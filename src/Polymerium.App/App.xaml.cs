@@ -5,9 +5,11 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
+using Polymerium.Abstractions.DownloadSources;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views;
+using Polymerium.Core.DownloadSources;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -51,6 +53,9 @@ public partial class App : Application
         // local service registration
         services.AddSingleton<AssetStorageService>();
         services.AddSingleton<IOverlayService, WindowOverlayService>();
+        // download source provider registration
+        services.AddTransient<DownloadSourceProviderBase, BMCLApiProvider>();
+        services.AddTransient<DownloadSourceProviderBase, FallbackProvider>();
         return services.BuildServiceProvider();
     }
 }

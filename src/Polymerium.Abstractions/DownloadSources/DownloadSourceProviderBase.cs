@@ -11,6 +11,6 @@ namespace Polymerium.Abstractions.DownloadSources
     {
         public abstract string Identity { get; }
 
-        public virtual Option<IEnumerable<GameVersion>> GetGameVersions() => Option<IEnumerable<GameVersion>>.None();
+        public virtual Task<Option<IEnumerable<GameVersion>>> GetGameVersionsAsync() => Task.FromResult<Option<IEnumerable<GameVersion>>>(Option<IEnumerable<GameVersion>>.None());
     }
 }

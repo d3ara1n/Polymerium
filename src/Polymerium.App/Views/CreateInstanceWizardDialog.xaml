@@ -8,6 +8,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:abstractions="using:Polymerium.Abstractions.DownloadSources.Models"
     Padding ="0"
     Loaded="CreateInstanceWizardDialog_OnLoaded"
     mc:Ignorable="d">
@@ -40,39 +41,41 @@
             </ControlTemplate>
         </ContentControl.Template>
         <Grid RowDefinitions="*,Auto">
-            <ScrollViewer>
+            <ScrollViewer IsEnabled="{x:Bind IsOpeable,Mode=OneWay}">
                 <StackPanel Spacing="{StaticResource StackPanelSpacing}" Margin="25">
                     <TextBlock Text="创建空实例" Style="{ThemeResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="游戏版本" />
-                    <ComboBox x:Name="CoreVersion" IsEditable="False">
-                        <!-- 按时间排序，快照右边有个小标标识是 snapshot -->
-                        <x:String>1.19.1</x:String>
-                        <x:String>1.16.5</x:String>
-                        <x:String>1.12.2</x:String>
-                        <x:String>1.9.0</x:String>
-                        <x:String>1.7.4</x:String>
-                        <x:String>1.4.5</x:String>
-                        <x:String>1.3.2</x:String>
-                        <x:String>1.2.5</x:String>
-                        <x:String>1.1.0</x:String>
+                    <TextBlock Text="游戏版本"/>
+                    <ComboBox x:Name="CoreVersion" IsEditable="False" SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}" ItemsSource="{x:Bind Versions,Mode=OneWay}" HorizontalAlignment="Stretch">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="abstractions:GameVersion">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Text="{x:Bind Id}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                                    <Grid Grid.Column="1">
+                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}" CornerRadius="5" Opacity="0.6">
+                                            <TextBlock Margin="5,2,5,2" Text="{x:Bind Type}" FontSize="10"/>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock Text="作者" />
-                    <TextBox PlaceholderText="AUTHOR" />
+                    <TextBox PlaceholderText="空字符串也可以是作者名..."/>
                     <Expander Header="高级" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
                         <StackPanel Spacing="{StaticResource StackPanelSpacing}">
                             <TextBlock Text="实例版本" />
-                            <TextBox Text="1.0.0" />
+                            <TextBox Text="1.0.0" PlaceholderText="当作为整合包发布时使用"/>
                         </StackPanel>
                     </Expander>
                     <TextBlock Text="最后给实例起一个名字" />
-                    <TextBox PlaceholderText="{x:Bind CoreVersion.SelectedValue,Mode=OneWay}" />
+                    <TextBox x:Name="InstanceName" Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}" PlaceholderText="会以此标识该实例"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
     </ContentControl>
     <controls:CustomDialog.OperationContent>
         <StackPanel Orientation="Horizontal" Spacing="10">
-            <Button Content="添加" />
+            <Button x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOpeable,Mode=OneWay}" Click="AddButton_Click"/>
             <Button x:Name="CloseButton" Content="取消" Click="CloseButton_OnClick" />
         </StackPanel>
     </controls:CustomDialog.OperationContent>

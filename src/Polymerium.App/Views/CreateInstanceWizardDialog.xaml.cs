@@ -2,12 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Polymerium.Abstractions.DownloadSources.Models;
 using Polymerium.App.Controls;
 using Polymerium.App.ViewModels;
 
@@ -27,6 +32,34 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         ViewModel = App.Current.Provider.GetRequiredService<CreateInstanceWizardViewModel>();
         _dispatcher = DispatcherQueue.GetForCurrentThread();
     }
+
+
+
+    public IEnumerable<GameVersion> Versions
+    {
+        get { return (IEnumerable<GameVersion>)GetValue(VersionsProperty); }
+        set { SetValue(VersionsProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty VersionsProperty =
+        DependencyProperty.Register(nameof(Versions), typeof(IEnumerable<GameVersion>), typeof(CreateInstanceWizardDialog), new PropertyMetadata(null));
+
+
+
+
+    public bool IsOpeable
+    {
+        get { return (bool)GetValue(IsOpeableProperty); }
+        set { SetValue(IsOpeableProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for IsEnabled.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IsOpeableProperty =
+        DependencyProperty.Register(nameof(IsOpeable), typeof(bool), typeof(CreateInstanceWizardDialog), new PropertyMetadata(false));
+
+
+
 
     public CreateInstanceWizardViewModel ViewModel { get; }
 
@@ -48,12 +81,24 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     private void CreateInstanceWizardDialog_OnLoaded(object sender, RoutedEventArgs e)
     {
         VisualStateManager.GoToState(_root, "Loading", false);
+        IsOpeable = false;
         Task.Run(() => ViewModel.FillDataAsync(ViewModel_FillDataCompleted), CancellationToken.None);
     }
 
-    private async Task ViewModel_FillDataCompleted()
+    private Task ViewModel_FillDataCompleted(IEnumerable<GameVersion> data)
     {
         _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-            VisualStateManager.GoToState(_root, "Default", false));
+        {
+            IsOpeable = true;
+            Versions = data;
+            CoreVersion.SelectedIndex = 0;
+            VisualStateManager.GoToState(_root, "Default", false);
+        });
+        return Task.CompletedTask;
+    }
+
+    private void AddButton_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }

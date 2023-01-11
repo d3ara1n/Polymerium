@@ -8,17 +8,22 @@ namespace Polymerium.Abstractions.DownloadSources.Models
 {
     public struct GameVersion
     {
-        public GameVersion(string version, string releaseType, DateTimeOffset time, DateTimeOffset releaseTime)
+        public GameVersion(string version, ReleaseType type, DateTimeOffset time, DateTimeOffset releaseTime)
         {
-            Version = version;
-            ReleaseType = releaseType;
+            Id = version;
+            Type = type;
             Time = time;
             ReleaseTime = releaseTime;
         }
 
-        public string Version { get; private set; }
-        public string ReleaseType { get; private set; }
+        public string Id { get; private set; }
+        public ReleaseType Type { get; private set; }
         public DateTimeOffset Time { get; private set; }
         public DateTimeOffset ReleaseTime { get; private set; }
+
+        public override string ToString()
+        {
+            return Id;
+        }
     }
 }

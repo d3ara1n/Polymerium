@@ -15,6 +15,7 @@
     <Authors>D3ara1n</Authors>
     <Product>Polymerium</Product>
     <Description>Polymerium Minecraft Instance Manager</Description>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\Placeholder\skinmc-avatar.png" />
@@ -50,7 +51,6 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="WinUIEx" Version="2.1.0" />
-    <PackageReference Include="Wupoo" Version="1.0.2" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -63,6 +63,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj" />
     <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj" />
     <ProjectReference Include="..\Polymerium.Core\Polymerium.Core.csproj" />
   </ItemGroup>

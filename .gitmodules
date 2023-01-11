@@ -1,0 +1,3 @@
+[submodule "submodules/Wupoo"]
+	path = submodules/Wupoo
+	url = git@github.com:d3ara1n/Wupoo
