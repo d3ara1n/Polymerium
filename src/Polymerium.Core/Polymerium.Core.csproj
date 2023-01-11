@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>$(AssemblyName)</Title>
+    <Authors>D3ara1n</Authors>
+    <Product>Polymerium</Product>
+    <Description>Polymerium core lib</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IBuilder" Version="0.1.0" />
+    <PackageReference Include="Wupoo" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

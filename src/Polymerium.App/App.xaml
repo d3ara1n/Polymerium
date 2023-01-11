@@ -1,0 +1,32 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Application
+    x:Class="Polymerium.App.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light" />
+                <ResourceDictionary x:Key="Dark" />
+            </ResourceDictionary.ThemeDictionaries>
+            <!-- TitleBar Transparent -->
+            <StaticResource x:Key="WindowCaptionBackground" ResourceKey="ControlFillColorTransparentBrush" />
+            <StaticResource x:Key="WindowCaptionBackgroundDisabled" ResourceKey="ControlFillColorTransparentBrush" />
+            <StaticResource x:Key="AppBarButtonSubItemChevronForeground" ResourceKey="ControlFillColorTransparentBrush" />
+            <StaticResource x:Key="AppBarButtonSubItemChevronForegroundPointerOver"
+                            ResourceKey="ControlFillColorTransparentBrush" />
+            <StaticResource x:Key="AppBarButtonSubItemChevronForegroundPressed"
+                            ResourceKey="ControlFillColorTransparentBrush" />
+            <StaticResource x:Key="AppBarButtonSubItemChevronForegroundSubMenuOpened"
+                            ResourceKey="ControlFillColorTransparentBrush" />
+
+            <SolidColorBrush x:Key="PageBackgroundBrush" Color="{StaticResource LayerOnAcrylicFillColorDefault}" />
+            <SolidColorBrush x:Key="PageStrokeBrush" Color="{StaticResource ControlStrokeColorDefault}" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
