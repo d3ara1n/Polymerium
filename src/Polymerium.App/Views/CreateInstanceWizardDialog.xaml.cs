@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions.DownloadSources.Models;
 using Polymerium.App.Controls;
 using Polymerium.App.ViewModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -82,10 +83,10 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     {
         VisualStateManager.GoToState(_root, "Loading", false);
         IsOpeable = false;
-        Task.Run(() => ViewModel.FillDataAsync(ViewModel_FillDataCompleted), CancellationToken.None);
+        Task.Run(() => ViewModel.FillDataAsync(ViewModel_FillDataCompletedAsync), CancellationToken.None);
     }
 
-    private Task ViewModel_FillDataCompleted(IEnumerable<GameVersion> data)
+    private Task ViewModel_FillDataCompletedAsync(IEnumerable<GameVersion> data)
     {
         _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
@@ -99,6 +100,19 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
 
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
+        VisualStateManager.GoToState(_root, "Working", false);
+        IsOpeable = false;
+        Task.Run(() => ViewModel.Commit(ViewModel_CommitCompletedAsync), CancellationToken.None);
+    }
 
+    private Task ViewModel_CommitCompletedAsync()
+    {
+        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            IsOpeable = true;
+            VisualStateManager.GoToState(_root, "Default", false);
+            Dismiss();
+        });
+        return Task.CompletedTask;
     }
 }

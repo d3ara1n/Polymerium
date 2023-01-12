@@ -17,6 +17,14 @@ namespace Polymerium.Abstractions
 
         public bool IsNone() => !IsSome();
 
+        
+        public static Option<T> Wrap(T? value) => value switch
+        {
+            null => None(),
+            _ => Some(value!)
+        };
+
+
         public bool TryUnwrap(out T data)
         {
             if (this is Some<T> some)

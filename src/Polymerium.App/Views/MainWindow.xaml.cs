@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using Polymerium.App.Messages;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 using WinUIEx;
@@ -49,5 +51,10 @@ public sealed partial class MainWindow : WindowEx
     {
         var item = sender.SelectedItem as NavigationItemModel;
         RootFrame.Navigate(item.SourcePage, null, new SuppressNavigationTransitionInfo());
+    }
+
+    private void Main_Closed(object sender, WindowEventArgs args)
+    {
+        StrongReferenceMessenger.Default.Send(new ApplicationAliveChangedMessage(false));
     }
 }

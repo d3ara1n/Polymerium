@@ -47,9 +47,10 @@ public partial class App : Application
         #endif
         );
         // view models registration
-        services.AddScoped<MainViewModel>();
-        services.AddScoped<NewInstanceViewModel>();
-        services.AddScoped<CreateInstanceWizardViewModel>();
+        services.AddTransient<MainViewModel>();
+        services.AddTransient<NewInstanceViewModel>();
+        services.AddTransient<CreateInstanceWizardViewModel>();
+        services.AddTransient<InstanceViewModel>();
         // local service registration
         services.AddSingleton<AssetStorageService>();
         services.AddSingleton<IOverlayService, WindowOverlayService>();
