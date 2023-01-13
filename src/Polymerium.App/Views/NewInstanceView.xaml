@@ -14,7 +14,7 @@
             <Grid Background="{ThemeResource PageBackgroundBrush}" BorderBrush="{ThemeResource PageStrokeBrush}"
                   BorderThickness="1" CornerRadius="5" Margin="5,0,5,5" RowDefinitions="*,*">
                 <Grid.ChildrenTransitions>
-                    <EntranceThemeTransition />
+                    <ContentThemeTransition />
                 </Grid.ChildrenTransitions>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                     <TextBlock Text="从空模板创建实例" Style="{StaticResource SubtitleTextBlockStyle}" />
@@ -28,7 +28,7 @@
             <Grid Grid.Column="1" Background="{ThemeResource PageBackgroundBrush}"
                   BorderBrush="{ThemeResource PageStrokeBrush}" BorderThickness="1" CornerRadius="5" Margin="5,0,10,5">
                 <Grid.ChildrenTransitions>
-                    <EntranceThemeTransition />
+                    <ContentThemeTransition />
                 </Grid.ChildrenTransitions>
                 <Grid>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -59,10 +59,10 @@
                 <ScalarTransition />
             </Grid.OpacityTransition>
             <Grid.ChildrenTransitions>
-                <EntranceThemeTransition />
+                <ContentThemeTransition />
             </Grid.ChildrenTransitions>
             <Rectangle Fill="Transparent" StrokeDashArray="8 4"
-                       Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" StrokeThickness="4" />
+                       Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" StrokeThickness="3" />
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
                 <FontIcon Glyph="&#xE1E3;" FontSize="44" VerticalAlignment="Center" Margin="0,0,10,0" />
                 <StackPanel>

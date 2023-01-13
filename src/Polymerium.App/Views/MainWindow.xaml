@@ -9,6 +9,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:converters="using:Polymerium.App.Converters"
     xmlns:ex="using:WinUIEx"
     Title="Polymerium" MinHeight="400" MinWidth="600" Height="600" Width="960"
     mc:Ignorable="d" Closed="Main_Closed">
@@ -51,16 +53,17 @@
             SelectedItem="{x:Bind ViewModel.SelectedItem}"
             SelectionChanged="OnSelectionChanged">
             <NavigationView.PaneCustomContent>
-                <ImageIcon Source="ms-appx:///Assets/Placeholder/skinmc-avatar.png" Margin="20" />
+                <ImageIcon Source="ms-appx:///Assets/Placeholders/default_avatar.png" Margin="20" />
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavigationItemModel">
                     <NavigationViewItem IsSelected="{x:Bind IsSelected, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{x:Bind Caption}">
                         <Grid Height="64" Margin="0,0,-10,0">
-                            <StackPanel VerticalAlignment="Center" Margin="0">
-                                <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center" />
-                            </StackPanel>
+                            <Grid VerticalAlignment="Center" Margin="0">
+                                <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center"/>
+                                <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}" CornerRadius="13"/>
+                            </Grid>
                         </Grid>
                     </NavigationViewItem>
                 </DataTemplate>

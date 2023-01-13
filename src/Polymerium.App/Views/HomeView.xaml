@@ -7,15 +7,74 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Polymerium.App.Models"
+    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
-
-    <ScrollViewer>
-        <Grid Background="{ThemeResource PageBackgroundBrush}" BorderBrush="{ThemeResource PageStrokeBrush}"
-              BorderThickness="1" CornerRadius="5" MinHeight="512" Margin="5,0,10,10">
-            <Grid.ChildrenTransitions>
-                <EntranceThemeTransition />
-            </Grid.ChildrenTransitions>
-            <TextBlock Text="This is Home page!" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <Page.Resources>
+        <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter"/>
+    </Page.Resources>
+    <Grid ColumnDefinitions="65*,35*">
+        <Grid RowDefinitions="Auto,*">
+            <Grid Margin="20" CornerRadius="10" Height="188" Background="{ThemeResource PageBackgroundBrush}" BorderBrush="{ThemeResource PageStrokeBrush}" BorderThickness="1">
+                <Grid.ChildrenTransitions>
+                    <ContentThemeTransition/>
+                </Grid.ChildrenTransitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="下午好，玩家" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{ThemeResource BodyTextBlockStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <ScrollViewer Grid.Row="1">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,5">
+                        <TextBlock Text="最近游玩"/>
+                        <Button Grid.Column="1">
+                            <FontIcon Glyph="&#xE108;"/>
+                        </Button>
+                    </Grid>
+                    <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:RecentPlayedItemModel">
+                                <controls:RecentPlayedItemControl Style="{StaticResource DefaultRecentPlayedItemStyle}">
+                                    <Grid RowDefinitions="Auto,*" MaxWidth="100">
+                                        <toolkit:ImageEx Width="80" Height="80" Margin="10,10,10,5" CornerRadius="10" Source="{x:Bind ThumbnailFile}" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" Stretch="UniformToFill"/>
+                                        <Grid Grid.Row="1" RowDefinitions="Auto,*">
+                                            <Grid.ChildrenTransitions>
+                                                <ContentThemeTransition/>
+                                            </Grid.ChildrenTransitions>
+                                            <TextBlock Margin="10,5,10,2" Text="{x:Bind Name}" Style="{ThemeResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource ApplicationForegroundThemeBrush}"/>
+                                            <Grid ColumnDefinitions="Auto,*"  Grid.Row="1" VerticalAlignment="Bottom" Margin="10,2,10,10">
+                                                <FontIcon Margin="0,0,2,0" VerticalAlignment="Bottom" Glyph="&#xE121;" FontSize="11"/>
+                                                <TextBlock Grid.Column="1" HorizontalAlignment="Right" FontSize="11" Text="{x:Bind LastPlayedAt,Converter={StaticResource DateTimeOffsetToStringConverter}}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </controls:RecentPlayedItemControl>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
-    </ScrollViewer>
+    </Grid>
 </Page>

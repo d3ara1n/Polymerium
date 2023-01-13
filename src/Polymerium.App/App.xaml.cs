@@ -46,11 +46,13 @@ public partial class App : Application
         .SetMinimumLevel(LogLevel.Debug)
         #endif
         );
+        services.AddMemoryCache();
         // view models registration
         services.AddTransient<MainViewModel>();
         services.AddTransient<NewInstanceViewModel>();
         services.AddTransient<CreateInstanceWizardViewModel>();
         services.AddTransient<InstanceViewModel>();
+        services.AddTransient<HomeViewModel>();
         // local service registration
         services.AddSingleton<AssetStorageService>();
         services.AddSingleton<IOverlayService, WindowOverlayService>();

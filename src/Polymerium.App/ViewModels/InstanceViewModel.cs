@@ -23,6 +23,7 @@ namespace Polymerium.App.ViewModels
 
         public void GotInstance(GameInstance instance)
         {
+            Instance = instance;
         }
     }
 }

@@ -116,4 +116,29 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="controls:RecentPlayedItemControl" BasedOn="{StaticResource DefaultRecentPlayedItem}"/>
+
+    <Style x:Key="DefaultRecentPlayedItemStyle" TargetType="controls:RecentPlayedItemControl">
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Background" Value="{ThemeResource FloatLayerBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource FloatLayerBackgroundBrush}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:RecentPlayedItemControl">
+                    <Grid Margin="{TemplateBinding Padding}">
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}"/>
+                        <Border x:Name="PART_Background" Opacity="0" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border.OpacityTransition>
+                                <ScalarTransition/>
+                            </Border.OpacityTransition>
+                        </Border>
+                        <ContentPresenter/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

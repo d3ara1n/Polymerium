@@ -33,10 +33,9 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
         else
             throw new ApplicationException("Window overlay cannot get registered");
 
-        NavigationPages = new ObservableCollection<NavigationItemModel>(storageService.GetViewOfInstances().Select(it => new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it)))
-        {
-            new("\xEA8A", "Home", typeof(HomeView)), new("\xF8AA", "Add", typeof(NewInstanceView))
-        };
+        NavigationPages = new ObservableCollection<NavigationItemModel>(storageService.GetViewOfInstances().Select(it => new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it, it.ThumbnailFile)));
+        NavigationPages.Insert(0, new("\xEA8A", "Home", typeof(HomeView)));
+        NavigationPages.Add(new("\xF8AA", "Add", typeof(NewInstanceView)));
         SelectedItem = NavigationPages[0];
         NavigationPinnedPages = new NavigationItemModel[] { new("\xE115", "Settings", typeof(HomeView)) };
 
@@ -81,7 +80,7 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
 
     public void Receive(GameInstanceAddedMessage message)
     {
-        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () => NavigationPages.Insert(NavigationPages.Count - 1, new NavigationItemModel("\xF158", message.AddedInstance.Name, typeof(InstanceView), message.AddedInstance)));
+        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () => NavigationPages.Insert(NavigationPages.Count - 1, new NavigationItemModel("\xF158", message.AddedInstance.Name, typeof(InstanceView), message.AddedInstance, message.AddedInstance.ThumbnailFile)));
     }
 
     public void Receive(ApplicationAliveChangedMessage message)

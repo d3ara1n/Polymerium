@@ -50,7 +50,7 @@ public sealed partial class MainWindow : WindowEx
     private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         var item = sender.SelectedItem as NavigationItemModel;
-        RootFrame.Navigate(item.SourcePage, null, new SuppressNavigationTransitionInfo());
+        RootFrame.Navigate(item.SourcePage, item.PageParameter, new SuppressNavigationTransitionInfo());
     }
 
     private void Main_Closed(object sender, WindowEventArgs args)
