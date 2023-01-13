@@ -18,7 +18,8 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Assets\Placeholders\default_avatar.png" />
+    <None Remove="Assets\Placeholders\default_avatar_bust.png" />
+    <None Remove="Assets\Placeholders\default_avatar_face.png" />
     <None Remove="Assets\Placeholders\default_panorama1.webp" />
     <None Remove="Assets\Placeholders\default_world_icon.png" />
     <None Remove="Styles\Common.xaml" />

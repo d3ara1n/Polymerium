@@ -53,7 +53,7 @@
             SelectedItem="{x:Bind ViewModel.SelectedItem}"
             SelectionChanged="OnSelectionChanged">
             <NavigationView.PaneCustomContent>
-                <ImageIcon Source="ms-appx:///Assets/Placeholders/default_avatar.png" Margin="20" />
+                <ImageIcon Source="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="20" />
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavigationItemModel">

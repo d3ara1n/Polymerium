@@ -21,12 +21,15 @@
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition/>
                 </Grid.ChildrenTransitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <StackPanel VerticalAlignment="Center">
+                <Grid ColumnDefinitions="6*,4*">
+                    <toolkit:ImageEx Stretch="UniformToFill" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Placeholders/default_avatar_bust.png"/>
+                </Grid>
+                <Grid ColumnDefinitions="4*,6*">
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock Text="下午好，玩家" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                        <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{ThemeResource BodyTextBlockStyle}"/>
+                        <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" TextWrapping="WrapWholeWords" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{ThemeResource BodyTextBlockStyle}"/>
                     </StackPanel>
-                </StackPanel>
+                </Grid>
             </Grid>
             <ScrollViewer Grid.Row="1">
                 <StackPanel>
