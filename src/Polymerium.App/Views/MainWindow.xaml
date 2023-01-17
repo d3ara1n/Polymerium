@@ -11,8 +11,9 @@
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:ex="using:WinUIEx"
-    Title="Polymerium" MinHeight="400" MinWidth="600" Height="600" Width="960"
+    Title="Polymerium" MinHeight="400" MinWidth="600" Height="600" Width="780"
     mc:Ignorable="d" Closed="Main_Closed">
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
         <Rectangle x:Name="FakeBackground" Grid.ColumnSpan="9" Grid.RowSpan="9"
@@ -53,9 +54,8 @@
             SelectedItem="{x:Bind ViewModel.SelectedPage, Mode=TwoWay}"
             SelectionChanged="OnSelectionChanged">
             <NavigationView.PaneCustomContent>
-                <!-- TODO: replaced with AvatarBox -->
-                <ImageIcon ToolTipService.ToolTip="{x:Bind ViewModel.LogonAccount.Inner.DisplayName,Mode=OneWay}" Source="{x:Bind ViewModel.LogonAccount.AvatarSource,Mode=OneWay}" Margin="20">
-                    <ImageIcon.ContextFlyout>
+                <controls:IconButton ToolTipService.ToolTip="{x:Bind ViewModel.LogonAccount.Inner.DisplayName,Mode=OneWay}" Height="60" Width="70" Margin="5">
+                    <controls:IconButton.ContextFlyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Text="{x:Bind ViewModel.LogonAccount.Inner.DisplayName,Mode=OneWay}"/>
                             <MenuFlyoutSeparator/>
@@ -66,8 +66,9 @@
                             <MenuFlyoutSeparator/>
                             <MenuFlyoutItem Text="添加账号"/>
                         </MenuFlyout>
-                    </ImageIcon.ContextFlyout>
-                </ImageIcon>
+                    </controls:IconButton.ContextFlyout>
+                        <ImageIcon Source="{x:Bind ViewModel.LogonAccount.AvatarSource,Mode=OneWay}" Margin="5"/>
+                </controls:IconButton>
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavigationItemModel">

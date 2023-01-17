@@ -18,6 +18,7 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Brands\curseforge.svg" />
     <None Remove="Assets\Placeholders\default_avatar_alt_bust.png" />
     <None Remove="Assets\Placeholders\default_avatar_alt_face.png" />
     <None Remove="Assets\Placeholders\default_avatar_bust.png" />

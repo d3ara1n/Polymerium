@@ -15,9 +15,9 @@
     <Page.Resources>
         <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter"/>
     </Page.Resources>
-    <Grid ColumnDefinitions="65*,35*">
+    <Grid>
         <Grid RowDefinitions="Auto,*">
-            <Grid Margin="20" CornerRadius="10" Height="188" Background="{ThemeResource PageBackgroundBrush}" BorderBrush="{ThemeResource PageStrokeBrush}" BorderThickness="1">
+            <Grid Margin="5,0,10,5" CornerRadius="10" Height="188" Background="{ThemeResource PageBackgroundBrush}" BorderBrush="{ThemeResource PageStrokeBrush}" BorderThickness="1">
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition/>
                 </Grid.ChildrenTransitions>
@@ -35,9 +35,9 @@
                 <StackPanel>
                     <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,5">
                         <TextBlock Text="最近游玩"/>
-                        <Button Grid.Column="1">
+                        <controls:IconButton Grid.Column="1">
                             <FontIcon Glyph="&#xE108;"/>
-                        </Button>
+                        </controls:IconButton>
                     </Grid>
                     <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}">
                         <ListView.ItemTemplate>

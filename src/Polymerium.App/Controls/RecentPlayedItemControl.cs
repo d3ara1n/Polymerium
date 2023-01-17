@@ -14,19 +14,19 @@ namespace Polymerium.App.Controls
 
         protected override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
             PART_Background = GetTemplateChild("PART_Background") as Border;
+            base.OnApplyTemplate();
         }
         protected override void OnPointerEntered(PointerRoutedEventArgs e)
         {
-            base.OnPointerEntered(e);
             PART_Background.Opacity = 1.0d;
+            base.OnPointerEntered(e);
         }
 
         protected override void OnPointerExited(PointerRoutedEventArgs e)
         {
-            base.OnPointerExited(e);
             PART_Background.Opacity = 0.0d;
+            base.OnPointerExited(e);
         }
     }
 }

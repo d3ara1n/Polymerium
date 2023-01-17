@@ -26,4 +26,14 @@ public sealed partial class InstanceView : Page
         ViewModel.GotInstance(instance);
 
     }
+
+    private void Header_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+    {
+        EditButton.Opacity = 1.0;
+    }
+
+    private void Header_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+    {
+        EditButton.Opacity = 0.0;
+    }
 }

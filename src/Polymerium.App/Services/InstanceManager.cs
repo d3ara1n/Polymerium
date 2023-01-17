@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Polymerium.App.Services
 {
-    public class AccountManagementService
+    public class InstanceManager
     {
     }
 }

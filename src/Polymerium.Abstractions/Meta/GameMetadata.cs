@@ -11,6 +11,6 @@ namespace Polymerium.Abstractions.Meta
     {
         public string CoreVersion { get; set; }
         public IEnumerable<ExperienceExtender> Extenders { get; set; }
-
+        public IEnumerable<AssetAttachments> Assets { get; set; }
     }
 }

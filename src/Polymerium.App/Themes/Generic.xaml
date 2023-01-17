@@ -9,6 +9,8 @@
     <Style TargetType="controls:CustomDialog" BasedOn="{StaticResource DefaultCustomDialogStyle}" />
 
     <Style x:Name="DefaultCustomDialogStyle" TargetType="controls:CustomDialog">
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="BorderBrush" Value="{ThemeResource ContentDialogBorderBrush}" />
         <Setter Property="BorderThickness" Value="{ThemeResource ContentDialogBorderWidth}" />
         <Setter Property="Background" Value="{ThemeResource ContentDialogBackground}" />
@@ -140,5 +142,72 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="controls:IconButton">
+        <Style.Setters>
+            <Setter Property="Background" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource HyperlinkButtonBorderThemeBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource HyperlinkButtonBorderThemeThickness}" />
+            <Setter Property="Padding" Value="{ThemeResource ButtonPadding}"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="controls:IconButton">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="Common">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Storyboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity">
+                                                    <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="0.0" />
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.0" To="0.95"/>
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.0" To="0.95"/>
+                                            </Storyboard>
+                                        </VisualState.Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Storyboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity">
+                                                    <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="1.0" />
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" BeginTime="{StaticResource ControlFasterAnimationDuration}" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <BounceEase/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" BeginTime="{StaticResource ControlFasterAnimationDuration}" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <BounceEase/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </VisualState.Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="PART_Background.Opacity" Value="1"/>
+                                            <Setter Target="PART_Background.Background" Value="{ThemeResource HyperlinkButtonBackgroundPressed}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <ScaleTransform x:Name="PART_Transform"/>
+                                </Border.RenderTransform>
+                            </Border>
+                            <ContentPresenter Margin="{TemplateBinding Padding}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
     </Style>
 </ResourceDictionary>

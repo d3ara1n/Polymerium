@@ -37,7 +37,7 @@ public sealed partial class MainWindow : WindowEx
         if (Environment.OSVersion.Version.Major >= 10)
         {
             if (Environment.OSVersion.Version.Build >= 22000)
-                Backdrop = new MicaSystemBackdrop();
+                Backdrop = new AcrylicSystemBackdrop();
             else
                 Backdrop = new AcrylicSystemBackdrop();
         }

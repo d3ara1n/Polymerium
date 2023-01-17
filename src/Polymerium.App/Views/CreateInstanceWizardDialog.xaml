@@ -75,7 +75,7 @@
     </ContentControl>
     <controls:CustomDialog.OperationContent>
         <StackPanel Orientation="Horizontal" Spacing="10">
-            <Button x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOpeable,Mode=OneWay}" Click="AddButton_Click"/>
+            <Button x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOpeable,Mode=OneWay}" Style="{ThemeResource AccentButtonStyle}" Click="AddButton_Click"/>
             <Button x:Name="CloseButton" Content="取消" Click="CloseButton_OnClick" />
         </StackPanel>
     </controls:CustomDialog.OperationContent>
