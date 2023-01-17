@@ -42,9 +42,9 @@ public partial class App : Application
         var services = new ServiceCollection();
         // application services registration
         services.AddLogging(logging => logging.AddSimpleConsole().AddDebug()
-        #if DEBUG
+#if DEBUG
         .SetMinimumLevel(LogLevel.Debug)
-        #endif
+#endif
         );
         services.AddMemoryCache();
         // view models registration
@@ -53,9 +53,11 @@ public partial class App : Application
         services.AddTransient<CreateInstanceWizardViewModel>();
         services.AddTransient<InstanceViewModel>();
         services.AddTransient<HomeViewModel>();
+        services.AddTransient<SettingViewModel>();
         // local service registration
         services.AddSingleton<AssetStorageService>();
         services.AddSingleton<IOverlayService, WindowOverlayService>();
+        services.AddSingleton<AccountManagementService>();
         // download source provider registration
         services.AddTransient<DownloadSourceProviderBase, BMCLApiProvider>();
         services.AddTransient<DownloadSourceProviderBase, FallbackProvider>();

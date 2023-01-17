@@ -50,22 +50,33 @@
             PaneDisplayMode="Left"
             Transitions="{x:Null}"
             FooterMenuItemsSource="{x:Bind ViewModel.NavigationPinnedPages}"
-            SelectedItem="{x:Bind ViewModel.SelectedItem}"
+            SelectedItem="{x:Bind ViewModel.SelectedPage, Mode=TwoWay}"
             SelectionChanged="OnSelectionChanged">
             <NavigationView.PaneCustomContent>
-                <ImageIcon Source="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="20" />
+                <!-- TODO: replaced with AvatarBox -->
+                <ImageIcon ToolTipService.ToolTip="{x:Bind ViewModel.LogonAccount.Inner.DisplayName,Mode=OneWay}" Source="{x:Bind ViewModel.LogonAccount.AvatarSource,Mode=OneWay}" Margin="20">
+                    <ImageIcon.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="{x:Bind ViewModel.LogonAccount.Inner.DisplayName,Mode=OneWay}"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutSubItem x:Name="SwitchToSubMenu" Text="切换到"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="刷新"/>
+                            <MenuFlyoutItem Text="注销"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="添加账号"/>
+                        </MenuFlyout>
+                    </ImageIcon.ContextFlyout>
+                </ImageIcon>
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavigationItemModel">
-                    <NavigationViewItem IsSelected="{x:Bind IsSelected, Mode=TwoWay}"
-                                        ToolTipService.ToolTip="{x:Bind Caption}">
-                        <Grid Height="64" Margin="0,0,-10,0">
-                            <Grid VerticalAlignment="Center" Margin="0">
-                                <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center"/>
-                                <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}" CornerRadius="13"/>
-                            </Grid>
+                    <Grid Height="64" Margin="0,0,-10,0" ToolTipService.ToolTip="{x:Bind Caption}">
+                        <Grid VerticalAlignment="Center" Margin="0">
+                            <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center"/>
+                            <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}" CornerRadius="13"/>
                         </Grid>
-                    </NavigationViewItem>
+                    </Grid>
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
         </NavigationView>

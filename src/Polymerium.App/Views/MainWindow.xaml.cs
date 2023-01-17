@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Specialized;
+using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Windowing;
@@ -43,6 +45,44 @@ public sealed partial class MainWindow : WindowEx
         {
             FakeBackground.Visibility = Visibility.Visible;
         }
+
+        foreach (var a in ViewModel.LogonAccounts)
+        {
+            var item = new MenuFlyoutItem() { Text = a.Inner.DisplayName, Tag = a };
+            item.Click += (sender, _) => ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)sender).Tag);
+            SwitchToSubMenu.Items.Add(item);
+        }
+        ViewModel.LogonAccounts.CollectionChanged += LogonAccounts_CollectionChanged;
+    }
+
+    private void LogonAccounts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+
+                foreach (AccountItemModel a in e.NewItems)
+                {
+                    var item = new MenuFlyoutItem() { Text = a.Inner.DisplayName, Tag = a };
+                    item.Click += (sender, _) => ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)sender).Tag);
+                    SwitchToSubMenu.Items.Add(item);
+                }
+
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                foreach (AccountItemModel a in e.OldItems)
+                {
+                    var item = SwitchToSubMenu.Items.FirstOrDefault(x => ((AccountItemModel)x.Tag).Inner.Id == a.Inner.Id);
+                    if (item != null)
+                    {
+                        SwitchToSubMenu.Items.Remove(item);
+                    }
+                }
+                break;
+            case NotifyCollectionChangedAction.Reset:
+                SwitchToSubMenu.Items.Clear();
+                break;
+        }
     }
 
     public MainViewModel ViewModel { get; }
@@ -50,7 +90,8 @@ public sealed partial class MainWindow : WindowEx
     private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         var item = sender.SelectedItem as NavigationItemModel;
-        RootFrame.Navigate(item.SourcePage, item.PageParameter, new SuppressNavigationTransitionInfo());
+        RootFrame.Navigate(item.SourcePage, (item.GameInstance, ViewModel.LogonAccount?.Inner), new SuppressNavigationTransitionInfo());
+        ViewModel.OnNavigatedTo(item);
     }
 
     private void Main_Closed(object sender, WindowEventArgs args)

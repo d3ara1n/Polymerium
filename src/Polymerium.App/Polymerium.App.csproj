@@ -18,6 +18,8 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Placeholders\default_avatar_alt_bust.png" />
+    <None Remove="Assets\Placeholders\default_avatar_alt_face.png" />
     <None Remove="Assets\Placeholders\default_avatar_bust.png" />
     <None Remove="Assets\Placeholders\default_avatar_face.png" />
     <None Remove="Assets\Placeholders\default_panorama1.webp" />
@@ -29,6 +31,7 @@
     <None Remove="Views\InstanceView.xaml" />
     <None Remove="Views\NewInstanceView.xaml" />
     <None Remove="Views\SearchCenterView.xaml" />
+    <None Remove="Views\SettingView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +75,11 @@
     <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj" />
     <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj" />
     <ProjectReference Include="..\Polymerium.Core\Polymerium.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SettingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Themes\Generic.xaml">

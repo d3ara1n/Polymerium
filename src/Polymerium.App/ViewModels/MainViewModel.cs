@@ -7,11 +7,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.Accounts;
 using Polymerium.Abstractions.DownloadSources.Models;
 using Polymerium.App.Messages;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.Core.Accounts;
 
 namespace Polymerium.App.ViewModels;
 
@@ -31,20 +33,46 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
         if (overlayService is WindowOverlayService windowOverlayService)
             windowOverlayService.Register(PushOverlay, PullOverlay);
         else
-            throw new ApplicationException("Window overlay cannot get registered");
-
+            throw new ArgumentNullException(nameof(overlayService));
+        IsActive = true;
         NavigationPages = new ObservableCollection<NavigationItemModel>(storageService.GetViewOfInstances().Select(it => new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it, it.ThumbnailFile)));
         NavigationPages.Insert(0, new("\xEA8A", "Home", typeof(HomeView)));
         NavigationPages.Add(new("\xF8AA", "Add", typeof(NewInstanceView)));
-        SelectedItem = NavigationPages[0];
-        NavigationPinnedPages = new NavigationItemModel[] { new("\xE115", "Settings", typeof(HomeView)) };
-
-        IsActive = true;
+        SelectedPage = NavigationPages[0];
+        NavigationPinnedPages = new NavigationItemModel[] { new("\xE115", "Settings", typeof(SettingView)) };
+        LogonAccounts = new ObservableCollection<AccountItemModel>()
+        {
+            new()
+            {
+                Inner = new OfflineAccount()
+                {
+                    PlayerName = "Dearain",
+                    GeneratedId = "123456"
+                },
+                AvatarSource = "ms-appx:///Assets/Placeholders/default_avatar_alt_face.png"
+            },
+            new()
+            {
+                Inner = new OfflineAccount()
+                {
+                    PlayerName = "Herobrine",
+                    GeneratedId = "654321"
+                },
+                AvatarSource = "ms-appx:///Assets/Placeholders/default_avatar_face.png"
+            }
+        };
+        LogonAccount = LogonAccounts[0];
+        AccountShowcase = LogonAccount;
     }
 
     public ObservableCollection<NavigationItemModel> NavigationPages { get; }
     public NavigationItemModel[] NavigationPinnedPages { get; }
-    public NavigationItemModel SelectedItem { get; set; }
+    private NavigationItemModel selectedPage;
+    public NavigationItemModel SelectedPage { get => selectedPage; set => SetProperty(ref selectedPage, value); }
+    public ObservableCollection<AccountItemModel> LogonAccounts { get; set; }
+    private AccountItemModel logonAccount;
+    public AccountItemModel LogonAccount { get => logonAccount; set => SetProperty(ref logonAccount, value); }
+    public AccountItemModel AccountShowcase { get; set; }
 
 
     private ContentControl overlay;
@@ -76,6 +104,33 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
         // 安全的把所有权转移出去
         (var res, Overlay) = (Overlay, null);
         return res;
+    }
+
+    public void SwitchAccountTo(AccountItemModel model)
+    {
+        if (SelectedPage.GameInstance != null)
+        {
+            SelectedPage.GameInstance.BoundAccountId = model.Inner.Id;
+        }
+        else
+        {
+            AccountShowcase = model;
+        }
+        LogonAccount = model;
+    }
+
+    public void OnNavigatedTo(NavigationItemModel page)
+    {
+        if (page.GameInstance != null)
+        {
+            var account = LogonAccounts.FirstOrDefault(x => x.Inner.Id == page.GameInstance.BoundAccountId);
+            if (account != null)
+                LogonAccount = account;
+        }
+        else
+        {
+            LogonAccount = AccountShowcase;
+        }
     }
 
     public void Receive(GameInstanceAddedMessage message)

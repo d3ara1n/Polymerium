@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.Accounts;
+using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 
 namespace Polymerium.App.Views;
@@ -20,7 +22,7 @@ public sealed partial class InstanceView : Page
     {
         base.OnNavigatedTo(e);
 
-        var instance = e.Parameter as GameInstance;
+        (var instance, var account) = ((GameInstance, IGameAccount))e.Parameter;
         ViewModel.GotInstance(instance);
 
     }

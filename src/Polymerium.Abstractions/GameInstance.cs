@@ -15,5 +15,6 @@ namespace Polymerium.Abstractions
         public string Author { get; set; }
         public string FolderName { get; set; }
         public string ThumbnailFile { get; set; }
+        public string BoundAccountId { get; set; }
     }
 }
