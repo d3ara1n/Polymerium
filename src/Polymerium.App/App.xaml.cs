@@ -57,6 +57,7 @@ public partial class App : Application
         // local service registration
         services.AddSingleton<AssetStorageService>();
         services.AddSingleton<IOverlayService, WindowOverlayService>();
+        services.AddSingleton<NavigationService>();
         services.AddSingleton<AccountManager>();
         // download source provider registration
         services.AddTransient<DownloadSourceProviderBase, BMCLApiProvider>();

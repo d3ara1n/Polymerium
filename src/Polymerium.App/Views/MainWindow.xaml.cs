@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Reflection.Metadata;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Messages;
 using Polymerium.App.Models;
@@ -23,6 +25,7 @@ public sealed partial class MainWindow : WindowEx
     {
         InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<MainViewModel>();
+        ViewModel.SetNavigateHandler(Navigate);
 
         if (AppWindowTitleBar.IsCustomizationSupported())
         {
@@ -37,7 +40,7 @@ public sealed partial class MainWindow : WindowEx
         if (Environment.OSVersion.Version.Major >= 10)
         {
             if (Environment.OSVersion.Version.Build >= 22000)
-                Backdrop = new AcrylicSystemBackdrop();
+                Backdrop = new MicaSystemBackdrop();
             else
                 Backdrop = new AcrylicSystemBackdrop();
         }
@@ -91,11 +94,48 @@ public sealed partial class MainWindow : WindowEx
     {
         var item = sender.SelectedItem as NavigationItemModel;
         RootFrame.Navigate(item.SourcePage, (item.GameInstance, ViewModel.LogonAccount?.Inner), new SuppressNavigationTransitionInfo());
+        RootFrame.BackStack.Clear();
         ViewModel.OnNavigatedTo(item);
     }
 
     private void Main_Closed(object sender, WindowEventArgs args)
     {
         StrongReferenceMessenger.Default.Send(new ApplicationAliveChangedMessage(false));
+    }
+
+    private void BackButton_Click(object sender, RoutedEventArgs e)
+    {
+        RootFrame.GoBack();
+    }
+
+    private void Navigate(Type view, object parameter)
+    {
+
+        if (view == typeof(InstanceView) && parameter is string instanceId)
+        {
+            if (ViewModel.NavigationPages.Where(x => x.SourcePage == typeof(InstanceView)).FirstOrDefault(x => x.GameInstance.Id == instanceId) is NavigationItemModel { } instanceView)
+            {
+                MainNavigationBar.SelectedItem = instanceView;
+            }
+            else
+            {
+                throw new ArgumentException($"parameter {parameter} not found as game instance id");
+            }
+        }
+        else
+        {
+            if (ViewModel.NavigationPages.FirstOrDefault(x => x.SourcePage == view) is NavigationItemModel { } notPinned)
+            {
+                MainNavigationBar.SelectedItem = notPinned;
+            }
+            else if (ViewModel.NavigationPinnedPages.FirstOrDefault(x => x.SourcePage == view) is NavigationItemModel { } pinned)
+            {
+                MainNavigationBar.SelectedItem = pinned;
+            }
+            else
+            {
+                RootFrame.Navigate(view, parameter, new SuppressNavigationTransitionInfo());
+            }
+        }
     }
 }

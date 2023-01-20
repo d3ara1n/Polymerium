@@ -17,14 +17,15 @@ public class WindowOverlayService : IOverlayService
         if (_showHandler != null)
             _showHandler(content);
         else
-            throw new ApplicationException("No window is able to accept overlay request");
+            throw new ArgumentNullException(nameof(_showHandler));
     }
 
     public ContentControl Dismiss()
     {
         if (_dismissHandler != null)
             return _dismissHandler();
-        throw new ApplicationException("No window is able to accept overlay request");
+        else
+            throw new ArgumentNullException(nameof(_dismissHandler));
     }
 
     public void Register(OverlayShowHandler showHandler, OverlayDismissHandler dismissHandler)

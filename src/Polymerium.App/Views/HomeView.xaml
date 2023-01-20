@@ -17,7 +17,7 @@
     </Page.Resources>
     <Grid>
         <Grid RowDefinitions="Auto,*">
-            <Grid Margin="5,0,10,5" CornerRadius="10" Height="188" Background="{ThemeResource PageBackgroundBrush}" BorderBrush="{ThemeResource PageStrokeBrush}" BorderThickness="1">
+            <Grid Margin="5,0,10,5" CornerRadius="10" Height="188" Background="{ThemeResource CardBackgroundBrush}" BorderBrush="{ThemeResource CardStrokeBrush}" BorderThickness="1">
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition/>
                 </Grid.ChildrenTransitions>

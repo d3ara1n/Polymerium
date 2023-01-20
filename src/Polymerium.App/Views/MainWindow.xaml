@@ -18,9 +18,12 @@
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
         <Rectangle x:Name="FakeBackground" Grid.ColumnSpan="9" Grid.RowSpan="9"
                    Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="Collapsed" />
-        <Grid x:Name="AppTitleBar" Grid.ColumnSpan="9" Height="46" ColumnDefinitions="Auto,*">
+        <Grid x:Name="AppTitleBar" Grid.ColumnSpan="2" Height="46" ColumnDefinitions="Auto,*">
             <Grid Grid.Column="0">
-                <StackPanel Orientation="Horizontal" Margin="25,5,25,5">
+                <StackPanel Orientation="Horizontal">
+                    <controls:IconButton x:Name="BackButton" Margin="5" IsEnabled="{Binding CanGoBack,ElementName=RootFrame}" Click="BackButton_Click">
+                        <FontIcon Glyph="&#xE112;" FontSize="10"/>
+                    </controls:IconButton>
                     <TextBlock Text="Polymer" FontSize="14" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Text="ium" FontSize="14" VerticalAlignment="Center" />
                 </StackPanel>
@@ -30,7 +33,7 @@
                     <ColumnDefinition x:Name="ColumnLeft" Width="Auto" />
                     <ColumnDefinition x:Name="ColumnRight" Width="*" />
                 </Grid.ColumnDefinitions>
-                <AutoSuggestBox Height="32" Width="200" HorizontalAlignment="Right" Margin="0,0,10,0"
+                <AutoSuggestBox Height="32" Width="200" HorizontalAlignment="Right" Margin="25,0,10,0"
                                 PlaceholderText="Search" QueryIcon="Find" AutoMaximizeSuggestionArea="True" />
                 <Grid x:Name="TitleBarDragArea" Grid.Column="1">
                     <!-- 这里能放些指示性的控件 -->
@@ -40,7 +43,6 @@
         <NavigationView
             x:Name="MainNavigationBar"
             Grid.Row="1"
-            Grid.RowSpan="2"
             Margin="5,-5,0,5"
             Width="78"
             MenuItemsSource="{x:Bind ViewModel.NavigationPages}"
@@ -49,7 +51,6 @@
             IsSettingsVisible="False"
             IsTitleBarAutoPaddingEnabled="False"
             PaneDisplayMode="Left"
-            Transitions="{x:Null}"
             FooterMenuItemsSource="{x:Bind ViewModel.NavigationPinnedPages}"
             SelectedItem="{x:Bind ViewModel.SelectedPage, Mode=TwoWay}"
             SelectionChanged="OnSelectionChanged">
@@ -67,7 +68,7 @@
                             <MenuFlyoutItem Text="添加账号"/>
                         </MenuFlyout>
                     </controls:IconButton.ContextFlyout>
-                        <ImageIcon Source="{x:Bind ViewModel.LogonAccount.AvatarSource,Mode=OneWay}" Margin="5"/>
+                    <ImageIcon Source="{x:Bind ViewModel.LogonAccount.AvatarSource,Mode=OneWay}" Margin="5"/>
                 </controls:IconButton>
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>

@@ -127,7 +127,7 @@ public class CustomDialog : ContentControl
         }
         else
         {
-            throw new ApplicationException("OverlayService not set");
+            throw new ArgumentNullException(nameof(OverlayService));
         }
     }
 }

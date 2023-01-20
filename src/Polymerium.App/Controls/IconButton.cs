@@ -11,21 +11,35 @@ namespace Polymerium.App.Controls
 {
     public class IconButton : ButtonBase
     {
+        public IconButton()
+        {
+            IsEnabledChanged += (_, e) =>
+            {
+                if (e.NewValue?.ToString().ToLower() == "true")
+                {
+                    VisualStateManager.GoToState(this, IsPointerOver ? "PointerOver" : "Normal", true);
+                }
+                else
+                {
+                    VisualStateManager.GoToState(this, "Disabled", true);
+                }
+            };
+        }
         protected override void OnPointerEntered(PointerRoutedEventArgs e)
         {
-            VisualStateManager.GoToState(this, "PointerOver", true);
+            if (IsEnabled) VisualStateManager.GoToState(this, "PointerOver", true);
             base.OnPointerEntered(e);
         }
 
         protected override void OnPointerExited(PointerRoutedEventArgs e)
         {
-            if (!IsPressed) VisualStateManager.GoToState(this, "Normal", true);
+            if (IsEnabled) if (!IsPressed) VisualStateManager.GoToState(this, "Normal", true);
             base.OnPointerExited(e);
         }
 
         protected override void OnPointerPressed(PointerRoutedEventArgs e)
         {
-            VisualStateManager.GoToState(this, "Pressed", true);
+            if (IsEnabled) VisualStateManager.GoToState(this, "Pressed", true);
             base.OnPointerPressed(e);
         }
 

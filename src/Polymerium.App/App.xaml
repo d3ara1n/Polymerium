@@ -26,8 +26,8 @@
             <StaticResource x:Key="AppBarButtonSubItemChevronForegroundSubMenuOpened"
                             ResourceKey="ControlFillColorTransparentBrush" />
 
-            <SolidColorBrush x:Key="PageBackgroundBrush" Color="{StaticResource LayerOnAcrylicFillColorDefault}" />
-            <SolidColorBrush x:Key="PageStrokeBrush" Color="{StaticResource ControlStrokeColorDefault}" />
+            <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource LayerOnAcrylicFillColorDefault}" />
+            <SolidColorBrush x:Key="CardStrokeBrush" Color="{StaticResource ControlStrokeColorDefault}" />
             <SolidColorBrush x:Key="FloatLayerBackgroundBrush" Color="{StaticResource CardBackgroundFillColorDefault}"/>
         </ResourceDictionary>
     </Application.Resources>

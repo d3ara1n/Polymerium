@@ -11,7 +11,7 @@
 
     <Grid RowDefinitions="*,*">
         <Grid ColumnDefinitions="*,*">
-            <Grid Background="{ThemeResource PageBackgroundBrush}" BorderBrush="{ThemeResource PageStrokeBrush}"
+            <Grid Background="{ThemeResource CardBackgroundBrush}" BorderBrush="{ThemeResource CardStrokeBrush}"
                   BorderThickness="1" CornerRadius="5" Margin="5,0,5,5" RowDefinitions="*,*">
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition />
@@ -25,8 +25,8 @@
                 <Button x:Name="OpenWizardButton" Content="打开实例创建向导" Grid.Row="1" HorizontalAlignment="Center"
                         Command="{x:Bind ViewModel.OpenWizardCommand}" />
             </Grid>
-            <Grid Grid.Column="1" Background="{ThemeResource PageBackgroundBrush}"
-                  BorderBrush="{ThemeResource PageStrokeBrush}" BorderThickness="1" CornerRadius="5" Margin="5,0,10,5">
+            <Grid Grid.Column="1" Background="{ThemeResource CardBackgroundBrush}"
+                  BorderBrush="{ThemeResource CardStrokeBrush}" BorderThickness="1" CornerRadius="5" Margin="5,0,10,5">
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition />
                 </Grid.ChildrenTransitions>
@@ -44,7 +44,7 @@
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                         <TextBlock Text="整合包!" Style="{StaticResource SubtitleTextBlockStyle}" />
                     </StackPanel>
-                    <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="30">
+                    <HyperlinkButton x:Name="GotoSearchButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="30" Command="{x:Bind ViewModel.GotoSearchPageCommand}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="前往搜索页面" />
                             <FontIcon Glyph="&#xE0AB;" />

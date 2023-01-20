@@ -21,14 +21,16 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
 {
     private readonly ILogger _logger;
     private readonly IOverlayService _overlayService;
+    private readonly NavigationService _navigationService;
     private readonly AssetStorageService _storageService;
     private readonly DispatcherQueue _dispatcher;
 
-    public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, AssetStorageService storageService)
+    public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, AssetStorageService storageService, NavigationService navigationService)
     {
         _logger = logger;
         _overlayService = overlayService;
         _storageService = storageService;
+        _navigationService = navigationService;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         if (overlayService is WindowOverlayService windowOverlayService)
             windowOverlayService.Register(PushOverlay, PullOverlay);
@@ -117,6 +119,11 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
             AccountShowcase = model;
         }
         LogonAccount = model;
+    }
+
+    public void SetNavigateHandler(NavigateHandler handler)
+    {
+        _navigationService.Register(handler);
     }
 
     public void OnNavigatedTo(NavigationItemModel page)
