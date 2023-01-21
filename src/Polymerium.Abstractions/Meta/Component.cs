@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Polymerium.Abstractions.Meta
 {
-    // 模组，资源包之类的，没见过 curseforge 包数据就先放着不编了
-    public struct AssetAttachments
+    public struct Component
     {
+        public string Identity { get; set; }
+        public string Version { get; set; }
     }
 }

@@ -22,14 +22,14 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
     private readonly ILogger _logger;
     private readonly IOverlayService _overlayService;
     private readonly NavigationService _navigationService;
-    private readonly AssetStorageService _storageService;
+    private readonly InstanceManager _instanceManager;
     private readonly DispatcherQueue _dispatcher;
 
-    public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, AssetStorageService storageService, NavigationService navigationService)
+    public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, InstanceManager instanceManager, NavigationService navigationService)
     {
         _logger = logger;
         _overlayService = overlayService;
-        _storageService = storageService;
+        _instanceManager = instanceManager;
         _navigationService = navigationService;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         if (overlayService is WindowOverlayService windowOverlayService)
@@ -37,7 +37,7 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
         else
             throw new ArgumentNullException(nameof(overlayService));
         IsActive = true;
-        NavigationPages = new ObservableCollection<NavigationItemModel>(storageService.GetViewOfInstances().Select(it => new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it, it.ThumbnailFile)));
+        NavigationPages = new ObservableCollection<NavigationItemModel>(instanceManager.GetView().Select(it => new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it, it.ThumbnailFile)));
         NavigationPages.Insert(0, new("\xEA8A", "Home", typeof(HomeView)));
         NavigationPages.Add(new("\xF8AA", "Add", typeof(NewInstanceView)));
         SelectedPage = NavigationPages[0];

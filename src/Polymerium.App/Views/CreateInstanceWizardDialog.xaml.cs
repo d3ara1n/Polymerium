@@ -17,14 +17,8 @@ using Polymerium.App.Controls;
 using Polymerium.App.ViewModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace Polymerium.App.Views;
 
-/// <summary>
-///     An empty page that can be used on its own or navigated to within a Frame.
-/// </summary>
 public sealed partial class CreateInstanceWizardDialog : CustomDialog
 {
     public CreateInstanceWizardDialog()
@@ -49,15 +43,15 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
 
 
 
-    public bool IsOpeable
+    public bool IsOpearable
     {
-        get { return (bool)GetValue(IsOpeableProperty); }
-        set { SetValue(IsOpeableProperty, value); }
+        get { return (bool)GetValue(IsOperableProperty); }
+        set { SetValue(IsOperableProperty, value); }
     }
 
     // Using a DependencyProperty as the backing store for IsEnabled.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsOpeableProperty =
-        DependencyProperty.Register(nameof(IsOpeable), typeof(bool), typeof(CreateInstanceWizardDialog), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsOperableProperty =
+        DependencyProperty.Register(nameof(IsOpearable), typeof(bool), typeof(CreateInstanceWizardDialog), new PropertyMetadata(false));
 
 
 
@@ -82,7 +76,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     private void CreateInstanceWizardDialog_OnLoaded(object sender, RoutedEventArgs e)
     {
         VisualStateManager.GoToState(_root, "Loading", false);
-        IsOpeable = false;
+        IsOpearable = false;
         Task.Run(() => ViewModel.FillDataAsync(ViewModel_FillDataCompletedAsync), CancellationToken.None);
     }
 
@@ -90,7 +84,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     {
         _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
-            IsOpeable = true;
+            IsOpearable = true;
             Versions = data;
             CoreVersion.SelectedIndex = 0;
             VisualStateManager.GoToState(_root, "Default", false);
@@ -101,7 +95,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
         VisualStateManager.GoToState(_root, "Working", false);
-        IsOpeable = false;
+        IsOpearable = false;
         Task.Run(() => ViewModel.Commit(ViewModel_CommitCompletedAsync), CancellationToken.None);
     }
 
@@ -109,7 +103,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     {
         _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
-            IsOpeable = true;
+            IsOpearable = true;
             VisualStateManager.GoToState(_root, "Default", false);
             Dismiss();
         });

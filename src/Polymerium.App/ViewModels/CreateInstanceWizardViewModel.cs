@@ -17,13 +17,13 @@ namespace Polymerium.App.ViewModels;
 public class CreateInstanceWizardViewModel : ObservableObject
 {
     private readonly IEnumerable<DownloadSourceProviderBase> _providers;
-    private readonly AssetStorageService _assetStorage;
+    private readonly InstanceManager _instanceManager;
     private readonly IMemoryCache _cache;
 
-    public CreateInstanceWizardViewModel(IEnumerable<DownloadSourceProviderBase> providers, AssetStorageService storageService, IMemoryCache cache)
+    public CreateInstanceWizardViewModel(IEnumerable<DownloadSourceProviderBase> providers, InstanceManager instanceManager, IMemoryCache cache)
     {
         _providers = providers;
-        _assetStorage = storageService;
+        _instanceManager = instanceManager;
         _cache = cache;
     }
 
@@ -70,10 +70,10 @@ public class CreateInstanceWizardViewModel : ObservableObject
             Metadata = new()
             {
                 CoreVersion = SelectedVersion.Value.Id,
-                Extenders = Enumerable.Empty<ExperienceExtender>()
+                Components = Enumerable.Empty<Component>()
             }
         };
-        _assetStorage.AddInstance(instance);
+        _instanceManager.AddInstance(instance);
         await callback();
     }
 }

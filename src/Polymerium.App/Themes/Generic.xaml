@@ -5,9 +5,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:behaviors="using:CommunityToolkit.WinUI.UI.Behaviors"
-    xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers">
+    xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media">
 
     <Style TargetType="controls:CustomDialog" BasedOn="{StaticResource DefaultCustomDialogStyle}" />
 
@@ -264,6 +266,25 @@
                         </Grid>
                         <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}"/>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:GlowingButton">
+        <Setter Property="Padding" Value="20,8,20,8"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="{ThemeResource SystemAccentColorDark1}"/>
+        <Setter Property="GlowColor" Value="{ThemeResource SystemAccentColor}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:GlowingButton">
+                    <Border x:Name="Background" Background="{TemplateBinding Background}">
+                        <ui:Effects.Shadow>
+                            <media:AttachedCardShadow x:Name="Shadow" Offset="0" BlurRadius="8" Color="{ThemeResource SystemAccentColor}" Opacity="0"/>
+                        </ui:Effects.Shadow>
+                        <ContentPresenter x:Name="Container"  Margin="{TemplateBinding Padding}"/>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 
 namespace Polymerium.Abstractions
@@ -11,6 +12,7 @@ namespace Polymerium.Abstractions
     {
         public string Id { get; set; }
         public GameMetadata Metadata { get; set; }
+        public FileBasedLaunchConfiguration Configuration { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
         public string FolderName { get; set; }

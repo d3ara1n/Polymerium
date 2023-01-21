@@ -41,7 +41,7 @@
                                 <TextBlock Text="游戏版本 1.18.2" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                             </StackPanel>
                             <Grid Grid.Column="1">
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="运行" Width="120" Style="{StaticResource AccentButtonStyle}"/>
+                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="运行" Width="114" Command="{x:Bind ViewModel.StartCommand}" Style="{StaticResource AccentButtonStyle}"/>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
