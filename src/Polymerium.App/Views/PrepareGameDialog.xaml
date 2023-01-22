@@ -33,7 +33,7 @@
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
-                <Grid x:Name="Frame" HorizontalAlignment="Center" VerticalAlignment="Center" Width="380" Height="240" RenderTransformOrigin="0.5,0.5">
+                <Grid x:Name="Frame" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420" Height="250" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
                         <ScaleTransform x:Name="ScaleTransform"/>
                     </Grid.RenderTransform>
@@ -44,7 +44,7 @@
                     </Border>
                     <Grid x:Name="Root" Margin="5">
                         <Image x:Name="BackgroundImage" ImageOpened="BackgroundImage_ImageOpened" ImageFailed="BackgroundImage_ImageFailed" Source="ms-appx:///Assets/Placeholders/default_panorama1.png" Stretch="UniformToFill"/>
-                        <Rectangle Fill="Black" Opacity="0.5"/>
+                        <Rectangle Fill="Black" Opacity="0.7"/>
                         <controls:IconButton x:Name="CloseButton" VerticalAlignment="Top" HorizontalAlignment="Right" Click="CloseButton_Click">
                             <FontIcon Glyph="&#xE106;" FontSize="10"/>
                         </controls:IconButton>

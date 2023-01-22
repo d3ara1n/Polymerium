@@ -116,7 +116,7 @@ namespace Polymerium.Core.Engines
         private async Task<AssetsIndex?> EnsureAssetsIndexCreatedAsync(GameInstance instance, Models.Mojang.Index index, RestoreProgressHandler callback, CancellationToken token)
         {
             if (token.IsCancellationRequested) return null;
-            var indexFilePath = new Uri($"poly-file://{instance.Id}/assets.json", UriKind.Absolute);
+            var indexFilePath = new Uri($"poly-file:///assets/indexes/{Path.GetFileName(index.AssetIndex.Url.AbsoluteUri)}", UriKind.Absolute);
             string content = null;
             if (!await _fileBaseService.VerfyHashAsync(indexFilePath, index.AssetIndex.Sha1, SHA1.Create()) || !_fileBaseService.TryReadAllText(indexFilePath, out content))
             {
