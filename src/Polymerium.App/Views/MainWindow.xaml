@@ -14,7 +14,7 @@
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:ex="using:WinUIEx"
     Title="Polymerium" MinHeight="400" MinWidth="600" Height="600" Width="780"
-    mc:Ignorable="d" Closed="Main_Closed">
+    mc:Ignorable="d">
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
         <Rectangle x:Name="FakeBackground" Grid.ColumnSpan="9" Grid.RowSpan="9"
                    Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="Collapsed" />

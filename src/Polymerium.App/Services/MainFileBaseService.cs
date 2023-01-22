@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -11,13 +13,14 @@ namespace Polymerium.App.Services
     // 确保文件父目录存在，能从 poly-file url 转换到具体目录
     public class MainFileBaseService : IFileBaseService
     {
-        public readonly MainFileBaseOptions _options;
-        public MainFileBaseService(IOptions<MainFileBaseOptions> options)
+        private readonly MainFileBaseOptions _options;
+        private readonly MemoryStorage _memory;
+        public MainFileBaseService(IOptions<MainFileBaseOptions> options, MemoryStorage memory)
         {
             _options = options.Value;
+            _memory = memory;
         }
 
-        // 只取 path 部分
         public string Locate(Uri uri)
         {
 
@@ -25,7 +28,18 @@ namespace Polymerium.App.Services
             {
                 if (uri.Scheme != "poly-file" && !string.IsNullOrEmpty(uri.Scheme))
                     throw new ArgumentException("Not valid poly-file url");
-                return new Uri(new Uri(_options.BaseFolder, UriKind.Absolute), uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)).AbsolutePath;
+                if (string.IsNullOrEmpty(uri.Host))
+                {
+                    return Path.Combine(_options.BaseFolder, uri.GetComponents(UriComponents.Path, UriFormat.Unescaped));
+                }
+                else
+                {
+                    var instance = _memory.Instances.FirstOrDefault(x => x.Id == uri.Host);
+                    if (instance != null)
+                        return Path.Combine(_options.BaseFolder, "instances", instance.FolderName, uri.GetComponents(UriComponents.Path, UriFormat.Unescaped));
+                    else
+                        throw new ArgumentException("Instance id not presented in managed list");
+                }
             }
             else
             {
@@ -56,6 +70,22 @@ namespace Polymerium.App.Services
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
             }
             File.WriteAllText(path, content);
+        }
+
+        public bool DoFileExist(Uri uri) => File.Exists(Locate(uri));
+
+        public async Task<bool> VerfyHashAsync(Uri uri, string hash, HashAlgorithm algorithm)
+        {
+            var path = Locate(uri);
+            if (!File.Exists(path)) return false;
+            using (var reader = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                var buffer = new byte[reader.Length];
+                await reader.ReadAsync(buffer, 0, buffer.Length);
+                var hashBytes = algorithm.ComputeHash(buffer);
+                var hashString = String.Join(string.Empty, hashBytes.Select(x => x.ToString("x2")));
+                return hash == hashString;
+            }
         }
     }
 }

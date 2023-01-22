@@ -20,13 +20,13 @@
                     </Grid.ChildrenTransitions>
                     <toolkit:ConstrainedBox Margin="30,30,15,30" VerticalAlignment="Center" HorizontalAlignment="Left" AspectRatio="1:1">
                         <Border CornerRadius="5" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeBrush}">
-                            <toolkit:ImageEx CornerRadius="5" Source="ms-appx:///Assets/Placeholders/default_world_icon.png"/>
+                            <toolkit:ImageEx CornerRadius="5" Source="{x:Bind ViewModel.Instance.ThumbnailFile}" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" PlaceholderStretch="UniformToFill"/>
                         </Border>
                     </toolkit:ConstrainedBox>
                     <Grid Grid.Column="1" Margin="15,30,30,30" RowDefinitions="Auto,*">
                         <Grid ColumnDefinitions="*,Auto">
                             <StackPanel>
-                                <TextBlock Text="All The Mods 8" Style="{StaticResource TitleTextBlockStyle}"/>
+                                <TextBlock Text="{x:Bind ViewModel.Instance.Name}" Style="{StaticResource TitleTextBlockStyle}"/>
                                 <StackPanel Orientation="Horizontal" Spacing="5">
                                     <FontIcon Glyph="&#xE946;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                                     <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
@@ -38,7 +38,10 @@
                                     <Hyperlink>资产附件</Hyperlink>
                                     </TextBlock>
                                 </StackPanel>
-                                <TextBlock Text="游戏版本 1.18.2" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="游戏版本"/>
+                                    <TextBlock Text="{x:Bind ViewModel.Instance.Metadata.CoreVersion}"/>
+                                </StackPanel>
                             </StackPanel>
                             <Grid Grid.Column="1">
                                 <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="运行" Width="114" Command="{x:Bind ViewModel.StartCommand}" Style="{StaticResource AccentButtonStyle}"/>

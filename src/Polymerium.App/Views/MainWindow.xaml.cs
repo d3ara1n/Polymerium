@@ -98,11 +98,6 @@ public sealed partial class MainWindow : WindowEx
         ViewModel.OnNavigatedTo(item);
     }
 
-    private void Main_Closed(object sender, WindowEventArgs args)
-    {
-        StrongReferenceMessenger.Default.Send(new ApplicationAliveChangedMessage(false));
-    }
-
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
         RootFrame.GoBack();

@@ -11,10 +11,10 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Polymerium.App.Services
 {
-    public sealed class DataStorageService : IDisposable
+    public sealed class DataStorage : IDisposable
     {
         private readonly IFileBaseService _fileBaseService;
-        public DataStorageService(IFileBaseService fileBaseService)
+        public DataStorage(IFileBaseService fileBaseService)
         {
             _fileBaseService = fileBaseService;
         }

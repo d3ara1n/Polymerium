@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using ColorCode.Compilation.Languages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -35,7 +36,7 @@ namespace Polymerium.App.Views
             this.InitializeComponent();
             _overlayService = overlayService;
             ViewModel = App.Current.Provider.GetRequiredService<PrepareGameViewModel>();
-            ViewModel.GotInstance(instance);
+            ViewModel.GotInstance(instance, () => IsReady = true);
         }
 
 
@@ -97,6 +98,7 @@ namespace Polymerium.App.Views
             scaleXAnimation.Begin();
             scaleYAnimation.Begin();
             fadeAnimation.Begin();
+            Task.Run(ViewModel.PrepareAsync);
         }
 
         private void BackgroundImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
@@ -109,8 +111,6 @@ namespace Polymerium.App.Views
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            IsReady = true;
-            return;
             var xAnimation = scaleXAnimation.Children[0] as DoubleAnimation;
             xAnimation.From = 1.0;
             xAnimation.To = 1.05;
@@ -128,6 +128,7 @@ namespace Polymerium.App.Views
 
         private void FadeAnimation_Completed(object sender, object e)
         {
+            ViewModel.Cancel();
             _overlayService.Dismiss();
         }
 

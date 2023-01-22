@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Options;
 using Polymerium.Abstractions;
 using Polymerium.App.Data;
 using Polymerium.App.Messages;
@@ -16,38 +17,58 @@ namespace Polymerium.App.Services
     }
     public sealed class InstanceManager : IDisposable
     {
-        private readonly DataStorageService _storageService;
-
-        private readonly List<GameInstance> _instances;
-        public InstanceManager(DataStorageService storageService)
+        private readonly DataStorage _dataStorage;
+        private readonly MemoryStorage _memoryStorage;
+        public InstanceManager(DataStorage dataStorage, MemoryStorage memoryStorage)
         {
-            _storageService = storageService;
-            var instances = storageService.LoadList<InstanceModel, GameInstance>(() => new List<GameInstance>());
-            _instances = instances.ToList();
+            _dataStorage = dataStorage;
+            _memoryStorage = memoryStorage;
+            var instances = dataStorage.LoadList<InstanceModel, GameInstance>(() => new List<GameInstance>());
+            foreach (var instance in instances)
+            {
+                _memoryStorage.Instances.Add(instance);
+            }
         }
 
         public void Dispose()
         {
-            _storageService.SaveList<InstanceModel, GameInstance>(_instances);
+            _dataStorage.SaveList<InstanceModel, GameInstance>(_memoryStorage.Instances);
         }
 
         public IEnumerable<GameInstance> GetView()
         {
-            return _instances;
+            return _memoryStorage.Instances;
         }
 
         public Result<InstanceManagerError> AddInstance(GameInstance instance)
         {
-            if (_instances.Any(x => x.Id == instance.Id))
+            if (_memoryStorage.Instances.Any(x => x.Id == instance.Id))
             {
                 return Result<InstanceManagerError>.Err(InstanceManagerError.DuplicateId);
             }
             else
             {
-                _instances.Add(instance);
-                StrongReferenceMessenger.Default.Send(new GameInstanceAddedMessage(instance));
+                _memoryStorage.Instances.Add(instance);
                 return Result<InstanceManagerError>.Ok();
             }
+        }
+
+        public Option<GameInstance> FindById(string id)
+        {
+            if (TryFindById(id, out var instance))
+            {
+                return Option<GameInstance>.Some(instance);
+            }
+            else
+            {
+                return Option<GameInstance>.None();
+            }
+        }
+
+        public bool TryFindById(string id, out GameInstance instance)
+        {
+            instance = _memoryStorage.Instances.FirstOrDefault(x => x.Id == id);
+            return instance != null;
         }
     }
 }

@@ -69,7 +69,8 @@ public partial class App : Application
         services.AddSingleton<NavigationService>();
         services.AddSingleton<AccountManager>();
         services.AddSingleton<InstanceManager>();
-        services.AddSingleton<DataStorageService>();
+        services.AddSingleton<DataStorage>();
+        services.AddSingleton<MemoryStorage>();
         // global services
         services.AddSingleton<GameManager>();
         services.AddSingleton<IFileBaseService, MainFileBaseService>().Configure<MainFileBaseOptions>(configure => configure.BaseFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium/"));

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
@@ -14,29 +15,33 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Core.Accounts;
+using WinUIEx.Messaging;
 
 namespace Polymerium.App.ViewModels;
 
-public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMessage>, IRecipient<ApplicationAliveChangedMessage>
+public sealed class MainViewModel : ObservableRecipient, IDisposable
 {
     private readonly ILogger _logger;
     private readonly IOverlayService _overlayService;
     private readonly NavigationService _navigationService;
     private readonly InstanceManager _instanceManager;
     private readonly DispatcherQueue _dispatcher;
+    private readonly MemoryStorage _memoryStorage;
 
-    public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, InstanceManager instanceManager, NavigationService navigationService)
+    public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, InstanceManager instanceManager, NavigationService navigationService, MemoryStorage memoryStorage)
     {
         _logger = logger;
         _overlayService = overlayService;
         _instanceManager = instanceManager;
         _navigationService = navigationService;
+        _memoryStorage = memoryStorage;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         if (overlayService is WindowOverlayService windowOverlayService)
             windowOverlayService.Register(PushOverlay, PullOverlay);
         else
             throw new ArgumentNullException(nameof(overlayService));
         IsActive = true;
+        _memoryStorage.Instances.CollectionChanged += Instances_CollectionChanged;
         NavigationPages = new ObservableCollection<NavigationItemModel>(instanceManager.GetView().Select(it => new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it, it.ThumbnailFile)));
         NavigationPages.Insert(0, new("\xEA8A", "Home", typeof(HomeView)));
         NavigationPages.Add(new("\xF8AA", "Add", typeof(NewInstanceView)));
@@ -66,7 +71,6 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
         LogonAccount = LogonAccounts[0];
         AccountShowcase = LogonAccount;
     }
-
     public ObservableCollection<NavigationItemModel> NavigationPages { get; }
     public NavigationItemModel[] NavigationPinnedPages { get; }
     private NavigationItemModel selectedPage;
@@ -140,12 +144,38 @@ public class MainViewModel : ObservableRecipient, IRecipient<GameInstanceAddedMe
         }
     }
 
-    public void Receive(GameInstanceAddedMessage message)
+    private void Instances_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () => NavigationPages.Insert(NavigationPages.Count - 1, new NavigationItemModel("\xF158", message.AddedInstance.Name, typeof(InstanceView), message.AddedInstance, message.AddedInstance.ThumbnailFile)));
+        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    {
+                        foreach (GameInstance instance in e.NewItems)
+                        {
+                            NavigationPages.Insert(NavigationPages.Count - 1, new NavigationItemModel("\xF158", instance.Name, typeof(InstanceView), instance, instance.ThumbnailFile));
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    {
+                        foreach(GameInstance instance in e.OldItems)
+                        {
+                            var item = NavigationPages.FirstOrDefault(x => x.GameInstance.Id == instance.Id);
+                            if(item != null)
+                            {
+                                NavigationPages.Remove(item);
+                                // TODO: 当前页面和该实例有关就关闭该页面
+                            }
+                        }
+                    }
+                    break;
+            }
+        });
     }
 
-    public void Receive(ApplicationAliveChangedMessage message)
+    public void Dispose()
     {
         IsActive = false;
     }

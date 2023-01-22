@@ -44,7 +44,7 @@
                     </Border>
                     <Grid x:Name="Root" Margin="5">
                         <Image x:Name="BackgroundImage" ImageOpened="BackgroundImage_ImageOpened" ImageFailed="BackgroundImage_ImageFailed" Source="ms-appx:///Assets/Placeholders/default_panorama1.png" Stretch="UniformToFill"/>
-                        <Rectangle Fill="Black" Opacity="0.6"/>
+                        <Rectangle Fill="Black" Opacity="0.5"/>
                         <controls:IconButton x:Name="CloseButton" VerticalAlignment="Top" HorizontalAlignment="Right" Click="CloseButton_Click">
                             <FontIcon Glyph="&#xE106;" FontSize="10"/>
                         </controls:IconButton>
@@ -60,7 +60,7 @@
                                 <TextBlock Text="开始" FontSize="26"/>
                             </controls:GlowingButton>
                         </Grid>
-                        <Grid x:Name="Prompt" Background="{ThemeResource SystemAccentColor}" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                        <Grid x:Name="Prompt" ToolTipService.ToolTip="{x:Bind ViewModel.ProgressDetails,Mode=OneWay}" Background="{ThemeResource SystemAccentColor}" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
                             <TextBlock Foreground="WhiteSmoke" Text="{x:Bind ViewModel.Progress,Mode=OneWay}" Margin="20,8,20,8" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                     </Grid>
