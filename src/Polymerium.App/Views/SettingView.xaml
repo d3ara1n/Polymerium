@@ -13,6 +13,9 @@
     <ScrollViewer>
         <controls:Card Margin="5,0,10,10" Padding="50">
             <StackPanel Spacing="5">
+                <StackPanel.ChildrenTransitions>
+                    <ContentThemeTransition/>
+                </StackPanel.ChildrenTransitions>
                 <TextBlock Text="应用" Style="{StaticResource SubtitleTextBlockStyle}"/>
                 <Expander HorizontalAlignment="Stretch">
                     <Expander.Header>

@@ -16,6 +16,7 @@
     <Product>Polymerium</Product>
     <Description>Polymerium Minecraft Instance Manager</Description>
     <Nullable>disable</Nullable>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\Brands\curseforge.svg" />
@@ -23,14 +24,20 @@
     <None Remove="Assets\Icons\icons8-basil-48.png" />
     <None Remove="Assets\Icons\icons8-color-wheel-48.png" />
     <None Remove="Assets\Icons\icons8-home-page-48.png" />
+    <None Remove="Assets\Icons\icons8-plugin-48.png" />
     <None Remove="Assets\Icons\icons8-puzzle-48.png" />
     <None Remove="Assets\Icons\icons8-settings-48.png" />
+    <None Remove="Assets\LockScreenLogo.png" />
     <None Remove="Assets\Placeholders\default_avatar_alt_bust.png" />
     <None Remove="Assets\Placeholders\default_avatar_alt_face.png" />
     <None Remove="Assets\Placeholders\default_avatar_bust.png" />
     <None Remove="Assets\Placeholders\default_avatar_face.png" />
     <None Remove="Assets\Placeholders\default_panorama1.png" />
     <None Remove="Assets\Placeholders\default_world_icon.png" />
+    <None Remove="Assets\SplashScreen.png" />
+    <None Remove="Assets\SqureLogo22.png" />
+    <None Remove="Assets\SqureLogo300.png" />
+    <None Remove="Assets\SqureLogo88.png" />
     <None Remove="Styles\Common.xaml" />
     <None Remove="Styles\Generic.xaml" />
     <None Remove="Views\CreateInstanceWizardDialog.xaml" />
@@ -40,16 +47,6 @@
     <None Remove="Views\PrepareGameDialog.xaml" />
     <None Remove="Views\SearchCenterView.xaml" />
     <None Remove="Views\SettingView.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
 
   <ItemGroup>

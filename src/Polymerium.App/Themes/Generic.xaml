@@ -12,13 +12,13 @@
     xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers"
     xmlns:interactions="using:Microsoft.Xaml.Interactions.Core"
     xmlns:media="using:CommunityToolkit.WinUI.UI.Media">
-    
+
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource LayerOnAcrylicFillColorDefault}" />
     <SolidColorBrush x:Key="CardStrokeBrush" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="FloatLayerBackgroundBrush" Color="{StaticResource CardBackgroundFillColorDefault}"/>
     <CornerRadius x:Key="ContentAreaCornerRadius">10</CornerRadius>
     <CornerRadius x:Key="ItemAreaCornerRadius">5</CornerRadius>
-    
+
     <Style TargetType="controls:CustomDialog" BasedOn="{StaticResource DefaultCustomDialogStyle}" />
 
     <Style x:Name="DefaultCustomDialogStyle" TargetType="controls:CustomDialog">
@@ -161,7 +161,9 @@
         </Setter>
     </Style>
 
-    <Style TargetType="controls:IconButton">
+    <Style TargetType="controls:IconButton" BasedOn="{StaticResource DefaultIconButtonStyle}"/>
+
+    <Style x:Key="DefaultIconButtonStyle" TargetType="controls:IconButton">
         <Style.Setters>
             <Setter Property="Background" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />
             <Setter Property="BorderBrush" Value="{ThemeResource HyperlinkButtonBorderThemeBrush}" />
@@ -193,14 +195,14 @@
                                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity">
                                                     <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="1.0" />
                                                 </DoubleAnimationUsingKeyFrames>
-                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" BeginTime="{StaticResource ControlFasterAnimationDuration}" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
                                                     <DoubleAnimation.EasingFunction>
-                                                        <BounceEase/>
+                                                        <SineEase EasingMode="EaseIn"/>
                                                     </DoubleAnimation.EasingFunction>
                                                 </DoubleAnimation>
-                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" BeginTime="{StaticResource ControlFasterAnimationDuration}" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
                                                     <DoubleAnimation.EasingFunction>
-                                                        <BounceEase/>
+                                                        <SineEase EasingMode="EaseIn"/>
                                                     </DoubleAnimation.EasingFunction>
                                                 </DoubleAnimation>
                                             </Storyboard>
@@ -233,7 +235,9 @@
         </Style.Setters>
     </Style>
 
-    <Style TargetType="controls:Card">
+    <Style TargetType="controls:Card" BasedOn="{StaticResource DefaultCardStyle}"/>
+
+    <Style x:Key="DefaultCardStyle" TargetType="controls:Card">
         <Setter Property="Padding" Value="15"/>
         <Setter Property="Background" Value="{ThemeResource CardBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}"/>
@@ -250,7 +254,9 @@
         </Setter>
     </Style>
 
-    <Style TargetType="controls:GroupBox">
+    <Style TargetType="controls:GroupBox" BasedOn="{StaticResource DefaultGroupBoxStyle}"/>
+
+    <Style x:Key="DefaultGroupBoxStyle" TargetType="controls:GroupBox">
         <Setter Property="Background" Value="{ThemeResource CardBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>

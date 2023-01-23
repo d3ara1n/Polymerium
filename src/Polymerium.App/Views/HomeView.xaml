@@ -17,7 +17,7 @@
     </Page.Resources>
     <Grid>
         <Grid RowDefinitions="Auto,*">
-            <controls:Card Margin="5,0,10,5" Height="188">
+            <controls:Card Margin="5,0,10,5" Height="188" Padding="0">
                 <Grid>
                     <Grid.ChildrenTransitions>
                         <ContentThemeTransition/>
