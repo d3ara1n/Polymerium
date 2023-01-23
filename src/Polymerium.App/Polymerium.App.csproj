@@ -19,6 +19,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\Brands\curseforge.svg" />
+    <None Remove="Assets\Icons\icons8-add-new-48.png" />
+    <None Remove="Assets\Icons\icons8-basil-48.png" />
+    <None Remove="Assets\Icons\icons8-color-wheel-48.png" />
+    <None Remove="Assets\Icons\icons8-home-page-48.png" />
+    <None Remove="Assets\Icons\icons8-puzzle-48.png" />
+    <None Remove="Assets\Icons\icons8-settings-48.png" />
     <None Remove="Assets\Placeholders\default_avatar_alt_bust.png" />
     <None Remove="Assets\Placeholders\default_avatar_alt_face.png" />
     <None Remove="Assets\Placeholders\default_avatar_bust.png" />

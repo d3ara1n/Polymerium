@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Polymerium.Core.DownloadSources.Fallback
+namespace Polymerium.App.Models
 {
-    internal class VersionModel
+    public class GameVersionModel
     {
         public string Id { get; set; }
         public string Type { get; set; }
+        public string Url { get; set; }
         public DateTimeOffset Time { get; set; }
         public DateTimeOffset ReleaseTime { get; set; }
-        public string Url { get; set; }
     }
 }

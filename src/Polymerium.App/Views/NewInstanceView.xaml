@@ -12,7 +12,7 @@
     <Grid RowDefinitions="*,*">
         <Grid ColumnDefinitions="*,*">
             <Grid Background="{ThemeResource CardBackgroundBrush}" BorderBrush="{ThemeResource CardStrokeBrush}"
-                  BorderThickness="1" CornerRadius="5" Margin="5,0,5,5" RowDefinitions="*,*">
+                  BorderThickness="1" CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,0,5,5" RowDefinitions="*,*">
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition />
                 </Grid.ChildrenTransitions>
@@ -26,7 +26,7 @@
                         Command="{x:Bind ViewModel.OpenWizardCommand}" />
             </Grid>
             <Grid Grid.Column="1" Background="{ThemeResource CardBackgroundBrush}"
-                  BorderBrush="{ThemeResource CardStrokeBrush}" BorderThickness="1" CornerRadius="5" Margin="5,0,10,5">
+                  BorderBrush="{ThemeResource CardStrokeBrush}" BorderThickness="1" CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,0,10,5">
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition />
                 </Grid.ChildrenTransitions>
@@ -53,7 +53,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" x:Name="DragDropPane" Opacity="0.3" AllowDrop="True" CornerRadius="5" Margin="5,5,10,10"
+        <Grid Grid.Row="1" x:Name="DragDropPane" Opacity="0.3" AllowDrop="True" CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,5,10,10"
               DragEnter="DragDropPane_OnDragEnter" DragLeave="DragDropPane_OnDragLeave">
             <Grid.OpacityTransition>
                 <ScalarTransition />

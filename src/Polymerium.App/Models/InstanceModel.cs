@@ -12,6 +12,6 @@ namespace Polymerium.App.Models
     {
         public GameInstance Inner { get; set; }
         public string InstanceName => Inner.Name;
-        public IEnumerable<ExtenderTagItemModel> Extenders { get; set; }
+        public IEnumerable<ComponentTagItemModel> Extenders { get; set; }
     }
 }

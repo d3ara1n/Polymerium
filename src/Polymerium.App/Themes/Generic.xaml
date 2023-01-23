@@ -8,9 +8,17 @@
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:behaviors="using:CommunityToolkit.WinUI.UI.Behaviors"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers"
+    xmlns:interactions="using:Microsoft.Xaml.Interactions.Core"
     xmlns:media="using:CommunityToolkit.WinUI.UI.Media">
-
+    
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource LayerOnAcrylicFillColorDefault}" />
+    <SolidColorBrush x:Key="CardStrokeBrush" Color="{StaticResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="FloatLayerBackgroundBrush" Color="{StaticResource CardBackgroundFillColorDefault}"/>
+    <CornerRadius x:Key="ContentAreaCornerRadius">10</CornerRadius>
+    <CornerRadius x:Key="ItemAreaCornerRadius">5</CornerRadius>
+    
     <Style TargetType="controls:CustomDialog" BasedOn="{StaticResource DefaultCustomDialogStyle}" />
 
     <Style x:Name="DefaultCustomDialogStyle" TargetType="controls:CustomDialog">
@@ -20,7 +28,7 @@
         <Setter Property="BorderThickness" Value="{ThemeResource ContentDialogBorderWidth}" />
         <Setter Property="Background" Value="{ThemeResource ContentDialogBackground}" />
         <Setter Property="Foreground" Value="{ThemeResource ContentDialogForeground}" />
-        <Setter Property="CornerRadius" Value="7"/>
+        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}"/>
         <Setter Property="Padding" Value="{ThemeResource ContentDialogPadding}" />
         <Setter Property="MinWidth" Value="248" />
         <Setter Property="MinHeight" Value="100" />
@@ -128,7 +136,7 @@
 
     <Style x:Key="DefaultRecentPlayedItemStyle" TargetType="controls:RecentPlayedItemControl">
         <Setter Property="Padding" Value="5"/>
-        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}"/>
         <Setter Property="Background" Value="{ThemeResource FloatLayerBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}"/>
         <Setter Property="BorderThickness" Value="2"/>
@@ -230,7 +238,7 @@
         <Setter Property="Background" Value="{ThemeResource CardBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:Card">
@@ -246,7 +254,7 @@
         <Setter Property="Background" Value="{ThemeResource CardBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+        <Setter Property="CornerRadius" Value="{ThemeResource ItemAreaCornerRadius}"/>
         <Setter Property="Padding" Value="15"/>
         <Setter Property="HeaderTemplate">
             <Setter.Value>
@@ -273,18 +281,66 @@
 
     <Style TargetType="controls:GlowingButton">
         <Setter Property="Padding" Value="20,8,20,8"/>
-        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="{ThemeResource SystemAccentColorDark1}"/>
         <Setter Property="GlowColor" Value="{ThemeResource SystemAccentColor}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:GlowingButton">
-                    <Border x:Name="Background" Background="{TemplateBinding Background}">
+                    <Border x:Name="PART_Background" Background="{TemplateBinding Background}">
                         <ui:Effects.Shadow>
-                            <media:AttachedCardShadow x:Name="Shadow" Offset="0" BlurRadius="8" Color="{ThemeResource SystemAccentColor}" Opacity="0"/>
+                            <media:AttachedCardShadow x:Name="PART_Shadow" Offset="0" BlurRadius="8" Color="{ThemeResource SystemAccentColor}" Opacity="0"/>
                         </ui:Effects.Shadow>
-                        <ContentPresenter x:Name="Container"  Margin="{TemplateBinding Padding}"/>
+                        <animations:Explicit.Animations>
+                            <animations:AnimationSet x:Name="PointerEnter">
+                                <animations:OpacityDropShadowAnimation To="1.0" />
+                            </animations:AnimationSet>
+                            <animations:AnimationSet x:Name="PointerLeave">
+                                <animations:OpacityDropShadowAnimation To="0" />
+                            </animations:AnimationSet>
+                        </animations:Explicit.Animations>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="Common">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_Layer" Storyboard.TargetProperty="Opacity" To="0" Duration="{StaticResource ControlNormalAnimationDuration}"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_Layer" Storyboard.TargetProperty="Opacity" To="1" Duration="{StaticResource ControlFasterAnimationDuration}"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity" To="0.7" Duration="{StaticResource ControlFasterAnimationDuration}"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <interactivity:Interaction.Behaviors>
+                            <interactions:EventTriggerBehavior EventName="PointerEntered">
+                                <behaviors:StartAnimationAction Animation="{Binding ElementName=PointerEnter}"/>
+                            </interactions:EventTriggerBehavior>
+                            <interactions:EventTriggerBehavior EventName="PointerExited">
+                                <behaviors:StartAnimationAction Animation="{Binding ElementName=PointerLeave}"/>
+                            </interactions:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                        <Grid>
+                            <Rectangle x:Name="PART_Layer" Fill="{ThemeResource ContentDialogTopOverlay}" Opacity="0"/>
+                            <ContentPresenter x:Name="Container"  Margin="{TemplateBinding Padding}"/>
+                        </Grid>
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:ExpanderEx">
+        <Setter Property="CornerRadius" Value="{ThemeResource ItemAreaCornerRadius}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ExpanderEx">
+                    <!-- TODO -->
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

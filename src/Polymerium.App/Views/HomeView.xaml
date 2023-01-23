@@ -17,20 +17,22 @@
     </Page.Resources>
     <Grid>
         <Grid RowDefinitions="Auto,*">
-            <Grid Margin="5,0,10,5" CornerRadius="10" Height="188" Background="{ThemeResource CardBackgroundBrush}" BorderBrush="{ThemeResource CardStrokeBrush}" BorderThickness="1">
-                <Grid.ChildrenTransitions>
-                    <ContentThemeTransition/>
-                </Grid.ChildrenTransitions>
-                <Grid ColumnDefinitions="6*,4*">
-                    <toolkit:ImageEx Stretch="UniformToFill" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Placeholders/default_avatar_bust.png"/>
+            <controls:Card Margin="5,0,10,5" Height="188">
+                <Grid>
+                    <Grid.ChildrenTransitions>
+                        <ContentThemeTransition/>
+                    </Grid.ChildrenTransitions>
+                    <Grid ColumnDefinitions="6*,4*">
+                        <toolkit:ImageEx Stretch="UniformToFill" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Placeholders/default_avatar_bust.png"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="4*,6*">
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="下午好，玩家" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" TextWrapping="WrapWholeWords" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{ThemeResource BodyTextBlockStyle}"/>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
-                <Grid ColumnDefinitions="4*,6*">
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="下午好，玩家" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                        <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" TextWrapping="WrapWholeWords" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{ThemeResource BodyTextBlockStyle}"/>
-                    </StackPanel>
-                </Grid>
-            </Grid>
+            </controls:Card>
             <ScrollViewer Grid.Row="1">
                 <StackPanel>
                     <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,5">

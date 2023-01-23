@@ -1,28 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.UI.Xaml.Shapes;
+using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
-using Polymerium.Abstractions.DownloadSources;
-using Polymerium.Abstractions.DownloadSources.Models;
 using Polymerium.Abstractions.Meta;
+using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Wupoo;
 
 namespace Polymerium.App.ViewModels;
 
 public class CreateInstanceWizardViewModel : ObservableObject
 {
-    private readonly IEnumerable<DownloadSourceProviderBase> _providers;
     private readonly InstanceManager _instanceManager;
     private readonly IMemoryCache _cache;
 
-    public CreateInstanceWizardViewModel(IEnumerable<DownloadSourceProviderBase> providers, InstanceManager instanceManager, IMemoryCache cache)
+    public CreateInstanceWizardViewModel(InstanceManager instanceManager, IMemoryCache cache)
     {
-        _providers = providers;
         _instanceManager = instanceManager;
         _cache = cache;
     }
@@ -32,24 +29,22 @@ public class CreateInstanceWizardViewModel : ObservableObject
     private string instanceAuthor = string.Empty;
     public string InstanceAuthor { get => instanceAuthor; set => SetProperty(ref instanceAuthor, value); }
 
-    private GameVersion? selectedVersion;
-    public GameVersion? SelectedVersion { get => selectedVersion; set => SetProperty(ref selectedVersion, value); }
+    private GameVersionModel? selectedVersion;
+    public GameVersionModel? SelectedVersion { get => selectedVersion; set => SetProperty(ref selectedVersion, value); }
 
-    public async Task FillDataAsync(Func<IEnumerable<GameVersion>, Task> callback)
+    public async Task FillDataAsync(Func<IEnumerable<GameVersionModel>, Task> callback)
     {
-        // TODO: 走缓存
+        // TODO: 日后改成 ResourceResolver
         var versions = await _cache.GetOrCreateAsync("GetGameVersions", async entry =>
         {
-            var res = Enumerable.Empty<GameVersion>();
-            foreach (var provider in _providers)
+            var res = Enumerable.Empty<GameVersionModel>();
+            var url = "https://piston-meta.mojang.com/mc/game/version_manifest.json";
+            await Wapoo.Wohoo(url)
+            .ForJsonResult<JObject>(x =>
             {
-                var option = await provider.GetGameVersionsAsync();
-                if (option.TryUnwrap(out var data))
-                {
-                    res = data;
-                    break;
-                }
-            }
+                res = x.Value<JArray>("versions").ToObject<IEnumerable<GameVersionModel>>();
+            })
+            .FetchAsync();
             return res;
         });
         await callback(versions.ToList());
@@ -69,7 +64,7 @@ public class CreateInstanceWizardViewModel : ObservableObject
             ThumbnailFile = "ms-appx:///Assets/Placeholders/default_world_icon.png",
             Metadata = new()
             {
-                CoreVersion = SelectedVersion.Value.Id,
+                CoreVersion = SelectedVersion.Id,
                 Components = Enumerable.Empty<Component>()
             }
         };

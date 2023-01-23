@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Polymerium.App.Models
 {
-    public class ExtenderTagItemModel
+    public class ComponentTagItemModel
     {
         public string Name { get; set; }
         public string Version { get; set; }

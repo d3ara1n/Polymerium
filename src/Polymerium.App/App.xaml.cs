@@ -6,12 +6,10 @@ using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
-using Polymerium.Abstractions.DownloadSources;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views;
 using Polymerium.Core;
-using Polymerium.Core.DownloadSources;
 using Polymerium.Core.Engines;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -78,9 +76,6 @@ public partial class App : Application
         services.AddScoped<DownloadEngine>();
         services.AddScoped<ResolveEngine>();
         services.AddScoped<RestoreEngine>();
-        // download source provider registration
-        services.AddTransient<DownloadSourceProviderBase, BMCLApiProvider>();
-        services.AddTransient<DownloadSourceProviderBase, FallbackProvider>();
         return services.BuildServiceProvider();
     }
 }

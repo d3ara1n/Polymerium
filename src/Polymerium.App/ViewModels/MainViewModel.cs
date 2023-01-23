@@ -8,14 +8,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions;
-using Polymerium.Abstractions.Accounts;
-using Polymerium.Abstractions.DownloadSources.Models;
-using Polymerium.App.Messages;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Core.Accounts;
-using WinUIEx.Messaging;
 
 namespace Polymerium.App.ViewModels;
 
@@ -43,10 +39,10 @@ public sealed class MainViewModel : ObservableRecipient, IDisposable
         IsActive = true;
         _memoryStorage.Instances.CollectionChanged += Instances_CollectionChanged;
         NavigationPages = new ObservableCollection<NavigationItemModel>(instanceManager.GetView().Select(it => new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it, it.ThumbnailFile)));
-        NavigationPages.Insert(0, new("\xEA8A", "Home", typeof(HomeView)));
-        NavigationPages.Add(new("\xF8AA", "Add", typeof(NewInstanceView)));
+        NavigationPages.Insert(0, new("\xEA8A", "Home", typeof(HomeView), thumbnailSource: "ms-appx:///Assets/Icons/icons8-home-page-48.png"));
+        NavigationPages.Add(new("\xF8AA", "Add", typeof(NewInstanceView), thumbnailSource: "ms-appx:///Assets/Icons/icons8-add-new-48.png"));
         SelectedPage = NavigationPages[0];
-        NavigationPinnedPages = new NavigationItemModel[] { new("\xE115", "Settings", typeof(SettingView)) };
+        NavigationPinnedPages = new NavigationItemModel[] { new("\xE115", "Settings", typeof(SettingView), thumbnailSource: "ms-appx:///Assets/Icons/icons8-settings-48.png") };
         LogonAccounts = new ObservableCollection<AccountItemModel>()
         {
             new()

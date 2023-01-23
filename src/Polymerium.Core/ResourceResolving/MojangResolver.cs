@@ -1,20 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Polymerium.Abstractions.ResourceResolving;
+using Polymerium.Core.Models.Mojang;
 
 namespace Polymerium.Core.ResourceResolving
 {
     //[Domain("mojang)]
-    public class MojangResolver : IResourceResolver
+    public class MojangResolver : ResourceResolverBase
     {
-        //[UrlExtract("{version}")]
-        //[UrlLabel(ResourceType.Core)]
-        public void GetVersion(string version)
+        // poly-res://core:mojang/versions
+        //[Resource(Domain="mojang",Type="core",Expression="versions")]
+        public VersionManifest? GetVersions()
         {
-            //
+            return null;
         }
     }
 }

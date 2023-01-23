@@ -7,10 +7,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <Grid>
-        <TextBlock Text="Settings!"/>
-    </Grid>
+    <ScrollViewer>
+        <controls:Card Margin="5,0,10,10" Padding="50">
+            <StackPanel Spacing="5">
+                <TextBlock Text="应用" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <Expander HorizontalAlignment="Stretch">
+                    <Expander.Header>
+                        <Grid>
+                            <TextBlock VerticalAlignment="Center">
+                                <Run Text="没有设置"/>
+                                <LineBreak/>
+                                <Run Text="以后会有" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                            </TextBlock>
+                            <ToggleSwitch HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Expander.Header>
+                </Expander>
+            </StackPanel>
+        </controls:Card>
+    </ScrollViewer>
 </Page>

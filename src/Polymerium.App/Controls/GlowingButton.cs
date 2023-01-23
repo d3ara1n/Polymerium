@@ -27,30 +27,34 @@ namespace Polymerium.App.Controls
         public static readonly DependencyProperty GlowColorProperty =
             DependencyProperty.Register(nameof(GlowColor), typeof(Color), typeof(GlowingButton), new PropertyMetadata(null));
 
-        private AttachedCardShadow _shadow;
-        private ContentPresenter _container;
-        protected override void OnApplyTemplate()
+
+        public GlowingButton()
         {
-            _shadow = GetTemplateChild("Shadow") as AttachedCardShadow;
-            _container = GetTemplateChild("Container") as ContentPresenter;
-            base.OnApplyTemplate();
+            IsEnabledChanged += GlowingButton_IsEnabledChanged;
         }
 
-        protected override void OnPointerEntered(PointerRoutedEventArgs e)
+        private void GlowingButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            _shadow.Opacity = 1.0;
-            _container.Foreground = new SolidColorBrush()
+            if (e.NewValue?.ToString().ToLower() == "true")
             {
-                Color = Color.FromArgb(255, 255, 255, 255),
-            };
-            base.OnPointerEntered(e);
+                VisualStateManager.GoToState(this, "Normal", true);
+            }
+            else
+            {
+                VisualStateManager.GoToState(this, "Disabled", true);
+            }
         }
 
-        protected override void OnPointerExited(PointerRoutedEventArgs e)
+        protected override void OnPointerPressed(PointerRoutedEventArgs e)
         {
-            _shadow.Opacity = 0.0;
-            _container.Foreground = Foreground;
-            base.OnPointerExited(e);
+            VisualStateManager.GoToState(this, "Pressed", true);
+            base.OnPointerPressed(e);
+        }
+
+        protected override void OnPointerReleased(PointerRoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "Normal", true);
+            base.OnPointerReleased(e);
         }
     }
 }

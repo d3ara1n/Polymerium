@@ -20,7 +20,7 @@
                     </Grid.ChildrenTransitions>
                     <toolkit:ConstrainedBox Margin="30,30,15,30" VerticalAlignment="Center" HorizontalAlignment="Left" AspectRatio="1:1">
                         <Border CornerRadius="5" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeBrush}">
-                            <toolkit:ImageEx CornerRadius="5" Source="{x:Bind ViewModel.Instance.ThumbnailFile}" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" PlaceholderStretch="UniformToFill"/>
+                            <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}" Source="{x:Bind ViewModel.Instance.ThumbnailFile}" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" PlaceholderStretch="UniformToFill"/>
                         </Border>
                     </toolkit:ConstrainedBox>
                     <Grid Grid.Column="1" Margin="15,30,30,30" RowDefinitions="Auto,*">
@@ -61,7 +61,7 @@
                                         </Style>
                                     </GridView.ItemContainerStyle>
                                     <GridView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:ExtenderTagItemModel">
+                                        <DataTemplate x:DataType="models:ComponentTagItemModel">
                                             <Grid Margin="5,0,5,0">
                                                 <Border CornerRadius="5" Background="{ThemeResource FloatLayerBackgroundBrush}" ToolTipService.ToolTip="{x:Bind Version}">
                                                     <Grid Margin="10,5,10,5">
@@ -71,8 +71,8 @@
                                             </Grid>
                                         </DataTemplate>
                                     </GridView.ItemTemplate>
-                                    <models:ExtenderTagItemModel Name="Forge" Version="40.2.0"/>
-                                    <models:ExtenderTagItemModel Name="Optfine" Version="HD_U_H7"/>
+                                    <models:ComponentTagItemModel Name="Forge" Version="40.2.0"/>
+                                    <models:ComponentTagItemModel Name="Optfine" Version="HD_U_H7"/>
                                 </GridView>
                             </ScrollViewer>
                             <Grid Grid.Column="1">
@@ -94,7 +94,7 @@
                     </Grid.ChildrenTransitions>
                     <controls:IconButton>
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
-                            <FontIcon Glyph="&#xE790;" FontSize="36" Margin="0,0,10,0"/>
+                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-basil-48.png" Margin="0,0,10,0"/>
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="资源包" FontSize="16"/>
                                 <TextBlock Text="2" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
@@ -103,7 +103,7 @@
                     </controls:IconButton>
                     <controls:IconButton Grid.Column="1">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
-                            <FontIcon Glyph="&#xE621;" FontSize="36" Margin="0,0,10,0"/>
+                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-puzzle-48.png" Margin="0,0,10,0"/>
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="模组" FontSize="16"/>
                                 <TextBlock Text="347" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
@@ -112,7 +112,7 @@
                     </controls:IconButton>
                     <controls:IconButton Grid.Column="2">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
-                            <FontIcon Glyph="&#xF133;" FontSize="36" Margin="0,0,10,0"/>
+                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-color-wheel-48.png" Margin="0,0,10,0"/>
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="着色器包" FontSize="16"/>
                                 <TextBlock Text="不支持" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>

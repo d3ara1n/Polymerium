@@ -33,7 +33,7 @@
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
-                <Grid x:Name="Frame" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420" Height="250" RenderTransformOrigin="0.5,0.5">
+                <Grid x:Name="Frame" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420" Height="260" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
                         <ScaleTransform x:Name="ScaleTransform"/>
                     </Grid.RenderTransform>

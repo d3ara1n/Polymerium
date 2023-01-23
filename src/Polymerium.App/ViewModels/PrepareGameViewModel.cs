@@ -67,7 +67,7 @@ namespace Polymerium.App.ViewModels
                         ProgressDetails = args.FileName;
                         break;
                     case RestoreProgressType.Download:
-                        Progress = $"下载第 {args.Downloaded} 共 {args.TotalToDownload} 个文件";
+                        Progress = $"已下载 {args.Downloaded} 个文件，共 {args.TotalToDownload} 个";
                         ProgressDetails = args.FileName;
                         break;
                     case RestoreProgressType.Assets:

@@ -8,7 +8,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:abstractions="using:Polymerium.Abstractions.DownloadSources.Models"
+    xmlns:models="using:Polymerium.App.Models"
     Padding ="0"
     Loaded="CreateInstanceWizardDialog_OnLoaded"
     mc:Ignorable="d">
@@ -41,13 +41,13 @@
             </ControlTemplate>
         </ContentControl.Template>
         <Grid RowDefinitions="*,Auto">
-            <ScrollViewer IsEnabled="{x:Bind IsOpearable,Mode=OneWay}">
+            <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
                 <StackPanel Spacing="{StaticResource StackPanelSpacing}" Margin="25">
                     <TextBlock Text="创建空实例" Style="{ThemeResource SubtitleTextBlockStyle}" />
                     <TextBlock Text="游戏版本"/>
                     <ComboBox x:Name="CoreVersion" IsEditable="False" SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}" ItemsSource="{x:Bind Versions,Mode=OneWay}" HorizontalAlignment="Stretch">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="abstractions:GameVersion">
+                            <DataTemplate x:DataType="models:GameVersionModel">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <TextBlock Text="{x:Bind Id}" VerticalAlignment="Center" Margin="5,0,10,0"/>
                                     <Grid Grid.Column="1">
@@ -75,7 +75,7 @@
     </ContentControl>
     <controls:CustomDialog.OperationContent>
         <StackPanel Orientation="Horizontal" Spacing="10">
-            <Button x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOpearable,Mode=OneWay}" Style="{ThemeResource AccentButtonStyle}" Click="AddButton_Click"/>
+            <Button x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOperable,Mode=OneWay}" Style="{ThemeResource AccentButtonStyle}" Click="AddButton_Click"/>
             <Button x:Name="CloseButton" Content="取消" Click="CloseButton_OnClick" />
         </StackPanel>
     </controls:CustomDialog.OperationContent>

@@ -51,6 +51,13 @@ namespace Polymerium.Core.Engines
         public async Task<bool> RestoreAsync(GameInstance instance, RestoreProgressHandler callback, CancellationToken token)
         {
             _logger.LogInformation("Restore begin");
+            var res = await RestoreInternalAsync(instance, callback, token);
+            _logger.LogInformation("Restore finished with {} error", res ? "no" : "an");
+            return res;
+        }
+
+        private async Task<bool> RestoreInternalAsync(GameInstance instance, RestoreProgressHandler callback, CancellationToken token)
+        {
             var index = await EnsureInstanceIndexCreatedAsync(instance, callback, token);
             if (index == null) return false;
             // 下载 jar

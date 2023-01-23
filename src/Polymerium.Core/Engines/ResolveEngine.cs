@@ -9,8 +9,8 @@ namespace Polymerium.Core.Engines
 {
     public class ResolveEngine
     {
-        private readonly IEnumerable<IResourceResolver> _resolvers;
-        public ResolveEngine(IEnumerable<IResourceResolver> resolvers)
+        private readonly IEnumerable<ResourceResolverBase> _resolvers;
+        public ResolveEngine(IEnumerable<ResourceResolverBase> resolvers)
         {
             _resolvers = resolvers;
         }
