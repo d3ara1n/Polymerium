@@ -1,13 +1,32 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI.UI.Controls;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace Polymerium.App.Controls
 {
-    public class ExpanderEx: Expander
+    public class ExpanderEx : HeaderedContentControl
     {
+        public bool IsExpanded
+        {
+            get { return (bool)GetValue(IsExpandedProperty); }
+            set { SetValue(IsExpandedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsOpen.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsExpandedProperty =
+            DependencyProperty.Register(nameof(IsExpanded), typeof(bool), typeof(ExpanderEx), new PropertyMetadata(false, new PropertyChangedCallback(IsExpanded_Changed)));
+
+        private static void IsExpanded_Changed(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+        {
+            var expander = sender as ExpanderEx;
+            VisualStateManager.GoToState(expander, expander.IsExpanded == true ? "Open" : "Normal", true);
+        }
     }
 }

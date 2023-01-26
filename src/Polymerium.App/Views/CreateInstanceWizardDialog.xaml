@@ -45,7 +45,7 @@
                 <StackPanel Spacing="{StaticResource StackPanelSpacing}" Margin="25">
                     <TextBlock Text="创建空实例" Style="{ThemeResource SubtitleTextBlockStyle}" />
                     <TextBlock Text="游戏版本"/>
-                    <ComboBox x:Name="CoreVersion" IsEditable="False" SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}" ItemsSource="{x:Bind Versions,Mode=OneWay}" HorizontalAlignment="Stretch">
+                    <ComboBox x:Name="CoreVersion" IsEditable="False" SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}" ItemsSource="{x:Bind Versions,Mode=OneWay}" SelectionChanged="CoreVersion_SelectionChanged" HorizontalAlignment="Stretch">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="models:GameVersionModel">
                                 <Grid ColumnDefinitions="*,Auto">
@@ -74,9 +74,12 @@
         </Grid>
     </ContentControl>
     <controls:CustomDialog.OperationContent>
-        <StackPanel Orientation="Horizontal" Spacing="10">
+        <StackPanel>
+            <TextBlock Text="{x:Bind ErrorMessage,Mode=OneWay}" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
             <Button x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOperable,Mode=OneWay}" Style="{ThemeResource AccentButtonStyle}" Click="AddButton_Click"/>
             <Button x:Name="CloseButton" Content="取消" Click="CloseButton_OnClick" />
+        </StackPanel>
         </StackPanel>
     </controls:CustomDialog.OperationContent>
 </controls:CustomDialog>

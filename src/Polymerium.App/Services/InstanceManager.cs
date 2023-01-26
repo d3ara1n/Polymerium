@@ -48,7 +48,7 @@ namespace Polymerium.App.Services
             }
             else
             {
-                _memoryStorage.Instances.Add(instance);
+                while (_memoryStorage.Instances.Any(x => x.FolderName == instance.FolderName)) instance.FolderName += '_';
                 return Result<InstanceManagerError>.Ok();
             }
         }

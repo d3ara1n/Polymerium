@@ -8,14 +8,14 @@ using Microsoft.UI.Xaml.Data;
 
 namespace Polymerium.App.Converters
 {
-    internal class NullToVisibleConverter : IValueConverter
+    internal class NotNullToVisibleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             return value switch
             {
-                null or "" => Visibility.Visible,
-                _ => Visibility.Collapsed
+                null or "" => Visibility.Collapsed,
+                _ => Visibility.Visible
             };
         }
 

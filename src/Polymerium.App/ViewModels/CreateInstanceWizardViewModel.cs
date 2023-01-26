@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,7 +14,7 @@ using Wupoo;
 
 namespace Polymerium.App.ViewModels;
 
-public class CreateInstanceWizardViewModel : ObservableObject
+public class CreateInstanceWizardViewModel : ObservableValidator
 {
     private readonly InstanceManager _instanceManager;
     private readonly IMemoryCache _cache;
@@ -25,12 +26,16 @@ public class CreateInstanceWizardViewModel : ObservableObject
     }
 
     private string instanceName = string.Empty;
-    public string InstanceName { get => instanceName; set => SetProperty(ref instanceName, value); }
+    [Required]
+    [MinLength(1)]
+    [MaxLength(128)]
+    public string InstanceName { get => instanceName; set => SetProperty(ref instanceName, value, true); }
     private string instanceAuthor = string.Empty;
     public string InstanceAuthor { get => instanceAuthor; set => SetProperty(ref instanceAuthor, value); }
 
-    private GameVersionModel? selectedVersion;
-    public GameVersionModel? SelectedVersion { get => selectedVersion; set => SetProperty(ref selectedVersion, value); }
+    private GameVersionModel selectedVersion;
+    [Required]
+    public GameVersionModel SelectedVersion { get => selectedVersion; set => SetProperty(ref selectedVersion, value, true); }
 
     public async Task FillDataAsync(Func<IEnumerable<GameVersionModel>, Task> callback)
     {
@@ -52,8 +57,6 @@ public class CreateInstanceWizardViewModel : ObservableObject
 
     public async Task Commit(Func<Task> callback)
     {
-        // TODO: 检查一下元素是否合法，返回错误，如果添加失败也返回错误
-        // TODO: 添加所谓的 ValidationRule
         var invalidFileNameChars = System.IO.Path.GetInvalidFileNameChars();
         var instance = new GameInstance()
         {

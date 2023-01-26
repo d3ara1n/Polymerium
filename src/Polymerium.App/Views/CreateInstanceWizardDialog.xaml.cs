@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,7 +49,14 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         DependencyProperty.Register(nameof(IsOperable), typeof(bool), typeof(CreateInstanceWizardDialog), new PropertyMetadata(false));
 
 
+    public string ErrorMessage
+    {
+        get { return (string)GetValue(ErrorMessageProperty); }
+        set { SetValue(ErrorMessageProperty, value); }
+    }
 
+    public static readonly DependencyProperty ErrorMessageProperty =
+        DependencyProperty.Register(nameof(ErrorMessage), typeof(string), typeof(CreateInstanceWizardDialog), new PropertyMetadata(string.Empty));
 
     public CreateInstanceWizardViewModel ViewModel { get; }
 
@@ -88,9 +96,18 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
 
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        VisualStateManager.GoToState(_root, "Working", false);
-        IsOperable = false;
-        Task.Run(() => ViewModel.Commit(ViewModel_CommitCompletedAsync), CancellationToken.None);
+        var errors = ViewModel.GetErrors();
+        if (errors != null && errors.Any())
+        {
+            ErrorMessage = string.Join('\n', errors.Select(x => x.ErrorMessage));
+        }
+        else
+        {
+            ErrorMessage = string.Empty;
+            VisualStateManager.GoToState(_root, "Working", false);
+            IsOperable = false;
+            Task.Run(() => ViewModel.Commit(ViewModel_CommitCompletedAsync), CancellationToken.None);
+        }
     }
 
     private Task ViewModel_CommitCompletedAsync()
@@ -102,5 +119,13 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
             Dismiss();
         });
         return Task.CompletedTask;
+    }
+
+    private void CoreVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(ViewModel.InstanceName) || ViewModel.InstanceName == ((GameVersionModel)e.RemovedItems.FirstOrDefault())?.Id)
+        {
+            ViewModel.InstanceName = ((GameVersionModel)e.AddedItems.FirstOrDefault())?.Id;
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Polymerium.Core.Engines
 {
     public class DownloadEngine
     {
-        const uint MAX_WORKER = 16;
+        const uint MAX_WORKER = 8;
         const int MAX_RETRY = 3;
         uint workerNumber = 0;
 
