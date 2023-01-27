@@ -10,5 +10,13 @@ namespace Polymerium.Core.Models.Mojang.Indexes
     {
         public LibraryDownloads Downloads { get; set; }
         public string Name { get; set; }
+        public LibraryNatives? Natives { get; set; }
+        public IEnumerable<Rule> Rules { get; set; }
+
+        public bool Verfy()
+            => Rules == null
+            || !Rules.Any()
+            || (Rules.Where(x => x.Action.Equals("allow", StringComparison.OrdinalIgnoreCase)).Any(x => x.Verfy())
+            && Rules.Where(x => x.Action.Equals("disallow", StringComparison.OrdinalIgnoreCase)).All(x => x.Verfy()));
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -40,20 +41,44 @@ namespace Polymerium.Core.Engines
             settings.Converters.Add(new ArgumentsItemConverter());
             settings.Converters.Add(new RuleFeaturesConverter());
             settings.Converters.Add(new AssetsIndexConverter());
+            settings.Converters.Add(new ClassifierConverter());
             _wapooOptions = new WapooOptions()
             {
                 JsonSerializerOptions = settings
             };
         }
 
-        public async Task<bool> ResotreAsync(GameInstance instance, RestoreProgressHandler callback = null) => await RestoreAsync(instance, callback, CancellationToken.None);
+        public async Task<bool> RestoreAsync(GameInstance instance, RestoreProgressHandler callback = null) => await RestoreAsync(instance, callback, CancellationToken.None);
 
         public async Task<bool> RestoreAsync(GameInstance instance, RestoreProgressHandler callback, CancellationToken token)
         {
             _logger.LogInformation("Restore begin");
-            var res = await RestoreInternalAsync(instance, callback, token);
-            _logger.LogInformation("Restore finished with {} error", res ? "no" : "an");
-            return res;
+            var res = RestoreInternalAsync(instance, callback, token);
+            res.Wait();
+            if (res.IsCompletedSuccessfully)
+            {
+                _logger.LogInformation("Restore finished with {} error for {}", res.Result ? "no" : "an", instance.Id);
+                callback?.Invoke(this, RestoreProgressEventArgs.CreateComplete());
+            }
+            else if (res.IsCanceled)
+            {
+                _logger.LogInformation("Restore canceled for {}", instance.Id);
+                callback?.Invoke(this, RestoreProgressEventArgs.CreateError(RestoreError.Canceled, null));
+            }
+            else
+            {
+                if (res.Exception != null)
+                {
+                    _logger.LogError(res.Exception, "Restore ran into excepiton for {}", instance.Id);
+                    callback?.Invoke(this, RestoreProgressEventArgs.CreateError(RestoreError.ExceptionOccurred, null, res.Exception));
+                }
+                else
+                {
+                    _logger.LogError("Restore ran into unknown exception for {}", instance.Id);
+                    callback?.Invoke(this, RestoreProgressEventArgs.CreateError(RestoreError.Unknown, null));
+                }
+            }
+            return res.Result;
         }
 
         private async Task<bool> RestoreInternalAsync(GameInstance instance, RestoreProgressHandler callback, CancellationToken token)
@@ -67,7 +92,77 @@ namespace Polymerium.Core.Engines
             var assetIndex = await EnsureAssetsIndexCreatedAsync(instance, index.Value, callback, token);
             if (assetIndex == null) return false;
             if (!await EnsureAssetsCompletedAsync(instance, assetIndex.Value, callback, token)) return false;
-            callback?.Invoke(this, RestoreProgressEventArgs.CreateComplete());
+            if (!await EnsureLibrariesCompletedAsync(instance, index.Value, callback, token)) return false;
+            return true;
+        }
+
+        private async Task<bool> UnzipFileAsync(string from, string to, RestoreProgressHandler callback, CancellationToken token)
+        {
+            try
+            {
+                ZipFile.ExtractToDirectory(from, to, true);
+                return true;
+            }
+            catch (Exception e)
+            {
+                callback?.Invoke(this, RestoreProgressEventArgs.CreateError(RestoreError.ExceptionOccurred, Path.GetFileName(from), e));
+                return false;
+            }
+        }
+
+        private async Task<bool> EnsureLibrariesCompletedAsync(GameInstance instance, Models.Mojang.Index index, RestoreProgressHandler callback, CancellationToken token)
+        {
+            if (token.IsCancellationRequested) return false;
+            callback?.Invoke(this, RestoreProgressEventArgs.CreateUpdate(RestoreProgressType.Libraries, null));
+            var libDir = new Uri("poly-file:///libraries/");
+            var nativesDir = new Uri($"poly-file://{instance.Id}/natives/");
+            var sha1 = SHA1.Create();
+            var group = new DownloadTaskGroup() { Token = token };
+            _fileBaseService.RemoveDirectory(nativesDir);
+            foreach (var item in index.Libraries.Where(x => x.Verfy()))
+            {
+                if (token.IsCancellationRequested) return false;
+                var libPath = new Uri(libDir, item.Downloads.Artifact.Path);
+                if (!await _fileBaseService.VerfyHashAsync(libPath, item.Downloads.Artifact.Sha1, sha1))
+                {
+                    group.TryAdd(item.Downloads.Artifact.Url.AbsoluteUri, _fileBaseService.Locate(libPath), out var _);
+                }
+                if (item.Natives.HasValue)
+                {
+                    var native = OperatingSystem.IsWindows() ? item.Natives.Value.Windows : (OperatingSystem.IsMacOS() ? item.Natives.Value.Osx : (OperatingSystem.IsLinux() ? item.Natives.Value.Linux : "unknown"));
+                    if (native == "unknown")
+                    {
+                        callback?.Invoke(this, RestoreProgressEventArgs.CreateError(RestoreError.OsNotSupport, item.Name));
+                        return false;
+                    }
+                    var classifier = item.Downloads.Classifiers.FirstOrDefault(x => x.Identity == native);
+                    var path = new Uri(libDir, classifier.Path);
+                    if (!await _fileBaseService.VerfyHashAsync(path, classifier.Sha1, sha1))
+                    {
+                        if (group.TryAdd(classifier.Url.AbsoluteUri, _fileBaseService.Locate(path), out var task))
+                        {
+                            task.CompletedCallback = async (t, s) =>
+                            {
+                                if (s) await UnzipFileAsync(t.Destination, _fileBaseService.Locate(nativesDir), callback, token);
+                            };
+                        }
+                    }
+                    else
+                    {
+                        await UnzipFileAsync(_fileBaseService.Locate(path), _fileBaseService.Locate(nativesDir), callback, token);
+                    }
+                }
+            }
+            if (group.TotalCount == 0)
+            {
+                return true;
+            }
+            group.CompletedDelegate = (g, t, c, s) =>
+            {
+                callback?.Invoke(this, RestoreProgressEventArgs.CreateDownload(Path.GetFileName(t.Destination), c, g.TotalCount));
+            };
+            _downloader.Enqueue(group);
+            group.Wait();
             return true;
         }
 
@@ -82,10 +177,11 @@ namespace Polymerium.Core.Engines
             };
             foreach (var item in index.Objects.Select(x => x.Hash))
             {
+                if (token.IsCancellationRequested) return false;
                 var path = new Uri($"poly-file:///assets/objects/{item[..2]}/{item}", UriKind.Absolute);
                 if (!await _fileBaseService.VerfyHashAsync(path, item, sha1))
                 {
-                    group.Add($"https://resources.download.minecraft.net/{item[..2]}/{item}", _fileBaseService.Locate(path));
+                    group.TryAdd($"https://resources.download.minecraft.net/{item[..2]}/{item}", _fileBaseService.Locate(path), out var _);
                 }
             }
             if (group.TotalCount == 0)
@@ -104,10 +200,10 @@ namespace Polymerium.Core.Engines
         private async Task<Uri> EnsureJarDownloadedAsync(GameInstance instance, Models.Mojang.Index index, RestoreProgressHandler callback, CancellationToken token)
         {
             if (token.IsCancellationRequested) return null;
-            var jarFilePath = new Uri($"poly-file://{instance.Id}/client.jar", UriKind.Absolute);
+            var jarFilePath = new Uri($"poly-file://{instance.Id}/{instance.FolderName}.jar", UriKind.Absolute);
             if (!await _fileBaseService.VerfyHashAsync(jarFilePath, index.Downloads.Client.Sha1, SHA1.Create()))
             {
-                callback?.Invoke(this, RestoreProgressEventArgs.CreateUpdate(RestoreProgressType.Core, "client.jar"));
+                callback?.Invoke(this, RestoreProgressEventArgs.CreateUpdate(RestoreProgressType.Core, $"{instance.FolderName}.jar"));
                 var task = new DownloadTask()
                 {
                     Token = token,

@@ -19,23 +19,33 @@ namespace Polymerium.Core.Engines.Downloading
         public int TotalCount => tasks.Count;
 
         internal EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-        public void Add(string source, string destintion)
+        public bool TryAdd(string source, string destintion, out DownloadTask task)
         {
             if (!tasks.Any(x => x.Destination == destintion))
             {
-                tasks.Add(new DownloadTask()
+                var tmp = new DownloadTask()
                 {
                     Source = source,
                     Destination = destintion,
                     Token = Token
-                });
+                };
+                tasks.Add(tmp);
+                task = tmp;
+                return true;
             }
-
+            else
+            {
+                task = null;
+                return false;
+            }
         }
         public void Wait()
         {
             // 用 WaitAll 会有小问题
-            waitHandle.WaitOne();
+            if (tasks.Any())
+            {
+                waitHandle.WaitOne();
+            }
         }
     }
 }

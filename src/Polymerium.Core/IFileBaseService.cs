@@ -14,5 +14,6 @@ namespace Polymerium.Core
         void WriteAllText(Uri uri, string content);
         bool DoFileExist(Uri uri);
         Task<bool> VerfyHashAsync(Uri uri, string hash, HashAlgorithm algorithm);
+        bool RemoveDirectory(Uri uri);
     }
 }

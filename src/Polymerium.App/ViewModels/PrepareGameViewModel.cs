@@ -74,6 +74,10 @@ namespace Polymerium.App.ViewModels
                         Progress = "补全资源文件";
                         ProgressDetails = string.Empty;
                         break;
+                    case RestoreProgressType.Libraries:
+                        Progress = "补全库文件";
+                        ProgressDetails = string.Empty;
+                        break;
                     case RestoreProgressType.AllCompleted:
                         Progress = "准备就绪";
                         ProgressDetails = string.Empty;

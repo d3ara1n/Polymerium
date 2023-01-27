@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -36,14 +37,14 @@ namespace Polymerium.App.Services
                 {
                     var instance = _memory.Instances.FirstOrDefault(x => x.Id == uri.Host);
                     if (instance != null)
-                        return Path.Combine(_options.BaseFolder, "instances", instance.FolderName, uri.GetComponents(UriComponents.Path, UriFormat.Unescaped));
+                        return new Uri(new Uri(new Uri(new Uri(_options.BaseFolder), "instances/"), instance.FolderName + '/'), uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)).LocalPath;
                     else
                         throw new ArgumentException("Instance id not presented in managed list");
                 }
             }
             else
             {
-                return new Uri(new Uri(_options.BaseFolder, UriKind.Absolute), uri).AbsolutePath;
+                return new Uri(new Uri(_options.BaseFolder, UriKind.Absolute), uri).LocalPath;
             }
         }
 
@@ -85,6 +86,20 @@ namespace Polymerium.App.Services
                 var hashBytes = algorithm.ComputeHash(buffer);
                 var hashString = String.Join(string.Empty, hashBytes.Select(x => x.ToString("x2")));
                 return hash == hashString;
+            }
+        }
+
+        public bool RemoveDirectory(Uri uri)
+        {
+            var path = Locate(uri);
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

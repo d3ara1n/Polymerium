@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Polymerium.Core.Models.Mojang.Indexes
 {
-    public struct LibraryDownloads
+    public struct LibraryNatives
     {
-        public LibraryDownloadsArtifact Artifact { get; set; }
-        public IEnumerable<LibraryDownloadsClassifier> Classifiers { get; set; }
+        public string Windows { get; set; }
+        public string Linux { get; set; }
+        public string Osx { get; set; }
     }
 }

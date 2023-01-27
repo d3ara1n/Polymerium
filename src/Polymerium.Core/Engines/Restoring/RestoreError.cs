@@ -11,5 +11,9 @@ namespace Polymerium.Core.Engines.Restoring
         ResourceNotReacheable,
         ResourceNotFound,
         SerializationFailure,
+        OsNotSupport,
+        Canceled,
+        ExceptionOccurred,
+        Unknown
     }
 }
