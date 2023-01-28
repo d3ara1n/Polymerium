@@ -11,6 +11,7 @@ namespace Polymerium.App.Models
     {
         public IGameAccount Inner { get; set; }
         // 指向皮肤文件，缓存到本地之后分解成正面和脸部
-        public string AvatarSource { get; set; }
+        public string AvatarFaceSource { get; set; }
+        public string AvatarBustSource { get; set; }
     }
 }

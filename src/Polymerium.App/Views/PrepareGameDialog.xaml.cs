@@ -19,6 +19,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.Accounts;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
@@ -36,10 +37,10 @@ namespace Polymerium.App.Views
             this.InitializeComponent();
             _overlayService = overlayService;
             ViewModel = App.Current.Provider.GetRequiredService<PrepareGameViewModel>();
-            ViewModel.GotInstance(instance, () => IsReady = true);
+            passed = ViewModel.GotInstance(instance, () => IsReady = true);
         }
 
-
+        private bool passed = false;
 
         public bool IsReady
         {
@@ -98,7 +99,10 @@ namespace Polymerium.App.Views
             scaleXAnimation.Begin();
             scaleYAnimation.Begin();
             fadeAnimation.Begin();
-            Task.Run(ViewModel.PrepareAsync);
+            if (passed)
+                Task.Run(ViewModel.PrepareAsync);
+            else
+                VisualStateManager.GoToState(this, "Invalid", true);
         }
 
         private void BackgroundImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)

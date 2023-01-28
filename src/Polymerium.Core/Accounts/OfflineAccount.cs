@@ -9,11 +9,8 @@ namespace Polymerium.Core.Accounts
 {
     public class OfflineAccount : IGameAccount
     {
-        public string Id => GeneratedId;
-        public string DisplayName => PlayerName;
-        // set by user
-        public string PlayerName { get; set; }
-        // set by logging process
-        public string GeneratedId { get; set; }
+        public string Id { get; set; }
+        public string UUID { get; set; }
+        public string Nickname { get; set; }
     }
 }

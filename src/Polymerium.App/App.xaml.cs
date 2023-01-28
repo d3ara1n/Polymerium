@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
+using Polymerium.App.ViewModels.AddAccountWizard;
 using Polymerium.App.Views;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
@@ -62,11 +63,15 @@ public partial class App : Application
         services.AddTransient<HomeViewModel>();
         services.AddTransient<SettingViewModel>();
         services.AddTransient<PrepareGameViewModel>();
+        services.AddTransient<AddAccountWizardViewModel>();
+        services.AddTransient<SelectionViewModel>();
+        services.AddTransient<OfflineAccountViewModel>();
         // local service registration
         services.AddSingleton<IOverlayService, WindowOverlayService>();
         services.AddSingleton<NavigationService>();
         services.AddSingleton<AccountManager>();
         services.AddSingleton<InstanceManager>();
+        services.AddSingleton<ConfigurationManager>();
         services.AddSingleton<DataStorage>();
         services.AddSingleton<MemoryStorage>();
         // global services

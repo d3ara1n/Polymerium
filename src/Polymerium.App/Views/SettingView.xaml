@@ -88,6 +88,11 @@
                         </Grid>
                     </controls:ExpanderEx.Header>
                 </controls:ExpanderEx>
+                <TextBlock Text="说明" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock>
+                    <Run Text="图标素材来自 "/>
+                    <Hyperlink NavigateUri="https://icons8.com/icons/fluency">icons8</Hyperlink>
+                </TextBlock>
             </StackPanel>
         </controls:Card>
     </ScrollViewer>

@@ -23,7 +23,7 @@ namespace Polymerium.App.Services
         {
             _dataStorage = dataStorage;
             _memoryStorage = memoryStorage;
-            var instances = dataStorage.LoadList<InstanceModel, GameInstance>(() => new List<GameInstance>());
+            var instances = dataStorage.LoadList<InstanceModel, GameInstance>(() => Enumerable.Empty<GameInstance>());
             foreach (var instance in instances)
             {
                 _memoryStorage.Instances.Add(instance);

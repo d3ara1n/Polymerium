@@ -22,7 +22,7 @@ public sealed partial class InstanceView : Page
     {
         base.OnNavigatedTo(e);
 
-        (var instance, var account) = ((GameInstance, IGameAccount))e.Parameter;
+        var instance = (GameInstance)e.Parameter;
         ViewModel.GotInstance(instance);
 
     }

@@ -48,13 +48,6 @@ public sealed partial class MainWindow : WindowEx
         {
             FakeBackground.Visibility = Visibility.Visible;
         }
-
-        foreach (var a in ViewModel.LogonAccounts)
-        {
-            var item = new MenuFlyoutItem() { Text = a.Inner.DisplayName, Tag = a };
-            item.Click += (sender, _) => ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)sender).Tag);
-            SwitchToSubMenu.Items.Add(item);
-        }
         ViewModel.LogonAccounts.CollectionChanged += LogonAccounts_CollectionChanged;
     }
 
@@ -66,7 +59,7 @@ public sealed partial class MainWindow : WindowEx
 
                 foreach (AccountItemModel a in e.NewItems)
                 {
-                    var item = new MenuFlyoutItem() { Text = a.Inner.DisplayName, Tag = a };
+                    var item = new MenuFlyoutItem() { Text = a.Inner.Nickname, Tag = a };
                     item.Click += (sender, _) => ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)sender).Tag);
                     SwitchToSubMenu.Items.Add(item);
                 }
@@ -93,7 +86,7 @@ public sealed partial class MainWindow : WindowEx
     private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         var item = sender.SelectedItem as NavigationItemModel;
-        RootFrame.Navigate(item.SourcePage, (item.GameInstance, ViewModel.LogonAccount?.Inner), new SuppressNavigationTransitionInfo());
+        RootFrame.Navigate(item.SourcePage, item.GameInstance, new SuppressNavigationTransitionInfo());
         RootFrame.BackStack.Clear();
         ViewModel.OnNavigatedTo(item);
     }
@@ -132,5 +125,10 @@ public sealed partial class MainWindow : WindowEx
                 RootFrame.Navigate(view, parameter, new SuppressNavigationTransitionInfo());
             }
         }
+    }
+
+    private void Grid_Loaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.FillMenuItems();
     }
 }

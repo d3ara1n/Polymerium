@@ -6,14 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 
 namespace Polymerium.App.ViewModels
 {
     public class HomeViewModel : ObservableObject
     {
         public ObservableCollection<RecentPlayedItemModel> RecentPlays { get; private set; }
-        public HomeViewModel()
+        private readonly MemoryStorage _memoryStorage;
+        public MemoryStorage MemoryStorage => _memoryStorage;
+        public HomeViewModel(MemoryStorage memoryStorage)
         {
+            _memoryStorage = memoryStorage;
             RecentPlays = new ObservableCollection<RecentPlayedItemModel>()
             {
                 new()

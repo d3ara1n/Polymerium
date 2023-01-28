@@ -11,7 +11,8 @@ namespace Polymerium.Abstractions.Accounts
         // 'login' method or something to get access
 
         // when created, generated an id
-        string Id { get; }
-        string DisplayName { get; }
+        string Id { get; set; }
+        string UUID { get; set; }
+        string Nickname { get; }
     }
 }

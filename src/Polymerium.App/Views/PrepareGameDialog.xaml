@@ -24,12 +24,24 @@
                         <VisualState x:Name="Ready">
                             <Storyboard>
                                 <DoubleAnimation Storyboard.TargetName="GameReadyButton" Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="0:0:0.6"/>
-                                <DoubleAnimation Storyboard.TargetName="TranslateTransform" Storyboard.TargetProperty="Y" From="0" To="-66" Duration="0:0:0.6">
+                                <DoubleAnimation Storyboard.TargetName="LabelTranslateTransform" Storyboard.TargetProperty="Y" From="0" To="-48" Duration="0:0:0.6">
+                                    <DoubleAnimation.EasingFunction>
+                                        <SineEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetName="AccountTranslateTransform" Storyboard.TargetProperty="Y" From="0" To="6" Duration="0:0:0.6">
                                     <DoubleAnimation.EasingFunction>
                                         <SineEase EasingMode="EaseOut"/>
                                     </DoubleAnimation.EasingFunction>
                                 </DoubleAnimation>
                             </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Invalid">
+                            <VisualState.Setters>
+                                <Setter Target="Label.Text" Value="没有选择账号无法继续"/>
+                                <Setter Target="PromptText.Text" Value="请先绑定账号"/>
+                                <Setter Target="DisplayName.Text" Value="未登录"/>
+                            </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
@@ -49,19 +61,29 @@
                             <FontIcon Glyph="&#xE106;" FontSize="10"/>
                         </controls:IconButton>
                         <Grid x:Name="Container">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                                <StackPanel.RenderTransform>
-                                    <TranslateTransform x:Name="TranslateTransform"/>
-                                </StackPanel.RenderTransform>
-                                <TextBlock Text="您的游戏即将准备就绪" Foreground="{ThemeResource SystemAccentColor}" FontSize="28"/>
-                                <TextBlock Text="{x:Bind ViewModel.Instance.Name}" HorizontalAlignment="Center" Foreground="{ThemeResource SystemAccentColor}" FontSize="16"/>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                                    <StackPanel.RenderTransform>
+                                        <TranslateTransform x:Name="LabelTranslateTransform"/>
+                                    </StackPanel.RenderTransform>
+                                    <TextBlock x:Name="Label" Text="您的游戏即将准备就绪" Foreground="{ThemeResource SystemAccentColor}" FontSize="28"/>
+                                    <TextBlock Text="{x:Bind ViewModel.Instance.Name}" HorizontalAlignment="Center" Foreground="{ThemeResource SystemAccentColor}" FontSize="16"/>
+                                </StackPanel>
+                                <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource SystemAccentColor}" RenderTransformOrigin="0.5,0.5">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="AccountTranslateTransform"/>
+                                    </TextBlock.RenderTransform>
+                                    <Run Text="以“"/>
+                                    <Run x:Name="DisplayName" Text="Dearain"/>
+                                    <Run Text="”的身份"/>
+                                </TextBlock>
                             </StackPanel>
                             <controls:GlowingButton x:Name="GameReadyButton" Opacity="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <TextBlock Text="开始" FontSize="26"/>
                             </controls:GlowingButton>
                         </Grid>
                         <Grid x:Name="Prompt" ToolTipService.ToolTip="{x:Bind ViewModel.ProgressDetails,Mode=OneWay}" Background="{ThemeResource SystemAccentColor}" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                            <TextBlock Foreground="WhiteSmoke" Text="{x:Bind ViewModel.Progress,Mode=OneWay}" Margin="20,8,20,8" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="PromptText" Foreground="WhiteSmoke" Text="{x:Bind ViewModel.Progress,Mode=OneWay}" Margin="20,8,20,8" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                     </Grid>
                 </Grid>

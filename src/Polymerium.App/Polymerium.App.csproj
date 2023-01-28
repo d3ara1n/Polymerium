@@ -18,6 +18,10 @@
         <Nullable>disable</Nullable>
         <DefaultLanguage>zh-CN</DefaultLanguage>
     </PropertyGroup>
+    <ItemGroup>
+      <None Remove="Assets\Brands\microsoft.256x256.png" />
+      <None Remove="Assets\Brands\minecraft.256x256.png" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
@@ -39,6 +43,7 @@
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
         <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+        <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="7.0.0" />
         <PackageReference Include="WinUIEx" Version="2.1.0" />
         <Manifest Include="$(ApplicationManifest)" />
     </ItemGroup>
@@ -110,4 +115,14 @@
     <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
         <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
     </PropertyGroup>
+    <ItemGroup>
+      <Page Update="Views\AddAccountWizard\SelectionView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
+    <ItemGroup>
+      <Page Update="Views\AddAccountWizard\OfflineAccountView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
 </Project>

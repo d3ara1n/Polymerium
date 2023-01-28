@@ -23,6 +23,7 @@
 
     <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter"/>
     <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter"/>
+    <converters:NullToParameterConverter x:Key="NullToParameterConverter"/>
 
     <Style TargetType="controls:CustomDialog" BasedOn="{StaticResource DefaultCustomDialogStyle}" />
 
@@ -120,13 +121,7 @@
                                     </Border>
                                     <Grid x:Name="OperationArea" Grid.Row="1" Visibility="Collapsed">
                                         <ContentControl x:Name="OperationContainer" HorizontalAlignment="Right"
-                                                        Margin="{TemplateBinding OperationPadding}" Content="{TemplateBinding OperationContent}">
-                                            <ContentControl.Resources>
-                                                <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-                                                    <Setter Property="MinWidth" Value="90" />
-                                                </Style>
-                                            </ContentControl.Resources>
-                                        </ContentControl>
+                                                        Margin="{TemplateBinding OperationPadding}" Content="{TemplateBinding OperationContent}"/>
                                     </Grid>
                                 </Grid>
                             </Border>
@@ -337,7 +332,7 @@
                             </interactions:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
                         <Grid>
-                            <Rectangle x:Name="PART_Layer" Fill="{ThemeResource ContentDialogTopOverlay}" Opacity="0"/>
+                            <Rectangle x:Name="PART_Layer" Fill="{ThemeResource FloatLayerBackgroundBrush}" Opacity="0"/>
                             <ContentPresenter x:Name="Container"  Margin="{TemplateBinding Padding}"/>
                         </Grid>
                     </Border>

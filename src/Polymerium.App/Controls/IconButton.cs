@@ -33,7 +33,7 @@ namespace Polymerium.App.Controls
 
         protected override void OnPointerExited(PointerRoutedEventArgs e)
         {
-            if (IsEnabled) if (!IsPressed) VisualStateManager.GoToState(this, "Normal", true);
+            if (IsEnabled && !IsPressed) VisualStateManager.GoToState(this, "Normal", true);
             base.OnPointerExited(e);
         }
 

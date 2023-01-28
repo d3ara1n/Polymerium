@@ -23,11 +23,14 @@
                         <ContentThemeTransition/>
                     </Grid.ChildrenTransitions>
                     <Grid ColumnDefinitions="6*,4*">
-                        <toolkit:ImageEx Stretch="UniformToFill" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Bottom" Source="ms-appx:///Assets/Placeholders/default_avatar_bust.png"/>
+                        <toolkit:ImageEx Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Bottom" IsCacheEnabled="True" Stretch="UniformToFill" Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarBustSource,Mode=OneWay}" PlaceholderStretch="UniformToFill" PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png"/>
                     </Grid>
                     <Grid ColumnDefinitions="4*,6*">
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="下午好，玩家" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">
+                                <Run Text="你好 "/>
+                                <Run Text="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}"/>
+                            </TextBlock>
                             <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" TextWrapping="WrapWholeWords" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{ThemeResource BodyTextBlockStyle}"/>
                         </StackPanel>
                     </Grid>

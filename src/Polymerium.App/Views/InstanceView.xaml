@@ -20,7 +20,7 @@
                     </Grid.ChildrenTransitions>
                     <toolkit:ConstrainedBox Margin="30,30,15,30" VerticalAlignment="Center" HorizontalAlignment="Left" AspectRatio="1:1">
                         <Border CornerRadius="5" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeBrush}">
-                            <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}" Source="{x:Bind ViewModel.Instance.ThumbnailFile}" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" PlaceholderStretch="UniformToFill"/>
+                            <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}" Source="{x:Bind ViewModel.Instance.ThumbnailFile}" IsCacheEnabled="True" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" PlaceholderStretch="UniformToFill"/>
                         </Border>
                     </toolkit:ConstrainedBox>
                     <Grid Grid.Column="1" Margin="15,30,30,30" RowDefinitions="Auto,*">

@@ -27,7 +27,11 @@ namespace Polymerium.App.Services
         public bool Save<TModel, TData>(TData data)
             where TModel : RefinedModelBase<TData>, new()
         {
-            throw new NotImplementedException();
+            var model = new TModel();
+            model.Apply(data);
+            var json = JsonConvert.SerializeObject(model, model.SerializerSettings);
+            _fileBaseService.WriteAllText(model.Location, json);
+            return true;
         }
 
         public bool SaveList<TModel, TData>(IEnumerable<TData> data)
@@ -40,10 +44,19 @@ namespace Polymerium.App.Services
             return true;
         }
 
-        public TData Load<TModel, TData>(Func<TModel> factory = null)
+        public TData Load<TModel, TData>(Func<TData> factory = null)
             where TModel : RefinedModelBase<TData>, new()
         {
-            throw new NotImplementedException();
+            var model = new TModel();
+            if (_fileBaseService.TryReadAllText(model.Location, out var text))
+            {
+                JsonConvert.PopulateObject(text, model, model.SerializerSettings);
+                return model.Extract();
+            }
+            else
+            {
+                return factory != null ? factory() : default;
+            }
         }
 
         public IEnumerable<TData> LoadList<TModel, TData>(Func<IEnumerable<TData>> factory = null)
@@ -57,14 +70,7 @@ namespace Polymerium.App.Services
             }
             else
             {
-                if (factory != null)
-                {
-                    return factory();
-                }
-                else
-                {
-                    return default;
-                }
+                return factory != null ? factory() : Enumerable.Empty<TData>();
             }
         }
     }

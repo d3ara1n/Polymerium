@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.Accounts;
+using Polymerium.App.Services;
 using Polymerium.Core.Engines;
 using Polymerium.Core.Engines.Restoring;
 
@@ -14,30 +16,43 @@ namespace Polymerium.App.ViewModels
 {
     public sealed class PrepareGameViewModel : ObservableObject, IDisposable
     {
-        private DispatcherQueue _dispatcher;
-        private RestoreEngine _restore;
+        private readonly DispatcherQueue _dispatcher;
+        private readonly RestoreEngine _restore;
+        private readonly AccountManager _accountManager;
 
 
         private Action readyHandler;
 
         private GameInstance instance;
         public GameInstance Instance { get => instance; set => SetProperty(ref instance, value); }
+        private IGameAccount account;
+        public IGameAccount Account { get => account; set => SetProperty(ref account, value); }
         private string progress = "准备中";
         public string Progress { get => progress; set => SetProperty(ref progress, value); }
         private string progressDetails;
         public string ProgressDetails { get => progressDetails; set => SetProperty(ref progressDetails, value); }
-        public PrepareGameViewModel(RestoreEngine restore)
+        public PrepareGameViewModel(RestoreEngine restore, AccountManager accountManager)
         {
             _restore = restore;
+            _accountManager = accountManager;
             _dispatcher = DispatcherQueue.GetForCurrentThread();
         }
-        public void GotInstance(GameInstance instance, Action handler)
+        public bool GotInstance(GameInstance instance, Action handler)
         {
             Instance = instance;
             readyHandler = handler;
+            if(_accountManager.TryFindById(instance.BoundAccountId, out var account))
+            {
+                Account = account;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        private CancellationTokenSource source = new CancellationTokenSource();
+        private readonly CancellationTokenSource source = new CancellationTokenSource();
         public void Cancel()
         {
             if (!source.IsCancellationRequested)
