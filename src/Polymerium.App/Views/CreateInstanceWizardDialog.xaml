@@ -44,15 +44,15 @@
             <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
                 <StackPanel Spacing="{StaticResource StackPanelSpacing}" Margin="25">
                     <TextBlock Text="创建空实例" Style="{ThemeResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="游戏版本"/>
+                    <TextBlock Text="游戏版本" />
                     <ComboBox x:Name="CoreVersion" IsEditable="False" SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}" ItemsSource="{x:Bind Versions,Mode=OneWay}" SelectionChanged="CoreVersion_SelectionChanged" HorizontalAlignment="Stretch">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="models:GameVersionModel">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <TextBlock Text="{x:Bind Id}" VerticalAlignment="Center" Margin="5,0,10,0"/>
+                                    <TextBlock Text="{x:Bind Id}" VerticalAlignment="Center" Margin="5,0,10,0" />
                                     <Grid Grid.Column="1">
                                         <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}" CornerRadius="5" Opacity="0.6">
-                                            <TextBlock Margin="5,2,5,2" Text="{x:Bind Type}" FontSize="10"/>
+                                            <TextBlock Margin="5,2,5,2" Text="{x:Bind Type}" FontSize="10" />
                                         </Border>
                                     </Grid>
                                 </Grid>
@@ -60,26 +60,26 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock Text="作者" />
-                    <TextBox PlaceholderText="空字符串也可以是作者名..."/>
+                    <TextBox PlaceholderText="空字符串也可以是作者名..." />
                     <Expander Header="高级" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
                         <StackPanel Spacing="{StaticResource StackPanelSpacing}">
                             <TextBlock Text="实例版本" />
-                            <TextBox Text="1.0.0" PlaceholderText="当作为整合包发布时使用"/>
+                            <TextBox Text="1.0.0" PlaceholderText="当作为整合包发布时使用" />
                         </StackPanel>
                     </Expander>
                     <TextBlock Text="最后给实例起一个名字" />
-                    <TextBox x:Name="InstanceName" Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}" PlaceholderText="会以此标识该实例"/>
+                    <TextBox x:Name="InstanceName" Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}" PlaceholderText="会以此标识该实例" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>
     </ContentControl>
     <controls:CustomDialog.OperationContent>
         <StackPanel>
-            <TextBlock Text="{x:Bind ErrorMessage,Mode=OneWay}" Margin="0,0,0,10"/>
+            <TextBlock Text="{x:Bind ErrorMessage,Mode=OneWay}" Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
-            <Button x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOperable,Mode=OneWay}" Style="{ThemeResource AccentButtonStyle}" Click="AddButton_Click"/>
-            <Button x:Name="CloseButton" Content="取消" Click="CloseButton_OnClick" />
-        </StackPanel>
+                <Button x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOperable,Mode=OneWay}" Style="{ThemeResource AccentButtonStyle}" Click="AddButton_Click" />
+                <Button x:Name="CloseButton" Content="取消" Click="CloseButton_OnClick" />
+            </StackPanel>
         </StackPanel>
     </controls:CustomDialog.OperationContent>
 </controls:CustomDialog>

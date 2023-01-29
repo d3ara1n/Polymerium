@@ -1,19 +1,16 @@
+using Polymerium.Abstractions.Accounts;
+using Polymerium.App.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Polymerium.Abstractions.Accounts;
-using Polymerium.App.Data;
-using Windows.Security.Credentials;
 
 namespace Polymerium.App.Services
 {
     public sealed class AccountManager : IDisposable
     {
-
         private readonly DataStorage _dataStorage;
         private readonly MemoryStorage _memoryStorage;
+
         public AccountManager(MemoryStorage memoryStorage, DataStorage dataStorage)
         {
             _memoryStorage = memoryStorage;

@@ -1,23 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using Newtonsoft.Json;
 using Polymerium.App.Data;
 using Polymerium.Core;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Polymerium.App.Services
 {
     public sealed class DataStorage : IDisposable
     {
         private readonly IFileBaseService _fileBaseService;
+
         public DataStorage(IFileBaseService fileBaseService)
         {
             _fileBaseService = fileBaseService;
         }
+
         public void Dispose()
         {
             // 保存

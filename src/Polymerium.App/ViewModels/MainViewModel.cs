@@ -1,7 +1,3 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -14,7 +10,10 @@ using Polymerium.App.Extensions;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Core.Accounts;
+using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace Polymerium.App.ViewModels;
 
@@ -66,8 +65,8 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
     public AccountItemModel AccountShowcase { get; set; }
     public MemoryStorage MemoryStorage => _memoryStorage;
 
-
     private ContentControl overlay;
+
     public ContentControl Overlay
     {
         get => overlay;
@@ -145,6 +144,7 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
                         }
                     }
                     break;
+
                 case NotifyCollectionChangedAction.Remove:
                     {
                         foreach (GameInstance instance in e.OldItems)
@@ -179,6 +179,7 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
                     }
                 }
                 break;
+
             case NotifyCollectionChangedAction.Remove:
                 {
                     foreach (IGameAccount r in e.OldItems)
@@ -191,6 +192,7 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
                     }
                 }
                 break;
+
             case NotifyCollectionChangedAction.Reset:
                 LogonAccounts.Clear();
                 break;

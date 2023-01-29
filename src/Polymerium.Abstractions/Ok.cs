@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Polymerium.Abstractions
 {
     public class Ok<TOk, TErr> : Result<TOk, TErr>
@@ -16,5 +10,6 @@ namespace Polymerium.Abstractions
         }
     }
 
-    public class Ok<TErr> : Result<TErr> { }
+    public class Ok<TErr> : Result<TErr>
+    { }
 }

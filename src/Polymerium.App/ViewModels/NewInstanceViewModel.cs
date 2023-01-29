@@ -1,4 +1,3 @@
-using System.Runtime.ConstrainedExecution;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Services;

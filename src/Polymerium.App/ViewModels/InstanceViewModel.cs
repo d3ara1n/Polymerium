@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.Abstractions;
@@ -16,6 +10,7 @@ namespace Polymerium.App.ViewModels
     {
         private readonly InstanceManager _instanceManager;
         private readonly IOverlayService _overlayService;
+
         public InstanceViewModel(InstanceManager instanceManager, IOverlayService overlayService)
         {
             _instanceManager = instanceManager;

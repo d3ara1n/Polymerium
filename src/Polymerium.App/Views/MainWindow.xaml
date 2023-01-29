@@ -8,10 +8,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:converters="using:Polymerium.App.Converters"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:models="using:Polymerium.App.Models"
     xmlns:ex="using:WinUIEx"
     Title="Polymerium" MinHeight="400" MinWidth="600" Height="600" Width="780"
     mc:Ignorable="d">
@@ -22,7 +21,7 @@
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <controls:IconButton x:Name="BackButton" Margin="5" IsEnabled="{Binding CanGoBack,ElementName=RootFrame}" Click="BackButton_Click">
-                        <FontIcon Glyph="&#xE112;" FontSize="10"/>
+                        <FontIcon Glyph="&#xE112;" FontSize="10" />
                     </controls:IconButton>
                     <TextBlock Text="Polymer" FontSize="14" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Text="ium" FontSize="14" VerticalAlignment="Center" />
@@ -58,25 +57,25 @@
                 <controls:IconButton ToolTipService.ToolTip="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}" Height="60" Width="70" Margin="5">
                     <controls:IconButton.ContextFlyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutSubItem x:Name="SwitchToSubMenu" Text="切换到"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="刷新"/>
-                            <MenuFlyoutItem Text="注销"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"/>
+                            <MenuFlyoutItem Text="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutSubItem x:Name="SwitchToSubMenu" Text="切换到" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem Text="刷新" />
+                            <MenuFlyoutItem Text="注销" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem Text="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}" />
                         </MenuFlyout>
                     </controls:IconButton.ContextFlyout>
-                    <toolkit:ImageEx Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarFaceSource,Mode=OneWay}" Stretch="Fill" PlaceholderStretch="Fill" PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="5"/>
+                    <toolkit:ImageEx Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarFaceSource,Mode=OneWay}" Stretch="Fill" PlaceholderStretch="Fill" PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="5" />
                 </controls:IconButton>
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavigationItemModel">
                     <Grid Height="64" Margin="0,0,-10,0" ToolTipService.ToolTip="{x:Bind Caption}">
                         <Grid VerticalAlignment="Center" Margin="0">
-                            <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center"/>
-                            <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}" CornerRadius="5"/>
+                            <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center" />
+                            <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}" CornerRadius="5" />
                         </Grid>
                     </Grid>
                 </DataTemplate>

@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Polymerium.App.Configurations;
 using Polymerium.App.Data;
+using System;
 
 namespace Polymerium.App.Services
 {
@@ -12,6 +8,7 @@ namespace Polymerium.App.Services
     {
         private readonly DataStorage _dataStorage;
         public Configuration Current { get; set; }
+
         public ConfigurationManager(DataStorage dataStorage)
         {
             _dataStorage = dataStorage;

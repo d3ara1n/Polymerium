@@ -4,26 +4,25 @@
 <Page
     x:Class="Polymerium.App.Views.AddAccountWizard.SelectionView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Polymerium.App.Views.AddAccountWizard"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:models="using:Polymerium.App.Models"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Polymerium.App.Models"
     mc:Ignorable="d">
 
     <Grid>
         <StackPanel Spacing="12">
-            <TextBlock Text="选择一种登录方式" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+            <TextBlock Text="选择一种登录方式" Style="{ThemeResource SubtitleTextBlockStyle}" />
             <ComboBox x:Name="FirstPage" SelectionChanged="FirstPage_SelectionChanged" IsEditable="False" HorizontalAlignment="Stretch" SelectedIndex="0" HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Entries}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate x:DataType="models:AccountWizardEntryModel">
-                    <Grid ColumnDefinitions="Auto,*">
-                        <ImageIcon Source="{x:Bind BrandIconSource}" Width="18" Height="18" Margin="0,0,14,0"/>
-                        <TextBlock Grid.Column="1" Text="{x:Bind Caption}" VerticalAlignment="Center"/>
-                    </Grid>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="models:AccountWizardEntryModel">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <ImageIcon Source="{x:Bind BrandIconSource}" Width="18" Height="18" Margin="0,0,14,0" />
+                            <TextBlock Grid.Column="1" Text="{x:Bind Caption}" VerticalAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
     </Grid>
 </Page>

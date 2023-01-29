@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Polymerium.Core.Models.Mojang.Indexes
 {
@@ -14,6 +10,7 @@ namespace Polymerium.Core.Models.Mojang.Indexes
 
         public bool Verfy()
         {
+            if(Features.HasValue) return false;
             var matched = !Os.HasValue || Os.Value.Match();
             return Action.Equals("allow", StringComparison.OrdinalIgnoreCase) ? matched : !matched;
         }

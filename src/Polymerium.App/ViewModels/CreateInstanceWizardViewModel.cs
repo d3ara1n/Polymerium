@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
@@ -10,6 +5,11 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 using Wupoo;
 
 namespace Polymerium.App.ViewModels;
@@ -26,14 +26,17 @@ public class CreateInstanceWizardViewModel : ObservableValidator
     }
 
     private string instanceName = string.Empty;
+
     [Required]
     [MinLength(1)]
     [MaxLength(128)]
     public string InstanceName { get => instanceName; set => SetProperty(ref instanceName, value, true); }
+
     private string instanceAuthor = string.Empty;
     public string InstanceAuthor { get => instanceAuthor; set => SetProperty(ref instanceAuthor, value); }
 
     private GameVersionModel selectedVersion;
+
     [Required]
     public GameVersionModel SelectedVersion { get => selectedVersion; set => SetProperty(ref selectedVersion, value, true); }
 

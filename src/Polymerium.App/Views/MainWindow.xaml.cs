@@ -1,20 +1,16 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Reflection.Metadata;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media.Animation;
-using Polymerium.App.Messages;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System;
+using System.Collections.Specialized;
+using System.Linq;
 using WinUIEx;
 
 namespace Polymerium.App.Views;
@@ -65,6 +61,7 @@ public sealed partial class MainWindow : WindowEx
                 }
 
                 break;
+
             case NotifyCollectionChangedAction.Remove:
                 foreach (AccountItemModel a in e.OldItems)
                 {
@@ -75,6 +72,7 @@ public sealed partial class MainWindow : WindowEx
                     }
                 }
                 break;
+
             case NotifyCollectionChangedAction.Reset:
                 SwitchToSubMenu.Items.Clear();
                 break;
@@ -98,7 +96,6 @@ public sealed partial class MainWindow : WindowEx
 
     private void Navigate(Type view, object parameter)
     {
-
         if (view == typeof(InstanceView) && parameter is string instanceId)
         {
             if (ViewModel.NavigationPages.Where(x => x.SourcePage == typeof(InstanceView)).FirstOrDefault(x => x.GameInstance.Id == instanceId) is NavigationItemModel { } instanceView)

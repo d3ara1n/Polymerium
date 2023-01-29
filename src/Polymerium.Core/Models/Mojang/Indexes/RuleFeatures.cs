@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Polymerium.Core.Models.Mojang.Converters;
 
 namespace Polymerium.Core.Models.Mojang.Indexes
 {
+    [JsonConverter(typeof(RuleFeaturesConverter))]
     public struct RuleFeatures
     {
         public string Key { get; set; }

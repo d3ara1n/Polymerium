@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Polymerium.Core.Engines.Downloading
 {
@@ -19,6 +17,7 @@ namespace Polymerium.Core.Engines.Downloading
         public int TotalCount => tasks.Count;
 
         internal EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+
         public bool TryAdd(string source, string destintion, out DownloadTask task)
         {
             if (!tasks.Any(x => x.Destination == destintion))
@@ -39,6 +38,7 @@ namespace Polymerium.Core.Engines.Downloading
                 return false;
             }
         }
+
         public void Wait()
         {
             // 用 WaitAll 会有小问题

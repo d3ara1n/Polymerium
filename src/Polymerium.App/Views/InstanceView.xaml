@@ -16,35 +16,35 @@
             <controls:Card x:Name="Header" Height="220" Padding="0" Margin="5,0,10,5" PointerEntered="Header_PointerEntered" PointerExited="Header_PointerExited">
                 <Grid ColumnDefinitions="Auto,*">
                     <Grid.ChildrenTransitions>
-                        <ContentThemeTransition/>
+                        <ContentThemeTransition />
                     </Grid.ChildrenTransitions>
                     <toolkit:ConstrainedBox Margin="30,30,15,30" VerticalAlignment="Center" HorizontalAlignment="Left" AspectRatio="1:1">
                         <Border CornerRadius="5" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeBrush}">
-                            <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}" Source="{x:Bind ViewModel.Instance.ThumbnailFile}" IsCacheEnabled="True" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" PlaceholderStretch="UniformToFill"/>
+                            <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}" Source="{x:Bind ViewModel.Instance.ThumbnailFile}" IsCacheEnabled="True" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" PlaceholderStretch="UniformToFill" />
                         </Border>
                     </toolkit:ConstrainedBox>
                     <Grid Grid.Column="1" Margin="15,30,30,30" RowDefinitions="Auto,*">
                         <Grid ColumnDefinitions="*,Auto">
                             <StackPanel>
-                                <TextBlock Text="{x:Bind ViewModel.Instance.Name}" Style="{StaticResource TitleTextBlockStyle}"/>
+                                <TextBlock Text="{x:Bind ViewModel.Instance.Name}" Style="{StaticResource TitleTextBlockStyle}" />
                                 <StackPanel Orientation="Horizontal" Spacing="5">
-                                    <FontIcon Glyph="&#xE946;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                    <FontIcon Glyph="&#xE946;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                     <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                    <Run Text="来自"/>
+                                    <Run Text="来自" />
                                     <Hyperlink>Curseforge</Hyperlink>
                                     </TextBlock>
                                     <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                    <Run Text="带有"/>
+                                    <Run Text="带有" />
                                     <Hyperlink>附件</Hyperlink>
                                     </TextBlock>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock Text="游戏版本"/>
-                                    <TextBlock Text="{x:Bind ViewModel.Instance.Metadata.CoreVersion}"/>
+                                    <TextBlock Text="游戏版本" />
+                                    <TextBlock Text="{x:Bind ViewModel.Instance.Metadata.CoreVersion}" />
                                 </StackPanel>
                             </StackPanel>
                             <Grid Grid.Column="1">
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="运行" Width="114" Command="{x:Bind ViewModel.StartCommand}" Style="{StaticResource AccentButtonStyle}"/>
+                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="运行" Width="114" Command="{x:Bind ViewModel.StartCommand}" Style="{StaticResource AccentButtonStyle}" />
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
@@ -52,12 +52,12 @@
                                 <GridView SelectionMode="None" Padding="0" ToolTipService.ToolTip="已安装的体验扩充包" VerticalAlignment="Bottom">
                                     <GridView.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <toolkit:WrapPanel/>
+                                            <toolkit:WrapPanel />
                                         </ItemsPanelTemplate>
                                     </GridView.ItemsPanel>
                                     <GridView.ItemContainerStyle>
                                         <Style TargetType="GridViewItem">
-                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="Margin" Value="0" />
                                         </Style>
                                     </GridView.ItemContainerStyle>
                                     <GridView.ItemTemplate>
@@ -65,22 +65,22 @@
                                             <Grid Margin="5,0,5,0">
                                                 <Border CornerRadius="5" Background="{ThemeResource FloatLayerBackgroundBrush}" ToolTipService.ToolTip="{x:Bind Version}">
                                                     <Grid Margin="10,5,10,5">
-                                                        <TextBlock Text="{x:Bind Name}"/>
+                                                        <TextBlock Text="{x:Bind Name}" />
                                                     </Grid>
                                                 </Border>
                                             </Grid>
                                         </DataTemplate>
                                     </GridView.ItemTemplate>
-                                    <models:ComponentTagItemModel Name="Forge" Version="40.2.0"/>
-                                    <models:ComponentTagItemModel Name="Optfine" Version="HD_U_H7"/>
+                                    <models:ComponentTagItemModel Name="Forge" Version="40.2.0" />
+                                    <models:ComponentTagItemModel Name="Optfine" Version="HD_U_H7" />
                                 </GridView>
                             </ScrollViewer>
                             <Grid Grid.Column="1">
                                 <controls:IconButton x:Name="EditButton" Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的版本，体验扩充资源">
                                     <controls:IconButton.OpacityTransition>
-                                        <ScalarTransition/>
+                                        <ScalarTransition />
                                     </controls:IconButton.OpacityTransition>
-                                    <FontIcon Glyph="&#xE104;"/>
+                                    <FontIcon Glyph="&#xE104;" />
                                 </controls:IconButton>
                             </Grid>
                         </Grid>
@@ -90,32 +90,32 @@
             <controls:Card Margin="5,5,10,5" Padding="5">
                 <Grid ColumnDefinitions="*,*,*">
                     <Grid.ChildrenTransitions>
-                        <ContentThemeTransition/>
+                        <ContentThemeTransition />
                     </Grid.ChildrenTransitions>
                     <controls:IconButton>
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
-                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-basil-48.png" Margin="0,0,10,0"/>
+                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-basil-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock Text="资源包" FontSize="16"/>
-                                <TextBlock Text="2" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                <TextBlock Text="资源包" FontSize="16" />
+                                <TextBlock Text="2" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
                     </controls:IconButton>
                     <controls:IconButton Grid.Column="1">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
-                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-plugin-48.png" Margin="0,0,10,0"/>
+                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-plugin-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock Text="模组" FontSize="16"/>
-                                <TextBlock Text="347" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                <TextBlock Text="模组" FontSize="16" />
+                                <TextBlock Text="347" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
                     </controls:IconButton>
                     <controls:IconButton Grid.Column="2">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
-                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-color-wheel-48.png" Margin="0,0,10,0"/>
+                            <ImageIcon Source="ms-appx:///Assets/Icons/icons8-color-wheel-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock Text="着色器包" FontSize="16"/>
-                                <TextBlock Text="不支持" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                <TextBlock Text="着色器包" FontSize="16" />
+                                <TextBlock Text="不支持" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
                     </controls:IconButton>
@@ -125,18 +125,18 @@
                 <toolkit:ConstrainedBox AspectRatio="16:9">
                     <Grid>
                         <Grid.ChildrenTransitions>
-                            <ContentThemeTransition/>
+                            <ContentThemeTransition />
                         </Grid.ChildrenTransitions>
-                        <TextBlock Text="没有截图可以展示，游戏中按下 F2 生成截图" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text="没有截图可以展示，游戏中按下 F2 生成截图" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Grid>
                 </toolkit:ConstrainedBox>
             </controls:GroupBox>
             <controls:GroupBox Header="存档" Margin="5,5,10,5">
                 <Grid>
                     <Grid.ChildrenTransitions>
-                        <ContentThemeTransition/>
+                        <ContentThemeTransition />
                     </Grid.ChildrenTransitions>
-                    <TextBlock Text="占位符"/>
+                    <TextBlock Text="占位符" />
                 </Grid>
             </controls:GroupBox>
             <controls:GroupBox Header="其他信息" Margin="5,5,10,10">
@@ -144,9 +144,9 @@
                 <!-- 游玩次数 异常退出次数 总游戏时间 -->
                 <Grid>
                     <Grid.ChildrenTransitions>
-                        <ContentThemeTransition/>
+                        <ContentThemeTransition />
                     </Grid.ChildrenTransitions>
-                    <TextBlock Text="占位符"/>
+                    <TextBlock Text="占位符" />
                 </Grid>
             </controls:GroupBox>
         </StackPanel>

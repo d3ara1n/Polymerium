@@ -1,29 +1,18 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views.AddAccountWizard;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System;
 
 namespace Polymerium.App.Views
 {
     public delegate void AddAccountWizardStateHandler(Type nextPage, bool isLast = false, Func<bool> finishAction = null);
+
     public sealed partial class AddAccountWizardDialog : CustomDialog
     {
         public AddAccountWizardViewModel ViewModel { get; private set; }
@@ -31,6 +20,7 @@ namespace Polymerium.App.Views
         private readonly AddAccountWizardStateHandler handler;
         private Func<bool> finish;
         private Type next;
+
         public AddAccountWizardDialog(IOverlayService overlayService)
         {
             this.InitializeComponent();

@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Polymerium.Abstractions.Accounts
 {
     public interface IGameAccount
@@ -12,6 +6,7 @@ namespace Polymerium.Abstractions.Accounts
 
         // when created, generated an id
         string Id { get; set; }
+
         string UUID { get; set; }
         string Nickname { get; }
     }

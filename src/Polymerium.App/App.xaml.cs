@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System;
-using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
@@ -12,6 +10,8 @@ using Polymerium.App.ViewModels.AddAccountWizard;
 using Polymerium.App.Views;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
+using System;
+using System.IO;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

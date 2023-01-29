@@ -1,13 +1,8 @@
+using Polymerium.Abstractions;
+using Polymerium.App.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Extensions.Options;
-using Polymerium.Abstractions;
-using Polymerium.App.Data;
-using Polymerium.App.Messages;
 
 namespace Polymerium.App.Services
 {
@@ -15,10 +10,12 @@ namespace Polymerium.App.Services
     {
         DuplicateId
     }
+
     public sealed class InstanceManager : IDisposable
     {
         private readonly DataStorage _dataStorage;
         private readonly MemoryStorage _memoryStorage;
+
         public InstanceManager(DataStorage dataStorage, MemoryStorage memoryStorage)
         {
             _dataStorage = dataStorage;

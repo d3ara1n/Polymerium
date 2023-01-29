@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Polymerium.Core.Models.Mojang.Indexes;
+using System;
+using System.Linq;
 
 namespace Polymerium.Core.Models.Mojang.Converters
 {
@@ -22,7 +19,7 @@ namespace Polymerium.Core.Models.Mojang.Converters
             var prop = obj.Properties().First();
             var features = new RuleFeatures();
             features.Key = prop.Name;
-            features.Enabled = prop.Value.Type == JTokenType.Boolean ? prop.Value<bool>() : true;
+            features.Enabled = prop.Value.Type == JTokenType.Boolean ? prop.Value.Value<bool>() : true;
             return features;
         }
 

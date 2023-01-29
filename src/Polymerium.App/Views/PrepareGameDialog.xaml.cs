@@ -1,30 +1,17 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using ColorCode.Compilation.Languages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
 using Polymerium.Abstractions;
-using Polymerium.Abstractions.Accounts;
-using Polymerium.App.Controls;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.Views
 {
@@ -32,6 +19,7 @@ namespace Polymerium.App.Views
     {
         public PrepareGameViewModel ViewModel { get; private set; }
         private readonly IOverlayService _overlayService;
+
         public PrepareGameDialog(GameInstance instance, IOverlayService overlayService)
         {
             this.InitializeComponent();
@@ -58,6 +46,7 @@ namespace Polymerium.App.Views
         private Storyboard fadeAnimation;
         private Storyboard scaleXAnimation;
         private Storyboard scaleYAnimation;
+
         protected override void OnApplyTemplate()
         {
             _layout = GetTemplateChild("Layout") as Border;

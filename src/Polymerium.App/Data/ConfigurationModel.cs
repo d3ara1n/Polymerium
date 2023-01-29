@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.App.Configurations;
+using System;
 
 namespace Polymerium.App.Data
 {
@@ -13,12 +10,15 @@ namespace Polymerium.App.Data
         public override Uri Location => location;
 
         public AppSettings Settings { get; set; }
-        public string AccountShowcase { get; set; }
+        public string AccountShowcaseId { get; set; }
+
+        public FileBasedLaunchConfiguration GameGlobals { get; set; }
 
         public override void Apply(Configuration data)
         {
             Settings = data.Settings;
-            AccountShowcase = data.AccountShowcaseId;
+            AccountShowcaseId = data.AccountShowcaseId;
+            GameGlobals = data.GameGlobals;
         }
 
         public override Configuration Extract()
@@ -26,7 +26,8 @@ namespace Polymerium.App.Data
             var cfg = new Configuration()
             {
                 Settings = Settings,
-                AccountShowcaseId = AccountShowcase
+                AccountShowcaseId = AccountShowcaseId,
+                GameGlobals = GameGlobals,
             };
             return cfg;
         }

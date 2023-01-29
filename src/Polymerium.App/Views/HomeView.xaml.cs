@@ -15,7 +15,8 @@ namespace Polymerium.App.Views;
 /// </summary>
 public sealed partial class HomeView : Page
 {
-    public HomeViewModel ViewModel {get;}
+    public HomeViewModel ViewModel { get; }
+
     public HomeView()
     {
         InitializeComponent();

@@ -4,19 +4,18 @@
 <Page
     x:Class="Polymerium.App.Views.AddAccountWizard.OfflineAccountView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Polymerium.App.Views.AddAccountWizard"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock Text="玩家名"/>
-            <TextBox Text="{x:Bind ViewModel.Nickname,Mode=TwoWay}"/>
-            <TextBlock Text="UUID"/>
-            <TextBox Text="{x:Bind ViewModel.UUID,Mode=TwoWay}" PlaceholderText="{x:Bind ViewModel.EmptyUUID}"/>
-            <TextBlock Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}"/>
+            <TextBlock Text="玩家名" />
+            <TextBox Text="{x:Bind ViewModel.Nickname,Mode=TwoWay}" />
+            <TextBlock Text="UUID" />
+            <TextBox Text="{x:Bind ViewModel.UUID,Mode=TwoWay}" PlaceholderText="{x:Bind ViewModel.EmptyUUID,Mode=OneWay}" />
+            <TextBlock Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" />
         </StackPanel>
     </Grid>
 </Page>

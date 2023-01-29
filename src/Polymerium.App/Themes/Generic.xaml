@@ -4,26 +4,25 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:behaviors="using:CommunityToolkit.WinUI.UI.Behaviors"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:triggers="using:CommunityToolkit.WinUI.UI.Triggers"
-    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
     xmlns:interactions="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:media="using:CommunityToolkit.WinUI.UI.Media">
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:converters="using:Polymerium.App.Converters">
 
     <!-- 放 App.xaml 或其他字典里就报错 -->
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource LayerOnAcrylicFillColorDefault}" />
     <SolidColorBrush x:Key="CardStrokeBrush" Color="{StaticResource ControlStrokeColorDefault}" />
-    <SolidColorBrush x:Key="FloatLayerBackgroundBrush" Color="{StaticResource CardBackgroundFillColorDefault}"/>
+    <SolidColorBrush x:Key="FloatLayerBackgroundBrush" Color="{StaticResource CardBackgroundFillColorDefault}" />
     <CornerRadius x:Key="ContentAreaCornerRadius">10</CornerRadius>
     <CornerRadius x:Key="ItemAreaCornerRadius">5</CornerRadius>
 
-    <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter"/>
-    <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter"/>
-    <converters:NullToParameterConverter x:Key="NullToParameterConverter"/>
+    <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
+    <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
+    <converters:NullToParameterConverter x:Key="NullToParameterConverter" />
 
     <Style TargetType="controls:CustomDialog" BasedOn="{StaticResource DefaultCustomDialogStyle}" />
 
@@ -34,7 +33,7 @@
         <Setter Property="BorderThickness" Value="{ThemeResource ContentDialogBorderWidth}" />
         <Setter Property="Background" Value="{ThemeResource ContentDialogBackground}" />
         <Setter Property="Foreground" Value="{ThemeResource ContentDialogForeground}" />
-        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}"/>
+        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}" />
         <Setter Property="Padding" Value="{ThemeResource ContentDialogPadding}" />
         <Setter Property="MinWidth" Value="248" />
         <Setter Property="MinHeight" Value="100" />
@@ -121,7 +120,7 @@
                                     </Border>
                                     <Grid x:Name="OperationArea" Grid.Row="1" Visibility="Collapsed">
                                         <ContentControl x:Name="OperationContainer" HorizontalAlignment="Right"
-                                                        Margin="{TemplateBinding OperationPadding}" Content="{TemplateBinding OperationContent}"/>
+                                                        Margin="{TemplateBinding OperationPadding}" Content="{TemplateBinding OperationContent}" />
                                     </Grid>
                                 </Grid>
                             </Border>
@@ -132,46 +131,46 @@
         </Setter>
     </Style>
 
-    <Style TargetType="controls:RecentPlayedItemControl" BasedOn="{StaticResource DefaultRecentPlayedItem}"/>
+    <Style TargetType="controls:RecentPlayedItemControl" BasedOn="{StaticResource DefaultRecentPlayedItem}" />
 
     <Style x:Key="DefaultRecentPlayedItemStyle" TargetType="controls:RecentPlayedItemControl">
-        <Setter Property="Padding" Value="5"/>
-        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}"/>
-        <Setter Property="Background" Value="{ThemeResource FloatLayerBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}"/>
-        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}" />
+        <Setter Property="Background" Value="{ThemeResource FloatLayerBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:RecentPlayedItemControl">
                     <Grid Margin="{TemplateBinding Padding}">
                         <Border x:Name="PART_Border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.OpacityTransition>
-                                <ScalarTransition/>
+                                <ScalarTransition />
                             </Border.OpacityTransition>
                         </Border>
                         <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.OpacityTransition>
-                                <ScalarTransition/>
+                                <ScalarTransition />
                             </Border.OpacityTransition>
                         </Border>
-                        <ContentPresenter/>
+                        <ContentPresenter />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style TargetType="controls:IconButton" BasedOn="{StaticResource DefaultIconButtonStyle}"/>
+    <Style TargetType="controls:IconButton" BasedOn="{StaticResource DefaultIconButtonStyle}" />
 
     <Style x:Key="DefaultIconButtonStyle" TargetType="controls:IconButton">
         <Style.Setters>
             <Setter Property="Background" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />
             <Setter Property="BorderBrush" Value="{ThemeResource HyperlinkButtonBorderThemeBrush}" />
             <Setter Property="BorderThickness" Value="{ThemeResource HyperlinkButtonBorderThemeThickness}" />
-            <Setter Property="Padding" Value="{ThemeResource ButtonPadding}"/>
+            <Setter Property="Padding" Value="{ThemeResource ButtonPadding}" />
             <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
             <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}"/>
+            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:IconButton">
@@ -184,8 +183,8 @@
                                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity">
                                                     <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="0.0" />
                                                 </DoubleAnimationUsingKeyFrames>
-                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.0" To="0.95"/>
-                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.0" To="0.95"/>
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.0" To="0.95" />
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.0" To="0.95" />
                                             </Storyboard>
                                         </VisualState.Storyboard>
                                     </VisualState>
@@ -197,12 +196,12 @@
                                                 </DoubleAnimationUsingKeyFrames>
                                                 <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
                                                     <DoubleAnimation.EasingFunction>
-                                                        <SineEase EasingMode="EaseIn"/>
+                                                        <SineEase EasingMode="EaseIn" />
                                                     </DoubleAnimation.EasingFunction>
                                                 </DoubleAnimation>
                                                 <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
                                                     <DoubleAnimation.EasingFunction>
-                                                        <SineEase EasingMode="EaseIn"/>
+                                                        <SineEase EasingMode="EaseIn" />
                                                     </DoubleAnimation.EasingFunction>
                                                 </DoubleAnimation>
                                             </Storyboard>
@@ -210,13 +209,13 @@
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
-                                            <Setter Target="PART_Background.Opacity" Value="1"/>
-                                            <Setter Target="PART_Background.Background" Value="{ThemeResource HyperlinkButtonBackgroundPressed}"/>
+                                            <Setter Target="PART_Background.Opacity" Value="1" />
+                                            <Setter Target="PART_Background.Background" Value="{ThemeResource HyperlinkButtonBackgroundPressed}" />
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <VisualState.Setters>
-                                            <Setter Target="PART_Container.Foreground" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}"/>
+                                            <Setter Target="PART_Container.Foreground" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
                                         </VisualState.Setters>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -224,10 +223,10 @@
 
                             <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" RenderTransformOrigin="0.5,0.5">
                                 <Border.RenderTransform>
-                                    <ScaleTransform x:Name="PART_Transform"/>
+                                    <ScaleTransform x:Name="PART_Transform" />
                                 </Border.RenderTransform>
                             </Border>
-                            <ContentPresenter x:Name="PART_Container" Margin="{TemplateBinding Padding}"/>
+                            <ContentPresenter x:Name="PART_Container" Margin="{TemplateBinding Padding}" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -235,38 +234,38 @@
         </Style.Setters>
     </Style>
 
-    <Style TargetType="controls:Card" BasedOn="{StaticResource DefaultCardStyle}"/>
+    <Style TargetType="controls:Card" BasedOn="{StaticResource DefaultCardStyle}" />
 
     <Style x:Key="DefaultCardStyle" TargetType="controls:Card">
-        <Setter Property="Padding" Value="15"/>
-        <Setter Property="Background" Value="{ThemeResource CardBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}"/>
+        <Setter Property="Padding" Value="15" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:Card">
                     <Grid CornerRadius="{TemplateBinding CornerRadius}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter Margin="{TemplateBinding Padding}"/>
+                        <ContentPresenter Margin="{TemplateBinding Padding}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style TargetType="controls:GroupBox" BasedOn="{StaticResource DefaultGroupBoxStyle}"/>
+    <Style TargetType="controls:GroupBox" BasedOn="{StaticResource DefaultGroupBoxStyle}" />
 
     <Style x:Key="DefaultGroupBoxStyle" TargetType="controls:GroupBox">
-        <Setter Property="Background" Value="{ThemeResource CardBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="{ThemeResource ItemAreaCornerRadius}"/>
-        <Setter Property="Padding" Value="15"/>
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ItemAreaCornerRadius}" />
+        <Setter Property="Padding" Value="15" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <Border BorderThickness="0,0,0,1" BorderBrush="{ThemeResource CardStrokeBrush}">
-                        <TextBlock Text="{Binding}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="20,10,20,10"/>
+                        <TextBlock Text="{Binding}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="20,10,20,10" />
                     </Border>
                 </DataTemplate>
             </Setter.Value>
@@ -276,9 +275,9 @@
                 <ControlTemplate TargetType="controls:GroupBox">
                     <Grid RowDefinitions="Auto,*"  CornerRadius="{TemplateBinding CornerRadius}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
                         <Grid>
-                            <ContentPresenter Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                            <ContentPresenter Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         </Grid>
-                        <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}"/>
+                        <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -286,15 +285,15 @@
     </Style>
 
     <Style TargetType="controls:GlowingButton">
-        <Setter Property="Padding" Value="20,8,20,8"/>
-        <Setter Property="Background" Value="{ThemeResource SystemAccentColorDark1}"/>
-        <Setter Property="GlowColor" Value="{ThemeResource SystemAccentColor}"/>
+        <Setter Property="Padding" Value="20,8,20,8" />
+        <Setter Property="Background" Value="{ThemeResource SystemAccentColorDark1}" />
+        <Setter Property="GlowColor" Value="{ThemeResource SystemAccentColor}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:GlowingButton">
                     <Border x:Name="PART_Background" Background="{TemplateBinding Background}">
                         <ui:Effects.Shadow>
-                            <media:AttachedCardShadow x:Name="PART_Shadow" Offset="0" BlurRadius="8" Color="{ThemeResource SystemAccentColor}" Opacity="0"/>
+                            <media:AttachedCardShadow x:Name="PART_Shadow" Offset="0" BlurRadius="8" Color="{ThemeResource SystemAccentColor}" Opacity="0" />
                         </ui:Effects.Shadow>
                         <animations:Explicit.Animations>
                             <animations:AnimationSet x:Name="PointerEnter">
@@ -308,32 +307,32 @@
                             <VisualStateGroup x:Name="Common">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_Layer" Storyboard.TargetProperty="Opacity" To="0" Duration="{StaticResource ControlNormalAnimationDuration}"/>
+                                        <DoubleAnimation Storyboard.TargetName="PART_Layer" Storyboard.TargetProperty="Opacity" To="0" Duration="{StaticResource ControlNormalAnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_Layer" Storyboard.TargetProperty="Opacity" To="1" Duration="{StaticResource ControlFasterAnimationDuration}"/>
+                                        <DoubleAnimation Storyboard.TargetName="PART_Layer" Storyboard.TargetProperty="Opacity" To="1" Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity" To="0.7" Duration="{StaticResource ControlFasterAnimationDuration}"/>
+                                        <DoubleAnimation Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity" To="0.7" Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <interactivity:Interaction.Behaviors>
                             <interactions:EventTriggerBehavior EventName="PointerEntered">
-                                <behaviors:StartAnimationAction Animation="{Binding ElementName=PointerEnter}"/>
+                                <behaviors:StartAnimationAction Animation="{Binding ElementName=PointerEnter}" />
                             </interactions:EventTriggerBehavior>
                             <interactions:EventTriggerBehavior EventName="PointerExited">
-                                <behaviors:StartAnimationAction Animation="{Binding ElementName=PointerLeave}"/>
+                                <behaviors:StartAnimationAction Animation="{Binding ElementName=PointerLeave}" />
                             </interactions:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
                         <Grid>
-                            <Rectangle x:Name="PART_Layer" Fill="{ThemeResource FloatLayerBackgroundBrush}" Opacity="0"/>
-                            <ContentPresenter x:Name="Container"  Margin="{TemplateBinding Padding}"/>
+                            <Rectangle x:Name="PART_Layer" Fill="{ThemeResource FloatLayerBackgroundBrush}" Opacity="0" />
+                            <ContentPresenter x:Name="Container"  Margin="{TemplateBinding Padding}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -341,14 +340,14 @@
         </Setter>
     </Style>
 
-    <Style TargetType="controls:ExpanderEx" BasedOn="{StaticResource DefaultExpanderExStyle}"/>
+    <Style TargetType="controls:ExpanderEx" BasedOn="{StaticResource DefaultExpanderExStyle}" />
 
     <Style x:Key="DefaultExpanderExStyle" TargetType="controls:ExpanderEx">
-        <Setter Property="CornerRadius" Value="{ThemeResource ItemAreaCornerRadius}"/>
-        <Setter Property="Background" Value="{ThemeResource ExpanderHeaderBackground}"/>
-        <Setter Property="BorderBrush" Value="{ThemeResource ExpanderHeaderBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="{ThemeResource ExpanderHeaderBorderThickness}"/>
-        <Setter Property="Padding" Value="12"/>
+        <Setter Property="CornerRadius" Value="{ThemeResource ItemAreaCornerRadius}" />
+        <Setter Property="Background" Value="{ThemeResource ExpanderHeaderBackground}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource ExpanderHeaderBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{ThemeResource ExpanderHeaderBorderThickness}" />
+        <Setter Property="Padding" Value="12" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ExpanderEx">
@@ -367,13 +366,13 @@
                                                 <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
                                                 <SplineDoubleKeyFrame KeyTime="0:0:0.167" Value="-5" KeySpline="1.0, 1.0, 0.0, 1.0" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="PART_Container" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.167"/>
+                                            <DoubleAnimation Storyboard.TargetName="PART_Container" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.167" />
                                         </Storyboard>
                                     </VisualState.Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Open">
                                     <VisualState.Setters>
-                                        <Setter Target="PART_Indicator.Glyph" Value="&#xE70E;"/>
+                                        <Setter Target="PART_Indicator.Glyph" Value="&#xE70E;" />
                                         <Setter Target="PART_Header.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
                                     </VisualState.Setters>
                                     <VisualState.Storyboard>
@@ -387,7 +386,7 @@
                                                 <DiscreteDoubleKeyFrame KeyTime="0" Value="-5" />
                                                 <SplineDoubleKeyFrame KeyTime="0:0:0.333" Value="0" KeySpline="0.0, 0.0, 0.0, 1.0" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="PART_Container" Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="0:0:0.333"/>
+                                            <DoubleAnimation Storyboard.TargetName="PART_Container" Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="0:0:0.333" />
                                         </Storyboard>
                                     </VisualState.Storyboard>
                                 </VisualState>
@@ -397,7 +396,7 @@
                             <ToggleButton x:Name="PART_Header" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" IsEnabled="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToBoolConverter}}" IsThreeState="False" IsChecked="{Binding IsExpanded,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}" HorizontalContentAlignment="Stretch" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
-                                        <ContentPresenter 
+                                        <ContentPresenter
                                         x:Name="ContentPresenter"
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -415,7 +414,7 @@
                                             </ContentPresenter.BackgroundTransition>
                                             <VisualStateManager.VisualStateGroups>
                                                 <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal"/>
+                                                    <VisualState x:Name="Normal" />
                                                     <VisualState x:Name="PointerOver">
                                                         <Storyboard>
                                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
@@ -442,8 +441,8 @@
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
-                                                    <VisualState x:Name="Disabled"/>
-                                                    <VisualState x:Name="Checked"/>
+                                                    <VisualState x:Name="Disabled" />
+                                                    <VisualState x:Name="Checked" />
                                                     <VisualState x:Name="CheckedPointerOver">
                                                         <Storyboard>
                                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
@@ -542,17 +541,17 @@
                                 </ToggleButton.Template>
                             </ToggleButton>
                             <Grid ColumnDefinitions="*,Auto" Margin="{TemplateBinding Padding}">
-                                <ContentPresenter Content="{TemplateBinding Header}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ContentTemplate="{TemplateBinding HeaderTemplate}"/>
+                                <ContentPresenter Content="{TemplateBinding Header}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ContentTemplate="{TemplateBinding HeaderTemplate}" />
                                 <Grid Grid.Column="1" MinWidth="36">
-                                    <FontIcon x:Name="PART_Indicator" Visibility="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToVisibleConverter}}" Glyph="&#xE70D;"/>
+                                    <FontIcon x:Name="PART_Indicator" Visibility="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToVisibleConverter}}" Glyph="&#xE70D;" />
                                 </Grid>
                             </Grid>
                         </Grid>
                         <Border Grid.Row="1" x:Name="PART_Container" Visibility="Collapsed">
                             <Border.RenderTransform>
-                                <CompositeTransform x:Name="PART_CompositeTransform"/>
+                                <CompositeTransform x:Name="PART_CompositeTransform" />
                             </Border.RenderTransform>
-                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                         </Border>
                     </Grid>
                 </ControlTemplate>

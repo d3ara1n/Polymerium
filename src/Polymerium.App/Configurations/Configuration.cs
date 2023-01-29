@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Polymerium.Abstractions.LaunchConfigurations;
 
 namespace Polymerium.App.Configurations
 {
@@ -10,5 +6,6 @@ namespace Polymerium.App.Configurations
     {
         public AppSettings Settings { get; set; }
         public string AccountShowcaseId { get; set; }
+        public FileBasedLaunchConfiguration GameGlobals { get; set; }
     }
 }

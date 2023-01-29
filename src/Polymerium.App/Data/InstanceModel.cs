@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
+using System;
 
 namespace Polymerium.App.Data
 {
@@ -15,6 +11,7 @@ namespace Polymerium.App.Data
     {
         private static Uri location = new Uri("poly-file:///instances.json", UriKind.Absolute);
         public override Uri Location => location;
+
         private static JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
         {
             Formatting = Formatting.Indented,
@@ -26,6 +23,7 @@ namespace Polymerium.App.Data
                 NamingStrategy = new CamelCaseNamingStrategy()
             }
         };
+
         public override JsonSerializerSettings SerializerSettings => serializerSettings;
 
         public string Id { get; set; }
@@ -39,7 +37,6 @@ namespace Polymerium.App.Data
 
         public override void Apply(GameInstance instance)
         {
-
             Id = instance.Id;
             Metadata = instance.Metadata;
             Configuration = instance.Configuration;

@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Polymerium.Core.Engines.Downloading
 {
@@ -14,6 +10,7 @@ namespace Polymerium.Core.Engines.Downloading
         public Action<DownloadTask, bool> CompletedCallback { get; set; }
         public CancellationToken Token { get; set; } = CancellationToken.None;
         internal EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+
         public void Wait()
         {
             waitHandle.WaitOne();

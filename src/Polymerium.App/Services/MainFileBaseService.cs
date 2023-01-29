@@ -1,13 +1,10 @@
+using Microsoft.Extensions.Options;
+using Polymerium.Core;
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using Microsoft.UI.Xaml.Media;
-using Polymerium.Core;
 
 namespace Polymerium.App.Services
 {
@@ -16,6 +13,7 @@ namespace Polymerium.App.Services
     {
         private readonly MainFileBaseOptions _options;
         private readonly MemoryStorage _memory;
+
         public MainFileBaseService(IOptions<MainFileBaseOptions> options, MemoryStorage memory)
         {
             _options = options.Value;
@@ -24,14 +22,13 @@ namespace Polymerium.App.Services
 
         public string Locate(Uri uri)
         {
-
             if (uri.IsAbsoluteUri)
             {
                 if (uri.Scheme != "poly-file" && !string.IsNullOrEmpty(uri.Scheme))
                     throw new ArgumentException("Not valid poly-file url");
                 if (string.IsNullOrEmpty(uri.Host))
                 {
-                    return Path.Combine(_options.BaseFolder, uri.GetComponents(UriComponents.Path, UriFormat.Unescaped));
+                    return new Uri(new Uri(_options.BaseFolder), uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)).LocalPath;
                 }
                 else
                 {

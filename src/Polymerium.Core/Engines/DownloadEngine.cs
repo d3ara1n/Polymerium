@@ -1,23 +1,19 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Polymerium.Core.Engines.Downloading;
+using System;
+using System.Collections.Concurrent;
+using System.IO;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.Core.Engines
 {
     public class DownloadEngine
     {
-        const uint MAX_WORKER = 8;
-        const int MAX_RETRY = 3;
-        uint workerNumber = 0;
+        private const uint MAX_WORKER = 8;
+        private const int MAX_RETRY = 3;
+        private uint workerNumber = 0;
 
         private readonly ILogger _logger;
 
@@ -45,7 +41,6 @@ namespace Polymerium.Core.Engines
             };
             foreach (var task in group.Tasks)
             {
-
                 var internalTask = new InternalTask()
                 {
                     AssociatedGroup = internalGroup,

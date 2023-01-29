@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -12,6 +8,10 @@ using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.Views;
 
@@ -24,8 +24,6 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         _dispatcher = DispatcherQueue.GetForCurrentThread();
     }
 
-
-
     public IEnumerable<GameVersionModel> Versions
     {
         get { return (IEnumerable<GameVersionModel>)GetValue(VersionsProperty); }
@@ -36,9 +34,6 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     public static readonly DependencyProperty VersionsProperty =
         DependencyProperty.Register(nameof(Versions), typeof(IEnumerable<GameVersionModel>), typeof(CreateInstanceWizardDialog), new PropertyMetadata(null));
 
-
-
-
     public bool IsOperable
     {
         get { return (bool)GetValue(IsOperableProperty); }
@@ -47,7 +42,6 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
 
     public static readonly DependencyProperty IsOperableProperty =
         DependencyProperty.Register(nameof(IsOperable), typeof(bool), typeof(CreateInstanceWizardDialog), new PropertyMetadata(false));
-
 
     public string ErrorMessage
     {

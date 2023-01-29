@@ -7,6 +7,7 @@ namespace Polymerium.App.Views
     public sealed partial class SettingView : Page
     {
         public SettingViewModel ViewModel { get; }
+
         public SettingView()
         {
             this.InitializeComponent();

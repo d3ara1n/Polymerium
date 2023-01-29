@@ -1,12 +1,12 @@
 {
-  "profiles": {
-    "Polymerium.App (Package)": {
-      "commandName": "MsixPackage",
-      "hotReloadEnabled": true,
-      "nativeDebugging": false
-    },
-    "Polymerium.App (Unpackaged)": {
-      "commandName": "Project"
+    "profiles": {
+        "Polymerium.App (Package)": {
+            "commandName": "MsixPackage",
+            "hotReloadEnabled": true,
+            "nativeDebugging": false
+        },
+        "Polymerium.App (Unpackaged)": {
+            "commandName": "Project"
+        }
     }
-  }
 }

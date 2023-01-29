@@ -1,27 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
-using Polymerium.Abstractions.Meta;
 using Polymerium.Core.Engines.Downloading;
 using Polymerium.Core.Engines.Restoring;
 using Polymerium.Core.Models.Mojang;
-using Polymerium.Core.Models.Mojang.Converters;
+using System;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using Wupoo;
 
 namespace Polymerium.Core.Engines
 {
     public delegate void RestoreProgressHandler(RestoreEngine sender, RestoreProgressEventArgs args);
+
     public class RestoreEngine
     {
         private readonly ILogger _logger;
@@ -30,6 +25,8 @@ namespace Polymerium.Core.Engines
         private readonly DownloadEngine _downloader;
         private readonly WapooOptions _wapooOptions;
         private readonly IFileBaseService _fileBaseService;
+        private readonly SHA1 _sha1 = SHA1.Create();
+
         public RestoreEngine(ILogger<RestoreEngine> logger, GameManager manager, ResolveEngine resolver, DownloadEngine downloader, IFileBaseService fileBaseService)
         {
             _logger = logger;
@@ -38,10 +35,6 @@ namespace Polymerium.Core.Engines
             _downloader = downloader;
             _fileBaseService = fileBaseService;
             var settings = new JsonSerializerSettings();
-            settings.Converters.Add(new ArgumentsItemConverter());
-            settings.Converters.Add(new RuleFeaturesConverter());
-            settings.Converters.Add(new AssetsIndexConverter());
-            settings.Converters.Add(new ClassifierConverter());
             _wapooOptions = new WapooOptions()
             {
                 JsonSerializerOptions = settings
@@ -83,7 +76,7 @@ namespace Polymerium.Core.Engines
 
         private async Task<bool> RestoreInternalAsync(GameInstance instance, RestoreProgressHandler callback, CancellationToken token)
         {
-            var index = await EnsureInstanceIndexCreatedAsync(instance, callback, token);
+            var index = await EnsureIndexCreatedAsync(instance, callback, token);
             if (index == null) return false;
             // 下载 jar
             var jarFile = await EnsureJarDownloadedAsync(instance, index.Value, callback, token);
@@ -129,7 +122,8 @@ namespace Polymerium.Core.Engines
                 }
                 if (item.Natives.HasValue)
                 {
-                    var native = OperatingSystem.IsWindows() ? item.Natives.Value.Windows : (OperatingSystem.IsMacOS() ? item.Natives.Value.Osx : (OperatingSystem.IsLinux() ? item.Natives.Value.Linux : "unknown"));
+                    // support more platform not only windows
+                    var native = item.Natives.Value.Windows;
                     if (native == "unknown")
                     {
                         callback?.Invoke(this, RestoreProgressEventArgs.CreateError(RestoreError.OsNotSupport, item.Name));
@@ -200,7 +194,7 @@ namespace Polymerium.Core.Engines
         private async Task<Uri> EnsureJarDownloadedAsync(GameInstance instance, Models.Mojang.Index index, RestoreProgressHandler callback, CancellationToken token)
         {
             if (token.IsCancellationRequested) return null;
-            var jarFilePath = new Uri($"poly-file://{instance.Id}/{instance.FolderName}.jar", UriKind.Absolute);
+            var jarFilePath = new Uri($"poly-file://{instance.Id}/client.jar", UriKind.Absolute);
             if (!await _fileBaseService.VerfyHashAsync(jarFilePath, index.Downloads.Client.Sha1, SHA1.Create()))
             {
                 callback?.Invoke(this, RestoreProgressEventArgs.CreateUpdate(RestoreProgressType.Core, $"{instance.FolderName}.jar"));
@@ -251,10 +245,10 @@ namespace Polymerium.Core.Engines
             }
         }
 
-        private async Task<Models.Mojang.Index?> EnsureInstanceIndexCreatedAsync(GameInstance instance, RestoreProgressHandler callback, CancellationToken token)
+        private async Task<Models.Mojang.Index?> EnsureIndexCreatedAsync(GameInstance instance, RestoreProgressHandler callback, CancellationToken token)
         {
             if (token.IsCancellationRequested) return null;
-            var indexFilePath = new Uri($"poly-file://{instance.Id}/index.json", UriKind.Absolute);
+            var indexFilePath = new Uri($"poly-file:///local/indexes/{instance.Metadata.CoreVersion}.json", UriKind.Absolute);
             string content = null;
             var meta = instance.Metadata;
             if (!_fileBaseService.TryReadAllText(indexFilePath, out content))

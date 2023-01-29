@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Polymerium.Abstractions.Accounts;
+using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Polymerium.App.Data
 {
     public class AccountModel : RefinedModelBase<IGameAccount>
     {
-        readonly byte[] POLY_SIGNED = new byte[] { 114, 5, 14, 191, 98, 10 };
+        private readonly byte[] POLY_SIGNED = new byte[] { 114, 5, 14, 191, 98, 10 };
         private readonly Uri location = new Uri("poly-file:///accounts.json");
         public override Uri Location => location;
         public string TypeName { get; set; }
