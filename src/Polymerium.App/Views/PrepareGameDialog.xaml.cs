@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Polymerium.Abstractions;
 using Polymerium.App.Services;
+using Polymerium.App.ViewModels;
 
 namespace Polymerium.App.Views;
 

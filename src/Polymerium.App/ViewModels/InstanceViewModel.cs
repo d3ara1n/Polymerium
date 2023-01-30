@@ -6,7 +6,7 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;
 
-public class InstanceViewModel : ObservableObject
+public partial class InstanceViewModel : ObservableObject
 {
     private readonly InstanceManager _instanceManager;
     private readonly IOverlayService _overlayService;

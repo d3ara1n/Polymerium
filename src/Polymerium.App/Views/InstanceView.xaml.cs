@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.Abstractions;
+using Polymerium.App.ViewModels;
 
 namespace Polymerium.App.Views;
 

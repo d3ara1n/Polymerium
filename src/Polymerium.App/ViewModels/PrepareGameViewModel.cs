@@ -19,7 +19,7 @@ using Polymerium.Core.Stars;
 
 namespace Polymerium.App.ViewModels;
 
-public sealed class PrepareGameViewModel : ObservableObject, IDisposable
+public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
 {
     private readonly AccountManager _accountManager;
     private readonly ConfigurationManager _configurationManager;

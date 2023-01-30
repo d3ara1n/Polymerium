@@ -17,7 +17,7 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;
 
-public sealed class MainViewModel : ObservableRecipient, IDisposable
+public sealed partial class MainViewModel : ObservableRecipient, IDisposable
 {
     private readonly AccountManager _accountManager;
     private readonly ComponentManager _componentManager;

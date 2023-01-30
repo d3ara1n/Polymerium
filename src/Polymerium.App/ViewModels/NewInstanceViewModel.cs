@@ -5,7 +5,7 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;
 
-public class NewInstanceViewModel : ObservableObject
+public partial class NewInstanceViewModel : ObservableObject
 {
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
