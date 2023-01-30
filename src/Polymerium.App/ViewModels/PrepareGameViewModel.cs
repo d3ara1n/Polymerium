@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
@@ -6,189 +10,235 @@ using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Accounts;
 using Polymerium.Abstractions.LaunchConfigurations;
+using Polymerium.Abstractions.Models;
 using Polymerium.App.Services;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
-using Polymerium.Core.Engines.Restoring;
 using Polymerium.Core.LaunchConfigurations;
-using Polymerium.Core.Models.Mojang.Indexes;
 using Polymerium.Core.Stars;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Polymerium.App.ViewModels
+namespace Polymerium.App.ViewModels;
+
+public sealed class PrepareGameViewModel : ObservableObject, IDisposable
 {
-    public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
+    private readonly AccountManager _accountManager;
+    private readonly ConfigurationManager _configurationManager;
+    private readonly DispatcherQueue _dispatcher;
+    private readonly IFileBaseService _fileBase;
+    private readonly MemoryStorage _memoryStorage;
+    private readonly IOverlayService _overlayService;
+    private readonly RestoreEngine _restore;
+
+    private readonly CancellationTokenSource source = new();
+    private IGameAccount account;
+
+    private GameInstance instance;
+
+    private string labelTitle;
+    private string progress;
+    private string progressDetails;
+
+    private Action readyHandler;
+
+    public PrepareGameViewModel(RestoreEngine restore, AccountManager accountManager,
+        ConfigurationManager configurationManager, IFileBaseService fileBase, IOverlayService overlayService,
+        MemoryStorage memoryStorage)
     {
-        private readonly DispatcherQueue _dispatcher;
-        private readonly RestoreEngine _restore;
-        private readonly AccountManager _accountManager;
-        private readonly ConfigurationManager _configurationManager;
-        private readonly IFileBaseService _fileBase;
+        _restore = restore;
+        _accountManager = accountManager;
+        _configurationManager = configurationManager;
+        _fileBase = fileBase;
+        _overlayService = overlayService;
+        _memoryStorage = memoryStorage;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
+    }
 
-        private Action readyHandler;
+    public GameInstance Instance
+    {
+        get => instance;
+        set => SetProperty(ref instance, value);
+    }
 
-        private GameInstance instance;
-        public GameInstance Instance { get => instance; set => SetProperty(ref instance, value); }
-        private IGameAccount account;
-        public IGameAccount Account { get => account; set => SetProperty(ref account, value); }
-        private string progress = "准备中";
-        public string Progress { get => progress; set => SetProperty(ref progress, value); }
-        private string progressDetails;
-        public string ProgressDetails { get => progressDetails; set => SetProperty(ref progressDetails, value); }
+    public IGameAccount Account
+    {
+        get => account;
+        set => SetProperty(ref account, value);
+    }
 
-        public PrepareGameViewModel(RestoreEngine restore, AccountManager accountManager, ConfigurationManager configurationManager, IFileBaseService fileBase)
+    public string LabelTitle
+    {
+        get => labelTitle;
+        set => SetProperty(ref labelTitle, value);
+    }
+
+    public string Progress
+    {
+        get => progress;
+        set => SetProperty(ref progress, value);
+    }
+
+    public string ProgressDetails
+    {
+        get => progressDetails;
+        set => SetProperty(ref progressDetails, value);
+    }
+
+    public void Dispose()
+    {
+        // application exit
+        Cancel();
+    }
+
+    public bool GotInstance(GameInstance instance, Action handler)
+    {
+        Instance = instance;
+        readyHandler = handler;
+        if (_accountManager.TryFindById(instance.BoundAccountId, out var a))
         {
-            _restore = restore;
-            _accountManager = accountManager;
-            _configurationManager = configurationManager;
-            _fileBase = fileBase;
-            _dispatcher = DispatcherQueue.GetForCurrentThread();
+            Account = a;
+            return true;
         }
 
-        public bool GotInstance(GameInstance instance, Action handler)
+        return false;
+    }
+
+    public void Cancel()
+    {
+        if (!source.IsCancellationRequested) source.Cancel();
+    }
+
+    public async Task PrepareAsync()
+    {
+        await PrepareAsync(source.Token);
+    }
+
+    public async Task PrepareAsync(CancellationToken token)
+    {
+        var stage = _restore.ProduceStage(Instance, _memoryStorage.SupportedComponents);
+        stage.TaskFinishedCallback = UpdateTaskProgressSafe;
+        UpdateLabelSafe(stage.StageName);
+        UpdateTaskProgressSafe("准备中");
+        var hasNext = false;
+        // TODO: update title as rolling text with stage name
+        do
         {
-            Instance = instance;
-            readyHandler = handler;
-            if (_accountManager.TryFindById(instance.BoundAccountId, out var account))
+            UpdateTaskProgressSafe("准备中");
+            var option = await stage.StartAsync();
+            hasNext = option.TryUnwrap(out var lastStage);
+            if (hasNext)
             {
-                Account = account;
-                return true;
+                stage = lastStage;
+                stage.TaskFinishedCallback = UpdateTaskProgressSafe;
+                UpdateLabelSafe(stage.StageName);
             }
-            else
+        } while (hasNext);
+
+        if (stage.IsCompletedSuccessfully)
+        {
+            if (!stage.Token.IsCancellationRequested)
             {
-                return false;
+                UpdateLabelSafe("您的游戏已经准备就绪", true);
+                UpdateTaskProgressSafe("任务完成");
             }
         }
-
-        private readonly CancellationTokenSource source = new CancellationTokenSource();
-
-        public void Cancel()
+        else
         {
-            if (!source.IsCancellationRequested)
-            {
-                source.Cancel();
-            }
+            CriticalError($"{stage.StageName}:\n{stage.ErrorMessage}");
         }
+    }
 
-        public async Task PrepareAsync() => await PrepareAsync(source.Token);
-
-        public async Task PrepareAsync(CancellationToken token)
+    private void UpdateLabelSafe(string title, bool ready = false)
+    {
+        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
-            await _restore.RestoreAsync(instance, (_, args) => UpdateProgressSafe(args), token);
-        }
+            LabelTitle = title;
+            if (ready)
+                readyHandler();
+        });
+    }
 
-        private void UpdateProgressSafe(RestoreProgressEventArgs args)
+
+    private void UpdateTaskProgressSafe(string message, string details = null)
+    {
+        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
-            _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, new DispatcherQueueHandler(() =>
-            {
-                switch (args.ProgressType)
+            Progress = message;
+            ProgressDetails = details;
+        });
+    }
+
+
+    [RelayCommand]
+    public void Start()
+    {
+        var workingDir = new Uri($"poly-file://{instance.Id}/");
+        var assetsRoot = new Uri("poly-file:///assets/");
+        var nativesRoot = new Uri($"poly-file://{instance.Id}/natives/");
+        var librariesRoot = new Uri("poly-file:///libraries/");
+        var polylockFile = new Uri($"poly-file://{instance.Id}/polymerium.lock.json");
+        if (_fileBase.TryReadAllText(polylockFile, out var content))
+        {
+            var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
+            var configuration = new CompoundLaunchConfiguration(
+                Instance.Configuration ?? new FileBasedLaunchConfiguration(),
+                _configurationManager.Current.GameGlobals ?? new FileBasedLaunchConfiguration());
+            var builder = new PlanetBlenderBuilder();
+            builder
+                .WithJavaPath(configuration.JavaPath)
+                .WithMainClass(polylock.MainClass)
+                .WithWorkingDirectory(_fileBase.Locate(workingDir))
+                .WithGameArguments(polylock.GameArguments)
+                .WithJvmArguments(polylock.JvmArguments)
+                .ConfigureStarship(configure =>
                 {
-                    case RestoreProgressType.ErrorOccurred:
-                        Progress = args.Error.ToString();
-                        ProgressDetails = args.Exception != null ? args.Exception.ToString() : args.FileName;
-                        break;
-
-                    case RestoreProgressType.Core:
-                        Progress = "补全游戏本体";
-                        ProgressDetails = args.FileName;
-                        break;
-
-                    case RestoreProgressType.Download:
-                        Progress = $"已下载 {args.Downloaded} 个文件，共 {args.TotalToDownload} 个";
-                        ProgressDetails = args.FileName;
-                        break;
-
-                    case RestoreProgressType.Assets:
-                        Progress = "补全资源文件";
-                        ProgressDetails = string.Empty;
-                        break;
-
-                    case RestoreProgressType.Libraries:
-                        Progress = "补全库文件";
-                        ProgressDetails = string.Empty;
-                        break;
-
-                    case RestoreProgressType.AllCompleted:
-                        Progress = "准备就绪";
-                        ProgressDetails = string.Empty;
-                        readyHandler();
-                        break;
-                }
-            }));
-        }
-
-        [RelayCommand]
-        public void Start()
-        {
-            var workingDir = new Uri($"poly-file://{instance.Id}/");
-            var assetsRoot = new Uri("poly-file:///assets/");
-            var nativesRoot = new Uri($"poly-file://{instance.Id}/natives/");
-            var librariesRoot = new Uri($"poly-file:///libraries/");
-            var jarFile = new Uri($"poly-file://{instance.Id}/client.jar");
-            var indexFile = new Uri($"poly-file:///local/indexes/{instance.Metadata.CoreVersion}.json");
-            if (_fileBase.TryReadAllText(indexFile, out var content))
-            {
-                var index = JsonConvert.DeserializeObject<Core.Models.Mojang.Index>(content);
-                var configuration = new CompoundLaunchConfiguration(Instance.Configuration ?? new FileBasedLaunchConfiguration(), _configurationManager.Current.GameGlobals ?? new FileBasedLaunchConfiguration());
-                var builder = new PlanetBlenderBuilder();
-                builder
-                    .WithJavaPath(configuration.JavaPath)
-                    .WithMainClass(index.MainClass)
-                    .WithWorkingDirectory(_fileBase.Locate(workingDir))
-                    .WithGameArguments(index.Arguments.Game)
-                    .WithJvmArguments(index.Arguments.Jvm)
-                    .ConfigureStarship(configure =>
-                {
-                    configure.AddCrate("auth_player_name", Account.Nickname);
-                    configure.AddCrate("version_name", Instance.Metadata.CoreVersion);
-                    configure.AddCrate("game_directory", _fileBase.Locate(workingDir));
-                    configure.AddCrate("assets_root", _fileBase.Locate(assetsRoot));
-                    configure.AddCrate("assets_index_name", index.Assets);
-                    configure.AddCrate("auth_uuid", account.UUID);
-                    // this wont work
-                    configure.AddCrate("auth_access_token", Guid.NewGuid().ToString());
-                    // really?
-                    configure.AddCrate("clientid", "00000000402b5328");
-                    configure.AddCrate("user_type", "legacy");
-                    configure.AddCrate("version_type", "release");
-                    // rule os
-                    // TODO: 目前只支持 windows
-                    configure.AddCrate("os.name", "windows");
-                    // TODO: 目前只支持 x86
-                    configure.AddCrate("os.arch", "x86");
-                    configure.AddCrate("os.version", Environment.OSVersion.Version.ToString());
-                    // jvm
-                    configure.AddCrate("natives_directory", _fileBase.Locate(nativesRoot));
-                    configure.AddCrate("classpath", string.Join(';', index.Libraries.Where(x => x.Verfy()).Select(x => _fileBase.Locate(new Uri(librariesRoot, x.Downloads.Artifact.Path))).Append(_fileBase.Locate(jarFile))));
-                    configure.AddCrate("launcher_name", "Polymerium");
-                    configure.AddCrate("launcher_version", "Latest(maybe)");
+                    configure.AddCargo(polylock.Cargo)
+                        .AddCrate("auth_player_name", Account.Nickname)
+                        .AddCrate("version_name", "THE POWER")
+                        .AddCrate("game_directory", _fileBase.Locate(workingDir))
+                        .AddCrate("assets_root", _fileBase.Locate(assetsRoot))
+                        .AddCrate("assets_index_name", polylock.AssetIndex.Id)
+                        .AddCrate("auth_uuid", account.UUID)
+                        // this wont work
+                        .AddCrate("auth_access_token", Guid.NewGuid().ToString())
+                        // really?
+                        .AddCrate("clientid", "00000000402b5328")
+                        .AddCrate("user_type", "legacy")
+                        .AddCrate("version_type", "release")
+                        // rule os
+                        // TODO: 目前只支持 windows
+                        .AddCrate("os.name", "windows")
+                        // TODO: 目前只支持 x86
+                        .AddCrate("os.arch", "x86")
+                        .AddCrate("os.version", Environment.OSVersion.Version.ToString())
+                        // jvm
+                        .AddCrate("natives_directory", _fileBase.Locate(nativesRoot))
+                        .AddCrate("classpath",
+                            string.Join(';',
+                                polylock.Libraries
+                                    .Select(x => _fileBase.Locate(new Uri(librariesRoot, x.Path)))))
+                        .AddCrate("launcher_name", "Polymerium")
+                        .AddCrate("launcher_version", "Latest(maybe)");
                 });
-                var blender = builder.Build();
-                blender.Start();
-            }
-            else
-            {
-                CriticalError("index.json 文件以错误的方式出现，这可能是还原过程不够彻底或发生未察觉的异常导致");
-            }
+            var blender = builder.Build();
+            blender.Start();
         }
-
-        private void CriticalError(string msg)
+        else
         {
+            CriticalError("Polylock 文件以错误的方式出现，这可能是还原过程不够彻底或发生未察觉的异常导致");
+        }
+    }
+
+    private void CriticalError(string msg)
+    {
+        _dispatcher.TryEnqueue(() =>
+        {
+            _overlayService.Dismiss();
             var dialog = new ContentDialog();
             dialog.XamlRoot = App.Current.Window.Content.XamlRoot;
             dialog.Title = "关键错误";
             dialog.Content = msg;
             dialog.CloseButtonText = "晓得了";
             dialog.ShowAsync();
-        }
-
-        public void Dispose()
-        {
-            // application exit
-            Cancel();
-        }
+        });
     }
 }

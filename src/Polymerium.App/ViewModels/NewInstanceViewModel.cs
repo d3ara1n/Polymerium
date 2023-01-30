@@ -5,10 +5,10 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class NewInstanceViewModel : ObservableObject
+public class NewInstanceViewModel : ObservableObject
 {
-    private readonly IOverlayService _overlayService;
     private readonly NavigationService _navigationService;
+    private readonly IOverlayService _overlayService;
 
     public NewInstanceViewModel(IOverlayService overlayService, NavigationService navigationService)
     {
@@ -19,7 +19,7 @@ public partial class NewInstanceViewModel : ObservableObject
     [RelayCommand]
     public void OpenWizard()
     {
-        _overlayService.Show(new CreateInstanceWizardDialog() { OverlayService = _overlayService });
+        _overlayService.Show(new CreateInstanceWizardDialog { OverlayService = _overlayService });
     }
 
     [RelayCommand]

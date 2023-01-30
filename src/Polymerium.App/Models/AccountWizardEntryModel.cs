@@ -1,11 +1,10 @@
 using System;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public class AccountWizardEntryModel
 {
-    public class AccountWizardEntryModel
-    {
-        public string Caption { get; set; }
-        public string BrandIconSource { get; set; }
-        public Type Page { get; set; }
-    }
+    public string Caption { get; set; }
+    public string BrandIconSource { get; set; }
+    public Type Page { get; set; }
 }

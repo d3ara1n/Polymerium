@@ -1,8 +1,7 @@
-namespace Polymerium.Core.Stars
+namespace Polymerium.Core.Stars;
+
+public struct Crate
 {
-    public struct Crate
-    {
-        public string Label { get; set; }
-        public string Content { get; set; }
-    }
+    public string Label { get; set; }
+    public string Content { get; set; }
 }

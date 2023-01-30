@@ -1,7 +1,6 @@
-namespace Polymerium.App.Services
+namespace Polymerium.App.Services;
+
+public class MainFileBaseOptions
 {
-    public class MainFileBaseOptions
-    {
-        public string BaseFolder { get; set; }
-    }
+    public string BaseFolder { get; set; }
 }

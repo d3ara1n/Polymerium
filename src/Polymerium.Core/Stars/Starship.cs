@@ -1,44 +1,39 @@
-using Polymerium.Core.Models.Mojang.Indexes;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Polymerium.Core.Stars
+namespace Polymerium.Core.Stars;
+
+public class Starship
 {
-    public class Starship
+    private readonly Regex compiled = new(@"\$\{(?<field>[a-z_]+)\}");
+
+    public Starship(IEnumerable<Crate> cargo)
     {
-        private Regex compiled = new Regex(@"\$\{(?<field>[a-z_]+)\}");
-        public IEnumerable<Crate> Cargo { get; private set; }
+        Cargo = cargo;
+    }
 
-        public Starship(IEnumerable<Crate> cargo)
-        {
-            Cargo = cargo;
-        }
+    public IEnumerable<Crate> Cargo { get; }
 
-        public IEnumerable<string> Ship(IEnumerable<ArgumentsItem> from)
+    public IEnumerable<string> Ship(IEnumerable<string> from)
+    {
+        return from.Select(x =>
         {
-            return from.Where(x => x.Verfy()).SelectMany(x => x.Values.Select(x =>
+            var match = compiled.Match(x);
+            if (match.Success)
             {
-                var match = compiled.Match(x);
-                if (match.Success)
+                var group = match.Groups["field"];
+                if (Cargo.Any(x => x.Label == group.Value))
                 {
-                    var group = match.Groups["field"];
-                    if (Cargo.Any(x => x.Label == group.Value))
-                    {
-                        var crate = Cargo.First(x => x.Label == group.Value);
-                        var result = x[..match.Index] + crate.Content + x[(match.Index + match.Length)..];
-                        return result;
-                    }
-                    else
-                    {
-                        return x;
-                    }
+                    var crate = Cargo.First(x => x.Label == group.Value);
+                    var result = x[..match.Index] + crate.Content + x[(match.Index + match.Length)..];
+                    return result;
                 }
-                else
-                {
-                    return x;
-                }
-            }));
-        }
+
+                return x;
+            }
+
+            return x;
+        });
     }
 }

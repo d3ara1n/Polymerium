@@ -42,10 +42,12 @@
                                 <TextBlock VerticalAlignment="Center">
                                     <Run Text="语言" />
                                     <LineBreak />
-                                    <Run Text="重启生效" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <Run Text="重启生效"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
-                            <ComboBox SelectedIndex="0" IsEditable="False" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <ComboBox SelectedIndex="0" IsEditable="False" HorizontalAlignment="Right"
+                                      VerticalAlignment="Center">
                                 <x:String>简体中文</x:String>
                                 <x:String>还是简体中文</x:String>
                             </ComboBox>
@@ -53,23 +55,25 @@
                     </controls:ExpanderEx.Header>
                 </controls:ExpanderEx>
                 <TextBlock Text="游戏全局配置" Style="{StaticResource SubtitleTextBlockStyle}" />
-                <TextBlock Text="私有实例配置中未设置的项目将会继承全局配置中的对应项目" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                <TextBlock Text="私有实例配置中未设置的项目将会继承全局配置中的对应项目"
+                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE8B7;" Margin="20" />
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="Java 可执行文件位置"/>
-                                    <TextBlock Text="{x:Bind ViewModel.JavaPath,Mode=TwoWay}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <TextBlock Text="Java 可执行文件位置" />
+                                    <TextBlock Text="{x:Bind ViewModel.JavaPath,Mode=TwoWay}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
                             </StackPanel>
-                            <Button x:Name="OpenJavaDialogButton" Content="打开选取对话框" HorizontalAlignment="Right"/>
+                            <Button x:Name="OpenJavaDialogButton" Content="打开选取对话框" HorizontalAlignment="Right" />
                         </Grid>
                     </controls:ExpanderEx.Header>
                     <Grid Background="{ThemeResource ExpanderHeaderBackground}">
                         <!-- 日后会有对话框用以在多个 Java 中选择 -->
-                        <TextBox Text="{x:Bind ViewModel.JavaPath,Mode=TwoWay}"/>
+                        <TextBox Text="{x:Bind ViewModel.JavaPath,Mode=TwoWay}" />
                     </Grid>
                 </controls:ExpanderEx>
                 <controls:ExpanderEx Padding="0">
@@ -78,9 +82,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE8B7;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                <Run Text="Java 虚拟机分配的最大内存" />
-                                <LineBreak />
-                                <Run Text="没有自动分配算法，根据经验来设置" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <Run Text="Java 虚拟机分配的最大内存" />
+                                    <LineBreak />
+                                    <Run Text="没有自动分配算法，根据经验来设置"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">

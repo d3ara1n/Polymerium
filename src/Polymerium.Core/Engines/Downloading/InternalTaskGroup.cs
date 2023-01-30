@@ -1,9 +1,6 @@
-namespace Polymerium.Core.Engines.Downloading
-{
-    internal class InternalTaskGroup
-    {
-        public DownloadTaskGroup Inner { get; set; }
+namespace Polymerium.Core.Engines.Downloading;
 
-        public int Downloaded = 0;
-    }
+internal class InternalTaskGroup
+{
+    public DownloadTaskGroup Inner { get; set; }
 }

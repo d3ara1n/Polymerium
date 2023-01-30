@@ -1,13 +1,11 @@
-using Polymerium.Abstractions;
 using System.Collections.Generic;
+using Polymerium.Abstractions;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public class InstanceModel
 {
-    // TODO: 在修改完 GameInstance 后应该更新这些值
-    public class InstanceModel
-    {
-        public GameInstance Inner { get; set; }
-        public string InstanceName => Inner.Name;
-        public IEnumerable<ComponentTagItemModel> Extenders { get; set; }
-    }
+    public GameInstance Inner { get; set; }
+    public string InstanceName => Inner.Name;
+    public IEnumerable<ComponentTagItemModel> Extenders { get; set; }
 }

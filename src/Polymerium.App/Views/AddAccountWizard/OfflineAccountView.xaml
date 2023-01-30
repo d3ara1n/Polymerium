@@ -14,7 +14,8 @@
             <TextBlock Text="玩家名" />
             <TextBox Text="{x:Bind ViewModel.Nickname,Mode=TwoWay}" />
             <TextBlock Text="UUID" />
-            <TextBox Text="{x:Bind ViewModel.UUID,Mode=TwoWay}" PlaceholderText="{x:Bind ViewModel.EmptyUUID,Mode=OneWay}" />
+            <TextBox Text="{x:Bind ViewModel.UUID,Mode=TwoWay}"
+                     PlaceholderText="{x:Bind ViewModel.EmptyUUID,Mode=OneWay}" />
             <TextBlock Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" />
         </StackPanel>
     </Grid>

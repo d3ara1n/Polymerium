@@ -4,32 +4,36 @@ using Polymerium.Abstractions;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 
-namespace Polymerium.App.ViewModels
+namespace Polymerium.App.ViewModels;
+
+public class InstanceViewModel : ObservableObject
 {
-    public partial class InstanceViewModel : ObservableObject
+    private readonly InstanceManager _instanceManager;
+    private readonly IOverlayService _overlayService;
+
+    private GameInstance instance;
+
+    public InstanceViewModel(InstanceManager instanceManager, IOverlayService overlayService)
     {
-        private readonly InstanceManager _instanceManager;
-        private readonly IOverlayService _overlayService;
+        _instanceManager = instanceManager;
+        _overlayService = overlayService;
+    }
 
-        public InstanceViewModel(InstanceManager instanceManager, IOverlayService overlayService)
-        {
-            _instanceManager = instanceManager;
-            _overlayService = overlayService;
-        }
+    public GameInstance Instance
+    {
+        get => instance;
+        set => SetProperty(ref instance, value);
+    }
 
-        private GameInstance instance;
-        public GameInstance Instance { get => instance; set => SetProperty(ref instance, value); }
+    public void GotInstance(GameInstance instance)
+    {
+        Instance = instance;
+    }
 
-        public void GotInstance(GameInstance instance)
-        {
-            Instance = instance;
-        }
-
-        [RelayCommand]
-        public void Start()
-        {
-            var dialog = new PrepareGameDialog(Instance, _overlayService);
-            _overlayService.Show(dialog);
-        }
+    [RelayCommand]
+    public void Start()
+    {
+        var dialog = new PrepareGameDialog(Instance, _overlayService);
+        _overlayService.Show(dialog);
     }
 }

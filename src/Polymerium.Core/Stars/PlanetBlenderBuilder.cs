@@ -1,71 +1,67 @@
-using Polymerium.Core.Models.Mojang.Indexes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IBuilder;
 
-namespace Polymerium.Core.Stars
+namespace Polymerium.Core.Stars;
+
+public class PlanetBlenderBuilder : IBuilder<PlanetBlender>
 {
-    public class PlanetBlenderBuilder : IBuilder.IBuilder<PlanetBlender>
+    private readonly StarshipBuilder starshipBuilder = new();
+    private IEnumerable<string> gameArguments;
+    private string javaPath;
+    private IEnumerable<string> jvmArguments;
+    private string mainClass;
+    private string workingDirectory;
+
+    public PlanetBlender Build()
     {
-        private StarshipBuilder starshipBuilder = new();
-        private string javaPath;
-        private string mainClass;
-        private string workingDirectory;
-        private IEnumerable<ArgumentsItem> gameArguments;
-        private IEnumerable<ArgumentsItem> jvmArguments;
-
-        public PlanetBlenderBuilder ConfigureStarship(Action<StarshipBuilder> configure)
+        var starship = starshipBuilder.Build();
+        var jvm = starship.Ship(jvmArguments);
+        var game = starship.Ship(gameArguments);
+        var arguments = jvm.Append(mainClass).Concat(game);
+        var options = new PlanetOptions
         {
-            configure?.Invoke(starshipBuilder);
-            return this;
-        }
+            Arguments = arguments,
+            JavaExecutable = javaPath,
+            WorkingDirectory = workingDirectory
+        };
+        return new PlanetBlender(options);
+    }
 
-        public PlanetBlenderBuilder WithJavaPath(string javaPath)
-        {
-            this.javaPath = javaPath;
-            return this;
-        }
+    public PlanetBlenderBuilder ConfigureStarship(Action<StarshipBuilder> configure)
+    {
+        configure?.Invoke(starshipBuilder);
+        return this;
+    }
 
-        public PlanetBlenderBuilder WithMainClass(string mainClass)
-        {
-            this.mainClass = mainClass;
-            return this;
-        }
+    public PlanetBlenderBuilder WithJavaPath(string javaPath)
+    {
+        this.javaPath = javaPath;
+        return this;
+    }
 
-        public PlanetBlenderBuilder WithWorkingDirectory(string working)
-        {
-            workingDirectory = working;
-            return this;
-        }
+    public PlanetBlenderBuilder WithMainClass(string mainClass)
+    {
+        this.mainClass = mainClass;
+        return this;
+    }
 
-        public PlanetBlenderBuilder WithGameArguments(IEnumerable<ArgumentsItem> arguments)
-        {
-            gameArguments = arguments;
-            return this;
-        }
+    public PlanetBlenderBuilder WithWorkingDirectory(string working)
+    {
+        workingDirectory = working;
+        return this;
+    }
 
-        public PlanetBlenderBuilder WithJvmArguments(IEnumerable<ArgumentsItem> arguments)
-        {
-            jvmArguments = arguments;
-            return this;
-        }
+    public PlanetBlenderBuilder WithGameArguments(IEnumerable<string> arguments)
+    {
+        gameArguments = arguments;
+        return this;
+    }
 
-        public PlanetBlenderBuilder()
-        { }
-
-        public PlanetBlender Build()
-        {
-            var starship = starshipBuilder.Build();
-            var jvm = starship.Ship(jvmArguments);
-            var game = starship.Ship(gameArguments);
-            var arguments = jvm.Append(mainClass).Concat(game);
-            var options = new PlanetOptions()
-            {
-                Arguments = arguments,
-                JavaExecutable = javaPath,
-                WorkingDirectory = workingDirectory
-            };
-            return new PlanetBlender(options);
-        }
+    public PlanetBlenderBuilder WithJvmArguments(IEnumerable<string> arguments)
+    {
+        jvmArguments = arguments;
+        return this;
     }
 }

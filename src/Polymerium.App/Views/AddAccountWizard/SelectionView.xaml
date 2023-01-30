@@ -13,7 +13,9 @@
     <Grid>
         <StackPanel Spacing="12">
             <TextBlock Text="选择一种登录方式" Style="{ThemeResource SubtitleTextBlockStyle}" />
-            <ComboBox x:Name="FirstPage" SelectionChanged="FirstPage_SelectionChanged" IsEditable="False" HorizontalAlignment="Stretch" SelectedIndex="0" HorizontalContentAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Entries}">
+            <ComboBox x:Name="FirstPage" SelectionChanged="FirstPage_SelectionChanged" IsEditable="False"
+                      HorizontalAlignment="Stretch" SelectedIndex="0" HorizontalContentAlignment="Stretch"
+                      ItemsSource="{x:Bind ViewModel.Entries}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="models:AccountWizardEntryModel">
                         <Grid ColumnDefinitions="Auto,*">

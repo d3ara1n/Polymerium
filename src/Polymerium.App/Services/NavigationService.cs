@@ -1,30 +1,29 @@
 using System;
 
-namespace Polymerium.App.Services
+namespace Polymerium.App.Services;
+
+public delegate void NavigateHandler(Type view, object parameter);
+
+public class NavigationService
 {
-    public delegate void NavigateHandler(Type view, object parameter);
+    private NavigateHandler _handler;
 
-    public class NavigationService
+    public void Register(NavigateHandler handler)
     {
-        private NavigateHandler _handler;
+        _handler = handler;
+    }
 
-        public void Register(NavigateHandler handler)
-        {
-            _handler = handler;
-        }
+    public void Navigate<TView>(object parameter)
+    {
+        if (_handler != null)
 
-        public void Navigate<TView>(object parameter)
-        {
-            if (_handler != null)
+            _handler(typeof(TView), parameter);
+        else
+            throw new ArgumentNullException(nameof(_handler));
+    }
 
-                _handler(typeof(TView), parameter);
-            else
-                throw new ArgumentNullException(nameof(_handler));
-        }
-
-        public void Navigate<TView>()
-        {
-            Navigate<TView>(null);
-        }
+    public void Navigate<TView>()
+    {
+        Navigate<TView>(null);
     }
 }

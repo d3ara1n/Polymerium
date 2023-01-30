@@ -1,13 +1,12 @@
-namespace Polymerium.Core.Engines.Restoring
+namespace Polymerium.Core.Engines.Restoring;
+
+public enum RestoreError
 {
-    public enum RestoreError
-    {
-        ResourceNotReacheable,
-        ResourceNotFound,
-        SerializationFailure,
-        OsNotSupport,
-        Canceled,
-        ExceptionOccurred,
-        Unknown
-    }
+    ResourceNotReacheable,
+    ResourceNotFound,
+    SerializationFailure,
+    OsNotSupport,
+    Canceled,
+    ExceptionOccurred,
+    Unknown
 }

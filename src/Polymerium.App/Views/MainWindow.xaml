@@ -20,7 +20,8 @@
         <Grid x:Name="AppTitleBar" Grid.ColumnSpan="2" Height="46" ColumnDefinitions="Auto,*">
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <controls:IconButton x:Name="BackButton" Margin="5" IsEnabled="{Binding CanGoBack,ElementName=RootFrame}" Click="BackButton_Click">
+                    <controls:IconButton x:Name="BackButton" Margin="5"
+                                         IsEnabled="{Binding CanGoBack,ElementName=RootFrame}" Click="BackButton_Click">
                         <FontIcon Glyph="&#xE112;" FontSize="10" />
                     </controls:IconButton>
                     <TextBlock Text="Polymer" FontSize="14" VerticalAlignment="Center" FontWeight="Bold" />
@@ -54,10 +55,13 @@
             SelectedItem="{x:Bind ViewModel.SelectedPage, Mode=TwoWay}"
             SelectionChanged="OnSelectionChanged">
             <NavigationView.PaneCustomContent>
-                <controls:IconButton ToolTipService.ToolTip="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}" Height="60" Width="70" Margin="5">
+                <controls:IconButton
+                    ToolTipService.ToolTip="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}"
+                    Height="60" Width="70" Margin="5">
                     <controls:IconButton.ContextFlyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
+                            <MenuFlyoutItem
+                                Text="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
                             <MenuFlyoutSeparator />
                             <MenuFlyoutSubItem x:Name="SwitchToSubMenu" Text="切换到" />
                             <MenuFlyoutSeparator />
@@ -67,7 +71,10 @@
                             <MenuFlyoutItem Text="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}" />
                         </MenuFlyout>
                     </controls:IconButton.ContextFlyout>
-                    <toolkit:ImageEx Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarFaceSource,Mode=OneWay}" Stretch="Fill" PlaceholderStretch="Fill" PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="5" />
+                    <toolkit:ImageEx
+                        Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarFaceSource,Mode=OneWay}"
+                        Stretch="Fill" PlaceholderStretch="Fill"
+                        PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="5" />
                 </controls:IconButton>
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
@@ -75,7 +82,9 @@
                     <Grid Height="64" Margin="0,0,-10,0" ToolTipService.ToolTip="{x:Bind Caption}">
                         <Grid VerticalAlignment="Center" Margin="0">
                             <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center" />
-                            <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}" CornerRadius="5" />
+                            <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center"
+                                             VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}"
+                                             CornerRadius="5" />
                         </Grid>
                     </Grid>
                 </DataTemplate>

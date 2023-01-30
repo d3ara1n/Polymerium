@@ -1,14 +1,9 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Polymerium.App.ViewModels
+namespace Polymerium.App.ViewModels;
+
+public class AddAccountWizardViewModel : ObservableObject
 {
-    public partial class AddAccountWizardViewModel : ObservableObject
-    {
-        internal readonly CancellationTokenSource Source = new();
-
-        public AddAccountWizardViewModel()
-        {
-        }
-    }
+    internal readonly CancellationTokenSource Source = new();
 }

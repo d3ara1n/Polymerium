@@ -1,6 +1,5 @@
-namespace Polymerium.Abstractions.Meta.Resouces
+namespace Polymerium.Abstractions.Meta.Resouces;
+
+public struct Mod
 {
-    public struct Mod
-    {
-    }
 }

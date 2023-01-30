@@ -1,5 +1,5 @@
-using Microsoft.UI.Xaml.Controls;
 using System;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Polymerium.App.Services;
 
@@ -24,8 +24,7 @@ public class WindowOverlayService : IOverlayService
     {
         if (_dismissHandler != null)
             return _dismissHandler();
-        else
-            throw new ArgumentNullException(nameof(_dismissHandler));
+        throw new ArgumentNullException(nameof(_dismissHandler));
     }
 
     public void Register(OverlayShowHandler showHandler, OverlayDismissHandler dismissHandler)

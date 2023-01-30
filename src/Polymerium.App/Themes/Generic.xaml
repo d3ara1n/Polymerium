@@ -53,27 +53,39 @@
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition To="DialogShown">
                                         <Storyboard x:Name="DialogShownStoryboard">
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="Visibility">
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root"
+                                                                           Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
-                                                                       Storyboard.TargetProperty="Opacity">
+                                                                           Storyboard.TargetProperty="Opacity">
                                                 <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.0" />
-                                                <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="1.0" />
+                                                <LinearDoubleKeyFrame
+                                                    KeyTime="{StaticResource ControlFasterAnimationDuration}"
+                                                    Value="1.0" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BorderScaleTransform" Storyboard.TargetProperty="ScaleX">
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BorderScaleTransform"
+                                                                           Storyboard.TargetProperty="ScaleX">
                                                 <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.05" />
-                                                <SplineDoubleKeyFrame KeyTime="{StaticResource ControlNormalAnimationDuration}" KeySpline="{StaticResource ControlFastOutSlowInKeySpline}" Value="1.0" />
+                                                <SplineDoubleKeyFrame
+                                                    KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                    KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                    Value="1.0" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BorderScaleTransform" Storyboard.TargetProperty="ScaleY">
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BorderScaleTransform"
+                                                                           Storyboard.TargetProperty="ScaleY">
                                                 <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.05" />
-                                                <SplineDoubleKeyFrame KeyTime="{StaticResource ControlNormalAnimationDuration}" KeySpline="{StaticResource ControlFastOutSlowInKeySpline}" Value="1.0" />
+                                                <SplineDoubleKeyFrame
+                                                    KeyTime="{StaticResource ControlNormalAnimationDuration}"
+                                                    KeySpline="{StaticResource ControlFastOutSlowInKeySpline}"
+                                                    Value="1.0" />
                                             </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualTransition>
                                     <VisualTransition To="DialogHidden">
                                         <Storyboard x:Name="DialogHiddenStoryboard">
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="Visibility">
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root"
+                                                                           Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <!-- code-behind animation instead -->
@@ -109,18 +121,20 @@
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     Background="{TemplateBinding Background}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    RenderTransformOrigin="0.5,0.5"  Margin="{ThemeResource ContentDialogPadding}"
+                                    RenderTransformOrigin="0.5,0.5" Margin="{ThemeResource ContentDialogPadding}"
                                     MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}">
                                 <Border.RenderTransform>
                                     <ScaleTransform x:Name="BorderScaleTransform" />
                                 </Border.RenderTransform>
                                 <Grid RowDefinitions="*,Auto">
                                     <Border x:Name="ContentArea" Background="{ThemeResource ContentDialogTopOverlay}">
-                                        <ContentPresenter x:Name="ContentContainer" Margin="{TemplateBinding Padding}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                        <ContentPresenter x:Name="ContentContainer" Margin="{TemplateBinding Padding}"
+                                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
                                     </Border>
                                     <Grid x:Name="OperationArea" Grid.Row="1" Visibility="Collapsed">
                                         <ContentControl x:Name="OperationContainer" HorizontalAlignment="Right"
-                                                        Margin="{TemplateBinding OperationPadding}" Content="{TemplateBinding OperationContent}" />
+                                                        Margin="{TemplateBinding OperationPadding}"
+                                                        Content="{TemplateBinding OperationContent}" />
                                     </Grid>
                                 </Grid>
                             </Border>
@@ -143,12 +157,15 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:RecentPlayedItemControl">
                     <Grid Margin="{TemplateBinding Padding}">
-                        <Border x:Name="PART_Border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border x:Name="PART_Border" BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.OpacityTransition>
                                 <ScalarTransition />
                             </Border.OpacityTransition>
                         </Border>
-                        <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.OpacityTransition>
                                 <ScalarTransition />
                             </Border.OpacityTransition>
@@ -180,26 +197,44 @@
                                     <VisualState x:Name="Normal">
                                         <VisualState.Storyboard>
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity">
-                                                    <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="0.0" />
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background"
+                                                                               Storyboard.TargetProperty="Opacity">
+                                                    <LinearDoubleKeyFrame
+                                                        KeyTime="{StaticResource ControlFasterAnimationDuration}"
+                                                        Value="0.0" />
                                                 </DoubleAnimationUsingKeyFrames>
-                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.0" To="0.95" />
-                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.0" To="0.95" />
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform"
+                                                                 Storyboard.TargetProperty="ScaleX"
+                                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                                 From="1.0" To="0.95" />
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform"
+                                                                 Storyboard.TargetProperty="ScaleY"
+                                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                                 From="1.0" To="0.95" />
                                             </Storyboard>
                                         </VisualState.Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="PointerOver">
                                         <VisualState.Storyboard>
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity">
-                                                    <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="1.0" />
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background"
+                                                                               Storyboard.TargetProperty="Opacity">
+                                                    <LinearDoubleKeyFrame
+                                                        KeyTime="{StaticResource ControlFasterAnimationDuration}"
+                                                        Value="1.0" />
                                                 </DoubleAnimationUsingKeyFrames>
-                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleX" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform"
+                                                                 Storyboard.TargetProperty="ScaleX"
+                                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                                 From="1.05" To="1.0">
                                                     <DoubleAnimation.EasingFunction>
                                                         <SineEase EasingMode="EaseIn" />
                                                     </DoubleAnimation.EasingFunction>
                                                 </DoubleAnimation>
-                                                <DoubleAnimation Storyboard.TargetName="PART_Transform" Storyboard.TargetProperty="ScaleY" Duration="{StaticResource ControlFasterAnimationDuration}" From="1.05" To="1.0">
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform"
+                                                                 Storyboard.TargetProperty="ScaleY"
+                                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                                 From="1.05" To="1.0">
                                                     <DoubleAnimation.EasingFunction>
                                                         <SineEase EasingMode="EaseIn" />
                                                     </DoubleAnimation.EasingFunction>
@@ -210,18 +245,23 @@
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
                                             <Setter Target="PART_Background.Opacity" Value="1" />
-                                            <Setter Target="PART_Background.Background" Value="{ThemeResource HyperlinkButtonBackgroundPressed}" />
+                                            <Setter Target="PART_Background.Background"
+                                                    Value="{ThemeResource HyperlinkButtonBackgroundPressed}" />
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <VisualState.Setters>
-                                            <Setter Target="PART_Container.Foreground" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
+                                            <Setter Target="PART_Container.Foreground"
+                                                    Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
                                         </VisualState.Setters>
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
 
-                            <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" RenderTransformOrigin="0.5,0.5">
+                            <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}" RenderTransformOrigin="0.5,0.5">
                                 <Border.RenderTransform>
                                     <ScaleTransform x:Name="PART_Transform" />
                                 </Border.RenderTransform>
@@ -245,7 +285,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:Card">
-                    <Grid CornerRadius="{TemplateBinding CornerRadius}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid CornerRadius="{TemplateBinding CornerRadius}" Background="{TemplateBinding Background}"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter Margin="{TemplateBinding Padding}" />
                     </Grid>
                 </ControlTemplate>
@@ -265,7 +307,8 @@
             <Setter.Value>
                 <DataTemplate>
                     <Border BorderThickness="0,0,0,1" BorderBrush="{ThemeResource CardStrokeBrush}">
-                        <TextBlock Text="{Binding}" Style="{StaticResource SubtitleTextBlockStyle}" Margin="20,10,20,10" />
+                        <TextBlock Text="{Binding}" Style="{StaticResource SubtitleTextBlockStyle}"
+                                   Margin="20,10,20,10" />
                     </Border>
                 </DataTemplate>
             </Setter.Value>
@@ -273,9 +316,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:GroupBox">
-                    <Grid RowDefinitions="Auto,*"  CornerRadius="{TemplateBinding CornerRadius}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                    <Grid RowDefinitions="Auto,*" CornerRadius="{TemplateBinding CornerRadius}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
                         <Grid>
-                            <ContentPresenter Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                            <ContentPresenter Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         </Grid>
                         <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" />
                     </Grid>
@@ -293,7 +339,8 @@
                 <ControlTemplate TargetType="controls:GlowingButton">
                     <Border x:Name="PART_Background" Background="{TemplateBinding Background}">
                         <ui:Effects.Shadow>
-                            <media:AttachedCardShadow x:Name="PART_Shadow" Offset="0" BlurRadius="8" Color="{ThemeResource SystemAccentColor}" Opacity="0" />
+                            <media:AttachedCardShadow x:Name="PART_Shadow" Offset="0" BlurRadius="8"
+                                                      Color="{ThemeResource SystemAccentColor}" Opacity="0" />
                         </ui:Effects.Shadow>
                         <animations:Explicit.Animations>
                             <animations:AnimationSet x:Name="PointerEnter">
@@ -307,17 +354,23 @@
                             <VisualStateGroup x:Name="Common">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_Layer" Storyboard.TargetProperty="Opacity" To="0" Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        <DoubleAnimation Storyboard.TargetName="PART_Layer"
+                                                         Storyboard.TargetProperty="Opacity" To="0"
+                                                         Duration="{StaticResource ControlNormalAnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_Layer" Storyboard.TargetProperty="Opacity" To="1" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        <DoubleAnimation Storyboard.TargetName="PART_Layer"
+                                                         Storyboard.TargetProperty="Opacity" To="1"
+                                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity" To="0.7" Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        <DoubleAnimation Storyboard.TargetName="PART_Background"
+                                                         Storyboard.TargetProperty="Opacity" To="0.7"
+                                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -332,7 +385,7 @@
                         </interactivity:Interaction.Behaviors>
                         <Grid>
                             <Rectangle x:Name="PART_Layer" Fill="{ThemeResource FloatLayerBackgroundBrush}" Opacity="0" />
-                            <ContentPresenter x:Name="Container"  Margin="{TemplateBinding Padding}" />
+                            <ContentPresenter x:Name="Container" Margin="{TemplateBinding Padding}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -357,87 +410,123 @@
                                 <VisualState x:Name="Normal">
                                     <VisualState.Storyboard>
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Container" Storyboard.TargetProperty="Visibility">
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Container"
+                                                                           Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="Collapsed" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames
-                                            Storyboard.TargetName="PART_CompositeTransform"
-                                            Storyboard.TargetProperty="TranslateY">
+                                                Storyboard.TargetName="PART_CompositeTransform"
+                                                Storyboard.TargetProperty="TranslateY">
                                                 <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
-                                                <SplineDoubleKeyFrame KeyTime="0:0:0.167" Value="-5" KeySpline="1.0, 1.0, 0.0, 1.0" />
+                                                <SplineDoubleKeyFrame KeyTime="0:0:0.167" Value="-5"
+                                                                      KeySpline="1.0, 1.0, 0.0, 1.0" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="PART_Container" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.167" />
+                                            <DoubleAnimation Storyboard.TargetName="PART_Container"
+                                                             Storyboard.TargetProperty="Opacity" To="0"
+                                                             Duration="0:0:0.167" />
                                         </Storyboard>
                                     </VisualState.Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Open">
                                     <VisualState.Setters>
                                         <Setter Target="PART_Indicator.Glyph" Value="&#xE70E;" />
-                                        <Setter Target="PART_Header.CornerRadius" Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
+                                        <Setter Target="PART_Header.CornerRadius"
+                                                Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
                                     </VisualState.Setters>
                                     <VisualState.Storyboard>
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Container" Storyboard.TargetProperty="Visibility">
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Container"
+                                                                           Storyboard.TargetProperty="Visibility">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames
-                                            Storyboard.TargetName="PART_CompositeTransform"
-                                            Storyboard.TargetProperty="TranslateY">
+                                                Storyboard.TargetName="PART_CompositeTransform"
+                                                Storyboard.TargetProperty="TranslateY">
                                                 <DiscreteDoubleKeyFrame KeyTime="0" Value="-5" />
-                                                <SplineDoubleKeyFrame KeyTime="0:0:0.333" Value="0" KeySpline="0.0, 0.0, 0.0, 1.0" />
+                                                <SplineDoubleKeyFrame KeyTime="0:0:0.333" Value="0"
+                                                                      KeySpline="0.0, 0.0, 0.0, 1.0" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetName="PART_Container" Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="0:0:0.333" />
+                                            <DoubleAnimation Storyboard.TargetName="PART_Container"
+                                                             Storyboard.TargetProperty="Opacity" From="0" To="1.0"
+                                                             Duration="0:0:0.333" />
                                         </Storyboard>
                                     </VisualState.Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid>
-                            <controls:ToggleButtonEx x:Name="PART_Header" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" IsInteractive="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToBoolConverter}}" IsThreeState="False" IsChecked="{Binding IsExpanded,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}" HorizontalContentAlignment="Stretch" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}">
+                            <controls:ToggleButtonEx x:Name="PART_Header" VerticalAlignment="Stretch"
+                                                     VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                     IsInteractive="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToBoolConverter}}"
+                                                     IsThreeState="False"
+                                                     IsChecked="{Binding IsExpanded,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}"
+                                                     HorizontalContentAlignment="Stretch"
+                                                     Background="{TemplateBinding Background}"
+                                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                                     BorderBrush="{TemplateBinding BorderBrush}"
+                                                     CornerRadius="{TemplateBinding CornerRadius}">
                                 <controls:ToggleButtonEx.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <ContentPresenter
-                                        x:Name="ContentPresenter"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        Content="{TemplateBinding Content}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                        ContentTransitions="{TemplateBinding ContentTransitions}"
-                                        CornerRadius="{TemplateBinding CornerRadius}"
-                                        Padding="{TemplateBinding Padding}"
-                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        AutomationProperties.AccessibilityView="Raw">
+                                            x:Name="ContentPresenter"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                                            CornerRadius="{TemplateBinding CornerRadius}"
+                                            Padding="{TemplateBinding Padding}"
+                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            AutomationProperties.AccessibilityView="Raw">
                                             <ContentPresenter.BackgroundTransition>
                                                 <BrushTransition Duration="0:0:0.083" />
                                             </ContentPresenter.BackgroundTransition>
                                             <VisualStateManager.VisualStateGroups>
                                                 <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal"/>
+                                                    <VisualState x:Name="Normal" />
                                                     <VisualState x:Name="PointerOver">
                                                         <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushPointerOver}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="BorderBrush">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBorderBrushPointerOver}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPointerOver}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Foreground">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonForegroundPointerOver}" />
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
                                                     <VisualState x:Name="Pressed">
                                                         <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBackgroundPressed}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushPressed}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="BorderBrush">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBorderBrushPressed}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPressed}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Foreground">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonForegroundPressed}" />
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
@@ -445,40 +534,67 @@
                                                     <VisualState x:Name="Checked" />
                                                     <VisualState x:Name="CheckedPointerOver">
                                                         <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushPointerOver}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="BorderBrush">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBorderBrushPointerOver}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPointerOver}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Foreground">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonForegroundPointerOver}" />
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
                                                     <VisualState x:Name="CheckedPressed">
                                                         <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBackgroundPressed}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundPressed}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Foreground">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonForegroundPressed}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushPressed}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="BorderBrush">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBorderBrushPressed}" />
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
                                                     <VisualState x:Name="CheckedDisabled">
                                                         <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundDisabled}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Background">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBackgroundDisabled}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundDisabled}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="Foreground">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonForegroundDisabled}" />
                                                             </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushDisabled}" />
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="ContentPresenter"
+                                                                Storyboard.TargetProperty="BorderBrush">
+                                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{ThemeResource ToggleButtonBorderBrushDisabled}" />
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
@@ -488,9 +604,14 @@
                                     </ControlTemplate>
                                 </controls:ToggleButtonEx.Template>
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <ContentPresenter Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+                                    <ContentPresenter Content="{TemplateBinding Header}"
+                                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                      HorizontalAlignment="Stretch"
+                                                      HorizontalContentAlignment="Stretch" />
                                     <Grid Grid.Column="1" MinWidth="36">
-                                        <FontIcon x:Name="PART_Indicator" Visibility="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToVisibleConverter}}" Glyph="&#xE70D;" />
+                                        <FontIcon x:Name="PART_Indicator"
+                                                  Visibility="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToVisibleConverter}}"
+                                                  Glyph="&#xE70D;" />
                                     </Grid>
                                 </Grid>
                             </controls:ToggleButtonEx>
@@ -499,7 +620,8 @@
                             <Border.RenderTransform>
                                 <CompositeTransform x:Name="PART_CompositeTransform" />
                             </Border.RenderTransform>
-                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
                         </Border>
                     </Grid>
                 </ControlTemplate>

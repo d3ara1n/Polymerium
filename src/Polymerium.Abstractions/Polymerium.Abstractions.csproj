@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <Title>$(AssemblyName)</Title>
-    <Product>Polymerium</Product>
-    <Description>Abstructions of Polymerium</Description>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <Title>$(AssemblyName)</Title>
+        <Product>Polymerium</Product>
+        <Description>Abstructions of Polymerium</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <IncludeSymbols>True</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
 
 </Project>

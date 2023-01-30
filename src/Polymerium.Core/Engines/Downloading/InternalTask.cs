@@ -1,9 +1,8 @@
-namespace Polymerium.Core.Engines.Downloading
+namespace Polymerium.Core.Engines.Downloading;
+
+internal class InternalTask
 {
-    internal class InternalTask
-    {
-        public InternalTaskGroup AssociatedGroup { get; set; }
-        public DownloadTask Inner { get; set; }
-        public int RetryCount { get; set; } = 0;
-    }
+    public InternalTaskGroup AssociatedGroup { get; set; }
+    public DownloadTask Inner { get; set; }
+    public int RetryCount { get; set; } = 0;
 }

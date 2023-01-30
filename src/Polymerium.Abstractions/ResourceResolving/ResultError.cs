@@ -1,8 +1,7 @@
-namespace Polymerium.Abstractions.ResourceResolving
+namespace Polymerium.Abstractions.ResourceResolving;
+
+public enum ResultError
 {
-    public enum ResultError
-    {
-        Unknown,
-        NotFound
-    }
+    Unknown,
+    NotFound
 }

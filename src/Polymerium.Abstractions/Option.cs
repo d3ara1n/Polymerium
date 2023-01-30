@@ -1,49 +1,56 @@
 using System;
 
-namespace Polymerium.Abstractions
+namespace Polymerium.Abstractions;
+
+public abstract class Option<T>
 {
-    public abstract class Option<T>
+    private static readonly None<T> none = new();
+
+    public static None<T> None()
     {
-        private static None<T> none = new None<T>();
+        return none;
+    }
 
-        public static None<T> None() => none;
+    public static Some<T> Some(T data)
+    {
+        return new Some<T>(data);
+    }
 
-        public static Some<T> Some(T data) => new Some<T>(data);
+    public bool IsSome()
+    {
+        return this is Some<T>;
+    }
 
-        public bool IsSome() => this is Some<T>;
+    public bool IsNone()
+    {
+        return !IsSome();
+    }
 
-        public bool IsNone() => !IsSome();
-
-        public static Option<T> Wrap(T? value) => value switch
+    public static Option<T> Wrap(T? value)
+    {
+        return value switch
         {
             null => None(),
             _ => Some(value!)
         };
+    }
 
-        public bool TryUnwrap(out T data)
+    public bool TryUnwrap(out T data)
+    {
+        if (this is Some<T> some)
         {
-            if (this is Some<T> some)
-            {
-                data = some.Value;
-                return true;
-            }
-            else
-            {
-                data = default;
-                return false;
-            }
+            data = some.Value;
+            return true;
         }
 
-        public T Unwrap()
-        {
-            if (this is Some<T> some)
-            {
-                return some.Value;
-            }
-            else
-            {
-                throw new NullReferenceException(typeof(T).FullName);
-            }
-        }
+        data = default;
+        return false;
+    }
+
+    public T Unwrap()
+    {
+        if (this is Some<T> some)
+            return some.Value;
+        throw new NullReferenceException(typeof(T).FullName);
     }
 }

@@ -1,8 +1,8 @@
-namespace Polymerium.Abstractions
+namespace Polymerium.Abstractions;
+
+public class None<T> : Option<T>
 {
-    public class None<T> : Option<T>
+    internal None()
     {
-        internal None()
-        { }
     }
 }

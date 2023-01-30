@@ -1,35 +1,33 @@
+using System;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.App.Configurations;
-using System;
 
-namespace Polymerium.App.Data
+namespace Polymerium.App.Data;
+
+public class ConfigurationModel : RefinedModelBase<Configuration>
 {
-    public class ConfigurationModel : RefinedModelBase<Configuration>
+    public override Uri Location { get; } = new("poly-file:///configuration.json");
+
+    public AppSettings Settings { get; set; }
+    public string AccountShowcaseId { get; set; }
+
+    public FileBasedLaunchConfiguration GameGlobals { get; set; }
+
+    public override void Apply(Configuration data)
     {
-        private readonly Uri location = new Uri("poly-file:///configuration.json");
-        public override Uri Location => location;
+        Settings = data.Settings;
+        AccountShowcaseId = data.AccountShowcaseId;
+        GameGlobals = data.GameGlobals;
+    }
 
-        public AppSettings Settings { get; set; }
-        public string AccountShowcaseId { get; set; }
-
-        public FileBasedLaunchConfiguration GameGlobals { get; set; }
-
-        public override void Apply(Configuration data)
+    public override Configuration Extract()
+    {
+        var cfg = new Configuration
         {
-            Settings = data.Settings;
-            AccountShowcaseId = data.AccountShowcaseId;
-            GameGlobals = data.GameGlobals;
-        }
-
-        public override Configuration Extract()
-        {
-            var cfg = new Configuration()
-            {
-                Settings = Settings,
-                AccountShowcaseId = AccountShowcaseId,
-                GameGlobals = GameGlobals,
-            };
-            return cfg;
-        }
+            Settings = Settings,
+            AccountShowcaseId = AccountShowcaseId,
+            GameGlobals = GameGlobals
+        };
+        return cfg;
     }
 }

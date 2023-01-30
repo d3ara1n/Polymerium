@@ -23,7 +23,11 @@
                         <ContentThemeTransition />
                     </Grid.ChildrenTransitions>
                     <Grid ColumnDefinitions="6*,4*">
-                        <toolkit:ImageEx Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Bottom" IsCacheEnabled="True" Stretch="UniformToFill" Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarBustSource,Mode=OneWay}" PlaceholderStretch="UniformToFill" PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png" />
+                        <toolkit:ImageEx Height="140" Width="140" HorizontalAlignment="Center"
+                                         VerticalAlignment="Bottom" IsCacheEnabled="True" Stretch="UniformToFill"
+                                         Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarBustSource,Mode=OneWay}"
+                                         PlaceholderStretch="UniformToFill"
+                                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png" />
                     </Grid>
                     <Grid ColumnDefinitions="4*,6*">
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -31,7 +35,9 @@
                                 <Run Text="你好 " />
                                 <Run Text="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
                             </TextBlock>
-                            <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" TextWrapping="WrapWholeWords" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{ThemeResource BodyTextBlockStyle}" />
+                            <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" TextWrapping="WrapWholeWords"
+                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                       Style="{ThemeResource BodyTextBlockStyle}" />
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -49,15 +55,25 @@
                             <DataTemplate x:DataType="models:RecentPlayedItemModel">
                                 <controls:RecentPlayedItemControl Style="{StaticResource DefaultRecentPlayedItemStyle}">
                                     <Grid RowDefinitions="Auto,*" MaxWidth="100">
-                                        <toolkit:ImageEx Width="80" Height="80" Margin="10,10,10,5" CornerRadius="10" Source="{x:Bind ThumbnailFile}" PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" Stretch="UniformToFill" />
+                                        <toolkit:ImageEx Width="80" Height="80" Margin="10,10,10,5" CornerRadius="10"
+                                                         Source="{x:Bind ThumbnailFile}"
+                                                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
+                                                         Stretch="UniformToFill" />
                                         <Grid Grid.Row="1" RowDefinitions="Auto,*">
                                             <Grid.ChildrenTransitions>
                                                 <ContentThemeTransition />
                                             </Grid.ChildrenTransitions>
-                                            <TextBlock Margin="10,5,10,2" Text="{x:Bind Name}" Style="{ThemeResource BodyStrongTextBlockStyle}" Foreground="{ThemeResource ApplicationForegroundThemeBrush}" />
-                                            <Grid ColumnDefinitions="Auto,*"  Grid.Row="1" VerticalAlignment="Bottom" Margin="10,2,10,10">
-                                                <FontIcon Margin="0,0,2,0" VerticalAlignment="Bottom" Glyph="&#xE121;" FontSize="11" />
-                                                <TextBlock Grid.Column="1" HorizontalAlignment="Right" FontSize="11" Text="{x:Bind LastPlayedAt,Converter={StaticResource DateTimeOffsetToStringConverter}}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                            <TextBlock Margin="10,5,10,2" Text="{x:Bind Name}"
+                                                       Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                                       Foreground="{ThemeResource ApplicationForegroundThemeBrush}" />
+                                            <Grid ColumnDefinitions="Auto,*" Grid.Row="1" VerticalAlignment="Bottom"
+                                                  Margin="10,2,10,10">
+                                                <FontIcon Margin="0,0,2,0" VerticalAlignment="Bottom" Glyph="&#xE121;"
+                                                          FontSize="11" />
+                                                <TextBlock Grid.Column="1" HorizontalAlignment="Right" FontSize="11"
+                                                           Text="{x:Bind LastPlayedAt,Converter={StaticResource DateTimeOffsetToStringConverter}}"
+                                                           Style="{ThemeResource BodyTextBlockStyle}"
+                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                             </Grid>
                                         </Grid>
                                     </Grid>

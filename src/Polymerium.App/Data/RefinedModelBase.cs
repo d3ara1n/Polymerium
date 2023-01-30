@@ -1,20 +1,17 @@
-using Newtonsoft.Json;
 using System;
+using Newtonsoft.Json;
 
-namespace Polymerium.App.Data
+namespace Polymerium.App.Data;
+
+public abstract class RefinedModelBase<T>
 {
-    public abstract class RefinedModelBase<T>
-    {
-        [JsonIgnore]
-        public abstract Uri Location { get; }
+    private static readonly JsonSerializerSettings serializerSettings = new();
 
-        private static readonly JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+    [JsonIgnore] public abstract Uri Location { get; }
 
-        [JsonIgnore]
-        public virtual JsonSerializerSettings SerializerSettings { get; } = serializerSettings;
+    [JsonIgnore] public virtual JsonSerializerSettings SerializerSettings { get; } = serializerSettings;
 
-        public abstract T Extract();
+    public abstract T Extract();
 
-        public abstract void Apply(T data);
-    }
+    public abstract void Apply(T data);
 }

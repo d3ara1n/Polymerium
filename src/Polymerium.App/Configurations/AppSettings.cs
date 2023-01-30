@@ -1,6 +1,5 @@
-namespace Polymerium.App.Configurations
+namespace Polymerium.App.Configurations;
+
+public class AppSettings
 {
-    public class AppSettings
-    {
-    }
 }

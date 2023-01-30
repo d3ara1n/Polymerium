@@ -1,22 +1,21 @@
-using Microsoft.UI.Xaml.Data;
 using System;
+using Microsoft.UI.Xaml.Data;
 
-namespace Polymerium.App.Converters
+namespace Polymerium.App.Converters;
+
+internal class NotNullToBoolConverter : IValueConverter
 {
-    internal class NotNullToBoolConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
+        return value switch
         {
-            return value switch
-            {
-                null or "" => false,
-                _ => true
-            };
-        }
+            null or "" => false,
+            _ => true
+        };
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

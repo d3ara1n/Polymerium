@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
@@ -5,19 +11,20 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Wupoo;
 
 namespace Polymerium.App.ViewModels;
 
 public class CreateInstanceWizardViewModel : ObservableValidator
 {
-    private readonly InstanceManager _instanceManager;
     private readonly IMemoryCache _cache;
+    private readonly InstanceManager _instanceManager;
+
+    private string instanceAuthor = string.Empty;
+
+    private string instanceName = string.Empty;
+
+    private GameVersionModel selectedVersion;
 
     public CreateInstanceWizardViewModel(InstanceManager instanceManager, IMemoryCache cache)
     {
@@ -25,20 +32,27 @@ public class CreateInstanceWizardViewModel : ObservableValidator
         _cache = cache;
     }
 
-    private string instanceName = string.Empty;
-
     [Required]
     [MinLength(1)]
     [MaxLength(128)]
-    public string InstanceName { get => instanceName; set => SetProperty(ref instanceName, value, true); }
+    public string InstanceName
+    {
+        get => instanceName;
+        set => SetProperty(ref instanceName, value, true);
+    }
 
-    private string instanceAuthor = string.Empty;
-    public string InstanceAuthor { get => instanceAuthor; set => SetProperty(ref instanceAuthor, value); }
-
-    private GameVersionModel selectedVersion;
+    public string InstanceAuthor
+    {
+        get => instanceAuthor;
+        set => SetProperty(ref instanceAuthor, value);
+    }
 
     [Required]
-    public GameVersionModel SelectedVersion { get => selectedVersion; set => SetProperty(ref selectedVersion, value, true); }
+    public GameVersionModel SelectedVersion
+    {
+        get => selectedVersion;
+        set => SetProperty(ref selectedVersion, value, true);
+    }
 
     public async Task FillDataAsync(Func<IEnumerable<GameVersionModel>, Task> callback)
     {
@@ -48,11 +62,11 @@ public class CreateInstanceWizardViewModel : ObservableValidator
             var res = Enumerable.Empty<GameVersionModel>();
             var url = "https://piston-meta.mojang.com/mc/game/version_manifest.json";
             await Wapoo.Wohoo(url)
-            .ForJsonResult<JObject>(x =>
-            {
-                res = x.Value<JArray>("versions").ToObject<IEnumerable<GameVersionModel>>();
-            })
-            .FetchAsync();
+                .ForJsonResult<JObject>(x =>
+                {
+                    res = x.Value<JArray>("versions").ToObject<IEnumerable<GameVersionModel>>();
+                })
+                .FetchAsync();
             return res;
         });
         await callback(versions.ToList());
@@ -60,18 +74,16 @@ public class CreateInstanceWizardViewModel : ObservableValidator
 
     public async Task Commit(Func<Task> callback)
     {
-        var invalidFileNameChars = System.IO.Path.GetInvalidFileNameChars();
-        var instance = new GameInstance()
+        var invalidFileNameChars = Path.GetInvalidFileNameChars();
+        var instance = new GameInstance
         {
             Id = Guid.NewGuid().ToString(),
             Name = InstanceName,
             FolderName = string.Join("", InstanceName.Select(x => invalidFileNameChars.Contains(x) ? '_' : x)),
             Author = InstanceAuthor,
-            ThumbnailFile = "ms-appx:///Assets/Placeholders/default_world_icon.png",
-            Metadata = new()
+            Metadata = new GameMetadata
             {
-                CoreVersion = SelectedVersion.Id,
-                Components = Enumerable.Empty<Component>()
+                Components = new[] { new Component { Identity = "net.minecraft", Version = SelectedVersion.Id } }
             }
         };
         _instanceManager.AddInstance(instance);

@@ -1,9 +1,8 @@
-namespace Polymerium.Core.Models.Mojang.Indexes
+namespace Polymerium.Core.Models.Mojang.Indexes;
+
+public struct LibraryNatives
 {
-    public struct LibraryNatives
-    {
-        public string Windows { get; set; }
-        public string Linux { get; set; }
-        public string Osx { get; set; }
-    }
+    public string Windows { get; set; }
+    public string Linux { get; set; }
+    public string Osx { get; set; }
 }

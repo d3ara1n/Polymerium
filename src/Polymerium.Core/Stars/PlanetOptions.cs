@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Polymerium.Core.Stars
+namespace Polymerium.Core.Stars;
+
+public struct PlanetOptions
 {
-    public struct PlanetOptions
-    {
-        public string JavaExecutable { get; init; }
-        public IEnumerable<string> Arguments { get; init; }
-        public string WorkingDirectory { get; init; }
-    }
+    public string JavaExecutable { get; init; }
+    public IEnumerable<string> Arguments { get; init; }
+    public string WorkingDirectory { get; init; }
 }

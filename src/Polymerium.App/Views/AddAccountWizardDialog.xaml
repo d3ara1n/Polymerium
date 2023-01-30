@@ -13,9 +13,12 @@
     <Frame x:Name="Root" />
     <controls:CustomDialog.OperationContent>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-            <Button x:Name="PreviousButton" Content="上一步" IsEnabled="{x:Bind Root.CanGoBack,Mode=OneWay}" Click="PreviousButton_Click" />
-            <Button x:Name="NextButton" Style="{ThemeResource AccentButtonStyle}" Content="下一步" IsEnabled="False" Click="NextButton_Click" />
-            <Button x:Name="FinishButton" Style="{ThemeResource AccentButtonStyle}" Content="完成" Visibility="Collapsed" Click="FinishButton_Click" />
+            <Button x:Name="PreviousButton" Content="上一步" IsEnabled="{x:Bind Root.CanGoBack,Mode=OneWay}"
+                    Click="PreviousButton_Click" />
+            <Button x:Name="NextButton" Style="{ThemeResource AccentButtonStyle}" Content="下一步" IsEnabled="False"
+                    Click="NextButton_Click" />
+            <Button x:Name="FinishButton" Style="{ThemeResource AccentButtonStyle}" Content="完成" Visibility="Collapsed"
+                    Click="FinishButton_Click" />
             <Button x:Name="CloseButton" Content="取消" Click="CloseButton_Click" />
         </StackPanel>
     </controls:CustomDialog.OperationContent>

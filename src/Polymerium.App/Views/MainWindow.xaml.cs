@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Specialized;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
-using Polymerium.App.ViewModels;
-using System;
-using System.Collections.Specialized;
-using System.Linq;
 using WinUIEx;
 
 namespace Polymerium.App.Views;
@@ -44,8 +43,11 @@ public sealed partial class MainWindow : WindowEx
         {
             FakeBackground.Visibility = Visibility.Visible;
         }
+
         ViewModel.LogonAccounts.CollectionChanged += LogonAccounts_CollectionChanged;
     }
+
+    public MainViewModel ViewModel { get; }
 
     private void LogonAccounts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
@@ -55,8 +57,9 @@ public sealed partial class MainWindow : WindowEx
 
                 foreach (AccountItemModel a in e.NewItems)
                 {
-                    var item = new MenuFlyoutItem() { Text = a.Inner.Nickname, Tag = a };
-                    item.Click += (sender, _) => ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)sender).Tag);
+                    var item = new MenuFlyoutItem { Text = a.Inner.Nickname, Tag = a };
+                    item.Click += (sender, _) =>
+                        ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)sender).Tag);
                     SwitchToSubMenu.Items.Add(item);
                 }
 
@@ -65,12 +68,11 @@ public sealed partial class MainWindow : WindowEx
             case NotifyCollectionChangedAction.Remove:
                 foreach (AccountItemModel a in e.OldItems)
                 {
-                    var item = SwitchToSubMenu.Items.FirstOrDefault(x => ((AccountItemModel)x.Tag).Inner.Id == a.Inner.Id);
-                    if (item != null)
-                    {
-                        SwitchToSubMenu.Items.Remove(item);
-                    }
+                    var item = SwitchToSubMenu.Items.FirstOrDefault(x =>
+                        ((AccountItemModel)x.Tag).Inner.Id == a.Inner.Id);
+                    if (item != null) SwitchToSubMenu.Items.Remove(item);
                 }
+
                 break;
 
             case NotifyCollectionChangedAction.Reset:
@@ -78,8 +80,6 @@ public sealed partial class MainWindow : WindowEx
                 break;
         }
     }
-
-    public MainViewModel ViewModel { get; }
 
     private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
@@ -98,29 +98,24 @@ public sealed partial class MainWindow : WindowEx
     {
         if (view == typeof(InstanceView) && parameter is string instanceId)
         {
-            if (ViewModel.NavigationPages.Where(x => x.SourcePage == typeof(InstanceView)).FirstOrDefault(x => x.GameInstance.Id == instanceId) is NavigationItemModel { } instanceView)
-            {
+            if (ViewModel.NavigationPages.Where(x => x.SourcePage == typeof(InstanceView))
+                    .FirstOrDefault(x => x.GameInstance.Id == instanceId) is NavigationItemModel { } instanceView)
                 MainNavigationBar.SelectedItem = instanceView;
-            }
             else
-            {
                 throw new ArgumentException($"parameter {parameter} not found as game instance id");
-            }
         }
         else
         {
-            if (ViewModel.NavigationPages.FirstOrDefault(x => x.SourcePage == view) is NavigationItemModel { } notPinned)
-            {
+            if (ViewModel.NavigationPages.FirstOrDefault(x => x.SourcePage == view) is NavigationItemModel
+                {
+                } notPinned)
                 MainNavigationBar.SelectedItem = notPinned;
-            }
-            else if (ViewModel.NavigationPinnedPages.FirstOrDefault(x => x.SourcePage == view) is NavigationItemModel { } pinned)
-            {
+            else if (ViewModel.NavigationPinnedPages.FirstOrDefault(x => x.SourcePage == view) is NavigationItemModel
+                     {
+                     } pinned)
                 MainNavigationBar.SelectedItem = pinned;
-            }
             else
-            {
                 RootFrame.Navigate(view, parameter, new SuppressNavigationTransitionInfo());
-            }
         }
     }
 

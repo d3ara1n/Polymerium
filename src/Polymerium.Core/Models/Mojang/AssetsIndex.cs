@@ -1,12 +1,11 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Polymerium.Core.Models.Mojang.Converters;
-using System.Collections.Generic;
 
-namespace Polymerium.Core.Models.Mojang
+namespace Polymerium.Core.Models.Mojang;
+
+[JsonConverter(typeof(AssetsIndexConverter))]
+public struct AssetsIndex
 {
-    [JsonConverter(typeof(AssetsIndexConverter))]
-    public struct AssetsIndex
-    {
-        public IEnumerable<AssetsIndexItem> Objects { get; set; }
-    }
+    public IEnumerable<AssetsIndexItem> Objects { get; set; }
 }

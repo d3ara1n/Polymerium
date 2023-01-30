@@ -21,13 +21,17 @@
                         <VisualState x:Name="Unready" />
                         <VisualState x:Name="Ready">
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetName="GameReadyButton" Storyboard.TargetProperty="Opacity" From="0" To="1.0" Duration="0:0:0.6" />
-                                <DoubleAnimation Storyboard.TargetName="LabelTranslateTransform" Storyboard.TargetProperty="Y" From="0" To="-48" Duration="0:0:0.6">
+                                <DoubleAnimation Storyboard.TargetName="GameReadyButton"
+                                                 Storyboard.TargetProperty="Opacity" From="0" To="1.0"
+                                                 Duration="0:0:0.6" />
+                                <DoubleAnimation Storyboard.TargetName="LabelTranslateTransform"
+                                                 Storyboard.TargetProperty="Y" From="0" To="-48" Duration="0:0:0.6">
                                     <DoubleAnimation.EasingFunction>
                                         <SineEase EasingMode="EaseOut" />
                                     </DoubleAnimation.EasingFunction>
                                 </DoubleAnimation>
-                                <DoubleAnimation Storyboard.TargetName="AccountTranslateTransform" Storyboard.TargetProperty="Y" From="0" To="6" Duration="0:0:0.6">
+                                <DoubleAnimation Storyboard.TargetName="AccountTranslateTransform"
+                                                 Storyboard.TargetProperty="Y" From="0" To="6" Duration="0:0:0.6">
                                     <DoubleAnimation.EasingFunction>
                                         <SineEase EasingMode="EaseOut" />
                                     </DoubleAnimation.EasingFunction>
@@ -43,19 +47,24 @@
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
-                <Grid x:Name="Frame" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420" Height="260" RenderTransformOrigin="0.5,0.5">
+                <Grid x:Name="Frame" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420" Height="260"
+                      RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
                         <ScaleTransform x:Name="ScaleTransform" />
                     </Grid.RenderTransform>
                     <Border x:Name="Border" Background="{ThemeResource SystemAccentColor}">
                         <ui:Effects.Shadow>
-                            <media:AttachedCardShadow BlurRadius="10" Color="{ThemeResource SystemAccentColor}" Offset="0" />
+                            <media:AttachedCardShadow BlurRadius="10" Color="{ThemeResource SystemAccentColor}"
+                                                      Offset="0" />
                         </ui:Effects.Shadow>
                     </Border>
                     <Grid x:Name="Root" Margin="5">
-                        <Image x:Name="BackgroundImage" ImageOpened="BackgroundImage_ImageOpened" ImageFailed="BackgroundImage_ImageFailed" Source="ms-appx:///Assets/Placeholders/default_panorama1.png" Stretch="UniformToFill" />
+                        <Image x:Name="BackgroundImage" ImageOpened="BackgroundImage_ImageOpened"
+                               ImageFailed="BackgroundImage_ImageFailed"
+                               Source="ms-appx:///Assets/Placeholders/default_panorama1.png" Stretch="UniformToFill" />
                         <Rectangle Fill="Black" Opacity="0.7" />
-                        <controls:IconButton x:Name="CloseButton" VerticalAlignment="Top" HorizontalAlignment="Right" Click="CloseButton_Click">
+                        <controls:IconButton x:Name="CloseButton" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                             Click="CloseButton_Click">
                             <FontIcon Glyph="&#xE106;" FontSize="10" />
                         </controls:IconButton>
                         <Grid x:Name="Container">
@@ -64,24 +73,33 @@
                                     <StackPanel.RenderTransform>
                                         <TranslateTransform x:Name="LabelTranslateTransform" />
                                     </StackPanel.RenderTransform>
-                                    <TextBlock x:Name="Label" Text="您的游戏即将准备就绪" Foreground="{ThemeResource SystemAccentColor}" FontSize="28" />
-                                    <TextBlock Text="{x:Bind ViewModel.Instance.Name}" HorizontalAlignment="Center" Foreground="{ThemeResource SystemAccentColor}" FontSize="16" />
+                                    <TextBlock x:Name="Label" Text="{x:Bind ViewModel.LabelTitle,Mode=OneWay}"
+                                               Foreground="{ThemeResource SystemAccentColor}" FontSize="28" />
+                                    <TextBlock Text="{x:Bind ViewModel.Instance.Name}" HorizontalAlignment="Center"
+                                               Foreground="{ThemeResource SystemAccentColor}" FontSize="16" />
                                 </StackPanel>
-                                <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource SystemAccentColor}" RenderTransformOrigin="0.5,0.5">
+                                <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource SystemAccentColor}"
+                                           RenderTransformOrigin="0.5,0.5">
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform x:Name="AccountTranslateTransform" />
                                     </TextBlock.RenderTransform>
                                     <Run Text="以“" />
-                                    <Run x:Name="DisplayName" Text="Dearain" />
+                                    <Run x:Name="DisplayName" Text="{x:Bind ViewModel.Account.Nickname}" />
                                     <Run Text="”的身份" />
                                 </TextBlock>
                             </StackPanel>
-                            <controls:GlowingButton x:Name="GameReadyButton" Opacity="0" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{x:Bind ViewModel.StartCommand}">
+                            <controls:GlowingButton x:Name="GameReadyButton" Opacity="0" VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Command="{x:Bind ViewModel.StartCommand}">
                                 <TextBlock Text="开始" FontSize="26" />
                             </controls:GlowingButton>
                         </Grid>
-                        <Grid x:Name="Prompt" ToolTipService.ToolTip="{x:Bind ViewModel.ProgressDetails,Mode=OneWay}" Background="{ThemeResource SystemAccentColor}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                            <TextBlock x:Name="PromptText" Foreground="WhiteSmoke" Text="{x:Bind ViewModel.Progress,Mode=OneWay}" Margin="20,8,20,8" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <Grid x:Name="Prompt" ToolTipService.ToolTip="{x:Bind ViewModel.ProgressDetails,Mode=OneWay}"
+                              Background="{ThemeResource SystemAccentColor}" HorizontalAlignment="Center"
+                              VerticalAlignment="Bottom">
+                            <TextBlock x:Name="PromptText" Foreground="WhiteSmoke"
+                                       Text="{x:Bind ViewModel.Progress,Mode=OneWay}" Margin="20,8,20,8"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
                     </Grid>
                 </Grid>

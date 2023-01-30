@@ -1,22 +1,21 @@
-namespace Polymerium.Abstractions
+namespace Polymerium.Abstractions;
+
+public class Err<TOk, TErr> : Result<TOk, TErr>
 {
-    public class Err<TOk, TErr> : Result<TOk, TErr>
+    public Err(TErr err)
     {
-        public TErr Value { get; private set; }
-
-        public Err(TErr err)
-        {
-            Value = err;
-        }
+        Value = err;
     }
 
-    public class Err<TErr> : Result<TErr>
-    {
-        public TErr Value { get; private set; }
+    public TErr Value { get; }
+}
 
-        public Err(TErr err)
-        {
-            Value = err;
-        }
+public class Err<TErr> : Result<TErr>
+{
+    public Err(TErr err)
+    {
+        Value = err;
     }
+
+    public TErr Value { get; }
 }

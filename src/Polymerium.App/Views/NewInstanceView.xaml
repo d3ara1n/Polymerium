@@ -12,7 +12,8 @@
     <Grid RowDefinitions="*,*">
         <Grid ColumnDefinitions="*,*">
             <Grid Background="{ThemeResource CardBackgroundBrush}" BorderBrush="{ThemeResource CardStrokeBrush}"
-                  BorderThickness="1" CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,0,5,5" RowDefinitions="*,*">
+                  BorderThickness="1" CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,0,5,5"
+                  RowDefinitions="*,*">
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition />
                 </Grid.ChildrenTransitions>
@@ -26,7 +27,8 @@
                         Command="{x:Bind ViewModel.OpenWizardCommand}" />
             </Grid>
             <Grid Grid.Column="1" Background="{ThemeResource CardBackgroundBrush}"
-                  BorderBrush="{ThemeResource CardStrokeBrush}" BorderThickness="1" CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,0,10,5">
+                  BorderBrush="{ThemeResource CardStrokeBrush}" BorderThickness="1"
+                  CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,0,10,5">
                 <Grid.ChildrenTransitions>
                     <ContentThemeTransition />
                 </Grid.ChildrenTransitions>
@@ -44,7 +46,8 @@
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                         <TextBlock Text="整合包!" Style="{StaticResource SubtitleTextBlockStyle}" />
                     </StackPanel>
-                    <HyperlinkButton x:Name="GotoSearchButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="30" Command="{x:Bind ViewModel.GotoSearchPageCommand}">
+                    <HyperlinkButton x:Name="GotoSearchButton" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                     Margin="30" Command="{x:Bind ViewModel.GotoSearchPageCommand}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="前往搜索页面" />
                             <FontIcon Glyph="&#xE0AB;" />
@@ -53,7 +56,8 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" x:Name="DragDropPane" Opacity="0.3" AllowDrop="True" CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,5,10,10"
+        <Grid Grid.Row="1" x:Name="DragDropPane" Opacity="0.3" AllowDrop="True"
+              CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,5,10,10"
               DragEnter="DragDropPane_OnDragEnter" DragLeave="DragDropPane_OnDragLeave">
             <Grid.OpacityTransition>
                 <ScalarTransition />

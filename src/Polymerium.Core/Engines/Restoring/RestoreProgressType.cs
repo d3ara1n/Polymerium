@@ -1,12 +1,11 @@
-namespace Polymerium.Core.Engines.Restoring
+namespace Polymerium.Core.Engines.Restoring;
+
+public enum RestoreProgressType
 {
-    public enum RestoreProgressType
-    {
-        Core,
-        Libraries,
-        Assets,
-        Download,
-        ErrorOccurred,
-        AllCompleted
-    }
+    Core,
+    Libraries,
+    Assets,
+    Download,
+    ErrorOccurred,
+    AllCompleted
 }

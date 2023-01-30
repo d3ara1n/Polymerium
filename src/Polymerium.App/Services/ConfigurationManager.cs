@@ -1,23 +1,23 @@
+using System;
 using Polymerium.App.Configurations;
 using Polymerium.App.Data;
-using System;
 
-namespace Polymerium.App.Services
+namespace Polymerium.App.Services;
+
+public sealed class ConfigurationManager : IDisposable
 {
-    public sealed class ConfigurationManager : IDisposable
+    private readonly DataStorage _dataStorage;
+
+    public ConfigurationManager(DataStorage dataStorage)
     {
-        private readonly DataStorage _dataStorage;
-        public Configuration Current { get; set; }
+        _dataStorage = dataStorage;
+        Current = dataStorage.Load<ConfigurationModel, Configuration>(() => new Configuration());
+    }
 
-        public ConfigurationManager(DataStorage dataStorage)
-        {
-            _dataStorage = dataStorage;
-            Current = dataStorage.Load<ConfigurationModel, Configuration>(() => new Configuration());
-        }
+    public Configuration Current { get; set; }
 
-        public void Dispose()
-        {
-            _dataStorage.Save<ConfigurationModel, Configuration>(Current);
-        }
+    public void Dispose()
+    {
+        _dataStorage.Save<ConfigurationModel, Configuration>(Current);
     }
 }

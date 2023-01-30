@@ -1,25 +1,24 @@
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Models;
 using Polymerium.App.Views.AddAccountWizard;
-using System.Collections.Generic;
 
-namespace Polymerium.App.ViewModels.AddAccountWizard
+namespace Polymerium.App.ViewModels.AddAccountWizard;
+
+public class SelectionViewModel : ObservableObject
 {
-    public class SelectionViewModel : ObservableObject
+    public SelectionViewModel()
     {
-        public IEnumerable<AccountWizardEntryModel> Entries { get; private set; }
-
-        public SelectionViewModel()
+        Entries = new List<AccountWizardEntryModel>
         {
-            Entries = new List<AccountWizardEntryModel>()
+            new()
             {
-                new AccountWizardEntryModel()
-                {
-                    Caption = "离线账号",
-                    BrandIconSource = "ms-appx:///Assets/Brands/minecraft.256x256.png",
-                    Page = typeof(OfflineAccountView),
-                }
-            };
-        }
+                Caption = "离线账号",
+                BrandIconSource = "ms-appx:///Assets/Icons/Brands/minecraft.256x256.png",
+                Page = typeof(OfflineAccountView)
+            }
+        };
     }
+
+    public IEnumerable<AccountWizardEntryModel> Entries { get; }
 }

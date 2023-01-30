@@ -1,17 +1,16 @@
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 
-namespace Polymerium.Abstractions
+namespace Polymerium.Abstractions;
+
+public class GameInstance
 {
-    public class GameInstance
-    {
-        public string Id { get; set; }
-        public GameMetadata Metadata { get; set; }
-        public FileBasedLaunchConfiguration Configuration { get; set; }
-        public string Name { get; set; }
-        public string Author { get; set; }
-        public string FolderName { get; set; }
-        public string ThumbnailFile { get; set; }
-        public string BoundAccountId { get; set; }
-    }
+    public string Id { get; set; }
+    public GameMetadata Metadata { get; set; }
+    public FileBasedLaunchConfiguration Configuration { get; set; }
+    public string Name { get; set; }
+    public string Author { get; set; }
+    public string FolderName { get; set; }
+    public string ThumbnailFile { get; set; }
+    public string BoundAccountId { get; set; }
 }

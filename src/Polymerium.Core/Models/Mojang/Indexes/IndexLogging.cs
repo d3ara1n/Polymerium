@@ -1,7 +1,6 @@
-namespace Polymerium.Core.Models.Mojang.Indexes
+namespace Polymerium.Core.Models.Mojang.Indexes;
+
+public struct IndexLogging
 {
-    public struct IndexLogging
-    {
-        public IndexLoggingItem Client { get; set; }
-    }
+    public IndexLoggingItem Client { get; set; }
 }
