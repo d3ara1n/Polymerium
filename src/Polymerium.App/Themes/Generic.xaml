@@ -393,8 +393,8 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid>
-                            <ToggleButton x:Name="PART_Header" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" IsEnabled="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToBoolConverter}}" IsThreeState="False" IsChecked="{Binding IsExpanded,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}" HorizontalContentAlignment="Stretch" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}">
-                                <ToggleButton.Template>
+                            <controls:ToggleButtonEx x:Name="PART_Header" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" IsInteractive="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToBoolConverter}}" IsThreeState="False" IsChecked="{Binding IsExpanded,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}" HorizontalContentAlignment="Stretch" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}">
+                                <controls:ToggleButtonEx.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <ContentPresenter
                                         x:Name="ContentPresenter"
@@ -414,7 +414,7 @@
                                             </ContentPresenter.BackgroundTransition>
                                             <VisualStateManager.VisualStateGroups>
                                                 <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="Normal"/>
                                                     <VisualState x:Name="PointerOver">
                                                         <Storyboard>
                                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
@@ -482,70 +482,18 @@
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
-                                                    <VisualState x:Name="Indeterminate">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundIndeterminate}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundIndeterminate}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushIndeterminate}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="IndeterminatePointerOver">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundIndeterminatePointerOver}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushIndeterminatePointerOver}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundIndeterminatePointerOver}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="IndeterminatePressed">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundIndeterminatePressed}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushIndeterminatePressed}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundIndeterminatePressed}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="IndeterminateDisabled">
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundIndeterminateDisabled}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonForegroundIndeterminateDisabled}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBorderBrushIndeterminateDisabled}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
                                         </ContentPresenter>
                                     </ControlTemplate>
-                                </ToggleButton.Template>
-                            </ToggleButton>
-                            <Grid ColumnDefinitions="*,Auto" Margin="{TemplateBinding Padding}">
-                                <ContentPresenter Content="{TemplateBinding Header}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                                <Grid Grid.Column="1" MinWidth="36">
-                                    <FontIcon x:Name="PART_Indicator" Visibility="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToVisibleConverter}}" Glyph="&#xE70D;" />
+                                </controls:ToggleButtonEx.Template>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <ContentPresenter Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+                                    <Grid Grid.Column="1" MinWidth="36">
+                                        <FontIcon x:Name="PART_Indicator" Visibility="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToVisibleConverter}}" Glyph="&#xE70D;" />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
+                            </controls:ToggleButtonEx>
                         </Grid>
                         <Border Grid.Row="1" x:Name="PART_Container" Visibility="Collapsed">
                             <Border.RenderTransform>

@@ -58,11 +58,12 @@ namespace Polymerium.Core.Stars
             var starship = starshipBuilder.Build();
             var jvm = starship.Ship(jvmArguments);
             var game = starship.Ship(gameArguments);
-            var arguments = string.Join(' ', jvm.Append(mainClass).Concat(game));
+            var arguments = jvm.Append(mainClass).Concat(game);
             var options = new PlanetOptions()
             {
                 Arguments = arguments,
-                JavaExecutable = javaPath
+                JavaExecutable = javaPath,
+                WorkingDirectory = workingDirectory
             };
             return new PlanetBlender(options);
         }

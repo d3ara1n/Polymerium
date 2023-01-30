@@ -4,6 +4,7 @@ using Polymerium.Abstractions;
 using Polymerium.Core.Engines.Downloading;
 using Polymerium.Core.Engines.Restoring;
 using Polymerium.Core.Models.Mojang;
+using Polymerium.Core.Models.Mojang.Indexes;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -81,6 +82,8 @@ namespace Polymerium.Core.Engines
             // 下载 jar
             var jarFile = await EnsureJarDownloadedAsync(instance, index.Value, callback, token);
             if (jarFile == null) return false;
+            // 补全 logging.xml
+            if (index.Value.Logging.HasValue) await EnsureLoggingXmlCreatedAsync(instance, index.Value.Logging.Value, callback, token);
             // 补全 assets
             var assetIndex = await EnsureAssetsIndexCreatedAsync(instance, index.Value, callback, token);
             if (assetIndex == null) return false;
@@ -109,14 +112,13 @@ namespace Polymerium.Core.Engines
             callback?.Invoke(this, RestoreProgressEventArgs.CreateUpdate(RestoreProgressType.Libraries, null));
             var libDir = new Uri("poly-file:///libraries/");
             var nativesDir = new Uri($"poly-file://{instance.Id}/natives/");
-            var sha1 = SHA1.Create();
             var group = new DownloadTaskGroup() { Token = token };
             _fileBaseService.RemoveDirectory(nativesDir);
             foreach (var item in index.Libraries.Where(x => x.Verfy()))
             {
                 if (token.IsCancellationRequested) return false;
                 var libPath = new Uri(libDir, item.Downloads.Artifact.Path);
-                if (!await _fileBaseService.VerfyHashAsync(libPath, item.Downloads.Artifact.Sha1, sha1))
+                if (!await _fileBaseService.VerfyHashAsync(libPath, item.Downloads.Artifact.Sha1, _sha1))
                 {
                     group.TryAdd(item.Downloads.Artifact.Url.AbsoluteUri, _fileBaseService.Locate(libPath), out var _);
                 }
@@ -131,7 +133,7 @@ namespace Polymerium.Core.Engines
                     }
                     var classifier = item.Downloads.Classifiers.FirstOrDefault(x => x.Identity == native);
                     var path = new Uri(libDir, classifier.Path);
-                    if (!await _fileBaseService.VerfyHashAsync(path, classifier.Sha1, sha1))
+                    if (!await _fileBaseService.VerfyHashAsync(path, classifier.Sha1, _sha1))
                     {
                         if (group.TryAdd(classifier.Url.AbsoluteUri, _fileBaseService.Locate(path), out var task))
                         {
@@ -160,11 +162,33 @@ namespace Polymerium.Core.Engines
             return true;
         }
 
+        private async Task<bool> EnsureLoggingXmlCreatedAsync(GameInstance instance, IndexLogging logging, RestoreProgressHandler callback, CancellationToken token)
+        {
+            if (token.IsCancellationRequested) return false;
+            var loggingXml = new Uri($"poly-file://{instance.Id}/{logging.Client.File.Id}");
+            if (!await _fileBaseService.VerfyHashAsync(loggingXml, logging.Client.File.Sha1, _sha1))
+            {
+                var task = new DownloadTask()
+                {
+                    Token = token,
+                    Source = logging.Client.File.Url.AbsoluteUri,
+                    Destination = _fileBaseService.Locate(loggingXml)
+                };
+                task.CompletedCallback += (t, s) =>
+                {
+                    callback?.Invoke(this, RestoreProgressEventArgs.CreateDownload(logging.Client.File.Id, 1, 1));
+                };
+                _downloader.Enqueue(task);
+                task.Wait();
+                return true;
+            }
+            return true;
+        }
+
         private async Task<bool> EnsureAssetsCompletedAsync(GameInstance instance, AssetsIndex index, RestoreProgressHandler callback, CancellationToken token)
         {
             if (token.IsCancellationRequested) return false;
             callback?.Invoke(this, RestoreProgressEventArgs.CreateUpdate(RestoreProgressType.Assets, null));
-            var sha1 = SHA1.Create();
             var group = new DownloadTaskGroup()
             {
                 Token = token
@@ -173,7 +197,7 @@ namespace Polymerium.Core.Engines
             {
                 if (token.IsCancellationRequested) return false;
                 var path = new Uri($"poly-file:///assets/objects/{item[..2]}/{item}", UriKind.Absolute);
-                if (!await _fileBaseService.VerfyHashAsync(path, item, sha1))
+                if (!await _fileBaseService.VerfyHashAsync(path, item, _sha1))
                 {
                     group.TryAdd($"https://resources.download.minecraft.net/{item[..2]}/{item}", _fileBaseService.Locate(path), out var _);
                 }

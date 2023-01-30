@@ -11,6 +11,7 @@ using Polymerium.Core;
 using Polymerium.Core.Engines;
 using Polymerium.Core.Engines.Restoring;
 using Polymerium.Core.LaunchConfigurations;
+using Polymerium.Core.Models.Mojang.Indexes;
 using Polymerium.Core.Stars;
 using System;
 using System.Linq;

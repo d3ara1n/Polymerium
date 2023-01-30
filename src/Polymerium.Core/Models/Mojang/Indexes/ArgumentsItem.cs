@@ -12,6 +12,6 @@ namespace Polymerium.Core.Models.Mojang.Indexes
         public IEnumerable<Rule> Rules { get; set; }
         public IEnumerable<string> Values { get; set; }
 
-        public bool Verfy() => !(Rules != null && Rules.Any());
+        public bool Verfy() => !(Rules != null && Rules.Any()) && (Values != null && Values.Any());
     }
 }

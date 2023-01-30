@@ -14,6 +14,7 @@ namespace Polymerium.Core.Models.Mojang
         public string Id { get; set; }
         public JavaVersion JavaVersion { get; set; }
         public IEnumerable<Library> Libraries { get; set; }
+        public IndexLogging? Logging { get; set; }
         public string MainClass { get; set; }
         public string MinecraftArguments { get; set; }
         public uint MinimumLauncherVersion { get; set; }

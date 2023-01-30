@@ -16,11 +16,15 @@ namespace Polymerium.Core.Stars
         {
             var process = new Process()
             {
-                StartInfo = new ProcessStartInfo(_options.JavaExecutable, _options.Arguments)
+                StartInfo = new ProcessStartInfo(_options.JavaExecutable)
                 {
                     WorkingDirectory = _options.WorkingDirectory,
                 }
             };
+            foreach(var item in _options.Arguments)
+            {
+                process.StartInfo.ArgumentList.Add(item);
+            }
             process.Start();
         }
     }

@@ -38,7 +38,7 @@ namespace Polymerium.Core.Stars
                 {
                     return x;
                 }
-            })).Select(x => x.Contains(' ') ? $"\"{x}\"" : x);
+            }));
         }
     }
 }
