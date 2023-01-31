@@ -17,11 +17,12 @@
                            PointerEntered="Header_PointerEntered" PointerExited="Header_PointerExited">
                 <Grid ColumnDefinitions="Auto,*">
                     <Grid.ChildrenTransitions>
-                        <ContentThemeTransition />
+                        <EntranceThemeTransition />
                     </Grid.ChildrenTransitions>
                     <toolkit:ConstrainedBox Margin="30,30,15,30" VerticalAlignment="Center" HorizontalAlignment="Left"
                                             AspectRatio="1:1">
-                        <Border CornerRadius="5" BorderThickness="1" BorderBrush="{ThemeResource CardStrokeBrush}">
+                        <Border CornerRadius="{ThemeResource ControlCornerRadius}" BorderThickness="1"
+                                BorderBrush="{ThemeResource CardStrokeBrush}">
                             <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}"
                                              Source="{x:Bind ViewModel.Instance.ThumbnailFile}" IsCacheEnabled="True"
                                              PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
@@ -55,7 +56,8 @@
                         <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled"
                                           HorizontalScrollMode="Disabled" HorizontalScrollBarVisibility="Disabled">
-                                <GridView SelectionMode="None" Padding="0" ToolTipService.ToolTip="已安装的体验扩充包"
+                                <GridView SelectionMode="None" Padding="0" ItemsSource="{x:Bind ViewModel.Components}"
+                                          ToolTipService.ToolTip="已安装的组件(体验扩充包)"
                                           VerticalAlignment="Bottom">
                                     <GridView.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -72,7 +74,7 @@
                                             <Grid Margin="5,0,5,0">
                                                 <Border CornerRadius="5"
                                                         Background="{ThemeResource FloatLayerBackgroundBrush}"
-                                                        ToolTipService.ToolTip="{x:Bind Version}">
+                                                        ToolTipService.ToolTip="{x:Bind Description}">
                                                     <Grid Margin="10,5,10,5">
                                                         <TextBlock Text="{x:Bind Name}" />
                                                     </Grid>
@@ -80,13 +82,12 @@
                                             </Grid>
                                         </DataTemplate>
                                     </GridView.ItemTemplate>
-                                    <models:ComponentTagItemModel Name="Minecraft" Version="1.19.3" />
-                                    <models:ComponentTagItemModel Name="Forge" Version="40.2.0" />
                                 </GridView>
                             </ScrollViewer>
                             <Grid Grid.Column="1">
                                 <controls:IconButton x:Name="EditButton" Opacity="0" HorizontalAlignment="Right"
-                                                     VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的版本，体验扩充资源">
+                                                     VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的元数据"
+                                                     Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
                                     <controls:IconButton.OpacityTransition>
                                         <ScalarTransition />
                                     </controls:IconButton.OpacityTransition>

@@ -66,6 +66,7 @@ public partial class App : Application
         services.AddTransient<AddAccountWizardViewModel>();
         services.AddTransient<SelectionViewModel>();
         services.AddTransient<OfflineAccountViewModel>();
+        services.AddTransient<InstanceConfigurationViewModel>();
         // local service registration
         services.AddSingleton<IOverlayService, WindowOverlayService>();
         services.AddSingleton<NavigationService>();

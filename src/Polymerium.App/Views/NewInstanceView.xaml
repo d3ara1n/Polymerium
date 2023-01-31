@@ -7,32 +7,31 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Polymerium.App.Controls"
     mc:Ignorable="d">
 
     <Grid RowDefinitions="*,*">
         <Grid ColumnDefinitions="*,*">
-            <Grid Background="{ThemeResource CardBackgroundBrush}" BorderBrush="{ThemeResource CardStrokeBrush}"
-                  BorderThickness="1" CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,0,5,5"
-                  RowDefinitions="*,*">
-                <Grid.ChildrenTransitions>
-                    <ContentThemeTransition />
-                </Grid.ChildrenTransitions>
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                    <TextBlock Text="从空模板创建实例" Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="并稍后添加内容" Style="{StaticResource BodyTextBlockStyle}"
-                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                               VerticalAlignment="Bottom" />
-                </StackPanel>
-                <Button x:Name="OpenWizardButton" Content="打开实例创建向导" Grid.Row="1" HorizontalAlignment="Center"
-                        Command="{x:Bind ViewModel.OpenWizardCommand}" />
-            </Grid>
-            <Grid Grid.Column="1" Background="{ThemeResource CardBackgroundBrush}"
-                  BorderBrush="{ThemeResource CardStrokeBrush}" BorderThickness="1"
-                  CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,0,10,5">
-                <Grid.ChildrenTransitions>
-                    <ContentThemeTransition />
-                </Grid.ChildrenTransitions>
+            <controls:Card Margin="5,0,5,5">
+                <Grid RowDefinitions="*,*">
+                    <Grid.ChildrenTransitions>
+                        <EntranceThemeTransition />
+                    </Grid.ChildrenTransitions>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <TextBlock Text="从空模板创建实例" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <TextBlock Text="并稍后添加内容" Style="{StaticResource BodyTextBlockStyle}"
+                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                   VerticalAlignment="Bottom" />
+                    </StackPanel>
+                    <Button x:Name="OpenWizardButton" Content="打开实例创建向导" Grid.Row="1" HorizontalAlignment="Center"
+                            Command="{x:Bind ViewModel.OpenWizardCommand}" />
+                </Grid>
+            </controls:Card>
+            <controls:Card Grid.Column="1" Margin="5,0,10,5">
                 <Grid>
+                    <Grid.ChildrenTransitions>
+                        <EntranceThemeTransition />
+                    </Grid.ChildrenTransitions>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock Text="从" Style="{StaticResource BodyTextBlockStyle}"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
@@ -54,7 +53,7 @@
                         </StackPanel>
                     </HyperlinkButton>
                 </Grid>
-            </Grid>
+            </controls:Card>
         </Grid>
         <Grid Grid.Row="1" x:Name="DragDropPane" Opacity="0.3" AllowDrop="True"
               CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,5,10,10"
@@ -63,7 +62,7 @@
                 <ScalarTransition />
             </Grid.OpacityTransition>
             <Grid.ChildrenTransitions>
-                <ContentThemeTransition />
+                <EntranceThemeTransition />
             </Grid.ChildrenTransitions>
             <Rectangle Fill="Transparent" StrokeDashArray="8 4"
                        Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" StrokeThickness="3" />

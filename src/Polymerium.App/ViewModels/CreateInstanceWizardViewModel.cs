@@ -67,6 +67,11 @@ public class CreateInstanceWizardViewModel : ObservableValidator
                     res = x.Value<JArray>("versions").ToObject<IEnumerable<GameVersionModel>>();
                 })
                 .FetchAsync();
+            if (res.Any())
+                entry.SetSlidingExpiration(TimeSpan.FromHours(1));
+            else
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
+
             return res;
         });
         await callback(versions.ToList());

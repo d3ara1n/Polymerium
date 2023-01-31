@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
-using Polymerium.App.Views.AddAccountWizard;
+using Polymerium.App.Views.AddAccountWizards;
 
 namespace Polymerium.App.Views;
 

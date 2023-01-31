@@ -20,7 +20,7 @@
             <controls:Card Margin="5,0,10,5" Height="188" Padding="0">
                 <Grid>
                     <Grid.ChildrenTransitions>
-                        <ContentThemeTransition />
+                        <EntranceThemeTransition />
                     </Grid.ChildrenTransitions>
                     <Grid ColumnDefinitions="6*,4*">
                         <toolkit:ImageEx Height="140" Width="140" HorizontalAlignment="Center"

@@ -8,7 +8,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels.AddAccountWizard;
 
-namespace Polymerium.App.Views.AddAccountWizard;
+namespace Polymerium.App.Views.AddAccountWizards;
 
 public sealed partial class OfflineAccountView : Page
 {

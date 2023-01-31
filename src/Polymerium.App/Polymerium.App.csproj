@@ -18,6 +18,9 @@
         <Nullable>disable</Nullable>
         <DefaultLanguage>zh-CN</DefaultLanguage>
     </PropertyGroup>
+    <ItemGroup>
+        <None Remove="Views\Instances\InstanceConfigurationView.xaml"/>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0"/>
@@ -118,6 +121,11 @@
     </ItemGroup>
     <ItemGroup>
         <Page Update="Views\AddAccountWizard\OfflineAccountView.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\Instances\InstanceConfigurationView.xaml">
             <Generator>MSBuild:Compile</Generator>
         </Page>
     </ItemGroup>

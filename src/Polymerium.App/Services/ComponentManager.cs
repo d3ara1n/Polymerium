@@ -23,21 +23,25 @@ public class ComponentManager
         {
             new()
             {
-                Identity = "net.minecraft"
+                Identity = "net.minecraft",
+                FriendlyName = "Minecraft"
             },
             new()
             {
                 Identity = "net.minecraftforge",
+                FriendlyName = "Forge",
                 Dependencies = new[] { "net.minecraft" }
             },
             new()
             {
                 Identity = "net.fabricmc.fabric-loader",
+                FriendlyName = "Fabric",
                 Dependencies = new[] { "net.minecraft" }
             },
             new()
             {
                 Identity = "org.quiltmc.quilt-loader",
+                FriendlyName = "Quilt",
                 Dependencies = new[] { "net.minecraft" }
             }
         };
@@ -46,6 +50,12 @@ public class ComponentManager
     public IEnumerable<ComponentMeta> GetView()
     {
         return GetView(ComponentViewFilter.All);
+    }
+
+    public bool TryFindByIdentity(string identity, out ComponentMeta meta)
+    {
+        meta = _memoryStorage.SupportedComponents.FirstOrDefault(x => x.Identity == identity);
+        return meta != null;
     }
 
     public IEnumerable<ComponentMeta> GetView(ComponentViewFilter filter)

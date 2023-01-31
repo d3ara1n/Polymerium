@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Models;
-using Polymerium.App.Views.AddAccountWizard;
+using Polymerium.App.Views.AddAccountWizards;
 
 namespace Polymerium.App.ViewModels.AddAccountWizard;
 

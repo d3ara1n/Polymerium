@@ -9,7 +9,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels.AddAccountWizard;
 
-namespace Polymerium.App.Views.AddAccountWizard;
+namespace Polymerium.App.Views.AddAccountWizards;
 
 public sealed partial class SelectionView : Page
 {
