@@ -143,7 +143,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
         }
         else
         {
-            CriticalError($"{stage.StageName}:\n{stage.ErrorMessage}");
+            CriticalError($"{stage.StageName}\n{stage.ErrorMessage}:\n{stage.Exception?.StackTrace}");
         }
     }
 
@@ -193,7 +193,8 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
                 {
                     configure.AddCargo(polylock.Cargo)
                         .AddCrate("auth_player_name", Account.Nickname)
-                        .AddCrate("version_name", "THE POWER")
+                        // net.minecraft 的版本，这里试试换实例名会不会有别的影响
+                        .AddCrate("version_name", instance.Name)
                         .AddCrate("game_directory", _fileBase.Locate(workingDir))
                         .AddCrate("assets_root", _fileBase.Locate(assetsRoot))
                         .AddCrate("assets_index_name", polylock.AssetIndex.Id)
@@ -203,7 +204,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
                         // really?
                         .AddCrate("clientid", "00000000402b5328")
                         .AddCrate("user_type", "legacy")
-                        .AddCrate("version_type", "release")
+                        .AddCrate("version_type", "Polymerium")
                         // rule os
                         // TODO: 目前只支持 windows
                         .AddCrate("os.name", "windows")
@@ -217,7 +218,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
                                 polylock.Libraries
                                     .Select(x => _fileBase.Locate(new Uri(librariesRoot, x.Path)))))
                         .AddCrate("launcher_name", "Polymerium")
-                        .AddCrate("launcher_version", "Latest(maybe)");
+                        .AddCrate("launcher_version", "0.1.0");
                 });
             var blender = builder.Build();
             blender.Start();
@@ -230,7 +231,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
 
     private void CriticalError(string msg)
     {
-        _dispatcher.TryEnqueue(() =>
+        _dispatcher.TryEnqueue(async () =>
         {
             _overlayService.Dismiss();
             var dialog = new ContentDialog();
@@ -238,7 +239,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
             dialog.Title = "关键错误";
             dialog.Content = msg;
             dialog.CloseButtonText = "晓得了";
-            dialog.ShowAsync();
+            await dialog.ShowAsync();
         });
     }
 }

@@ -34,7 +34,7 @@ public class LoadAssetIndexStage : StageBase
     public override async Task<Option<StageBase>> StartAsync()
     {
         if (Token.IsCancellationRequested) return Cancel();
-        var assetIndexFile = new Uri($"poly-file:///assets/indexes/{_polylock.AssetIndex.Id}");
+        var assetIndexFile = new Uri($"poly-file:///assets/indexes/{_polylock.AssetIndex.Id}.json");
         string content = null;
         if (!await _fileBase.VerfyHashAsync(assetIndexFile, _polylock.AssetIndex.Sha1, _sha1) ||
             !_fileBase.TryReadAllText(assetIndexFile, out content))

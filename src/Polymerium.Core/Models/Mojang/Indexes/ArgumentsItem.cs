@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -13,6 +14,10 @@ public struct ArgumentsItem
 
     public bool Verfy()
     {
-        return !(Rules != null && Rules.Any()) && Values != null && Values.Any();
+        return Rules == null
+               || !Rules.Any()
+               || (Rules.Where(x => x.Action.Equals("allow", StringComparison.OrdinalIgnoreCase)).Any(x => x.Verfy())
+                   && Rules.Where(x => x.Action.Equals("disallow", StringComparison.OrdinalIgnoreCase))
+                       .All(x => x.Verfy()));
     }
 }

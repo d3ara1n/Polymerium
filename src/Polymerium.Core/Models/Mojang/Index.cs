@@ -6,7 +6,8 @@ namespace Polymerium.Core.Models.Mojang;
 
 public struct Index
 {
-    public Arguments Arguments { get; set; }
+    // compliance level 1
+    public Arguments? Arguments { get; set; }
     public AssetIndex AssetIndex { get; set; }
     public string Assets { get; set; }
     public uint ComplianceLevel { get; set; }
@@ -16,6 +17,8 @@ public struct Index
     public IEnumerable<Library> Libraries { get; set; }
     public IndexLogging? Logging { get; set; }
     public string MainClass { get; set; }
+
+    // compliance level 0
     public string MinecraftArguments { get; set; }
     public uint MinimumLauncherVersion { get; set; }
     public DateTimeOffset ReleaseTime { get; set; }
