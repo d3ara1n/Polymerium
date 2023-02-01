@@ -35,6 +35,12 @@ public class InstanceModel : RefinedModelBase<GameInstance>
     public string FolderName { get; set; }
     public string ThumbnailFile { get; set; }
     public string BoundAccountId { get; set; }
+    public DateTimeOffset? LastPlay { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset? LastRestore { get; set; }
+    public TimeSpan PlayTime { get; set; }
+    public int PlayCount { get; set; }
+    public int ExceptionCount { get; set; }
 
     public override void Apply(GameInstance instance)
     {
@@ -46,6 +52,12 @@ public class InstanceModel : RefinedModelBase<GameInstance>
         FolderName = instance.FolderName;
         ThumbnailFile = instance.ThumbnailFile;
         BoundAccountId = instance.BoundAccountId;
+        LastPlay = instance.LastPlay;
+        CreatedAt = instance.CreatedAt;
+        LastRestore = instance.LastRestore;
+        PlayTime = instance.PlayTime;
+        PlayCount = instance.PlayCount;
+        ExceptionCount = instance.ExceptionCount;
     }
 
     public override GameInstance Extract()
@@ -59,7 +71,13 @@ public class InstanceModel : RefinedModelBase<GameInstance>
             Author = Author,
             FolderName = FolderName,
             ThumbnailFile = ThumbnailFile,
-            BoundAccountId = BoundAccountId
+            BoundAccountId = BoundAccountId,
+            LastPlay = LastPlay,
+            PlayTime = PlayTime,
+            CreatedAt = CreatedAt,
+            ExceptionCount = ExceptionCount,
+            LastRestore = LastRestore,
+            PlayCount = PlayCount
         };
         return res;
     }

@@ -1,3 +1,4 @@
+using System;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 
@@ -13,4 +14,10 @@ public class GameInstance
     public string FolderName { get; set; }
     public string ThumbnailFile { get; set; }
     public string BoundAccountId { get; set; }
+    public DateTimeOffset? LastPlay { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset? LastRestore { get; set; }
+    public TimeSpan PlayTime { get; set; }
+    public int PlayCount { get; set; }
+    public int ExceptionCount { get; set; }
 }

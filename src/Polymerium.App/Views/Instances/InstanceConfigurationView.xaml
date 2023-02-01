@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:models="using:Polymerium.App.Models"
     mc:Ignorable="d">
 
     <Grid ColumnDefinitions="Auto,*">
@@ -21,29 +22,38 @@
                     <Border Width="60" Height="60" Margin="0,0,5,10" CornerRadius="{ThemeResource ControlCornerRadius}"
                             BorderThickness="1" BorderBrush="{ThemeResource CardStrokeBrush}">
                         <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}"
+                                         Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile,Mode=OneWay}"
                                          PlaceholderStretch="UniformToFill"
                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" />
                     </Border>
                     <StackPanel VerticalAlignment="Center" Grid.Column="1" Margin="5,0,0,10">
-                        <TextBlock Text="1.3.2 工业时代整合包" TextWrapping="WrapWholeWords" />
-                        <TextBlock Text="by Unknown"
+                        <TextBlock Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay}"
+                                   TextWrapping="WrapWholeWords" />
+                        <TextBlock Text="{x:Bind ViewModel.Context.AssociatedInstance.Author,Mode=OneWay}"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                     </StackPanel>
                 </Grid>
                 <ScrollViewer Grid.Row="1">
                     <StackPanel>
-                        <ListView SelectedIndex="0">
-                            <ListViewItem>
-                                <TextBlock Text="设置" />
-                            </ListViewItem>
-                            <ListViewItem>
-                                <TextBlock Text="高级" />
-                            </ListViewItem>
+                        <ListView x:Name="PageSelection" SelectedIndex="0" ItemsSource="{x:Bind ViewModel.Pages}"
+                                  SelectionChanged="PageSelection_SelectionChanged">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:InstanceConfigurationPageModel">
+                                    <Grid>
+                                        <ImageIcon Width="20" Height="20" HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center" Source="{x:Bind IconSource}" />
+                                        <TextBlock Text="{x:Bind Header}" HorizontalAlignment="Left" Margin="40,0,0,0"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
         </controls:Card>
-        <controls:Card Grid.Column="1" Margin="5,0,10,10" />
+        <controls:Card Grid.Column="1" Margin="5,0,10,10">
+            <Frame x:Name="SubpageRoot" />
+        </controls:Card>
     </Grid>
 </Page>

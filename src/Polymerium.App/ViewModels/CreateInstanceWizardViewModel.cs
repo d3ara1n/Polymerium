@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -79,17 +79,25 @@ public class CreateInstanceWizardViewModel : ObservableValidator
 
     public async Task Commit(Func<Task> callback)
     {
-        var invalidFileNameChars = Path.GetInvalidFileNameChars();
         var instance = new GameInstance
         {
             Id = Guid.NewGuid().ToString(),
             Name = InstanceName,
-            FolderName = string.Join("", InstanceName.Select(x => invalidFileNameChars.Contains(x) ? '_' : x)),
+            FolderName = InstanceName,
             Author = InstanceAuthor,
             Metadata = new GameMetadata
             {
                 Components = new[] { new Component { Identity = "net.minecraft", Version = SelectedVersion.Id } }
-            }
+            },
+            Configuration = new FileBasedLaunchConfiguration(),
+            CreatedAt = DateTimeOffset.Now,
+            LastPlay = null,
+            LastRestore = null,
+            ExceptionCount = 0,
+            PlayCount = 0,
+            ThumbnailFile = string.Empty,
+            BoundAccountId = null,
+            PlayTime = TimeSpan.Zero
         };
         _instanceManager.AddInstance(instance);
         await callback();

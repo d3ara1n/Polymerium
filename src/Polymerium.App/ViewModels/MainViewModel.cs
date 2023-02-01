@@ -27,6 +27,9 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
     private readonly ILogger _logger;
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
+    private readonly MemoryStorage _memoryStorage;
+
+    public ViewModelContext Context { get; }
 
     private ContentControl overlay;
     private NavigationItemModel selectedPage;
@@ -34,7 +37,7 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
     public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, InstanceManager instanceManager,
         AccountManager accountManager, ConfigurationManager configurationManager, ComponentManager componentManager,
         NavigationService navigationService,
-        MemoryStorage memoryStorage)
+        MemoryStorage memoryStorage, ViewModelContext context)
     {
         _logger = logger;
         _overlayService = overlayService;
@@ -42,16 +45,17 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
         _componentManager = componentManager;
         _accountManager = accountManager;
         _navigationService = navigationService;
-        MemoryStorage = memoryStorage;
+        _memoryStorage = memoryStorage;
         _configurationManager = configurationManager;
+        Context = context;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         if (overlayService is WindowOverlayService windowOverlayService)
             windowOverlayService.Register(PushOverlay, PullOverlay);
         else
             throw new ArgumentNullException(nameof(overlayService));
         IsActive = true;
-        MemoryStorage.Instances.CollectionChanged += Instances_CollectionChanged;
-        MemoryStorage.Accounts.CollectionChanged += Accounts_CollectionChanged;
+        _memoryStorage.Instances.CollectionChanged += Instances_CollectionChanged;
+        _memoryStorage.Accounts.CollectionChanged += Accounts_CollectionChanged;
         NavigationPages = new ObservableCollection<NavigationItemModel>(instanceManager.GetView().Select(it =>
             new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it, it.ThumbnailFile)));
         NavigationPages.Insert(0,
@@ -81,7 +85,6 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
 
     public ObservableCollection<AccountItemModel> LogonAccounts { get; set; }
     public AccountItemModel AccountShowcase { get; set; }
-    public MemoryStorage MemoryStorage { get; }
 
     public ContentControl Overlay
     {
@@ -130,7 +133,7 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
             AccountShowcase = model;
         }
 
-        MemoryStorage.SelectedAccount = model;
+        Context.SelectedAccount = model;
     }
 
     public void SetNavigateHandler(NavigateHandler handler)
@@ -138,17 +141,19 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
         _navigationService.Register(handler);
     }
 
-    public void OnNavigatedTo(NavigationItemModel page)
+    public void OnNavigatingTo(NavigationItemModel page)
     {
         if (page.GameInstance != null)
         {
+            Context.AssociatedInstance = page.GameInstance;
             var account = LogonAccounts.FirstOrDefault(x => x.Inner.Id == page.GameInstance.BoundAccountId);
             if (account != null)
-                MemoryStorage.SelectedAccount = account;
+                Context.SelectedAccount = account;
         }
         else
         {
-            MemoryStorage.SelectedAccount = AccountShowcase;
+            Context.AssociatedInstance = null;
+            Context.SelectedAccount = AccountShowcase;
         }
     }
 
@@ -171,7 +176,7 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
                 {
                     foreach (GameInstance instance in e.OldItems)
                     {
-                        var item = NavigationPages.FirstOrDefault(x => x.GameInstance.Id == instance.Id);
+                        var item = NavigationPages.FirstOrDefault(x => x.GameInstance?.Id == instance.Id);
                         if (item != null) NavigationPages.Remove(item);
                         // TODO: 当前页面和该实例有关就关闭该页面
                     }
@@ -224,6 +229,6 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
     public void FillMenuItems()
     {
         // FlyoutSubMenu 不能绑定 ItemSource 就真的**
-        foreach (var model in MemoryStorage.Accounts) LogonAccounts.Add(model.ToModel());
+        foreach (var model in _memoryStorage.Accounts) LogonAccounts.Add(model.ToModel());
     }
 }

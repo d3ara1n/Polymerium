@@ -85,9 +85,16 @@ public sealed partial class MainWindow : WindowEx
     private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         var item = sender.SelectedItem as NavigationItemModel;
-        RootFrame.Navigate(item.SourcePage, item.GameInstance, new SuppressNavigationTransitionInfo());
-        RootFrame.BackStack.Clear();
-        ViewModel.OnNavigatedTo(item);
+        if (item != null)
+        {
+            ViewModel.OnNavigatingTo(item);
+            RootFrame.Navigate(item.SourcePage, item.GameInstance, new SuppressNavigationTransitionInfo());
+            RootFrame.BackStack.Clear();
+        }
+        else
+        {
+            ViewModel.SelectedPage = ViewModel.NavigationPages[0];
+        }
     }
 
     private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -100,18 +107,18 @@ public sealed partial class MainWindow : WindowEx
         if (view == typeof(InstanceView) && parameter is string instanceId)
         {
             if (ViewModel.NavigationPages.Where(x => x.SourcePage == typeof(InstanceView))
-                    .FirstOrDefault(x => x.GameInstance.Id == instanceId) is NavigationItemModel { } instanceView)
+                    .FirstOrDefault(x => x.GameInstance.Id == instanceId) is { } instanceView)
                 MainNavigationBar.SelectedItem = instanceView;
             else
                 throw new ArgumentException($"parameter {parameter} not found as game instance id");
         }
         else
         {
-            if (ViewModel.NavigationPages.FirstOrDefault(x => x.SourcePage == view) is NavigationItemModel
+            if (ViewModel.NavigationPages.FirstOrDefault(x => x.SourcePage == view) is
                 {
                 } notPinned)
                 MainNavigationBar.SelectedItem = notPinned;
-            else if (ViewModel.NavigationPinnedPages.FirstOrDefault(x => x.SourcePage == view) is NavigationItemModel
+            else if (ViewModel.NavigationPinnedPages.FirstOrDefault(x => x.SourcePage == view) is
                      {
                      } pinned)
                 MainNavigationBar.SelectedItem = pinned;

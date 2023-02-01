@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
 using Polymerium.Core.Components;
+using Polymerium.Core.Extensions;
 using Polymerium.Core.StageModels;
 
 namespace Polymerium.Core.Engines.Restoring.Stages;
@@ -37,7 +38,9 @@ public class CheckAvailabilityStage : StageBase
     {
         if (Token.IsCancellationRequested) return Error("还原过程取消");
         var polylockDataFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json");
-        if (await _fileBase.VerfyHashAsync(polylockDataFile, _instance.Metadata.LockFileSha1, _sha1) &&
+        // 不是简单的 md5, 所以文件名也不应该是 .md5
+        var polylockHashFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json.hash");
+        if (_fileBase.TryReadAllText(polylockHashFile, out var hash) && hash == _instance.ComputeMetadataHash() &&
             _fileBase.TryReadAllText(polylockDataFile, out var content))
 
         {
@@ -45,6 +48,7 @@ public class CheckAvailabilityStage : StageBase
             return Next(new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader));
         }
 
-        return Next(new BuildStructureStage(_instance, _sha1, _metas, polylockDataFile, _downloader, _provider));
+        return Next(new BuildStructureStage(_instance, _sha1, _metas, polylockDataFile, polylockHashFile, _downloader,
+            _provider));
     }
 }

@@ -1,25 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Polymerium.Abstractions;
 using Polymerium.App.Data;
+using Polymerium.Core;
 
 namespace Polymerium.App.Services;
 
 public enum InstanceManagerError
 {
-    DuplicateId
+    DuplicateId,
+    FileSystemOperationFailed
 }
 
 public sealed class InstanceManager : IDisposable
 {
     private readonly DataStorage _dataStorage;
     private readonly MemoryStorage _memoryStorage;
+    private readonly IFileBaseService _fileBase;
 
-    public InstanceManager(DataStorage dataStorage, MemoryStorage memoryStorage)
+    public InstanceManager(DataStorage dataStorage, MemoryStorage memoryStorage, IFileBaseService fileBase)
     {
         _dataStorage = dataStorage;
         _memoryStorage = memoryStorage;
+        _fileBase = fileBase;
         var instances = dataStorage.LoadList<InstanceModel, GameInstance>(() => Enumerable.Empty<GameInstance>());
         foreach (var instance in instances) _memoryStorage.Instances.Add(instance);
     }
@@ -36,11 +41,39 @@ public sealed class InstanceManager : IDisposable
 
     public Result<InstanceManagerError> AddInstance(GameInstance instance)
     {
+        var invalidFileNameChars = Path.GetInvalidFileNameChars();
+        if (string.IsNullOrWhiteSpace(instance.Name)) instance.Name = "_";
         if (_memoryStorage.Instances.Any(x => x.Id == instance.Id))
             return Result<InstanceManagerError>.Err(InstanceManagerError.DuplicateId);
-
+        instance.FolderName =
+            string.Join("", instance.FolderName.Select(x => invalidFileNameChars.Contains(x) ? '_' : x));
         while (_memoryStorage.Instances.Any(x => x.FolderName == instance.FolderName)) instance.FolderName += '_';
         _memoryStorage.Instances.Add(instance);
+        return Result<InstanceManagerError>.Ok();
+    }
+
+    public Result<InstanceManagerError> RenameInstanceSafe(GameInstance instance, string name)
+    {
+        var invalidFileNameChars = Path.GetInvalidFileNameChars();
+        if (string.IsNullOrWhiteSpace(name)) name = "_";
+        var folderName = string.Join("", name.Select(x => invalidFileNameChars.Contains(x) ? '_' : x));
+        while (_memoryStorage.Instances.Any(x => x.Id != instance.Id && x.FolderName == folderName)) folderName += '_';
+        var instanceDir = _fileBase.Locate(new Uri($"poly-file://{instance.Id}"));
+        if (Directory.Exists(instanceDir))
+        {
+            var newDir = Path.Combine(Path.GetDirectoryName(instanceDir), folderName);
+            try
+            {
+                Directory.Move(instanceDir, newDir);
+            }
+            catch
+            {
+                return Result<InstanceManagerError>.Err(InstanceManagerError.FileSystemOperationFailed);
+            }
+        }
+
+        instance.Name = name;
+        instance.FolderName = folderName;
         return Result<InstanceManagerError>.Ok();
     }
 
@@ -55,5 +88,10 @@ public sealed class InstanceManager : IDisposable
     {
         instance = _memoryStorage.Instances.FirstOrDefault(x => x.Id == id);
         return instance != null;
+    }
+
+    public void RemoveInstance(GameInstance instance)
+    {
+        if (TryFindById(instance.Id, out var found)) _memoryStorage.Instances.Remove(found);
     }
 }

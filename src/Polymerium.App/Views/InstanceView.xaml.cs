@@ -18,14 +18,6 @@ public sealed partial class InstanceView : Page
 
     public InstanceViewModel ViewModel { get; }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
-    {
-        base.OnNavigatedTo(e);
-
-        var instance = (GameInstance)e.Parameter;
-        ViewModel.GotInstance(instance);
-    }
-
     private void Header_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
         EditButton.Opacity = 1.0;

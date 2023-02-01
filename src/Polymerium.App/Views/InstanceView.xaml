@@ -118,7 +118,7 @@
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-plugin-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="模组" FontSize="16" />
-                                <TextBlock Text="347"
+                                <TextBlock Text="不支持"
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
@@ -135,7 +135,7 @@
                     </controls:IconButton>
                 </Grid>
             </controls:Card>
-            <controls:GroupBox Header="截图" Margin="5,5,10,5">
+            <controls:GroupBox Header="截图(WIP)" Margin="5,5,10,5">
                 <toolkit:ConstrainedBox AspectRatio="16:9">
                     <Grid>
                         <Grid.ChildrenTransitions>
@@ -146,7 +146,7 @@
                     </Grid>
                 </toolkit:ConstrainedBox>
             </controls:GroupBox>
-            <controls:GroupBox Header="存档" Margin="5,5,10,5">
+            <controls:GroupBox Header="存档(WIP)" Margin="5,5,10,5">
                 <Grid>
                     <Grid.ChildrenTransitions>
                         <ContentThemeTransition />
@@ -155,13 +155,29 @@
                 </Grid>
             </controls:GroupBox>
             <controls:GroupBox Header="其他信息" Margin="5,5,10,10">
-                <!-- 上一次运行，最后一次还原 安装时间 -->
-                <!-- 游玩次数 异常退出次数 总游戏时间 -->
                 <Grid>
                     <Grid.ChildrenTransitions>
                         <ContentThemeTransition />
                     </Grid.ChildrenTransitions>
-                    <TextBlock Text="占位符" />
+                    <GridView SelectionMode="None" ItemsSource="{x:Bind ViewModel.InformationItems}">
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </GridView.ItemContainerStyle>
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="models:InstanceInformationItemModel">
+                                <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*" Margin="5"
+                                      HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <FontIcon FontSize="12" Margin="0,0,5,0" Glyph="{x:Bind IconGlyph}" />
+                                    <TextBlock Grid.Column="1" Text="{x:Bind Caption}" />
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind Content}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
                 </Grid>
             </controls:GroupBox>
         </StackPanel>

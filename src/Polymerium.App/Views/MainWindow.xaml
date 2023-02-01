@@ -56,12 +56,12 @@
             SelectionChanged="OnSelectionChanged">
             <NavigationView.PaneCustomContent>
                 <controls:IconButton
-                    ToolTipService.ToolTip="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay}"
                     Height="60" Width="70" Margin="5">
                     <controls:IconButton.ContextFlyout>
                         <MenuFlyout>
                             <MenuFlyoutItem
-                                Text="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
+                                Text="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
                             <MenuFlyoutSeparator />
                             <MenuFlyoutSubItem x:Name="SwitchToSubMenu" Text="切换到" />
                             <MenuFlyoutSeparator />
@@ -72,7 +72,7 @@
                         </MenuFlyout>
                     </controls:IconButton.ContextFlyout>
                     <toolkit:ImageEx
-                        Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarFaceSource,Mode=OneWay}"
+                        Source="{x:Bind ViewModel.Context.SelectedAccount.AvatarFaceSource,Mode=OneWay}"
                         Stretch="Fill" PlaceholderStretch="Fill"
                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="5" />
                 </controls:IconButton>

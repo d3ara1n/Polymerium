@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
 using Polymerium.App.ViewModels.AddAccountWizard;
+using Polymerium.App.ViewModels.Instances;
 using Polymerium.App.Views;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
@@ -56,6 +57,7 @@ public partial class App : Application
         );
         services.AddMemoryCache();
         // view models registration
+        services.AddSingleton<ViewModelContext>();
         services.AddTransient<MainViewModel>();
         services.AddTransient<NewInstanceViewModel>();
         services.AddTransient<CreateInstanceWizardViewModel>();
@@ -67,6 +69,9 @@ public partial class App : Application
         services.AddTransient<SelectionViewModel>();
         services.AddTransient<OfflineAccountViewModel>();
         services.AddTransient<InstanceConfigurationViewModel>();
+        services.AddTransient<InstanceMetadataConfigurationViewModel>();
+        services.AddTransient<InstanceLaunchConfigurationViewModel>();
+        services.AddTransient<InstanceAdvancedConfigurationViewModel>();
         // local service registration
         services.AddSingleton<IOverlayService, WindowOverlayService>();
         services.AddSingleton<NavigationService>();

@@ -25,7 +25,7 @@
                     <Grid ColumnDefinitions="6*,4*">
                         <toolkit:ImageEx Height="140" Width="140" HorizontalAlignment="Center"
                                          VerticalAlignment="Bottom" IsCacheEnabled="True" Stretch="UniformToFill"
-                                         Source="{x:Bind ViewModel.MemoryStorage.SelectedAccount.AvatarBustSource,Mode=OneWay}"
+                                         Source="{x:Bind ViewModel.Context.SelectedAccount.AvatarBustSource,Mode=OneWay}"
                                          PlaceholderStretch="UniformToFill"
                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png" />
                     </Grid>
@@ -33,9 +33,9 @@
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">
                                 <Run Text="你好 " />
-                                <Run Text="{x:Bind ViewModel.MemoryStorage.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
+                                <Run Text="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
                             </TextBlock>
-                            <TextBlock Text="你还没有设置账号，&#x000A;点击左侧导航栏头像添加" TextWrapping="WrapWholeWords"
+                            <TextBlock Text="{x:Bind ViewModel.Tip}" TextWrapping="WrapWholeWords"
                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                        Style="{ThemeResource BodyTextBlockStyle}" />
                         </StackPanel>
@@ -46,14 +46,13 @@
                 <StackPanel>
                     <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,5">
                         <TextBlock Text="最近游玩" />
-                        <controls:IconButton Grid.Column="1">
-                            <FontIcon Glyph="&#xE108;" />
-                        </controls:IconButton>
                     </Grid>
                     <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:RecentPlayedItemModel">
-                                <controls:RecentPlayedItemControl Style="{StaticResource DefaultRecentPlayedItemStyle}">
+                                <controls:RecentPlayedItemControl Style="{StaticResource DefaultRecentPlayedItemStyle}"
+                                                                  Command="{x:Bind Command}"
+                                                                  CommandParameter="{x:Bind InstanceId}">
                                     <Grid RowDefinitions="Auto,*" MaxWidth="100">
                                         <toolkit:ImageEx Width="80" Height="80" Margin="10,10,10,5" CornerRadius="10"
                                                          Source="{x:Bind ThumbnailFile}"

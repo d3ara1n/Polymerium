@@ -9,6 +9,7 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Core.Components;
 using Polymerium.Core.Components.Installers;
+using Polymerium.Core.Extensions;
 using Polymerium.Core.StageModels;
 
 namespace Polymerium.Core.Engines.Restoring.Stages;
@@ -21,10 +22,12 @@ public class BuildStructureStage : StageBase
     private readonly GameInstance _instance;
     private readonly IEnumerable<ComponentMeta> _metas;
     private readonly Uri _polylockDataFile;
+    private readonly Uri _polylockHashFile;
     private readonly IServiceProvider _provider;
     private readonly SHA1 _sha1;
 
     public BuildStructureStage(GameInstance instance, SHA1 sha1, IEnumerable<ComponentMeta> metas, Uri polylockDataFile,
+        Uri polylockHashFile,
         DownloadEngine downloader,
         IServiceProvider provider)
     {
@@ -32,12 +35,13 @@ public class BuildStructureStage : StageBase
         _sha1 = sha1;
         _metas = metas;
         _polylockDataFile = polylockDataFile;
+        _polylockHashFile = polylockHashFile;
         _downloader = downloader;
         _provider = provider;
         _fileBase = _provider.GetRequiredService<IFileBaseService>();
         _installers = new Dictionary<string, Type>
         {
-            { "net.minecraft", typeof(MinecraftInstaller) }
+            { "net.minecraft", typeof(MinecraftComponentInstaller) }
         };
     }
 
@@ -64,8 +68,8 @@ public class BuildStructureStage : StageBase
             var polylock = context.Build();
             var polylockData = JsonConvert.SerializeObject(polylock);
             _fileBase.WriteAllText(_polylockDataFile, polylockData);
-            if ((await _fileBase.ComputeHashAsync(_polylockDataFile, _sha1)).TryUnwrap(out var hash))
-                _instance.Metadata = _instance.Metadata with { LockFileSha1 = hash };
+            var md5 = _instance.ComputeMetadataHash();
+            _fileBase.WriteAllText(_polylockHashFile, md5);
 
             return Next(new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader));
         }

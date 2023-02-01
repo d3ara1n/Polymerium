@@ -32,8 +32,6 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
     private readonly CancellationTokenSource source = new();
     private IGameAccount account;
 
-    private GameInstance instance;
-
     private string labelTitle;
     private string progress;
     private string progressDetails;
@@ -53,11 +51,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
         _dispatcher = DispatcherQueue.GetForCurrentThread();
     }
 
-    public GameInstance Instance
-    {
-        get => instance;
-        set => SetProperty(ref instance, value);
-    }
+    public GameInstance Instance { get; private set; }
 
     public IGameAccount Account
     {
@@ -93,7 +87,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
     {
         Instance = instance;
         readyHandler = handler;
-        if (_accountManager.TryFindById(instance.BoundAccountId, out var a))
+        if (_accountManager.TryFindById(Instance.BoundAccountId, out var a))
         {
             Account = a;
             return true;
@@ -114,6 +108,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
 
     public async Task PrepareAsync(CancellationToken token)
     {
+        Instance.PlayCount++;
         var stage = _restore.ProduceStage(Instance, _memoryStorage.SupportedComponents);
         stage.TaskFinishedCallback = UpdateTaskProgressSafe;
         UpdateLabelSafe(stage.StageName);
@@ -139,10 +134,16 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
             {
                 UpdateLabelSafe("您的游戏已经准备就绪", true);
                 UpdateTaskProgressSafe("任务完成");
+                Instance.LastRestore = DateTimeOffset.Now;
+            }
+            else
+            {
+                Instance.PlayCount--;
             }
         }
         else
         {
+            Instance.ExceptionCount++;
             CriticalError($"{stage.StageName}\n{stage.ErrorMessage}:\n{stage.Exception?.StackTrace}");
         }
     }
@@ -171,11 +172,11 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
     [RelayCommand]
     public void Start()
     {
-        var workingDir = new Uri($"poly-file://{instance.Id}/");
+        var workingDir = new Uri($"poly-file://{Instance.Id}/");
         var assetsRoot = new Uri("poly-file:///assets/");
-        var nativesRoot = new Uri($"poly-file://{instance.Id}/natives/");
+        var nativesRoot = new Uri($"poly-file://{Instance.Id}/natives/");
         var librariesRoot = new Uri("poly-file:///libraries/");
-        var polylockFile = new Uri($"poly-file://{instance.Id}/polymerium.lock.json");
+        var polylockFile = new Uri($"poly-file://{Instance.Id}/polymerium.lock.json");
         if (_fileBase.TryReadAllText(polylockFile, out var content))
         {
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
@@ -194,7 +195,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
                     configure.AddCargo(polylock.Cargo)
                         .AddCrate("auth_player_name", Account.Nickname)
                         // net.minecraft 的版本，这里试试换实例名会不会有别的影响
-                        .AddCrate("version_name", instance.Name)
+                        .AddCrate("version_name", Instance.Name)
                         .AddCrate("game_directory", _fileBase.Locate(workingDir))
                         .AddCrate("assets_root", _fileBase.Locate(assetsRoot))
                         .AddCrate("assets_index_name", polylock.AssetIndex.Id)
@@ -222,6 +223,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
                 });
             var blender = builder.Build();
             blender.Start();
+            Instance.LastPlay = DateTimeOffset.Now;
         }
         else
         {

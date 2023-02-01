@@ -19,33 +19,35 @@
         <DefaultLanguage>zh-CN</DefaultLanguage>
     </PropertyGroup>
     <ItemGroup>
-        <None Remove="Dialogs\ConfirmationDialog.xaml"/>
-        <None Remove="Dialogs\TextInputDialog.xaml"/>
+        <None Remove="Assets\Icons\icons8-blueprint-48.png" />
+        <None Remove="Assets\Icons\icons8-firework-48.png" />
+        <None Remove="Assets\Icons\icons8-slider-48.png" />
+        <None Remove="Views\Instances\InstanceConfigurationView.xaml" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0"/>
-        <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2"/>
-        <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2"/>
-        <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2"/>
-        <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2"/>
-        <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2"/>
-        <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2"/>
-        <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2"/>
-        <PackageReference Include="Humanizer" Version="2.14.1"/>
-        <PackageReference Include="IBuilder" Version="0.1.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102"/>
-        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
-        <PackageReference Include="System.Drawing.Common" Version="7.0.0"/>
-        <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="7.0.0"/>
-        <PackageReference Include="WinUIEx" Version="2.1.0"/>
-        <Manifest Include="$(ApplicationManifest)"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+        <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
+        <PackageReference Include="Humanizer" Version="2.14.1" />
+        <PackageReference Include="IBuilder" Version="0.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+        <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+        <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="7.0.0" />
+        <PackageReference Include="WinUIEx" Version="2.1.0" />
+        <Manifest Include="$(ApplicationManifest)" />
     </ItemGroup>
 
     <!-- 
@@ -54,32 +56,12 @@
         package has not yet been restored.
       -->
     <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
-        <ProjectCapability Include="Msix"/>
+        <ProjectCapability Include="Msix" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj"/>
-        <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj"/>
-        <ProjectReference Include="..\Polymerium.Core\Polymerium.Core.csproj"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Page Update="Dialogs\ConfirmationDialog.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <Page Update="Views\Instances\InstanceAdvancedConfigurationView.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <Page Update="Views\Instances\InstanceLaunchConfigurationView.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <Page Update="Views\Instances\InstanceMetadataConfigurationView.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
+        <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj" />
+        <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj" />
+        <ProjectReference Include="..\Polymerium.Core\Polymerium.Core.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Page Update="Views\PrepareGameDialog.xaml">
@@ -151,8 +133,6 @@
         </Page>
     </ItemGroup>
     <ItemGroup>
-        <Page Update="Dialogs\TextInputDialog.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
+      <Folder Include="ViewModels\Instances\" />
     </ItemGroup>
 </Project>

@@ -11,7 +11,6 @@ namespace Polymerium.App.Services;
 // Shared Objects service
 public class MemoryStorage : ObservableObject
 {
-    private AccountItemModel selectedAccount;
 
     public MemoryStorage()
     {
@@ -21,12 +20,6 @@ public class MemoryStorage : ObservableObject
 
     public ObservableCollection<GameInstance> Instances { get; }
     public ObservableCollection<IGameAccount> Accounts { get; }
-
-    public AccountItemModel SelectedAccount
-    {
-        get => selectedAccount;
-        set => SetProperty(ref selectedAccount, value);
-    }
-
     public IEnumerable<ComponentMeta> SupportedComponents { get; set; }
+    
 }

@@ -26,12 +26,12 @@
                         </Grid>
                     </controls:ExpanderEx.Header>
                     <StackPanel Spacing="1">
-                        <Grid Background="{ThemeResource ExpanderHeaderBackground}">
+                        <controls:ExpanderExItem>
                             <TextBlock Text="其实没有超能力" />
-                        </Grid>
-                        <Grid Background="{ThemeResource ExpanderHeaderBackground}">
+                        </controls:ExpanderExItem>
+                        <controls:ExpanderExItem>
                             <Button Content="点这个按钮也没用" />
-                        </Grid>
+                        </controls:ExpanderExItem>
                     </StackPanel>
                 </controls:ExpanderEx>
                 <controls:ExpanderEx Padding="0">
@@ -71,10 +71,10 @@
                             <Button x:Name="OpenJavaDialogButton" Content="打开选取对话框" HorizontalAlignment="Right" />
                         </Grid>
                     </controls:ExpanderEx.Header>
-                    <Grid Background="{ThemeResource ExpanderHeaderBackground}">
-                        <!-- 日后会有对话框用以在多个 Java 中选择 -->
+                    <!-- 日后会有对话框用以在多个 Java 中选择 -->
+                    <controls:ExpanderExItem>
                         <TextBox Text="{x:Bind ViewModel.JavaPath,Mode=TwoWay}" />
-                    </Grid>
+                    </controls:ExpanderExItem>
                 </controls:ExpanderEx>
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>

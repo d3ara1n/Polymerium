@@ -23,6 +23,24 @@
     <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
     <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
     <converters:NullToParameterConverter x:Key="NullToParameterConverter" />
+    <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter" />
+
+    <Style TargetType="controls:ExpanderExItem" BasedOn="{StaticResource DefaultExpanderExItemStyle}" />
+
+    <Style x:Key="DefaultExpanderExItemStyle" TargetType="controls:ExpanderExItem">
+        <Setter Property="Background" Value="{ThemeResource ExpanderHeaderBackground}" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ExpanderExItem">
+                    <Grid Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}"
+                          Margin="1,0,1,0">
+                        <ContentPresenter Margin="{TemplateBinding Padding}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="controls:CustomDialog" BasedOn="{StaticResource DefaultCustomDialogStyle}" />
 
@@ -608,8 +626,8 @@
                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                       HorizontalAlignment="Stretch"
                                                       HorizontalContentAlignment="Stretch" />
-                                    <Grid Grid.Column="1" MinWidth="36">
-                                        <FontIcon x:Name="PART_Indicator"
+                                    <Grid Grid.Column="1">
+                                        <FontIcon x:Name="PART_Indicator" Margin="5,0,0,0"
                                                   Visibility="{Binding Content,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource NotNullToVisibleConverter}}"
                                                   Glyph="&#xE70D;" />
                                     </Grid>
@@ -620,8 +638,7 @@
                             <Border.RenderTransform>
                                 <CompositeTransform x:Name="PART_CompositeTransform" />
                             </Border.RenderTransform>
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <ContentPresenter />
                         </Border>
                     </Grid>
                 </ControlTemplate>

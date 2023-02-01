@@ -1,9 +1,10 @@
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 
 namespace Polymerium.App.Controls;
 
-public class RecentPlayedItemControl : ContentControl
+public class RecentPlayedItemControl : ButtonBase
 {
     private Border PART_Background;
     private Border PART_Border;
@@ -27,5 +28,17 @@ public class RecentPlayedItemControl : ContentControl
         PART_Background.Opacity = 0.0d;
         PART_Border.Opacity = 1.0d;
         base.OnPointerExited(e);
+    }
+
+    protected override void OnPointerPressed(PointerRoutedEventArgs e)
+    {
+        PART_Background.Opacity = 0.5d;
+        base.OnPointerPressed(e);
+    }
+
+    protected override void OnPointerReleased(PointerRoutedEventArgs e)
+    {
+        PART_Background.Opacity = IsPointerOver ? 1.0d : 0d;
+        base.OnPointerReleased(e);
     }
 }
