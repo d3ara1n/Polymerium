@@ -46,4 +46,9 @@ public sealed class AccountManager : IDisposable
     {
         _memoryStorage.Accounts.Add(account);
     }
+
+    public void RemoveAccount(IGameAccount account)
+    {
+        _memoryStorage.Accounts.Remove(account);
+    }
 }

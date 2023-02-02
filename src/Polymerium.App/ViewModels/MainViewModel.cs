@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -17,7 +18,7 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;
 
-public sealed partial class MainViewModel : ObservableRecipient, IDisposable
+public sealed class MainViewModel : ObservableRecipient, IDisposable
 {
     private readonly AccountManager _accountManager;
     private readonly ComponentManager _componentManager;
@@ -45,8 +46,10 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
         _navigationService = navigationService;
         _memoryStorage = memoryStorage;
         _configurationManager = configurationManager;
-        Context = context;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
+        OpenAddAccountWizardCommand = new RelayCommand(OpenAddAccountWizard);
+        RemoveAccountCommand = new RelayCommand(RemoveAccount);
+        Context = context;
         if (overlayService is WindowOverlayService windowOverlayService)
             windowOverlayService.Register(PushOverlay, PullOverlay);
         else
@@ -91,6 +94,10 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
         get => overlay;
         set => SetProperty(ref overlay, value);
     }
+
+    public ICommand OpenAddAccountWizardCommand { get; }
+
+    public ICommand RemoveAccountCommand { get; }
 
     public void Dispose()
     {
@@ -191,15 +198,7 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
         {
             case NotifyCollectionChangedAction.Add:
             {
-                foreach (IGameAccount a in e.NewItems)
-                {
-                    var model = new AccountItemModel
-                    {
-                        Inner = a,
-                        AvatarFaceSource = "ms-appx:///Assets/Placeholders/default_avatar_face.png"
-                    };
-                    LogonAccounts.Add(model);
-                }
+                foreach (IGameAccount a in e.NewItems) LogonAccounts.Add(a.ToModel());
             }
                 break;
 
@@ -219,11 +218,30 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
         }
     }
 
-    [RelayCommand]
-    public void OpenAddAccountWizard()
+    private void OpenAddAccountWizard()
     {
         _overlayService.Show(new AddAccountWizardDialog(_overlayService));
     }
+
+    private void RemoveAccount()
+    {
+        if (Context.SelectedAccount != null)
+        {
+            if (Context.AssociatedInstance != null)
+            {
+                Context.AssociatedInstance.BoundAccountId = null;
+            }
+            else
+            {
+                AccountShowcase = null;
+                _configurationManager.Current.AccountShowcaseId = null;
+            }
+
+            _accountManager.RemoveAccount(Context.SelectedAccount.Inner);
+            Context.SelectedAccount = null;
+        }
+    }
+
 
     public void FillMenuItems()
     {

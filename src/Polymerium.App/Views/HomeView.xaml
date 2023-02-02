@@ -33,7 +33,8 @@
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">
                                 <Run Text="你好 " />
-                                <Run Text="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay}" />
+                                <Run
+                                    Text="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay,Converter={StaticResource NullToParameterConverter},ConverterParameter=未登录}" />
                             </TextBlock>
                             <TextBlock Text="{x:Bind ViewModel.Tip}" TextWrapping="WrapWholeWords"
                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"

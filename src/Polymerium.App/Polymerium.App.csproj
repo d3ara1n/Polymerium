@@ -25,6 +25,7 @@
         <None Remove="Dialogs\ConfirmationDialog.xaml"/>
         <None Remove="Dialogs\JavaPickerDialog.xaml"/>
         <None Remove="Dialogs\TextInputDialog.xaml"/>
+        <None Remove="Views\MainView.xaml"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -64,6 +65,11 @@
         <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj"/>
         <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj"/>
         <ProjectReference Include="..\Polymerium.Core\Polymerium.Core.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\MainView.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Dialogs\JavaPickerDialog.xaml">
