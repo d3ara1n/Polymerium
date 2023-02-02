@@ -12,21 +12,13 @@
         <EnableMsixTooling>true</EnableMsixTooling>
         <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
         <Title>$(AssemblyName)</Title>
-        <Authors>D3ara1n</Authors>
+        <Authors>d3ara1n</Authors>
         <Product>Polymerium</Product>
         <Description>Polymerium Minecraft Instance Manager</Description>
         <Nullable>disable</Nullable>
         <DefaultLanguage>zh-CN</DefaultLanguage>
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
     </PropertyGroup>
-    <ItemGroup>
-        <None Remove="Assets\Logo.ico"/>
-        <None Remove="Assets\Logo.png"/>
-        <None Remove="Dialogs\ConfirmationDialog.xaml"/>
-        <None Remove="Dialogs\JavaPickerDialog.xaml"/>
-        <None Remove="Dialogs\TextInputDialog.xaml"/>
-        <None Remove="Views\MainView.xaml"/>
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0"/>
