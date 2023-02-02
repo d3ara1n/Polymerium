@@ -7,13 +7,13 @@ namespace Polymerium.App.Views.Instances;
 
 public sealed partial class InstanceConfigurationView : Page
 {
-    public InstanceConfigurationViewModel ViewModel { get; }
-
     public InstanceConfigurationView()
     {
         InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<InstanceConfigurationViewModel>();
     }
+
+    public InstanceConfigurationViewModel ViewModel { get; }
 
     private void PageSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {

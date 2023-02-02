@@ -12,14 +12,13 @@ using Polymerium.Core;
 
 namespace Polymerium.App.ViewModels.Instances;
 
-public class InstanceAdvancedConfigurationViewModel : ObservableObject
+public partial class InstanceAdvancedConfigurationViewModel : ObservableObject
 {
-    private readonly InstanceManager _instanceManager;
     private readonly DispatcherQueue _dispatcher;
     private readonly IFileBaseService _fileBase;
-    private readonly NavigationService _navigation;
+    private readonly InstanceManager _instanceManager;
     private readonly ILogger _logger;
-    public ViewModelContext Context { get; }
+    private readonly NavigationService _navigation;
 
     public InstanceAdvancedConfigurationViewModel(ViewModelContext context, InstanceManager instanceManager,
         IFileBaseService fileBase, NavigationService navigation, ILogger<InstanceAdvancedConfigurationViewModel> logger)
@@ -31,6 +30,8 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         _logger = logger;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
     }
+
+    public ViewModelContext Context { get; }
 
     [RelayCommand]
     public void OpenRenameDialog()

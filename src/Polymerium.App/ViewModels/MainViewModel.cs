@@ -25,11 +25,9 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
     private readonly DispatcherQueue _dispatcher;
     private readonly InstanceManager _instanceManager;
     private readonly ILogger _logger;
+    private readonly MemoryStorage _memoryStorage;
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
-    private readonly MemoryStorage _memoryStorage;
-
-    public ViewModelContext Context { get; }
 
     private ContentControl overlay;
     private NavigationItemModel selectedPage;
@@ -73,6 +71,8 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
         if (_accountManager.TryFindById(_configurationManager.Current.AccountShowcaseId, out var account))
             AccountShowcase = account.ToModel();
     }
+
+    public ViewModelContext Context { get; }
 
     public ObservableCollection<NavigationItemModel> NavigationPages { get; }
     public NavigationItemModel[] NavigationPinnedPages { get; }
@@ -147,8 +147,7 @@ public sealed partial class MainViewModel : ObservableRecipient, IDisposable
         {
             Context.AssociatedInstance = page.GameInstance;
             var account = LogonAccounts.FirstOrDefault(x => x.Inner.Id == page.GameInstance.BoundAccountId);
-            if (account != null)
-                Context.SelectedAccount = account;
+            Context.SelectedAccount = account;
         }
         else
         {

@@ -66,7 +66,7 @@ public class MainFileBaseService : IFileBaseService
         return File.Exists(Locate(uri));
     }
 
-    public async Task<bool> VerfyHashAsync(Uri uri, string hash, HashAlgorithm algorithm)
+    public async Task<bool> VerifyHashAsync(Uri uri, string hash, HashAlgorithm algorithm)
     {
         var option = await ComputeHashAsync(uri, algorithm);
         if (option.TryUnwrap(out var res))

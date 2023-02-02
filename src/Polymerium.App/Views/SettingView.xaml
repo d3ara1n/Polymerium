@@ -22,7 +22,7 @@
                                     <Run Text="使用超能力" />
                                 </TextBlock>
                             </StackPanel>
-                            <ToggleSwitch HorizontalAlignment="Right" Margin="0,0,-90,0" />
+                            <ToggleSwitch HorizontalAlignment="Right" Margin="0,0,-85,0" />
                         </Grid>
                     </controls:ExpanderEx.Header>
                     <StackPanel Spacing="1">
@@ -63,18 +63,42 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE8B7;" Margin="20" />
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="Java 可执行文件位置" />
-                                    <TextBlock Text="{x:Bind ViewModel.JavaPath,Mode=TwoWay}"
+                                    <TextBlock Text="自动检测 Java 版本" />
+                                    <TextBlock Text="{x:Bind ViewModel.JavaSummary,Mode=OneWay}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
                             </StackPanel>
-                            <Button x:Name="OpenJavaDialogButton" Content="打开选取对话框" HorizontalAlignment="Right" />
+                            <ToggleSwitch x:Name="AutoDetectJavaSwitch"
+                                          IsOn="{x:Bind ViewModel.AutoDetectJava,Mode=TwoWay}"
+                                          VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-85,0" />
                         </Grid>
                     </controls:ExpanderEx.Header>
-                    <!-- 日后会有对话框用以在多个 Java 中选择 -->
-                    <controls:ExpanderExItem>
-                        <TextBox Text="{x:Bind ViewModel.JavaPath,Mode=TwoWay}" />
-                    </controls:ExpanderExItem>
+                    <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                    IsEnabled="{x:Bind ViewModel.AutoDetectJava,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                        <StackPanel Spacing="1">
+                            <controls:ExpanderExItem>
+                                <Grid>
+                                    <TextBlock Text="使用系统中已经预装的 Java 实例" VerticalAlignment="Center" />
+                                    <Button x:Name="OpenJavaDialogButton" Content="打开选取对话框" HorizontalAlignment="Right"
+                                            Command="{x:Bind ViewModel.OpenPickerAsyncCommand}" />
+                                </Grid>
+                            </controls:ExpanderExItem>
+                            <controls:ExpanderExItem>
+                                <Grid>
+                                    <TextBlock Text="使用自定义 Java 路径(精确到 bin/java.exe,lib 所在目录)"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Left" />
+                                    <ToggleSwitch x:Name="CustomJavaHomeSwitch" Margin="0,0,-85,0" IsOn="False"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Right" />
+                                </Grid>
+                            </controls:ExpanderExItem>
+                            <controls:ExpanderExItem>
+                                <TextBox IsEnabled="{x:Bind CustomJavaHomeSwitch.IsOn,Mode=OneWay}"
+                                         Text="{x:Bind ViewModel.JavaHome,Mode=TwoWay}" />
+                            </controls:ExpanderExItem>
+                        </StackPanel>
+                    </ContentControl>
                 </controls:ExpanderEx>
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
@@ -89,7 +113,7 @@
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                <TextBox Text="4096" />
+                                <TextBox Text="{x:Bind ViewModel.JvmMaxMemory,Mode=TwoWay}" />
                                 <TextBlock Text="MB" VerticalAlignment="Center" />
                             </StackPanel>
                         </Grid>

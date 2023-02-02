@@ -24,6 +24,7 @@
     <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
     <converters:NullToParameterConverter x:Key="NullToParameterConverter" />
     <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter" />
+    <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
 
     <Style TargetType="controls:ExpanderExItem" BasedOn="{StaticResource DefaultExpanderExItemStyle}" />
 

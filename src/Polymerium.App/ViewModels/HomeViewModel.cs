@@ -15,13 +15,6 @@ public class HomeViewModel : ObservableObject
     private readonly MemoryStorage _memoryStorage;
     private readonly NavigationService _naviationService;
 
-    public ViewModelContext Context { get; }
-
-    public string[] Tips { get; }
-    public string Tip { get; }
-
-    public ICommand GotoRecentItemInstanceViewCommand { get; }
-
     public HomeViewModel(MemoryStorage memoryStorage, ViewModelContext context, NavigationService naviationService)
     {
         _memoryStorage = memoryStorage;
@@ -30,13 +23,13 @@ public class HomeViewModel : ObservableObject
         RecentPlays = new ObservableCollection<RecentPlayedItemModel>(memoryStorage.Instances
             .Where(x => x.LastPlay.HasValue).OrderBy(x => DateTimeOffset.Now - x.LastPlay.Value).Take(10).Select(x =>
                 new RecentPlayedItemModel
-        {
-            Name = x.Name,
-            InstanceId = x.Id,
-            ThumbnailFile = x.ThumbnailFile,
-            LastPlayedAt = x.LastPlay.Value!,
-            Command = GotoRecentItemInstanceViewCommand
-        }));
+                {
+                    Name = x.Name,
+                    InstanceId = x.Id,
+                    ThumbnailFile = x.ThumbnailFile,
+                    LastPlayedAt = x.LastPlay.Value!,
+                    Command = GotoRecentItemInstanceViewCommand
+                }));
         Tips = new[]
         {
             "比较抽象，没有提示"
@@ -47,6 +40,13 @@ public class HomeViewModel : ObservableObject
             Tip = Tips[Random.Shared.Next(Tips.Length)];
         _naviationService = naviationService;
     }
+
+    public ViewModelContext Context { get; }
+
+    public string[] Tips { get; }
+    public string Tip { get; }
+
+    public ICommand GotoRecentItemInstanceViewCommand { get; }
 
     public ObservableCollection<RecentPlayedItemModel> RecentPlays { get; }
 

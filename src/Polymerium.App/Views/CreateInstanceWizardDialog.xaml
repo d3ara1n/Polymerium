@@ -47,12 +47,13 @@
                     <TextBlock Text="最后给实例起一个名字" />
                     <TextBox x:Name="InstanceName" Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}"
                              PlaceholderText="会以此标识该实例" />
-                    <TextBlock Text="游戏版本" />
-                    <ComboBox x:Name="CoreVersion" IsEditable="False"
-                              SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}"
-                              ItemsSource="{x:Bind Versions,Mode=OneWay}"
-                              SelectionChanged="CoreVersion_SelectionChanged" HorizontalAlignment="Stretch">
-                        <ComboBox.ItemTemplate>
+                    <TextBlock>
+                        <Run Text="游戏版本: " />
+                        <Run Text="{x:Bind ViewModel.SelectedVersion.Id,Mode=OneWay}" />
+                    </TextBlock>
+                    <AutoSuggestBox x:Name="VersionBox" PlaceholderText="键入以搜索" TextMemberPath="Id"
+                                    TextChanged="VersionBox_TextChanged" SuggestionChosen="VersionBox_SuggestionChosen">
+                        <AutoSuggestBox.ItemTemplate>
                             <DataTemplate x:DataType="models:GameVersionModel">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <TextBlock Text="{x:Bind Id}" VerticalAlignment="Center" Margin="5,0,10,0" />
@@ -66,8 +67,8 @@
                                     </Grid>
                                 </Grid>
                             </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                        </AutoSuggestBox.ItemTemplate>
+                    </AutoSuggestBox>
                     <TextBlock Text="作者" />
                     <TextBox PlaceholderText="空字符串也可以是作者名..." />
                     <Expander Header="高级" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">

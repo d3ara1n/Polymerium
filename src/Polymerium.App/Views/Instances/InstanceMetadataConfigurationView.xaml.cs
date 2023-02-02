@@ -6,11 +6,11 @@ namespace Polymerium.App.Views.Instances;
 
 public sealed partial class InstanceMetadataConfigurationView : Page
 {
-    public InstanceMetadataConfigurationViewModel ViewModel { get; }
-
     public InstanceMetadataConfigurationView()
     {
         InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<InstanceMetadataConfigurationViewModel>();
     }
+
+    public InstanceMetadataConfigurationViewModel ViewModel { get; }
 }

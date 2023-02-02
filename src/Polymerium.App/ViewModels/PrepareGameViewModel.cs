@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -133,7 +134,7 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
             if (!stage.Token.IsCancellationRequested)
             {
                 UpdateLabelSafe("您的游戏已经准备就绪", true);
-                UpdateTaskProgressSafe("任务完成");
+                UpdateTaskProgressSafe("准备就绪");
                 Instance.LastRestore = DateTimeOffset.Now;
             }
             else
@@ -185,11 +186,11 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
                 _configurationManager.Current.GameGlobals ?? new FileBasedLaunchConfiguration());
             var builder = new PlanetBlenderBuilder();
             builder
-                .WithJavaPath(configuration.JavaPath)
+                .WithJavaPath(Path.Combine(configuration.JavaHome, "bin", "java.exe"))
                 .WithMainClass(polylock.MainClass)
                 .WithWorkingDirectory(_fileBase.Locate(workingDir))
                 .WithGameArguments(polylock.GameArguments)
-                .WithJvmArguments(polylock.JvmArguments)
+                .WithJvmArguments(polylock.JvmArguments.Append("-Xmx${jvm_max_memory}m"))
                 .ConfigureStarship(configure =>
                 {
                     configure.AddCargo(polylock.Cargo)
@@ -207,9 +208,8 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
                         .AddCrate("user_type", "legacy")
                         .AddCrate("version_type", "Polymerium")
                         // rule os
-                        // TODO: 目前只支持 windows
+                        // TODO: 目前只支持 windows x86
                         .AddCrate("os.name", "windows")
-                        // TODO: 目前只支持 x86
                         .AddCrate("os.arch", "x86")
                         .AddCrate("os.version", Environment.OSVersion.Version.ToString())
                         // jvm
@@ -219,7 +219,9 @@ public sealed partial class PrepareGameViewModel : ObservableObject, IDisposable
                                 polylock.Libraries
                                     .Select(x => _fileBase.Locate(new Uri(librariesRoot, x.Path)))))
                         .AddCrate("launcher_name", "Polymerium")
-                        .AddCrate("launcher_version", "0.1.0");
+                        .AddCrate("launcher_version", "0.1.0")
+                        // custom jvm argument patches
+                        .AddCrate("jvm_max_memory", configuration.JvmMaxMemory.ToString());
                 });
             var blender = builder.Build();
             blender.Start();

@@ -30,6 +30,10 @@ public class CreateInstanceWizardViewModel : ObservableValidator
     {
         _instanceManager = instanceManager;
         _cache = cache;
+
+        InstanceName = null;
+        SelectedVersion = null;
+        InstanceAuthor = null;
     }
 
     [Required]
@@ -41,6 +45,7 @@ public class CreateInstanceWizardViewModel : ObservableValidator
         set => SetProperty(ref instanceName, value, true);
     }
 
+    [MaxLength(128)]
     public string InstanceAuthor
     {
         get => instanceAuthor;

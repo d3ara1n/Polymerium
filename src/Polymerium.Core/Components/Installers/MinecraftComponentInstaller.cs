@@ -46,11 +46,11 @@ public class MinecraftComponentInstaller : ComponentInstallerBase
                     // compliance 的等级影响 arguments 存在的形式
                     if (index.Value.ComplianceLevel == 1 && index.Value.Arguments.HasValue)
                     {
-                        foreach (var argument in index.Value.Arguments.Value.Game.Where(x => x.Verfy())
+                        foreach (var argument in index.Value.Arguments.Value.Game.Where(x => x.Verify())
                                      .SelectMany(x => x.Values))
                             Context.AddGameArgument(argument);
 
-                        foreach (var argument in index.Value.Arguments.Value.Jvm.Where(x => x.Verfy())
+                        foreach (var argument in index.Value.Arguments.Value.Jvm.Where(x => x.Verify())
                                      .SelectMany(x => x.Values))
                             Context.AddJvmArguments(argument);
                     }
@@ -69,7 +69,7 @@ public class MinecraftComponentInstaller : ComponentInstallerBase
                         Context.AddCrate("user_properties", "{}");
                     }
 
-                    foreach (var item in index.Value.Libraries.Where(x => x.Verfy()))
+                    foreach (var item in index.Value.Libraries.Where(x => x.Verify()))
                     {
                         if (item.Downloads.Artifact.HasValue)
                         {

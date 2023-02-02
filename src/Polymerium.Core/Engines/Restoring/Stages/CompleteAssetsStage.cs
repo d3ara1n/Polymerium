@@ -45,7 +45,7 @@ public class CompleteAssetsStage : StageBase
         {
             if (Token.IsCancellationRequested) return Cancel();
             var path = new Uri($"poly-file:///assets/objects/{item[..2]}/{item}", UriKind.Absolute);
-            if (!await _fileBase.VerfyHashAsync(path, item, _sha1))
+            if (!await _fileBase.VerifyHashAsync(path, item, _sha1))
                 group.TryAdd($"https://resources.download.minecraft.net/{item[..2]}/{item}",
                     _fileBase.Locate(path), out var _);
         }

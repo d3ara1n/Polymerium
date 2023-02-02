@@ -85,7 +85,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         {
             IsOperable = true;
             Versions = data;
-            CoreVersion.SelectedIndex = 0;
+            ViewModel.SelectedVersion = Versions.FirstOrDefault();
             VisualStateManager.GoToState(_root, "Default", false);
         });
         return Task.CompletedTask;
@@ -118,10 +118,24 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         return Task.CompletedTask;
     }
 
-    private void CoreVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void VersionBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+        {
+            var input = sender.Text;
+            if (string.IsNullOrEmpty(input))
+                sender.ItemsSource = Versions;
+            else
+                sender.ItemsSource = Versions.Where(x => x.Id.StartsWith(input));
+        }
+    }
+
+    private void VersionBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    {
+        var item = args.SelectedItem as GameVersionModel;
+        ViewModel.SelectedVersion = item;
         if (string.IsNullOrEmpty(ViewModel.InstanceName) ||
-            ViewModel.InstanceName == ((GameVersionModel)e.RemovedItems.FirstOrDefault())?.Id)
-            ViewModel.InstanceName = ((GameVersionModel)e.AddedItems.FirstOrDefault())?.Id;
+            ViewModel.InstanceName == item.Id)
+            ViewModel.InstanceName = item.Id;
     }
 }

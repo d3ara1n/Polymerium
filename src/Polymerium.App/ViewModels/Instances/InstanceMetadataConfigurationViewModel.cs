@@ -5,10 +5,10 @@ namespace Polymerium.App.ViewModels.Instances;
 
 public class InstanceMetadataConfigurationViewModel : ObservableObject
 {
-    public ViewModelContext Context { get; }
-
     public InstanceMetadataConfigurationViewModel(ViewModelContext context)
     {
         Context = context;
     }
+
+    public ViewModelContext Context { get; }
 }

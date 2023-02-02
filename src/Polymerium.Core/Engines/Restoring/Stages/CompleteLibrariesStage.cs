@@ -42,7 +42,7 @@ public class CompleteLibrariesStage : StageBase
         {
             if (Token.IsCancellationRequested) return Cancel();
             var libPath = new Uri(libraryDir, item.Path);
-            if (!await _fileBase.VerfyHashAsync(libPath, item.Sha1, _sha1))
+            if (!await _fileBase.VerifyHashAsync(libPath, item.Sha1, _sha1))
             {
                 if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task))
                     if (item.IsNative)

@@ -6,6 +6,7 @@ namespace Polymerium.App.Services;
 
 public class ViewModelContext : ObservableObject
 {
+    private GameInstance associatedInstance;
     private AccountItemModel selectedAccount;
 
     public AccountItemModel SelectedAccount
@@ -13,8 +14,6 @@ public class ViewModelContext : ObservableObject
         get => selectedAccount;
         set => SetProperty(ref selectedAccount, value);
     }
-
-    private GameInstance associatedInstance;
 
     public GameInstance AssociatedInstance
     {

@@ -81,6 +81,7 @@ public partial class App : Application
         services.AddSingleton<DataStorage>();
         services.AddSingleton<MemoryStorage>();
         services.AddSingleton<ComponentManager>();
+        services.AddSingleton<JavaManager>();
         // global services
         services.AddSingleton<GameManager>();
         services.AddSingleton<IFileBaseService, MainFileBaseService>().Configure<MainFileBaseOptions>(configure =>

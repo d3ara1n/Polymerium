@@ -11,35 +11,15 @@ namespace Polymerium.App.Dialogs;
 
 public sealed partial class TextInputDialog : ContentDialog
 {
-    public string InputText
-    {
-        get => (string)GetValue(InputTextProperty);
-        set => SetValue(InputTextProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for InputText.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty InputTextProperty =
         DependencyProperty.Register(nameof(InputText), typeof(string), typeof(TextInputDialog),
             new PropertyMetadata(string.Empty));
 
-
-    public string InputTextPlaceholder
-    {
-        get => (string)GetValue(InputTextPlaceholderProperty);
-        set => SetValue(InputTextPlaceholderProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for InputTextPlaceholder.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty InputTextPlaceholderProperty =
         DependencyProperty.Register(nameof(InputTextPlaceholder), typeof(string), typeof(TextInputDialog),
             new PropertyMetadata(string.Empty));
-
-
-    public string Description
-    {
-        get => (string)GetValue(DescriptionProperty);
-        set => SetValue(DescriptionProperty, value);
-    }
 
     // Using a DependencyProperty as the backing store for Description.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty DescriptionProperty =
@@ -50,5 +30,25 @@ public sealed partial class TextInputDialog : ContentDialog
     public TextInputDialog()
     {
         InitializeComponent();
+    }
+
+    public string InputText
+    {
+        get => (string)GetValue(InputTextProperty);
+        set => SetValue(InputTextProperty, value);
+    }
+
+
+    public string InputTextPlaceholder
+    {
+        get => (string)GetValue(InputTextPlaceholderProperty);
+        set => SetValue(InputTextPlaceholderProperty, value);
+    }
+
+
+    public string Description
+    {
+        get => (string)GetValue(DescriptionProperty);
+        set => SetValue(DescriptionProperty, value);
     }
 }

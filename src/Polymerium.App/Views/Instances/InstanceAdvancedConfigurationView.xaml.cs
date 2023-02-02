@@ -6,11 +6,11 @@ namespace Polymerium.App.Views.Instances;
 
 public sealed partial class InstanceAdvancedConfigurationView : Page
 {
-    public InstanceAdvancedConfigurationViewModel ViewModel { get; }
-
     public InstanceAdvancedConfigurationView()
     {
         InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<InstanceAdvancedConfigurationViewModel>();
     }
+
+    public InstanceAdvancedConfigurationViewModel ViewModel { get; }
 }

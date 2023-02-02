@@ -15,11 +15,11 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel : ObservableObject
 {
-    private readonly InstanceManager _instanceManager;
-    private readonly IOverlayService _overlayService;
     private readonly ComponentManager _componentManager;
-    private readonly NavigationService _navigationService;
     private readonly ViewModelContext _context;
+    private readonly InstanceManager _instanceManager;
+    private readonly NavigationService _navigationService;
+    private readonly IOverlayService _overlayService;
 
     public InstanceViewModel(InstanceManager instanceManager, IOverlayService overlayService,
         ComponentManager componentManager, NavigationService navigationService, ViewModelContext context)

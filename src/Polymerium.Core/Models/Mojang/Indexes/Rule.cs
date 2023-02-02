@@ -8,7 +8,7 @@ public struct Rule
     public RuleFeatures? Features { get; set; }
     public RuleOs? Os { get; set; }
 
-    public bool Verfy()
+    public bool Verify()
     {
         if (Features.HasValue) return false;
         var matched = !Os.HasValue || Os.Value.Match();
