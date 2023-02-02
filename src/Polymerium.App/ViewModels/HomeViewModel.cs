@@ -35,7 +35,7 @@ public class HomeViewModel : ObservableObject
             "比较抽象，没有提示"
         };
         if (Context.SelectedAccount == null)
-            Tip = "你还没有设置账号，\n;点击左侧导航栏头像添加";
+            Tip = "你还没有设置账号，\n点击左侧导航栏头像添加";
         else
             Tip = Tips[Random.Shared.Next(Tips.Length)];
         _naviationService = naviationService;

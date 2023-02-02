@@ -34,6 +34,7 @@ public class SettingViewModel : ObservableObject
         Global = configurationManager.Current.GameGlobals;
         AutoDetectJava = Global.AutoDetectJava ?? true;
         JavaHome = Global.JavaHome;
+        JvmMaxMemory = Global.JvmMaxMemory ?? 4096;
     }
 
     public ICommand OpenPickerAsyncCommand { get; }
