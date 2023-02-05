@@ -5,6 +5,12 @@ namespace Polymerium.Abstractions.Meta;
 
 public struct GameMetadata
 {
-    public IEnumerable<Component> Components { get; set; }
-    public IEnumerable<Uri> Attachments { get; set; }
+    public IList<Component> Components { get; set; }
+    public IList<Uri> Attachments { get; set; }
+
+    public GameMetadata()
+    {
+        Components = new List<Component>();
+        Attachments = new List<Uri>();
+    }
 }

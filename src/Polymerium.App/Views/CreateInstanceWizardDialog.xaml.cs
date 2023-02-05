@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -30,15 +27,12 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         DependencyProperty.Register(nameof(ErrorMessage), typeof(string), typeof(CreateInstanceWizardDialog),
             new PropertyMetadata(string.Empty));
 
-    private readonly DispatcherQueue _dispatcher;
-
     private ContentControl _root;
 
     public CreateInstanceWizardDialog()
     {
         InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<CreateInstanceWizardViewModel>();
-        _dispatcher = DispatcherQueue.GetForCurrentThread();
     }
 
     public IEnumerable<GameVersionModel> Versions
@@ -81,7 +75,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
 
     private Task ViewModel_FillDataCompletedAsync(IEnumerable<GameVersionModel> data)
     {
-        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
             IsOperable = true;
             Versions = data;
@@ -109,7 +103,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
 
     private Task ViewModel_CommitCompletedAsync()
     {
-        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
             IsOperable = true;
             VisualStateManager.GoToState(_root, "Default", false);
@@ -135,7 +129,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         var item = args.SelectedItem as GameVersionModel;
         ViewModel.SelectedVersion = item;
         if (string.IsNullOrEmpty(ViewModel.InstanceName) ||
-            ViewModel.InstanceName == item.Id)
-            ViewModel.InstanceName = item.Id;
+            ViewModel.InstanceName == item?.Id)
+            ViewModel.InstanceName = item?.Id;
     }
 }

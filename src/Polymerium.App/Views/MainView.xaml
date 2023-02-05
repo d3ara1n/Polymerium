@@ -18,10 +18,10 @@
         <Grid x:FieldModifier="Public" x:Name="AppTitleBar" Grid.ColumnSpan="2" Height="46" ColumnDefinitions="Auto,*">
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <controls:IconButton x:Name="BackButton" Margin="5"
-                                         IsEnabled="{Binding CanGoBack,ElementName=RootFrame}" Click="BackButton_Click">
+                    <Button x:Name="BackButton" Margin="5" Style="{StaticResource IconButtonStyle}"
+                            IsEnabled="{Binding CanGoBack,ElementName=RootFrame}" Click="BackButton_Click">
                         <FontIcon Glyph="&#xE112;" FontSize="10" />
-                    </controls:IconButton>
+                    </Button>
                     <TextBlock Text="Polymer" FontSize="14" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Text="ium" FontSize="14" VerticalAlignment="Center" />
                 </StackPanel>
@@ -53,10 +53,10 @@
             SelectedItem="{x:Bind ViewModel.SelectedPage, Mode=TwoWay}"
             SelectionChanged="OnSelectionChanged">
             <NavigationView.PaneCustomContent>
-                <controls:IconButton
-                    ToolTipService.ToolTip="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay}"
-                    Height="60" Width="70" Margin="5">
-                    <controls:IconButton.ContextFlyout>
+                <Button Style="{StaticResource IconButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay}"
+                        Height="60" Width="70" Margin="5">
+                    <Button.ContextFlyout>
                         <MenuFlyout>
                             <MenuFlyoutItem
                                 Text="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay,Converter={StaticResource NullToParameterConverter},ConverterParameter=未登录}" />
@@ -70,12 +70,12 @@
                             <MenuFlyoutSeparator />
                             <MenuFlyoutItem Text="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}" />
                         </MenuFlyout>
-                    </controls:IconButton.ContextFlyout>
+                    </Button.ContextFlyout>
                     <toolkit:ImageEx
                         Source="{x:Bind ViewModel.Context.SelectedAccount.AvatarFaceSource,Mode=OneWay}"
                         Stretch="Fill" PlaceholderStretch="Fill"
                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="5" />
-                </controls:IconButton>
+                </Button>
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavigationItemModel">

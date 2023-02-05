@@ -24,7 +24,8 @@
                         <Border CornerRadius="{ThemeResource ControlCornerRadius}" BorderThickness="1"
                                 BorderBrush="{ThemeResource CardStrokeBrush}">
                             <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}"
-                                             Source="{x:Bind ViewModel.Instance.ThumbnailFile}" IsCacheEnabled="True"
+                                             Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile,Mode=OneWay}"
+                                             IsCacheEnabled="True"
                                              PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
                                              PlaceholderStretch="UniformToFill" />
                         </Border>
@@ -32,7 +33,7 @@
                     <Grid Grid.Column="1" Margin="15,30,30,30" RowDefinitions="Auto,*">
                         <Grid ColumnDefinitions="*,Auto">
                             <StackPanel>
-                                <TextBlock Text="{x:Bind ViewModel.Instance.Name}"
+                                <TextBlock Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay}"
                                            Style="{StaticResource TitleTextBlockStyle}" />
                                 <StackPanel Orientation="Horizontal" Spacing="5">
                                     <FontIcon Glyph="&#xE946;" FontSize="12"
@@ -85,14 +86,15 @@
                                 </GridView>
                             </ScrollViewer>
                             <Grid Grid.Column="1">
-                                <controls:IconButton x:Name="EditButton" Opacity="0" HorizontalAlignment="Right"
-                                                     VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的元数据"
-                                                     Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
-                                    <controls:IconButton.OpacityTransition>
+                                <Button x:Name="EditButton" Opacity="0" HorizontalAlignment="Right"
+                                        Style="{StaticResource IconButtonStyle}"
+                                        VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的元数据"
+                                        Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
+                                    <Button.OpacityTransition>
                                         <ScalarTransition />
-                                    </controls:IconButton.OpacityTransition>
+                                    </Button.OpacityTransition>
                                     <FontIcon Glyph="&#xE104;" />
-                                </controls:IconButton>
+                                </Button>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -103,7 +105,7 @@
                     <Grid.ChildrenTransitions>
                         <ContentThemeTransition />
                     </Grid.ChildrenTransitions>
-                    <controls:IconButton>
+                    <Button Style="{StaticResource IconButtonStyle}">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-basil-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
@@ -112,8 +114,8 @@
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
-                    </controls:IconButton>
-                    <controls:IconButton Grid.Column="1">
+                    </Button>
+                    <Button Grid.Column="1" Style="{StaticResource IconButtonStyle}">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-plugin-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
@@ -122,8 +124,8 @@
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
-                    </controls:IconButton>
-                    <controls:IconButton Grid.Column="2">
+                    </Button>
+                    <Button Grid.Column="2" Style="{StaticResource IconButtonStyle}">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-color-wheel-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
@@ -132,10 +134,13 @@
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
-                    </controls:IconButton>
+                    </Button>
                 </Grid>
             </controls:Card>
-            <controls:GroupBox Header="截图(WIP)" Margin="5,5,10,5">
+            <controls:GroupBox Margin="5,5,10,5">
+                <controls:GroupBox.Header>
+                    <TextBlock Text="截图(WIP)" Style="{StaticResource SubtitleTextBlockStyle}" />
+                </controls:GroupBox.Header>
                 <toolkit:ConstrainedBox AspectRatio="16:9">
                     <Grid>
                         <Grid.ChildrenTransitions>
@@ -146,7 +151,10 @@
                     </Grid>
                 </toolkit:ConstrainedBox>
             </controls:GroupBox>
-            <controls:GroupBox Header="存档(WIP)" Margin="5,5,10,5">
+            <controls:GroupBox Margin="5,5,10,5">
+                <controls:GroupBox.Header>
+                    <TextBlock Text="存档(WIP)" Style="{StaticResource SubtitleTextBlockStyle}" />
+                </controls:GroupBox.Header>
                 <Grid>
                     <Grid.ChildrenTransitions>
                         <ContentThemeTransition />
@@ -154,7 +162,10 @@
                     <TextBlock Text="占位符" />
                 </Grid>
             </controls:GroupBox>
-            <controls:GroupBox Header="其他信息" Margin="5,5,10,10">
+            <controls:GroupBox Margin="5,5,10,10">
+                <controls:GroupBox.Header>
+                    <TextBlock Text="其他信息" Style="{StaticResource SubtitleTextBlockStyle}" />
+                </controls:GroupBox.Header>
                 <Grid>
                     <Grid.ChildrenTransitions>
                         <ContentThemeTransition />

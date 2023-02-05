@@ -35,6 +35,8 @@ public class SettingViewModel : ObservableObject
         AutoDetectJava = Global.AutoDetectJava ?? true;
         JavaHome = Global.JavaHome;
         JvmMaxMemory = Global.JvmMaxMemory ?? 4096;
+        WindowWidth = Global.WindowWidth ?? 480;
+        WindowHeight = Global.WindowHeight ?? 854;
     }
 
     public ICommand OpenPickerAsyncCommand { get; }
@@ -93,6 +95,28 @@ public class SettingViewModel : ObservableObject
         set
         {
             if (SetProperty(ref jvmMaxMemory, value)) Global.JvmMaxMemory = value;
+        }
+    }
+
+    private uint windowHeight;
+
+    public uint WindowHeight
+    {
+        get => windowHeight;
+        set
+        {
+            if (SetProperty(ref windowHeight, value)) Global.WindowHeight = value;
+        }
+    }
+
+    private uint windowWidth;
+
+    public uint WindowWidth
+    {
+        get => windowWidth;
+        set
+        {
+            if (SetProperty(ref windowWidth, value)) Global.WindowWidth = value;
         }
     }
 

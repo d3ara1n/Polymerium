@@ -26,6 +26,12 @@ public class CompoundLaunchConfiguration : LaunchConfigurationBase
         set => throw new NotSupportedException();
     }
 
+    public override bool? SkipJavaVersionCheck
+    {
+        get => _first.SkipJavaVersionCheck ?? _second.SkipJavaVersionCheck;
+        set => throw new NotSupportedException();
+    }
+
     public override uint? JvmMaxMemory
     {
         get => _first.JvmMaxMemory ?? _second.JvmMaxMemory;

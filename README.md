@@ -97,7 +97,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
     * [ ] Forge
     * [ ] Fabric
     * [ ] Quilt
-  * [ ] 附件
+  * [ ] 附件安装
 * [ ] 资源附件
   * [ ] 资源解析引擎
   * [ ] 内置解析器
@@ -125,7 +125,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
   * [ ] 私有配置页面
 * [ ] 本地化
 
-更多细节请在 [Issues](https://github.com/d3ara1n/Polymerium/issues)中查询。
+更多细节请在 [Issues](https://github.com/d3ara1n/Polymerium/issues) 中查询。
 
 <!-- LICENSE -->
 ## License

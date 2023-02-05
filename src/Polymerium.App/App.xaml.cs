@@ -52,45 +52,46 @@ public partial class App : Application
         // application services registration
         services.AddLogging(logging => logging.AddSimpleConsole().AddDebug()
 #if DEBUG
-                .SetMinimumLevel(LogLevel.Debug)
+                    .SetMinimumLevel(LogLevel.Debug)
 #endif
-        );
-        services.AddMemoryCache();
+            )
+            .AddMemoryCache();
         // view models registration
-        services.AddSingleton<ViewModelContext>();
-        services.AddTransient<MainViewModel>();
-        services.AddTransient<NewInstanceViewModel>();
-        services.AddTransient<CreateInstanceWizardViewModel>();
-        services.AddTransient<InstanceViewModel>();
-        services.AddTransient<HomeViewModel>();
-        services.AddTransient<SettingViewModel>();
-        services.AddTransient<PrepareGameViewModel>();
-        services.AddTransient<AddAccountWizardViewModel>();
-        services.AddTransient<SelectionViewModel>();
-        services.AddTransient<OfflineAccountViewModel>();
-        services.AddTransient<InstanceConfigurationViewModel>();
-        services.AddTransient<InstanceMetadataConfigurationViewModel>();
-        services.AddTransient<InstanceLaunchConfigurationViewModel>();
-        services.AddTransient<InstanceAdvancedConfigurationViewModel>();
+        services.AddSingleton<ViewModelContext>()
+            .AddTransient<MainViewModel>()
+            .AddTransient<NewInstanceViewModel>()
+            .AddTransient<CreateInstanceWizardViewModel>()
+            .AddTransient<InstanceViewModel>()
+            .AddTransient<HomeViewModel>()
+            .AddTransient<SettingViewModel>()
+            .AddTransient<PrepareGameViewModel>()
+            .AddTransient<AddAccountWizardViewModel>()
+            .AddTransient<SelectionViewModel>()
+            .AddTransient<OfflineAccountViewModel>()
+            .AddTransient<InstanceConfigurationViewModel>()
+            .AddTransient<InstanceMetadataConfigurationViewModel>()
+            .AddTransient<InstanceLaunchConfigurationViewModel>()
+            .AddTransient<InstanceAdvancedConfigurationViewModel>()
+            .AddTransient<AddMetaComponentWizardViewModel>();
         // local service registration
-        services.AddSingleton<IOverlayService, WindowOverlayService>();
-        services.AddSingleton<NavigationService>();
-        services.AddSingleton<AccountManager>();
-        services.AddSingleton<InstanceManager>();
-        services.AddSingleton<ConfigurationManager>();
-        services.AddSingleton<DataStorage>();
-        services.AddSingleton<MemoryStorage>();
-        services.AddSingleton<ComponentManager>();
-        services.AddSingleton<JavaManager>();
+        services.AddSingleton<IOverlayService, WindowOverlayService>()
+            .AddSingleton<NavigationService>()
+            .AddSingleton<AccountManager>()
+            .AddSingleton<InstanceManager>()
+            .AddSingleton<ConfigurationManager>()
+            .AddSingleton<DataStorage>()
+            .AddSingleton<MemoryStorage>()
+            .AddSingleton<ComponentManager>()
+            .AddSingleton<JavaManager>();
         // global services
-        services.AddSingleton<GameManager>();
-        services.AddSingleton<IFileBaseService, MainFileBaseService>().Configure<MainFileBaseOptions>(configure =>
-            configure.BaseFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                ".polymerium/"));
+        services.AddSingleton<GameManager>()
+            .AddSingleton<IFileBaseService, MainFileBaseService>().Configure<MainFileBaseOptions>(configure =>
+                configure.BaseFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                    ".polymerium/"));
         // engines
-        services.AddScoped<DownloadEngine>();
-        services.AddScoped<ResolveEngine>();
-        services.AddScoped<RestoreEngine>();
+        services.AddScoped<DownloadEngine>()
+            .AddScoped<ResolveEngine>()
+            .AddScoped<RestoreEngine>();
         return services.BuildServiceProvider();
     }
 }
