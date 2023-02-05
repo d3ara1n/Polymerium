@@ -63,10 +63,11 @@
                                ImageFailed="BackgroundImage_ImageFailed"
                                Source="ms-appx:///Assets/Placeholders/default_panorama1.png" Stretch="UniformToFill" />
                         <Rectangle Fill="Black" Opacity="0.7" />
-                        <controls:IconButton x:Name="CloseButton" VerticalAlignment="Top" HorizontalAlignment="Right"
-                                             Click="CloseButton_Click">
+                        <Button x:Name="CloseButton" Style="{StaticResource IconButtonStyle}" VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Click="CloseButton_Click">
                             <FontIcon Glyph="&#xE106;" FontSize="10" />
-                        </controls:IconButton>
+                        </Button>
                         <Grid x:Name="Container">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <StackPanel HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
@@ -18,7 +17,7 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;
 
-public sealed class MainViewModel : ObservableRecipient, IDisposable
+public sealed class MainViewModel : ObservableObject
 {
     private readonly AccountManager _accountManager;
     private readonly ComponentManager _componentManager;
@@ -54,7 +53,6 @@ public sealed class MainViewModel : ObservableRecipient, IDisposable
             windowOverlayService.Register(PushOverlay, PullOverlay);
         else
             throw new ArgumentNullException(nameof(overlayService));
-        IsActive = true;
         _memoryStorage.Instances.CollectionChanged += Instances_CollectionChanged;
         _memoryStorage.Accounts.CollectionChanged += Accounts_CollectionChanged;
         NavigationPages = new ObservableCollection<NavigationItemModel>(instanceManager.GetView().Select(it =>
@@ -99,23 +97,6 @@ public sealed class MainViewModel : ObservableRecipient, IDisposable
 
     public ICommand RemoveAccountCommand { get; }
 
-    public void Dispose()
-    {
-        IsActive = false;
-    }
-
-    protected override void OnActivated()
-    {
-        base.OnActivated();
-        StrongReferenceMessenger.Default.RegisterAll(this);
-    }
-
-    protected override void OnDeactivated()
-    {
-        base.OnDeactivated();
-        StrongReferenceMessenger.Default.UnregisterAll(this);
-    }
-
     private void PushOverlay(ContentControl content)
     {
         Overlay = content;
@@ -152,7 +133,7 @@ public sealed class MainViewModel : ObservableRecipient, IDisposable
     {
         if (page.GameInstance != null)
         {
-            Context.AssociatedInstance = page.GameInstance;
+            Context.AssociatedInstance = new GameInstanceModel(page.GameInstance);
             var account = LogonAccounts.FirstOrDefault(x => x.Inner.Id == page.GameInstance.BoundAccountId);
             Context.SelectedAccount = account;
         }

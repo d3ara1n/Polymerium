@@ -1,4 +1,6 @@
 using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.App.Configurations;
 
@@ -8,6 +10,19 @@ public class ConfigurationModel : RefinedModelBase<Configuration>
 {
     public override Uri Location { get; } = new("poly-file:///configuration.json");
 
+    private static readonly JsonSerializerSettings serializerSettings = new()
+    {
+        Formatting = Formatting.Indented,
+        NullValueHandling = NullValueHandling.Include,
+        MissingMemberHandling = MissingMemberHandling.Ignore,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+        ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new CamelCaseNamingStrategy()
+        }
+    };
+
+    public override JsonSerializerSettings SerializerSettings => serializerSettings;
     public AppSettings Settings { get; set; }
     public string AccountShowcaseId { get; set; }
 

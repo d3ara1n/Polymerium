@@ -1,3 +1,4 @@
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Services;
@@ -5,7 +6,7 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class NewInstanceViewModel : ObservableObject
+public class NewInstanceViewModel : ObservableObject
 {
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
@@ -14,15 +15,18 @@ public partial class NewInstanceViewModel : ObservableObject
     {
         _overlayService = overlayService;
         _navigationService = navigationService;
+        OpenWizardCommand = new RelayCommand(OpenWizard);
+        GotoSearchPageCommand = new RelayCommand(GotoSearchPage);
     }
 
-    [RelayCommand]
+    public ICommand OpenWizardCommand { get; }
+    public ICommand GotoSearchPageCommand { get; }
+    
     public void OpenWizard()
     {
         _overlayService.Show(new CreateInstanceWizardDialog { OverlayService = _overlayService });
     }
-
-    [RelayCommand]
+    
     public void GotoSearchPage()
     {
         _navigationService.Navigate<SearchCenterView>();

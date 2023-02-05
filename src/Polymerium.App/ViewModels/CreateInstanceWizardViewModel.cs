@@ -11,6 +11,8 @@ using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.Core.Models.Mojang;
+using Polymerium.Core.Models.Mojang.VersionManifests;
 using Wupoo;
 
 namespace Polymerium.App.ViewModels;
@@ -61,16 +63,23 @@ public class CreateInstanceWizardViewModel : ObservableValidator
 
     public async Task FillDataAsync(Func<IEnumerable<GameVersionModel>, Task> callback)
     {
-        // TODO: 日后改成 ResourceResolver
-        var versions = await _cache.GetOrCreateAsync("GetGameVersions", async entry =>
+        var versions = await _cache.GetOrCreateAsync("versions:core", async entry =>
         {
             var res = Enumerable.Empty<GameVersionModel>();
             var url = "https://piston-meta.mojang.com/mc/game/version_manifest.json";
             await Wapoo.Wohoo(url)
-                .ForJsonResult<JObject>(x =>
-                {
-                    res = x.Value<JArray>("versions").ToObject<IEnumerable<GameVersionModel>>();
-                })
+                .ForJsonResult<JObject>(x => res = x.Value<JArray>("versions").ToObject<IEnumerable<GameVersion>>()
+                    .Select(x => new GameVersionModel
+                    {
+                        Id = x.Id,
+                        ReleaseType = x.Type switch
+                        {
+                            ReleaseType.Release => "正式",
+                            ReleaseType.Snapshot => "快照",
+                            ReleaseType.Old_Alpha => "Alpha",
+                            ReleaseType.Old_Beta => "Beta"
+                        }
+                    }))
                 .FetchAsync();
             if (res.Any())
                 entry.SetSlidingExpiration(TimeSpan.FromHours(1));
@@ -90,10 +99,7 @@ public class CreateInstanceWizardViewModel : ObservableValidator
             Name = InstanceName,
             FolderName = InstanceName,
             Author = InstanceAuthor,
-            Metadata = new GameMetadata
-            {
-                Components = new[] { new Component { Identity = "net.minecraft", Version = SelectedVersion.Id } }
-            },
+            Metadata = new GameMetadata(),
             Configuration = new FileBasedLaunchConfiguration(),
             CreatedAt = DateTimeOffset.Now,
             LastPlay = null,
@@ -104,6 +110,11 @@ public class CreateInstanceWizardViewModel : ObservableValidator
             BoundAccountId = null,
             PlayTime = TimeSpan.Zero
         };
+        instance.Metadata.Components.Add(new Component
+        {
+            Identity = "net.minecraft",
+            Version = SelectedVersion.Id
+        });
         _instanceManager.AddInstance(instance);
         await callback();
     }

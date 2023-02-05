@@ -12,9 +12,6 @@
     Padding="0"
     Loaded="CreateInstanceWizardDialog_OnLoaded"
     mc:Ignorable="d">
-    <controls:CustomDialog.Resources>
-        <x:Double x:Key="StackPanelSpacing">12</x:Double>
-    </controls:CustomDialog.Resources>
     <ContentControl x:Name="Root">
         <ContentControl.Template>
             <ControlTemplate>
@@ -42,7 +39,7 @@
         </ContentControl.Template>
         <Grid RowDefinitions="*,Auto">
             <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
-                <StackPanel Spacing="{StaticResource StackPanelSpacing}" Margin="25">
+                <StackPanel Spacing="12" Margin="25">
                     <TextBlock Text="创建空实例" Style="{ThemeResource SubtitleTextBlockStyle}" />
                     <TextBlock Text="最后给实例起一个名字" />
                     <TextBox x:Name="InstanceName" Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}"
@@ -62,7 +59,7 @@
                                                 BorderThickness="1"
                                                 BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
                                                 CornerRadius="5" Opacity="0.6">
-                                            <TextBlock Margin="5,2,5,2" Text="{x:Bind Type}" FontSize="10" />
+                                            <TextBlock Margin="5,2,5,2" Text="{x:Bind ReleaseType}" FontSize="10" />
                                         </Border>
                                     </Grid>
                                 </Grid>
@@ -72,7 +69,7 @@
                     <TextBlock Text="作者" />
                     <TextBox PlaceholderText="空字符串也可以是作者名..." />
                     <Expander Header="高级" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <StackPanel Spacing="{StaticResource StackPanelSpacing}">
+                        <StackPanel Spacing="12">
                             <TextBlock Text="实例版本" />
                             <TextBox Text="1.0.0" PlaceholderText="当作为整合包发布时使用" />
                         </StackPanel>

@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Polymerium.Abstractions;
 using Polymerium.App.Models;
 
 namespace Polymerium.App.Services;
 
 public class ViewModelContext : ObservableObject
 {
-    private GameInstance associatedInstance;
+    private GameInstanceModel associatedInstance;
     private AccountItemModel selectedAccount;
 
     public AccountItemModel SelectedAccount
@@ -15,13 +14,9 @@ public class ViewModelContext : ObservableObject
         set => SetProperty(ref selectedAccount, value);
     }
 
-    public GameInstance AssociatedInstance
+    public GameInstanceModel AssociatedInstance
     {
         get => associatedInstance;
-        set
-        {
-            associatedInstance = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref associatedInstance, value);
     }
 }

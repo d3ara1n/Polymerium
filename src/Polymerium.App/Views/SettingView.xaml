@@ -119,6 +119,35 @@
                         </Grid>
                     </controls:ExpanderEx.Header>
                 </controls:ExpanderEx>
+                <controls:ExpanderEx Padding="0">
+                    <controls:ExpanderEx.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE2B2;" Margin="20" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="游戏窗口初始大小" />
+                                    <LineBreak />
+                                    <Run Text="默认 854x480"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </controls:ExpanderEx.Header>
+                    <StackPanel Spacing="1">
+                        <controls:ExpanderExItem>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Text="宽" />
+                                <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}" />
+                            </Grid>
+                        </controls:ExpanderExItem>
+                        <controls:ExpanderExItem>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Text="高" />
+                                <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}" />
+                            </Grid>
+                        </controls:ExpanderExItem>
+                    </StackPanel>
+                </controls:ExpanderEx>
                 <TextBlock Text="说明" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBlock>
                     <Run Text="图标素材来自 " />

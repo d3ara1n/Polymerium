@@ -6,5 +6,5 @@ namespace Polymerium.Core.Models.Mojang;
 public struct VersionManifest
 {
     public LatestVersion Latest { get; set; }
-    public IEnumerable<Version> Versions { get; set; }
+    public IEnumerable<GameVersion> Versions { get; set; }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace Polymerium.Core.Models.Mojang.VersionManifests;
 
-public struct Version
+public struct GameVersion
 {
     public string Id { get; set; }
     public ReleaseType Type { get; set; }
