@@ -10,7 +10,7 @@ using Index = Polymerium.Core.Models.Mojang.Index;
 
 namespace Polymerium.Core.Components.Installers;
 
-public class MinecraftComponentInstaller : ComponentInstallerBase
+public sealed class MinecraftComponentInstaller : ComponentInstallerBase
 {
     public override async Task<Result<string>> StartAsync(Component component)
     {

@@ -11,7 +11,7 @@ using Polymerium.Core.Models.Forge;
 
 namespace Polymerium.Core.Components.Installers;
 
-public class ForgeComponentInstaller : ComponentInstallerBase
+public sealed class ForgeComponentInstaller : ComponentInstallerBase
 {
     private readonly IFileBaseService _fileBase;
 

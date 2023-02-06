@@ -11,6 +11,7 @@ using Polymerium.Abstractions.Meta;
 using Polymerium.App.Services;
 using Polymerium.Core.Components;
 using Polymerium.Core.Models.BmclApi.Forge;
+using Polymerium.Core.Models.Fabric;
 using Polymerium.Core.Models.Mojang.VersionManifests;
 using Wupoo;
 
@@ -101,6 +102,8 @@ public class AddMetaComponentWizardViewModel : ObservableObject
         {
             "net.minecraft" => LoadMinecraftVersionsAsync,
             "net.minecraftforge" => LoadForgeVersionsAsync,
+            "net.fabricmc.fabric-loader" => LoadFabricVersionsAsync,
+            "org.quiltmc.quilt-loader" => LoadQuiltVersionsAsync,
             _ => _ => Task.FromResult(Enumerable.Empty<string>())
         });
         callback(result);
@@ -124,7 +127,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     private async Task<IEnumerable<string>> LoadMinecraftVersionsAsync(ICacheEntry entry)
     {
         return await LoadVersionsAsync<JObject>("https://piston-meta.mojang.com/mc/game/version_manifest.json",
-            x => x.Value<JArray>("versions").ToObject<IEnumerable<GameVersion>>().Select(x => x.Id),
+            x => x.Value<JArray>("versions").ToObject<IEnumerable<GameVersion>>().Select(y => y.Id),
             entry);
     }
 
@@ -133,6 +136,20 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     {
         return await LoadVersionsAsync<IEnumerable<ForgeBuild>>(
             $"https://bmclapi2.bangbang93.com/forge/minecraft/{coreVersion}",
-            x => x.Select(x => x.Version).OrderDescending(), entry);
+            x => x.Select(y => y.Version).OrderDescending(), entry);
+    }
+
+    private async Task<IEnumerable<string>> LoadFabricVersionsAsync(ICacheEntry entry)
+    {
+        return await LoadVersionsAsync<IEnumerable<FabricVersion>>(
+            $"https://meta.fabricmc.net/v2/versions/loader/{coreVersion}",
+            x => x.Select(y => y.Loader.Version), entry);
+    }
+
+    private async Task<IEnumerable<string>> LoadQuiltVersionsAsync(ICacheEntry entry)
+    {
+        return await LoadVersionsAsync<IEnumerable<FabricVersion>>(
+            $"https://meta.quiltmc.org/v3/versions/loader/{coreVersion}",
+            x => x.Select(y => y.Loader.Version), entry);
     }
 }
