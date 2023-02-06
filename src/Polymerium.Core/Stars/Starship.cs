@@ -19,21 +19,21 @@ public class Starship
     {
         return from.Select(x =>
         {
-            var match = compiled.Match(x);
-            if (match.Success)
-            {
-                var group = match.Groups["field"];
-                if (Cargo.Any(x => x.Label == group.Value))
+            var matches = compiled.Matches(x);
+            var mid = x;
+            foreach (Match match in matches)
+                if (match.Success)
                 {
-                    var crate = Cargo.First(x => x.Label == group.Value);
-                    var result = x[..match.Index] + crate.Content + x[(match.Index + match.Length)..];
-                    return result;
+                    var group = match.Groups["field"];
+                    if (Cargo.Any(it => it.Label == group.Value))
+                    {
+                        var crate = Cargo.First(it => it.Label == group.Value);
+                        var key = $"${{{crate.Label}}}";
+                        mid = mid.Replace(key, crate.Content);
+                    }
                 }
 
-                return x;
-            }
-
-            return x;
+            return mid;
         });
     }
 }

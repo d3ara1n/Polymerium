@@ -1,4 +1,4 @@
-namespace Polymerium.Core.Models.Mojang;
+namespace Polymerium.Core.Models;
 
 public enum ReleaseType
 {
