@@ -38,6 +38,8 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
 
     public ICommand OpenRenameDialogCommand { get; }
     public ICommand DeleteInstanceCommand { get; }
+
+    // NOTE: 重置对于已解锁的实例只会删除目录，但对于具有 ReferenceSource 的实例，会重新导入元数据
     
     public void OpenRenameDialog()
     {

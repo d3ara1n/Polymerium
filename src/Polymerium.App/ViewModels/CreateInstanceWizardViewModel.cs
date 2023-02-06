@@ -38,6 +38,16 @@ public class CreateInstanceWizardViewModel : ObservableValidator
         InstanceAuthor = null;
     }
 
+    private string version;
+
+    [Required]
+    [RegularExpression(@"^[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)*$")]
+    public string Version
+    {
+        get => version;
+        set => SetProperty(ref version, value);
+    }
+
     [Required]
     [MinLength(1)]
     [MaxLength(128)]
@@ -99,6 +109,8 @@ public class CreateInstanceWizardViewModel : ObservableValidator
             Name = InstanceName,
             FolderName = InstanceName,
             Author = InstanceAuthor,
+            ReferenceSource = null,
+            Version = Version,
             Metadata = new GameMetadata(),
             Configuration = new FileBasedLaunchConfiguration(),
             CreatedAt = DateTimeOffset.Now,

@@ -12,6 +12,7 @@ public struct InstallerVersion
     public ReleaseType Type { get; set; }
     public string MainClass { get; set; }
     public string InheritsFrom { get; set; }
-    public ForgeArguments Arguments { get; set; }
+    public ForgeArguments? Arguments { get; set; }
+    public string MinecraftArguments { get; set; }
     public IEnumerable<ForgeLibrary> Libraries { get; set; }
 }

@@ -8,27 +8,26 @@
     <projectFile pubXmlPath="src/Polymerium.App/Properties/PublishProfiles/win10-x86.pubxml">src/Polymerium.App/Polymerium.App.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/FabricComponentInstaller.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/FabricComponentInstallerBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/QuiltComponentInstaller.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/Converters/LauncherMetaMainClassConverter.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricLibraryItem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersion.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricIntermediary.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMeta.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMetaLibraries.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMetaMainClass.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLoader.cs" afterDir="false" />
+    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="Fabric&amp;Quilt的组件安装能用但不知道好不好用是不是这么用">
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/ImporterBase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Importers/ModrinthImporter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/Converters/ModpackDependencyConverter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackDependency.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackEnvs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackFile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackHashes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackIndex.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/GameComponents/net.fabricmc.fabric_loader.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/GameComponents/net.fabricmc.fabric-loader.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/GameComponents/org.quiltmc.quilt_loader.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/GameComponents/org.quiltmc.quilt-loader.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/MainFileBaseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/MainFileBaseService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/GameInstance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/GameInstance.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResourceResolverBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResourceResolverBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/ForgeComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/ForgeComponentInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/MinecraftComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/MinecraftComponentInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/BuildPolylockStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/BuildPolylockStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteAssetsStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteAssetsStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteLibrariesStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/DownloadLibrariesStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerVersion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerVersion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Polymerium.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Polymerium.Core.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +43,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c98c4c26354b89d76ffbddb774441bcc9c7ed3559b98dbd6fe39a56fc7eb18/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cd4baac7317266f4f516e33baa69963b5f1f5ed866e119194d80c2958f827/StartAnimationAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f46d8257f4c1dc361b73ec7a2fa4d14a2b9f79568db1e74156c505c679420c2/AsyncRelayCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizardDialog.xaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net7.0-windows10.0.20348.0/win10-x64/App.g.i.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" root0="FORCE_HIGHLIGHTING" />
@@ -64,22 +64,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\zqy02\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\zqy02\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Polymerium.App: Polymerium.App (Unpackaged)">
     <configuration name="Polymerium.App Unpackaged" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/src/Polymerium.App/bin/x64/Debug/net7.0-windows10.0.20348.0/win10-x64/Polymerium.App.exe" />
@@ -175,7 +176,7 @@
       <workItem from="1675676230958" duration="141000" />
       <workItem from="1675679489090" duration="1993000" />
       <workItem from="1675681522266" duration="41000" />
-      <workItem from="1675681640427" duration="3989000" />
+      <workItem from="1675681640427" duration="12227000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -233,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675676369657</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fabric&amp;Quilt的组件安装能用但不知道好不好用是不是这么用">
+      <created>1675685797699</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1675685797699</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,7 +272,8 @@
     <MESSAGE value="当前账号可以被删除，但FlyoutMenu自带bug（这玩意bug真多），要重启才生效" />
     <MESSAGE value="组件可以编辑，加了个forge支持，但不能还原。还原就报错" />
     <MESSAGE value="Forge安装还差Processor部分" />
-    <option name="LAST_COMMIT_MESSAGE" value="Forge安装还差Processor部分" />
+    <MESSAGE value="Fabric&amp;Quilt的组件安装能用但不知道好不好用是不是这么用" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fabric&amp;Quilt的组件安装能用但不知道好不好用是不是这么用" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

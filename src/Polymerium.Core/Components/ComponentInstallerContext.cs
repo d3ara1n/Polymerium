@@ -67,6 +67,11 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
         JavaMajorVersionRequired = major;
     }
 
+    public void OverrideGameArguments()
+    {
+        gameArguments.Clear();
+    }
+
     public void AppendGameArgument(string value)
     {
         gameArguments.Add(value);

@@ -22,4 +22,8 @@
         <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Models\Forge\Converters"/>
+    </ItemGroup>
+
 </Project>
