@@ -42,7 +42,9 @@ public class BuildStructureStage : StageBase
         _installers = new Dictionary<string, Type>
         {
             { "net.minecraft", typeof(MinecraftComponentInstaller) },
-            { "net.minecraftforge", typeof(ForgeComponentInstaller) }
+            { "net.minecraftforge", typeof(ForgeComponentInstaller) },
+            { "net.fabricmc.fabric-loader", typeof(FabricComponentInstaller) },
+            { "org.quiltmc.quilt-loader", typeof(QuiltComponentInstaller) }
         };
     }
 
