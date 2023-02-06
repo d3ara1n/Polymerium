@@ -35,7 +35,8 @@
                               SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:InstanceComponentItemModel">
-                                <Grid ColumnDefinitions="*,Auto" ToolTipService.ToolTip="{x:Bind Id}">
+                                <Grid ColumnDefinitions="*,Auto" ToolTipService.ToolTip="{x:Bind Id}"
+                                      Background="Transparent">
                                     <StackPanel Orientation="Horizontal" Margin="0,7,0,7">
                                         <ImageIcon Source="{x:Bind ThumbnailSource}"
                                                    Height="36" Margin="0,0,10,0" />
@@ -48,7 +49,8 @@
                                     </StackPanel>
                                     <Grid Grid.Column="1">
                                         <Button x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
-                                                Command="{x:Bind RemoveCommand}" CommandParameter="{Binding}">
+                                                Command="{x:Bind RemoveCommand}" CommandParameter="{Binding}"
+                                                ToolTipService.ToolTip="移除">
                                             <FontIcon Glyph="&#xE108;" />
                                             <animations:Explicit.Animations>
                                                 <animations:AnimationSet x:Name="HideAnimation">
