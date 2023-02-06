@@ -11,6 +11,7 @@ public struct PolylockData
     public IEnumerable<Library> Libraries { get; set; }
     public IEnumerable<string> GameArguments { get; set; }
     public IEnumerable<string> JvmArguments { get; set; }
+    public IEnumerable<PolylockAttachment> Attachments { get; set; }
     public IDictionary<string, string> Cargo { get; set; }
     public int JavaMajorVersionRequired { get; set; }
 }

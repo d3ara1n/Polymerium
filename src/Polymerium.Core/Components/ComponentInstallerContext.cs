@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using IBuilder;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
@@ -12,10 +13,18 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
     private readonly List<string> gameArguments = new();
     private readonly List<string> jvmArguments = new();
     private readonly List<Library> libraries = new();
+    private readonly List<PolylockAttachment> attachments = new();
 
     public ComponentInstallerContext(GameInstance instance)
     {
         Instance = instance;
+    }
+
+    public string GetCoreVersion()
+    {
+        return Instance.Metadata.Components.Any(x => x.Identity == "net.minecraft")
+            ? Instance.Metadata.Components.First(x => x.Identity == "net.minecraft").Version
+            : null;
     }
 
     public GameInstance Instance { get; }
@@ -26,6 +35,7 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
     public IEnumerable<string> GameArguments => gameArguments;
     public IEnumerable<string> JvmArguments => jvmArguments;
     public IEnumerable<Library> Libraries => libraries;
+    public IEnumerable<PolylockAttachment> Attachments => attachments;
 
     public PolylockData Build()
     {
@@ -35,6 +45,7 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
             Cargo = Cargo,
             Libraries = Libraries,
             AssetIndex = AssetIndex,
+            Attachments = Attachments,
             GameArguments = GameArguments,
             JvmArguments = JvmArguments,
             JavaMajorVersionRequired = JavaMajorVersionRequired
@@ -56,14 +67,14 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
         JavaMajorVersionRequired = major;
     }
 
-    public void AddGameArgument(string value)
+    public void AppendGameArgument(string value)
     {
-        if (!gameArguments.Contains(value)) gameArguments.Add(value);
+        gameArguments.Add(value);
     }
 
-    public void AddJvmArguments(string value)
+    public void AppendJvmArguments(string value)
     {
-        if (!jvmArguments.Contains(value)) jvmArguments.Add(value);
+        jvmArguments.Add(value);
     }
 
     public void AddCrate(string key, string value)
@@ -74,8 +85,14 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
             cargo.Add(key, value);
     }
 
-    public void AppendLibrary(Library library)
+    public void AddLibrary(Library library)
     {
         libraries.Add(library);
+    }
+
+
+    public void AddAttachment(PolylockAttachment attachment)
+    {
+        attachments.Add(attachment);
     }
 }

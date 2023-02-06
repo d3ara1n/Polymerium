@@ -11,7 +11,7 @@ using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.Core.Models.Mojang;
+using Polymerium.Core.Models;
 using Polymerium.Core.Models.Mojang.VersionManifests;
 using Wupoo;
 

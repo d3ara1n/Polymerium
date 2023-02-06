@@ -67,7 +67,7 @@ public class CompleteLibrariesStage : StageBase
         };
         _downloader.Enqueue(group);
         if (group.Wait())
-            return Finish();
+            return Next(new CompleteAttachmentsStage(_instance, _polylock, _sha1, _fileBase, _downloader));
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }
 

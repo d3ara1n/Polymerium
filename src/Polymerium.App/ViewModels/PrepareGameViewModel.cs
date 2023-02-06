@@ -211,7 +211,10 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                             "--height",
                             "${resolution_height}"
                         }))
-                        .WithJvmArguments(polylock.JvmArguments.Append("-Xmx${jvm_max_memory}m"))
+                        .WithJvmArguments(polylock.JvmArguments.Concat(new[]
+                        {
+                            "-Xmx${jvm_max_memory}m"
+                        }))
                         .ConfigureStarship(configure =>
                         {
                             configure.AddCargo(polylock.Cargo)
@@ -238,6 +241,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                 .AddCrate("resolution_height", (configuration.WindowHeight ?? 480).ToString())
                                 // jvm
                                 .AddCrate("natives_directory", _fileBase.Locate(nativesRoot))
+                                .AddCrate("classpath_separator", ";")
                                 .AddCrate("classpath",
                                     string.Join(';',
                                         polylock.Libraries

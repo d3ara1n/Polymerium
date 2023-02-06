@@ -41,7 +41,8 @@ public class BuildStructureStage : StageBase
         _fileBase = _provider.GetRequiredService<IFileBaseService>();
         _installers = new Dictionary<string, Type>
         {
-            { "net.minecraft", typeof(MinecraftComponentInstaller) }
+            { "net.minecraft", typeof(MinecraftComponentInstaller) },
+            { "net.minecraftforge", typeof(ForgeComponentInstaller) }
         };
     }
 

@@ -48,24 +48,24 @@ public class MinecraftComponentInstaller : ComponentInstallerBase
                     {
                         foreach (var argument in index.Value.Arguments.Value.Game.Where(x => x.Verify())
                                      .SelectMany(x => x.Values))
-                            Context.AddGameArgument(argument);
+                            Context.AppendGameArgument(argument);
 
                         foreach (var argument in index.Value.Arguments.Value.Jvm.Where(x => x.Verify())
                                      .SelectMany(x => x.Values))
-                            Context.AddJvmArguments(argument);
+                            Context.AppendJvmArguments(argument);
                     }
 
                     if (index.Value.ComplianceLevel == 0)
                     {
                         if (!string.IsNullOrEmpty(index.Value.MinecraftArguments))
                             foreach (var split in index.Value.MinecraftArguments.Split())
-                                Context.AddGameArgument(split);
+                                Context.AppendGameArgument(split);
                         // patch the jvm arguments (copied from 1.19.3's jvm arguments)
-                        Context.AddJvmArguments("-Djava.library.path=${natives_directory}");
-                        Context.AddJvmArguments("-Dminecraft.launcher.brand=${launcher_name}");
-                        Context.AddJvmArguments("-Dminecraft.launcher.version=${launcher_version}");
-                        Context.AddJvmArguments("-cp");
-                        Context.AddJvmArguments("${classpath}");
+                        Context.AppendJvmArguments("-Djava.library.path=${natives_directory}");
+                        Context.AppendJvmArguments("-Dminecraft.launcher.brand=${launcher_name}");
+                        Context.AppendJvmArguments("-Dminecraft.launcher.version=${launcher_version}");
+                        Context.AppendJvmArguments("-cp");
+                        Context.AppendJvmArguments("${classpath}");
                         Context.AddCrate("user_properties", "{}");
                     }
 
@@ -81,7 +81,7 @@ public class MinecraftComponentInstaller : ComponentInstallerBase
                                 Url = item.Downloads.Artifact.Value.Url,
                                 Path = item.Downloads.Artifact.Value.Path
                             };
-                            Context.AppendLibrary(library);
+                            Context.AddLibrary(library);
                         }
 
                         if (item.Natives.HasValue)
@@ -98,7 +98,7 @@ public class MinecraftComponentInstaller : ComponentInstallerBase
                                 Sha1 = classifier.Sha1,
                                 Url = classifier.Url
                             };
-                            Context.AppendLibrary(native);
+                            Context.AddLibrary(native);
                         }
                     }
 
@@ -111,7 +111,7 @@ public class MinecraftComponentInstaller : ComponentInstallerBase
                         Sha1 = index.Value.Downloads.Client.Sha1,
                         Url = index.Value.Downloads.Client.Url
                     };
-                    Context.AppendLibrary(client);
+                    Context.AddLibrary(client);
                     return Finished();
                 }
 
