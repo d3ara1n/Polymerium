@@ -11,7 +11,7 @@ using Polymerium.Core.StageModels;
 
 namespace Polymerium.Core.Engines.Restoring.Stages;
 
-public class CompleteLibrariesStage : StageBase
+public class DownloadLibrariesStage : StageBase
 {
     private readonly DownloadEngine _downloader;
     private readonly IFileBaseService _fileBase;
@@ -19,7 +19,7 @@ public class CompleteLibrariesStage : StageBase
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
 
-    public CompleteLibrariesStage(GameInstance instance, PolylockData polylock, SHA1 sha1, IFileBaseService fileBase,
+    public DownloadLibrariesStage(GameInstance instance, PolylockData polylock, SHA1 sha1, IFileBaseService fileBase,
         DownloadEngine downloader)
     {
         _instance = instance;

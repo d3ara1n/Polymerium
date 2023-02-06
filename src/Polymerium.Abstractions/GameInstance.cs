@@ -8,6 +8,8 @@ public class GameInstance
 {
     public string Id { get; set; }
     public GameMetadata Metadata { get; set; }
+    public string Version { get; set; }
+    public Uri ReferenceSource { get; set; }
     public FileBasedLaunchConfiguration Configuration { get; set; }
     public string Name { get; set; }
     public string Author { get; set; }

@@ -54,7 +54,7 @@ public class CompleteAssetsStage : StageBase
             Report($"已下载 {downloaded} 个文件，共 {group.TotalCount} 个", Path.GetFileName(task.Destination));
         _downloader.Enqueue(group);
         if (group.Wait())
-            return Next(new CompleteLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader));
+            return Next(new DownloadLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader));
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }
 }

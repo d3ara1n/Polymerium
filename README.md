@@ -31,11 +31,20 @@
 
 [![Screenshot][product-screenshot]](#关于)
 
-**这是个 WIP 项目，大部分功能还没写完或仅存在于设计，开发进度请参考 Roadmap。**
+**这是个 WIP 早期项目，大部分功能还没写完或仅存在于设计，开发进度请参考 Roadmap。**
 
 ### 理念
 
 正如其缝合的名字一样，Polymerium 的主要目标是整合 Minecraft 的游戏资源，而非单单启动游戏。其使用与启动器完全不同的思路来管理游戏资源：创建实例元数据，使用还原引擎将游戏本地文件还原到元数据所描述的状态；Polymerium 不维护游戏文件，只维护实例元数据。有关于 Polymerium 的模式请参阅还没开始写的文档。
+
+### Why another launcher?
+
+这不是 *launcher*，这也不是压缩毛巾，这是 Polymerium —— *游戏实例管理器*。
+初衷是在用 PrismLauncher 的时候遇到一些问题并想出一些改进的的方法，不过在写代码、与 forge installer 斗智斗勇的过程中已经忘记哪些改进了（囧。现在要回答这个问题的话，那么答案是：没有为什么，小孩子不懂事写着玩的。
+
+### 跨平台
+
+设计之初是跨平台的，所有文件都放在家目录和用户配置目录而不是 Windows 那逆天难找的 AppData。不过现实问题是 MAUI 没涉足 Linux Desktop，Avalonia 则看了几个对应的程序，动画缺失或卡顿（出于对个人作者的尊重，所以我把锅甩给框架本身），遂选择不跨平台从创建到现在多年积累三千 open issues和 19 年至今未处理某 issue 的 WinUI3。
 
 ### 吐槽
 
@@ -71,6 +80,8 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
   * [ ] 导入/导出
     * [ ] Polypack
     * [ ] CurseForge
+    * [ ] Modrinth
+    * [ ] MultiMC
 * [ ] 启动游戏
   * [x] Polylock 文件
   * [ ] 可选参数

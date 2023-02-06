@@ -48,11 +48,26 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                 Url = library.Downloads.Artifact.Url,
                 IsNative = false
             });
+        // Note: 早些版本的 forge-client.jar 是随 installer.jar 附带的，需要用 local repository 服务来保证 Library.Url
+        //       PolylockData 中可以包含 build tasks 来产生缺失但又无法下载的 forge libraries
+        //       例如 minecraftforge-client.jar 的 url 为 poly-build://{build}[/{task}]
+        //       PolylockData.Builds[name={path_of_library}].Tasks[name={task}]
+        //       指定 task 构建会按照 task.DependsOn 依次先从上向下顺序构建
+        //       不指定 task 构建会不断扫描序列中 DependsOn 为 null 或 DependsOn.IsCompleted 的 task
+        //       高版本的 Forge 的 processors 就用 build tasks 实现
+        // Note: Library.Url 可以改名为 Source
+        if (versionJson.Value.Arguments.HasValue)
+        {
+            foreach (var argument in versionJson.Value.Arguments.Value.Game) Context.AppendGameArgument(argument);
 
-        ;
-        foreach (var argument in versionJson.Value.Arguments.Game) Context.AppendGameArgument(argument);
-
-        foreach (var argument in versionJson.Value.Arguments.Jvm) Context.AppendJvmArguments(argument);
+            foreach (var argument in versionJson.Value.Arguments.Value.Jvm) Context.AppendJvmArguments(argument);
+        }
+        else if (!string.IsNullOrEmpty(versionJson.Value.MinecraftArguments))
+        {
+            Context.OverrideGameArguments();
+            foreach (var argument in versionJson.Value.MinecraftArguments.Split(' '))
+                Context.AppendGameArgument(argument);
+        }
 
         Context.AddCrate("library_directory", _fileBase.Locate(new Uri("poly-file:///libraries")));
 
