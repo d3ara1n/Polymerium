@@ -21,12 +21,12 @@ public class NewInstanceViewModel : ObservableObject
 
     public ICommand OpenWizardCommand { get; }
     public ICommand GotoSearchPageCommand { get; }
-    
+
     public void OpenWizard()
     {
         _overlayService.Show(new CreateInstanceWizardDialog { OverlayService = _overlayService });
     }
-    
+
     public void GotoSearchPage()
     {
         _navigationService.Navigate<SearchCenterView>();

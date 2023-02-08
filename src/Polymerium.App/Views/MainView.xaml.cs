@@ -23,30 +23,32 @@ public sealed partial class MainView : Page
 
     public MainViewModel ViewModel { get; }
 
-    private void LogonAccounts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void LogonAccounts_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         switch (e.Action)
         {
             case NotifyCollectionChangedAction.Add:
 
-                foreach (AccountItemModel a in e.NewItems)
-                {
-                    var item = new MenuFlyoutItem { Text = a.Inner.Nickname, Tag = a };
-                    item.Click += (sender, _) =>
-                        ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)sender).Tag);
-                    SwitchToSubMenu.Items.Add(item);
-                }
+                if (e.NewItems != null)
+                    foreach (AccountItemModel a in e.NewItems)
+                    {
+                        var item = new MenuFlyoutItem { Text = a.Inner.Nickname, Tag = a };
+                        item.Click += (flyout, _) =>
+                            ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)flyout).Tag);
+                        SwitchToSubMenu.Items.Add(item);
+                    }
 
                 break;
 
             case NotifyCollectionChangedAction.Remove:
-                foreach (AccountItemModel a in e.OldItems)
-                {
-                    var item = SwitchToSubMenu.Items.FirstOrDefault(x =>
-                        ((AccountItemModel)x.Tag).Inner.Id == a.Inner.Id);
-                    if (item != null)
-                        SwitchToSubMenu.Items.Remove(item);
-                }
+                if (e.OldItems != null)
+                    foreach (AccountItemModel a in e.OldItems)
+                    {
+                        var item = SwitchToSubMenu.Items.FirstOrDefault(x =>
+                            ((AccountItemModel)x.Tag).Inner.Id == a.Inner.Id);
+                        if (item != null)
+                            SwitchToSubMenu.Items.Remove(item);
+                    }
 
                 break;
 
@@ -76,12 +78,12 @@ public sealed partial class MainView : Page
         RootFrame.GoBack();
     }
 
-    private void Navigate(Type view, object parameter)
+    private void Navigate(Type view, object? parameter)
     {
         if (view == typeof(InstanceView) && parameter is string instanceId)
         {
             if (ViewModel.NavigationPages.Where(x => x.SourcePage == typeof(InstanceView))
-                    .FirstOrDefault(x => x.GameInstance.Id == instanceId) is { } instanceView)
+                    .FirstOrDefault(x => x.GameInstance?.Id == instanceId) is { } instanceView)
                 MainNavigationBar.SelectedItem = instanceView;
             else
                 throw new ArgumentException($"parameter {parameter} not found as game instance id");

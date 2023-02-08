@@ -5,12 +5,12 @@ namespace Polymerium.App.Services;
 
 public delegate void OverlayShowHandler(ContentControl content);
 
-public delegate ContentControl OverlayDismissHandler();
+public delegate ContentControl? OverlayDismissHandler();
 
 public class WindowOverlayService : IOverlayService
 {
-    private OverlayDismissHandler _dismissHandler;
-    private OverlayShowHandler _showHandler;
+    private OverlayDismissHandler? _dismissHandler;
+    private OverlayShowHandler? _showHandler;
 
     public void Show(ContentControl content)
     {
@@ -20,10 +20,10 @@ public class WindowOverlayService : IOverlayService
             throw new ArgumentNullException(nameof(_showHandler));
     }
 
-    public ContentControl Dismiss()
+    public ContentControl? Dismiss()
     {
         if (_dismissHandler != null)
-            return _dismissHandler();
+            return _dismissHandler.Invoke();
         throw new ArgumentNullException(nameof(_dismissHandler));
     }
 

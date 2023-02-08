@@ -7,8 +7,6 @@ namespace Polymerium.App.Models;
 
 public class GameInstanceModel : ObservableObject
 {
-    public GameInstance Inner { get; }
-
     public GameInstanceModel(GameInstance instance)
     {
         Inner = instance;
@@ -16,6 +14,8 @@ public class GameInstanceModel : ObservableObject
         Attachments = new SynchronizedCollection<Uri>(Inner.Metadata.Attachments);
         Configuration = new ConfigurationModel(Inner.Configuration);
     }
+
+    public GameInstance Inner { get; }
 
     public SynchronizedCollection<Component> Components { get; }
     public SynchronizedCollection<Uri> Attachments { get; }
@@ -56,7 +56,7 @@ public class GameInstanceModel : ObservableObject
 
     public string ThumbnailFile
     {
-        get => Inner.ThumbnailFile;
+        get => Inner.ThumbnailFile ?? string.Empty;
         set
         {
             Inner.ThumbnailFile = value;
@@ -64,7 +64,7 @@ public class GameInstanceModel : ObservableObject
         }
     }
 
-    public string BoundAccountId
+    public string? BoundAccountId
     {
         get => Inner.BoundAccountId;
         set

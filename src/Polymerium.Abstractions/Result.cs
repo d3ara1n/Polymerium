@@ -14,7 +14,7 @@ public class Result<TOk, TErr>
         return new Err<TOk, TErr>(value);
     }
 
-    public bool IsOk(out TOk value)
+    public bool IsOk(out TOk? value)
     {
         if (this is Ok<TOk, TErr> ok)
         {
@@ -26,7 +26,7 @@ public class Result<TOk, TErr>
         return false;
     }
 
-    public bool IsErr(out TErr value)
+    public bool IsErr(out TErr? value)
     {
         if (this is Err<TOk, TErr> err)
         {
@@ -38,7 +38,7 @@ public class Result<TOk, TErr>
         return false;
     }
 
-    public TOk Unwrap()
+    public TOk? Unwrap()
     {
         if (IsOk(out var value))
             return value;
@@ -63,7 +63,7 @@ public class Result<TErr>
         return this is Ok<TErr>;
     }
 
-    public bool IsErr(out TErr value)
+    public bool IsErr(out TErr? value)
     {
         if (this is Err<TErr> err)
         {
@@ -75,7 +75,7 @@ public class Result<TErr>
         return false;
     }
 
-    public TErr Unwrap()
+    public TErr? Unwrap()
     {
         if (IsErr(out var value))
             return value;

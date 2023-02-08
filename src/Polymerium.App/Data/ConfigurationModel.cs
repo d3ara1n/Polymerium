@@ -8,8 +8,6 @@ namespace Polymerium.App.Data;
 
 public class ConfigurationModel : RefinedModelBase<Configuration>
 {
-    public override Uri Location { get; } = new("poly-file:///configuration.json");
-
     private static readonly JsonSerializerSettings serializerSettings = new()
     {
         Formatting = Formatting.Indented,
@@ -22,11 +20,13 @@ public class ConfigurationModel : RefinedModelBase<Configuration>
         }
     };
 
-    public override JsonSerializerSettings SerializerSettings => serializerSettings;
-    public AppSettings Settings { get; set; }
-    public string AccountShowcaseId { get; set; }
+    public override Uri Location { get; } = new("poly-file:///configuration.json");
 
-    public FileBasedLaunchConfiguration GameGlobals { get; set; }
+    public override JsonSerializerSettings SerializerSettings => serializerSettings;
+    public AppSettings? Settings { get; set; }
+    public string? AccountShowcaseId { get; set; }
+
+    public FileBasedLaunchConfiguration? GameGlobals { get; set; }
 
     public override void Apply(Configuration data)
     {
@@ -37,12 +37,8 @@ public class ConfigurationModel : RefinedModelBase<Configuration>
 
     public override Configuration Extract()
     {
-        var cfg = new Configuration
-        {
-            Settings = Settings,
-            AccountShowcaseId = AccountShowcaseId,
-            GameGlobals = GameGlobals
-        };
+        var cfg = new Configuration(Settings ?? new AppSettings(), AccountShowcaseId ?? string.Empty,
+            GameGlobals ?? new FileBasedLaunchConfiguration());
         return cfg;
     }
 }

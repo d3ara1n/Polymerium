@@ -73,14 +73,8 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
                     {
                         if (item.Downloads.Artifact.HasValue)
                         {
-                            var library = new Library
-                            {
-                                IsNative = false,
-                                Name = item.Name,
-                                Sha1 = item.Downloads.Artifact.Value.Sha1,
-                                Url = item.Downloads.Artifact.Value.Url,
-                                Path = item.Downloads.Artifact.Value.Path
-                            };
+                            var library = new Library(item.Name, item.Downloads.Artifact.Value.Path,
+                                item.Downloads.Artifact.Value.Sha1, item.Downloads.Artifact.Value.Url);
                             Context.AddLibrary(library);
                         }
 
@@ -90,27 +84,14 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
                             var name = item.Natives.Value.Windows.Replace("${arch}",
                                 Environment.Is64BitOperatingSystem ? "64" : "32");
                             var classifier = item.Downloads.Classifiers.First(x => x.Identity == name);
-                            var native = new Library
-                            {
-                                IsNative = true,
-                                Name = item.Name,
-                                Path = classifier.Path,
-                                Sha1 = classifier.Sha1,
-                                Url = classifier.Url
-                            };
+                            var native = new Library(item.Name, classifier.Path, classifier.Sha1, classifier.Url, true);
                             Context.AddLibrary(native);
                         }
                     }
 
-                    var client = new Library
-                    {
-                        IsNative = false,
-                        Name = $"net/minecraft:minecraft:{component.Version}",
-                        Path =
-                            $"net/minecraft/minecraft/{component.Version}/minecraft/minecraft-{component.Version}.jar",
-                        Sha1 = index.Value.Downloads.Client.Sha1,
-                        Url = index.Value.Downloads.Client.Url
-                    };
+                    var client = new Library($"net/minecraft:minecraft:{component.Version}",
+                        $"net/minecraft/minecraft/{component.Version}/minecraft/minecraft-{component.Version}.jar",
+                        index.Value.Downloads.Client.Sha1, index.Value.Downloads.Client.Url);
                     Context.AddLibrary(client);
                     return Finished();
                 }

@@ -19,6 +19,6 @@ public class ExpanderEx : HeaderedContentControl
     private static void IsExpanded_Changed(DependencyObject sender, DependencyPropertyChangedEventArgs args)
     {
         var expander = sender as ExpanderEx;
-        VisualStateManager.GoToState(expander, expander.IsExpanded ? "Open" : "Normal", true);
+        VisualStateManager.GoToState(expander, expander!.IsExpanded ? "Open" : "Normal", true);
     }
 }

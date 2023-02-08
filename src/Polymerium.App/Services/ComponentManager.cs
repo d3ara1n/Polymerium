@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Polymerium.Core.Components;
 
@@ -21,52 +22,29 @@ public class ComponentManager
         // GameInstance.Meta 中的 components 依赖关系的图顶点只能有一个元素, {fabric,forge}->{minecraft} 中fabric forge平行那么即互斥
         _memoryStorage.SupportedComponents = new List<ComponentMeta>
         {
-            new()
-            {
-                Identity = "net.minecraft",
-                FriendlyName = "Minecraft"
-            },
-            new()
-            {
-                Identity = "net.minecraftforge",
-                FriendlyName = "Forge",
-                Dependencies = new[] { "net.minecraft" }
-            },
-            new()
-            {
-                Identity = "net.fabricmc.fabric-loader",
-                FriendlyName = "Fabric",
-                Dependencies = new[] { "net.minecraft" }
-            },
-            new()
-            {
-                Identity = "org.quiltmc.quilt-loader",
-                FriendlyName = "Quilt",
-                Dependencies = new[] { "net.minecraft" }
-            }
+            new("net.minecraft", "Minecraft"),
+            new("net.minecraftforge", "Forge", new[] { "net.minecraft" }),
+            new("net.fabricmc.fabric-loader", "Fabric", new[] { "net.minecraft" }),
+            new("org.quiltmc.quilt-loader", "Quilt", new[] { "net.minecraft" })
         };
     }
 
-    public IEnumerable<ComponentMeta> GetView()
-    {
-        return GetView(ComponentViewFilter.All);
-    }
-
-    public bool TryFindByIdentity(string identity, out ComponentMeta meta)
+    public bool TryFindByIdentity(string identity, out ComponentMeta? meta)
     {
         meta = _memoryStorage.SupportedComponents.FirstOrDefault(x => x.Identity == identity);
         return meta != null;
     }
 
-    public IEnumerable<ComponentMeta> GetView(ComponentViewFilter filter)
+    public IEnumerable<ComponentMeta> GetView(ComponentViewFilter filter = ComponentViewFilter.All)
     {
         return filter switch
         {
-            ComponentViewFilter.All => _memoryStorage.SupportedComponents,
             ComponentViewFilter.Core => _memoryStorage.SupportedComponents.Where(x =>
-                x.Dependencies == null || !x.Dependencies.Any()),
+                !x.Dependencies.Any()),
             ComponentViewFilter.Modloader => _memoryStorage.SupportedComponents.Where(x =>
-                x.Dependencies != null && x.Dependencies.Any())
+                x.Dependencies.Any()),
+            ComponentViewFilter.All => _memoryStorage.SupportedComponents,
+            _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
         };
     }
 }

@@ -65,7 +65,7 @@ public class BuildStructureStage : StageBase
                 installer.Context = context;
                 installer.Token = Token;
                 var result = await installer.StartAsync(component);
-                if (result.IsErr(out var message)) return Error(message);
+                if (result.IsErr(out var message)) return Error(message!);
             }
 
             var polylock = context.Build();

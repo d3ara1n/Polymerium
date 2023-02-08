@@ -15,7 +15,7 @@
         <Authors>D3ara1n</Authors>
         <Product>Polymerium</Product>
         <Description>Polymerium Minecraft Instance Manager</Description>
-        <Nullable>disable</Nullable>
+        <Nullable>enable</Nullable>
         <DefaultLanguage>zh-CN</DefaultLanguage>
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
     </PropertyGroup>

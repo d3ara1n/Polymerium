@@ -8,11 +8,11 @@ namespace Polymerium.Core.Stars;
 public class PlanetBlenderBuilder : IBuilder<PlanetBlender>
 {
     private readonly StarshipBuilder starshipBuilder = new();
-    private IEnumerable<string> gameArguments;
-    private string javaPath;
-    private IEnumerable<string> jvmArguments;
-    private string mainClass;
-    private string workingDirectory;
+    private IEnumerable<string> gameArguments = Enumerable.Empty<string>();
+    private string javaPath = string.Empty;
+    private IEnumerable<string> jvmArguments = Enumerable.Empty<string>();
+    private string mainClass = string.Empty;
+    private string workingDirectory = string.Empty;
 
     public PlanetBlender Build()
     {

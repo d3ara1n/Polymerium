@@ -1,6 +1,6 @@
 namespace Polymerium.Abstractions.ResourceResolving;
 
-public enum ResultError
+public enum ResolveResultError
 {
     Unknown,
     NotFound

@@ -61,7 +61,7 @@ public sealed class InstanceManager : IDisposable
         var instanceDir = _fileBase.Locate(new Uri($"poly-file://{instance.Id}"));
         if (Directory.Exists(instanceDir))
         {
-            var newDir = Path.Combine(Path.GetDirectoryName(instanceDir), folderName);
+            var newDir = Path.Combine(Path.GetDirectoryName(instanceDir)!, folderName);
             try
             {
                 Directory.Move(instanceDir, newDir);
@@ -80,11 +80,11 @@ public sealed class InstanceManager : IDisposable
     public Option<GameInstance> FindById(string id)
     {
         if (TryFindById(id, out var instance))
-            return Option<GameInstance>.Some(instance);
+            return Option<GameInstance>.Some(instance!);
         return Option<GameInstance>.None();
     }
 
-    public bool TryFindById(string id, out GameInstance instance)
+    public bool TryFindById(string id, out GameInstance? instance)
     {
         instance = _memoryStorage.Instances.FirstOrDefault(x => x.Id == id);
         return instance != null;
@@ -92,6 +92,6 @@ public sealed class InstanceManager : IDisposable
 
     public void RemoveInstance(GameInstance instance)
     {
-        if (TryFindById(instance.Id, out var found)) _memoryStorage.Instances.Remove(found);
+        if (TryFindById(instance.Id, out var found)) _memoryStorage.Instances.Remove(found!);
     }
 }

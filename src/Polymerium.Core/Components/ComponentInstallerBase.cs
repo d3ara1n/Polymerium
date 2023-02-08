@@ -8,7 +8,7 @@ namespace Polymerium.Core.Components;
 public abstract class ComponentInstallerBase
 {
     // 输出 libraries，参数, main class overrides, crate(按等级会向前覆盖)
-    public ComponentInstallerContext Context { get; set; }
+    public ComponentInstallerContext Context { get; set; } = null!;
     public CancellationToken Token { get; set; } = CancellationToken.None;
 
     public abstract Task<Result<string>> StartAsync(Component component);

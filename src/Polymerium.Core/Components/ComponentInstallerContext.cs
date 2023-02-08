@@ -9,28 +9,21 @@ namespace Polymerium.Core.Components;
 
 public class ComponentInstallerContext : IBuilder<PolylockData>
 {
+    private readonly List<PolylockAttachment> attachments = new();
     private readonly Dictionary<string, string> cargo = new();
     private readonly List<string> gameArguments = new();
     private readonly List<string> jvmArguments = new();
     private readonly List<Library> libraries = new();
-    private readonly List<PolylockAttachment> attachments = new();
 
     public ComponentInstallerContext(GameInstance instance)
     {
         Instance = instance;
     }
 
-    public string GetCoreVersion()
-    {
-        return Instance.Metadata.Components.Any(x => x.Identity == "net.minecraft")
-            ? Instance.Metadata.Components.First(x => x.Identity == "net.minecraft").Version
-            : null;
-    }
-
     public GameInstance Instance { get; }
-    public string MainClass { get; private set; }
-    public int JavaMajorVersionRequired { get; private set; }
-    public AssetIndex AssetIndex { get; private set; }
+    public string? MainClass { get; private set; }
+    public int? JavaMajorVersionRequired { get; private set; }
+    public AssetIndex? AssetIndex { get; private set; }
     public IDictionary<string, string> Cargo => cargo;
     public IEnumerable<string> GameArguments => gameArguments;
     public IEnumerable<string> JvmArguments => jvmArguments;
@@ -41,15 +34,22 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
     {
         return new PolylockData
         {
-            MainClass = MainClass,
+            MainClass = MainClass ?? string.Empty,
             Cargo = Cargo,
             Libraries = Libraries,
-            AssetIndex = AssetIndex,
+            AssetIndex = AssetIndex ?? default,
             Attachments = Attachments,
             GameArguments = GameArguments,
             JvmArguments = JvmArguments,
-            JavaMajorVersionRequired = JavaMajorVersionRequired
+            JavaMajorVersionRequired = JavaMajorVersionRequired ?? 0
         };
+    }
+
+    public string? GetCoreVersion()
+    {
+        return Instance.Metadata.Components.Any(x => x.Identity == "net.minecraft")
+            ? Instance.Metadata.Components.First(x => x.Identity == "net.minecraft").Version
+            : null;
     }
 
     public void SetMainClass(string mainClass)

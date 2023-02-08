@@ -47,7 +47,7 @@ public sealed class DataStorage : IDisposable
         return true;
     }
 
-    public TData Load<TModel, TData>(Func<TData> factory = null)
+    public TData Load<TModel, TData>(Func<TData>? factory = null)
         where TModel : RefinedModelBase<TData>, new()
     {
         var model = new TModel();
@@ -57,17 +57,17 @@ public sealed class DataStorage : IDisposable
             return model.Extract();
         }
 
-        return factory != null ? factory() : default;
+        return factory!();
     }
 
-    public IEnumerable<TData> LoadList<TModel, TData>(Func<IEnumerable<TData>> factory = null)
+    public IEnumerable<TData> LoadList<TModel, TData>(Func<IEnumerable<TData>>? factory = null)
         where TModel : RefinedModelBase<TData>, new()
     {
         var model = new TModel();
         if (_fileBaseService.TryReadAllText(model.Location, out var text))
         {
             var list = JsonConvert.DeserializeObject<IEnumerable<TModel>>(text, model.SerializerSettings);
-            return list.Select(x => x.Extract());
+            return list?.Select(x => x.Extract()) ?? Enumerable.Empty<TData>();
         }
 
         return factory != null ? factory() : Enumerable.Empty<TData>();

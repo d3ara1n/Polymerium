@@ -5,12 +5,12 @@ namespace Polymerium.App.Models;
 
 public class ConfigurationModel : ObservableObject
 {
-    public FileBasedLaunchConfiguration Inner { get; }
-
     public ConfigurationModel(FileBasedLaunchConfiguration configuration)
     {
         Inner = configuration;
     }
+
+    public FileBasedLaunchConfiguration Inner { get; }
 
     public string JavaHome
     {

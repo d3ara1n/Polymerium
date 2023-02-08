@@ -13,17 +13,18 @@ internal class RuleFeaturesConverter : JsonConverter
         return objectType == typeof(RuleFeatures);
     }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
+        JsonSerializer serializer)
     {
         var obj = JObject.Load(reader);
         var prop = obj.Properties().First();
         var features = new RuleFeatures();
         features.Key = prop.Name;
-        features.Enabled = prop.Value.Type == JTokenType.Boolean ? prop.Value.Value<bool>() : true;
+        features.Enabled = prop.Value.Type != JTokenType.Boolean || prop.Value.Value<bool>();
         return features;
     }
 
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
     {
         throw new NotImplementedException();
     }

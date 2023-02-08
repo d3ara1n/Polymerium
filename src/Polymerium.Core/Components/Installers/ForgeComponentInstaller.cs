@@ -40,14 +40,8 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
         if (!profileJson.HasValue) return Failed("Legacy forge installer is not supported");
 
         foreach (var library in versionJson.Value.Libraries)
-            Context.AddLibrary(new Library
-            {
-                Name = library.Name,
-                Path = library.Downloads.Artifact.Path,
-                Sha1 = library.Downloads.Artifact.Sha1,
-                Url = library.Downloads.Artifact.Url,
-                IsNative = false
-            });
+            Context.AddLibrary(new Library(library.Name, library.Downloads.Artifact.Path,
+                library.Downloads.Artifact.Sha1, library.Downloads.Artifact.Url));
         // Note: 早些版本的 forge-client.jar 是随 installer.jar 附带的，需要用 local repository 服务来保证 Library.Url
         //       PolylockData 中可以包含 build tasks 来产生缺失但又无法下载的 forge libraries
         //       例如 minecraftforge-client.jar 的 url 为 poly-build://{build}[/{task}]

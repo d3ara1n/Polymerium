@@ -12,18 +12,10 @@ namespace Polymerium.App.Views;
 
 public sealed partial class AddMetaComponentWizardDialog : CustomDialog
 {
-    public bool IsOperable
-    {
-        get => (bool)GetValue(IsOperableProperty);
-        set => SetValue(IsOperableProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for IsOperable.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsOperableProperty =
         DependencyProperty.Register(nameof(IsOperable), typeof(bool), typeof(AddMetaComponentWizardDialog),
             new PropertyMetadata(true));
-
-    public AddMetaComponentWizardViewModel ViewModel { get; }
 
     public AddMetaComponentWizardDialog()
     {
@@ -31,6 +23,14 @@ public sealed partial class AddMetaComponentWizardDialog : CustomDialog
         ViewModel = App.Current.Provider.GetRequiredService<AddMetaComponentWizardViewModel>();
         ViewModel.DismissHandler = Dismiss;
     }
+
+    public bool IsOperable
+    {
+        get => (bool)GetValue(IsOperableProperty);
+        set => SetValue(IsOperableProperty, value);
+    }
+
+    public AddMetaComponentWizardViewModel ViewModel { get; }
 
     private void MetaSelection_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {

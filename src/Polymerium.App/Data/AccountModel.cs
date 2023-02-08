@@ -11,8 +11,8 @@ public class AccountModel : RefinedModelBase<IGameAccount>
     private readonly byte[] POLY_SIGNED = { 114, 5, 14, 191, 98, 10 };
     public override Uri Location { get; } = new("poly-file:///accounts.json");
 
-    public string TypeName { get; set; }
-    public byte[] Juice { get; set; }
+    public string? TypeName { get; set; }
+    public byte[]? Juice { get; set; }
 
     public override void Apply(IGameAccount data)
     {
@@ -23,11 +23,11 @@ public class AccountModel : RefinedModelBase<IGameAccount>
 
     public override IGameAccount Extract()
     {
-        var data = ProtectedData.Unprotect(Juice, POLY_SIGNED, DataProtectionScope.CurrentUser);
+        var data = ProtectedData.Unprotect(Juice!, POLY_SIGNED, DataProtectionScope.CurrentUser);
         var json = Encoding.UTF8.GetString(data);
-        var obj = Type.GetType(TypeName);
-        var instance = Activator.CreateInstance(obj) as IGameAccount;
-        JsonConvert.PopulateObject(json, instance);
-        return instance;
+        var obj = Type.GetType(TypeName!);
+        var instance = Activator.CreateInstance(obj!) as IGameAccount;
+        JsonConvert.PopulateObject(json, instance!);
+        return instance!;
     }
 }

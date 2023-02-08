@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,21 +28,10 @@ public class ModrinthImporter : ImporterBase
             // 不需要，直接灌入 poly-file://{id}/ 就行
             // 但是此时 GameInstance 还没加入 InstanceManager 的托管范围，怎么获得目录呢（囧
             // TODO: 还是得打个待办
-            var instance = new GameInstance
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = index.Name,
-                FolderName = index.Name,
-                CreatedAt = DateTimeOffset.Now,
-                Metadata = new GameMetadata(),
-                Configuration = new FileBasedLaunchConfiguration(),
-                // 由于是本地导入的，所以没有 ReferenceSource，也不上锁
-                // 通过下载中心导入的包会是 poly-res://modpack:modrinth/<id|slug>
-                ReferenceSource = null,
-                ThumbnailFile = string.Empty,
-                Version = index.VersionId,
-                PlayTime = TimeSpan.Zero
-            };
+            var instance = new GameInstance(new GameMetadata(), index.VersionId, new FileBasedLaunchConfiguration(),
+                index.Name, index.Name);
+            // 由于是本地导入的，所以没有 ReferenceSource，也不上锁
+            // 通过下载中心导入的包会是 poly-res://modpack:modrinth/<id|slug>
             foreach (var dependency in index.Dependencies)
                 instance.Metadata.Components.Add(new Component
                 {

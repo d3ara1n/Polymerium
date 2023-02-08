@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         DependencyProperty.Register(nameof(ErrorMessage), typeof(string), typeof(CreateInstanceWizardDialog),
             new PropertyMetadata(string.Empty));
 
-    private ContentControl _root;
+    private ContentControl? _root;
 
     public CreateInstanceWizardDialog()
     {
@@ -88,9 +89,10 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
         var errors = ViewModel.GetErrors();
-        if (errors != null && errors.Any())
+        var validationResults = errors as ValidationResult[] ?? errors.ToArray();
+        if (validationResults.Any())
         {
-            ErrorMessage = string.Join('\n', errors.Select(x => x.ErrorMessage));
+            ErrorMessage = string.Join('\n', validationResults.Select(x => x.ErrorMessage));
         }
         else
         {
@@ -130,6 +132,6 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         ViewModel.SelectedVersion = item;
         if (string.IsNullOrEmpty(ViewModel.InstanceName) ||
             ViewModel.InstanceName == item?.Id)
-            ViewModel.InstanceName = item?.Id;
+            ViewModel.InstanceName = item?.Id ?? string.Empty;
     }
 }

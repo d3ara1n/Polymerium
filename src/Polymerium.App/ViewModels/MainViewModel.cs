@@ -29,8 +29,8 @@ public sealed class MainViewModel : ObservableObject
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
 
-    private ContentControl overlay;
-    private NavigationItemModel selectedPage;
+    private ContentControl? overlay;
+    private NavigationItemModel? selectedPage;
 
     public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, InstanceManager instanceManager,
         AccountManager accountManager, ConfigurationManager configurationManager, ComponentManager componentManager,
@@ -69,8 +69,9 @@ public sealed class MainViewModel : ObservableObject
                 thumbnailSource: "ms-appx:///Assets/Icons/icons8-settings-48.png")
         };
         LogonAccounts = new ObservableCollection<AccountItemModel>();
-        if (_accountManager.TryFindById(_configurationManager.Current.AccountShowcaseId, out var account))
-            AccountShowcase = account.ToModel();
+        if (_accountManager.TryFindById(_configurationManager.Current.AccountShowcaseId ?? string.Empty,
+                out var account))
+            AccountShowcase = account!.ToModel();
     }
 
     public ViewModelContext Context { get; }
@@ -78,16 +79,16 @@ public sealed class MainViewModel : ObservableObject
     public ObservableCollection<NavigationItemModel> NavigationPages { get; }
     public NavigationItemModel[] NavigationPinnedPages { get; }
 
-    public NavigationItemModel SelectedPage
+    public NavigationItemModel? SelectedPage
     {
         get => selectedPage;
         set => SetProperty(ref selectedPage, value);
     }
 
     public ObservableCollection<AccountItemModel> LogonAccounts { get; set; }
-    public AccountItemModel AccountShowcase { get; set; }
+    public AccountItemModel? AccountShowcase { get; set; }
 
-    public ContentControl Overlay
+    public ContentControl? Overlay
     {
         get => overlay;
         set => SetProperty(ref overlay, value);
@@ -102,7 +103,7 @@ public sealed class MainViewModel : ObservableObject
         Overlay = content;
     }
 
-    private ContentControl PullOverlay()
+    private ContentControl? PullOverlay()
     {
         // 安全的把所有权转移出去
         (var res, Overlay) = (Overlay, null);
@@ -111,7 +112,7 @@ public sealed class MainViewModel : ObservableObject
 
     public void SwitchAccountTo(AccountItemModel model)
     {
-        if (SelectedPage.GameInstance != null)
+        if (SelectedPage?.GameInstance != null)
         {
             SelectedPage.GameInstance.BoundAccountId = model.Inner.Id;
         }
@@ -144,7 +145,7 @@ public sealed class MainViewModel : ObservableObject
         }
     }
 
-    private void Instances_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void Instances_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
@@ -152,44 +153,49 @@ public sealed class MainViewModel : ObservableObject
             {
                 case NotifyCollectionChangedAction.Add:
                 {
-                    foreach (GameInstance instance in e.NewItems)
-                        NavigationPages.Insert(NavigationPages.Count - 1,
-                            new NavigationItemModel("\xF158", instance.Name, typeof(InstanceView), instance,
-                                instance.ThumbnailFile));
+                    if (e.NewItems != null)
+                        foreach (GameInstance instance in e.NewItems)
+                            NavigationPages.Insert(NavigationPages.Count - 1,
+                                new NavigationItemModel("\xF158", instance.Name, typeof(InstanceView), instance,
+                                    instance.ThumbnailFile));
                 }
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
                 {
-                    foreach (GameInstance instance in e.OldItems)
-                    {
-                        var item = NavigationPages.FirstOrDefault(x => x.GameInstance?.Id == instance.Id);
-                        if (item != null) NavigationPages.Remove(item);
-                        // TODO: 当前页面和该实例有关就关闭该页面
-                    }
+                    if (e.OldItems != null)
+                        foreach (GameInstance instance in e.OldItems)
+                        {
+                            var item = NavigationPages.FirstOrDefault(x => x.GameInstance?.Id == instance.Id);
+                            if (item != null) NavigationPages.Remove(item);
+                            // TODO: 当前页面和该实例有关就关闭该页面
+                        }
                 }
                     break;
             }
         });
     }
 
-    private void Accounts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void Accounts_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         switch (e.Action)
         {
             case NotifyCollectionChangedAction.Add:
             {
-                foreach (IGameAccount a in e.NewItems) LogonAccounts.Add(a.ToModel());
+                if (e.NewItems != null)
+                    foreach (IGameAccount a in e.NewItems)
+                        LogonAccounts.Add(a.ToModel());
             }
                 break;
 
             case NotifyCollectionChangedAction.Remove:
             {
-                foreach (IGameAccount r in e.OldItems)
-                {
-                    var model = LogonAccounts.FirstOrDefault(x => x.Inner.Id == r.Id);
-                    if (model != null) LogonAccounts.Remove(model);
-                }
+                if (e.OldItems != null)
+                    foreach (IGameAccount r in e.OldItems)
+                    {
+                        var model = LogonAccounts.FirstOrDefault(x => x.Inner.Id == r.Id);
+                        if (model != null) LogonAccounts.Remove(model);
+                    }
             }
                 break;
 
