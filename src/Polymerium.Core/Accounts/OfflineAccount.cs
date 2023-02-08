@@ -11,6 +11,13 @@ public class OfflineAccount : IGameAccount
         Nickname = nickname;
     }
 
+    private OfflineAccount()
+    {
+        Id = string.Empty;
+        UUID = string.Empty;
+        Nickname = string.Empty;
+    }
+
     public string Id { get; set; }
     public string UUID { get; set; }
     public string Nickname { get; set; }

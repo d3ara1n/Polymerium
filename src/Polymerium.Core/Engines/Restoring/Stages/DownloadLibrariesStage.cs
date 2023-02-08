@@ -46,10 +46,10 @@ public class DownloadLibrariesStage : StageBase
             {
                 if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task))
                     if (item.IsNative)
-                        task.CompletedCallback = async (task, s) =>
+                        task!.CompletedCallback = async (t, s) =>
                         {
                             if (s)
-                                await UnzipFileAsync(task.Destination, _fileBase.Locate(nativesDir),
+                                await UnzipFileAsync(t.Destination, _fileBase.Locate(nativesDir),
                                     Token);
                         };
             }
@@ -78,7 +78,7 @@ public class DownloadLibrariesStage : StageBase
             ZipFile.ExtractToDirectory(from, to, true);
             return true;
         }
-        catch (Exception e)
+        catch (Exception _)
         {
             return false;
         }

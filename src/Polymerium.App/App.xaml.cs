@@ -30,12 +30,13 @@ public partial class App : Application
 
     public new static App Current => (App)Application.Current;
 
-    public MainWindow Window { get; } = new();
+    public MainWindow Window { get; private set; } = null!;
 
     public IServiceProvider Provider { get; }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        Window = new MainWindow();
         Window.Closed += Window_Closed;
         Window.Activate();
     }

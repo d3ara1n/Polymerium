@@ -81,6 +81,7 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
             IsOperable = true;
             Versions = data;
             ViewModel.SelectedVersion = Versions.FirstOrDefault();
+            ViewModel.InstanceName = ViewModel.SelectedVersion?.Id ?? string.Empty;
             VisualStateManager.GoToState(_root, "Default", false);
         });
         return Task.CompletedTask;

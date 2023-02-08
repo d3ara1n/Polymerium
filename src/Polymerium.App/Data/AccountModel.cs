@@ -26,7 +26,7 @@ public class AccountModel : RefinedModelBase<IGameAccount>
         var data = ProtectedData.Unprotect(Juice!, POLY_SIGNED, DataProtectionScope.CurrentUser);
         var json = Encoding.UTF8.GetString(data);
         var obj = Type.GetType(TypeName!);
-        var instance = Activator.CreateInstance(obj!) as IGameAccount;
+        var instance = Activator.CreateInstance(obj!, true) as IGameAccount;
         JsonConvert.PopulateObject(json, instance!);
         return instance!;
     }

@@ -7,7 +7,7 @@ public static class GameAccountExtensions
 {
     public static AccountItemModel ToModel(this IGameAccount account)
     {
-        return new AccountItemModel(account, $"https://minotar.net/bust/{account.UUID}/100.png",
-            $"https://minotar.net/helm/{account.UUID}/100.png");
+        return new AccountItemModel(account, $"https://minotar.net/helm/{account.UUID}/100.png",
+            $"https://minotar.net/bust/{account.UUID}/100.png");
     }
 }
