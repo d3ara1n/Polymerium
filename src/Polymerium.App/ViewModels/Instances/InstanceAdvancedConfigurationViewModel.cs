@@ -40,7 +40,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
     public ICommand DeleteInstanceCommand { get; }
 
     // NOTE: 重置对于已解锁的实例只会删除目录，但对于具有 ReferenceSource 的实例，会重新导入元数据
-    
+
     public void OpenRenameDialog()
     {
         _dispatcher.TryEnqueue(async () =>
@@ -48,7 +48,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
             var instance = Context.AssociatedInstance;
             var dialog = new TextInputDialog();
             dialog.Title = "重命名";
-            dialog.InputTextPlaceholder = instance.Name;
+            dialog.InputTextPlaceholder = instance!.Name;
             dialog.Description = "这会同样会作用于实例所在目录";
             dialog.XamlRoot = App.Current.Window.Content.XamlRoot;
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
@@ -58,7 +58,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
             }
         });
     }
-    
+
     public async Task DeleteInstanceAsync()
     {
         var dialog = new ConfirmationDialog
@@ -69,7 +69,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary)
         {
-            var dir = new Uri($"poly-file://{Context.AssociatedInstance.Id}/");
+            var dir = new Uri($"poly-file://{Context.AssociatedInstance!.Id}/");
             var path = _fileBase.Locate(dir);
             if (Directory.Exists(path))
                 try

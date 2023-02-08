@@ -12,11 +12,11 @@ public class OfflineAccountViewModel : ObservableValidator
 {
     private readonly AccountManager _accountManager;
     private readonly MD5 md5 = MD5.Create();
-    private string errorMessage;
+    private string errorMessage = string.Empty;
 
-    private string nickname;
+    private string nickname = string.Empty;
 
-    private string uuid;
+    private string uuid = string.Empty;
 
     public OfflineAccountViewModel(AccountManager accountManager)
     {
@@ -65,12 +65,8 @@ public class OfflineAccountViewModel : ObservableValidator
 
     public void Register()
     {
-        var account = new OfflineAccount
-        {
-            Id = Guid.NewGuid().ToString(),
-            Nickname = Nickname,
-            UUID = string.IsNullOrEmpty(UUID) ? EmptyUUID : UUID
-        };
+        var account = new OfflineAccount(Guid.NewGuid().ToString(), Nickname,
+            string.IsNullOrEmpty(UUID) ? EmptyUUID : UUID);
         _accountManager.AddAccount(account);
     }
 }

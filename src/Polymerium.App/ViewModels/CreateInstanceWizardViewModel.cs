@@ -26,19 +26,19 @@ public class CreateInstanceWizardViewModel : ObservableValidator
 
     private string instanceName = string.Empty;
 
-    private GameVersionModel selectedVersion;
+    private GameVersionModel? selectedVersion;
+
+    private string version = string.Empty;
 
     public CreateInstanceWizardViewModel(InstanceManager instanceManager, IMemoryCache cache)
     {
         _instanceManager = instanceManager;
         _cache = cache;
 
-        InstanceName = null;
+        InstanceName = string.Empty;
         SelectedVersion = null;
-        InstanceAuthor = null;
+        InstanceAuthor = string.Empty;
     }
-
-    private string version;
 
     [Required]
     [RegularExpression(@"^[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)*$")]
@@ -65,7 +65,7 @@ public class CreateInstanceWizardViewModel : ObservableValidator
     }
 
     [Required]
-    public GameVersionModel SelectedVersion
+    public GameVersionModel? SelectedVersion
     {
         get => selectedVersion;
         set => SetProperty(ref selectedVersion, value, true);
@@ -78,54 +78,35 @@ public class CreateInstanceWizardViewModel : ObservableValidator
             var res = Enumerable.Empty<GameVersionModel>();
             var url = "https://piston-meta.mojang.com/mc/game/version_manifest.json";
             await Wapoo.Wohoo(url)
-                .ForJsonResult<JObject>(x => res = x.Value<JArray>("versions").ToObject<IEnumerable<GameVersion>>()
-                    .Select(x => new GameVersionModel
+                .ForJsonResult<JObject>(x => res = x.Value<JArray>("versions")!.ToObject<IEnumerable<GameVersion>>()!
+                    .Select(x => new GameVersionModel(x.Id, x.Type switch
                     {
-                        Id = x.Id,
-                        ReleaseType = x.Type switch
-                        {
-                            ReleaseType.Release => "正式",
-                            ReleaseType.Snapshot => "快照",
-                            ReleaseType.Old_Alpha => "Alpha",
-                            ReleaseType.Old_Beta => "Beta"
-                        }
-                    }))
+                        ReleaseType.Release => "正式",
+                        ReleaseType.Snapshot => "快照",
+                        ReleaseType.Old_Alpha => "Alpha",
+                        ReleaseType.Old_Beta => "Beta",
+                        _ => throw new ArgumentOutOfRangeException()
+                    })))
                 .FetchAsync();
-            if (res.Any())
+            var gameVersionModels = res as GameVersionModel[] ?? res.ToArray();
+            if (gameVersionModels.Any())
                 entry.SetSlidingExpiration(TimeSpan.FromHours(1));
             else
                 entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
 
-            return res;
+            return gameVersionModels;
         });
-        await callback(versions.ToList());
+        await callback(versions?.ToList() ?? Enumerable.Empty<GameVersionModel>());
     }
 
     public async Task Commit(Func<Task> callback)
     {
-        var instance = new GameInstance
-        {
-            Id = Guid.NewGuid().ToString(),
-            Name = InstanceName,
-            FolderName = InstanceName,
-            Author = InstanceAuthor,
-            ReferenceSource = null,
-            Version = Version,
-            Metadata = new GameMetadata(),
-            Configuration = new FileBasedLaunchConfiguration(),
-            CreatedAt = DateTimeOffset.Now,
-            LastPlay = null,
-            LastRestore = null,
-            ExceptionCount = 0,
-            PlayCount = 0,
-            ThumbnailFile = string.Empty,
-            BoundAccountId = null,
-            PlayTime = TimeSpan.Zero
-        };
+        var instance = new GameInstance(new GameMetadata(), Version,
+            new FileBasedLaunchConfiguration(), InstanceName, InstanceName);
         instance.Metadata.Components.Add(new Component
         {
             Identity = "net.minecraft",
-            Version = SelectedVersion.Id
+            Version = SelectedVersion!.Id
         });
         _instanceManager.AddInstance(instance);
         await callback();

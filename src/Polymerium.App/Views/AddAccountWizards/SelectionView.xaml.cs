@@ -13,7 +13,7 @@ namespace Polymerium.App.Views.AddAccountWizards;
 
 public sealed partial class SelectionView : Page
 {
-    private AddAccountWizardStateHandler handler;
+    private AddAccountWizardStateHandler? handler;
 
     public SelectionView()
     {
@@ -31,6 +31,6 @@ public sealed partial class SelectionView : Page
 
     private void FirstPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        handler((e.AddedItems.First() as AccountWizardEntryModel).Page);
+        if (e.AddedItems.FirstOrDefault() is AccountWizardEntryModel first) handler?.Invoke(first.Page);
     }
 }

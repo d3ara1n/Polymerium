@@ -18,7 +18,6 @@ public sealed partial class InstanceConfigurationView : Page
     private void PageSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var view = sender as ListView;
-        var page = view.SelectedValue as InstanceConfigurationPageModel;
-        SubpageRoot.Navigate(page.Page);
+        if (view!.SelectedValue is InstanceConfigurationPageModel page) SubpageRoot.Navigate(page.Page);
     }
 }

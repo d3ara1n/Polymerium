@@ -19,9 +19,16 @@ namespace Polymerium.App.ViewModels;
 
 public class AddMetaComponentWizardViewModel : ObservableObject
 {
-    private readonly ComponentManager _componentManager;
     private readonly IMemoryCache _cache;
-    private readonly string coreVersion;
+    private readonly ComponentManager _componentManager;
+    private readonly string? coreVersion;
+
+    internal Action? DismissHandler;
+    private ComponentMeta? selectedMeta;
+
+    private string? selectedVersion;
+
+    private IEnumerable<string> versions = Enumerable.Empty<string>();
 
     public AddMetaComponentWizardViewModel(ViewModelContext context, ComponentManager componentManager,
         IMemoryCache cache)
@@ -29,7 +36,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
         Context = context;
         _componentManager = componentManager;
         _cache = cache;
-        coreVersion = Context.AssociatedInstance.Components.Any(x => x.Identity == "net.minecraft")
+        coreVersion = Context.AssociatedInstance?.Components.Any(x => x.Identity == "net.minecraft") == true
             ? Context.AssociatedInstance.Components.First(x => x.Identity == "net.minecraft").Version
             : null;
         if (coreVersion != null)
@@ -41,14 +48,10 @@ public class AddMetaComponentWizardViewModel : ObservableObject
         CancelCommand = new RelayCommand(Cancel);
     }
 
-    internal Action DismissHandler;
     public IRelayCommand AddComponentCommand { get; }
     public ICommand CancelCommand { get; }
     public ViewModelContext Context { get; }
     public IEnumerable<ComponentMeta> Metas { get; }
-    private ComponentMeta selectedMeta;
-
-    private IEnumerable<string> versions;
 
     public IEnumerable<string> Versions
     {
@@ -56,15 +59,13 @@ public class AddMetaComponentWizardViewModel : ObservableObject
         set => SetProperty(ref versions, value);
     }
 
-    public ComponentMeta SelectedMeta
+    public ComponentMeta? SelectedMeta
     {
         get => selectedMeta;
         set => SetProperty(ref selectedMeta, value);
     }
 
-    private string selectedVersion;
-
-    public string SelectedVersion
+    public string? SelectedVersion
     {
         get => selectedVersion;
         set
@@ -81,12 +82,12 @@ public class AddMetaComponentWizardViewModel : ObservableObject
 
     private void AddComponent()
     {
-        var identity = SelectedMeta.Identity;
+        var identity = SelectedMeta!.Identity;
         var version = SelectedVersion;
-        Context.AssociatedInstance.Components.Add(new Component
+        Context.AssociatedInstance?.Components.Add(new Component
         {
             Identity = identity,
-            Version = version
+            Version = version!
         });
         DismissHandler?.Invoke();
     }
@@ -106,7 +107,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
             "org.quiltmc.quilt-loader" => LoadQuiltVersionsAsync,
             _ => _ => Task.FromResult(Enumerable.Empty<string>())
         });
-        callback(result);
+        callback?.Invoke(result!);
     }
 
     private async Task<IEnumerable<string>> LoadVersionsAsync<TMid>(string url, Func<TMid, IEnumerable<string>> produce,
@@ -116,18 +117,19 @@ public class AddMetaComponentWizardViewModel : ObservableObject
         await Wapoo.Wohoo(url)
             .ForJsonResult<TMid>(x => result = produce(x))
             .FetchAsync();
-        if (result.Any())
+        var loadVersionsAsync = result as string[] ?? result.ToArray();
+        if (loadVersionsAsync.Any())
             entry.SetSlidingExpiration(TimeSpan.FromHours(1));
         else
             entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
 
-        return result;
+        return loadVersionsAsync;
     }
 
     private async Task<IEnumerable<string>> LoadMinecraftVersionsAsync(ICacheEntry entry)
     {
         return await LoadVersionsAsync<JObject>("https://piston-meta.mojang.com/mc/game/version_manifest.json",
-            x => x.Value<JArray>("versions").ToObject<IEnumerable<GameVersion>>().Select(y => y.Id),
+            x => x.Value<JArray>("versions")!.ToObject<IEnumerable<GameVersion>>()!.Select(y => y.Id),
             entry);
     }
 

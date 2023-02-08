@@ -5,15 +5,15 @@ namespace Polymerium.Core.Engines.Restoring;
 public class RestoreProgressEventArgs : EventArgs
 {
     public RestoreProgressType ProgressType { get; set; }
-    public string FileName { get; set; }
+    public string FileName { get; set; } = string.Empty;
     public RestoreError Error { get; set; }
 
     public int Downloaded { get; set; }
     public int TotalToDownload { get; set; }
 
-    public Exception Exception { get; set; }
+    public Exception? Exception { get; set; }
 
-    public static RestoreProgressEventArgs CreateError(RestoreError error, string fileName, Exception exception = null)
+    public static RestoreProgressEventArgs CreateError(RestoreError error, string fileName, Exception? exception = null)
     {
         return new RestoreProgressEventArgs
         {

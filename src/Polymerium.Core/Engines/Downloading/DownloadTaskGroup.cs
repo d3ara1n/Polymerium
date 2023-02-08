@@ -14,16 +14,16 @@ public class DownloadTaskGroup
     internal EventWaitHandle waitHandle = new(false, EventResetMode.ManualReset);
     public IEnumerable<DownloadTask> Tasks => tasks;
 
-    public Action<DownloadTaskGroup, DownloadTask, int, bool> CompletedDelegate { get; set; }
+    public Action<DownloadTaskGroup, DownloadTask, int, bool>? CompletedDelegate { get; set; }
 
     public CancellationToken Token { get; set; } = CancellationToken.None;
 
     public int DownloadedCount => downloadedCount;
     public int TotalCount => tasks.Count;
 
-    public bool TryAdd(string source, string destintion, out DownloadTask task)
+    public bool TryAdd(string source, string destintion, out DownloadTask? task)
     {
-        if (!tasks.Any(x => x.Destination == destintion))
+        if (tasks.All(x => x.Destination != destintion))
         {
             var tmp = new DownloadTask
             {

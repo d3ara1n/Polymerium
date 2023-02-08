@@ -50,14 +50,14 @@ public class MainFileBaseService : IFileBaseService
             return true;
         }
 
-        text = default;
+        text = string.Empty;
         return false;
     }
 
     public void WriteAllText(Uri uri, string content)
     {
         var path = Locate(uri);
-        if (!Directory.Exists(Path.GetDirectoryName(path))) Directory.CreateDirectory(Path.GetDirectoryName(path));
+        if (!Directory.Exists(Path.GetDirectoryName(path))) Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, content);
     }
 
@@ -66,7 +66,7 @@ public class MainFileBaseService : IFileBaseService
         return File.Exists(Locate(uri));
     }
 
-    public async Task<bool> VerifyHashAsync(Uri uri, string hash, HashAlgorithm algorithm)
+    public async Task<bool> VerifyHashAsync(Uri uri, string? hash, HashAlgorithm algorithm)
     {
         if (hash == null) return DoFileExist(uri);
         var option = await ComputeHashAsync(uri, algorithm);
@@ -82,8 +82,8 @@ public class MainFileBaseService : IFileBaseService
         using (var reader = new FileStream(path, FileMode.Open, FileAccess.Read))
         {
             var buffer = new byte[reader.Length];
-            await reader.ReadAsync(buffer, 0, buffer.Length);
-            var hashBytes = algorithm.ComputeHash(buffer);
+            var actualLength = await reader.ReadAsync(buffer, 0, buffer.Length);
+            var hashBytes = algorithm.ComputeHash(buffer, 0, actualLength);
             var hashString = string.Join(string.Empty, hashBytes.Select(x => x.ToString("x2")));
             return Option<string>.Some(hashString);
         }

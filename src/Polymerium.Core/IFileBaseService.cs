@@ -15,7 +15,7 @@ public interface IFileBaseService
 
     bool DoFileExist(Uri uri);
 
-    Task<bool> VerifyHashAsync(Uri uri, string hash, HashAlgorithm algorithm);
+    Task<bool> VerifyHashAsync(Uri uri, string? hash, HashAlgorithm algorithm);
     Task<Option<string>> ComputeHashAsync(Uri uri, HashAlgorithm algorithm);
 
     bool RemoveDirectory(Uri uri);

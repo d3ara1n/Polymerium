@@ -25,7 +25,7 @@ public class GlowingButton : ButtonBase
 
     private void GlowingButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
-        if (e.NewValue?.ToString().ToLower() == "true")
+        if (e.NewValue?.ToString()?.ToLower() == "true")
             VisualStateManager.GoToState(this, "Normal", true);
         else
             VisualStateManager.GoToState(this, "Disabled", true);

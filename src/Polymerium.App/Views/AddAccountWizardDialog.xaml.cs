@@ -11,13 +11,13 @@ using Polymerium.App.Views.AddAccountWizards;
 
 namespace Polymerium.App.Views;
 
-public delegate void AddAccountWizardStateHandler(Type nextPage, bool isLast = false, Func<bool> finishAction = null);
+public delegate void AddAccountWizardStateHandler(Type? nextPage, bool isLast = false, Func<bool>? finishAction = null);
 
 public sealed partial class AddAccountWizardDialog : CustomDialog
 {
     private readonly AddAccountWizardStateHandler handler;
-    private Func<bool> finish;
-    private Type next;
+    private Func<bool>? finish;
+    private Type? next;
 
     public AddAccountWizardDialog(IOverlayService overlayService)
     {
@@ -36,7 +36,7 @@ public sealed partial class AddAccountWizardDialog : CustomDialog
         Dismiss();
     }
 
-    private void SetState(Type nextPage, bool isLast, Func<bool> finishAction)
+    private void SetState(Type? nextPage, bool isLast, Func<bool>? finishAction)
     {
         if (nextPage != null)
         {
@@ -75,7 +75,7 @@ public sealed partial class AddAccountWizardDialog : CustomDialog
 
     private void FinishButton_Click(object sender, RoutedEventArgs e)
     {
-        if (finish())
+        if (finish?.Invoke() ?? true)
             Dismiss();
     }
 }

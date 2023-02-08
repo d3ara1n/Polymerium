@@ -18,12 +18,16 @@ public class SettingViewModel : ObservableObject
     private readonly JavaManager _javaManager;
     private bool autoDetectJava;
 
-    private string javahome;
+    private string javaHome = string.Empty;
 
-    private string javaSummary;
+    private string javaSummary = string.Empty;
     private uint jvmMaxMemory;
 
-    private JavaInstallationModel selectedJava;
+    private JavaInstallationModel? selectedJava;
+
+    private uint windowHeight;
+
+    private uint windowWidth;
 
     public SettingViewModel(ConfigurationManager configurationManager, JavaManager javaManager)
     {
@@ -51,10 +55,10 @@ public class SettingViewModel : ObservableObject
 
     public string JavaHome
     {
-        get => javahome;
+        get => javaHome;
         set
         {
-            if (SetProperty(ref javahome, value))
+            if (SetProperty(ref javaHome, value))
             {
                 Global.JavaHome = value;
                 var option = _javaManager.VerifyJavaHome(value);
@@ -76,15 +80,15 @@ public class SettingViewModel : ObservableObject
         }
     }
 
-    public JavaInstallationModel SelectedJava
+    public JavaInstallationModel? SelectedJava
     {
         get => selectedJava;
         set
         {
             if (SetProperty(ref selectedJava, value))
             {
-                JavaHome = value.HomePath;
-                JavaSummary = value.Summary;
+                JavaHome = value!.HomePath;
+                JavaSummary = value.Summary ?? string.Empty;
             }
         }
     }
@@ -98,8 +102,6 @@ public class SettingViewModel : ObservableObject
         }
     }
 
-    private uint windowHeight;
-
     public uint WindowHeight
     {
         get => windowHeight;
@@ -108,8 +110,6 @@ public class SettingViewModel : ObservableObject
             if (SetProperty(ref windowHeight, value)) Global.WindowHeight = value;
         }
     }
-
-    private uint windowWidth;
 
     public uint WindowWidth
     {
@@ -131,9 +131,9 @@ public class SettingViewModel : ObservableObject
                 if (option.TryUnwrap(out var model))
                     return model;
                 return null;
-            }).Where(x => x != null)
+            }).Where(x => x != null).Select(x => x!)
         };
-        if (await dialog.ShowAsync() == ContentDialogResult.Primary && dialog.SelectedJava != null)
+        if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             SelectedJava = dialog.SelectedJava;
     }
 }

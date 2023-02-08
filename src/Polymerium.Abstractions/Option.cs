@@ -26,7 +26,7 @@ public abstract class Option<T>
         return !IsSome();
     }
 
-    public static Option<T> Wrap(T? value)
+    public static Option<T> Wrap(T value)
     {
         return value switch
         {
@@ -35,7 +35,7 @@ public abstract class Option<T>
         };
     }
 
-    public bool TryUnwrap(out T data)
+    public bool TryUnwrap(out T? data)
     {
         if (this is Some<T> some)
         {

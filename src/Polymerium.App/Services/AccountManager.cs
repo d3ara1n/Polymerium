@@ -29,7 +29,7 @@ public sealed class AccountManager : IDisposable
         return _memoryStorage.Accounts;
     }
 
-    public bool TryFindById(string id, out IGameAccount account)
+    public bool TryFindById(string id, out IGameAccount? account)
     {
         var found = _memoryStorage.Accounts.FirstOrDefault(x => x.Id == id);
         if (found != null)

@@ -25,13 +25,13 @@ public sealed partial class PrepareGameDialog : ContentControl
     private readonly IOverlayService _overlayService;
 
     private readonly bool passed;
-    private Image _backgroundImage;
+    private Image? _backgroundImage;
 
-    private Border _layout;
-    private ScaleTransform _scaleTransform;
-    private Storyboard fadeAnimation;
-    private Storyboard scaleXAnimation;
-    private Storyboard scaleYAnimation;
+    private Border? _layout;
+    private ScaleTransform? _scaleTransform;
+    private Storyboard? fadeAnimation;
+    private Storyboard? scaleXAnimation;
+    private Storyboard? scaleYAnimation;
 
     public PrepareGameDialog(GameInstance instance, IOverlayService overlayService)
     {
@@ -87,9 +87,9 @@ public sealed partial class PrepareGameDialog : ContentControl
 
     private void BackgroundImage_ImageOpened(object sender, RoutedEventArgs e)
     {
-        scaleXAnimation.Begin();
-        scaleYAnimation.Begin();
-        fadeAnimation.Begin();
+        scaleXAnimation!.Begin();
+        scaleYAnimation!.Begin();
+        fadeAnimation!.Begin();
         if (passed)
             Task.Run(ViewModel.PrepareAsync);
         else
@@ -98,7 +98,7 @@ public sealed partial class PrepareGameDialog : ContentControl
 
     private void BackgroundImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
     {
-        _backgroundImage.Source = new BitmapImage
+        _backgroundImage!.Source = new BitmapImage
         {
             UriSource = new Uri("ms-appx:///Assets/Placeholders/default_panorama1.png")
         };
@@ -106,14 +106,14 @@ public sealed partial class PrepareGameDialog : ContentControl
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        var xAnimation = scaleXAnimation.Children[0] as DoubleAnimation;
-        xAnimation.From = 1.0;
+        var xAnimation = scaleXAnimation!.Children[0] as DoubleAnimation;
+        xAnimation!.From = 1.0;
         xAnimation.To = 1.05;
-        var yAnimation = scaleYAnimation.Children[0] as DoubleAnimation;
-        yAnimation.From = 1.0;
+        var yAnimation = scaleYAnimation!.Children[0] as DoubleAnimation;
+        yAnimation!.From = 1.0;
         yAnimation.To = 1.05;
-        var fAnimation = fadeAnimation.Children[0] as DoubleAnimation;
-        fAnimation.From = 1.0;
+        var fAnimation = fadeAnimation!.Children[0] as DoubleAnimation;
+        fAnimation!.From = 1.0;
         fAnimation.To = 0.0;
         fadeAnimation.Completed += FadeAnimation_Completed;
         scaleXAnimation.Begin();
@@ -121,7 +121,7 @@ public sealed partial class PrepareGameDialog : ContentControl
         fadeAnimation.Begin();
     }
 
-    private void FadeAnimation_Completed(object sender, object e)
+    private void FadeAnimation_Completed(object? sender, object e)
     {
         ViewModel.Cancel();
         _overlayService.Dismiss();
@@ -130,7 +130,7 @@ public sealed partial class PrepareGameDialog : ContentControl
     private static void IsReadyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
     {
         var dialog = sender as PrepareGameDialog;
-        if (dialog.IsReady)
+        if (dialog!.IsReady)
             VisualStateManager.GoToState(dialog, "Ready", true);
         else
             VisualStateManager.GoToState(dialog, "Unready", true);

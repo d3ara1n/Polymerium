@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>disable</ImplicitUsings>
-        <Nullable>disable</Nullable>
+        <Nullable>enable</Nullable>
+        <NullableReferenceTypes>true</NullableReferenceTypes>
         <Title>$(AssemblyName)</Title>
         <Authors>D3ara1n</Authors>
         <Product>Polymerium</Product>

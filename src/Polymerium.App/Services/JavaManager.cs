@@ -44,7 +44,7 @@ public class JavaManager
         if (File.Exists(releaseFile))
         {
             var lines = File.ReadAllText(releaseFile).Replace("\r", string.Empty).Split('\n');
-            var result = new JavaInstallationModel { HomePath = home };
+            var result = new JavaInstallationModel(home);
             var anyMatched = false;
             foreach (var line in lines)
             {
@@ -84,7 +84,7 @@ public class JavaManager
         return Option<JavaInstallationModel>.None();
     }
 
-    private IEnumerable<string> SearchInRegistry(string path, string subPath, string key)
+    private IEnumerable<string> SearchInRegistry(string path, string? subPath, string key)
     {
         using var r = Registry.LocalMachine.OpenSubKey(path);
         if (r != null)

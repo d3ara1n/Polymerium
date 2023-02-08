@@ -26,8 +26,7 @@ public class DownloadEngine
 
     public void Enqueue(DownloadTask task)
     {
-        var internalTask = new InternalTask();
-        internalTask.Inner = task;
+        var internalTask = new InternalTask(task);
         tasks.Add(internalTask);
         _logger.LogInformation("Task of file {} added", Path.GetFileName(task.Destination));
         TrySpawn();
@@ -35,17 +34,10 @@ public class DownloadEngine
 
     public void Enqueue(DownloadTaskGroup group)
     {
-        var internalGroup = new InternalTaskGroup
-        {
-            Inner = group
-        };
+        var internalGroup = new InternalTaskGroup(group);
         foreach (var task in group.Tasks)
         {
-            var internalTask = new InternalTask
-            {
-                AssociatedGroup = internalGroup,
-                Inner = task
-            };
+            var internalTask = new InternalTask(task, internalGroup);
             tasks.Add(internalTask);
         }
 
@@ -74,7 +66,7 @@ public class DownloadEngine
         }
     }
 
-    private void Work_Work(object thread)
+    private void Work_Work(object? thread)
     {
         var self = thread as Thread;
         TrySpawn();
@@ -83,7 +75,7 @@ public class DownloadEngine
             if (task.Inner.Token.IsCancellationRequested) continue;
             var client = new HttpClient();
             if (!Directory.Exists(Path.GetDirectoryName(task.Inner.Destination)))
-                Directory.CreateDirectory(Path.GetDirectoryName(task.Inner.Destination));
+                Directory.CreateDirectory(Path.GetDirectoryName(task.Inner.Destination)!);
             var file = new FileStream(task.Inner.Destination, FileMode.OpenOrCreate, FileAccess.Write);
             try
             {
@@ -108,7 +100,7 @@ public class DownloadEngine
             file.Close();
         }
 
-        _logger.LogDebug("Thread {}({}) died", self.Name, self.ManagedThreadId);
+        _logger.LogDebug("Thread {}({}) died", self!.Name, self.ManagedThreadId);
         Interlocked.Decrement(ref workerNumber);
     }
 

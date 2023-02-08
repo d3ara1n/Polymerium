@@ -2,18 +2,18 @@ using System;
 
 namespace Polymerium.App.Services;
 
-public delegate void NavigateHandler(Type view, object parameter);
+public delegate void NavigateHandler(Type view, object? parameter);
 
 public class NavigationService
 {
-    private NavigateHandler _handler;
+    private NavigateHandler? _handler;
 
     public void Register(NavigateHandler handler)
     {
         _handler = handler;
     }
 
-    public void Navigate<TView>(object parameter)
+    public void Navigate<TView>(object? parameter)
     {
         if (_handler != null)
 

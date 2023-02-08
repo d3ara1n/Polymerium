@@ -10,11 +10,11 @@ namespace Polymerium.Core.Engines.Restoring.Stages;
 
 public class CompleteAttachmentsStage : StageBase
 {
+    private readonly DownloadEngine _downloader;
+    private readonly IFileBaseService _fileBase;
     private readonly GameInstance _instance;
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
-    private readonly IFileBaseService _fileBase;
-    private readonly DownloadEngine _downloader;
 
     public CompleteAttachmentsStage(GameInstance instance, PolylockData polylock, SHA1 sha1, IFileBaseService fileBase,
         DownloadEngine downloader)

@@ -33,9 +33,9 @@ public class CustomDialog : ContentControl
     private readonly Storyboard scaleXOutStoryboard;
     private readonly Storyboard scaleYOutStoryboard;
 
-    private ScaleTransform _borderScaleTransform;
+    private ScaleTransform? _borderScaleTransform;
 
-    private Grid _root;
+    private Grid? _root;
 
     public CustomDialog()
     {
@@ -74,7 +74,7 @@ public class CustomDialog : ContentControl
         set => SetValue(OperationPaddingProperty, value);
     }
 
-    public IOverlayService OverlayService { get; set; }
+    public IOverlayService? OverlayService { get; set; }
 
     private static void OperationContentPropertyChangedCallback(DependencyObject d,
         DependencyPropertyChangedEventArgs e)

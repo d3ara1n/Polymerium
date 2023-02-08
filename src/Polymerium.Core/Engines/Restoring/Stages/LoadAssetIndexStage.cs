@@ -35,12 +35,12 @@ public class LoadAssetIndexStage : StageBase
     {
         if (Token.IsCancellationRequested) return Cancel();
         var assetIndexFile = new Uri($"poly-file:///assets/indexes/{_polylock.AssetIndex.Id}.json");
-        string content = null;
+        string? content = null;
         if (!await _fileBase.VerifyHashAsync(assetIndexFile, _polylock.AssetIndex.Sha1, _sha1) ||
             !_fileBase.TryReadAllText(assetIndexFile, out content))
         {
             if (Token.IsCancellationRequested) return Cancel();
-            Exception exception = null;
+            Exception? exception = null;
             await Wapoo.Wohoo(_polylock.AssetIndex.Url)
                 .WhenException<Exception>(e => exception = e)
                 .ForAnyResult(async (_, stream) =>

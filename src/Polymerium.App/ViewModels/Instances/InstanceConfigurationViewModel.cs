@@ -13,24 +13,9 @@ public class InstanceConfigurationViewModel : ObservableObject
         Context = context;
         Pages = new ObservableCollection<InstanceConfigurationPageModel>
         {
-            new InstanceConfigurationPageModel
-            {
-                Header = "元数据",
-                IconSource = "ms-appx:///Assets/Icons/icons8-blueprint-48.png",
-                Page = typeof(InstanceMetadataConfigurationView)
-            },
-            new InstanceConfigurationPageModel
-            {
-                Header = "启动参数",
-                IconSource = "ms-appx:///Assets/Icons/icons8-firework-48.png",
-                Page = typeof(InstanceLaunchConfigurationView)
-            },
-            new InstanceConfigurationPageModel
-            {
-                Header = "高级",
-                IconSource = "ms-appx:///Assets/Icons/icons8-slider-48.png",
-                Page = typeof(InstanceAdvancedConfigurationView)
-            }
+            new("ms-appx:///Assets/Icons/icons8-blueprint-48.png", "元数据", typeof(InstanceMetadataConfigurationView)),
+            new("ms-appx:///Assets/Icons/icons8-firework-48.png", "启动参数", typeof(InstanceLaunchConfigurationView)),
+            new("ms-appx:///Assets/Icons/icons8-slider-48.png", "高级", typeof(InstanceAdvancedConfigurationView))
         };
     }
 

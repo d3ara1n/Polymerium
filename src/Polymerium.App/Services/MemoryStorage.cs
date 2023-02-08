@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Accounts;
@@ -14,6 +15,7 @@ public class MemoryStorage : ObservableObject
     {
         Instances = new ObservableCollection<GameInstance>();
         Accounts = new ObservableCollection<IGameAccount>();
+        SupportedComponents = Enumerable.Empty<ComponentMeta>();
     }
 
     public ObservableCollection<GameInstance> Instances { get; }

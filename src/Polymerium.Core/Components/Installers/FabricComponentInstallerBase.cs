@@ -18,45 +18,26 @@ public abstract class FabricComponentInstallerBase : ComponentInstallerBase
     public override async Task<Result<string>> StartAsync(Component component)
     {
         if (Token.IsCancellationRequested) return Canceled();
-        IEnumerable<FabricVersion> versions = null;
+        IEnumerable<FabricVersion>? versions = null;
         await Wapoo.Wohoo(new Uri(ManifestUrl, Context.GetCoreVersion()).AbsoluteUri)
             .ForJsonResult<IEnumerable<FabricVersion>>(x => versions = x)
             .FetchAsync();
         if (versions != null)
         {
-            if (versions.Any(x => x.Loader.Version == component.Version))
+            var fabricVersions = versions as FabricVersion[] ?? versions.ToArray();
+            if (fabricVersions.Any(x => x.Loader.Version == component.Version))
             {
-                var version = versions.First(x => x.Loader.Version == component.Version);
+                var version = fabricVersions.First(x => x.Loader.Version == component.Version);
                 var loaderPath = MavenToPath(version.Loader.Maven);
                 var intermediaryPath = MavenToPath(version.Intermediary.Maven);
-                var loader = new Library
-                {
-                    Name = version.Loader.Maven,
-                    Path = loaderPath,
-                    Url = new Uri(MavenUrl, loaderPath),
-                    Sha1 = null,
-                    IsNative = false
-                };
-                var intermediary = new Library
-                {
-                    Name = version.Intermediary.Maven,
-                    Path = intermediaryPath,
-                    Url = new Uri(MavenUrl, intermediaryPath),
-                    Sha1 = null,
-                    IsNative = false
-                };
+                var loader = new Library(version.Loader.Maven, loaderPath, null, new Uri(MavenUrl, loaderPath));
+                var intermediary = new Library(version.Intermediary.Maven, intermediaryPath, null,
+                    new Uri(MavenUrl, intermediaryPath));
                 foreach (var item in
                          version.LauncherMeta.Libraries.Common.Concat(version.LauncherMeta.Libraries.Client))
                 {
                     var path = MavenToPath(item.Name);
-                    var library = new Library
-                    {
-                        Name = item.Name,
-                        Path = path,
-                        Url = new Uri(item.Url, path),
-                        Sha1 = null,
-                        IsNative = false
-                    };
+                    var library = new Library(item.Name, path, null, new Uri(item.Url, path));
                     Context.AddLibrary(library);
                 }
 

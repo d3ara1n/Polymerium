@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,7 @@ namespace Polymerium.App.Views.AddAccountWizards;
 
 public sealed partial class OfflineAccountView : Page
 {
-    private AddAccountWizardStateHandler handler;
+    private AddAccountWizardStateHandler? handler;
 
     public OfflineAccountView()
     {
@@ -25,16 +26,17 @@ public sealed partial class OfflineAccountView : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         (handler, _) = ((AddAccountWizardStateHandler, CancellationToken))e.Parameter;
-        handler(null, true, Finish);
+        handler?.Invoke(null, true, Finish);
         base.OnNavigatedTo(e);
     }
 
     private bool Finish()
     {
         var errors = ViewModel.GetErrors();
-        if (errors != null && errors.Any())
+        var validationResults = errors as ValidationResult[] ?? errors.ToArray();
+        if (validationResults.Any())
         {
-            ViewModel.ErrorMessage = string.Join('\n', errors.Select(x => x.ErrorMessage));
+            ViewModel.ErrorMessage = string.Join('\n', validationResults.Select(x => x.ErrorMessage));
             return false;
         }
 

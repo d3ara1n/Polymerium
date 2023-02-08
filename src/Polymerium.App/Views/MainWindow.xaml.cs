@@ -13,7 +13,7 @@ public sealed partial class MainWindow : WindowEx
     public MainWindow()
     {
         InitializeComponent();
-        
+
 
         if (AppWindowTitleBar.IsCustomizationSupported())
         {

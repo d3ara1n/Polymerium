@@ -11,7 +11,6 @@ using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Accounts;
-using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Models;
 using Polymerium.App.Services;
 using Polymerium.Core;
@@ -27,19 +26,19 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
     private readonly ConfigurationManager _configurationManager;
     private readonly DispatcherQueue _dispatcher;
     private readonly IFileBaseService _fileBase;
+    private readonly JavaManager _javaManager;
     private readonly MemoryStorage _memoryStorage;
     private readonly IOverlayService _overlayService;
     private readonly RestoreEngine _restore;
-    private readonly JavaManager _javaManager;
 
     private readonly CancellationTokenSource source = new();
-    private IGameAccount account;
+    private IGameAccount? account;
 
-    private string labelTitle;
-    private string progress;
-    private string progressDetails;
+    private string labelTitle = string.Empty;
+    private string progress = string.Empty;
+    private string progressDetails = string.Empty;
 
-    private Action readyHandler;
+    private Action? readyHandler;
 
     public PrepareGameViewModel(RestoreEngine restore, AccountManager accountManager,
         ConfigurationManager configurationManager, IFileBaseService fileBase, IOverlayService overlayService,
@@ -57,9 +56,9 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
     }
 
     public ICommand StartCommand { get; }
-    public GameInstance Instance { get; private set; }
+    public GameInstance? Instance { get; private set; }
 
-    public IGameAccount Account
+    public IGameAccount? Account
     {
         get => account;
         set => SetProperty(ref account, value);
@@ -93,7 +92,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
     {
         Instance = instance;
         readyHandler = handler;
-        if (_accountManager.TryFindById(Instance.BoundAccountId, out var a))
+        if (_accountManager.TryFindById(Instance!.BoundAccountId ?? string.Empty, out var a))
         {
             Account = a;
             return true;
@@ -114,9 +113,10 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
 
     public async Task PrepareAsync(CancellationToken token)
     {
-        Instance.PlayCount++;
+        Instance!.PlayCount++;
         var stage = _restore.ProduceStage(Instance, _memoryStorage.SupportedComponents);
         stage.TaskFinishedCallback = UpdateTaskProgressSafe;
+        stage.Token = token;
         UpdateLabelSafe(stage.StageName);
         var hasNext = false;
         // TODO: update title as rolling text with stage name
@@ -127,7 +127,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             hasNext = option.TryUnwrap(out var lastStage);
             if (hasNext)
             {
-                stage = lastStage;
+                stage = lastStage!;
+                stage.Token = token;
                 stage.TaskFinishedCallback = UpdateTaskProgressSafe;
                 UpdateLabelSafe(stage.StageName);
             }
@@ -159,33 +160,33 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         {
             LabelTitle = title;
             if (ready)
-                readyHandler();
+                readyHandler?.Invoke();
         });
     }
 
 
-    private void UpdateTaskProgressSafe(string message, string details = null)
+    private void UpdateTaskProgressSafe(string message, string? details = null)
     {
         _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
         {
             Progress = message;
-            ProgressDetails = details;
+            ProgressDetails = details ?? string.Empty;
         });
     }
 
     public void Start()
     {
-        var workingDir = new Uri($"poly-file://{Instance.Id}/");
+        var workingDir = new Uri($"poly-file://{Instance!.Id}/");
         var assetsRoot = new Uri("poly-file:///assets/");
-        var nativesRoot = new Uri($"poly-file://{Instance.Id}/natives/");
+        var nativesRoot = new Uri($"poly-file://{Instance!.Id}/natives/");
         var librariesRoot = new Uri("poly-file:///libraries/");
-        var polylockFile = new Uri($"poly-file://{Instance.Id}/polymerium.lock.json");
+        var polylockFile = new Uri($"poly-file://{Instance!.Id}/polymerium.lock.json");
         if (_fileBase.TryReadAllText(polylockFile, out var content))
         {
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
             var configuration = new CompoundLaunchConfiguration(
-                Instance.Configuration ?? new FileBasedLaunchConfiguration(),
-                _configurationManager.Current.GameGlobals ?? new FileBasedLaunchConfiguration());
+                Instance.Configuration,
+                _configurationManager.Current.GameGlobals);
             var autoDetectJava = configuration.AutoDetectJava ?? false;
             var javaHomes = autoDetectJava
                 ? _javaManager.QueryJavaInstallations()
@@ -194,7 +195,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             {
                 var verify = _javaManager.VerifyJavaHome(javaHome);
                 if (verify.TryUnwrap(out var model) &&
-                    ((model.JavaVersion.StartsWith("1.8") ? "8" : model.JavaVersion).StartsWith(
+                    ((model!.JavaVersion?.StartsWith("1.8") == true ? "8" : model.JavaVersion ?? string.Empty)
+                     .StartsWith(
                          polylock.JavaMajorVersionRequired.ToString()) ||
                      (configuration.SkipJavaVersionCheck == true && !autoDetectJava)))
                 {
@@ -218,13 +220,13 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                         .ConfigureStarship(configure =>
                         {
                             configure.AddCargo(polylock.Cargo)
-                                .AddCrate("auth_player_name", Account.Nickname)
+                                .AddCrate("auth_player_name", Account!.Nickname)
                                 // net.minecraft 的版本，这里试试换实例名会不会有别的影响
                                 .AddCrate("version_name", Instance.Name)
                                 .AddCrate("game_directory", _fileBase.Locate(workingDir))
                                 .AddCrate("assets_root", _fileBase.Locate(assetsRoot))
                                 .AddCrate("assets_index_name", polylock.AssetIndex.Id)
-                                .AddCrate("auth_uuid", account.UUID)
+                                .AddCrate("auth_uuid", Account!.UUID)
                                 // this wont work
                                 .AddCrate("auth_access_token", Guid.NewGuid().ToString())
                                 // really?
@@ -249,7 +251,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                 .AddCrate("launcher_name", "Polymerium")
                                 .AddCrate("launcher_version", "0.1.0")
                                 // custom jvm argument patches
-                                .AddCrate("jvm_max_memory", configuration.JvmMaxMemory.ToString());
+                                .AddCrate("jvm_max_memory", configuration.JvmMaxMemory?.ToString() ?? "4096");
                         });
                     var blender = builder.Build();
                     blender.Start();
