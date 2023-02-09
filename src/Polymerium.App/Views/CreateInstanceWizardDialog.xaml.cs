@@ -32,8 +32,8 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
 
     public CreateInstanceWizardDialog()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<CreateInstanceWizardViewModel>();
+        InitializeComponent();
     }
 
     public IEnumerable<GameVersionModel> Versions

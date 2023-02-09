@@ -14,9 +14,9 @@ public class DownloadEngine
 {
     private const uint MAX_WORKER = 8;
     private const int MAX_RETRY = 3;
+    private readonly HttpClientHandler _handler;
 
     private readonly ILogger _logger;
-    private readonly HttpClientHandler _handler;
 
     private readonly BlockingCollection<InternalTask> tasks = new();
     private uint workerNumber;
@@ -24,7 +24,7 @@ public class DownloadEngine
     public DownloadEngine(ILogger<DownloadEngine> logger)
     {
         _logger = logger;
-        _handler = new HttpClientHandler()
+        _handler = new HttpClientHandler
         {
             Proxy = WebRequest.GetSystemWebProxy()
         };

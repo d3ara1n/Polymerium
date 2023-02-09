@@ -1,16 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
-using System.Xml.Linq;
 using Duffet;
 using Duffet.Builders;
-using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.ResourceResolving.Attributes;
@@ -70,9 +67,7 @@ public class ResolveEngine
                 var builder = new BankBuilder();
                 var match = resolver.Expression.Compiled.Match(expression);
                 if (match.Success)
-                {
                     foreach (Group group in match.Groups)
-                    {
                         if (group.Success && group.Name != string.Empty)
                         {
                             var name = group.Name;
@@ -82,32 +77,24 @@ public class ResolveEngine
                                 .Typed(typeof(string))
                                 .WithObject(value);
                         }
-                    }
-                }
 
                 // prepare query arguments
                 foreach (string key in query.Keys)
-                {
                     builder.Property()
                         .Named(key)
                         .Typed(typeof(string))
                         .WithObject(query.Get(key));
-                }
 
                 var bank = builder.Build();
                 var context = new ResolverContext(instance);
                 resolver.Self.Context = context;
                 return await ExecuteAsAsyncStateMachine(resolver.Method, resolver.Self, bank);
             }
-            else
-            {
-                return Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.NotFound);
-            }
+
+            return Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.NotFound);
         }
-        else
-        {
-            throw new ArgumentException("Scheme only accepts 'poly-res'", nameof(resource));
-        }
+
+        throw new ArgumentException("Scheme only accepts 'poly-res'", nameof(resource));
     }
 
     private Task<Result<ResolveResult, ResolveResultError>> ExecuteAsAsyncStateMachine(MethodInfo method,
@@ -116,17 +103,12 @@ public class ResolveEngine
     {
         var arguments = bank.Serve(method);
         if (method.GetCustomAttribute<AsyncStateMachineAttribute>() != null)
-        {
             return (Task<Result<ResolveResult, ResolveResultError>>)(method.Invoke(subject, arguments) ??
                                                                      Task.FromResult(
                                                                          Result<ResolveResult, ResolveResultError>.Err(
                                                                              ResolveResultError.Unknown)));
-        }
-        else
-        {
-            return Task.Run(() => method.Invoke(subject, arguments) as Result<ResolveResult, ResolveResultError> ??
-                                  Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.Unknown));
-        }
+        return Task.Run(() => method.Invoke(subject, arguments) as Result<ResolveResult, ResolveResultError> ??
+                              Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.Unknown));
     }
 
     private record ResolverTuple(string TypeName, string? DomainName, MethodInfo Method,

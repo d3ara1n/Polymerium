@@ -19,8 +19,8 @@ public sealed partial class AddMetaComponentWizardDialog : CustomDialog
 
     public AddMetaComponentWizardDialog()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<AddMetaComponentWizardViewModel>();
+        InitializeComponent();
         ViewModel.DismissHandler = Dismiss;
     }
 

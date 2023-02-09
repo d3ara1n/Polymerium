@@ -35,9 +35,9 @@ public sealed partial class PrepareGameDialog : ContentControl
 
     public PrepareGameDialog(GameInstance instance, IOverlayService overlayService)
     {
+        ViewModel = App.Current.Provider.GetRequiredService<PrepareGameViewModel>();
         InitializeComponent();
         _overlayService = overlayService;
-        ViewModel = App.Current.Provider.GetRequiredService<PrepareGameViewModel>();
         passed = ViewModel.GotInstance(instance, () => IsReady = true);
     }
 

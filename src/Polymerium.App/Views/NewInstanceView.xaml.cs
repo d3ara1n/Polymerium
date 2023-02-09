@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -22,8 +21,8 @@ public sealed partial class NewInstanceView : Page
 {
     public NewInstanceView()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<NewInstanceViewModel>();
+        InitializeComponent();
     }
 
     public NewInstanceViewModel ViewModel { get; }
@@ -31,10 +30,7 @@ public sealed partial class NewInstanceView : Page
     private void DragDropPane_OnDragEnter(object sender, DragEventArgs e)
     {
         DragDropPane.Opacity = 1.0;
-        if (e.DataView.Contains(StandardDataFormats.StorageItems))
-        {
-            e.AcceptedOperation = DataPackageOperation.Link;
-        }
+        if (e.DataView.Contains(StandardDataFormats.StorageItems)) e.AcceptedOperation = DataPackageOperation.Link;
     }
 
     private void DragDropPane_OnDragLeave(object sender, DragEventArgs e)

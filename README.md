@@ -78,11 +78,10 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
   * [x] 删除
   * [ ] 解锁（转换为 untagged 实例）
   * [ ] 导入/导出
-    * [ ] 导入预览对话框
+    * [x] 导入预览对话框
     * [ ] Polypack
     * [ ] CurseForge
     * [x] Modrinth
-      * [ ] 从 API 获取图标等细节
     * [ ] MultiMC
 * [ ] 启动游戏
   * [x] Polylock 文件
