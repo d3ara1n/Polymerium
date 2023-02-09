@@ -17,8 +17,8 @@ public sealed partial class OfflineAccountView : Page
 
     public OfflineAccountView()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<OfflineAccountViewModel>();
+        InitializeComponent();
     }
 
     public OfflineAccountViewModel ViewModel { get; }

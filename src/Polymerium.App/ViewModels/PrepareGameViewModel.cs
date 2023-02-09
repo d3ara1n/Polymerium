@@ -125,7 +125,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             UpdateTaskProgressSafe("准备中");
             try
             {
-                var option = await stage.StartAsync(); hasNext = option.TryUnwrap(out var lastStage);
+                var option = await stage.StartAsync();
+                hasNext = option.TryUnwrap(out var lastStage);
                 if (hasNext)
                 {
                     stage = lastStage!;
@@ -140,7 +141,6 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 CriticalError($"{stage.StageName}\n{ex.Message}:\n{ex.StackTrace}");
                 return;
             }
-
         } while (hasNext);
 
         if (stage.IsCompletedSuccessfully)

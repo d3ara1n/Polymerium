@@ -8,8 +8,8 @@ public sealed partial class HomeView : Page
 {
     public HomeView()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<HomeViewModel>();
+        InitializeComponent();
     }
 
     public HomeViewModel ViewModel { get; }

@@ -14,12 +14,12 @@ namespace Polymerium.Core.Engines.Restoring.Stages;
 public class CheckAvailabilityStage : StageBase
 {
     private readonly DownloadEngine _downloader;
-    private readonly ResolveEngine _resolver;
     private readonly IFileBaseService _fileBase;
 
     private readonly GameInstance _instance;
     private readonly IEnumerable<ComponentMeta> _metas;
     private readonly IServiceProvider _provider;
+    private readonly ResolveEngine _resolver;
     private readonly SHA1 _sha1;
 
     public CheckAvailabilityStage(GameInstance instance, SHA1 sha1, IEnumerable<ComponentMeta> metas,

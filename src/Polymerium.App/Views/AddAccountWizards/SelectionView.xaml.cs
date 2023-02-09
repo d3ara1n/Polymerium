@@ -17,8 +17,8 @@ public sealed partial class SelectionView : Page
 
     public SelectionView()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<SelectionViewModel>();
+        InitializeComponent();
     }
 
     public SelectionViewModel ViewModel { get; }

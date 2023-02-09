@@ -37,7 +37,7 @@
                 </Grid>
             </ControlTemplate>
         </ContentControl.Template>
-        <Grid RowDefinitions="*,Auto">
+        <Grid>
             <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
                 <StackPanel Spacing="12" Margin="25">
                     <TextBlock Text="创建空实例" Style="{ThemeResource SubtitleTextBlockStyle}" />

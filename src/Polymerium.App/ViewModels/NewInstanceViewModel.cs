@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,14 +12,11 @@ public class NewInstanceViewModel : ObservableObject
 {
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
-    private readonly ImportService _importer;
 
-    public NewInstanceViewModel(IOverlayService overlayService, NavigationService navigationService,
-        ImportService importer)
+    public NewInstanceViewModel(IOverlayService overlayService, NavigationService navigationService)
     {
         _overlayService = overlayService;
         _navigationService = navigationService;
-        _importer = importer;
         OpenWizardCommand = new RelayCommand(OpenWizard);
         GotoSearchPageCommand = new RelayCommand(GotoSearchPage);
     }
@@ -39,10 +37,11 @@ public class NewInstanceViewModel : ObservableObject
     public async Task ArchiveAcceptedAsync(string fileName)
     {
         // TODO: 放到对话框中：第一阶段确认信息并提供机会修改实例名和目录名。第二阶段转圈圈
-        var result = await _importer.ImportAsync(fileName);
-        if (result.IsOk(out var import))
+        if (File.Exists(fileName))
         {
-            await _importer.PostImportAsync(import!);
+            var dialog = new ImportModpackWizardDialog(fileName);
+            dialog.OverlayService = _overlayService;
+            _overlayService.Show(dialog);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Polymerium.App.Controls;
 
 public class CustomDialog : ContentControl
 {
+    // TODO: 各种 WizardDialog 的 ContentControl.Template 应该合并到 CustomDialog 中，状态合并到一个状态组
     public static readonly DependencyProperty OperationContentProperty = DependencyProperty.Register(
         nameof(OperationContent),
         typeof(object),

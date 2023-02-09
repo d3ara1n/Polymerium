@@ -12,19 +12,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="IBuilder" Version="0.1.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+        <PackageReference Include="IBuilder" Version="0.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\submodules\Duffet\src\Duffet\Duffet.csproj" />
-        <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj" />
-        <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj" />
+        <ProjectReference Include="..\..\submodules\Duffet\src\Duffet\Duffet.csproj"/>
+        <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj"/>
+        <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Models\Forge\Converters" />
+        <Folder Include="Models\Forge\Converters"/>
     </ItemGroup>
 
 </Project>

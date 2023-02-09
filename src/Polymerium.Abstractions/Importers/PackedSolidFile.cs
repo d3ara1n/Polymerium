@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Polymerium.Abstractions.Importers;
+﻿namespace Polymerium.Abstractions.Importers;
 
 public struct PackedSolidFile
 {

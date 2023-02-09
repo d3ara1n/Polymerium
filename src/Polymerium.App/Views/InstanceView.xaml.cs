@@ -9,9 +9,8 @@ public sealed partial class InstanceView : Page
 {
     public InstanceView()
     {
-        InitializeComponent();
-
         ViewModel = App.Current.Provider.GetRequiredService<InstanceViewModel>();
+        InitializeComponent();
     }
 
     public InstanceViewModel ViewModel { get; }

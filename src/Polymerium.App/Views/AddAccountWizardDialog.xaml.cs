@@ -21,9 +21,9 @@ public sealed partial class AddAccountWizardDialog : CustomDialog
 
     public AddAccountWizardDialog(IOverlayService overlayService)
     {
+        ViewModel = App.Current.Provider.GetRequiredService<AddAccountWizardViewModel>();
         InitializeComponent();
         OverlayService = overlayService;
-        ViewModel = App.Current.Provider.GetRequiredService<AddAccountWizardViewModel>();
         handler = SetState;
         Root.Navigate(typeof(SelectionView), (handler, ViewModel.Source.Token));
     }

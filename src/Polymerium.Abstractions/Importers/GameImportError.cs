@@ -5,5 +5,5 @@ public enum GameImportError
     Unknown,
     FileSystemError,
     Unsupported,
-    WrongPackType,
+    WrongPackType
 }

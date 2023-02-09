@@ -19,7 +19,6 @@ namespace Polymerium.Core.Engines.Restoring.Stages;
 public class BuildPolylockStage : StageBase
 {
     private readonly DownloadEngine _downloader;
-    private readonly ResolveEngine _resolver;
     private readonly IFileBaseService _fileBase;
     private readonly IDictionary<string, Type> _installers;
     private readonly GameInstance _instance;
@@ -27,6 +26,7 @@ public class BuildPolylockStage : StageBase
     private readonly Uri _polylockDataFile;
     private readonly Uri _polylockHashFile;
     private readonly IServiceProvider _provider;
+    private readonly ResolveEngine _resolver;
     private readonly SHA1 _sha1;
 
     public BuildPolylockStage(GameInstance instance, SHA1 sha1, IEnumerable<ComponentMeta> metas, Uri polylockDataFile,
@@ -77,22 +77,17 @@ public class BuildPolylockStage : StageBase
             var tasks = new List<Task<Result<ResolveResult, ResolveResultError>>>();
 
             foreach (var attachment in _instance.Metadata.Attachments)
-            {
                 tasks.Add(_resolver.ResolveAsync(_instance, attachment));
-            }
 
             await Task.WhenAll(tasks);
             var errors = tasks.Count(x => x.Result.IsErr(out var _));
-            if (errors > 0)
-            {
-                return Error($"{errors}/{tasks.Count} 条附件资源解析错误");
-            }
+            if (errors > 0) return Error($"{errors}/{tasks.Count} 条附件资源解析错误");
 
             var product = new List<PolylockAttachment>(polylock.Attachments);
             product.AddRange(tasks.Select(x =>
             {
                 var result = x.Result.Unwrap()!;
-                return new PolylockAttachment()
+                return new PolylockAttachment
                 {
                     Source = result.Source,
                     Sha1 = result.Hash,

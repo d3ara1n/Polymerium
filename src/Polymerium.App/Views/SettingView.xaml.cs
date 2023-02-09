@@ -8,8 +8,8 @@ public sealed partial class SettingView : Page
 {
     public SettingView()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<SettingViewModel>();
+        InitializeComponent();
     }
 
     public SettingViewModel ViewModel { get; }

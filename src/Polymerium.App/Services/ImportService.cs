@@ -36,15 +36,11 @@ public class ImportService
                 var importer = new ModrinthImporter();
                 return await importer.ProcessAsync(archive);
             }
-            else
-            {
-                return Result<ImportResult, GameImportError>.Err(GameImportError.Unsupported);
-            }
+
+            return Result<ImportResult, GameImportError>.Err(GameImportError.Unsupported);
         }
-        else
-        {
-            return Result<ImportResult, GameImportError>.Err(GameImportError.FileSystemError);
-        }
+
+        return Result<ImportResult, GameImportError>.Err(GameImportError.FileSystemError);
     }
 
     public async Task<Result<GameImportError>> PostImportAsync(ImportResult product)
@@ -62,13 +58,10 @@ public class ImportService
                         var path = _fileBase.Locate(fileUrl!);
                         var entry = product.Archive.GetEntry(file.FileName)!;
                         var dir = Path.GetDirectoryName(path);
-                        if (!Directory.Exists(dir))
-                        {
-                            Directory.CreateDirectory(dir);
-                        }
+                        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
                         entry.ExtractToFile(path);
-                        allocated.Add(new Uri(new Uri($"poly-res://local@file/"), file.Path));
+                        allocated.Add(new Uri(new Uri("poly-res://local@file/"), file.Path));
                     }
                     else
                     {
@@ -81,10 +74,7 @@ public class ImportService
                 }
             }
 
-            foreach (var file in allocated)
-            {
-                product.Instance.Metadata.Attachments.Add(file);
-            }
+            foreach (var file in allocated) product.Instance.Metadata.Attachments.Add(file);
 
             _instanceManager.AddInstance(product.Instance);
             return Result<GameImportError>.Ok();

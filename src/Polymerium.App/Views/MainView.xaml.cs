@@ -14,8 +14,8 @@ public sealed partial class MainView : Page
 {
     public MainView()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<MainViewModel>();
+        InitializeComponent();
         ViewModel.SetNavigateHandler(Navigate);
 
         ViewModel.LogonAccounts.CollectionChanged += LogonAccounts_CollectionChanged;

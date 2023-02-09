@@ -8,8 +8,8 @@ public sealed partial class InstanceLaunchConfigurationView : Page
 {
     public InstanceLaunchConfigurationView()
     {
-        InitializeComponent();
         ViewModel = App.Current.Provider.GetRequiredService<InstanceLaunchConfigurationViewModel>();
+        InitializeComponent();
     }
 
     public InstanceLaunchConfigurationViewModel ViewModel { get; }
