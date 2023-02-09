@@ -10,7 +10,7 @@ public class DateTimeOffsetToStringConverter : IValueConverter
     {
         if (value is DateTimeOffset time)
             return time.Humanize();
-        return "Unknown";
+        return "从未";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -4,18 +4,18 @@ namespace Polymerium.Abstractions.ResourceResolving;
 
 public class ResolveResult
 {
-    // 只能是 http, https, file
-    public ResolveResult(Uri url, string hash, Uri path, object? description = null)
+    public ResolveResult(Uri source, Uri path, string? hash, object? description = null)
     {
-        Url = url;
+        Source = source;
         Hash = hash;
         Path = path;
         Description = description;
     }
 
-    public Uri Url { get; set; }
+    // 只能是 http, https, file
+    public Uri Source { get; set; }
 
-    public string Hash { get; set; }
+    public string? Hash { get; set; }
 
     // destination: poly-file
     public Uri Path { get; set; }

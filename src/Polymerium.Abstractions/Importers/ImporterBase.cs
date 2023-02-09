@@ -1,19 +1,25 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Polymerium.Abstractions.Importers;
 
 public abstract class ImporterBase
 {
-    public abstract Task<Result<GameInstance, string>> ProcessAsync(Stream stream);
+    public abstract Task<Result<ImportResult, GameImportError>> ProcessAsync(ZipArchive archive);
 
-    public Result<GameInstance, string> Failed(string message)
+    public Result<ImportResult, GameImportError> Failed(GameImportError reason)
     {
-        return Result<GameInstance, string>.Err(message);
+        return Result<ImportResult, GameImportError>.Err(reason);
     }
 
-    public Result<GameInstance, string> Finished(GameInstance instance)
+    public Result<ImportResult, GameImportError> Finished(ZipArchive archive, GameInstance instance,
+        IEnumerable<PackedSolidFile>? files = null)
     {
-        return Result<GameInstance, string>.Ok(instance);
+        return Result<ImportResult, GameImportError>.Ok(new ImportResult(archive, instance,
+            files ?? Enumerable.Empty<PackedSolidFile>()));
     }
 }

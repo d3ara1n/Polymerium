@@ -35,6 +35,7 @@ public class CompleteAttachmentsStage : StageBase
         {
             Token = Token
         };
+        var local = 0;
         foreach (var attachment in attachments)
         {
             if (Token.IsCancellationRequested) return Cancel();
@@ -42,7 +43,12 @@ public class CompleteAttachmentsStage : StageBase
             {
                 if (attachment.Source.Scheme == "poly-file")
                 {
-                    // TODO: Just move the file and report
+                    var path = _fileBase.Locate(attachment.Source);
+                    var target = _fileBase.Locate(attachment.Target);
+                    var dir = Path.GetDirectoryName(target);
+                    if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                    File.Copy(path, target, true);
+                    Report($"使用本地仓库补全({++local})", Path.GetFileName(target));
                 }
                 else
                 {

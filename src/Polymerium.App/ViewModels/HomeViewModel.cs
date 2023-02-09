@@ -23,8 +23,7 @@ public class HomeViewModel : ObservableObject
         GotoRecentItemInstanceViewCommand = new RelayCommand<string>(GotoRecentItemInstanceView);
         RecentPlays = new ObservableCollection<RecentPlayedItemModel>(memoryStorage.Instances
             .Where(x => x.LastPlay.HasValue).OrderBy(x => DateTimeOffset.Now - x.LastPlay!.Value).Take(10).Select(x =>
-                new RecentPlayedItemModel(x.Id, x.ThumbnailFile, x.Name,
-                    x.LastPlay.HasValue ? x.LastPlay.Value.Humanize() : "从未",
+                new RecentPlayedItemModel(x.Id, x.ThumbnailFile, x.Name, x.LastPlay,
                     GotoRecentItemInstanceViewCommand)));
         Tips = new[]
         {

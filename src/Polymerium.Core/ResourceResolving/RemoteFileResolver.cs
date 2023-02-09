@@ -9,9 +9,9 @@ namespace Polymerium.Core.ResourceResolving;
 [ResourceType("file")]
 public class RemoteFileResolver : ResourceResolverBase
 {
-    [ResourceExpression("{path}")]
-    public Result<ResolveResult, ResolveResultError> GetFile(Uri path, string sha1, Uri source)
+    [ResourceExpression("{*path}")]
+    public Result<ResolveResult, ResolveResultError> GetFile(string path, string sha1, string source)
     {
-        return Ok(path, source, sha1);
+        return Ok(new Uri(path, UriKind.Relative), new Uri(source, UriKind.Absolute), sha1);
     }
 }

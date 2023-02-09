@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ public class DownloadEngine
     private const int MAX_RETRY = 3;
 
     private readonly ILogger _logger;
+    private readonly HttpClientHandler _handler;
 
     private readonly BlockingCollection<InternalTask> tasks = new();
     private uint workerNumber;
@@ -22,6 +24,10 @@ public class DownloadEngine
     public DownloadEngine(ILogger<DownloadEngine> logger)
     {
         _logger = logger;
+        _handler = new HttpClientHandler()
+        {
+            Proxy = WebRequest.GetSystemWebProxy()
+        };
     }
 
     public void Enqueue(DownloadTask task)
@@ -73,7 +79,8 @@ public class DownloadEngine
         while (tasks.TryTake(out var task))
         {
             if (task.Inner.Token.IsCancellationRequested) continue;
-            var client = new HttpClient();
+            var client = new HttpClient(_handler, false);
+            client.Timeout = TimeSpan.FromSeconds(30);
             if (!Directory.Exists(Path.GetDirectoryName(task.Inner.Destination)))
                 Directory.CreateDirectory(Path.GetDirectoryName(task.Inner.Destination)!);
             var file = new FileStream(task.Inner.Destination, FileMode.OpenOrCreate, FileAccess.Write);

@@ -123,15 +123,24 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         do
         {
             UpdateTaskProgressSafe("准备中");
-            var option = await stage.StartAsync();
-            hasNext = option.TryUnwrap(out var lastStage);
-            if (hasNext)
+            try
             {
-                stage = lastStage!;
-                stage.Token = token;
-                stage.TaskFinishedCallback = UpdateTaskProgressSafe;
-                UpdateLabelSafe(stage.StageName);
+                var option = await stage.StartAsync(); hasNext = option.TryUnwrap(out var lastStage);
+                if (hasNext)
+                {
+                    stage = lastStage!;
+                    stage.Token = token;
+                    stage.TaskFinishedCallback = UpdateTaskProgressSafe;
+                    UpdateLabelSafe(stage.StageName);
+                }
             }
+            catch (Exception ex)
+            {
+                Instance.ExceptionCount++;
+                CriticalError($"{stage.StageName}\n{ex.Message}:\n{ex.StackTrace}");
+                return;
+            }
+
         } while (hasNext);
 
         if (stage.IsCompletedSuccessfully)

@@ -57,7 +57,7 @@
         </Grid>
         <Grid Grid.Row="1" x:Name="DragDropPane" Opacity="0.3" AllowDrop="True"
               CornerRadius="{ThemeResource OverlayCornerRadius}" Margin="5,5,10,10"
-              DragEnter="DragDropPane_OnDragEnter" DragLeave="DragDropPane_OnDragLeave">
+              DragEnter="DragDropPane_OnDragEnter" DragLeave="DragDropPane_OnDragLeave" Drop="DragDropPane_Drop">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
