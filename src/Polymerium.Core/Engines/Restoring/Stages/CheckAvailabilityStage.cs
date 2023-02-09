@@ -14,6 +14,7 @@ namespace Polymerium.Core.Engines.Restoring.Stages;
 public class CheckAvailabilityStage : StageBase
 {
     private readonly DownloadEngine _downloader;
+    private readonly ResolveEngine _resolver;
     private readonly IFileBaseService _fileBase;
 
     private readonly GameInstance _instance;
@@ -22,11 +23,12 @@ public class CheckAvailabilityStage : StageBase
     private readonly SHA1 _sha1;
 
     public CheckAvailabilityStage(GameInstance instance, SHA1 sha1, IEnumerable<ComponentMeta> metas,
-        DownloadEngine downloader, IFileBaseService fileBase, IServiceProvider provider)
+        DownloadEngine downloader, ResolveEngine resolver, IFileBaseService fileBase, IServiceProvider provider)
     {
         _instance = instance;
         _sha1 = sha1;
         _metas = metas;
+        _resolver = resolver;
         _downloader = downloader;
         _fileBase = fileBase;
         _provider = provider;
@@ -48,7 +50,7 @@ public class CheckAvailabilityStage : StageBase
             return Next(new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader));
         }
 
-        return Next(new BuildStructureStage(_instance, _sha1, _metas, polylockDataFile, polylockHashFile, _downloader,
-            _provider));
+        return Next(new BuildPolylockStage(_instance, _sha1, _metas, polylockDataFile, polylockHashFile,
+            _downloader, _resolver, _provider));
     }
 }

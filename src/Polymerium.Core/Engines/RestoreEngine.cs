@@ -41,6 +41,7 @@ public class RestoreEngine
 
     public StageBase ProduceStage(GameInstance instance, IEnumerable<ComponentMeta> metas)
     {
-        return new CheckAvailabilityStage(instance, _sha1, metas, _downloader, _fileBase, _scope.ServiceProvider);
+        return new CheckAvailabilityStage(instance, _sha1, metas, _downloader, _resolver, _fileBase,
+            _scope.ServiceProvider);
     }
 }

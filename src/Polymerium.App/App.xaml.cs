@@ -6,6 +6,7 @@ using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
+using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
 using Polymerium.App.ViewModels.AddAccountWizard;
@@ -13,6 +14,7 @@ using Polymerium.App.ViewModels.Instances;
 using Polymerium.App.Views;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
+using Polymerium.Core.ResourceResolving;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -82,7 +84,9 @@ public partial class App : Application
             .AddSingleton<DataStorage>()
             .AddSingleton<MemoryStorage>()
             .AddSingleton<ComponentManager>()
-            .AddSingleton<JavaManager>();
+            .AddSingleton<JavaManager>()
+            .AddSingleton<ImportService>()
+            .AddSingleton<LocalRepositoryService>();
         // global services
         services.AddSingleton<GameManager>()
             .AddSingleton<IFileBaseService, MainFileBaseService>().Configure<MainFileBaseOptions>(configure =>
@@ -92,6 +96,9 @@ public partial class App : Application
         services.AddScoped<DownloadEngine>()
             .AddScoped<ResolveEngine>()
             .AddScoped<RestoreEngine>();
+        // resolvers
+        services.AddTransient<ResourceResolverBase, LocalFileResolver>()
+            .AddTransient<ResourceResolverBase, RemoteFileResolver>();
         return services.BuildServiceProvider();
     }
 }

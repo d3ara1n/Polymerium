@@ -35,7 +35,7 @@
                             <StackPanel>
                                 <TextBlock Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay}"
                                            Style="{StaticResource TitleTextBlockStyle}" />
-                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                <StackPanel Orientation="Horizontal" Spacing="5" Visibility="Collapsed">
                                     <FontIcon Glyph="&#xE946;" FontSize="12"
                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                     <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">

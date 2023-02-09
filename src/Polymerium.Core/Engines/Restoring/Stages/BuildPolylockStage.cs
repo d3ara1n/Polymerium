@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Abstractions.Models;
+using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Core.Components;
 using Polymerium.Core.Components.Installers;
 using Polymerium.Core.Extensions;
@@ -14,9 +16,10 @@ using Polymerium.Core.StageModels;
 
 namespace Polymerium.Core.Engines.Restoring.Stages;
 
-public class BuildStructureStage : StageBase
+public class BuildPolylockStage : StageBase
 {
     private readonly DownloadEngine _downloader;
+    private readonly ResolveEngine _resolver;
     private readonly IFileBaseService _fileBase;
     private readonly IDictionary<string, Type> _installers;
     private readonly GameInstance _instance;
@@ -26,9 +29,9 @@ public class BuildStructureStage : StageBase
     private readonly IServiceProvider _provider;
     private readonly SHA1 _sha1;
 
-    public BuildStructureStage(GameInstance instance, SHA1 sha1, IEnumerable<ComponentMeta> metas, Uri polylockDataFile,
+    public BuildPolylockStage(GameInstance instance, SHA1 sha1, IEnumerable<ComponentMeta> metas, Uri polylockDataFile,
         Uri polylockHashFile,
-        DownloadEngine downloader,
+        DownloadEngine downloader, ResolveEngine resolver,
         IServiceProvider provider)
     {
         _instance = instance;
@@ -36,6 +39,7 @@ public class BuildStructureStage : StageBase
         _metas = metas;
         _polylockDataFile = polylockDataFile;
         _polylockHashFile = polylockHashFile;
+        _resolver = resolver;
         _downloader = downloader;
         _provider = provider;
         _fileBase = _provider.GetRequiredService<IFileBaseService>();
@@ -68,7 +72,36 @@ public class BuildStructureStage : StageBase
                 if (result.IsErr(out var message)) return Error(message!);
             }
 
+
             var polylock = context.Build();
+            var tasks = new List<Task<Result<ResolveResult, ResolveResultError>>>();
+
+            foreach (var attachment in _instance.Metadata.Attachments)
+            {
+                tasks.Add(_resolver.ResolveAsync(_instance, attachment));
+            }
+
+            await Task.WhenAll(tasks);
+            var errors = tasks.Count(x => x.Result.IsErr(out var _));
+            if (errors > 0)
+            {
+                return Error($"{errors}/{tasks.Count} 条附件资源解析错误");
+            }
+
+            var product = new List<PolylockAttachment>(polylock.Attachments);
+            product.AddRange(tasks.Select(x =>
+            {
+                var result = x.Result.Unwrap()!;
+                return new PolylockAttachment()
+                {
+                    Source = result.Source,
+                    Sha1 = result.Hash,
+                    Target = new Uri(new Uri($"poly-file://{_instance.Id}/"), result.Path)
+                };
+            }));
+            polylock.Attachments = product;
+
+
             var polylockData = JsonConvert.SerializeObject(polylock);
             _fileBase.WriteAllText(_polylockDataFile, polylockData);
             var md5 = _instance.ComputeMetadataHash();
@@ -90,7 +123,7 @@ public class BuildStructureStage : StageBase
 
     private uint MeasureDependencyDepth(ComponentMeta meta)
     {
-        return meta.Dependencies != null && meta.Dependencies.Any()
+        return meta.Dependencies.Any()
             ? meta.Dependencies.Max(x => MeasureDependencyDepth(_metas.First(y => y.Identity == x)) + 1)
             : 0;
     }
