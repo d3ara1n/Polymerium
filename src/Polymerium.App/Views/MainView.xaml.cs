@@ -107,4 +107,37 @@ public sealed partial class MainView : Page
     {
         ViewModel.FillMenuItems();
     }
+
+    private void SearchBar_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+        {
+            var input = sender.Text;
+
+            var result = ViewModel.GetViewOfInstance()
+                .Where(x => string.IsNullOrEmpty(input) || x.Name.StartsWith(sender.Text))
+                .Select(x => new NavigationSearchBarItemModel(x.Name, "\xF158", x.Id))
+                .Append(new NavigationSearchBarItemModel($"搜索: {input}", "\xE721"));
+            sender.ItemsSource = result;
+        }
+    }
+
+    private void SearchBar_OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    {
+        sender.Text = string.Empty;
+        var model = (NavigationSearchBarItemModel)args.SelectedItem;
+        if (string.IsNullOrEmpty(model.Reference))
+        {
+            // TODO: Go to Search Center
+        }
+        else
+        {
+            ViewModel.GotoInstanceView(model.Reference);
+        }
+    }
+
+    private void SearchBar_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    {
+        // TODO: Go to Search Center
+    }
 }

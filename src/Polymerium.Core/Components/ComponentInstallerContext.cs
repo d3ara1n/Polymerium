@@ -44,14 +44,7 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
             JavaMajorVersionRequired = JavaMajorVersionRequired ?? 0
         };
     }
-
-    public string? GetCoreVersion()
-    {
-        return Instance.Metadata.Components.Any(x => x.Identity == "net.minecraft")
-            ? Instance.Metadata.Components.First(x => x.Identity == "net.minecraft").Version
-            : null;
-    }
-
+    
     public void SetMainClass(string mainClass)
     {
         MainClass = mainClass;

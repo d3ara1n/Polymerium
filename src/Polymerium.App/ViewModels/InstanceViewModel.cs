@@ -10,6 +10,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.App.Views.Instances;
+using Polymerium.Core.Extensions;
 
 namespace Polymerium.App.ViewModels;
 
@@ -28,7 +29,7 @@ public class InstanceViewModel : ObservableObject
         _componentManager = componentManager;
         _navigationService = navigationService;
         Context = context;
-
+        CoreVersion = Context.AssociatedInstance.Inner.GetCoreVersion() ?? "N/A";
         StartCommand = new RelayCommand(Start);
         GotoConfigurationViewCommand = new RelayCommand(GotoConfigurationView);
         Components =
@@ -58,6 +59,14 @@ public class InstanceViewModel : ObservableObject
                 ? "从未"
                 : Context.AssociatedInstance.LastRestore.Humanize())
         };
+    }
+
+    private string coreVersion = string.Empty;
+
+    public string CoreVersion
+    {
+        get => coreVersion;
+        set => SetProperty(ref coreVersion, value);
     }
 
     public ObservableCollection<ComponentTagItemModel> Components { get; }

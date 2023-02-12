@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.Models.Game;
+using Polymerium.Core.Extensions;
 using Polymerium.Core.Models.Forge;
 
 namespace Polymerium.Core.Components.Installers;
@@ -23,7 +24,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
     public override async Task<Result<string>> StartAsync(Component component)
     {
         if (Token.IsCancellationRequested) return Canceled();
-        var mcVersion = Context.GetCoreVersion();
+        var mcVersion = Context.Instance.GetCoreVersion();
         if (mcVersion == null) return Failed("Forge depends on net.minecraft which is not found");
 
         var installerUrl =

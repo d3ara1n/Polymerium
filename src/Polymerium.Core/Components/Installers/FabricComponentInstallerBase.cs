@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.Models.Game;
+using Polymerium.Core.Extensions;
 using Polymerium.Core.Models.Fabric;
 using Wupoo;
 
@@ -19,7 +20,7 @@ public abstract class FabricComponentInstallerBase : ComponentInstallerBase
     {
         if (Token.IsCancellationRequested) return Canceled();
         IEnumerable<FabricVersion>? versions = null;
-        await Wapoo.Wohoo(new Uri(ManifestUrl, Context.GetCoreVersion()).AbsoluteUri)
+        await Wapoo.Wohoo(new Uri(ManifestUrl, Context.Instance.GetCoreVersion()).AbsoluteUri)
             .ForJsonResult<IEnumerable<FabricVersion>>(x => versions = x)
             .FetchAsync();
         if (versions != null)
