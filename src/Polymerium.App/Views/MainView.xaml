@@ -30,8 +30,20 @@
                     <ColumnDefinition x:FieldModifier="Public" x:Name="ColumnLeft" Width="Auto" />
                     <ColumnDefinition x:FieldModifier="Public" x:Name="ColumnRight" Width="*" />
                 </Grid.ColumnDefinitions>
-                <AutoSuggestBox Height="32" Width="200" HorizontalAlignment="Right" Margin="25,0,10,0"
-                                PlaceholderText="Search" QueryIcon="Find" AutoMaximizeSuggestionArea="True" />
+                <AutoSuggestBox x:Name="SearchBar" Height="32" Width="200" HorizontalAlignment="Right"
+                                Margin="25,0,10,0"
+                                PlaceholderText="Search" QueryIcon="Find" AutoMaximizeSuggestionArea="True"
+                                TextChanged="SearchBar_OnTextChanged" SuggestionChosen="SearchBar_OnSuggestionChosen"
+                                QuerySubmitted="SearchBar_OnQuerySubmitted">
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:NavigationSearchBarItemModel">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <FontIcon Glyph="{x:Bind Glyph}" FontSize="12" Margin="0,0,10,0" />
+                                <TextBlock Grid.Column="1" Text="{x:Bind Caption}" />
+                            </Grid>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
                 <Grid x:FieldModifier="Public" x:Name="TitleBarDragArea" Grid.Column="1">
                     <!-- 这里能放些指示性的控件 -->
                 </Grid>

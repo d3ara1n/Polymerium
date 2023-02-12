@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -68,6 +69,7 @@ public sealed class MainViewModel : ObservableObject
             new("\xE115", "Settings", typeof(SettingView),
                 thumbnailSource: "ms-appx:///Assets/Icons/icons8-settings-48.png")
         };
+        SearchBarItems = new ObservableCollection<NavigationSearchBarItemModel>();
         LogonAccounts = new ObservableCollection<AccountItemModel>();
         if (_accountManager.TryFindById(_configurationManager.Current.AccountShowcaseId ?? string.Empty,
                 out var account))
@@ -85,8 +87,10 @@ public sealed class MainViewModel : ObservableObject
         set => SetProperty(ref selectedPage, value);
     }
 
-    public ObservableCollection<AccountItemModel> LogonAccounts { get; set; }
+    public ObservableCollection<AccountItemModel> LogonAccounts { get; }
     public AccountItemModel? AccountShowcase { get; set; }
+
+    public ObservableCollection<NavigationSearchBarItemModel> SearchBarItems { get; }
 
     public ContentControl? Overlay
     {
@@ -234,5 +238,15 @@ public sealed class MainViewModel : ObservableObject
     {
         // FlyoutSubMenu 不能绑定 ItemSource 就真的**
         foreach (var model in _memoryStorage.Accounts) LogonAccounts.Add(model.ToModel());
+    }
+
+    public IEnumerable<GameInstance> GetViewOfInstance()
+    {
+        return _instanceManager.GetView();
+    }
+
+    public void GotoInstanceView(string id)
+    {
+        _navigationService.Navigate<InstanceView>(id);
     }
 }
