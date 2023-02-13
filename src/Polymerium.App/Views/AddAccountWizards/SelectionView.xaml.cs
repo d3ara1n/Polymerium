@@ -31,6 +31,7 @@ public sealed partial class SelectionView : Page
 
     private void FirstPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.AddedItems.FirstOrDefault() is AccountWizardEntryModel first) handler?.Invoke(first.Page);
+        if (e.AddedItems.FirstOrDefault() is AccountWizardEntryModel first)
+            handler?.Invoke(first.Page);
     }
 }

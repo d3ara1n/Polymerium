@@ -11,17 +11,18 @@ public class InstanceModel : RefinedModelBase<GameInstance>
 {
     private static readonly Uri location = new("poly-file:///instances.json", UriKind.Absolute);
 
-    private static readonly JsonSerializerSettings serializerSettings = new()
-    {
-        Formatting = Formatting.Indented,
-        NullValueHandling = NullValueHandling.Include,
-        MissingMemberHandling = MissingMemberHandling.Ignore,
-        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-        ContractResolver = new DefaultContractResolver
+    private static readonly JsonSerializerSettings serializerSettings =
+        new()
         {
-            NamingStrategy = new CamelCaseNamingStrategy()
-        }
-    };
+            Formatting = Formatting.Indented,
+            NullValueHandling = NullValueHandling.Include,
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            }
+        };
 
     public override Uri Location => location;
 
@@ -66,11 +67,24 @@ public class InstanceModel : RefinedModelBase<GameInstance>
 
     public override GameInstance Extract()
     {
-        var res = new GameInstance(Id!, Metadata!.Value, Version!, ReferenceSource!, Configuration!, Name!,
+        var res = new GameInstance(
+            Id!,
+            Metadata!.Value,
+            Version!,
+            ReferenceSource!,
+            Configuration!,
+            Name!,
             Author ?? string.Empty,
-            FolderName!, ThumbnailFile ?? string.Empty, BoundAccountId ?? string.Empty, LastPlay!,
-            CreatedAt ?? DateTimeOffset.Now, LastRestore!, PlayTime ?? TimeSpan.Zero, PlayCount ?? 0,
-            ExceptionCount ?? 0);
+            FolderName!,
+            ThumbnailFile ?? string.Empty,
+            BoundAccountId ?? string.Empty,
+            LastPlay!,
+            CreatedAt ?? DateTimeOffset.Now,
+            LastRestore!,
+            PlayTime ?? TimeSpan.Zero,
+            PlayCount ?? 0,
+            ExceptionCount ?? 0
+        );
         return res;
     }
 }

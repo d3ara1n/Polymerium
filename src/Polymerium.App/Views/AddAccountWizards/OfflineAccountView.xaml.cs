@@ -36,7 +36,10 @@ public sealed partial class OfflineAccountView : Page
         var validationResults = errors as ValidationResult[] ?? errors.ToArray();
         if (validationResults.Any())
         {
-            ViewModel.ErrorMessage = string.Join('\n', validationResults.Select(x => x.ErrorMessage));
+            ViewModel.ErrorMessage = string.Join(
+                '\n',
+                validationResults.Select(x => x.ErrorMessage)
+            );
             return false;
         }
 

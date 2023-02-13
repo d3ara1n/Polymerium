@@ -12,8 +12,12 @@ public class ModpackDependencyConverter : JsonConverter
         throw new NotImplementedException();
     }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
-        JsonSerializer serializer)
+    public override object ReadJson(
+        JsonReader reader,
+        Type objectType,
+        object? existingValue,
+        JsonSerializer serializer
+    )
     {
         var obj = JObject.Load(reader);
         var props = obj.Properties();
@@ -21,11 +25,7 @@ public class ModpackDependencyConverter : JsonConverter
         {
             var key = x.Name;
             var value = x.Value.Value<string>();
-            return new ModrinthModpackDependency
-            {
-                Id = key,
-                Version = value ?? string.Empty
-            };
+            return new ModrinthModpackDependency { Id = key, Version = value ?? string.Empty };
         });
     }
 

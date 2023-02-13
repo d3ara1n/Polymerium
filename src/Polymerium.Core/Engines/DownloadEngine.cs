@@ -24,10 +24,7 @@ public class DownloadEngine
     public DownloadEngine(ILogger<DownloadEngine> logger)
     {
         _logger = logger;
-        _handler = new HttpClientHandler
-        {
-            Proxy = WebRequest.GetSystemWebProxy()
-        };
+        _handler = new HttpClientHandler { Proxy = WebRequest.GetSystemWebProxy() };
     }
 
     public void Enqueue(DownloadTask task)
@@ -78,12 +75,17 @@ public class DownloadEngine
         TrySpawn();
         while (tasks.TryTake(out var task))
         {
-            if (task.Inner.Token.IsCancellationRequested) continue;
+            if (task.Inner.Token.IsCancellationRequested)
+                continue;
             var client = new HttpClient(_handler, false);
             client.Timeout = TimeSpan.FromSeconds(30);
             if (!Directory.Exists(Path.GetDirectoryName(task.Inner.Destination)))
                 Directory.CreateDirectory(Path.GetDirectoryName(task.Inner.Destination)!);
-            var file = new FileStream(task.Inner.Destination, FileMode.OpenOrCreate, FileAccess.Write);
+            var file = new FileStream(
+                task.Inner.Destination,
+                FileMode.OpenOrCreate,
+                FileAccess.Write
+            );
             try
             {
                 var stream = client.GetStreamAsync(task.Inner.Source, task.Inner.Token).Result;
@@ -116,11 +118,19 @@ public class DownloadEngine
         task.Inner.CompletedCallback?.Invoke(task.Inner, succ);
         task.Inner.waitHandle.Set();
         task.Inner.IsSuccessful = succ;
-        _logger.LogInformation("Task completed with file {}", Path.GetFileName(task.Inner.Destination));
+        _logger.LogInformation(
+            "Task completed with file {}",
+            Path.GetFileName(task.Inner.Destination)
+        );
         if (task.AssociatedGroup != null)
         {
             var d = Interlocked.Increment(ref task.AssociatedGroup.Inner.downloadedCount);
-            task.AssociatedGroup.Inner.CompletedDelegate?.Invoke(task.AssociatedGroup.Inner, task.Inner, d, succ);
+            task.AssociatedGroup.Inner.CompletedDelegate?.Invoke(
+                task.AssociatedGroup.Inner,
+                task.Inner,
+                d,
+                succ
+            );
             if (d >= task.AssociatedGroup.Inner.TotalCount)
             {
                 task.AssociatedGroup.Inner.waitHandle.Set();

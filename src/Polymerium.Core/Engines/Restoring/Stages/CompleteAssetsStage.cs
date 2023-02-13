@@ -20,9 +20,14 @@ public class CompleteAssetsStage : StageBase
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
 
-    public CompleteAssetsStage(GameInstance instance, PolylockData polylock, AssetsIndex index, SHA1 sha1,
+    public CompleteAssetsStage(
+        GameInstance instance,
+        PolylockData polylock,
+        AssetsIndex index,
+        SHA1 sha1,
         IFileBaseService fileBase,
-        DownloadEngine downloader)
+        DownloadEngine downloader
+    )
     {
         _instance = instance;
         _polylock = polylock;
@@ -36,25 +41,32 @@ public class CompleteAssetsStage : StageBase
 
     public override async Task<Option<StageBase>> StartAsync()
     {
-        if (Token.IsCancellationRequested) return Cancel();
-        var group = new DownloadTaskGroup
-        {
-            Token = Token
-        };
+        if (Token.IsCancellationRequested)
+            return Cancel();
+        var group = new DownloadTaskGroup { Token = Token };
         foreach (var item in _index.Objects.Select(x => x.Hash))
         {
-            if (Token.IsCancellationRequested) return Cancel();
+            if (Token.IsCancellationRequested)
+                return Cancel();
             var path = new Uri($"poly-file:///assets/objects/{item[..2]}/{item}", UriKind.Absolute);
             if (!await _fileBase.VerifyHashAsync(path, item, _sha1))
-                group.TryAdd($"https://resources.download.minecraft.net/{item[..2]}/{item}",
-                    _fileBase.Locate(path), out var _);
+                group.TryAdd(
+                    $"https://resources.download.minecraft.net/{item[..2]}/{item}",
+                    _fileBase.Locate(path),
+                    out var _
+                );
         }
 
         group.CompletedDelegate = (_, task, downloaded, success) =>
-            Report($"已下载 {downloaded} 个文件，共 {group.TotalCount} 个", Path.GetFileName(task.Destination));
+            Report(
+                $"已下载 {downloaded} 个文件，共 {group.TotalCount} 个",
+                Path.GetFileName(task.Destination)
+            );
         _downloader.Enqueue(group);
         if (group.Wait())
-            return Next(new DownloadLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader));
+            return Next(
+                new DownloadLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader)
+            );
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }
 }

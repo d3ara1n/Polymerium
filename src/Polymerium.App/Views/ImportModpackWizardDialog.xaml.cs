@@ -12,9 +12,12 @@ namespace Polymerium.App.Views;
 
 public sealed partial class ImportModpackWizardDialog : CustomDialog
 {
-    public static readonly DependencyProperty IsOperableProperty =
-        DependencyProperty.Register(nameof(IsOperable), typeof(bool), typeof(ImportModpackWizardDialog),
-            new PropertyMetadata(false));
+    public static readonly DependencyProperty IsOperableProperty = DependencyProperty.Register(
+        nameof(IsOperable),
+        typeof(bool),
+        typeof(ImportModpackWizardDialog),
+        new PropertyMetadata(false)
+    );
 
     public ImportModpackWizardDialog(string fileName)
     {
@@ -42,7 +45,8 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
     {
         IsOperable = false;
         VisualStateManager.GoToState(Root, "Loading", false);
-        if (!string.IsNullOrEmpty(ViewModel.InstanceName)) ViewModel.Exposed!.Name = ViewModel.InstanceName!;
+        if (!string.IsNullOrEmpty(ViewModel.InstanceName))
+            ViewModel.Exposed!.Name = ViewModel.InstanceName!;
         Task.Run(async () => await ViewModel.ApplyExtractionAsync(ReadyHandler));
     }
 
@@ -68,7 +72,8 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
                 VisualStateManager.GoToState(Root, "Default", false);
             }
 
-            if (dismiss) Dismiss();
+            if (dismiss)
+                Dismiss();
         });
     }
 

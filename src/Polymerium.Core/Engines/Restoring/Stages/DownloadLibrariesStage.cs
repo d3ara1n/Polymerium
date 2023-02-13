@@ -19,8 +19,13 @@ public class DownloadLibrariesStage : StageBase
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
 
-    public DownloadLibrariesStage(GameInstance instance, PolylockData polylock, SHA1 sha1, IFileBaseService fileBase,
-        DownloadEngine downloader)
+    public DownloadLibrariesStage(
+        GameInstance instance,
+        PolylockData polylock,
+        SHA1 sha1,
+        IFileBaseService fileBase,
+        DownloadEngine downloader
+    )
     {
         _instance = instance;
         _polylock = polylock;
@@ -33,14 +38,16 @@ public class DownloadLibrariesStage : StageBase
 
     public override async Task<Option<StageBase>> StartAsync()
     {
-        if (Token.IsCancellationRequested) return Cancel();
+        if (Token.IsCancellationRequested)
+            return Cancel();
         var libraryDir = new Uri("poly-file:///libraries/");
         var nativesDir = new Uri($"poly-file://{_instance.Id}/natives/");
         var group = new DownloadTaskGroup { Token = Token };
         _fileBase.RemoveDirectory(nativesDir);
         foreach (var item in _polylock.Libraries)
         {
-            if (Token.IsCancellationRequested) return Cancel();
+            if (Token.IsCancellationRequested)
+                return Cancel();
             var libPath = new Uri(libraryDir, item.Path);
             if (!await _fileBase.VerifyHashAsync(libPath, item.Sha1, _sha1))
             {
@@ -49,25 +56,36 @@ public class DownloadLibrariesStage : StageBase
                         task!.CompletedCallback = async (t, s) =>
                         {
                             if (s)
-                                await UnzipFileAsync(t.Destination, _fileBase.Locate(nativesDir),
-                                    Token);
+                                await UnzipFileAsync(
+                                    t.Destination,
+                                    _fileBase.Locate(nativesDir),
+                                    Token
+                                );
                         };
             }
             else
             {
                 if (item.IsNative)
-                    await UnzipFileAsync(_fileBase.Locate(libPath), _fileBase.Locate(nativesDir),
-                        Token);
+                    await UnzipFileAsync(
+                        _fileBase.Locate(libPath),
+                        _fileBase.Locate(nativesDir),
+                        Token
+                    );
             }
         }
 
         group.CompletedDelegate = (_, task, downloaded, success) =>
         {
-            Report($"已下载 {downloaded} 个文件，共 {group.TotalCount} 个", Path.GetFileName(task.Destination));
+            Report(
+                $"已下载 {downloaded} 个文件，共 {group.TotalCount} 个",
+                Path.GetFileName(task.Destination)
+            );
         };
         _downloader.Enqueue(group);
         if (group.Wait())
-            return Next(new CompleteAttachmentsStage(_instance, _polylock, _sha1, _fileBase, _downloader));
+            return Next(
+                new CompleteAttachmentsStage(_instance, _polylock, _sha1, _fileBase, _downloader)
+            );
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }
 

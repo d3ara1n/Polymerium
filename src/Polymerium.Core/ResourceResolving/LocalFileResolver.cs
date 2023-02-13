@@ -12,7 +12,10 @@ public class LocalFileResolver : ResourceResolverBase
     [ResourceExpression("{*path}")]
     public Result<ResolveResult, ResolveResultError> GetFile(string path)
     {
-        return Ok(new Uri(new Uri($"poly-file://{Context.Instance.Id}/"), path),
-            new Uri(new Uri($"poly-file:///local/instances/{Context.Instance.Id}/"), path), null);
+        return Ok(
+            new Uri(new Uri($"poly-file://{Context.Instance.Id}/"), path),
+            new Uri(new Uri($"poly-file:///local/instances/{Context.Instance.Id}/"), path),
+            null
+        );
     }
 }

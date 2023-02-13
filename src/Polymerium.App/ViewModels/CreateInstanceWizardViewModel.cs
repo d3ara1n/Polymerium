@@ -73,41 +73,58 @@ public class CreateInstanceWizardViewModel : ObservableValidator
 
     public async Task FillDataAsync(Func<IEnumerable<GameVersionModel>, Task> callback)
     {
-        var versions = await _cache.GetOrCreateAsync("versions:core", async entry =>
-        {
-            var res = Enumerable.Empty<GameVersionModel>();
-            var url = "https://piston-meta.mojang.com/mc/game/version_manifest.json";
-            await Wapoo.Wohoo(url)
-                .ForJsonResult<JObject>(x => res = x.Value<JArray>("versions")!.ToObject<IEnumerable<GameVersion>>()!
-                    .Select(x => new GameVersionModel(x.Id, x.Type switch
-                    {
-                        ReleaseType.Release => "正式",
-                        ReleaseType.Snapshot => "快照",
-                        ReleaseType.Old_Alpha => "Alpha",
-                        ReleaseType.Old_Beta => "Beta",
-                        _ => throw new ArgumentOutOfRangeException()
-                    })))
-                .FetchAsync();
-            var gameVersionModels = res as GameVersionModel[] ?? res.ToArray();
-            if (gameVersionModels.Any())
-                entry.SetSlidingExpiration(TimeSpan.FromHours(1));
-            else
-                entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
+        var versions = await _cache.GetOrCreateAsync(
+            "versions:core",
+            async entry =>
+            {
+                var res = Enumerable.Empty<GameVersionModel>();
+                var url = "https://piston-meta.mojang.com/mc/game/version_manifest.json";
+                await Wapoo
+                    .Wohoo(url)
+                    .ForJsonResult<JObject>(
+                        x =>
+                            res = x.Value<JArray>("versions")!
+                                .ToObject<IEnumerable<GameVersion>>()!
+                                .Select(
+                                    x =>
+                                        new GameVersionModel(
+                                            x.Id,
+                                            x.Type switch
+                                            {
+                                                ReleaseType.Release => "正式",
+                                                ReleaseType.Snapshot => "快照",
+                                                ReleaseType.Old_Alpha => "Alpha",
+                                                ReleaseType.Old_Beta => "Beta",
+                                                _ => throw new ArgumentOutOfRangeException()
+                                            }
+                                        )
+                                )
+                    )
+                    .FetchAsync();
+                var gameVersionModels = res as GameVersionModel[] ?? res.ToArray();
+                if (gameVersionModels.Any())
+                    entry.SetSlidingExpiration(TimeSpan.FromHours(1));
+                else
+                    entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
 
-            return gameVersionModels;
-        });
+                return gameVersionModels;
+            }
+        );
         await callback(versions?.ToList() ?? Enumerable.Empty<GameVersionModel>());
     }
 
     public async Task Commit(Func<Task> callback)
     {
-        var instance = new GameInstance(new GameMetadata(), Version,
-            new FileBasedLaunchConfiguration(), InstanceName, InstanceName);
-        instance.Metadata.Components.Add(new Component
-        {
-            Identity = "net.minecraft",
-            Version = SelectedVersion!.Id
-        });
+        var instance = new GameInstance(
+            new GameMetadata(),
+            Version,
+            new FileBasedLaunchConfiguration(),
+            InstanceName,
+            InstanceName
+        );
+        instance.Metadata.Components.Add(
+            new Component { Identity = "net.minecraft", Version = SelectedVersion!.Id }
+        );
         _instanceManager.AddInstance(instance);
         await callback();
     }

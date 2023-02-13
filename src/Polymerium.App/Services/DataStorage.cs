@@ -66,7 +66,10 @@ public sealed class DataStorage : IDisposable
         var model = new TModel();
         if (_fileBaseService.TryReadAllText(model.Location, out var text))
         {
-            var list = JsonConvert.DeserializeObject<IEnumerable<TModel>>(text, model.SerializerSettings);
+            var list = JsonConvert.DeserializeObject<IEnumerable<TModel>>(
+                text,
+                model.SerializerSettings
+            );
             return list?.Select(x => x.Extract()) ?? Enumerable.Empty<TData>();
         }
 

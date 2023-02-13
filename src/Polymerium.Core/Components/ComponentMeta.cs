@@ -5,7 +5,11 @@ namespace Polymerium.Core.Components;
 
 public class ComponentMeta
 {
-    public ComponentMeta(string identity, string friendlyName, IEnumerable<string>? dependencies = null)
+    public ComponentMeta(
+        string identity,
+        string friendlyName,
+        IEnumerable<string>? dependencies = null
+    )
     {
         Identity = identity;
         FriendlyName = friendlyName;

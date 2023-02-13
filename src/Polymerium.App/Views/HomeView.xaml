@@ -25,7 +25,7 @@
                     <Grid ColumnDefinitions="6*,4*">
                         <toolkit:ImageEx Height="140" Width="140" HorizontalAlignment="Center"
                                          VerticalAlignment="Bottom" IsCacheEnabled="True" Stretch="UniformToFill"
-                                         Source="{x:Bind ViewModel.Context.SelectedAccount.AvatarBustSource,Mode=OneWay}"
+                                         Source="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource AccountToBustAvatarConverter}}"
                                          PlaceholderStretch="UniformToFill"
                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png" />
                     </Grid>
@@ -34,7 +34,7 @@
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">
                                 <Run Text="你好 " />
                                 <Run
-                                    Text="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay,Converter={StaticResource NullToParameterConverter},ConverterParameter=未登录}" />
+                                    Text="{x:Bind ViewModel.Context.SelectedAccount.Nickname,Mode=OneWay,Converter={StaticResource NullToParameterConverter},ConverterParameter=未登录}" />
                             </TextBlock>
                             <TextBlock Text="{x:Bind ViewModel.Tip}" TextWrapping="WrapWholeWords"
                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"

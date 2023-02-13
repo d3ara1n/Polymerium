@@ -52,14 +52,20 @@ public partial class App : Application
     {
         var services = new ServiceCollection();
         // application services registration
-        services.AddLogging(logging => logging.AddSimpleConsole().AddDebug()
+        services
+            .AddLogging(
+                logging =>
+                    logging
+                        .AddSimpleConsole()
+                        .AddDebug()
 #if DEBUG
-                    .SetMinimumLevel(LogLevel.Debug)
+                        .SetMinimumLevel(LogLevel.Debug)
 #endif
             )
             .AddMemoryCache();
         // view models registration
-        services.AddSingleton<ViewModelContext>()
+        services
+            .AddSingleton<ViewModelContext>()
             .AddTransient<MainViewModel>()
             .AddTransient<NewInstanceViewModel>()
             .AddTransient<CreateInstanceWizardViewModel>()
@@ -77,7 +83,8 @@ public partial class App : Application
             .AddTransient<AddMetaComponentWizardViewModel>()
             .AddTransient<ImportModpackWizardViewModel>();
         // local service registration
-        services.AddSingleton<IOverlayService, WindowOverlayService>()
+        services
+            .AddSingleton<IOverlayService, WindowOverlayService>()
             .AddSingleton<NavigationService>()
             .AddSingleton<AccountManager>()
             .AddSingleton<InstanceManager>()
@@ -89,16 +96,21 @@ public partial class App : Application
             .AddSingleton<ImportService>()
             .AddSingleton<LocalRepositoryService>();
         // global services
-        services.AddSingleton<GameManager>()
-            .AddSingleton<IFileBaseService, MainFileBaseService>().Configure<MainFileBaseOptions>(configure =>
-                configure.BaseFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                    ".polymerium/"));
+        services
+            .AddSingleton<GameManager>()
+            .AddSingleton<IFileBaseService, MainFileBaseService>()
+            .Configure<MainFileBaseOptions>(
+                configure =>
+                    configure.BaseFolder = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                        ".polymerium/"
+                    )
+            );
         // engines
-        services.AddScoped<DownloadEngine>()
-            .AddScoped<ResolveEngine>()
-            .AddScoped<RestoreEngine>();
+        services.AddScoped<DownloadEngine>().AddScoped<ResolveEngine>().AddScoped<RestoreEngine>();
         // resolvers
-        services.AddTransient<ResourceResolverBase, LocalFileResolver>()
+        services
+            .AddTransient<ResourceResolverBase, LocalFileResolver>()
             .AddTransient<ResourceResolverBase, RemoteFileResolver>();
         return services.BuildServiceProvider();
     }

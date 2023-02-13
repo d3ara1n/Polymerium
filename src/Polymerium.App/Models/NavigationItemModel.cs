@@ -5,8 +5,13 @@ namespace Polymerium.App.Models;
 
 public class NavigationItemModel
 {
-    public NavigationItemModel(string glyph, string caption, Type sourcePage, GameInstance? instance = null,
-        string? thumbnailSource = null)
+    public NavigationItemModel(
+        string glyph,
+        string caption,
+        Type sourcePage,
+        GameInstance? instance = null,
+        string? thumbnailSource = null
+    )
     {
         Glyph = glyph;
         Caption = caption;

@@ -11,7 +11,11 @@ public class SelectionViewModel : ObservableObject
     {
         Entries = new List<AccountWizardEntryModel>
         {
-            new("离线账号", "ms-appx:///Assets/Icons/Brands/minecraft.256x256.png", typeof(OfflineAccountView))
+            new(
+                "离线账号",
+                "ms-appx:///Assets/Icons/Brands/minecraft.256x256.png",
+                typeof(OfflineAccountView)
+            )
         };
     }
 

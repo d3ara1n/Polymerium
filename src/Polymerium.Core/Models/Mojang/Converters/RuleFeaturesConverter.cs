@@ -13,8 +13,12 @@ internal class RuleFeaturesConverter : JsonConverter
         return objectType == typeof(RuleFeatures);
     }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
-        JsonSerializer serializer)
+    public override object ReadJson(
+        JsonReader reader,
+        Type objectType,
+        object? existingValue,
+        JsonSerializer serializer
+    )
     {
         var obj = JObject.Load(reader);
         var prop = obj.Properties().First();

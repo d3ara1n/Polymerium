@@ -14,10 +14,14 @@ public abstract class ImporterBase
         return Result<ImportResult, GameImportError>.Err(reason);
     }
 
-    public Result<ImportResult, GameImportError> Finished(ZipArchive archive, GameInstance instance,
-        IEnumerable<PackedSolidFile>? files = null)
+    public Result<ImportResult, GameImportError> Finished(
+        ZipArchive archive,
+        GameInstance instance,
+        IEnumerable<PackedSolidFile>? files = null
+    )
     {
-        return Result<ImportResult, GameImportError>.Ok(new ImportResult(archive, instance,
-            files ?? Enumerable.Empty<PackedSolidFile>()));
+        return Result<ImportResult, GameImportError>.Ok(
+            new ImportResult(archive, instance, files ?? Enumerable.Empty<PackedSolidFile>())
+        );
     }
 }

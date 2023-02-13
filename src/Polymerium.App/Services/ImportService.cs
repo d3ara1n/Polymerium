@@ -17,8 +17,11 @@ public class ImportService
     private readonly InstanceManager _instanceManager;
     private readonly LocalRepositoryService _localRepository;
 
-    public ImportService(IFileBaseService fileBase, InstanceManager instanceManager,
-        LocalRepositoryService localRepository)
+    public ImportService(
+        IFileBaseService fileBase,
+        InstanceManager instanceManager,
+        LocalRepositoryService localRepository
+    )
     {
         _fileBase = fileBase;
         _instanceManager = instanceManager;
@@ -45,39 +48,43 @@ public class ImportService
 
     public async Task<Result<GameImportError>> PostImportAsync(ImportResult product)
     {
-        return await Task.Run(new Func<Result<GameImportError>>(() =>
-        {
-            var allocated = new List<Uri>();
-            foreach (var file in product.Files)
+        return await Task.Run(
+            new Func<Result<GameImportError>>(() =>
             {
-                var result = _localRepository.AllocInstanceLink(product.Instance.Id, file.Path);
-                try
+                var allocated = new List<Uri>();
+                foreach (var file in product.Files)
                 {
-                    if (result.IsOk(out var fileUrl))
+                    var result = _localRepository.AllocInstanceLink(product.Instance.Id, file.Path);
+                    try
                     {
-                        var path = _fileBase.Locate(fileUrl!);
-                        var entry = product.Archive.GetEntry(file.FileName)!;
-                        var dir = Path.GetDirectoryName(path);
-                        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                        if (result.IsOk(out var fileUrl))
+                        {
+                            var path = _fileBase.Locate(fileUrl!);
+                            var entry = product.Archive.GetEntry(file.FileName)!;
+                            var dir = Path.GetDirectoryName(path);
+                            if (!Directory.Exists(dir))
+                                Directory.CreateDirectory(dir!);
 
-                        entry.ExtractToFile(path);
-                        allocated.Add(new Uri(new Uri("poly-res://local@file/"), file.Path));
+                            entry.ExtractToFile(path);
+                            allocated.Add(new Uri(new Uri("poly-res://local@file/"), file.Path));
+                        }
+                        else
+                        {
+                            return Result<GameImportError>.Err(GameImportError.FileSystemError);
+                        }
                     }
-                    else
+                    catch
                     {
                         return Result<GameImportError>.Err(GameImportError.FileSystemError);
                     }
                 }
-                catch
-                {
-                    return Result<GameImportError>.Err(GameImportError.FileSystemError);
-                }
-            }
 
-            foreach (var file in allocated) product.Instance.Metadata.Attachments.Add(file);
+                foreach (var file in allocated)
+                    product.Instance.Metadata.Attachments.Add(file);
 
-            _instanceManager.AddInstance(product.Instance);
-            return Result<GameImportError>.Ok();
-        }));
+                _instanceManager.AddInstance(product.Instance);
+                return Result<GameImportError>.Ok();
+            })
+        );
     }
 }

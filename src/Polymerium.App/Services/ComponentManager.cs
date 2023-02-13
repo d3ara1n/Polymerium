@@ -39,10 +39,10 @@ public class ComponentManager
     {
         return filter switch
         {
-            ComponentViewFilter.Core => _memoryStorage.SupportedComponents.Where(x =>
-                !x.Dependencies.Any()),
-            ComponentViewFilter.Modloader => _memoryStorage.SupportedComponents.Where(x =>
-                x.Dependencies.Any()),
+            ComponentViewFilter.Core
+                => _memoryStorage.SupportedComponents.Where(x => !x.Dependencies.Any()),
+            ComponentViewFilter.Modloader
+                => _memoryStorage.SupportedComponents.Where(x => x.Dependencies.Any()),
             ComponentViewFilter.All => _memoryStorage.SupportedComponents,
             _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
         };

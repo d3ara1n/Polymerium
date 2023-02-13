@@ -16,18 +16,23 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     private readonly ComponentManager _componentManager;
     private readonly IOverlayService _overlayService;
 
-    public InstanceMetadataConfigurationViewModel(ViewModelContext context, ComponentManager componentManager,
-        IOverlayService overlayService)
+    public InstanceMetadataConfigurationViewModel(
+        ViewModelContext context,
+        ComponentManager componentManager,
+        IOverlayService overlayService
+    )
     {
         Context = context;
         _componentManager = componentManager;
         _overlayService = overlayService;
         AddComponentCommand = new RelayCommand(AddComponent);
-        RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(RemoveComponentSelf);
-        Components =
-            new ObservableCollection<InstanceComponentItemModel>(
-                Context.AssociatedInstance?.Components.Select(FromComponent) ??
-                Enumerable.Empty<InstanceComponentItemModel>());
+        RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(
+            RemoveComponentSelf
+        );
+        Components = new ObservableCollection<InstanceComponentItemModel>(
+            Context.AssociatedInstance?.Components.Select(FromComponent)
+            ?? Enumerable.Empty<InstanceComponentItemModel>()
+        );
         Context.AssociatedInstance!.Components.CollectionChanged += Components_OnCollectionChanged;
     }
 
@@ -52,8 +57,11 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
                 if (e.OldItems != null)
                     foreach (Component item in e.OldItems)
                     {
-                        var com = Components.FirstOrDefault(x => x.Id == item.Identity && x.Version == item.Version);
-                        if (com != null) Components.Remove(com);
+                        var com = Components.FirstOrDefault(
+                            x => x.Id == item.Identity && x.Version == item.Version
+                        );
+                        if (com != null)
+                            Components.Remove(com);
                     }
 
                 break;
@@ -66,26 +74,32 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     private InstanceComponentItemModel FromComponent(Component component)
     {
         _componentManager.TryFindByIdentity(component.Identity, out var meta);
-        return new InstanceComponentItemModel(component.Identity,
+        return new InstanceComponentItemModel(
+            component.Identity,
             $"ms-appx:///Assets/Icons/GameComponents/{component.Identity}.png",
-            meta?.FriendlyName ?? component.Identity, component.Version, RemoveComponentSelfCommand);
+            meta?.FriendlyName ?? component.Identity,
+            component.Version,
+            RemoveComponentSelfCommand
+        );
     }
 
     private void AddComponent()
     {
-        var dialog = new AddMetaComponentWizardDialog
-        {
-            OverlayService = _overlayService
-        };
+        var dialog = new AddMetaComponentWizardDialog { OverlayService = _overlayService };
         _overlayService.Show(dialog);
     }
 
     private void RemoveComponentSelf(InstanceComponentItemModel? model)
     {
-        if (Context.AssociatedInstance!.Components.Any(x => x.Identity == model?.Id && x.Version == model.Version))
+        if (
+            Context.AssociatedInstance!.Components.Any(
+                x => x.Identity == model?.Id && x.Version == model.Version
+            )
+        )
         {
-            var item = Context.AssociatedInstance.Components.First(x =>
-                x.Identity == model?.Id && x.Version == model.Version);
+            var item = Context.AssociatedInstance.Components.First(
+                x => x.Identity == model?.Id && x.Version == model.Version
+            );
             Context.AssociatedInstance.Components.Remove(item);
         }
     }

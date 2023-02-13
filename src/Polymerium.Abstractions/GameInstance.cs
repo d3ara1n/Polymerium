@@ -6,11 +6,15 @@ namespace Polymerium.Abstractions;
 
 public class GameInstance
 {
-    public GameInstance(GameMetadata metadata, string version, FileBasedLaunchConfiguration configuration,
-        string name, string folderName)
+    public GameInstance(
+        GameMetadata metadata,
+        string version,
+        FileBasedLaunchConfiguration configuration,
+        string name,
+        string folderName
+    )
     {
-        Id = Guid.NewGuid()
-            .ToString();
+        Id = Guid.NewGuid().ToString();
         Metadata = metadata;
         Version = version;
         Author = string.Empty;
@@ -21,10 +25,24 @@ public class GameInstance
         PlayTime = TimeSpan.Zero;
     }
 
-    public GameInstance(string id, GameMetadata metadata, string version, Uri? referenceSource,
-        FileBasedLaunchConfiguration configuration, string name, string author, string folderName,
-        string? thumbnailFile, string? boundAccountId, DateTimeOffset? lastPlay, DateTimeOffset createdAt,
-        DateTimeOffset? lastRestore, TimeSpan playTime, int playCount, int exceptionCount)
+    public GameInstance(
+        string id,
+        GameMetadata metadata,
+        string version,
+        Uri? referenceSource,
+        FileBasedLaunchConfiguration configuration,
+        string name,
+        string author,
+        string folderName,
+        string? thumbnailFile,
+        string? boundAccountId,
+        DateTimeOffset? lastPlay,
+        DateTimeOffset createdAt,
+        DateTimeOffset? lastRestore,
+        TimeSpan playTime,
+        int playCount,
+        int exceptionCount
+    )
     {
         Id = id;
         Metadata = metadata;

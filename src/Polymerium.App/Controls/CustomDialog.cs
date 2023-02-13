@@ -16,19 +16,21 @@ namespace Polymerium.App.Controls;
 public class CustomDialog : ContentControl
 {
     // TODO: 各种 WizardDialog 的 ContentControl.Template 应该合并到 CustomDialog 中，状态合并到一个状态组
-    public static readonly DependencyProperty OperationContentProperty = DependencyProperty.Register(
-        nameof(OperationContent),
-        typeof(object),
-        typeof(CustomDialog),
-        new PropertyMetadata(default, OperationContentPropertyChangedCallback)
-    );
+    public static readonly DependencyProperty OperationContentProperty =
+        DependencyProperty.Register(
+            nameof(OperationContent),
+            typeof(object),
+            typeof(CustomDialog),
+            new PropertyMetadata(default, OperationContentPropertyChangedCallback)
+        );
 
-    public static readonly DependencyProperty OperationPaddingProperty = DependencyProperty.Register(
-        nameof(OperationPadding),
-        typeof(Thickness),
-        typeof(CustomDialog),
-        new PropertyMetadata(default)
-    );
+    public static readonly DependencyProperty OperationPaddingProperty =
+        DependencyProperty.Register(
+            nameof(OperationPadding),
+            typeof(Thickness),
+            typeof(CustomDialog),
+            new PropertyMetadata(default)
+        );
 
     private readonly Storyboard fadeoutStoryboard;
     private readonly Storyboard scaleXOutStoryboard;
@@ -43,23 +45,29 @@ public class CustomDialog : ContentControl
         DefaultStyleKey = typeof(CustomDialog);
 
         fadeoutStoryboard = new Storyboard();
-        fadeoutStoryboard.Children.Add(new DoubleAnimation
-        {
-            Duration = new Duration(TimeSpan.FromMilliseconds(150)),
-            To = 0.0
-        });
+        fadeoutStoryboard.Children.Add(
+            new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromMilliseconds(150)),
+                To = 0.0
+            }
+        );
         scaleXOutStoryboard = new Storyboard();
-        scaleXOutStoryboard.Children.Add(new DoubleAnimation
-        {
-            Duration = new Duration(TimeSpan.FromMilliseconds(150)),
-            To = 1.05
-        });
+        scaleXOutStoryboard.Children.Add(
+            new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromMilliseconds(150)),
+                To = 1.05
+            }
+        );
         scaleYOutStoryboard = new Storyboard();
-        scaleYOutStoryboard.Children.Add(new DoubleAnimation
-        {
-            Duration = new Duration(TimeSpan.FromMilliseconds(150)),
-            To = 1.05
-        });
+        scaleYOutStoryboard.Children.Add(
+            new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromMilliseconds(150)),
+                To = 1.05
+            }
+        );
         fadeoutStoryboard.Completed += (_, _) => OverlayService!.Dismiss();
     }
 
@@ -77,8 +85,10 @@ public class CustomDialog : ContentControl
 
     public IOverlayService? OverlayService { get; set; }
 
-    private static void OperationContentPropertyChangedCallback(DependencyObject d,
-        DependencyPropertyChangedEventArgs e)
+    private static void OperationContentPropertyChangedCallback(
+        DependencyObject d,
+        DependencyPropertyChangedEventArgs e
+    )
     {
         var dialog = d as CustomDialog;
         if (dialog?.OperationContent != null)

@@ -30,7 +30,8 @@ public sealed partial class NewInstanceView : Page
     private void DragDropPane_OnDragEnter(object sender, DragEventArgs e)
     {
         DragDropPane.Opacity = 1.0;
-        if (e.DataView.Contains(StandardDataFormats.StorageItems)) e.AcceptedOperation = DataPackageOperation.Link;
+        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            e.AcceptedOperation = DataPackageOperation.Link;
     }
 
     private void DragDropPane_OnDragLeave(object sender, DragEventArgs e)

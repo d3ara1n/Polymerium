@@ -12,20 +12,29 @@ namespace Polymerium.App.Dialogs;
 public sealed partial class TextInputDialog : ContentDialog
 {
     // Using a DependencyProperty as the backing store for InputText.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty InputTextProperty =
-        DependencyProperty.Register(nameof(InputText), typeof(string), typeof(TextInputDialog),
-            new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register(
+        nameof(InputText),
+        typeof(string),
+        typeof(TextInputDialog),
+        new PropertyMetadata(string.Empty)
+    );
 
     // Using a DependencyProperty as the backing store for InputTextPlaceholder.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty InputTextPlaceholderProperty =
-        DependencyProperty.Register(nameof(InputTextPlaceholder), typeof(string), typeof(TextInputDialog),
-            new PropertyMetadata(string.Empty));
+        DependencyProperty.Register(
+            nameof(InputTextPlaceholder),
+            typeof(string),
+            typeof(TextInputDialog),
+            new PropertyMetadata(string.Empty)
+        );
 
     // Using a DependencyProperty as the backing store for Description.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty DescriptionProperty =
-        DependencyProperty.Register(nameof(Description), typeof(string), typeof(TextInputDialog),
-            new PropertyMetadata(string.Empty));
-
+    public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(
+        nameof(Description),
+        typeof(string),
+        typeof(TextInputDialog),
+        new PropertyMetadata(string.Empty)
+    );
 
     public TextInputDialog()
     {
@@ -38,13 +47,11 @@ public sealed partial class TextInputDialog : ContentDialog
         set => SetValue(InputTextProperty, value);
     }
 
-
     public string InputTextPlaceholder
     {
         get => (string)GetValue(InputTextPlaceholderProperty);
         set => SetValue(InputTextPlaceholderProperty, value);
     }
-
 
     public string Description
     {

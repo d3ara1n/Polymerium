@@ -8,7 +8,8 @@ public sealed partial class InstanceAdvancedConfigurationView : Page
 {
     public InstanceAdvancedConfigurationView()
     {
-        ViewModel = App.Current.Provider.GetRequiredService<InstanceAdvancedConfigurationViewModel>();
+        ViewModel =
+            App.Current.Provider.GetRequiredService<InstanceAdvancedConfigurationViewModel>();
         InitializeComponent();
     }
 

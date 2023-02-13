@@ -9,7 +9,8 @@ namespace Polymerium.App.Services;
 
 public class JavaManager
 {
-    private readonly Regex keyValueCompiled = new("^(?<key>[A-Z_]+)=\"(?<value>[a-z\\ A-Z0-9_.-]*)\"$");
+    private readonly Regex keyValueCompiled =
+        new("^(?<key>[A-Z_]+)=\"(?<value>[a-z\\ A-Z0-9_.-]*)\"$");
 
     public IEnumerable<string> QueryJavaInstallations()
     {
@@ -32,7 +33,8 @@ public class JavaManager
         foreach (var (path, subPath, key) in candidates)
         {
             var items = SearchInRegistry(path, subPath, key);
-            foreach (var item in items) list.Add(item);
+            foreach (var item in items)
+                list.Add(item);
         }
 
         return list;
@@ -74,7 +76,8 @@ public class JavaManager
 
             if (anyMatched)
             {
-                result.Summary = $"{result.JavaVersion} {result.OsName} {result.OsArch} - {result.Implementor}";
+                result.Summary =
+                    $"{result.JavaVersion} {result.OsName} {result.OsArch} - {result.Implementor}";
                 return Option<JavaInstallationModel>.Some(result);
             }
 
@@ -92,11 +95,14 @@ public class JavaManager
             var subkeys = r.GetSubKeyNames();
             foreach (var subkey in subkeys)
             {
-                using var subR = r.OpenSubKey(string.IsNullOrEmpty(subPath) ? subkey : $"{subkey}\\{subPath}");
+                using var subR = r.OpenSubKey(
+                    string.IsNullOrEmpty(subPath) ? subkey : $"{subkey}\\{subPath}"
+                );
                 if (subR != null)
                 {
                     var value = subR.GetValue(key);
-                    if (value is string it) yield return it;
+                    if (value is string it)
+                        yield return it;
                 }
             }
         }

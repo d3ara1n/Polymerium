@@ -8,7 +8,8 @@ public sealed partial class InstanceMetadataConfigurationView : Page
 {
     public InstanceMetadataConfigurationView()
     {
-        ViewModel = App.Current.Provider.GetRequiredService<InstanceMetadataConfigurationViewModel>();
+        ViewModel =
+            App.Current.Provider.GetRequiredService<InstanceMetadataConfigurationViewModel>();
         InitializeComponent();
     }
 

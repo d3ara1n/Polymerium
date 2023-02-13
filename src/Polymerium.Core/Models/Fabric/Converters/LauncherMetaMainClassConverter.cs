@@ -12,18 +12,18 @@ public class LauncherMetaMainClassConverter : JsonConverter
         throw new NotImplementedException();
     }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
-        JsonSerializer serializer)
+    public override object ReadJson(
+        JsonReader reader,
+        Type objectType,
+        object? existingValue,
+        JsonSerializer serializer
+    )
     {
         var token = JToken.Load(reader);
         if (token.Type == JTokenType.String)
         {
             var mainClass = token.ToObject<string>()!;
-            return new FabricLauncherMetaMainClass
-            {
-                Client = mainClass,
-                Server = mainClass
-            };
+            return new FabricLauncherMetaMainClass { Client = mainClass, Server = mainClass };
         }
 
         return token.ToObject<FabricLauncherMetaMainClass>();

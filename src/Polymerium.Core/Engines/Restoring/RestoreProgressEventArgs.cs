@@ -13,7 +13,11 @@ public class RestoreProgressEventArgs : EventArgs
 
     public Exception? Exception { get; set; }
 
-    public static RestoreProgressEventArgs CreateError(RestoreError error, string fileName, Exception? exception = null)
+    public static RestoreProgressEventArgs CreateError(
+        RestoreError error,
+        string fileName,
+        Exception? exception = null
+    )
     {
         return new RestoreProgressEventArgs
         {
@@ -26,22 +30,19 @@ public class RestoreProgressEventArgs : EventArgs
 
     public static RestoreProgressEventArgs CreateComplete()
     {
-        return new RestoreProgressEventArgs
-        {
-            ProgressType = RestoreProgressType.AllCompleted
-        };
+        return new RestoreProgressEventArgs { ProgressType = RestoreProgressType.AllCompleted };
     }
 
     public static RestoreProgressEventArgs CreateUpdate(RestoreProgressType type, string fileName)
     {
-        return new RestoreProgressEventArgs
-        {
-            ProgressType = type,
-            FileName = fileName
-        };
+        return new RestoreProgressEventArgs { ProgressType = type, FileName = fileName };
     }
 
-    public static RestoreProgressEventArgs CreateDownload(string fileName, int downloaded, int total)
+    public static RestoreProgressEventArgs CreateDownload(
+        string fileName,
+        int downloaded,
+        int total
+    )
     {
         return new RestoreProgressEventArgs
         {

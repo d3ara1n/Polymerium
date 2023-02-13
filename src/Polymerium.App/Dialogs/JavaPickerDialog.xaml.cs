@@ -14,28 +14,32 @@ namespace Polymerium.App.Dialogs;
 public sealed partial class JavaPickerDialog : ContentDialog
 {
     // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty SelectedJavaProperty =
-        DependencyProperty.Register(nameof(SelectedJava), typeof(JavaInstallationModel), typeof(JavaPickerDialog),
-            new PropertyMetadata(null));
+    public static readonly DependencyProperty SelectedJavaProperty = DependencyProperty.Register(
+        nameof(SelectedJava),
+        typeof(JavaInstallationModel),
+        typeof(JavaPickerDialog),
+        new PropertyMetadata(null)
+    );
 
     // Using a DependencyProperty as the backing store for JavaInstallations.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty JavaInstallationsProperty =
-        DependencyProperty.Register(nameof(JavaInstallations), typeof(IEnumerable<JavaInstallationModel>),
-            typeof(JavaPickerDialog), new PropertyMetadata(null));
-
+        DependencyProperty.Register(
+            nameof(JavaInstallations),
+            typeof(IEnumerable<JavaInstallationModel>),
+            typeof(JavaPickerDialog),
+            new PropertyMetadata(null)
+        );
 
     public JavaPickerDialog()
     {
         InitializeComponent();
     }
 
-
     public JavaInstallationModel SelectedJava
     {
         get => (JavaInstallationModel)GetValue(SelectedJavaProperty);
         set => SetValue(SelectedJavaProperty, value);
     }
-
 
     public IEnumerable<JavaInstallationModel> JavaInstallations
     {

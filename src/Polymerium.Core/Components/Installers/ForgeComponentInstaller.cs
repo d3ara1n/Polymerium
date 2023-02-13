@@ -23,26 +23,38 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
 
     public override async Task<Result<string>> StartAsync(Component component)
     {
-        if (Token.IsCancellationRequested) return Canceled();
+        if (Token.IsCancellationRequested)
+            return Canceled();
         var mcVersion = Context.Instance.GetCoreVersion();
-        if (mcVersion == null) return Failed("Forge depends on net.minecraft which is not found");
+        if (mcVersion == null)
+            return Failed("Forge depends on net.minecraft which is not found");
 
         var installerUrl =
             $"https://bmclapi2.bangbang93.com/forge/download?mcversion={mcVersion}&version={component.Version}&category=installer&format=jar";
         using var client = new HttpClient();
         await using var stream = await client.GetStreamAsync(installerUrl);
         var archive = new ZipArchive(stream, ZipArchiveMode.Read);
-        if (Token.IsCancellationRequested) return Canceled();
+        if (Token.IsCancellationRequested)
+            return Canceled();
         var versionJson = await GetArchiveJsonAsync<InstallerVersion>(archive, "version.json");
-        if (!versionJson.HasValue) return Failed("Legacy forge installer is not supported");
+        if (!versionJson.HasValue)
+            return Failed("Legacy forge installer is not supported");
 
-        if (Token.IsCancellationRequested) return Canceled();
+        if (Token.IsCancellationRequested)
+            return Canceled();
         var profileJson = await GetArchiveJsonAsync<InstallerProfile>(archive, "version.json");
-        if (!profileJson.HasValue) return Failed("Legacy forge installer is not supported");
+        if (!profileJson.HasValue)
+            return Failed("Legacy forge installer is not supported");
 
         foreach (var library in versionJson.Value.Libraries)
-            Context.AddLibrary(new Library(library.Name, library.Downloads.Artifact.Path,
-                library.Downloads.Artifact.Sha1, library.Downloads.Artifact.Url));
+            Context.AddLibrary(
+                new Library(
+                    library.Name,
+                    library.Downloads.Artifact.Path,
+                    library.Downloads.Artifact.Sha1,
+                    library.Downloads.Artifact.Url
+                )
+            );
         // Note: 早些版本的 forge-client.jar 是随 installer.jar 附带的，需要用 local repository 服务来保证 Library.Url
         //       PolylockData 中可以包含 build tasks 来产生缺失但又无法下载的 forge libraries
         //       例如 minecraftforge-client.jar 的 url 为 poly-build://{build}[/{task}]
@@ -53,9 +65,11 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
         // Note: Library.Url 可以改名为 Source
         if (versionJson.Value.Arguments.HasValue)
         {
-            foreach (var argument in versionJson.Value.Arguments.Value.Game) Context.AppendGameArgument(argument);
+            foreach (var argument in versionJson.Value.Arguments.Value.Game)
+                Context.AppendGameArgument(argument);
 
-            foreach (var argument in versionJson.Value.Arguments.Value.Jvm) Context.AppendJvmArguments(argument);
+            foreach (var argument in versionJson.Value.Arguments.Value.Jvm)
+                Context.AppendJvmArguments(argument);
         }
         else if (!string.IsNullOrEmpty(versionJson.Value.MinecraftArguments))
         {
@@ -76,7 +90,8 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
         where TJson : struct
     {
         var entry = archive.GetEntry(fileName);
-        if (entry == null) return null;
+        if (entry == null)
+            return null;
 
         await using var stream = entry.Open();
         using var reader = new StreamReader(stream);
