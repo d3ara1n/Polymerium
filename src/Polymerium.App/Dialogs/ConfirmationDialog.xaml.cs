@@ -6,10 +6,12 @@ namespace Polymerium.App.Dialogs;
 public sealed partial class ConfirmationDialog : ContentDialog
 {
     // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register(nameof(Text), typeof(string), typeof(ConfirmationDialog),
-            new PropertyMetadata(string.Empty));
-
+    public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+        nameof(Text),
+        typeof(string),
+        typeof(ConfirmationDialog),
+        new PropertyMetadata(string.Empty)
+    );
 
     public ConfirmationDialog()
     {

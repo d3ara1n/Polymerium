@@ -22,8 +22,15 @@ public class CheckAvailabilityStage : StageBase
     private readonly ResolveEngine _resolver;
     private readonly SHA1 _sha1;
 
-    public CheckAvailabilityStage(GameInstance instance, SHA1 sha1, IEnumerable<ComponentMeta> metas,
-        DownloadEngine downloader, ResolveEngine resolver, IFileBaseService fileBase, IServiceProvider provider)
+    public CheckAvailabilityStage(
+        GameInstance instance,
+        SHA1 sha1,
+        IEnumerable<ComponentMeta> metas,
+        DownloadEngine downloader,
+        ResolveEngine resolver,
+        IFileBaseService fileBase,
+        IServiceProvider provider
+    )
     {
         _instance = instance;
         _sha1 = sha1;
@@ -38,19 +45,34 @@ public class CheckAvailabilityStage : StageBase
 
     public override async Task<Option<StageBase>> StartAsync()
     {
-        if (Token.IsCancellationRequested) return Error("还原过程取消");
+        if (Token.IsCancellationRequested)
+            return Error("还原过程取消");
         var polylockDataFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json");
         // 不是简单的 md5, 所以文件名也不应该是 .md5
         var polylockHashFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json.hash");
-        if (_fileBase.TryReadAllText(polylockHashFile, out var hash) && hash == _instance.ComputeMetadataHash() &&
-            _fileBase.TryReadAllText(polylockDataFile, out var content))
-
+        if (
+            _fileBase.TryReadAllText(polylockHashFile, out var hash)
+            && hash == _instance.ComputeMetadataHash()
+            && _fileBase.TryReadAllText(polylockDataFile, out var content)
+        )
         {
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
-            return Next(new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader));
+            return Next(
+                new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader)
+            );
         }
 
-        return Next(new BuildPolylockStage(_instance, _sha1, _metas, polylockDataFile, polylockHashFile,
-            _downloader, _resolver, _provider));
+        return Next(
+            new BuildPolylockStage(
+                _instance,
+                _sha1,
+                _metas,
+                polylockDataFile,
+                polylockHashFile,
+                _downloader,
+                _resolver,
+                _provider
+            )
+        );
     }
 }

@@ -11,7 +11,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Accounts;
-using Polymerium.App.Extensions;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
@@ -33,10 +32,17 @@ public sealed class MainViewModel : ObservableObject
     private ContentControl? overlay;
     private NavigationItemModel? selectedPage;
 
-    public MainViewModel(ILogger<MainViewModel> logger, IOverlayService overlayService, InstanceManager instanceManager,
-        AccountManager accountManager, ConfigurationManager configurationManager, ComponentManager componentManager,
+    public MainViewModel(
+        ILogger<MainViewModel> logger,
+        IOverlayService overlayService,
+        InstanceManager instanceManager,
+        AccountManager accountManager,
+        ConfigurationManager configurationManager,
+        ComponentManager componentManager,
         NavigationService navigationService,
-        MemoryStorage memoryStorage, ViewModelContext context)
+        MemoryStorage memoryStorage,
+        ViewModelContext context
+    )
     {
         _logger = logger;
         _overlayService = overlayService;
@@ -55,25 +61,48 @@ public sealed class MainViewModel : ObservableObject
         else
             throw new ArgumentNullException(nameof(overlayService));
         _memoryStorage.Instances.CollectionChanged += Instances_CollectionChanged;
-        _memoryStorage.Accounts.CollectionChanged += Accounts_CollectionChanged;
-        NavigationPages = new ObservableCollection<NavigationItemModel>(instanceManager.GetView().Select(it =>
-            new NavigationItemModel("\xF158", it.Name, typeof(InstanceView), it, it.ThumbnailFile)));
-        NavigationPages.Insert(0,
-            new NavigationItemModel("\xEA8A", "Home", typeof(HomeView),
-                thumbnailSource: "ms-appx:///Assets/Icons/icons8-home-page-48.png"));
-        NavigationPages.Add(new NavigationItemModel("\xF8AA", "Add", typeof(NewInstanceView),
-            thumbnailSource: "ms-appx:///Assets/Icons/icons8-add-new-48.png"));
+        NavigationPages = new ObservableCollection<NavigationItemModel>(
+            instanceManager
+                .GetView()
+                .Select(
+                    it =>
+                        new NavigationItemModel(
+                            "\xF158",
+                            it.Name,
+                            typeof(InstanceView),
+                            it,
+                            it.ThumbnailFile
+                        )
+                )
+        );
+        NavigationPages.Insert(
+            0,
+            new NavigationItemModel(
+                "\xEA8A",
+                "Home",
+                typeof(HomeView),
+                thumbnailSource: "ms-appx:///Assets/Icons/icons8-home-page-48.png"
+            )
+        );
+        NavigationPages.Add(
+            new NavigationItemModel(
+                "\xF8AA",
+                "Add",
+                typeof(NewInstanceView),
+                thumbnailSource: "ms-appx:///Assets/Icons/icons8-add-new-48.png"
+            )
+        );
         SelectedPage = NavigationPages[0];
         NavigationPinnedPages = new NavigationItemModel[]
         {
-            new("\xE115", "Settings", typeof(SettingView),
-                thumbnailSource: "ms-appx:///Assets/Icons/icons8-settings-48.png")
+            new(
+                "\xE115",
+                "Settings",
+                typeof(SettingView),
+                thumbnailSource: "ms-appx:///Assets/Icons/icons8-settings-48.png"
+            )
         };
         SearchBarItems = new ObservableCollection<NavigationSearchBarItemModel>();
-        LogonAccounts = new ObservableCollection<AccountItemModel>();
-        if (_accountManager.TryFindById(_configurationManager.Current.AccountShowcaseId ?? string.Empty,
-                out var account))
-            AccountShowcase = account!.ToModel();
     }
 
     public ViewModelContext Context { get; }
@@ -81,14 +110,13 @@ public sealed class MainViewModel : ObservableObject
     public ObservableCollection<NavigationItemModel> NavigationPages { get; }
     public NavigationItemModel[] NavigationPinnedPages { get; }
 
+    public ObservableCollection<IGameAccount> LogonAccounts => _memoryStorage.Accounts;
+
     public NavigationItemModel? SelectedPage
     {
         get => selectedPage;
         set => SetProperty(ref selectedPage, value);
     }
-
-    public ObservableCollection<AccountItemModel> LogonAccounts { get; }
-    public AccountItemModel? AccountShowcase { get; set; }
 
     public ObservableCollection<NavigationSearchBarItemModel> SearchBarItems { get; }
 
@@ -114,21 +142,6 @@ public sealed class MainViewModel : ObservableObject
         return res;
     }
 
-    public void SwitchAccountTo(AccountItemModel model)
-    {
-        if (SelectedPage?.GameInstance != null)
-        {
-            SelectedPage.GameInstance.BoundAccountId = model.Inner.Id;
-        }
-        else
-        {
-            _configurationManager.Current.AccountShowcaseId = model.Inner.Id;
-            AccountShowcase = model;
-        }
-
-        Context.SelectedAccount = model;
-    }
-
     public void SetNavigateHandler(NavigateHandler handler)
     {
         _navigationService.Register(handler);
@@ -136,77 +149,54 @@ public sealed class MainViewModel : ObservableObject
 
     public void OnNavigatingTo(NavigationItemModel page)
     {
-        if (page.GameInstance != null)
-        {
-            Context.AssociatedInstance = new GameInstanceModel(page.GameInstance);
-            var account = LogonAccounts.FirstOrDefault(x => x.Inner.Id == page.GameInstance.BoundAccountId);
-            Context.SelectedAccount = account;
-        }
-        else
-        {
-            Context.AssociatedInstance = null;
-            Context.SelectedAccount = AccountShowcase;
-        }
+        Context.AssociatedInstance =
+            page.GameInstance != null ? new GameInstanceModel(page.GameInstance) : null;
     }
 
     private void Instances_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-        {
-            switch (e.Action)
+        _dispatcher.TryEnqueue(
+            DispatcherQueuePriority.Normal,
+            () =>
             {
-                case NotifyCollectionChangedAction.Add:
+                switch (e.Action)
                 {
-                    if (e.NewItems != null)
-                        foreach (GameInstance instance in e.NewItems)
-                            NavigationPages.Insert(NavigationPages.Count - 1,
-                                new NavigationItemModel("\xF158", instance.Name, typeof(InstanceView), instance,
-                                    instance.ThumbnailFile));
-                }
-                    break;
+                    case NotifyCollectionChangedAction.Add:
 
-                case NotifyCollectionChangedAction.Remove:
-                {
-                    if (e.OldItems != null)
-                        foreach (GameInstance instance in e.OldItems)
-                        {
-                            var item = NavigationPages.FirstOrDefault(x => x.GameInstance?.Id == instance.Id);
-                            if (item != null) NavigationPages.Remove(item);
-                            // TODO: 当前页面和该实例有关就关闭该页面
-                        }
-                }
-                    break;
-            }
-        });
-    }
-
-    private void Accounts_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        switch (e.Action)
-        {
-            case NotifyCollectionChangedAction.Add:
-            {
-                if (e.NewItems != null)
-                    foreach (IGameAccount a in e.NewItems)
-                        LogonAccounts.Add(a.ToModel());
-            }
-                break;
-
-            case NotifyCollectionChangedAction.Remove:
-            {
-                if (e.OldItems != null)
-                    foreach (IGameAccount r in e.OldItems)
                     {
-                        var model = LogonAccounts.FirstOrDefault(x => x.Inner.Id == r.Id);
-                        if (model != null) LogonAccounts.Remove(model);
+                        if (e.NewItems != null)
+                            foreach (GameInstance instance in e.NewItems)
+                                NavigationPages.Insert(
+                                    NavigationPages.Count - 1,
+                                    new NavigationItemModel(
+                                        "\xF158",
+                                        instance.Name,
+                                        typeof(InstanceView),
+                                        instance,
+                                        instance.ThumbnailFile
+                                    )
+                                );
                     }
-            }
-                break;
+                        break;
 
-            case NotifyCollectionChangedAction.Reset:
-                LogonAccounts.Clear();
-                break;
-        }
+                    case NotifyCollectionChangedAction.Remove:
+
+                    {
+                        if (e.OldItems != null)
+                            foreach (GameInstance instance in e.OldItems)
+                            {
+                                var item = NavigationPages.FirstOrDefault(
+                                    x => x.GameInstance?.Id == instance.Id
+                                );
+                                if (item != null)
+                                    NavigationPages.Remove(item);
+                                // TODO: 当前页面和该实例有关就关闭该页面
+                            }
+                    }
+                        break;
+                }
+            }
+        );
     }
 
     private void OpenAddAccountWizard()
@@ -224,20 +214,13 @@ public sealed class MainViewModel : ObservableObject
             }
             else
             {
-                AccountShowcase = null;
+                Context.AccountShowcase = null;
                 _configurationManager.Current.AccountShowcaseId = null;
             }
 
-            _accountManager.RemoveAccount(Context.SelectedAccount.Inner);
+            _accountManager.RemoveAccount(Context.SelectedAccount);
             Context.SelectedAccount = null;
         }
-    }
-
-
-    public void FillMenuItems()
-    {
-        // FlyoutSubMenu 不能绑定 ItemSource 就真的**
-        foreach (var model in _memoryStorage.Accounts) LogonAccounts.Add(model.ToModel());
     }
 
     public IEnumerable<GameInstance> GetViewOfInstance()

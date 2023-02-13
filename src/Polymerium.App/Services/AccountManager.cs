@@ -15,8 +15,11 @@ public sealed class AccountManager : IDisposable
     {
         _memoryStorage = memoryStorage;
         _dataStorage = dataStorage;
-        var accounts = dataStorage.LoadList<AccountModel, IGameAccount>(() => Enumerable.Empty<IGameAccount>());
-        foreach (var account in accounts) _memoryStorage.Accounts.Add(account);
+        var accounts = dataStorage.LoadList<AccountModel, IGameAccount>(
+            () => Enumerable.Empty<IGameAccount>()
+        );
+        foreach (var account in accounts)
+            _memoryStorage.Accounts.Add(account);
     }
 
     public void Dispose()

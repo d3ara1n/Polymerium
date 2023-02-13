@@ -5,8 +5,13 @@ namespace Polymerium.App.Models;
 
 public class RecentPlayedItemModel
 {
-    public RecentPlayedItemModel(string instanceId, string? thumbnailFile, string name, DateTimeOffset? lastPlayedAt,
-        ICommand command)
+    public RecentPlayedItemModel(
+        string instanceId,
+        string? thumbnailFile,
+        string name,
+        DateTimeOffset? lastPlayedAt,
+        ICommand command
+    )
     {
         InstanceId = instanceId;
         ThumbnailFile = thumbnailFile;

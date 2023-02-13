@@ -7,7 +7,8 @@ public class NullToParameterConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        if (value == null) return parameter;
+        if (value == null)
+            return parameter;
         return value;
     }
 

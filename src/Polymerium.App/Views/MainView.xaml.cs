@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Specialized;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -17,54 +16,24 @@ public sealed partial class MainView : Page
         ViewModel = App.Current.Provider.GetRequiredService<MainViewModel>();
         InitializeComponent();
         ViewModel.SetNavigateHandler(Navigate);
-
-        ViewModel.LogonAccounts.CollectionChanged += LogonAccounts_CollectionChanged;
     }
 
     public MainViewModel ViewModel { get; }
 
-    private void LogonAccounts_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        switch (e.Action)
-        {
-            case NotifyCollectionChangedAction.Add:
-
-                if (e.NewItems != null)
-                    foreach (AccountItemModel a in e.NewItems)
-                    {
-                        var item = new MenuFlyoutItem { Text = a.Inner.Nickname, Tag = a };
-                        item.Click += (flyout, _) =>
-                            ViewModel.SwitchAccountTo((AccountItemModel)((MenuFlyoutItem)flyout).Tag);
-                        SwitchToSubMenu.Items.Add(item);
-                    }
-
-                break;
-
-            case NotifyCollectionChangedAction.Remove:
-                if (e.OldItems != null)
-                    foreach (AccountItemModel a in e.OldItems)
-                    {
-                        var item = SwitchToSubMenu.Items.FirstOrDefault(x =>
-                            ((AccountItemModel)x.Tag).Inner.Id == a.Inner.Id);
-                        if (item != null)
-                            SwitchToSubMenu.Items.Remove(item);
-                    }
-
-                break;
-
-            case NotifyCollectionChangedAction.Reset:
-                SwitchToSubMenu.Items.Clear();
-                break;
-        }
-    }
-
-    private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    private void OnSelectionChanged(
+        NavigationView sender,
+        NavigationViewSelectionChangedEventArgs args
+    )
     {
         var item = sender.SelectedItem as NavigationItemModel;
         if (item != null)
         {
             ViewModel.OnNavigatingTo(item);
-            RootFrame.Navigate(item.SourcePage, item.GameInstance, new SuppressNavigationTransitionInfo());
+            RootFrame.Navigate(
+                item.SourcePage,
+                item.GameInstance,
+                new SuppressNavigationTransitionInfo()
+            );
             RootFrame.BackStack.Clear();
         }
         else
@@ -82,39 +51,43 @@ public sealed partial class MainView : Page
     {
         if (view == typeof(InstanceView) && parameter is string instanceId)
         {
-            if (ViewModel.NavigationPages.Where(x => x.SourcePage == typeof(InstanceView))
-                    .FirstOrDefault(x => x.GameInstance?.Id == instanceId) is { } instanceView)
+            if (
+                ViewModel.NavigationPages
+                    .Where(x => x.SourcePage == typeof(InstanceView))
+                    .FirstOrDefault(x => x.GameInstance?.Id == instanceId) is
+                { } instanceView
+            )
                 MainNavigationBar.SelectedItem = instanceView;
             else
                 throw new ArgumentException($"parameter {parameter} not found as game instance id");
         }
         else
         {
-            if (ViewModel.NavigationPages.FirstOrDefault(x => x.SourcePage == view) is
-                {
-                } notPinned)
+            if (
+                ViewModel.NavigationPages.FirstOrDefault(x => x.SourcePage == view) is { } notPinned
+            )
                 MainNavigationBar.SelectedItem = notPinned;
-            else if (ViewModel.NavigationPinnedPages.FirstOrDefault(x => x.SourcePage == view) is
-                     {
-                     } pinned)
+            else if (
+                ViewModel.NavigationPinnedPages.FirstOrDefault(x => x.SourcePage == view) is
+                { } pinned
+            )
                 MainNavigationBar.SelectedItem = pinned;
             else
                 RootFrame.Navigate(view, parameter, new SuppressNavigationTransitionInfo());
         }
     }
 
-    private void Page_Loaded(object sender, RoutedEventArgs e)
-    {
-        ViewModel.FillMenuItems();
-    }
-
-    private void SearchBar_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    private void SearchBar_OnTextChanged(
+        AutoSuggestBox sender,
+        AutoSuggestBoxTextChangedEventArgs args
+    )
     {
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
         {
             var input = sender.Text;
 
-            var result = ViewModel.GetViewOfInstance()
+            var result = ViewModel
+                .GetViewOfInstance()
                 .Where(x => string.IsNullOrEmpty(input) || x.Name.StartsWith(sender.Text))
                 .Select(x => new NavigationSearchBarItemModel(x.Name, "\xF158", x.Id))
                 .Append(new NavigationSearchBarItemModel($"搜索: {input}", "\xE721"));
@@ -122,7 +95,10 @@ public sealed partial class MainView : Page
         }
     }
 
-    private void SearchBar_OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    private void SearchBar_OnSuggestionChosen(
+        AutoSuggestBox sender,
+        AutoSuggestBoxSuggestionChosenEventArgs args
+    )
     {
         sender.Text = string.Empty;
         var model = (NavigationSearchBarItemModel)args.SelectedItem;
@@ -136,7 +112,10 @@ public sealed partial class MainView : Page
         }
     }
 
-    private void SearchBar_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    private void SearchBar_OnQuerySubmitted(
+        AutoSuggestBox sender,
+        AutoSuggestBoxQuerySubmittedEventArgs args
+    )
     {
         // TODO: Go to Search Center
     }

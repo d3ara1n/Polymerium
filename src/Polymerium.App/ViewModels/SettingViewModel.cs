@@ -98,7 +98,8 @@ public class SettingViewModel : ObservableObject
         get => jvmMaxMemory;
         set
         {
-            if (SetProperty(ref jvmMaxMemory, value)) Global.JvmMaxMemory = value;
+            if (SetProperty(ref jvmMaxMemory, value))
+                Global.JvmMaxMemory = value;
         }
     }
 
@@ -107,7 +108,8 @@ public class SettingViewModel : ObservableObject
         get => windowHeight;
         set
         {
-            if (SetProperty(ref windowHeight, value)) Global.WindowHeight = value;
+            if (SetProperty(ref windowHeight, value))
+                Global.WindowHeight = value;
         }
     }
 
@@ -116,7 +118,8 @@ public class SettingViewModel : ObservableObject
         get => windowWidth;
         set
         {
-            if (SetProperty(ref windowWidth, value)) Global.WindowWidth = value;
+            if (SetProperty(ref windowWidth, value))
+                Global.WindowWidth = value;
         }
     }
 
@@ -125,13 +128,17 @@ public class SettingViewModel : ObservableObject
         var dialog = new JavaPickerDialog
         {
             XamlRoot = App.Current.Window.Content.XamlRoot,
-            JavaInstallations = _javaManager.QueryJavaInstallations().Select(x =>
-            {
-                var option = _javaManager.VerifyJavaHome(x);
-                if (option.TryUnwrap(out var model))
-                    return model;
-                return null;
-            }).Where(x => x != null).Select(x => x!)
+            JavaInstallations = _javaManager
+                .QueryJavaInstallations()
+                .Select(x =>
+                {
+                    var option = _javaManager.VerifyJavaHome(x);
+                    if (option.TryUnwrap(out var model))
+                        return model;
+                    return null;
+                })
+                .Where(x => x != null)
+                .Select(x => x!)
         };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             SelectedJava = dialog.SelectedJava;

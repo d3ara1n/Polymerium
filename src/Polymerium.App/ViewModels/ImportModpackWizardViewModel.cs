@@ -39,15 +39,20 @@ public class ImportModpackWizardViewModel : ObservableObject
         _fileName = fileName;
     }
 
-    public async Task ExtractInformationAsync(Action<Result<ImportResult, GameImportError>, bool> callback)
+    public async Task ExtractInformationAsync(
+        Action<Result<ImportResult, GameImportError>, bool> callback
+    )
     {
         var result = await _importer.ImportAsync(_fileName);
-        if (result.IsOk(out var import)) _importResult = import!;
+        if (result.IsOk(out var import))
+            _importResult = import!;
 
         callback(result, false);
     }
 
-    public async Task ApplyExtractionAsync(Action<Result<ImportResult, GameImportError>, bool> callback)
+    public async Task ApplyExtractionAsync(
+        Action<Result<ImportResult, GameImportError>, bool> callback
+    )
     {
         // TODO: InstanceName 做 validation
         var result = await _importer.PostImportAsync(_importResult!);

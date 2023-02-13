@@ -14,7 +14,6 @@ public sealed partial class MainWindow : WindowEx
     {
         InitializeComponent();
 
-
         if (AppWindowTitleBar.IsCustomizationSupported())
         {
             SetTitleBar(Main.TitleBarDragArea);
@@ -22,7 +21,10 @@ public sealed partial class MainWindow : WindowEx
         }
         else
         {
-            (Main.ColumnRight.Width, Main.ColumnLeft.Width) = (Main.ColumnLeft.Width, Main.ColumnRight.Width);
+            (Main.ColumnRight.Width, Main.ColumnLeft.Width) = (
+                Main.ColumnLeft.Width,
+                Main.ColumnRight.Width
+            );
         }
 
         if (Environment.OSVersion.Version.Major >= 10)

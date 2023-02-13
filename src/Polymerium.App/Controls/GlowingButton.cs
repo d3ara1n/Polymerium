@@ -8,9 +8,12 @@ namespace Polymerium.App.Controls;
 public class GlowingButton : ButtonBase
 {
     // Using a DependencyProperty as the backing store for GlowColor.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty GlowColorProperty =
-        DependencyProperty.Register(nameof(GlowColor), typeof(Color), typeof(GlowingButton),
-            new PropertyMetadata(null));
+    public static readonly DependencyProperty GlowColorProperty = DependencyProperty.Register(
+        nameof(GlowColor),
+        typeof(Color),
+        typeof(GlowingButton),
+        new PropertyMetadata(null)
+    );
 
     public GlowingButton()
     {

@@ -7,7 +7,8 @@ public class SynchronizedCollection<T> : ObservableCollection<T>
 {
     private readonly IList<T> inner;
 
-    public SynchronizedCollection(IList<T> from) : base(from)
+    public SynchronizedCollection(IList<T> from)
+        : base(from)
     {
         inner = from;
     }
@@ -23,7 +24,6 @@ public class SynchronizedCollection<T> : ObservableCollection<T>
         inner.RemoveAt(index);
         base.RemoveItem(index);
     }
-
 
     protected override void ClearItems()
     {

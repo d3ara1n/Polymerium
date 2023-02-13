@@ -29,10 +29,16 @@ public class BuildPolylockStage : StageBase
     private readonly ResolveEngine _resolver;
     private readonly SHA1 _sha1;
 
-    public BuildPolylockStage(GameInstance instance, SHA1 sha1, IEnumerable<ComponentMeta> metas, Uri polylockDataFile,
+    public BuildPolylockStage(
+        GameInstance instance,
+        SHA1 sha1,
+        IEnumerable<ComponentMeta> metas,
+        Uri polylockDataFile,
         Uri polylockHashFile,
-        DownloadEngine downloader, ResolveEngine resolver,
-        IServiceProvider provider)
+        DownloadEngine downloader,
+        ResolveEngine resolver,
+        IServiceProvider provider
+    )
     {
         _instance = instance;
         _sha1 = sha1;
@@ -56,22 +62,26 @@ public class BuildPolylockStage : StageBase
 
     public override async Task<Option<StageBase>> StartAsync()
     {
-        if (Token.IsCancellationRequested) return Cancel();
+        if (Token.IsCancellationRequested)
+            return Cancel();
         try
         {
             var queue = BuildQueue(_instance.Metadata.Components);
-            var installerTypes = queue.Select(x => (x.Item1, _installers.First(y => y.Key == x.Item2.Identity).Value));
+            var installerTypes = queue.Select(
+                x => (x.Item1, _installers.First(y => y.Key == x.Item2.Identity).Value)
+            );
             var context = new ComponentInstallerContext(_instance);
             foreach (var (component, type) in installerTypes)
             {
                 Report($"解析 {component.Identity}({component.Version}) 元数据");
-                var installer = (ComponentInstallerBase)ActivatorUtilities.CreateInstance(_provider, type);
+                var installer = (ComponentInstallerBase)
+                    ActivatorUtilities.CreateInstance(_provider, type);
                 installer.Context = context;
                 installer.Token = Token;
                 var result = await installer.StartAsync(component);
-                if (result.IsErr(out var message)) return Error(message!);
+                if (result.IsErr(out var message))
+                    return Error(message!);
             }
-
 
             var polylock = context.Build();
             var tasks = new List<Task<Result<ResolveResult, ResolveResultError>>>();
@@ -81,28 +91,32 @@ public class BuildPolylockStage : StageBase
 
             await Task.WhenAll(tasks);
             var errors = tasks.Count(x => x.Result.IsErr(out var _));
-            if (errors > 0) return Error($"{errors}/{tasks.Count} 条附件资源解析错误");
+            if (errors > 0)
+                return Error($"{errors}/{tasks.Count} 条附件资源解析错误");
 
             var product = new List<PolylockAttachment>(polylock.Attachments);
-            product.AddRange(tasks.Select(x =>
-            {
-                var result = x.Result.Unwrap()!;
-                return new PolylockAttachment
+            product.AddRange(
+                tasks.Select(x =>
                 {
-                    Source = result.Source,
-                    Sha1 = result.Hash,
-                    Target = new Uri(new Uri($"poly-file://{_instance.Id}/"), result.Path)
-                };
-            }));
+                    var result = x.Result.Unwrap()!;
+                    return new PolylockAttachment
+                    {
+                        Source = result.Source,
+                        Sha1 = result.Hash,
+                        Target = new Uri(new Uri($"poly-file://{_instance.Id}/"), result.Path)
+                    };
+                })
+            );
             polylock.Attachments = product;
-
 
             var polylockData = JsonConvert.SerializeObject(polylock);
             _fileBase.WriteAllText(_polylockDataFile, polylockData);
             var md5 = _instance.ComputeMetadataHash();
             _fileBase.WriteAllText(_polylockHashFile, md5);
 
-            return Next(new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader));
+            return Next(
+                new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader)
+            );
         }
         catch (Exception e)
         {
@@ -112,14 +126,19 @@ public class BuildPolylockStage : StageBase
 
     private IEnumerable<(Component, ComponentMeta)> BuildQueue(IEnumerable<Component> components)
     {
-        return components.Select(x => (x, _metas.First(y => y.Identity == x.Identity)))
-            .Select(x => (x, MeasureDependencyDepth(x.Item2))).OrderBy(x => x.Item2).Select(y => y.x);
+        return components
+            .Select(x => (x, _metas.First(y => y.Identity == x.Identity)))
+            .Select(x => (x, MeasureDependencyDepth(x.Item2)))
+            .OrderBy(x => x.Item2)
+            .Select(y => y.x);
     }
 
     private uint MeasureDependencyDepth(ComponentMeta meta)
     {
         return meta.Dependencies.Any()
-            ? meta.Dependencies.Max(x => MeasureDependencyDepth(_metas.First(y => y.Identity == x)) + 1)
+            ? meta.Dependencies.Max(
+                x => MeasureDependencyDepth(_metas.First(y => y.Identity == x)) + 1
+            )
             : 0;
     }
 }

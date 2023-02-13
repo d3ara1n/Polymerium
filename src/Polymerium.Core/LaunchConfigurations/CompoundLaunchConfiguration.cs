@@ -8,7 +8,10 @@ public class CompoundLaunchConfiguration : LaunchConfigurationBase
     private readonly LaunchConfigurationBase _first;
     private readonly LaunchConfigurationBase _second;
 
-    public CompoundLaunchConfiguration(LaunchConfigurationBase first, LaunchConfigurationBase second)
+    public CompoundLaunchConfiguration(
+        LaunchConfigurationBase first,
+        LaunchConfigurationBase second
+    )
     {
         _first = first;
         _second = second;

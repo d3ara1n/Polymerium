@@ -11,7 +11,11 @@ using Polymerium.App.Views.AddAccountWizards;
 
 namespace Polymerium.App.Views;
 
-public delegate void AddAccountWizardStateHandler(Type? nextPage, bool isLast = false, Func<bool>? finishAction = null);
+public delegate void AddAccountWizardStateHandler(
+    Type? nextPage,
+    bool isLast = false,
+    Func<bool>? finishAction = null
+);
 
 public sealed partial class AddAccountWizardDialog : CustomDialog
 {

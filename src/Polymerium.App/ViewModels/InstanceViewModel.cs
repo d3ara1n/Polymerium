@@ -21,8 +21,13 @@ public class InstanceViewModel : ObservableObject
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
 
-    public InstanceViewModel(InstanceManager instanceManager, IOverlayService overlayService,
-        ComponentManager componentManager, NavigationService navigationService, ViewModelContext context)
+    public InstanceViewModel(
+        InstanceManager instanceManager,
+        IOverlayService overlayService,
+        ComponentManager componentManager,
+        NavigationService navigationService,
+        ViewModelContext context
+    )
     {
         _instanceManager = instanceManager;
         _overlayService = overlayService;
@@ -32,32 +37,48 @@ public class InstanceViewModel : ObservableObject
         CoreVersion = Context.AssociatedInstance.Inner.GetCoreVersion() ?? "N/A";
         StartCommand = new RelayCommand(Start);
         GotoConfigurationViewCommand = new RelayCommand(GotoConfigurationView);
-        Components =
-            new ObservableCollection<ComponentTagItemModel>(
-                BuildComponentModels(Context.AssociatedInstance!.Components));
+        Components = new ObservableCollection<ComponentTagItemModel>(
+            BuildComponentModels(Context.AssociatedInstance!.Components)
+        );
         InformationItems = new ObservableCollection<InstanceInformationItemModel>
         {
             new("\uF427", "标志符", Context.AssociatedInstance.Id),
-            new("\uE125", "作者", string.IsNullOrEmpty(Context.AssociatedInstance.Author)
-                ? "(未标注)"
-                : Context.AssociatedInstance.Author),
+            new(
+                "\uE125",
+                "作者",
+                string.IsNullOrEmpty(Context.AssociatedInstance.Author)
+                    ? "(未标注)"
+                    : Context.AssociatedInstance.Author
+            ),
             new("\uE121", "游戏时间", Context.AssociatedInstance.PlayTime.Humanize()),
-            new("\uEC92", "最近一次游玩", Context.AssociatedInstance.LastPlay == null
-                ? "从未"
-                : Context.AssociatedInstance.LastPlay.Humanize()),
+            new(
+                "\uEC92",
+                "最近一次游玩",
+                Context.AssociatedInstance.LastPlay == null
+                    ? "从未"
+                    : Context.AssociatedInstance.LastPlay.Humanize()
+            ),
             new("\uEB50", "游玩次数", $"{Context.AssociatedInstance.PlayCount} 次"),
-            new("\uEB05", "启动成功率", Context.AssociatedInstance.PlayCount == 0
-                ? "N/A"
-                : $"{(Context.AssociatedInstance.PlayCount - Context.AssociatedInstance.ExceptionCount) / (float)Context.AssociatedInstance.PlayCount * 100}%"),
+            new(
+                "\uEB05",
+                "启动成功率",
+                Context.AssociatedInstance.PlayCount == 0
+                    ? "N/A"
+                    : $"{(Context.AssociatedInstance.PlayCount - Context.AssociatedInstance.ExceptionCount) / (float)Context.AssociatedInstance.PlayCount * 100}%"
+            ),
             new("\uEC92", "创建时间", Context.AssociatedInstance.CreatedAt.Humanize())
             {
                 Caption = "创建时间",
                 IconGlyph = "\uEC92",
                 Content = Context.AssociatedInstance.CreatedAt.Humanize()
             },
-            new("\uEC92", "最近一次还原", Context.AssociatedInstance.LastRestore == null
-                ? "从未"
-                : Context.AssociatedInstance.LastRestore.Humanize())
+            new(
+                "\uEC92",
+                "最近一次还原",
+                Context.AssociatedInstance.LastRestore == null
+                    ? "从未"
+                    : Context.AssociatedInstance.LastRestore.Humanize()
+            )
         };
     }
 
@@ -82,15 +103,20 @@ public class InstanceViewModel : ObservableObject
         _overlayService.Show(dialog);
     }
 
-    private IEnumerable<ComponentTagItemModel> BuildComponentModels(IEnumerable<Component> components)
+    private IEnumerable<ComponentTagItemModel> BuildComponentModels(
+        IEnumerable<Component> components
+    )
     {
-        return components.Select(
-            x =>
-            {
-                _componentManager.TryFindByIdentity(x.Identity, out var meta);
-                return new ComponentTagItemModel(meta?.FriendlyName ?? x.Identity, x.Version, x.Identity,
-                    $"{x.Identity}:{x.Version}");
-            });
+        return components.Select(x =>
+        {
+            _componentManager.TryFindByIdentity(x.Identity, out var meta);
+            return new ComponentTagItemModel(
+                meta?.FriendlyName ?? x.Identity,
+                x.Version,
+                x.Identity,
+                $"{x.Identity}:{x.Version}"
+            );
+        });
     }
 
     public void GotoConfigurationView()

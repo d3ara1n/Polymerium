@@ -19,8 +19,13 @@ public class LoadAssetIndexStage : StageBase
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
 
-    public LoadAssetIndexStage(GameInstance instance, SHA1 sha1, PolylockData polylock, IFileBaseService fileBase,
-        DownloadEngine downloader)
+    public LoadAssetIndexStage(
+        GameInstance instance,
+        SHA1 sha1,
+        PolylockData polylock,
+        IFileBaseService fileBase,
+        DownloadEngine downloader
+    )
     {
         _instance = instance;
         _sha1 = sha1;
@@ -33,30 +38,47 @@ public class LoadAssetIndexStage : StageBase
 
     public override async Task<Option<StageBase>> StartAsync()
     {
-        if (Token.IsCancellationRequested) return Cancel();
+        if (Token.IsCancellationRequested)
+            return Cancel();
         var assetIndexFile = new Uri($"poly-file:///assets/indexes/{_polylock.AssetIndex.Id}.json");
         string? content = null;
-        if (!await _fileBase.VerifyHashAsync(assetIndexFile, _polylock.AssetIndex.Sha1, _sha1) ||
-            !_fileBase.TryReadAllText(assetIndexFile, out content))
+        if (
+            !await _fileBase.VerifyHashAsync(assetIndexFile, _polylock.AssetIndex.Sha1, _sha1)
+            || !_fileBase.TryReadAllText(assetIndexFile, out content)
+        )
         {
-            if (Token.IsCancellationRequested) return Cancel();
+            if (Token.IsCancellationRequested)
+                return Cancel();
             Exception? exception = null;
-            await Wapoo.Wohoo(_polylock.AssetIndex.Url)
+            await Wapoo
+                .Wohoo(_polylock.AssetIndex.Url)
                 .WhenException<Exception>(e => exception = e)
-                .ForAnyResult(async (_, stream) =>
-                {
-                    using var reader = new StreamReader(stream);
-                    content = await reader.ReadToEndAsync();
-                })
+                .ForAnyResult(
+                    async (_, stream) =>
+                    {
+                        using var reader = new StreamReader(stream);
+                        content = await reader.ReadToEndAsync();
+                    }
+                )
                 .FetchAsync();
-            if (content == null) return Error(exception?.Message ?? "获取资源索引失败", exception);
+            if (content == null)
+                return Error(exception?.Message ?? "获取资源索引失败", exception);
             _fileBase.WriteAllText(assetIndexFile, content);
         }
 
         try
         {
             var assetIndex = JsonConvert.DeserializeObject<AssetsIndex>(content);
-            return Next(new CompleteAssetsStage(_instance, _polylock, assetIndex, _sha1, _fileBase, _downloader));
+            return Next(
+                new CompleteAssetsStage(
+                    _instance,
+                    _polylock,
+                    assetIndex,
+                    _sha1,
+                    _fileBase,
+                    _downloader
+                )
+            );
         }
         catch (Exception e)
         {

@@ -18,7 +18,11 @@ public class AccountModel : RefinedModelBase<IGameAccount>
     {
         TypeName = data.GetType().AssemblyQualifiedName;
         var text = JsonConvert.SerializeObject(data);
-        Juice = ProtectedData.Protect(Encoding.UTF8.GetBytes(text), POLY_SIGNED, DataProtectionScope.CurrentUser);
+        Juice = ProtectedData.Protect(
+            Encoding.UTF8.GetBytes(text),
+            POLY_SIGNED,
+            DataProtectionScope.CurrentUser
+        );
     }
 
     public override IGameAccount Extract()

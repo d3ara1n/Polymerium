@@ -12,17 +12,18 @@ internal class AssetsIndexConverter : JsonConverter
         return objectType == typeof(AssetsIndex);
     }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
-        JsonSerializer serializer)
+    public override object ReadJson(
+        JsonReader reader,
+        Type objectType,
+        object? existingValue,
+        JsonSerializer serializer
+    )
     {
         var index = JObject.Load(reader);
         var objects = index.Value<JObject>("objects")!;
         var properties = objects.Properties();
         var items = new List<AssetsIndexItem>();
-        var res = new AssetsIndex
-        {
-            Objects = items
-        };
+        var res = new AssetsIndex { Objects = items };
         foreach (var prop in properties)
         {
             var item = new AssetsIndexItem();

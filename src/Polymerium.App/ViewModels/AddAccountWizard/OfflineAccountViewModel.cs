@@ -45,16 +45,22 @@ public class OfflineAccountViewModel : ObservableValidator
         get => nickname;
         set
         {
-            SetProperty(ref nickname, value, true);
-            EmptyUUID = NameUUIDFromNickname(value == null ? string.Empty : value);
+            if (SetProperty(ref nickname, value, true))
+                EmptyUUID = NameUUIDFromNickname(value);
         }
     }
 
-    public string EmptyUUID { get; private set; } = Guid.NewGuid().ToString();
+    private string emptyUUID;
 
-    private string NameUUIDFromNickname(string nickname)
+    public string EmptyUUID
     {
-        var hash = md5.ComputeHash(Encoding.UTF8.GetBytes($"OfflinePlayer::{nickname}"));
+        get => emptyUUID;
+        set => SetProperty(ref emptyUUID, value);
+    }
+
+    private string NameUUIDFromNickname(string name)
+    {
+        var hash = md5.ComputeHash(Encoding.UTF8.GetBytes($"OfflinePlayer:{name}"));
         hash[6] &= 0x0f;
         hash[6] |= 0x30;
         hash[8] &= 0x3f;
@@ -65,8 +71,11 @@ public class OfflineAccountViewModel : ObservableValidator
 
     public void Register()
     {
-        var account = new OfflineAccount(Guid.NewGuid().ToString(), Nickname,
-            string.IsNullOrEmpty(UUID) ? EmptyUUID : UUID);
+        var account = new OfflineAccount(
+            Guid.NewGuid().ToString(),
+            string.IsNullOrEmpty(UUID) ? EmptyUUID : UUID,
+            Nickname
+        );
         _accountManager.AddAccount(account);
     }
 }

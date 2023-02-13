@@ -2,8 +2,14 @@
 
 public class JavaInstallationModel
 {
-    public JavaInstallationModel(string implementor, string javaVersion, string osArch, string osName, string homePath,
-        string summary)
+    public JavaInstallationModel(
+        string implementor,
+        string javaVersion,
+        string osArch,
+        string osName,
+        string homePath,
+        string summary
+    )
     {
         Implementor = implementor;
         JavaVersion = javaVersion;

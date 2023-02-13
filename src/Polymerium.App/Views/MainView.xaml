@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:models="using:Polymerium.App.Models"
-    mc:Ignorable="d" Loaded="Page_Loaded">
+    mc:Ignorable="d">
 
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
         <Rectangle x:FieldModifier="Public" x:Name="FakeBackground" Grid.ColumnSpan="9" Grid.RowSpan="9"
@@ -65,26 +65,27 @@
             SelectionChanged="OnSelectionChanged">
             <NavigationView.PaneCustomContent>
                 <Button Style="{StaticResource IconButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.Context.SelectedAccount.Nickname,Mode=OneWay,FallbackValue=未登录}"
                         Height="60" Width="70" Margin="5">
-                    <Button.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                Text="{x:Bind ViewModel.Context.SelectedAccount.Inner.Nickname,Mode=OneWay,Converter={StaticResource NullToParameterConverter},ConverterParameter=未登录}" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutSubItem x:Name="SwitchToSubMenu" Text="切换到" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="刷新" />
-                            <MenuFlyoutItem Text="注销"
-                                            IsEnabled="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
-                                            Command="{x:Bind ViewModel.RemoveAccountCommand}" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}" />
-                        </MenuFlyout>
-                    </Button.ContextFlyout>
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <TextBlock Text="本页面 WIP, 会在未来重做" />
+                                <Button Content="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}" />
+                                <Button Content="刷新" />
+                                <Button Content="注销"
+                                        IsEnabled="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
+                                        Command="{x:Bind ViewModel.RemoveAccountCommand}" />
+                                <ListView x:Name="AccountSelection"
+                                          SelectedValue="{x:Bind ViewModel.Context.SelectedAccount,Mode=TwoWay}"
+                                          DisplayMemberPath="Nickname"
+                                          ItemsSource="{x:Bind ViewModel.LogonAccounts}" />
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
                     <toolkit:ImageEx
-                        Source="{x:Bind ViewModel.Context.SelectedAccount.AvatarFaceSource,Mode=OneWay}"
-                        Stretch="Fill" PlaceholderStretch="Fill"
+                        Source="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,FallbackValue={x:Null},Converter={StaticResource AccountToFaceAvatarConverter}}"
+                        Stretch="UniformToFill" PlaceholderStretch="UniformToFill"
                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_face.png" Margin="5" />
                 </Button>
             </NavigationView.PaneCustomContent>

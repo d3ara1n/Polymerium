@@ -24,7 +24,9 @@ public class ResolveEngine
     {
         _resolvers = resolvers;
         // 保证 DomainName 为 null 最后被匹配到
-        _tuples = _resolvers.SelectMany(GetTuplesInType).OrderByDescending(x => x.DomainName?.Length ?? -1);
+        _tuples = _resolvers
+            .SelectMany(GetTuplesInType)
+            .OrderByDescending(x => x.DomainName?.Length ?? -1);
     }
 
     private IEnumerable<ResolverTuple> GetTuplesInType(ResourceResolverBase resolver)
@@ -36,8 +38,13 @@ public class ResolveEngine
         var methods = res.GetMethods();
         foreach (var method in methods)
             // 这不是 HyperaiX.UnitBase，对返回值严格要求
-            if (method.IsPublic && (method.ReturnType == typeof(Result<ResolveResult, ResolveResultError>) ||
-                                    method.ReturnType == typeof(Task<Result<ResolveResult, ResolveResultError>>)))
+            if (
+                method.IsPublic
+                && (
+                    method.ReturnType == typeof(Result<ResolveResult, ResolveResultError>)
+                    || method.ReturnType == typeof(Task<Result<ResolveResult, ResolveResultError>>)
+                )
+            )
             {
                 var methodType = method.GetCustomAttribute<ResourceTypeAttribute>();
                 var expression = method.GetCustomAttribute<ResourceExpressionAttribute>();
@@ -45,12 +52,21 @@ public class ResolveEngine
                 {
                     var realType = methodType ?? type;
                     if (realType != null)
-                        yield return new ResolverTuple(realType.TypeName, domainName, method, expression, resolver);
+                        yield return new ResolverTuple(
+                            realType.TypeName,
+                            domainName,
+                            method,
+                            expression,
+                            resolver
+                        );
                 }
             }
     }
 
-    public async Task<Result<ResolveResult, ResolveResultError>> ResolveAsync(GameInstance instance, Uri resource)
+    public async Task<Result<ResolveResult, ResolveResultError>> ResolveAsync(
+        GameInstance instance,
+        Uri resource
+    )
     {
         if (resource.Scheme == "poly-res")
         {
@@ -58,9 +74,15 @@ public class ResolveEngine
             var domain = !string.IsNullOrEmpty(resource.UserInfo) ? resource.UserInfo : null;
             var expression = resource.GetComponents(UriComponents.Path, UriFormat.Unescaped);
             var query = HttpUtility.ParseQueryString(resource.Query);
-            var resolver = _tuples.FirstOrDefault(x => type == x.TypeName && (domain == null
-                ? x.DomainName == null
-                : x.DomainName == domain || x.DomainName == null));
+            var resolver = _tuples.FirstOrDefault(
+                x =>
+                    type == x.TypeName
+                    && (
+                        domain == null
+                            ? x.DomainName == null
+                            : x.DomainName == domain || x.DomainName == null
+                    )
+            );
             if (resolver != null)
             {
                 // prepare path arguments
@@ -72,18 +94,12 @@ public class ResolveEngine
                         {
                             var name = group.Name;
                             var value = group.Value;
-                            builder.Property()
-                                .Named(name)
-                                .Typed(typeof(string))
-                                .WithObject(value);
+                            builder.Property().Named(name).Typed(typeof(string)).WithObject(value);
                         }
 
                 // prepare query arguments
                 foreach (string key in query.Keys)
-                    builder.Property()
-                        .Named(key)
-                        .Typed(typeof(string))
-                        .WithObject(query.Get(key));
+                    builder.Property().Named(key).Typed(typeof(string)).WithObject(query.Get(key));
 
                 var bank = builder.Build();
                 var context = new ResolverContext(instance);
@@ -97,20 +113,32 @@ public class ResolveEngine
         throw new ArgumentException("Scheme only accepts 'poly-res'", nameof(resource));
     }
 
-    private Task<Result<ResolveResult, ResolveResultError>> ExecuteAsAsyncStateMachine(MethodInfo method,
+    private Task<Result<ResolveResult, ResolveResultError>> ExecuteAsAsyncStateMachine(
+        MethodInfo method,
         object subject,
-        Bank bank)
+        Bank bank
+    )
     {
         var arguments = bank.Serve(method);
         if (method.GetCustomAttribute<AsyncStateMachineAttribute>() != null)
-            return (Task<Result<ResolveResult, ResolveResultError>>)(method.Invoke(subject, arguments) ??
-                                                                     Task.FromResult(
-                                                                         Result<ResolveResult, ResolveResultError>.Err(
-                                                                             ResolveResultError.Unknown)));
-        return Task.Run(() => method.Invoke(subject, arguments) as Result<ResolveResult, ResolveResultError> ??
-                              Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.Unknown));
+            return (Task<Result<ResolveResult, ResolveResultError>>)(
+                method.Invoke(subject, arguments)
+                ?? Task.FromResult(
+                    Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.Unknown)
+                )
+            );
+        return Task.Run(
+            () =>
+                method.Invoke(subject, arguments) as Result<ResolveResult, ResolveResultError>
+                ?? Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.Unknown)
+        );
     }
 
-    private record ResolverTuple(string TypeName, string? DomainName, MethodInfo Method,
-        ResourceExpressionAttribute Expression, ResourceResolverBase Self);
+    private record ResolverTuple(
+        string TypeName,
+        string? DomainName,
+        MethodInfo Method,
+        ResourceExpressionAttribute Expression,
+        ResourceResolverBase Self
+    );
 }

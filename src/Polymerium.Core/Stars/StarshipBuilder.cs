@@ -14,11 +14,7 @@ public class StarshipBuilder : IBuilder<Starship>
 
     public StarshipBuilder AddCrate(string label, string content)
     {
-        var crate = new Crate
-        {
-            Label = label,
-            Content = content
-        };
+        var crate = new Crate { Label = label, Content = content };
         return AddCrate(crate);
     }
 
@@ -30,14 +26,16 @@ public class StarshipBuilder : IBuilder<Starship>
 
     public StarshipBuilder AddCargo(IEnumerable<Crate> cargo)
     {
-        foreach (var crate in cargo) crates.Add(crate);
+        foreach (var crate in cargo)
+            crates.Add(crate);
 
         return this;
     }
 
     public StarshipBuilder AddCargo(IDictionary<string, string> cargo)
     {
-        foreach (var (label, content) in cargo) AddCrate(label, content);
+        foreach (var (label, content) in cargo)
+            AddCrate(label, content);
 
         return this;
     }

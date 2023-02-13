@@ -21,7 +21,6 @@ public abstract class ResourceResolverBase
 
     public Result<ResolveResult, ResolveResultError> Ok(Uri path, Uri source, string? hash)
     {
-        return Result<ResolveResult, ResolveResultError>.Ok(
-            new ResolveResult(source, path, hash));
+        return Result<ResolveResult, ResolveResultError>.Ok(new ResolveResult(source, path, hash));
     }
 }

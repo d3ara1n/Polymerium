@@ -4,7 +4,11 @@ namespace Polymerium.App.Configurations;
 
 public class Configuration
 {
-    public Configuration(AppSettings settings, string? accountShowcaseId, FileBasedLaunchConfiguration gameGlobals)
+    public Configuration(
+        AppSettings settings,
+        string? accountShowcaseId,
+        FileBasedLaunchConfiguration gameGlobals
+    )
     {
         Settings = settings;
         AccountShowcaseId = accountShowcaseId;

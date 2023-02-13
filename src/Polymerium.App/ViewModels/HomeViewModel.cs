@@ -15,19 +15,32 @@ public class HomeViewModel : ObservableObject
     private readonly MemoryStorage _memoryStorage;
     private readonly NavigationService navigationService;
 
-    public HomeViewModel(MemoryStorage memoryStorage, ViewModelContext context, NavigationService navigationService)
+    public HomeViewModel(
+        MemoryStorage memoryStorage,
+        ViewModelContext context,
+        NavigationService navigationService
+    )
     {
         _memoryStorage = memoryStorage;
         Context = context;
         GotoRecentItemInstanceViewCommand = new RelayCommand<string>(GotoRecentItemInstanceView);
-        RecentPlays = new ObservableCollection<RecentPlayedItemModel>(memoryStorage.Instances
-            .Where(x => x.LastPlay.HasValue).OrderBy(x => DateTimeOffset.Now - x.LastPlay!.Value).Take(10).Select(x =>
-                new RecentPlayedItemModel(x.Id, x.ThumbnailFile, x.Name, x.LastPlay,
-                    GotoRecentItemInstanceViewCommand)));
-        Tips = new[]
-        {
-            "比较抽象，没有提示"
-        };
+        RecentPlays = new ObservableCollection<RecentPlayedItemModel>(
+            memoryStorage.Instances
+                .Where(x => x.LastPlay.HasValue)
+                .OrderBy(x => DateTimeOffset.Now - x.LastPlay!.Value)
+                .Take(10)
+                .Select(
+                    x =>
+                        new RecentPlayedItemModel(
+                            x.Id,
+                            x.ThumbnailFile,
+                            x.Name,
+                            x.LastPlay,
+                            GotoRecentItemInstanceViewCommand
+                        )
+                )
+        );
+        Tips = new[] { "比较抽象，没有提示" };
         if (Context.SelectedAccount == null)
             Tip = "你还没有设置账号，\n点击左侧导航栏头像添加";
         else

@@ -40,9 +40,15 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
 
     private Action? readyHandler;
 
-    public PrepareGameViewModel(RestoreEngine restore, AccountManager accountManager,
-        ConfigurationManager configurationManager, IFileBaseService fileBase, IOverlayService overlayService,
-        MemoryStorage memoryStorage, JavaManager javaManager)
+    public PrepareGameViewModel(
+        RestoreEngine restore,
+        AccountManager accountManager,
+        ConfigurationManager configurationManager,
+        IFileBaseService fileBase,
+        IOverlayService overlayService,
+        MemoryStorage memoryStorage,
+        JavaManager javaManager
+    )
     {
         _restore = restore;
         _accountManager = accountManager;
@@ -103,7 +109,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
 
     public void Cancel()
     {
-        if (!source.IsCancellationRequested) source.Cancel();
+        if (!source.IsCancellationRequested)
+            source.Cancel();
     }
 
     public async Task PrepareAsync()
@@ -159,28 +166,35 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         else
         {
             Instance.ExceptionCount++;
-            CriticalError($"{stage.StageName}\n{stage.ErrorMessage}:\n{stage.Exception?.StackTrace}");
+            CriticalError(
+                $"{stage.StageName}\n{stage.ErrorMessage}:\n{stage.Exception?.StackTrace}"
+            );
         }
     }
 
     private void UpdateLabelSafe(string title, bool ready = false)
     {
-        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-        {
-            LabelTitle = title;
-            if (ready)
-                readyHandler?.Invoke();
-        });
+        _dispatcher.TryEnqueue(
+            DispatcherQueuePriority.Normal,
+            () =>
+            {
+                LabelTitle = title;
+                if (ready)
+                    readyHandler?.Invoke();
+            }
+        );
     }
-
 
     private void UpdateTaskProgressSafe(string message, string? details = null)
     {
-        _dispatcher.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-        {
-            Progress = message;
-            ProgressDetails = details ?? string.Empty;
-        });
+        _dispatcher.TryEnqueue(
+            DispatcherQueuePriority.Normal,
+            () =>
+            {
+                Progress = message;
+                ProgressDetails = details ?? string.Empty;
+            }
+        );
     }
 
     public void Start()
@@ -195,7 +209,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
             var configuration = new CompoundLaunchConfiguration(
                 Instance.Configuration,
-                _configurationManager.Current.GameGlobals);
+                _configurationManager.Current.GameGlobals
+            );
             var autoDetectJava = configuration.AutoDetectJava ?? false;
             var javaHomes = autoDetectJava
                 ? _javaManager.QueryJavaInstallations()
@@ -203,11 +218,17 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             foreach (var javaHome in javaHomes)
             {
                 var verify = _javaManager.VerifyJavaHome(javaHome);
-                if (verify.TryUnwrap(out var model) &&
-                    ((model!.JavaVersion?.StartsWith("1.8") == true ? "8" : model.JavaVersion ?? string.Empty)
-                     .StartsWith(
-                         polylock.JavaMajorVersionRequired.ToString()) ||
-                     (configuration.SkipJavaVersionCheck == true && !autoDetectJava)))
+                if (
+                    verify.TryUnwrap(out var model)
+                    && (
+                        (
+                            model!.JavaVersion?.StartsWith("1.8") == true
+                                ? "8"
+                                : model.JavaVersion ?? string.Empty
+                        ).StartsWith(polylock.JavaMajorVersionRequired.ToString())
+                        || (configuration.SkipJavaVersionCheck == true && !autoDetectJava)
+                    )
+                )
                 {
                     // log the java information model
                     var builder = new PlanetBlenderBuilder();
@@ -215,20 +236,24 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                         .WithJavaPath(Path.Combine(javaHome!, "bin", "java.exe"))
                         .WithMainClass(polylock.MainClass)
                         .WithWorkingDirectory(_fileBase.Locate(workingDir))
-                        .WithGameArguments(polylock.GameArguments.Concat(new[]
-                        {
-                            "--width",
-                            "${resolution_width}",
-                            "--height",
-                            "${resolution_height}"
-                        }))
-                        .WithJvmArguments(polylock.JvmArguments.Concat(new[]
-                        {
-                            "-Xmx${jvm_max_memory}m"
-                        }))
+                        .WithGameArguments(
+                            polylock.GameArguments.Concat(
+                                new[]
+                                {
+                                    "--width",
+                                    "${resolution_width}",
+                                    "--height",
+                                    "${resolution_height}"
+                                }
+                            )
+                        )
+                        .WithJvmArguments(
+                            polylock.JvmArguments.Concat(new[] { "-Xmx${jvm_max_memory}m" })
+                        )
                         .ConfigureStarship(configure =>
                         {
-                            configure.AddCargo(polylock.Cargo)
+                            configure
+                                .AddCargo(polylock.Cargo)
                                 .AddCrate("auth_player_name", Account!.Nickname)
                                 // net.minecraft 的版本，这里试试换实例名会不会有别的影响
                                 .AddCrate("version_name", Instance.Name)
@@ -248,19 +273,33 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                 .AddCrate("os.arch", "x86")
                                 .AddCrate("os.version", Environment.OSVersion.Version.ToString())
                                 // game resolution
-                                .AddCrate("resolution_width", (configuration.WindowWidth ?? 854).ToString())
-                                .AddCrate("resolution_height", (configuration.WindowHeight ?? 480).ToString())
+                                .AddCrate(
+                                    "resolution_width",
+                                    (configuration.WindowWidth ?? 854).ToString()
+                                )
+                                .AddCrate(
+                                    "resolution_height",
+                                    (configuration.WindowHeight ?? 480).ToString()
+                                )
                                 // jvm
                                 .AddCrate("natives_directory", _fileBase.Locate(nativesRoot))
                                 .AddCrate("classpath_separator", ";")
-                                .AddCrate("classpath",
-                                    string.Join(';',
-                                        polylock.Libraries
-                                            .Select(x => _fileBase.Locate(new Uri(librariesRoot, x.Path)))))
+                                .AddCrate(
+                                    "classpath",
+                                    string.Join(
+                                        ';',
+                                        polylock.Libraries.Select(
+                                            x => _fileBase.Locate(new Uri(librariesRoot, x.Path))
+                                        )
+                                    )
+                                )
                                 .AddCrate("launcher_name", "Polymerium")
                                 .AddCrate("launcher_version", "0.1.0")
                                 // custom jvm argument patches
-                                .AddCrate("jvm_max_memory", configuration.JvmMaxMemory?.ToString() ?? "4096");
+                                .AddCrate(
+                                    "jvm_max_memory",
+                                    configuration.JvmMaxMemory?.ToString() ?? "4096"
+                                );
                         });
                     var blender = builder.Build();
                     blender.Start();

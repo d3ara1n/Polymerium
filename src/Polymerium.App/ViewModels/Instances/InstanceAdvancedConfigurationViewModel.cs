@@ -21,8 +21,13 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
     private readonly ILogger _logger;
     private readonly NavigationService _navigation;
 
-    public InstanceAdvancedConfigurationViewModel(ViewModelContext context, InstanceManager instanceManager,
-        IFileBaseService fileBase, NavigationService navigation, ILogger<InstanceAdvancedConfigurationViewModel> logger)
+    public InstanceAdvancedConfigurationViewModel(
+        ViewModelContext context,
+        InstanceManager instanceManager,
+        IFileBaseService fileBase,
+        NavigationService navigation,
+        ILogger<InstanceAdvancedConfigurationViewModel> logger
+    )
     {
         Context = context;
         _instanceManager = instanceManager;

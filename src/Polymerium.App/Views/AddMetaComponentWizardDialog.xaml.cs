@@ -13,9 +13,12 @@ namespace Polymerium.App.Views;
 public sealed partial class AddMetaComponentWizardDialog : CustomDialog
 {
     // Using a DependencyProperty as the backing store for IsOperable.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsOperableProperty =
-        DependencyProperty.Register(nameof(IsOperable), typeof(bool), typeof(AddMetaComponentWizardDialog),
-            new PropertyMetadata(true));
+    public static readonly DependencyProperty IsOperableProperty = DependencyProperty.Register(
+        nameof(IsOperable),
+        typeof(bool),
+        typeof(AddMetaComponentWizardDialog),
+        new PropertyMetadata(true)
+    );
 
     public AddMetaComponentWizardDialog()
     {

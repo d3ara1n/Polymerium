@@ -11,15 +11,22 @@ public struct RuleOs
 
     public bool Match()
     {
-        var name = OperatingSystem.IsWindows() ? "windows" :
-            OperatingSystem.IsMacOS() ? "osx" :
-            OperatingSystem.IsLinux() ? "linux" : "unknown";
+        var name = OperatingSystem.IsWindows()
+            ? "windows"
+            : OperatingSystem.IsMacOS()
+                ? "osx"
+                : OperatingSystem.IsLinux()
+                    ? "linux"
+                    : "unknown";
         var arch = Environment.Is64BitOperatingSystem ? "x64" : "x86";
         var version = Environment.OSVersion.Version.ToString();
 
-        if (!string.IsNullOrEmpty(Name) && !Name.Equals(name, StringComparison.OrdinalIgnoreCase)) return false;
-        if (!string.IsNullOrEmpty(Version) && !Regex.IsMatch(version, Version)) return false;
-        if (!string.IsNullOrEmpty(Arch) && !Arch.Equals(arch, StringComparison.OrdinalIgnoreCase)) return false;
+        if (!string.IsNullOrEmpty(Name) && !Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            return false;
+        if (!string.IsNullOrEmpty(Version) && !Regex.IsMatch(version, Version))
+            return false;
+        if (!string.IsNullOrEmpty(Arch) && !Arch.Equals(arch, StringComparison.OrdinalIgnoreCase))
+            return false;
         return true;
     }
 }

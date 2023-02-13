@@ -18,9 +18,12 @@ namespace Polymerium.App.Views;
 public sealed partial class PrepareGameDialog : ContentControl
 {
     // Using a DependencyProperty as the backing store for IsReady.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsReadyProperty =
-        DependencyProperty.Register(nameof(IsReady), typeof(bool), typeof(PrepareGameDialog),
-            new PropertyMetadata(false, IsReadyChanged));
+    public static readonly DependencyProperty IsReadyProperty = DependencyProperty.Register(
+        nameof(IsReady),
+        typeof(bool),
+        typeof(PrepareGameDialog),
+        new PropertyMetadata(false, IsReadyChanged)
+    );
 
     private readonly IOverlayService _overlayService;
 
@@ -58,30 +61,36 @@ public sealed partial class PrepareGameDialog : ContentControl
         scaleXAnimation = new Storyboard();
         Storyboard.SetTarget(scaleXAnimation, _scaleTransform);
         Storyboard.SetTargetProperty(scaleXAnimation, "ScaleX");
-        scaleXAnimation.Children.Add(new DoubleAnimation
-        {
-            Duration = new Duration(TimeSpan.FromMilliseconds(150)),
-            From = 1.05,
-            To = 1.0
-        });
+        scaleXAnimation.Children.Add(
+            new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromMilliseconds(150)),
+                From = 1.05,
+                To = 1.0
+            }
+        );
         scaleYAnimation = new Storyboard();
         Storyboard.SetTarget(scaleYAnimation, _scaleTransform);
         Storyboard.SetTargetProperty(scaleYAnimation, "ScaleY");
-        scaleYAnimation.Children.Add(new DoubleAnimation
-        {
-            Duration = new Duration(TimeSpan.FromMilliseconds(150)),
-            From = 1.05,
-            To = 1.0
-        });
+        scaleYAnimation.Children.Add(
+            new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromMilliseconds(150)),
+                From = 1.05,
+                To = 1.0
+            }
+        );
         fadeAnimation = new Storyboard();
         Storyboard.SetTarget(fadeAnimation, _layout);
         Storyboard.SetTargetProperty(fadeAnimation, "Opacity");
-        fadeAnimation.Children.Add(new DoubleAnimation
-        {
-            Duration = new Duration(TimeSpan.FromMilliseconds(150)),
-            From = 0,
-            To = 1.0
-        });
+        fadeAnimation.Children.Add(
+            new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromMilliseconds(150)),
+                From = 0,
+                To = 1.0
+            }
+        );
         base.OnApplyTemplate();
     }
 
@@ -127,7 +136,10 @@ public sealed partial class PrepareGameDialog : ContentControl
         _overlayService.Dismiss();
     }
 
-    private static void IsReadyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    private static void IsReadyChanged(
+        DependencyObject sender,
+        DependencyPropertyChangedEventArgs args
+    )
     {
         var dialog = sender as PrepareGameDialog;
         if (dialog!.IsReady)

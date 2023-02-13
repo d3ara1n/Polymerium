@@ -5,7 +5,11 @@ namespace Polymerium.Abstractions.Importers;
 
 public class ImportResult
 {
-    public ImportResult(ZipArchive archive, GameInstance instance, IEnumerable<PackedSolidFile> files)
+    public ImportResult(
+        ZipArchive archive,
+        GameInstance instance,
+        IEnumerable<PackedSolidFile> files
+    )
     {
         Archive = archive;
         Instance = instance;

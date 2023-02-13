@@ -14,8 +14,12 @@ internal class ClassifierConverter : JsonConverter
         return objectType == typeof(IEnumerable<LibraryDownloadsClassifier>);
     }
 
-    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
-        JsonSerializer serializer)
+    public override object ReadJson(
+        JsonReader reader,
+        Type objectType,
+        object? existingValue,
+        JsonSerializer serializer
+    )
     {
         var obj = JObject.Load(reader);
         var props = obj.Properties();

@@ -4,8 +4,13 @@ namespace Polymerium.App.Models;
 
 public class InstanceComponentItemModel
 {
-    public InstanceComponentItemModel(string id, string thumbnailSource, string friendlyName, string version,
-        IRelayCommand<InstanceComponentItemModel> removeCommand)
+    public InstanceComponentItemModel(
+        string id,
+        string thumbnailSource,
+        string friendlyName,
+        string version,
+        IRelayCommand<InstanceComponentItemModel> removeCommand
+    )
     {
         Id = id;
         ThumbnailSource = thumbnailSource;

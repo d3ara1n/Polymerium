@@ -44,7 +44,7 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
             JavaMajorVersionRequired = JavaMajorVersionRequired ?? 0
         };
     }
-    
+
     public void SetMainClass(string mainClass)
     {
         MainClass = mainClass;
@@ -87,7 +87,6 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
     {
         libraries.Add(library);
     }
-
 
     public void AddAttachment(PolylockAttachment attachment)
     {

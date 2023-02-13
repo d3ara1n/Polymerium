@@ -43,7 +43,8 @@ public class DownloadTaskGroup
     public bool Wait()
     {
         // 用 WaitAll 会有小问题
-        if (tasks.Any()) waitHandle.WaitOne();
+        if (tasks.Any())
+            waitHandle.WaitOne();
         return tasks.All(x => x.IsSuccessful);
     }
 }

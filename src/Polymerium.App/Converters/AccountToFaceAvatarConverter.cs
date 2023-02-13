@@ -1,18 +1,16 @@
-using System;
-using Microsoft.UI.Xaml;
+﻿using System;
 using Microsoft.UI.Xaml.Data;
+using Polymerium.Abstractions.Accounts;
 
 namespace Polymerium.App.Converters;
 
-internal class NotNullToVisibleConverter : IValueConverter
+public class AccountToFaceAvatarConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        return value switch
-        {
-            null or "" => Visibility.Collapsed,
-            _ => Visibility.Visible
-        };
+        return value is IGameAccount account
+            ? $"https://minotar.net/helm/{account.UUID}/100.png"
+            : value;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)

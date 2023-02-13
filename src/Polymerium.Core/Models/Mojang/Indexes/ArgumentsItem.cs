@@ -16,8 +16,13 @@ public struct ArgumentsItem
     {
         return Rules == null
                || !Rules.Any()
-               || (Rules.Where(x => x.Action.Equals("allow", StringComparison.OrdinalIgnoreCase)).Any(x => x.Verify())
-                   && Rules.Where(x => x.Action.Equals("disallow", StringComparison.OrdinalIgnoreCase))
-                       .All(x => x.Verify()));
+               || (
+                   Rules
+                       .Where(x => x.Action.Equals("allow", StringComparison.OrdinalIgnoreCase))
+                       .Any(x => x.Verify())
+                   && Rules
+                       .Where(x => x.Action.Equals("disallow", StringComparison.OrdinalIgnoreCase))
+                       .All(x => x.Verify())
+               );
     }
 }

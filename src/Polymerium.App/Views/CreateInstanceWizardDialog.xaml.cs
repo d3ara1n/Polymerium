@@ -16,17 +16,26 @@ namespace Polymerium.App.Views;
 public sealed partial class CreateInstanceWizardDialog : CustomDialog
 {
     // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty VersionsProperty =
-        DependencyProperty.Register(nameof(Versions), typeof(IEnumerable<GameVersionModel>),
-            typeof(CreateInstanceWizardDialog), new PropertyMetadata(null));
+    public static readonly DependencyProperty VersionsProperty = DependencyProperty.Register(
+        nameof(Versions),
+        typeof(IEnumerable<GameVersionModel>),
+        typeof(CreateInstanceWizardDialog),
+        new PropertyMetadata(null)
+    );
 
-    public static readonly DependencyProperty IsOperableProperty =
-        DependencyProperty.Register(nameof(IsOperable), typeof(bool), typeof(CreateInstanceWizardDialog),
-            new PropertyMetadata(false));
+    public static readonly DependencyProperty IsOperableProperty = DependencyProperty.Register(
+        nameof(IsOperable),
+        typeof(bool),
+        typeof(CreateInstanceWizardDialog),
+        new PropertyMetadata(false)
+    );
 
-    public static readonly DependencyProperty ErrorMessageProperty =
-        DependencyProperty.Register(nameof(ErrorMessage), typeof(string), typeof(CreateInstanceWizardDialog),
-            new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty ErrorMessageProperty = DependencyProperty.Register(
+        nameof(ErrorMessage),
+        typeof(string),
+        typeof(CreateInstanceWizardDialog),
+        new PropertyMetadata(string.Empty)
+    );
 
     private ContentControl? _root;
 
@@ -71,19 +80,25 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     {
         VisualStateManager.GoToState(_root, "Loading", false);
         IsOperable = false;
-        Task.Run(() => ViewModel.FillDataAsync(ViewModel_FillDataCompletedAsync), CancellationToken.None);
+        Task.Run(
+            () => ViewModel.FillDataAsync(ViewModel_FillDataCompletedAsync),
+            CancellationToken.None
+        );
     }
 
     private Task ViewModel_FillDataCompletedAsync(IEnumerable<GameVersionModel> data)
     {
-        DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-        {
-            IsOperable = true;
-            Versions = data;
-            ViewModel.SelectedVersion = Versions.FirstOrDefault();
-            ViewModel.InstanceName = ViewModel.SelectedVersion?.Id ?? string.Empty;
-            VisualStateManager.GoToState(_root, "Default", false);
-        });
+        DispatcherQueue.TryEnqueue(
+            DispatcherQueuePriority.Normal,
+            () =>
+            {
+                IsOperable = true;
+                Versions = data;
+                ViewModel.SelectedVersion = Versions.FirstOrDefault();
+                ViewModel.InstanceName = ViewModel.SelectedVersion?.Id ?? string.Empty;
+                VisualStateManager.GoToState(_root, "Default", false);
+            }
+        );
         return Task.CompletedTask;
     }
 
@@ -100,22 +115,31 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
             ErrorMessage = string.Empty;
             VisualStateManager.GoToState(_root, "Working", false);
             IsOperable = false;
-            Task.Run(() => ViewModel.Commit(ViewModel_CommitCompletedAsync), CancellationToken.None);
+            Task.Run(
+                () => ViewModel.Commit(ViewModel_CommitCompletedAsync),
+                CancellationToken.None
+            );
         }
     }
 
     private Task ViewModel_CommitCompletedAsync()
     {
-        DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
-        {
-            IsOperable = true;
-            VisualStateManager.GoToState(_root, "Default", false);
-            Dismiss();
-        });
+        DispatcherQueue.TryEnqueue(
+            DispatcherQueuePriority.Normal,
+            () =>
+            {
+                IsOperable = true;
+                VisualStateManager.GoToState(_root, "Default", false);
+                Dismiss();
+            }
+        );
         return Task.CompletedTask;
     }
 
-    private void VersionBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    private void VersionBox_TextChanged(
+        AutoSuggestBox sender,
+        AutoSuggestBoxTextChangedEventArgs args
+    )
     {
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
         {
@@ -127,12 +151,14 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
         }
     }
 
-    private void VersionBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    private void VersionBox_SuggestionChosen(
+        AutoSuggestBox sender,
+        AutoSuggestBoxSuggestionChosenEventArgs args
+    )
     {
         var item = args.SelectedItem as GameVersionModel;
         ViewModel.SelectedVersion = item;
-        if (string.IsNullOrEmpty(ViewModel.InstanceName) ||
-            ViewModel.InstanceName == item?.Id)
+        if (string.IsNullOrEmpty(ViewModel.InstanceName) || ViewModel.InstanceName == item?.Id)
             ViewModel.InstanceName = item?.Id ?? string.Empty;
     }
 }

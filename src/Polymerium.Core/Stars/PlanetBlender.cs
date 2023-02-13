@@ -20,7 +20,8 @@ public class PlanetBlender
                 WorkingDirectory = _options.WorkingDirectory
             }
         };
-        foreach (var item in _options.Arguments) process.StartInfo.ArgumentList.Add(item);
+        foreach (var item in _options.Arguments)
+            process.StartInfo.ArgumentList.Add(item);
         process.Start();
     }
 }

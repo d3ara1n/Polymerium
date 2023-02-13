@@ -10,7 +10,8 @@ public struct Rule
 
     public bool Verify()
     {
-        if (Features.HasValue) return false;
+        if (Features.HasValue)
+            return false;
         var matched = !Os.HasValue || Os.Value.Match();
         return Action.Equals("allow", StringComparison.OrdinalIgnoreCase) ? matched : !matched;
     }

@@ -28,13 +28,20 @@ public class MainFileBaseService : IFileBaseService
             if (uri.Scheme != "poly-file" && !string.IsNullOrEmpty(uri.Scheme))
                 throw new ArgumentException("Not valid poly-file url");
             if (string.IsNullOrEmpty(uri.Host))
-                return new Uri(new Uri(_options.BaseFolder), uri.GetComponents(UriComponents.Path, UriFormat.Unescaped))
-                    .LocalPath;
+                return new Uri(
+                    new Uri(_options.BaseFolder),
+                    uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)
+                ).LocalPath;
 
             var instance = _memory.Instances.FirstOrDefault(x => x.Id == uri.Host);
             if (instance != null)
-                return new Uri(new Uri(new Uri(new Uri(_options.BaseFolder), "instances/"), instance.FolderName + '/'),
-                    uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)).LocalPath;
+                return new Uri(
+                    new Uri(
+                        new Uri(new Uri(_options.BaseFolder), "instances/"),
+                        instance.FolderName + '/'
+                    ),
+                    uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)
+                ).LocalPath;
             throw new ArgumentException("Instance id not presented in managed list");
         }
 
@@ -57,7 +64,8 @@ public class MainFileBaseService : IFileBaseService
     public void WriteAllText(Uri uri, string content)
     {
         var path = Locate(uri);
-        if (!Directory.Exists(Path.GetDirectoryName(path))) Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        if (!Directory.Exists(Path.GetDirectoryName(path)))
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, content);
     }
 
@@ -68,7 +76,8 @@ public class MainFileBaseService : IFileBaseService
 
     public async Task<bool> VerifyHashAsync(Uri uri, string? hash, HashAlgorithm algorithm)
     {
-        if (hash == null) return DoFileExist(uri);
+        if (hash == null)
+            return DoFileExist(uri);
         var option = await ComputeHashAsync(uri, algorithm);
         if (option.TryUnwrap(out var res))
             return hash == res;
@@ -78,7 +87,8 @@ public class MainFileBaseService : IFileBaseService
     public async Task<Option<string>> ComputeHashAsync(Uri uri, HashAlgorithm algorithm)
     {
         var path = Locate(uri);
-        if (!File.Exists(path)) return Option<string>.None();
+        if (!File.Exists(path))
+            return Option<string>.None();
         using (var reader = new FileStream(path, FileMode.Open, FileAccess.Read))
         {
             var buffer = new byte[reader.Length];

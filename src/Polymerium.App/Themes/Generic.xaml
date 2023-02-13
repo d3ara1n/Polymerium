@@ -25,6 +25,8 @@
     <converters:NullToParameterConverter x:Key="NullToParameterConverter" />
     <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter" />
     <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+    <converters:AccountToBustAvatarConverter x:Key="AccountToBustAvatarConverter" />
+    <converters:AccountToFaceAvatarConverter x:Key="AccountToFaceAvatarConverter" />
 
     <Style TargetType="controls:ExpanderExItem" BasedOn="{StaticResource DefaultExpanderExItemStyle}" />
 
