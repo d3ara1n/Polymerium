@@ -6,12 +6,12 @@ namespace Polymerium.App.Services;
 
 public class ViewModelContext : ObservableObject
 {
-    private GameInstanceModel? associatedInstance;
-    private IGameAccount? selectedAccount;
-    private IGameAccount? accountShowcase;
+    private readonly AccountManager _accountManager;
 
     private readonly ConfigurationManager _configurationManager;
-    private readonly AccountManager _accountManager;
+    private IGameAccount? accountShowcase;
+    private GameInstanceModel? associatedInstance;
+    private IGameAccount? selectedAccount;
 
     public ViewModelContext(
         ConfigurationManager configurationManager,

@@ -27,6 +27,7 @@
     <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
     <converters:AccountToBustAvatarConverter x:Key="AccountToBustAvatarConverter" />
     <converters:AccountToFaceAvatarConverter x:Key="AccountToFaceAvatarConverter" />
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
     <Style TargetType="controls:ExpanderExItem" BasedOn="{StaticResource DefaultExpanderExItemStyle}" />
 
