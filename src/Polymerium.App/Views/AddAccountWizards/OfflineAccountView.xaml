@@ -11,6 +11,7 @@
 
     <Grid>
         <StackPanel Spacing="8">
+            <TextBlock Text="添加离线账号" Style="{StaticResource SubtitleTextBlockStyle}" />
             <TextBlock Text="玩家名" />
             <TextBox Text="{x:Bind ViewModel.Nickname,Mode=TwoWay}" />
             <TextBlock Text="UUID" />

@@ -12,7 +12,7 @@ using Polymerium.App.Views.AddAccountWizards;
 namespace Polymerium.App.Views;
 
 public delegate void AddAccountWizardStateHandler(
-    Type? nextPage,
+    (Type, object?)? nextPage,
     bool isLast = false,
     Func<bool>? finishAction = null
 );
@@ -21,7 +21,7 @@ public sealed partial class AddAccountWizardDialog : CustomDialog
 {
     private readonly AddAccountWizardStateHandler handler;
     private Func<bool>? finish;
-    private Type? next;
+    private (Type, object?)? next;
 
     public AddAccountWizardDialog(IOverlayService overlayService)
     {
@@ -29,7 +29,7 @@ public sealed partial class AddAccountWizardDialog : CustomDialog
         InitializeComponent();
         OverlayService = overlayService;
         handler = SetState;
-        Root.Navigate(typeof(SelectionView), (handler, ViewModel.Source.Token));
+        Root.Navigate(typeof(SelectionView), (handler, ViewModel.Source.Token, (object?)null));
     }
 
     public AddAccountWizardViewModel ViewModel { get; }
@@ -40,7 +40,7 @@ public sealed partial class AddAccountWizardDialog : CustomDialog
         Dismiss();
     }
 
-    private void SetState(Type? nextPage, bool isLast, Func<bool>? finishAction)
+    private void SetState((Type, object?)? nextPage, bool isLast, Func<bool>? finishAction)
     {
         if (nextPage != null)
         {
@@ -69,7 +69,7 @@ public sealed partial class AddAccountWizardDialog : CustomDialog
 
     private void NextButton_Click(object sender, RoutedEventArgs e)
     {
-        Root.Navigate(next, (handler, ViewModel.Source.Token));
+        Root.Navigate(next!.Value.Item1, (handler, ViewModel.Source.Token, next!.Value.Item2));
     }
 
     private void PreviousButton_Click(object sender, RoutedEventArgs e)

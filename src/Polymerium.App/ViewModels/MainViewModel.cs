@@ -208,6 +208,7 @@ public sealed class MainViewModel : ObservableObject
     {
         if (Context.SelectedAccount != null)
         {
+            var account = Context.SelectedAccount;
             if (Context.AssociatedInstance != null)
             {
                 Context.AssociatedInstance.BoundAccountId = null;
@@ -218,7 +219,7 @@ public sealed class MainViewModel : ObservableObject
                 _configurationManager.Current.AccountShowcaseId = null;
             }
 
-            _accountManager.RemoveAccount(Context.SelectedAccount);
+            _accountManager.RemoveAccount(account);
             Context.SelectedAccount = null;
         }
     }

@@ -9,14 +9,21 @@ public class SelectionViewModel : ObservableObject
 {
     public SelectionViewModel()
     {
-        Entries = new List<AccountWizardEntryModel>
+        var entries = new List<AccountWizardEntryModel>
         {
             new(
-                "离线账号",
-                "ms-appx:///Assets/Icons/Brands/minecraft.256x256.png",
-                typeof(OfflineAccountView)
-            )
+                "微软账号",
+                "ms-appx:///Assets/Icons/Brands/microsoft.256x256.png",
+                typeof(MicrosoftAccountIntroView))
         };
+#if DEBUG
+        entries.Add(new AccountWizardEntryModel(
+            "离线账号",
+            "ms-appx:///Assets/Icons/Brands/minecraft.256x256.png",
+            typeof(OfflineAccountView)
+        ));
+#endif
+        Entries = entries;
     }
 
     public IEnumerable<AccountWizardEntryModel> Entries { get; }

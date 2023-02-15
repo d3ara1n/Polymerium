@@ -98,11 +98,12 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
       * [ ] 进程管理
   * [x] 参数解析
 * [ ] 账号管理
-  * [ ] 管理模型
+  * [x] 管理模型
     * [x] 添加
-    * [ ] 移除
-  * [ ] 离线模式
-  * [ ] Microsoft 账号登录
+    * [x] 移除
+  * [x] 离线模式
+  * [x] Microsoft 账号登录
+  * [ ] 离线 Fallback 模式代替离线模式
 * [ ] 还原引擎
   * [x] 基于 Stage 模型
   * [ ] 组件安装
@@ -144,6 +145,17 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 * [ ] 本地化
 
 更多细节请在 [Issues](https://github.com/d3ara1n/Polymerium/issues) 中查询。
+
+<!-- REFERENCES -->
+## 外部资料和参考
+
+* 游戏启动流程、Fabric/Quilt 部署：[Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
+* 游戏启动流程：[教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8?variant=zh)
+* Forge：木得参考，也木得写完
+* 微软验证：[Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
+* 微软验证实现: [Cml.Core.Microsoft](https://github.com/CmlLib/CmlLib.Core.Auth.Microsoft)
+
+十分感谢以上作者和所著文章。
 
 <!-- LICENSE -->
 ## License

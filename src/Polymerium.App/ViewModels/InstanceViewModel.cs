@@ -21,6 +21,8 @@ public class InstanceViewModel : ObservableObject
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
 
+    private string coreVersion = string.Empty;
+
     public InstanceViewModel(
         InstanceManager instanceManager,
         IOverlayService overlayService,
@@ -81,8 +83,6 @@ public class InstanceViewModel : ObservableObject
             )
         };
     }
-
-    private string coreVersion = string.Empty;
 
     public string CoreVersion
     {

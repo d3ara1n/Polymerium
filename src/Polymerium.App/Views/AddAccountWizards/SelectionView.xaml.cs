@@ -25,13 +25,13 @@ public sealed partial class SelectionView : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        (handler, _) = ((AddAccountWizardStateHandler, CancellationToken))e.Parameter;
+        (handler, _, _) = ((AddAccountWizardStateHandler, CancellationToken, object?))e.Parameter;
         base.OnNavigatedTo(e);
     }
 
     private void FirstPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.AddedItems.FirstOrDefault() is AccountWizardEntryModel first)
-            handler?.Invoke(first.Page);
+            handler?.Invoke((first.Page, null));
     }
 }

@@ -19,11 +19,10 @@
         <DefaultLanguage>zh-CN</DefaultLanguage>
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
     </PropertyGroup>
-    <ItemGroup>
-        <None Remove="Dialogs\MessageDialog.xaml"/>
-    </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="CmlLib.Core.Auth.Microsoft" Version="2.2.0"/>
+        <PackageReference Include="CmlLib.Core.Auth.Microsoft.MsalClient" Version="2.0.0"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0"/>
         <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2"/>
         <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2"/>
@@ -172,5 +171,20 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Extensions"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\AddAccountWizards\MicrosoftAccountFinishView.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\AddAccountWizards\MicrosoftAccountAuthView.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\AddAccountWizards\MicrosoftAccountIntroView.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
 </Project>

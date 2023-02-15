@@ -1,0 +1,39 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<Page
+    x:Class="Polymerium.App.Views.AddAccountWizards.MicrosoftAccountAuthView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="MicrosoftAccountAuthView_OnLoaded">
+    <Grid>
+        <StackPanel Spacing="8">
+            <TextBlock Text="登录微软账号(2/3)" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="在浏览器中输入以下验证码" />
+            <controls:Card Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
+                <Grid>
+                    <TextBlock x:Name="DeviceCodeText" Text="{x:Bind UserCode,Mode=OneWay}" FontSize="26"
+                               HorizontalAlignment="Center"
+                               Foreground="{ThemeResource SystemAccentColor}" />
+                    <ProgressRing x:Name="LoadingRing" IsIndeterminate="True"
+                                  Visibility="{x:Bind UserCode,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reverse}" />
+                </Grid>
+            </controls:Card>
+            <Button x:Name="OpenBrowserButton" HorizontalAlignment="Stretch"
+                    IsEnabled="{x:Bind VerificationUrl,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
+                    Style="{StaticResource AccentButtonStyle}" Click="OpenBrowserButton_OnClick">
+                <Grid>
+                    <TextBlock Text="在浏览器中验证" HorizontalAlignment="Center" />
+                </Grid>
+            </Button>
+            <TextBlock>
+                <Run Text="验证码会在15分钟内失效" />
+                <LineBreak />
+                <Run Text="届时你需要返回上一页面重新开始登录流程" />
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -6,12 +6,12 @@ namespace Polymerium.App.Converters;
 
 internal class NotNullToVisibleConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, string language)
+    public object Convert(object value, Type targetType, object? parameter, string language)
     {
         return value switch
         {
-            null or "" => Visibility.Collapsed,
-            _ => Visibility.Visible
+            null or "" => parameter == null ? Visibility.Collapsed : Visibility.Visible,
+            _ => parameter == null ? Visibility.Visible : Visibility.Collapsed
         };
     }
 
