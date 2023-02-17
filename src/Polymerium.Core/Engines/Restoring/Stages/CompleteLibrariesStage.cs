@@ -11,7 +11,7 @@ using Polymerium.Core.StageModels;
 
 namespace Polymerium.Core.Engines.Restoring.Stages;
 
-public class DownloadLibrariesStage : StageBase
+public class CompleteLibrariesStage : StageBase
 {
     private readonly DownloadEngine _downloader;
     private readonly IFileBaseService _fileBase;
@@ -19,7 +19,7 @@ public class DownloadLibrariesStage : StageBase
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
 
-    public DownloadLibrariesStage(
+    public CompleteLibrariesStage(
         GameInstance instance,
         PolylockData polylock,
         SHA1 sha1,
@@ -44,33 +44,49 @@ public class DownloadLibrariesStage : StageBase
         var nativesDir = new Uri($"poly-file://{_instance.Id}/natives/");
         var group = new DownloadTaskGroup { Token = Token };
         _fileBase.RemoveDirectory(nativesDir);
+        var local = 0;
         foreach (var item in _polylock.Libraries)
         {
             if (Token.IsCancellationRequested)
                 return Cancel();
             var libPath = new Uri(libraryDir, item.Path);
-            if (!await _fileBase.VerifyHashAsync(libPath, item.Sha1, _sha1))
+            if (item.Url != null)
             {
-                if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task))
+                if (!await _fileBase.VerifyHashAsync(libPath, item.Sha1, _sha1))
+                {
+                    if (item.Url.Scheme == "poly-file")
+                    {
+                        var target = _fileBase.Locate(libPath);
+                        if (!Directory.Exists(Path.GetDirectoryName(target)))
+                            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+
+                        File.Copy(_fileBase.Locate(item.Url), target, true);
+                        Report($"使用本地仓库补全({++local})", Path.GetFileName(target));
+                    }
+                    else
+                    {
+                        if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task))
+                            if (item.IsNative)
+                                task!.CompletedCallback = async (t, s) =>
+                                {
+                                    if (s)
+                                        await UnzipFileAsync(
+                                            t.Destination,
+                                            _fileBase.Locate(nativesDir),
+                                            Token
+                                        );
+                                };
+                    }
+                }
+                else
+                {
                     if (item.IsNative)
-                        task!.CompletedCallback = async (t, s) =>
-                        {
-                            if (s)
-                                await UnzipFileAsync(
-                                    t.Destination,
-                                    _fileBase.Locate(nativesDir),
-                                    Token
-                                );
-                        };
-            }
-            else
-            {
-                if (item.IsNative)
-                    await UnzipFileAsync(
-                        _fileBase.Locate(libPath),
-                        _fileBase.Locate(nativesDir),
-                        Token
-                    );
+                        await UnzipFileAsync(
+                            _fileBase.Locate(libPath),
+                            _fileBase.Locate(nativesDir),
+                            Token
+                        );
+                }
             }
         }
 

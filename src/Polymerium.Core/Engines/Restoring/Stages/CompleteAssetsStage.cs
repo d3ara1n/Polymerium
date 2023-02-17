@@ -65,7 +65,7 @@ public class CompleteAssetsStage : StageBase
         _downloader.Enqueue(group);
         if (group.Wait())
             return Next(
-                new DownloadLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader)
+                new CompleteLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader)
             );
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }

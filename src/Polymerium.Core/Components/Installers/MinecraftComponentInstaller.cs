@@ -49,7 +49,7 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
                     Context.SetJavaVersion((int)index.Value.JavaVersion.MajorVersion);
                     Context.SetMainClass(index.Value.MainClass);
                     // compliance 的等级影响 arguments 存在的形式
-                    if (index.Value.ComplianceLevel == 1 && index.Value.Arguments.HasValue)
+                    if (index.Value.Arguments.HasValue)
                     {
                         foreach (
                             var argument in index.Value.Arguments.Value.Game
@@ -65,8 +65,7 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
                         )
                             Context.AppendJvmArguments(argument);
                     }
-
-                    if (index.Value.ComplianceLevel == 0)
+                    else
                     {
                         if (!string.IsNullOrEmpty(index.Value.MinecraftArguments))
                             foreach (var split in index.Value.MinecraftArguments.Split())
@@ -81,6 +80,7 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
                         Context.AppendJvmArguments("${classpath}");
                         Context.AddCrate("user_properties", "{}");
                     }
+
 
                     foreach (var item in index.Value.Libraries.Where(x => x.Verify()))
                     {
@@ -118,7 +118,7 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
 
                     var client = new Library(
                         $"net/minecraft:minecraft:{component.Version}",
-                        $"net/minecraft/minecraft/{component.Version}/minecraft/minecraft-{component.Version}.jar",
+                        $"net/minecraft/minecraft/{component.Version}/minecraft-{component.Version}.jar",
                         index.Value.Downloads.Client.Sha1,
                         index.Value.Downloads.Client.Url
                     );

@@ -15,17 +15,14 @@ public class ImportService
 {
     private readonly IFileBaseService _fileBase;
     private readonly InstanceManager _instanceManager;
-    private readonly LocalRepositoryService _localRepository;
 
     public ImportService(
         IFileBaseService fileBase,
-        InstanceManager instanceManager,
-        LocalRepositoryService localRepository
+        InstanceManager instanceManager
     )
     {
         _fileBase = fileBase;
         _instanceManager = instanceManager;
-        _localRepository = localRepository;
     }
 
     public async Task<Result<ImportResult, GameImportError>> ImportAsync(string filePath)
@@ -54,24 +51,17 @@ public class ImportService
                 var allocated = new List<Uri>();
                 foreach (var file in product.Files)
                 {
-                    var result = _localRepository.AllocInstanceLink(product.Instance.Id, file.Path);
                     try
                     {
-                        if (result.IsOk(out var fileUrl))
-                        {
-                            var path = _fileBase.Locate(fileUrl!);
-                            var entry = product.Archive.GetEntry(file.FileName)!;
-                            var dir = Path.GetDirectoryName(path);
-                            if (!Directory.Exists(dir))
-                                Directory.CreateDirectory(dir!);
+                        var path = _fileBase.Locate(
+                            new Uri(new Uri($"poly-file:///local/instances/{product.Instance.Id}/"), file.Path));
+                        var entry = product.Archive.GetEntry(file.FileName)!;
+                        var dir = Path.GetDirectoryName(path);
+                        if (!Directory.Exists(dir))
+                            Directory.CreateDirectory(dir!);
 
-                            entry.ExtractToFile(path);
-                            allocated.Add(new Uri(new Uri("poly-res://local@file/"), file.Path));
-                        }
-                        else
-                        {
-                            return Result<GameImportError>.Err(GameImportError.FileSystemError);
-                        }
+                        entry.ExtractToFile(path);
+                        allocated.Add(new Uri(new Uri("poly-res://local@file/"), file.Path));
                     }
                     catch
                     {

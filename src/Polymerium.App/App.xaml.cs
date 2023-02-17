@@ -96,8 +96,7 @@ public partial class App : Application
             .AddSingleton<MemoryStorage>()
             .AddSingleton<ComponentManager>()
             .AddSingleton<JavaManager>()
-            .AddSingleton<ImportService>()
-            .AddSingleton<LocalRepositoryService>();
+            .AddSingleton<ImportService>();
         // global services
         services
             .AddSingleton<GameManager>()

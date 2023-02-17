@@ -42,7 +42,7 @@ public class MicrosoftAccountAuthViewModel : ObservableObject
         {
             var session = await handler.LoginFromOAuth(Token);
             var account = new MicrosoftAccount(Guid.NewGuid().ToString(), session.GameSession.UUID!,
-                session.GameSession.Username!);
+                session.GameSession.Username!, session.GameSession.AccessToken!, session.GameSession.ClientToken!);
             callback("验证通过", null, account);
         }
         catch (Exception e)

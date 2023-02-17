@@ -9,246 +9,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/BoolToVisibilityConverter.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium - Backup (1).App.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium - Backup.App.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountFinishViewModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountIntroViewModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountAuthView.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountAuthView.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountFinishView.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountFinishView.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountIntroView.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountIntroView.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/MicrosoftAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Accounts/IGameAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Accounts/IGameAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Err.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Err.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/GameInstance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/GameInstance.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/GameImportError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/GameImportError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/ImportResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/ImportResult.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/ImporterBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/ImporterBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/PackedSolidFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Importers/PackedSolidFile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/LaunchConfigurations/FileBasedLaunchConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/LaunchConfigurations/FileBasedLaunchConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/LaunchConfigurations/LaunchConfigurationBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/LaunchConfigurations/LaunchConfigurationBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Component.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Component.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/GameMetadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/GameMetadata.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/Mod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/Mod.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/Modpack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/Modpack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/ResourcePack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/ResourcePack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/ShaderPack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/ShaderPack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Models/Game/AssetIndex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Models/Game/AssetIndex.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Models/Game/Library.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Models/Game/Library.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Models/PolylockAttachment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Models/PolylockAttachment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Models/PolylockData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Models/PolylockData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/None.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/None.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Ok.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Ok.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Option.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Option.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/Attributes/ResourceDomainAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/Attributes/ResourceDomainAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/Attributes/ResourceExpressionAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/Attributes/ResourceExpressionAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/Attributes/ResourceTypeAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/Attributes/ResourceTypeAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResolveResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResolveResult.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResolveResultError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResolveResultError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResolverContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResolverContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResourceResolverBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/ResourceResolving/ResourceResolverBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Result.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Result.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Some.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Some.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Configurations/AppSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Configurations/AppSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Configurations/Configuration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Configurations/Configuration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/Card.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/Card.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/CustomDialog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/CustomDialog.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/ExpanderEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/ExpanderEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/ExpanderExItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/ExpanderExItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/GlowingButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/GlowingButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/GroupBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/GroupBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/RecentPlayedItemControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/RecentPlayedItemControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/ToggleButtonEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/ToggleButtonEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Converters/DateTimeOffsetToStringConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/DateTimeOffsetToStringConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotEmptyToVisibleConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotEmptyToVisibleConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotNullToBoolConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotNullToBoolConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotNullToVisibleConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotNullToVisibleConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Converters/NullToParameterConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/NullToParameterConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Converters/ReverseBoolConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/ReverseBoolConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Data/AccountModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Data/AccountModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Data/ConfigurationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Data/ConfigurationModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Data/InstanceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Data/InstanceModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Data/RefinedModelBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Data/RefinedModelBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/ConfirmationDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/ConfirmationDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/JavaPickerDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/JavaPickerDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/MessageDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/MessageDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/TextInputDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/TextInputDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/AccountWizardEntryModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/AccountWizardEntryModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/AutoSuggestionItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/AutoSuggestionItemModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/ComponentTagItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/ComponentTagItemModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/ConfigurationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/ConfigurationModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/GameInstanceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/GameInstanceModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/GameVersionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/GameVersionModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceComponentItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceComponentItemModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceConfigurationPageModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceConfigurationPageModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceInformationItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceInformationItemModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/JavaInstallationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/JavaInstallationModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/NavigationItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/NavigationItemModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/NavigationSearchBarItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/NavigationSearchBarItemModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/RecentPlayedItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/RecentPlayedItemModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/SynchronizedCollection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/SynchronizedCollection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/AccountManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/AccountManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/ComponentManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ComponentManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/ConfigurationManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ConfigurationManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/DataStorage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/DataStorage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/IOverlayService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/IOverlayService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/InstanceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/InstanceManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/JavaManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/JavaManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/LocalRepositoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/LocalRepositoryService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/MainFileBaseOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/MainFileBaseOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/MainFileBaseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/MainFileBaseService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/MemoryStorage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/MemoryStorage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/NavigationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/NavigationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/ViewModelContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ViewModelContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/WindowOverlayService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/WindowOverlayService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/OfflineAccountViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/OfflineAccountViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/SelectionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/SelectionViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizardViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/HomeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/HomeViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceConfigurationViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceLaunchConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceLaunchConfigurationViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceMetadataConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceMetadataConfigurationViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MainViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MainViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/NewInstanceViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/NewInstanceViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizardDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/AddMetaComponentWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddMetaComponentWizardDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/CreateInstanceWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/CreateInstanceWizardDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/HomeView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/HomeView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/ImportModpackWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ImportModpackWizardDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceConfigurationView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainWindow.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/NewInstanceView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/NewInstanceView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/PrepareGameDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/PrepareGameDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/MicrosoftAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/MicrosoftAccount.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/OfflineAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/OfflineAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentMeta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentMeta.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/FabricComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/FabricComponentInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/FabricComponentInstallerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/FabricComponentInstallerBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/ForgeComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/ForgeComponentInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/MinecraftComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/MinecraftComponentInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/QuiltComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/QuiltComponentInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/DownloadEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/DownloadEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Downloading/DownloadTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Downloading/DownloadTask.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Downloading/DownloadTaskGroup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Downloading/DownloadTaskGroup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Downloading/InternalTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Downloading/InternalTask.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Downloading/InternalTaskGroup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Downloading/InternalTaskGroup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/ResolveEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/ResolveEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/RestoreError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/RestoreError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/RestoreProgressEventArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/RestoreProgressEventArgs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/RestoreProgressType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/RestoreProgressType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/BuildPolylockStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/BuildPolylockStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CheckAvailabilityStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CheckAvailabilityStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteAssetsStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteAssetsStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteAttachmentsStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteAttachmentsStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/DownloadLibrariesStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/DownloadLibrariesStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/LoadAssetIndexStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/LoadAssetIndexStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Extensions/GameInstanceExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Extensions/GameInstanceExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/IFileBaseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/IFileBaseService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Importers/ModrinthImporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Importers/ModrinthImporter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/LaunchConfigurations/CompoundLaunchConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/LaunchConfigurations/CompoundLaunchConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/BmclApi/Forge/ForgeBuild.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/BmclApi/Forge/ForgeBuild.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/BmclApi/Forge/ForgeVersionFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/BmclApi/Forge/ForgeVersionFile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/Converters/LauncherMetaMainClassConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/Converters/LauncherMetaMainClassConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricLibraryItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricLibraryItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricIntermediary.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricIntermediary.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMeta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMeta.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMetaLibraries.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMetaLibraries.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMetaMainClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLauncherMetaMainClass.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/FabricVersions/FabricLoader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/ForgeLibrary.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/ForgeLibrary.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/ForgeLibraryDownloads.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/ForgeLibraryDownloads.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/ForgeLibraryDownloadsArtifact.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/ForgeLibraryDownloadsArtifact.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfiles/ForgeProfileData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfiles/ForgeProfileData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerVersion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerVersion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerVersions/ForgeArguments.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerVersions/ForgeArguments.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/Converters/ModpackDependencyConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/Converters/ModpackDependencyConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackDependency.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackDependency.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackEnvs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackEnvs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackFile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackHashes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackHashes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackIndex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthModpackIndex.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthProject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthProject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/AssetsIndex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/AssetsIndex.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/AssetsIndexItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/AssetsIndexItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Converters/ArgumentsItemConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Converters/ArgumentsItemConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Converters/AssetsIndexConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Converters/AssetsIndexConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Converters/ClassifierConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Converters/ClassifierConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Converters/RuleFeaturesConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Converters/RuleFeaturesConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Index.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Index.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/Arguments.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/Arguments.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/ArgumentsItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/ArgumentsItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/AssetIndex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/AssetIndex.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexDownloads.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexDownloads.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexDownloadsItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexDownloadsItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexLogging.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexLogging.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexLoggingItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexLoggingItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexLoggingItemFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/IndexLoggingItemFile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/JavaVersion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/JavaVersion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/Library.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/Library.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/LibraryDownloads.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/LibraryDownloads.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/LibraryDownloadsArtifact.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/LibraryDownloadsArtifact.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/LibraryDownloadsClassifier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/LibraryDownloadsClassifier.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/LibraryNatives.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/LibraryNatives.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/Rule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/Rule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/RuleFeatures.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/RuleFeatures.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/RuleOs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/Indexes/RuleOs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/VersionManifest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/VersionManifest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/VersionManifests/GameVersion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/VersionManifests/GameVersion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/VersionManifests/LatestVersion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Mojang/VersionManifests/LatestVersion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/ReleaseType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/ReleaseType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Polymerium.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Polymerium.Core.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/LocalFileResolver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/LocalFileResolver.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/RemoteFileResolver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/RemoteFileResolver.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/StageModels/StageBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/StageModels/StageBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Stars/Crate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Stars/Crate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Stars/PlanetBlender.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Stars/PlanetBlender.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Stars/PlanetBlenderBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Stars/PlanetBlenderBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Stars/PlanetOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Stars/PlanetOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Stars/Starship.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Stars/Starship.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Stars/StarshipBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Stars/StarshipBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/BankBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/BankBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/PropertyBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/PropertyBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Property.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Property.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/PostBodyNotGivenException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/PostBodyNotGivenException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/WapooException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/WapooException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/HttpMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/HttpMethods.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Wapoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Wapoo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/WapooOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/WapooOptions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,8 +22,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7529ceeb2b7c4bfc9a81660dca4a237126600/65/f1811f6d/MLogin.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7529ceeb2b7c4bfc9a81660dca4a237126600/ae/d108538f/MSession.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/88639c5da27746da97e04df1e0ebec1163c3a0/3e/f94bdbc2/ItemCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/88639c5da27746da97e04df1e0ebec1163c3a0/ce/68e8bb55/ItemsControl.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f6168b260fa9426fa9ca49af82234c2af600/73/be8a3af0/MojangXboxLoginResponse.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f6168b260fa9426fa9ca49af82234c2af600/f7/20499246/JavaEditionSessionCache.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3e432edeee9469b7cfdb81d6e6bd278cf57afb9e54ab75649b8bb2f52cdde69/ObservableObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c53c3a5248b20163ed1d8b829afdda05041cbd8c1a054ffc5f5c5b4ef1d3/Collection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c98c4c26354b89d76ffbddb774441bcc9c7ed3559b98dbd6fe39a56fc7eb18/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
@@ -410,6 +180,7 @@
       <workItem from="1676340852432" duration="5261000" />
       <workItem from="1676349042555" duration="1729000" />
       <workItem from="1676425003579" duration="9756000" />
+      <workItem from="1676608084611" duration="4268000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>

@@ -64,11 +64,21 @@ public class CreateInstanceWizardViewModel : ObservableValidator
         set => SetProperty(ref instanceAuthor, value);
     }
 
+    private string? autoSelectedVersion = string.Empty;
+
     [Required]
     public GameVersionModel? SelectedVersion
     {
         get => selectedVersion;
-        set => SetProperty(ref selectedVersion, value, true);
+        set
+        {
+            if (SetProperty(ref selectedVersion, value, true))
+                if (value != null && InstanceName == autoSelectedVersion)
+                {
+                    InstanceName = value.Id;
+                    autoSelectedVersion = value.Id;
+                }
+        }
     }
 
     public async Task FillDataAsync(Func<IEnumerable<GameVersionModel>, Task> callback)

@@ -152,8 +152,15 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
 
         if (stage.IsCompletedSuccessfully)
         {
-            if (!stage.Token.IsCancellationRequested)
+            if (!token.IsCancellationRequested)
             {
+                // do the further checks
+                // these steps should be moved into some game manager
+                // java
+                // account
+
+                // TODO: validate account and do refresh
+                
                 UpdateLabelSafe("您的游戏已经准备就绪", true);
                 UpdateTaskProgressSafe("准备就绪");
                 Instance.LastRestore = DateTimeOffset.Now;
@@ -255,7 +262,6 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                             configure
                                 .AddCargo(polylock.Cargo)
                                 .AddCrate("auth_player_name", Account!.Nickname)
-                                // net.minecraft 的版本，这里试试换实例名会不会有别的影响
                                 .AddCrate("version_name", Instance.Name)
                                 .AddCrate("game_directory", _fileBase.Locate(workingDir))
                                 .AddCrate("assets_root", _fileBase.Locate(assetsRoot))

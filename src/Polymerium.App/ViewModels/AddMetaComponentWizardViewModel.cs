@@ -104,7 +104,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     public async Task LoadVersionsAsync(string identity, Action<IEnumerable<string>> callback)
     {
         var result = await _cache.GetOrCreateAsync<IEnumerable<string>>(
-            $"versions:{identity}",
+            identity == "net.minecraftforge" ? $"versions:{identity}/{coreVersion}" : $"versions:{identity}",
             identity switch
             {
                 "net.minecraft" => LoadMinecraftVersionsAsync,
@@ -150,7 +150,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     {
         return await LoadVersionsAsync<IEnumerable<ForgeBuild>>(
             $"https://bmclapi2.bangbang93.com/forge/minecraft/{coreVersion}",
-            x => x.Select(y => y.Version).OrderDescending(),
+            x => x.Select(y => y.Version).Reverse(),
             entry
         );
     }

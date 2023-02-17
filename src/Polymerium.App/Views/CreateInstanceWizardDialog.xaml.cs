@@ -95,7 +95,6 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
                 IsOperable = true;
                 Versions = data;
                 ViewModel.SelectedVersion = Versions.FirstOrDefault();
-                ViewModel.InstanceName = ViewModel.SelectedVersion?.Id ?? string.Empty;
                 VisualStateManager.GoToState(_root, "Default", false);
             }
         );
@@ -158,7 +157,5 @@ public sealed partial class CreateInstanceWizardDialog : CustomDialog
     {
         var item = args.SelectedItem as GameVersionModel;
         ViewModel.SelectedVersion = item;
-        if (string.IsNullOrEmpty(ViewModel.InstanceName) || ViewModel.InstanceName == item?.Id)
-            ViewModel.InstanceName = item?.Id ?? string.Empty;
     }
 }
