@@ -13,6 +13,6 @@ public struct InstallerVersion
     public string MainClass { get; set; }
     public string InheritsFrom { get; set; }
     public ForgeArguments? Arguments { get; set; }
-    public string MinecraftArguments { get; set; }
+    public string? MinecraftArguments { get; set; }
     public IEnumerable<ForgeLibrary> Libraries { get; set; }
 }

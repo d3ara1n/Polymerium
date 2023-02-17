@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using IBuilder;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
@@ -84,7 +85,7 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
 
     public void AddLibrary(Library library)
     {
-        libraries.Add(library);
+        if (!libraries.Any(x => x.Name == library.Name && x.IsNative == library.IsNative)) libraries.Add(library);
     }
 
     public void AddAttachment(PolylockAttachment attachment)

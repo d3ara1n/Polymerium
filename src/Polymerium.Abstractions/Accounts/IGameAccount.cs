@@ -9,4 +9,6 @@ public interface IGameAccount
 
     string UUID { get; set; }
     string Nickname { get; }
+    bool Validate();
+    bool Refresh();
 }
