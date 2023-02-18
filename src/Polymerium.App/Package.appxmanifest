@@ -8,8 +8,8 @@
 
     <Identity
             Name="679063bf-2fb3-4202-9f79-5b35fbed32d1"
-            Publisher="CN=zqy02"
-            Version="1.0.0.0"/>
+            Publisher="CN=D3ara1n"
+            Version="0.0.1.0"/>
 
     <Properties>
         <DisplayName>Polymerium</DisplayName>

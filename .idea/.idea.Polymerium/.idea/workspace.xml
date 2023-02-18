@@ -8,11 +8,8 @@
     <projectFile pubXmlPath="src/Polymerium.App/Properties/PublishProfiles/win10-x86.pubxml">src/Polymerium.App/Polymerium.App.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="forge work with 1.12.2+">
+    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/ForgeComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/ForgeComponentInstaller.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +178,7 @@
       <workItem from="1676608084611" duration="4268000" />
       <workItem from="1676617314600" duration="26207000" />
       <workItem from="1676686023158" duration="13387000" />
-      <workItem from="1676712809940" duration="3518000" />
+      <workItem from="1676712809940" duration="4398000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -295,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676701605615</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="forge work with 1.12.2+">
+      <created>1676716652317</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1676716652317</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
