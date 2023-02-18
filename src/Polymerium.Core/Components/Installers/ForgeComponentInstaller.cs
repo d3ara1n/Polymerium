@@ -85,16 +85,22 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                 var localPath = _fileBase.Locate(local);
                 if (!Directory.Exists(Path.GetDirectoryName(localPath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);
-
+            
                 entry.ExtractToFile(localPath, true);
-
+            
                 Context.AddLibrary(
                     new Library(
                         $"net.minecraft.forge:{(entry.Name.Contains("universal") ? "universal" : "forge")}:{component.Version}",
                         path, null, local));
-
-                GoAheadWithWrapper(installerUrl, mcVersion, component.Version);
             }
+
+            // Context.AddLibrary(new Library($"net.minecraftforge:launcher:{component.Version}",
+            //     $"net/minecraftforge/forge/{mcVersion}-{component.Version}/forge-{mcVersion}-{component.Version}-launcher.jar",
+            //     null,
+            //     new Uri(
+            //         $"https://maven.minecraftforge.net/net/minecraftforge/forge/{mcVersion}-{component.Version}/forge-{mcVersion}-{component.Version}-launcher.jar")));
+
+            GoAheadWithWrapper(installerUrl, mcVersion, component.Version);
         }
         else
         {
