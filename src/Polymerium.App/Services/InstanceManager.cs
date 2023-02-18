@@ -77,7 +77,9 @@ public sealed class InstanceManager : IDisposable
         var instanceDir = _fileBase.Locate(new Uri($"poly-file://{instance.Id}"));
         if (Directory.Exists(instanceDir))
         {
-            var newDir = Path.Combine(Path.GetDirectoryName(instanceDir)!, folderName);
+            var newDir =
+                Path.Combine(Path.GetDirectoryName(instanceDir.EndsWith('\\') ? instanceDir[..^1] : instanceDir)!,
+                    folderName);
             try
             {
                 Directory.Move(instanceDir, newDir);

@@ -10,6 +10,12 @@
     mc:Ignorable="d">
 
     <Grid>
-        <TextBlock Text="SearchCenter!" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image Source="ms-appx:///Assets/Icons/icons8-drill-48.png" Stretch="Fill" Width="60" Height="60" />
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="施工中..." Style="{StaticResource TitleTextBlockStyle}" />
+                <TextBlock Text="该页面将在未来呈现，敬请期待" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
