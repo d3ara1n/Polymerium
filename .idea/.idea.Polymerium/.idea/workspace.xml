@@ -8,14 +8,7 @@
     <projectFile pubXmlPath="src/Polymerium.App/Properties/PublishProfiles/win10-x86.pubxml">src/Polymerium.App/Polymerium.App.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Accounts/IGameAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Accounts/IGameAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/MicrosoftAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/MicrosoftAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/OfflineAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/OfflineAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/GameManager.cs" afterDir="false" />
-    </list>
+    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +26,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c98c4c26354b89d76ffbddb774441bcc9c7ed3559b98dbd6fe39a56fc7eb18/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cd4baac7317266f4f516e33baa69963b5f1f5ed866e119194d80c2958f827/StartAnimationAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f46d8257f4c1dc361b73ec7a2fa4d14a2b9f79568db1e74156c505c679420c2/AsyncRelayCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizardDialog.xaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net7.0-windows10.0.20348.0/win10-x64/App.g.i.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" root0="FORCE_HIGHLIGHTING" />
@@ -181,6 +175,7 @@
       <workItem from="1676349042555" duration="1729000" />
       <workItem from="1676425003579" duration="9756000" />
       <workItem from="1676608084611" duration="4268000" />
+      <workItem from="1676617314600" duration="26207000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -280,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676175782882</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="forge work with 1.13+">
+      <created>1676647659820</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1676647659820</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -318,7 +320,8 @@
     <MESSAGE value="fix bus that caused by the last commit" />
     <MESSAGE value="#5" />
     <MESSAGE value=":art: fmt+移除有问题的账号切换ContextMenu,切换为代码更整洁但界面难看的Flyout（日后改）" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="forge work with 1.13+" />
+    <option name="LAST_COMMIT_MESSAGE" value="forge work with 1.13+" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

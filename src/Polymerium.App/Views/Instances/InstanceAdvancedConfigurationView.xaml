@@ -21,7 +21,8 @@
                         <TextBlock VerticalAlignment="Center">
                             <Run Text="实例名" />
                             <LineBreak />
-                            <Run Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay}"
+                            <Run
+                                Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay,FallbackValue=(未定义)}"
                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                         </TextBlock>
                     </StackPanel>
@@ -36,7 +37,7 @@
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xEBE8;" Margin="20" />
                         <TextBlock VerticalAlignment="Center">
-                            <Run Text="危险区" />
+                            <Run Text="危险操作" />
                             <LineBreak />
                             <Run Text="此类操作会对游戏文件产生副作用"
                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />

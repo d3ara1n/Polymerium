@@ -117,7 +117,7 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
                     }
 
                     var client = new Library(
-                        $"net/minecraft:minecraft:{component.Version}",
+                        $"net.minecraft:minecraft:{component.Version}",
                         $"net/minecraft/minecraft/{component.Version}/minecraft-{component.Version}.jar",
                         index.Value.Downloads.Client.Sha1,
                         index.Value.Downloads.Client.Url

@@ -160,7 +160,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 // account
 
                 // TODO: validate account and do refresh
-                
+
                 UpdateLabelSafe("您的游戏已经准备就绪", true);
                 UpdateTaskProgressSafe("准备就绪");
                 Instance.LastRestore = DateTimeOffset.Now;
@@ -240,7 +240,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                     // log the java information model
                     var builder = new PlanetBlenderBuilder();
                     builder
-                        .WithJavaPath(Path.Combine(javaHome!, "bin", "java.exe"))
+                        .WithJavaPath(Path.Combine(javaHome, "bin", "java.exe"))
                         .WithMainClass(polylock.MainClass)
                         .WithWorkingDirectory(_fileBase.Locate(workingDir))
                         .WithGameArguments(
@@ -267,11 +267,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                 .AddCrate("assets_root", _fileBase.Locate(assetsRoot))
                                 .AddCrate("assets_index_name", polylock.AssetIndex.Id)
                                 .AddCrate("auth_uuid", Account!.UUID)
-                                // this wont work
-                                .AddCrate("auth_access_token", Guid.NewGuid().ToString())
-                                // really?
-                                .AddCrate("clientid", "00000000402b5328")
-                                .AddCrate("user_type", "legacy")
+                                .AddCrate("auth_access_token", Account!.AccessToken)
+                                .AddCrate("user_type", "mojang")
                                 .AddCrate("version_type", "Polymerium")
                                 // rule os
                                 // TODO: 目前只支持 windows x86
@@ -294,13 +291,14 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                     "classpath",
                                     string.Join(
                                         ';',
-                                        polylock.Libraries.Select(
+                                        polylock.Libraries
+                                            .Where(x => x is { PresentInClassPath: true, IsNative: false }).Select(
                                             x => _fileBase.Locate(new Uri(librariesRoot, x.Path))
                                         )
                                     )
                                 )
                                 .AddCrate("launcher_name", "Polymerium")
-                                .AddCrate("launcher_version", "0.1.0")
+                                .AddCrate("launcher_version", GetType().Assembly.GetName().Version?.ToString() ?? "0.0")
                                 // custom jvm argument patches
                                 .AddCrate(
                                     "jvm_max_memory",

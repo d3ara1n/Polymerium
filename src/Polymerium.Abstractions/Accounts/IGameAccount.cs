@@ -8,7 +8,8 @@ public interface IGameAccount
     string Id { get; set; }
 
     string UUID { get; set; }
-    string Nickname { get; }
+    string Nickname { get; set; }
+    string AccessToken { get; set; }
     bool Validate();
     bool Refresh();
 }

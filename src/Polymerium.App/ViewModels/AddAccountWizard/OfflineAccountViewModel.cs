@@ -74,6 +74,7 @@ public class OfflineAccountViewModel : ObservableValidator
         var account = new OfflineAccount(
             Guid.NewGuid().ToString(),
             string.IsNullOrEmpty(UUID) ? EmptyUUID : UUID,
+            Guid.NewGuid().ToString(),
             Nickname
         );
         _accountManager.AddAccount(account);
