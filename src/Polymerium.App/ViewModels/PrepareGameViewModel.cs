@@ -228,11 +228,10 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 if (
                     verify.TryUnwrap(out var model)
                     && (
-                        (
-                            model!.JavaVersion?.StartsWith("1.8") == true
-                                ? "8"
-                                : model.JavaVersion ?? string.Empty
-                        ).StartsWith(polylock.JavaMajorVersionRequired.ToString())
+                        (model!.JavaVersion?.StartsWith("1.8") == true
+                            ? "8"
+                            : model.JavaVersion ?? string.Empty)
+                        .StartsWith(polylock.JavaMajorVersionRequired.ToString())
                         || (configuration.SkipJavaVersionCheck == true && !autoDetectJava)
                     )
                 )
@@ -293,8 +292,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                         ';',
                                         polylock.Libraries
                                             .Where(x => x is { PresentInClassPath: true, IsNative: false }).Select(
-                                            x => _fileBase.Locate(new Uri(librariesRoot, x.Path))
-                                        )
+                                                x => _fileBase.Locate(new Uri(librariesRoot, x.Path))
+                                            )
                                     )
                                 )
                                 .AddCrate("launcher_name", "Polymerium")

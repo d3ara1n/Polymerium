@@ -85,7 +85,25 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
 
     public void AddLibrary(Library library)
     {
-        if (!libraries.Any(x => x.Name == library.Name && x.IsNative == library.IsNative)) libraries.Add(library);
+        var found = false;
+        foreach (var exist in libraries)
+        {
+            var existTuple = exist.Name.Split(':');
+            var tuple = library.Name.Split(':');
+            if (existTuple.Take(2).Concat(existTuple.Skip(3)).SequenceEqual(tuple.Take(2).Concat(tuple.Skip(3))) &&
+                exist.IsNative == library.IsNative &&
+                exist.PresentInClassPath == library.PresentInClassPath)
+            {
+                exist.Name = library.Name;
+                exist.Path = library.Path;
+                exist.Sha1 = library.Sha1;
+                exist.Url = library.Url;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) libraries.Add(library);
     }
 
     public void AddAttachment(PolylockAttachment attachment)
