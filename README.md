@@ -67,7 +67,11 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 
 ### 安装
 
-目前不分发。
+在 [Release]("https://github.com/d3ara1n/Polymerium/releases") 中下载证书文件(.cer)和程序包(.msix)。
+
+1. 双击安装证书
+2. 在 Windows 设置，`隐私和安全性` 中的 `开发者选项` 打开 `开发者模式`
+3. 双击程序包进入安装环节
 
 <!-- ROADMAP -->
 ## Roadmap
