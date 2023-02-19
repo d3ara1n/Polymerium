@@ -22,6 +22,8 @@ public class GameInstanceModel : ObservableObject
 
     public ConfigurationModel Configuration { get; }
 
+    public string CoreVersion { get; set; }
+
     public string Name
     {
         get => Inner.Name;

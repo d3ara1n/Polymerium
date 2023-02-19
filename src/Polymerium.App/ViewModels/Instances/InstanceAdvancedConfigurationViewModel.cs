@@ -68,7 +68,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
                     };
                     errorDialog.ShowAsync().AsTask().GetAwaiter();
                 }
-                Context.AssociatedInstance = instance;
+                Context.AssociatedInstance = new Models.GameInstanceModel(instance.Inner);
             }
         });
     }

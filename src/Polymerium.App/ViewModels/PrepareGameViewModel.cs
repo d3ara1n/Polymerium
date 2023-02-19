@@ -307,6 +307,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                     var blender = builder.Build();
                     blender.Start();
                     Instance.LastPlay = DateTimeOffset.Now;
+                    _dispatcher.TryEnqueue(() => _overlayService.Dismiss());
                     return;
                 }
             }
