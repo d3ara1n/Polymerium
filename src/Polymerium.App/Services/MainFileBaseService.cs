@@ -71,7 +71,8 @@ public class MainFileBaseService : IFileBaseService
 
     public bool DoFileExist(Uri uri)
     {
-        return File.Exists(Locate(uri));
+        var file = new FileInfo(Locate(uri));
+        return file.Exists && file.Length > 0;
     }
 
     public async Task<bool> VerifyHashAsync(Uri uri, string? hash, HashAlgorithm algorithm)

@@ -65,17 +65,16 @@ public class CompleteLibrariesStage : StageBase
                     }
                     else
                     {
-                        if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task))
-                            if (item.IsNative)
-                                task!.CompletedCallback = async (t, s) =>
-                                {
-                                    if (s)
-                                        await UnzipFileAsync(
-                                            t.Destination,
-                                            _fileBase.Locate(nativesDir),
-                                            Token
-                                        );
-                                };
+                        if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task) && item.IsNative)
+                            task!.CompletedCallback = async (t, s) =>
+                            {
+                                if (s)
+                                    await UnzipFileAsync(
+                                        t.Destination,
+                                        _fileBase.Locate(nativesDir),
+                                        Token
+                                    );
+                            };
                     }
                 }
                 else

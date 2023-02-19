@@ -143,7 +143,7 @@
             </controls:Card>
             <controls:GroupBox Margin="5,5,10,5" Visibility="Collapsed">
                 <controls:GroupBox.Header>
-                    <TextBlock Text="截图(WIP)" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="截图(WIP)" Style="{StaticResource BodyStrongTextBlockStyle}" />
                 </controls:GroupBox.Header>
                 <toolkit:ConstrainedBox AspectRatio="16:9">
                     <Grid>
@@ -157,7 +157,7 @@
             </controls:GroupBox>
             <controls:GroupBox Margin="5,5,10,5" Visibility="Collapsed">
                 <controls:GroupBox.Header>
-                    <TextBlock Text="存档(WIP)" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="存档(WIP)" Style="{StaticResource BodyStrongTextBlockStyle}" />
                 </controls:GroupBox.Header>
                 <Grid>
                     <Grid.ChildrenTransitions>
@@ -168,7 +168,7 @@
             </controls:GroupBox>
             <controls:GroupBox Margin="5,5,10,10">
                 <controls:GroupBox.Header>
-                    <TextBlock Text="其他信息" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="其他信息" Style="{StaticResource BodyStrongTextBlockStyle}" />
                 </controls:GroupBox.Header>
                 <Grid>
                     <Grid.ChildrenTransitions>

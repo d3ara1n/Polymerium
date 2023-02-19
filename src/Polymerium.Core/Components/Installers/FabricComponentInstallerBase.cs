@@ -13,7 +13,8 @@ namespace Polymerium.Core.Components.Installers;
 
 public abstract class FabricComponentInstallerBase : ComponentInstallerBase
 {
-    protected abstract Uri MavenUrl { get; }
+    protected abstract Uri LoaderMavenUrl { get; }
+    protected abstract Uri IntermediaryMavenUrl { get; }
     protected abstract Uri ManifestUrl { get; }
 
     public override async Task<Result<string>> StartAsync(Component component)
@@ -37,13 +38,13 @@ public abstract class FabricComponentInstallerBase : ComponentInstallerBase
                     version.Loader.Maven,
                     loaderPath,
                     null,
-                    new Uri(MavenUrl, loaderPath)
+                    new Uri(LoaderMavenUrl, loaderPath)
                 );
                 var intermediary = new Library(
                     version.Intermediary.Maven,
                     intermediaryPath,
                     null,
-                    new Uri(MavenUrl, intermediaryPath)
+                    new Uri(IntermediaryMavenUrl, intermediaryPath)
                 );
                 foreach (
                     var item in version.LauncherMeta.Libraries.Common.Concat(
