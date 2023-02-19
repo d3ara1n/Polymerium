@@ -81,7 +81,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
             foreach (var entry in libs)
             {
                 var path = entry.FullName[6..];
-                var local = new Uri(new Uri($"poly-file:///local/instances/{Context.Instance.Id}/"), path);
+                var local = new Uri(new Uri($"poly-file:///local/instances/{Context.Instance.Id}/libraries/"), path);
                 var localPath = _fileBase.Locate(local);
                 if (!Directory.Exists(Path.GetDirectoryName(localPath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);

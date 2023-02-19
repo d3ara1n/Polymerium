@@ -17,8 +17,8 @@ public class ResourceExpressionAttribute : Attribute
             expression,
             m =>
                 m.Value.Contains("*")
-                    ? $"(?<{m.Groups["name"].Value.Replace("*", "")}>[0-9a-zA-Z_.,'~!\\(\\)\\ \"\\/+-]+)"
-                    : $"(?<{m.Groups["name"].Value}>[0-9a-zA-Z_.,'~!\\(\\)\\ \"+-]+)"
+                    ? $"(?<{m.Groups["name"].Value.Replace("*", "")}>[0-9a-zA-Z_.,'~!\\(\\)\\\\[\\] \"\\/+-]+)"
+                    : $"(?<{m.Groups["name"].Value}>[0-9a-zA-Z_.,'~!\\(\\)\\\\[\\] \"+-]+)"
         );
         Compiled = new Regex($"^{newPattern}$");
     }
