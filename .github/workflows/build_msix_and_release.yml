@@ -54,9 +54,8 @@ jobs:
         
     - name: Remove the pfx
       run: Remove-Item -path C:\appx.pfx
-
     - uses: ncipollo/release-action@v1
       with:
-        artifacts: "src\\${{ env.Solution_Name }}.App\\Packages\\*\\*.cer,${{ env.Solution_Name }}\\Packages\\*.msix"
+        artifacts: "src\\${{ env.Solution_Name }}.App\\Packages\\*\\*.cer,src\\${{ env.Solution_Name }}.App\\Packages\\*\\*.msix"
         prerelease: true
         generateReleaseNotes: true
