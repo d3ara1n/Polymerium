@@ -20,13 +20,11 @@
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
         <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
         <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-        <PackageCertificateThumbprint>7BB2FD75665BA9A5A4BF5CFE76893AF4939AF2DB</PackageCertificateThumbprint>
         <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
         <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
         <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
         <GenerateTestArtifacts>True</GenerateTestArtifacts>
         <AppxBundle>Never</AppxBundle>
-        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     </PropertyGroup>
 
     <ItemGroup>
