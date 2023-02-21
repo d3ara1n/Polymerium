@@ -48,55 +48,57 @@
                     <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,5">
                         <TextBlock Text="最近游玩" />
                     </Grid>
-                    <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:RecentPlayedItemModel">
-                                <controls:RecentPlayedItemControl Style="{StaticResource DefaultRecentPlayedItemStyle}"
+                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                        <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}" Margin="0,0,0,5">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:RecentPlayedItemModel">
+                                    <controls:RecentPlayedItemControl Style="{StaticResource DefaultRecentPlayedItemStyle}"
                                                                   Command="{x:Bind Command}"
                                                                   CommandParameter="{x:Bind InstanceId}">
-                                    <Grid RowDefinitions="Auto,*" MaxWidth="100">
-                                        <toolkit:ImageEx Width="80" Height="80" Margin="10,10,10,5" CornerRadius="10"
+                                        <Grid RowDefinitions="Auto,*" MaxWidth="100">
+                                            <toolkit:ImageEx Width="80" Height="80" Margin="10,10,10,5" CornerRadius="10"
                                                          Source="{x:Bind ThumbnailFile}"
                                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
                                                          Stretch="UniformToFill" />
-                                        <Grid Grid.Row="1" RowDefinitions="Auto,*">
-                                            <Grid.ChildrenTransitions>
-                                                <ContentThemeTransition />
-                                            </Grid.ChildrenTransitions>
-                                            <TextBlock Margin="10,5,10,2" Text="{x:Bind Name}"
+                                            <Grid Grid.Row="1" RowDefinitions="Auto,*">
+                                                <Grid.ChildrenTransitions>
+                                                    <ContentThemeTransition />
+                                                </Grid.ChildrenTransitions>
+                                                <TextBlock Margin="10,5,10,2" Text="{x:Bind Name}"
                                                        Style="{ThemeResource BodyStrongTextBlockStyle}"
                                                        Foreground="{ThemeResource ApplicationForegroundThemeBrush}" />
-                                            <Grid ColumnDefinitions="Auto,*" Grid.Row="1" VerticalAlignment="Bottom"
+                                                <Grid ColumnDefinitions="Auto,*" Grid.Row="1" VerticalAlignment="Bottom"
                                                   Margin="10,2,10,10">
-                                                <FontIcon Margin="0,0,2,0" VerticalAlignment="Bottom" Glyph="&#xE121;"
+                                                    <FontIcon Margin="0,0,2,0" VerticalAlignment="Bottom" Glyph="&#xE121;"
                                                           FontSize="11" />
-                                                <TextBlock Grid.Column="1" HorizontalAlignment="Right" FontSize="11"
+                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Right" FontSize="11"
                                                            Text="{x:Bind LastPlayedAt,Converter={StaticResource DateTimeOffsetToStringConverter}}"
                                                            Style="{ThemeResource BodyTextBlockStyle}"
                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                </Grid>
                                             </Grid>
                                         </Grid>
-                                    </Grid>
-                                </controls:RecentPlayedItemControl>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate>
-                                            <ContentPresenter />
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
+                                    </controls:RecentPlayedItemControl>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <ContentPresenter />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </ScrollViewer>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
