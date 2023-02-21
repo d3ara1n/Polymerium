@@ -53,7 +53,7 @@ jobs:
         Platform: ${{ matrix.platform }}
         
     - name: Remove the pfx
-      run: Remove-Item -path appx.pfx
+      run: Remove-Item -path C:\appx.pfx
 
     - uses: ncipollo/release-action@v1
       with:
