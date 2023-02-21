@@ -58,6 +58,5 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "${{ env.Solution_Name }}\\Packages\\*.cer,${{ env.Solution_Name }}\\Packages\\*.msix"
-        bodyFile: "body.md"
         prerelease: true
         generateReleaseNotes: true
