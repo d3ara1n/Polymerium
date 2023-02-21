@@ -21,8 +21,12 @@
         <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
         <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
         <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-        <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-        <PackageCertificateThumbprint>A0F79CAA2160E9B5B32B3C07594D06487B4F9CE6</PackageCertificateThumbprint>
+        <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+        <PackageCertificateKeyFile>C:\Users\zqy02\Projects\Polymerium.App_TemporaryKey.pfx</PackageCertificateKeyFile>
+        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+        <GenerateTestArtifacts>True</GenerateTestArtifacts>
+        <AppxBundle>Never</AppxBundle>
+        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     </PropertyGroup>
 
     <ItemGroup>
