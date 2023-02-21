@@ -52,7 +52,7 @@
         <NavigationView
             x:Name="MainNavigationBar"
             Grid.Row="1"
-            Margin="5,-5,0,5"
+            Margin="5,-5,-5,5"
             Width="78"
             MenuItemsSource="{x:Bind ViewModel.NavigationPages}"
             IsBackButtonVisible="Collapsed"
@@ -101,6 +101,11 @@
                     </Grid>
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
+            <NavigationView.MenuItemContainerStyle>
+                <Style TargetType="NavigationViewItem">
+                    <Setter Property="Margin" Value="0,0,5,0"/>
+                </Style>
+            </NavigationView.MenuItemContainerStyle>
         </NavigationView>
         <Frame x:Name="RootFrame" Grid.Row="1" Grid.Column="1" />
         <!-- WinUI 的对话框没有自定义选项，这里引入 WPF 的 in-app 对话框风格 -->

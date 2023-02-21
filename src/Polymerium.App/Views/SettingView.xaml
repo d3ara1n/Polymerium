@@ -136,13 +136,13 @@
                     <StackPanel Spacing="1">
                         <controls:ExpanderExItem>
                             <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock Text="宽" />
+                                <TextBlock Text="宽" VerticalAlignment="Center"/>
                                 <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}" />
                             </Grid>
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
                             <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock Text="高" />
+                                <TextBlock Text="高"  VerticalAlignment="Center"/>
                                 <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}" />
                             </Grid>
                         </controls:ExpanderExItem>
