@@ -22,11 +22,7 @@
         <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
         <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
         <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-        <GenerateTestArtifacts>True</GenerateTestArtifacts>
-        <AppxBundle>Never</AppxBundle>
         <PackageCertificateThumbprint>A0F79CAA2160E9B5B32B3C07594D06487B4F9CE6</PackageCertificateThumbprint>
-        <PackageCertificateKeyFile>Polymerium.App_TemporaryKey.pfx</PackageCertificateKeyFile>
     </PropertyGroup>
 
     <ItemGroup>
