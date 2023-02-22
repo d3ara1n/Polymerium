@@ -1,4 +1,5 @@
 using Polymerium.Abstractions.Accounts;
+using System.Threading.Tasks;
 
 namespace Polymerium.Core.Accounts;
 
@@ -25,13 +26,13 @@ public class OfflineAccount : IGameAccount
     public string Nickname { get; set; }
     public string AccessToken { get; set; }
 
-    public bool Validate()
+    public Task<bool> ValidateAsync()
     {
-        return true;
+        return Task.FromResult(true);
     }
 
-    public bool Refresh()
+    public Task<bool> RefreshAsync()
     {
-        return true;
+        return Task.FromResult(true);
     }
 }

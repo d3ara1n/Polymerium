@@ -69,17 +69,17 @@
                         Height="60" Width="70" Margin="5">
                     <Button.Flyout>
                         <Flyout>
-                            <StackPanel>
-                                <TextBlock Text="本页面 WIP, 会在未来重做" />
-                                <Button Content="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}" />
-                                <Button Content="刷新" />
-                                <Button Content="注销"
-                                        IsEnabled="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
-                                        Command="{x:Bind ViewModel.RemoveAccountCommand}" />
+                            <StackPanel Spacing="8" MinWidth="180">
                                 <ListView x:Name="AccountSelection"
                                           SelectedValue="{x:Bind ViewModel.Context.SelectedAccount,Mode=TwoWay}"
                                           DisplayMemberPath="Nickname"
                                           ItemsSource="{x:Bind ViewModel.LogonAccounts}" />
+                                <Grid>
+                                    <Button Content="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"  HorizontalAlignment="Right"/>
+                                    <Button Content="注销当前"
+                                        IsEnabled="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
+                                        Command="{x:Bind ViewModel.RemoveAccountCommand}" HorizontalAlignment="Left"/>
+                                </Grid>
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>

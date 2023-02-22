@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CmlLib.Core.Auth;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
@@ -13,6 +14,7 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Accounts;
 using Polymerium.Abstractions.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Stages.Preparing;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
 using Polymerium.Core.LaunchConfigurations;
@@ -126,7 +128,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         stage.Token = token;
         UpdateLabelSafe(stage.StageName);
         var hasNext = false;
-        // TODO: update title as rolling text with stage name
+        var appended = false;
         do
         {
             UpdateTaskProgressSafe("准备中");
@@ -140,6 +142,12 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                     stage.Token = token;
                     stage.TaskFinishedCallback = UpdateTaskProgressSafe;
                     UpdateLabelSafe(stage.StageName);
+                }
+                else if (!appended)
+                {
+                    stage = new CheckAccountAvailabilityStage(_fileBase, Account!);
+                    appended = true;
+                    hasNext = true;
                 }
             }
             catch (Exception ex)
@@ -155,11 +163,10 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             if (!token.IsCancellationRequested)
             {
                 // do the further checks
+                // stage-lize!
                 // these steps should be moved into some game manager
                 // java
                 // account
-
-                // TODO: validate account and do refresh
 
                 UpdateLabelSafe("您的游戏已经准备就绪", true);
                 UpdateTaskProgressSafe("准备就绪");
