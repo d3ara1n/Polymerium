@@ -123,9 +123,9 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
   * [ ] 离线 Fallback 模式代替离线模式
 * [ ] 还原引擎
   * [x] 基于 Stage 模型
-  * [ ] 组件安装
+  * [x] 组件安装
     * [x] 香草
-    * [ ] Forge
+    * [x] Forge
     * [x] Fabric
     * [x] Quilt
   * [ ] 附件安装
@@ -168,7 +168,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 
 * 游戏启动流程、Fabric/Quilt 部署：[Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
 * 游戏启动流程：[教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8?variant=zh)
-* Forge：木得参考，也木得写完
+* Forge：[ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
 * 微软验证：[Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
 * 微软验证实现：[Cml.Core.Auth.Microsoft](https://github.com/CmlLib/CmlLib.Core.Auth.Microsoft)
 * Forge 版本和下载：[BMCLApi](https://bmclapidoc.bangbang93.com/)

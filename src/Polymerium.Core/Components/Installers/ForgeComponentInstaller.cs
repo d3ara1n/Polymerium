@@ -49,7 +49,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
         var versionJson = await GetArchiveJsonAsync<InstallerVersion>(archive, "version.json");
         var profileJson = await GetArchiveJsonAsync<InstallerProfile>(archive, "install_profile.json");
 
-        if (versionJson.HasValue && profileJson.HasValue)
+        if (versionJson.HasValue && profileJson.HasValue && profileJson.Value.Spec != null)
         {
             // above 1.12
             foreach (var library in versionJson.Value.Libraries)
@@ -85,26 +85,36 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                 var localPath = _fileBase.Locate(local);
                 if (!Directory.Exists(Path.GetDirectoryName(localPath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);
-            
+
                 entry.ExtractToFile(localPath, true);
-            
+
                 Context.AddLibrary(
                     new Library(
                         $"net.minecraft.forge:{(entry.Name.Contains("universal") ? "universal" : "forge")}:{component.Version}",
                         path, null, local));
             }
-
-            // Context.AddLibrary(new Library($"net.minecraftforge:launcher:{component.Version}",
-            //     $"net/minecraftforge/forge/{mcVersion}-{component.Version}/forge-{mcVersion}-{component.Version}-launcher.jar",
-            //     null,
-            //     new Uri(
-            //         $"https://maven.minecraftforge.net/net/minecraftforge/forge/{mcVersion}-{component.Version}/forge-{mcVersion}-{component.Version}-launcher.jar")));
-
             GoAheadWithWrapper(installerUrl, mcVersion, component.Version);
         }
         else
         {
+            //var install = profileJson.Value.Install.Value;
+            //var filePath = install.FilePath;
+            //var entry = archive.GetEntry(filePath)!;
+            //var path = $"forge-{mcVersion}-{component.Version}-universal.jar";
+            //var local = new Uri(new Uri($"poly-file:///local/instances/{Context.Instance.Id}/libraries/"), path);
+            //var localPath = _fileBase.Locate(local);
+            //if (!Directory.Exists(Path.GetDirectoryName(localPath)))
+            //    Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);
+
+            //entry.ExtractToFile(localPath, true);
+
+            //Context.AddLibrary(
+            //    new Library(
+            //        $"net.minecraft.forge:{(entry.Name.Contains("universal") ? "universal" : "forge")}:{component.Version}",
+            //        path, null, local));
+
             throw new NotImplementedException();
+
         }
 
         Context.AddCrate("library_directory", _fileBase.Locate(new Uri("poly-file:///libraries")));

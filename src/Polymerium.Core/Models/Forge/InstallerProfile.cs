@@ -5,7 +5,9 @@ namespace Polymerium.Core.Models.Forge;
 
 public struct InstallerProfile
 {
-    public int Spec { get; set; }
+    public int? Spec { get; set; }
+    // for old version install
+    public ForgeProfileInstall? Install { get; set; }
     public string Profile { get; set; }
     public string Version { get; set; }
     public string Path { get; set; }

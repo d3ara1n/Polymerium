@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Polymerium.Abstractions.Accounts;
 
 public interface IGameAccount
@@ -10,6 +12,6 @@ public interface IGameAccount
     string UUID { get; set; }
     string Nickname { get; set; }
     string AccessToken { get; set; }
-    bool Validate();
-    bool Refresh();
+    Task<bool> ValidateAsync();
+    Task<bool> RefreshAsync();
 }

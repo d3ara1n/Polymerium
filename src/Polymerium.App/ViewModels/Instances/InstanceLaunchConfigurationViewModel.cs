@@ -1,14 +1,52 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
+using Polymerium.Abstractions.LaunchConfigurations;
+using Polymerium.App.Dialogs;
+using Polymerium.App.Models;
 using Polymerium.App.Services;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Polymerium.App.ViewModels.Instances;
 
 public class InstanceLaunchConfigurationViewModel : ObservableObject
 {
-    public InstanceLaunchConfigurationViewModel(ViewModelContext context)
+    private readonly JavaManager _javaManager;
+    public InstanceLaunchConfigurationViewModel(ViewModelContext context, JavaManager javaManager)
     {
+        _javaManager = javaManager;
         Context = context;
+        Configuration = Context.AssociatedInstance!.Configuration;
+        OpenPickerAsyncCommand = new AsyncRelayCommand(OpenPickerAsync);
     }
 
+    public ConfigurationModel Configuration { get; }
+
     public ViewModelContext Context { get; }
+
+    public ICommand OpenPickerAsyncCommand { get; }
+
+    public async Task OpenPickerAsync()
+    {
+        var dialog = new JavaPickerDialog
+        {
+            XamlRoot = App.Current.Window.Content.XamlRoot,
+            JavaInstallations = _javaManager
+                .QueryJavaInstallations()
+                .Select(x =>
+                {
+                    var option = _javaManager.VerifyJavaHome(x);
+                    if (option.TryUnwrap(out var model))
+                        return model;
+                    return null;
+                })
+                .Where(x => x != null)
+                .Select(x => x!)
+        };
+        if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            Configuration.JavaHome = dialog.SelectedJava.HomePath;
+    }
 }

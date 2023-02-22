@@ -46,7 +46,7 @@ public class CheckAvailabilityStage : StageBase
     public override async Task<Option<StageBase>> StartAsync()
     {
         if (Token.IsCancellationRequested)
-            return Error("还原过程取消");
+            return Cancel();
         var polylockDataFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json");
         // 不是简单的 md5, 所以文件名也不应该是 .md5
         var polylockHashFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json.hash");

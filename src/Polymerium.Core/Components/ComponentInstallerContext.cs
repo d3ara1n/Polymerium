@@ -67,7 +67,7 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
 
     public void AppendGameArgument(string value)
     {
-        gameArguments.Add(value);
+        if (!gameArguments.Contains(value)) gameArguments.Add(value);
     }
 
     public void AppendJvmArguments(string value)
@@ -102,7 +102,7 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
             //    break;
             //}
 
-            if(exist.Name == library.Name && exist.IsNative == library.IsNative && exist.PresentInClassPath == library.PresentInClassPath)
+            if (exist.Name == library.Name && exist.IsNative == library.IsNative && exist.PresentInClassPath == library.PresentInClassPath)
             {
                 found = true;
             }
