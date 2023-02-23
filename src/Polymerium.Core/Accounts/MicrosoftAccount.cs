@@ -19,6 +19,7 @@ public class MicrosoftAccount : IGameAccount
     private const string PROFILE_ENDPOINT = "https://api.minecraftservices.com/minecraft/profile";
     private const string CLIENT_ID = "66b049dc-22a1-4fd8-a17d-2ccd01332101";
     private const string SCOPE = "XboxLive.signin offline_access";
+
     public MicrosoftAccount(string id, string uuid, string nickname, string accessToken, string refreshToken)
     {
         Id = id;

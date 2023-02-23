@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Abstractions;
@@ -16,6 +17,8 @@ public class ImportModpackWizardViewModel : ObservableObject
     private GameInstance? exposed;
 
     private string? instanceName = string.Empty;
+
+    private CancellationTokenSource source = new CancellationTokenSource();
 
     public ImportModpackWizardViewModel(ImportService importer)
     {
@@ -39,15 +42,20 @@ public class ImportModpackWizardViewModel : ObservableObject
         _fileName = fileName;
     }
 
+    public void RequestCancel()
+    {
+        source.Cancel();
+    }
+
     public async Task ExtractInformationAsync(
         Action<Result<ImportResult, GameImportError>, bool> callback
     )
     {
-        var result = await _importer.ImportAsync(_fileName);
+        var result = await _importer.ImportAsync(_fileName, source.Token);
         if (result.IsOk(out var import))
             _importResult = import!;
 
-        callback(result, false);
+        if (!source.Token.IsCancellationRequested) callback(result, false);
     }
 
     public async Task ApplyExtractionAsync(

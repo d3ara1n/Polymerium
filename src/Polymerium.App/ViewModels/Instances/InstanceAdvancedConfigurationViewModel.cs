@@ -19,6 +19,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
     private readonly IFileBaseService _fileBase;
     private readonly InstanceManager _instanceManager;
     private readonly ILogger _logger;
+    private readonly ConfigurationManager _configurationManager;
     private readonly NavigationService _navigation;
 
     public InstanceAdvancedConfigurationViewModel(
@@ -26,6 +27,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         InstanceManager instanceManager,
         IFileBaseService fileBase,
         NavigationService navigation,
+        ConfigurationManager configurationManager,
         ILogger<InstanceAdvancedConfigurationViewModel> logger
     )
     {
@@ -34,6 +36,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         _fileBase = fileBase;
         _navigation = navigation;
         _logger = logger;
+        _configurationManager = configurationManager;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         OpenRenameDialogCommand = new RelayCommand(OpenRenameDialog);
         DeleteInstanceCommand = new AsyncRelayCommand(DeleteInstanceAsync);
@@ -68,7 +71,9 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
                     };
                     errorDialog.ShowAsync().AsTask().GetAwaiter();
                 }
-                Context.AssociatedInstance = new Models.GameInstanceModel(instance.Inner);
+
+                Context.AssociatedInstance =
+                    new Models.GameInstanceModel(instance.Inner, _configurationManager.Current.GameGlobals);
             }
         });
     }

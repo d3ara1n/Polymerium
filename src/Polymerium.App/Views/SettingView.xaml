@@ -104,7 +104,24 @@
                     <controls:ExpanderEx.Header>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon Glyph="&#xE8B7;" Margin="20" />
+                                <FontIcon Glyph="&#xE9D5;" Margin="20" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="跳过 Java 兼容性检查" />
+                                    <LineBreak />
+                                    <Run Text="当确定 Java 版本兼容时可开启此项"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </TextBlock>
+                            </StackPanel>
+                            <ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right"
+                                          IsOn="{x:Bind ViewModel.SkipJavaVersionCheck,Mode=TwoWay}" Margin="0,0,-85,0"/>
+                        </Grid>
+                    </controls:ExpanderEx.Header>
+                </controls:ExpanderEx>
+                <controls:ExpanderEx Padding="0">
+                    <controls:ExpanderEx.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xEC8F;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
                                     <Run Text="Java 虚拟机分配的最大内存" />
                                     <LineBreak />
@@ -136,13 +153,13 @@
                     <StackPanel Spacing="1">
                         <controls:ExpanderExItem>
                             <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock Text="宽" VerticalAlignment="Center"/>
+                                <TextBlock Text="宽" VerticalAlignment="Center" />
                                 <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}" />
                             </Grid>
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
                             <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock Text="高"  VerticalAlignment="Center"/>
+                                <TextBlock Text="高" VerticalAlignment="Center" />
                                 <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}" />
                             </Grid>
                         </controls:ExpanderExItem>
@@ -150,11 +167,11 @@
                 </controls:ExpanderEx>
                 <TextBlock Text="说明" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBlock>
-                    <Run Text="储存库 "/>
+                    <Run Text="储存库 " />
                     <Hyperlink NavigateUri="https://github.com/d3ara1n/Polymerium">Github</Hyperlink>
                 </TextBlock>
                 <TextBlock>
-                    <Run Text="图标素材来自 " />
+                    <Run Text="图标素材 " />
                     <Hyperlink NavigateUri="https://icons8.com/icons/fluency">icons8</Hyperlink>
                 </TextBlock>
             </StackPanel>

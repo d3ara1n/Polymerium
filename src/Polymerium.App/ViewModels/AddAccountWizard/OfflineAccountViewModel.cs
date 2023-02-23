@@ -13,7 +13,7 @@ public class OfflineAccountViewModel : ObservableValidator
     private readonly AccountManager _accountManager;
     private readonly MD5 md5 = MD5.Create();
 
-    private string emptyUUID;
+    private string emptyUUID = string.Empty;
     private string errorMessage = string.Empty;
 
     private string nickname = string.Empty;
@@ -23,6 +23,7 @@ public class OfflineAccountViewModel : ObservableValidator
     public OfflineAccountViewModel(AccountManager accountManager)
     {
         _accountManager = accountManager;
+        EmptyUUID = string.Empty; // overrided by nickname setter
         Nickname = "Steve";
         UUID = string.Empty;
     }

@@ -36,7 +36,7 @@ public class InstanceViewModel : ObservableObject
         _componentManager = componentManager;
         _navigationService = navigationService;
         Context = context;
-        CoreVersion = Context.AssociatedInstance.Inner.GetCoreVersion() ?? "N/A";
+        CoreVersion = Context.AssociatedInstance!.Inner.GetCoreVersion() ?? "N/A";
         StartCommand = new RelayCommand(Start);
         GotoConfigurationViewCommand = new RelayCommand(GotoConfigurationView);
         Components = new ObservableCollection<ComponentTagItemModel>(

@@ -1,20 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Abstractions.LaunchConfigurations;
+using Polymerium.Core.LaunchConfigurations;
 
 namespace Polymerium.App.Models;
 
 public class ConfigurationModel : ObservableObject
 {
-    public ConfigurationModel(FileBasedLaunchConfiguration configuration)
+    public ConfigurationModel(CompoundLaunchConfiguration configuration)
     {
         Inner = configuration;
     }
 
-    public FileBasedLaunchConfiguration Inner { get; }
+    public CompoundLaunchConfiguration Inner { get; }
 
     public string JavaHome
     {
-        get => Inner.JavaHome;
+        get => Inner.JavaHome ?? "未定义";
         set
         {
             Inner.JavaHome = value;
@@ -22,9 +23,9 @@ public class ConfigurationModel : ObservableObject
         }
     }
 
-    public bool? AutoDetectJava
+    public bool AutoDetectJava
     {
-        get => Inner.AutoDetectJava;
+        get => Inner.AutoDetectJava ?? true;
         set
         {
             Inner.AutoDetectJava = value;
@@ -32,9 +33,9 @@ public class ConfigurationModel : ObservableObject
         }
     }
 
-    public bool? SkipJavaVersionCheck
+    public bool SkipJavaVersionCheck
     {
-        get => Inner.SkipJavaVersionCheck;
+        get => Inner.SkipJavaVersionCheck ?? false;
         set
         {
             Inner.SkipJavaVersionCheck = value;
@@ -42,9 +43,9 @@ public class ConfigurationModel : ObservableObject
         }
     }
 
-    public uint? JvmMaxMemory
+    public uint JvmMaxMemory
     {
-        get => Inner.JvmMaxMemory;
+        get => Inner.JvmMaxMemory ?? 0;
         set
         {
             Inner.JvmMaxMemory = value;
@@ -52,9 +53,9 @@ public class ConfigurationModel : ObservableObject
         }
     }
 
-    public uint? WindowWidth
+    public uint WindowWidth
     {
-        get => Inner.WindowWidth;
+        get => Inner.WindowWidth ??0;
         set
         {
             Inner.WindowWidth = value;
@@ -62,9 +63,9 @@ public class ConfigurationModel : ObservableObject
         }
     }
 
-    public uint? WindowHeight
+    public uint WindowHeight
     {
-        get => Inner.WindowHeight;
+        get => Inner.WindowHeight ?? 0;
         set
         {
             Inner.WindowHeight = value;
