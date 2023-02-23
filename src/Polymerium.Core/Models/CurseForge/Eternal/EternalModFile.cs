@@ -17,7 +17,7 @@ public struct EternalModFile
     public DateTimeOffset FileDate { get; set; }
     public ulong FileLength { get; set; }
     public int DownloadCount { get; set; }
-    public string DownloadUrl { get; set; }
+    public string? DownloadUrl { get; set; }
     public IEnumerable<string> GameVersions { get; set; }
     public object SortableGameVersions { get; set; }
     public IEnumerable<EternalModFileDependency> Dependencies { get; set; }

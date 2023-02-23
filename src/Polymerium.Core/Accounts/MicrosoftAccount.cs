@@ -81,7 +81,6 @@ public class MicrosoftAccount : IGameAccount
 
     public async Task<bool> RefreshAsync()
     {
-        // TODO: 得自己写 login 流程
 
         return true;
 

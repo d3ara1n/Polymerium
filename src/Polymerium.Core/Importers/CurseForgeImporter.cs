@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
@@ -76,21 +75,17 @@ public class CurseForgeImporter : ImporterBase
                     var option = task.Result;
                     if (option.TryUnwrap(out var info))
                     {
-                        if (!string.IsNullOrEmpty(info.DownloadUrl))
-                        {
-                            string? sha1 = null;
-                            var hashes = info.Hashes.Where(x => x.Algo == 2);
-                            if (hashes.Any())
-                            {
-                                sha1 = hashes.First().Value;
-                            }
+                        var url = info.DownloadUrl ??
+                                  $"https://edge.forgecdn.net/files/{info.Id / 1000}/{info.Id % 1000}/{info.FileName}";
+                        string? sha1 = null;
+                        var hashes = info.Hashes.Where(x => x.Algo == 2);
+                        if (hashes.Any()) sha1 = hashes.First().Value;
 
-                            var res = new Uri(
-                                $"poly-res://remote@file/mods/{info.FileName}?{(sha1 != null ? $"sha1={sha1}&" : "")}source={HttpUtility.UrlEncode(info.DownloadUrl)}"
-                            );
+                        var res = new Uri(
+                            $"poly-res://remote@file/mods/{info.FileName}?{(sha1 != null ? $"sha1={sha1}&" : "")}source={HttpUtility.UrlEncode(url)}"
+                        );
 
-                            instance.Metadata.Attachments.Add(res);
-                        }
+                        instance.Metadata.Attachments.Add(res);
                     }
                     else
                     {
