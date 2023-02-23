@@ -17,39 +17,39 @@ public class CompoundLaunchConfiguration : LaunchConfigurationBase
         _second = second;
     }
 
-    public override string JavaHome
+    public override string? JavaHome
     {
         get => _first.JavaHome ?? _second.JavaHome;
-        set => throw new NotSupportedException();
+        set => _first.JavaHome = value;
     }
 
     public override bool? AutoDetectJava
     {
         get => _first.AutoDetectJava ?? _second.AutoDetectJava;
-        set => throw new NotSupportedException();
+        set => _first.AutoDetectJava = value;
     }
 
     public override bool? SkipJavaVersionCheck
     {
         get => _first.SkipJavaVersionCheck ?? _second.SkipJavaVersionCheck;
-        set => throw new NotSupportedException();
+        set => _first.SkipJavaVersionCheck = value;
     }
 
     public override uint? JvmMaxMemory
     {
         get => _first.JvmMaxMemory ?? _second.JvmMaxMemory;
-        set => throw new NotSupportedException();
+        set => _first.JvmMaxMemory = value;
     }
 
     public override uint? WindowHeight
     {
         get => _first.WindowHeight ?? _second.WindowHeight;
-        set => throw new NotSupportedException();
+        set => _first.WindowHeight = value;
     }
 
     public override uint? WindowWidth
     {
         get => _first.WindowWidth ?? _second.WindowWidth;
-        set => throw new NotSupportedException();
+        set => _first.WindowWidth = value;
     }
 }

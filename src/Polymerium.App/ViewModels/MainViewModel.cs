@@ -150,7 +150,7 @@ public sealed class MainViewModel : ObservableObject
     public void OnNavigatingTo(NavigationItemModel page)
     {
         Context.AssociatedInstance =
-            page.GameInstance != null ? new GameInstanceModel(page.GameInstance) : null;
+            page.GameInstance != null ? new GameInstanceModel(page.GameInstance, _configurationManager.Current.GameGlobals) : null;
     }
 
     private void Instances_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

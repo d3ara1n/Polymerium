@@ -1,18 +1,20 @@
 ﻿using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Core.LaunchConfigurations;
 
 namespace Polymerium.App.Models;
 
 public class GameInstanceModel : ObservableObject
 {
-    public GameInstanceModel(GameInstance instance)
+    public GameInstanceModel(GameInstance instance, FileBasedLaunchConfiguration fallback)
     {
         Inner = instance;
         Components = new SynchronizedCollection<Component>(Inner.Metadata.Components);
         Attachments = new SynchronizedCollection<Uri>(Inner.Metadata.Attachments);
-        Configuration = new ConfigurationModel(Inner.Configuration);
+        Configuration = new ConfigurationModel(new CompoundLaunchConfiguration(Inner.Configuration, fallback));
     }
 
     public GameInstance Inner { get; }
@@ -21,8 +23,6 @@ public class GameInstanceModel : ObservableObject
     public SynchronizedCollection<Uri> Attachments { get; }
 
     public ConfigurationModel Configuration { get; }
-
-    public string CoreVersion { get; set; }
 
     public string Name
     {

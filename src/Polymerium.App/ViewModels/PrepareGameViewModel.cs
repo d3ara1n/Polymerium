@@ -122,7 +122,6 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
 
     public async Task PrepareAsync(CancellationToken token)
     {
-        Instance!.PlayCount++;
         var stage = _restore.ProduceStage(Instance, _memoryStorage.SupportedComponents);
         stage.TaskFinishedCallback = UpdateTaskProgressSafe;
         stage.Token = token;
@@ -143,7 +142,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                     stage.TaskFinishedCallback = UpdateTaskProgressSafe;
                     UpdateLabelSafe(stage.StageName);
                 }
-                else if (!appended)
+                else if (!appended && stage.IsCompletedSuccessfully)
                 {
                     stage = new CheckAccountAvailabilityStage(_fileBase, Account!);
                     appended = true;
@@ -157,10 +156,10 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 return;
             }
         } while (hasNext);
-
-        if (stage.IsCompletedSuccessfully)
+        if (!token.IsCancellationRequested)
         {
-            if (!token.IsCancellationRequested)
+            Instance.PlayCount++;
+            if (stage.IsCompletedSuccessfully)
             {
                 // do the further checks
                 // stage-lize!
@@ -174,15 +173,11 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             }
             else
             {
-                Instance.PlayCount--;
+                Instance.ExceptionCount++;
+                CriticalError(
+                    $"{stage.StageName}\n{stage.ErrorMessage}:\n{stage.Exception?.StackTrace}"
+                );
             }
-        }
-        else
-        {
-            Instance.ExceptionCount++;
-            CriticalError(
-                $"{stage.StageName}\n{stage.ErrorMessage}:\n{stage.Exception?.StackTrace}"
-            );
         }
     }
 
@@ -228,7 +223,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             var autoDetectJava = configuration.AutoDetectJava ?? false;
             var javaHomes = autoDetectJava
                 ? _javaManager.QueryJavaInstallations()
-                : new[] { configuration.JavaHome };
+                : new[] { configuration.JavaHome }!;
             foreach (var javaHome in javaHomes)
             {
                 var verify = _javaManager.VerifyJavaHome(javaHome);

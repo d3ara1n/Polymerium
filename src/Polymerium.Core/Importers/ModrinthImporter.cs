@@ -27,82 +27,85 @@ public class ModrinthImporter : ImporterBase
             var index = JsonConvert.DeserializeObject<ModrinthModpackIndex>(
                 await reader.ReadToEndAsync()
             );
-            if (index.Game != "minecraft")
-                return Failed(GameImportError.WrongPackType);
-            var instance = new GameInstance(
-                new GameMetadata(),
-                index.VersionId,
-                new FileBasedLaunchConfiguration(),
-                index.Name,
-                index.Name
-            );
-            // 由于是本地导入的，所以没有 ReferenceSource，也不上锁
-            // 通过下载中心导入的包会是 poly-res://modpack:modrinth/<id|slug>
+            if (index.Game == "minecraft")
+            {
+                var instance = new GameInstance(
+                    new GameMetadata(),
+                    index.VersionId,
+                    new FileBasedLaunchConfiguration(),
+                    index.Name,
+                    index.Name
+                );
+                // 由于是本地导入的，所以没有 ReferenceSource，也不上锁
+                // 通过下载中心导入的包会是 poly-res://modpack:modrinth/<id|slug>
 
-            foreach (var dependency in index.Dependencies)
-                instance.Metadata.Components.Add(
-                    new Component
-                    {
-                        Version = dependency.Version,
-                        Identity = dependency.Id switch
+                foreach (var dependency in index.Dependencies)
+                    instance.Metadata.Components.Add(
+                        new Component
                         {
-                            "minecraft" => "net.minecraft",
-                            "forge" => "net.minecraftforge",
-                            "fabric-loader" => "net.fabricmc.fabric-loader",
-                            "quilt-loader" => "org.quiltmc.quilt-loader",
-                            _ => dependency.Id
+                            Version = dependency.Version,
+                            Identity = dependency.Id switch
+                            {
+                                "minecraft" => "net.minecraft",
+                                "forge" => "net.minecraftforge",
+                                "fabric-loader" => "net.fabricmc.fabric-loader",
+                                "quilt-loader" => "org.quiltmc.quilt-loader",
+                                _ => dependency.Id
+                            }
                         }
-                    }
-                );
+                    );
 
-            foreach (
-                var file in index.Files.Where(
-                    x =>
-                        !x.Envs.HasValue
-                        || (
-                            x.Envs.HasValue
-                            && (
-                                x.Envs.Value.Client == ModrinthModpackEnv.Optional
-                                || x.Envs.Value.Client == ModrinthModpackEnv.Required
+                foreach (
+                    var file in index.Files.Where(
+                        x =>
+                            !x.Envs.HasValue
+                            || (
+                                x.Envs.HasValue
+                                && (
+                                    x.Envs.Value.Client == ModrinthModpackEnv.Optional
+                                    || x.Envs.Value.Client == ModrinthModpackEnv.Required
+                                )
                             )
-                        )
-                )
-            )
-                instance.Metadata.Attachments.Add(
-                    new Uri(
-                        $"poly-res://remote@file/{file.Path}?sha1={file.Hashes.Sha1}&source={HttpUtility.UrlEncode(file.Downloads.First().ToString())}"
                     )
-                );
-
-            var files = new List<PackedSolidFile>();
-
-            foreach (
-                var file in archive.Entries.Where(
-                    x => x.FullName.StartsWith("overrides") && !x.FullName.EndsWith("/")
                 )
-            )
-                files.Add(
-                    new PackedSolidFile
-                    {
-                        FileName = file.FullName,
-                        Path = Path.GetRelativePath("overrides", file.FullName)
-                    }
-                );
+                    instance.Metadata.Attachments.Add(
+                        new Uri(
+                            $"poly-res://remote@file/{file.Path}?sha1={file.Hashes.Sha1}&source={HttpUtility.UrlEncode(file.Downloads.First().ToString())}"
+                        )
+                    );
 
-            foreach (
-                var clientFile in archive.Entries.Where(
-                    x => x.FullName.StartsWith("client-overrides") && !x.FullName.EndsWith("/")
+                var files = new List<PackedSolidFile>();
+
+                foreach (
+                    var file in archive.Entries.Where(
+                        x => x.FullName.StartsWith("overrides") && !x.FullName.EndsWith("/")
+                    )
                 )
-            )
-                files.Add(
-                    new PackedSolidFile
-                    {
-                        FileName = clientFile.FullName,
-                        Path = Path.GetRelativePath("client-overrides", clientFile.FullName)
-                    }
-                );
+                    files.Add(
+                        new PackedSolidFile
+                        {
+                            FileName = file.FullName,
+                            Path = Path.GetRelativePath("overrides", file.FullName)
+                        }
+                    );
 
-            return Finished(archive, instance, files);
+                foreach (
+                    var clientFile in archive.Entries.Where(
+                        x => x.FullName.StartsWith("client-overrides") && !x.FullName.EndsWith("/")
+                    )
+                )
+                    files.Add(
+                        new PackedSolidFile
+                        {
+                            FileName = clientFile.FullName,
+                            Path = Path.GetRelativePath("client-overrides", clientFile.FullName)
+                        }
+                    );
+
+                return Finished(archive, instance, files);
+            }
+
+            return Failed(GameImportError.Unsupported);
         }
 
         return Failed(GameImportError.WrongPackType);

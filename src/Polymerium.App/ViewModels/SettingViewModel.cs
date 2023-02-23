@@ -16,6 +16,9 @@ public class SettingViewModel : ObservableObject
 {
     private readonly ConfigurationManager _configurationManager;
     private readonly JavaManager _javaManager;
+
+    private bool skipJavaVersionCheck;
+
     private bool autoDetectJava;
 
     private string javaHome = string.Empty;
@@ -34,10 +37,10 @@ public class SettingViewModel : ObservableObject
         _configurationManager = configurationManager;
         _javaManager = javaManager;
         OpenPickerAsyncCommand = new AsyncRelayCommand(OpenPickerAsync);
-        configurationManager.Current.GameGlobals ??= new FileBasedLaunchConfiguration();
         Global = configurationManager.Current.GameGlobals;
         AutoDetectJava = Global.AutoDetectJava ?? true;
-        JavaHome = Global.JavaHome;
+        SkipJavaVersionCheck = Global.SkipJavaVersionCheck ?? false;
+        JavaHome = Global.JavaHome ?? string.Empty;
         JvmMaxMemory = Global.JvmMaxMemory ?? 4096;
         WindowWidth = Global.WindowWidth ?? 480;
         WindowHeight = Global.WindowHeight ?? 854;
@@ -90,6 +93,16 @@ public class SettingViewModel : ObservableObject
                 JavaHome = value!.HomePath;
                 JavaSummary = value.Summary ?? string.Empty;
             }
+        }
+    }
+
+    public bool SkipJavaVersionCheck
+    {
+        get => skipJavaVersionCheck;
+        set
+        {
+            SetProperty(ref skipJavaVersionCheck, value);
+            Global.SkipJavaVersionCheck = value;
         }
     }
 

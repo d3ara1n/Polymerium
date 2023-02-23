@@ -7,6 +7,7 @@ using Polymerium.Abstractions.Importers;
 using Polymerium.App.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.ViewModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Polymerium.App.Views;
 
@@ -38,7 +39,15 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
     {
         VisualStateManager.GoToState(Root, "Loading", false);
         IsOperable = false;
-        Task.Run(async () => await ViewModel.ExtractInformationAsync(ReadyHandler));
+        Task.Run(async () =>
+        {
+            var task = ViewModel.ExtractInformationAsync(ReadyHandler);
+            task.Wait();
+            if (!task.IsCompletedSuccessfully)
+            {
+                ShowError(task.Exception?.Message??"未知错误");
+            }
+        });
     }
 
     private void ConfirmButton_OnClick(object sender, RoutedEventArgs e)
@@ -47,7 +56,15 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
         VisualStateManager.GoToState(Root, "Loading", false);
         if (!string.IsNullOrEmpty(ViewModel.InstanceName))
             ViewModel.Exposed!.Name = ViewModel.InstanceName!;
-        Task.Run(async () => await ViewModel.ApplyExtractionAsync(ReadyHandler));
+        Task.Run(async () =>
+        {
+            var task = ViewModel.ApplyExtractionAsync(ReadyHandler);
+            task.Wait();
+            if (!task.IsCompletedSuccessfully)
+            {
+                ShowError(task.Exception?.Message??"未知错误");
+            }
+        });
     }
 
     private void ReadyHandler(Result<ImportResult, GameImportError> result, bool dismiss)
@@ -57,12 +74,7 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
             if (result.IsErr(out var error))
             {
                 Dismiss();
-                var messageBox = new MessageDialog
-                {
-                    XamlRoot = App.Current.Window.Content.XamlRoot,
-                    Message = $"导入时发生错误，唯一错误参考：{error.ToString()}"
-                };
-                await messageBox.ShowAsync();
+                ShowError(error.ToString());
             }
             else if (result.IsOk(out var import))
             {
@@ -77,8 +89,23 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
         });
     }
 
+    private void ShowError(string error)
+    {
+        DispatcherQueue.TryEnqueue(async () =>
+        {
+            var messageBox = new MessageDialog
+            {
+                XamlRoot = App.Current.Window.Content.XamlRoot,
+                Title = "导入失败",
+                Message = $"导入时发生错误，唯一错误参考：{error}"
+            };
+            await messageBox.ShowAsync();
+        });
+    }
+
     private void CancelButton_OnClick(object sender, RoutedEventArgs e)
     {
+        ViewModel.RequestCancel();
         Dismiss();
     }
 }

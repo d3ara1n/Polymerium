@@ -12,8 +12,8 @@ public class RemoteFileResolver : ResourceResolverBase
     [ResourceExpression("{*path}")]
     public Result<ResolveResult, ResolveResultError> GetFile(
         string path,
-        string sha1,
-        string source
+        string source,
+        string? sha1 = null
     )
     {
         return Ok(new Uri(path, UriKind.Relative), new Uri(source, UriKind.Absolute), sha1);

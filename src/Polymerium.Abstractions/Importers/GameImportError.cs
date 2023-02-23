@@ -4,6 +4,8 @@ public enum GameImportError
 {
     Unknown,
     FileSystemError,
+    ResourceNotFound,
+    BrokenIndex,
     Unsupported,
     WrongPackType
 }
