@@ -43,10 +43,10 @@ public class CheckAvailabilityStage : StageBase
 
     public override string StageName => "检查资源可用性";
 
-    public override async Task<Option<StageBase>> StartAsync()
+    public override Task<Option<StageBase>> StartAsync()
     {
         if (Token.IsCancellationRequested)
-            return Cancel();
+            return Task.FromResult(Cancel());
         var polylockDataFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json");
         // 不是简单的 md5, 所以文件名也不应该是 .md5
         var polylockHashFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json.hash");
@@ -57,12 +57,12 @@ public class CheckAvailabilityStage : StageBase
         )
         {
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
-            return Next(
+            return Task.FromResult(Next(
                 new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader)
-            );
+            ));
         }
 
-        return Next(
+        return Task.FromResult(Next(
             new BuildPolylockStage(
                 _instance,
                 _sha1,
@@ -73,6 +73,6 @@ public class CheckAvailabilityStage : StageBase
                 _resolver,
                 _provider
             )
-        );
+        ));
     }
 }

@@ -44,6 +44,13 @@ public class Result<TOk, TErr>
             return value;
         throw new NullReferenceException(typeof(TOk).FullName);
     }
+
+    public Result<TErr> ToErr()
+    {
+        if (IsErr(out var err))
+            return Result<TErr>.Err(err!);
+        throw new NullReferenceException("Err");
+    }
 }
 
 public class Result<TErr>

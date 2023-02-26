@@ -10,6 +10,6 @@
     mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}" CloseButtonText="关闭">
     <Grid>
-        <TextBlock TextWrapping="WrapWholeWords" />
+        <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind Message}" />
     </Grid>
 </ContentDialog>

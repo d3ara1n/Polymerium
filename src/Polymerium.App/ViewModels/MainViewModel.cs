@@ -132,13 +132,17 @@ public sealed class MainViewModel : ObservableObject
 
     private void PushOverlay(ContentControl content)
     {
-        Overlay = content;
+        _dispatcher.TryEnqueue(() => { Overlay = content; });
     }
 
     private ContentControl? PullOverlay()
     {
-        // 安全的把所有权转移出去
-        (var res, Overlay) = (Overlay, null);
+        ContentControl? res = null;
+        _dispatcher.TryEnqueue(() =>
+        {
+            // 安全的把所有权转移出去
+            (res, Overlay) = (Overlay, null);
+        });
         return res;
     }
 

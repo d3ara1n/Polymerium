@@ -18,7 +18,7 @@ public class ImportModpackWizardViewModel : ObservableObject
 
     private string? instanceName = string.Empty;
 
-    private CancellationTokenSource source = new CancellationTokenSource();
+    private readonly CancellationTokenSource source = new();
 
     public ImportModpackWizardViewModel(ImportService importer)
     {
@@ -51,7 +51,7 @@ public class ImportModpackWizardViewModel : ObservableObject
         Action<Result<ImportResult, GameImportError>, bool> callback
     )
     {
-        var result = await _importer.ImportAsync(_fileName, source.Token);
+        var result = await _importer.ImportAsync(_fileName!, source.Token);
         if (result.IsOk(out var import))
             _importResult = import!;
 

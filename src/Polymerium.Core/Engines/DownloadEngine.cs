@@ -93,11 +93,11 @@ public class DownloadEngine
                 stream.Close();
                 FinishTask(task, !task.Inner.Token.IsCancellationRequested);
             }
-            catch (TaskCanceledException _)
+            catch (TaskCanceledException)
             {
                 continue;
             }
-            catch (Exception _)
+            catch
             {
                 if (task.RetryCount++ < MAX_RETRY)
                     tasks.Add(task);

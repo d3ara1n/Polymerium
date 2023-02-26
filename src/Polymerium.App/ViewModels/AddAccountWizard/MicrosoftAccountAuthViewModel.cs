@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using CmlLib.Core.Auth.Microsoft;
-using CmlLib.Core.Auth.Microsoft.MsalClient;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Dialogs;
@@ -14,10 +12,12 @@ namespace Polymerium.App.ViewModels.AddAccountWizard;
 public class MicrosoftAccountAuthViewModel : ObservableObject
 {
     private readonly IOverlayService _overlayService;
+    private readonly DispatcherQueue _dispatcher;
 
     public MicrosoftAccountAuthViewModel(IOverlayService overlayService)
     {
         _overlayService = overlayService;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
     }
 
     internal CancellationToken Token { get; set; }
@@ -25,17 +25,18 @@ public class MicrosoftAccountAuthViewModel : ObservableObject
     public async Task LoginDeviceCodeFlowAsync(Action<string?, string?, MicrosoftAccount?> callback)
     {
         var result = await MicrosoftAccount.LoginAsync((code, url) => callback(code, url, null), Token);
-        if (result.IsErr(out var exception))
-            Error(exception!.Message);
-        else
+        if (!Token.IsCancellationRequested)
         {
-            callback("验证通过", null, result.Unwrap());
+            if (result.IsErr(out var error))
+                Error(error!);
+            else
+                callback("验证通过", null, result.Unwrap());
         }
     }
 
     private void Error(string reason)
     {
-        DispatcherQueue.GetForCurrentThread().TryEnqueue(() =>
+        _dispatcher.TryEnqueue(() =>
         {
             _overlayService.Dismiss();
             var dialog = new MessageDialog
@@ -44,7 +45,9 @@ public class MicrosoftAccountAuthViewModel : ObservableObject
                 Title = "登录未完成",
                 Message = reason
             };
-            dialog.ShowAsync().AsTask().Wait();
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+            dialog.ShowAsync();
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
         });
     }
 }
