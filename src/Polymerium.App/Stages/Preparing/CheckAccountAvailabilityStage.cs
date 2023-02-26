@@ -37,6 +37,7 @@ namespace Polymerium.App.Stages.Preparing
                     return Error("验证账号可用性失败且无法修复");
                 }
             }
+
             return Finish();
         }
     }
