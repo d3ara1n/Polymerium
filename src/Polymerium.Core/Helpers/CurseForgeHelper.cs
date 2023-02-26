@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
@@ -19,7 +18,7 @@ public static class CurseForgeHelper
     {
         if (token.HasValue && token.Value.IsCancellationRequested) return Option<T>.None();
         var found = false;
-        T result = default;
+        T? result = default;
         await Wapoo.Wohoo(ENDPOINT + service)
             .WithHeader("x-api-key", API_KEY)
             .ForJsonResult<JObject>(x =>
@@ -45,12 +44,12 @@ public static class CurseForgeHelper
                         }
                     }
 
-                    result = node.ToObject<T>();
+                    result = node!.ToObject<T>();
                     found = true;
                 }
             })
             .FetchAsync();
-        return found ? Option<T>.Some(result) : Option<T>.None();
+        return found ? Option<T>.Some(result!) : Option<T>.None();
     }
 
     public static async Task<Option<string>> GetModDownloadUrlAsync(int projectId, int fileId)

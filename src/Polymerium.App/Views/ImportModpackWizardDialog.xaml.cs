@@ -7,7 +7,6 @@ using Polymerium.Abstractions.Importers;
 using Polymerium.App.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.ViewModels;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Polymerium.App.Views;
 
@@ -42,10 +41,10 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
         Task.Run(async () =>
         {
             var task = ViewModel.ExtractInformationAsync(ReadyHandler);
-            task.Wait();
+            await task;
             if (!task.IsCompletedSuccessfully)
             {
-                ShowError(task.Exception?.Message??"未知错误");
+                ShowError(task.Exception?.Message ?? "未知错误");
             }
         });
     }
@@ -56,20 +55,20 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
         VisualStateManager.GoToState(Root, "Loading", false);
         if (!string.IsNullOrEmpty(ViewModel.InstanceName))
             ViewModel.Exposed!.Name = ViewModel.InstanceName!;
-        Task.Run(async () =>
+        Task.Run(() =>
         {
             var task = ViewModel.ApplyExtractionAsync(ReadyHandler);
             task.Wait();
             if (!task.IsCompletedSuccessfully)
             {
-                ShowError(task.Exception?.Message??"未知错误");
+                ShowError(task.Exception?.Message ?? "未知错误");
             }
         });
     }
 
     private void ReadyHandler(Result<ImportResult, GameImportError> result, bool dismiss)
     {
-        DispatcherQueue.TryEnqueue(async () =>
+        DispatcherQueue.TryEnqueue(() =>
         {
             if (result.IsErr(out var error))
             {

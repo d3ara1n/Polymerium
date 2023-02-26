@@ -1,5 +1,4 @@
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -34,9 +33,8 @@ public class NewInstanceViewModel : ObservableObject
         _navigationService.Navigate<SearchCenterView>();
     }
 
-    public async Task ArchiveAcceptedAsync(string fileName)
+    public void ArchiveAccepted(string fileName)
     {
-        // TODO: 放到对话框中：第一阶段确认信息并提供机会修改实例名和目录名。第二阶段转圈圈
         if (File.Exists(fileName))
         {
             var dialog = new ImportModpackWizardDialog(fileName);

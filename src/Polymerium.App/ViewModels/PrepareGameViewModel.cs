@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using CmlLib.Core.Auth;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
@@ -122,7 +121,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
 
     public async Task PrepareAsync(CancellationToken token)
     {
-        var stage = _restore.ProduceStage(Instance, _memoryStorage.SupportedComponents);
+        var stage = _restore.ProduceStage(Instance!, _memoryStorage.SupportedComponents);
         stage.TaskFinishedCallback = UpdateTaskProgressSafe;
         stage.Token = token;
         UpdateLabelSafe(stage.StageName);
@@ -151,14 +150,14 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             }
             catch (Exception ex)
             {
-                Instance.ExceptionCount++;
+                Instance!.ExceptionCount++;
                 CriticalError($"{stage.StageName}\n{ex.Message}:\n{ex.StackTrace}");
                 return;
             }
         } while (hasNext);
         if (!token.IsCancellationRequested)
         {
-            Instance.PlayCount++;
+            Instance!.PlayCount++;
             if (stage.IsCompletedSuccessfully)
             {
                 // do the further checks

@@ -1,25 +1,16 @@
-﻿using CmlLib.Core.Auth.Microsoft.MsalClient;
-using CmlLib.Core.Auth.Microsoft;
-using Newtonsoft.Json.Linq;
-using Polymerium.Abstractions;
-using Polymerium.Abstractions.Accounts;
-using System;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Wupoo;
-using System.Net.Http;
-using System.Collections.Generic;
+using Polymerium.Abstractions;
+using Polymerium.Abstractions.Accounts;
+using Polymerium.Core.Helpers;
 
 namespace Polymerium.Core.Accounts;
 
 public class MicrosoftAccount : IGameAccount
 {
-    private const string DEVICE_ENDPOINT = "https://login.microsoftonline.com/consumers/oauth2/v2.0/devicecode";
-    private const string TOKEN_ENDPOINT = "https://login.microsoftonline.com/consumers/oauth2/v2.0/token";
-    private const string PROFILE_ENDPOINT = "https://api.minecraftservices.com/minecraft/profile";
-    private const string CLIENT_ID = "66b049dc-22a1-4fd8-a17d-2ccd01332101";
-    private const string SCOPE = "XboxLive.signin offline_access";
-
+    public string LoginType => "mojang";
     public MicrosoftAccount(string id, string uuid, string nickname, string accessToken, string refreshToken)
     {
         Id = id;
@@ -44,75 +35,88 @@ public class MicrosoftAccount : IGameAccount
     public string AccessToken { get; set; }
     public string RefreshToken { get; set; }
 
-    public static async Task<Result<MicrosoftAccount, Exception>> LoginAsync(Action<string, string> userCodeCallback, CancellationToken token = default)
+    public static async Task<Result<MicrosoftAccount, string>> LoginAsync(Action<string, string> userCodeCallback,
+        CancellationToken token = default)
     {
-        var app = MsalMinecraftLoginHelper.CreateDefaultApplicationBuilder(CLIENT_ID)
-            .Build();
-        var handler = new LoginHandlerBuilder().ForJavaEdition()
-            .WithMsalOAuth(app, factory => factory.CreateDeviceCodeApi(code =>
+        var deviceCodeOption =
+            await MicrosoftAccountHelper.AcquireMicrosoftTokenByDeviceCodeAsync(userCodeCallback, token);
+        if (token.IsCancellationRequested) return Result<MicrosoftAccount, string>.Err("操作取消");
+        if (deviceCodeOption.TryUnwrap(out var flow))
+        {
+            var refreshToken = flow.RefreshToken;
+            var microsoftToken = flow.AccessToken;
+            var option = await LoginAsync(microsoftToken, token);
+            if (option.IsOk(out var account)) account!.RefreshToken = refreshToken;
+            return option;
+        }
+
+        return Result<MicrosoftAccount, string>.Err("通过设备码获取微软账号时出现网络异常或超时");
+    }
+
+    public static async Task<Result<MicrosoftAccount, string>> LoginAsync(string microsoftAccessToken,
+        CancellationToken token)
+    {
+        // 这！就是嵌套地狱！
+        var account = new MicrosoftAccount { Id = Guid.NewGuid().ToString() };
+        var xboxOption = await MicrosoftAccountHelper.AcquireXboxTokenAsync(microsoftAccessToken, token);
+        if (token.IsCancellationRequested) return Result<MicrosoftAccount, string>.Err("操作取消");
+        if (xboxOption.TryUnwrap(out var xbox))
+        {
+            var xstsOption = await MicrosoftAccountHelper.AcquireXstsTokenAsync(xbox.Token, token);
+            if (token.IsCancellationRequested) return Result<MicrosoftAccount, string>.Err("操作取消");
+            if (xstsOption.TryUnwrap(out var xsts))
             {
-                userCodeCallback(code.UserCode, code.VerificationUrl);
-                return Task.CompletedTask;
-            }))
-            .Build();
-        try
-        {
-            var session = await handler.LoginFromOAuth(token);
-            var account = new MicrosoftAccount(Guid.NewGuid().ToString(), session.GameSession.UUID!,
-                session.GameSession.Username!, session.GameSession.AccessToken!, session.MicrosoftOAuthToken?.RawRefreshToken);
-            return Result<MicrosoftAccount, Exception>.Ok(account);
+                var minecraftOption =
+                    await MicrosoftAccountHelper.AcquireMinecraftTokenAsync(xsts.Token,
+                        xsts.DisplayClaims.Xui.First().Uhs, token);
+                if (token.IsCancellationRequested) return Result<MicrosoftAccount, string>.Err("操作取消");
+                if (minecraftOption.TryUnwrap(out var minecraft))
+                {
+                    account.AccessToken = minecraft.AccessToken;
+                    var ownership =
+                        await MicrosoftAccountHelper.VerifyMinecraftOwnershipAsync(minecraft.AccessToken, token);
+                    if (token.IsCancellationRequested) return Result<MicrosoftAccount, string>.Err("操作取消");
+                    if (ownership)
+                    {
+                        var profileOption =
+                            await MicrosoftAccountHelper.GetProfileByAccessTokenAsync(minecraft.AccessToken, token);
+                        if (token.IsCancellationRequested) return Result<MicrosoftAccount, string>.Err("操作取消");
+                        if (profileOption.TryUnwrap(out var profile))
+                        {
+                            account.UUID = profile.Id;
+                            account.Nickname = profile.Name;
+                            return Result<MicrosoftAccount, string>.Ok(account);
+                        }
+
+                        return Result<MicrosoftAccount, string>.Err("获取玩家信息失败");
+                    }
+
+                    return Result<MicrosoftAccount, string>.Err("无法验证用户的游戏所有权");
+                }
+
+                return Result<MicrosoftAccount, string>.Err("Minecraft 获取授权时出现网络异常或未授权");
+            }
+
+            return Result<MicrosoftAccount, string>.Err("Xbox Live XSTS 获取授权时出现网络异常或未授权");
         }
-        catch (Exception e)
-        {
-            return Result<MicrosoftAccount, Exception>.Err(e);
-        }
+
+        return Result<MicrosoftAccount, string>.Err("Xbox Live 获取授权时出现网络异常或未授权");
     }
 
     public async Task<bool> ValidateAsync()
     {
-        var succ = false;
-        await Wapoo.Wohoo(PROFILE_ENDPOINT)
-            .ViaGet()
-            .UseBearer(AccessToken)
-            .WhenCode(204, _ => succ = true)
-            .FetchAsync();
-        return succ;
+        return (await MicrosoftAccountHelper.GetProfileByAccessTokenAsync(AccessToken)).IsSome();
     }
 
     public async Task<bool> RefreshAsync()
     {
+        var accountOption = await MicrosoftAccountHelper.RefreshAccessTokenAsync(RefreshToken);
+        if (accountOption.TryUnwrap(out var account))
+        {
+            AccessToken = account.AccessToken;
+            RefreshToken = account.RefreshToken;
+        }
 
-        return true;
-
-        var succ = false;
-        await Wapoo.Wohoo(TOKEN_ENDPOINT)
-            .ViaPost()
-            .WithBody(new FormUrlEncodedContent(new Dictionary<string, string>()
-            {
-                {"client_id",CLIENT_ID },
-                {"refresh_token",  RefreshToken},
-                {"grant_type","refresh_token" }
-            }))
-            .ForJsonResult<JObject>(x =>
-            {
-                string? accessToken = null;
-                string? refreshToken = null;
-                if (x.ContainsKey("access_token"))
-                {
-                    accessToken = x["access_token"]!.Value<string>();
-                }
-                if (x.ContainsKey("refresh_token"))
-                {
-                    refreshToken = x["refresh_token"]!.Value<string>();
-                }
-                if (accessToken != null && refreshToken != null)
-                {
-                    AccessToken = accessToken!;
-                    RefreshToken = refreshToken!;
-                    succ = true;
-                }
-            })
-            .FetchAsync();
-        return succ;
+        return accountOption.IsSome();
     }
 }

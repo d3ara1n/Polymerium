@@ -47,7 +47,7 @@ public sealed partial class NewInstanceView : Page
             var items = await e.DataView.GetStorageItemsAsync();
             var file = items!.First()!;
             e.Handled = true;
-            await ViewModel.ArchiveAcceptedAsync(file.Path);
+            ViewModel.ArchiveAccepted(file.Path);
         }
     }
 }

@@ -1,10 +1,11 @@
-using Polymerium.Abstractions.Accounts;
 using System.Threading.Tasks;
+using Polymerium.Abstractions.Accounts;
 
 namespace Polymerium.Core.Accounts;
 
 public class OfflineAccount : IGameAccount
 {
+    public string LoginType => "legacy";
     public OfflineAccount(string id, string uuid, string accessToken, string nickname)
     {
         Id = id;

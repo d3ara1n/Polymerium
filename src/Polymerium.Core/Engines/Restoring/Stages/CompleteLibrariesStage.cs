@@ -2,7 +2,6 @@
 using System.IO;
 using System.IO.Compression;
 using System.Security.Cryptography;
-using System.Threading;
 using System.Threading.Tasks;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
@@ -66,25 +65,22 @@ public class CompleteLibrariesStage : StageBase
                     else
                     {
                         if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task) && item.IsNative)
-                            task!.CompletedCallback = async (t, s) =>
+                            task!.CompletedCallback = (t, s) =>
                             {
                                 if (s)
-                                    await UnzipFileAsync(
+                                    UnzipFile(
                                         t.Destination,
-                                        _fileBase.Locate(nativesDir),
-                                        Token
-                                    );
+                                        _fileBase.Locate(nativesDir));
                             };
                     }
                 }
                 else
                 {
                     if (item.IsNative)
-                        await UnzipFileAsync(
-                            _fileBase.Locate(libPath),
-                            _fileBase.Locate(nativesDir),
-                            Token
-                        );
+                        if (!UnzipFile(
+                                _fileBase.Locate(libPath),
+                                _fileBase.Locate(nativesDir)))
+                            return Error("解压 natives 文件时出现异常");
                 }
             }
         }
@@ -104,14 +100,14 @@ public class CompleteLibrariesStage : StageBase
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }
 
-    private async Task<bool> UnzipFileAsync(string from, string to, CancellationToken token)
+    private bool UnzipFile(string from, string to)
     {
         try
         {
             ZipFile.ExtractToDirectory(from, to, true);
             return true;
         }
-        catch (Exception _)
+        catch
         {
             return false;
         }
