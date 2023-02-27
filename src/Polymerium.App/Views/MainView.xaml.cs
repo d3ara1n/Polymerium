@@ -90,25 +90,8 @@ public sealed partial class MainView : Page
                 .GetViewOfInstance()
                 .Where(x => string.IsNullOrEmpty(input) || x.Name.StartsWith(sender.Text))
                 .Select(x => new NavigationSearchBarItemModel(x.Name, "\xF158", x.Id))
-                .Append(new NavigationSearchBarItemModel($"搜索: {input}", "\xE721"));
+                .Append(new NavigationSearchBarItemModel($"搜索: {input}", "\xE721", query: input));
             sender.ItemsSource = result;
-        }
-    }
-
-    private void SearchBar_OnSuggestionChosen(
-        AutoSuggestBox sender,
-        AutoSuggestBoxSuggestionChosenEventArgs args
-    )
-    {
-        sender.Text = string.Empty;
-        var model = (NavigationSearchBarItemModel)args.SelectedItem;
-        if (string.IsNullOrEmpty(model.Reference))
-        {
-            // TODO: Go to Search Center
-        }
-        else
-        {
-            ViewModel.GotoInstanceView(model.Reference);
         }
     }
 
@@ -117,6 +100,16 @@ public sealed partial class MainView : Page
         AutoSuggestBoxQuerySubmittedEventArgs args
     )
     {
-        // TODO: Go to Search Center
+        if (args.ChosenSuggestion is NavigationSearchBarItemModel model)
+        {
+            if (string.IsNullOrEmpty(model.Reference))
+                ViewModel.GotoSearchView(model.Query!);
+            else
+                ViewModel.GotoInstanceView(model.Reference);
+        }
+        else if (!string.IsNullOrEmpty(sender.Text))
+        {
+            ViewModel.GotoSearchView(sender.Text);
+        }
     }
 }

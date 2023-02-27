@@ -155,6 +155,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 return;
             }
         } while (hasNext);
+
         if (!token.IsCancellationRequested)
         {
             Instance!.PlayCount++;

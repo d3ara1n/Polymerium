@@ -64,7 +64,8 @@ public class CompleteLibrariesStage : StageBase
                     }
                     else
                     {
-                        if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task) && item.IsNative)
+                        if (group.TryAdd(item.Url.AbsoluteUri, _fileBase.Locate(libPath), out var task) &&
+                            item.IsNative)
                             task!.CompletedCallback = (t, s) =>
                             {
                                 if (s)

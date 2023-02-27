@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Dialogs;
+using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Core;
 
@@ -15,11 +16,11 @@ namespace Polymerium.App.ViewModels.Instances;
 
 public class InstanceAdvancedConfigurationViewModel : ObservableObject
 {
+    private readonly ConfigurationManager _configurationManager;
     private readonly DispatcherQueue _dispatcher;
     private readonly IFileBaseService _fileBase;
     private readonly InstanceManager _instanceManager;
     private readonly ILogger _logger;
-    private readonly ConfigurationManager _configurationManager;
     private readonly NavigationService _navigation;
 
     public InstanceAdvancedConfigurationViewModel(
@@ -73,7 +74,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
                 }
 
                 Context.AssociatedInstance =
-                    new Models.GameInstanceModel(instance.Inner, _configurationManager.Current.GameGlobals);
+                    new GameInstanceModel(instance.Inner, _configurationManager.Current.GameGlobals);
             }
         });
     }

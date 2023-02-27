@@ -15,6 +15,7 @@ using Polymerium.App.Views;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
 using Polymerium.Core.ResourceResolving;
+using Polymerium.Core.Resources;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -84,7 +85,8 @@ public partial class App : Application
             .AddTransient<InstanceLaunchConfigurationViewModel>()
             .AddTransient<InstanceAdvancedConfigurationViewModel>()
             .AddTransient<AddMetaComponentWizardViewModel>()
-            .AddTransient<ImportModpackWizardViewModel>();
+            .AddTransient<ImportModpackWizardViewModel>()
+            .AddTransient<SearchCenterViewModel>();
         // local service registration
         services
             .AddSingleton<IOverlayService, WindowOverlayService>()
@@ -114,6 +116,9 @@ public partial class App : Application
         services
             .AddTransient<ResourceResolverBase, LocalFileResolver>()
             .AddTransient<ResourceResolverBase, RemoteFileResolver>();
+        // repository
+        services.AddTransient<IResourceRepository, ModrinthRepository>()
+            .AddTransient<IResourceRepository, CurseForgeRepository>();
         return services.BuildServiceProvider();
     }
 }

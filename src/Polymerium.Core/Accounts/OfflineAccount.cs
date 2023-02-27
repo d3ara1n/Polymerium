@@ -5,7 +5,6 @@ namespace Polymerium.Core.Accounts;
 
 public class OfflineAccount : IGameAccount
 {
-    public string LoginType => "legacy";
     public OfflineAccount(string id, string uuid, string accessToken, string nickname)
     {
         Id = id;
@@ -21,6 +20,8 @@ public class OfflineAccount : IGameAccount
         Nickname = string.Empty;
         AccessToken = string.Empty;
     }
+
+    public string LoginType => "legacy";
 
     public string Id { get; set; }
     public string UUID { get; set; }

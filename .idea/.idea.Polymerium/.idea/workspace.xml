@@ -8,8 +8,64 @@
     <projectFile pubXmlPath="src/Polymerium.App/Properties/PublishProfiles/win10-x86.pubxml">src/Polymerium.App/Polymerium.App.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="#3 实现了登录和刷新，fallback定于未来实现">
+    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Resources/Modpack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Resources/ResourceType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchCenterViewModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Resources/CurseForgeRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Resources/IResourceRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Resources/ModrinthRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Polymerium.sln.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Polymerium.sln.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/Mod.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/Modpack.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/ResourcePack.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Resourcecs/ShaderPack.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/ConfigurationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/ConfigurationModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/NavigationSearchBarItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/NavigationSearchBarItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Package.appxmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Package.appxmanifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Stages/Preparing/CheckAccountAvailabilityStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Stages/Preparing/CheckAccountAvailabilityStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/SelectionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/SelectionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceLaunchConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceLaunchConfigurationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MainViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MainViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/CreateInstanceWizardDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/CreateInstanceWizardDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/HomeView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/HomeView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/ImportModpackWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ImportModpackWizardDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/MicrosoftAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/MicrosoftAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/OfflineAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Accounts/OfflineAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/ComponentInstallerContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/ForgeComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/ForgeComponentInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/QuiltComponentInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Components/Installers/QuiltComponentInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteLibrariesStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CompleteLibrariesStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/CurseForgeHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/CurseForgeHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Importers/CurseForgeImporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Importers/CurseForgeImporter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/LaunchConfigurations/CompoundLaunchConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/LaunchConfigurations/CompoundLaunchConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/CurseForge/Eternal/EternalModFileHash.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/CurseForge/Eternal/EternalModFileHash.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfiles/ForgeProfileInstall.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfiles/ForgeProfileInstall.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfiles/ForgeProfileInstallVersionInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfiles/ForgeProfileInstallVersionInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfiles/ForgeProfileInstallVersionInfoLibrary.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Forge/InstallerProfiles/ForgeProfileInstallVersionInfoLibrary.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submodules/Duffet" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Wupoo" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Wapoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Wapoo.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +86,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c98c4c26354b89d76ffbddb774441bcc9c7ed3559b98dbd6fe39a56fc7eb18/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cd4baac7317266f4f516e33baa69963b5f1f5ed866e119194d80c2958f827/StartAnimationAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f46d8257f4c1dc361b73ec7a2fa4d14a2b9f79568db1e74156c505c679420c2/AsyncRelayCommand.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/Stages/Preparing/CheckAccountAvailabilityStage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizardDialog.xaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net7.0-windows10.0.20348.0/win10-x64/App.g.i.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" root0="FORCE_HIGHLIGHTING" />
@@ -188,7 +243,8 @@
       <workItem from="1677118918383" duration="12034000" />
       <workItem from="1677148493594" duration="2644000" />
       <workItem from="1677242323809" duration="712000" />
-      <workItem from="1677412779039" duration="296000" />
+      <workItem from="1677412779039" duration="675000" />
+      <workItem from="1677414351912" duration="7455000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -323,7 +379,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677413060166</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="更新子模块">
+      <created>1677413448658</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1677413448658</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,7 +429,8 @@
     <MESSAGE value="forge work with 1.12.2+" />
     <MESSAGE value="能导入CurseForge包了" />
     <MESSAGE value="#3 实现了登录和刷新，fallback定于未来实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="#3 实现了登录和刷新，fallback定于未来实现" />
+    <MESSAGE value="更新子模块" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新子模块" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

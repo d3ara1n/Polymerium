@@ -14,9 +14,10 @@ public static class CurseForgeHelper
     private const string API_KEY = "$2a$10$cjd5uExXA6oMi3lSnylNC.xsFJiujI8uQ/pV1eGltFe/hlDO2mjzm";
     private const string ENDPOINT = "https://api.curseforge.com";
 
-    private static async Task<Option<T>> Request<T>(string service, string? dataKey, CancellationToken? token = default)
+    private static async Task<Option<T>> GetResourceAsync<T>(string service, string? dataKey,
+        CancellationToken token = default)
     {
-        if (token.HasValue && token.Value.IsCancellationRequested) return Option<T>.None();
+        if (token.IsCancellationRequested) return Option<T>.None();
         var found = false;
         T? result = default;
         await Wapoo.Wohoo(ENDPOINT + service)
@@ -33,16 +34,10 @@ public static class CurseForgeHelper
                     var path = dataKey.Split('.');
                     var node = x as JToken;
                     foreach (var key in path)
-                    {
                         if (node is JObject obj && obj.ContainsKey(key))
-                        {
                             node = obj[key];
-                        }
                         else
-                        {
                             break;
-                        }
-                    }
 
                     result = node!.ToObject<T>();
                     found = true;
@@ -52,15 +47,17 @@ public static class CurseForgeHelper
         return found ? Option<T>.Some(result!) : Option<T>.None();
     }
 
-    public static async Task<Option<string>> GetModDownloadUrlAsync(int projectId, int fileId)
+    public static async Task<Option<string>> GetModDownloadUrlAsync(int projectId, int fileId,
+        CancellationToken token = default)
     {
         var service = $"/v1/mods/{projectId}/files/{fileId}/download-url";
-        return await Request<string>(service, "data");
+        return await GetResourceAsync<string>(service, "data", token);
     }
 
-    public static async Task<Option<EternalModFile>> GetModFileInfoAsync(int projectId, int fileId, CancellationToken? token = default)
+    public static async Task<Option<EternalModFile>> GetModFileInfoAsync(int projectId, int fileId,
+        CancellationToken token = default)
     {
         var service = $"/v1/mods/{projectId}/files/{fileId}";
-        return await Request<EternalModFile>(service, "data", token);
+        return await GetResourceAsync<EternalModFile>(service, "data", token);
     }
 }

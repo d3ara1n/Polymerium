@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Core.LaunchConfigurations;
 
 namespace Polymerium.App.Models;
@@ -55,7 +54,7 @@ public class ConfigurationModel : ObservableObject
 
     public uint WindowWidth
     {
-        get => Inner.WindowWidth ??0;
+        get => Inner.WindowWidth ?? 0;
         set
         {
             Inner.WindowWidth = value;

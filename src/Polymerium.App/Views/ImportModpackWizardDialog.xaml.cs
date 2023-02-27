@@ -42,10 +42,7 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
         {
             var task = ViewModel.ExtractInformationAsync(ReadyHandler);
             await task;
-            if (!task.IsCompletedSuccessfully)
-            {
-                ShowError(task.Exception?.Message ?? "未知错误");
-            }
+            if (!task.IsCompletedSuccessfully) ShowError(task.Exception?.Message ?? "未知错误");
         });
     }
 
@@ -59,10 +56,7 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
         {
             var task = ViewModel.ApplyExtractionAsync(ReadyHandler);
             task.Wait();
-            if (!task.IsCompletedSuccessfully)
-            {
-                ShowError(task.Exception?.Message ?? "未知错误");
-            }
+            if (!task.IsCompletedSuccessfully) ShowError(task.Exception?.Message ?? "未知错误");
         });
     }
 

@@ -11,8 +11,8 @@ namespace Polymerium.App.ViewModels.AddAccountWizard;
 
 public class MicrosoftAccountAuthViewModel : ObservableObject
 {
-    private readonly IOverlayService _overlayService;
     private readonly DispatcherQueue _dispatcher;
+    private readonly IOverlayService _overlayService;
 
     public MicrosoftAccountAuthViewModel(IOverlayService overlayService)
     {

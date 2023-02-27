@@ -1,5 +1,0 @@
-namespace Polymerium.Abstractions.Meta.Resouces;
-
-public struct Modpack
-{
-}

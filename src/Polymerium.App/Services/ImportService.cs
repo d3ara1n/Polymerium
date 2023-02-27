@@ -26,7 +26,8 @@ public class ImportService
         _instanceManager = instanceManager;
     }
 
-    public async Task<Result<ImportResult, GameImportError>> ImportAsync(string filePath, CancellationToken? token = default)
+    public async Task<Result<ImportResult, GameImportError>> ImportAsync(string filePath,
+        CancellationToken? token = default)
     {
         if (File.Exists(filePath))
         {
@@ -34,13 +35,13 @@ public class ImportService
             var files = archive.Entries.Select(x => x.FullName);
             if (files.Any(x => x == "modrinth.index.json"))
             {
-                var importer = new ModrinthImporter() { Token = token ?? CancellationToken.None };
+                var importer = new ModrinthImporter { Token = token ?? CancellationToken.None };
                 return await importer.ProcessAsync(archive);
             }
 
             if (files.Any(x => x == "manifest.json"))
             {
-                var importer = new CurseForgeImporter() { Token = token ?? CancellationToken.None };
+                var importer = new CurseForgeImporter { Token = token ?? CancellationToken.None };
                 return await importer.ProcessAsync(archive);
             }
 
@@ -57,7 +58,6 @@ public class ImportService
             {
                 var allocated = new List<Uri>();
                 foreach (var file in product.Files)
-                {
                     try
                     {
                         var path = _fileBase.Locate(
@@ -74,7 +74,6 @@ public class ImportService
                     {
                         return Result<GameImportError>.Err(GameImportError.FileSystemError);
                     }
-                }
 
                 foreach (var file in allocated)
                     product.Instance.Metadata.Attachments.Add(file);

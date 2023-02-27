@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Polymerium.Abstractions.Resources;
+
+namespace Polymerium.Core.Resources;
+
+public class CurseForgeRepository : IResourceRepository
+{
+    public string Label => "CurseForge";
+    public ResourceType SupportedResources => ResourceType.All;
+
+    public Task<IEnumerable<Modpack>> SearchModpacksAsync(string query, string? version, uint offset = 0,
+        uint limit = 10,
+        CancellationToken token = default)
+    {
+        throw new NotImplementedException();
+    }
+}

@@ -41,5 +41,5 @@ public struct ModrinthProject
     public IEnumerable<object> Gallery { get; set; }
     public object? FlameAnvilProject { get; set; }
     public object? FlameAnvilUser { get; set; }
-    public uint Color { get; set; }
+    public uint? Color { get; set; }
 }
