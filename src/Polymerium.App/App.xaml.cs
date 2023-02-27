@@ -86,7 +86,8 @@ public partial class App : Application
             .AddTransient<InstanceAdvancedConfigurationViewModel>()
             .AddTransient<AddMetaComponentWizardViewModel>()
             .AddTransient<ImportModpackWizardViewModel>()
-            .AddTransient<SearchCenterViewModel>();
+            .AddTransient<SearchCenterViewModel>()
+            .AddTransient<SearchDetailViewModel>();
         // local service registration
         services
             .AddSingleton<IOverlayService, WindowOverlayService>()

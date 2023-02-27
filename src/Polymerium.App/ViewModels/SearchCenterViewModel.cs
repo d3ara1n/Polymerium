@@ -46,9 +46,9 @@ public class SearchCenterViewModel : ObservableObject
                 SelectedResourceType = null;
                 SupportedResources.Clear();
                 var supported = value!.SupportedResources;
-                for (uint index = 0; index < (uint)ResourceType.All; index++)
+                foreach (uint i in Enum.GetValues(typeof(ResourceType)))
                 {
-                    var type = (ResourceType)index;
+                    var type = (ResourceType)i;
                     if ((supported & type) == type) SupportedResources.Add(type);
                 }
 
