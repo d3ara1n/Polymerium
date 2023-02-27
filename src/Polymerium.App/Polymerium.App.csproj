@@ -177,7 +177,12 @@
         </Page>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Extensions" />
+        <Folder Include="Extensions"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\SearchDetailDialog.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Views\AddAccountWizards\MicrosoftAccountFinishView.xaml">

@@ -9,7 +9,7 @@ namespace Polymerium.Core.Resources;
 public class CurseForgeRepository : IResourceRepository
 {
     public string Label => "CurseForge";
-    public ResourceType SupportedResources => ResourceType.All;
+    public ResourceType SupportedResources => ResourceType.Modpack;
 
     public Task<IEnumerable<Modpack>> SearchModpacksAsync(string query, string? version, uint offset = 0,
         uint limit = 10,
