@@ -23,7 +23,7 @@
                             <LineBreak />
                             <Run
                                 Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay,FallbackValue=(未定义)}"
-                                 Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                         </TextBlock>
                     </StackPanel>
                     <Button Content="安全重命名" HorizontalAlignment="Right"

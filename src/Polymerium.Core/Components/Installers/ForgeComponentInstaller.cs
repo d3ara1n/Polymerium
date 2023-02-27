@@ -93,6 +93,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                         $"net.minecraft.forge:{(entry.Name.Contains("universal") ? "universal" : "forge")}:{component.Version}",
                         path, null, local));
             }
+
             GoAheadWithWrapper(installerUrl, mcVersion, component.Version);
         }
         else
@@ -114,7 +115,6 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
             //        path, null, local));
 
             throw new NotImplementedException();
-
         }
 
         Context.AddCrate("library_directory", _fileBase.Locate(new Uri("poly-file:///libraries")));

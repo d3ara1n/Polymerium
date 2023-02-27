@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using IBuilder;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
@@ -87,7 +86,6 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
     {
         var found = false;
         foreach (var exist in libraries)
-        {
             //var existTuple = exist.Name.Split(':');
             //var tuple = library.Name.Split(':');
             //if (existTuple.Take(2).Concat(existTuple.Skip(3)).SequenceEqual(tuple.Take(2).Concat(tuple.Skip(3))) &&
@@ -101,12 +99,9 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
             //    found = true;
             //    break;
             //}
-
-            if (exist.Name == library.Name && exist.IsNative == library.IsNative && exist.PresentInClassPath == library.PresentInClassPath)
-            {
+            if (exist.Name == library.Name && exist.IsNative == library.IsNative &&
+                exist.PresentInClassPath == library.PresentInClassPath)
                 found = true;
-            }
-        }
 
         if (!found) libraries.Add(library);
     }

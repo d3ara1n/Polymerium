@@ -11,14 +11,14 @@ namespace Polymerium.App.ViewModels;
 public class ImportModpackWizardViewModel : ObservableObject
 {
     private readonly ImportService _importer;
+
+    private readonly CancellationTokenSource source = new();
     private string? _fileName;
     private ImportResult? _importResult;
 
     private GameInstance? exposed;
 
     private string? instanceName = string.Empty;
-
-    private readonly CancellationTokenSource source = new();
 
     public ImportModpackWizardViewModel(ImportService importer)
     {

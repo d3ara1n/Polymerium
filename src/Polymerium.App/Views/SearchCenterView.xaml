@@ -6,16 +6,70 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:Polymerium.App.Models"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image Source="ms-appx:///Assets/Icons/icons8-drill-48.png" Stretch="Fill" Width="60" Height="60" />
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="施工中..." Style="{StaticResource TitleTextBlockStyle}" />
-                <TextBlock Text="该页面将在未来呈现，敬请期待" />
+    <Grid RowDefinitions="Auto,*">
+        <Grid.Transitions>
+            <EntranceThemeTransition />
+        </Grid.Transitions>
+        <ContentControl Margin="5,0,10,5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                        IsEnabled="{x:Bind IsDataLoading,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+            <StackPanel Spacing="10">
+                <TextBlock Text="搜索中心" Style="{StaticResource TitleTextBlockStyle}" />
+                <AutoSuggestBox x:Name="SearchBox" PlaceholderText="键入以开始" QueryIcon="Find"
+                                QuerySubmitted="SearchBox_OnQuerySubmitted" />
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <TextBlock Text="来自:" VerticalAlignment="Center" />
+                    <ComboBox x:Name="RepositoryBox"
+                              SelectedItem="{x:Bind ViewModel.SelectedRepository,Mode=TwoWay}"
+                              ItemsSource="{x:Bind ViewModel.Repositories}" DisplayMemberPath="Label" />
+                    <TextBlock Text="类型:" VerticalAlignment="Center" />
+                    <ComboBox x:Name="ResourceBox" SelectedItem="{x:Bind ViewModel.SelectedResourceType,Mode=TwoWay}"
+                              ItemsSource="{x:Bind ViewModel.SupportedResources}" />
+                </StackPanel>
+                <ProgressBar IsIndeterminate="True"
+                             Visibility="{x:Bind IsDataLoading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
             </StackPanel>
-        </StackPanel>
+        </ContentControl>
+        <Grid Grid.Row="1">
+            <ListView x:Name="ResultList" IncrementalLoadingTrigger="Edge" SelectionMode="None"
+                      Margin="0,5,0,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SearchCenterResultItemModel">
+                        <Grid Margin="5,3,10,3">
+                            <controls:Card>
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <ui:ImageEx Height="64" Width="64" Margin="0,0,15,0"
+                                                Stretch="UniformToFill" Source="{x:Bind IconSource}"
+                                                IsCacheEnabled="True"
+                                                CornerRadius="5" />
+                                    <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
+                                        <Grid RowDefinitions="Auto,*">
+                                            <TextBlock Text="{x:Bind Caption}"
+                                                       Style="{StaticResource SubtitleTextBlockStyle}" />
+                                            <TextBlock Text="{x:Bind Summary}" Grid.Row="1"
+                                                       TextWrapping="WrapWholeWords" />
+                                        </Grid>
+                                        <StackPanel Grid.Column="1" />
+                                    </Grid>
+                                </Grid>
+                            </controls:Card>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <TextBlock x:Name="NoResultLabel" Text="无结果" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Visibility="Visible" />
+        </Grid>
     </Grid>
 </Page>

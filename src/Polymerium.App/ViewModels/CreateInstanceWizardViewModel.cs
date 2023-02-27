@@ -22,6 +22,8 @@ public class CreateInstanceWizardViewModel : ObservableValidator
     private readonly IMemoryCache _cache;
     private readonly InstanceManager _instanceManager;
 
+    private string? autoSelectedVersion = string.Empty;
+
     private string instanceAuthor = string.Empty;
 
     private string instanceName = string.Empty;
@@ -63,8 +65,6 @@ public class CreateInstanceWizardViewModel : ObservableValidator
         get => instanceAuthor;
         set => SetProperty(ref instanceAuthor, value);
     }
-
-    private string? autoSelectedVersion = string.Empty;
 
     [Required]
     public GameVersionModel? SelectedVersion

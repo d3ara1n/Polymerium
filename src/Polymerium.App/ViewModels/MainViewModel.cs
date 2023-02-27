@@ -154,7 +154,9 @@ public sealed class MainViewModel : ObservableObject
     public void OnNavigatingTo(NavigationItemModel page)
     {
         Context.AssociatedInstance =
-            page.GameInstance != null ? new GameInstanceModel(page.GameInstance, _configurationManager.Current.GameGlobals) : null;
+            page.GameInstance != null
+                ? new GameInstanceModel(page.GameInstance, _configurationManager.Current.GameGlobals)
+                : null;
     }
 
     private void Instances_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -194,7 +196,6 @@ public sealed class MainViewModel : ObservableObject
                                 );
                                 if (item != null)
                                     NavigationPages.Remove(item);
-                                // TODO: 当前页面和该实例有关就关闭该页面
                             }
                     }
                         break;
@@ -236,5 +237,10 @@ public sealed class MainViewModel : ObservableObject
     public void GotoInstanceView(string id)
     {
         _navigationService.Navigate<InstanceView>(id);
+    }
+
+    public void GotoSearchView(string query)
+    {
+        _navigationService.Navigate<SearchCenterView>(query);
     }
 }

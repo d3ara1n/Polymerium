@@ -29,9 +29,9 @@ public class CurseForgeImporter : ImporterBase
                 var instance = new GameInstance(new GameMetadata(), index.Version,
                     new FileBasedLaunchConfiguration(), index.Name, index.Name)
                 {
-                    Author = index.Author,
+                    Author = index.Author
                 };
-                instance.Metadata.Components.Add(new Component()
+                instance.Metadata.Components.Add(new Component
                 {
                     Identity = "net.minecraft",
                     Version = index.Minecraft.Version
@@ -47,12 +47,9 @@ public class CurseForgeImporter : ImporterBase
                             "fabric" => "net.fabricmc.fabric-loader",
                             _ => null
                         };
-                        if (name == null)
-                        {
-                            return Failed(GameImportError.Unsupported);
-                        }
+                        if (name == null) return Failed(GameImportError.Unsupported);
                         var version = split[1];
-                        instance.Metadata.Components.Add(new Component()
+                        instance.Metadata.Components.Add(new Component
                         {
                             Identity = name!,
                             Version = version

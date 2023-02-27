@@ -31,10 +31,9 @@
                     <ColumnDefinition x:FieldModifier="Public" x:Name="ColumnRight" Width="*" />
                 </Grid.ColumnDefinitions>
                 <AutoSuggestBox x:Name="SearchBar" Height="32" Width="200" HorizontalAlignment="Right"
-                                Margin="25,0,10,0"
+                                Margin="25,0,10,0" TextMemberPath="Caption"
                                 PlaceholderText="Search" QueryIcon="Find" AutoMaximizeSuggestionArea="True"
-                                TextChanged="SearchBar_OnTextChanged" SuggestionChosen="SearchBar_OnSuggestionChosen"
-                                QuerySubmitted="SearchBar_OnQuerySubmitted">
+                                TextChanged="SearchBar_OnTextChanged" QuerySubmitted="SearchBar_OnQuerySubmitted">
                     <AutoSuggestBox.ItemTemplate>
                         <DataTemplate x:DataType="models:NavigationSearchBarItemModel">
                             <Grid ColumnDefinitions="Auto,*">
@@ -66,7 +65,7 @@
             <NavigationView.PaneCustomContent>
                 <Button Style="{StaticResource IconButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.Context.SelectedAccount.Nickname,Mode=OneWay,FallbackValue=未登录}"
-                        Height="60" Width="70" Margin="5">
+                        Height="50" Width="60" Margin="5,5,10,5">
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel Spacing="8" MinWidth="180">
@@ -75,10 +74,12 @@
                                           DisplayMemberPath="Nickname"
                                           ItemsSource="{x:Bind ViewModel.LogonAccounts}" />
                                 <Grid>
-                                    <Button Content="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"  HorizontalAlignment="Right"/>
+                                    <Button Content="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"
+                                            HorizontalAlignment="Right" />
                                     <Button Content="注销当前"
-                                        IsEnabled="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
-                                        Command="{x:Bind ViewModel.RemoveAccountCommand}" HorizontalAlignment="Left"/>
+                                            IsEnabled="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
+                                            Command="{x:Bind ViewModel.RemoveAccountCommand}"
+                                            HorizontalAlignment="Left" />
                                 </Grid>
                             </StackPanel>
                         </Flyout>
@@ -103,7 +104,7 @@
             </NavigationView.MenuItemTemplate>
             <NavigationView.MenuItemContainerStyle>
                 <Style TargetType="NavigationViewItem">
-                    <Setter Property="Margin" Value="0,0,5,0"/>
+                    <Setter Property="Margin" Value="0,0,5,0" />
                 </Style>
             </NavigationView.MenuItemContainerStyle>
         </NavigationView>

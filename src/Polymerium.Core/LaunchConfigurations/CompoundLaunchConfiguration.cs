@@ -1,4 +1,3 @@
-using System;
 using Polymerium.Abstractions.LaunchConfigurations;
 
 namespace Polymerium.Core.LaunchConfigurations;

@@ -49,7 +49,8 @@
                         <Run Text="{x:Bind ViewModel.SelectedVersion.Id,Mode=OneWay}" />
                     </TextBlock>
                     <AutoSuggestBox x:Name="VersionBox" PlaceholderText="键入以搜索" TextMemberPath="Id"
-                                    TextChanged="VersionBox_TextChanged" SuggestionChosen="VersionBox_SuggestionChosen">
+                                    TextChanged="VersionBox_TextChanged"
+                                    SuggestionChosen="VersionBox_SuggestionChosen">
                         <AutoSuggestBox.ItemTemplate>
                             <DataTemplate x:DataType="models:GameVersionModel">
                                 <Grid ColumnDefinitions="*,Auto">

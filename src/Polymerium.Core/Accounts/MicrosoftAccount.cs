@@ -10,7 +10,6 @@ namespace Polymerium.Core.Accounts;
 
 public class MicrosoftAccount : IGameAccount
 {
-    public string LoginType => "mojang";
     public MicrosoftAccount(string id, string uuid, string nickname, string accessToken, string refreshToken)
     {
         Id = id;
@@ -29,11 +28,30 @@ public class MicrosoftAccount : IGameAccount
         RefreshToken = string.Empty;
     }
 
+    public string RefreshToken { get; set; }
+    public string LoginType => "mojang";
+
     public string Id { get; set; }
     public string UUID { get; set; }
     public string Nickname { get; set; }
     public string AccessToken { get; set; }
-    public string RefreshToken { get; set; }
+
+    public async Task<bool> ValidateAsync()
+    {
+        return (await MicrosoftAccountHelper.GetProfileByAccessTokenAsync(AccessToken)).IsSome();
+    }
+
+    public async Task<bool> RefreshAsync()
+    {
+        var accountOption = await MicrosoftAccountHelper.RefreshAccessTokenAsync(RefreshToken);
+        if (accountOption.TryUnwrap(out var account))
+        {
+            AccessToken = account.AccessToken;
+            RefreshToken = account.RefreshToken;
+        }
+
+        return accountOption.IsSome();
+    }
 
     public static async Task<Result<MicrosoftAccount, string>> LoginAsync(Action<string, string> userCodeCallback,
         CancellationToken token = default)
@@ -101,22 +119,5 @@ public class MicrosoftAccount : IGameAccount
         }
 
         return Result<MicrosoftAccount, string>.Err("Xbox Live 获取授权时出现网络异常或未授权");
-    }
-
-    public async Task<bool> ValidateAsync()
-    {
-        return (await MicrosoftAccountHelper.GetProfileByAccessTokenAsync(AccessToken)).IsSome();
-    }
-
-    public async Task<bool> RefreshAsync()
-    {
-        var accountOption = await MicrosoftAccountHelper.RefreshAccessTokenAsync(RefreshToken);
-        if (accountOption.TryUnwrap(out var account))
-        {
-            AccessToken = account.AccessToken;
-            RefreshToken = account.RefreshToken;
-        }
-
-        return accountOption.IsSome();
     }
 }
