@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Polymerium.Abstractions.Resources;
@@ -15,6 +16,6 @@ public class CurseForgeRepository : IResourceRepository
         uint limit = 10,
         CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Enumerable.Empty<Modpack>());
     }
 }

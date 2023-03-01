@@ -50,7 +50,7 @@ public class CompleteAttachmentsStage : StageBase
                     var target = _fileBase.Locate(attachment.Target);
                     var dir = Path.GetDirectoryName(target);
                     if (!Directory.Exists(dir))
-                        Directory.CreateDirectory(dir);
+                        Directory.CreateDirectory(dir!);
                     File.Copy(path, target, true);
                     Report($"使用本地仓库补全({++local})", Path.GetFileName(target));
                 }
