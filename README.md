@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/d3ara1n/Polymerium">
-    <img src="src/Polymerium.App/Assets/Logo.png" alt="Logo" width="80" height="80">
+    <img src="src/Polymerium.App/Polymerium.App%20(Package)/Images/Logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Polymerium</h3>
@@ -61,11 +61,15 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 * [![VisualStudioCode][VSCode]][VSCode-url]
 
 <!-- GETTING STARTED -->
-## 入门
+## 安装使用
 
-目前~~不~~入门。
+### 微软商店
 
-### 安装
+<a href="ms-windows-store://pdp/?ProductId=9NGQHHCT2Q6Z&mode=mini">
+   <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Microsoft Store" />
+</a>
+
+### 预编译
 
 在 [Release]("https://github.com/d3ara1n/Polymerium/releases") 中下载证书文件(.cer)和程序包(.msix)。
 
@@ -150,10 +154,13 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
       * [x] 远程资源
 * [ ] 搜索
   * [ ] 搜索中心
-  * [ ] SearchBar
+  * [x] SearchBar
     * [x] 托管的实例搜索
-    * [ ] 搜索中心联动
-  * [ ] 互联网资源搜索
+    * [x] 搜索中心联动
+  * [x] 互联网资源搜索
+  * [ ] 导入在线整合包
+  * [ ] 添加在线资源到本地实例
+  * [ ] 收藏合集：为一个（新）实例添加一系列资源，用以对公共整合包快速个性化
 * [ ] 软件设置
 * [ ] 游戏实例设置
   * [ ] 元数据编辑
