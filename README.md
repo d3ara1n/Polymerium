@@ -65,7 +65,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 
 ### 微软商店
 
-[![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](ms-windows-store://pdp/?ProductId=9NGQHHCT2Q6Z&mode=mini)
+[![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/apps/9NGQHHCT2Q6Z)
 
 ### 预编译
 
