@@ -28,6 +28,7 @@ public sealed class MainViewModel : ObservableObject
     private readonly MemoryStorage _memoryStorage;
     private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
+    private readonly INotificationService _notificationService;
 
     private ContentControl? overlay;
     private NavigationItemModel? selectedPage;
@@ -35,6 +36,7 @@ public sealed class MainViewModel : ObservableObject
     public MainViewModel(
         ILogger<MainViewModel> logger,
         IOverlayService overlayService,
+        INotificationService notificationService,
         InstanceManager instanceManager,
         AccountManager accountManager,
         ConfigurationManager configurationManager,
@@ -46,6 +48,7 @@ public sealed class MainViewModel : ObservableObject
     {
         _logger = logger;
         _overlayService = overlayService;
+        _notificationService = notificationService;
         _instanceManager = instanceManager;
         _componentManager = componentManager;
         _accountManager = accountManager;
@@ -60,7 +63,12 @@ public sealed class MainViewModel : ObservableObject
             windowOverlayService.Register(PushOverlay, PullOverlay);
         else
             throw new ArgumentNullException(nameof(overlayService));
+        if (notificationService is InAppNotificationService inAppNotification)
+            inAppNotification.Register(EnqueueNotification);
+        else
+            throw new ArgumentNullException(nameof(notificationService));
         _memoryStorage.Instances.CollectionChanged += Instances_CollectionChanged;
+        Notifications = new ObservableCollection<InAppNotificationItem>();
         NavigationPages = new ObservableCollection<NavigationItemModel>(
             instanceManager
                 .GetView()
@@ -112,6 +120,8 @@ public sealed class MainViewModel : ObservableObject
 
     public ObservableCollection<IGameAccount> LogonAccounts => _memoryStorage.Accounts;
 
+    public ObservableCollection<InAppNotificationItem> Notifications { get; }
+
     public NavigationItemModel? SelectedPage
     {
         get => selectedPage;
@@ -124,6 +134,11 @@ public sealed class MainViewModel : ObservableObject
     {
         get => overlay;
         set => SetProperty(ref overlay, value);
+    }
+
+    private void EnqueueNotification(string text)
+    {
+        _dispatcher.TryEnqueue(() => { Notifications.Add(new InAppNotificationItem(text)); });
     }
 
     public ICommand OpenAddAccountWizardCommand { get; }

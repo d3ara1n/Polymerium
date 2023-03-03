@@ -112,4 +112,38 @@ public sealed partial class MainView : Page
             ViewModel.GotoSearchView(sender.Text);
         }
     }
+
+    private void NotificationItem_Loaded(object sender, RoutedEventArgs e)
+    {
+        var grid = (Grid)sender;
+        var fadeIn = new Storyboard();
+        Storyboard.SetTarget(fadeIn, grid);
+        Storyboard.SetTargetProperty(fadeIn, "Opacity");
+        fadeIn.Children.Add(new DoubleAnimation
+        {
+            From = 0d,
+            To = 1d,
+            Duration = new Duration(TimeSpan.FromMilliseconds(220))
+        });
+        fadeIn.Completed += (_, _) =>
+        {
+            var fadeOut = new Storyboard();
+            Storyboard.SetTarget(fadeOut, grid);
+            Storyboard.SetTargetProperty(fadeOut, "Opacity");
+            fadeOut.Children.Add(new DoubleAnimation
+            {
+                From = 1d,
+                To = 0d,
+                BeginTime = TimeSpan.FromSeconds(4),
+                Duration = new Duration(TimeSpan.FromMilliseconds(300))
+            });
+            fadeOut.Completed += (_, _) =>
+            {
+                if (ViewModel.Notifications.Count > 0)
+                    ViewModel.Notifications.RemoveAt(0);
+            };
+            fadeOut.Begin();
+        };
+        fadeIn.Begin();
+    }
 }

@@ -112,5 +112,18 @@
         <!-- WinUI 的对话框没有自定义选项，这里引入 WPF 的 in-app 对话框风格 -->
         <ContentPresenter x:Name="TopOverlay" Grid.RowSpan="9" Grid.ColumnSpan="9"
                           Content="{x:Bind ViewModel.Overlay, Mode=OneWay}" />
+        <ItemsControl x:Name="NotificationContainer" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                      Grid.RowSpan="9" Grid.ColumnSpan="9" Margin="0,0,0,46"
+                      ItemsSource="{x:Bind ViewModel.Notifications}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="models:InAppNotificationItem">
+                    <Grid x:Name="NotificationItem" Loaded="NotificationItem_Loaded"
+                          Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                          HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="5" Margin="0,2,0,2">
+                        <TextBlock Text="{x:Bind Text}" Margin="7" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Page>
