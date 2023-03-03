@@ -174,7 +174,6 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 * 游戏启动流程：[教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8?variant=zh)
 * Forge：[ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
 * 微软验证：[Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
-* 微软验证实现：[Cml.Core.Auth.Microsoft](https://github.com/CmlLib/CmlLib.Core.Auth.Microsoft)
 * Forge 版本和下载：[BMCLApi](https://bmclapidoc.bangbang93.com/)
 
 十分感谢以上作者和所著文章。

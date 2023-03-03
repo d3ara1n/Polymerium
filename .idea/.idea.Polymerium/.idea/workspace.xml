@@ -83,6 +83,18 @@
   }
 }</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Polymerium.App: Polymerium.App (Unpackaged)">
+    <configuration name="Polymerium.App: win10-arm64" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
+      <riderPublish publish_profile="win10-arm64.pubxml" pubxml_path="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Properties/PublishProfiles/win10-arm64.pubxml" uuid_high="-3135381123620779117" uuid_low="-8024763659079769556" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Polymerium.App: win10-x64" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
+      <riderPublish publish_profile="win10-x64.pubxml" pubxml_path="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Properties/PublishProfiles/win10-x64.pubxml" uuid_high="-3135381123620779117" uuid_low="-8024763659079769556" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Polymerium.App: win10-x86" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
+      <riderPublish publish_profile="win10-x86.pubxml" pubxml_path="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Properties/PublishProfiles/win10-x86.pubxml" uuid_high="-3135381123620779117" uuid_low="-8024763659079769556" />
+      <method v="2" />
+    </configuration>
     <configuration name="Polymerium.App Unpackaged" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/src/Polymerium.App/bin/x64/Debug/net7.0-windows10.0.20348.0/win10-x64/Polymerium.App.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -126,6 +138,9 @@
     <list>
       <item itemvalue=".NET Launch Settings Profile.Polymerium.App: Polymerium.App (Unpackaged)" />
       <item itemvalue=".NET Project.Polymerium.App Unpackaged" />
+      <item itemvalue="Publish to IIS.Polymerium.App: win10-arm64" />
+      <item itemvalue="Publish to IIS.Polymerium.App: win10-x64" />
+      <item itemvalue="Publish to IIS.Polymerium.App: win10-x86" />
       <item itemvalue="UWP.Polymerium.App" />
     </list>
   </component>

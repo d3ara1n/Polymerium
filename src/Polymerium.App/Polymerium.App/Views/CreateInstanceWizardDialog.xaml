@@ -72,7 +72,7 @@
                     <Expander Header="高级" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
                         <StackPanel Spacing="12">
                             <TextBlock Text="实例版本" />
-                            <TextBox Text="1.0.0" PlaceholderText="当作为整合包发布时使用" />
+                            <TextBox Text="{x:Bind ViewModel.Version,Mode=TwoWay}" PlaceholderText="当作为整合包发布时使用" />
                         </StackPanel>
                     </Expander>
                 </StackPanel>

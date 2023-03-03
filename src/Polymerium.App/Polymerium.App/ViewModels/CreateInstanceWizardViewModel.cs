@@ -40,6 +40,7 @@ public class CreateInstanceWizardViewModel : ObservableValidator
         InstanceName = string.Empty;
         SelectedVersion = null;
         InstanceAuthor = string.Empty;
+        Version = "1.0.0";
     }
 
     [Required]

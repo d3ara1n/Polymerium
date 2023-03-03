@@ -91,6 +91,7 @@ public partial class App : Application
         // local service registration
         services
             .AddSingleton<IOverlayService, WindowOverlayService>()
+            .AddSingleton<INotificationService, InAppNotificationService>()
             .AddSingleton<NavigationService>()
             .AddSingleton<AccountManager>()
             .AddSingleton<InstanceManager>()
