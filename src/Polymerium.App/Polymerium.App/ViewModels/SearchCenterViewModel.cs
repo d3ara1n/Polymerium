@@ -13,6 +13,10 @@ namespace Polymerium.App.ViewModels;
 
 public class SearchCenterViewModel : ObservableObject
 {
+    private IResourceRepository? selectedRepository;
+
+    private ResourceType? selectedResourceType;
+
     public SearchCenterViewModel(IEnumerable<IResourceRepository> repositories)
     {
         Repositories = repositories;
@@ -25,15 +29,11 @@ public class SearchCenterViewModel : ObservableObject
 
     public ObservableCollection<ResourceType> SupportedResources { get; set; }
 
-    private ResourceType? selectedResourceType;
-
     public ResourceType? SelectedResourceType
     {
         get => selectedResourceType;
         set => SetProperty(ref selectedResourceType, value);
     }
-
-    private IResourceRepository? selectedRepository;
 
     public IResourceRepository? SelectedRepository
     {
@@ -68,7 +68,7 @@ public class SearchCenterViewModel : ObservableObject
             _ => throw new NotImplementedException()
         };
         return results.Select(x =>
-            new SearchCenterResultItemModel(x.Name, x.IconSource, x.Author, x.Summary, x.Body, ResourceType.Modpack,
+            new SearchCenterResultItemModel(x.Name, x.IconSource, x.Author, x.Summary, ResourceType.Modpack,
                 x));
     }
 }

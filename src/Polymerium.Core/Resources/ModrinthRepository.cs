@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DotNext.Threading;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Helpers;
 
@@ -17,6 +18,7 @@ public class ModrinthRepository : IResourceRepository
     {
         var results =
             await ModrinthHelper.SearchProjectsAsync(query, ResourceType.Modpack, version, null, offset, limit, token);
-        return results.Select(x => new Modpack(x.Id, x.Title, x.Team, x.IconUrl, x.Description, x.Body));
+        return results.Select(x =>
+            new Modpack(x.Id, x.Title, x.Team, x.IconUrl, x.Description, new AsyncLazy<string>(x.Body)));
     }
 }

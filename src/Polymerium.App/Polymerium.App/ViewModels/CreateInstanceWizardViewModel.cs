@@ -11,6 +11,7 @@ using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.Core.Components;
 using Polymerium.Core.Models;
 using Polymerium.Core.Models.Mojang.VersionManifests;
 using Wupoo;
@@ -134,7 +135,7 @@ public class CreateInstanceWizardViewModel : ObservableValidator
             InstanceName
         );
         instance.Metadata.Components.Add(
-            new Component { Identity = "net.minecraft", Version = SelectedVersion!.Id }
+            new Component { Identity = ComponentMeta.MINECRAFT, Version = SelectedVersion!.Id }
         );
         _instanceManager.AddInstance(instance);
         await callback();

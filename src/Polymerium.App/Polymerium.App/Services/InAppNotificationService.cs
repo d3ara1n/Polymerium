@@ -6,13 +6,13 @@ public class InAppNotificationService : INotificationService
 {
     private EnqueueNotificationItemHandler? _handler;
 
-    public void Register(EnqueueNotificationItemHandler handler)
-    {
-        _handler = handler;
-    }
-
     public void Enqueue(string text)
     {
         _handler?.Invoke(text);
+    }
+
+    public void Register(EnqueueNotificationItemHandler handler)
+    {
+        _handler = handler;
     }
 }

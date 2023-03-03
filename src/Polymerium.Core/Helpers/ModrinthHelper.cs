@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Resources;
+using Polymerium.Core.Components;
 using Polymerium.Core.Models.Modrinth;
 using Wupoo;
 
@@ -52,13 +54,20 @@ public static class ModrinthHelper
     }
 
     public static async Task<IEnumerable<ModrinthProject>> SearchProjectsAsync(string query, ResourceType type,
-        string? version, string? modLoader, uint offset = 0, uint limit = 10,
+        string? gameVersion = null, string? modLoaderId = null, uint offset = 0, uint limit = 10,
         CancellationToken token = default)
     {
         var facets = new List<KeyValuePair<string, string>>();
-        if (version != null) facets.Add(new KeyValuePair<string, string>("version", version));
+        if (gameVersion != null) facets.Add(new KeyValuePair<string, string>("version", gameVersion));
 
-        if (modLoader != null) facets.Add(new KeyValuePair<string, string>("categories", modLoader));
+        if (modLoaderId != null)
+            facets.Add(new KeyValuePair<string, string>("categories", modLoaderId switch
+            {
+                ComponentMeta.FORGE => "forge",
+                ComponentMeta.FABRIC => "fabric",
+                ComponentMeta.QUILT => "quilt",
+                _ => throw new NotSupportedException()
+            }));
 
         facets.Add(new KeyValuePair<string, string>("project_type", type switch
         {
@@ -71,7 +80,7 @@ public static class ModrinthHelper
             _ => throw new NotImplementedException()
         }));
         var service =
-            $"/search?query={query}&offset={offset}&limit={limit}&facets=[{string.Join(',', facets.Select(x => $"[\"{x.Key}:{x.Value}\"]"))}]";
+            $"/search?query={HttpUtility.UrlEncode(query)}&offset={offset}&limit={limit}&facets=[{string.Join(',', facets.Select(x => $"[\"{x.Key}:{x.Value}\"]"))}]";
         return await GetResourcesAsync<ModrinthProject>(service, token);
     }
 }

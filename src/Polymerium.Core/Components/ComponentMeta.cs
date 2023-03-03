@@ -5,6 +5,11 @@ namespace Polymerium.Core.Components;
 
 public class ComponentMeta
 {
+    public const string MINECRAFT = "net.minecraft";
+    public const string FORGE = "net.minecraftforge";
+    public const string FABRIC = "net.fabricmc.fabric-loader";
+    public const string QUILT = "org.quiltmc.quilt-loader";
+
     public ComponentMeta(
         string identity,
         string friendlyName,

@@ -14,4 +14,8 @@
         <Platforms>AnyCPU;ARM64</Platforms>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="DotNext.Threading" Version="4.10.0"/>
+    </ItemGroup>
+
 </Project>

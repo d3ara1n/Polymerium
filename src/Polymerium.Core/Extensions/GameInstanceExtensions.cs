@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
+using Polymerium.Core.Components;
 
 namespace Polymerium.Core.Extensions;
 
@@ -17,8 +18,8 @@ public static class GameInstanceExtensions
 
     public static string? GetCoreVersion(this GameInstance instance)
     {
-        return instance.Metadata.Components.Any(x => x.Identity == "net.minecraft")
-            ? instance.Metadata.Components.First(x => x.Identity == "net.minecraft").Version
+        return instance.Metadata.Components.Any(x => x.Identity == ComponentMeta.MINECRAFT)
+            ? instance.Metadata.Components.First(x => x.Identity == ComponentMeta.MINECRAFT).Version
             : null;
     }
 }

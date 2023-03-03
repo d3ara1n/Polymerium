@@ -27,8 +27,8 @@ public sealed class MainViewModel : ObservableObject
     private readonly ILogger _logger;
     private readonly MemoryStorage _memoryStorage;
     private readonly NavigationService _navigationService;
-    private readonly IOverlayService _overlayService;
     private readonly INotificationService _notificationService;
+    private readonly IOverlayService _overlayService;
 
     private ContentControl? overlay;
     private NavigationItemModel? selectedPage;
@@ -136,14 +136,14 @@ public sealed class MainViewModel : ObservableObject
         set => SetProperty(ref overlay, value);
     }
 
+    public ICommand OpenAddAccountWizardCommand { get; }
+
+    public ICommand RemoveAccountCommand { get; }
+
     private void EnqueueNotification(string text)
     {
         _dispatcher.TryEnqueue(() => { Notifications.Add(new InAppNotificationItem(text)); });
     }
-
-    public ICommand OpenAddAccountWizardCommand { get; }
-
-    public ICommand RemoveAccountCommand { get; }
 
     private void PushOverlay(ContentControl content)
     {
