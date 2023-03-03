@@ -10,7 +10,10 @@ namespace Polymerium.App.Views;
 
 public sealed partial class SearchCenterView : Page
 {
-    public SearchCenterViewModel ViewModel { get; }
+    // Using a DependencyProperty as the backing store for IsDataLoading.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IsDataLoadingProperty =
+        DependencyProperty.Register(nameof(IsDataLoading), typeof(bool), typeof(SearchCenterView),
+            new PropertyMetadata(false));
 
     public SearchCenterView()
     {
@@ -18,17 +21,14 @@ public sealed partial class SearchCenterView : Page
         InitializeComponent();
     }
 
+    public SearchCenterViewModel ViewModel { get; }
+
 
     public bool IsDataLoading
     {
         get => (bool)GetValue(IsDataLoadingProperty);
         set => SetValue(IsDataLoadingProperty, value);
     }
-
-    // Using a DependencyProperty as the backing store for IsDataLoading.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsDataLoadingProperty =
-        DependencyProperty.Register(nameof(IsDataLoading), typeof(bool), typeof(SearchCenterView),
-            new PropertyMetadata(false));
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {

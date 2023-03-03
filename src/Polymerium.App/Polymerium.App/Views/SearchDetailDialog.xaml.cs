@@ -7,10 +7,6 @@ namespace Polymerium.App.Views;
 
 public sealed partial class SearchDetailDialog : CustomDialog
 {
-    public SearchDetailViewModel ViewModel { get; }
-
-    public ResourceBase Resource { get; }
-
     public SearchDetailDialog(ResourceBase resource)
     {
         ViewModel = App.Current.Provider.GetRequiredService<SearchDetailViewModel>();
@@ -19,4 +15,8 @@ public sealed partial class SearchDetailDialog : CustomDialog
         Resource = resource;
         InitializeComponent();
     }
+
+    public SearchDetailViewModel ViewModel { get; }
+
+    public ResourceBase Resource { get; }
 }

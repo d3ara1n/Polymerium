@@ -40,9 +40,9 @@ public class AddMetaComponentWizardViewModel : ObservableObject
         _componentManager = componentManager;
         _cache = cache;
         coreVersion =
-            Context.AssociatedInstance?.Components.Any(x => x.Identity == "net.minecraft") == true
+            Context.AssociatedInstance?.Components.Any(x => x.Identity == ComponentMeta.MINECRAFT) == true
                 ? Context.AssociatedInstance.Components
-                    .First(x => x.Identity == "net.minecraft")
+                    .First(x => x.Identity == ComponentMeta.MINECRAFT)
                     .Version
                 : null;
         if (coreVersion != null)
@@ -104,13 +104,13 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     public async Task LoadVersionsAsync(string identity, Action<IEnumerable<string>> callback)
     {
         var result = await _cache.GetOrCreateAsync<IEnumerable<string>>(
-            identity == "net.minecraftforge" ? $"versions:{identity}/{coreVersion}" : $"versions:{identity}",
+            identity == ComponentMeta.FORGE ? $"versions:{identity}/{coreVersion}" : $"versions:{identity}",
             identity switch
             {
-                "net.minecraft" => LoadMinecraftVersionsAsync,
-                "net.minecraftforge" => LoadForgeVersionsAsync,
-                "net.fabricmc.fabric-loader" => LoadFabricVersionsAsync,
-                "org.quiltmc.quilt-loader" => LoadQuiltVersionsAsync,
+                ComponentMeta.MINECRAFT => LoadMinecraftVersionsAsync,
+                ComponentMeta.FORGE => LoadForgeVersionsAsync,
+                ComponentMeta.FABRIC => LoadFabricVersionsAsync,
+                ComponentMeta.QUILT => LoadQuiltVersionsAsync,
                 _ => _ => Task.FromResult(Enumerable.Empty<string>())
             }
         );

@@ -51,10 +51,10 @@ public class BuildPolylockStage : StageBase
         _fileBase = _provider.GetRequiredService<IFileBaseService>();
         _installers = new Dictionary<string, Type>
         {
-            { "net.minecraft", typeof(MinecraftComponentInstaller) },
-            { "net.minecraftforge", typeof(ForgeComponentInstaller) },
-            { "net.fabricmc.fabric-loader", typeof(FabricComponentInstaller) },
-            { "org.quiltmc.quilt-loader", typeof(QuiltComponentInstaller) }
+            { ComponentMeta.MINECRAFT, typeof(MinecraftComponentInstaller) },
+            { ComponentMeta.FORGE, typeof(ForgeComponentInstaller) },
+            { ComponentMeta.FABRIC, typeof(FabricComponentInstaller) },
+            { ComponentMeta.QUILT, typeof(QuiltComponentInstaller) }
         };
     }
 

@@ -22,10 +22,10 @@ public class ComponentManager
         // GameInstance.Meta 中的 components 依赖关系的图顶点只能有一个元素, {fabric,forge}->{minecraft} 中fabric forge平行那么即互斥
         _memoryStorage.SupportedComponents = new List<ComponentMeta>
         {
-            new("net.minecraft", "Minecraft"),
-            new("net.minecraftforge", "Forge", new[] { "net.minecraft" }),
-            new("net.fabricmc.fabric-loader", "Fabric", new[] { "net.minecraft" }),
-            new("org.quiltmc.quilt-loader", "Quilt", new[] { "net.minecraft" })
+            new(ComponentMeta.MINECRAFT, "Minecraft"),
+            new(ComponentMeta.FORGE, "Forge", new[] { ComponentMeta.MINECRAFT }),
+            new(ComponentMeta.FABRIC, "Fabric", new[] { ComponentMeta.MINECRAFT }),
+            new(ComponentMeta.QUILT, "Quilt", new[] { ComponentMeta.MINECRAFT })
         };
     }
 

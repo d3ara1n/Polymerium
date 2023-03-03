@@ -10,6 +10,7 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Core.Components;
 using Polymerium.Core.Helpers;
 using Polymerium.Core.Models.CurseForge;
 
@@ -33,7 +34,7 @@ public class CurseForgeImporter : ImporterBase
                 };
                 instance.Metadata.Components.Add(new Component
                 {
-                    Identity = "net.minecraft",
+                    Identity = ComponentMeta.MINECRAFT,
                     Version = index.Minecraft.Version
                 });
                 foreach (var modLoader in index.Minecraft.ModLoaders)
@@ -43,8 +44,8 @@ public class CurseForgeImporter : ImporterBase
                     {
                         var name = split[0] switch
                         {
-                            "forge" => "net.minecraftforge",
-                            "fabric" => "net.fabricmc.fabric-loader",
+                            "forge" => ComponentMeta.FORGE,
+                            "fabric" => ComponentMeta.FABRIC,
                             _ => null
                         };
                         if (name == null) return Failed(GameImportError.Unsupported);

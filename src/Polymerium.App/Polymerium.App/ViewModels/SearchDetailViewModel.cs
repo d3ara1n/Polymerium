@@ -5,10 +5,10 @@ namespace Polymerium.App.ViewModels;
 
 public class SearchDetailViewModel : ObservableObject
 {
-    public ViewModelContext Context { get; }
-
     public SearchDetailViewModel(ViewModelContext context)
     {
         Context = context;
     }
+
+    public ViewModelContext Context { get; }
 }

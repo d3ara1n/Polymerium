@@ -10,6 +10,7 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Core.Components;
 using Polymerium.Core.Models.Modrinth;
 
 namespace Polymerium.Core.Importers;
@@ -46,10 +47,10 @@ public class ModrinthImporter : ImporterBase
                             Version = dependency.Version,
                             Identity = dependency.Id switch
                             {
-                                "minecraft" => "net.minecraft",
-                                "forge" => "net.minecraftforge",
-                                "fabric-loader" => "net.fabricmc.fabric-loader",
-                                "quilt-loader" => "org.quiltmc.quilt-loader",
+                                "minecraft" => ComponentMeta.MINECRAFT,
+                                "forge" => ComponentMeta.FORGE,
+                                "fabric-loader" => ComponentMeta.FABRIC,
+                                "quilt-loader" => ComponentMeta.QUILT,
                                 _ => dependency.Id
                             }
                         }
