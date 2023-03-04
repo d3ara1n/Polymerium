@@ -1,19 +1,16 @@
 ﻿using System;
-using DotNext.Threading;
 
 namespace Polymerium.Abstractions.Resources;
 
 public abstract record ResourceBase
 {
-    protected ResourceBase(string id, string name, string author, Uri iconSource, string summary,
-        AsyncLazy<string> body)
+    protected ResourceBase(string id, string name, string author, Uri iconSource, string summary)
     {
         Id = id;
         Name = name;
         Author = author;
         IconSource = iconSource;
         Summary = summary;
-        Body = body;
     }
 
     public string Id { get; set; }
@@ -21,5 +18,4 @@ public abstract record ResourceBase
     public string Author { get; set; }
     public Uri IconSource { get; set; }
     public string Summary { get; set; }
-    public AsyncLazy<string> Body { get; set; }
 }

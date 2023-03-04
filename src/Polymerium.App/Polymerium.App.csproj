@@ -42,9 +42,9 @@
         <Manifest Include="$(ApplicationManifest)"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj"/>
-        <ProjectReference Include="..\..\Polymerium.Abstractions\Polymerium.Abstractions.csproj"/>
-        <ProjectReference Include="..\..\Polymerium.Core\Polymerium.Core.csproj"/>
+        <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj"/>
+        <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj"/>
+        <ProjectReference Include="..\Polymerium.Core\Polymerium.Core.csproj"/>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Dialogs\MessageDialog.xaml">

@@ -53,7 +53,7 @@ public static class ModrinthHelper
         return await GetResourceAsync<ModrinthProject>(service, token);
     }
 
-    public static async Task<IEnumerable<ModrinthProject>> SearchProjectsAsync(string query, ResourceType type,
+    public static async Task<IEnumerable<ModrinthHit>> SearchProjectsAsync(string query, ResourceType type,
         string? gameVersion = null, string? modLoaderId = null, uint offset = 0, uint limit = 10,
         CancellationToken token = default)
     {
@@ -81,6 +81,6 @@ public static class ModrinthHelper
         }));
         var service =
             $"/search?query={HttpUtility.UrlEncode(query)}&offset={offset}&limit={limit}&facets=[{string.Join(',', facets.Select(x => $"[\"{x.Key}:{x.Value}\"]"))}]";
-        return await GetResourcesAsync<ModrinthProject>(service, token);
+        return await GetResourcesAsync<ModrinthHit>(service, token);
     }
 }

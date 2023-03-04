@@ -66,4 +66,10 @@ public sealed partial class SearchCenterView : Page
                             ResultList.Items.Count > 0 ? Visibility.Collapsed : Visibility.Visible));
         }
     }
+
+    private void ResultItem_Click(object sender, RoutedEventArgs e)
+    {
+        var model = (SearchCenterResultItemModel)((Button)sender).DataContext!;
+        ViewModel.ShowDetailDialog(model);
+    }
 }

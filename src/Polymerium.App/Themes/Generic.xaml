@@ -60,6 +60,7 @@
         <Setter Property="MinWidth" Value="248" />
         <Setter Property="MinHeight" Value="100" />
         <Setter Property="OperationPadding" Value="25" />
+        <Setter Property="OperationHorizontalAlignment" Value="Right" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:CustomDialog">
@@ -131,6 +132,8 @@
                                 <VisualState x:Name="WithOperation">
                                     <VisualState.Setters>
                                         <Setter Target="OperationArea.Visibility" Value="Visible" />
+                                        <Setter Target="ContentArea.CornerRadius"
+                                                Value="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="DefaultOperation" />
@@ -149,12 +152,14 @@
                                     <ScaleTransform x:Name="BorderScaleTransform" />
                                 </Border.RenderTransform>
                                 <Grid RowDefinitions="*,Auto">
-                                    <Border x:Name="ContentArea" Background="{ThemeResource ContentDialogTopOverlay}">
+                                    <Border x:Name="ContentArea" Background="{ThemeResource ContentDialogTopOverlay}"
+                                            CornerRadius="{TemplateBinding CornerRadius}">
                                         <ContentPresenter x:Name="ContentContainer" Margin="{TemplateBinding Padding}"
                                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
                                     </Border>
                                     <Grid x:Name="OperationArea" Grid.Row="1" Visibility="Collapsed">
-                                        <ContentControl x:Name="OperationContainer" HorizontalAlignment="Right"
+                                        <ContentControl x:Name="OperationContainer"
+                                                        HorizontalAlignment="{TemplateBinding OperationHorizontalAlignment}"
                                                         Margin="{TemplateBinding OperationPadding}"
                                                         Content="{TemplateBinding OperationContent}" />
                                     </Grid>

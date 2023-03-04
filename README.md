@@ -76,11 +76,10 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 
 ### 预编译
 
-在 [Release]("https://github.com/d3ara1n/Polymerium/releases") 中下载证书文件(.cer)和程序包(.msix)。
+在 [Release]("https://github.com/d3ara1n/Polymerium/releases") 中下载程序包(.msixbundle)。
 
-1. 双击安装证书
-2. 在 Windows 设置，`隐私和安全性` 中的 `开发者选项` 打开 `开发者模式`
-3. 双击程序包进入安装环节
+1. 在 Windows 设置，`隐私和安全性` 中的 `开发者选项` 打开 `开发者模式`
+2. 双击程序包进入安装环节
 
 ### 配置
 
@@ -88,11 +87,11 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 
 ### 添加实例
 
-目前仅支持创建原版实例（并在随后的实例配置页面添加 modloader ）或导入 modrinth 整合包。
+目前仅支持创建原版实例（并在随后的实例配置页面添加 Mod Loader ）或导入 Modrinth 整合包。
 
 #### 导入 Modrinth 整合包
 
-在 modrinth 下载整合包文件，拖动到导入页面的 DragDrop 面板，根据向导添加。
+在 Modrinth 下载整合包文件，拖动到导入页面的 DragDrop 面板，根据向导添加。
 
 <!-- ROADMAP -->
 
@@ -114,7 +113,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
     * [ ] 可选参数
         * [ ] 自定义 JVM 参数
         * [ ] 预定义的优化 JVM 参数
-    * [ ] 先决条件检查
+        * [ ] 先决条件检查
         * [x] Java 版本自动选择和兼容性检查
     * [ ] 行星搅拌机
         * [x] Fire-and-forget 模式
@@ -122,7 +121,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
             * [ ] 订阅日志
                 * [ ] 保存到文件
             * [ ] 进程管理
-    * [x] 参数解析
+        * [x] 参数解析
 * [ ] 账号管理
     * [x] 管理模型
         * [x] 添加
@@ -160,13 +159,13 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
             * [x] 远程资源
 * [ ] 搜索
     * [ ] 搜索中心
+        * [x] 互联网资源搜索
+        * [ ] 导入在线整合包
+        * [ ] 添加在线资源到本地实例
+        * [ ] 收藏合集：为一个（新）实例添加一系列资源，用以对公共整合包快速个性化
     * [x] SearchBar
         * [x] 托管的实例搜索
         * [x] 搜索中心联动
-    * [x] 互联网资源搜索
-    * [ ] 导入在线整合包
-    * [ ] 添加在线资源到本地实例
-    * [ ] 收藏合集：为一个（新）实例添加一系列资源，用以对公共整合包快速个性化
 * [ ] 软件设置
 * [ ] 游戏实例设置
     * [ ] 元数据编辑
@@ -181,9 +180,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 
 * 游戏启动流程、Fabric/Quilt 部署：[Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
 *
-
 游戏启动流程：[教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8?variant=zh)
-
 * Forge：[ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
 * 微软验证：[Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
 * Forge 版本和下载：[BMCLApi](https://bmclapidoc.bangbang93.com/)
