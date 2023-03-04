@@ -12,6 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="资源模型需要重新设计以适配多种用途">
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchDetailDialog.xaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthHit.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Polymerium.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Polymerium.sln" afterDir="false" />
@@ -19,218 +21,218 @@
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Polymerium.Abstractions.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Polymerium.Abstractions.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Resources/Modpack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Resources/Modpack.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Resources/ResourceBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Resources/ResourceBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-125.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-400.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-125.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-400.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-125.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-400.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-125.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-400.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-24.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-256.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-24.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-256.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-125.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-400.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-24.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-256.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-125.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-400.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-125.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-150.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-200.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-400.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Package.appxmanifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Polymerium.App (Package).wapproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/App.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/App.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/Brands/microsoft.256x256.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/Brands/minecraft.256x256.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/GameComponents/net.fabricmc.fabric-loader.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/GameComponents/net.minecraft.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/GameComponents/net.minecraftforge.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/GameComponents/org.quiltmc.quilt-loader.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-add-new-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-basil-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-blueprint-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-color-wheel-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-drill-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-firework-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-home-page-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-plugin-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-puzzle-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-settings-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-slider-48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Logo.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_avatar_alt_bust.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_avatar_alt_face.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_avatar_bust.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_avatar_face.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_panorama1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_world_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Configurations/AppSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Configurations/Configuration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/Card.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/CustomDialog.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/ExpanderEx.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/ExpanderExItem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/GlowingButton.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/GroupBox.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/RecentPlayedItemControl.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/ToggleButtonEx.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/AccountToBustAvatarConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/AccountToFaceAvatarConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/BoolToVisibilityConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/DateTimeOffsetToStringConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/NotEmptyToVisibleConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/NotNullToBoolConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/NotNullToVisibleConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/NullToParameterConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/ReverseBoolConverter.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Data/AccountModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Data/ConfigurationModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Data/InstanceModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Data/RefinedModelBase.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/ConfirmationDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/ConfirmationDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/JavaPickerDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/JavaPickerDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/MessageDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/MessageDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/TextInputDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/TextInputDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/AccountWizardEntryModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/AutoSuggestionItemModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/ComponentTagItemModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/ConfigurationModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/GameInstanceModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/GameVersionModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/InAppNotificationItem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/IncrementalFactorySource.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/InstanceComponentItemModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/InstanceConfigurationPageModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/InstanceInformationItemModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/JavaInstallationModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/NavigationItemModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/NavigationSearchBarItemModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/RecentPlayedItemModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/SearchCenterResultItemModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/SynchronizedCollection.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Polymerium.App.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/AccountManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/ComponentManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/ConfigurationManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/DataStorage.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/INotificationService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/IOverlayService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/ImportService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/InAppNotificationService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/InstanceManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/JavaManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/MainFileBaseOptions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/MainFileBaseService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/MemoryStorage.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/NavigationService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/ViewModelContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/WindowOverlayService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Stages/Preparing/CheckAccountAvailabilityStage.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Themes/Generic.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountFinishViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountIntroViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/OfflineAccountViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/SelectionViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizardViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/HomeViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/InstanceViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/Instances/InstanceConfigurationViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/Instances/InstanceLaunchConfigurationViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/Instances/InstanceMetadataConfigurationViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/MainViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/NewInstanceViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/PrepareGameViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/SearchCenterViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/SearchDetailViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/SettingViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizardDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizardDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountAuthView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountAuthView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountFinishView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountFinishView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountIntroView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountIntroView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddMetaComponentWizardDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddMetaComponentWizardDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/CreateInstanceWizardDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/CreateInstanceWizardDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/HomeView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/HomeView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/ImportModpackWizardDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/ImportModpackWizardDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/InstanceView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/InstanceView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceConfigurationView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceConfigurationView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/MainView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/MainView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/MainWindow.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/MainWindow.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/NewInstanceView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/NewInstanceView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/PrepareGameDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/PrepareGameDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SearchCenterView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SearchCenterView.xaml.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-100.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/LargeTile.scale-100.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-125.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/LargeTile.scale-125.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-150.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/LargeTile.scale-150.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-200.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/LargeTile.scale-200.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/LargeTile.scale-400.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/LargeTile.scale-400.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-100.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SmallTile.scale-100.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-125.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SmallTile.scale-125.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-150.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SmallTile.scale-150.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-200.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SmallTile.scale-200.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SmallTile.scale-400.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SmallTile.scale-400.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-100.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SplashScreen.scale-100.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-125.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SplashScreen.scale-125.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-150.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SplashScreen.scale-150.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-200.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SplashScreen.scale-200.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/SplashScreen.scale-400.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/SplashScreen.scale-400.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-100.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square150x150Logo.scale-100.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-125.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square150x150Logo.scale-125.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-150.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square150x150Logo.scale-150.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-200.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square150x150Logo.scale-200.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square150x150Logo.scale-400.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square150x150Logo.scale-400.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-16.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-16.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-24.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-24.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-256.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-256.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-32.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-32.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-lightunplated_targetsize-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-16.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-16.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-24.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-24.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-256.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-256.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-32.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-32.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.altform-unplated_targetsize-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-100.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.scale-100.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-125.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.scale-125.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-150.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.scale-150.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-200.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.scale-200.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.scale-400.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.scale-400.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-16.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-16.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-24.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-24.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-256.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-256.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-32.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-32.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Square44x44Logo.targetsize-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-100.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/StoreLogo.scale-100.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-125.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/StoreLogo.scale-125.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-150.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/StoreLogo.scale-150.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-200.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/StoreLogo.scale-200.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/StoreLogo.scale-400.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/StoreLogo.scale-400.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-100.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Wide310x150Logo.scale-100.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-125.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Wide310x150Logo.scale-125.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-150.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Wide310x150Logo.scale-150.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-200.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Wide310x150Logo.scale-200.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Images/Wide310x150Logo.scale-400.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Images/Wide310x150Logo.scale-400.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Package.appxmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Package.appxmanifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App (Package)/Polymerium.App (Package).wapproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Polymerium.App (Package).wapproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/App.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/Brands/microsoft.256x256.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/Brands/microsoft.256x256.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/Brands/minecraft.256x256.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/Brands/minecraft.256x256.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/GameComponents/net.fabricmc.fabric-loader.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/GameComponents/net.fabricmc.fabric-loader.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/GameComponents/net.minecraft.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/GameComponents/net.minecraft.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/GameComponents/net.minecraftforge.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/GameComponents/net.minecraftforge.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/GameComponents/org.quiltmc.quilt-loader.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/GameComponents/org.quiltmc.quilt-loader.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-add-new-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-add-new-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-basil-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-basil-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-blueprint-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-blueprint-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-color-wheel-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-color-wheel-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-drill-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-drill-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-firework-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-firework-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-home-page-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-home-page-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-plugin-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-plugin-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-puzzle-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-puzzle-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-settings-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-settings-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Icons/icons8-slider-48.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Icons/icons8-slider-48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Logo.ico" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Logo.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_avatar_alt_bust.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Placeholders/default_avatar_alt_bust.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_avatar_alt_face.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Placeholders/default_avatar_alt_face.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_avatar_bust.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Placeholders/default_avatar_bust.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_avatar_face.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Placeholders/default_avatar_face.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_panorama1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Placeholders/default_panorama1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Assets/Placeholders/default_world_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Placeholders/default_world_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Configurations/AppSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Configurations/AppSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Configurations/Configuration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Configurations/Configuration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/Card.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/Card.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/CustomDialog.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/CustomDialog.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/ExpanderEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/ExpanderEx.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/ExpanderExItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/ExpanderExItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/GlowingButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/GlowingButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/GroupBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/GroupBox.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/RecentPlayedItemControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/RecentPlayedItemControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Controls/ToggleButtonEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/ToggleButtonEx.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/AccountToBustAvatarConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/AccountToBustAvatarConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/AccountToFaceAvatarConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/AccountToFaceAvatarConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/BoolToVisibilityConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/BoolToVisibilityConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/DateTimeOffsetToStringConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/DateTimeOffsetToStringConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/NotEmptyToVisibleConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotEmptyToVisibleConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/NotNullToBoolConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotNullToBoolConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/NotNullToVisibleConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/NotNullToVisibleConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/NullToParameterConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/NullToParameterConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Converters/ReverseBoolConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/ReverseBoolConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Data/AccountModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Data/AccountModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Data/ConfigurationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Data/ConfigurationModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Data/InstanceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Data/InstanceModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Data/RefinedModelBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Data/RefinedModelBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/ConfirmationDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/ConfirmationDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/ConfirmationDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/ConfirmationDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/JavaPickerDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/JavaPickerDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/JavaPickerDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/JavaPickerDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/MessageDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/MessageDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/MessageDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/MessageDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/TextInputDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/TextInputDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Dialogs/TextInputDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/TextInputDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/AccountWizardEntryModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/AccountWizardEntryModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/AutoSuggestionItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/AutoSuggestionItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/ComponentTagItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/ComponentTagItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/ConfigurationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/ConfigurationModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/GameInstanceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/GameInstanceModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/GameVersionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/GameVersionModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/InAppNotificationItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InAppNotificationItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/IncrementalFactorySource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/IncrementalFactorySource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/InstanceComponentItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceComponentItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/InstanceConfigurationPageModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceConfigurationPageModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/InstanceInformationItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceInformationItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/JavaInstallationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/JavaInstallationModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/NavigationItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/NavigationItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/NavigationSearchBarItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/NavigationSearchBarItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/RecentPlayedItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/RecentPlayedItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/SearchCenterResultItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/SearchCenterResultItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Models/SynchronizedCollection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/SynchronizedCollection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Polymerium.App.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/AccountManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/AccountManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/ComponentManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ComponentManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/ConfigurationManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ConfigurationManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/DataStorage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/DataStorage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/INotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/INotificationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/IOverlayService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/IOverlayService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/ImportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/InAppNotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/InAppNotificationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/InstanceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/InstanceManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/JavaManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/JavaManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/MainFileBaseOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/MainFileBaseOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/MainFileBaseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/MainFileBaseService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/MemoryStorage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/MemoryStorage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/NavigationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/NavigationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/ViewModelContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ViewModelContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Services/WindowOverlayService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/WindowOverlayService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Stages/Preparing/CheckAccountAvailabilityStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Stages/Preparing/CheckAccountAvailabilityStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Themes/Generic.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountAuthViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountFinishViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountFinishViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountIntroViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/MicrosoftAccountIntroViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/OfflineAccountViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/OfflineAccountViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizard/SelectionViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizard/SelectionViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddAccountWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddAccountWizardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/CreateInstanceWizardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/HomeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/HomeViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/InstanceViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceAdvancedConfigurationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/Instances/InstanceConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceConfigurationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/Instances/InstanceLaunchConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceLaunchConfigurationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/Instances/InstanceMetadataConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/Instances/InstanceMetadataConfigurationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/MainViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MainViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/NewInstanceViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/NewInstanceViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/PrepareGameViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/SearchCenterViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchCenterViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/SearchDetailViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchDetailViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/ViewModels/SettingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizardDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizardDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizardDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountAuthView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountAuthView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountAuthView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountAuthView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountFinishView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountFinishView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountFinishView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountFinishView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountIntroView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountIntroView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountIntroView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/MicrosoftAccountIntroView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/OfflineAccountView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddAccountWizards/SelectionView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddMetaComponentWizardDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddMetaComponentWizardDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/AddMetaComponentWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AddMetaComponentWizardDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/CreateInstanceWizardDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/CreateInstanceWizardDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/CreateInstanceWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/CreateInstanceWizardDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/HomeView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/HomeView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/HomeView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/HomeView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/ImportModpackWizardDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ImportModpackWizardDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/ImportModpackWizardDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ImportModpackWizardDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/InstanceView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/InstanceView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceAdvancedConfigurationView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceConfigurationView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceConfigurationView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/MainView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/MainView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainWindow.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainWindow.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/NewInstanceView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/NewInstanceView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/NewInstanceView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/NewInstanceView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/PrepareGameDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/PrepareGameDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/PrepareGameDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/PrepareGameDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SearchCenterView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SearchCenterView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SearchDetailDialog.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SearchDetailDialog.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SettingView.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SettingView.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/app.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SearchDetailDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchDetailDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SettingView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Views/SettingView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/app.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/app.manifest" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/ModrinthHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/ModrinthHelper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthProject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/Modrinth/ModrinthProject.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Resources/CurseForgeRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Resources/CurseForgeRepository.cs" afterDir="false" />
@@ -435,7 +437,7 @@
       <workItem from="1677841802047" duration="109000" />
       <workItem from="1677851839554" duration="328000" />
       <workItem from="1677905650659" duration="39000" />
-      <workItem from="1677909259890" duration="413000" />
+      <workItem from="1677909259890" duration="1080000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
