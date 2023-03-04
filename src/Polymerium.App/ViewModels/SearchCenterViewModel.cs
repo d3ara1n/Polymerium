@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
+using Polymerium.App.Views;
 using Polymerium.Core.Resources;
 
 namespace Polymerium.App.ViewModels;
 
 public class SearchCenterViewModel : ObservableObject
 {
+    private readonly IOverlayService _overlayService;
     private IResourceRepository? selectedRepository;
 
     private ResourceType? selectedResourceType;
 
-    public SearchCenterViewModel(IEnumerable<IResourceRepository> repositories)
+    public SearchCenterViewModel(IEnumerable<IResourceRepository> repositories, IOverlayService overlayService)
     {
+        _overlayService = overlayService;
         Repositories = repositories;
         SupportedResources = new ObservableCollection<ResourceType>();
         // HACK: SelectedIndex = 0 不会反向引用
@@ -70,5 +74,14 @@ public class SearchCenterViewModel : ObservableObject
         return results.Select(x =>
             new SearchCenterResultItemModel(x.Name, x.IconSource, x.Author, x.Summary, ResourceType.Modpack,
                 x));
+    }
+
+    public void ShowDetailDialog(SearchCenterResultItemModel model)
+    {
+        var dialog = new SearchDetailDialog(model.Resource)
+        {
+            OverlayService = _overlayService
+        };
+        _overlayService.Show(dialog);
     }
 }

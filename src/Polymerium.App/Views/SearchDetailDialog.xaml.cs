@@ -12,11 +12,9 @@ public sealed partial class SearchDetailDialog : CustomDialog
         ViewModel = App.Current.Provider.GetRequiredService<SearchDetailViewModel>();
         // Context 中没有绑定 Instance 则弹出 InstanceSelectorDialog 进行选择。
         // Modpack 安装则不需要选择实例，但要有安装进度
-        Resource = resource;
+        ViewModel.GotResource(resource);
         InitializeComponent();
     }
 
     public SearchDetailViewModel ViewModel { get; }
-
-    public ResourceBase Resource { get; }
 }

@@ -8,7 +8,7 @@ namespace Polymerium.Core.Models.Modrinth;
 [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public struct ModrinthProject
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
     public string Title { get; set; }
     public string Slug { get; set; }
     public string ProjectType { get; set; }

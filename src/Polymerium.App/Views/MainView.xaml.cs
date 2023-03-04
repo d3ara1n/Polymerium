@@ -88,7 +88,8 @@ public sealed partial class MainView : Page
 
             var result = ViewModel
                 .GetViewOfInstance()
-                .Where(x => string.IsNullOrEmpty(input) || x.Name.StartsWith(sender.Text))
+                .Where(x => string.IsNullOrEmpty(input) ||
+                            x.Name.StartsWith(sender.Text, StringComparison.OrdinalIgnoreCase))
                 .Select(x => new NavigationSearchBarItemModel(x.Name, "\xF158", x.Id))
                 .Append(new NavigationSearchBarItemModel($"搜索: {input}", "\xE721", query: input));
             sender.ItemsSource = result;
