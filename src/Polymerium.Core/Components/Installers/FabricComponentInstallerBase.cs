@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.Models.Game;
 using Polymerium.Core.Extensions;
@@ -17,7 +16,7 @@ public abstract class FabricComponentInstallerBase : ComponentInstallerBase
     protected abstract Uri IntermediaryMavenUrl { get; }
     protected abstract Uri ManifestUrl { get; }
 
-    public override async Task<Result<string>> StartAsync(Component component)
+    public override async Task<ComponentInstallerError?> StartAsync(Component component)
     {
         if (Token.IsCancellationRequested)
             return Canceled();
@@ -64,10 +63,10 @@ public abstract class FabricComponentInstallerBase : ComponentInstallerBase
                 return Finished();
             }
 
-            return Failed("Version not found in manifest");
+            return Failed(ComponentInstallerError.ResourceNotFound);
         }
 
-        return Failed("Network error or version not compatible");
+        return Failed(ComponentInstallerError.NotCompatible);
     }
 
     private string MavenToPath(string maven, string separator = ".")

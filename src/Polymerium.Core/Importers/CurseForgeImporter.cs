@@ -4,14 +4,13 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
+using DotNext;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Core.Components;
-using Polymerium.Core.Helpers;
 using Polymerium.Core.Models.CurseForge;
 
 namespace Polymerium.Core.Importers;
@@ -62,33 +61,10 @@ public class CurseForgeImporter : ImporterBase
                     }
                 }
 
-                var tasks = index.Files.Where(x => x.Required).Select(x =>
-                    CurseForgeHelper.GetModFileInfoAsync(x.ProjectId, x.FileId, Token)
-                );
-
-                Task.WaitAll(tasks.ToArray());
-
-                foreach (var task in tasks)
+                foreach (var file in index.Files)
                 {
-                    var option = task.Result;
-                    if (option.TryUnwrap(out var info))
-                    {
-                        var url = info.DownloadUrl ??
-                                  $"https://edge.forgecdn.net/files/{info.Id / 1000}/{info.Id % 1000}/{info.FileName}";
-                        string? sha1 = null;
-                        var hashes = info.Hashes.Where(x => x.Algo == 2);
-                        if (hashes.Any()) sha1 = hashes.First().Value;
-
-                        var res = new Uri(
-                            $"poly-res://remote@file/mods/{info.FileName}?{(sha1 != null ? $"sha1={sha1}&" : "")}source={HttpUtility.UrlEncode(url)}"
-                        );
-
-                        instance.Metadata.Attachments.Add(res);
-                    }
-                    else
-                    {
-                        return Failed(GameImportError.ResourceNotFound);
-                    }
+                    var modUrl = new Uri($"poly-res://curseforge@mod/{file.ProjectId}?version={file.FileId}");
+                    instance.Metadata.Attachments.Add(modUrl);
                 }
 
                 var files = new List<PackedSolidFile>();

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using DotNext;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
 using Polymerium.App.Services;
@@ -52,8 +53,8 @@ public class ImportModpackWizardViewModel : ObservableObject
     )
     {
         var result = await _importer.ImportAsync(_fileName!, source.Token);
-        if (result.IsOk(out var import))
-            _importResult = import!;
+        if (result.IsSuccessful)
+            _importResult = result.Value;
 
         if (!source.Token.IsCancellationRequested) callback(result, false);
     }
@@ -64,9 +65,9 @@ public class ImportModpackWizardViewModel : ObservableObject
     {
         // TODO: InstanceName 做 validation
         var result = await _importer.PostImportAsync(_importResult!);
-        if (result.IsErr(out var err))
-            callback(Result<ImportResult, GameImportError>.Err(err), true);
+        if (result.HasValue)
+            callback(new Result<ImportResult, GameImportError>(result.Value), true);
         else
-            callback(Result<ImportResult, GameImportError>.Ok(_importResult!), true);
+            callback(_importResult!, true);
     }
 }

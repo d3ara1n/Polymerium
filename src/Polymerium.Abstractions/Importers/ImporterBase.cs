@@ -3,6 +3,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DotNext;
 
 namespace Polymerium.Abstractions.Importers;
 
@@ -13,7 +14,7 @@ public abstract class ImporterBase
 
     public Result<ImportResult, GameImportError> Failed(GameImportError reason)
     {
-        return Result<ImportResult, GameImportError>.Err(reason);
+        return new Result<ImportResult, GameImportError>(reason);
     }
 
     public Result<ImportResult, GameImportError> Finished(
@@ -22,8 +23,6 @@ public abstract class ImporterBase
         IEnumerable<PackedSolidFile>? files = null
     )
     {
-        return Result<ImportResult, GameImportError>.Ok(
-            new ImportResult(archive, instance, files ?? Enumerable.Empty<PackedSolidFile>())
-        );
+        return new ImportResult(archive, instance, files ?? Enumerable.Empty<PackedSolidFile>());
     }
 }

@@ -62,13 +62,14 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
             dialog.XamlRoot = App.Current.Window.Content.XamlRoot;
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             {
-                if (_instanceManager.RenameInstanceSafe(instance.Inner, dialog.InputText).IsErr(out var error))
+                var result = _instanceManager.RenameInstanceSafe(instance.Inner, dialog.InputText);
+                if (result.HasValue)
                 {
                     var errorDialog = new MessageDialog
                     {
                         XamlRoot = App.Current.Window.Content.XamlRoot,
                         Title = "重命名失败",
-                        Message = error.ToString()
+                        Message = result.Value.ToString()
                     };
                     errorDialog.ShowAsync().AsTask().GetAwaiter();
                 }

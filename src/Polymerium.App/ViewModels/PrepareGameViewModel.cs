@@ -269,7 +269,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                 .AddCrate("assets_index_name", polylock.AssetIndex.Id)
                                 .AddCrate("auth_uuid", Account!.UUID)
                                 .AddCrate("auth_access_token", Account!.AccessToken)
-                                .AddCrate("user_type", "mojang")
+                                .AddCrate("user_type", Account!.LoginType)
                                 .AddCrate("version_type", "Polymerium")
                                 // rule os
                                 // TODO: 目前只支持 windows x86

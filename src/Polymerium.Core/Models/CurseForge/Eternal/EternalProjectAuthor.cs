@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Polymerium.Core.Models.CurseForge;
+namespace Polymerium.Core.Models.CurseForge.Eternal;
 
-public struct CurseForgeProjectAuthor
+public struct EternalProjectAuthor
 {
     public uint Id { get; set; }
     public string Name { get; set; }

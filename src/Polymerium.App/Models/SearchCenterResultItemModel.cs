@@ -1,12 +1,13 @@
 ﻿using System;
 using Polymerium.Abstractions.Resources;
+using Polymerium.Core.Resources;
 
 namespace Polymerium.App.Models;
 
 public class SearchCenterResultItemModel
 {
     public SearchCenterResultItemModel(string caption, Uri iconSource, string author, string summary, ResourceType type,
-        ResourceBase tag)
+        RepositoryAssetMeta tag)
     {
         Caption = caption;
         IconSource = iconSource;
@@ -21,5 +22,5 @@ public class SearchCenterResultItemModel
     public string Author { get; set; }
     public string Summary { get; set; }
     public ResourceType Type { get; set; }
-    public ResourceBase Resource { get; set; }
+    public RepositoryAssetMeta Resource { get; set; }
 }

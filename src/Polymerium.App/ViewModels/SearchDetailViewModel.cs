@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Polymerium.Abstractions.Resources;
 using Polymerium.App.Services;
+using Polymerium.Core.Resources;
 
 namespace Polymerium.App.ViewModels;
 
@@ -12,9 +12,9 @@ public class SearchDetailViewModel : ObservableObject
     }
 
     public ViewModelContext Context { get; }
-    public ResourceBase? Resource { get; private set; }
+    public RepositoryAssetMeta? Resource { get; private set; }
 
-    public void GotResource(ResourceBase resource)
+    public void GotResource(RepositoryAssetMeta resource)
     {
         Resource = resource;
     }

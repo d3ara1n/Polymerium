@@ -6,25 +6,24 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using DotNext;
 using Duffet;
 using Duffet.Builders;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.ResourceResolving.Attributes;
+using Polymerium.Abstractions.Resources;
 
 namespace Polymerium.Core.Engines;
 
 public class ResolveEngine
 {
-    private static readonly Regex QUERY_PATTERN = new("(?<query>[0-9a-zA-Z_]+)");
-    private readonly IEnumerable<ResourceResolverBase> _resolvers;
     private readonly IEnumerable<ResolverTuple> _tuples;
 
     public ResolveEngine(IEnumerable<ResourceResolverBase> resolvers)
     {
-        _resolvers = resolvers;
         // 保证 DomainName 为 null 最后被匹配到
-        _tuples = _resolvers
+        _tuples = resolvers
             .SelectMany(GetTuplesInType)
             .OrderByDescending(x => x.DomainName?.Length ?? -1);
     }
@@ -53,7 +52,7 @@ public class ResolveEngine
                     var realType = methodType ?? type;
                     if (realType != null)
                         yield return new ResolverTuple(
-                            realType.TypeName,
+                            realType.ResourceType,
                             domainName,
                             method,
                             expression,
@@ -76,7 +75,7 @@ public class ResolveEngine
             var query = HttpUtility.ParseQueryString(resource.Query);
             var resolver = _tuples.FirstOrDefault(
                 x =>
-                    type == x.TypeName
+                    x.Type.ToString().Equals(type, StringComparison.OrdinalIgnoreCase)
                     && (
                         domain == null
                             ? x.DomainName == null
@@ -107,7 +106,7 @@ public class ResolveEngine
                 return await ExecuteAsAsyncStateMachine(resolver.Method, resolver.Self, bank);
             }
 
-            return Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.NotFound);
+            return new Result<ResolveResult, ResolveResultError>(ResolveResultError.NotFound);
         }
 
         throw new ArgumentException("Scheme only accepts 'poly-res'", nameof(resource));
@@ -124,18 +123,18 @@ public class ResolveEngine
             return (Task<Result<ResolveResult, ResolveResultError>>)(
                 method.Invoke(subject, arguments)
                 ?? Task.FromResult(
-                    Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.Unknown)
+                    new Result<ResolveResult, ResolveResultError>(ResolveResultError.Unknown)
                 )
             );
         return Task.Run(
             () =>
-                method.Invoke(subject, arguments) as Result<ResolveResult, ResolveResultError>
-                ?? Result<ResolveResult, ResolveResultError>.Err(ResolveResultError.Unknown)
+                (Result<ResolveResult, ResolveResultError>?)method.Invoke(subject, arguments)
+                ?? new Result<ResolveResult, ResolveResultError>(ResolveResultError.Unknown)
         );
     }
 
     private record ResolverTuple(
-        string TypeName,
+        ResourceType Type,
         string? DomainName,
         MethodInfo Method,
         ResourceExpressionAttribute Expression,

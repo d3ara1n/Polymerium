@@ -13,13 +13,14 @@
 
     <Grid RowDefinitions="Auto,*">
         <Grid ColumnDefinitions="Auto,*">
-            <ui:ImageEx Width="64" Height="64" Source="{x:Bind ViewModel.Resource.IconSource}" CornerRadius="5" />
+            <ui:ImageEx Width="64" Height="64" Source="{x:Bind ViewModel.Resource.Value.IconSource}" CornerRadius="5" />
             <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
                 <StackPanel Margin="12,0,12,0">
-                    <TextBlock Text="{x:Bind ViewModel.Resource.Name}" Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="{x:Bind ViewModel.Resource.Id}"
+                    <TextBlock Text="{x:Bind ViewModel.Resource.Value.Name}"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="{x:Bind ViewModel.Resource.Value.Id}"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                    <TextBlock Text="{x:Bind ViewModel.Resource.Author}"
+                    <TextBlock Text="{x:Bind ViewModel.Resource.Value.Author}"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 </StackPanel>
                 <Grid Grid.Column="1">

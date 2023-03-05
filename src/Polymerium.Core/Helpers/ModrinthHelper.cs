@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Components;
-using Polymerium.Core.Models.Modrinth;
+using Polymerium.Core.Models.Modrinth.Labrinth;
 using Wupoo;
 
 namespace Polymerium.Core.Helpers;
@@ -47,13 +47,13 @@ public static class ModrinthHelper
         return results ?? Enumerable.Empty<T>();
     }
 
-    public static async Task<Option<ModrinthProject>> GetProjectAsync(string id, CancellationToken token = default)
+    public static async Task<Option<LabrinthProject>> GetProjectAsync(string id, CancellationToken token = default)
     {
         var service = $"/project/{id}";
-        return await GetResourceAsync<ModrinthProject>(service, token);
+        return await GetResourceAsync<LabrinthProject>(service, token);
     }
 
-    public static async Task<IEnumerable<ModrinthHit>> SearchProjectsAsync(string query, ResourceType type,
+    public static async Task<IEnumerable<LabrinthHit>> SearchProjectsAsync(string query, ResourceType type,
         string? gameVersion = null, string? modLoaderId = null, uint offset = 0, uint limit = 10,
         CancellationToken token = default)
     {
@@ -81,6 +81,6 @@ public static class ModrinthHelper
         }));
         var service =
             $"/search?query={HttpUtility.UrlEncode(query)}&offset={offset}&limit={limit}&facets=[{string.Join(',', facets.Select(x => $"[\"{x.Key}:{x.Value}\"]"))}]";
-        return await GetResourcesAsync<ModrinthHit>(service, token);
+        return await GetResourcesAsync<LabrinthHit>(service, token);
     }
 }

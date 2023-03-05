@@ -1,4 +1,5 @@
-using System;
+using DotNext;
+using Polymerium.Abstractions.Resources;
 
 namespace Polymerium.Abstractions.ResourceResolving;
 
@@ -17,12 +18,15 @@ namespace Polymerium.Abstractions.ResourceResolving;
 // 不带 domain 的 url 只能被不带 domain name 的 resolver 处理
 public abstract class ResourceResolverBase
 {
-#pragma warning disable CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
-    public ResolverContext Context { get; set; }
-#pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
+    public ResolverContext Context { get; set; } = null!;
 
-    public Result<ResolveResult, ResolveResultError> Ok(Uri path, Uri source, string? hash)
+    public Result<ResolveResult, ResolveResultError> Ok(ResourceBase resource, ResourceType type)
     {
-        return Result<ResolveResult, ResolveResultError>.Ok(new ResolveResult(source, path, hash));
+        return new ResolveResult(resource, type);
+    }
+
+    public Result<ResolveResult, ResolveResultError> Err(ResolveResultError error)
+    {
+        return new(error);
     }
 }

@@ -11,5 +11,6 @@ public enum ResourceType : uint
     DataPack,
     World,
     Shader,
-    Plugin
+    Plugin,
+    File
 }
