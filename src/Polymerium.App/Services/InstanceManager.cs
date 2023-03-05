@@ -46,13 +46,13 @@ public sealed class InstanceManager : IDisposable
         return _memoryStorage.Instances;
     }
 
-    public Result<InstanceManagerError> AddInstance(GameInstance instance)
+    public InstanceManagerError? AddInstance(GameInstance instance)
     {
         var invalidFileNameChars = Path.GetInvalidFileNameChars();
         if (string.IsNullOrWhiteSpace(instance.Name))
             instance.Name = "_";
         if (_memoryStorage.Instances.Any(x => x.Id == instance.Id))
-            return Result<InstanceManagerError>.Err(InstanceManagerError.DuplicateId);
+            return InstanceManagerError.DuplicateId;
         instance.FolderName = string.Join(
             "",
             instance.FolderName.Select(x => invalidFileNameChars.Contains(x) ? '_' : x)
@@ -60,10 +60,10 @@ public sealed class InstanceManager : IDisposable
         while (_memoryStorage.Instances.Any(x => x.FolderName == instance.FolderName))
             instance.FolderName += '_';
         _memoryStorage.Instances.Add(instance);
-        return Result<InstanceManagerError>.Ok();
+        return null;
     }
 
-    public Result<InstanceManagerError> RenameInstanceSafe(GameInstance instance, string name)
+    public InstanceManagerError? RenameInstanceSafe(GameInstance instance, string name)
     {
         var invalidFileNameChars = Path.GetInvalidFileNameChars();
         if (string.IsNullOrWhiteSpace(name))
@@ -86,15 +86,13 @@ public sealed class InstanceManager : IDisposable
             }
             catch
             {
-                return Result<InstanceManagerError>.Err(
-                    InstanceManagerError.FileSystemOperationFailed
-                );
+                return InstanceManagerError.FileSystemOperationFailed;
             }
         }
 
         instance.Name = name;
         instance.FolderName = folderName;
-        return Result<InstanceManagerError>.Ok();
+        return null;
     }
 
     public Option<GameInstance> FindById(string id)

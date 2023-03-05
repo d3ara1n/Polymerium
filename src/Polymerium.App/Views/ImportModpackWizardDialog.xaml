@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="ImportingWizardDialog_OnLoaded">
+    mc:Ignorable="d" Padding="0" Loaded="ImportingWizardDialog_OnLoaded">
 
     <ContentControl x:Name="Root">
         <ContentControl.Template>
@@ -36,7 +36,7 @@
             </ControlTemplate>
         </ContentControl.Template>
         <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
-            <StackPanel Spacing="12">
+            <StackPanel Spacing="12" Margin="25">
                 <TextBlock Text="从整合包导入" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBlock Text="实例名" />
                 <TextBox Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}"

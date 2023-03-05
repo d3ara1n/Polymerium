@@ -105,7 +105,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
     * [ ] 导入/导出
         * [x] 导入预览对话框
         * [ ] Polypack
-        * [ ] CurseForge
+        * [x] CurseForge
         * [x] Modrinth
         * [ ] MultiMC
 * [ ] 启动游戏

@@ -117,7 +117,8 @@ public partial class App : Application
         // resolvers
         services
             .AddTransient<ResourceResolverBase, LocalFileResolver>()
-            .AddTransient<ResourceResolverBase, RemoteFileResolver>();
+            .AddTransient<ResourceResolverBase, RemoteFileResolver>()
+            .AddTransient<ResourceResolverBase, CurseForgeResolver>();
         // repository
         services.AddTransient<IResourceRepository, ModrinthRepository>()
             .AddTransient<IResourceRepository, CurseForgeRepository>();

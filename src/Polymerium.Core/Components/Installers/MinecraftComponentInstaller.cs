@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.Models.Game;
 using Polymerium.Core.Models.Mojang;
@@ -12,7 +11,7 @@ namespace Polymerium.Core.Components.Installers;
 
 public sealed class MinecraftComponentInstaller : ComponentInstallerBase
 {
-    public override async Task<Result<string>> StartAsync(Component component)
+    public override async Task<ComponentInstallerError?> StartAsync(Component component)
     {
         if (Token.IsCancellationRequested)
             return Canceled();
@@ -126,12 +125,12 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
                     return Finished();
                 }
 
-                return Failed("版本索引文件下载失败");
+                return Failed(ComponentInstallerError.NetworkError);
             }
 
-            return Failed($"要求的版本 {component.Version} 不在清单之中");
+            return Failed(ComponentInstallerError.ResourceNotFound);
         }
 
-        return Failed("清单文件下载失败");
+        return Failed(ComponentInstallerError.NetworkError);
     }
 }

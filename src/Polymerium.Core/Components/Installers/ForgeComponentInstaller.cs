@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.Models.Game;
 using Polymerium.Core.Extensions;
@@ -22,7 +21,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
         _fileBase = fileBase;
     }
 
-    public override async Task<Result<string>> StartAsync(Component component)
+    public override async Task<ComponentInstallerError?> StartAsync(Component component)
     {
         // Note: 早些版本的 forge-client.jar 是随 installer.jar 附带的，需要用 local repository 服务来保证 Library.Url
         //       PolylockData 中可以包含 build tasks 来产生缺失但又无法下载的 forge libraries
@@ -37,7 +36,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
             return Canceled();
         var mcVersion = Context.Instance.GetCoreVersion();
         if (mcVersion == null)
-            return Failed("Forge depends on net.minecraft which is not found");
+            return Failed(ComponentInstallerError.DependencyNotMet);
 
         var installerUrl =
             $"https://bmclapi2.bangbang93.com/forge/download?mcversion={mcVersion}&version={component.Version}&category=installer&format=jar";
@@ -98,47 +97,11 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
         }
         else
         {
-            //var install = profileJson.Value.Install.Value;
-            //var filePath = install.FilePath;
-            //var entry = archive.GetEntry(filePath)!;
-            //var path = $"forge-{mcVersion}-{component.Version}-universal.jar";
-            //var local = new Uri(new Uri($"poly-file:///local/instances/{Context.Instance.Id}/libraries/"), path);
-            //var localPath = _fileBase.Locate(local);
-            //if (!Directory.Exists(Path.GetDirectoryName(localPath)))
-            //    Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);
-
-            //entry.ExtractToFile(localPath, true);
-
-            //Context.AddLibrary(
-            //    new Library(
-            //        $"net.minecraft.forge:{(entry.Name.Contains("universal") ? "universal" : "forge")}:{component.Version}",
-            //        path, null, local));
-
             throw new NotImplementedException();
         }
 
         Context.AddCrate("library_directory", _fileBase.Locate(new Uri("poly-file:///libraries")));
         return Finished();
-    }
-
-    private void GoAheadByExtracting(ZipArchiveEntry entry, string mainClass, string componentVersion)
-    {
-        var path = $"net/minecraftforge/{componentVersion}/forge-{componentVersion}-client.jar";
-        var local = new Uri(new Uri($"poly-file:///local/instances/{Context.Instance.Id}/"), path);
-        var localPath = _fileBase.Locate(local);
-
-        if (!Directory.Exists(Path.GetDirectoryName(localPath)))
-            Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);
-
-        entry.ExtractToFile(localPath, true);
-        Context.AddLibrary(new Library($"net.minecraftforge:forge:{componentVersion}", path, null, local));
-        Context.SetMainClass(mainClass);
-    }
-
-    private void GoAheadWithProcessors(string mainClass)
-    {
-        Context.SetMainClass(mainClass);
-        throw new NotImplementedException();
     }
 
     private void GoAheadWithWrapper(string installerUrl, string coreVersion, string componentVersion)

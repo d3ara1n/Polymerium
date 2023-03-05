@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Polymerium.Core.Models.CurseForge;
+namespace Polymerium.Core.Models.CurseForge.Eternal;
 
-public struct CurseForgeProject
+public struct EternalProject
 {
     public uint Id { get; set; }
     public uint GameId { get; set; }
@@ -17,8 +17,8 @@ public struct CurseForgeProject
     public uint PrimaryCategoryId { get; set; }
     public object Categories { get; set; }
     public uint ClassId { get; set; }
-    public IEnumerable<CurseForgeProjectAuthor> Authors { get; set; }
-    public CurseForgeProjectLogo Logo { get; set; }
+    public IEnumerable<EternalProjectAuthor> Authors { get; set; }
+    public EternalProjectLogo? Logo { get; set; }
     public object Screenshots { get; set; }
     public uint MainFileId { get; set; }
     public object LatestFiles { get; set; }

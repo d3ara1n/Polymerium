@@ -27,10 +27,20 @@ public class MicrosoftAccountAuthViewModel : ObservableObject
         var result = await MicrosoftAccount.LoginAsync((code, url) => callback(code, url, null), Token);
         if (!Token.IsCancellationRequested)
         {
-            if (result.IsErr(out var error))
-                Error(error!);
+            if (result.IsSuccessful)
+                callback("验证通过", null, result.Value);
             else
-                callback("验证通过", null, result.Unwrap());
+                Error(result.Error switch
+                {
+                    MicrosoftAccount.MicrosoftAccountError.Canceled => "操作取消",
+                    MicrosoftAccount.MicrosoftAccountError.OwnershipFailed => "无法验证用户的游戏所有权",
+                    MicrosoftAccount.MicrosoftAccountError.ProfileFailed => "获取玩家信息失败",
+                    MicrosoftAccount.MicrosoftAccountError.MinecraftAuthenticationFailed => "Minecraft 获取授权时出现网络异常或未授权",
+                    MicrosoftAccount.MicrosoftAccountError.XboxAuthenticationFailed => "Xbox Live 获取授权时出现网络异常或未授权",
+                    MicrosoftAccount.MicrosoftAccountError.XstsAuthenticationFailed => "Xbox Live XSTS 获取授权时出现网络异常或未授权",
+                    MicrosoftAccount.MicrosoftAccountError.MicrosoftAuthenticationFailed => "通过设备码获取微软账号时出现网络异常或超时",
+                    _ => throw new ArgumentOutOfRangeException()
+                });
         }
     }
 

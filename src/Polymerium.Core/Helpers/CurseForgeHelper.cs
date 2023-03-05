@@ -8,7 +8,6 @@ using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Components;
-using Polymerium.Core.Models.CurseForge;
 using Polymerium.Core.Models.CurseForge.Eternal;
 using Wupoo;
 
@@ -61,7 +60,7 @@ public static class CurseForgeHelper
         return results != null ? results : Enumerable.Empty<T>();
     }
 
-    public static async Task<IEnumerable<CurseForgeProject>> SearchProjectsAsync(string query, ResourceType type,
+    public static async Task<IEnumerable<EternalProject>> SearchProjectsAsync(string query, ResourceType type,
         string? gameVersion = null, string? modLoaderId = null, uint offset = 0, uint limit = 10,
         CancellationToken token = default)
     {
@@ -83,7 +82,13 @@ public static class CurseForgeHelper
                               _ => 0
                           }}"
                           : "");
-        return await GetResourcesAsync<CurseForgeProject>(service, token);
+        return await GetResourcesAsync<EternalProject>(service, token);
+    }
+
+    public static async Task<Option<EternalProject>> GetModInfoAsync(uint projectId, CancellationToken token = default)
+    {
+        var service = $"/mods/{projectId}";
+        return await GetResourceAsync<EternalProject>(service, token);
     }
 
     public static async Task<Option<string>> GetModDescriptionAsync(uint projectId, CancellationToken token = default)
@@ -99,7 +104,7 @@ public static class CurseForgeHelper
         return await GetResourceAsync<string>(service, token);
     }
 
-    public static async Task<Option<EternalModFile>> GetModFileInfoAsync(int projectId, int fileId,
+    public static async Task<Option<EternalModFile>> GetModFileInfoAsync(uint projectId, uint fileId,
         CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{fileId}";

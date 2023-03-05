@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Polymerium.Core.Models.Modrinth;
+namespace Polymerium.Core.Models.Modrinth.Labrinth;
 
 [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public struct ModrinthProject
+public struct LabrinthProject
 {
     public string? Id { get; set; }
     public string Title { get; set; }

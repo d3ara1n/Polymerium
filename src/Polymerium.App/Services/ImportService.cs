@@ -5,7 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Polymerium.Abstractions;
+using DotNext;
 using Polymerium.Abstractions.Importers;
 using Polymerium.Core;
 using Polymerium.Core.Importers;
@@ -45,16 +45,16 @@ public class ImportService
                 return await importer.ProcessAsync(archive);
             }
 
-            return Result<ImportResult, GameImportError>.Err(GameImportError.Unsupported);
+            return new Result<ImportResult, GameImportError>(GameImportError.Unsupported);
         }
 
-        return Result<ImportResult, GameImportError>.Err(GameImportError.FileSystemError);
+        return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
     }
 
-    public async Task<Result<GameImportError>> PostImportAsync(ImportResult product)
+    public async Task<GameImportError?> PostImportAsync(ImportResult product)
     {
         return await Task.Run(
-            new Func<Result<GameImportError>>(() =>
+            new Func<GameImportError?>(() =>
             {
                 var allocated = new List<Uri>();
                 foreach (var file in product.Files)
@@ -72,14 +72,14 @@ public class ImportService
                     }
                     catch
                     {
-                        return Result<GameImportError>.Err(GameImportError.FileSystemError);
+                        return GameImportError.FileSystemError;
                     }
 
                 foreach (var file in allocated)
                     product.Instance.Metadata.Attachments.Add(file);
 
                 _instanceManager.AddInstance(product.Instance);
-                return Result<GameImportError>.Ok();
+                return null;
             })
         );
     }

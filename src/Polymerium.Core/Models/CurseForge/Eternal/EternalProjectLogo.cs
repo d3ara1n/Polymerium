@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Polymerium.Core.Models.CurseForge;
+namespace Polymerium.Core.Models.CurseForge.Eternal;
 
-public struct CurseForgeProjectLogo
+public struct EternalProjectLogo
 {
     public uint Id { get; set; }
     public uint ModId { get; set; }

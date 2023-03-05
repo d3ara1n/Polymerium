@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Core.Components.Installers;
 
 namespace Polymerium.Core.Components;
 
@@ -11,20 +11,20 @@ public abstract class ComponentInstallerBase
     public ComponentInstallerContext Context { get; set; } = null!;
     public CancellationToken Token { get; set; } = CancellationToken.None;
 
-    public abstract Task<Result<string>> StartAsync(Component component);
+    public abstract Task<ComponentInstallerError?> StartAsync(Component component);
 
-    public Result<string> Finished()
+    public ComponentInstallerError? Finished()
     {
-        return Result<string>.Ok();
+        return null;
     }
 
-    public Result<string> Failed(string reason)
+    public ComponentInstallerError? Failed(ComponentInstallerError reason)
     {
-        return Result<string>.Err(reason);
+        return reason;
     }
 
-    public Result<string> Canceled()
+    public ComponentInstallerError? Canceled()
     {
-        return Failed(string.Empty);
+        return ComponentInstallerError.Canceled;
     }
 }

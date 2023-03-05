@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using DotNext;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
 using Polymerium.App.Controls;
 using Polymerium.App.Dialogs;
@@ -64,17 +64,18 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
     {
         DispatcherQueue.TryEnqueue(() =>
         {
-            if (result.IsErr(out var error))
+            if (result.IsSuccessful)
             {
-                Dismiss();
-                ShowError(error.ToString());
-            }
-            else if (result.IsOk(out var import))
-            {
-                ViewModel.Exposed = import!.Instance;
+                ViewModel.Exposed = result.Value.Instance;
                 ViewModel.InstanceName = ViewModel.Exposed.Name;
                 IsOperable = true;
                 VisualStateManager.GoToState(Root, "Default", false);
+            }
+            else
+            {
+                Dismiss();
+                // TODO: stringify GameImportError
+                ShowError(result.Error.ToString());
             }
 
             if (dismiss)

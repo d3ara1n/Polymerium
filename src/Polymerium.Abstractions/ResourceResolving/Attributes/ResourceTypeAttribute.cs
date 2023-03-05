@@ -1,14 +1,15 @@
 ﻿using System;
+using Polymerium.Abstractions.Resources;
 
 namespace Polymerium.Abstractions.ResourceResolving.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class ResourceTypeAttribute : Attribute
 {
-    public ResourceTypeAttribute(string typeName)
+    public ResourceTypeAttribute(ResourceType type)
     {
-        TypeName = typeName;
+        ResourceType = type;
     }
 
-    public string TypeName { get; }
+    public ResourceType ResourceType { get; }
 }
