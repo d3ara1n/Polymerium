@@ -27,7 +27,8 @@ public class CurseForgeResolver : ResourceResolverBase
             var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value);
             if (modOption.TryUnwrap(out var eternalMod) && fileOption.TryUnwrap(out var eternalFile))
             {
-                var mod = new Mod(eternalMod.Id.ToString(), eternalMod.Name, string.Join(", ", eternalMod.Authors),
+                var mod = new Mod(eternalMod.Id.ToString(), eternalMod.Name,
+                    string.Join(", ", eternalMod.Authors.Select(x => x.Name)),
                     eternalMod.Logo?.ThumbnailUrl, eternalMod.Summary, version,
                     new Uri($"poly-res://curseforge@file/{projectId}/{version}"));
                 return Ok(mod, ResourceType.Mod);

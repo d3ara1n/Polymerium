@@ -12,11 +12,12 @@
     xmlns:interaction="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:CommunityToolkit.WinUI.UI.Behaviors"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     mc:Ignorable="d">
 
     <ScrollViewer>
-        <StackPanel Spacing="5">
+        <StackPanel Spacing="5" Margin="5,0,10,10">
             <controls:GroupBox>
                 <controls:GroupBox.Header>
                     <Grid>
@@ -25,7 +26,6 @@
                                 Style="{StaticResource IconButtonStyle}"
                                 Command="{x:Bind ViewModel.AddComponentCommand}" />
                     </Grid>
-
                 </controls:GroupBox.Header>
                 <StackPanel>
                     <TextBlock Text="大部分组件都是 Modloader 且目前支持的组件也只有 Modloader。由于 Modloader 的特性，只支持同时启用一个除本体以外的组件。"
@@ -51,7 +51,7 @@
                                         <Button x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
                                                 Command="{x:Bind RemoveCommand}" CommandParameter="{Binding}"
                                                 ToolTipService.ToolTip="移除">
-                                            <FontIcon Glyph="&#xE108;" />
+                                            <FontIcon Glyph="&#xE108;" FontSize="12" />
                                             <animations:Explicit.Animations>
                                                 <animations:AnimationSet x:Name="HideAnimation">
                                                     <animations:OpacityAnimation To="0.0" Duration="0:0:0.01" />
@@ -79,6 +79,63 @@
                                                 Animation="{Binding ElementName=FadeOutAnimation}" />
                                         </interaction:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </controls:GroupBox>
+            <controls:GroupBox x:Name="AttachmentBox" Padding="0" Loaded="AttachmentBox_Loaded"
+                               IsEnabled="{x:Bind ViewModel.IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                <controls:GroupBox.Header>
+                    <Grid Margin="15">
+                        <TextBlock Text="附件" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                            <TextBlock Text="已选择 _ 个项目" VerticalAlignment="Center" />
+                            <Button x:Name="RemoveAttachmentButton" Content="移除"
+                                    Style="{StaticResource IconButtonStyle}" />
+                            <Button x:Name="AddAttachmentButton" Content="添加"
+                                    Style="{StaticResource IconButtonStyle}" />
+                        </StackPanel>
+                    </Grid>
+                </controls:GroupBox.Header>
+                <StackPanel>
+                    <ProgressBar IsIndeterminate="True"
+                                 Visibility="{x:Bind ViewModel.IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <TextBlock Text="此处做出的删减并不会在增量还原时移除对应文件，需要手动删除。元数据仅作为最小文件(存在性)保证" TextWrapping="WrapWholeWords"
+                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                               Margin="15,15,15,7" />
+                    <Grid ColumnDefinitions="*,Auto" Margin="15,7,15,7">
+                        <AutoSuggestBox QueryIcon="Find" PlaceholderText="搜索已添加的附件" />
+                        <Button Grid.Column="1" Margin="5,0,0,0">
+                            <FontIcon Glyph="&#xE16E;" />
+                        </Button>
+                    </Grid>
+                    <ListView Margin="15,7,15,15" ItemsSource="{x:Bind ViewModel.Attachments}" MaxHeight="512"
+                              SelectionMode="Extended">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:InstanceAttachmentItemModel">
+                                <Grid ColumnDefinitions="Auto,*" Margin="5" ToolTipService.ToolTip="{x:Bind Summary}">
+                                    <ui:ImageEx Width="48" Height="48" Margin="0,0,10,0" Source="{x:Bind IconSource}"
+                                                IsCacheEnabled="True" CacheMode="BitmapCache" Stretch="Fill"
+                                                PlaceholderSource="ms-appx:///Assets/Placeholders/default_dirt.png" />
+                                    <Grid Grid.Column="1" RowDefinitions="*,Auto">
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind Caption}"
+                                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                            <TextBlock Text="{x:Bind Summary}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                            <TextBlock Text="版本:"
+                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                            <TextBlock Text="{x:Bind Version}"
+                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                            <TextBlock Text=" 作者:"
+                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                            <TextBlock Text="{x:Bind Author}"
+                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                        </StackPanel>
+                                    </Grid>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

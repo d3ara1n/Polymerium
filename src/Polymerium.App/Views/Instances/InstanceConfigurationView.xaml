@@ -54,8 +54,6 @@
                 </ScrollViewer>
             </Grid>
         </controls:Card>
-        <controls:Card Grid.Column="1" Margin="5,0,10,10">
-            <Frame x:Name="SubpageRoot" />
-        </controls:Card>
+        <Frame x:Name="SubpageRoot" Grid.Column="1" />
     </Grid>
 </Page>
