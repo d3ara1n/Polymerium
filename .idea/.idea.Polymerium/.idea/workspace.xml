@@ -34,9 +34,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c98c4c26354b89d76ffbddb774441bcc9c7ed3559b98dbd6fe39a56fc7eb18/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cd4baac7317266f4f516e33baa69963b5f1f5ed866e119194d80c2958f827/StartAnimationAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f46d8257f4c1dc361b73ec7a2fa4d14a2b9f79568db1e74156c505c679420c2/AsyncRelayCommand.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/Views/SearchDetailDialog.xaml" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/Converters/LauncherMetaMainClassConverter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.Core/ResourceResolving/CurseForgeResolver.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -213,6 +213,7 @@
       <workItem from="1677905650659" duration="39000" />
       <workItem from="1677909259890" duration="1080000" />
       <workItem from="1678000307303" duration="1039000" />
+      <workItem from="1678083867840" duration="112000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -382,7 +383,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678000741294</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="元数据添加UI性能不佳的附件栏，不具有增删功能">
+      <created>1678083972566</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1678083972566</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,7 +413,6 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value=":bug: assetindex忘记加扩展名。通过手动补充高版本的jvm参数到低版本实现低版本启动" />
     <MESSAGE value="配置页面需要额外一个导航框架" />
     <MESSAGE value="删除实例和重命名。使用ViewModelContext获取绑定实例和选择的账号。实例其他信息。首页最近游玩。" />
     <MESSAGE value="确定对话框怎么上个提交没一块上去？" />
@@ -430,7 +437,8 @@
     <MESSAGE value="添加搜索中心的CurseForge整合包支持" />
     <MESSAGE value="资源模型需要重新设计以适配多种用途" />
     <MESSAGE value="用 DotNext.Result 代替 Result&lt;&gt;，下一步用 T? 代替 Option&lt;&gt;。Resource 具有初步模型" />
-    <option name="LAST_COMMIT_MESSAGE" value="用 DotNext.Result 代替 Result&lt;&gt;，下一步用 T? 代替 Option&lt;&gt;。Resource 具有初步模型" />
+    <MESSAGE value="元数据添加UI性能不佳的附件栏，不具有增删功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="元数据添加UI性能不佳的附件栏，不具有增删功能" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

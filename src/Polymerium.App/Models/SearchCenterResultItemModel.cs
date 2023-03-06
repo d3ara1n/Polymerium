@@ -6,7 +6,8 @@ namespace Polymerium.App.Models;
 
 public class SearchCenterResultItemModel
 {
-    public SearchCenterResultItemModel(string caption, Uri iconSource, string author, string summary, ResourceType type,
+    public SearchCenterResultItemModel(string caption, Uri? iconSource, string author, string summary,
+        ResourceType type,
         RepositoryAssetMeta tag)
     {
         Caption = caption;
@@ -18,7 +19,7 @@ public class SearchCenterResultItemModel
     }
 
     public string Caption { get; set; }
-    public Uri IconSource { get; set; }
+    public Uri? IconSource { get; set; }
     public string Author { get; set; }
     public string Summary { get; set; }
     public ResourceType Type { get; set; }

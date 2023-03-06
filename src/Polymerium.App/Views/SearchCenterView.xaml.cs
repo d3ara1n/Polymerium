@@ -1,3 +1,4 @@
+using System.Linq;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -34,8 +35,32 @@ public sealed partial class SearchCenterView : Page
     {
         if (e.Parameter != null)
         {
-            SearchBox.Text = e.Parameter?.ToString();
-            QuerySubmitted(SearchBox.Text!);
+            var arguments = (SearchCenterNavigationArguments)e.Parameter;
+            SearchBox.Text = arguments.Query;
+            var repository =
+                ViewModel.Repositories.FirstOrDefault(x =>
+                    arguments.Repository == null || x.Label == arguments.Repository);
+            if (repository != null)
+            {
+                ViewModel.SelectedRepository = repository;
+                var found = true;
+                if (arguments.Type != null)
+                {
+                    var type = ViewModel.SelectedRepository.SupportedResources & arguments.Type;
+                    if (type == arguments.Type)
+                        ViewModel.SelectedResourceType = arguments.Type;
+                    else
+                        found = false;
+                }
+
+                if (!arguments.InstanceScopeOverride) ViewModel.InstanceScope = ViewModel.Context.AssociatedInstance;
+                if (found && arguments.SearchImmediately) QuerySubmitted(arguments.Query);
+            }
+        }
+        else
+        {
+            ViewModel.SelectedRepository = ViewModel.Repositories.First();
+            ViewModel.InstanceScope = ViewModel.Context.AssociatedInstance;
         }
     }
 
