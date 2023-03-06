@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/d3ara1n/Polymerium">
-    <img src="src/Polymerium.App/Polymerium.App%20(Package)/Images/Logo.png" alt="Logo" width="80" height="80">
+    <img src="src/Polymerium.App%20(Package)/Images/Logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Polymerium</h3>
@@ -122,21 +122,21 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
                 * [ ] 保存到文件
             * [ ] 进程管理
         * [x] 参数解析
-* [ ] 账号管理
+* [x] 账号管理
     * [x] 管理模型
         * [x] 添加
         * [x] 移除
     * [x] 离线模式
     * [x] Microsoft 账号登录
         * [x] 开始游戏前验证账号有效性或刷新
-* [ ] 还原引擎
+* [x] 还原引擎
     * [x] 基于 Stage 模型
     * [x] 组件安装
         * [x] 香草
         * [x] Forge
         * [x] Fabric
         * [x] Quilt
-    * [ ] 附件安装
+    * [x] 附件安装
 * [ ] 资源附件
     * [ ] 资源解析引擎
         * [x] {var} 参数
@@ -148,8 +148,8 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
             * [ ] CurseForge
         * [ ] 模组
             * [ ] 本地仓库
-            * [ ] Modrinth
-            * [ ] CurseForge
+            * [x] Modrinth
+            * [x] CurseForge
         * [ ] 资源包
             * [ ] 本地仓库
             * [ ] Modrinth
@@ -168,7 +168,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
         * [x] 搜索中心联动
 * [ ] 软件设置
 * [ ] 游戏实例设置
-    * [ ] 元数据编辑
+    * [x] 元数据编辑
     * [ ] 私有配置页面
 * [ ] 本地化
 
