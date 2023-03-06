@@ -10,58 +10,63 @@
     xmlns:controls="using:Polymerium.App.Controls"
     mc:Ignorable="d">
 
-    <StackPanel Spacing="5">
-        <TextBlock Text="本页操作修改游戏本地文件，会改变同步状态，修改不需要谨慎（不是你的原因，是文件状态的校验不好做也没做好），但要做好产生意料之外的影响的准备。"
-                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" TextWrapping="WrapWholeWords" />
-        <controls:ExpanderEx>
-            <controls:ExpanderEx.Header>
-                <Grid>
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xE13E;" Margin="20" />
-                        <TextBlock VerticalAlignment="Center">
+    <ScrollViewer>
+        <controls:Card Margin="5,0,10,10">
+            <StackPanel Spacing="5">
+                <TextBlock Text="本页操作修改游戏本地文件，会改变同步状态，修改不需要谨慎（不是你的原因，是文件状态的校验不好做也没做好），但要做好产生意料之外的影响的准备。"
+                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" TextWrapping="WrapWholeWords" />
+                <controls:ExpanderEx>
+                    <controls:ExpanderEx.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE13E;" Margin="20" />
+                                <TextBlock VerticalAlignment="Center">
                             <Run Text="实例名" />
                             <LineBreak />
                             <Run
                                 Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay,FallbackValue=(未定义)}"
                                 Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                        </TextBlock>
-                    </StackPanel>
-                    <Button Content="安全重命名" HorizontalAlignment="Right"
-                            Command="{x:Bind ViewModel.OpenRenameDialogCommand}" />
-                </Grid>
-            </controls:ExpanderEx.Header>
-        </controls:ExpanderEx>
-        <controls:ExpanderEx>
-            <controls:ExpanderEx.Header>
-                <Grid>
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xEBE8;" Margin="20" />
-                        <TextBlock VerticalAlignment="Center">
+                                </TextBlock>
+                            </StackPanel>
+                            <Button Content="安全重命名" HorizontalAlignment="Right"
+                                    Command="{x:Bind ViewModel.OpenRenameDialogCommand}" />
+                        </Grid>
+                    </controls:ExpanderEx.Header>
+                </controls:ExpanderEx>
+                <controls:ExpanderEx>
+                    <controls:ExpanderEx.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xEBE8;" Margin="20" />
+                                <TextBlock VerticalAlignment="Center">
                             <Run Text="危险操作" />
                             <LineBreak />
                             <Run Text="此类操作会对游戏文件产生副作用"
                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                        </TextBlock>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </controls:ExpanderEx.Header>
+                    <StackPanel Spacing="1">
+                        <controls:ExpanderExItem>
+                            <Grid>
+                                <TextBlock Text="重置游戏本地文件" VerticalAlignment="Center" />
+                                <Button Content="重置" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        IsEnabled="False"
+                                        ToolTipService.ToolTip="WIP" />
+                            </Grid>
+                        </controls:ExpanderExItem>
+                        <controls:ExpanderExItem>
+                            <Grid>
+                                <TextBlock Text="删除实例和本地文件" VerticalAlignment="Center" />
+                                <Button Content="删除" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        Style="{StaticResource AccentButtonStyle}"
+                                        Command="{x:Bind ViewModel.DeleteInstanceCommand}" />
+                            </Grid>
+                        </controls:ExpanderExItem>
                     </StackPanel>
-                </Grid>
-            </controls:ExpanderEx.Header>
-            <StackPanel Spacing="1">
-                <controls:ExpanderExItem>
-                    <Grid>
-                        <TextBlock Text="重置游戏本地文件" VerticalAlignment="Center" />
-                        <Button Content="重置" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="False"
-                                ToolTipService.ToolTip="WIP" />
-                    </Grid>
-                </controls:ExpanderExItem>
-                <controls:ExpanderExItem>
-                    <Grid>
-                        <TextBlock Text="删除实例和本地文件" VerticalAlignment="Center" />
-                        <Button Content="删除" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                Style="{StaticResource AccentButtonStyle}"
-                                Command="{x:Bind ViewModel.DeleteInstanceCommand}" />
-                    </Grid>
-                </controls:ExpanderExItem>
+                </controls:ExpanderEx>
             </StackPanel>
-        </controls:ExpanderEx>
-    </StackPanel>
+        </controls:Card>
+    </ScrollViewer>
 </Page>

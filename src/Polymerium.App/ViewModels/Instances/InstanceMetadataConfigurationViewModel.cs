@@ -1,13 +1,18 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.Core.Engines;
 
 namespace Polymerium.App.ViewModels.Instances;
 
@@ -15,16 +20,19 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 {
     private readonly ComponentManager _componentManager;
     private readonly IOverlayService _overlayService;
+    private readonly ResolveEngine _resolver;
 
     public InstanceMetadataConfigurationViewModel(
         ViewModelContext context,
         ComponentManager componentManager,
-        IOverlayService overlayService
+        IOverlayService overlayService,
+        ResolveEngine resolver
     )
     {
         Context = context;
         _componentManager = componentManager;
         _overlayService = overlayService;
+        _resolver = resolver;
         AddComponentCommand = new RelayCommand(AddComponent);
         RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(
             RemoveComponentSelf
@@ -33,15 +41,22 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
             Context.AssociatedInstance?.Components.Select(FromComponent)
             ?? Enumerable.Empty<InstanceComponentItemModel>()
         );
+        Attachments = new ObservableCollection<InstanceAttachmentItemModel>();
         Context.AssociatedInstance!.Components.CollectionChanged += Components_OnCollectionChanged;
     }
 
     public ViewModelContext Context { get; }
-
     public ObservableCollection<InstanceComponentItemModel> Components { get; }
-
+    public ObservableCollection<InstanceAttachmentItemModel> Attachments { get; }
     public ICommand AddComponentCommand { get; }
     public IRelayCommand<InstanceComponentItemModel> RemoveComponentSelfCommand { get; }
+    private bool isAttachmentBeingParsed;
+
+    public bool IsAttachmentBeingParsed
+    {
+        get => isAttachmentBeingParsed;
+        set => SetProperty(ref isAttachmentBeingParsed, value);
+    }
 
     private void Components_OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
@@ -71,6 +86,15 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         }
     }
 
+    public async Task LoadParseAttachmentsAsync(Action<InstanceAttachmentItemModel?> callback)
+    {
+        var tasks = new List<Task>();
+        foreach (var attachment in Context.AssociatedInstance!.Attachments)
+            tasks.Add(LoadAddAttachmentInfoAsync(attachment, callback));
+        await Task.WhenAll(tasks);
+        callback(null);
+    }
+
     private InstanceComponentItemModel FromComponent(Component component)
     {
         _componentManager.TryFindByIdentity(component.Identity, out var meta);
@@ -81,6 +105,25 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
             component.Version,
             RemoveComponentSelfCommand
         );
+    }
+
+    private async Task LoadAddAttachmentInfoAsync(Uri attachment, Action<InstanceAttachmentItemModel?> callback)
+    {
+        var result = await _resolver.ResolveAsync(Context.AssociatedInstance!.Inner, attachment);
+        InstanceAttachmentItemModel model = null!;
+        if (result.IsSuccessful)
+        {
+            var item = result.Value;
+            model = new InstanceAttachmentItemModel(item.Type, item.Resource.Name, item.Resource.Author,
+                item.Resource.IconSource, item.Resource.Version, item.Resource.Summary, attachment);
+        }
+        else
+        {
+            model = new InstanceAttachmentItemModel(ResourceType.File, "未知", "未知", null, "N/A", attachment.AbsoluteUri,
+                attachment);
+        }
+
+        callback(model);
     }
 
     private void AddComponent()
