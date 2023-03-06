@@ -29,6 +29,15 @@
                     <TextBlock Text="类型:" VerticalAlignment="Center" />
                     <ComboBox x:Name="ResourceBox" SelectedItem="{x:Bind ViewModel.SelectedResourceType,Mode=TwoWay}"
                               ItemsSource="{x:Bind ViewModel.SupportedResources}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10"
+                                Visibility="{x:Bind ViewModel.InstanceScope,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource NotNullToVisibleConverter}}">
+                        <TextBlock Text="实例: " VerticalAlignment="Center" />
+                        <TextBox Text="{x:Bind ViewModel.InstanceScope.Name,Mode=OneWay,FallbackValue={x:Null}}"
+                                 IsEnabled="False" />
+                        <Button x:Name="ClearScopeButton" Command="{x:Bind ViewModel.ClearScopeCommand}">
+                            <FontIcon Glyph="&#xE106;" />
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
                 <ProgressBar IsIndeterminate="True"
                              Visibility="{x:Bind IsDataLoading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -44,10 +53,11 @@
                                     HorizontalContentAlignment="Stretch"
                                     VerticalAlignment="Stretch" Click="ResultItem_Click">
                                 <Grid ColumnDefinitions="Auto,*" Margin="12">
-                                    <ui:ImageEx Height="64" Width="64" Margin="0,0,15,0"
-                                                Stretch="UniformToFill" Source="{x:Bind IconSource}"
-                                                IsCacheEnabled="True"
-                                                CornerRadius="5" />
+                                    <ui:ImageEx Height="64" Width="64" Margin="0,0,15,0" CornerRadius="5"
+                                                Stretch="Fill" Source="{x:Bind IconSource}"
+                                                PlaceholderStretch="Fill"
+                                                PlaceholderSource="ms-appx:///Assets/Placeholders/default_dirt.png"
+                                                IsCacheEnabled="True" CacheMode="BitmapCache" />
                                     <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
                                         <Grid RowDefinitions="Auto,*">
                                             <TextBlock Text="{x:Bind Caption}"
@@ -69,7 +79,7 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <TextBlock x:Name="NoResultLabel" Text="无结果" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <TextBlock x:Name="NoResultLabel" Text="列表为空" HorizontalAlignment="Center" VerticalAlignment="Center"
                        Visibility="Visible" />
         </Grid>
     </Grid>

@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Core.Resources;
+﻿namespace Polymerium.Abstractions.Resources;
 
 public enum RepositoryLabel
 {

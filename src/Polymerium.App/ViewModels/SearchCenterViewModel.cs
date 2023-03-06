@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -20,18 +22,29 @@ public class SearchCenterViewModel : ObservableObject
 
     private ResourceType? selectedResourceType;
 
-    public SearchCenterViewModel(IEnumerable<IResourceRepository> repositories, IOverlayService overlayService)
+    public SearchCenterViewModel(ViewModelContext context, IEnumerable<IResourceRepository> repositories,
+        IOverlayService overlayService)
     {
+        Context = context;
         _overlayService = overlayService;
         Repositories = repositories;
         SupportedResources = new ObservableCollection<ResourceType>();
-        // HACK: SelectedIndex = 0 不会反向引用
-        SelectedRepository = Repositories.First();
+        ClearScopeCommand = new RelayCommand(ClearScope);
     }
 
-    public IEnumerable<IResourceRepository> Repositories { get; }
+    public ViewModelContext Context { get; set; }
 
+    public IEnumerable<IResourceRepository> Repositories { get; }
+    public ICommand ClearScopeCommand { get; }
     public ObservableCollection<ResourceType> SupportedResources { get; set; }
+
+    private GameInstanceModel? instanceScope;
+
+    public GameInstanceModel? InstanceScope
+    {
+        get => instanceScope;
+        set => SetProperty(ref instanceScope, value);
+    }
 
     public ResourceType? SelectedResourceType
     {
@@ -53,7 +66,7 @@ public class SearchCenterViewModel : ObservableObject
                 foreach (uint i in Enum.GetValues(typeof(ResourceType)))
                 {
                     var type = (ResourceType)i;
-                    if ((supported & type) == type) SupportedResources.Add(type);
+                    if (type != ResourceType.None && (supported & type) == type) SupportedResources.Add(type);
                 }
 
                 SelectedResourceType = SupportedResources.Any(x => x == old) ? old : SupportedResources.First();
@@ -66,11 +79,7 @@ public class SearchCenterViewModel : ObservableObject
     {
         var repository = SelectedRepository;
         if (repository == null) return Enumerable.Empty<SearchCenterResultItemModel>();
-        var results = type switch
-        {
-            ResourceType.Modpack => await repository.SearchModpacksAsync(query, null, offset, limit, token),
-            _ => throw new NotImplementedException()
-        };
+        var results = await repository.SearchProjectsAsync(query, type, null, offset, limit, token);
         return results.Select(x =>
             new SearchCenterResultItemModel(x.Name, x.IconSource, x.Author, x.Summary, ResourceType.Modpack,
                 x));
@@ -83,5 +92,10 @@ public class SearchCenterViewModel : ObservableObject
             OverlayService = _overlayService
         };
         _overlayService.Show(dialog);
+    }
+
+    private void ClearScope()
+    {
+        InstanceScope = null;
     }
 }

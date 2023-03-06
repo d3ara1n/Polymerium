@@ -28,5 +28,5 @@ public struct LabrinthHit
     public string ServerSide { get; set; }
     public IEnumerable<Uri> Gallery { get; set; }
     public Uri FeaturedGallery { get; set; }
-    public long Color { get; set; }
+    public long? Color { get; set; }
 }

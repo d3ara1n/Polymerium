@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,25 +10,49 @@ namespace Polymerium.Core.Resources;
 public class CurseForgeRepository : IResourceRepository
 {
     public RepositoryLabel Label => RepositoryLabel.CurseForge;
-    public ResourceType SupportedResources => ResourceType.Modpack;
+    public ResourceType SupportedResources => ResourceType.Modpack | ResourceType.Mod | ResourceType.ResourcePack;
 
 
-    public async Task<IEnumerable<RepositoryAssetMeta>> SearchModpacksAsync(string query, string? version,
+    public async Task<IEnumerable<RepositoryAssetMeta>> SearchProjectsAsync(string query, ResourceType type,
+        string? version,
         uint offset = 0,
         uint limit = 10,
         CancellationToken token = default)
     {
         var results =
-            await CurseForgeHelper.SearchProjectsAsync(query, ResourceType.Modpack, version, null, offset, limit,
+            await CurseForgeHelper.SearchProjectsAsync(query, type, version, null, offset, limit,
                 token);
         return results.Select(x => new RepositoryAssetMeta
         {
             Id = x.Id.ToString(),
             Name = x.Name,
             Author = string.Join(", ", x.Authors.Select(y => y.Name)),
-            IconSource = x.Logo?.ThumbnailUrl ?? new Uri("ms-appx:///Assets/Placeholders/default_world_icon.png"),
+            IconSource = x.Logo?.ThumbnailUrl,
             Summary = x.Summary,
-            Type = ResourceType.Modpack
+            Type = type
         });
+    }
+
+    public async Task<RepositoryAssetMeta?> GetModAsync(string id, CancellationToken token = default)
+    {
+        if (uint.TryParse(id, out var projectId))
+        {
+            var option = await CurseForgeHelper.GetModInfoAsync(projectId, token);
+            if (option.TryUnwrap(out var project))
+            {
+                var result = new RepositoryAssetMeta
+                {
+                    Id = id,
+                    Name = project.Name,
+                    Author = string.Join(", ", project.Authors.Select(x => x.Name)),
+                    Summary = project.Summary,
+                    IconSource = project.Logo?.ThumbnailUrl,
+                    Type = ResourceType.Mod
+                };
+                return result;
+            }
+        }
+
+        return null;
     }
 }

@@ -74,8 +74,6 @@ public static class ModrinthHelper
             ResourceType.Modpack => "modpack",
             ResourceType.Shader => "shader",
             ResourceType.Mod => "mod",
-            ResourceType.Plugin => "mod",
-            ResourceType.DataPack => "mod",
             ResourceType.ResourcePack => "resourcepack",
             _ => throw new NotImplementedException()
         }));

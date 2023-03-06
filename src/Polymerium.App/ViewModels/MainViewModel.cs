@@ -256,6 +256,6 @@ public sealed class MainViewModel : ObservableObject
 
     public void GotoSearchView(string query)
     {
-        _navigationService.Navigate<SearchCenterView>(query);
+        _navigationService.Navigate<SearchCenterView>(new SearchCenterNavigationArguments(query, true));
     }
 }

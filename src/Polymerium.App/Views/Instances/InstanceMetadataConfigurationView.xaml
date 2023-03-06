@@ -4,16 +4,17 @@
 <Page
     x:Class="Polymerium.App.Views.Instances.InstanceMetadataConfigurationView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Polymerium.App.Models"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:interaction="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:behaviors="using:CommunityToolkit.WinUI.UI.Behaviors"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
+    xmlns:behaviors="using:CommunityToolkit.WinUI.UI.Behaviors"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:u="using:CommunityToolkit.WinUI.UI"
+    xmlns:interaction="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:models="using:Polymerium.App.Models"
     mc:Ignorable="d">
 
     <ScrollViewer>
@@ -51,7 +52,7 @@
                                         <Button x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
                                                 Command="{x:Bind RemoveCommand}" CommandParameter="{Binding}"
                                                 ToolTipService.ToolTip="移除">
-                                            <FontIcon Glyph="&#xE108;" FontSize="12" />
+                                            <FontIcon Glyph="&#xE108;" />
                                             <animations:Explicit.Animations>
                                                 <animations:AnimationSet x:Name="HideAnimation">
                                                     <animations:OpacityAnimation To="0.0" Duration="0:0:0.01" />
@@ -91,28 +92,55 @@
                     <Grid Margin="15">
                         <TextBlock Text="附件" Style="{StaticResource SubtitleTextBlockStyle}" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-                            <TextBlock Text="已选择 _ 个项目" VerticalAlignment="Center" />
-                            <Button x:Name="RemoveAttachmentButton" Content="移除"
-                                    Style="{StaticResource IconButtonStyle}" />
+                            <StackPanel Orientation="Horizontal" Spacing="8"
+                                        Visibility="{x:Bind CanDelete,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="已选择" />
+                                    <Run Text="{x:Bind SelectedItemCount,Mode=OneWay}" />
+                                    <Run Text="个项目" />
+                                </TextBlock>
+                                <Button x:Name="RemoveAttachmentButton" Content="移除"
+                                        Style="{StaticResource IconButtonStyle}"
+                                        Command="{x:Bind ViewModel.RemoveAttachmentsCommand}"
+                                        CommandParameter="{x:Bind AttachmentList.SelectedItems}" />
+                            </StackPanel>
                             <Button x:Name="AddAttachmentButton" Content="添加"
-                                    Style="{StaticResource IconButtonStyle}" />
+                                    Style="{StaticResource IconButtonStyle}"
+                                    Command="{x:Bind ViewModel.GotoSearchCenterCommand}" />
                         </StackPanel>
                     </Grid>
                 </controls:GroupBox.Header>
                 <StackPanel>
                     <ProgressBar IsIndeterminate="True"
                                  Visibility="{x:Bind ViewModel.IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <TextBlock Text="此处做出的删减并不会在增量还原时移除对应文件，需要手动删除。元数据仅作为最小文件(存在性)保证" TextWrapping="WrapWholeWords"
+                    <TextBlock Text="此处做出的删减并不会在增量还原时移除对应文件，需要手动删除。元数据仅作为最小文件(存在性)保证。" TextWrapping="WrapWholeWords"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                Margin="15,15,15,7" />
                     <Grid ColumnDefinitions="*,Auto" Margin="15,7,15,7">
-                        <AutoSuggestBox QueryIcon="Find" PlaceholderText="搜索已添加的附件" />
-                        <Button Grid.Column="1" Margin="5,0,0,0">
-                            <FontIcon Glyph="&#xE16E;" />
+                        <AutoSuggestBox x:Name="AttachmentSearchBox" QueryIcon="Find" PlaceholderText="搜索已添加的附件"
+                                        TextChanged="AttachmentSearchBox_TextChanged" />
+                        <Button Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <Grid>
+                                        <StackPanel>
+                                            <CheckBox Content="模组" IsChecked="{x:Bind IsModChecked,Mode=TwoWay}" />
+                                            <CheckBox Content="资源包"
+                                                      IsChecked="{x:Bind IsResourcepackChecked,Mode=TwoWay}" />
+                                            <CheckBox Content="着色器包" IsChecked="{x:Bind IsShaderChecked,Mode=TwoWay}" />
+                                            <CheckBox Content="文件" IsChecked="{x:Bind IsFileChecked,Mode=TwoWay}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Flyout>
+                            </Button.Flyout>
+                            <FontIcon Glyph="&#xE16E;" FontSize="12" />
                         </Button>
                     </Grid>
-                    <ListView Margin="15,7,15,15" ItemsSource="{x:Bind ViewModel.Attachments}" MaxHeight="512"
-                              SelectionMode="Extended">
+                    <ListView x:Name="AttachmentList" Margin="15,7,15,15" MaxHeight="512"
+                              SelectionMode="Extended" SelectionChanged="AttachmentList_SelectionChanged">
+                        <ListView.ItemsSource>
+                            <u:AdvancedCollectionView x:Name="AttachmentSource" Source="{x:Bind ViewModel.Attachments}" />
+                        </ListView.ItemsSource>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:InstanceAttachmentItemModel">
                                 <Grid ColumnDefinitions="Auto,*" Margin="5" ToolTipService.ToolTip="{x:Bind Summary}">

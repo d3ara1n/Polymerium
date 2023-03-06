@@ -21,41 +21,54 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     private readonly ComponentManager _componentManager;
     private readonly IOverlayService _overlayService;
     private readonly ResolveEngine _resolver;
+    private readonly NavigationService _navigationService;
+
+    private Action<InstanceAttachmentItemModel?>? addAttachmentCallback;
 
     public InstanceMetadataConfigurationViewModel(
         ViewModelContext context,
         ComponentManager componentManager,
         IOverlayService overlayService,
-        ResolveEngine resolver
+        ResolveEngine resolver,
+        NavigationService navigation
     )
     {
         Context = context;
         _componentManager = componentManager;
         _overlayService = overlayService;
         _resolver = resolver;
+        _navigationService = navigation;
         AddComponentCommand = new RelayCommand(AddComponent);
-        RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(
-            RemoveComponentSelf
-        );
+        GotoSearchCenterCommand = new RelayCommand(GotoSearchCenter);
+        RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(RemoveComponentSelf);
+        RemoveAttachmentsCommand = new RelayCommand<IList<object>>(RemoveAttachments);
         Components = new ObservableCollection<InstanceComponentItemModel>(
             Context.AssociatedInstance?.Components.Select(FromComponent)
             ?? Enumerable.Empty<InstanceComponentItemModel>()
         );
         Attachments = new ObservableCollection<InstanceAttachmentItemModel>();
         Context.AssociatedInstance!.Components.CollectionChanged += Components_OnCollectionChanged;
+        Context.AssociatedInstance!.Attachments.CollectionChanged += Attachments_CollectionChanged;
     }
 
     public ViewModelContext Context { get; }
     public ObservableCollection<InstanceComponentItemModel> Components { get; }
     public ObservableCollection<InstanceAttachmentItemModel> Attachments { get; }
     public ICommand AddComponentCommand { get; }
+    public ICommand GotoSearchCenterCommand { get; }
     public IRelayCommand<InstanceComponentItemModel> RemoveComponentSelfCommand { get; }
-    private bool isAttachmentBeingParsed;
+    public IRelayCommand<IList<object>> RemoveAttachmentsCommand { get; }
+    private bool isAttachmentBeingParsed = true;
 
     public bool IsAttachmentBeingParsed
     {
         get => isAttachmentBeingParsed;
         set => SetProperty(ref isAttachmentBeingParsed, value);
+    }
+
+    public void SetCallback(Action<InstanceAttachmentItemModel?> callback)
+    {
+        addAttachmentCallback = callback;
     }
 
     private void Components_OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -86,13 +99,39 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         }
     }
 
-    public async Task LoadParseAttachmentsAsync(Action<InstanceAttachmentItemModel?> callback)
+    private void Attachments_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                if (e.NewItems != null && e.NewItems.Count > 0)
+                    Task.Run(() => LoadParseAttachmentsAsync((IEnumerable<Uri>)e.NewItems));
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                if (e.OldItems != null)
+                {
+                    var collection = Attachments.Where(x => e.OldItems.Contains(x.Attachment)).ToList();
+                    foreach (var model in collection) Attachments.Remove(model);
+                }
+
+                break;
+            case NotifyCollectionChangedAction.Reset:
+                Attachments.Clear();
+                break;
+            case NotifyCollectionChangedAction.Replace:
+                // 如果未来要实现原地编辑并更新一个附件而不是移除后添加，就会有替换事件。
+                throw new NotImplementedException();
+                break;
+        }
+    }
+
+    public async Task LoadParseAttachmentsAsync(IEnumerable<Uri> newlyAdded)
     {
         var tasks = new List<Task>();
-        foreach (var attachment in Context.AssociatedInstance!.Attachments)
-            tasks.Add(LoadAddAttachmentInfoAsync(attachment, callback));
+        foreach (var attachment in newlyAdded)
+            tasks.Add(LoadAddAttachmentInfoAsync(attachment, addAttachmentCallback!));
         await Task.WhenAll(tasks);
-        callback(null);
+        addAttachmentCallback!(null);
     }
 
     private InstanceComponentItemModel FromComponent(Component component)
@@ -119,11 +158,23 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         }
         else
         {
-            model = new InstanceAttachmentItemModel(ResourceType.File, "未知", "未知", null, "N/A", attachment.AbsoluteUri,
+            model = new InstanceAttachmentItemModel(ResourceType.None, "未知", "未知", null, "N/A", attachment.AbsoluteUri,
                 attachment);
         }
 
         callback(model);
+    }
+
+    private void RemoveAttachments(IList<object>? items)
+    {
+        if (items != null)
+            foreach (InstanceAttachmentItemModel item in items.ToArray())
+                Context.AssociatedInstance!.Attachments.Remove(item.Attachment);
+    }
+
+    private void GotoSearchCenter()
+    {
+        _navigationService.Navigate<SearchCenterView>();
     }
 
     private void AddComponent()
