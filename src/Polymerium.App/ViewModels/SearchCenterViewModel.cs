@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.App.Views;
+using Polymerium.Core.Components;
 using Polymerium.Core.Resources;
 
 namespace Polymerium.App.ViewModels;
@@ -79,7 +79,13 @@ public class SearchCenterViewModel : ObservableObject
     {
         var repository = SelectedRepository;
         if (repository == null) return Enumerable.Empty<SearchCenterResultItemModel>();
-        var results = await repository.SearchProjectsAsync(query, type, null, offset, limit, token);
+        string? version = null;
+        string? modLoader = null;
+        if (InstanceScope?.Components.Any(x => ComponentMeta.MINECRAFT != x.Identity) == true)
+            modLoader = InstanceScope.Components.First(x => ComponentMeta.MINECRAFT != x.Identity).Identity;
+        if (InstanceScope?.Components.Any(x => ComponentMeta.MINECRAFT == x.Identity) == true)
+            version = InstanceScope.Components.First(x => ComponentMeta.MINECRAFT == x.Identity).Version;
+        var results = await repository.SearchProjectsAsync(query, type, modLoader, version, offset, limit, token);
         return results.Select(x =>
             new SearchCenterResultItemModel(x.Name, x.IconSource, x.Author, x.Summary, ResourceType.Modpack,
                 x));
@@ -87,11 +93,11 @@ public class SearchCenterViewModel : ObservableObject
 
     public void ShowDetailDialog(SearchCenterResultItemModel model)
     {
-        var dialog = new SearchDetailDialog(model.Resource)
-        {
-            OverlayService = _overlayService
-        };
-        _overlayService.Show(dialog);
+        //var dialog = new SearchDetailDialog(model.Resource)
+        //{
+        //    OverlayService = _overlayService
+        //};
+        //_overlayService.Show(dialog);
     }
 
     private void ClearScope()

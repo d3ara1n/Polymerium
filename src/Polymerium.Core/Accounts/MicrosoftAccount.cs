@@ -56,11 +56,18 @@ public class MicrosoftAccount : IGameAccount
         var accountOption = await MicrosoftAccountHelper.RefreshAccessTokenAsync(RefreshToken);
         if (accountOption.TryUnwrap(out var account))
         {
-            AccessToken = account.AccessToken;
             RefreshToken = account.RefreshToken;
+            var result = await LoginAsync(account.AccessToken, CancellationToken.None);
+            if (result.IsSuccessful)
+            {
+                AccessToken = result.Value.AccessToken;
+                UUID = result.Value.UUID;
+                Nickname = result.Value.Nickname;
+                return true;
+            }
         }
 
-        return accountOption.IsSome();
+        return false;
     }
 
     public static async Task<Result<MicrosoftAccount, MicrosoftAccountError>> LoginAsync(

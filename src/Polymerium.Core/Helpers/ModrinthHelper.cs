@@ -72,7 +72,7 @@ public static class ModrinthHelper
         facets.Add(new KeyValuePair<string, string>("project_type", type switch
         {
             ResourceType.Modpack => "modpack",
-            ResourceType.Shader => "shader",
+            ResourceType.ShaderPack => "shader",
             ResourceType.Mod => "mod",
             ResourceType.ResourcePack => "resourcepack",
             _ => throw new NotImplementedException()

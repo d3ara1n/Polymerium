@@ -125,7 +125,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         {
             ResourceType.Mod => self.IsModChecked,
             ResourceType.ResourcePack => self.IsResourcepackChecked,
-            ResourceType.Shader => self.IsShaderChecked,
+            ResourceType.ShaderPack => self.IsShaderChecked,
             ResourceType.File => self.IsFileChecked,
             _ => true
         };

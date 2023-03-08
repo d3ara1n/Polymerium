@@ -102,12 +102,13 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
     * [x] 从空模板创建
     * [x] 删除
     * [ ] 解锁（转换为 untagged 实例）
-    * [ ] 导入/导出
+    * [ ] 导入
         * [x] 导入预览对话框
         * [ ] Polypack
         * [x] CurseForge
         * [x] Modrinth
         * [ ] MultiMC
+    * [ ] 导出为 Polypack
 * [ ] 启动游戏
     * [x] Polylock 文件
     * [ ] 可选参数

@@ -14,14 +14,9 @@ public class CurseForgeRepository : IResourceRepository
 
 
     public async Task<IEnumerable<RepositoryAssetMeta>> SearchProjectsAsync(string query, ResourceType type,
-        string? version,
-        uint offset = 0,
-        uint limit = 10,
-        CancellationToken token = default)
+        string? modLoader, string? version, uint offset = 0, uint limit = 10, CancellationToken token = default)
     {
-        var results =
-            await CurseForgeHelper.SearchProjectsAsync(query, type, version, null, offset, limit,
-                token);
+        var results = await CurseForgeHelper.SearchProjectsAsync(query, type, version, modLoader, offset, limit, token);
         return results.Select(x => new RepositoryAssetMeta
         {
             Id = x.Id.ToString(),

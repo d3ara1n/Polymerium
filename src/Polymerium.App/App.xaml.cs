@@ -84,6 +84,7 @@ public partial class App : Application
             .AddTransient<InstanceMetadataConfigurationViewModel>()
             .AddTransient<InstanceLaunchConfigurationViewModel>()
             .AddTransient<InstanceAdvancedConfigurationViewModel>()
+            .AddTransient<InstanceAssetViewModel>()
             .AddTransient<AddMetaComponentWizardViewModel>()
             .AddTransient<ImportModpackWizardViewModel>()
             .AddTransient<SearchCenterViewModel>()

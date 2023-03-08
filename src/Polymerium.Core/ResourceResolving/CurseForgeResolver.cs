@@ -6,6 +6,7 @@ using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.ResourceResolving.Attributes;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Helpers;
+using Polymerium.Core.Models.CurseForge.Eternal;
 
 namespace Polymerium.Core.ResourceResolving;
 
@@ -14,9 +15,8 @@ public class CurseForgeResolver : ResourceResolverBase
 {
     private static readonly Func<string, uint> PARSER_INT = uint.Parse;
 
-    [ResourceType(ResourceType.Mod)]
-    [ResourceExpression("{projectId}")]
-    public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(string projectId, string version)
+    private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(ResourceType type, string projectId,
+        string version, Func<EternalProject, EternalModFile, ResourceBase> cast)
     {
         var pid = PARSER_INT.TryInvoke(projectId);
         // version 其实就是 fileId
@@ -25,19 +25,35 @@ public class CurseForgeResolver : ResourceResolverBase
         {
             var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value);
             var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value);
-            if (modOption.TryUnwrap(out var eternalMod) && fileOption.TryUnwrap(out var eternalFile))
+            if (modOption.TryUnwrap(out var eternalProject) && fileOption.TryUnwrap(out var eternalFile))
             {
-                var mod = new Mod(eternalMod.Id.ToString(), eternalMod.Name,
-                    string.Join(", ", eternalMod.Authors.Select(x => x.Name)),
-                    eternalMod.Logo?.ThumbnailUrl, eternalMod.Summary, version,
-                    new Uri($"poly-res://curseforge@file/{projectId}/{version}"));
-                return Ok(mod, ResourceType.Mod);
+                return new ResolveResult(cast(eternalProject, eternalFile), type);
             }
 
             return Err(ResolveResultError.NotFound);
         }
 
         return Err(ResolveResultError.InvalidArguments);
+    }
+
+    [ResourceType(ResourceType.Modpack)]
+    [ResourceExpression("{projectId}")]
+    public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(string projectId, string version)
+    {
+        return await GetProjectAsync(ResourceType.Modpack, projectId, version,
+            (project, _) => new Modpack(project.Id.ToString(), project.Name,
+                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
+                version, new Uri($"poly-res://curseforge@modpack/{projectId}?version={version}")));
+    }
+
+    [ResourceType(ResourceType.Mod)]
+    [ResourceExpression("{projectId}")]
+    public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(string projectId, string version)
+    {
+        return await GetProjectAsync(ResourceType.Mod, projectId, version,
+            (project, _) => new Mod(project.Id.ToString(), project.Name,
+                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
+                version, new Uri($"poly-res://curseforge@mod/{projectId}?version={version}")));
     }
 
     [ResourceType(ResourceType.File)]
