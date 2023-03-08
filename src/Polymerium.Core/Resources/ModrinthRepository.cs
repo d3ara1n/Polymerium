@@ -12,15 +12,14 @@ public class ModrinthRepository : IResourceRepository
     public RepositoryLabel Label => RepositoryLabel.Modrinth;
 
     public ResourceType SupportedResources =>
-        ResourceType.Modpack | ResourceType.Mod | ResourceType.Shader | ResourceType.ResourcePack;
+        ResourceType.Modpack | ResourceType.Mod | ResourceType.ShaderPack | ResourceType.ResourcePack;
 
     public async Task<IEnumerable<RepositoryAssetMeta>> SearchProjectsAsync(string query, ResourceType type,
-        string? version,
-        uint offset = 0,
-        uint limit = 10, CancellationToken token = default)
+        string? modLoader, string? version,
+        uint offset = 0, uint limit = 10, CancellationToken token = default)
     {
         var results =
-            await ModrinthHelper.SearchProjectsAsync(query, type, version, null, offset, limit, token);
+            await ModrinthHelper.SearchProjectsAsync(query, type, version, modLoader, offset, limit, token);
         return results.Select(x =>
             new RepositoryAssetMeta
             {

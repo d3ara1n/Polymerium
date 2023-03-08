@@ -37,6 +37,24 @@
                     <controls:ExpanderEx.Header>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xEDE1;" Margin="20" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="导出元数据" />
+                                    <LineBreak />
+                                    <Run
+                                        Text="仅支持导出为 Polypack"
+                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </TextBlock>
+                            </StackPanel>
+                            <Button Content="导出为整合包" HorizontalAlignment="Right"
+                                    Command="{x:Bind ViewModel.OpenRenameDialogCommand}" IsEnabled="False" />
+                        </Grid>
+                    </controls:ExpanderEx.Header>
+                </controls:ExpanderEx>
+                <controls:ExpanderEx>
+                    <controls:ExpanderEx.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEBE8;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
                             <Run Text="危险操作" />

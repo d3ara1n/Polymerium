@@ -11,8 +11,8 @@ public enum ResourceType : uint
     ResourcePack = 0x100,
     DataPack = 0x1000,
     World = 0x10000,
-    Shader = 0x100000,
+    ShaderPack = 0x100000,
     Plugin = 0x1000000,
     File = 0x10000000,
-    All = Modpack | Mod | ResourcePack | DataPack | World | Shader | Plugin | File
+    All = Modpack | Mod | ResourcePack | DataPack | World | ShaderPack | Plugin | File
 }

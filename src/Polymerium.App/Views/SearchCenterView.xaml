@@ -50,7 +50,7 @@
                     <DataTemplate x:DataType="models:SearchCenterResultItemModel">
                         <Grid Margin="5,3,10,3">
                             <Button x:Name="ResultItem" HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch" ToolTipService.ToolTip="{x:Bind Summary}"
                                     VerticalAlignment="Stretch" Click="ResultItem_Click">
                                 <Grid ColumnDefinitions="Auto,*" Margin="12">
                                     <ui:ImageEx Height="64" Width="64" Margin="0,0,15,0" CornerRadius="5"

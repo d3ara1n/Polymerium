@@ -109,33 +109,50 @@
                     <Grid.ChildrenTransitions>
                         <ContentThemeTransition />
                     </Grid.ChildrenTransitions>
-                    <Button Style="{StaticResource IconButtonStyle}">
+                    <Button Style="{StaticResource IconButtonStyle}"
+                            Command="{x:Bind ViewModel.OpenAssetDrawerCommand}" CommandParameter="ResourcePack">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-basil-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="资源包" FontSize="16" />
-                                <TextBlock Text="WIP"
+                                <TextBlock Text="{x:Bind ViewModel.RawResourcePacks.Count}"
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="1" Style="{StaticResource IconButtonStyle}">
+                    <Button Grid.Column="1" Style="{StaticResource IconButtonStyle}"
+                            Command="{x:Bind ViewModel.OpenAssetDrawerCommand}" CommandParameter="Mod"
+                            IsEnabled="{x:Bind ViewModel.IsModSupported}">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-plugin-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="模组" FontSize="16" />
-                                <TextBlock Text="WIP"
-                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                <Grid>
+                                    <TextBlock Text="{x:Bind ViewModel.RawMods.Count}"
+                                               Visibility="{x:Bind ViewModel.IsModSupported,Converter={StaticResource BoolToVisibilityConverter}}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <TextBlock Text="不支持"
+                                               Visibility="{x:Bind ViewModel.IsModSupported,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </Grid>
                             </StackPanel>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="2" Style="{StaticResource IconButtonStyle}">
+                    <Button Grid.Column="2" Style="{StaticResource IconButtonStyle}"
+                            Command="{x:Bind ViewModel.OpenAssetDrawerCommand}" CommandParameter="ShaderPack"
+                            IsEnabled="{x:Bind ViewModel.IsShaderSupported}">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-color-wheel-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="着色器包" FontSize="16" />
-                                <TextBlock Text="WIP"
-                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                <Grid>
+                                    <TextBlock Text="{x:Bind ViewModel.RawShaders.Count}"
+                                               Visibility="{x:Bind ViewModel.IsShaderSupported,Converter={StaticResource BoolToVisibilityConverter}}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <TextBlock Text="不支持"
+                                               Visibility="{x:Bind ViewModel.IsShaderSupported,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </Grid>
                             </StackPanel>
                         </Grid>
                     </Button>

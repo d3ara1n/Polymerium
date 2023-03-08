@@ -1,0 +1,65 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<controls:Drawer
+    x:Class="Polymerium.App.Views.Instances.InstanceAssetDrawer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:u="using:CommunityToolkit.WinUI.UI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Polymerium.App.Models"
+    mc:Ignorable="d" Loaded="Drawer_Loaded">
+
+    <ContentControl IsEnabled="{x:Bind IsParsing,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+        <Grid RowDefinitions="Auto,*">
+            <StackPanel Spacing="10">
+                <ui:ConstrainedBox AspectRatio="2:1">
+                    <Grid x:Name="DragDropPane" Opacity="0.3" AllowDrop="True"
+                          CornerRadius="{ThemeResource OverlayCornerRadius}"
+                          DragEnter="DragDropPane_DragEnter" DragLeave="DragDropPane_DragLeave"
+                          Drop="DragDropPane_Drop">
+                        <Grid.OpacityTransition>
+                            <ScalarTransition />
+                        </Grid.OpacityTransition>
+                        <Rectangle Fill="Transparent" StrokeDashArray="8 4"
+                                   Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                   StrokeThickness="2" />
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                            <FontIcon Glyph="&#xE1E3;" FontSize="44" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <StackPanel>
+                                <TextBlock Text="从文件添加" Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <TextBlock Text="拖入文件以添加" Style="{StaticResource BodyTextBlockStyle}"
+                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </ui:ConstrainedBox>
+                <AutoSuggestBox QueryIcon="Find" PlaceholderText="搜索已安装的游戏资产" />
+                <ProgressBar IsIndeterminate="True"
+                             Visibility="{x:Bind IsParsing,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+            </StackPanel>
+            <ListView Grid.Row="1" Margin="0,10,0,0">
+                <ListView.ItemsSource>
+                    <u:AdvancedCollectionView x:Name="AssetsSource" Source="{x:Bind Assets}" />
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:InstanceAssetModel">
+                        <Grid RowDefinitions="Auto,*" Margin="8">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="{x:Bind Name}" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                                    <Run Text="版本" />
+                                    <Run Text="{x:Bind Version}" />
+                                </TextBlock>
+                            </StackPanel>
+                            <TextBlock Text="{x:Bind Description}" Grid.Row="1" TextWrapping="WrapWholeWords" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentControl>
+</controls:Drawer>
