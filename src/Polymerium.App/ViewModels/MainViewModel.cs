@@ -140,9 +140,9 @@ public sealed class MainViewModel : ObservableObject
 
     public ICommand RemoveAccountCommand { get; }
 
-    private void EnqueueNotification(string text)
+    private void EnqueueNotification(string caption, string text, InfoBarSeverity severity)
     {
-        _dispatcher.TryEnqueue(() => { Notifications.Add(new InAppNotificationItem(text)); });
+        _dispatcher.TryEnqueue(() => { Notifications.Add(new InAppNotificationItem(caption, text, severity)); });
     }
 
     private void PushOverlay(ContentControl content)

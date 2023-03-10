@@ -24,26 +24,30 @@ public class MainFileBaseService : IFileBaseService
     public string Locate(Uri uri)
     {
         if (uri.IsAbsoluteUri)
-        {
-            if (uri.Scheme != "poly-file" && !string.IsNullOrEmpty(uri.Scheme))
-                throw new ArgumentException("Not valid poly-file url");
-            if (string.IsNullOrEmpty(uri.Host))
-                return new Uri(
-                    new Uri(_options.BaseFolder),
-                    uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)
-                ).LocalPath;
+            switch (uri.Scheme)
+            {
+                case "poly-file":
+                {
+                    if (string.IsNullOrEmpty(uri.Host))
+                        return new Uri(
+                            new Uri(_options.BaseFolder),
+                            uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)
+                        ).LocalPath;
 
-            var instance = _memory.Instances.FirstOrDefault(x => x.Id == uri.Host);
-            if (instance != null)
-                return new Uri(
-                    new Uri(
-                        new Uri(new Uri(_options.BaseFolder), "instances/"),
-                        instance.FolderName + '/'
-                    ),
-                    uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)
-                ).LocalPath;
-            throw new ArgumentException("Instance id not presented in managed list");
-        }
+                    var instance = _memory.Instances.FirstOrDefault(x => x.Id == uri.Host);
+                    if (instance != null)
+                        return new Uri(
+                            new Uri(
+                                new Uri(new Uri(_options.BaseFolder), "instances/"),
+                                instance.FolderName + '/'
+                            ),
+                            uri.GetComponents(UriComponents.Path, UriFormat.Unescaped)
+                        ).LocalPath;
+                    throw new ArgumentException("Instance id not presented in managed list");
+                }
+                default:
+                    return uri.LocalPath;
+            }
 
         return new Uri(new Uri(_options.BaseFolder, UriKind.Absolute), uri).LocalPath;
     }

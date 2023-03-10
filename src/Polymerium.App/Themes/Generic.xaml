@@ -699,14 +699,14 @@
                             <Grid RowDefinitions="Auto,*">
                                 <StackPanel>
                                     <Grid x:Name="PART_SafeZone" Height="42" />
-                                    <StackPanel Orientation="Horizontal" Margin="10,0" Spacing="10">
+                                    <Grid ColumnDefinitions="Auto,*" Margin="10,0">
                                         <Button x:Name="PART_CloseButton" Style="{StaticResource IconButtonStyle}"
                                                 VerticalAlignment="Top">
                                             <FontIcon Glyph="&#xE126;" FontSize="14" />
                                         </Button>
-                                        <TextBlock Text="{TemplateBinding Title}"
-                                                   Style="{StaticResource SubtitleTextBlockStyle}" />
-                                    </StackPanel>
+                                        <ContentPresenter Grid.Column="1" Content="{TemplateBinding Header}"
+                                                          ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                    </Grid>
                                 </StackPanel>
                                 <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" />
                             </Grid>

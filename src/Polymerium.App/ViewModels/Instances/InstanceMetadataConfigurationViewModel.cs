@@ -19,11 +19,12 @@ namespace Polymerium.App.ViewModels.Instances;
 public class InstanceMetadataConfigurationViewModel : ObservableObject
 {
     private readonly ComponentManager _componentManager;
+    private readonly NavigationService _navigationService;
     private readonly IOverlayService _overlayService;
     private readonly ResolveEngine _resolver;
-    private readonly NavigationService _navigationService;
 
     private Action<InstanceAttachmentItemModel?>? addAttachmentCallback;
+    private bool isAttachmentBeingParsed = true;
 
     public InstanceMetadataConfigurationViewModel(
         ViewModelContext context,
@@ -58,7 +59,6 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     public ICommand GotoSearchCenterCommand { get; }
     public IRelayCommand<InstanceComponentItemModel> RemoveComponentSelfCommand { get; }
     public IRelayCommand<IList<object>> RemoveAttachmentsCommand { get; }
-    private bool isAttachmentBeingParsed = true;
 
     public bool IsAttachmentBeingParsed
     {

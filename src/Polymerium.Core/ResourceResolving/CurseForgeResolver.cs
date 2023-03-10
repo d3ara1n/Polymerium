@@ -26,9 +26,7 @@ public class CurseForgeResolver : ResourceResolverBase
             var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value);
             var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value);
             if (modOption.TryUnwrap(out var eternalProject) && fileOption.TryUnwrap(out var eternalFile))
-            {
                 return new ResolveResult(cast(eternalProject, eternalFile), type);
-            }
 
             return Err(ResolveResultError.NotFound);
         }

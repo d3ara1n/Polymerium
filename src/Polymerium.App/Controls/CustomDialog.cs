@@ -32,18 +32,10 @@ public class CustomDialog : ContentControl
             new PropertyMetadata(default)
         );
 
-
-    public HorizontalAlignment OperationHorizontalAlignment
-    {
-        get => (HorizontalAlignment)GetValue(OperationHorizontalAlignmentProperty);
-        set => SetValue(OperationHorizontalAlignmentProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for OperationHorizontalAlignment.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty OperationHorizontalAlignmentProperty =
         DependencyProperty.Register(nameof(OperationHorizontalAlignment), typeof(HorizontalAlignment),
             typeof(CustomDialog), new PropertyMetadata(HorizontalAlignment.Stretch));
-
 
 
     private readonly Storyboard fadeoutStoryboard;
@@ -83,6 +75,13 @@ public class CustomDialog : ContentControl
             }
         );
         fadeoutStoryboard.Completed += (_, _) => OverlayService!.Dismiss();
+    }
+
+
+    public HorizontalAlignment OperationHorizontalAlignment
+    {
+        get => (HorizontalAlignment)GetValue(OperationHorizontalAlignmentProperty);
+        set => SetValue(OperationHorizontalAlignmentProperty, value);
     }
 
     public object OperationContent

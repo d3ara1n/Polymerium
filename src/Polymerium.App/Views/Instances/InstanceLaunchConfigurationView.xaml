@@ -18,8 +18,8 @@
                                 <StackPanel VerticalAlignment="Center">
                                     <TextBlock Text="自动检测 Java 版本" />
                                     <TextBlock
-                                    Text="{x:Bind ViewModel.Configuration.JavaHome,Mode=OneWay,FallbackValue=默认}"
-                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                        Text="{x:Bind ViewModel.Configuration.JavaHome,Mode=OneWay,FallbackValue=默认}"
+                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
                             </StackPanel>
                             <ToggleSwitch x:Name="AutoDetectJavaSwitch"
@@ -56,10 +56,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE9D5;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                <Run Text="跳过 Java 兼容性检查" />
-                                <LineBreak />
-                                <Run Text="当确定 Java 版本兼容时可开启此项"
-                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <Run Text="跳过 Java 兼容性检查" />
+                                    <LineBreak />
+                                    <Run Text="当确定 Java 版本兼容时可开启此项"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
                             <ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right"
@@ -74,10 +74,10 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEC8F;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                <Run Text="Java 虚拟机分配的最大内存" />
-                                <LineBreak />
-                                <Run Text="没有自动分配算法，根据经验来设置"
-                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <Run Text="Java 虚拟机分配的最大内存" />
+                                    <LineBreak />
+                                    <Run Text="没有自动分配算法，根据经验来设置"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">

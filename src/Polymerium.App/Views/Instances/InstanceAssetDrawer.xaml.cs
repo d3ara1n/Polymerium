@@ -1,5 +1,4 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,34 +6,39 @@ using Windows.ApplicationModel.DataTransfer;
 using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels.Instances;
 using Polymerium.Core.GameAssets;
+using File = System.IO.File;
 
 namespace Polymerium.App.Views.Instances;
 
 public sealed partial class InstanceAssetDrawer : Drawer
 {
-    public bool IsParsing
-    {
-        get => (bool)GetValue(IsParsingProperty);
-        set => SetValue(IsParsingProperty, value);
-    }
+    // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TitleProperty =
+        DependencyProperty.Register(nameof(Title), typeof(string), typeof(InstanceAssetDrawer),
+            new PropertyMetadata(string.Empty));
 
     // Using a DependencyProperty as the backing store for IsParsing.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsParsingProperty =
         DependencyProperty.Register(nameof(IsParsing), typeof(bool), typeof(InstanceAssetDrawer),
             new PropertyMetadata(false));
 
+    private readonly CancellationTokenSource _source;
+
+    private readonly IAdvancedCollectionView _view;
+
 
     public InstanceAssetDrawer(ResourceType type, IAdvancedCollectionView view)
     {
-        _type = type;
         _view = view;
         _source = new CancellationTokenSource();
         ViewModel = App.Current.Provider.GetRequiredService<InstanceAssetViewModel>();
+        ViewModel.Type = type;
         InitializeComponent();
         Title = type switch
         {
@@ -45,13 +49,21 @@ public sealed partial class InstanceAssetDrawer : Drawer
         };
     }
 
-    private readonly ResourceType _type;
-    private readonly IAdvancedCollectionView _view;
-    private readonly CancellationTokenSource _source;
+
+    public string Title
+    {
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
+
+
+    public bool IsParsing
+    {
+        get => (bool)GetValue(IsParsingProperty);
+        set => SetValue(IsParsingProperty, value);
+    }
 
     public InstanceAssetViewModel ViewModel { get; }
-
-    public ObservableCollection<InstanceAssetModel> Assets { get; } = new();
 
     private void DragDropPane_DragEnter(object sender, DragEventArgs e)
     {
@@ -73,7 +85,7 @@ public sealed partial class InstanceAssetDrawer : Drawer
             var items = await e.DataView.GetStorageItemsAsync();
             var file = items!.First()!;
             e.Handled = true;
-            // TODO
+            if (File.Exists(file.Path)) await ViewModel.FileAccepted(file.Path, raw => _view.Add(raw));
         }
     }
 
@@ -93,9 +105,19 @@ public sealed partial class InstanceAssetDrawer : Drawer
         DispatcherQueue.TryEnqueue(() =>
         {
             if (model != null)
-                Assets.Add(model);
+                ViewModel.Assets.Add(model);
             else
                 IsParsing = false;
         });
+    }
+
+    private void AssetSearch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+        {
+            AssetsSource.Filter = obj =>
+                ((InstanceAssetModel)obj).Name.StartsWith(sender.Text, StringComparison.OrdinalIgnoreCase);
+            AssetsSource.RefreshFilter();
+        }
     }
 }

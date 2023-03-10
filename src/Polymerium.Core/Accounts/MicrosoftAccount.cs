@@ -20,6 +20,7 @@ public class MicrosoftAccount : IGameAccount
         XstsAuthenticationFailed,
         MicrosoftAuthenticationFailed
     }
+
     public MicrosoftAccount(string id, string uuid, string nickname, string accessToken, string refreshToken)
     {
         Id = id;
