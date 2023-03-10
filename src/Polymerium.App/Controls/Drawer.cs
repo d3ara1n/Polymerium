@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -6,24 +7,14 @@ using Polymerium.App.Services;
 
 namespace Polymerium.App.Controls;
 
-public class Drawer : ContentControl
+public class Drawer : HeaderedContentControl
 {
-    public string Title
-    {
-        get => (string)GetValue(TitleProperty);
-        set => SetValue(TitleProperty, value);
-    }
-
-    // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty TitleProperty =
-        DependencyProperty.Register(nameof(Title), typeof(string), typeof(Drawer), new PropertyMetadata(string.Empty));
-
-    public IOverlayService? OverlayService { get; set; }
-
     public Drawer()
     {
         DefaultStyleKey = typeof(Drawer);
     }
+
+    public IOverlayService? OverlayService { get; set; }
 
     protected override void OnApplyTemplate()
     {

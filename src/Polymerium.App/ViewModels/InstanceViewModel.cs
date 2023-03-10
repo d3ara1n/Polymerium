@@ -28,6 +28,9 @@ public class InstanceViewModel : ObservableObject
     private readonly IOverlayService _overlayService;
 
     private string coreVersion = string.Empty;
+    private bool isModSupported;
+
+    private bool isShaderSupported;
 
     public InstanceViewModel(
         ViewModelContext context,
@@ -122,15 +125,12 @@ public class InstanceViewModel : ObservableObject
     public IAdvancedCollectionView RawShaders { get; }
     public IAdvancedCollectionView RawMods { get; }
     public IAdvancedCollectionView RawResourcePacks { get; }
-    private bool isModSupported;
 
     public bool IsModSupported
     {
         get => isModSupported;
         set => SetProperty(ref isModSupported, value);
     }
-
-    private bool isShaderSupported;
 
     public bool IsShaderSupported
     {

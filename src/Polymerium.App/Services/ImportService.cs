@@ -31,18 +31,25 @@ public class ImportService
     {
         if (File.Exists(filePath))
         {
-            var archive = ZipFile.OpenRead(filePath);
-            var files = archive.Entries.Select(x => x.FullName);
-            if (files.Any(x => x == "modrinth.index.json"))
+            try
             {
-                var importer = new ModrinthImporter { Token = token ?? CancellationToken.None };
-                return await importer.ProcessAsync(archive);
-            }
+                var archive = ZipFile.OpenRead(filePath);
+                var files = archive.Entries.Select(x => x.FullName);
+                if (files.Any(x => x == "modrinth.index.json"))
+                {
+                    var importer = new ModrinthImporter { Token = token ?? CancellationToken.None };
+                    return await importer.ProcessAsync(archive);
+                }
 
-            if (files.Any(x => x == "manifest.json"))
+                if (files.Any(x => x == "manifest.json"))
+                {
+                    var importer = new CurseForgeImporter { Token = token ?? CancellationToken.None };
+                    return await importer.ProcessAsync(archive);
+                }
+            }
+            catch
             {
-                var importer = new CurseForgeImporter { Token = token ?? CancellationToken.None };
-                return await importer.ProcessAsync(archive);
+                return new Result<ImportResult, GameImportError>(GameImportError.WrongPackType);
             }
 
             return new Result<ImportResult, GameImportError>(GameImportError.Unsupported);

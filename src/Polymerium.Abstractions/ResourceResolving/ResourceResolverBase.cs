@@ -27,6 +27,6 @@ public abstract class ResourceResolverBase
 
     public Result<ResolveResult, ResolveResultError> Err(ResolveResultError error)
     {
-        return new(error);
+        return new Result<ResolveResult, ResolveResultError>(error);
     }
 }

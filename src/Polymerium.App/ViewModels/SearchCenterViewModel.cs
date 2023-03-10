@@ -18,6 +18,8 @@ namespace Polymerium.App.ViewModels;
 public class SearchCenterViewModel : ObservableObject
 {
     private readonly IOverlayService _overlayService;
+
+    private GameInstanceModel? instanceScope;
     private IResourceRepository? selectedRepository;
 
     private ResourceType? selectedResourceType;
@@ -37,8 +39,6 @@ public class SearchCenterViewModel : ObservableObject
     public IEnumerable<IResourceRepository> Repositories { get; }
     public ICommand ClearScopeCommand { get; }
     public ObservableCollection<ResourceType> SupportedResources { get; set; }
-
-    private GameInstanceModel? instanceScope;
 
     public GameInstanceModel? InstanceScope
     {

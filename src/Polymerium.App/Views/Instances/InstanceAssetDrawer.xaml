@@ -12,7 +12,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     mc:Ignorable="d" Loaded="Drawer_Loaded">
-
+    <controls:Drawer.Header>
+        <Grid>
+            <TextBlock Text="{x:Bind Title}" Style="{StaticResource SubtitleTextBlockStyle}" />
+        </Grid>
+    </controls:Drawer.Header>
     <ContentControl IsEnabled="{x:Bind IsParsing,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
         <Grid RowDefinitions="Auto,*">
             <StackPanel Spacing="10">
@@ -37,25 +41,42 @@
                         </StackPanel>
                     </Grid>
                 </ui:ConstrainedBox>
-                <AutoSuggestBox QueryIcon="Find" PlaceholderText="搜索已安装的游戏资产" />
+                <AutoSuggestBox x:Name="AssetSearch" QueryIcon="Find" PlaceholderText="搜索已安装的游戏资产"
+                                TextChanged="AssetSearch_TextChanged" />
                 <ProgressBar IsIndeterminate="True"
                              Visibility="{x:Bind IsParsing,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                <Grid>
+                    <HyperlinkButton x:Name="OpenInExplorerButton" Command="{x:Bind ViewModel.OpenInExplorerCommand}"
+                                     CommandParameter="{x:Bind AssetList.SelectedItem,Mode=OneWay}"
+                                     HorizontalAlignment="Left">
+                        <TextBlock Text="在资源管理器中查看" />
+                    </HyperlinkButton>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                Visibility="{x:Bind AssetList.SelectedItem,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
+                        <Button Style="{StaticResource IconButtonStyle}" Content="删除"
+                                Command="{x:Bind ViewModel.DeleteAssetCommand}"
+                                CommandParameter="{x:Bind AssetList.SelectedItem,Mode=OneWay}" />
+                    </StackPanel>
+                </Grid>
             </StackPanel>
-            <ListView Grid.Row="1" Margin="0,10,0,0">
+            <ListView x:Name="AssetList" Grid.Row="1" Margin="0,10,0,0">
                 <ListView.ItemsSource>
-                    <u:AdvancedCollectionView x:Name="AssetsSource" Source="{x:Bind Assets}" />
+                    <u:AdvancedCollectionView x:Name="AssetsSource" Source="{x:Bind ViewModel.Assets}" />
                 </ListView.ItemsSource>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:InstanceAssetModel">
                         <Grid RowDefinitions="Auto,*" Margin="8">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <TextBlock Text="{x:Bind Name}" Style="{StaticResource BodyStrongTextBlockStyle}" />
-                                <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                                <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                           Visibility="{x:Bind Version,Converter={StaticResource NotNullToVisibleConverter}}">
                                     <Run Text="版本" />
-                                    <Run Text="{x:Bind Version}" />
+                                    <Run Text="{x:Bind Version,FallbackValue=N/A}" />
                                 </TextBlock>
                             </StackPanel>
-                            <TextBlock Text="{x:Bind Description}" Grid.Row="1" TextWrapping="WrapWholeWords" />
+                            <TextBlock Text="{x:Bind Description,FallbackValue={x:Null}}"
+                                       Visibility="{x:Bind Description,Converter={StaticResource NotNullToVisibleConverter}}"
+                                       Grid.Row="1" TextWrapping="WrapWholeWords" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
