@@ -643,7 +643,7 @@
         <Setter Property="Background" Value="{ThemeResource ContentDialogBackground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}" />
         <Setter Property="BorderThickness" Value="1,0,0,0" />
-        <Setter Property="Padding" Value="{ThemeResource ContentDialogPadding}" />
+        <Setter Property="Padding" Value="12,5,12,12" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:Drawer">

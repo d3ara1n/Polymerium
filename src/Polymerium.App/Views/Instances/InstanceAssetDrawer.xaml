@@ -19,8 +19,8 @@
     </controls:Drawer.Header>
     <ContentControl IsEnabled="{x:Bind IsParsing,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
         <Grid RowDefinitions="Auto,*">
-            <StackPanel Spacing="10">
-                <ui:ConstrainedBox AspectRatio="2:1">
+            <StackPanel Spacing="5">
+                <ui:ConstrainedBox AspectRatio="3:1">
                     <Grid x:Name="DragDropPane" Opacity="0.3" AllowDrop="True"
                           CornerRadius="{ThemeResource OverlayCornerRadius}"
                           DragEnter="DragDropPane_DragEnter" DragLeave="DragDropPane_DragLeave"
@@ -59,7 +59,7 @@
                     </StackPanel>
                 </Grid>
             </StackPanel>
-            <ListView x:Name="AssetList" Grid.Row="1" Margin="0,10,0,0">
+            <ListView x:Name="AssetList" Grid.Row="1">
                 <ListView.ItemsSource>
                     <u:AdvancedCollectionView x:Name="AssetsSource" Source="{x:Bind ViewModel.Assets}" />
                 </ListView.ItemsSource>
