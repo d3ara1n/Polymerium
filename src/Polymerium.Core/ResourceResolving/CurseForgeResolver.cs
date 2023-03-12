@@ -63,14 +63,22 @@ public class CurseForgeResolver : ResourceResolverBase
         var fid = PARSER_INT.TryInvoke(fileId);
         if (pid.IsSuccessful && fid.IsSuccessful)
         {
+            var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value);
             var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value);
-            if (fileOption.TryUnwrap(out var eternalFile))
+            if (modOption.TryUnwrap(out var eternalProject) && fileOption.TryUnwrap(out var eternalFile))
             {
-                var hashes = eternalFile.Hashes.Where(x => x.Algo == 2);
+                var hashes = eternalFile.Hashes.Where(x => x.Algo == 1);
                 string? sha1 = null;
                 if (hashes.Any()) sha1 = hashes.First().Value;
                 var file = new File(eternalFile.Id.ToString(), eternalFile.DisplayName, string.Empty, null,
-                    string.Empty, fileId, $"mods/{eternalFile.FileName}", sha1,
+                    string.Empty, fileId, $"{eternalProject.ClassId switch
+                    {
+                        6 => "mods",
+                        12 => "resourcepacks",
+                        17 => "worlds",
+                        4546 => "shaderpacks",
+                        _ => throw new NotImplementedException()
+                    }}/{eternalFile.FileName}", sha1,
                     eternalFile.DownloadUrl ??
                     new Uri(
                         $"https://edge.forgecdn.net/files/{eternalFile.Id / 1000}/{eternalFile.Id % 1000}/{eternalFile.FileName}"));

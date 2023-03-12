@@ -63,7 +63,7 @@ public class CurseForgeImporter : ImporterBase
 
                 foreach (var file in index.Files)
                 {
-                    var modUrl = new Uri($"poly-res://curseforge@mod/{file.ProjectId}?version={file.FileId}");
+                    var modUrl = new Uri($"poly-res://curseforge@file/{file.ProjectId}/{file.FileId}");
                     instance.Metadata.Attachments.Add(modUrl);
                 }
 

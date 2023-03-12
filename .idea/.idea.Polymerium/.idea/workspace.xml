@@ -11,9 +11,7 @@
     <projectFile pubXmlPath="src/Polymerium.App/Polymerium.App/Properties/PublishProfiles/win10-x86.pubxml">src/Polymerium.App/Polymerium.App/Polymerium.App.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,6 +34,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c98c4c26354b89d76ffbddb774441bcc9c7ed3559b98dbd6fe39a56fc7eb18/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cd4baac7317266f4f516e33baa69963b5f1f5ed866e119194d80c2958f827/StartAnimationAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f46d8257f4c1dc361b73ec7a2fa4d14a2b9f79568db1e74156c505c679420c2/AsyncRelayCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/Themes/Generic.xaml" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/Converters/LauncherMetaMainClassConverter.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -220,6 +219,7 @@
       <workItem from="1678243277492" duration="569000" />
       <workItem from="1678423512285" duration="552000" />
       <workItem from="1678424180860" duration="72000" />
+      <workItem from="1678426824211" duration="57000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -417,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678424043876</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="微调了抽屉内的布局，更紧凑，留给内容更多空间">
+      <created>1678426873480</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1678426873480</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -440,7 +447,6 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="当前账号可以被删除，但FlyoutMenu自带bug（这玩意bug真多），要重启才生效" />
     <MESSAGE value="组件可以编辑，加了个forge支持，但不能还原。还原就报错" />
     <MESSAGE value="Forge安装还差Processor部分" />
     <MESSAGE value="Fabric&amp;Quilt的组件安装能用但不知道好不好用是不是这么用" />
@@ -465,7 +471,8 @@
     <MESSAGE value="搜索中心和其他页面联动；可以搜索多种资源。" />
     <MESSAGE value="资产仅能查看fabric模组，其他没做完" />
     <MESSAGE value="#8 总体完成，功能仅能简单使用，无法与元数据联动" />
-    <option name="LAST_COMMIT_MESSAGE" value="#8 总体完成，功能仅能简单使用，无法与元数据联动" />
+    <MESSAGE value="微调了抽屉内的布局，更紧凑，留给内容更多空间" />
+    <option name="LAST_COMMIT_MESSAGE" value="微调了抽屉内的布局，更紧凑，留给内容更多空间" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
