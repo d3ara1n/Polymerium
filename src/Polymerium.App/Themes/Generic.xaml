@@ -14,9 +14,9 @@
     xmlns:converters="using:Polymerium.App.Converters">
 
     <!-- 放 App.xaml 或其他字典里就报错 -->
-    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource LayerOnAcrylicFillColorDefault}" />
-    <SolidColorBrush x:Key="CardStrokeBrush" Color="{StaticResource ControlStrokeColorDefault}" />
-    <SolidColorBrush x:Key="FloatLayerBackgroundBrush" Color="{StaticResource CardBackgroundFillColorDefault}" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{ThemeResource LayerOnAcrylicFillColorDefault}" />
+    <SolidColorBrush x:Key="CardStrokeBrush" Color="{ThemeResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="FloatLayerBackgroundBrush" Color="{ThemeResource CardBackgroundFillColorDefault}" />
     <CornerRadius x:Key="ContentAreaCornerRadius">10</CornerRadius>
     <CornerRadius x:Key="ItemAreaCornerRadius">5</CornerRadius>
 
