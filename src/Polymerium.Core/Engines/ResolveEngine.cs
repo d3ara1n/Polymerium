@@ -62,10 +62,8 @@ public class ResolveEngine
             }
     }
 
-    public async Task<Result<ResolveResult, ResolveResultError>> ResolveAsync(
-        GameInstance instance,
-        Uri resource
-    )
+    public async Task<Result<ResolveResult, ResolveResultError>> ResolveAsync(Uri resource,
+        GameInstance? instance = null)
     {
         if (resource.Scheme == "poly-res")
         {
@@ -110,6 +108,15 @@ public class ResolveEngine
         }
 
         throw new ArgumentException("Scheme only accepts 'poly-res'", nameof(resource));
+    }
+
+    public async Task<Result<ResolveResult, ResolveResultError>> ResolveToFileAsync(Uri url,
+        GameInstance? instance = null)
+    {
+        var result = await ResolveAsync(url, instance);
+        if (result.IsSuccessful && result.Value.Type != ResourceType.File)
+            return await ResolveAsync(result.Value.Resource.File, instance);
+        return result;
     }
 
     private Task<Result<ResolveResult, ResolveResultError>> ExecuteAsAsyncStateMachine(

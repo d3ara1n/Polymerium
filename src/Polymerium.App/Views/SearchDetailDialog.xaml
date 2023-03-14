@@ -8,10 +8,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Polymerium.App.Models"
     xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
-    mc:Ignorable="d">
+    xmlns:u="using:CommunityToolkit.WinUI.UI"
+    mc:Ignorable="d" OperationPadding="0" OperationHorizontalAlignment="Stretch" Loaded="CustomDialog_Loaded">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,15,*">
         <Grid ColumnDefinitions="Auto,*">
             <ui:ImageEx Width="64" Height="64" Source="{x:Bind ViewModel.Resource.Value.IconSource}" CornerRadius="5" />
             <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
@@ -24,10 +26,44 @@
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 </StackPanel>
                 <Grid Grid.Column="1">
-                    <!-- summary: mod loaders -->
+                    <!-- details -->
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" />
+        <Grid Grid.Row="2">
+            <!-- A button to view all the hidden -->
+            <ListView x:Name="VersionList" SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}"
+                      IsEnabled="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                <ListView.ItemsSource>
+                    <u:AdvancedCollectionView x:Name="VersionSource" Source="{x:Bind ViewModel.Versions}" />
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SearchCenterResultItemVersionModel">
+                        <StackPanel Margin="5">
+                            <TextBlock Text="{x:Bind Display}" />
+                            <TextBlock
+                                Text="{x:Bind File.SupportedCoreVersions,Converter={StaticResource EnumerableToStringConverter}}"
+                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                            <TextBlock
+                                Text="{x:Bind File.SupportedModLoaders,Converter={StaticResource EnumerableToStringConverter}}"
+                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
+    <controls:CustomDialog.OperationContent>
+        <StackPanel>
+            <ProgressBar x:Name="Progress" Maximum="100" IsIndeterminate="True"
+                         Visibility="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+            <StackPanel Spacing="10" Orientation="Horizontal" Margin="15" HorizontalAlignment="Right">
+                <Button x:Name="InstallButton" Style="{StaticResource AccentButtonStyle}" Content="安装"
+                        IsEnabled="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
+                        Visibility="{x:Bind VersionList.SelectedItem,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}"
+                        Click="InstallButton_Click" />
+                <Button x:Name="CancelButton" Content="关闭" Click="CancelButton_Click" />
+            </StackPanel>
+        </StackPanel>
+    </controls:CustomDialog.OperationContent>
 </controls:CustomDialog>

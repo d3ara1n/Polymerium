@@ -121,7 +121,6 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
             case NotifyCollectionChangedAction.Replace:
                 // 如果未来要实现原地编辑并更新一个附件而不是移除后添加，就会有替换事件。
                 throw new NotImplementedException();
-                break;
         }
     }
 
@@ -148,7 +147,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     private async Task LoadAddAttachmentInfoAsync(Uri attachment, Action<InstanceAttachmentItemModel?> callback)
     {
-        var result = await _resolver.ResolveAsync(Context.AssociatedInstance!.Inner, attachment);
+        var result = await _resolver.ResolveAsync(attachment, Context.AssociatedInstance?.Inner);
         InstanceAttachmentItemModel model = null!;
         if (result.IsSuccessful)
         {

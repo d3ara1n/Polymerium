@@ -89,7 +89,7 @@ public class BuildPolylockStage : StageBase
             var tasks = new List<Task<Result<ResolveResult, ResolveResultError>>>();
             Report("解析元数据中的附件资源信息");
             foreach (var attachment in _instance.Metadata.Attachments)
-                tasks.Add(ResolveToFileAsync(_instance, attachment));
+                tasks.Add(_resolver.ResolveToFileAsync(attachment, _instance));
             await Task.WhenAll(tasks);
             var errors = tasks.Count(x => !x.Result.IsSuccessful || x.Result.Value.Type != ResourceType.File);
             if (errors > 0)
@@ -123,14 +123,6 @@ public class BuildPolylockStage : StageBase
         {
             return Error(e.Message, e);
         }
-    }
-
-    private async Task<Result<ResolveResult, ResolveResultError>> ResolveToFileAsync(GameInstance instance, Uri url)
-    {
-        var result = await _resolver.ResolveAsync(instance, url);
-        if (result.IsSuccessful && result.Value.Type != ResourceType.File)
-            return await _resolver.ResolveAsync(_instance, result.Value.Resource.File);
-        return result;
     }
 
     private IEnumerable<(Component, ComponentMeta)> BuildQueue(IEnumerable<Component> components)

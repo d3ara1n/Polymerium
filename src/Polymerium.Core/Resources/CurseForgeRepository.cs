@@ -19,12 +19,14 @@ public class CurseForgeRepository : IResourceRepository
         var results = await CurseForgeHelper.SearchProjectsAsync(query, type, version, modLoader, offset, limit, token);
         return results.Select(x => new RepositoryAssetMeta
         {
+            Repository = RepositoryLabel.CurseForge,
             Id = x.Id.ToString(),
             Name = x.Name,
             Author = string.Join(", ", x.Authors.Select(y => y.Name)),
             IconSource = x.Logo?.ThumbnailUrl,
             Summary = x.Summary,
-            Type = type
+            Type = type,
+            Versions = x.LatestFilesIndexes.Select(x => x.FileId.ToString())
         });
     }
 
@@ -37,12 +39,14 @@ public class CurseForgeRepository : IResourceRepository
             {
                 var result = new RepositoryAssetMeta
                 {
+                    Repository = RepositoryLabel.CurseForge,
                     Id = id,
                     Name = project.Name,
                     Author = string.Join(", ", project.Authors.Select(x => x.Name)),
                     Summary = project.Summary,
                     IconSource = project.Logo?.ThumbnailUrl,
-                    Type = ResourceType.Mod
+                    Type = ResourceType.Mod,
+                    Versions = project.LatestFilesIndexes.Select(x => x.FileId.ToString())
                 };
                 return result;
             }

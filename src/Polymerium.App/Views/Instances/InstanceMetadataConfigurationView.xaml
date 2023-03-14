@@ -94,7 +94,8 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
                             <StackPanel Orientation="Horizontal" Spacing="8"
                                         Visibility="{x:Bind CanDelete,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
-                                <TextBlock VerticalAlignment="Center">
+                                <TextBlock VerticalAlignment="Center"
+                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                     <Run Text="已选择" />
                                     <Run Text="{x:Bind SelectedItemCount,Mode=OneWay}" />
                                     <Run Text="个项目" />

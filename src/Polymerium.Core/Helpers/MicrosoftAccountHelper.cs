@@ -59,7 +59,7 @@ public static class MicrosoftAccountHelper
                     { "device_code", deviceCode?.DeviceCode! }
                 }))
                 .ViaPost()
-                .ForJsonResult<JObject>(async x =>
+                .ForJsonResult<JObject>(x =>
                 {
                     if (x.ContainsKey("error"))
                     {
@@ -141,7 +141,7 @@ public static class MicrosoftAccountHelper
             : Option<MinecraftAuthenticationResponse>.None();
     }
 
-    public static async Task<bool> VerifyMinecraftOwnershipAsync(string accessToken, CancellationToken token = default)
+    public static Task<bool> VerifyMinecraftOwnershipAsync(string accessToken, CancellationToken token = default)
     {
         //bool res = false;
         //await Wapoo.Wohoo(STORE_ENDPOINT)
@@ -152,7 +152,7 @@ public static class MicrosoftAccountHelper
 
 
         // 由于 response 不是 json 不好处理，这里跳过验证
-        return true;
+        return Task.FromResult(true);
     }
 
     public static async Task<Option<MinecraftProfileResponse>> GetProfileByAccessTokenAsync(string accessToken,

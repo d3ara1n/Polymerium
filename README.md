@@ -32,7 +32,7 @@
 
 [![Screenshot][product-screenshot]](#关于)
 
-**这是个 WIP 早期项目，大部分功能还没写完或仅存在于设计，开发进度请参考 Roadmap。**
+**这是个 WIP 早期项目，大部分功能还没写完或仅存在于设计，开发进度请参考 [Roadmap](#roadmap)。**
 
 ### 理念
 
@@ -87,11 +87,15 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 
 ### 添加实例
 
-目前仅支持创建原版实例（并在随后的实例配置页面添加 Mod Loader ）或导入 Modrinth 整合包。
+目前仅支持创建原版实例（并在随后的实例配置页面添加 Mod Loader ）或导入 Modrinth，CurseForge 整合包。
 
 #### 导入 Modrinth 整合包
 
 在 Modrinth 下载整合包文件，拖动到导入页面的 DragDrop 面板，根据向导添加。
+
+#### 导入 CurseForge 整合包
+
+同上。
 
 <!-- ROADMAP -->
 
@@ -142,7 +146,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
     * [ ] 资源解析引擎
         * [x] {var} 参数
         * [x] {*vars} 参数
-        * [ ] Url 类型转换
+        * [x] Url 类型转换
     * [ ] 内置解析器
         * [ ] 整合包
             * [ ] Modrinth
@@ -181,9 +185,7 @@ WinUI 3 目前还在早期阶段，一路下来难用，性能差不说，遇到
 
 * 游戏启动流程、Fabric/Quilt 部署：[Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
 *
-
 游戏启动流程：[教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8?variant=zh)
-
 * Forge：[ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
 * 微软验证：[Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
 * Forge 版本和下载：[BMCLApi](https://bmclapidoc.bangbang93.com/)

@@ -42,6 +42,7 @@ public sealed partial class SearchCenterView : Page
                     arguments.Repository == null || x.Label == arguments.Repository);
             if (repository != null)
             {
+                if (!arguments.InstanceScopeOverride) ViewModel.InstanceScope = ViewModel.Context.AssociatedInstance;
                 ViewModel.SelectedRepository = repository;
                 var found = true;
                 if (arguments.Type != null)
@@ -52,15 +53,13 @@ public sealed partial class SearchCenterView : Page
                     else
                         found = false;
                 }
-
-                if (!arguments.InstanceScopeOverride) ViewModel.InstanceScope = ViewModel.Context.AssociatedInstance;
                 if (found && arguments.SearchImmediately) QuerySubmitted(arguments.Query);
             }
         }
         else
         {
-            ViewModel.SelectedRepository = ViewModel.Repositories.First();
             ViewModel.InstanceScope = ViewModel.Context.AssociatedInstance;
+            ViewModel.SelectedRepository = ViewModel.Repositories.First();
         }
     }
 
