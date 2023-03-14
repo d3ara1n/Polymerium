@@ -2,10 +2,10 @@
 
 public class ResolverContext
 {
-    public ResolverContext(GameInstance instance)
+    public ResolverContext(GameInstance? instance)
     {
         Instance = instance;
     }
 
-    public GameInstance Instance { get; }
+    public GameInstance? Instance { get; }
 }

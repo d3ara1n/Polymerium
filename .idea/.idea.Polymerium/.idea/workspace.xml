@@ -11,7 +11,27 @@
     <projectFile pubXmlPath="src/Polymerium.App/Polymerium.App/Properties/PublishProfiles/win10-x86.pubxml">src/Polymerium.App/Polymerium.App/Polymerium.App.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="" />
+    <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App (Package)/Package.appxmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Package.appxmanifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchCenterViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchCenterViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchDetailViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchDetailViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchDetailDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchDetailDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchDetailDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchDetailDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/CurseForgeHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/CurseForgeHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/ModrinthHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/ModrinthHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/CurseForge/Eternal/EternalModFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/CurseForge/Eternal/EternalModFile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Models/CurseForge/Eternal/EternalProject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Models/CurseForge/Eternal/EternalProject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/CurseForgeResolver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/CurseForgeResolver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Resources/CurseForgeRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Resources/CurseForgeRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Resources/ModrinthRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Resources/ModrinthRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Resources/RepositoryAssetMeta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Resources/RepositoryAssetMeta.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +54,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c98c4c26354b89d76ffbddb774441bcc9c7ed3559b98dbd6fe39a56fc7eb18/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cd4baac7317266f4f516e33baa69963b5f1f5ed866e119194d80c2958f827/StartAnimationAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f46d8257f4c1dc361b73ec7a2fa4d14a2b9f79568db1e74156c505c679420c2/AsyncRelayCommand.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/Themes/Generic.xaml" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/Converters/LauncherMetaMainClassConverter.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -220,6 +239,10 @@
       <workItem from="1678423512285" duration="552000" />
       <workItem from="1678424180860" duration="72000" />
       <workItem from="1678426824211" duration="57000" />
+      <workItem from="1678601959364" duration="81000" />
+      <workItem from="1678603942870" duration="39000" />
+      <workItem from="1678787894952" duration="33000" />
+      <workItem from="1678792735280" duration="17000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -424,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678426873480</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="修复 #11 curseforge 包导入重新工作">
+      <created>1678601999709</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1678601999709</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,7 +477,6 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="组件可以编辑，加了个forge支持，但不能还原。还原就报错" />
     <MESSAGE value="Forge安装还差Processor部分" />
     <MESSAGE value="Fabric&amp;Quilt的组件安装能用但不知道好不好用是不是这么用" />
     <MESSAGE value="Modrinth整合包导入需要先完成资源解析和本地资源解析" />
@@ -472,7 +501,8 @@
     <MESSAGE value="资产仅能查看fabric模组，其他没做完" />
     <MESSAGE value="#8 总体完成，功能仅能简单使用，无法与元数据联动" />
     <MESSAGE value="微调了抽屉内的布局，更紧凑，留给内容更多空间" />
-    <option name="LAST_COMMIT_MESSAGE" value="微调了抽屉内的布局，更紧凑，留给内容更多空间" />
+    <MESSAGE value="修复 #11 curseforge 包导入重新工作" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复 #11 curseforge 包导入重新工作" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

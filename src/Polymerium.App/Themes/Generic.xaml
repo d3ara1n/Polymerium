@@ -28,6 +28,7 @@
     <converters:AccountToBustAvatarConverter x:Key="AccountToBustAvatarConverter" />
     <converters:AccountToFaceAvatarConverter x:Key="AccountToFaceAvatarConverter" />
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <converters:EnumerableToStringConverter x:Key="EnumerableToStringConverter" />
 
     <Style TargetType="controls:ExpanderExItem" BasedOn="{StaticResource DefaultExpanderExItemStyle}" />
 
@@ -147,6 +148,7 @@
                                     <Grid x:Name="OperationArea" Grid.Row="1" Visibility="Collapsed">
                                         <ContentControl x:Name="OperationContainer"
                                                         HorizontalAlignment="{TemplateBinding OperationHorizontalAlignment}"
+                                                        HorizontalContentAlignment="Stretch"
                                                         Margin="{TemplateBinding OperationPadding}"
                                                         Content="{TemplateBinding OperationContent}" />
                                     </Grid>

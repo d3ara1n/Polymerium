@@ -16,6 +16,7 @@
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
     </PropertyGroup>
     <ItemGroup>
+        <None Remove="Dialogs\InstanceSelectorDialog.xaml"/>
         <None Remove="Views\Instances\InstanceAssetDrawer.xaml"/>
     </ItemGroup>
 
@@ -47,6 +48,11 @@
         <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj"/>
         <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj"/>
         <ProjectReference Include="..\Polymerium.Core\Polymerium.Core.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Dialogs\InstanceSelectorDialog.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Views\Instances\InstanceAssetDrawer.xaml">

@@ -26,6 +26,13 @@ public static class CurseForgeHelper
     private const uint CLASSID_WORLD = 17;
     private const uint CLASSID_RESOURCEPACK = 12;
 
+    public static readonly IReadOnlyDictionary<string, string> MODLOADERS_MAPPINGS = new Dictionary<string, string>
+    {
+        { "Forge", ComponentMeta.FORGE },
+        { "Fabric", ComponentMeta.FABRIC },
+        { "Quilt", ComponentMeta.QUILT }
+    }.AsReadOnly();
+
     private static async Task<Option<T>> GetResourceAsync<T>(string service,
         CancellationToken token = default)
     {
@@ -109,5 +116,12 @@ public static class CurseForgeHelper
     {
         var service = $"/mods/{projectId}/files/{fileId}";
         return await GetResourceAsync<EternalModFile>(service, token);
+    }
+
+    public static async Task<IEnumerable<EternalModFile>> GetModFilesAsync(uint projectId,
+        CancellationToken token = default)
+    {
+        var service = $"/mods/{projectId}/files";
+        return await GetResourcesAsync<EternalModFile>(service, token);
     }
 }

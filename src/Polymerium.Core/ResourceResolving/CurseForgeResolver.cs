@@ -15,6 +15,15 @@ public class CurseForgeResolver : ResourceResolverBase
 {
     private static readonly Func<string, uint> PARSER_INT = uint.Parse;
 
+    public static Uri MakeResourceUrl(ResourceType type, string projectId, string version)
+    {
+        return type switch
+        {
+            ResourceType.File => new Uri($"poly-res://curseforge@file/{projectId}/{version}"),
+            _ => new Uri($"poly-res://curseforge@{type.ToString().ToLower()}/{projectId}?version={version}")
+        };
+    }
+
     private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(ResourceType type, string projectId,
         string version, Func<EternalProject, EternalModFile, ResourceBase> cast)
     {
@@ -41,7 +50,7 @@ public class CurseForgeResolver : ResourceResolverBase
         return await GetProjectAsync(ResourceType.Modpack, projectId, version,
             (project, _) => new Modpack(project.Id.ToString(), project.Name,
                 string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
-                version, new Uri($"poly-res://curseforge@modpack/{projectId}?version={version}")));
+                version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
     }
 
     [ResourceType(ResourceType.Mod)]
@@ -51,7 +60,27 @@ public class CurseForgeResolver : ResourceResolverBase
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
             (project, _) => new Mod(project.Id.ToString(), project.Name,
                 string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
-                version, new Uri($"poly-res://curseforge@mod/{projectId}?version={version}")));
+                version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
+    }
+
+    [ResourceType(ResourceType.ResourcePack)]
+    [ResourceExpression("{projectId}")]
+    public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(string projectId, string version)
+    {
+        return await GetProjectAsync(ResourceType.Mod, projectId, version,
+            (project, _) => new ResourcePack(project.Id.ToString(), project.Name,
+                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
+                version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
+    }
+
+    [ResourceType(ResourceType.ShaderPack)]
+    [ResourceExpression("{projectId}")]
+    public async Task<Result<ResolveResult, ResolveResultError>> GetShaderPackAsync(string projectId, string version)
+    {
+        return await GetProjectAsync(ResourceType.Mod, projectId, version,
+            (project, _) => new ShaderPack(project.Id.ToString(), project.Name,
+                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
+                version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
     }
 
     [ResourceType(ResourceType.File)]
@@ -67,27 +96,23 @@ public class CurseForgeResolver : ResourceResolverBase
             var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value);
             if (modOption.TryUnwrap(out var eternalProject) && fileOption.TryUnwrap(out var eternalFile))
             {
-                var hashes = eternalFile.Hashes.Where(x => x.Algo == 1);
-                string? sha1 = null;
-                if (hashes.Any()) sha1 = hashes.First().Value;
+                var sha1 = eternalFile.ExtractSha1();
+                var fileName = eternalProject.ClassId switch
+                {
+                    6 => $"mods/{eternalFile.FileName}",
+                    12 => $"resourcepacks/{eternalFile.FileName}",
+                    17 => $"worlds/{eternalFile.FileName}",
+                    4546 => $"shaderpacks/{eternalFile.FileName}",
+                    4471 => eternalFile.FileName,
+                    _ => throw new NotImplementedException()
+                };
                 var file = new File(eternalFile.Id.ToString(), eternalFile.DisplayName, string.Empty, null,
-                    string.Empty, fileId, $"{eternalProject.ClassId switch
-                    {
-                        6 => "mods",
-                        12 => "resourcepacks",
-                        17 => "worlds",
-                        4546 => "shaderpacks",
-                        _ => throw new NotImplementedException()
-                    }}/{eternalFile.FileName}", sha1,
-                    eternalFile.DownloadUrl ??
-                    new Uri(
-                        $"https://edge.forgecdn.net/files/{eternalFile.Id / 1000}/{eternalFile.Id % 1000}/{eternalFile.FileName}"));
+                    string.Empty, fileId, fileName, sha1,
+                    eternalFile.ExtractDownloadUrl());
                 return Ok(file, ResourceType.File);
             }
-
             return Err(ResolveResultError.NotFound);
         }
-
         return Err(ResolveResultError.InvalidArguments);
     }
 }

@@ -63,7 +63,6 @@ public class ImportModpackWizardViewModel : ObservableObject
         Action<Result<ImportResult, GameImportError>, bool> callback
     )
     {
-        // TODO: InstanceName 做 validation
         var result = await _importer.PostImportAsync(_importResult!);
         if (result.HasValue)
             callback(new Result<ImportResult, GameImportError>(result.Value), true);

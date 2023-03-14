@@ -23,12 +23,14 @@ public class ModrinthRepository : IResourceRepository
         return results.Select(x =>
             new RepositoryAssetMeta
             {
+                Repository = RepositoryLabel.Modrinth,
                 Id = x.ProjectId,
                 Name = x.Title,
                 Author = x.Author,
                 IconSource = x.IconUrl,
                 Summary = x.Description,
-                Type = type
+                Type = type,
+                Versions = x.Versions
             });
     }
 
@@ -39,12 +41,14 @@ public class ModrinthRepository : IResourceRepository
         {
             var result = new RepositoryAssetMeta
             {
+                Repository = RepositoryLabel.Modrinth,
                 Id = id,
                 Name = project.Title,
                 Author = project.Team,
                 IconSource = project.IconUrl,
                 Summary = project.Description,
-                Type = ResourceType.Mod
+                Type = ResourceType.Mod,
+                Versions = project.Versions
             };
             return result;
         }

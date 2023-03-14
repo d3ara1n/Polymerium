@@ -21,8 +21,8 @@ public struct EternalProject
     public EternalProjectLogo? Logo { get; set; }
     public object Screenshots { get; set; }
     public uint MainFileId { get; set; }
-    public object LatestFiles { get; set; }
-    public object LatestFilesIndexes { get; set; }
+    public IEnumerable<EternalProjectLatestFile> LatestFiles { get; set; }
+    public IEnumerable<EternalProjectLatestFileIndex> LatestFilesIndexes { get; set; }
     public DateTimeOffset DateCreated { get; set; }
     public DateTimeOffset DateModified { get; set; }
     public DateTimeOffset DateReleased { get; set; }

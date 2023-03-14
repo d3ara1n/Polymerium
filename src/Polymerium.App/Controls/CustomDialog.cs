@@ -132,6 +132,7 @@ public class CustomDialog : ContentControl
 
     public void Dismiss()
     {
+        OnDismiss();
         if (OverlayService != null)
         {
             //// 先触发动画，等动画结束触发事件之后调用服务里的 Dismiss()
@@ -148,5 +149,9 @@ public class CustomDialog : ContentControl
         {
             throw new ArgumentNullException(nameof(OverlayService));
         }
+    }
+
+    protected virtual void OnDismiss()
+    {
     }
 }

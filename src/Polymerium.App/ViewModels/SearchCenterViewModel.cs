@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Views;
 using Polymerium.Core.Components;
 using Polymerium.Core.Resources;
 
@@ -57,21 +58,24 @@ public class SearchCenterViewModel : ObservableObject
         get => selectedRepository;
         set
         {
-            if (SetProperty(ref selectedRepository, value))
-            {
-                (var old, SelectedResourceType) = (SelectedResourceType, null);
-                SelectedResourceType = null;
-                SupportedResources.Clear();
-                var supported = value!.SupportedResources;
-                foreach (uint i in Enum.GetValues(typeof(ResourceType)))
-                {
-                    var type = (ResourceType)i;
-                    if (type != ResourceType.None && (supported & type) == type) SupportedResources.Add(type);
-                }
-
-                SelectedResourceType = SupportedResources.Any(x => x == old) ? old : SupportedResources.First();
-            }
+            if (SetProperty(ref selectedRepository, value)) UpdateSupportedResources();
         }
+    }
+
+    public void UpdateSupportedResources()
+    {
+        (var old, SelectedResourceType) = (SelectedResourceType, null);
+        SelectedResourceType = null;
+        SupportedResources.Clear();
+        var supported = SelectedRepository!.SupportedResources;
+        foreach (uint i in Enum.GetValues(typeof(ResourceType)))
+        {
+            var type = (ResourceType)i;
+            if (type != ResourceType.None && (supported & type) == type &&
+                (InstanceScope == null || type != ResourceType.Modpack)) SupportedResources.Add(type);
+        }
+
+        SelectedResourceType = SupportedResources.Any(x => x == old) ? old : SupportedResources.First();
     }
 
     public async Task<IEnumerable<SearchCenterResultItemModel>> QueryAsync(string query, ResourceType type,
@@ -93,15 +97,16 @@ public class SearchCenterViewModel : ObservableObject
 
     public void ShowDetailDialog(SearchCenterResultItemModel model)
     {
-        //var dialog = new SearchDetailDialog(model.Resource)
-        //{
-        //    OverlayService = _overlayService
-        //};
-        //_overlayService.Show(dialog);
+        var dialog = new SearchDetailDialog(model.Resource, InstanceScope?.Inner)
+        {
+            OverlayService = _overlayService
+        };
+        _overlayService.Show(dialog);
     }
 
     private void ClearScope()
     {
         InstanceScope = null;
+        UpdateSupportedResources();
     }
 }

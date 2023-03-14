@@ -119,10 +119,11 @@ public partial class App : Application
         services
             .AddTransient<ResourceResolverBase, LocalFileResolver>()
             .AddTransient<ResourceResolverBase, RemoteFileResolver>()
-            .AddTransient<ResourceResolverBase, CurseForgeResolver>();
+            .AddTransient<ResourceResolverBase, CurseForgeResolver>()
+            .AddTransient<ResourceResolverBase, ModrinthResolver>();
         // repository
-        services.AddTransient<IResourceRepository, ModrinthRepository>()
-            .AddTransient<IResourceRepository, CurseForgeRepository>();
+        services.AddTransient<IResourceRepository, CurseForgeRepository>()
+            .AddTransient<IResourceRepository, ModrinthRepository>();
         return services.BuildServiceProvider();
     }
 }
