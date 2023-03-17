@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -45,6 +46,7 @@ public sealed partial class SearchDetailDialog : CustomDialog
     private void CustomDialog_Loaded(object sender, RoutedEventArgs e)
     {
         VersionSource.Filter = VersionSourceFilter;
+        VersionSource.SortDescriptions.Add(new SortDescription("ReleaseDateTime", SortDirection.Descending));
         IsOperating = true;
         Task.Run(() => ViewModel.LoadVersionsAsync(LoadVersionHandler));
     }

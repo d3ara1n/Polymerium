@@ -20,7 +20,7 @@ public struct LabrinthVersion
     public string Id { get; set; }
     public string ProjectId { get; set; }
     public string AuthorId { get; set; }
-    public string DatePublished { get; set; }
+    public DateTimeOffset DatePublished { get; set; }
     public long Downloads { get; set; }
     public Uri? ChangelogUrl { get; set; }
     public IEnumerable<LabrinthVersionFile> Files { get; set; }
