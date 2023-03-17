@@ -58,8 +58,10 @@ public class SearchDetailViewModel : ObservableObject
         // 支持的 modloader 和游戏版本应该是 file 的属性，但 modrinth 将其归于 version，这。。。
         var files = Resource!.Value.Repository switch
         {
-            RepositoryLabel.Modrinth => (await ModrinthHelper.GetProjectVersionsAsync(Resource.Value.Id)).Select(x =>
-                new SearchCenterResultItemVersionModel(x.Id, x.Name, x.Files.Select(y => new RepositoryAssetFile
+            RepositoryLabel.Modrinth => (await ModrinthHelper.GetProjectVersionsAsync(Resource.Value.Id))
+                .Select(x =>
+                    new SearchCenterResultItemVersionModel(x.Id, x.Name, x.DatePublished, x.Files.Select(y =>
+                        new RepositoryAssetFile
                 {
                     FileName = y.Filename,
                     Sha1 = y.Hashes.Sha1,
@@ -69,7 +71,7 @@ public class SearchDetailViewModel : ObservableObject
                         .Select(y => ModrinthHelper.MODLOADERS_MAPPINGS[y])
                 }).First(), ModrinthResolver.MakeResourceUrl(Resource.Value.Type, Resource.Value.Id, x.Id))),
             RepositoryLabel.CurseForge => (await CurseForgeHelper.GetModFilesAsync(uint.Parse(Resource.Value.Id)))
-                .Select(x => new SearchCenterResultItemVersionModel(x.Id.ToString(), x.DisplayName,
+                .Select(x => new SearchCenterResultItemVersionModel(x.Id.ToString(), x.DisplayName, x.FileDate,
                     new RepositoryAssetFile
                     {
                         FileName = Resource.Value.Type switch
@@ -146,6 +148,7 @@ public class SearchDetailViewModel : ObservableObject
             {
                 importResult.Value.Instance.ReferenceSource = version.ResourceUrl;
                 importResult.Value.Instance.ThumbnailFile = Resource!.Value.IconSource?.AbsoluteUri;
+                importResult.Value.Instance.Author = Resource!.Value.Author;
                 var postError = await _importer.PostImportAsync(importResult.Value);
                 if (postError.HasValue)
                     EndedError($"添加导入的实例失败: {postError}");

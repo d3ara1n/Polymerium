@@ -18,7 +18,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{C110B9
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "Polymerium.App (Package)", "src\Polymerium.App (Package)\Polymerium.App (Package).wapproj", "{D53F2D52-3507-4F6F-BF1D-BC642CB8C31C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polymerium.App", "src\Polymerium.App\Polymerium.App.csproj", "{D47CE37A-E31E-4B93-90A2-4FF81616222C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polymerium.App", "src\Polymerium.App\Polymerium.App.csproj", "{D47CE37A-E31E-4B93-90A2-4FF81616222C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Changelogs", "Changelogs", "{287C6B18-9178-417D-B603-09C18E2D3DE9}"
+	ProjectSection(SolutionItems) = preProject
+		changelogs\v0.3.1.md = changelogs\v0.3.1.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

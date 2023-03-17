@@ -157,7 +157,7 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
             * [x] CurseForge
         * [ ] 着色器包
             * [ ] 本地仓库
-            * [*] Modrinth
+            * [x] Modrinth
         * [x] 文件附件
             * [x] 本地仓库
             * [x] 远程资源
@@ -182,12 +182,12 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 
 ## 外部资料和参考
 
-* 游戏启动流程、Fabric/Quilt 部署：[Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
-*
-游戏启动流程：[教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8?variant=zh)
-* Forge：[ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
-* 微软验证：[Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
-* Forge 版本和下载：[BMCLApi](https://bmclapidoc.bangbang93.com/)
+- 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
+-
+游戏启动流程: [教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8?variant=zh)
+- Forge: [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
+- 微软验证: [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
+- Forge 版本和下载: [BMCLApi](https://bmclapidoc.bangbang93.com/)
 
 十分感谢以上作者和所著文章。
 
