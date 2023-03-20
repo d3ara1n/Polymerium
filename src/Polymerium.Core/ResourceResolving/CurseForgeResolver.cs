@@ -14,6 +14,7 @@ namespace Polymerium.Core.ResourceResolving;
 public class CurseForgeResolver : ResourceResolverBase
 {
     private static readonly Func<string, uint> PARSER_INT = uint.Parse;
+    private const string CURSEFORGE_PROJECT_URL = "https://beta.curseforge.com/minecraft/{0}/{1}";
 
     public static Uri MakeResourceUrl(ResourceType type, string projectId, string version)
     {
@@ -49,7 +50,9 @@ public class CurseForgeResolver : ResourceResolverBase
     {
         return await GetProjectAsync(ResourceType.Modpack, projectId, version,
             (project, _) => new Modpack(project.Id.ToString(), project.Name,
-                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
+                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
+                new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "modpacks").Replace("{1}", project.Slug)),
+                project.Summary,
                 version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
     }
 
@@ -59,7 +62,8 @@ public class CurseForgeResolver : ResourceResolverBase
     {
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
             (project, _) => new Mod(project.Id.ToString(), project.Name,
-                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
+                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
+                new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "mc-mods").Replace("{1}", project.Slug)), project.Summary,
                 version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
     }
 
@@ -69,17 +73,9 @@ public class CurseForgeResolver : ResourceResolverBase
     {
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
             (project, _) => new ResourcePack(project.Id.ToString(), project.Name,
-                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
-                version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
-    }
-
-    [ResourceType(ResourceType.ShaderPack)]
-    [ResourceExpression("{projectId}")]
-    public async Task<Result<ResolveResult, ResolveResultError>> GetShaderPackAsync(string projectId, string version)
-    {
-        return await GetProjectAsync(ResourceType.Mod, projectId, version,
-            (project, _) => new ShaderPack(project.Id.ToString(), project.Name,
-                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl, project.Summary,
+                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
+                new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "texture-packs").Replace("{1}", project.Slug)),
+                project.Summary,
                 version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
     }
 
@@ -106,7 +102,7 @@ public class CurseForgeResolver : ResourceResolverBase
                     4471 => eternalFile.FileName,
                     _ => throw new NotImplementedException()
                 };
-                var file = new File(eternalFile.Id.ToString(), eternalFile.DisplayName, string.Empty, null,
+                var file = new File(eternalFile.Id.ToString(), eternalFile.DisplayName, string.Empty, null, null,
                     string.Empty, fileId, fileName, sha1,
                     eternalFile.ExtractDownloadUrl());
                 return Ok(file, ResourceType.File);

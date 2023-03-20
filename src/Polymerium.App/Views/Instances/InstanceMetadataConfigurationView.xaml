@@ -91,7 +91,7 @@
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
                         <TextBlock Text="附件" Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="5">
                             <StackPanel Orientation="Horizontal" Spacing="8"
                                         Visibility="{x:Bind CanDelete,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                                 <TextBlock VerticalAlignment="Center"
@@ -145,6 +145,14 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:InstanceAttachmentItemModel">
                                 <Grid ColumnDefinitions="Auto,*" Margin="5" ToolTipService.ToolTip="{x:Bind Summary}">
+                                    <Grid.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="访问外部链接"
+                                                            IsEnabled="{x:Bind Reference,Converter={StaticResource NotNullToBoolConverter}}"
+                                                            Command="{x:Bind OpenReferenceCommand}"
+                                                            CommandParameter="{x:Bind Reference}" />
+                                        </MenuFlyout>
+                                    </Grid.ContextFlyout>
                                     <ui:ImageEx Width="48" Height="48" Margin="0,0,10,0" Source="{x:Bind IconSource}"
                                                 IsCacheEnabled="True" CacheMode="BitmapCache" Stretch="Fill"
                                                 PlaceholderSource="ms-appx:///Assets/Placeholders/default_dirt.png" />

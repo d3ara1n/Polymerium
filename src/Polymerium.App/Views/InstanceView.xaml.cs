@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Polymerium.App.ViewModels;
@@ -23,5 +24,10 @@ public sealed partial class InstanceView : Page
     private void Header_PointerExited(object sender, PointerRoutedEventArgs e)
     {
         EditButton.Opacity = 0.0;
+    }
+
+    private void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.LoadAssets();
     }
 }

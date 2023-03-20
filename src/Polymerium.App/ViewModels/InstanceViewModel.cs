@@ -28,9 +28,12 @@ public class InstanceViewModel : ObservableObject
     private readonly IOverlayService _overlayService;
 
     private string coreVersion = string.Empty;
-    private bool isModSupported;
 
+    private bool isModSupported;
     private bool isShaderSupported;
+    private uint resourcePackCount;
+    private uint modCount;
+    private uint shaderPackCount;
 
     public InstanceViewModel(
         ViewModelContext context,
@@ -93,8 +96,8 @@ public class InstanceViewModel : ObservableObject
                     : Context.AssociatedInstance.LastRestore.Humanize()
             )
         };
-        RawAssetSource = new ObservableCollection<AssetRaw>(gameManager.ScanAssets(Context.AssociatedInstance!.Inner));
-        RawShaders = new AdvancedCollectionView
+        RawAssetSource = new ObservableCollection<AssetRaw>();
+        RawShaderPacks = new AdvancedCollectionView
         {
             Source = RawAssetSource,
             Filter = x => ((AssetRaw)x).Type == ResourceType.ShaderPack
@@ -122,7 +125,7 @@ public class InstanceViewModel : ObservableObject
     public ObservableCollection<ComponentTagItemModel> Components { get; }
     public ObservableCollection<InstanceInformationItemModel> InformationItems { get; }
     public ObservableCollection<AssetRaw> RawAssetSource { get; }
-    public IAdvancedCollectionView RawShaders { get; }
+    public IAdvancedCollectionView RawShaderPacks { get; }
     public IAdvancedCollectionView RawMods { get; }
     public IAdvancedCollectionView RawResourcePacks { get; }
 
@@ -136,6 +139,24 @@ public class InstanceViewModel : ObservableObject
     {
         get => isShaderSupported;
         set => SetProperty(ref isShaderSupported, value);
+    }
+
+    public uint ModCount
+    {
+        get => modCount;
+        set => SetProperty(ref modCount, value);
+    }
+
+    public uint ResourcePackCount
+    {
+        get => resourcePackCount;
+        set => SetProperty(ref resourcePackCount, value);
+    }
+
+    public uint ShaderPackCount
+    {
+        get => shaderPackCount;
+        set => SetProperty(ref shaderPackCount, value);
     }
 
     public ViewModelContext Context { get; }
@@ -169,7 +190,7 @@ public class InstanceViewModel : ObservableObject
     {
         var drawer = type switch
         {
-            "ShaderPack" => new InstanceAssetDrawer(ResourceType.ShaderPack, RawShaders),
+            "ShaderPack" => new InstanceAssetDrawer(ResourceType.ShaderPack, RawShaderPacks),
             "Mod" => new InstanceAssetDrawer(ResourceType.Mod, RawMods),
             "ResourcePack" => new InstanceAssetDrawer(ResourceType.ResourcePack, RawResourcePacks),
             _ => throw new NotImplementedException()
@@ -181,5 +202,19 @@ public class InstanceViewModel : ObservableObject
     public void GotoConfigurationView()
     {
         _navigationService.Navigate<InstanceConfigurationView>();
+    }
+
+    public void LoadAssets()
+    {
+        var assets = _gameManager.ScanAssets(Context.AssociatedInstance!.Inner);
+        RawAssetSource.Clear();
+        foreach (var asset in assets)
+            RawAssetSource.Add(asset);
+        RawMods.Refresh();
+        ModCount = (uint)RawMods.Count;
+        RawResourcePacks.Refresh();
+        ResourcePackCount = (uint)RawResourcePacks.Count;
+        RawShaderPacks.Refresh();
+        ShaderPackCount = (uint)RawShaderPacks.Count;
     }
 }

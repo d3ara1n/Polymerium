@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -146,5 +147,17 @@ public sealed partial class InstanceMetadataConfigurationView : Page
              ((InstanceAttachmentItemModel)x).Caption.StartsWith(AttachmentSearchBox.Text,
                  StringComparison.OrdinalIgnoreCase));
         AttachmentSource.RefreshFilter();
+    }
+
+    private void OpenReferenceUrlButton_Click(object sender, RoutedEventArgs e)
+    {
+        var button = (Button)sender;
+        var item = (InstanceAttachmentItemModel)button.DataContext;
+        var url = item.Reference;
+        if (url != null)
+            Process.Start(new ProcessStartInfo(url.AbsoluteUri)
+            {
+                UseShellExecute = true
+            });
     }
 }

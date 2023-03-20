@@ -13,6 +13,7 @@ namespace Polymerium.Core.ResourceResolving;
 [ResourceDomain("modrinth")]
 public class ModrinthResolver : ResourceResolverBase
 {
+    private const string MODRINTH_PROJECT_URL = "https://modrinth.com/{0}/{1}";
     public static Uri MakeResourceUrl(ResourceType type, string projectId, string version)
     {
         return type switch
@@ -39,6 +40,7 @@ public class ModrinthResolver : ResourceResolverBase
     {
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
             (project, _) => new Modpack(project.Id ?? project.Slug, project.Title, project.Team, project.IconUrl,
+                new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "modpack").Replace("{1}", project.Slug)),
                 project.Description,
                 version, new Uri($"poly-res://modrinth@file/mods/{version}")));
     }
@@ -49,6 +51,7 @@ public class ModrinthResolver : ResourceResolverBase
     {
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
             (project, _) => new Mod(project.Id ?? project.Slug, project.Title, project.Team, project.IconUrl,
+                new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "mod").Replace("{1}", project.Slug)),
                 project.Description,
                 version, new Uri($"poly-res://modrinth@file/mods/{version}")));
     }
@@ -59,6 +62,7 @@ public class ModrinthResolver : ResourceResolverBase
     {
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
             (project, _) => new ResourcePack(project.Id ?? project.Slug, project.Title, project.Team, project.IconUrl,
+                new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "resourcepack").Replace("{1}", project.Slug)),
                 project.Description,
                 version, new Uri($"poly-res://modrinth@file/resourcepacks/{version}")));
     }
@@ -69,6 +73,7 @@ public class ModrinthResolver : ResourceResolverBase
     {
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
             (project, _) => new ResourcePack(project.Id ?? project.Slug, project.Title, project.Team, project.IconUrl,
+                new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "shader").Replace("{1}", project.Slug)),
                 project.Description,
                 version, new Uri($"poly-res://modrinth@file/shaderpacks/{version}")));
     }
@@ -82,7 +87,7 @@ public class ModrinthResolver : ResourceResolverBase
         {
             var first = file.Files.First();
             return Ok(
-                new File(file.Id, file.Name, string.Empty, null, string.Empty, version, $"{dir}/{first.Filename}",
+                new File(file.Id, file.Name, string.Empty, null, null, string.Empty, version, $"{dir}/{first.Filename}",
                     first.Hashes.Sha1, first.Url), ResourceType.File);
         }
 
@@ -98,7 +103,7 @@ public class ModrinthResolver : ResourceResolverBase
         {
             var first = file.Files.First();
             return Ok(
-                new File(file.Id, file.Name, string.Empty, null, string.Empty, version, first.Filename,
+                new File(file.Id, file.Name, string.Empty, null, null, string.Empty, version, first.Filename,
                     first.Hashes.Sha1, first.Url), ResourceType.File);
         }
 
