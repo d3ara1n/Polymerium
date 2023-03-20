@@ -10,7 +10,7 @@
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:models="using:Polymerium.App.Models"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="Page_Loaded">
     <ScrollViewer>
         <StackPanel>
             <controls:Card x:Name="Header" Height="220" Padding="0" Margin="5,0,10,5"
@@ -115,7 +115,7 @@
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-basil-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="资源包" FontSize="16" />
-                                <TextBlock Text="{x:Bind ViewModel.RawResourcePacks.Count}"
+                                <TextBlock Text="{x:Bind ViewModel.ResourcePackCount,Mode=OneWay}"
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
@@ -128,7 +128,7 @@
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="模组" FontSize="16" />
                                 <Grid>
-                                    <TextBlock Text="{x:Bind ViewModel.RawMods.Count}"
+                                    <TextBlock Text="{x:Bind ViewModel.ModCount,Mode=OneWay}"
                                                Visibility="{x:Bind ViewModel.IsModSupported,Converter={StaticResource BoolToVisibilityConverter}}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                     <TextBlock Text="不支持"
@@ -146,7 +146,7 @@
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
                                 <TextBlock Text="着色器包" FontSize="16" />
                                 <Grid>
-                                    <TextBlock Text="{x:Bind ViewModel.RawShaders.Count}"
+                                    <TextBlock Text="{x:Bind ViewModel.ShaderPackCount,Mode=OneWay}"
                                                Visibility="{x:Bind ViewModel.IsShaderSupported,Converter={StaticResource BoolToVisibilityConverter}}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                     <TextBlock Text="不支持"

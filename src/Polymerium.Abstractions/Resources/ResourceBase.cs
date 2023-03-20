@@ -4,13 +4,15 @@ namespace Polymerium.Abstractions.Resources;
 
 public abstract record ResourceBase
 {
-    protected ResourceBase(string id, string name, string author, Uri? iconSource, string summary, string version,
+    protected ResourceBase(string id, string name, string author, Uri? iconSource, Uri? reference, string summary,
+        string version,
         Uri file)
     {
         Id = id;
         Name = name;
         Author = author;
         IconSource = iconSource;
+        Reference = reference;
         Summary = summary;
         Version = version;
         File = file;
@@ -20,6 +22,7 @@ public abstract record ResourceBase
     public string Name { get; set; }
     public string Author { get; set; }
     public Uri? IconSource { get; set; }
+    public Uri? Reference { get; set; }
     public string Summary { get; set; }
 
     // 通过 (domain@)type, id, version 三元组可以获得特定版本资源的文件三元组 fileName, hash, source

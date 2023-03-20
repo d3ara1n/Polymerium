@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -41,6 +42,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         _navigationService = navigation;
         AddComponentCommand = new RelayCommand(AddComponent);
         GotoSearchCenterCommand = new RelayCommand(GotoSearchCenter);
+        OpenReferenceUrlCommand = new RelayCommand<Uri>(OpenReferenceUrl);
         RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(RemoveComponentSelf);
         RemoveAttachmentsCommand = new RelayCommand<IList<object>>(RemoveAttachments);
         Components = new ObservableCollection<InstanceComponentItemModel>(
@@ -57,6 +59,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     public ObservableCollection<InstanceAttachmentItemModel> Attachments { get; }
     public ICommand AddComponentCommand { get; }
     public ICommand GotoSearchCenterCommand { get; }
+    public ICommand OpenReferenceUrlCommand { get; }
     public IRelayCommand<InstanceComponentItemModel> RemoveComponentSelfCommand { get; }
     public IRelayCommand<IList<object>> RemoveAttachmentsCommand { get; }
 
@@ -153,12 +156,14 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         {
             var item = result.Value;
             model = new InstanceAttachmentItemModel(item.Type, item.Resource.Name, item.Resource.Author,
-                item.Resource.IconSource, item.Resource.Version, item.Resource.Summary, attachment);
+                item.Resource.IconSource, item.Resource.Reference, item.Resource.Version, item.Resource.Summary,
+                attachment, OpenReferenceUrlCommand);
         }
         else
         {
-            model = new InstanceAttachmentItemModel(ResourceType.None, "未知", "未知", null, "N/A", attachment.AbsoluteUri,
-                attachment);
+            model = new InstanceAttachmentItemModel(ResourceType.None, "未知", "未知", null, null, "N/A",
+                attachment.AbsoluteUri,
+                attachment, OpenReferenceUrlCommand);
         }
 
         callback(model);
@@ -195,5 +200,10 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
             );
             Context.AssociatedInstance.Components.Remove(item);
         }
+    }
+
+    private void OpenReferenceUrl(Uri? reference)
+    {
+        if (reference != null) Process.Start(new ProcessStartInfo(reference.AbsoluteUri) { UseShellExecute = true });
     }
 }

@@ -78,7 +78,7 @@ public static class CurseForgeHelper
             ResourceType.ResourcePack => CLASSID_RESOURCEPACK,
             ResourceType.World => CLASSID_WORLD,
             _ => throw new NotSupportedException()
-        }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlEncode(query)}"
+        }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlEncode(query)}&sortField=2&sortOrder=desc"
                       + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
                       + (modLoaderId != null
                           ? $"&modLoaderType={modLoaderId switch
