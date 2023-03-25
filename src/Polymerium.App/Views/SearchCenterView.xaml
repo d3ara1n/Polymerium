@@ -31,7 +31,7 @@
                               ItemsSource="{x:Bind ViewModel.SupportedResources}" />
                     <StackPanel Orientation="Horizontal" Spacing="10"
                                 Visibility="{x:Bind ViewModel.InstanceScope,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource NotNullToVisibleConverter}}">
-                        <TextBlock Text="实例: " VerticalAlignment="Center" />
+                        <TextBlock Text="结果已为实例过滤: " VerticalAlignment="Center" />
                         <TextBox Text="{x:Bind ViewModel.InstanceScope.Name,Mode=OneWay,FallbackValue={x:Null}}"
                                  IsEnabled="False" />
                         <Button x:Name="ClearScopeButton" Command="{x:Bind ViewModel.ClearScopeCommand}">

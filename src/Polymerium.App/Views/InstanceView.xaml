@@ -15,94 +15,118 @@
         <StackPanel>
             <controls:Card x:Name="Header" Height="220" Padding="0" Margin="5,0,10,5"
                            PointerEntered="Header_PointerEntered" PointerExited="Header_PointerExited">
-                <Grid ColumnDefinitions="Auto,*">
-                    <Grid.ChildrenTransitions>
-                        <EntranceThemeTransition />
-                    </Grid.ChildrenTransitions>
-                    <toolkit:ConstrainedBox Margin="30,30,15,30" VerticalAlignment="Center" HorizontalAlignment="Left"
-                                            AspectRatio="1:1">
-                        <Border CornerRadius="{ThemeResource ControlCornerRadius}" BorderThickness="1"
-                                BorderBrush="{ThemeResource CardStrokeBrush}">
-                            <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}"
-                                             Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile,Mode=OneWay}"
-                                             IsCacheEnabled="True"
-                                             PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
-                                             PlaceholderStretch="UniformToFill" />
-                        </Border>
-                    </toolkit:ConstrainedBox>
-                    <Grid Grid.Column="1" Margin="15,30,30,30" RowDefinitions="Auto,*">
-                        <Grid ColumnDefinitions="*,Auto">
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay}"
-                                           Style="{StaticResource TitleTextBlockStyle}" />
-                                <StackPanel Orientation="Horizontal" Spacing="5" Visibility="Collapsed">
-                                    <FontIcon Glyph="&#xE946;" FontSize="12"
-                                              Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                    <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                IsEnabled="{x:Bind IsPending,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Grid.ChildrenTransitions>
+                            <EntranceThemeTransition />
+                        </Grid.ChildrenTransitions>
+                        <ProgressBar VerticalAlignment="Top" HorizontalAlignment="Stretch" IsIndeterminate="True"
+                                     Grid.ColumnSpan="9" Grid.RowSpan="9"
+                                     Visibility="{x:Bind IsPending,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <toolkit:ConstrainedBox Margin="30,30,15,30" VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                AspectRatio="1:1">
+                            <Border CornerRadius="{ThemeResource ControlCornerRadius}" BorderThickness="1"
+                                    BorderBrush="{ThemeResource CardStrokeBrush}">
+                                <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}"
+                                                 Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile,Mode=OneWay}"
+                                                 IsCacheEnabled="True"
+                                                 PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
+                                                 PlaceholderStretch="UniformToFill" />
+                            </Border>
+                        </toolkit:ConstrainedBox>
+                        <Grid Grid.Column="1" Margin="15,30,30,30" RowDefinitions="Auto,*">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay}"
+                                               Style="{StaticResource TitleTextBlockStyle}" />
+                                    <StackPanel Orientation="Horizontal" Spacing="5"
+                                                Visibility="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <FontIcon Glyph="&#xE946;" FontSize="12"
+                                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                        <TextBlock
+                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                         <Run Text="来自" />
-                                        <Hyperlink>Curseforge</Hyperlink>
-                                    </TextBlock>
-                                    <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                                        <Hyperlink NavigateUri="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}">整合包</Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock
+                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                         <Run Text="带有" />
                                         <Hyperlink>附件</Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
-                                <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                     <Run Text="游戏版本: " />
                                     <Run Text="{x:Bind ViewModel.CoreVersion,Mode=OneWay}" />
-                                </TextBlock>
-                            </StackPanel>
-                            <Grid Grid.Column="1">
-                                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="运行" Width="114"
-                                        Command="{x:Bind ViewModel.StartCommand}"
-                                        Style="{StaticResource AccentButtonStyle}" />
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Spacing="3">
+                                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="运行"
+                                            Width="114"
+                                            Command="{x:Bind ViewModel.StartCommand}"
+                                            Style="{StaticResource AccentButtonStyle}" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                                Visibility="{x:Bind ViewModel.IsRestorationNeeded,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                                                Spacing="3">
+                                        <FontIcon Glyph="&#xE946;" FontSize="12" />
+                                        <TextBlock Text="需要还原" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                                Visibility="{x:Bind ViewModel.IsRestorationNeeded,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
+                                                Spacing="3">
+                                        <FontIcon Glyph="&#xE73E;" FontSize="12" />
+                                        <TextBlock Text="准备就绪" />
+                                    </StackPanel>
+                                </StackPanel>
                             </Grid>
-                        </Grid>
-                        <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled"
-                                          HorizontalScrollMode="Disabled" HorizontalScrollBarVisibility="Disabled">
-                                <GridView SelectionMode="None" Padding="0" ItemsSource="{x:Bind ViewModel.Components}"
-                                          ToolTipService.ToolTip="已安装的组件(体验扩充包)"
-                                          VerticalAlignment="Bottom">
-                                    <GridView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <toolkit:WrapPanel />
-                                        </ItemsPanelTemplate>
-                                    </GridView.ItemsPanel>
-                                    <GridView.ItemContainerStyle>
-                                        <Style TargetType="GridViewItem">
-                                            <Setter Property="Margin" Value="0" />
-                                        </Style>
-                                    </GridView.ItemContainerStyle>
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:ComponentTagItemModel">
-                                            <Grid Margin="5,0,5,0">
-                                                <Border CornerRadius="5"
-                                                        Background="{ThemeResource FloatLayerBackgroundBrush}"
-                                                        ToolTipService.ToolTip="{x:Bind Description}">
-                                                    <Grid Margin="10,5,10,5">
-                                                        <TextBlock Text="{x:Bind Name}" />
-                                                    </Grid>
-                                                </Border>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                </GridView>
-                            </ScrollViewer>
-                            <Grid Grid.Column="1">
-                                <Button x:Name="EditButton" Opacity="0" HorizontalAlignment="Right"
-                                        Style="{StaticResource IconButtonStyle}"
-                                        VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的元数据"
-                                        Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
-                                    <Button.OpacityTransition>
-                                        <ScalarTransition />
-                                    </Button.OpacityTransition>
-                                    <FontIcon Glyph="&#xE104;" />
-                                </Button>
+                            <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled"
+                                              HorizontalScrollMode="Disabled" HorizontalScrollBarVisibility="Disabled">
+                                    <GridView SelectionMode="None" Padding="0"
+                                              ItemsSource="{x:Bind ViewModel.Components}"
+                                              ToolTipService.ToolTip="已安装的组件(体验扩充包)"
+                                              VerticalAlignment="Bottom">
+                                        <GridView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <toolkit:WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </GridView.ItemsPanel>
+                                        <GridView.ItemContainerStyle>
+                                            <Style TargetType="GridViewItem">
+                                                <Setter Property="Margin" Value="0" />
+                                            </Style>
+                                        </GridView.ItemContainerStyle>
+                                        <GridView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:ComponentTagItemModel">
+                                                <Grid Margin="5,0,5,0">
+                                                    <Border CornerRadius="5"
+                                                            Background="{ThemeResource FloatLayerBackgroundBrush}"
+                                                            ToolTipService.ToolTip="{x:Bind Description}">
+                                                        <Grid Margin="10,5,10,5">
+                                                            <TextBlock Text="{x:Bind Name}" />
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridView.ItemTemplate>
+                                    </GridView>
+                                </ScrollViewer>
+                                <Grid Grid.Column="1">
+                                    <Button x:Name="EditButton" Opacity="0" HorizontalAlignment="Right"
+                                            Style="{StaticResource IconButtonStyle}"
+                                            VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的元数据"
+                                            Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
+                                        <Button.OpacityTransition>
+                                            <ScalarTransition />
+                                        </Button.OpacityTransition>
+                                        <FontIcon Glyph="&#xE104;" />
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
+                </ContentControl>
             </controls:Card>
             <controls:Card Margin="5,5,10,5" Padding="5">
                 <Grid ColumnDefinitions="*,*,*">

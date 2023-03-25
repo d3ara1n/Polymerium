@@ -19,6 +19,20 @@
 
     <ScrollViewer>
         <StackPanel Spacing="5" Margin="5,0,10,10">
+            <controls:GroupBox
+                Visibility="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Converter={StaticResource BoolToVisibilityConverter}}">
+                <controls:GroupBox.Header>
+                    <Grid>
+                        <TextBlock Text="整合包" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <Button x:Name="UnlockButton" Content="解锁" HorizontalAlignment="Right"
+                                Style="{StaticResource IconButtonStyle}"
+                                Command="{x:Bind ViewModel.AddComponentCommand}" />
+                    </Grid>
+                </controls:GroupBox.Header>
+                <Grid>
+                    <TextBlock Text="WIP" />
+                </Grid>
+            </controls:GroupBox>
             <controls:GroupBox>
                 <controls:GroupBox.Header>
                     <Grid>

@@ -257,6 +257,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                         )
                         .WithJvmArguments(
                             polylock.JvmArguments.Concat(new[] { "-Xmx${jvm_max_memory}m" })
+                                .Concat((configuration.AdditionalJvmArguments ?? string.Empty).Split(' '))
                         )
                         .ConfigureStarship(configure =>
                         {

@@ -80,7 +80,7 @@ public static class CurseForgeHelper
             _ => throw new NotSupportedException()
         }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlEncode(query)}&sortField=2&sortOrder=desc"
                       + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
-                      + (modLoaderId != null
+                      + ((type == ResourceType.Mod || type == ResourceType.Modpack) && modLoaderId != null
                           ? $"&modLoaderType={modLoaderId switch
                           {
                               ComponentMeta.FORGE => 1,

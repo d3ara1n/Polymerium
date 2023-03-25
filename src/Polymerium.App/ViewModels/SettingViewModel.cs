@@ -22,7 +22,10 @@ public class SettingViewModel : ObservableObject
     private string javaHome = string.Empty;
 
     private string javaSummary = string.Empty;
+
     private uint jvmMaxMemory;
+
+    private string additionalJvmArguments = string.Empty;
 
     private JavaInstallationModel? selectedJava;
 
@@ -42,6 +45,7 @@ public class SettingViewModel : ObservableObject
         SkipJavaVersionCheck = Global.SkipJavaVersionCheck ?? false;
         JavaHome = Global.JavaHome ?? string.Empty;
         JvmMaxMemory = Global.JvmMaxMemory ?? 4096;
+        AdditionalJvmArugments = Global.AdditionalJvmArguments ?? string.Empty;
         WindowWidth = Global.WindowWidth ?? 480;
         WindowHeight = Global.WindowHeight ?? 854;
     }
@@ -113,6 +117,16 @@ public class SettingViewModel : ObservableObject
         {
             if (SetProperty(ref jvmMaxMemory, value))
                 Global.JvmMaxMemory = value;
+        }
+    }
+
+    public string AdditionalJvmArugments
+    {
+        get => additionalJvmArguments;
+        set
+        {
+            if (SetProperty(ref additionalJvmArguments, value))
+                Global.AdditionalJvmArguments = value;
         }
     }
 

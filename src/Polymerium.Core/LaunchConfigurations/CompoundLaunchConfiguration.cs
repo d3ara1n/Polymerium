@@ -34,6 +34,12 @@ public class CompoundLaunchConfiguration : LaunchConfigurationBase
         set => _first.SkipJavaVersionCheck = value;
     }
 
+    public override string? AdditionalJvmArguments
+    {
+        get => _first.AdditionalJvmArguments ?? _second.AdditionalJvmArguments;
+        set => _first.AdditionalJvmArguments = value;
+    }
+
     public override uint? JvmMaxMemory
     {
         get => _first.JvmMaxMemory ?? _second.JvmMaxMemory;

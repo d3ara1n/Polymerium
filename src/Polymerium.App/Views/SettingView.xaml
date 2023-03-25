@@ -140,6 +140,27 @@
                     <controls:ExpanderEx.Header>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE140;" Margin="20" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="Java 虚拟机附加参数" />
+                                    <LineBreak />
+                                    <Run Text="非必要的用于调整虚拟机性能的额外参数"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </controls:ExpanderEx.Header>
+                    <StackPanel Spacing="1">
+                        <controls:ExpanderExItem>
+                            <TextBox Text="{x:Bind ViewModel.AdditionalJvmArugments,Mode=TwoWay}"
+                                     IsSpellCheckEnabled="False" />
+                        </controls:ExpanderExItem>
+                    </StackPanel>
+                </controls:ExpanderEx>
+                <controls:ExpanderEx Padding="0">
+                    <controls:ExpanderEx.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE2B2;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
                                     <Run Text="游戏窗口初始大小" />

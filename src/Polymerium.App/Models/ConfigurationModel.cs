@@ -52,6 +52,16 @@ public class ConfigurationModel : ObservableObject
         }
     }
 
+    public string AdditionalJvmArguments
+    {
+        get => Inner.AdditionalJvmArguments ?? string.Empty;
+        set
+        {
+            Inner.AdditionalJvmArguments = value;
+            OnPropertyChanged();
+        }
+    }
+
     public uint WindowWidth
     {
         get => Inner.WindowWidth ?? 0;
