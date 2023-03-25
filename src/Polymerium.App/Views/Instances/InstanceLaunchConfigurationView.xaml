@@ -10,6 +10,8 @@
     <ScrollViewer>
         <controls:Card Margin="5,0,10,10">
             <StackPanel Spacing="5">
+                <TextBlock Text="实例启动参数会从全局设置中继承，对实例的修改会被保存，且只在该实例生效，不会影响全局设置" TextWrapping="WrapWholeWords"
+                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
                         <Grid>
@@ -86,6 +88,27 @@
                             </StackPanel>
                         </Grid>
                     </controls:ExpanderEx.Header>
+                </controls:ExpanderEx>
+                <controls:ExpanderEx Padding="0">
+                    <controls:ExpanderEx.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE140;" Margin="20" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="Java 虚拟机附加参数" />
+                                    <LineBreak />
+                                    <Run Text="非必要的用于调整虚拟机性能的额外参数"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </controls:ExpanderEx.Header>
+                    <StackPanel Spacing="1">
+                        <controls:ExpanderExItem>
+                            <TextBox Text="{x:Bind ViewModel.Configuration.AdditionalJvmArguments,Mode=TwoWay}"
+                                     IsSpellCheckEnabled="False" />
+                        </controls:ExpanderExItem>
+                    </StackPanel>
                 </controls:ExpanderEx>
             </StackPanel>
         </controls:Card>

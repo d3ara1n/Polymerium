@@ -9,6 +9,7 @@ using System.Web;
 using DotNext;
 using Duffet;
 using Duffet.Builders;
+using Microsoft.Extensions.Caching.Memory;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.ResourceResolving.Attributes;
@@ -19,13 +20,15 @@ namespace Polymerium.Core.Engines;
 public class ResolveEngine
 {
     private readonly IEnumerable<ResolverTuple> _tuples;
+    private readonly IMemoryCache _cache;
 
-    public ResolveEngine(IEnumerable<ResourceResolverBase> resolvers)
+    public ResolveEngine(IEnumerable<ResourceResolverBase> resolvers, IMemoryCache cache)
     {
         // 保证 DomainName 为 null 最后被匹配到
         _tuples = resolvers
             .SelectMany(GetTuplesInType)
             .OrderByDescending(x => x.DomainName?.Length ?? -1);
+        _cache = cache;
     }
 
     private IEnumerable<ResolverTuple> GetTuplesInType(ResourceResolverBase resolver)
@@ -67,47 +70,62 @@ public class ResolveEngine
     {
         if (resource.Scheme == "poly-res")
         {
-            var type = resource.Host;
-            var domain = !string.IsNullOrEmpty(resource.UserInfo) ? resource.UserInfo : null;
-            var expression = resource.GetComponents(UriComponents.Path, UriFormat.Unescaped);
-            var query = HttpUtility.ParseQueryString(resource.Query);
-            var resolver = _tuples.FirstOrDefault(
-                x =>
-                    x.Type.ToString().Equals(type, StringComparison.OrdinalIgnoreCase)
-                    && (
-                        domain == null
-                            ? x.DomainName == null
-                            : x.DomainName == domain || x.DomainName == null
-                    )
-            );
-            if (resolver != null)
+            if (_cache.TryGetValue<Result<ResolveResult, ResolveResultError>>(resource.AbsoluteUri, out var cached) &&
+                cached.IsSuccessful)
+                return cached;
+            return await _cache.GetOrCreateAsync(resource, async entry =>
             {
-                // prepare path arguments
-                var builder = new BankBuilder();
-                var match = resolver.Expression.Compiled.Match(expression);
-                if (match.Success)
-                    foreach (Group group in match.Groups)
-                        if (group.Success && group.Name != string.Empty)
-                        {
-                            var name = group.Name;
-                            var value = group.Value;
-                            builder.Property().Named(name).Typed(typeof(string)).WithObject(value);
-                        }
-
-                // prepare query arguments
-                foreach (string key in query.Keys)
-                    builder.Property().Named(key).Typed(typeof(string)).WithObject(query.Get(key));
-
-                var bank = builder.Build();
-                var context = new ResolverContext(instance);
-                resolver.Self.Context = context;
-                return await ExecuteAsAsyncStateMachine(resolver.Method, resolver.Self, bank);
-            }
-
-            return new Result<ResolveResult, ResolveResultError>(ResolveResultError.NotFound);
+                var result = await ResolveInternalAsync(resource, instance);
+                if (result.IsSuccessful) entry.SetSlidingExpiration(TimeSpan.FromMinutes(60));
+                else entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
+                return result;
+            });
         }
 
         throw new ArgumentException("Scheme only accepts 'poly-res'", nameof(resource));
+    }
+
+    private async Task<Result<ResolveResult, ResolveResultError>> ResolveInternalAsync(Uri resource,
+        GameInstance? instance = null)
+    {
+        var type = resource.Host;
+        var domain = !string.IsNullOrEmpty(resource.UserInfo) ? resource.UserInfo : null;
+        var expression = resource.GetComponents(UriComponents.Path, UriFormat.Unescaped);
+        var query = HttpUtility.ParseQueryString(resource.Query);
+        var resolver = _tuples.FirstOrDefault(
+            x =>
+                x.Type.ToString().Equals(type, StringComparison.OrdinalIgnoreCase)
+                && (
+                    domain == null
+                        ? x.DomainName == null
+                        : x.DomainName == domain || x.DomainName == null
+                )
+        );
+        if (resolver != null)
+        {
+            // prepare path arguments
+            var builder = new BankBuilder();
+            var match = resolver.Expression.Compiled.Match(expression);
+            if (match.Success)
+                foreach (Group group in match.Groups)
+                    if (group.Success && group.Name != string.Empty)
+                    {
+                        var name = group.Name;
+                        var value = group.Value;
+                        builder.Property().Named(name).Typed(typeof(string)).WithObject(value);
+                    }
+
+            // prepare query arguments
+            foreach (string key in query.Keys)
+                builder.Property().Named(key).Typed(typeof(string)).WithObject(query.Get(key));
+
+            var bank = builder.Build();
+            var context = new ResolverContext(instance);
+            resolver.Self.Context = context;
+            return await ExecuteAsAsyncStateMachine(resolver.Method, resolver.Self, bank);
+        }
+
+        return new Result<ResolveResult, ResolveResultError>(ResolveResultError.NotFound);
     }
 
     public async Task<Result<ResolveResult, ResolveResultError>> ResolveToFileAsync(Uri url,

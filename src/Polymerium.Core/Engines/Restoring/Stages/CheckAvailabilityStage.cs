@@ -47,12 +47,10 @@ public class CheckAvailabilityStage : StageBase
     {
         if (Token.IsCancellationRequested)
             return Task.FromResult(Cancel());
-        var polylockDataFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json");
-        // 不是简单的 md5, 所以文件名也不应该是 .md5
-        var polylockHashFile = new Uri($"poly-file://{_instance.Id}/polymerium.lock.json.hash");
+        var polylockDataFile = _instance.GetPolylockDataUrl();
+        var polylockHashFile = _instance.GetPolylockHashUrl();
         if (
-            _fileBase.TryReadAllText(polylockHashFile, out var hash)
-            && hash == _instance.ComputeMetadataHash()
+            !_instance.CheckIfNeedRestoration(_fileBase)
             && _fileBase.TryReadAllText(polylockDataFile, out var content)
         )
         {

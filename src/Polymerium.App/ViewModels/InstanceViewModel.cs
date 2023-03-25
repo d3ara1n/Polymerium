@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,6 +16,7 @@ using Polymerium.App.Views;
 using Polymerium.App.Views.Instances;
 using Polymerium.Core;
 using Polymerium.Core.Components;
+using Polymerium.Core.Engines;
 using Polymerium.Core.Extensions;
 using Polymerium.Core.GameAssets;
 
@@ -24,7 +26,9 @@ public class InstanceViewModel : ObservableObject
 {
     private readonly ComponentManager _componentManager;
     private readonly GameManager _gameManager;
+    private readonly ResolveEngine _resolver;
     private readonly NavigationService _navigationService;
+    private readonly IFileBaseService _fileBase;
     private readonly IOverlayService _overlayService;
 
     private string coreVersion = string.Empty;
@@ -35,10 +39,15 @@ public class InstanceViewModel : ObservableObject
     private uint modCount;
     private uint shaderPackCount;
 
+    private bool isRestorationNeeded;
+    private Uri? referenceUrl;
+
     public InstanceViewModel(
         ViewModelContext context,
         InstanceManager instanceManager,
+        ResolveEngine resolver,
         IOverlayService overlayService,
+        IFileBaseService fileBase,
         ComponentManager componentManager,
         NavigationService navigationService,
         GameManager gameManager
@@ -46,8 +55,10 @@ public class InstanceViewModel : ObservableObject
     {
         _overlayService = overlayService;
         _componentManager = componentManager;
+        _resolver = resolver;
         _navigationService = navigationService;
         _gameManager = gameManager;
+        _fileBase = fileBase;
         Context = context;
         CoreVersion = Context.AssociatedInstance!.Inner.GetCoreVersion() ?? "N/A";
         StartCommand = new RelayCommand(Start);
@@ -159,6 +170,18 @@ public class InstanceViewModel : ObservableObject
         set => SetProperty(ref shaderPackCount, value);
     }
 
+    public bool IsRestorationNeeded
+    {
+        get => isRestorationNeeded;
+        set => SetProperty(ref isRestorationNeeded, value);
+    }
+
+    public Uri? ReferenceUrl
+    {
+        get => referenceUrl;
+        set => SetProperty(ref referenceUrl, value);
+    }
+
     public ViewModelContext Context { get; }
     public ICommand StartCommand { get; }
     public ICommand OpenAssetDrawerCommand { get; }
@@ -216,5 +239,19 @@ public class InstanceViewModel : ObservableObject
         ResourcePackCount = (uint)RawResourcePacks.Count;
         RawShaderPacks.Refresh();
         ShaderPackCount = (uint)RawShaderPacks.Count;
+    }
+
+    public async Task LoadInstanceInformationAsync(Action<Uri?, bool> callback)
+    {
+        var isNeeded = Context.AssociatedInstance!.Inner.CheckIfNeedRestoration(_fileBase);
+        Uri? url = null;
+        if (Context.AssociatedInstance.ReferenceSource != null)
+        {
+            var result = await _resolver.ResolveAsync(Context.AssociatedInstance!.ReferenceSource,
+                Context.AssociatedInstance!.Inner);
+            if (result) url = result.Value.Resource.Reference;
+        }
+
+        callback(url, isNeeded);
     }
 }

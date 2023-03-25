@@ -131,4 +131,17 @@ public class GameInstanceModel : ObservableObject
             OnPropertyChanged();
         }
     }
+
+    public Uri? ReferenceSource
+    {
+        get => Inner.ReferenceSource;
+        set
+        {
+            Inner.ReferenceSource = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(IsTagged));
+        }
+    }
+
+    public bool IsTagged => ReferenceSource != null;
 }

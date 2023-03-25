@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
@@ -21,5 +22,21 @@ public static class GameInstanceExtensions
         return instance.Metadata.Components.Any(x => x.Identity == ComponentMeta.MINECRAFT)
             ? instance.Metadata.Components.First(x => x.Identity == ComponentMeta.MINECRAFT).Version
             : null;
+    }
+
+    public static Uri GetPolylockDataUrl(this GameInstance instance)
+    {
+        return new($"poly-file://{instance.Id}/polymerium.lock.json");
+    }
+
+    public static Uri GetPolylockHashUrl(this GameInstance instance)
+    {
+        return new($"poly-file://{instance.Id}/polymerium.lock.json.hash");
+    }
+
+    public static bool CheckIfNeedRestoration(this GameInstance instance, IFileBaseService fileBase)
+    {
+        return !(fileBase.TryReadAllText(instance.GetPolylockHashUrl(), out var hash)
+                 && hash == instance.ComputeMetadataHash());
     }
 }
