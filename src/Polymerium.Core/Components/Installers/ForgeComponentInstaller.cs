@@ -74,7 +74,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                     Context.AppendJvmArguments(argument);
             }
 
-            // add forge client, launcher from maven url
+            // add forge jar from archive
             var libs = archive.Entries.Where(x =>
                 x.FullName.StartsWith("maven/net/minecraftforge/forge") && x.Name.EndsWith(".jar"));
             foreach (var entry in libs)
@@ -107,18 +107,18 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
     private void GoAheadWithWrapper(string installerUrl, string coreVersion, string componentVersion)
     {
         Context.AddLibrary(new Library($"net.minecraftforge:installer:{componentVersion}",
-            $"net/minecraftforge/installer/{componentVersion}/forge-installer-{componentVersion}.jar",
+            $"net/minecraftforge/forge/{coreVersion}-{componentVersion}/forge-{coreVersion}-{componentVersion}-installer.jar",
             null,
             new Uri(installerUrl), presentInClassPath: false));
-        Context.AddLibrary(new Library("com.github.zekerzhayard:ForgeWrapper:1.5.5",
-            "com/github/zekerzhayard/ForgeWrapper/1.5.5/ForgeWrapper-1.5.5.jar",
+        Context.AddLibrary(new Library("io.github.zekerzhayard:ForgeWrapper:1.5.5",
+            "io/github/zekerzhayard/ForgeWrapper/1.5.5/ForgeWrapper-1.5.5.jar",
             "4ee5f25cc9c7efbf54aff4c695da1054c1a1d7a3",
             new Uri(
                 "https://github.com/ZekerZhayard/ForgeWrapper/releases/download/1.5.5/ForgeWrapper-1.5.5.jar")));
 
         Context.AppendJvmArguments("-Dforgewrapper.librariesDir=${library_directory}");
         Context.AppendJvmArguments(
-            $"-Dforgewrapper.installer=${{library_directory}}\\net\\minecraftforge\\installer\\{componentVersion}\\forge-installer-{componentVersion}.jar");
+            $"-Dforgewrapper.installer=${{library_directory}}\\net\\minecraftforge\\forge\\{coreVersion}-{componentVersion}\\forge-{coreVersion}-{componentVersion}-installer.jar");
         Context.AppendJvmArguments(
             $"-Dforgewrapper.minecraft=${{library_directory}}\\net\\minecraft\\minecraft\\{coreVersion}\\minecraft-{coreVersion}.jar");
 

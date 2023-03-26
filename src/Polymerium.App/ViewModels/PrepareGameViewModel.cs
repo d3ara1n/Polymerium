@@ -269,7 +269,10 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                 .AddCrate("assets_root", _fileBase.Locate(assetsRoot))
                                 .AddCrate("assets_index_name", polylock.AssetIndex.Id)
                                 .AddCrate("auth_uuid", Account!.UUID)
-                                .AddCrate("auth_access_token", Account!.AccessToken)
+                                .AddCrate("auth_access_token",
+                                    !string.IsNullOrWhiteSpace(Account!.AccessToken)
+                                        ? Account!.AccessToken
+                                        : "unauthorized")
                                 .AddCrate("user_type", Account!.LoginType)
                                 .AddCrate("version_type", "Polymerium")
                                 // rule os

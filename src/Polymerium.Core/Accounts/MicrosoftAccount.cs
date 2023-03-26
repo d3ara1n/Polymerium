@@ -40,7 +40,7 @@ public class MicrosoftAccount : IGameAccount
     }
 
     public string RefreshToken { get; set; }
-    public string LoginType => "mojang";
+    public string LoginType => "msa";
 
     public string Id { get; set; }
     public string UUID { get; set; }

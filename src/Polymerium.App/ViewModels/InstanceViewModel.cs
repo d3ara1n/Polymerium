@@ -243,7 +243,7 @@ public class InstanceViewModel : ObservableObject
 
     public async Task LoadInstanceInformationAsync(Action<Uri?, bool> callback)
     {
-        var isNeeded = Context.AssociatedInstance!.Inner.CheckIfNeedRestoration(_fileBase);
+        var isNeeded = !Context.AssociatedInstance!.Inner.CheckIfRestored(_fileBase, out _);
         Uri? url = null;
         if (Context.AssociatedInstance.ReferenceSource != null)
         {

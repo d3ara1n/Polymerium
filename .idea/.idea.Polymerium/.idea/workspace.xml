@@ -12,28 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/changelogs/v0.3.md" beforeDir="false" afterPath="$PROJECT_DIR$/changelogs/v0.3.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/LaunchConfigurations/FileBasedLaunchConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/LaunchConfigurations/FileBasedLaunchConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/LaunchConfigurations/LaunchConfigurationBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/LaunchConfigurations/LaunchConfigurationBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/ConfigurationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/ConfigurationModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/GameInstanceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/GameInstanceModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/PrepareGameViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchCenterView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/ResolveEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/ResolveEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CheckAvailabilityStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/CheckAvailabilityStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Extensions/GameInstanceExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Extensions/GameInstanceExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/CurseForgeHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Helpers/CurseForgeHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/LaunchConfigurations/CompoundLaunchConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/LaunchConfigurations/CompoundLaunchConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Polymerium.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Polymerium.Core.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,6 +229,7 @@
       <workItem from="1679019479662" duration="608000" />
       <workItem from="1679318685907" duration="219000" />
       <workItem from="1679728586466" duration="33000" />
+      <workItem from="1679728660785" duration="151000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -482,7 +462,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679318763251</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="#14 简单实现">
+      <created>1679728796814</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1679728796814</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,7 +492,6 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="元数据修改页面的组件移除按钮不会若隐若现了" />
     <MESSAGE value="fmt; make code &quot;nullable&quot;" />
     <MESSAGE value="fix bus that caused by the last commit" />
     <MESSAGE value="#5" />
@@ -530,7 +516,8 @@
     <MESSAGE value="#4 下载中心功能实装。收藏和依赖于下一个版本实现" />
     <MESSAGE value="- **优化**下载中心详情页面的版本根据发布日期降序&#10;- **优化**下载中心 CurseForge 搜索结果按热度正确排序" />
     <MESSAGE value="**新增**元数据中的附件列表可以快速在浏览器中访问对应的资源页面" />
-    <option name="LAST_COMMIT_MESSAGE" value="**新增**元数据中的附件列表可以快速在浏览器中访问对应的资源页面" />
+    <MESSAGE value="#14 简单实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="#14 简单实现" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

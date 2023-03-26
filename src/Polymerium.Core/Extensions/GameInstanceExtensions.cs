@@ -34,9 +34,11 @@ public static class GameInstanceExtensions
         return new($"poly-file://{instance.Id}/polymerium.lock.json.hash");
     }
 
-    public static bool CheckIfNeedRestoration(this GameInstance instance, IFileBaseService fileBase)
+    public static bool CheckIfRestored(this GameInstance instance, IFileBaseService fileBase, out string? content)
     {
-        return !(fileBase.TryReadAllText(instance.GetPolylockHashUrl(), out var hash)
-                 && hash == instance.ComputeMetadataHash());
+        content = null;
+        return fileBase.TryReadAllText(instance.GetPolylockHashUrl(), out var hash)
+               && hash == instance.ComputeMetadataHash() &&
+               fileBase.TryReadAllText(instance.GetPolylockDataUrl(), out content);
     }
 }

@@ -49,12 +49,9 @@ public class CheckAvailabilityStage : StageBase
             return Task.FromResult(Cancel());
         var polylockDataFile = _instance.GetPolylockDataUrl();
         var polylockHashFile = _instance.GetPolylockHashUrl();
-        if (
-            !_instance.CheckIfNeedRestoration(_fileBase)
-            && _fileBase.TryReadAllText(polylockDataFile, out var content)
-        )
+        if (_instance.CheckIfRestored(_fileBase, out var content))
         {
-            var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
+            var polylock = JsonConvert.DeserializeObject<PolylockData>(content!);
             return Task.FromResult(Next(
                 new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader)
             ));

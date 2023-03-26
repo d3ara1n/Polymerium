@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 
 namespace Polymerium.Core.Stars;
 
@@ -20,7 +21,7 @@ public class PlanetBlender
                 WorkingDirectory = _options.WorkingDirectory
             }
         };
-        foreach (var item in _options.Arguments)
+        foreach (var item in _options.Arguments.Where(x => !string.IsNullOrWhiteSpace(x)))
             process.StartInfo.ArgumentList.Add(item);
         process.Start();
     }
