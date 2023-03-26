@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using IBuilder;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
@@ -86,24 +88,64 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
     {
         var found = false;
         foreach (var exist in libraries)
-            //var existTuple = exist.Name.Split(':');
-            //var tuple = library.Name.Split(':');
-            //if (existTuple.Take(2).Concat(existTuple.Skip(3)).SequenceEqual(tuple.Take(2).Concat(tuple.Skip(3))) &&
-            //    exist.IsNative == library.IsNative &&
-            //    exist.PresentInClassPath == library.PresentInClassPath)
-            //{
-            //    exist.Name = library.Name;
-            //    exist.Path = library.Path;
-            //    exist.Sha1 = library.Sha1;
-            //    exist.Url = library.Url;
-            //    found = true;
-            //    break;
-            //}
-            if (exist.Name == library.Name && exist.IsNative == library.IsNative &&
-                exist.PresentInClassPath == library.PresentInClassPath)
-                found = true;
+            if (exist.PresentInClassPath && library.PresentInClassPath)
+            {
+                var existTuple = exist.Name.Split(':');
+                var tuple = library.Name.Split(':');
+                if (existTuple.Take(2).Concat(existTuple.Skip(3)).SequenceEqual(tuple.Take(2).Concat(tuple.Skip(3))) &&
+                    exist.IsNative == library.IsNative &&
+                    exist.PresentInClassPath == library.PresentInClassPath)
+                {
+                    var version = tuple[2];
+                    var existVersion = existTuple[2];
+                    if (CompareVersion(version, existVersion))
+                    {
+                        exist.Name = library.Name;
+                        exist.Path = library.Path;
+                        exist.Sha1 = library.Sha1;
+                        exist.Url = library.Url;
+                    }
+
+                    found = true;
+                    break;
+                }
+            }
+            else
+            {
+                if (exist.Name == library.Name && exist.IsNative == library.IsNative &&
+                    exist.PresentInClassPath == library.PresentInClassPath)
+                    found = true;
+            }
 
         if (!found) libraries.Add(library);
+    }
+
+    private bool CompareVersion(string a, string b)
+    {
+        var a1 = a.Split('.');
+        var b1 = b.Split('.');
+        for (var i = 0; i < Math.Min(a1.Length, b1.Length); i++)
+        {
+            var compare = PartiallyCompareVersion(a1[i], b1[i]);
+            if (compare > 0)
+                return true;
+            if (compare < 0)
+                return false;
+        }
+
+        return a1.Length > b1.Length;
+    }
+
+    private int PartiallyCompareVersion(string a, string b)
+    {
+        if (int.TryParse(a, out var ia) && int.TryParse(b, out var ib))
+        {
+            if (ia > ib) return 1;
+            if (ia < ib) return -1;
+            return 0;
+        }
+
+        return string.Compare(a, b);
     }
 
     public void AddAttachment(PolylockAttachment attachment)
