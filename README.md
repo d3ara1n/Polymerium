@@ -112,9 +112,9 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 * [ ] 启动游戏
     * [x] Polylock 文件
     * [ ] 可选参数
-        * [ ] 自定义 JVM 参数
+        * [x] 自定义 JVM 参数
         * [ ] 预定义的优化 JVM 参数
-        * [ ] 先决条件检查
+        * [x] 先决条件检查
         * [x] Java 版本自动选择和兼容性检查
     * [ ] 行星搅拌机
         * [x] Fire-and-forget 模式
@@ -184,7 +184,7 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 
 - 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
 -
-游戏启动流程: [教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8?variant=zh)
+游戏启动流程: [教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8)
 - Forge: [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
 - 微软验证: [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
 - Forge 版本和下载: [BMCLApi](https://bmclapidoc.bangbang93.com/)

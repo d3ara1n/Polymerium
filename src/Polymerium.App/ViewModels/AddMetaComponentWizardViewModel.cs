@@ -150,7 +150,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     {
         return await LoadVersionsAsync<IEnumerable<ForgeBuild>>(
             $"https://bmclapi2.bangbang93.com/forge/minecraft/{coreVersion}",
-            x => x.Select(y => y.Version).Reverse(),
+            x => x.OrderByDescending(y => y.Modified).Select(y => y.Version),
             entry
         );
     }
