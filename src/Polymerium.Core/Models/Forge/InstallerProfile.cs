@@ -7,8 +7,15 @@ public struct InstallerProfile
 {
     public int? Spec { get; set; }
 
-    // for old version install
+    // for old version install compatibility
     public ForgeProfileInstall? Install { get; set; }
+
+    public ForgeProfileInstallVersionInfo? VersionInfo { get; set; }
+
+    // unknown objects
+    public object? Optionals { get; set; }
+
+    // end for old version install compatibility
     public string Profile { get; set; }
     public string Version { get; set; }
     public string Path { get; set; }

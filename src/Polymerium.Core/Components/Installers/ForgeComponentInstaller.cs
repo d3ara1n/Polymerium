@@ -50,7 +50,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
 
         if (versionJson.HasValue && profileJson.HasValue && profileJson.Value.Spec != null)
         {
-            // above 1.12
+            // 1.12 and above 
             foreach (var library in versionJson.Value.Libraries)
                 if (library.Downloads.Artifact.Url != null)
                     Context.AddLibrary(new Library(library.Name, library.Downloads.Artifact.Path,
@@ -93,7 +93,29 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                         path, null, local));
             }
 
-            GoAheadWithWrapper(installerUrl, mcVersion, component.Version);
+            if (versionJson.Value.MainClass == "cpw.mods.bootstraplauncher.BootstrapLauncher")
+                // 1.13+
+                GoAheadWithWrapper(installerUrl, mcVersion, component.Version);
+            else
+                // 1.12
+                Context.SetMainClass(versionJson.Value.MainClass);
+        }
+        else if (profileJson.HasValue)
+        {
+            // below 1.12
+            Context.OverrideGameArguments();
+            foreach (var argument in profileJson.Value.VersionInfo!.Value.MinecraftArguments.Split(' '))
+                Context.AppendGameArgument(argument);
+            foreach (var library in profileJson.Value.VersionInfo!.Value.Libraries.Where(x =>
+                         x.ClientRequired.HasValue && x.ClientRequired.Value))
+            {
+                // 库只给个 name 不给 url = =
+                // 自杀吧
+                // 直接报错得了
+            }
+
+            throw new NotImplementedException();
+            Context.SetMainClass(profileJson.Value.VersionInfo!.Value.MainClass);
         }
         else
         {

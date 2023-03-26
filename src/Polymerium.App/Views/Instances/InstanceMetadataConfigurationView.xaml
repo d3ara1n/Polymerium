@@ -25,8 +25,7 @@
                     <Grid>
                         <TextBlock Text="整合包" Style="{StaticResource SubtitleTextBlockStyle}" />
                         <Button x:Name="UnlockButton" Content="解锁" HorizontalAlignment="Right"
-                                Style="{StaticResource IconButtonStyle}"
-                                Command="{x:Bind ViewModel.AddComponentCommand}" />
+                                Style="{StaticResource IconButtonStyle}" />
                     </Grid>
                 </controls:GroupBox.Header>
                 <Grid>
