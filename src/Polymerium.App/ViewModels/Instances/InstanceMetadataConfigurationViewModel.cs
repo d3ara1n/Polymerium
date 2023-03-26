@@ -9,6 +9,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -129,9 +130,10 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     public async Task LoadParseAttachmentsAsync(IEnumerable<Uri> newlyAdded)
     {
+        var context = new ResolverContext(Context.AssociatedInstance!.Inner);
         var tasks = new List<Task>();
         foreach (var attachment in newlyAdded)
-            tasks.Add(LoadAddAttachmentInfoAsync(attachment, addAttachmentCallback!));
+            tasks.Add(LoadAddAttachmentInfoAsync(attachment, context, addAttachmentCallback!));
         await Task.WhenAll(tasks);
         addAttachmentCallback!(null);
     }
@@ -148,9 +150,10 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         );
     }
 
-    private async Task LoadAddAttachmentInfoAsync(Uri attachment, Action<InstanceAttachmentItemModel?> callback)
+    private async Task LoadAddAttachmentInfoAsync(Uri attachment, ResolverContext context,
+        Action<InstanceAttachmentItemModel?> callback)
     {
-        var result = await _resolver.ResolveAsync(attachment, Context.AssociatedInstance?.Inner);
+        var result = await _resolver.ResolveAsync(attachment, context);
         InstanceAttachmentItemModel model = null!;
         if (result.IsSuccessful)
         {

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Helpers;
 
@@ -12,11 +13,18 @@ public class CurseForgeRepository : IResourceRepository
     public RepositoryLabel Label => RepositoryLabel.CurseForge;
     public ResourceType SupportedResources => ResourceType.Modpack | ResourceType.Mod | ResourceType.ResourcePack;
 
+    private readonly IMemoryCache _cache;
+
+    public CurseForgeRepository(IMemoryCache cache)
+    {
+        _cache = cache;
+    }
 
     public async Task<IEnumerable<RepositoryAssetMeta>> SearchProjectsAsync(string query, ResourceType type,
         string? modLoader, string? version, uint offset = 0, uint limit = 10, CancellationToken token = default)
     {
-        var results = await CurseForgeHelper.SearchProjectsAsync(query, type, version, modLoader, offset, limit, token);
+        var results =
+            await CurseForgeHelper.SearchProjectsAsync(_cache, query, type, version, modLoader, offset, limit, token);
         return results.Select(x => new RepositoryAssetMeta
         {
             Repository = RepositoryLabel.CurseForge,
@@ -34,7 +42,7 @@ public class CurseForgeRepository : IResourceRepository
     {
         if (uint.TryParse(id, out var projectId))
         {
-            var option = await CurseForgeHelper.GetModInfoAsync(projectId, token);
+            var option = await CurseForgeHelper.GetModInfoAsync(projectId, _cache, token);
             if (option.TryUnwrap(out var project))
             {
                 var result = new RepositoryAssetMeta

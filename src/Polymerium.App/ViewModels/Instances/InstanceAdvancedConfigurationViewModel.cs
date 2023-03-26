@@ -90,17 +90,21 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary)
         {
-            var dir = new Uri($"poly-file://{Context.AssociatedInstance!.Id}/");
-            var path = _fileBase.Locate(dir);
-            if (Directory.Exists(path))
-                try
-                {
-                    Directory.Delete(path, true);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e, "Deleting instance {} local files failed", dir.AbsoluteUri);
-                }
+            var folderDir = new Uri($"poly-file://{Context.AssociatedInstance!.Id}/");
+            var folderPath = _fileBase.Locate(folderDir);
+            var localDir = new Uri($"poly-file:///local/instances/{Context.AssociatedInstance!.Id}/");
+            var localPath = _fileBase.Locate(localDir);
+            try
+            {
+                if (Directory.Exists(folderPath))
+                    Directory.Delete(folderPath, true);
+                if (Directory.Exists(localPath))
+                    Directory.Delete(localPath, true);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Deleting instance {} local files failed", folderDir.AbsoluteUri);
+            }
 
             _instanceManager.RemoveInstance(Context.AssociatedInstance.Inner);
         }

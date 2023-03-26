@@ -7,8 +7,10 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -26,15 +28,17 @@ public class SearchDetailViewModel : ObservableObject
     private readonly ResolveEngine _resolver;
     private readonly INotificationService _notification;
     private readonly ImportService _importer;
+    private readonly IMemoryCache _cache;
 
     public SearchDetailViewModel(ViewModelContext context, MemoryStorage memoryStorage, ResolveEngine resolver,
-        INotificationService notification, ImportService importer)
+        INotificationService notification, ImportService importer, IMemoryCache cache)
     {
         Context = context;
         _memoryStorage = memoryStorage;
         _resolver = resolver;
         _notification = notification;
         _importer = importer;
+        _cache = cache;
         Versions = new ObservableCollection<SearchCenterResultItemVersionModel>();
     }
 
@@ -58,19 +62,21 @@ public class SearchDetailViewModel : ObservableObject
         // 支持的 modloader 和游戏版本应该是 file 的属性，但 modrinth 将其归于 version，这。。。
         var files = Resource!.Value.Repository switch
         {
-            RepositoryLabel.Modrinth => (await ModrinthHelper.GetProjectVersionsAsync(Resource.Value.Id))
+            RepositoryLabel.Modrinth => (await ModrinthHelper.GetProjectVersionsAsync(Resource.Value.Id, _cache))
                 .Select(x =>
                     new SearchCenterResultItemVersionModel(x.Id, x.Name, x.DatePublished, x.Files.Select(y =>
                         new RepositoryAssetFile
-                {
-                    FileName = y.Filename,
-                    Sha1 = y.Hashes.Sha1,
-                    Source = y.Url,
-                    SupportedCoreVersions = x.GameVersions,
-                    SupportedModLoaders = x.Loaders.Where(y => ModrinthHelper.MODLOADERS_MAPPINGS.ContainsKey(y))
+                        {
+                            FileName = y.Filename,
+                            Sha1 = y.Hashes.Sha1,
+                            Source = y.Url,
+                            SupportedCoreVersions = x.GameVersions,
+                            SupportedModLoaders = x.Loaders
+                                .Where(y => ModrinthHelper.MODLOADERS_MAPPINGS.ContainsKey(y))
                         .Select(y => ModrinthHelper.MODLOADERS_MAPPINGS[y])
-                }).First(), ModrinthResolver.MakeResourceUrl(Resource.Value.Type, Resource.Value.Id, x.Id))),
-            RepositoryLabel.CurseForge => (await CurseForgeHelper.GetModFilesAsync(uint.Parse(Resource.Value.Id)))
+                        }).First(), ModrinthResolver.MakeResourceUrl(Resource.Value.Type, Resource.Value.Id, x.Id))),
+            RepositoryLabel.CurseForge => (await CurseForgeHelper.GetModFilesAsync(uint.Parse(Resource.Value.Id),
+                    _cache))
                 .Select(x => new SearchCenterResultItemVersionModel(x.Id.ToString(), x.DisplayName, x.FileDate,
                     new RepositoryAssetFile
                     {
@@ -111,7 +117,7 @@ public class SearchDetailViewModel : ObservableObject
         CancellationToken token = default)
     {
         var url = version.ResourceUrl;
-        var resolveResult = await _resolver.ResolveToFileAsync(url);
+        var resolveResult = await _resolver.ResolveToFileAsync(url, new ResolverContext());
         if (resolveResult.IsSuccessful && resolveResult.Value.Resource is File file)
         {
             report(0, false);

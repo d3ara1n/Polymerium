@@ -144,7 +144,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         AttachmentSource.Filter = x =>
             (filter?.Invoke((InstanceAttachmentItemModel)x) ?? true) &&
             (string.IsNullOrEmpty(AttachmentSearchBox.Text) ||
-             ((InstanceAttachmentItemModel)x).Caption.StartsWith(AttachmentSearchBox.Text,
+             ((InstanceAttachmentItemModel)x).Caption.Contains(AttachmentSearchBox.Text,
                  StringComparison.OrdinalIgnoreCase));
         AttachmentSource.RefreshFilter();
     }

@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI;
 using Humanizer;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -248,7 +249,7 @@ public class InstanceViewModel : ObservableObject
         if (Context.AssociatedInstance.ReferenceSource != null)
         {
             var result = await _resolver.ResolveAsync(Context.AssociatedInstance!.ReferenceSource,
-                Context.AssociatedInstance!.Inner);
+                new ResolverContext(Context.AssociatedInstance!.Inner));
             if (result) url = result.Value.Resource.Reference;
         }
 

@@ -93,7 +93,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                         path, null, local));
             }
 
-            if (versionJson.Value.MainClass == "cpw.mods.bootstraplauncher.BootstrapLauncher")
+            if (versionJson.Value.MainClass != "net.minecraft.launchwrapper.Launch")
                 // 1.13+
                 GoAheadWithWrapper(installerUrl, mcVersion, component.Version);
             else
@@ -113,9 +113,8 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                 // 自杀吧
                 // 直接报错得了
             }
-
-            throw new NotImplementedException();
             Context.SetMainClass(profileJson.Value.VersionInfo!.Value.MainClass);
+            throw new NotImplementedException();
         }
         else
         {

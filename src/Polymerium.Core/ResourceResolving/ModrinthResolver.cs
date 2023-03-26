@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DotNext;
+using Microsoft.Extensions.Caching.Memory;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.ResourceResolving.Attributes;
 using Polymerium.Abstractions.Resources;
@@ -14,6 +15,14 @@ namespace Polymerium.Core.ResourceResolving;
 public class ModrinthResolver : ResourceResolverBase
 {
     private const string MODRINTH_PROJECT_URL = "https://modrinth.com/{0}/{1}";
+
+    private readonly IMemoryCache _cache;
+
+    public ModrinthResolver(IMemoryCache cache)
+    {
+        _cache = cache;
+    }
+
     public static Uri MakeResourceUrl(ResourceType type, string projectId, string version)
     {
         return type switch
@@ -26,8 +35,8 @@ public class ModrinthResolver : ResourceResolverBase
     private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(ResourceType type, string projectId,
         string version, Func<LabrinthProject, LabrinthVersion, ResourceBase> cast)
     {
-        var modOption = await ModrinthHelper.GetProjectAsync(projectId);
-        var versionOption = await ModrinthHelper.GetVersionAsync(version);
+        var modOption = await ModrinthHelper.GetProjectAsync(projectId, _cache);
+        var versionOption = await ModrinthHelper.GetVersionAsync(version, _cache);
         if (modOption.TryUnwrap(out var project) && versionOption.TryUnwrap(out var file))
             return new ResolveResult(cast(project, file), type);
 
@@ -82,7 +91,7 @@ public class ModrinthResolver : ResourceResolverBase
     [ResourceExpression("{dir}/{version}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetFileAsync(string dir, string version)
     {
-        var versionOption = await ModrinthHelper.GetVersionAsync(version);
+        var versionOption = await ModrinthHelper.GetVersionAsync(version, _cache);
         if (versionOption.TryUnwrap(out var file))
         {
             var first = file.Files.First();
@@ -98,7 +107,7 @@ public class ModrinthResolver : ResourceResolverBase
     [ResourceExpression("{version}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetModpackFileAsync(string version)
     {
-        var versionOption = await ModrinthHelper.GetVersionAsync(version);
+        var versionOption = await ModrinthHelper.GetVersionAsync(version, _cache);
         if (versionOption.TryUnwrap(out var file))
         {
             var first = file.Files.First();
