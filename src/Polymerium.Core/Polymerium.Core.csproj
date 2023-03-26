@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNext.Threading" Version="4.10.0"/>
+        <PackageReference Include="DotNext.Threading" Version="4.12.0"/>
         <PackageReference Include="IBuilder" Version="0.1.0"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0"/>

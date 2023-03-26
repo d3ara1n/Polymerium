@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/d3ara1n/Polymerium">
-    <img src="src/Polymerium.App%20(Package)/Images/Logo.png" alt="Logo" width="80" height="80">
+    <img src="assets/images/Logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Polymerium</h3>

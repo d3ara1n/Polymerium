@@ -33,12 +33,13 @@
         <PackageReference Include="IBuilder" Version="0.1.0"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230217.4"/>
-        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230313.1"/>
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
         <PackageReference Include="System.Drawing.Common" Version="7.0.0"/>
         <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="7.0.1"/>
         <PackageReference Include="WinUIEx" Version="2.1.0"/>

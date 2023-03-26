@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DotNext;
+using Microsoft.Extensions.Caching.Memory;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.ResourceResolving.Attributes;
 using Polymerium.Abstractions.Resources;
@@ -15,6 +16,13 @@ public class CurseForgeResolver : ResourceResolverBase
 {
     private static readonly Func<string, uint> PARSER_INT = uint.Parse;
     private const string CURSEFORGE_PROJECT_URL = "https://beta.curseforge.com/minecraft/{0}/{1}";
+
+    private readonly IMemoryCache _cache;
+
+    public CurseForgeResolver(IMemoryCache cache)
+    {
+        _cache = cache;
+    }
 
     public static Uri MakeResourceUrl(ResourceType type, string projectId, string version)
     {
@@ -33,8 +41,8 @@ public class CurseForgeResolver : ResourceResolverBase
         var fid = PARSER_INT.TryInvoke(version);
         if (pid.IsSuccessful && fid.IsSuccessful)
         {
-            var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value);
-            var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value);
+            var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value, _cache);
+            var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value, _cache);
             if (modOption.TryUnwrap(out var eternalProject) && fileOption.TryUnwrap(out var eternalFile))
                 return new ResolveResult(cast(eternalProject, eternalFile), type);
 
@@ -88,8 +96,8 @@ public class CurseForgeResolver : ResourceResolverBase
         var fid = PARSER_INT.TryInvoke(fileId);
         if (pid.IsSuccessful && fid.IsSuccessful)
         {
-            var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value);
-            var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value);
+            var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value, _cache);
+            var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value, _cache);
             if (modOption.TryUnwrap(out var eternalProject) && fileOption.TryUnwrap(out var eternalFile))
             {
                 var sha1 = eternalFile.ExtractSha1();

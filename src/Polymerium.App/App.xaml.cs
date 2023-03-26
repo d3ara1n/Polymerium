@@ -63,7 +63,8 @@ public partial class App : Application
                         .SetMinimumLevel(LogLevel.Debug)
 #endif
             )
-            .AddMemoryCache();
+            .AddMemoryCache()
+            .AddHttpClient();
         // view models registration
         services
             .AddSingleton<ViewModelContext>()

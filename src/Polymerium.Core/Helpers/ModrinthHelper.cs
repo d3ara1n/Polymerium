@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Resources;
@@ -24,54 +25,70 @@ public static class ModrinthHelper
         { "quilt", ComponentMeta.QUILT }
     }.AsReadOnly();
 
-    private static async Task<Option<T>> GetResourceAsync<T>(string service, CancellationToken token = default)
+    private static async Task<Option<T>> GetResourceAsync<T>(string service, IMemoryCache cache,
+        CancellationToken token = default)
     {
         if (token.IsCancellationRequested) return Option<T>.None();
-        T? result = default;
-        var found = false;
-        await Wapoo.Wohoo(ENDPOINT + service)
-            .ForJsonResult<T>(x =>
-            {
-                result = x;
-                found = true;
-            })
-            .ViaGet()
-            .FetchAsync(token);
-        return found ? Option<T>.Some(result!) : Option<T>.None();
+        return await cache.GetOrCreateAsync<Option<T>>(service, async entry =>
+        {
+            T? result = default;
+            var found = false;
+            await Wapoo.Wohoo(ENDPOINT + service)
+                .ForJsonResult<T>(x =>
+                {
+                    result = x;
+                    found = true;
+                })
+                .ViaGet()
+                .FetchAsync(token);
+            entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
+            return found ? Option<T>.Some(result!) : Option<T>.None();
+        }) ?? Option<T>.None();
     }
 
-    private static async Task<IEnumerable<T>> GetResourcesAsync<T>(string service,
+    private static async Task<IEnumerable<T>> GetResourcesAsync<T>(string service, IMemoryCache cache,
         CancellationToken token = default)
     {
-        IEnumerable<T>? results = null;
-        await Wapoo.Wohoo(ENDPOINT + service)
-            .ForJsonResult<JArray>(x => { results = x.ToObject<IEnumerable<T>>(); })
-            .ViaGet()
-            .FetchAsync(token);
-        return results ?? Enumerable.Empty<T>();
+        if (token.IsCancellationRequested) return Enumerable.Empty<T>();
+        return await cache.GetOrCreateAsync(service, async entry =>
+        {
+            IEnumerable<T>? results = null;
+            await Wapoo.Wohoo(ENDPOINT + service)
+                .ForJsonResult<JArray>(x => { results = x.ToObject<IEnumerable<T>>(); })
+                .ViaGet()
+                .FetchAsync(token);
+            entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
+            return results ?? Enumerable.Empty<T>();
+        }) ?? Enumerable.Empty<T>();
     }
 
-    private static async Task<IEnumerable<T>> GetHitsAsync<T>(string service,
+    private static async Task<IEnumerable<T>> GetHitsAsync<T>(string service, IMemoryCache cache,
         CancellationToken token = default)
     {
-        IEnumerable<T>? results = null;
-        await Wapoo.Wohoo(ENDPOINT + service)
-            .ForJsonResult<JObject>(x =>
-            {
-                if (x.ContainsKey("hits")) results = x["hits"]!.ToObject<IEnumerable<T>>();
-            })
-            .ViaGet()
-            .FetchAsync(token);
-        return results ?? Enumerable.Empty<T>();
+        if (token.IsCancellationRequested) return Enumerable.Empty<T>();
+        return await cache.GetOrCreateAsync(service, async entry =>
+        {
+            IEnumerable<T>? results = null;
+            await Wapoo.Wohoo(ENDPOINT + service)
+                .ForJsonResult<JObject>(x =>
+                {
+                    if (x.ContainsKey("hits")) results = x["hits"]!.ToObject<IEnumerable<T>>();
+                })
+                .ViaGet()
+                .FetchAsync(token);
+            return results ?? Enumerable.Empty<T>();
+        }) ?? Enumerable.Empty<T>();
     }
 
-    public static async Task<Option<LabrinthProject>> GetProjectAsync(string id, CancellationToken token = default)
+    public static async Task<Option<LabrinthProject>> GetProjectAsync(string id, IMemoryCache cache,
+        CancellationToken token = default)
     {
         var service = $"/project/{id}";
-        return await GetResourceAsync<LabrinthProject>(service, token);
+        return await GetResourceAsync<LabrinthProject>(service, cache, token);
     }
 
-    public static async Task<IEnumerable<LabrinthHit>> SearchProjectsAsync(string query, ResourceType type,
+    public static async Task<IEnumerable<LabrinthHit>> SearchProjectsAsync(IMemoryCache cache, string query,
+        ResourceType type,
         string? gameVersion = null, string? modLoaderId = null, uint offset = 0, uint limit = 10,
         CancellationToken token = default)
     {
@@ -97,20 +114,20 @@ public static class ModrinthHelper
         }));
         var service =
             $"/search?query={HttpUtility.UrlEncode(query)}&offset={offset}&limit={limit}&facets=[{string.Join(',', facets.Select(x => $"[\"{x.Key}:{x.Value}\"]"))}]";
-        return await GetHitsAsync<LabrinthHit>(service, token);
+        return await GetHitsAsync<LabrinthHit>(service, cache, token);
     }
 
-    public static async Task<IEnumerable<LabrinthVersion>> GetProjectVersionsAsync(string projectId,
+    public static async Task<IEnumerable<LabrinthVersion>> GetProjectVersionsAsync(string projectId, IMemoryCache cache,
         CancellationToken token = default)
     {
         var service = $"/project/{projectId}/version";
-        return await GetResourcesAsync<LabrinthVersion>(service, token);
+        return await GetResourcesAsync<LabrinthVersion>(service, cache, token);
     }
 
-    public static async Task<Option<LabrinthVersion>> GetVersionAsync(string versionId,
+    public static async Task<Option<LabrinthVersion>> GetVersionAsync(string versionId, IMemoryCache cache,
         CancellationToken token = default)
     {
         var service = $"/version/{versionId}";
-        return await GetResourceAsync<LabrinthVersion>(service, token);
+        return await GetResourceAsync<LabrinthVersion>(service, cache, token);
     }
 }
