@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -16,12 +17,18 @@ public class Drawer : HeaderedContentControl
 
     public IOverlayService? OverlayService { get; set; }
 
+    public event EventHandler<EventArgs>? Closed;
+
     protected override void OnApplyTemplate()
     {
         var button = (Button)GetTemplateChild("PART_CloseButton");
         button.Command = new RelayCommand(Close);
         var close = (Storyboard)GetTemplateChild("PART_CloseStoryBoard");
-        close.Completed += (_, _) => OverlayService!.Dismiss();
+        close.Completed += (_, _) =>
+        {
+            OverlayService!.Dismiss();
+            Closed?.Invoke(this, new EventArgs());
+        };
         VisualStateManager.GoToState(this, "Opened", false);
     }
 

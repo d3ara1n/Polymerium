@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNext;
@@ -32,23 +33,33 @@ public class ModrinthResolver : ResourceResolverBase
         };
     }
 
+    private string MembersToLine(IEnumerable<LabrinthTeamMember> members)
+    {
+        return string.Join(", ",
+            members.Select(x => !string.IsNullOrEmpty(x.User.Name) ? x.User.Name : x.User.Username));
+    }
+
     private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(ResourceType type, string projectId,
-        string version, Func<LabrinthProject, LabrinthVersion, ResourceBase> cast)
+        string version, Func<LabrinthProject, LabrinthVersion, IEnumerable<LabrinthTeamMember>, ResourceBase> cast)
     {
         var modOption = await ModrinthHelper.GetProjectAsync(projectId, _cache);
         var versionOption = await ModrinthHelper.GetVersionAsync(version, _cache);
         if (modOption.TryUnwrap(out var project) && versionOption.TryUnwrap(out var file))
-            return new ResolveResult(cast(project, file), type);
+        {
+            var teams = await ModrinthHelper.GetTeamMembersAsync(project.Team, _cache);
+            return new ResolveResult(cast(project, file, teams), type);
+        }
 
         return Err(ResolveResultError.NotFound);
     }
 
     [ResourceType(ResourceType.Modpack)]
     [ResourceExpression("{projectId}")]
-    public async Task<Result<ResolveResult, ResolveResultError>> GetModPackAsync(string projectId, string version)
+    public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(string projectId, string version)
     {
-        return await GetProjectAsync(ResourceType.Mod, projectId, version,
-            (project, _) => new Modpack(project.Id ?? project.Slug, project.Title, project.Team, project.IconUrl,
+        return await GetProjectAsync(ResourceType.Modpack, projectId, version,
+            (project, file, members) => new Modpack(project.Id ?? project.Slug, project.Title, file.VersionNumber,
+                MembersToLine(members), project.IconUrl,
                 new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "modpack").Replace("{1}", project.Slug)),
                 project.Description,
                 version, new Uri($"poly-res://modrinth@file/mods/{version}")));
@@ -59,7 +70,8 @@ public class ModrinthResolver : ResourceResolverBase
     public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(string projectId, string version)
     {
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
-            (project, _) => new Mod(project.Id ?? project.Slug, project.Title, project.Team, project.IconUrl,
+            (project, file, members) => new Mod(project.Id ?? project.Slug, project.Title, file.VersionNumber,
+                MembersToLine(members), project.IconUrl,
                 new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "mod").Replace("{1}", project.Slug)),
                 project.Description,
                 version, new Uri($"poly-res://modrinth@file/mods/{version}")));
@@ -69,8 +81,9 @@ public class ModrinthResolver : ResourceResolverBase
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(string projectId, string version)
     {
-        return await GetProjectAsync(ResourceType.Mod, projectId, version,
-            (project, _) => new ResourcePack(project.Id ?? project.Slug, project.Title, project.Team, project.IconUrl,
+        return await GetProjectAsync(ResourceType.ResourcePack, projectId, version,
+            (project, file, members) => new ResourcePack(project.Id ?? project.Slug, project.Title, file.VersionNumber,
+                MembersToLine(members), project.IconUrl,
                 new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "resourcepack").Replace("{1}", project.Slug)),
                 project.Description,
                 version, new Uri($"poly-res://modrinth@file/resourcepacks/{version}")));
@@ -80,8 +93,9 @@ public class ModrinthResolver : ResourceResolverBase
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetShaderPackAsync(string projectId, string version)
     {
-        return await GetProjectAsync(ResourceType.Mod, projectId, version,
-            (project, _) => new ResourcePack(project.Id ?? project.Slug, project.Title, project.Team, project.IconUrl,
+        return await GetProjectAsync(ResourceType.ShaderPack, projectId, version,
+            (project, file, members) => new ResourcePack(project.Id ?? project.Slug, file.VersionNumber, project.Title,
+                MembersToLine(members), project.IconUrl,
                 new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "shader").Replace("{1}", project.Slug)),
                 project.Description,
                 version, new Uri($"poly-res://modrinth@file/shaderpacks/{version}")));
@@ -96,7 +110,8 @@ public class ModrinthResolver : ResourceResolverBase
         {
             var first = file.Files.First();
             return Ok(
-                new File(file.Id, file.Name, string.Empty, null, null, string.Empty, version, $"{dir}/{first.Filename}",
+                new File(file.Id, file.Name, file.VersionNumber, string.Empty, null, null, string.Empty, version,
+                    $"{dir}/{first.Filename}",
                     first.Hashes.Sha1, first.Url), ResourceType.File);
         }
 
@@ -112,7 +127,8 @@ public class ModrinthResolver : ResourceResolverBase
         {
             var first = file.Files.First();
             return Ok(
-                new File(file.Id, file.Name, string.Empty, null, null, string.Empty, version, first.Filename,
+                new File(file.Id, file.Name, file.VersionNumber, string.Empty, null, null, string.Empty, version,
+                    first.Filename,
                     first.Hashes.Sha1, first.Url), ResourceType.File);
         }
 

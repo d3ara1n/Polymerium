@@ -29,9 +29,11 @@ public class SearchDetailViewModel : ObservableObject
     private readonly INotificationService _notification;
     private readonly ImportService _importer;
     private readonly IMemoryCache _cache;
+    private readonly ComponentManager _componentManager;
 
     public SearchDetailViewModel(ViewModelContext context, MemoryStorage memoryStorage, ResolveEngine resolver,
-        INotificationService notification, ImportService importer, IMemoryCache cache)
+        INotificationService notification, ImportService importer, IMemoryCache cache,
+        ComponentManager componentManager)
     {
         Context = context;
         _memoryStorage = memoryStorage;
@@ -39,6 +41,7 @@ public class SearchDetailViewModel : ObservableObject
         _notification = notification;
         _importer = importer;
         _cache = cache;
+        _componentManager = componentManager;
         Versions = new ObservableCollection<SearchCenterResultItemVersionModel>();
     }
 
@@ -73,7 +76,9 @@ public class SearchDetailViewModel : ObservableObject
                             SupportedCoreVersions = x.GameVersions,
                             SupportedModLoaders = x.Loaders
                                 .Where(y => ModrinthHelper.MODLOADERS_MAPPINGS.ContainsKey(y))
-                        .Select(y => ModrinthHelper.MODLOADERS_MAPPINGS[y])
+                                .Select(y =>
+                                    _componentManager.ToFriendlyName(ModrinthHelper.MODLOADERS_MAPPINGS[y]) ??
+                                    "unknown_loader")
                         }).First(), ModrinthResolver.MakeResourceUrl(Resource.Value.Type, Resource.Value.Id, x.Id))),
             RepositoryLabel.CurseForge => (await CurseForgeHelper.GetModFilesAsync(uint.Parse(Resource.Value.Id),
                     _cache))
@@ -94,7 +99,9 @@ public class SearchDetailViewModel : ObservableObject
                             x.GameVersions.Where(y => !CurseForgeHelper.MODLOADERS_MAPPINGS.ContainsKey(y)),
                         SupportedModLoaders = x.GameVersions
                             .Where(y => CurseForgeHelper.MODLOADERS_MAPPINGS.ContainsKey(y))
-                            .Select(y => CurseForgeHelper.MODLOADERS_MAPPINGS[y])
+                            .Select(y =>
+                                _componentManager.ToFriendlyName(CurseForgeHelper.MODLOADERS_MAPPINGS[y]) ??
+                                "unknown_loader")
                     }, CurseForgeResolver.MakeResourceUrl(Resource.Value.Type, Resource.Value.Id, x.Id.ToString()))),
             _ => throw new NotImplementedException()
         };

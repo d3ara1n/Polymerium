@@ -34,7 +34,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c98c4c26354b89d76ffbddb774441bcc9c7ed3559b98dbd6fe39a56fc7eb18/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cd4baac7317266f4f516e33baa69963b5f1f5ed866e119194d80c2958f827/StartAnimationAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f46d8257f4c1dc361b73ec7a2fa4d14a2b9f79568db1e74156c505c679420c2/AsyncRelayCommand.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/ViewModels/AddMetaComponentWizardViewModel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/App.xaml.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/Converters/LauncherMetaMainClassConverter.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -231,6 +231,7 @@
       <workItem from="1679728660785" duration="151000" />
       <workItem from="1679808692554" duration="42000" />
       <workItem from="1679813566957" duration="67000" />
+      <workItem from="1679824829215" duration="672000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -484,7 +485,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679813627578</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="#16 修复和缓存优化">
+      <created>1679824905286</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1679824905286</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,7 +515,6 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="#5" />
     <MESSAGE value=":art: fmt+移除有问题的账号切换ContextMenu,切换为代码更整洁但界面难看的Flyout（日后改）" />
     <MESSAGE value="forge work with 1.13+" />
     <MESSAGE value="work with forge except 1.16.5" />
@@ -532,7 +539,8 @@
     <MESSAGE value="#14 简单实现" />
     <MESSAGE value="#15 终于得到解决" />
     <MESSAGE value="稍作调整以便发版" />
-    <option name="LAST_COMMIT_MESSAGE" value="稍作调整以便发版" />
+    <MESSAGE value="#16 修复和缓存优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="#16 修复和缓存优化" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

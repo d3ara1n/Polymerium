@@ -9,6 +9,7 @@ public class InstanceComponentItemModel
         string thumbnailSource,
         string friendlyName,
         string version,
+        bool canBeRemoved,
         IRelayCommand<InstanceComponentItemModel> removeCommand
     )
     {
@@ -16,6 +17,7 @@ public class InstanceComponentItemModel
         ThumbnailSource = thumbnailSource;
         FriendlyName = friendlyName;
         Version = version;
+        CanBeRemoved = canBeRemoved;
         RemoveCommand = removeCommand;
     }
 
@@ -23,6 +25,8 @@ public class InstanceComponentItemModel
     public string ThumbnailSource { get; set; }
     public string FriendlyName { get; set; }
     public string Version { get; set; }
+
+    public bool CanBeRemoved { get; set; }
 
     public IRelayCommand<InstanceComponentItemModel> RemoveCommand { get; set; }
 }

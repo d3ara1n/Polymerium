@@ -4,10 +4,11 @@ namespace Polymerium.Abstractions.Resources;
 
 public record ResourcePack : ResourceBase
 {
-    public ResourcePack(string id, string name, string author, Uri? iconSource, Uri? reference, string summary,
-        string version,
+    public ResourcePack(string id, string name, string version, string author, Uri? iconSource, Uri? reference,
+        string summary,
+        string versionId,
         Uri file) : base(
-        id, name, author, iconSource, reference, summary, version, file)
+        id, name, version, author, iconSource, reference, summary, versionId, file)
     {
     }
 }

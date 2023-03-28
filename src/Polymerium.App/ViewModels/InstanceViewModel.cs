@@ -13,7 +13,6 @@ using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.App.Views;
 using Polymerium.App.Views.Instances;
 using Polymerium.Core;
 using Polymerium.Core.Components;
@@ -30,7 +29,6 @@ public class InstanceViewModel : ObservableObject
     private readonly ResolveEngine _resolver;
     private readonly NavigationService _navigationService;
     private readonly IFileBaseService _fileBase;
-    private readonly IOverlayService _overlayService;
 
     private string coreVersion = string.Empty;
 
@@ -54,16 +52,14 @@ public class InstanceViewModel : ObservableObject
         GameManager gameManager
     )
     {
-        _overlayService = overlayService;
         _componentManager = componentManager;
         _resolver = resolver;
         _navigationService = navigationService;
         _gameManager = gameManager;
         _fileBase = fileBase;
         Context = context;
+        OverlayService = overlayService;
         CoreVersion = Context.AssociatedInstance!.Inner.GetCoreVersion() ?? "N/A";
-        StartCommand = new RelayCommand(Start);
-        OpenAssetDrawerCommand = new RelayCommand<string>(OpenAssetDrawer);
         GotoConfigurationViewCommand = new RelayCommand(GotoConfigurationView);
         Components = new ObservableCollection<ComponentTagItemModel>(
             BuildComponentModels(Context.AssociatedInstance!.Components)
@@ -184,15 +180,8 @@ public class InstanceViewModel : ObservableObject
     }
 
     public ViewModelContext Context { get; }
-    public ICommand StartCommand { get; }
-    public ICommand OpenAssetDrawerCommand { get; }
+    public IOverlayService OverlayService { get; }
     public ICommand GotoConfigurationViewCommand { get; }
-
-    public void Start()
-    {
-        var dialog = new PrepareGameDialog(Context.AssociatedInstance!.Inner, _overlayService);
-        _overlayService.Show(dialog);
-    }
 
     private IEnumerable<ComponentTagItemModel> BuildComponentModels(
         IEnumerable<Component> components
@@ -208,19 +197,6 @@ public class InstanceViewModel : ObservableObject
                 $"{x.Identity}:{x.Version}"
             );
         });
-    }
-
-    public void OpenAssetDrawer(string? type)
-    {
-        var drawer = type switch
-        {
-            "ShaderPack" => new InstanceAssetDrawer(ResourceType.ShaderPack, RawShaderPacks),
-            "Mod" => new InstanceAssetDrawer(ResourceType.Mod, RawMods),
-            "ResourcePack" => new InstanceAssetDrawer(ResourceType.ResourcePack, RawResourcePacks),
-            _ => throw new NotImplementedException()
-        };
-        drawer.OverlayService = _overlayService;
-        _overlayService.Show(drawer);
     }
 
     public void GotoConfigurationView()

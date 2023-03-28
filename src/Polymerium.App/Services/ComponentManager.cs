@@ -29,6 +29,13 @@ public class ComponentManager
         };
     }
 
+    public string? ToFriendlyName(string identity)
+    {
+        if (TryFindByIdentity(identity, out var meta))
+            return meta!.FriendlyName;
+        return null;
+    }
+
     public bool TryFindByIdentity(string identity, out ComponentMeta? meta)
     {
         meta = _memoryStorage.SupportedComponents.FirstOrDefault(x => x.Identity == identity);

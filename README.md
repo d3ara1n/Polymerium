@@ -111,9 +111,8 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
     * [ ] 导出为 Polypack
 * [ ] 启动游戏
     * [x] Polylock 文件
-    * [ ] 可选参数
+    * [x] 可选参数
         * [x] 自定义 JVM 参数
-        * [ ] 预定义的优化 JVM 参数
         * [x] 先决条件检查
         * [x] Java 版本自动选择和兼容性检查
     * [ ] 行星搅拌机
@@ -138,25 +137,22 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
         * [x] Fabric
         * [x] Quilt
     * [x] 附件安装
-* [ ] 资源附件
-    * [ ] 资源解析引擎
+* [x] 资源附件
+    * [x] 资源解析引擎
         * [x] {var} 参数
         * [x] {*vars} 参数
         * [x] Url 类型转换
-    * [ ] 内置解析器
+    * [x] 内置解析器
         * [x] 整合包
             * [x] Modrinth
             * [x] CurseForge
-        * [ ] 模组
-            * [ ] 本地仓库
+        * [x] 模组
             * [x] Modrinth
             * [x] CurseForge
-        * [ ] 资源包
-            * [ ] 本地仓库
+        * [x] 资源包
             * [x] Modrinth
             * [x] CurseForge
-        * [ ] 着色器包
-            * [ ] 本地仓库
+        * [x] 着色器包
             * [x] Modrinth
         * [x] 文件附件
             * [x] 本地仓库
@@ -166,6 +162,7 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
         * [x] 互联网资源搜索
         * [x] 导入在线整合包
         * [x] 添加在线资源到本地实例
+            * [ ] 在本地实例中筛选出合适列表并提供开关以显示全部
         * [ ] 收藏合集：为一个（新）实例添加一系列资源，用以对公共整合包快速个性化
     * [x] SearchBar
         * [x] 托管的实例搜索
@@ -173,7 +170,8 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 * [ ] 软件设置
 * [ ] 游戏实例设置
     * [x] 元数据编辑
-    * [ ] 私有配置页面
+    * [x] 私有启动配置页面
+    * [ ] 重置实例
 * [ ] 本地化
 
 更多细节请在 [Issues](https://github.com/d3ara1n/Polymerium/issues) 中查询。

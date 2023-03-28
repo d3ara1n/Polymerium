@@ -13,9 +13,10 @@ using Polymerium.App.Services;
 
 namespace Polymerium.App.Controls;
 
+// TODO: 各种 WizardDialog 的 ContentControl.Template 应该合并到 CustomDialog 中，状态合并到一个状态组
 public class CustomDialog : ContentControl
 {
-    // TODO: 各种 WizardDialog 的 ContentControl.Template 应该合并到 CustomDialog 中，状态合并到一个状态组
+
     public static readonly DependencyProperty OperationContentProperty =
         DependencyProperty.Register(
             nameof(OperationContent),
@@ -37,14 +38,12 @@ public class CustomDialog : ContentControl
         DependencyProperty.Register(nameof(OperationHorizontalAlignment), typeof(HorizontalAlignment),
             typeof(CustomDialog), new PropertyMetadata(HorizontalAlignment.Stretch));
 
+    public event EventHandler<EventArgs>? Dismissed;
+
 
     private readonly Storyboard fadeoutStoryboard;
     private readonly Storyboard scaleXOutStoryboard;
     private readonly Storyboard scaleYOutStoryboard;
-
-    private ScaleTransform? _borderScaleTransform;
-
-    private Grid? _root;
 
     public CustomDialog()
     {
@@ -74,7 +73,11 @@ public class CustomDialog : ContentControl
                 To = 1.05
             }
         );
-        fadeoutStoryboard.Completed += (_, _) => OverlayService!.Dismiss();
+        fadeoutStoryboard.Completed += (_, _) =>
+        {
+            OverlayService!.Dismiss();
+            Dismissed?.Invoke(this, new EventArgs());
+        };
     }
 
 
@@ -115,8 +118,8 @@ public class CustomDialog : ContentControl
     {
         base.OnApplyTemplate();
         // 动画全部用代码实现，WPF 时期的前后端分离一去不复返
-        _root = GetTemplateChild("Root") as Grid;
-        _borderScaleTransform = GetTemplateChild("BorderScaleTransform") as ScaleTransform;
+        var _root = GetTemplateChild("Root") as Grid;
+        var _borderScaleTransform = GetTemplateChild("BorderScaleTransform") as ScaleTransform;
         Storyboard.SetTarget(fadeoutStoryboard, _root);
         Storyboard.SetTargetProperty(fadeoutStoryboard, "Opacity");
         Storyboard.SetTarget(scaleXOutStoryboard, _borderScaleTransform);
@@ -152,6 +155,10 @@ public class CustomDialog : ContentControl
     }
 
     protected virtual void OnDismiss()
+    {
+    }
+
+    internal virtual void FreeLock()
     {
     }
 }
