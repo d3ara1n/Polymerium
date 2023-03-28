@@ -130,4 +130,11 @@ public static class ModrinthHelper
         var service = $"/version/{versionId}";
         return await GetResourceAsync<LabrinthVersion>(service, cache, token);
     }
+
+    public static async Task<IEnumerable<LabrinthTeamMember>> GetTeamMembersAsync(string teamId, IMemoryCache cache,
+        CancellationToken token = default)
+    {
+        var service = $"/team/{teamId}/members";
+        return await GetResourcesAsync<LabrinthTeamMember>(service, cache, token);
+    }
 }

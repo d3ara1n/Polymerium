@@ -22,6 +22,7 @@ public class OfflineAccount : IGameAccount
     }
 
     public string LoginType => "legacy";
+    public string FriendlyType => "离线账号";
 
     public string Id { get; set; }
     public string UUID { get; set; }

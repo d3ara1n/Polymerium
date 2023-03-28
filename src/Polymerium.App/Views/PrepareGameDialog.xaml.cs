@@ -25,6 +25,8 @@ public sealed partial class PrepareGameDialog : ContentControl
         new PropertyMetadata(false, IsReadyChanged)
     );
 
+    public event EventHandler<EventArgs>? Dismissed;
+
     private readonly IOverlayService _overlayService;
 
     private readonly bool passed;
@@ -134,6 +136,7 @@ public sealed partial class PrepareGameDialog : ContentControl
     {
         ViewModel.Cancel();
         _overlayService.Dismiss();
+        Dismissed?.Invoke(this, new EventArgs());
     }
 
     private static void IsReadyChanged(

@@ -26,7 +26,6 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     private readonly ResolveEngine _resolver;
 
     private Action<InstanceAttachmentItemModel?>? addAttachmentCallback;
-    private bool isAttachmentBeingParsed = true;
 
     public InstanceMetadataConfigurationViewModel(
         ViewModelContext context,
@@ -63,12 +62,6 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     public ICommand OpenReferenceUrlCommand { get; }
     public IRelayCommand<InstanceComponentItemModel> RemoveComponentSelfCommand { get; }
     public IRelayCommand<IList<object>> RemoveAttachmentsCommand { get; }
-
-    public bool IsAttachmentBeingParsed
-    {
-        get => isAttachmentBeingParsed;
-        set => SetProperty(ref isAttachmentBeingParsed, value);
-    }
 
     public void SetCallback(Action<InstanceAttachmentItemModel?> callback)
     {
@@ -128,6 +121,22 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         }
     }
 
+    public async Task LoadParseReferenceAsync(Action<InstanceModpackReferenceModel?> callback)
+    {
+        var result = await _resolver.ResolveAsync(Context.AssociatedInstance!.ReferenceSource!,
+            new ResolverContext(Context.AssociatedInstance.Inner));
+        if (result.IsSuccessful && result.Value.Type == ResourceType.Modpack)
+        {
+            var model = new InstanceModpackReferenceModel(result.Value.Resource.Name, result.Value.Resource.Id,
+                result.Value.Resource.Version, result.Value.Resource.VersionId, result.Value.Resource.Author);
+            callback(model);
+        }
+        else
+        {
+            callback(null);
+        }
+    }
+
     public async Task LoadParseAttachmentsAsync(IEnumerable<Uri> newlyAdded)
     {
         var context = new ResolverContext(Context.AssociatedInstance!.Inner);
@@ -146,6 +155,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
             $"ms-appx:///Assets/Icons/GameComponents/{component.Identity}.png",
             meta?.FriendlyName ?? component.Identity,
             component.Version,
+            !Context.AssociatedInstance!.IsTagged,
             RemoveComponentSelfCommand
         );
     }
@@ -208,5 +218,10 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     private void OpenReferenceUrl(Uri? reference)
     {
         if (reference != null) Process.Start(new ProcessStartInfo(reference.AbsoluteUri) { UseShellExecute = true });
+    }
+
+    public void Unlock()
+    {
+        Context.AssociatedInstance!.ReferenceSource = null;
     }
 }

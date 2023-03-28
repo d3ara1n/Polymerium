@@ -21,7 +21,8 @@ public class RemoteFileResolver : ResourceResolverBase
     {
         var name = Path.GetFileName(path);
         return Ok(
-            new File(name, name, string.Empty, null, null, string.Empty, string.Empty, path, sha1, new Uri(source)),
+            new File(name, name, string.Empty, string.Empty, null, null, string.Empty, string.Empty, path, sha1,
+                new Uri(source)),
             ResourceType.File);
     }
 }

@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:accounts="using:Polymerium.Abstractions.Accounts"
     xmlns:models="using:Polymerium.App.Models"
     mc:Ignorable="d">
 
@@ -71,8 +72,21 @@
                             <StackPanel Spacing="8" MinWidth="180">
                                 <ListView x:Name="AccountSelection"
                                           SelectedValue="{x:Bind ViewModel.Context.SelectedAccount,Mode=TwoWay}"
-                                          DisplayMemberPath="Nickname"
-                                          ItemsSource="{x:Bind ViewModel.LogonAccounts}" />
+                                          ItemsSource="{x:Bind ViewModel.LogonAccounts}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="accounts:IGameAccount">
+                                            <StackPanel Orientation="Horizontal">
+                                                <toolkit:ImageEx Width="24" Height="24"
+                                                                 Source="{x:Bind Converter={StaticResource AccountToFaceAvatarConverter}}" />
+                                                <StackPanel Margin="10" VerticalAlignment="Center">
+                                                    <TextBlock Text="{x:Bind Nickname}" />
+                                                    <TextBlock Text="{x:Bind FriendlyType}"
+                                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                                 <Grid>
                                     <Button Content="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"
                                             HorizontalAlignment="Right" />

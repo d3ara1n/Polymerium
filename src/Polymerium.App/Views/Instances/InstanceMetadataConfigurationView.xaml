@@ -19,17 +19,38 @@
 
     <ScrollViewer>
         <StackPanel Spacing="5" Margin="5,0,10,10">
-            <controls:GroupBox
-                Visibility="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Converter={StaticResource BoolToVisibilityConverter}}">
+            <controls:GroupBox x:Name="ReferenceBox" Padding="0" Loaded="ReferenceBox_Loaded"
+                               Visibility="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                 <controls:GroupBox.Header>
-                    <Grid>
+                    <Grid Margin="15">
                         <TextBlock Text="整合包" Style="{StaticResource SubtitleTextBlockStyle}" />
                         <Button x:Name="UnlockButton" Content="解锁" HorizontalAlignment="Right"
-                                Style="{StaticResource IconButtonStyle}" />
+                                Click="UnlockButton_Click"
+                                Style="{StaticResource IconButtonStyle}"
+                                IsEnabled="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}" />
                     </Grid>
                 </controls:GroupBox.Header>
                 <Grid>
-                    <TextBlock Text="WIP" />
+                    <ProgressRing IsIndeterminate="True" VerticalAlignment="Top"
+                                  Visibility="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <StackPanel Margin="15" Spacing="8">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <ui:ImageEx Width="60" Height="60"
+                                        Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile}"
+                                        Margin="0,0,15,0" />
+                            <Grid Grid.Column="1" RowDefinitions="Auto,*">
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind ModpackReference.Name,Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind ModpackReference.Author,Mode=OneWay}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                        <TextBlock
+                            Text="该实例引用了一个整合包（意味着实例是上锁的），在修改实例元数据之前，需要移除引用信息（该过程称为解锁）。对于未解锁的实例，对模组和资源包等资产的修改只能通过在实例页面手动添加文件（未来会添加打开下载中心直接将文件下载到对应目录的按钮）。"
+                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                            TextWrapping="WrapWholeWords" />
+                    </StackPanel>
                 </Grid>
             </controls:GroupBox>
             <controls:GroupBox>
@@ -38,6 +59,7 @@
                         <TextBlock Text="组件" Style="{StaticResource SubtitleTextBlockStyle}" />
                         <Button x:Name="AddComponentButton" Content="添加" HorizontalAlignment="Right"
                                 Style="{StaticResource IconButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
                                 Command="{x:Bind ViewModel.AddComponentCommand}" />
                     </Grid>
                 </controls:GroupBox.Header>
@@ -64,6 +86,7 @@
                                     <Grid Grid.Column="1">
                                         <Button x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
                                                 Command="{x:Bind RemoveCommand}" CommandParameter="{Binding}"
+                                                IsEnabled="{x:Bind CanBeRemoved}"
                                                 ToolTipService.ToolTip="移除">
                                             <FontIcon Glyph="&#xE108;" />
                                             <animations:Explicit.Animations>
@@ -100,7 +123,7 @@
                 </StackPanel>
             </controls:GroupBox>
             <controls:GroupBox x:Name="AttachmentBox" Padding="0" Loaded="AttachmentBox_Loaded"
-                               IsEnabled="{x:Bind ViewModel.IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                               IsEnabled="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
                         <TextBlock Text="附件" Style="{StaticResource SubtitleTextBlockStyle}" />
@@ -115,18 +138,20 @@
                                 </TextBlock>
                                 <Button x:Name="RemoveAttachmentButton" Content="移除"
                                         Style="{StaticResource IconButtonStyle}"
+                                        IsEnabled="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
                                         Command="{x:Bind ViewModel.RemoveAttachmentsCommand}"
                                         CommandParameter="{x:Bind AttachmentList.SelectedItems}" />
                             </StackPanel>
                             <Button x:Name="AddAttachmentButton" Content="添加"
                                     Style="{StaticResource IconButtonStyle}"
+                                    IsEnabled="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
                                     Command="{x:Bind ViewModel.GotoSearchCenterCommand}" />
                         </StackPanel>
                     </Grid>
                 </controls:GroupBox.Header>
                 <StackPanel>
                     <ProgressBar IsIndeterminate="True"
-                                 Visibility="{x:Bind ViewModel.IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                                 Visibility="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
                     <TextBlock Text="此处做出的删减并不会在增量还原时移除对应文件，需要手动删除。元数据仅作为最小文件(存在性)保证。" TextWrapping="WrapWholeWords"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                Margin="15,15,15,7" />

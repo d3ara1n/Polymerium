@@ -57,7 +57,7 @@ public class CurseForgeResolver : ResourceResolverBase
     public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(string projectId, string version)
     {
         return await GetProjectAsync(ResourceType.Modpack, projectId, version,
-            (project, _) => new Modpack(project.Id.ToString(), project.Name,
+            (project, file) => new Modpack(project.Id.ToString(), project.Name, file.DisplayName,
                 string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
                 new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "modpacks").Replace("{1}", project.Slug)),
                 project.Summary,
@@ -69,7 +69,7 @@ public class CurseForgeResolver : ResourceResolverBase
     public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(string projectId, string version)
     {
         return await GetProjectAsync(ResourceType.Mod, projectId, version,
-            (project, _) => new Mod(project.Id.ToString(), project.Name,
+            (project, file) => new Mod(project.Id.ToString(), project.Name, file.DisplayName,
                 string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
                 new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "mc-mods").Replace("{1}", project.Slug)), project.Summary,
                 version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
@@ -79,8 +79,8 @@ public class CurseForgeResolver : ResourceResolverBase
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(string projectId, string version)
     {
-        return await GetProjectAsync(ResourceType.Mod, projectId, version,
-            (project, _) => new ResourcePack(project.Id.ToString(), project.Name,
+        return await GetProjectAsync(ResourceType.ResourcePack, projectId, version,
+            (project, file) => new ResourcePack(project.Id.ToString(), project.Name, file.DisplayName,
                 string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
                 new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "texture-packs").Replace("{1}", project.Slug)),
                 project.Summary,
@@ -110,7 +110,8 @@ public class CurseForgeResolver : ResourceResolverBase
                     4471 => eternalFile.FileName,
                     _ => throw new NotImplementedException()
                 };
-                var file = new File(eternalFile.Id.ToString(), eternalFile.DisplayName, string.Empty, null, null,
+                var file = new File(eternalFile.Id.ToString(), eternalFile.DisplayName, eternalFile.DisplayName,
+                    string.Empty, null, null,
                     string.Empty, fileId, fileName, sha1,
                     eternalFile.ExtractDownloadUrl());
                 return Ok(file, ResourceType.File);

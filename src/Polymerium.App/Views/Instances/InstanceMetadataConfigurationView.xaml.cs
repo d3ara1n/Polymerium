@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions.Resources;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels.Instances;
 
@@ -41,6 +42,44 @@ public sealed partial class InstanceMetadataConfigurationView : Page
     public static readonly DependencyProperty CanDeleteProperty =
         DependencyProperty.Register(nameof(CanDelete), typeof(bool), typeof(InstanceMetadataConfigurationView),
             new PropertyMetadata(false));
+
+
+    public bool IsAttachmentBeingParsed
+    {
+        get => (bool)GetValue(IsAttachmentBeingParsedProperty);
+        set => SetValue(IsAttachmentBeingParsedProperty, value);
+    }
+
+    // Using a DependencyProperty as the backing store for IsAttachmentBeingParsed.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IsAttachmentBeingParsedProperty =
+        DependencyProperty.Register(nameof(IsAttachmentBeingParsed), typeof(bool),
+            typeof(InstanceMetadataConfigurationView), new PropertyMetadata(false));
+
+
+    public bool IsReferenceBeingParsed
+    {
+        get => (bool)GetValue(IsReferenceBeingParsedProperty);
+        set => SetValue(IsReferenceBeingParsedProperty, value);
+    }
+
+    // Using a DependencyProperty as the backing store for IsReferenceBeingParsed.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IsReferenceBeingParsedProperty =
+        DependencyProperty.Register(nameof(IsReferenceBeingParsed), typeof(bool),
+            typeof(InstanceMetadataConfigurationView), new PropertyMetadata(false));
+
+
+    public InstanceModpackReferenceModel ModpackReference
+    {
+        get => (InstanceModpackReferenceModel)GetValue(ModpackReferenceProperty);
+        set => SetValue(ModpackReferenceProperty, value);
+    }
+
+    // Using a DependencyProperty as the backing store for ModpackReference.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ModpackReferenceProperty =
+        DependencyProperty.Register(nameof(ModpackReference), typeof(InstanceModpackReferenceModel),
+            typeof(InstanceMetadataConfigurationView), new PropertyMetadata(null));
+
+
 
     private static Func<InstanceAttachmentItemModel, bool>? filter;
 
@@ -98,18 +137,37 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         {
             if (model != null)
             {
-                ViewModel.IsAttachmentBeingParsed = true;
+                IsAttachmentBeingParsed = true;
                 ViewModel.Attachments.Add(model);
             }
             else
             {
-                ViewModel.IsAttachmentBeingParsed = false;
+                IsAttachmentBeingParsed = false;
             }
+        });
+    }
+
+    private void ReferenceBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (ViewModel.Context.AssociatedInstance!.IsTagged)
+        {
+            IsReferenceBeingParsed = true;
+            Task.Run(() => ViewModel.LoadParseReferenceAsync(AddReferenceHandler));
+        }
+    }
+
+    private void AddReferenceHandler(InstanceModpackReferenceModel? model)
+    {
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            IsReferenceBeingParsed = false;
+            ModpackReference = model ?? new InstanceModpackReferenceModel("解析失败", "unknown", "N/A", "unknown", "N/A");
         });
     }
 
     private void AttachmentBox_Loaded(object sender, RoutedEventArgs e)
     {
+        IsAttachmentBeingParsed = true;
         Task.Run(() => ViewModel.LoadParseAttachmentsAsync(ViewModel.Context.AssociatedInstance!.Attachments));
     }
 
@@ -159,5 +217,16 @@ public sealed partial class InstanceMetadataConfigurationView : Page
             {
                 UseShellExecute = true
             });
+    }
+
+    private async void UnlockButton_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new ConfirmationDialog
+        {
+            XamlRoot = XamlRoot,
+            Content = "解锁是一次性的，一旦删除整合包引用信息将失去未来实例自动更新的能力。\n确定要继续吗？"
+        };
+        var result = await dialog.ShowAsync();
+        if (result == ContentDialogResult.Primary) ViewModel.Unlock();
     }
 }

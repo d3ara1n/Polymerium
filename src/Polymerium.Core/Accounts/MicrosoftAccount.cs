@@ -41,6 +41,7 @@ public class MicrosoftAccount : IGameAccount
 
     public string RefreshToken { get; set; }
     public string LoginType => "msa";
+    public string FriendlyType => "微软账号";
 
     public string Id { get; set; }
     public string UUID { get; set; }
