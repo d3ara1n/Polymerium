@@ -16,7 +16,6 @@ namespace Polymerium.App.Controls;
 // TODO: 各种 WizardDialog 的 ContentControl.Template 应该合并到 CustomDialog 中，状态合并到一个状态组
 public class CustomDialog : ContentControl
 {
-
     public static readonly DependencyProperty OperationContentProperty =
         DependencyProperty.Register(
             nameof(OperationContent),
@@ -37,8 +36,6 @@ public class CustomDialog : ContentControl
     public static readonly DependencyProperty OperationHorizontalAlignmentProperty =
         DependencyProperty.Register(nameof(OperationHorizontalAlignment), typeof(HorizontalAlignment),
             typeof(CustomDialog), new PropertyMetadata(HorizontalAlignment.Stretch));
-
-    public event EventHandler<EventArgs>? Dismissed;
 
 
     private readonly Storyboard fadeoutStoryboard;
@@ -100,6 +97,8 @@ public class CustomDialog : ContentControl
     }
 
     public IOverlayService? OverlayService { get; set; }
+
+    public event EventHandler<EventArgs>? Dismissed;
 
     private static void OperationContentPropertyChangedCallback(
         DependencyObject d,

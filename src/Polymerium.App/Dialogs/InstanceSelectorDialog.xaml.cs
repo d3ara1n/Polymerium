@@ -8,22 +8,10 @@ namespace Polymerium.App.Dialogs;
 
 public sealed partial class InstanceSelectorDialog : ContentDialog
 {
-    public ObservableCollection<GameInstance> Candidates
-    {
-        get => (ObservableCollection<GameInstance>)GetValue(CandidatesProperty);
-        set => SetValue(CandidatesProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CandidatesProperty =
         DependencyProperty.Register(nameof(Candidates), typeof(ObservableCollection<GameInstance>),
             typeof(InstanceSelectorDialog), new PropertyMetadata(new ObservableCollection<GameInstance>()));
-
-    public GameInstance SelectedInstance
-    {
-        get => (GameInstance)GetValue(SelectedInstanceProperty);
-        set => SetValue(SelectedInstanceProperty, value);
-    }
 
     // Using a DependencyProperty as the backing store for SelectedInstance.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty SelectedInstanceProperty =
@@ -35,5 +23,17 @@ public sealed partial class InstanceSelectorDialog : ContentDialog
     {
         InitializeComponent();
         foreach (var candidate in candidates) Candidates.Add(candidate);
+    }
+
+    public ObservableCollection<GameInstance> Candidates
+    {
+        get => (ObservableCollection<GameInstance>)GetValue(CandidatesProperty);
+        set => SetValue(CandidatesProperty, value);
+    }
+
+    public GameInstance SelectedInstance
+    {
+        get => (GameInstance)GetValue(SelectedInstanceProperty);
+        set => SetValue(SelectedInstanceProperty, value);
     }
 }

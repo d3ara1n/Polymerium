@@ -14,8 +14,8 @@ namespace Polymerium.Core.ResourceResolving;
 [ResourceDomain("curseforge")]
 public class CurseForgeResolver : ResourceResolverBase
 {
-    private static readonly Func<string, uint> PARSER_INT = uint.Parse;
     private const string CURSEFORGE_PROJECT_URL = "https://beta.curseforge.com/minecraft/{0}/{1}";
+    private static readonly Func<string, uint> PARSER_INT = uint.Parse;
 
     private readonly IMemoryCache _cache;
 
@@ -116,8 +116,10 @@ public class CurseForgeResolver : ResourceResolverBase
                     eternalFile.ExtractDownloadUrl());
                 return Ok(file, ResourceType.File);
             }
+
             return Err(ResolveResultError.NotFound);
         }
+
         return Err(ResolveResultError.InvalidArguments);
     }
 }

@@ -10,17 +10,17 @@ namespace Polymerium.Core.Resources;
 
 public class ModrinthRepository : IResourceRepository
 {
-    public RepositoryLabel Label => RepositoryLabel.Modrinth;
-
-    public ResourceType SupportedResources =>
-        ResourceType.Modpack | ResourceType.Mod | ResourceType.ShaderPack | ResourceType.ResourcePack;
-
     private readonly IMemoryCache _cache;
 
     public ModrinthRepository(IMemoryCache cache)
     {
         _cache = cache;
     }
+
+    public RepositoryLabel Label => RepositoryLabel.Modrinth;
+
+    public ResourceType SupportedResources =>
+        ResourceType.Modpack | ResourceType.Mod | ResourceType.ShaderPack | ResourceType.ResourcePack;
 
     public async Task<IEnumerable<RepositoryAssetMeta>> SearchProjectsAsync(string query, ResourceType type,
         string? modLoader, string? version,

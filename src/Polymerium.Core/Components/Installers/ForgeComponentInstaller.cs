@@ -113,6 +113,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                 // 自杀吧
                 // 直接报错得了
             }
+
             Context.SetMainClass(profileJson.Value.VersionInfo!.Value.MainClass);
             throw new NotImplementedException();
         }

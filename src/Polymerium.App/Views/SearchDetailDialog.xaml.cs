@@ -19,16 +19,12 @@ namespace Polymerium.App.Views;
 
 public sealed partial class SearchDetailDialog : CustomDialog
 {
-    public bool IsOperating
-    {
-        get => (bool)GetValue(IsOperatingProperty);
-        set => SetValue(IsOperatingProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for IsLoading.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsOperatingProperty =
         DependencyProperty.Register(nameof(IsOperating), typeof(bool), typeof(SearchDetailDialog),
             new PropertyMetadata(false));
+
+    private readonly CancellationTokenSource source = new();
 
     public SearchDetailDialog(RepositoryAssetMeta resource, GameInstance? scope)
     {
@@ -39,9 +35,13 @@ public sealed partial class SearchDetailDialog : CustomDialog
         InitializeComponent();
     }
 
-    public SearchDetailViewModel ViewModel { get; }
+    public bool IsOperating
+    {
+        get => (bool)GetValue(IsOperatingProperty);
+        set => SetValue(IsOperatingProperty, value);
+    }
 
-    private readonly CancellationTokenSource source = new();
+    public SearchDetailViewModel ViewModel { get; }
 
     private void CustomDialog_Loaded(object sender, RoutedEventArgs e)
     {

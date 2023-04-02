@@ -13,22 +13,21 @@ namespace Polymerium.App.Views;
 
 public sealed partial class InstanceView : Page
 {
-    public bool IsPending
-    {
-        get => (bool)GetValue(IsPendingProperty);
-        set => SetValue(IsPendingProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for IsPending.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsPendingProperty =
         DependencyProperty.Register(nameof(IsPending), typeof(bool), typeof(InstanceView), new PropertyMetadata(false));
-
 
 
     public InstanceView()
     {
         ViewModel = App.Current.Provider.GetRequiredService<InstanceViewModel>();
         InitializeComponent();
+    }
+
+    public bool IsPending
+    {
+        get => (bool)GetValue(IsPendingProperty);
+        set => SetValue(IsPendingProperty, value);
     }
 
     public InstanceViewModel ViewModel { get; }

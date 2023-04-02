@@ -70,17 +70,18 @@
                         <controls:ExpanderExItem>
                             <Grid>
                                 <TextBlock Text="重置游戏本地文件" VerticalAlignment="Center" />
-                                <Button Content="重置" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                        IsEnabled="False"
-                                        ToolTipService.ToolTip="WIP" />
+                                <Button x:Name="ResetInstanceButton" Content="重置" HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Click="ResetInstanceButton_Click" />
                             </Grid>
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
                             <Grid>
                                 <TextBlock Text="删除实例和本地文件" VerticalAlignment="Center" />
-                                <Button Content="删除" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                <Button x:Name="DeleteInstanceButton" Content="删除" HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
                                         Style="{StaticResource AccentButtonStyle}"
-                                        Command="{x:Bind ViewModel.DeleteInstanceCommand}" />
+                                        Click="DeleteInstanceButton_Click" />
                             </Grid>
                         </controls:ExpanderExItem>
                     </StackPanel>
