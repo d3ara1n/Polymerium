@@ -24,12 +24,12 @@ namespace Polymerium.App.ViewModels;
 
 public class SearchDetailViewModel : ObservableObject
 {
-    private readonly MemoryStorage _memoryStorage;
-    private readonly ResolveEngine _resolver;
-    private readonly INotificationService _notification;
-    private readonly ImportService _importer;
     private readonly IMemoryCache _cache;
     private readonly ComponentManager _componentManager;
+    private readonly ImportService _importer;
+    private readonly MemoryStorage _memoryStorage;
+    private readonly INotificationService _notification;
+    private readonly ResolveEngine _resolver;
 
     public SearchDetailViewModel(ViewModelContext context, MemoryStorage memoryStorage, ResolveEngine resolver,
         INotificationService notification, ImportService importer, IMemoryCache cache,
@@ -154,7 +154,7 @@ public class SearchDetailViewModel : ObservableObject
                 }
             } while (read != 0);
 
-            report(null, true);
+            report(null, false);
             writer.Close();
             var importResult = await _importer.ImportAsync(tmpFile, token);
             if (importResult.IsSuccessful)

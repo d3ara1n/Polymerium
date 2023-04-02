@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.System;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -41,12 +40,14 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         OpenRenameDialogCommand = new RelayCommand(OpenRenameDialog);
         DeleteInstanceCommand = new AsyncRelayCommand(DeleteInstanceAsync);
+        ResetInstanceCommand = new AsyncRelayCommand();
     }
 
     public ViewModelContext Context { get; }
 
     public ICommand OpenRenameDialogCommand { get; }
     public ICommand DeleteInstanceCommand { get; }
+    public ICommand ResetInstanceCommand { get; }
 
     // NOTE: 重置对于已解锁的实例只会删除目录，但对于具有 ReferenceSource 的实例，会重新导入元数据
 
@@ -80,33 +81,42 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         });
     }
 
-    public async Task DeleteInstanceAsync()
+    public void DeleteInstance()
     {
-        var dialog = new ConfirmationDialog
+        var folderDir = new Uri($"poly-file://{Context.AssociatedInstance!.Id}/");
+        var folderPath = _fileBase.Locate(folderDir);
+        var localDir = new Uri($"poly-file:///local/instances/{Context.AssociatedInstance!.Id}/");
+        var localPath = _fileBase.Locate(localDir);
+        try
         {
-            XamlRoot = App.Current.Window.Content.XamlRoot,
-            Title = "Really?",
-            Text = "此操作不可撤销"
-        };
-        if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-        {
-            var folderDir = new Uri($"poly-file://{Context.AssociatedInstance!.Id}/");
-            var folderPath = _fileBase.Locate(folderDir);
-            var localDir = new Uri($"poly-file:///local/instances/{Context.AssociatedInstance!.Id}/");
-            var localPath = _fileBase.Locate(localDir);
-            try
-            {
-                if (Directory.Exists(folderPath))
-                    Directory.Delete(folderPath, true);
-                if (Directory.Exists(localPath))
-                    Directory.Delete(localPath, true);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Deleting instance {} local files failed", folderDir.AbsoluteUri);
-            }
-
+            if (Directory.Exists(folderPath))
+                Directory.Delete(folderPath, true);
+            if (Directory.Exists(localPath))
+                Directory.Delete(localPath, true);
             _instanceManager.RemoveInstance(Context.AssociatedInstance.Inner);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Deleting instance {} local files failed", folderDir.AbsoluteUri);
+        }
+    }
+
+    public void ResetInstance()
+    {
+        var folderDir = new Uri($"poly-file://{Context.AssociatedInstance!.Id}/");
+        var folderPath = _fileBase.Locate(folderDir);
+        var localDir = new Uri($"poly-file:///local/instances/{Context.AssociatedInstance!.Id}/");
+        var localPath = _fileBase.Locate(localDir);
+        try
+        {
+            if (Directory.Exists(folderPath))
+                Directory.Delete(folderPath, true);
+            if (Directory.Exists(localPath))
+                Directory.Delete(localPath, true);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Deleting instance {} local files failed", folderDir.AbsoluteUri);
         }
     }
 }

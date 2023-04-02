@@ -17,6 +17,8 @@ public class SettingViewModel : ObservableObject
     private readonly ConfigurationManager _configurationManager;
     private readonly JavaManager _javaManager;
 
+    private string additionalJvmArguments = string.Empty;
+
     private bool autoDetectJava;
 
     private string javaHome = string.Empty;
@@ -24,8 +26,6 @@ public class SettingViewModel : ObservableObject
     private string javaSummary = string.Empty;
 
     private uint jvmMaxMemory;
-
-    private string additionalJvmArguments = string.Empty;
 
     private JavaInstallationModel? selectedJava;
 

@@ -182,7 +182,9 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 
 - 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
 -
+
 游戏启动流程: [教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8)
+
 - Forge: [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
 - 微软验证: [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
 - Forge 版本和下载: [BMCLApi](https://bmclapidoc.bangbang93.com/)

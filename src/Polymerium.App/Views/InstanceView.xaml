@@ -48,17 +48,17 @@
                                         <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                             <Run Text="导入自" />
-                                        <Hyperlink NavigateUri="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}">整合包</Hyperlink>
+                                            <Hyperlink NavigateUri="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}">整合包</Hyperlink>
                                         </TextBlock>
                                         <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                        <Run Text="带有" />
-                                        <Hyperlink>附件</Hyperlink>
+                                            <Run Text="带有" />
+                                            <Hyperlink>附件</Hyperlink>
                                         </TextBlock>
                                     </StackPanel>
                                     <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                    <Run Text="游戏版本: " />
-                                    <Run Text="{x:Bind ViewModel.CoreVersion,Mode=OneWay}" />
+                                        <Run Text="游戏版本: " />
+                                        <Run Text="{x:Bind ViewModel.CoreVersion,Mode=OneWay}" />
                                     </TextBlock>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Spacing="3">

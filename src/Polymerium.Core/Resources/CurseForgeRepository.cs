@@ -10,15 +10,15 @@ namespace Polymerium.Core.Resources;
 
 public class CurseForgeRepository : IResourceRepository
 {
-    public RepositoryLabel Label => RepositoryLabel.CurseForge;
-    public ResourceType SupportedResources => ResourceType.Modpack | ResourceType.Mod | ResourceType.ResourcePack;
-
     private readonly IMemoryCache _cache;
 
     public CurseForgeRepository(IMemoryCache cache)
     {
         _cache = cache;
     }
+
+    public RepositoryLabel Label => RepositoryLabel.CurseForge;
+    public ResourceType SupportedResources => ResourceType.Modpack | ResourceType.Mod | ResourceType.ResourcePack;
 
     public async Task<IEnumerable<RepositoryAssetMeta>> SearchProjectsAsync(string query, ResourceType type,
         string? modLoader, string? version, uint offset = 0, uint limit = 10, CancellationToken token = default)

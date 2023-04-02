@@ -25,21 +25,21 @@ namespace Polymerium.App.ViewModels;
 public class InstanceViewModel : ObservableObject
 {
     private readonly ComponentManager _componentManager;
-    private readonly GameManager _gameManager;
-    private readonly ResolveEngine _resolver;
-    private readonly NavigationService _navigationService;
     private readonly IFileBaseService _fileBase;
+    private readonly GameManager _gameManager;
+    private readonly NavigationService _navigationService;
+    private readonly ResolveEngine _resolver;
 
     private string coreVersion = string.Empty;
 
     private bool isModSupported;
-    private bool isShaderSupported;
-    private uint resourcePackCount;
-    private uint modCount;
-    private uint shaderPackCount;
 
     private bool isRestorationNeeded;
+    private bool isShaderSupported;
+    private uint modCount;
     private Uri? referenceUrl;
+    private uint resourcePackCount;
+    private uint shaderPackCount;
 
     public InstanceViewModel(
         ViewModelContext context,

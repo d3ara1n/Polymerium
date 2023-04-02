@@ -43,42 +43,20 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         DependencyProperty.Register(nameof(CanDelete), typeof(bool), typeof(InstanceMetadataConfigurationView),
             new PropertyMetadata(false));
 
-
-    public bool IsAttachmentBeingParsed
-    {
-        get => (bool)GetValue(IsAttachmentBeingParsedProperty);
-        set => SetValue(IsAttachmentBeingParsedProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for IsAttachmentBeingParsed.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsAttachmentBeingParsedProperty =
         DependencyProperty.Register(nameof(IsAttachmentBeingParsed), typeof(bool),
             typeof(InstanceMetadataConfigurationView), new PropertyMetadata(false));
-
-
-    public bool IsReferenceBeingParsed
-    {
-        get => (bool)GetValue(IsReferenceBeingParsedProperty);
-        set => SetValue(IsReferenceBeingParsedProperty, value);
-    }
 
     // Using a DependencyProperty as the backing store for IsReferenceBeingParsed.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsReferenceBeingParsedProperty =
         DependencyProperty.Register(nameof(IsReferenceBeingParsed), typeof(bool),
             typeof(InstanceMetadataConfigurationView), new PropertyMetadata(false));
 
-
-    public InstanceModpackReferenceModel ModpackReference
-    {
-        get => (InstanceModpackReferenceModel)GetValue(ModpackReferenceProperty);
-        set => SetValue(ModpackReferenceProperty, value);
-    }
-
     // Using a DependencyProperty as the backing store for ModpackReference.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty ModpackReferenceProperty =
         DependencyProperty.Register(nameof(ModpackReference), typeof(InstanceModpackReferenceModel),
             typeof(InstanceMetadataConfigurationView), new PropertyMetadata(null));
-
 
 
     private static Func<InstanceAttachmentItemModel, bool>? filter;
@@ -89,6 +67,27 @@ public sealed partial class InstanceMetadataConfigurationView : Page
             App.Current.Provider.GetRequiredService<InstanceMetadataConfigurationViewModel>();
         ViewModel.SetCallback(AddAttachmentHandler);
         InitializeComponent();
+    }
+
+
+    public bool IsAttachmentBeingParsed
+    {
+        get => (bool)GetValue(IsAttachmentBeingParsedProperty);
+        set => SetValue(IsAttachmentBeingParsedProperty, value);
+    }
+
+
+    public bool IsReferenceBeingParsed
+    {
+        get => (bool)GetValue(IsReferenceBeingParsedProperty);
+        set => SetValue(IsReferenceBeingParsedProperty, value);
+    }
+
+
+    public InstanceModpackReferenceModel ModpackReference
+    {
+        get => (InstanceModpackReferenceModel)GetValue(ModpackReferenceProperty);
+        set => SetValue(ModpackReferenceProperty, value);
     }
 
     public bool IsModChecked

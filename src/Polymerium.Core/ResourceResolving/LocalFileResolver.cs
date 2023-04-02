@@ -19,7 +19,7 @@ public class LocalFileResolver : ResourceResolverBase
         return Context.Instance != null
             ? Ok(
                 new File(name, name, string.Empty, string.Empty, null, null, string.Empty, string.Empty, path, null,
-                new Uri(new Uri($"poly-file:///local/instances/{Context.Instance!.Id}/"), path)), ResourceType.File)
+                    new Uri(new Uri($"poly-file:///local/instances/{Context.Instance!.Id}/"), path)), ResourceType.File)
             : Err(ResolveResultError.NotFound);
     }
 }

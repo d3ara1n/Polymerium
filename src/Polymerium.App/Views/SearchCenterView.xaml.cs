@@ -53,6 +53,7 @@ public sealed partial class SearchCenterView : Page
                     else
                         found = false;
                 }
+
                 if (found && arguments.SearchImmediately) QuerySubmitted(arguments.Query);
             }
         }
