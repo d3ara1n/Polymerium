@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
 using Polymerium.Core.Engines.Downloading;
+using Polymerium.Core.Managers;
 using Polymerium.Core.StageModels;
 
 namespace Polymerium.Core.Engines.Restoring.Stages;
@@ -17,13 +18,15 @@ public class CompleteLibrariesStage : StageBase
     private readonly GameInstance _instance;
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
+    private readonly AssetManager _assetManager;
 
     public CompleteLibrariesStage(
         GameInstance instance,
         PolylockData polylock,
         SHA1 sha1,
         IFileBaseService fileBase,
-        DownloadEngine downloader
+        DownloadEngine downloader,
+        AssetManager assetManager
     )
     {
         _instance = instance;
@@ -31,6 +34,7 @@ public class CompleteLibrariesStage : StageBase
         _sha1 = sha1;
         _fileBase = fileBase;
         _downloader = downloader;
+        _assetManager = assetManager;
     }
 
     public override string StageName => "补全游戏依赖库文件";
@@ -39,7 +43,7 @@ public class CompleteLibrariesStage : StageBase
     {
         if (Token.IsCancellationRequested)
             return Cancel();
-        var libraryDir = new Uri("poly-file:///libraries/");
+        var libraryDir = new Uri("poly-file:///cache/libraries/");
         var nativesDir = new Uri($"poly-file://{_instance.Id}/natives/");
         var group = new DownloadTaskGroup { Token = Token };
         _fileBase.RemoveDirectory(nativesDir);
@@ -96,7 +100,7 @@ public class CompleteLibrariesStage : StageBase
         _downloader.Enqueue(group);
         if (group.Wait())
             return Next(
-                new CompleteAttachmentsStage(_instance, _polylock, _sha1, _fileBase, _downloader)
+                new CompleteAttachmentsStage(_instance, _polylock, _sha1, _fileBase, _downloader, _assetManager)
             );
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }

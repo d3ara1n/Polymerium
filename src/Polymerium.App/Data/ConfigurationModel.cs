@@ -24,14 +24,12 @@ public class ConfigurationModel : RefinedModelBase<Configuration>
     public override Uri Location { get; } = new("poly-file:///configuration.json");
 
     public override JsonSerializerSettings SerializerSettings => serializerSettings;
-    public AppSettings? Settings { get; set; }
     public string? AccountShowcaseId { get; set; }
 
     public FileBasedLaunchConfiguration? GameGlobals { get; set; }
 
     public override void Apply(Configuration data)
     {
-        Settings = data.Settings;
         AccountShowcaseId = data.AccountShowcaseId;
         GameGlobals = data.GameGlobals;
     }
@@ -39,7 +37,6 @@ public class ConfigurationModel : RefinedModelBase<Configuration>
     public override Configuration Extract()
     {
         var cfg = new Configuration(
-            Settings ?? new AppSettings(),
             AccountShowcaseId ?? string.Empty,
             GameGlobals ?? new FileBasedLaunchConfiguration()
         );

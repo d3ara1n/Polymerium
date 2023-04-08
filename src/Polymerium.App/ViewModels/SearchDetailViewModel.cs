@@ -26,17 +26,20 @@ public class SearchDetailViewModel : ObservableObject
 {
     private readonly IMemoryCache _cache;
     private readonly ComponentManager _componentManager;
+    private readonly ConfigurationManager _configurationManager;
     private readonly ImportService _importer;
     private readonly MemoryStorage _memoryStorage;
     private readonly INotificationService _notification;
     private readonly ResolveEngine _resolver;
 
-    public SearchDetailViewModel(ViewModelContext context, MemoryStorage memoryStorage, ResolveEngine resolver,
+    public SearchDetailViewModel(ViewModelContext context, MemoryStorage memoryStorage,
+        ConfigurationManager configurationManager, ResolveEngine resolver,
         INotificationService notification, ImportService importer, IMemoryCache cache,
         ComponentManager componentManager)
     {
         Context = context;
         _memoryStorage = memoryStorage;
+        _configurationManager = configurationManager;
         _resolver = resolver;
         _notification = notification;
         _importer = importer;
@@ -52,9 +55,9 @@ public class SearchDetailViewModel : ObservableObject
 
     public ObservableCollection<SearchCenterResultItemVersionModel> Versions { get; }
 
-    public GameInstance? Scope { get; private set; }
+    public GameInstanceModel? Scope { get; private set; }
 
-    public void GotResources(RepositoryAssetMeta resource, GameInstance? scope)
+    public void GotResources(RepositoryAssetMeta resource, GameInstanceModel? scope)
     {
         Resource = resource;
         Scope = scope;
@@ -114,10 +117,15 @@ public class SearchDetailViewModel : ObservableObject
         return _memoryStorage.Instances;
     }
 
+    public void InstallAsset(GameInstanceModel instance, SearchCenterResultItemVersionModel version)
+    {
+        instance.Attachments.Add(version.ResourceUrl);
+        _notification.Enqueue("添加资产成功", $"对 {Resource!.Value.Name} 的引用被添加到 {instance.Name}", InfoBarSeverity.Success);
+    }
+
     public void InstallAsset(GameInstance instance, SearchCenterResultItemVersionModel version)
     {
-        instance.Metadata.Attachments.Add(version.ResourceUrl);
-        _notification.Enqueue("添加资产成功", $"对 {Resource!.Value.Name} 的引用被添加到 {instance.Name}", InfoBarSeverity.Success);
+        InstallAsset(new GameInstanceModel(instance, _configurationManager.Current.GameGlobals), version);
     }
 
     public async Task InstallModpackAsync(SearchCenterResultItemVersionModel version, Action<double?, bool> report,
@@ -190,5 +198,10 @@ public class SearchDetailViewModel : ObservableObject
     private void EndedSuccess(string message)
     {
         _notification.Enqueue("安装整合包完成", message, InfoBarSeverity.Success);
+    }
+
+    public string? GetModloaderFriendlyName(string identity)
+    {
+        return _componentManager.ToFriendlyName(identity);
     }
 }

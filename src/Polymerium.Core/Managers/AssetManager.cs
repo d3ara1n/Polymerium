@@ -15,17 +15,23 @@ using Tomlyn;
 using Tomlyn.Model;
 using File = System.IO.File;
 
-namespace Polymerium.Core;
+namespace Polymerium.Core.Managers;
 
-// 对游戏本体的操作需要通过 game manager 实施
+// 对游戏本体的操作需要通过 asset manager 实施
 // 需要 GameInstance 但不关心里面 meta 怎么写，只对本地文件负责
 // 维护 GameInstance 的是 InstanceManager(是 asset manager)
 // 不包括对游戏运行状态维护，运行状态会在游戏托管后被 GameManagedInstance 代理
-public class GameManager
+
+public enum RenewableAssetDeploymentError
+{
+    TargetConflict
+}
+
+public class AssetManager
 {
     private readonly IFileBaseService _fileBase;
 
-    public GameManager(IFileBaseService fileBase)
+    public AssetManager(IFileBaseService fileBase)
     {
         _fileBase = fileBase;
     }
@@ -186,13 +192,74 @@ public class GameManager
 
     public Uri GetAssetDirectory(GameInstance instance, ResourceType type)
     {
-        var dirUri = new Uri($"poly-file://{instance.Id}/{type switch
+        var dir = type switch
         {
             ResourceType.Mod => "mods",
             ResourceType.ShaderPack => "shaderpacks",
             ResourceType.ResourcePack => "resourcepacks",
             _ => throw new NotImplementedException()
-        }}/");
+        };
+        var dirUri = new Uri($"poly-file://{instance.Id}/{dir}/");
         return dirUri;
+    }
+
+    public IEnumerable<RenewableAssetState> TakeRenewableAssetSnapshot(GameInstance instance)
+    {
+        var snapshot = new List<RenewableAssetState>();
+        var instanceBase = new Uri($"poly-file://{instance.Id}/");
+        TakeRenewableAssetSnapshotInternal(snapshot, instanceBase, new Uri("poly-file:///cache/objects/"),
+            _fileBase.Locate(instanceBase));
+        return snapshot;
+    }
+
+    private void TakeRenewableAssetSnapshotInternal(in List<RenewableAssetState> snapshot, Uri instanceBase,
+        Uri poolBase, string parent)
+    {
+        var dir = new DirectoryInfo(parent);
+        if (dir.Exists)
+        {
+            var basePath = _fileBase.Locate(instanceBase);
+            var poolPath = _fileBase.Locate(poolBase);
+            foreach (var file in dir.GetFiles().Where(x => x.LinkTarget != null))
+            {
+                var relativeTarget = Path.GetRelativePath(basePath, file.FullName);
+                var relativeSource = Path.GetRelativePath(poolPath, file.LinkTarget!);
+                var renewable = new RenewableAssetState
+                {
+                    Source = new Uri(poolBase, relativeSource),
+                    Target = new Uri(instanceBase, relativeTarget)
+                };
+                snapshot.Add(renewable);
+            }
+
+            foreach (var sub in dir.GetDirectories())
+                TakeRenewableAssetSnapshotInternal(snapshot, instanceBase, poolBase, sub.FullName);
+        }
+    }
+
+    public RenewableAssetDeploymentError? DeployRenewableAssets(GameInstance instance,
+        IEnumerable<RenewableAssetState> finals)
+    {
+        // 想要 tagged RenewableAssetDeploymentError(file)...
+        if (finals.Any(x =>
+            {
+                var file = new FileInfo(_fileBase.Locate(x.Target));
+                return file.LinkTarget == null && file.Exists &&
+                       !_fileBase.CheckIfTheSameAsync(x.Target, x.Source).Result;
+            }))
+            return RenewableAssetDeploymentError.TargetConflict;
+        var snapshot = TakeRenewableAssetSnapshot(instance);
+        foreach (var original in snapshot.Where(x => !finals.Any(y => x.Source == y.Source && x.Target == y.Target)))
+            File.Delete(_fileBase.Locate(original.Target));
+        foreach (var final in finals.Where(x => !_fileBase.DoFileExist(x.Target)))
+        {
+            var path = _fileBase.Locate(final.Target);
+            var dir = Path.GetDirectoryName(path);
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir!);
+            File.CreateSymbolicLink(path, _fileBase.Locate(final.Source));
+        }
+
+        return null;
     }
 }

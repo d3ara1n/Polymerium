@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
+using Polymerium.Core.Managers;
 using Polymerium.Core.Models.Mojang;
 using Polymerium.Core.StageModels;
 using Wupoo;
@@ -18,13 +19,15 @@ public class LoadAssetIndexStage : StageBase
     private readonly GameInstance _instance;
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
+    private readonly AssetManager _assetManager;
 
     public LoadAssetIndexStage(
         GameInstance instance,
         SHA1 sha1,
         PolylockData polylock,
         IFileBaseService fileBase,
-        DownloadEngine downloader
+        DownloadEngine downloader,
+        AssetManager assetManager
     )
     {
         _instance = instance;
@@ -32,6 +35,7 @@ public class LoadAssetIndexStage : StageBase
         _polylock = polylock;
         _fileBase = fileBase;
         _downloader = downloader;
+        _assetManager = assetManager;
     }
 
     public override string StageName => "获取游戏资产资源清单";
@@ -40,7 +44,7 @@ public class LoadAssetIndexStage : StageBase
     {
         if (Token.IsCancellationRequested)
             return Cancel();
-        var assetIndexFile = new Uri($"poly-file:///assets/indexes/{_polylock.AssetIndex.Id}.json");
+        var assetIndexFile = new Uri($"poly-file:///cache/assets/indexes/{_polylock.AssetIndex.Id}.json");
         string? content = null;
         if (
             !await _fileBase.VerifyHashAsync(assetIndexFile, _polylock.AssetIndex.Sha1, _sha1)
@@ -76,7 +80,8 @@ public class LoadAssetIndexStage : StageBase
                     assetIndex,
                     _sha1,
                     _fileBase,
-                    _downloader
+                    _downloader,
+                    _assetManager
                 )
             );
         }

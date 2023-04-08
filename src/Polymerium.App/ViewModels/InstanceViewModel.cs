@@ -19,6 +19,7 @@ using Polymerium.Core.Components;
 using Polymerium.Core.Engines;
 using Polymerium.Core.Extensions;
 using Polymerium.Core.GameAssets;
+using Polymerium.Core.Managers;
 
 namespace Polymerium.App.ViewModels;
 
@@ -26,7 +27,7 @@ public class InstanceViewModel : ObservableObject
 {
     private readonly ComponentManager _componentManager;
     private readonly IFileBaseService _fileBase;
-    private readonly GameManager _gameManager;
+    private readonly AssetManager _gameManager;
     private readonly NavigationService _navigationService;
     private readonly ResolveEngine _resolver;
 
@@ -49,7 +50,7 @@ public class InstanceViewModel : ObservableObject
         IFileBaseService fileBase,
         ComponentManager componentManager,
         NavigationService navigationService,
-        GameManager gameManager
+        AssetManager gameManager
     )
     {
         _componentManager = componentManager;

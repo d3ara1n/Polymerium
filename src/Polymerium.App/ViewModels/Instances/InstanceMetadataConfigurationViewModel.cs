@@ -102,7 +102,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         {
             case NotifyCollectionChangedAction.Add:
                 if (e.NewItems != null && e.NewItems.Count > 0)
-                    Task.Run(() => LoadParseAttachmentsAsync((IEnumerable<Uri>)e.NewItems));
+                    Task.Run(() => LoadParseAttachmentsAsync(e.NewItems.Cast<Uri>()));
                 break;
             case NotifyCollectionChangedAction.Remove:
                 if (e.OldItems != null)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
 using Polymerium.Core.Engines.Downloading;
+using Polymerium.Core.Managers;
 using Polymerium.Core.Models.Mojang;
 using Polymerium.Core.StageModels;
 
@@ -19,6 +20,7 @@ public class CompleteAssetsStage : StageBase
     private readonly GameInstance _instance;
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
+    private readonly AssetManager _assetManager;
 
     public CompleteAssetsStage(
         GameInstance instance,
@@ -26,7 +28,8 @@ public class CompleteAssetsStage : StageBase
         AssetsIndex index,
         SHA1 sha1,
         IFileBaseService fileBase,
-        DownloadEngine downloader
+        DownloadEngine downloader,
+        AssetManager assetManager
     )
     {
         _instance = instance;
@@ -35,6 +38,7 @@ public class CompleteAssetsStage : StageBase
         _sha1 = sha1;
         _fileBase = fileBase;
         _downloader = downloader;
+        _assetManager = assetManager;
     }
 
     public override string StageName => "补全游戏资产文件";
@@ -48,7 +52,7 @@ public class CompleteAssetsStage : StageBase
         {
             if (Token.IsCancellationRequested)
                 return Cancel();
-            var path = new Uri($"poly-file:///assets/objects/{item[..2]}/{item}", UriKind.Absolute);
+            var path = new Uri($"poly-file:///cache/assets/objects/{item[..2]}/{item}", UriKind.Absolute);
             if (!await _fileBase.VerifyHashAsync(path, item, _sha1))
                 group.TryAdd(
                     $"https://resources.download.minecraft.net/{item[..2]}/{item}",
@@ -65,7 +69,7 @@ public class CompleteAssetsStage : StageBase
         _downloader.Enqueue(group);
         if (group.Wait())
             return Next(
-                new CompleteLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader)
+                new CompleteLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader, _assetManager)
             );
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }

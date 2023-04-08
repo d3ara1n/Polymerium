@@ -48,9 +48,7 @@
 
 ### 跨平台
 
-设计之初是跨平台的，所有文件都放在家目录和用户配置目录而不是 Windows 那逆天难找的 AppData。不过现实问题是 MAUI 没涉足
-Linux Desktop，Avalonia 则看了几个对应的程序，动画缺失或卡顿（出于对个人作者的尊重，所以我把锅甩给框架本身），遂选择不跨平台从创建到现在多年积累三千
-open issues和 19 年至今未处理某 issue 的 WinUI3。
+跨。跨了 Windows 10 和 Windows 11 两个“平台”。
 
 ### 使用以下技术栈和工具构建
 
@@ -66,7 +64,7 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 
 ## 安装使用
 
-### 微软商店
+### 微软商店(推荐)
 
 [![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/apps/9NGQHHCT2Q6Z)
 
@@ -85,23 +83,23 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 
 目前仅支持创建原版实例（并在随后的实例配置页面添加 Mod Loader ）或导入 Modrinth，CurseForge 整合包。
 
-#### 导入 Modrinth 整合包
+#### 导入整合包
 
-在 Modrinth 下载整合包文件，拖动到导入页面的 DragDrop 面板，根据向导添加。
-
-#### 导入 CurseForge 整合包
-
-同上。
+下载整合包文件，拖动到导入页面的 DragDrop 面板，根据向导添加。
 
 <!-- ROADMAP -->
 
 ## Roadmap
 
-* [x] 创建项目文件夹
+* [x] 创建该项目
+    * [x] 起名字
+    * [x] 创建 Git 项目仓库
+    * [x] 在目录里随处撒上魔术粉
 * [ ] 实例管理
     * [x] 从空模板创建
     * [x] 删除
-    * [ ] 解锁（转换为 untagged 实例）
+    * [x] 解锁（转换为 untagged 实例）
+    * [ ] 根据引用源更新实例元数据
     * [ ] 导入
         * [x] 导入预览对话框
         * [ ] Polypack
@@ -137,6 +135,7 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
         * [x] Fabric
         * [x] Quilt
     * [x] 附件安装
+    * [x] 基于文件池
 * [x] 资源附件
     * [x] 资源解析引擎
         * [x] {var} 参数
@@ -171,7 +170,7 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 * [ ] 游戏实例设置
     * [x] 元数据编辑
     * [x] 私有启动配置页面
-    * [ ] 重置实例
+    * [x] 重置实例
 * [ ] 本地化
 
 更多细节请在 [Issues](https://github.com/d3ara1n/Polymerium/issues) 中查询。
@@ -180,14 +179,12 @@ open issues和 19 年至今未处理某 issue 的 WinUI3。
 
 ## 外部资料和参考
 
-- 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
--
-
+* 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher/)
+*
 游戏启动流程: [教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8)
-
-- Forge: [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
-- 微软验证: [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
-- Forge 版本和下载: [BMCLApi](https://bmclapidoc.bangbang93.com/)
+* Forge: [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
+* 微软验证: [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
+* Forge 版本和下载: [BMCLApi](https://bmclapidoc.bangbang93.com/)
 
 十分感谢以上作者和所著文章。
 

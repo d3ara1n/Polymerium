@@ -97,7 +97,7 @@ public class SearchCenterViewModel : ObservableObject
 
     public void ShowDetailDialog(SearchCenterResultItemModel model)
     {
-        var dialog = new SearchDetailDialog(model.Resource, InstanceScope?.Inner)
+        var dialog = new SearchDetailDialog(model.Resource, InstanceScope)
         {
             OverlayService = _overlayService
         };
