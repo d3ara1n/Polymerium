@@ -22,6 +22,7 @@ public sealed partial class InstanceSelectorDialog : ContentDialog
     public InstanceSelectorDialog(IEnumerable<GameInstance> candidates)
     {
         InitializeComponent();
+        Candidates.Clear();
         foreach (var candidate in candidates) Candidates.Add(candidate);
     }
 

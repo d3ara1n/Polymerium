@@ -1,7 +1,6 @@
 using System;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Polymerium.Abstractions;
 
 namespace Polymerium.Core;
 
@@ -16,7 +15,9 @@ public interface IFileBaseService
     bool DoFileExist(Uri uri);
 
     Task<bool> VerifyHashAsync(Uri uri, string? hash, HashAlgorithm algorithm);
-    Task<Option<string>> ComputeHashAsync(Uri uri, HashAlgorithm algorithm);
+    Task<string?> ComputeHashAsync(Uri uri, HashAlgorithm algorithm);
 
     bool RemoveDirectory(Uri uri);
+
+    Task<bool> CheckIfTheSameAsync(Uri left, Uri right);
 }

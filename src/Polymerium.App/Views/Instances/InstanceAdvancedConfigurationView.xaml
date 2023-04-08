@@ -29,8 +29,8 @@
                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
-                            <Button Content="安全重命名" HorizontalAlignment="Right"
-                                    Command="{x:Bind ViewModel.OpenRenameDialogCommand}" />
+                            <Button x:Name="RenameButton" Content="安全重命名" HorizontalAlignment="Right"
+                                    Click="RenameButton_Click" />
                         </Grid>
                     </controls:ExpanderEx.Header>
                 </controls:ExpanderEx>
@@ -48,7 +48,7 @@
                                 </TextBlock>
                             </StackPanel>
                             <Button Content="导出为整合包" HorizontalAlignment="Right"
-                                    Command="{x:Bind ViewModel.OpenRenameDialogCommand}" IsEnabled="False" />
+                                    IsEnabled="False" />
                         </Grid>
                     </controls:ExpanderEx.Header>
                 </controls:ExpanderEx>

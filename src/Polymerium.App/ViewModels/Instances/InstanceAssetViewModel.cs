@@ -14,6 +14,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Core;
 using Polymerium.Core.GameAssets;
+using Polymerium.Core.Managers;
 using File = System.IO.File;
 
 namespace Polymerium.App.ViewModels.Instances;
@@ -21,10 +22,10 @@ namespace Polymerium.App.ViewModels.Instances;
 public class InstanceAssetViewModel : ObservableObject
 {
     private readonly IFileBaseService _fileBase;
-    private readonly GameManager _gameManager;
+    private readonly AssetManager _gameManager;
     private readonly INotificationService _notification;
 
-    public InstanceAssetViewModel(ViewModelContext context, GameManager gameManager, INotificationService notification,
+    public InstanceAssetViewModel(ViewModelContext context, AssetManager gameManager, INotificationService notification,
         IFileBaseService fileBase)
     {
         Context = context;

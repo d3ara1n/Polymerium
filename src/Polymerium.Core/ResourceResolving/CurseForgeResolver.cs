@@ -110,9 +110,9 @@ public class CurseForgeResolver : ResourceResolverBase
                     4471 => eternalFile.FileName,
                     _ => throw new NotImplementedException()
                 };
-                var file = new File(eternalFile.Id.ToString(), eternalFile.DisplayName, eternalFile.DisplayName,
+                var file = new File(eternalProject.Id.ToString(), eternalFile.DisplayName, eternalFile.DisplayName,
                     string.Empty, null, null,
-                    string.Empty, fileId, fileName, sha1,
+                    string.Empty, eternalFile.Id.ToString(), fileName, sha1,
                     eternalFile.ExtractDownloadUrl());
                 return Ok(file, ResourceType.File);
             }

@@ -94,7 +94,7 @@ public class ModrinthResolver : ResourceResolverBase
     public async Task<Result<ResolveResult, ResolveResultError>> GetShaderPackAsync(string projectId, string version)
     {
         return await GetProjectAsync(ResourceType.ShaderPack, projectId, version,
-            (project, file, members) => new ResourcePack(project.Id ?? project.Slug, file.VersionNumber, project.Title,
+            (project, file, members) => new ResourcePack(project.Id ?? project.Slug, project.Title, file.VersionNumber,
                 MembersToLine(members), project.IconUrl,
                 new Uri(MODRINTH_PROJECT_URL.Replace("{0}", "shader").Replace("{1}", project.Slug)),
                 project.Description,
@@ -110,7 +110,7 @@ public class ModrinthResolver : ResourceResolverBase
         {
             var first = file.Files.First();
             return Ok(
-                new File(file.Id, file.Name, file.VersionNumber, string.Empty, null, null, string.Empty, version,
+                new File(file.ProjectId, file.Name, file.VersionNumber, string.Empty, null, null, string.Empty, file.Id,
                     $"{dir}/{first.Filename}",
                     first.Hashes.Sha1, first.Url), ResourceType.File);
         }
@@ -127,7 +127,7 @@ public class ModrinthResolver : ResourceResolverBase
         {
             var first = file.Files.First();
             return Ok(
-                new File(file.Id, file.Name, file.VersionNumber, string.Empty, null, null, string.Empty, version,
+                new File(file.ProjectId, file.Name, file.VersionNumber, string.Empty, null, null, string.Empty, file.Id,
                     first.Filename,
                     first.Hashes.Sha1, first.Url), ResourceType.File);
         }

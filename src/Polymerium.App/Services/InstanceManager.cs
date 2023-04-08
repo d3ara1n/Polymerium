@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Mvvm.Messaging;
 using Polymerium.Abstractions;
 using Polymerium.App.Data;
+using Polymerium.App.Messages;
 using Polymerium.Core;
 
 namespace Polymerium.App.Services;
@@ -60,6 +62,7 @@ public sealed class InstanceManager : IDisposable
         while (_memoryStorage.Instances.Any(x => x.FolderName == instance.FolderName))
             instance.FolderName += '_';
         _memoryStorage.Instances.Add(instance);
+        WeakReferenceMessenger.Default.Send(new InstanceAddedMessage(instance));
         return null;
     }
 
@@ -111,6 +114,9 @@ public sealed class InstanceManager : IDisposable
     public void RemoveInstance(GameInstance instance)
     {
         if (TryFindById(instance.Id, out var found))
+        {
             _memoryStorage.Instances.Remove(found!);
+            WeakReferenceMessenger.Default.Send(new InstanceRemovedMessage(found!));
+        }
     }
 }

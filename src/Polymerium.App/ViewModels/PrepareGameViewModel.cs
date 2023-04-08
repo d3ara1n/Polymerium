@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.Notifications;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
@@ -161,15 +163,13 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             Instance!.PlayCount++;
             if (stage.IsCompletedSuccessfully)
             {
-                // do the further checks
-                // stage-lize!
-                // these steps should be moved into some game manager
-                // java
-                // account
-
                 UpdateLabelSafe("您的游戏已经准备就绪", true);
                 UpdateTaskProgressSafe("准备就绪");
                 Instance.LastRestore = DateTimeOffset.Now;
+                if (App.Current.Window.CoreWindow.ActivationMode != CoreWindowActivationMode.ActivatedInForeground)
+                    new ToastContentBuilder()
+                        .SetToastScenario(ToastScenario.Default)
+                        .AddText("");
             }
             else
             {
@@ -209,9 +209,9 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
     public void Start()
     {
         var workingDir = new Uri($"poly-file://{Instance!.Id}/");
-        var assetsRoot = new Uri("poly-file:///assets/");
+        var assetsRoot = new Uri("poly-file:///cache/assets/");
         var nativesRoot = new Uri($"poly-file://{Instance!.Id}/natives/");
-        var librariesRoot = new Uri("poly-file:///libraries/");
+        var librariesRoot = new Uri("poly-file:///cache/libraries/");
         var polylockFile = new Uri($"poly-file://{Instance!.Id}/polymerium.lock.json");
         if (_fileBase.TryReadAllText(polylockFile, out var content))
         {

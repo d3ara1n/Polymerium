@@ -13,8 +13,7 @@
     mc:Ignorable="d" Loaded="Page_Loaded">
     <ScrollViewer>
         <StackPanel>
-            <controls:Card x:Name="Header" Height="220" Padding="0" Margin="5,0,10,5"
-                           PointerEntered="Header_PointerEntered" PointerExited="Header_PointerExited">
+            <controls:Card x:Name="Header" Height="220" Padding="0" Margin="5,0,10,5">
                 <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                 IsEnabled="{x:Bind IsPending,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
                     <Grid ColumnDefinitions="Auto,*">
@@ -113,15 +112,14 @@
                                     </GridView>
                                 </ScrollViewer>
                                 <Grid Grid.Column="1">
-                                    <Button x:Name="EditButton" Opacity="0" HorizontalAlignment="Right"
-                                            Style="{StaticResource IconButtonStyle}"
-                                            VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的元数据"
-                                            Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
-                                        <Button.OpacityTransition>
-                                            <ScalarTransition />
-                                        </Button.OpacityTransition>
-                                        <FontIcon Glyph="&#xE104;" />
-                                    </Button>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="EditButton" HorizontalAlignment="Right"
+                                                Style="{StaticResource IconButtonStyle}"
+                                                VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的元数据"
+                                                Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
+                                            <FontIcon Glyph="&#xE104;" FontSize="14" />
+                                        </Button>
+                                    </StackPanel>
                                 </Grid>
                             </Grid>
                         </Grid>

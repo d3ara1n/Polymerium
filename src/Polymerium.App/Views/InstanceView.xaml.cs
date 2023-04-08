@@ -32,16 +32,6 @@ public sealed partial class InstanceView : Page
 
     public InstanceViewModel ViewModel { get; }
 
-    private void Header_PointerEntered(object sender, PointerRoutedEventArgs e)
-    {
-        EditButton.Opacity = 1.0;
-    }
-
-    private void Header_PointerExited(object sender, PointerRoutedEventArgs e)
-    {
-        EditButton.Opacity = 0.0;
-    }
-
     private void Page_Loaded(object sender, RoutedEventArgs e)
     {
         ViewModel.LoadAssets();

@@ -122,7 +122,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
             throw new NotImplementedException();
         }
 
-        Context.AddCrate("library_directory", _fileBase.Locate(new Uri("poly-file:///libraries")));
+        Context.AddCrate("library_directory", _fileBase.Locate(new Uri("poly-file:///cache/libraries")));
         return Finished();
     }
 

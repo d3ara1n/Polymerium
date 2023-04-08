@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Changelogs", "Changelogs", "{287C6B18-9178-417D-B603-09C18E2D3DE9}"
 	ProjectSection(SolutionItems) = preProject
 		changelogs\v0.3.md = changelogs\v0.3.md
+		changelogs\v0.4.md = changelogs\v0.4.md
 	EndProjectSection
 EndProject
 Global

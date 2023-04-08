@@ -14,6 +14,7 @@ using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Components;
 using Polymerium.Core.Components.Installers;
 using Polymerium.Core.Extensions;
+using Polymerium.Core.Managers;
 using Polymerium.Core.StageModels;
 
 namespace Polymerium.Core.Engines.Restoring.Stages;
@@ -30,6 +31,7 @@ public class BuildPolylockStage : StageBase
     private readonly IServiceProvider _provider;
     private readonly ResolveEngine _resolver;
     private readonly SHA1 _sha1;
+    private readonly AssetManager _assetManager;
 
     public BuildPolylockStage(
         GameInstance instance,
@@ -39,7 +41,8 @@ public class BuildPolylockStage : StageBase
         Uri polylockHashFile,
         DownloadEngine downloader,
         ResolveEngine resolver,
-        IServiceProvider provider
+        IServiceProvider provider,
+        AssetManager assetManager
     )
     {
         _instance = instance;
@@ -50,6 +53,7 @@ public class BuildPolylockStage : StageBase
         _resolver = resolver;
         _downloader = downloader;
         _provider = provider;
+        _assetManager = assetManager;
         _fileBase = _provider.GetRequiredService<IFileBaseService>();
         _installers = new Dictionary<string, Type>
         {
@@ -103,6 +107,7 @@ public class BuildPolylockStage : StageBase
                     var file = (File)x.Result.Value.Resource;
                     return new PolylockAttachment
                     {
+                        CachedObjectPath = $"{file.Source.Host}/{file.Id}/{file.VersionId}",
                         Source = file.Source,
                         Sha1 = file.Hash,
                         Target = new Uri(new Uri($"poly-file://{_instance.Id}/"), file.FileName)
@@ -117,7 +122,7 @@ public class BuildPolylockStage : StageBase
             _fileBase.WriteAllText(_polylockHashFile, md5);
 
             return Next(
-                new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader)
+                new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader, _assetManager)
             );
         }
         catch (Exception e)

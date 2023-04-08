@@ -14,6 +14,7 @@ using Polymerium.App.ViewModels.Instances;
 using Polymerium.App.Views;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
+using Polymerium.Core.Managers;
 using Polymerium.Core.ResourceResolving;
 using Polymerium.Core.Resources;
 
@@ -99,13 +100,14 @@ public partial class App : Application
             .AddSingleton<InstanceManager>()
             .AddSingleton<ConfigurationManager>()
             .AddSingleton<DataStorage>()
+            .AddSingleton<FilePoolService>()
             .AddSingleton<MemoryStorage>()
             .AddSingleton<ComponentManager>()
             .AddSingleton<JavaManager>()
             .AddSingleton<ImportService>();
         // global services
         services
-            .AddSingleton<GameManager>()
+            .AddSingleton<AssetManager>()
             .AddSingleton<IFileBaseService, MainFileBaseService>()
             .Configure<MainFileBaseOptions>(
                 configure =>

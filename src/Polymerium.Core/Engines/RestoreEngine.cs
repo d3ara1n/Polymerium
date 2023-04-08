@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Core.Components;
 using Polymerium.Core.Engines.Restoring.Stages;
+using Polymerium.Core.Managers;
 using Polymerium.Core.StageModels;
 using Wupoo;
 
@@ -17,19 +18,21 @@ public class RestoreEngine
     private readonly DownloadEngine _downloader;
     private readonly IFileBaseService _fileBase;
     private readonly ILogger _logger;
-    private readonly GameManager _manager;
+    private readonly AssetManager _manager;
     private readonly ResolveEngine _resolver;
     private readonly IServiceScope _scope;
     private readonly SHA1 _sha1 = SHA1.Create();
     private readonly WapooOptions _wapooOptions;
+    private readonly AssetManager _assetManager;
 
     public RestoreEngine(
         ILogger<RestoreEngine> logger,
-        GameManager manager,
+        AssetManager manager,
         ResolveEngine resolver,
         DownloadEngine downloader,
         IFileBaseService fileBase,
-        IServiceProvider provider
+        IServiceProvider provider,
+        AssetManager assetManager
     )
     {
         _logger = logger;
@@ -37,6 +40,7 @@ public class RestoreEngine
         _resolver = resolver;
         _downloader = downloader;
         _fileBase = fileBase;
+        _assetManager = assetManager;
         _scope = provider.CreateScope();
         var settings = new JsonSerializerSettings();
         _wapooOptions = new WapooOptions { JsonSerializerOptions = settings };
@@ -51,7 +55,8 @@ public class RestoreEngine
             _downloader,
             _resolver,
             _fileBase,
-            _scope.ServiceProvider
+            _scope.ServiceProvider,
+            _assetManager
         );
     }
 }

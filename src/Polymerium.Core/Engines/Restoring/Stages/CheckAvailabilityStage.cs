@@ -7,6 +7,7 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
 using Polymerium.Core.Components;
 using Polymerium.Core.Extensions;
+using Polymerium.Core.Managers;
 using Polymerium.Core.StageModels;
 
 namespace Polymerium.Core.Engines.Restoring.Stages;
@@ -21,6 +22,7 @@ public class CheckAvailabilityStage : StageBase
     private readonly IServiceProvider _provider;
     private readonly ResolveEngine _resolver;
     private readonly SHA1 _sha1;
+    private readonly AssetManager _assetManager;
 
     public CheckAvailabilityStage(
         GameInstance instance,
@@ -29,7 +31,8 @@ public class CheckAvailabilityStage : StageBase
         DownloadEngine downloader,
         ResolveEngine resolver,
         IFileBaseService fileBase,
-        IServiceProvider provider
+        IServiceProvider provider,
+        AssetManager assetManager
     )
     {
         _instance = instance;
@@ -39,6 +42,7 @@ public class CheckAvailabilityStage : StageBase
         _downloader = downloader;
         _fileBase = fileBase;
         _provider = provider;
+        _assetManager = assetManager;
     }
 
     public override string StageName => "检查资源可用性";
@@ -53,7 +57,7 @@ public class CheckAvailabilityStage : StageBase
         {
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content!);
             return Task.FromResult(Next(
-                new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader)
+                new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader, _assetManager)
             ));
         }
 
@@ -66,7 +70,8 @@ public class CheckAvailabilityStage : StageBase
                 polylockHashFile,
                 _downloader,
                 _resolver,
-                _provider
+                _provider,
+                _assetManager
             )
         ));
     }

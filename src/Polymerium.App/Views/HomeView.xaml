@@ -30,7 +30,7 @@
                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png" />
                     </Grid>
                     <Grid ColumnDefinitions="4*,6*">
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel Grid.Column="1" Margin="15" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">
                                 <Run Text="你好 " />
                                 <Run

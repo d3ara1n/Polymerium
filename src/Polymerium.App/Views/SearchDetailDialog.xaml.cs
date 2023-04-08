@@ -6,7 +6,6 @@ using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Controls;
 using Polymerium.App.Dialogs;
@@ -26,7 +25,7 @@ public sealed partial class SearchDetailDialog : CustomDialog
 
     private readonly CancellationTokenSource source = new();
 
-    public SearchDetailDialog(RepositoryAssetMeta resource, GameInstance? scope)
+    public SearchDetailDialog(RepositoryAssetMeta resource, GameInstanceModel? scope)
     {
         ViewModel = App.Current.Provider.GetRequiredService<SearchDetailViewModel>();
         // Context 中没有绑定 Instance 则弹出 InstanceSelectorDialog 进行选择。
@@ -72,10 +71,11 @@ public sealed partial class SearchDetailDialog : CustomDialog
         var file = (SearchCenterResultItemVersionModel)obj;
         if (ViewModel.Scope != null)
         {
-            var coreVersion = ViewModel.Scope.GetCoreVersion();
+            var coreVersion = ViewModel.Scope.Inner.GetCoreVersion();
             var isModLoaderSupported = !file.File.SupportedModLoaders.Any() ||
                                        file.File.SupportedModLoaders.Any(x =>
-                                           ViewModel.Scope.Metadata.Components.Any(y => x == y.Identity));
+                                           ViewModel.Scope.Components.Any(y =>
+                                               x == ViewModel.GetModloaderFriendlyName(y.Identity)));
             var isVersionSupported = !file.File.SupportedCoreVersions.Any() || coreVersion == null ||
                                      file.File.SupportedCoreVersions.Contains(coreVersion);
             return isModLoaderSupported && isVersionSupported;
@@ -99,9 +99,9 @@ public sealed partial class SearchDetailDialog : CustomDialog
         }
         else
         {
-            if (ViewModel.Context.AssociatedInstance != null)
+            if (ViewModel.Scope != null)
             {
-                ViewModel.InstallAsset(ViewModel.Context.AssociatedInstance.Inner, ViewModel.SelectedVersion!);
+                ViewModel.InstallAsset(ViewModel.Scope, ViewModel.SelectedVersion!);
                 Dismiss();
             }
             else
