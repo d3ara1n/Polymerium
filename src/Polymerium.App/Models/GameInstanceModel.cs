@@ -13,14 +13,14 @@ public class GameInstanceModel : ObservableObject
     {
         Inner = instance;
         Components = new SynchronizedCollection<Component>(Inner.Metadata.Components);
-        Attachments = new SynchronizedCollection<Uri>(Inner.Metadata.Attachments);
+        Attachments = new SynchronizedCollection<Attachment>(Inner.Metadata.Attachments);
         Configuration = new ConfigurationModel(new CompoundLaunchConfiguration(Inner.Configuration, fallback));
     }
 
     public GameInstance Inner { get; }
 
     public SynchronizedCollection<Component> Components { get; }
-    public SynchronizedCollection<Uri> Attachments { get; }
+    public SynchronizedCollection<Attachment> Attachments { get; }
 
     public ConfigurationModel Configuration { get; }
 

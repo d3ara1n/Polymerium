@@ -33,16 +33,6 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         DependencyProperty.Register(nameof(IsFileChecked), typeof(bool), typeof(InstanceMetadataConfigurationView),
             new PropertyMetadata(true, FilterCheckBoxChanged));
 
-    // Using a DependencyProperty as the backing store for SelectedItemCount.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty SelectedItemCountProperty =
-        DependencyProperty.Register(nameof(SelectedItemCount), typeof(int), typeof(InstanceMetadataConfigurationView),
-            new PropertyMetadata(0));
-
-    // Using a DependencyProperty as the backing store for CanDelete.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty CanDeleteProperty =
-        DependencyProperty.Register(nameof(CanDelete), typeof(bool), typeof(InstanceMetadataConfigurationView),
-            new PropertyMetadata(false));
-
     // Using a DependencyProperty as the backing store for IsAttachmentBeingParsed.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsAttachmentBeingParsedProperty =
         DependencyProperty.Register(nameof(IsAttachmentBeingParsed), typeof(bool),
@@ -115,19 +105,6 @@ public sealed partial class InstanceMetadataConfigurationView : Page
     }
 
 
-    public int SelectedItemCount
-    {
-        get => (int)GetValue(SelectedItemCountProperty);
-        set => SetValue(SelectedItemCountProperty, value);
-    }
-
-    public bool CanDelete
-    {
-        get => (bool)GetValue(CanDeleteProperty);
-        set => SetValue(CanDeleteProperty, value);
-    }
-
-
     public InstanceMetadataConfigurationViewModel ViewModel { get; }
 
     private void AddAttachmentHandler(InstanceAttachmentItemModel? model)
@@ -168,12 +145,6 @@ public sealed partial class InstanceMetadataConfigurationView : Page
     {
         IsAttachmentBeingParsed = true;
         Task.Run(() => ViewModel.LoadParseAttachmentsAsync(ViewModel.Context.AssociatedInstance!.Attachments));
-    }
-
-    private void AttachmentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        SelectedItemCount = AttachmentList.SelectedItems.Count;
-        CanDelete = AttachmentList.SelectedItems.Count > 0;
     }
 
     private static void FilterCheckBoxChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)

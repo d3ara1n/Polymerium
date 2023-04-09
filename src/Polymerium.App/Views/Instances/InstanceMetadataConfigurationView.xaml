@@ -23,7 +23,7 @@
                                Visibility="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
-                        <TextBlock Text="整合包" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <TextBlock Text="标签" Style="{StaticResource SubtitleTextBlockStyle}" />
                         <Button x:Name="UnlockButton" Content="解锁" HorizontalAlignment="Right"
                                 Click="UnlockButton_Click"
                                 Style="{StaticResource IconButtonStyle}"
@@ -47,7 +47,7 @@
                             </Grid>
                         </Grid>
                         <TextBlock
-                            Text="该实例引用了一个整合包（意味着实例是上锁的），在修改实例元数据之前，需要移除引用信息（该过程称为解锁）。对于未解锁的实例，对模组和资源包等资产的修改只能通过在实例页面手动添加文件（未来会添加打开下载中心直接将文件下载到对应目录的按钮）。"
+                            Text="该实例引用自一个整合包（具有标签，意味着实例元数据是上锁的），在修改实例部分元数据之前，需要移除引用信息（该过程称为解锁）。"
                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                             TextWrapping="WrapWholeWords" />
                     </StackPanel>
@@ -85,7 +85,7 @@
                                     </StackPanel>
                                     <Grid Grid.Column="1">
                                         <Button x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
-                                                Command="{x:Bind RemoveCommand}" CommandParameter="{Binding}"
+                                                Command="{x:Bind RemoveCommand}" CommandParameter="{x:Bind}"
                                                 IsEnabled="{x:Bind CanBeRemoved}"
                                                 ToolTipService.ToolTip="移除">
                                             <FontIcon Glyph="&#xE108;" />
@@ -128,31 +128,15 @@
                     <Grid Margin="15">
                         <TextBlock Text="附件" Style="{StaticResource SubtitleTextBlockStyle}" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="5">
-                            <StackPanel Orientation="Horizontal" Spacing="8"
-                                        Visibility="{x:Bind CanDelete,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
-                                <TextBlock VerticalAlignment="Center"
-                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                    <Run Text="已选择" />
-                                    <Run Text="{x:Bind SelectedItemCount,Mode=OneWay}" />
-                                    <Run Text="个项目" />
-                                </TextBlock>
-                                <Button x:Name="RemoveAttachmentButton" Content="移除"
-                                        Style="{StaticResource IconButtonStyle}"
-                                        IsEnabled="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
-                                        Command="{x:Bind ViewModel.RemoveAttachmentsCommand}"
-                                        CommandParameter="{x:Bind AttachmentList.SelectedItems}" />
-                            </StackPanel>
                             <Button x:Name="AddAttachmentButton" Content="添加"
-                                    Style="{StaticResource IconButtonStyle}"
-                                    IsEnabled="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
-                                    Command="{x:Bind ViewModel.GotoSearchCenterCommand}" />
+                                    Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.GotoSearchCenterCommand}" />
                         </StackPanel>
                     </Grid>
                 </controls:GroupBox.Header>
                 <StackPanel>
                     <ProgressBar IsIndeterminate="True"
                                  Visibility="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <TextBlock Text="此处做出的删减并不会在增量还原时移除对应文件，需要手动删除。元数据仅作为最小文件(存在性)保证。" TextWrapping="WrapWholeWords"
+                    <TextBlock Text="此处做出的修改会在下一次还原时被应用到实例目录文件，包括移除附件也会使实例目录中的对应文件被删除。" TextWrapping="WrapWholeWords"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                Margin="15,15,15,7" />
                     <Grid ColumnDefinitions="*,Auto" Margin="15,7,15,7">
@@ -176,7 +160,7 @@
                         </Button>
                     </Grid>
                     <ListView x:Name="AttachmentList" Margin="15,7,15,15" MaxHeight="512"
-                              SelectionMode="Extended" SelectionChanged="AttachmentList_SelectionChanged">
+                              SelectionMode="None">
                         <ListView.ItemsSource>
                             <u:AdvancedCollectionView x:Name="AttachmentSource" Source="{x:Bind ViewModel.Attachments}" />
                         </ListView.ItemsSource>
@@ -189,6 +173,10 @@
                                                             IsEnabled="{x:Bind Reference,Converter={StaticResource NotNullToBoolConverter}}"
                                                             Command="{x:Bind OpenReferenceCommand}"
                                                             CommandParameter="{x:Bind Reference}" />
+                                            <MenuFlyoutItem Text="移除"
+                                                            IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
+                                                            Command="{x:Bind RemoveCommand}"
+                                                            CommandParameter="{x:Bind}" />
                                         </MenuFlyout>
                                     </Grid.ContextFlyout>
                                     <ui:ImageEx Width="48" Height="48" Margin="0,0,10,0" Source="{x:Bind IconSource}"
