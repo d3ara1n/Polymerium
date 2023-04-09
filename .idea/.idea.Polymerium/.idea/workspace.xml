@@ -12,9 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/changelogs/v0.4.md" beforeDir="false" afterPath="$PROJECT_DIR$/changelogs/v0.4.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App (Package)/Package.appxmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Package.appxmanifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/InstanceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/InstanceManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,6 +250,7 @@
       <workItem from="1680932164328" duration="133000" />
       <workItem from="1680946016767" duration="123000" />
       <workItem from="1680946155888" duration="167000" />
+      <workItem from="1681028280054" duration="89000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
