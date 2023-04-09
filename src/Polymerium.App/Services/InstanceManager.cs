@@ -21,16 +21,19 @@ public sealed class InstanceManager : IDisposable
     private readonly DataStorage _dataStorage;
     private readonly IFileBaseService _fileBase;
     private readonly MemoryStorage _memoryStorage;
+    private readonly ConfigurationManager _configurationManager;
 
     public InstanceManager(
         DataStorage dataStorage,
         MemoryStorage memoryStorage,
-        IFileBaseService fileBase
+        IFileBaseService fileBase,
+        ConfigurationManager configurationManager
     )
     {
         _dataStorage = dataStorage;
         _memoryStorage = memoryStorage;
         _fileBase = fileBase;
+        _configurationManager = configurationManager;
         var instances = dataStorage.LoadList<InstanceModel, GameInstance>(
             () => Enumerable.Empty<GameInstance>()
         );
@@ -61,6 +64,7 @@ public sealed class InstanceManager : IDisposable
         );
         while (_memoryStorage.Instances.Any(x => x.FolderName == instance.FolderName))
             instance.FolderName += '_';
+        instance.BoundAccountId ??= _configurationManager.Current.AccountShowcaseId;
         _memoryStorage.Instances.Add(instance);
         WeakReferenceMessenger.Default.Send(new InstanceAddedMessage(instance));
         return null;
