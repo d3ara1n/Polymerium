@@ -20,8 +20,6 @@
                 <StackPanel Margin="12,0,12,0">
                     <TextBlock Text="{x:Bind ViewModel.Resource.Value.Name}"
                                Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="{x:Bind ViewModel.Resource.Value.Id}"
-                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                     <TextBlock Text="{x:Bind ViewModel.Resource.Value.Author}"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 </StackPanel>

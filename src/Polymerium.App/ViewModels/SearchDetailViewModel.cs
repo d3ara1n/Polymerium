@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.Models;
@@ -119,7 +120,11 @@ public class SearchDetailViewModel : ObservableObject
 
     public void InstallAsset(GameInstanceModel instance, SearchCenterResultItemVersionModel version)
     {
-        instance.Attachments.Add(version.ResourceUrl);
+        instance.Attachments.Add(new Attachment
+        {
+            Source = version.ResourceUrl,
+            From = null
+        });
         _notification.Enqueue("添加资产成功", $"对 {Resource!.Value.Name} 的引用被添加到 {instance.Name}", InfoBarSeverity.Success);
     }
 
@@ -167,10 +172,20 @@ public class SearchDetailViewModel : ObservableObject
             var importResult = await _importer.ImportAsync(tmpFile, token);
             if (importResult.IsSuccessful)
             {
-                importResult.Value.Instance.ReferenceSource = version.ResourceUrl;
+                // make it and its attachments tagged
+                importResult.Value.Instance.ReferenceSource = url;
                 importResult.Value.Instance.ThumbnailFile = Resource!.Value.IconSource?.AbsoluteUri;
                 importResult.Value.Instance.Author = Resource!.Value.Author;
                 var postError = await _importer.PostImportAsync(importResult.Value);
+                // make remote and local file attachments tagged
+                var attachments = importResult.Value.Instance.Metadata.Attachments;
+                for (var i = 0; i < attachments.Count; i++)
+                {
+                    attachments[i] = attachments[i] with
+                    {
+                        From = url
+                    };
+                }
                 if (postError.HasValue)
                     EndedError($"添加导入的实例失败: {postError}");
                 else

@@ -18,7 +18,7 @@
                       SelectedValue="{x:Bind SelectedJava,Mode=TwoWay}"
                       ItemsSource="{x:Bind JavaInstallations,Mode=OneWay}" />
             <TextBlock>
-                <Run Text="实现者: " />
+                <Run Text="实现: " />
                 <Run Text="{x:Bind SelectedJava.Implementor,Mode=OneWay}" />
             </TextBlock>
             <TextBlock>

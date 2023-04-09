@@ -94,7 +94,7 @@ public class BuildPolylockStage : StageBase
             Report("解析元数据中的附件资源信息");
             var resolverContext = new ResolverContext(_instance);
             foreach (var attachment in _instance.Metadata.Attachments)
-                tasks.Add(_resolver.ResolveToFileAsync(attachment, resolverContext));
+                tasks.Add(_resolver.ResolveToFileAsync(attachment.Source, resolverContext));
             await Task.WhenAll(tasks);
             var errors = tasks.Count(x => !x.Result.IsSuccessful || x.Result.Value.Type != ResourceType.File);
             if (errors > 0)

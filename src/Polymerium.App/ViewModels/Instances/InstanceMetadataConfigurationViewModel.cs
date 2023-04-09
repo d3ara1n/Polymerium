@@ -43,8 +43,8 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         AddComponentCommand = new RelayCommand(AddComponent);
         GotoSearchCenterCommand = new RelayCommand(GotoSearchCenter);
         OpenReferenceUrlCommand = new RelayCommand<Uri>(OpenReferenceUrl);
+        RemoveAttachmentSelfCommand = new RelayCommand<InstanceAttachmentItemModel>(RemoveAttachmentSelf);
         RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(RemoveComponentSelf);
-        RemoveAttachmentsCommand = new RelayCommand<IList<object>>(RemoveAttachments);
         Components = new ObservableCollection<InstanceComponentItemModel>(
             Context.AssociatedInstance?.Components.Select(FromComponent)
             ?? Enumerable.Empty<InstanceComponentItemModel>()
@@ -60,8 +60,8 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     public ICommand AddComponentCommand { get; }
     public ICommand GotoSearchCenterCommand { get; }
     public ICommand OpenReferenceUrlCommand { get; }
+    public ICommand RemoveAttachmentSelfCommand { get; }
     public IRelayCommand<InstanceComponentItemModel> RemoveComponentSelfCommand { get; }
-    public IRelayCommand<IList<object>> RemoveAttachmentsCommand { get; }
 
     public void SetCallback(Action<InstanceAttachmentItemModel?> callback)
     {
@@ -102,7 +102,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         {
             case NotifyCollectionChangedAction.Add:
                 if (e.NewItems != null && e.NewItems.Count > 0)
-                    Task.Run(() => LoadParseAttachmentsAsync(e.NewItems.Cast<Uri>()));
+                    Task.Run(() => LoadParseAttachmentsAsync(e.NewItems.Cast<Attachment>()));
                 break;
             case NotifyCollectionChangedAction.Remove:
                 if (e.OldItems != null)
@@ -137,7 +137,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         }
     }
 
-    public async Task LoadParseAttachmentsAsync(IEnumerable<Uri> newlyAdded)
+    public async Task LoadParseAttachmentsAsync(IEnumerable<Attachment> newlyAdded)
     {
         var context = new ResolverContext(Context.AssociatedInstance!.Inner);
         var tasks = new List<Task>();
@@ -160,33 +160,27 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         );
     }
 
-    private async Task LoadAddAttachmentInfoAsync(Uri attachment, ResolverContext context,
+    private async Task LoadAddAttachmentInfoAsync(Attachment attachment, ResolverContext context,
         Action<InstanceAttachmentItemModel?> callback)
     {
-        var result = await _resolver.ResolveAsync(attachment, context);
+        var result = await _resolver.ResolveAsync(attachment.Source, context);
         InstanceAttachmentItemModel model = null!;
+        var isLocked = Context.AssociatedInstance!.ReferenceSource != null && attachment.From == Context.AssociatedInstance!.ReferenceSource;
         if (result.IsSuccessful)
         {
             var item = result.Value;
             model = new InstanceAttachmentItemModel(item.Type, item.Resource.Name, item.Resource.Author,
                 item.Resource.IconSource, item.Resource.Reference, item.Resource.Version, item.Resource.Summary,
-                attachment, OpenReferenceUrlCommand);
+                attachment, isLocked, OpenReferenceUrlCommand, RemoveAttachmentSelfCommand);
         }
         else
         {
             model = new InstanceAttachmentItemModel(ResourceType.None, "未知", "未知", null, null, "N/A",
-                attachment.AbsoluteUri,
-                attachment, OpenReferenceUrlCommand);
+                attachment.Source.AbsoluteUri,
+                attachment, isLocked, OpenReferenceUrlCommand, RemoveAttachmentSelfCommand);
         }
 
         callback(model);
-    }
-
-    private void RemoveAttachments(IList<object>? items)
-    {
-        if (items != null)
-            foreach (InstanceAttachmentItemModel item in items.ToArray())
-                Context.AssociatedInstance!.Attachments.Remove(item.Attachment);
     }
 
     private void GotoSearchCenter()
@@ -213,6 +207,12 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
             );
             Context.AssociatedInstance.Components.Remove(item);
         }
+    }
+
+    private void RemoveAttachmentSelf(InstanceAttachmentItemModel? model)
+    {
+        if (model != null && Context.AssociatedInstance!.Attachments.Contains(model.Attachment))
+            Context.AssociatedInstance!.Attachments.Remove(model.Attachment);
     }
 
     private void OpenReferenceUrl(Uri? reference)

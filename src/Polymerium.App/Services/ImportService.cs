@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DotNext;
 using Polymerium.Abstractions.Importers;
+using Polymerium.Abstractions.Meta;
 using Polymerium.Core;
 using Polymerium.Core.Importers;
 
@@ -83,8 +84,10 @@ public class ImportService
                     }
 
                 foreach (var file in allocated)
-                    product.Instance.Metadata.Attachments.Add(file);
-
+                    product.Instance.Metadata.Attachments.Add(new Attachment
+                    {
+                        Source = file
+                    });
                 _instanceManager.AddInstance(product.Instance);
                 return null;
             })

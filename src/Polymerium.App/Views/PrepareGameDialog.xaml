@@ -89,8 +89,8 @@
                                     <Run Text="”的身份" />
                                 </TextBlock>
                             </StackPanel>
-                            <controls:GlowingButton x:Name="GameReadyButton" Opacity="0" VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"
+                            <controls:GlowingButton x:Name="GameReadyButton" Opacity="0" IsEnabled="{x:Bind IsReady,Mode=OneWay}"
+                                                    HorizontalAlignment="Center" VerticalAlignment="Center"
                                                     Command="{x:Bind ViewModel.StartCommand}">
                                 <TextBlock Text="开始" FontSize="26" />
                             </controls:GlowingButton>
