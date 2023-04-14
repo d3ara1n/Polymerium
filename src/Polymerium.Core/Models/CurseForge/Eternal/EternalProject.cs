@@ -19,7 +19,7 @@ public struct EternalProject
     public uint ClassId { get; set; }
     public IEnumerable<EternalProjectAuthor> Authors { get; set; }
     public EternalProjectLogo? Logo { get; set; }
-    public object Screenshots { get; set; }
+    public IEnumerable<EternalScreenshot> Screenshots { get; set; }
     public uint MainFileId { get; set; }
     public IEnumerable<EternalProjectLatestFile> LatestFiles { get; set; }
     public IEnumerable<EternalProjectLatestFileIndex> LatestFilesIndexes { get; set; }

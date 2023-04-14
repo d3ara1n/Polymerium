@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -91,5 +92,12 @@ public sealed partial class MicrosoftAccountAuthView : Page
             Process.Start(new ProcessStartInfo(VerificationUrl) { UseShellExecute = true });
             IsPending = true;
         }
+    }
+
+    private void CopyButton_Click(object sender, RoutedEventArgs e)
+    {
+        var package = new DataPackage();
+        package.SetText(UserCode);
+        Clipboard.SetContent(package);
     }
 }

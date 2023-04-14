@@ -91,8 +91,7 @@ public class SearchCenterViewModel : ObservableObject
             version = InstanceScope.Components.First(x => ComponentMeta.MINECRAFT == x.Identity).Version;
         var results = await repository.SearchProjectsAsync(query, type, modLoader, version, offset, limit, token);
         return results.Select(x =>
-            new SearchCenterResultItemModel(x.Name, x.IconSource, x.Author, x.Summary, ResourceType.Modpack,
-                x));
+            new SearchCenterResultItemModel(x.Name, x.IconSource, x.Author, x.Summary, ResourceType.Modpack, x));
     }
 
     public void ShowDetailDialog(SearchCenterResultItemModel model)

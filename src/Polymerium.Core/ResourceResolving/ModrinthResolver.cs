@@ -42,12 +42,12 @@ public class ModrinthResolver : ResourceResolverBase
     private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(ResourceType type, string projectId,
         string version, Func<LabrinthProject, LabrinthVersion, IEnumerable<LabrinthTeamMember>, ResourceBase> cast)
     {
-        var modOption = await ModrinthHelper.GetProjectAsync(projectId, _cache);
-        var versionOption = await ModrinthHelper.GetVersionAsync(version, _cache);
-        if (modOption.TryUnwrap(out var project) && versionOption.TryUnwrap(out var file))
+        var project = await ModrinthHelper.GetProjectAsync(projectId, _cache);
+        var file = await ModrinthHelper.GetVersionAsync(version, _cache);
+        if (project.HasValue && file.HasValue)
         {
-            var teams = await ModrinthHelper.GetTeamMembersAsync(project.Team, _cache);
-            return new ResolveResult(cast(project, file, teams), type);
+            var teams = await ModrinthHelper.GetTeamMembersAsync(project.Value.Team, _cache);
+            return new ResolveResult(cast(project.Value, file.Value, teams), type);
         }
 
         return Err(ResolveResultError.NotFound);
@@ -105,12 +105,13 @@ public class ModrinthResolver : ResourceResolverBase
     [ResourceExpression("{dir}/{version}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetFileAsync(string dir, string version)
     {
-        var versionOption = await ModrinthHelper.GetVersionAsync(version, _cache);
-        if (versionOption.TryUnwrap(out var file))
+        var file = await ModrinthHelper.GetVersionAsync(version, _cache);
+        if (file.HasValue)
         {
-            var first = file.Files.First();
+            var first = file.Value.Files.First();
             return Ok(
-                new File(file.ProjectId, file.Name, file.VersionNumber, string.Empty, null, null, string.Empty, file.Id,
+                new File(file.Value.ProjectId, file.Value.Name, file.Value.VersionNumber, string.Empty, null, null,
+                    string.Empty, file.Value.Id,
                     $"{dir}/{first.Filename}",
                     first.Hashes.Sha1, first.Url), ResourceType.File);
         }
@@ -122,12 +123,13 @@ public class ModrinthResolver : ResourceResolverBase
     [ResourceExpression("{version}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetModpackFileAsync(string version)
     {
-        var versionOption = await ModrinthHelper.GetVersionAsync(version, _cache);
-        if (versionOption.TryUnwrap(out var file))
+        var file = await ModrinthHelper.GetVersionAsync(version, _cache);
+        if (file.HasValue)
         {
-            var first = file.Files.First();
+            var first = file.Value.Files.First();
             return Ok(
-                new File(file.ProjectId, file.Name, file.VersionNumber, string.Empty, null, null, string.Empty, file.Id,
+                new File(file.Value.ProjectId, file.Value.Name, file.Value.VersionNumber, string.Empty, null, null,
+                    string.Empty, file.Value.Id,
                     first.Filename,
                     first.Hashes.Sha1, first.Url), ResourceType.File);
         }

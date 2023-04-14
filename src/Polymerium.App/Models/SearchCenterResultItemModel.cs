@@ -7,15 +7,14 @@ namespace Polymerium.App.Models;
 public class SearchCenterResultItemModel
 {
     public SearchCenterResultItemModel(string caption, Uri? iconSource, string author, string summary,
-        ResourceType type,
-        RepositoryAssetMeta tag)
+        ResourceType type, RepositoryAssetMeta resource)
     {
         Caption = caption;
         IconSource = iconSource;
         Author = author;
         Summary = summary;
         Type = type;
-        Resource = tag;
+        Resource = resource;
     }
 
     public string Caption { get; set; }

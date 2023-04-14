@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +30,6 @@ public sealed partial class SearchDetailDialog : CustomDialog
     public SearchDetailDialog(RepositoryAssetMeta resource, GameInstanceModel? scope)
     {
         ViewModel = App.Current.Provider.GetRequiredService<SearchDetailViewModel>();
-        // Context 中没有绑定 Instance 则弹出 InstanceSelectorDialog 进行选择。
-        // Modpack 安装则不需要选择实例，但要有安装进度
         ViewModel.GotResources(resource, scope);
         InitializeComponent();
     }
@@ -40,14 +40,30 @@ public sealed partial class SearchDetailDialog : CustomDialog
         set => SetValue(IsOperatingProperty, value);
     }
 
+    public IEnumerable<SearchCenterResultItemScreenshotModel> Screenshots
+    {
+        get => (IEnumerable<SearchCenterResultItemScreenshotModel>)GetValue(ScreenshotsProperty);
+        set => SetValue(ScreenshotsProperty, value);
+    }
+
+    // Using a DependencyProperty as the backing store for Screenshots.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ScreenshotsProperty =
+        DependencyProperty.Register(nameof(Screenshots), typeof(IEnumerable<SearchCenterResultItemScreenshotModel>),
+            typeof(SearchDetailDialog), new PropertyMetadata(null));
+
+
+
     public SearchDetailViewModel ViewModel { get; }
 
-    private void CustomDialog_Loaded(object sender, RoutedEventArgs e)
+    public ObservableCollection<SearchCenterResultItemVersionModel> Versions { get; } = new();
+
+    private async void CustomDialog_Loaded(object sender, RoutedEventArgs e)
     {
         VersionSource.Filter = VersionSourceFilter;
         VersionSource.SortDescriptions.Add(new SortDescription("ReleaseDateTime", SortDirection.Descending));
         IsOperating = true;
-        Task.Run(() => ViewModel.LoadVersionsAsync(LoadVersionHandler));
+        await DescriptionPresenter.EnsureCoreWebView2Async();
+        await Task.Run(() => ViewModel.LoadInfoAsync(LaodInfoHandler, LoadVersionHandler));
     }
 
     private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -55,12 +71,24 @@ public sealed partial class SearchDetailDialog : CustomDialog
         Dismiss();
     }
 
+    private void LaodInfoHandler(string description, IEnumerable<SearchCenterResultItemScreenshotModel> screenshots)
+    {
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            DescriptionPresenter.NavigateToString(description);
+            Screenshots = screenshots;
+        });
+    }
+
     private void LoadVersionHandler(SearchCenterResultItemVersionModel? model)
     {
         DispatcherQueue.TryEnqueue(() =>
         {
             if (model != null)
-                ViewModel.Versions.Add(model);
+            {
+                Versions.Add(model);
+                VersionList.SelectedItem ??= model;
+            }
             else
                 IsOperating = false;
         });
@@ -91,17 +119,18 @@ public sealed partial class SearchDetailDialog : CustomDialog
 
     private async void InstallButton_Click(object sender, RoutedEventArgs e)
     {
+        var model = (SearchCenterResultItemVersionModel)VersionList.SelectedValue;
         if (ViewModel.Resource!.Value.Type == ResourceType.Modpack)
         {
             IsOperating = true;
             await Task.Run(
-                () => ViewModel.InstallModpackAsync(ViewModel.SelectedVersion!, ReportProgress, source.Token));
+                () => ViewModel.InstallModpackAsync(model, ReportProgress, source.Token));
         }
         else
         {
             if (ViewModel.Scope != null)
             {
-                ViewModel.InstallAsset(ViewModel.Scope, ViewModel.SelectedVersion!);
+                ViewModel.InstallAsset(ViewModel.Scope, model);
                 Dismiss();
             }
             else
@@ -114,7 +143,7 @@ public sealed partial class SearchDetailDialog : CustomDialog
                 if (result == ContentDialogResult.Primary)
                 {
                     var instance = selector.SelectedInstance;
-                    ViewModel.InstallAsset(instance, ViewModel.SelectedVersion!);
+                    ViewModel.InstallAsset(instance, model);
                     Dismiss();
                 }
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -46,15 +45,10 @@ public class SearchDetailViewModel : ObservableObject
         _importer = importer;
         _cache = cache;
         _componentManager = componentManager;
-        Versions = new ObservableCollection<SearchCenterResultItemVersionModel>();
     }
 
     public ViewModelContext Context { get; }
     public RepositoryAssetMeta? Resource { get; private set; }
-
-    public SearchCenterResultItemVersionModel? SelectedVersion { get; set; }
-
-    public ObservableCollection<SearchCenterResultItemVersionModel> Versions { get; }
 
     public GameInstanceModel? Scope { get; private set; }
 
@@ -64,8 +58,15 @@ public class SearchDetailViewModel : ObservableObject
         Scope = scope;
     }
 
-    public async Task LoadVersionsAsync(Action<SearchCenterResultItemVersionModel?> callback)
+    public async Task LoadInfoAsync(Action<string, IEnumerable<SearchCenterResultItemScreenshotModel>> infoCallback,
+        Action<SearchCenterResultItemVersionModel?> versionCallback)
     {
+        var description = Resource!.Value.Description?.Value ?? string.Empty;
+        var screenshots =
+            Resource!.Value.Screenshots?.Value.Select(x =>
+                new SearchCenterResultItemScreenshotModel(x.Item1, x.Item2.AbsoluteUri)) ??
+            Enumerable.Empty<SearchCenterResultItemScreenshotModel>();
+        infoCallback(description, screenshots);
         // 支持的 modloader 和游戏版本应该是 file 的属性，但 modrinth 将其归于 version，这。。。
         var files = Resource!.Value.Repository switch
         {
@@ -109,8 +110,8 @@ public class SearchDetailViewModel : ObservableObject
                     }, CurseForgeResolver.MakeResourceUrl(Resource.Value.Type, Resource.Value.Id, x.Id.ToString()))),
             _ => throw new NotImplementedException()
         };
-        foreach (var file in files) callback(file);
-        callback(null);
+        foreach (var file in files) versionCallback(file);
+        versionCallback(null);
     }
 
     public IEnumerable<GameInstance> GetGameInstances()

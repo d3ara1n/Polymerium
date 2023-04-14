@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Markdig;
 using Microsoft.Extensions.Caching.Memory;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Helpers;
@@ -38,25 +40,34 @@ public class ModrinthRepository : IResourceRepository
                 IconSource = x.IconUrl,
                 Summary = x.Description,
                 Type = type,
-                Versions = x.Versions
+                Versions = x.Versions,
+                Description = new Lazy<string>(() =>
+                {
+                    var project = ModrinthHelper.GetProjectAsync(x.ProjectId, _cache, token).Result;
+                    if (project.HasValue)
+                        return Markdown.ToHtml(project.Value.Body);
+                    return string.Empty;
+                }),
+                Screenshots = new Lazy<IEnumerable<(string, Uri)>>(x.Gallery.Select(y => (string.Empty, y)))
             });
     }
 
     public async Task<RepositoryAssetMeta?> GetModAsync(string id, CancellationToken token = default)
     {
-        var option = await ModrinthHelper.GetProjectAsync(id, _cache, token);
-        if (option.TryUnwrap(out var project))
+        var project = await ModrinthHelper.GetProjectAsync(id, _cache, token);
+        if (project.HasValue)
         {
             var result = new RepositoryAssetMeta
             {
                 Repository = RepositoryLabel.Modrinth,
                 Id = id,
-                Name = project.Title,
-                Author = project.Team,
-                IconSource = project.IconUrl,
-                Summary = project.Description,
+                Name = project.Value.Title,
+                Author = project.Value.Team,
+                IconSource = project.Value.IconUrl,
+                Summary = project.Value.Description,
+                Versions = project.Value.Versions,
                 Type = ResourceType.Mod,
-                Versions = project.Versions
+                Screenshots = new Lazy<IEnumerable<(string, Uri)>>(project.Value.Gallery.Select(x => (x.Title, x.Url)))
             };
             return result;
         }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Components;
 using Polymerium.Core.Models.CurseForge.Eternal;
@@ -34,11 +33,11 @@ public static class CurseForgeHelper
         { "Quilt", ComponentMeta.QUILT }
     }.AsReadOnly();
 
-    private static async Task<Option<T>> GetResourceAsync<T>(string service, IMemoryCache cache,
+    private static async Task<T?> GetResourceAsync<T>(string service, IMemoryCache cache,
         CancellationToken token = default)
     {
-        if (token.IsCancellationRequested) return Option<T>.None();
-        return await cache.GetOrCreateAsync<Option<T>>(service, async entry =>
+        if (token.IsCancellationRequested) return default;
+        return await cache.GetOrCreateAsync<T?>(service, async entry =>
         {
             var found = false;
             T? result = default;
@@ -54,8 +53,8 @@ public static class CurseForgeHelper
                 })
                 .FetchAsync();
             entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
-            return found ? Option<T>.Some(result!) : Option<T>.None();
-        }) ?? Option<T>.None();
+            return result;
+        });
     }
 
     public static async Task<IEnumerable<T>> GetResourcesAsync<T>(string service, IMemoryCache cache,
@@ -104,28 +103,28 @@ public static class CurseForgeHelper
         return await GetResourcesAsync<EternalProject>(service, cache, token);
     }
 
-    public static async Task<Option<EternalProject>> GetModInfoAsync(uint projectId, IMemoryCache cache,
+    public static async Task<EternalProject?> GetModInfoAsync(uint projectId, IMemoryCache cache,
         CancellationToken token = default)
     {
         var service = $"/mods/{projectId}";
         return await GetResourceAsync<EternalProject>(service, cache, token);
     }
 
-    public static async Task<Option<string>> GetModDescriptionAsync(uint projectId, IMemoryCache cache,
+    public static async Task<string?> GetModDescriptionAsync(uint projectId, IMemoryCache cache,
         CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/description";
         return await GetResourceAsync<string>(service, cache, token);
     }
 
-    public static async Task<Option<string>> GetModDownloadUrlAsync(uint projectId, int fileId, IMemoryCache cache,
+    public static async Task<string?> GetModDownloadUrlAsync(uint projectId, int fileId, IMemoryCache cache,
         CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{fileId}/download-url";
         return await GetResourceAsync<string>(service, cache, token);
     }
 
-    public static async Task<Option<EternalModFile>> GetModFileInfoAsync(uint projectId, uint fileId,
+    public static async Task<EternalModFile?> GetModFileInfoAsync(uint projectId, uint fileId,
         IMemoryCache cache,
         CancellationToken token = default)
     {

@@ -15,7 +15,11 @@
             <TextBlock Text="在浏览器中输入以下验证码" />
             <controls:Card Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
                 <Grid>
-                    <TextBlock x:Name="DeviceCodeText" Text="{x:Bind UserCode,Mode=OneWay}" FontSize="26"
+                    <Button x:Name="CopyButton" Style="{StaticResource IconButtonStyle}" Margin="7"
+                            VerticalAlignment="Center" HorizontalAlignment="Right" Click="CopyButton_Click">
+                        <FontIcon Glyph="&#xE16F;" FontSize="14" />
+                    </Button>
+                    <TextBlock x:Name="DeviceCodeText" Text="{x:Bind UserCode,Mode=OneWay}" FontSize="28"
                                HorizontalAlignment="Center"
                                Foreground="{ThemeResource SystemAccentColor}" />
                     <ProgressRing x:Name="LoadingRing" IsIndeterminate="True"
