@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,7 +35,13 @@ public class CurseForgeRepository : IResourceRepository
             IconSource = x.Logo?.ThumbnailUrl,
             Summary = x.Summary,
             Type = type,
-            Versions = x.LatestFilesIndexes.Select(x => x.FileId.ToString())
+            Versions = x.LatestFilesIndexes.Select(x => x.FileId.ToString()),
+            Description = new Lazy<string>(() =>
+            {
+                var description = CurseForgeHelper.GetModDescriptionAsync(x.Id, _cache, token).Result;
+                return description ?? string.Empty;
+            }),
+            Screenshots = new Lazy<IEnumerable<(string, Uri)>>(x.Screenshots.Select(y => (y.Title, y.Url)))
         });
     }
 
@@ -42,19 +49,27 @@ public class CurseForgeRepository : IResourceRepository
     {
         if (uint.TryParse(id, out var projectId))
         {
-            var option = await CurseForgeHelper.GetModInfoAsync(projectId, _cache, token);
-            if (option.TryUnwrap(out var project))
+            var project = await CurseForgeHelper.GetModInfoAsync(projectId, _cache, token);
+            if (project.HasValue)
             {
                 var result = new RepositoryAssetMeta
                 {
                     Repository = RepositoryLabel.CurseForge,
                     Id = id,
-                    Name = project.Name,
-                    Author = string.Join(", ", project.Authors.Select(x => x.Name)),
-                    Summary = project.Summary,
-                    IconSource = project.Logo?.ThumbnailUrl,
+                    Name = project.Value.Name,
+                    Author = string.Join(", ", project.Value.Authors.Select(x => x.Name)),
+                    Summary = project.Value.Summary,
+                    IconSource = project.Value.Logo?.ThumbnailUrl,
                     Type = ResourceType.Mod,
-                    Versions = project.LatestFilesIndexes.Select(x => x.FileId.ToString())
+                    Versions = project.Value.LatestFilesIndexes.Select(x => x.FileId.ToString()),
+                    Description = new Lazy<string>(() =>
+                    {
+                        var description = CurseForgeHelper.GetModDescriptionAsync(project.Value.Id, _cache, token)
+                            .Result;
+                        return description ?? string.Empty;
+                    }),
+                    Screenshots =
+                        new Lazy<IEnumerable<(string, Uri)>>(project.Value.Screenshots.Select(x => (x.Title, x.Url)))
                 };
                 return result;
             }

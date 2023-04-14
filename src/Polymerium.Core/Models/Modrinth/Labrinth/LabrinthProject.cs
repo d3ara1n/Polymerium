@@ -38,7 +38,7 @@ public struct LabrinthProject
     public Uri? WikiUrl { get; set; }
     public Uri? DiscordUrl { get; set; }
     public IEnumerable<object> DonationUrls { get; set; }
-    public IEnumerable<object> Gallery { get; set; }
+    public IEnumerable<LabrinthGalleryItem> Gallery { get; set; }
     public object? FlameAnvilProject { get; set; }
     public object? FlameAnvilUser { get; set; }
     public uint? Color { get; set; }

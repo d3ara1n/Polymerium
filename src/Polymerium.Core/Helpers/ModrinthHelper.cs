@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Components;
 using Polymerium.Core.Models.Modrinth.Labrinth;
@@ -25,11 +24,11 @@ public static class ModrinthHelper
         { "quilt", ComponentMeta.QUILT }
     }.AsReadOnly();
 
-    private static async Task<Option<T>> GetResourceAsync<T>(string service, IMemoryCache cache,
+    private static async Task<T?> GetResourceAsync<T>(string service, IMemoryCache cache,
         CancellationToken token = default)
     {
-        if (token.IsCancellationRequested) return Option<T>.None();
-        return await cache.GetOrCreateAsync<Option<T>>(service, async entry =>
+        if (token.IsCancellationRequested) return default;
+        return await cache.GetOrCreateAsync<T?>(service, async entry =>
         {
             T? result = default;
             var found = false;
@@ -42,8 +41,8 @@ public static class ModrinthHelper
                 .ViaGet()
                 .FetchAsync(token);
             entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
-            return found ? Option<T>.Some(result!) : Option<T>.None();
-        }) ?? Option<T>.None();
+            return result;
+        }) ?? default(T);
     }
 
     private static async Task<IEnumerable<T>> GetResourcesAsync<T>(string service, IMemoryCache cache,
@@ -80,7 +79,7 @@ public static class ModrinthHelper
         }) ?? Enumerable.Empty<T>();
     }
 
-    public static async Task<Option<LabrinthProject>> GetProjectAsync(string id, IMemoryCache cache,
+    public static async Task<LabrinthProject?> GetProjectAsync(string id, IMemoryCache cache,
         CancellationToken token = default)
     {
         var service = $"/project/{id}";
@@ -124,7 +123,7 @@ public static class ModrinthHelper
         return await GetResourcesAsync<LabrinthVersion>(service, cache, token);
     }
 
-    public static async Task<Option<LabrinthVersion>> GetVersionAsync(string versionId, IMemoryCache cache,
+    public static async Task<LabrinthVersion?> GetVersionAsync(string versionId, IMemoryCache cache,
         CancellationToken token = default)
     {
         var service = $"/version/{versionId}";

@@ -19,13 +19,11 @@
                     <EntranceThemeTransition />
                 </Grid.Transitions>
                 <Grid ColumnDefinitions="Auto,*">
-                    <Border Width="60" Height="60" Margin="0,0,5,10" CornerRadius="{ThemeResource ControlCornerRadius}"
-                            BorderThickness="1" BorderBrush="{ThemeResource CardStrokeBrush}">
-                        <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}"
-                                         Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile,Mode=OneWay,FallbackValue={x:Null}}"
-                                         PlaceholderStretch="UniformToFill"
-                                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" />
-                    </Border>
+                    <toolkit:ImageEx Width="60" Height="60" Margin="0,0,5,10"
+                                     CornerRadius="{ThemeResource ControlCornerRadius}"
+                                     Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile,Mode=OneWay,FallbackValue={x:Null}}"
+                                     PlaceholderStretch="UniformToFill"
+                                     PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" />
                     <StackPanel VerticalAlignment="Center" Grid.Column="1" Margin="5,0,0,10">
                         <TextBlock
                             Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay,FallbackValue=(未定义)}"

@@ -11,57 +11,61 @@
     xmlns:models="using:Polymerium.App.Models"
     xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:u="using:CommunityToolkit.WinUI.UI"
-    mc:Ignorable="d" OperationPadding="0" OperationHorizontalAlignment="Stretch" Loaded="CustomDialog_Loaded">
+    mc:Ignorable="d" OperationHorizontalAlignment="Stretch" Padding="0" Loaded="CustomDialog_Loaded"
+    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-    <Grid RowDefinitions="Auto,15,*">
+    <Grid>
+        <ScrollViewer>
+            <Grid Margin="15">
+                <WebView2 x:Name="DescriptionPresenter" />
+            </Grid>
+        </ScrollViewer>
+        <ProgressBar x:Name="Progress" Maximum="100" IsIndeterminate="True" VerticalAlignment="Bottom"
+                     Visibility="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+    </Grid>
+    <controls:CustomDialog.OperationContent>
         <Grid ColumnDefinitions="Auto,*">
-            <ui:ImageEx Width="64" Height="64" Source="{x:Bind ViewModel.Resource.Value.IconSource}" CornerRadius="5" />
-            <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
-                <StackPanel Margin="12,0,12,0">
+            <ui:ImageEx Width="80" Height="80" Source="{x:Bind ViewModel.Resource.Value.IconSource}" CornerRadius="5" />
+            <Grid Grid.Column="1">
+                <StackPanel Margin="12,0,12,0" VerticalAlignment="Center">
                     <TextBlock Text="{x:Bind ViewModel.Resource.Value.Name}"
                                Style="{StaticResource SubtitleTextBlockStyle}" />
                     <TextBlock Text="{x:Bind ViewModel.Resource.Value.Author}"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                    <Grid ColumnDefinitions="*,5,Auto" Margin="0,5">
+                        <ComboBox x:Name="VersionList"
+                                  IsEnabled="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                            <ComboBox.ItemsSource>
+                                <u:AdvancedCollectionView x:Name="VersionSource" Source="{x:Bind Versions}" />
+                            </ComboBox.ItemsSource>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:SearchCenterResultItemVersionModel">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{x:Bind Display}" />
+                                        <TextBlock
+                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                                            <Run Text="(" />
+                                            <Run
+                                                Text="{x:Bind File.SupportedCoreVersions,Converter={StaticResource EnumerableToStringConverter}}" />
+                                            <Run Text="," />
+                                            <Run
+                                                Text="{x:Bind File.SupportedModLoaders,Converter={StaticResource EnumerableToStringConverter}}" />
+                                            <Run Text=")" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <StackPanel Grid.Column="2" Spacing="10" Orientation="Horizontal">
+                            <Button x:Name="InstallButton" Style="{StaticResource AccentButtonStyle}" Content="安装"
+                                    IsEnabled="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
+                                    Visibility="{x:Bind VersionList.SelectedItem,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}"
+                                    Click="InstallButton_Click" />
+                            <Button x:Name="CancelButton" Content="关闭" Click="CancelButton_Click" />
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
-                <Grid Grid.Column="1">
-                    <!-- details -->
-                </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="2">
-            <!-- A button to view all the hidden -->
-            <ListView x:Name="VersionList" SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}"
-                      IsEnabled="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
-                <ListView.ItemsSource>
-                    <u:AdvancedCollectionView x:Name="VersionSource" Source="{x:Bind ViewModel.Versions}" />
-                </ListView.ItemsSource>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:SearchCenterResultItemVersionModel">
-                        <StackPanel Margin="5">
-                            <TextBlock Text="{x:Bind Display}" />
-                            <TextBlock
-                                Text="{x:Bind File.SupportedCoreVersions,Converter={StaticResource EnumerableToStringConverter}}"
-                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                            <TextBlock
-                                Text="{x:Bind File.SupportedModLoaders,Converter={StaticResource EnumerableToStringConverter}}"
-                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-    </Grid>
-    <controls:CustomDialog.OperationContent>
-        <StackPanel>
-            <ProgressBar x:Name="Progress" Maximum="100" IsIndeterminate="True"
-                         Visibility="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-            <StackPanel Spacing="10" Orientation="Horizontal" Margin="15" HorizontalAlignment="Right">
-                <Button x:Name="InstallButton" Style="{StaticResource AccentButtonStyle}" Content="安装"
-                        IsEnabled="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
-                        Visibility="{x:Bind VersionList.SelectedItem,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}"
-                        Click="InstallButton_Click" />
-                <Button x:Name="CancelButton" Content="关闭" Click="CancelButton_Click" />
-            </StackPanel>
-        </StackPanel>
     </controls:CustomDialog.OperationContent>
 </controls:CustomDialog>

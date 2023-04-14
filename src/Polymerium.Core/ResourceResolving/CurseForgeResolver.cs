@@ -41,10 +41,10 @@ public class CurseForgeResolver : ResourceResolverBase
         var fid = PARSER_INT.TryInvoke(version);
         if (pid.IsSuccessful && fid.IsSuccessful)
         {
-            var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value, _cache);
-            var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value, _cache);
-            if (modOption.TryUnwrap(out var eternalProject) && fileOption.TryUnwrap(out var eternalFile))
-                return new ResolveResult(cast(eternalProject, eternalFile), type);
+            var mod = await CurseForgeHelper.GetModInfoAsync(pid.Value, _cache);
+            var file = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value, _cache);
+            if (mod.HasValue && file.HasValue)
+                return new ResolveResult(cast(mod.Value, file.Value), type);
 
             return Err(ResolveResultError.NotFound);
         }
@@ -96,25 +96,25 @@ public class CurseForgeResolver : ResourceResolverBase
         var fid = PARSER_INT.TryInvoke(fileId);
         if (pid.IsSuccessful && fid.IsSuccessful)
         {
-            var modOption = await CurseForgeHelper.GetModInfoAsync(pid.Value, _cache);
-            var fileOption = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value, _cache);
-            if (modOption.TryUnwrap(out var eternalProject) && fileOption.TryUnwrap(out var eternalFile))
+            var mod = await CurseForgeHelper.GetModInfoAsync(pid.Value, _cache);
+            var file = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value, _cache);
+            if (mod.HasValue && file.HasValue)
             {
-                var sha1 = eternalFile.ExtractSha1();
-                var fileName = eternalProject.ClassId switch
+                var sha1 = file.Value.ExtractSha1();
+                var fileName = mod.Value.ClassId switch
                 {
-                    6 => $"mods/{eternalFile.FileName}",
-                    12 => $"resourcepacks/{eternalFile.FileName}",
-                    17 => $"worlds/{eternalFile.FileName}",
-                    4546 => $"shaderpacks/{eternalFile.FileName}",
-                    4471 => eternalFile.FileName,
+                    6 => $"mods/{file.Value.FileName}",
+                    12 => $"resourcepacks/{file.Value.FileName}",
+                    17 => $"worlds/{file.Value.FileName}",
+                    4546 => $"shaderpacks/{file.Value.FileName}",
+                    4471 => file.Value.FileName,
                     _ => throw new NotImplementedException()
                 };
-                var file = new File(eternalProject.Id.ToString(), eternalFile.DisplayName, eternalFile.DisplayName,
+                var result = new File(mod.Value.Id.ToString(), file.Value.DisplayName, file.Value.DisplayName,
                     string.Empty, null, null,
-                    string.Empty, eternalFile.Id.ToString(), fileName, sha1,
-                    eternalFile.ExtractDownloadUrl());
-                return Ok(file, ResourceType.File);
+                    string.Empty, file.Value.Id.ToString(), fileName, sha1,
+                    file.Value.ExtractDownloadUrl());
+                return Ok(result, ResourceType.File);
             }
 
             return Err(ResolveResultError.NotFound);

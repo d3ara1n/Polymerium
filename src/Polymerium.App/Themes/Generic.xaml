@@ -61,6 +61,8 @@
         <Setter Property="MinWidth" Value="248" />
         <Setter Property="MinHeight" Value="100" />
         <Setter Property="OperationPadding" Value="25" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="OperationHorizontalAlignment" Value="Right" />
         <Setter Property="Template">
             <Setter.Value>
@@ -129,7 +131,8 @@
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="Root" Visibility="Visible">
                             <Rectangle x:Name="SmokeBackground" Fill="{ThemeResource ContentDialogSmokeFill}" />
-                            <Border x:Name="Frame" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            <Border x:Name="Frame" VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                     CornerRadius="{TemplateBinding CornerRadius}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     Background="{TemplateBinding Background}"

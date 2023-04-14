@@ -31,18 +31,27 @@
                     </Grid>
                 </controls:GroupBox.Header>
                 <Grid>
-                    <ProgressRing IsIndeterminate="True" VerticalAlignment="Top"
-                                  Visibility="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
                     <StackPanel Margin="15" Spacing="8">
                         <Grid ColumnDefinitions="Auto,*">
-                            <ui:ImageEx Width="60" Height="60"
+                            <ui:ImageEx Width="64" Height="64"
+                                        PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
                                         Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile}"
-                                        Margin="0,0,15,0" />
-                            <Grid Grid.Column="1" RowDefinitions="Auto,*">
-                                <StackPanel>
+                                        Margin="0,0,15,0" CornerRadius="5" />
+                            <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
+                                <ProgressRing IsIndeterminate="True" VerticalAlignment="Center"
+                                              Visibility="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                                <StackPanel VerticalAlignment="Center">
                                     <TextBlock Text="{x:Bind ModpackReference.Name,Mode=OneWay}" />
                                     <TextBlock Text="{x:Bind ModpackReference.Author,Mode=OneWay}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <TextBlock Text="{x:Bind ModpackReference.Version,Mode=OneWay}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Spacing="5">
+                                    <Button Content="更新" HorizontalAlignment="Right" />
+                                    <ComboBox SelectedIndex="0">
+                                        <ComboBoxItem Content="WIP" />
+                                    </ComboBox>
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -64,7 +73,7 @@
                     </Grid>
                 </controls:GroupBox.Header>
                 <StackPanel>
-                    <TextBlock Text="大部分组件都是 Modloader 且目前支持的组件也只有 Modloader。由于 Modloader 的特性，只支持同时启用一个除本体以外的组件。"
+                    <TextBlock Text="大部分组件都是 Mod Loader 且目前支持的组件也只有 Mod Loader。由于 Mod Loader 的特性，只支持同时启用一个除本体以外的组件。"
                                TextWrapping="WrapWholeWords"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Margin="0,0,0,15" />
                     <ListView ItemsSource="{x:Bind ViewModel.Components}"
@@ -122,8 +131,7 @@
                     </ListView>
                 </StackPanel>
             </controls:GroupBox>
-            <controls:GroupBox x:Name="AttachmentBox" Padding="0" Loaded="AttachmentBox_Loaded"
-                               IsEnabled="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+            <controls:GroupBox x:Name="AttachmentBox" Padding="0" Loaded="AttachmentBox_Loaded">
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
                         <TextBlock Text="附件" Style="{StaticResource SubtitleTextBlockStyle}" />
@@ -133,77 +141,85 @@
                         </StackPanel>
                     </Grid>
                 </controls:GroupBox.Header>
-                <StackPanel>
-                    <ProgressBar IsIndeterminate="True"
-                                 Visibility="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <TextBlock Text="此处做出的修改会在下一次还原时被应用到实例目录文件，包括移除附件也会使实例目录中的对应文件被删除。" TextWrapping="WrapWholeWords"
-                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                               Margin="15,15,15,7" />
-                    <Grid ColumnDefinitions="*,Auto" Margin="15,7,15,7">
-                        <AutoSuggestBox x:Name="AttachmentSearchBox" QueryIcon="Find" PlaceholderText="搜索已添加的附件"
-                                        TextChanged="AttachmentSearchBox_TextChanged" />
-                        <Button Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
-                            <Button.Flyout>
-                                <Flyout>
-                                    <Grid>
-                                        <StackPanel>
-                                            <CheckBox Content="模组" IsChecked="{x:Bind IsModChecked,Mode=TwoWay}" />
-                                            <CheckBox Content="资源包"
-                                                      IsChecked="{x:Bind IsResourcepackChecked,Mode=TwoWay}" />
-                                            <CheckBox Content="着色器包" IsChecked="{x:Bind IsShaderChecked,Mode=TwoWay}" />
-                                            <CheckBox Content="文件" IsChecked="{x:Bind IsFileChecked,Mode=TwoWay}" />
-                                        </StackPanel>
+                <ContentControl
+                    IsEnabled="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                    <StackPanel>
+                        <ProgressBar IsIndeterminate="True"
+                                     Visibility="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <TextBlock Text="此处做出的修改会在下一次还原时被应用到实例目录文件，包括移除附件也会使实例目录中的对应文件被删除。"
+                                   TextWrapping="WrapWholeWords"
+                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                   Margin="15,15,15,7" />
+                        <Grid ColumnDefinitions="*,Auto" Margin="15,7,15,7">
+                            <AutoSuggestBox x:Name="AttachmentSearchBox" QueryIcon="Find" PlaceholderText="搜索已添加的附件"
+                                            TextChanged="AttachmentSearchBox_TextChanged" />
+                            <Button Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
+                                <Button.Flyout>
+                                    <Flyout>
+                                        <Grid>
+                                            <StackPanel>
+                                                <CheckBox Content="模组" IsChecked="{x:Bind IsModChecked,Mode=TwoWay}" />
+                                                <CheckBox Content="资源包"
+                                                          IsChecked="{x:Bind IsResourcepackChecked,Mode=TwoWay}" />
+                                                <CheckBox Content="着色器包"
+                                                          IsChecked="{x:Bind IsShaderChecked,Mode=TwoWay}" />
+                                                <CheckBox Content="文件" IsChecked="{x:Bind IsFileChecked,Mode=TwoWay}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Flyout>
+                                </Button.Flyout>
+                                <FontIcon Glyph="&#xE16E;" FontSize="12" />
+                            </Button>
+                        </Grid>
+                        <ListView x:Name="AttachmentList" Margin="15,7,15,15" MaxHeight="512"
+                                  SelectionMode="None">
+                            <ListView.ItemsSource>
+                                <u:AdvancedCollectionView x:Name="AttachmentSource"
+                                                          Source="{x:Bind ViewModel.Attachments}" />
+                            </ListView.ItemsSource>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:InstanceAttachmentItemModel">
+                                    <Grid ColumnDefinitions="Auto,*" Margin="5"
+                                          ToolTipService.ToolTip="{x:Bind Summary}">
+                                        <Grid.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="访问外部链接"
+                                                                IsEnabled="{x:Bind Reference,Converter={StaticResource NotNullToBoolConverter}}"
+                                                                Command="{x:Bind OpenReferenceCommand}"
+                                                                CommandParameter="{x:Bind Reference}" />
+                                                <MenuFlyoutItem Text="移除"
+                                                                IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
+                                                                Command="{x:Bind RemoveCommand}"
+                                                                CommandParameter="{x:Bind}" />
+                                            </MenuFlyout>
+                                        </Grid.ContextFlyout>
+                                        <ui:ImageEx Width="48" Height="48" Margin="0,0,10,0"
+                                                    Source="{x:Bind IconSource}"
+                                                    IsCacheEnabled="True" CacheMode="BitmapCache" Stretch="Fill"
+                                                    PlaceholderSource="ms-appx:///Assets/Placeholders/default_dirt.png" />
+                                        <Grid Grid.Column="1" RowDefinitions="*,Auto">
+                                            <StackPanel>
+                                                <TextBlock Text="{x:Bind Caption}"
+                                                           Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                <TextBlock Text="{x:Bind Summary}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                                <TextBlock Text="版本:"
+                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                <TextBlock Text="{x:Bind Version}"
+                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                <TextBlock Text=" 作者:"
+                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                <TextBlock Text="{x:Bind Author}"
+                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
-                                </Flyout>
-                            </Button.Flyout>
-                            <FontIcon Glyph="&#xE16E;" FontSize="12" />
-                        </Button>
-                    </Grid>
-                    <ListView x:Name="AttachmentList" Margin="15,7,15,15" MaxHeight="512"
-                              SelectionMode="None">
-                        <ListView.ItemsSource>
-                            <u:AdvancedCollectionView x:Name="AttachmentSource" Source="{x:Bind ViewModel.Attachments}" />
-                        </ListView.ItemsSource>
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:InstanceAttachmentItemModel">
-                                <Grid ColumnDefinitions="Auto,*" Margin="5" ToolTipService.ToolTip="{x:Bind Summary}">
-                                    <Grid.ContextFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Text="访问外部链接"
-                                                            IsEnabled="{x:Bind Reference,Converter={StaticResource NotNullToBoolConverter}}"
-                                                            Command="{x:Bind OpenReferenceCommand}"
-                                                            CommandParameter="{x:Bind Reference}" />
-                                            <MenuFlyoutItem Text="移除"
-                                                            IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
-                                                            Command="{x:Bind RemoveCommand}"
-                                                            CommandParameter="{x:Bind}" />
-                                        </MenuFlyout>
-                                    </Grid.ContextFlyout>
-                                    <ui:ImageEx Width="48" Height="48" Margin="0,0,10,0" Source="{x:Bind IconSource}"
-                                                IsCacheEnabled="True" CacheMode="BitmapCache" Stretch="Fill"
-                                                PlaceholderSource="ms-appx:///Assets/Placeholders/default_dirt.png" />
-                                    <Grid Grid.Column="1" RowDefinitions="*,Auto">
-                                        <StackPanel>
-                                            <TextBlock Text="{x:Bind Caption}"
-                                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
-                                            <TextBlock Text="{x:Bind Summary}" />
-                                        </StackPanel>
-                                        <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                            <TextBlock Text="版本:"
-                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                            <TextBlock Text="{x:Bind Version}"
-                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                            <TextBlock Text=" 作者:"
-                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                            <TextBlock Text="{x:Bind Author}"
-                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </ContentControl>
             </controls:GroupBox>
         </StackPanel>
     </ScrollViewer>

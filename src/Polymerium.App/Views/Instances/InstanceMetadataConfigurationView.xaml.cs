@@ -137,7 +137,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         DispatcherQueue.TryEnqueue(() =>
         {
             IsReferenceBeingParsed = false;
-            ModpackReference = model ?? new InstanceModpackReferenceModel("解析失败", "unknown", "N/A", "unknown", "N/A");
+            ModpackReference = model ?? new InstanceModpackReferenceModel("解析失败", "0", "N/A", "0", "N/A");
         });
     }
 
