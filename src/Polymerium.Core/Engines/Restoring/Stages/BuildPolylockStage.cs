@@ -110,7 +110,7 @@ public class BuildPolylockStage : StageBase
                         CachedObjectPath = $"{file.Source.Host}/{file.Id}/{file.VersionId}",
                         Source = file.Source,
                         Sha1 = file.Hash,
-                        Target = new Uri(new Uri($"poly-file://{_instance.Id}/"), file.FileName)
+                        Target = new Uri(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", _instance.Id)), file.FileName)
                     };
                 })
             );

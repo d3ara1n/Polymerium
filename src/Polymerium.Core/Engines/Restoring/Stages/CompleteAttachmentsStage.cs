@@ -68,7 +68,7 @@ public class CompleteAttachmentsStage : StageBase
             }
             else
             {
-                var pooled = new Uri($"poly-file:///cache/objects/{attachment.CachedObjectPath}.obj");
+                var pooled = new Uri(ConstPath.CACHE_OBJECTS_FILE.Replace("{0}", attachment.CachedObjectPath));
                 // 可再生资源，可再生资源被视作只读资源
                 if (!await _fileBase.VerifyHashAsync(pooled, attachment.Sha1, _sha1))
                 {

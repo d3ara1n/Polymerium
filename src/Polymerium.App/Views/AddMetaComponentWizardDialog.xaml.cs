@@ -51,6 +51,7 @@ public sealed partial class AddMetaComponentWizardDialog : CustomDialog
         DispatcherQueue.TryEnqueue(() =>
         {
             ViewModel.Versions = versions;
+            ViewModel.SelectedVersion ??= versions.FirstOrDefault();
             IsOperable = true;
             VisualStateManager.GoToState(Root, "Default", true);
         });

@@ -5,7 +5,7 @@ using IBuilder;
 
 namespace Polymerium.Core.Stars;
 
-public class PlanetBlenderBuilder : IBuilder<PlanetBlender>
+public class PlanetaryEngineBuilder : IBuilder<PlanetaryEngine>
 {
     private readonly StarshipBuilder starshipBuilder = new();
     private IEnumerable<string> gameArguments = Enumerable.Empty<string>();
@@ -13,55 +13,63 @@ public class PlanetBlenderBuilder : IBuilder<PlanetBlender>
     private IEnumerable<string> jvmArguments = Enumerable.Empty<string>();
     private string mainClass = string.Empty;
     private string workingDirectory = string.Empty;
+    private PlanetaryEngineMode mode = PlanetaryEngineMode.FireAndForget;
 
-    public PlanetBlender Build()
+    public PlanetaryEngine Build()
     {
         var starship = starshipBuilder.Build();
         var jvm = starship.Ship(jvmArguments);
         var game = starship.Ship(gameArguments);
         var arguments = jvm.Append(mainClass).Concat(game);
-        var options = new PlanetOptions
+        var options = new PlanetaryEngineOptions
         {
             Arguments = arguments,
             JavaExecutable = javaPath,
-            WorkingDirectory = workingDirectory
+            WorkingDirectory = workingDirectory,
+            Mode = mode
         };
-        return new PlanetBlender(options);
+        return new PlanetaryEngine(options);
     }
 
-    public PlanetBlenderBuilder ConfigureStarship(Action<StarshipBuilder> configure)
+    public PlanetaryEngineBuilder CraftStarship(Action<StarshipBuilder> builder)
     {
-        configure?.Invoke(starshipBuilder);
+        builder?.Invoke(starshipBuilder);
         return this;
     }
 
-    public PlanetBlenderBuilder WithJavaPath(string javaPath)
+    public PlanetaryEngineBuilder WithJavaPath(string javaPath)
     {
         this.javaPath = javaPath;
         return this;
     }
 
-    public PlanetBlenderBuilder WithMainClass(string mainClass)
+    public PlanetaryEngineBuilder WithMainClass(string mainClass)
     {
         this.mainClass = mainClass;
         return this;
     }
 
-    public PlanetBlenderBuilder WithWorkingDirectory(string working)
+    public PlanetaryEngineBuilder WithWorkingDirectory(string working)
     {
         workingDirectory = working;
         return this;
     }
 
-    public PlanetBlenderBuilder WithGameArguments(IEnumerable<string> arguments)
+    public PlanetaryEngineBuilder WithGameArguments(IEnumerable<string> arguments)
     {
         gameArguments = arguments;
         return this;
     }
 
-    public PlanetBlenderBuilder WithJvmArguments(IEnumerable<string> arguments)
+    public PlanetaryEngineBuilder WithJvmArguments(IEnumerable<string> arguments)
     {
         jvmArguments = arguments;
+        return this;
+    }
+
+    public PlanetaryEngineBuilder AsMode(PlanetaryEngineMode asMode)
+    {
+        mode = asMode;
         return this;
     }
 }

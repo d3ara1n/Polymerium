@@ -12,14 +12,30 @@
     xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:u="using:CommunityToolkit.WinUI.UI"
     mc:Ignorable="d" OperationHorizontalAlignment="Stretch" Padding="0" Loaded="CustomDialog_Loaded"
-    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
 
     <Grid>
-        <ScrollViewer>
-            <Grid Margin="15">
-                <WebView2 x:Name="DescriptionPresenter" />
-            </Grid>
-        </ScrollViewer>
+        <Pivot>
+            <Pivot.Resources>
+                <Style TargetType="PivotItem">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </Pivot.Resources>
+            <PivotItem Header="展示">
+                <FlipView x:Name="Gallery" Margin="15" ItemsSource="{x:Bind Screenshots}">
+                    <FlipView.ItemTemplate>
+                        <DataTemplate x:DataType="models:SearchCenterResultItemScreenshotModel">
+                            <ui:ImageEx Source="{x:Bind Url}" Stretch="Uniform" ToolTipService.ToolTip="{x:Bind Title}" />
+                        </DataTemplate>
+                    </FlipView.ItemTemplate>
+                </FlipView>
+            </PivotItem>
+            <PivotItem Header="描述">
+                <Grid>
+                    <WebView2 x:Name="DescriptionPresenter" />
+                </Grid>
+            </PivotItem>
+        </Pivot>
         <ProgressBar x:Name="Progress" Maximum="100" IsIndeterminate="True" VerticalAlignment="Bottom"
                      Visibility="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
     </Grid>

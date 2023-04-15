@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace Polymerium.Core.Stars;
 
-public class PlanetBlender
+public class PlanetaryEngine
 {
-    private readonly PlanetOptions _options;
+    private readonly PlanetaryEngineOptions _options;
 
-    public PlanetBlender(PlanetOptions options)
+    public PlanetaryEngine(PlanetaryEngineOptions options)
     {
         _options = options;
     }

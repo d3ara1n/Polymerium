@@ -43,8 +43,8 @@ public class CompleteLibrariesStage : StageBase
     {
         if (Token.IsCancellationRequested)
             return Cancel();
-        var libraryDir = new Uri("poly-file:///cache/libraries/");
-        var nativesDir = new Uri($"poly-file://{_instance.Id}/natives/");
+        var libraryDir = new Uri(ConstPath.CACHE_LIBRARIES_DIR);
+        var nativesDir = new Uri(ConstPath.INSTANCE_NATIVES_DIR.Replace("{0}", _instance.Id));
         var group = new DownloadTaskGroup { Token = Token };
         _fileBase.RemoveDirectory(nativesDir);
         var local = 0;

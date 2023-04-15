@@ -26,7 +26,7 @@
                                             HorizontalAlignment="Left"
                                             AspectRatio="1:1">
                         <toolkit:ImageEx CornerRadius="{ThemeResource ControlCornerRadius}"
-                                         Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile,Mode=OneWay}"
+                                         Source="{x:Bind ViewModel.Instance.ThumbnailFile,Mode=OneWay}"
                                          IsCacheEnabled="True"
                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
                                          PlaceholderStretch="UniformToFill" />
@@ -34,18 +34,21 @@
                     <Grid Grid.Column="1" Margin="15,30,30,30" RowDefinitions="Auto,*">
                         <Grid ColumnDefinitions="*,Auto">
                             <StackPanel>
-                                <TextBlock Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay}"
+                                <TextBlock Text="{x:Bind ViewModel.Instance.Name,Mode=OneWay}"
                                            Style="{StaticResource TitleTextBlockStyle}" />
                                 <ContentControl
                                     IsEnabled="{x:Bind IsPending,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal" Spacing="5"
-                                                Visibility="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Converter={StaticResource BoolToVisibilityConverter}}">
+                                                Visibility="{x:Bind ViewModel.Instance.IsTagged,Converter={StaticResource BoolToVisibilityConverter}}">
                                         <FontIcon Glyph="&#xE946;" FontSize="12"
                                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                         <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                             <Run Text="导入自" />
-                                            <Hyperlink NavigateUri="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}">整合包</Hyperlink>
+                                            <Hyperlink NavigateUri="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}"
+                                                       ToolTipService.ToolTip="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}">
+                                                整合包
+                                            </Hyperlink>
                                         </TextBlock>
                                         <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
@@ -180,7 +183,7 @@
             </controls:Card>
             <controls:GroupBox Margin="5,5,10,5" Visibility="Collapsed">
                 <controls:GroupBox.Header>
-                    <TextBlock Text="截图(WIP)" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <TextBlock Text="截图" Style="{StaticResource SubtitleTextBlockStyle}" />
                 </controls:GroupBox.Header>
                 <toolkit:ConstrainedBox AspectRatio="16:9">
                     <Grid>
@@ -192,17 +195,70 @@
                     </Grid>
                 </toolkit:ConstrainedBox>
             </controls:GroupBox>
-            <controls:GroupBox Margin="5,5,10,5" Visibility="Collapsed">
-                <controls:GroupBox.Header>
-                    <TextBlock Text="存档(WIP)" Style="{StaticResource BodyStrongTextBlockStyle}" />
-                </controls:GroupBox.Header>
-                <Grid>
-                    <Grid.ChildrenTransitions>
-                        <ContentThemeTransition />
-                    </Grid.ChildrenTransitions>
-                    <TextBlock Text="占位符" />
+            <ScrollViewer>
+                <Grid ColumnDefinitions="1*,1*" MaxHeight="512">
+                    <controls:GroupBox Margin="5,5,5,5">
+                        <controls:GroupBox.Header>
+                            <TextBlock Text="存档" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        </controls:GroupBox.Header>
+                        <Grid>
+                            <Grid.ChildrenTransitions>
+                                <ContentThemeTransition />
+                            </Grid.ChildrenTransitions>
+                            <ListView ItemsSource="{x:Bind ViewModel.Saves}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:InstanceWorldSaveModel">
+                                        <Grid ColumnDefinitions="Auto,*" Margin="8">
+                                            <toolkit:ImageEx Margin="0,0,8,0" Grid.RowSpan="9" CornerRadius="3"
+                                                             PlaceholderStretch="UniformToFill"
+                                                             PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
+                                                             Stretch="UniformToFill" Source="{x:Bind IconSource}"
+                                                             Height="64" Width="64" />
+                                            <Grid Grid.Column="1" RowDefinitions="*,Auto">
+                                                <StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{x:Bind Name}"
+                                                                   Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                        <TextBlock
+                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                                                            <Run Text="(" />
+                                                            <Run Text="{x:Bind GameVersion}" />
+                                                            <Run Text=")" />
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{x:Bind Seed}"
+                                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                </StackPanel>
+                                                <TextBlock Grid.Row="1"
+                                                           Text="{x:Bind LastPlayed,Converter={StaticResource DateTimeOffsetToStringConverter}}"
+                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <TextBlock Text="空" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Visibility="{x:Bind ViewModel.Saves,Mode=OneWay,Converter={StaticResource NotEmptyToVisibleConverter},ConverterParameter=reversed}" />
+                        </Grid>
+                    </controls:GroupBox>
+                    <controls:GroupBox Margin="5,5,10,5" Grid.Column="1">
+                        <controls:GroupBox.Header>
+                            <Grid>
+                                <TextBlock Text="服务器" Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <Button Content="添加" Style="{StaticResource IconButtonStyle}"
+                                        HorizontalAlignment="Right" />
+                            </Grid>
+                        </controls:GroupBox.Header>
+                        <Grid>
+                            <Grid.ChildrenTransitions>
+                                <ContentThemeTransition />
+                            </Grid.ChildrenTransitions>
+                            <TextBlock Text="无" />
+                        </Grid>
+                    </controls:GroupBox>
                 </Grid>
-            </controls:GroupBox>
+            </ScrollViewer>
             <controls:GroupBox Margin="5,5,10,10">
                 <controls:GroupBox.Header>
                     <TextBlock Text="其他信息" Style="{StaticResource BodyStrongTextBlockStyle}" />

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.App.Configurations;
+using Polymerium.Core;
 
 namespace Polymerium.App.Data;
 
@@ -21,7 +22,7 @@ public class ConfigurationModel : RefinedModelBase<Configuration>
             }
         };
 
-    public override Uri Location { get; } = new("poly-file:///configuration.json");
+    public override Uri Location { get; } = new(ConstPath.CONFIG_CONFIGURATION_FILE);
 
     public override JsonSerializerSettings SerializerSettings => serializerSettings;
     public string? AccountShowcaseId { get; set; }
