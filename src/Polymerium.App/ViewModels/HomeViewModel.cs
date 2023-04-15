@@ -1,12 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json.Linq;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Wupoo;
 
 namespace Polymerium.App.ViewModels;
 
@@ -67,5 +71,56 @@ public class HomeViewModel : ObservableObject
     public void GotoRecentItemInstanceView(string? instanceId)
     {
         navigationService.Navigate<InstanceView>(instanceId);
+    }
+
+    public async Task LoadNewsAsync(Action<HomeNewsItemModel?> callback)
+    {
+        var urlBase = new Uri("https://launchercontent.mojang.com");
+        var newsUrl = new Uri(urlBase, "news.json");
+        var results = new List<HomeNewsItemModel>();
+        await Wapoo.Wohoo(newsUrl.AbsoluteUri)
+            .ForJsonResult<JObject>(x =>
+            {
+                if (x.ContainsKey("entries"))
+                {
+                    var entries = x.Value<JArray>("entries");
+                    foreach (JObject entry in entries)
+                    {
+                        var category = string.Empty;
+                        if (entry.ContainsKey("category"))
+                            category = entry.Value<string>("category");
+                        if (category != "Minecraft: Java Edition") continue;
+                        var title = string.Empty;
+                        if (entry.ContainsKey("title"))
+                            title = entry.Value<string>("title");
+                        var text = string.Empty;
+                        if (entry.ContainsKey("text"))
+                            text = entry.Value<string>("text");
+                        var readMore = string.Empty;
+                        if (entry.ContainsKey("readMoreLink"))
+                            readMore = entry.Value<string>("readMoreLink");
+                        var imageSource = string.Empty;
+                        if (entry.ContainsKey("playPageImage"))
+                        {
+                            var playPageImage = entry.Value<JObject>("playPageImage");
+                            if (playPageImage!.ContainsKey("url"))
+                                imageSource = playPageImage.Value<string>("url");
+                        }
+
+                        var date = string.Empty;
+                        if (entry.ContainsKey("date"))
+                            date = entry.Value<string>("date");
+
+                        var model = new HomeNewsItemModel(title, text, DateTimeOffset.Parse(date),
+                            !string.IsNullOrEmpty(readMore) ? new Uri(readMore) : null,
+                            new Uri(urlBase, imageSource).AbsoluteUri);
+                        results.Add(model);
+                    }
+                }
+            })
+            .FetchAsync();
+        foreach (var item in results)
+            callback(item);
+        callback(null);
     }
 }

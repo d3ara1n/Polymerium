@@ -29,6 +29,7 @@
     <converters:AccountToFaceAvatarConverter x:Key="AccountToFaceAvatarConverter" />
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converters:EnumerableToStringConverter x:Key="EnumerableToStringConverter" />
+    <converters:DateTimeOffsetToHumanStringConverter x:Key="DateTimeOffsetToHumanStringConverter" />
     <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter" />
     <converters:ZeroToVisibleConverter x:Key="ZeroToVisibleConverter" />
 
