@@ -81,7 +81,7 @@ public sealed class InstanceManager : IDisposable
         );
         while (_memoryStorage.Instances.Any(x => x.Id != instance.Id && x.FolderName == folderName))
             folderName += '_';
-        var instanceDir = _fileBase.Locate(new Uri($"poly-file://{instance.Id}"));
+        var instanceDir = _fileBase.Locate(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)));
         if (Directory.Exists(instanceDir))
         {
             var newDir =

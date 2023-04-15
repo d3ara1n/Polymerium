@@ -27,7 +27,7 @@ public class InstanceViewModel : ObservableObject
 {
     private readonly ComponentManager _componentManager;
     private readonly IFileBaseService _fileBase;
-    private readonly AssetManager _gameManager;
+    private readonly AssetManager _assetManager;
     private readonly NavigationService _navigationService;
     private readonly ResolveEngine _resolver;
 
@@ -50,61 +50,62 @@ public class InstanceViewModel : ObservableObject
         IFileBaseService fileBase,
         ComponentManager componentManager,
         NavigationService navigationService,
-        AssetManager gameManager
+        AssetManager assetManager
     )
     {
         _componentManager = componentManager;
         _resolver = resolver;
         _navigationService = navigationService;
-        _gameManager = gameManager;
+        _assetManager = assetManager;
         _fileBase = fileBase;
-        Context = context;
+        Instance = context.AssociatedInstance!;
         OverlayService = overlayService;
-        CoreVersion = Context.AssociatedInstance!.Inner.GetCoreVersion() ?? "N/A";
+        CoreVersion = Instance.Inner.GetCoreVersion() ?? "N/A";
         GotoConfigurationViewCommand = new RelayCommand(GotoConfigurationView);
         Components = new ObservableCollection<ComponentTagItemModel>(
-            BuildComponentModels(Context.AssociatedInstance!.Components)
+            BuildComponentModels(Instance.Components)
         );
         InformationItems = new ObservableCollection<InstanceInformationItemModel>
         {
-            new("\uF427", "标志符", Context.AssociatedInstance.Id),
+            new("\uF427", "标志符", Instance.Id),
             new(
                 "\uE125",
                 "作者",
-                string.IsNullOrEmpty(Context.AssociatedInstance.Author)
+                string.IsNullOrEmpty(Instance.Author)
                     ? "(未标注)"
-                    : Context.AssociatedInstance.Author
+                    : Instance.Author
             ),
-            new("\uE121", "游戏时间", Context.AssociatedInstance.PlayTime.Humanize()),
+            new("\uE121", "游戏时间", Instance.PlayTime.Humanize()),
             new(
                 "\uEC92",
                 "最近一次游玩",
-                Context.AssociatedInstance.LastPlay == null
+                Instance.LastPlay == null
                     ? "从未"
-                    : Context.AssociatedInstance.LastPlay.Humanize()
+                    : Instance.LastPlay.Humanize()
             ),
-            new("\uEB50", "游玩次数", $"{Context.AssociatedInstance.PlayCount} 次"),
+            new("\uEB50", "游玩次数", $"{Instance.PlayCount} 次"),
             new(
                 "\uEB05",
                 "启动成功率",
-                Context.AssociatedInstance.PlayCount == 0
+                Instance.PlayCount == 0
                     ? "N/A"
-                    : $"{(Context.AssociatedInstance.PlayCount - Context.AssociatedInstance.ExceptionCount) / (float)Context.AssociatedInstance.PlayCount * 100}%"
+                    : $"{(Instance.PlayCount - Instance.ExceptionCount) / (float)Instance.PlayCount * 100}%"
             ),
-            new("\uEC92", "创建时间", Context.AssociatedInstance.CreatedAt.Humanize())
+            new("\uEC92", "创建时间", Instance.CreatedAt.Humanize())
             {
                 Caption = "创建时间",
                 IconGlyph = "\uEC92",
-                Content = Context.AssociatedInstance.CreatedAt.Humanize()
+                Content = Instance.CreatedAt.Humanize()
             },
             new(
                 "\uEC92",
                 "最近一次还原",
-                Context.AssociatedInstance.LastRestore == null
+                Instance.LastRestore == null
                     ? "从未"
-                    : Context.AssociatedInstance.LastRestore.Humanize()
+                    : Instance.LastRestore.Humanize()
             )
         };
+        Saves = new ObservableCollection<InstanceWorldSaveModel>();
         RawAssetSource = new ObservableCollection<AssetRaw>();
         RawShaderPacks = new AdvancedCollectionView
         {
@@ -121,7 +122,7 @@ public class InstanceViewModel : ObservableObject
             Source = RawAssetSource,
             Filter = x => ((AssetRaw)x).Type == ResourceType.ResourcePack
         };
-        IsModSupported = Context.AssociatedInstance.Components.Any(x => ComponentMeta.MINECRAFT != x.Identity);
+        IsModSupported = Instance.Components.Any(x => ComponentMeta.MINECRAFT != x.Identity);
         IsShaderSupported = true;
     }
 
@@ -133,6 +134,7 @@ public class InstanceViewModel : ObservableObject
 
     public ObservableCollection<ComponentTagItemModel> Components { get; }
     public ObservableCollection<InstanceInformationItemModel> InformationItems { get; }
+    public ObservableCollection<InstanceWorldSaveModel> Saves { get; }
     public ObservableCollection<AssetRaw> RawAssetSource { get; }
     public IAdvancedCollectionView RawShaderPacks { get; }
     public IAdvancedCollectionView RawMods { get; }
@@ -180,7 +182,7 @@ public class InstanceViewModel : ObservableObject
         set => SetProperty(ref referenceUrl, value);
     }
 
-    public ViewModelContext Context { get; }
+    public GameInstanceModel Instance { get; }
     public IOverlayService OverlayService { get; }
     public ICommand GotoConfigurationViewCommand { get; }
 
@@ -207,7 +209,7 @@ public class InstanceViewModel : ObservableObject
 
     public void LoadAssets()
     {
-        var assets = _gameManager.ScanAssets(Context.AssociatedInstance!.Inner);
+        var assets = _assetManager.ScanAssets(Instance.Inner);
         RawAssetSource.Clear();
         foreach (var asset in assets)
             RawAssetSource.Add(asset);
@@ -219,14 +221,29 @@ public class InstanceViewModel : ObservableObject
         ShaderPackCount = (uint)RawShaderPacks.Count;
     }
 
+    public void LoadSaves()
+    {
+        var saves = _assetManager.ScanSaves(Instance.Inner);
+        Saves.Clear();
+        foreach (var save in saves)
+        {
+            var model = new InstanceWorldSaveModel(
+                _fileBase.Locate(new Uri(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Instance.Id)),
+                    $"saves/{save.FolderName}/icon.png")),
+                save.Name, save.Seed, save.GameVersion, save.LastPlayed, save
+            );
+            Saves.Add(model);
+        }
+    }
+
     public async Task LoadInstanceInformationAsync(Action<Uri?, bool> callback)
     {
-        var isNeeded = !Context.AssociatedInstance!.Inner.CheckIfRestored(_fileBase, out _);
+        var isNeeded = !Instance.Inner.CheckIfRestored(_fileBase, out _);
         Uri? url = null;
-        if (Context.AssociatedInstance.ReferenceSource != null)
+        if (Instance.ReferenceSource != null)
         {
-            var result = await _resolver.ResolveAsync(Context.AssociatedInstance!.ReferenceSource,
-                new ResolverContext(Context.AssociatedInstance!.Inner));
+            var result = await _resolver.ResolveAsync(Instance.ReferenceSource,
+                new ResolverContext(Instance.Inner));
             if (result) url = result.Value.Resource.Reference;
         }
 

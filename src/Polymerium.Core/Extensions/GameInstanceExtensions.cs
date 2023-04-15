@@ -26,12 +26,12 @@ public static class GameInstanceExtensions
 
     public static Uri GetPolylockDataUrl(this GameInstance instance)
     {
-        return new Uri($"poly-file://{instance.Id}/polymerium.lock.json");
+        return new Uri(ConstPath.INSTANCE_POLYLOCKDATA_FILE.Replace("{0}", instance.Id));
     }
 
     public static Uri GetPolylockHashUrl(this GameInstance instance)
     {
-        return new Uri($"poly-file://{instance.Id}/polymerium.lock.json.hash");
+        return new Uri(ConstPath.INSTANCE_POLYLOCKHASH_FILE.Replace("{0}", instance.Id));
     }
 
     public static bool CheckIfRestored(this GameInstance instance, IFileBaseService fileBase, out string? content)

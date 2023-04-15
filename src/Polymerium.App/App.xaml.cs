@@ -108,6 +108,7 @@ public partial class App : Application
         // global services
         services
             .AddSingleton<AssetManager>()
+            .AddSingleton<GameManager>()
             .AddSingleton<IFileBaseService, MainFileBaseService>()
             .Configure<MainFileBaseOptions>(
                 configure =>

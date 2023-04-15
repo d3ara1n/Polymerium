@@ -3,13 +3,14 @@ using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
 using Polymerium.Abstractions.Accounts;
+using Polymerium.Core;
 
 namespace Polymerium.App.Data;
 
 public class AccountModel : RefinedModelBase<IGameAccount>
 {
     private readonly byte[] POLY_SIGNED = { 114, 5, 14, 191, 98, 10 };
-    public override Uri Location { get; } = new("poly-file:///accounts.json");
+    public override Uri Location { get; } = new(ConstPath.CONFIG_ACCOUNT_FILE);
 
     public string? TypeName { get; set; }
     public byte[]? Juice { get; set; }

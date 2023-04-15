@@ -80,7 +80,8 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
             foreach (var entry in libs)
             {
                 var path = entry.FullName[6..];
-                var local = new Uri(new Uri($"poly-file:///local/instances/{Context.Instance.Id}/libraries/"), path);
+                var local = new Uri(new Uri(ConstPath.LOCAL_INSTANCE_LIBRARIES_DIR.Replace("{0}", Context.Instance.Id)),
+                    path);
                 var localPath = _fileBase.Locate(local);
                 if (!Directory.Exists(Path.GetDirectoryName(localPath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);
@@ -122,7 +123,7 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
             throw new NotImplementedException();
         }
 
-        Context.AddCrate("library_directory", _fileBase.Locate(new Uri("poly-file:///cache/libraries")));
+        Context.AddCrate("library_directory", _fileBase.Locate(new Uri(ConstPath.CACHE_LIBRARIES_DIR[..^1])));
         return Finished();
     }
 

@@ -2,41 +2,39 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.UI.Windowing;
+using Windows.Graphics;
 using Microsoft.UI.Xaml;
-using WinUIEx;
+using Microsoft.UI.Xaml.Media;
 
 namespace Polymerium.App.Views;
 
-public sealed partial class MainWindow : WindowEx
+public sealed partial class MainWindow : Window
 {
     public MainWindow()
     {
         InitializeComponent();
 
-        if (AppWindowTitleBar.IsCustomizationSupported())
-        {
-            SetTitleBar(Main.TitleBarDragArea);
-            ExtendsContentIntoTitleBar = true;
-        }
-        else
-        {
-            (Main.ColumnRight.Width, Main.ColumnLeft.Width) = (
-                Main.ColumnLeft.Width,
-                Main.ColumnRight.Width
-            );
-        }
+        Title = "Polymerium";
+
+        AppWindow.Resize(new SizeInt32(780, 600));
 
         if (Environment.OSVersion.Version.Major >= 10)
         {
             if (Environment.OSVersion.Version.Build >= 22000)
-                Backdrop = new MicaSystemBackdrop();
+            {
+                SystemBackdrop = new MicaBackdrop();
+                SetTitleBar(Main.TitleBarDragArea);
+                ExtendsContentIntoTitleBar = true;
+            }
             else
-                Backdrop = new AcrylicSystemBackdrop();
+            {
+                SystemBackdrop = new DesktopAcrylicBackdrop();
+            }
         }
         else
         {
-            Main.FakeBackground.Visibility = Visibility.Visible;
+            // only windows 10+ supports msix so...
+            (Main.ColumnRight.Width, Main.ColumnLeft.Width) = (Main.ColumnLeft.Width, Main.ColumnRight.Width);
         }
     }
 }

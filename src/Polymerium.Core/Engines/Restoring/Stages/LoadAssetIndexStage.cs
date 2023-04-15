@@ -44,7 +44,7 @@ public class LoadAssetIndexStage : StageBase
     {
         if (Token.IsCancellationRequested)
             return Cancel();
-        var assetIndexFile = new Uri($"poly-file:///cache/assets/indexes/{_polylock.AssetIndex.Id}.json");
+        var assetIndexFile = new Uri(ConstPath.CACHE_ASSETS_INDEX_FILE.Replace("{0}", _polylock.AssetIndex.Id));
         string? content = null;
         if (
             !await _fileBase.VerifyHashAsync(assetIndexFile, _polylock.AssetIndex.Sha1, _sha1)

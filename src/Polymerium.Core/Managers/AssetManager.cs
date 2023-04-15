@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using fNbt;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
@@ -199,15 +200,15 @@ public class AssetManager
             ResourceType.ResourcePack => "resourcepacks",
             _ => throw new NotImplementedException()
         };
-        var dirUri = new Uri($"poly-file://{instance.Id}/{dir}/");
+        var dirUri = new Uri(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)), $"{dir}/");
         return dirUri;
     }
 
     public IEnumerable<RenewableAssetState> TakeRenewableAssetSnapshot(GameInstance instance)
     {
         var snapshot = new List<RenewableAssetState>();
-        var instanceBase = new Uri($"poly-file://{instance.Id}/");
-        TakeRenewableAssetSnapshotInternal(snapshot, instanceBase, new Uri("poly-file:///cache/objects/"),
+        var instanceBase = new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id));
+        TakeRenewableAssetSnapshotInternal(snapshot, instanceBase, new Uri(ConstPath.CACHE_OBJECTS_DIR),
             _fileBase.Locate(instanceBase));
         return snapshot;
     }
@@ -261,5 +262,44 @@ public class AssetManager
         }
 
         return null;
+    }
+
+    public IEnumerable<WorldSave> ScanSaves(GameInstance instance)
+    {
+        var saveDir = new Uri(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)), "saves/");
+        var list = new List<WorldSave>();
+        var saveDirPath = _fileBase.Locate(saveDir);
+        if (Directory.Exists(saveDirPath))
+        {
+            var subDirs = Directory.GetDirectories(saveDirPath);
+            foreach (var sub in subDirs)
+            {
+                var levelPath = Path.Combine(sub, "level.dat");
+                if (File.Exists(levelPath))
+                {
+                    var nbt = new NbtFile();
+                    nbt.LoadFromFile(levelPath);
+                    var save = new WorldSave { FolderName = Path.GetFileName(sub) };
+                    var data = nbt.RootTag.Get<NbtCompound>("Data");
+                    if (data != null)
+                    {
+                        if (data.Contains("LevelName"))
+                            save.Name = data.Get<NbtString>("LevelName").Value;
+                        if (data.Contains("LastPlayed"))
+                            save.LastPlayed =
+                                DateTimeOffset.FromUnixTimeMilliseconds(data.Get<NbtLong>("LastPlayed").Value);
+                        var genSettings = data.Get<NbtCompound>("WorldGenSettings");
+                        if (genSettings != null && genSettings.Contains("seed"))
+                            save.Seed = genSettings.Get<NbtLong>("seed").Value;
+                        var version = data.Get<NbtCompound>("Version");
+                        if (version != null && version.Contains("Name"))
+                            save.GameVersion = version.Get<NbtString>("Name").Value;
+                        list.Add(save);
+                    }
+                }
+            }
+        }
+
+        return list;
     }
 }

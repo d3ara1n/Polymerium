@@ -29,6 +29,7 @@
     <converters:AccountToFaceAvatarConverter x:Key="AccountToFaceAvatarConverter" />
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converters:EnumerableToStringConverter x:Key="EnumerableToStringConverter" />
+    <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter" />
 
     <Style TargetType="controls:ExpanderExItem" BasedOn="{StaticResource DefaultExpanderExItemStyle}" />
 
@@ -61,8 +62,10 @@
         <Setter Property="MinWidth" Value="248" />
         <Setter Property="MinHeight" Value="100" />
         <Setter Property="OperationPadding" Value="25" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="OperationHorizontalAlignment" Value="Right" />
         <Setter Property="Template">
             <Setter.Value>
@@ -131,8 +134,9 @@
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="Root" Visibility="Visible">
                             <Rectangle x:Name="SmokeBackground" Fill="{ThemeResource ContentDialogSmokeFill}" />
-                            <Border x:Name="Frame" VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            <Border x:Name="Frame"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     CornerRadius="{TemplateBinding CornerRadius}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     Background="{TemplateBinding Background}"

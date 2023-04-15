@@ -69,7 +69,8 @@ public class ImportService
                     try
                     {
                         var path = _fileBase.Locate(
-                            new Uri(new Uri($"poly-file:///local/instances/{product.Instance.Id}/"), file.Path));
+                            new Uri(new Uri(ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", product.Instance.Id)),
+                                file.Path));
                         var entry = product.Archive.GetEntry(file.FileName)!;
                         var dir = Path.GetDirectoryName(path);
                         if (!Directory.Exists(dir))

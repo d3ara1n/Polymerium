@@ -4,12 +4,13 @@ using Newtonsoft.Json.Serialization;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
+using Polymerium.Core;
 
 namespace Polymerium.App.Data;
 
 public class InstanceModel : RefinedModelBase<GameInstance>
 {
-    private static readonly Uri location = new("poly-file:///instances.json", UriKind.Absolute);
+    private static readonly Uri location = new(ConstPath.CONFIG_INSTANCE_FILE);
 
     private static readonly JsonSerializerSettings serializerSettings =
         new()

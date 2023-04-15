@@ -4,7 +4,6 @@ using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views.Instances;
@@ -35,6 +34,7 @@ public sealed partial class InstanceView : Page
     private void Page_Loaded(object sender, RoutedEventArgs e)
     {
         ViewModel.LoadAssets();
+        ViewModel.LoadSaves();
         Dialog_Dismissed(null, new EventArgs());
     }
 
@@ -50,7 +50,7 @@ public sealed partial class InstanceView : Page
 
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
-        var dialog = new PrepareGameDialog(ViewModel.Context.AssociatedInstance!.Inner, ViewModel.OverlayService);
+        var dialog = new PrepareGameDialog(ViewModel.Instance.Inner, ViewModel.OverlayService);
         dialog.Dismissed += Dialog_Dismissed;
         ViewModel.OverlayService.Show(dialog);
     }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.Notifications;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
@@ -19,6 +19,7 @@ using Polymerium.App.Stages.Preparing;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
 using Polymerium.Core.LaunchConfigurations;
+using Polymerium.Core.Managers;
 using Polymerium.Core.Stars;
 
 namespace Polymerium.App.ViewModels;
@@ -33,6 +34,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
     private readonly MemoryStorage _memoryStorage;
     private readonly IOverlayService _overlayService;
     private readonly RestoreEngine _restore;
+    private readonly GameManager _gameManager;
 
     private readonly CancellationTokenSource source = new();
     private IGameAccount? account;
@@ -50,7 +52,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         IFileBaseService fileBase,
         IOverlayService overlayService,
         MemoryStorage memoryStorage,
-        JavaManager javaManager
+        JavaManager javaManager,
+        GameManager gameManager
     )
     {
         _restore = restore;
@@ -60,6 +63,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         _overlayService = overlayService;
         _memoryStorage = memoryStorage;
         _javaManager = javaManager;
+        _gameManager = gameManager;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         StartCommand = new RelayCommand(Start);
     }
@@ -166,10 +170,6 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 UpdateLabelSafe("您的游戏已经准备就绪", true);
                 UpdateTaskProgressSafe("准备就绪");
                 Instance.LastRestore = DateTimeOffset.Now;
-                if (App.Current.Window.CoreWindow.ActivationMode != CoreWindowActivationMode.ActivatedInForeground)
-                    new ToastContentBuilder()
-                        .SetToastScenario(ToastScenario.Default)
-                        .AddText("");
             }
             else
             {
@@ -189,7 +189,15 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             {
                 LabelTitle = title;
                 if (ready)
+                {
                     readyHandler?.Invoke();
+                    if (App.Current.Window.Content.FocusState == FocusState.Unfocused)
+                        new ToastContentBuilder()
+                            .SetToastScenario(ToastScenario.Default)
+                            .AddText("游戏已准备完毕")
+                            .AddText("随时可以启动游戏")
+                            .Show();
+                }
             }
         );
     }
@@ -208,11 +216,11 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
 
     public void Start()
     {
-        var workingDir = new Uri($"poly-file://{Instance!.Id}/");
-        var assetsRoot = new Uri("poly-file:///cache/assets/");
-        var nativesRoot = new Uri($"poly-file://{Instance!.Id}/natives/");
-        var librariesRoot = new Uri("poly-file:///cache/libraries/");
-        var polylockFile = new Uri($"poly-file://{Instance!.Id}/polymerium.lock.json");
+        var workingDir = new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Instance!.Id));
+        var assetsRoot = new Uri(ConstPath.CACHE_ASSETS_DIR);
+        var nativesRoot = new Uri(ConstPath.INSTANCE_NATIVES_DIR.Replace("{0}", Instance!.Id));
+        var librariesRoot = new Uri(ConstPath.CACHE_LIBRARIES_DIR);
+        var polylockFile = new Uri(ConstPath.INSTANCE_POLYLOCKDATA_FILE.Replace("{0}", Instance!.Id));
         if (_fileBase.TryReadAllText(polylockFile, out var content))
         {
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
@@ -239,7 +247,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 )
                 {
                     // log the java information model
-                    var builder = new PlanetBlenderBuilder();
+                    var builder = new PlanetaryEngineBuilder();
                     builder
                         .WithJavaPath(Path.Combine(javaHome, "bin", "java.exe"))
                         .WithMainClass(polylock.MainClass)
@@ -259,7 +267,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                             polylock.JvmArguments.Concat(new[] { "-Xmx${jvm_max_memory}m" })
                                 .Concat((configuration.AdditionalJvmArguments ?? string.Empty).Split(' '))
                         )
-                        .ConfigureStarship(configure =>
+                        .CraftStarship(configure =>
                         {
                             configure
                                 .AddCargo(polylock.Cargo)
@@ -276,7 +284,6 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                 .AddCrate("user_type", Account!.LoginType)
                                 .AddCrate("version_type", "Polymerium")
                                 // rule os
-                                // TODO: 目前只支持 windows x86
                                 .AddCrate("os.name", "windows")
                                 .AddCrate("os.arch", "x86")
                                 .AddCrate("os.version", Environment.OSVersion.Version.ToString())
@@ -310,8 +317,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                     configuration.JvmMaxMemory?.ToString() ?? "4096"
                                 );
                         });
-                    var blender = builder.Build();
-                    blender.Start();
+                    _gameManager.LaunchFireForget(builder);
                     Instance.LastPlay = DateTimeOffset.Now;
                     _dispatcher.TryEnqueue(() => _overlayService.Dismiss());
                     return;

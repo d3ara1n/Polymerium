@@ -40,22 +40,11 @@ public sealed partial class SearchDetailDialog : CustomDialog
         set => SetValue(IsOperatingProperty, value);
     }
 
-    public IEnumerable<SearchCenterResultItemScreenshotModel> Screenshots
-    {
-        get => (IEnumerable<SearchCenterResultItemScreenshotModel>)GetValue(ScreenshotsProperty);
-        set => SetValue(ScreenshotsProperty, value);
-    }
-
-    // Using a DependencyProperty as the backing store for Screenshots.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty ScreenshotsProperty =
-        DependencyProperty.Register(nameof(Screenshots), typeof(IEnumerable<SearchCenterResultItemScreenshotModel>),
-            typeof(SearchDetailDialog), new PropertyMetadata(null));
-
-
-
     public SearchDetailViewModel ViewModel { get; }
 
     public ObservableCollection<SearchCenterResultItemVersionModel> Versions { get; } = new();
+
+    public ObservableCollection<SearchCenterResultItemScreenshotModel> Screenshots { get; } = new();
 
     private async void CustomDialog_Loaded(object sender, RoutedEventArgs e)
     {
@@ -76,7 +65,7 @@ public sealed partial class SearchDetailDialog : CustomDialog
         DispatcherQueue.TryEnqueue(() =>
         {
             DescriptionPresenter.NavigateToString(description);
-            Screenshots = screenshots;
+            foreach (var screenshot in screenshots) Screenshots.Add(screenshot);
         });
     }
 

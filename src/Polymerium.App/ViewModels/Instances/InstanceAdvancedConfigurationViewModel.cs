@@ -54,9 +54,9 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
 
     public bool DeleteInstance()
     {
-        var folderDir = new Uri($"poly-file://{Context.AssociatedInstance!.Id}/");
+        var folderDir = new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id));
         var folderPath = _fileBase.Locate(folderDir);
-        var localDir = new Uri($"poly-file:///local/instances/{Context.AssociatedInstance!.Id}/");
+        var localDir = new Uri(ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id));
         var localPath = _fileBase.Locate(localDir);
         try
         {
@@ -76,7 +76,7 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
 
     public bool ResetInstance()
     {
-        var folderDir = new Uri($"poly-file://{Context.AssociatedInstance!.Id}/");
+        var folderDir = new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id));
         var folderPath = _fileBase.Locate(folderDir);
         try
         {
