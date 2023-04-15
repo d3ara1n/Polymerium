@@ -172,7 +172,7 @@
                             </Button>
                         </Grid>
                         <ListView x:Name="AttachmentList" Margin="15,7,15,15" MaxHeight="512"
-                                  SelectionMode="None">
+                                  SelectionMode="Single">
                             <ListView.ItemsSource>
                                 <u:AdvancedCollectionView x:Name="AttachmentSource"
                                                           Source="{x:Bind ViewModel.Attachments}" />

@@ -11,25 +11,23 @@
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:converters="using:Polymerium.App.Converters"
     xmlns:models="using:Polymerium.App.Models"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="Page_Loaded">
     <Page.Resources>
-        <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter" />
+        <converters:DateTimeOffsetToHumanStringConverter x:Key="DateTimeOffsetToHumanStringConverter" />
     </Page.Resources>
-    <Grid>
+    <Grid ColumnDefinitions="*,Auto">
         <Grid RowDefinitions="Auto,*">
-            <controls:Card Margin="5,0,10,5" Height="188" Padding="0">
+            <controls:Card Margin="5,0,5,5" Height="188" Padding="0">
                 <Grid>
                     <Grid.ChildrenTransitions>
                         <EntranceThemeTransition />
                     </Grid.ChildrenTransitions>
-                    <Grid ColumnDefinitions="6*,4*">
+                    <Grid ColumnDefinitions="4*,6*">
                         <toolkit:ImageEx Height="140" Width="140" HorizontalAlignment="Center"
                                          VerticalAlignment="Bottom" IsCacheEnabled="True" Stretch="UniformToFill"
                                          Source="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource AccountToBustAvatarConverter}}"
                                          PlaceholderStretch="UniformToFill"
                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png" />
-                    </Grid>
-                    <Grid ColumnDefinitions="4*,6*">
                         <StackPanel Grid.Column="1" Margin="15" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">
                                 <Run Text="你好 " />
@@ -48,7 +46,7 @@
                     <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,5">
                         <TextBlock Text="最近游玩" />
                     </Grid>
-                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                         <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}" Margin="0,0,0,5">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:RecentPlayedItemModel">
@@ -77,7 +75,7 @@
                                                               FontSize="11" />
                                                     <TextBlock Grid.Column="1" HorizontalAlignment="Right"
                                                                FontSize="11"
-                                                               Text="{x:Bind LastPlayedAt,Converter={StaticResource DateTimeOffsetToStringConverter}}"
+                                                               Text="{x:Bind LastPlayedAt,Converter={StaticResource DateTimeOffsetToHumanStringConverter}}"
                                                                Style="{ThemeResource BodyTextBlockStyle}"
                                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                                 </Grid>
@@ -106,6 +104,56 @@
                     </ScrollViewer>
                 </StackPanel>
             </ScrollViewer>
+        </Grid>
+        <Grid Grid.Column="1" RowDefinitions="Auto,*">
+            <ProgressRing IsIndeterminate="True" Grid.RowSpan="9" VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Visibility="{x:Bind IsNewsLoading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TextBlock Text="新闻" Margin="5,0,10,5" />
+            <Grid Grid.Row="1">
+                <ListView ItemsSource="{x:Bind News}" Width="256" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:HomeNewsItemModel">
+                            <controls:Card Margin="5,5,10,5" Padding="0">
+                                <StackPanel>
+                                    <toolkit:ConstrainedBox AspectRatio="350:224">
+                                        <toolkit:ImageEx Source="{x:Bind ImageSource}"
+                                                         ToolTipService.ToolTip="{x:Bind ImageSource}" Stretch="Fill" />
+                                    </toolkit:ConstrainedBox>
+                                    <Grid RowDefinitions="*,Auto" Margin="12">
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind Title}"
+                                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                            <TextBlock Text="{x:Bind Text}" TextWrapping="WrapWholeWords" />
+                                        </StackPanel>
+                                        <Grid Grid.Row="1">
+                                            <TextBlock
+                                                ToolTipService.ToolTip="{x:Bind Date,Converter={StaticResource DateTimeOffsetToStringConverter}}"
+                                                Text="{x:Bind Date,Converter={StaticResource DateTimeOffsetToHumanStringConverter}}"
+                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                            <HyperlinkButton Content="查看详情" ToolTipService.ToolTip="{x:Bind ReadMore}"
+                                                             NavigateUri="{x:Bind ReadMore}"
+                                                             HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </StackPanel>
+                            </controls:Card>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
