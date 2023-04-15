@@ -30,6 +30,7 @@
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converters:EnumerableToStringConverter x:Key="EnumerableToStringConverter" />
     <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter" />
+    <converters:ZeroToVisibleConverter x:Key="ZeroToVisibleConverter" />
 
     <Style TargetType="controls:ExpanderExItem" BasedOn="{StaticResource DefaultExpanderExItemStyle}" />
 

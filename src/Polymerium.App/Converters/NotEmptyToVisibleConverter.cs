@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.UI.Xaml;
@@ -14,6 +15,7 @@ public class NotEmptyToVisibleConverter : IValueConverter
         {
             string it => !string.IsNullOrEmpty(it),
             IEnumerable<object> it => it.Any(),
+            IEnumerable it => it.Cast<object>().Any(),
             _ => value != null
         };
         return (parameter == null ? res : !res) ? Visibility.Visible : Visibility.Collapsed;

@@ -205,7 +205,7 @@
                             <Grid.ChildrenTransitions>
                                 <ContentThemeTransition />
                             </Grid.ChildrenTransitions>
-                            <ListView ItemsSource="{x:Bind ViewModel.Saves}">
+                            <ListView x:Name="SaveList" ItemsSource="{x:Bind ViewModel.Saves,Mode=OneWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:InstanceWorldSaveModel">
                                         <Grid ColumnDefinitions="Auto,*" Margin="8">
@@ -239,7 +239,7 @@
                             </ListView>
                             <TextBlock Text="空" VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       Visibility="{x:Bind ViewModel.Saves,Mode=OneWay,Converter={StaticResource NotEmptyToVisibleConverter},ConverterParameter=reversed}" />
+                                       Visibility="{x:Bind ViewModel.Saves.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibleConverter}}" />
                         </Grid>
                     </controls:GroupBox>
                     <controls:GroupBox Margin="5,5,10,5" Grid.Column="1">
@@ -254,7 +254,8 @@
                             <Grid.ChildrenTransitions>
                                 <ContentThemeTransition />
                             </Grid.ChildrenTransitions>
-                            <TextBlock Text="无" />
+                            <TextBlock Text="WIP" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
                         </Grid>
                     </controls:GroupBox>
                 </Grid>

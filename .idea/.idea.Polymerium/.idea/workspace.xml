@@ -24,8 +24,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.App/Data/AccountModel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/zqy02/Projects/Polymerium/src/Polymerium.Core/Helpers/CurseForgeHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.Core/Models/Fabric/Converters/LauncherMetaMainClassConverter.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -239,6 +239,7 @@
       <workItem from="1681028280054" duration="89000" />
       <workItem from="1681028871997" duration="449000" />
       <workItem from="1681481005541" duration="303000" />
+      <workItem from="1681552512078" duration="116000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
@@ -534,7 +535,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681481279874</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="winappsdk更新到1.3,所有poly-file路径统一定义，写了个存档预览">
+      <created>1681552616355</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1681552616355</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -557,7 +565,6 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="#3 实现了登录和刷新，fallback定于未来实现" />
     <MESSAGE value="更新子模块" />
     <MESSAGE value="可以拉取 modrinth modpack 列表，但不能用" />
     <MESSAGE value="添加了 #7 的实现，但还没替换掉现有的 MessageDialog 实现" />
@@ -582,7 +589,8 @@
     <MESSAGE value="#17 完成，但索引不够完善。#12 仅支持到“查看”，还未做到“更新”部分" />
     <MESSAGE value="新添加的实例会使用展示账号作为默认账号" />
     <MESSAGE value="下载中心对话框乱重做" />
-    <option name="LAST_COMMIT_MESSAGE" value="下载中心对话框乱重做" />
+    <MESSAGE value="winappsdk更新到1.3,所有poly-file路径统一定义，写了个存档预览" />
+    <option name="LAST_COMMIT_MESSAGE" value="winappsdk更新到1.3,所有poly-file路径统一定义，写了个存档预览" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
