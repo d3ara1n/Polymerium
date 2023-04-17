@@ -2,7 +2,12 @@
 
 public class NavigationSearchBarItemModel
 {
-    public NavigationSearchBarItemModel(string caption, string glyph, string? reference = null, string? query = null)
+    public NavigationSearchBarItemModel(
+        string caption,
+        string glyph,
+        string? reference = null,
+        string? query = null
+    )
     {
         Reference = reference;
         Caption = caption;

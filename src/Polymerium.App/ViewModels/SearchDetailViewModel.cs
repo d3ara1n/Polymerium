@@ -32,12 +32,18 @@ public class SearchDetailViewModel : ObservableObject
     private readonly INotificationService _notification;
     private readonly ResolveEngine _resolver;
 
-    public SearchDetailViewModel(ViewModelContext context, MemoryStorage memoryStorage,
-        ConfigurationManager configurationManager, ResolveEngine resolver,
-        INotificationService notification, ImportService importer, IMemoryCache cache,
-        ComponentManager componentManager)
+    public SearchDetailViewModel(
+        ViewModelContext context,
+        MemoryStorage memoryStorage,
+        ConfigurationManager configurationManager,
+        ResolveEngine resolver,
+        INotificationService notification,
+        ImportService importer,
+        IMemoryCache cache,
+        ComponentManager componentManager
+    )
     {
-        Context = context;
+        Instance = context.AssociatedInstance!;
         _memoryStorage = memoryStorage;
         _configurationManager = configurationManager;
         _resolver = resolver;
@@ -47,7 +53,7 @@ public class SearchDetailViewModel : ObservableObject
         _componentManager = componentManager;
     }
 
-    public ViewModelContext Context { get; }
+    public GameInstanceModel Instance { get; }
     public RepositoryAssetMeta? Resource { get; private set; }
 
     public GameInstanceModel? Scope { get; private set; }
@@ -58,59 +64,104 @@ public class SearchDetailViewModel : ObservableObject
         Scope = scope;
     }
 
-    public async Task LoadInfoAsync(Action<string, IEnumerable<SearchCenterResultItemScreenshotModel>> infoCallback,
-        Action<SearchCenterResultItemVersionModel?> versionCallback)
+    public async Task LoadInfoAsync(
+        Action<string, IEnumerable<SearchCenterResultItemScreenshotModel>> infoCallback,
+        Action<SearchCenterResultItemVersionModel?> versionCallback
+    )
     {
         var description = Resource!.Value.Description?.Value ?? string.Empty;
         var screenshots =
-            Resource!.Value.Screenshots?.Value.Select(x =>
-                new SearchCenterResultItemScreenshotModel(x.Item1, x.Item2.AbsoluteUri)) ??
-            Enumerable.Empty<SearchCenterResultItemScreenshotModel>();
+            Resource!.Value.Screenshots?.Value.Select(
+                x => new SearchCenterResultItemScreenshotModel(x.Item1, x.Item2.AbsoluteUri)
+            ) ?? Enumerable.Empty<SearchCenterResultItemScreenshotModel>();
         infoCallback(description, screenshots);
         // 支持的 modloader 和游戏版本应该是 file 的属性，但 modrinth 将其归于 version，这。。。
         var files = Resource!.Value.Repository switch
         {
-            RepositoryLabel.Modrinth => (await ModrinthHelper.GetProjectVersionsAsync(Resource.Value.Id, _cache))
-                .Select(x =>
-                    new SearchCenterResultItemVersionModel(x.Id, x.Name, x.DatePublished, x.Files.Select(y =>
-                        new RepositoryAssetFile
-                        {
-                            FileName = y.Filename,
-                            Sha1 = y.Hashes.Sha1,
-                            Source = y.Url,
-                            SupportedCoreVersions = x.GameVersions,
-                            SupportedModLoaders = x.Loaders
-                                .Where(y => ModrinthHelper.MODLOADERS_MAPPINGS.ContainsKey(y))
-                                .Select(y =>
-                                    _componentManager.ToFriendlyName(ModrinthHelper.MODLOADERS_MAPPINGS[y]) ??
-                                    "unknown_loader")
-                        }).First(), ModrinthResolver.MakeResourceUrl(Resource.Value.Type, Resource.Value.Id, x.Id))),
-            RepositoryLabel.CurseForge => (await CurseForgeHelper.GetModFilesAsync(uint.Parse(Resource.Value.Id),
-                    _cache))
-                .Select(x => new SearchCenterResultItemVersionModel(x.Id.ToString(), x.DisplayName, x.FileDate,
-                    new RepositoryAssetFile
-                    {
-                        FileName = Resource.Value.Type switch
-                        {
-                            ResourceType.ResourcePack => $"resourcepacks/{x.FileName}",
-                            ResourceType.Mod => $"mods/{x.FileName}",
-                            ResourceType.ShaderPack => $"shaderpacks/{x.FileName}",
-                            ResourceType.Modpack => x.FileName,
-                            _ => throw new NotImplementedException()
-                        },
-                        Sha1 = x.ExtractSha1(),
-                        Source = x.ExtractDownloadUrl(),
-                        SupportedCoreVersions =
-                            x.GameVersions.Where(y => !CurseForgeHelper.MODLOADERS_MAPPINGS.ContainsKey(y)),
-                        SupportedModLoaders = x.GameVersions
-                            .Where(y => CurseForgeHelper.MODLOADERS_MAPPINGS.ContainsKey(y))
-                            .Select(y =>
-                                _componentManager.ToFriendlyName(CurseForgeHelper.MODLOADERS_MAPPINGS[y]) ??
-                                "unknown_loader")
-                    }, CurseForgeResolver.MakeResourceUrl(Resource.Value.Type, Resource.Value.Id, x.Id.ToString()))),
+            RepositoryLabel.Modrinth
+                => (await ModrinthHelper.GetProjectVersionsAsync(Resource.Value.Id, _cache)).Select(
+                    x =>
+                        new SearchCenterResultItemVersionModel(
+                            x.Id,
+                            x.Name,
+                            x.DatePublished,
+                            x.Files
+                                .Select(
+                                    y =>
+                                        new RepositoryAssetFile
+                                        {
+                                            FileName = y.Filename,
+                                            Sha1 = y.Hashes.Sha1,
+                                            Source = y.Url,
+                                            SupportedCoreVersions = x.GameVersions,
+                                            SupportedModLoaders = x.Loaders
+                                                .Where(
+                                                    y =>
+                                                        ModrinthHelper.MODLOADERS_MAPPINGS.ContainsKey(
+                                                            y
+                                                        )
+                                                )
+                                                .Select(
+                                                    y =>
+                                                        _componentManager.ToFriendlyName(
+                                                            ModrinthHelper.MODLOADERS_MAPPINGS[y]
+                                                        ) ?? "unknown_loader"
+                                                )
+                                        }
+                                )
+                                .First(),
+                            ModrinthResolver.MakeResourceUrl(
+                                Resource.Value.Type,
+                                Resource.Value.Id,
+                                x.Id,
+                                Resource.Value.Type
+                            )
+                        )
+                ),
+            RepositoryLabel.CurseForge
+                => (
+                    await CurseForgeHelper.GetModFilesAsync(uint.Parse(Resource.Value.Id), _cache)
+                ).Select(
+                    x =>
+                        new SearchCenterResultItemVersionModel(
+                            x.Id.ToString(),
+                            x.DisplayName,
+                            x.FileDate,
+                            new RepositoryAssetFile
+                            {
+                                FileName = Resource.Value.Type switch
+                                {
+                                    ResourceType.ResourcePack => $"resourcepacks/{x.FileName}",
+                                    ResourceType.Mod => $"mods/{x.FileName}",
+                                    ResourceType.ShaderPack => $"shaderpacks/{x.FileName}",
+                                    ResourceType.Modpack => x.FileName,
+                                    _ => throw new NotImplementedException()
+                                },
+                                Sha1 = x.ExtractSha1(),
+                                Source = x.ExtractDownloadUrl(),
+                                SupportedCoreVersions = x.GameVersions.Where(
+                                    y => !CurseForgeHelper.MODLOADERS_MAPPINGS.ContainsKey(y)
+                                ),
+                                SupportedModLoaders = x.GameVersions
+                                    .Where(y => CurseForgeHelper.MODLOADERS_MAPPINGS.ContainsKey(y))
+                                    .Select(
+                                        y =>
+                                            _componentManager.ToFriendlyName(
+                                                CurseForgeHelper.MODLOADERS_MAPPINGS[y]
+                                            ) ?? "unknown_loader"
+                                    )
+                            },
+                            CurseForgeResolver.MakeResourceUrl(
+                                Resource.Value.Type,
+                                Resource.Value.Id,
+                                x.Id.ToString()
+                            )
+                        )
+                ),
             _ => throw new NotImplementedException()
         };
-        foreach (var file in files) versionCallback(file);
+        foreach (var file in files)
+            versionCallback(file);
         versionCallback(null);
     }
 
@@ -121,21 +172,27 @@ public class SearchDetailViewModel : ObservableObject
 
     public void InstallAsset(GameInstanceModel instance, SearchCenterResultItemVersionModel version)
     {
-        instance.Attachments.Add(new Attachment
-        {
-            Source = version.ResourceUrl,
-            From = null
-        });
-        _notification.Enqueue("添加资产成功", $"对 {Resource!.Value.Name} 的引用被添加到 {instance.Name}", InfoBarSeverity.Success);
+        instance.Attachments.Add(new Attachment { Source = version.ResourceUrl, From = null });
+        _notification.Enqueue(
+            "添加资产成功",
+            $"对 {Resource!.Value.Name} 的引用被添加到 {instance.Name}",
+            InfoBarSeverity.Success
+        );
     }
 
     public void InstallAsset(GameInstance instance, SearchCenterResultItemVersionModel version)
     {
-        InstallAsset(new GameInstanceModel(instance, _configurationManager.Current.GameGlobals), version);
+        InstallAsset(
+            new GameInstanceModel(instance, _configurationManager.Current.GameGlobals),
+            version
+        );
     }
 
-    public async Task InstallModpackAsync(SearchCenterResultItemVersionModel version, Action<double?, bool> report,
-        CancellationToken token = default)
+    public async Task InstallModpackAsync(
+        SearchCenterResultItemVersionModel version,
+        Action<double?, bool> report,
+        CancellationToken token = default
+    )
     {
         var url = version.ResourceUrl;
         var resolveResult = await _resolver.ResolveToFileAsync(url, new ResolverContext());
@@ -148,7 +205,10 @@ public class SearchDetailViewModel : ObservableObject
             using var client = new HttpClient();
             var response = await client.GetAsync(file.Source, token);
             ulong? totalSize = null;
-            if (response.Content.Headers.ContentLength.HasValue && response.Content.Headers.ContentLength.Value > 0)
+            if (
+                response.Content.Headers.ContentLength.HasValue
+                && response.Content.Headers.ContentLength.Value > 0
+            )
                 totalSize = (ulong)response.Content.Headers.ContentLength.Value;
             using var stream = await response.Content.ReadAsStreamAsync(token);
             var writer = new FileStream(tmpFile, FileMode.Create, FileAccess.Write);
@@ -182,10 +242,7 @@ public class SearchDetailViewModel : ObservableObject
                 var attachments = importResult.Value.Instance.Metadata.Attachments;
                 for (var i = 0; i < attachments.Count; i++)
                 {
-                    attachments[i] = attachments[i] with
-                    {
-                        From = url
-                    };
+                    attachments[i] = attachments[i] with { From = url };
                 }
                 if (postError.HasValue)
                     EndedError($"添加导入的实例失败: {postError}");

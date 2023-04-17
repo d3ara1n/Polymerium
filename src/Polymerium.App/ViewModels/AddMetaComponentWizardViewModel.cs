@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions.Meta;
+using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Core.Components;
 using Polymerium.Core.Models.BmclApi.Forge;
@@ -36,12 +37,12 @@ public class AddMetaComponentWizardViewModel : ObservableObject
         IMemoryCache cache
     )
     {
-        Context = context;
+        Instance = context.AssociatedInstance!;
         _componentManager = componentManager;
         _cache = cache;
         coreVersion =
-            Context.AssociatedInstance?.Components.Any(x => x.Identity == ComponentMeta.MINECRAFT) == true
-                ? Context.AssociatedInstance.Components
+            Instance.Components.Any(x => x.Identity == ComponentMeta.MINECRAFT)
+                ? Instance.Components
                     .First(x => x.Identity == ComponentMeta.MINECRAFT)
                     .Version
                 : null;
@@ -56,7 +57,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
 
     public IRelayCommand AddComponentCommand { get; }
     public ICommand CancelCommand { get; }
-    public ViewModelContext Context { get; }
+    public GameInstanceModel Instance { get; }
     public IEnumerable<ComponentMeta> Metas { get; }
 
     public IEnumerable<string> Versions
@@ -90,7 +91,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     {
         var identity = SelectedMeta!.Identity;
         var version = SelectedVersion;
-        Context.AssociatedInstance?.Components.Add(
+        Instance.Components.Add(
             new Component { Identity = identity, Version = version! }
         );
         DismissHandler?.Invoke();
@@ -104,7 +105,9 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     public async Task LoadVersionsAsync(string identity, Action<IEnumerable<string>> callback)
     {
         var result = await _cache.GetOrCreateAsync<IEnumerable<string>>(
-            identity == ComponentMeta.FORGE ? $"versions:{identity}/{coreVersion}" : $"versions:{identity}",
+            identity == ComponentMeta.FORGE
+                ? $"versions:{identity}/{coreVersion}"
+                : $"versions:{identity}",
             identity switch
             {
                 ComponentMeta.MINECRAFT => LoadMinecraftVersionsAsync,

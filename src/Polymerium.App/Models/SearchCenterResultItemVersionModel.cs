@@ -5,8 +5,13 @@ namespace Polymerium.App.Models;
 
 public class SearchCenterResultItemVersionModel
 {
-    public SearchCenterResultItemVersionModel(string id, string display, DateTimeOffset releaseDateTime,
-        RepositoryAssetFile file, Uri resourceUrl)
+    public SearchCenterResultItemVersionModel(
+        string id,
+        string display,
+        DateTimeOffset releaseDateTime,
+        RepositoryAssetFile file,
+        Uri resourceUrl
+    )
     {
         Id = id;
         Display = display;

@@ -41,7 +41,6 @@ public class CompleteAttachmentsStage : StageBase
 
     public override string StageName => "补全实例元数据中的附件";
 
-
     public override async Task<Option<StageBase>> StartAsync()
     {
         var attachments = _polylock.Attachments;
@@ -68,7 +67,9 @@ public class CompleteAttachmentsStage : StageBase
             }
             else
             {
-                var pooled = new Uri(ConstPath.CACHE_OBJECTS_FILE.Replace("{0}", attachment.CachedObjectPath));
+                var pooled = new Uri(
+                    ConstPath.CACHE_OBJECTS_FILE.Replace("{0}", attachment.CachedObjectPath)
+                );
                 // 可再生资源，可再生资源被视作只读资源
                 if (!await _fileBase.VerifyHashAsync(pooled, attachment.Sha1, _sha1))
                 {
@@ -93,13 +94,13 @@ public class CompleteAttachmentsStage : StageBase
         _downloader.Enqueue(group);
         if (group.Wait())
         {
-            var deployment = merge.Select(x => new RenewableAssetState
-            {
-                Source = x.Item2,
-                Target = x.Item1.Target
-            });
+            var deployment = merge.Select(
+                x => new RenewableAssetState { Source = x.Item2, Target = x.Item1.Target }
+            );
             var error = _assetManager.DeployRenewableAssets(_instance, deployment);
-            return error.HasValue ? Error("部署最终可再生资源出错: 即将部署的文件路径被另一个的文件占用。没有更详细信息，因为传递不出来更多参数Orz") : Finish();
+            return error.HasValue
+                ? Error("部署最终可再生资源出错: 即将部署的文件路径被另一个的文件占用。没有更详细信息，因为传递不出来更多参数Orz")
+                : Finish();
         }
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }

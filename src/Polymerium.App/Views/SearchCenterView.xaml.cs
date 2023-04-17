@@ -12,9 +12,12 @@ namespace Polymerium.App.Views;
 public sealed partial class SearchCenterView : Page
 {
     // Using a DependencyProperty as the backing store for IsDataLoading.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsDataLoadingProperty =
-        DependencyProperty.Register(nameof(IsDataLoading), typeof(bool), typeof(SearchCenterView),
-            new PropertyMetadata(false));
+    public static readonly DependencyProperty IsDataLoadingProperty = DependencyProperty.Register(
+        nameof(IsDataLoading),
+        typeof(bool),
+        typeof(SearchCenterView),
+        new PropertyMetadata(false)
+    );
 
     public SearchCenterView()
     {
@@ -23,7 +26,6 @@ public sealed partial class SearchCenterView : Page
     }
 
     public SearchCenterViewModel ViewModel { get; }
-
 
     public bool IsDataLoading
     {
@@ -37,12 +39,13 @@ public sealed partial class SearchCenterView : Page
         {
             var arguments = (SearchCenterNavigationArguments)e.Parameter;
             SearchBox.Text = arguments.Query;
-            var repository =
-                ViewModel.Repositories.FirstOrDefault(x =>
-                    arguments.Repository == null || x.Label == arguments.Repository);
+            var repository = ViewModel.Repositories.FirstOrDefault(
+                x => arguments.Repository == null || x.Label == arguments.Repository
+            );
             if (repository != null)
             {
-                if (!arguments.InstanceScopeOverride) ViewModel.InstanceScope = ViewModel.Context.AssociatedInstance;
+                if (!arguments.InstanceScopeOverride)
+                    ViewModel.InstanceScope = ViewModel.Instance;
                 ViewModel.SelectedRepository = repository;
                 var found = true;
                 if (arguments.Type != null)
@@ -54,18 +57,21 @@ public sealed partial class SearchCenterView : Page
                         found = false;
                 }
 
-                if (found && arguments.SearchImmediately) QuerySubmitted(arguments.Query);
+                if (found && arguments.SearchImmediately)
+                    QuerySubmitted(arguments.Query);
             }
         }
         else
         {
-            ViewModel.InstanceScope = ViewModel.Context.AssociatedInstance;
+            ViewModel.InstanceScope = ViewModel.Instance;
             ViewModel.SelectedRepository = ViewModel.Repositories.First();
         }
     }
 
-
-    private void SearchBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    private void SearchBox_OnQuerySubmitted(
+        AutoSuggestBox sender,
+        AutoSuggestBoxQuerySubmittedEventArgs args
+    )
     {
         QuerySubmitted(args.QueryText);
     }
@@ -75,20 +81,29 @@ public sealed partial class SearchCenterView : Page
         if (ViewModel.SelectedResourceType.HasValue)
         {
             var type = ViewModel.SelectedResourceType.Value;
-            ResultList.ItemsSource =
-                new IncrementalLoadingCollection<IncrementalFactorySource<SearchCenterResultItemModel>,
-                    SearchCenterResultItemModel>(new IncrementalFactorySource<SearchCenterResultItemModel>(
-                        async (offset, limit, token) =>
-                        {
-                            IsDataLoading = true;
-                            var results = await ViewModel.QueryAsync(query, type, offset, limit, token);
-                            IsDataLoading = false;
-                            return results;
-                        }
-                    ), 10,
-                    onEndLoading: () =>
-                        DispatcherQueue.TryEnqueue(() => NoResultLabel.Visibility =
-                            ResultList.Items.Count > 0 ? Visibility.Collapsed : Visibility.Visible));
+            ResultList.ItemsSource = new IncrementalLoadingCollection<
+                IncrementalFactorySource<SearchCenterResultItemModel>,
+                SearchCenterResultItemModel
+            >(
+                new IncrementalFactorySource<SearchCenterResultItemModel>(
+                    async (offset, limit, token) =>
+                    {
+                        IsDataLoading = true;
+                        var results = await ViewModel.QueryAsync(query, type, offset, limit, token);
+                        IsDataLoading = false;
+                        return results;
+                    }
+                ),
+                10,
+                onEndLoading: () =>
+                    DispatcherQueue.TryEnqueue(
+                        () =>
+                            NoResultLabel.Visibility =
+                                ResultList.Items.Count > 0
+                                    ? Visibility.Collapsed
+                                    : Visibility.Visible
+                    )
+            );
         }
     }
 

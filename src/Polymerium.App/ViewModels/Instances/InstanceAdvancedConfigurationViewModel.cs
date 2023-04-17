@@ -15,14 +15,12 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
     private readonly IFileBaseService _fileBase;
     private readonly InstanceManager _instanceManager;
     private readonly ILogger _logger;
-    private readonly NavigationService _navigation;
     private readonly INotificationService _notification;
 
     public InstanceAdvancedConfigurationViewModel(
         ViewModelContext context,
         InstanceManager instanceManager,
         IFileBaseService fileBase,
-        NavigationService navigation,
         ConfigurationManager configurationManager,
         INotificationService notification,
         ILogger<InstanceAdvancedConfigurationViewModel> logger
@@ -31,7 +29,6 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         Context = context;
         _instanceManager = instanceManager;
         _fileBase = fileBase;
-        _navigation = navigation;
         _logger = logger;
         _configurationManager = configurationManager;
         _notification = notification;
@@ -45,18 +42,23 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
     {
         var result = _instanceManager.RenameInstanceSafe(Context.AssociatedInstance!.Inner, name);
 
-
-        Context.AssociatedInstance =
-            new GameInstanceModel(Context.AssociatedInstance!.Inner, _configurationManager.Current.GameGlobals);
+        Context.AssociatedInstance = new GameInstanceModel(
+            Context.AssociatedInstance!.Inner,
+            _configurationManager.Current.GameGlobals
+        );
 
         return result;
     }
 
     public bool DeleteInstance()
     {
-        var folderDir = new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id));
+        var folderDir = new Uri(
+            ConstPath.INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id)
+        );
         var folderPath = _fileBase.Locate(folderDir);
-        var localDir = new Uri(ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id));
+        var localDir = new Uri(
+            ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id)
+        );
         var localPath = _fileBase.Locate(localDir);
         try
         {
@@ -76,7 +78,9 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
 
     public bool ResetInstance()
     {
-        var folderDir = new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id));
+        var folderDir = new Uri(
+            ConstPath.INSTANCE_BASE.Replace("{0}", Context.AssociatedInstance!.Id)
+        );
         var folderPath = _fileBase.Locate(folderDir);
         try
         {
@@ -91,7 +95,11 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         }
     }
 
-    public void PopNotification(string caption, string message, InfoBarSeverity severity = InfoBarSeverity.Success)
+    public void PopNotification(
+        string caption,
+        string message,
+        InfoBarSeverity severity = InfoBarSeverity.Success
+    )
     {
         _notification.Enqueue(caption, message, severity);
     }

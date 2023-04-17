@@ -10,7 +10,7 @@ public class InstanceConfigurationViewModel : ObservableObject
 {
     public InstanceConfigurationViewModel(ViewModelContext context)
     {
-        Context = context;
+        Instance = context.AssociatedInstance!;
         Pages = new ObservableCollection<InstanceConfigurationPageModel>
         {
             new(
@@ -31,7 +31,7 @@ public class InstanceConfigurationViewModel : ObservableObject
         };
     }
 
-    public ViewModelContext Context { get; }
+    public GameInstanceModel Instance { get; }
 
     public ObservableCollection<InstanceConfigurationPageModel> Pages { get; set; }
 }

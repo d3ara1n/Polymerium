@@ -25,17 +25,20 @@ public class SearchCenterViewModel : ObservableObject
 
     private ResourceType? selectedResourceType;
 
-    public SearchCenterViewModel(ViewModelContext context, IEnumerable<IResourceRepository> repositories,
-        IOverlayService overlayService)
+    public SearchCenterViewModel(
+        ViewModelContext context,
+        IEnumerable<IResourceRepository> repositories,
+        IOverlayService overlayService
+    )
     {
-        Context = context;
+        Instance = context.AssociatedInstance!;
         _overlayService = overlayService;
         Repositories = repositories;
         SupportedResources = new ObservableCollection<ResourceType>();
         ClearScopeCommand = new RelayCommand(ClearScope);
     }
 
-    public ViewModelContext Context { get; set; }
+    public GameInstanceModel Instance { get; set; }
 
     public IEnumerable<IResourceRepository> Repositories { get; }
     public ICommand ClearScopeCommand { get; }
@@ -58,7 +61,8 @@ public class SearchCenterViewModel : ObservableObject
         get => selectedRepository;
         set
         {
-            if (SetProperty(ref selectedRepository, value)) UpdateSupportedResources();
+            if (SetProperty(ref selectedRepository, value))
+                UpdateSupportedResources();
         }
     }
 
@@ -71,27 +75,61 @@ public class SearchCenterViewModel : ObservableObject
         foreach (uint i in Enum.GetValues(typeof(ResourceType)))
         {
             var type = (ResourceType)i;
-            if (type != ResourceType.None && (supported & type) == type &&
-                (InstanceScope == null || type != ResourceType.Modpack)) SupportedResources.Add(type);
+            if (
+                type != ResourceType.None
+                && (supported & type) == type
+                && (InstanceScope == null || type != ResourceType.Modpack)
+            )
+                SupportedResources.Add(type);
         }
 
-        SelectedResourceType = SupportedResources.Any(x => x == old) ? old : SupportedResources.First();
+        SelectedResourceType = SupportedResources.Any(x => x == old)
+            ? old
+            : SupportedResources.First();
     }
 
-    public async Task<IEnumerable<SearchCenterResultItemModel>> QueryAsync(string query, ResourceType type,
-        uint offset = 0, uint limit = 10, CancellationToken token = default)
+    public async Task<IEnumerable<SearchCenterResultItemModel>> QueryAsync(
+        string query,
+        ResourceType type,
+        uint offset = 0,
+        uint limit = 10,
+        CancellationToken token = default
+    )
     {
         var repository = SelectedRepository;
-        if (repository == null) return Enumerable.Empty<SearchCenterResultItemModel>();
+        if (repository == null)
+            return Enumerable.Empty<SearchCenterResultItemModel>();
         string? version = null;
         string? modLoader = null;
         if (InstanceScope?.Components.Any(x => ComponentMeta.MINECRAFT != x.Identity) == true)
-            modLoader = InstanceScope.Components.First(x => ComponentMeta.MINECRAFT != x.Identity).Identity;
+            modLoader = InstanceScope.Components
+                .First(x => ComponentMeta.MINECRAFT != x.Identity)
+                .Identity;
         if (InstanceScope?.Components.Any(x => ComponentMeta.MINECRAFT == x.Identity) == true)
-            version = InstanceScope.Components.First(x => ComponentMeta.MINECRAFT == x.Identity).Version;
-        var results = await repository.SearchProjectsAsync(query, type, modLoader, version, offset, limit, token);
-        return results.Select(x =>
-            new SearchCenterResultItemModel(x.Name, x.IconSource, x.Author, x.Summary, ResourceType.Modpack, x));
+            version = InstanceScope.Components
+                .First(x => ComponentMeta.MINECRAFT == x.Identity)
+                .Version;
+        var results = await repository.SearchProjectsAsync(
+            query,
+            type,
+            modLoader,
+            version,
+            offset,
+            limit,
+            token
+        );
+        return results.Select(
+            x =>
+                new SearchCenterResultItemModel(
+                    x.Name,
+                    x.IconSource,
+                    x.Author,
+                    x.Downloads,
+                    x.Summary,
+                    type,
+                    x
+                )
+        );
     }
 
     public void ShowDetailDialog(SearchCenterResultItemModel model)

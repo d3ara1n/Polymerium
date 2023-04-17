@@ -242,7 +242,7 @@
                                        Visibility="{x:Bind ViewModel.Saves.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibleConverter}}" />
                         </Grid>
                     </controls:GroupBox>
-                    <controls:GroupBox Margin="5,5,10,5" Grid.Column="1">
+                    <controls:GroupBox Margin="5,5,10,5" Grid.Column="1" Visibility="Collapsed">
                         <controls:GroupBox.Header>
                             <Grid>
                                 <TextBlock Text="服务器" Style="{StaticResource SubtitleTextBlockStyle}" />

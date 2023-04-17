@@ -25,10 +25,14 @@ public class InstanceAssetViewModel : ObservableObject
     private readonly AssetManager _gameManager;
     private readonly INotificationService _notification;
 
-    public InstanceAssetViewModel(ViewModelContext context, AssetManager gameManager, INotificationService notification,
-        IFileBaseService fileBase)
+    public InstanceAssetViewModel(
+        ViewModelContext context,
+        AssetManager gameManager,
+        INotificationService notification,
+        IFileBaseService fileBase
+    )
     {
-        Context = context;
+        Instance = context.AssociatedInstance!;
         _notification = notification;
         _gameManager = gameManager;
         _fileBase = fileBase;
@@ -37,7 +41,7 @@ public class InstanceAssetViewModel : ObservableObject
         Assets = new ObservableCollection<InstanceAssetModel>();
     }
 
-    public ViewModelContext Context { get; }
+    public GameInstanceModel Instance { get; }
     public ObservableCollection<InstanceAssetModel> Assets { get; }
 
     public ResourceType? Type { get; set; }
@@ -45,24 +49,37 @@ public class InstanceAssetViewModel : ObservableObject
     public ICommand OpenInExplorerCommand { get; }
     public ICommand DeleteAssetCommand { get; }
 
-    public async Task LoadAssetsAsync(IEnumerable<AssetRaw> assets, Action<InstanceAssetModel?> callback,
-        CancellationToken token = default)
+    public async Task LoadAssetsAsync(
+        IEnumerable<AssetRaw> assets,
+        Action<InstanceAssetModel?> callback,
+        CancellationToken token = default
+    )
     {
         var tasks = new List<Task>();
-        foreach (var raw in assets) tasks.Add(LoadAssetAsync(raw, callback, token));
+        foreach (var raw in assets)
+            tasks.Add(LoadAssetAsync(raw, callback, token));
         await Task.WhenAll(tasks);
         callback(null);
     }
 
-    private async Task LoadAssetAsync(AssetRaw raw, Action<InstanceAssetModel?> callback,
-        CancellationToken token = default)
+    private async Task LoadAssetAsync(
+        AssetRaw raw,
+        Action<InstanceAssetModel?> callback,
+        CancellationToken token = default
+    )
     {
-        if (token.IsCancellationRequested) return;
+        if (token.IsCancellationRequested)
+            return;
         var result = await _gameManager.ExtractAssetInfoAsync(raw, token);
         if (result.HasValue)
         {
-            var model = new InstanceAssetModel(result.Value.Type, result.Value.FileName, result.Value.Name,
-                result.Value.Version, result.Value.Description);
+            var model = new InstanceAssetModel(
+                result.Value.Type,
+                result.Value.FileName,
+                result.Value.Name,
+                result.Value.Version,
+                result.Value.Description
+            );
             callback(model);
         }
     }
@@ -70,17 +87,26 @@ public class InstanceAssetViewModel : ObservableObject
     public async Task FileAccepted(string fileName, Action<AssetRaw> callback)
     {
         var url = new Uri(fileName);
-        var product = await _gameManager.InstallAssetAsync(Context.AssociatedInstance!.Inner, Type!.Value, url);
+        var product = await _gameManager.InstallAssetAsync(
+            Instance.Inner,
+            Type!.Value,
+            url
+        );
         if (product.HasValue)
         {
-            callback(new AssetRaw
-            {
-                FileName = url,
-                Type = Type!.Value
-            });
-            _notification.Enqueue("添加成功", $"{product.Value.Name} 作为 {Type!.Value} 被添加", InfoBarSeverity.Success);
-            var model = new InstanceAssetModel(Type!.Value, url, product.Value.Name, product.Value.Version,
-                product.Value.Description);
+            callback(new AssetRaw { FileName = url, Type = Type!.Value });
+            _notification.Enqueue(
+                "添加成功",
+                $"{product.Value.Name} 作为 {Type!.Value} 被添加",
+                InfoBarSeverity.Success
+            );
+            var model = new InstanceAssetModel(
+                Type!.Value,
+                url,
+                product.Value.Name,
+                product.Value.Version,
+                product.Value.Description
+            );
             Assets.Add(model);
         }
         else
@@ -91,14 +117,19 @@ public class InstanceAssetViewModel : ObservableObject
 
     public void OpenInExplorer(InstanceAssetModel? model)
     {
-        var path = model != null
-            ? _fileBase.Locate(model.Url)
-            : _fileBase.Locate(_gameManager.GetAssetDirectory(Context.AssociatedInstance!.Inner, Type!.Value));
-        Process.Start(new ProcessStartInfo("explorer.exe")
-        {
-            UseShellExecute = true,
-            Arguments = Directory.Exists(path) ? path : $"/select, {path}"
-        });
+        var path =
+            model != null
+                ? _fileBase.Locate(model.Url)
+                : _fileBase.Locate(
+                    _gameManager.GetAssetDirectory(Instance.Inner, Type!.Value)
+                );
+        Process.Start(
+            new ProcessStartInfo("explorer.exe")
+            {
+                UseShellExecute = true,
+                Arguments = Directory.Exists(path) ? path : $"/select, {path}"
+            }
+        );
     }
 
     public void DeleteAsset(InstanceAssetModel? model)

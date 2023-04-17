@@ -21,15 +21,15 @@
                 <Grid ColumnDefinitions="Auto,*">
                     <toolkit:ImageEx Width="60" Height="60" Margin="0,0,5,10"
                                      CornerRadius="{ThemeResource ControlCornerRadius}"
-                                     Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile,Mode=OneWay,FallbackValue={x:Null}}"
+                                     Source="{x:Bind ViewModel.Instance.ThumbnailFile,Mode=OneWay,FallbackValue={x:Null}}"
                                      PlaceholderStretch="UniformToFill"
                                      PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png" />
                     <StackPanel VerticalAlignment="Center" Grid.Column="1" Margin="5,0,0,10">
                         <TextBlock
-                            Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay,FallbackValue=(未定义)}"
+                            Text="{x:Bind ViewModel.Instance.Name,Mode=OneWay,FallbackValue=(未定义)}"
                             TextWrapping="WrapWholeWords" />
                         <TextBlock
-                            Text="{x:Bind ViewModel.Context.AssociatedInstance.Author,Mode=OneWay,FallbackValue=(未标注)}"
+                            Text="{x:Bind ViewModel.Instance.Author,Mode=OneWay,FallbackValue=(未标注)}"
                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                     </StackPanel>
                 </Grid>

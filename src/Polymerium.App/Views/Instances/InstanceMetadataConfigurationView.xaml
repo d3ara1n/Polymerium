@@ -20,7 +20,7 @@
     <ScrollViewer>
         <StackPanel Spacing="5" Margin="5,0,10,10">
             <controls:GroupBox x:Name="ReferenceBox" Padding="0" Loaded="ReferenceBox_Loaded"
-                               Visibility="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
+                               Visibility="{x:Bind ViewModel.Instance.IsTagged,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
                         <TextBlock Text="标签" Style="{StaticResource SubtitleTextBlockStyle}" />
@@ -35,7 +35,7 @@
                         <Grid ColumnDefinitions="Auto,*">
                             <ui:ImageEx Width="64" Height="64"
                                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
-                                        Source="{x:Bind ViewModel.Context.AssociatedInstance.ThumbnailFile}"
+                                        Source="{x:Bind ViewModel.Instance.ThumbnailFile}"
                                         Margin="0,0,15,0" CornerRadius="5" />
                             <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
                                 <ProgressRing IsIndeterminate="True" VerticalAlignment="Center"
@@ -48,17 +48,15 @@
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Spacing="5">
-                                    <Button Content="更新" HorizontalAlignment="Right" />
-                                    <ComboBox SelectedIndex="0">
-                                        <ComboBoxItem Content="WIP" />
-                                    </ComboBox>
+                                    <Button Content="检查更新" HorizontalAlignment="Right" Visibility="Collapsed"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>
                         <TextBlock
-                            Text="该实例引用自一个整合包（具有标签，意味着实例元数据是上锁的），在修改实例部分元数据之前，需要移除引用信息（该过程称为解锁）。"
+                            Text="{x:Bind ModpackReference.Summary,Mode=OneWay}"
                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                             TextWrapping="WrapWholeWords" />
+                        <InfoBar IsOpen="True" Title="元数据已锁定" Message="该实例引用自一个整合包，在修改实例部分元数据之前，需要移除引用信息（解锁）。" Severity="Warning"/>
                     </StackPanel>
                 </Grid>
             </controls:GroupBox>
@@ -68,7 +66,7 @@
                         <TextBlock Text="组件" Style="{StaticResource SubtitleTextBlockStyle}" />
                         <Button x:Name="AddComponentButton" Content="添加" HorizontalAlignment="Right"
                                 Style="{StaticResource IconButtonStyle}"
-                                IsEnabled="{x:Bind ViewModel.Context.AssociatedInstance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
+                                IsEnabled="{x:Bind ViewModel.Instance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
                                 Command="{x:Bind ViewModel.AddComponentCommand}" />
                     </Grid>
                 </controls:GroupBox.Header>
@@ -141,7 +139,7 @@
                         </StackPanel>
                     </Grid>
                 </controls:GroupBox.Header>
-                <ContentControl
+                <ContentControl HorizontalContentAlignment="Stretch"
                     IsEnabled="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
                     <StackPanel>
                         <ProgressBar IsIndeterminate="True"

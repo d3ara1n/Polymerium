@@ -10,7 +10,8 @@ public class EnumerableToStringConverter : IValueConverter
     {
         return value switch
         {
-            IEnumerable<string> list => string.Join(parameter != null ? parameter.ToString() : ", ", list),
+            IEnumerable<string> list
+                => string.Join(parameter != null ? parameter.ToString() : ", ", list),
             _ => value
         };
     }

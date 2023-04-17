@@ -14,40 +14,64 @@ namespace Polymerium.App.Views.Instances;
 public sealed partial class InstanceMetadataConfigurationView : Page
 {
     // Using a DependencyProperty as the backing store for IsModChecked.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsModCheckedProperty =
-        DependencyProperty.Register(nameof(IsModChecked), typeof(bool), typeof(InstanceMetadataConfigurationView),
-            new PropertyMetadata(true, FilterCheckBoxChanged));
+    public static readonly DependencyProperty IsModCheckedProperty = DependencyProperty.Register(
+        nameof(IsModChecked),
+        typeof(bool),
+        typeof(InstanceMetadataConfigurationView),
+        new PropertyMetadata(true, FilterCheckBoxChanged)
+    );
 
     // Using a DependencyProperty as the backing store for IsModChecked.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsResourcepackCheckedProperty =
-        DependencyProperty.Register(nameof(IsResourcepackChecked), typeof(bool),
-            typeof(InstanceMetadataConfigurationView), new PropertyMetadata(true, FilterCheckBoxChanged));
+        DependencyProperty.Register(
+            nameof(IsResourcepackChecked),
+            typeof(bool),
+            typeof(InstanceMetadataConfigurationView),
+            new PropertyMetadata(true, FilterCheckBoxChanged)
+        );
 
     // Using a DependencyProperty as the backing store for IsModChecked.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsShaderCheckedProperty =
-        DependencyProperty.Register(nameof(IsShaderChecked), typeof(bool), typeof(InstanceMetadataConfigurationView),
-            new PropertyMetadata(true, FilterCheckBoxChanged));
+    public static readonly DependencyProperty IsShaderCheckedProperty = DependencyProperty.Register(
+        nameof(IsShaderChecked),
+        typeof(bool),
+        typeof(InstanceMetadataConfigurationView),
+        new PropertyMetadata(true, FilterCheckBoxChanged)
+    );
 
     // Using a DependencyProperty as the backing store for IsModChecked.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsFileCheckedProperty =
-        DependencyProperty.Register(nameof(IsFileChecked), typeof(bool), typeof(InstanceMetadataConfigurationView),
-            new PropertyMetadata(true, FilterCheckBoxChanged));
+    public static readonly DependencyProperty IsFileCheckedProperty = DependencyProperty.Register(
+        nameof(IsFileChecked),
+        typeof(bool),
+        typeof(InstanceMetadataConfigurationView),
+        new PropertyMetadata(true, FilterCheckBoxChanged)
+    );
 
     // Using a DependencyProperty as the backing store for IsAttachmentBeingParsed.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsAttachmentBeingParsedProperty =
-        DependencyProperty.Register(nameof(IsAttachmentBeingParsed), typeof(bool),
-            typeof(InstanceMetadataConfigurationView), new PropertyMetadata(false));
+        DependencyProperty.Register(
+            nameof(IsAttachmentBeingParsed),
+            typeof(bool),
+            typeof(InstanceMetadataConfigurationView),
+            new PropertyMetadata(false)
+        );
 
     // Using a DependencyProperty as the backing store for IsReferenceBeingParsed.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IsReferenceBeingParsedProperty =
-        DependencyProperty.Register(nameof(IsReferenceBeingParsed), typeof(bool),
-            typeof(InstanceMetadataConfigurationView), new PropertyMetadata(false));
+        DependencyProperty.Register(
+            nameof(IsReferenceBeingParsed),
+            typeof(bool),
+            typeof(InstanceMetadataConfigurationView),
+            new PropertyMetadata(false)
+        );
 
     // Using a DependencyProperty as the backing store for ModpackReference.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty ModpackReferenceProperty =
-        DependencyProperty.Register(nameof(ModpackReference), typeof(InstanceModpackReferenceModel),
-            typeof(InstanceMetadataConfigurationView), new PropertyMetadata(null));
-
+        DependencyProperty.Register(
+            nameof(ModpackReference),
+            typeof(InstanceModpackReferenceModel),
+            typeof(InstanceMetadataConfigurationView),
+            new PropertyMetadata(null)
+        );
 
     private static Func<InstanceAttachmentItemModel, bool>? filter;
 
@@ -59,20 +83,17 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         InitializeComponent();
     }
 
-
     public bool IsAttachmentBeingParsed
     {
         get => (bool)GetValue(IsAttachmentBeingParsedProperty);
         set => SetValue(IsAttachmentBeingParsedProperty, value);
     }
 
-
     public bool IsReferenceBeingParsed
     {
         get => (bool)GetValue(IsReferenceBeingParsedProperty);
         set => SetValue(IsReferenceBeingParsedProperty, value);
     }
-
 
     public InstanceModpackReferenceModel ModpackReference
     {
@@ -104,7 +125,6 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         set => SetValue(IsFileCheckedProperty, value);
     }
 
-
     public InstanceMetadataConfigurationViewModel ViewModel { get; }
 
     private void AddAttachmentHandler(InstanceAttachmentItemModel? model)
@@ -125,7 +145,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
 
     private void ReferenceBox_Loaded(object sender, RoutedEventArgs e)
     {
-        if (ViewModel.Context.AssociatedInstance!.IsTagged)
+        if (ViewModel.Instance.IsTagged)
         {
             IsReferenceBeingParsed = true;
             Task.Run(() => ViewModel.LoadParseReferenceAsync(AddReferenceHandler));
@@ -137,43 +157,61 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         DispatcherQueue.TryEnqueue(() =>
         {
             IsReferenceBeingParsed = false;
-            ModpackReference = model ?? new InstanceModpackReferenceModel("解析失败", "0", "N/A", "0", "N/A");
+            ModpackReference =
+                model ?? new InstanceModpackReferenceModel("解析失败", "0", "N/A", "0", "N/A", "无法找到该引用信息或解析期间网络异常");
         });
     }
 
     private void AttachmentBox_Loaded(object sender, RoutedEventArgs e)
     {
         IsAttachmentBeingParsed = true;
-        Task.Run(() => ViewModel.LoadParseAttachmentsAsync(ViewModel.Context.AssociatedInstance!.Attachments));
+        Task.Run(
+            () =>
+                ViewModel.LoadParseAttachmentsAsync(
+                    ViewModel.Instance.Attachments
+                )
+        );
     }
 
-    private static void FilterCheckBoxChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    private static void FilterCheckBoxChanged(
+        DependencyObject sender,
+        DependencyPropertyChangedEventArgs args
+    )
     {
         var self = (InstanceMetadataConfigurationView)sender;
-        filter = x => x.Type switch
-        {
-            ResourceType.Mod => self.IsModChecked,
-            ResourceType.ResourcePack => self.IsResourcepackChecked,
-            ResourceType.ShaderPack => self.IsShaderChecked,
-            ResourceType.File => self.IsFileChecked,
-            _ => true
-        };
+        filter = x =>
+            x.Type switch
+            {
+                ResourceType.Mod => self.IsModChecked,
+                ResourceType.ResourcePack => self.IsResourcepackChecked,
+                ResourceType.ShaderPack => self.IsShaderChecked,
+                ResourceType.File => self.IsFileChecked,
+                _ => true
+            };
         self.UpdateFilter();
     }
 
-    private void AttachmentSearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    private void AttachmentSearchBox_TextChanged(
+        AutoSuggestBox sender,
+        AutoSuggestBoxTextChangedEventArgs args
+    )
     {
-        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) UpdateFilter();
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            UpdateFilter();
     }
 
     private void UpdateFilter()
     {
         // 变量会被捕获
         AttachmentSource.Filter = x =>
-            (filter?.Invoke((InstanceAttachmentItemModel)x) ?? true) &&
-            (string.IsNullOrEmpty(AttachmentSearchBox.Text) ||
-             ((InstanceAttachmentItemModel)x).Caption.Contains(AttachmentSearchBox.Text,
-                 StringComparison.OrdinalIgnoreCase));
+            (filter?.Invoke((InstanceAttachmentItemModel)x) ?? true)
+            && (
+                string.IsNullOrEmpty(AttachmentSearchBox.Text)
+                || ((InstanceAttachmentItemModel)x).Caption.Contains(
+                    AttachmentSearchBox.Text,
+                    StringComparison.OrdinalIgnoreCase
+                )
+            );
         AttachmentSource.RefreshFilter();
     }
 
@@ -183,10 +221,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         var item = (InstanceAttachmentItemModel)button.DataContext;
         var url = item.Reference;
         if (url != null)
-            Process.Start(new ProcessStartInfo(url.AbsoluteUri)
-            {
-                UseShellExecute = true
-            });
+            Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
     }
 
     private async void UnlockButton_Click(object sender, RoutedEventArgs e)
@@ -197,6 +232,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
             Content = "解锁是一次性的，一旦删除整合包引用信息将失去未来实例自动更新的能力。\n确定要继续吗？"
         };
         var result = await dialog.ShowAsync();
-        if (result == ContentDialogResult.Primary) ViewModel.Unlock();
+        if (result == ContentDialogResult.Primary)
+            ViewModel.Unlock();
     }
 }

@@ -46,20 +46,36 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
         if (Token.IsCancellationRequested)
             return Canceled();
         var versionJson = await GetArchiveJsonAsync<InstallerVersion>(archive, "version.json");
-        var profileJson = await GetArchiveJsonAsync<InstallerProfile>(archive, "install_profile.json");
+        var profileJson = await GetArchiveJsonAsync<InstallerProfile>(
+            archive,
+            "install_profile.json"
+        );
 
         if (versionJson.HasValue && profileJson.HasValue && profileJson.Value.Spec != null)
         {
-            // 1.12 and above 
+            // 1.12 and above
             foreach (var library in versionJson.Value.Libraries)
                 if (library.Downloads.Artifact.Url != null)
-                    Context.AddLibrary(new Library(library.Name, library.Downloads.Artifact.Path,
-                        library.Downloads.Artifact.Sha1, library.Downloads.Artifact.Url));
+                    Context.AddLibrary(
+                        new Library(
+                            library.Name,
+                            library.Downloads.Artifact.Path,
+                            library.Downloads.Artifact.Sha1,
+                            library.Downloads.Artifact.Url
+                        )
+                    );
 
             foreach (var library in profileJson.Value.Libraries)
                 if (library.Downloads.Artifact.Url != null)
-                    Context.AddLibrary(new Library(library.Name, library.Downloads.Artifact.Path,
-                        library.Downloads.Artifact.Sha1, library.Downloads.Artifact.Url, presentInClassPath: false));
+                    Context.AddLibrary(
+                        new Library(
+                            library.Name,
+                            library.Downloads.Artifact.Path,
+                            library.Downloads.Artifact.Sha1,
+                            library.Downloads.Artifact.Url,
+                            presentInClassPath: false
+                        )
+                    );
 
             if (!string.IsNullOrEmpty(versionJson.Value.MinecraftArguments))
                 foreach (var argument in versionJson.Value.MinecraftArguments.Split(' '))
@@ -67,21 +83,34 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
 
             if (versionJson.Value.Arguments.HasValue)
             {
-                foreach (var argument in versionJson.Value.Arguments.Value.Game ?? Enumerable.Empty<string>())
+                foreach (
+                    var argument in versionJson.Value.Arguments.Value.Game
+                        ?? Enumerable.Empty<string>()
+                )
                     Context.AppendGameArgument(argument);
 
-                foreach (var argument in versionJson.Value.Arguments.Value.Jvm ?? Enumerable.Empty<string>())
+                foreach (
+                    var argument in versionJson.Value.Arguments.Value.Jvm
+                        ?? Enumerable.Empty<string>()
+                )
                     Context.AppendJvmArguments(argument);
             }
 
             // add forge jar from archive
-            var libs = archive.Entries.Where(x =>
-                x.FullName.StartsWith("maven/net/minecraftforge/forge") && x.Name.EndsWith(".jar"));
+            var libs = archive.Entries.Where(
+                x =>
+                    x.FullName.StartsWith("maven/net/minecraftforge/forge")
+                    && x.Name.EndsWith(".jar")
+            );
             foreach (var entry in libs)
             {
                 var path = entry.FullName[6..];
-                var local = new Uri(new Uri(ConstPath.LOCAL_INSTANCE_LIBRARIES_DIR.Replace("{0}", Context.Instance.Id)),
-                    path);
+                var local = new Uri(
+                    new Uri(
+                        ConstPath.LOCAL_INSTANCE_LIBRARIES_DIR.Replace("{0}", Context.Instance.Id)
+                    ),
+                    path
+                );
                 var localPath = _fileBase.Locate(local);
                 if (!Directory.Exists(Path.GetDirectoryName(localPath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(localPath)!);
@@ -91,7 +120,11 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
                 Context.AddLibrary(
                     new Library(
                         $"net.minecraft.forge:{(entry.Name.Contains("universal") ? "universal" : "forge")}:{component.Version}",
-                        path, null, local));
+                        path,
+                        null,
+                        local
+                    )
+                );
             }
 
             if (versionJson.Value.MainClass != "net.minecraft.launchwrapper.Launch")
@@ -105,10 +138,15 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
         {
             // below 1.12
             Context.OverrideGameArguments();
-            foreach (var argument in profileJson.Value.VersionInfo!.Value.MinecraftArguments.Split(' '))
+            foreach (
+                var argument in profileJson.Value.VersionInfo!.Value.MinecraftArguments.Split(' ')
+            )
                 Context.AppendGameArgument(argument);
-            foreach (var library in profileJson.Value.VersionInfo!.Value.Libraries.Where(x =>
-                         x.ClientRequired.HasValue && x.ClientRequired.Value))
+            foreach (
+                var library in profileJson.Value.VersionInfo!.Value.Libraries.Where(
+                    x => x.ClientRequired.HasValue && x.ClientRequired.Value
+                )
+            )
             {
                 // 库只给个 name 不给 url = =
                 // 自杀吧
@@ -123,27 +161,46 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
             throw new NotImplementedException();
         }
 
-        Context.AddCrate("library_directory", _fileBase.Locate(new Uri(ConstPath.CACHE_LIBRARIES_DIR[..^1])));
+        Context.AddCrate(
+            "library_directory",
+            _fileBase.Locate(new Uri(ConstPath.CACHE_LIBRARIES_DIR[..^1]))
+        );
         return Finished();
     }
 
-    private void GoAheadWithWrapper(string installerUrl, string coreVersion, string componentVersion)
+    private void GoAheadWithWrapper(
+        string installerUrl,
+        string coreVersion,
+        string componentVersion
+    )
     {
-        Context.AddLibrary(new Library($"net.minecraftforge:installer:{componentVersion}",
-            $"net/minecraftforge/forge/{coreVersion}-{componentVersion}/forge-{coreVersion}-{componentVersion}-installer.jar",
-            null,
-            new Uri(installerUrl), presentInClassPath: false));
-        Context.AddLibrary(new Library("io.github.zekerzhayard:ForgeWrapper:1.5.5",
-            "io/github/zekerzhayard/ForgeWrapper/1.5.5/ForgeWrapper-1.5.5.jar",
-            "4ee5f25cc9c7efbf54aff4c695da1054c1a1d7a3",
-            new Uri(
-                "https://github.com/ZekerZhayard/ForgeWrapper/releases/download/1.5.5/ForgeWrapper-1.5.5.jar")));
+        Context.AddLibrary(
+            new Library(
+                $"net.minecraftforge:installer:{componentVersion}",
+                $"net/minecraftforge/forge/{coreVersion}-{componentVersion}/forge-{coreVersion}-{componentVersion}-installer.jar",
+                null,
+                new Uri(installerUrl),
+                presentInClassPath: false
+            )
+        );
+        Context.AddLibrary(
+            new Library(
+                "io.github.zekerzhayard:ForgeWrapper:1.5.5",
+                "io/github/zekerzhayard/ForgeWrapper/1.5.5/ForgeWrapper-1.5.5.jar",
+                "4ee5f25cc9c7efbf54aff4c695da1054c1a1d7a3",
+                new Uri(
+                    "https://github.com/ZekerZhayard/ForgeWrapper/releases/download/1.5.5/ForgeWrapper-1.5.5.jar"
+                )
+            )
+        );
 
         Context.AppendJvmArguments("-Dforgewrapper.librariesDir=${library_directory}");
         Context.AppendJvmArguments(
-            $"-Dforgewrapper.installer=${{library_directory}}\\net\\minecraftforge\\forge\\{coreVersion}-{componentVersion}\\forge-{coreVersion}-{componentVersion}-installer.jar");
+            $"-Dforgewrapper.installer=${{library_directory}}\\net\\minecraftforge\\forge\\{coreVersion}-{componentVersion}\\forge-{coreVersion}-{componentVersion}-installer.jar"
+        );
         Context.AppendJvmArguments(
-            $"-Dforgewrapper.minecraft=${{library_directory}}\\net\\minecraft\\minecraft\\{coreVersion}\\minecraft-{coreVersion}.jar");
+            $"-Dforgewrapper.minecraft=${{library_directory}}\\net\\minecraft\\minecraft\\{coreVersion}\\minecraft-{coreVersion}.jar"
+        );
 
         Context.SetMainClass("io.github.zekerzhayard.forgewrapper.installer.Main");
     }

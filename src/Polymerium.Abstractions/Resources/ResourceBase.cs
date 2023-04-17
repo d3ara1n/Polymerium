@@ -4,10 +4,18 @@ namespace Polymerium.Abstractions.Resources;
 
 public abstract record ResourceBase
 {
-    protected ResourceBase(string id, string name, string version, string author, Uri? iconSource, Uri? reference,
+    protected ResourceBase(
+        string id,
+        string name,
+        string version,
+        string author,
+        Uri? iconSource,
+        Uri? reference,
         string summary,
         string versionId,
-        Uri file)
+        Uri? update,
+        Uri? file
+    )
     {
         Id = id;
         Name = name;
@@ -17,6 +25,7 @@ public abstract record ResourceBase
         Reference = reference;
         Summary = summary;
         VersionId = versionId;
+        Update = update;
         File = file;
     }
 
@@ -32,5 +41,6 @@ public abstract record ResourceBase
     // 三元组不可以为空，因为所有资源必须对应到可下载的文件
     public string Id { get; set; }
     public string VersionId { get; set; }
-    public Uri File { get; set; }
+    public Uri? Update { get; set; }
+    public Uri? File { get; set; }
 }

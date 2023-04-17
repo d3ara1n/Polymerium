@@ -19,9 +19,20 @@ public class LocalFileResolver : ResourceResolverBase
         var name = Path.GetFileNameWithoutExtension(path);
         return Context.Instance != null
             ? Ok(
-                new File(name, name, name, string.Empty, null, null, string.Empty, fileName, path, null,
-                    new Uri(new Uri(ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", Context.Instance.Id)), path)),
-                ResourceType.File)
+                new File(
+                    name,
+                    name,
+                    name,
+                    fileName,
+                    path,
+                    null,
+                    new Uri(
+                        new Uri(ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", Context.Instance.Id)),
+                        path
+                    )
+                ),
+                ResourceType.File
+            )
             : Err(ResolveResultError.NotFound);
     }
 }

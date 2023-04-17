@@ -14,22 +14,30 @@ namespace Polymerium.App.Views.AddAccountWizards;
 public sealed partial class MicrosoftAccountAuthView : Page
 {
     // Using a DependencyProperty as the backing store for DeviceCode.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty UserCodeProperty =
-        DependencyProperty.Register(nameof(UserCode), typeof(string), typeof(MicrosoftAccountAuthView),
-            new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty UserCodeProperty = DependencyProperty.Register(
+        nameof(UserCode),
+        typeof(string),
+        typeof(MicrosoftAccountAuthView),
+        new PropertyMetadata(string.Empty)
+    );
 
     // Using a DependencyProperty as the backing store for VerificationUrl.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty VerificationUrlProperty =
-        DependencyProperty.Register(nameof(VerificationUrl), typeof(string), typeof(MicrosoftAccountAuthView),
-            new PropertyMetadata(null));
+    public static readonly DependencyProperty VerificationUrlProperty = DependencyProperty.Register(
+        nameof(VerificationUrl),
+        typeof(string),
+        typeof(MicrosoftAccountAuthView),
+        new PropertyMetadata(null)
+    );
 
     // Using a DependencyProperty as the backing store for IsPending.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsPendingProperty =
-        DependencyProperty.Register("IsPending", typeof(bool), typeof(MicrosoftAccountAuthView),
-            new PropertyMetadata(false));
+    public static readonly DependencyProperty IsPendingProperty = DependencyProperty.Register(
+        "IsPending",
+        typeof(bool),
+        typeof(MicrosoftAccountAuthView),
+        new PropertyMetadata(false)
+    );
 
     private AddAccountWizardStateHandler? handler;
-
 
     public MicrosoftAccountAuthView()
     {
@@ -43,13 +51,11 @@ public sealed partial class MicrosoftAccountAuthView : Page
         set => SetValue(UserCodeProperty, value);
     }
 
-
     public string? VerificationUrl
     {
         get => (string?)GetValue(VerificationUrlProperty);
         set => SetValue(VerificationUrlProperty, value);
     }
-
 
     public bool IsPending
     {
@@ -61,7 +67,8 @@ public sealed partial class MicrosoftAccountAuthView : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        (handler, ViewModel.Token, _) = ((AddAccountWizardStateHandler, CancellationToken, object?))e.Parameter;
+        (handler, ViewModel.Token, _) = ((AddAccountWizardStateHandler, CancellationToken, object?))
+            e.Parameter;
         handler?.Invoke(null);
         base.OnNavigatedTo(e);
     }
@@ -71,8 +78,11 @@ public sealed partial class MicrosoftAccountAuthView : Page
         Task.Run(() => ViewModel.LoginDeviceCodeFlowAsync(LoginDeviceCodeFlowHandler));
     }
 
-    private void LoginDeviceCodeFlowHandler(string? userCode, string? verificationUrl,
-        MicrosoftAccount? user = null)
+    private void LoginDeviceCodeFlowHandler(
+        string? userCode,
+        string? verificationUrl,
+        MicrosoftAccount? user = null
+    )
     {
         DispatcherQueue.TryEnqueue(() =>
         {

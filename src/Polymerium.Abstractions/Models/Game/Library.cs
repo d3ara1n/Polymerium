@@ -4,8 +4,14 @@ namespace Polymerium.Abstractions.Models.Game;
 
 public class Library
 {
-    public Library(string name, string path, string? sha1, Uri? url, bool isNative = false,
-        bool presentInClassPath = true)
+    public Library(
+        string name,
+        string path,
+        string? sha1,
+        Uri? url,
+        bool isNative = false,
+        bool presentInClassPath = true
+    )
     {
         Name = name;
         Path = path;

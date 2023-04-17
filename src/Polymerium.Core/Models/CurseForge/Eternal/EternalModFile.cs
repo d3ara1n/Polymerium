@@ -32,7 +32,8 @@ public struct EternalModFile
 
     public Uri ExtractDownloadUrl()
     {
-        return DownloadUrl ?? new Uri($"https://edge.forgecdn.net/files/{Id / 1000}/{Id % 1000}/{FileName}");
+        return DownloadUrl
+            ?? new Uri($"https://edge.forgecdn.net/files/{Id / 1000}/{Id % 1000}/{FileName}");
     }
 
     public string? ExtractSha1()

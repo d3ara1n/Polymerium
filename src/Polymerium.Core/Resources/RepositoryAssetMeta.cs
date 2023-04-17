@@ -12,6 +12,7 @@ public struct RepositoryAssetMeta
     public string Name { get; set; }
     public string Author { get; set; }
     public Uri? IconSource { get; set; }
+    public long Downloads { get; set; }
     public Lazy<string>? Description { get; set; }
     public Lazy<IEnumerable<(string, Uri)>>? Screenshots { get; set; }
     public string Summary { get; set; }

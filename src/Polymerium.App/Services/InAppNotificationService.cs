@@ -2,13 +2,21 @@
 
 namespace Polymerium.App.Services;
 
-public delegate void EnqueueNotificationItemHandler(string caption, string text, InfoBarSeverity severity);
+public delegate void EnqueueNotificationItemHandler(
+    string caption,
+    string text,
+    InfoBarSeverity severity
+);
 
 public class InAppNotificationService : INotificationService
 {
     private EnqueueNotificationItemHandler? _handler;
 
-    public void Enqueue(string caption, string text, InfoBarSeverity severity = InfoBarSeverity.Informational)
+    public void Enqueue(
+        string caption,
+        string text,
+        InfoBarSeverity severity = InfoBarSeverity.Informational
+    )
     {
         _handler?.Invoke(caption, text, severity);
     }

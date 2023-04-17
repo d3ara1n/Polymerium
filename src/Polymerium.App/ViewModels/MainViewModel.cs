@@ -20,37 +20,29 @@ namespace Polymerium.App.ViewModels;
 public sealed class MainViewModel : ObservableObject
 {
     private readonly AccountManager _accountManager;
-    private readonly ComponentManager _componentManager;
     private readonly ConfigurationManager _configurationManager;
     private readonly DispatcherQueue _dispatcher;
     private readonly InstanceManager _instanceManager;
-    private readonly ILogger _logger;
     private readonly MemoryStorage _memoryStorage;
     private readonly NavigationService _navigationService;
-    private readonly INotificationService _notificationService;
     private readonly IOverlayService _overlayService;
 
     private ContentControl? overlay;
     private NavigationItemModel? selectedPage;
 
     public MainViewModel(
-        ILogger<MainViewModel> logger,
         IOverlayService overlayService,
         INotificationService notificationService,
         InstanceManager instanceManager,
         AccountManager accountManager,
         ConfigurationManager configurationManager,
-        ComponentManager componentManager,
         NavigationService navigationService,
         MemoryStorage memoryStorage,
         ViewModelContext context
     )
     {
-        _logger = logger;
         _overlayService = overlayService;
-        _notificationService = notificationService;
         _instanceManager = instanceManager;
-        _componentManager = componentManager;
         _accountManager = accountManager;
         _navigationService = navigationService;
         _memoryStorage = memoryStorage;
@@ -142,12 +134,18 @@ public sealed class MainViewModel : ObservableObject
 
     private void EnqueueNotification(string caption, string text, InfoBarSeverity severity)
     {
-        _dispatcher.TryEnqueue(() => { Notifications.Add(new InAppNotificationItem(caption, text, severity)); });
+        _dispatcher.TryEnqueue(() =>
+        {
+            Notifications.Add(new InAppNotificationItem(caption, text, severity));
+        });
     }
 
     private void PushOverlay(ContentControl content)
     {
-        _dispatcher.TryEnqueue(() => { Overlay = content; });
+        _dispatcher.TryEnqueue(() =>
+        {
+            Overlay = content;
+        });
     }
 
     private ContentControl? PullOverlay()
@@ -170,7 +168,10 @@ public sealed class MainViewModel : ObservableObject
     {
         Context.AssociatedInstance =
             page.GameInstance != null
-                ? new GameInstanceModel(page.GameInstance, _configurationManager.Current.GameGlobals)
+                ? new GameInstanceModel(
+                    page.GameInstance,
+                    _configurationManager.Current.GameGlobals
+                )
                 : null;
     }
 
@@ -184,35 +185,35 @@ public sealed class MainViewModel : ObservableObject
                 {
                     case NotifyCollectionChangedAction.Add:
 
-                    {
-                        if (e.NewItems != null)
-                            foreach (GameInstance instance in e.NewItems)
-                                NavigationPages.Insert(
-                                    NavigationPages.Count - 1,
-                                    new NavigationItemModel(
-                                        "\xF158",
-                                        instance.Name,
-                                        typeof(InstanceView),
-                                        instance,
-                                        instance.ThumbnailFile
-                                    )
-                                );
-                    }
+                        {
+                            if (e.NewItems != null)
+                                foreach (GameInstance instance in e.NewItems)
+                                    NavigationPages.Insert(
+                                        NavigationPages.Count - 1,
+                                        new NavigationItemModel(
+                                            "\xF158",
+                                            instance.Name,
+                                            typeof(InstanceView),
+                                            instance,
+                                            instance.ThumbnailFile
+                                        )
+                                    );
+                        }
                         break;
 
                     case NotifyCollectionChangedAction.Remove:
 
-                    {
-                        if (e.OldItems != null)
-                            foreach (GameInstance instance in e.OldItems)
-                            {
-                                var item = NavigationPages.FirstOrDefault(
-                                    x => x.GameInstance?.Id == instance.Id
-                                );
-                                if (item != null)
-                                    NavigationPages.Remove(item);
-                            }
-                    }
+                        {
+                            if (e.OldItems != null)
+                                foreach (GameInstance instance in e.OldItems)
+                                {
+                                    var item = NavigationPages.FirstOrDefault(
+                                        x => x.GameInstance?.Id == instance.Id
+                                    );
+                                    if (item != null)
+                                        NavigationPages.Remove(item);
+                                }
+                        }
                         break;
                 }
             }
@@ -256,6 +257,8 @@ public sealed class MainViewModel : ObservableObject
 
     public void GotoSearchView(string query)
     {
-        _navigationService.Navigate<SearchCenterView>(new SearchCenterNavigationArguments(query, true));
+        _navigationService.Navigate<SearchCenterView>(
+            new SearchCenterNavigationArguments(query, true)
+        );
     }
 }

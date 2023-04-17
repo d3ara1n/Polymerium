@@ -61,7 +61,10 @@ public class ResolveEngine
             }
     }
 
-    public async Task<Result<ResolveResult, ResolveResultError>> ResolveAsync(Uri resource, ResolverContext context)
+    public async Task<Result<ResolveResult, ResolveResultError>> ResolveAsync(
+        Uri resource,
+        ResolverContext context
+    )
     {
         if (resource.Scheme == "poly-res")
         {
@@ -107,7 +110,10 @@ public class ResolveEngine
         throw new ArgumentException("Scheme only accepts 'poly-res'", nameof(resource));
     }
 
-    public async Task<Result<ResolveResult, ResolveResultError>> ResolveToFileAsync(Uri url, ResolverContext context)
+    public async Task<Result<ResolveResult, ResolveResultError>> ResolveToFileAsync(
+        Uri url,
+        ResolverContext context
+    )
     {
         var result = await ResolveAsync(url, context);
         if (result.IsSuccessful && result.Value.Type != ResourceType.File)

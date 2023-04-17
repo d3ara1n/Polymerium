@@ -13,9 +13,12 @@ namespace Polymerium.App.Views;
 public sealed partial class InstanceView : Page
 {
     // Using a DependencyProperty as the backing store for IsPending.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsPendingProperty =
-        DependencyProperty.Register(nameof(IsPending), typeof(bool), typeof(InstanceView), new PropertyMetadata(false));
-
+    public static readonly DependencyProperty IsPendingProperty = DependencyProperty.Register(
+        nameof(IsPending),
+        typeof(bool),
+        typeof(InstanceView),
+        new PropertyMetadata(false)
+    );
 
     public InstanceView()
     {
