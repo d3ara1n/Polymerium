@@ -19,19 +19,24 @@ namespace Polymerium.App.Views.Instances;
 public sealed partial class InstanceAssetDrawer : Drawer
 {
     // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty TitleProperty =
-        DependencyProperty.Register(nameof(Title), typeof(string), typeof(InstanceAssetDrawer),
-            new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
+        nameof(Title),
+        typeof(string),
+        typeof(InstanceAssetDrawer),
+        new PropertyMetadata(string.Empty)
+    );
 
     // Using a DependencyProperty as the backing store for IsParsing.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsParsingProperty =
-        DependencyProperty.Register(nameof(IsParsing), typeof(bool), typeof(InstanceAssetDrawer),
-            new PropertyMetadata(false));
+    public static readonly DependencyProperty IsParsingProperty = DependencyProperty.Register(
+        nameof(IsParsing),
+        typeof(bool),
+        typeof(InstanceAssetDrawer),
+        new PropertyMetadata(false)
+    );
 
     private readonly CancellationTokenSource _source;
 
     private readonly IAdvancedCollectionView _view;
-
 
     public InstanceAssetDrawer(ResourceType type, IAdvancedCollectionView view)
     {
@@ -49,13 +54,11 @@ public sealed partial class InstanceAssetDrawer : Drawer
         };
     }
 
-
     public string Title
     {
         get => (string)GetValue(TitleProperty);
         set => SetValue(TitleProperty, value);
     }
-
 
     public bool IsParsing
     {
@@ -85,7 +88,8 @@ public sealed partial class InstanceAssetDrawer : Drawer
             var items = await e.DataView.GetStorageItemsAsync();
             var file = items!.First()!;
             e.Handled = true;
-            if (File.Exists(file.Path)) await ViewModel.FileAccepted(file.Path, raw => _view.Add(raw));
+            if (File.Exists(file.Path))
+                await ViewModel.FileAccepted(file.Path, raw => _view.Add(raw));
         }
     }
 
@@ -97,7 +101,14 @@ public sealed partial class InstanceAssetDrawer : Drawer
     private void Drawer_Loaded(object sender, RoutedEventArgs e)
     {
         IsParsing = true;
-        Task.Run(() => ViewModel.LoadAssetsAsync(_view.Select(x => (AssetRaw)x), AddAssetHandler, _source.Token));
+        Task.Run(
+            () =>
+                ViewModel.LoadAssetsAsync(
+                    _view.Select(x => (AssetRaw)x),
+                    AddAssetHandler,
+                    _source.Token
+                )
+        );
     }
 
     private void AddAssetHandler(InstanceAssetModel? model)
@@ -111,12 +122,18 @@ public sealed partial class InstanceAssetDrawer : Drawer
         });
     }
 
-    private void AssetSearch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    private void AssetSearch_TextChanged(
+        AutoSuggestBox sender,
+        AutoSuggestBoxTextChangedEventArgs args
+    )
     {
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
         {
             AssetsSource.Filter = obj =>
-                ((InstanceAssetModel)obj).Name.StartsWith(sender.Text, StringComparison.OrdinalIgnoreCase);
+                ((InstanceAssetModel)obj).Name.StartsWith(
+                    sender.Text,
+                    StringComparison.OrdinalIgnoreCase
+                );
             AssetsSource.RefreshFilter();
         }
     }

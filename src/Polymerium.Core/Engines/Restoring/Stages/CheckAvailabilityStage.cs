@@ -56,23 +56,34 @@ public class CheckAvailabilityStage : StageBase
         if (_instance.CheckIfRestored(_fileBase, out var content))
         {
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content!);
-            return Task.FromResult(Next(
-                new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader, _assetManager)
-            ));
+            return Task.FromResult(
+                Next(
+                    new LoadAssetIndexStage(
+                        _instance,
+                        _sha1,
+                        polylock,
+                        _fileBase,
+                        _downloader,
+                        _assetManager
+                    )
+                )
+            );
         }
 
-        return Task.FromResult(Next(
-            new BuildPolylockStage(
-                _instance,
-                _sha1,
-                _metas,
-                polylockDataFile,
-                polylockHashFile,
-                _downloader,
-                _resolver,
-                _provider,
-                _assetManager
+        return Task.FromResult(
+            Next(
+                new BuildPolylockStage(
+                    _instance,
+                    _sha1,
+                    _metas,
+                    polylockDataFile,
+                    polylockHashFile,
+                    _downloader,
+                    _resolver,
+                    _provider,
+                    _assetManager
+                )
             )
-        ));
+        );
     }
 }

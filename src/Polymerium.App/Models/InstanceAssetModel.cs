@@ -5,7 +5,13 @@ namespace Polymerium.App.Models;
 
 public class InstanceAssetModel
 {
-    public InstanceAssetModel(ResourceType type, Uri url, string name, string? version, string? description)
+    public InstanceAssetModel(
+        ResourceType type,
+        Uri url,
+        string name,
+        string? version,
+        string? description
+    )
     {
         Type = type;
         Url = url;

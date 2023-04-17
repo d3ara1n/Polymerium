@@ -5,8 +5,14 @@ namespace Polymerium.App.Models;
 
 public class InstanceWorldSaveModel
 {
-    public InstanceWorldSaveModel(string iconSource, string name, long seed, string gameVersion,
-        DateTimeOffset lastPlayed, WorldSave inner)
+    public InstanceWorldSaveModel(
+        string iconSource,
+        string name,
+        long seed,
+        string gameVersion,
+        DateTimeOffset lastPlayed,
+        WorldSave inner
+    )
     {
         Inner = inner;
         IconSource = iconSource;

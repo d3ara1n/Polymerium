@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -16,16 +17,17 @@ namespace Polymerium.App.ViewModels;
 
 public class HomeViewModel : ObservableObject
 {
-    private readonly MemoryStorage _memoryStorage;
     private readonly NavigationService navigationService;
+    private readonly IMemoryCache _cache;
 
     public HomeViewModel(
         MemoryStorage memoryStorage,
         ViewModelContext context,
-        NavigationService navigationService
+        NavigationService navigationService,
+        IMemoryCache cache
     )
     {
-        _memoryStorage = memoryStorage;
+        _cache = cache;
         Context = context;
         GotoRecentItemInstanceViewCommand = new RelayCommand<string>(GotoRecentItemInstanceView);
         RecentPlays = new ObservableCollection<RecentPlayedItemModel>(
@@ -77,48 +79,66 @@ public class HomeViewModel : ObservableObject
     {
         var urlBase = new Uri("https://launchercontent.mojang.com");
         var newsUrl = new Uri(urlBase, "news.json");
-        var results = new List<HomeNewsItemModel>();
-        await Wapoo.Wohoo(newsUrl.AbsoluteUri)
-            .ForJsonResult<JObject>(x =>
-            {
-                if (x.ContainsKey("entries"))
+        var results = await _cache.GetOrCreateAsync("HomeNews", async entry =>
+        {
+            var list = new List<HomeNewsItemModel>();
+            await Wapoo
+                .Wohoo(newsUrl.AbsoluteUri)
+                .ForJsonResult<JObject>(x =>
                 {
-                    var entries = x.Value<JArray>("entries");
-                    foreach (JObject entry in entries)
+                    if (x.ContainsKey("entries"))
                     {
-                        var category = string.Empty;
-                        if (entry.ContainsKey("category"))
-                            category = entry.Value<string>("category");
-                        if (category != "Minecraft: Java Edition") continue;
-                        var title = string.Empty;
-                        if (entry.ContainsKey("title"))
-                            title = entry.Value<string>("title");
-                        var text = string.Empty;
-                        if (entry.ContainsKey("text"))
-                            text = entry.Value<string>("text");
-                        var readMore = string.Empty;
-                        if (entry.ContainsKey("readMoreLink"))
-                            readMore = entry.Value<string>("readMoreLink");
-                        var imageSource = string.Empty;
-                        if (entry.ContainsKey("playPageImage"))
+                        var entries = x.Value<JArray>("entries");
+                        foreach (JObject entry in entries)
                         {
-                            var playPageImage = entry.Value<JObject>("playPageImage");
-                            if (playPageImage!.ContainsKey("url"))
-                                imageSource = playPageImage.Value<string>("url");
+                            var category = string.Empty;
+                            if (entry.ContainsKey("category"))
+                                category = entry.Value<string>("category");
+                            if (category != "Minecraft: Java Edition")
+                                continue;
+                            var title = string.Empty;
+                            if (entry.ContainsKey("title"))
+                                title = entry.Value<string>("title");
+                            var text = string.Empty;
+                            if (entry.ContainsKey("text"))
+                                text = entry.Value<string>("text");
+                            var readMore = string.Empty;
+                            if (entry.ContainsKey("readMoreLink"))
+                                readMore = entry.Value<string>("readMoreLink");
+                            var imageSource = string.Empty;
+                            if (entry.ContainsKey("playPageImage"))
+                            {
+                                var playPageImage = entry.Value<JObject>("playPageImage");
+                                if (playPageImage!.ContainsKey("url"))
+                                    imageSource = playPageImage.Value<string>("url");
+                            }
+
+                            var date = string.Empty;
+                            if (entry.ContainsKey("date"))
+                                date = entry.Value<string>("date");
+
+                            var model = new HomeNewsItemModel(
+                                title,
+                                text,
+                                DateTimeOffset.Parse(date),
+                                !string.IsNullOrEmpty(readMore) ? new Uri(readMore) : null,
+                                new Uri(urlBase, imageSource).AbsoluteUri
+                            );
+                            list.Add(model);
                         }
-
-                        var date = string.Empty;
-                        if (entry.ContainsKey("date"))
-                            date = entry.Value<string>("date");
-
-                        var model = new HomeNewsItemModel(title, text, DateTimeOffset.Parse(date),
-                            !string.IsNullOrEmpty(readMore) ? new Uri(readMore) : null,
-                            new Uri(urlBase, imageSource).AbsoluteUri);
-                        results.Add(model);
                     }
-                }
-            })
-            .FetchAsync();
+                })
+                .FetchAsync();
+            if (list.Count > 0)
+            {
+                entry.SetSlidingExpiration(TimeSpan.FromMinutes(60));
+            }
+            else
+            {
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
+            }
+            return list;
+        });
         foreach (var item in results)
             callback(item);
         callback(null);

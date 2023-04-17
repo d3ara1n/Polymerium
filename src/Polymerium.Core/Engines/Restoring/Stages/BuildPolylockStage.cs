@@ -96,7 +96,9 @@ public class BuildPolylockStage : StageBase
             foreach (var attachment in _instance.Metadata.Attachments)
                 tasks.Add(_resolver.ResolveToFileAsync(attachment.Source, resolverContext));
             await Task.WhenAll(tasks);
-            var errors = tasks.Count(x => !x.Result.IsSuccessful || x.Result.Value.Type != ResourceType.File);
+            var errors = tasks.Count(
+                x => !x.Result.IsSuccessful || x.Result.Value.Type != ResourceType.File
+            );
             if (errors > 0)
                 return Error($"{errors}/{tasks.Count} 条附件资源解析错误");
 
@@ -110,7 +112,10 @@ public class BuildPolylockStage : StageBase
                         CachedObjectPath = $"{file.Source.Host}/{file.Id}/{file.VersionId}",
                         Source = file.Source,
                         Sha1 = file.Hash,
-                        Target = new Uri(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", _instance.Id)), file.FileName)
+                        Target = new Uri(
+                            new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", _instance.Id)),
+                            file.FileName
+                        )
                     };
                 })
             );
@@ -122,7 +127,14 @@ public class BuildPolylockStage : StageBase
             _fileBase.WriteAllText(_polylockHashFile, md5);
 
             return Next(
-                new LoadAssetIndexStage(_instance, _sha1, polylock, _fileBase, _downloader, _assetManager)
+                new LoadAssetIndexStage(
+                    _instance,
+                    _sha1,
+                    polylock,
+                    _fileBase,
+                    _downloader,
+                    _assetManager
+                )
             );
         }
         catch (Exception e)

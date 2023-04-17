@@ -55,7 +55,8 @@ public class ImportModpackWizardViewModel : ObservableObject
         var result = await _importer.ImportAsync(_fileName!, source.Token);
         if (result.IsSuccessful)
             _importResult = result.Value;
-        if (!source.Token.IsCancellationRequested) callback(result, false);
+        if (!source.Token.IsCancellationRequested)
+            callback(result, false);
     }
 
     public async Task ApplyExtractionAsync(

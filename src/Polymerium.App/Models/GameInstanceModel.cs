@@ -14,7 +14,9 @@ public class GameInstanceModel : ObservableObject
         Inner = instance;
         Components = new SynchronizedCollection<Component>(Inner.Metadata.Components);
         Attachments = new SynchronizedCollection<Attachment>(Inner.Metadata.Attachments);
-        Configuration = new ConfigurationModel(new CompoundLaunchConfiguration(Inner.Configuration, fallback));
+        Configuration = new ConfigurationModel(
+            new CompoundLaunchConfiguration(Inner.Configuration, fallback)
+        );
     }
 
     public GameInstance Inner { get; }

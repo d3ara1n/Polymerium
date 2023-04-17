@@ -7,9 +7,19 @@ namespace Polymerium.App.Models;
 
 public class InstanceAttachmentItemModel
 {
-    public InstanceAttachmentItemModel(ResourceType type, string caption, string author, Uri? iconSource,
+    public InstanceAttachmentItemModel(
+        ResourceType type,
+        string caption,
+        string author,
+        Uri? iconSource,
         Uri? reference,
-        string version, string summary, Attachment attachment, bool isLocked, ICommand openReferenceCommand, ICommand removeCommand)
+        string version,
+        string summary,
+        Attachment attachment,
+        bool isLocked,
+        ICommand openReferenceCommand,
+        ICommand removeCommand
+    )
     {
         Type = type;
         Caption = caption;

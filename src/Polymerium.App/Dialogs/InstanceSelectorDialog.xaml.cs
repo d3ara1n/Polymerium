@@ -9,21 +9,28 @@ namespace Polymerium.App.Dialogs;
 public sealed partial class InstanceSelectorDialog : ContentDialog
 {
     // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty CandidatesProperty =
-        DependencyProperty.Register(nameof(Candidates), typeof(ObservableCollection<GameInstance>),
-            typeof(InstanceSelectorDialog), new PropertyMetadata(new ObservableCollection<GameInstance>()));
+    public static readonly DependencyProperty CandidatesProperty = DependencyProperty.Register(
+        nameof(Candidates),
+        typeof(ObservableCollection<GameInstance>),
+        typeof(InstanceSelectorDialog),
+        new PropertyMetadata(new ObservableCollection<GameInstance>())
+    );
 
     // Using a DependencyProperty as the backing store for SelectedInstance.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty SelectedInstanceProperty =
-        DependencyProperty.Register(nameof(SelectedInstance), typeof(GameInstance), typeof(InstanceSelectorDialog),
-            new PropertyMetadata(null));
-
+        DependencyProperty.Register(
+            nameof(SelectedInstance),
+            typeof(GameInstance),
+            typeof(InstanceSelectorDialog),
+            new PropertyMetadata(null)
+        );
 
     public InstanceSelectorDialog(IEnumerable<GameInstance> candidates)
     {
         InitializeComponent();
         Candidates.Clear();
-        foreach (var candidate in candidates) Candidates.Add(candidate);
+        foreach (var candidate in candidates)
+            Candidates.Add(candidate);
     }
 
     public ObservableCollection<GameInstance> Candidates

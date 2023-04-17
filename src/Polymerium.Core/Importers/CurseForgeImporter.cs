@@ -17,25 +17,36 @@ namespace Polymerium.Core.Importers;
 
 public class CurseForgeImporter : ImporterBase
 {
-    public override async Task<Result<ImportResult, GameImportError>> ProcessAsync(ZipArchive archive)
+    public override async Task<Result<ImportResult, GameImportError>> ProcessAsync(
+        ZipArchive archive
+    )
     {
         var indexFile = archive.GetEntry("manifest.json");
         if (indexFile != null)
         {
             using var reader = new StreamReader(indexFile.Open());
-            var index = JsonConvert.DeserializeObject<CurseForgeModpackIndex>(await reader.ReadToEndAsync());
+            var index = JsonConvert.DeserializeObject<CurseForgeModpackIndex>(
+                await reader.ReadToEndAsync()
+            );
             if (index.ManifestType == "minecraftModpack")
             {
-                var instance = new GameInstance(new GameMetadata(), index.Version,
-                    new FileBasedLaunchConfiguration(), index.Name, index.Name)
+                var instance = new GameInstance(
+                    new GameMetadata(),
+                    index.Version,
+                    new FileBasedLaunchConfiguration(),
+                    index.Name,
+                    index.Name
+                )
                 {
                     Author = index.Author
                 };
-                instance.Metadata.Components.Add(new Component
-                {
-                    Identity = ComponentMeta.MINECRAFT,
-                    Version = index.Minecraft.Version
-                });
+                instance.Metadata.Components.Add(
+                    new Component
+                    {
+                        Identity = ComponentMeta.MINECRAFT,
+                        Version = index.Minecraft.Version
+                    }
+                );
                 foreach (var modLoader in index.Minecraft.ModLoaders)
                 {
                     var split = modLoader.Id.Split("-");
@@ -47,13 +58,12 @@ public class CurseForgeImporter : ImporterBase
                             "fabric" => ComponentMeta.FABRIC,
                             _ => null
                         };
-                        if (name == null) return Failed(GameImportError.Unsupported);
+                        if (name == null)
+                            return Failed(GameImportError.Unsupported);
                         var version = split[1];
-                        instance.Metadata.Components.Add(new Component
-                        {
-                            Identity = name!,
-                            Version = version
-                        });
+                        instance.Metadata.Components.Add(
+                            new Component { Identity = name!, Version = version }
+                        );
                     }
                     else
                     {
@@ -63,10 +73,14 @@ public class CurseForgeImporter : ImporterBase
 
                 foreach (var file in index.Files)
                 {
-                    instance.Metadata.Attachments.Add(new Attachment
-                    {
-                        Source = new Uri($"poly-res://curseforge@file/{file.ProjectId}/{file.FileId}")
-                    });
+                    instance.Metadata.Attachments.Add(
+                        new Attachment
+                        {
+                            Source = new Uri(
+                                $"poly-res://curseforge@file/{file.ProjectId}/{file.FileId}"
+                            )
+                        }
+                    );
                 }
 
                 var files = new List<PackedSolidFile>();

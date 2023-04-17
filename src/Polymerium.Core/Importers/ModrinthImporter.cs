@@ -75,10 +75,14 @@ public class ModrinthImporter : ImporterBase
                             )
                     )
                 )
-                    instance.Metadata.Attachments.Add(new Attachment
-                    {
-                        Source = new Uri($"poly-res://remote@file/{file.Path}?sha1={file.Hashes.Sha1}&source={HttpUtility.UrlEncode(file.Downloads.First().ToString())}")
-                    });
+                    instance.Metadata.Attachments.Add(
+                        new Attachment
+                        {
+                            Source = new Uri(
+                                $"poly-res://remote@file/{file.Path}?sha1={file.Hashes.Sha1}&source={HttpUtility.UrlEncode(file.Downloads.First().ToString())}"
+                            )
+                        }
+                    );
 
                 var files = new List<PackedSolidFile>();
 

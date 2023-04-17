@@ -17,15 +17,15 @@ public class InstanceLaunchConfigurationViewModel : ObservableObject
 
     public InstanceLaunchConfigurationViewModel(ViewModelContext context, JavaManager javaManager)
     {
+        Instance = context.AssociatedInstance!;
         _javaManager = javaManager;
-        Context = context;
-        Configuration = Context.AssociatedInstance!.Configuration;
+        Configuration = Instance.Configuration;
         OpenPickerAsyncCommand = new AsyncRelayCommand(OpenPickerAsync);
     }
 
     public ConfigurationModel Configuration { get; }
 
-    public ViewModelContext Context { get; }
+    public GameInstanceModel Instance { get; }
 
     public ICommand OpenPickerAsyncCommand { get; }
 

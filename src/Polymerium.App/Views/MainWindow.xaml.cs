@@ -34,7 +34,10 @@ public sealed partial class MainWindow : Window
         else
         {
             // only windows 10+ supports msix so...
-            (Main.ColumnRight.Width, Main.ColumnLeft.Width) = (Main.ColumnLeft.Width, Main.ColumnRight.Width);
+            (Main.ColumnRight.Width, Main.ColumnLeft.Width) = (
+                Main.ColumnLeft.Width,
+                Main.ColumnRight.Width
+            );
         }
     }
 }

@@ -17,10 +17,12 @@ public sealed partial class HomeView : Page
     }
 
     // Using a DependencyProperty as the backing store for IsNewsLoading.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsNewsLoadingProperty =
-        DependencyProperty.Register(nameof(IsNewsLoading), typeof(bool), typeof(HomeView), new PropertyMetadata(false));
-
-
+    public static readonly DependencyProperty IsNewsLoadingProperty = DependencyProperty.Register(
+        nameof(IsNewsLoading),
+        typeof(bool),
+        typeof(HomeView),
+        new PropertyMetadata(false)
+    );
 
     public HomeView()
     {

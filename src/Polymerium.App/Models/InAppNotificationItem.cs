@@ -4,7 +4,11 @@ namespace Polymerium.App.Models;
 
 public class InAppNotificationItem
 {
-    public InAppNotificationItem(string caption, string text, InfoBarSeverity severity = InfoBarSeverity.Informational)
+    public InAppNotificationItem(
+        string caption,
+        string text,
+        InfoBarSeverity severity = InfoBarSeverity.Informational
+    )
     {
         Caption = caption;
         Text = text;

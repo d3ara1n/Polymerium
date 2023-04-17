@@ -21,7 +21,13 @@ public class MicrosoftAccount : IGameAccount
         MicrosoftAuthenticationFailed
     }
 
-    public MicrosoftAccount(string id, string uuid, string nickname, string accessToken, string refreshToken)
+    public MicrosoftAccount(
+        string id,
+        string uuid,
+        string nickname,
+        string accessToken,
+        string refreshToken
+    )
     {
         Id = id;
         UUID = uuid;
@@ -74,57 +80,87 @@ public class MicrosoftAccount : IGameAccount
 
     public static async Task<Result<MicrosoftAccount, MicrosoftAccountError>> LoginAsync(
         Action<string, string> userCodeCallback,
-        CancellationToken token = default)
+        CancellationToken token = default
+    )
     {
-        var deviceCodeOption =
-            await MicrosoftAccountHelper.AcquireMicrosoftTokenByDeviceCodeAsync(userCodeCallback, token);
+        var deviceCodeOption = await MicrosoftAccountHelper.AcquireMicrosoftTokenByDeviceCodeAsync(
+            userCodeCallback,
+            token
+        );
         if (token.IsCancellationRequested)
-            return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.Canceled);
+            return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                MicrosoftAccountError.Canceled
+            );
         if (deviceCodeOption.TryUnwrap(out var flow))
         {
             var refreshToken = flow.RefreshToken;
             var microsoftToken = flow.AccessToken;
             var result = await LoginAsync(microsoftToken, token);
-            if (result.IsSuccessful) result.Value.RefreshToken = refreshToken;
+            if (result.IsSuccessful)
+                result.Value.RefreshToken = refreshToken;
             return result;
         }
 
-        return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.MicrosoftAuthenticationFailed);
+        return new Result<MicrosoftAccount, MicrosoftAccountError>(
+            MicrosoftAccountError.MicrosoftAuthenticationFailed
+        );
     }
 
-    public static async Task<Result<MicrosoftAccount, MicrosoftAccountError>> LoginAsync(string microsoftAccessToken,
-        CancellationToken token)
+    public static async Task<Result<MicrosoftAccount, MicrosoftAccountError>> LoginAsync(
+        string microsoftAccessToken,
+        CancellationToken token
+    )
     {
         // 这！就是嵌套地狱！
         var account = new MicrosoftAccount { Id = Guid.NewGuid().ToString() };
-        var xboxOption = await MicrosoftAccountHelper.AcquireXboxTokenAsync(microsoftAccessToken, token);
+        var xboxOption = await MicrosoftAccountHelper.AcquireXboxTokenAsync(
+            microsoftAccessToken,
+            token
+        );
         if (token.IsCancellationRequested)
-            return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.Canceled);
+            return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                MicrosoftAccountError.Canceled
+            );
         if (xboxOption.TryUnwrap(out var xbox))
         {
             var xstsOption = await MicrosoftAccountHelper.AcquireXstsTokenAsync(xbox.Token, token);
             if (token.IsCancellationRequested)
-                return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.Canceled);
+                return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                    MicrosoftAccountError.Canceled
+                );
             if (xstsOption.TryUnwrap(out var xsts))
             {
-                var minecraftOption =
-                    await MicrosoftAccountHelper.AcquireMinecraftTokenAsync(xsts.Token,
-                        xsts.DisplayClaims.Xui.First().Uhs, token);
+                var minecraftOption = await MicrosoftAccountHelper.AcquireMinecraftTokenAsync(
+                    xsts.Token,
+                    xsts.DisplayClaims.Xui.First().Uhs,
+                    token
+                );
                 if (token.IsCancellationRequested)
-                    return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.Canceled);
+                    return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                        MicrosoftAccountError.Canceled
+                    );
                 if (minecraftOption.TryUnwrap(out var minecraft))
                 {
                     account.AccessToken = minecraft.AccessToken;
-                    var ownership =
-                        await MicrosoftAccountHelper.VerifyMinecraftOwnershipAsync(minecraft.AccessToken, token);
+                    var ownership = await MicrosoftAccountHelper.VerifyMinecraftOwnershipAsync(
+                        minecraft.AccessToken,
+                        token
+                    );
                     if (token.IsCancellationRequested)
-                        return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.Canceled);
+                        return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                            MicrosoftAccountError.Canceled
+                        );
                     if (ownership)
                     {
                         var profileOption =
-                            await MicrosoftAccountHelper.GetProfileByAccessTokenAsync(minecraft.AccessToken, token);
+                            await MicrosoftAccountHelper.GetProfileByAccessTokenAsync(
+                                minecraft.AccessToken,
+                                token
+                            );
                         if (token.IsCancellationRequested)
-                            return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.Canceled);
+                            return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                                MicrosoftAccountError.Canceled
+                            );
                         if (profileOption.TryUnwrap(out var profile))
                         {
                             account.UUID = profile.Id;
@@ -132,19 +168,28 @@ public class MicrosoftAccount : IGameAccount
                             return account;
                         }
 
-                        return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.ProfileFailed);
+                        return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                            MicrosoftAccountError.ProfileFailed
+                        );
                     }
 
-                    return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.OwnershipFailed);
+                    return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                        MicrosoftAccountError.OwnershipFailed
+                    );
                 }
 
-                return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError
-                    .MinecraftAuthenticationFailed);
+                return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                    MicrosoftAccountError.MinecraftAuthenticationFailed
+                );
             }
 
-            return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.XstsAuthenticationFailed);
+            return new Result<MicrosoftAccount, MicrosoftAccountError>(
+                MicrosoftAccountError.XstsAuthenticationFailed
+            );
         }
 
-        return new Result<MicrosoftAccount, MicrosoftAccountError>(MicrosoftAccountError.XboxAuthenticationFailed);
+        return new Result<MicrosoftAccount, MicrosoftAccountError>(
+            MicrosoftAccountError.XboxAuthenticationFailed
+        );
     }
 }

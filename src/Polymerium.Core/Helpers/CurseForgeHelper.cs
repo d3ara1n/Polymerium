@@ -26,60 +26,86 @@ public static class CurseForgeHelper
     private const uint CLASSID_WORLD = 17;
     private const uint CLASSID_RESOURCEPACK = 12;
 
-    public static readonly IReadOnlyDictionary<string, string> MODLOADERS_MAPPINGS = new Dictionary<string, string>
+    public static readonly IReadOnlyDictionary<string, string> MODLOADERS_MAPPINGS = new Dictionary<
+        string,
+        string
+    >
     {
         { "Forge", ComponentMeta.FORGE },
         { "Fabric", ComponentMeta.FABRIC },
         { "Quilt", ComponentMeta.QUILT }
     }.AsReadOnly();
 
-    private static async Task<T?> GetResourceAsync<T>(string service, IMemoryCache cache,
-        CancellationToken token = default)
+    private static async Task<T?> GetResourceAsync<T>(
+        string service,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
     {
-        if (token.IsCancellationRequested) return default;
-        return await cache.GetOrCreateAsync<T?>(service, async entry =>
-        {
-            var found = false;
-            T? result = default;
-            await Wapoo.Wohoo(ENDPOINT + service)
-                .WithHeader("x-api-key", API_KEY)
-                .ForJsonResult<JObject>(x =>
-                {
-                    if (x.ContainsKey("data"))
+        if (token.IsCancellationRequested)
+            return default;
+        return await cache.GetOrCreateAsync<T?>(
+            service,
+            async entry =>
+            {
+                var found = false;
+                T? result = default;
+                await Wapoo
+                    .Wohoo(ENDPOINT + service)
+                    .WithHeader("x-api-key", API_KEY)
+                    .ForJsonResult<JObject>(x =>
                     {
-                        result = x["data"]!.ToObject<T>();
-                        found = true;
-                    }
-                })
-                .FetchAsync();
-            entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
-            return result;
-        });
+                        if (x.ContainsKey("data"))
+                        {
+                            result = x["data"]!.ToObject<T>();
+                            found = true;
+                        }
+                    })
+                    .FetchAsync();
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
+                return result;
+            }
+        );
     }
 
-    public static async Task<IEnumerable<T>> GetResourcesAsync<T>(string service, IMemoryCache cache,
-        CancellationToken token = default)
+    public static async Task<IEnumerable<T>> GetResourcesAsync<T>(
+        string service,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
     {
-        if (token.IsCancellationRequested) return Enumerable.Empty<T>();
-        return await cache.GetOrCreateAsync(service, async entry =>
-        {
-            IEnumerable<T>? results = null;
-            await Wapoo.Wohoo(ENDPOINT + service)
-                .WithHeader("x-api-key", API_KEY)
-                .ForJsonResult<JObject>(x =>
+        if (token.IsCancellationRequested)
+            return Enumerable.Empty<T>();
+        return await cache.GetOrCreateAsync(
+                service,
+                async entry =>
                 {
-                    if (x.ContainsKey("data")) results = x["data"]!.ToObject<IEnumerable<T>>();
-                })
-                .FetchAsync();
-            entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
-            return results ?? Enumerable.Empty<T>();
-        }) ?? Enumerable.Empty<T>();
+                    IEnumerable<T>? results = null;
+                    await Wapoo
+                        .Wohoo(ENDPOINT + service)
+                        .WithHeader("x-api-key", API_KEY)
+                        .ForJsonResult<JObject>(x =>
+                        {
+                            if (x.ContainsKey("data"))
+                                results = x["data"]!.ToObject<IEnumerable<T>>();
+                        })
+                        .FetchAsync();
+                    entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
+                    return results ?? Enumerable.Empty<T>();
+                }
+            ) ?? Enumerable.Empty<T>();
     }
 
-    public static async Task<IEnumerable<EternalProject>> SearchProjectsAsync(IMemoryCache cache, string query,
+    public static async Task<IEnumerable<EternalProject>> SearchProjectsAsync(
+        IMemoryCache cache,
+        string query,
         ResourceType type,
-        string? gameVersion = null, string? modLoaderId = null, uint offset = 0, uint limit = 10,
-        CancellationToken token = default)
+        string? gameVersion = null,
+        string? modLoaderId = null,
+        uint offset = 0,
+        uint limit = 10,
+        CancellationToken token = default
+    )
     {
         var modLoaderType = modLoaderId switch
         {
@@ -88,7 +114,8 @@ public static class CurseForgeHelper
             ComponentMeta.QUILT => 5,
             _ => 0
         };
-        var service = $"/mods/search?gameId={GAME_ID}&classId={type switch
+        var service =
+            $"/mods/search?gameId={GAME_ID}&classId={type switch
         {
             ResourceType.Modpack => CLASSID_MODPACK,
             ResourceType.Mod => CLASSID_MOD,
@@ -96,44 +123,62 @@ public static class CurseForgeHelper
             ResourceType.World => CLASSID_WORLD,
             _ => throw new NotSupportedException()
         }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlEncode(query)}&sortField=2&sortOrder=desc"
-                      + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
-                      + ((type == ResourceType.Mod || type == ResourceType.Modpack) && modLoaderId != null
-                          ? $"&modLoaderType={modLoaderType}"
-                          : "");
+            + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
+            + (
+                (type == ResourceType.Mod || type == ResourceType.Modpack) && modLoaderId != null
+                    ? $"&modLoaderType={modLoaderType}"
+                    : ""
+            );
         return await GetResourcesAsync<EternalProject>(service, cache, token);
     }
 
-    public static async Task<EternalProject?> GetModInfoAsync(uint projectId, IMemoryCache cache,
-        CancellationToken token = default)
+    public static async Task<EternalProject?> GetModInfoAsync(
+        uint projectId,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
     {
         var service = $"/mods/{projectId}";
         return await GetResourceAsync<EternalProject>(service, cache, token);
     }
 
-    public static async Task<string?> GetModDescriptionAsync(uint projectId, IMemoryCache cache,
-        CancellationToken token = default)
+    public static async Task<string?> GetModDescriptionAsync(
+        uint projectId,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
     {
         var service = $"/mods/{projectId}/description";
         return await GetResourceAsync<string>(service, cache, token);
     }
 
-    public static async Task<string?> GetModDownloadUrlAsync(uint projectId, int fileId, IMemoryCache cache,
-        CancellationToken token = default)
+    public static async Task<string?> GetModDownloadUrlAsync(
+        uint projectId,
+        int fileId,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
     {
         var service = $"/mods/{projectId}/files/{fileId}/download-url";
         return await GetResourceAsync<string>(service, cache, token);
     }
 
-    public static async Task<EternalModFile?> GetModFileInfoAsync(uint projectId, uint fileId,
+    public static async Task<EternalModFile?> GetModFileInfoAsync(
+        uint projectId,
+        uint fileId,
         IMemoryCache cache,
-        CancellationToken token = default)
+        CancellationToken token = default
+    )
     {
         var service = $"/mods/{projectId}/files/{fileId}";
         return await GetResourceAsync<EternalModFile>(service, cache, token);
     }
 
-    public static async Task<IEnumerable<EternalModFile>> GetModFilesAsync(uint projectId, IMemoryCache cache,
-        CancellationToken token = default)
+    public static async Task<IEnumerable<EternalModFile>> GetModFilesAsync(
+        uint projectId,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
     {
         var service = $"/mods/{projectId}/files";
         return await GetResourcesAsync<EternalModFile>(service, cache, token);

@@ -4,8 +4,13 @@ namespace Polymerium.App.Models;
 
 public class SearchCenterNavigationArguments
 {
-    public SearchCenterNavigationArguments(string query, bool instanceScopeOverride = false,
-        RepositoryLabel? repository = null, ResourceType? type = null, bool searchImmediately = false)
+    public SearchCenterNavigationArguments(
+        string query,
+        bool instanceScopeOverride = false,
+        RepositoryLabel? repository = null,
+        ResourceType? type = null,
+        bool searchImmediately = false
+    )
     {
         Query = query;
         InstanceScopeOverride = instanceScopeOverride;

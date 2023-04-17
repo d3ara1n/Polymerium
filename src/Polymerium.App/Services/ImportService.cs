@@ -18,17 +18,16 @@ public class ImportService
     private readonly IFileBaseService _fileBase;
     private readonly InstanceManager _instanceManager;
 
-    public ImportService(
-        IFileBaseService fileBase,
-        InstanceManager instanceManager
-    )
+    public ImportService(IFileBaseService fileBase, InstanceManager instanceManager)
     {
         _fileBase = fileBase;
         _instanceManager = instanceManager;
     }
 
-    public async Task<Result<ImportResult, GameImportError>> ImportAsync(string filePath,
-        CancellationToken? token = default)
+    public async Task<Result<ImportResult, GameImportError>> ImportAsync(
+        string filePath,
+        CancellationToken? token = default
+    )
     {
         if (File.Exists(filePath))
         {
@@ -44,7 +43,10 @@ public class ImportService
 
                 if (files.Any(x => x == "manifest.json"))
                 {
-                    var importer = new CurseForgeImporter { Token = token ?? CancellationToken.None };
+                    var importer = new CurseForgeImporter
+                    {
+                        Token = token ?? CancellationToken.None
+                    };
                     return await importer.ProcessAsync(archive);
                 }
             }
@@ -69,8 +71,16 @@ public class ImportService
                     try
                     {
                         var path = _fileBase.Locate(
-                            new Uri(new Uri(ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", product.Instance.Id)),
-                                file.Path));
+                            new Uri(
+                                new Uri(
+                                    ConstPath.LOCAL_INSTANCE_BASE.Replace(
+                                        "{0}",
+                                        product.Instance.Id
+                                    )
+                                ),
+                                file.Path
+                            )
+                        );
                         var entry = product.Archive.GetEntry(file.FileName)!;
                         var dir = Path.GetDirectoryName(path);
                         if (!Directory.Exists(dir))
@@ -85,10 +95,7 @@ public class ImportService
                     }
 
                 foreach (var file in allocated)
-                    product.Instance.Metadata.Attachments.Add(new Attachment
-                    {
-                        Source = file
-                    });
+                    product.Instance.Metadata.Attachments.Add(new Attachment { Source = file });
                 _instanceManager.AddInstance(product.Instance);
                 return null;
             })

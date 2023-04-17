@@ -11,18 +11,23 @@ namespace Polymerium.App.Views.AddAccountWizards;
 public sealed partial class MicrosoftAccountFinishView : Page
 {
     // Using a DependencyProperty as the backing store for AvatarUrl.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty AvatarUrlProperty =
-        DependencyProperty.Register(nameof(AvatarUrl), typeof(string), typeof(MicrosoftAccountFinishView),
-            new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty AvatarUrlProperty = DependencyProperty.Register(
+        nameof(AvatarUrl),
+        typeof(string),
+        typeof(MicrosoftAccountFinishView),
+        new PropertyMetadata(string.Empty)
+    );
 
     // Using a DependencyProperty as the backing store for Username.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty UsernameProperty =
-        DependencyProperty.Register(nameof(Username), typeof(string), typeof(MicrosoftAccountFinishView),
-            new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register(
+        nameof(Username),
+        typeof(string),
+        typeof(MicrosoftAccountFinishView),
+        new PropertyMetadata(string.Empty)
+    );
 
     private MicrosoftAccount? account;
     private AddAccountWizardStateHandler? handler;
-
 
     public MicrosoftAccountFinishView()
     {
@@ -36,7 +41,6 @@ public sealed partial class MicrosoftAccountFinishView : Page
         set => SetValue(AvatarUrlProperty, value);
     }
 
-
     public string Username
     {
         get => (string)GetValue(UsernameProperty);
@@ -47,8 +51,8 @@ public sealed partial class MicrosoftAccountFinishView : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        (handler, _, var parameter) =
-            ((AddAccountWizardStateHandler, CancellationToken, object?))e.Parameter;
+        (handler, _, var parameter) = ((AddAccountWizardStateHandler, CancellationToken, object?))
+            e.Parameter;
         account = (MicrosoftAccount)parameter!;
         Username = account.Nickname;
         AvatarUrl = $"https://minotar.net/helm/{account.UUID}/100.png";

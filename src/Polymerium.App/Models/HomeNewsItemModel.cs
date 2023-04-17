@@ -4,7 +4,13 @@ namespace Polymerium.App.Models;
 
 public class HomeNewsItemModel
 {
-    public HomeNewsItemModel(string title, string text, DateTimeOffset date, Uri? readMore, string imageSource)
+    public HomeNewsItemModel(
+        string title,
+        string text,
+        DateTimeOffset date,
+        Uri? readMore,
+        string imageSource
+    )
     {
         Title = title;
         Text = text;

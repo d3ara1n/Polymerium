@@ -17,14 +17,17 @@ public class SelectionViewModel : ObservableObject
             new(
                 "微软账号",
                 "ms-appx:///Assets/Icons/Brands/microsoft.256x256.png",
-                typeof(MicrosoftAccountIntroView))
+                typeof(MicrosoftAccountIntroView)
+            )
         };
         if (storage.Accounts.Any(x => x is MicrosoftAccount))
-            entries.Add(new AccountWizardEntryModel(
-                "离线账号",
-                "ms-appx:///Assets/Icons/Brands/minecraft.256x256.png",
-                typeof(OfflineAccountView)
-            ));
+            entries.Add(
+                new AccountWizardEntryModel(
+                    "离线账号",
+                    "ms-appx:///Assets/Icons/Brands/minecraft.256x256.png",
+                    typeof(OfflineAccountView)
+                )
+            );
         Entries = entries;
     }
 

@@ -126,7 +126,8 @@ public partial class App : Application
             .AddTransient<ResourceResolverBase, CurseForgeResolver>()
             .AddTransient<ResourceResolverBase, ModrinthResolver>();
         // repository
-        services.AddTransient<IResourceRepository, CurseForgeRepository>()
+        services
+            .AddTransient<IResourceRepository, CurseForgeRepository>()
             .AddTransient<IResourceRepository, ModrinthRepository>();
         return services.BuildServiceProvider();
     }

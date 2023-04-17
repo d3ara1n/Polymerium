@@ -44,43 +44,51 @@ public class AssetManager
         var files = dir.Exists
             ? dir.GetFiles(ResourceType.Mod == type ? "*.jar" : "*.zip")
             : Enumerable.Empty<FileInfo>();
-        var assets = files.Select(x => new AssetRaw
-        {
-            FileName = new Uri(dirUri, x.Name),
-            Type = type
-        });
+        var assets = files.Select(
+            x => new AssetRaw { FileName = new Uri(dirUri, x.Name), Type = type }
+        );
         return assets;
     }
 
     public IEnumerable<AssetRaw> ScanAssets(GameInstance instance)
     {
-        return Enumerable.Empty<AssetRaw>()
+        return Enumerable
+            .Empty<AssetRaw>()
             .Concat(ScanAssets(instance, ResourceType.Mod))
             .Concat(ScanAssets(instance, ResourceType.ResourcePack))
             .Concat(ScanAssets(instance, ResourceType.ShaderPack));
     }
 
-    public async Task<AssetProduct?> ExtractAssetInfoAsync(AssetRaw raw, CancellationToken token = default)
+    public async Task<AssetProduct?> ExtractAssetInfoAsync(
+        AssetRaw raw,
+        CancellationToken token = default
+    )
     {
         var fileName = _fileBase.Locate(raw.FileName);
         if (File.Exists(fileName))
             try
             {
                 using var archive = new ZipArchive(File.OpenRead(fileName), ZipArchiveMode.Read);
-                return await (raw.Type switch
-                {
-                    ResourceType.Mod => ExtractModInfoAsync(archive, raw.FileName, token),
-                    ResourceType.ResourcePack => ExtractResourcePackInfoAsync(archive, raw.FileName, token),
-                    ResourceType.ShaderPack => Task.FromResult<AssetProduct?>(new AssetProduct
+                return await (
+                    raw.Type switch
                     {
-                        Name = Path.GetFileNameWithoutExtension(fileName),
-                        Version = null,
-                        Description = null,
-                        Type = ResourceType.ShaderPack,
-                        FileName = raw.FileName
-                    }),
-                    _ => throw new NotImplementedException()
-                });
+                        ResourceType.Mod => ExtractModInfoAsync(archive, raw.FileName, token),
+                        ResourceType.ResourcePack
+                            => ExtractResourcePackInfoAsync(archive, raw.FileName, token),
+                        ResourceType.ShaderPack
+                            => Task.FromResult<AssetProduct?>(
+                                new AssetProduct
+                                {
+                                    Name = Path.GetFileNameWithoutExtension(fileName),
+                                    Version = null,
+                                    Description = null,
+                                    Type = ResourceType.ShaderPack,
+                                    FileName = raw.FileName
+                                }
+                            ),
+                        _ => throw new NotImplementedException()
+                    }
+                );
             }
             catch
             {
@@ -90,10 +98,14 @@ public class AssetManager
         return null;
     }
 
-    private async Task<AssetProduct?> ExtractModInfoAsync(ZipArchive archive, Uri fileName,
-        CancellationToken token = default)
+    private async Task<AssetProduct?> ExtractModInfoAsync(
+        ZipArchive archive,
+        Uri fileName,
+        CancellationToken token = default
+    )
     {
-        if (token.IsCancellationRequested) return null;
+        if (token.IsCancellationRequested)
+            return null;
         var forge = archive.GetEntry("META-INF/mods.toml");
         if (forge != null)
         {
@@ -101,9 +113,13 @@ public class AssetManager
             var toml = await reader.ReadToEndAsync();
             var info = Toml.ToModel(toml);
             var mod = ((TomlTableArray)info["mods"])?.FirstOrDefault();
-            if (mod != null && mod.TryGetValue("displayName", out var name) &&
-                mod.TryGetValue("version", out var version) && mod.TryGetValue("authors", out var authors) &&
-                mod.TryGetValue("description", out var description))
+            if (
+                mod != null
+                && mod.TryGetValue("displayName", out var name)
+                && mod.TryGetValue("version", out var version)
+                && mod.TryGetValue("authors", out var authors)
+                && mod.TryGetValue("description", out var description)
+            )
             {
                 var product = new AssetProduct
                 {
@@ -137,10 +153,14 @@ public class AssetManager
         return null;
     }
 
-    private async Task<AssetProduct?> ExtractResourcePackInfoAsync(ZipArchive archive, Uri fileName,
-        CancellationToken token = default)
+    private async Task<AssetProduct?> ExtractResourcePackInfoAsync(
+        ZipArchive archive,
+        Uri fileName,
+        CancellationToken token = default
+    )
     {
-        if (token.IsCancellationRequested) return null;
+        if (token.IsCancellationRequested)
+            return null;
         var meta = archive.GetEntry("pack.mcmeta");
         if (meta != null)
         {
@@ -165,15 +185,15 @@ public class AssetManager
         return null;
     }
 
-    public async Task<AssetProduct?> InstallAssetAsync(GameInstance instance, ResourceType type, Uri source,
-        CancellationToken token = default)
+    public async Task<AssetProduct?> InstallAssetAsync(
+        GameInstance instance,
+        ResourceType type,
+        Uri source,
+        CancellationToken token = default
+    )
     {
         var real = source.Scheme == "poly-file" ? _fileBase.Locate(source) : source.AbsolutePath;
-        var raw = new AssetRaw
-        {
-            FileName = source,
-            Type = type
-        };
+        var raw = new AssetRaw { FileName = source, Type = type };
         var dest = new Uri(GetAssetDirectory(instance, type), Path.GetFileName(real));
         var realDest = _fileBase.Locate(dest);
         var product = await ExtractAssetInfoAsync(raw, token);
@@ -182,10 +202,7 @@ public class AssetManager
             if (Directory.Exists(Path.GetDirectoryName(realDest)))
                 Directory.CreateDirectory(Path.GetDirectoryName(realDest)!);
             File.Copy(real, realDest);
-            return product.Value with
-            {
-                FileName = dest
-            };
+            return product.Value with { FileName = dest };
         }
 
         return null;
@@ -200,7 +217,10 @@ public class AssetManager
             ResourceType.ResourcePack => "resourcepacks",
             _ => throw new NotImplementedException()
         };
-        var dirUri = new Uri(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)), $"{dir}/");
+        var dirUri = new Uri(
+            new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)),
+            $"{dir}/"
+        );
         return dirUri;
     }
 
@@ -208,13 +228,21 @@ public class AssetManager
     {
         var snapshot = new List<RenewableAssetState>();
         var instanceBase = new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id));
-        TakeRenewableAssetSnapshotInternal(snapshot, instanceBase, new Uri(ConstPath.CACHE_OBJECTS_DIR),
-            _fileBase.Locate(instanceBase));
+        TakeRenewableAssetSnapshotInternal(
+            snapshot,
+            instanceBase,
+            new Uri(ConstPath.CACHE_OBJECTS_DIR),
+            _fileBase.Locate(instanceBase)
+        );
         return snapshot;
     }
 
-    private void TakeRenewableAssetSnapshotInternal(in List<RenewableAssetState> snapshot, Uri instanceBase,
-        Uri poolBase, string parent)
+    private void TakeRenewableAssetSnapshotInternal(
+        in List<RenewableAssetState> snapshot,
+        Uri instanceBase,
+        Uri poolBase,
+        string parent
+    )
     {
         var dir = new DirectoryInfo(parent);
         if (dir.Exists)
@@ -238,19 +266,28 @@ public class AssetManager
         }
     }
 
-    public RenewableAssetDeploymentError? DeployRenewableAssets(GameInstance instance,
-        IEnumerable<RenewableAssetState> finals)
+    public RenewableAssetDeploymentError? DeployRenewableAssets(
+        GameInstance instance,
+        IEnumerable<RenewableAssetState> finals
+    )
     {
         // 想要 tagged RenewableAssetDeploymentError(file)...
-        if (finals.Any(x =>
+        if (
+            finals.Any(x =>
             {
                 var file = new FileInfo(_fileBase.Locate(x.Target));
-                return file.LinkTarget == null && file.Exists &&
-                       !_fileBase.CheckIfTheSameAsync(x.Target, x.Source).Result;
-            }))
+                return file.LinkTarget == null
+                    && file.Exists
+                    && !_fileBase.CheckIfTheSameAsync(x.Target, x.Source).Result;
+            })
+        )
             return RenewableAssetDeploymentError.TargetConflict;
         var snapshot = TakeRenewableAssetSnapshot(instance);
-        foreach (var original in snapshot.Where(x => !finals.Any(y => x.Source == y.Source && x.Target == y.Target)))
+        foreach (
+            var original in snapshot.Where(
+                x => !finals.Any(y => x.Source == y.Source && x.Target == y.Target)
+            )
+        )
             File.Delete(_fileBase.Locate(original.Target));
         foreach (var final in finals.Where(x => !_fileBase.DoFileExist(x.Target)))
         {
@@ -266,7 +303,10 @@ public class AssetManager
 
     public IEnumerable<WorldSave> ScanSaves(GameInstance instance)
     {
-        var saveDir = new Uri(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)), "saves/");
+        var saveDir = new Uri(
+            new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)),
+            "saves/"
+        );
         var list = new List<WorldSave>();
         var saveDirPath = _fileBase.Locate(saveDir);
         if (Directory.Exists(saveDirPath))
@@ -286,8 +326,9 @@ public class AssetManager
                         if (data.Contains("LevelName"))
                             save.Name = data.Get<NbtString>("LevelName").Value;
                         if (data.Contains("LastPlayed"))
-                            save.LastPlayed =
-                                DateTimeOffset.FromUnixTimeMilliseconds(data.Get<NbtLong>("LastPlayed").Value);
+                            save.LastPlayed = DateTimeOffset.FromUnixTimeMilliseconds(
+                                data.Get<NbtLong>("LastPlayed").Value
+                            );
                         var genSettings = data.Get<NbtCompound>("WorldGenSettings");
                         if (genSettings != null && genSettings.Contains("seed"))
                             save.Seed = genSettings.Get<NbtLong>("seed").Value;

@@ -88,8 +88,11 @@ public sealed partial class MainView : Page
 
             var result = ViewModel
                 .GetViewOfInstance()
-                .Where(x => string.IsNullOrEmpty(input) ||
-                            x.Name.StartsWith(sender.Text, StringComparison.OrdinalIgnoreCase))
+                .Where(
+                    x =>
+                        string.IsNullOrEmpty(input)
+                        || x.Name.StartsWith(sender.Text, StringComparison.OrdinalIgnoreCase)
+                )
                 .Select(x => new NavigationSearchBarItemModel(x.Name, "\xF158", x.Id))
                 .Append(new NavigationSearchBarItemModel($"搜索: {input}", "\xE721", query: input));
             sender.ItemsSource = result;
@@ -120,24 +123,28 @@ public sealed partial class MainView : Page
         var fadeIn = new Storyboard();
         Storyboard.SetTarget(fadeIn, grid);
         Storyboard.SetTargetProperty(fadeIn, "Opacity");
-        fadeIn.Children.Add(new DoubleAnimation
-        {
-            From = 0d,
-            To = 1d,
-            Duration = new Duration(TimeSpan.FromMilliseconds(220))
-        });
+        fadeIn.Children.Add(
+            new DoubleAnimation
+            {
+                From = 0d,
+                To = 1d,
+                Duration = new Duration(TimeSpan.FromMilliseconds(220))
+            }
+        );
         fadeIn.Completed += (_, _) =>
         {
             var fadeOut = new Storyboard();
             Storyboard.SetTarget(fadeOut, grid);
             Storyboard.SetTargetProperty(fadeOut, "Opacity");
-            fadeOut.Children.Add(new DoubleAnimation
-            {
-                From = 1d,
-                To = 0d,
-                BeginTime = TimeSpan.FromSeconds(4),
-                Duration = new Duration(TimeSpan.FromMilliseconds(300))
-            });
+            fadeOut.Children.Add(
+                new DoubleAnimation
+                {
+                    From = 1d,
+                    To = 0d,
+                    BeginTime = TimeSpan.FromSeconds(4),
+                    Duration = new Duration(TimeSpan.FromMilliseconds(300))
+                }
+            );
             fadeOut.Completed += (_, _) =>
             {
                 if (ViewModel.Notifications.Count > 0)

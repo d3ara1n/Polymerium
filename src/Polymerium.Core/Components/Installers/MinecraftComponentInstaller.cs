@@ -80,7 +80,6 @@ public sealed class MinecraftComponentInstaller : ComponentInstallerBase
                         Context.AddCrate("user_properties", "{}");
                     }
 
-
                     foreach (var item in index.Value.Libraries.Where(x => x.Verify()))
                     {
                         if (item.Downloads.Artifact.HasValue)

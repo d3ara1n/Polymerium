@@ -68,7 +68,8 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
 
     public void AppendGameArgument(string value)
     {
-        if (!gameArguments.Contains(value)) gameArguments.Add(value);
+        if (!gameArguments.Contains(value))
+            gameArguments.Add(value);
     }
 
     public void AppendJvmArguments(string value)
@@ -92,9 +93,14 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
             {
                 var existTuple = exist.Name.Split(':');
                 var tuple = library.Name.Split(':');
-                if (existTuple.Take(2).Concat(existTuple.Skip(3)).SequenceEqual(tuple.Take(2).Concat(tuple.Skip(3))) &&
-                    exist.IsNative == library.IsNative &&
-                    exist.PresentInClassPath == library.PresentInClassPath)
+                if (
+                    existTuple
+                        .Take(2)
+                        .Concat(existTuple.Skip(3))
+                        .SequenceEqual(tuple.Take(2).Concat(tuple.Skip(3)))
+                    && exist.IsNative == library.IsNative
+                    && exist.PresentInClassPath == library.PresentInClassPath
+                )
                 {
                     var version = tuple[2];
                     var existVersion = existTuple[2];
@@ -112,12 +118,16 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
             }
             else
             {
-                if (exist.Name == library.Name && exist.IsNative == library.IsNative &&
-                    exist.PresentInClassPath == library.PresentInClassPath)
+                if (
+                    exist.Name == library.Name
+                    && exist.IsNative == library.IsNative
+                    && exist.PresentInClassPath == library.PresentInClassPath
+                )
                     found = true;
             }
 
-        if (!found) libraries.Add(library);
+        if (!found)
+            libraries.Add(library);
     }
 
     private bool CompareVersion(string a, string b)
@@ -140,8 +150,10 @@ public class ComponentInstallerContext : IBuilder<PolylockData>
     {
         if (int.TryParse(a, out var ia) && int.TryParse(b, out var ib))
         {
-            if (ia > ib) return 1;
-            if (ia < ib) return -1;
+            if (ia > ib)
+                return 1;
+            if (ia < ib)
+                return -1;
             return 0;
         }
 

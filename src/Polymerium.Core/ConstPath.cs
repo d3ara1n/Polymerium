@@ -1,4 +1,5 @@
 ﻿namespace Polymerium.Core;
+
 #pragma warning disable S1075 // URIs should not be hardcoded
 public static class ConstPath
 {
@@ -17,6 +18,7 @@ public static class ConstPath
     public const string CONFIG_CONFIGURATION_FILE = "poly-file:///configuration.json";
     public const string CONFIG_INSTANCE_FILE = "poly-file:///instances.json";
     public const string LOCAL_INSTANCE_BASE = "poly-file:///local/instances/{0}/";
-    public const string LOCAL_INSTANCE_LIBRARIES_DIR = "poly-file:///local/instances/{0}/libraries/";
+    public const string LOCAL_INSTANCE_LIBRARIES_DIR =
+        "poly-file:///local/instances/{0}/libraries/";
 }
 #pragma warning restore S1075 // URIs should not be hardcoded

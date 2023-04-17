@@ -5,7 +5,6 @@ namespace Polymerium.App.Messages;
 
 public class InstanceAddedMessage : ValueChangedMessage<GameInstance>
 {
-    public InstanceAddedMessage(GameInstance value) : base(value)
-    {
-    }
+    public InstanceAddedMessage(GameInstance value)
+        : base(value) { }
 }

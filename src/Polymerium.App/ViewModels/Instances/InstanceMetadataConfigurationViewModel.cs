@@ -35,7 +35,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         NavigationService navigation
     )
     {
-        Context = context;
+        Instance = context.AssociatedInstance!;
         _componentManager = componentManager;
         _overlayService = overlayService;
         _resolver = resolver;
@@ -43,18 +43,22 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         AddComponentCommand = new RelayCommand(AddComponent);
         GotoSearchCenterCommand = new RelayCommand(GotoSearchCenter);
         OpenReferenceUrlCommand = new RelayCommand<Uri>(OpenReferenceUrl);
-        RemoveAttachmentSelfCommand = new RelayCommand<InstanceAttachmentItemModel>(RemoveAttachmentSelf);
-        RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(RemoveComponentSelf);
+        RemoveAttachmentSelfCommand = new RelayCommand<InstanceAttachmentItemModel>(
+            RemoveAttachmentSelf
+        );
+        RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(
+            RemoveComponentSelf
+        );
         Components = new ObservableCollection<InstanceComponentItemModel>(
-            Context.AssociatedInstance?.Components.Select(FromComponent)
-            ?? Enumerable.Empty<InstanceComponentItemModel>()
+            Instance.Components.Select(FromComponent)
+                ?? Enumerable.Empty<InstanceComponentItemModel>()
         );
         Attachments = new ObservableCollection<InstanceAttachmentItemModel>();
-        Context.AssociatedInstance!.Components.CollectionChanged += Components_OnCollectionChanged;
-        Context.AssociatedInstance!.Attachments.CollectionChanged += Attachments_CollectionChanged;
+        Instance.Components.CollectionChanged += Components_OnCollectionChanged;
+        Instance.Attachments.CollectionChanged += Attachments_CollectionChanged;
     }
 
-    public ViewModelContext Context { get; }
+    public GameInstanceModel Instance { get; }
     public ObservableCollection<InstanceComponentItemModel> Components { get; }
     public ObservableCollection<InstanceAttachmentItemModel> Attachments { get; }
     public ICommand AddComponentCommand { get; }
@@ -107,8 +111,11 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
             case NotifyCollectionChangedAction.Remove:
                 if (e.OldItems != null)
                 {
-                    var collection = Attachments.Where(x => e.OldItems.Contains(x.Attachment)).ToList();
-                    foreach (var model in collection) Attachments.Remove(model);
+                    var collection = Attachments
+                        .Where(x => e.OldItems.Contains(x.Attachment))
+                        .ToList();
+                    foreach (var model in collection)
+                        Attachments.Remove(model);
                 }
 
                 break;
@@ -123,12 +130,20 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     public async Task LoadParseReferenceAsync(Action<InstanceModpackReferenceModel?> callback)
     {
-        var result = await _resolver.ResolveAsync(Context.AssociatedInstance!.ReferenceSource!,
-            new ResolverContext(Context.AssociatedInstance.Inner));
+        var result = await _resolver.ResolveAsync(
+            Instance.ReferenceSource!,
+            new ResolverContext(Instance.Inner)
+        );
         if (result.IsSuccessful && result.Value.Type == ResourceType.Modpack)
         {
-            var model = new InstanceModpackReferenceModel(result.Value.Resource.Name, result.Value.Resource.Id,
-                result.Value.Resource.Version, result.Value.Resource.VersionId, result.Value.Resource.Author);
+            var model = new InstanceModpackReferenceModel(
+                result.Value.Resource.Name,
+                result.Value.Resource.Id,
+                result.Value.Resource.Version,
+                result.Value.Resource.VersionId,
+                result.Value.Resource.Author,
+                result.Value.Resource.Summary
+            );
             callback(model);
         }
         else
@@ -139,7 +154,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     public async Task LoadParseAttachmentsAsync(IEnumerable<Attachment> newlyAdded)
     {
-        var context = new ResolverContext(Context.AssociatedInstance!.Inner);
+        var context = new ResolverContext(Instance.Inner);
         var tasks = new List<Task>();
         foreach (var attachment in newlyAdded)
             tasks.Add(LoadAddAttachmentInfoAsync(attachment, context, addAttachmentCallback!));
@@ -155,29 +170,54 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
             $"ms-appx:///Assets/Icons/GameComponents/{component.Identity}.png",
             meta?.FriendlyName ?? component.Identity,
             component.Version,
-            !Context.AssociatedInstance!.IsTagged,
+            !Instance.IsTagged,
             RemoveComponentSelfCommand
         );
     }
 
-    private async Task LoadAddAttachmentInfoAsync(Attachment attachment, ResolverContext context,
-        Action<InstanceAttachmentItemModel?> callback)
+    private async Task LoadAddAttachmentInfoAsync(
+        Attachment attachment,
+        ResolverContext context,
+        Action<InstanceAttachmentItemModel?> callback
+    )
     {
         var result = await _resolver.ResolveAsync(attachment.Source, context);
         InstanceAttachmentItemModel model = null!;
-        var isLocked = Context.AssociatedInstance!.ReferenceSource != null && attachment.From == Context.AssociatedInstance!.ReferenceSource;
+        var isLocked =
+            Instance.ReferenceSource != null
+            && attachment.From == Instance.ReferenceSource;
         if (result.IsSuccessful)
         {
             var item = result.Value;
-            model = new InstanceAttachmentItemModel(item.Type, item.Resource.Name, item.Resource.Author,
-                item.Resource.IconSource, item.Resource.Reference, item.Resource.Version, item.Resource.Summary,
-                attachment, isLocked, OpenReferenceUrlCommand, RemoveAttachmentSelfCommand);
+            model = new InstanceAttachmentItemModel(
+                item.Type,
+                item.Resource.Name,
+                item.Resource.Author,
+                item.Resource.IconSource,
+                item.Resource.Reference,
+                item.Resource.Version,
+                item.Resource.Summary,
+                attachment,
+                isLocked,
+                OpenReferenceUrlCommand,
+                RemoveAttachmentSelfCommand
+            );
         }
         else
         {
-            model = new InstanceAttachmentItemModel(ResourceType.None, "未知", "未知", null, null, "N/A",
+            model = new InstanceAttachmentItemModel(
+                ResourceType.None,
+                "未知",
+                "未知",
+                null,
+                null,
+                "N/A",
                 attachment.Source.AbsoluteUri,
-                attachment, isLocked, OpenReferenceUrlCommand, RemoveAttachmentSelfCommand);
+                attachment,
+                isLocked,
+                OpenReferenceUrlCommand,
+                RemoveAttachmentSelfCommand
+            );
         }
 
         callback(model);
@@ -197,31 +237,32 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     private void RemoveComponentSelf(InstanceComponentItemModel? model)
     {
         if (
-            Context.AssociatedInstance!.Components.Any(
+            Instance.Components.Any(
                 x => x.Identity == model?.Id && x.Version == model.Version
             )
         )
         {
-            var item = Context.AssociatedInstance.Components.First(
+            var item = Instance.Components.First(
                 x => x.Identity == model?.Id && x.Version == model.Version
             );
-            Context.AssociatedInstance.Components.Remove(item);
+            Instance.Components.Remove(item);
         }
     }
 
     private void RemoveAttachmentSelf(InstanceAttachmentItemModel? model)
     {
-        if (model != null && Context.AssociatedInstance!.Attachments.Contains(model.Attachment))
-            Context.AssociatedInstance!.Attachments.Remove(model.Attachment);
+        if (model != null && Instance.Attachments.Contains(model.Attachment))
+            Instance.Attachments.Remove(model.Attachment);
     }
 
     private void OpenReferenceUrl(Uri? reference)
     {
-        if (reference != null) Process.Start(new ProcessStartInfo(reference.AbsoluteUri) { UseShellExecute = true });
+        if (reference != null)
+            Process.Start(new ProcessStartInfo(reference.AbsoluteUri) { UseShellExecute = true });
     }
 
     public void Unlock()
     {
-        Context.AssociatedInstance!.ReferenceSource = null;
+        Instance.ReferenceSource = null;
     }
 }

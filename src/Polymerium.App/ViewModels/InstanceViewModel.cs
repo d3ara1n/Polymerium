@@ -68,20 +68,12 @@ public class InstanceViewModel : ObservableObject
         InformationItems = new ObservableCollection<InstanceInformationItemModel>
         {
             new("\uF427", "标志符", Instance.Id),
-            new(
-                "\uE125",
-                "作者",
-                string.IsNullOrEmpty(Instance.Author)
-                    ? "(未标注)"
-                    : Instance.Author
-            ),
+            new("\uE125", "作者", string.IsNullOrEmpty(Instance.Author) ? "(未标注)" : Instance.Author),
             new("\uE121", "游戏时间", Instance.PlayTime.Humanize()),
             new(
                 "\uEC92",
                 "最近一次游玩",
-                Instance.LastPlay == null
-                    ? "从未"
-                    : Instance.LastPlay.Humanize()
+                Instance.LastPlay == null ? "从未" : Instance.LastPlay.Humanize()
             ),
             new("\uEB50", "游玩次数", $"{Instance.PlayCount} 次"),
             new(
@@ -100,9 +92,7 @@ public class InstanceViewModel : ObservableObject
             new(
                 "\uEC92",
                 "最近一次还原",
-                Instance.LastRestore == null
-                    ? "从未"
-                    : Instance.LastRestore.Humanize()
+                Instance.LastRestore == null ? "从未" : Instance.LastRestore.Humanize()
             )
         };
         Saves = new ObservableCollection<InstanceWorldSaveModel>();
@@ -228,9 +218,17 @@ public class InstanceViewModel : ObservableObject
         foreach (var save in saves)
         {
             var model = new InstanceWorldSaveModel(
-                _fileBase.Locate(new Uri(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Instance.Id)),
-                    $"saves/{save.FolderName}/icon.png")),
-                save.Name, save.Seed, save.GameVersion, save.LastPlayed, save
+                _fileBase.Locate(
+                    new Uri(
+                        new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Instance.Id)),
+                        $"saves/{save.FolderName}/icon.png"
+                    )
+                ),
+                save.Name,
+                save.Seed,
+                save.GameVersion,
+                save.LastPlayed,
+                save
             );
             Saves.Add(model);
         }
@@ -242,9 +240,12 @@ public class InstanceViewModel : ObservableObject
         Uri? url = null;
         if (Instance.ReferenceSource != null)
         {
-            var result = await _resolver.ResolveAsync(Instance.ReferenceSource,
-                new ResolverContext(Instance.Inner));
-            if (result) url = result.Value.Resource.Reference;
+            var result = await _resolver.ResolveAsync(
+                Instance.ReferenceSource,
+                new ResolverContext(Instance.Inner)
+            );
+            if (result)
+                url = result.Value.Resource.Reference;
         }
 
         callback(url, isNeeded);

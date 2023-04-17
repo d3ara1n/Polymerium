@@ -52,7 +52,9 @@ public class CompleteAssetsStage : StageBase
         {
             if (Token.IsCancellationRequested)
                 return Cancel();
-            var path = new Uri(ConstPath.CACHE_ASSETS_OBJECTS_FILE.Replace("{0}", item[..2]).Replace("{1}", item));
+            var path = new Uri(
+                ConstPath.CACHE_ASSETS_OBJECTS_FILE.Replace("{0}", item[..2]).Replace("{1}", item)
+            );
             if (!await _fileBase.VerifyHashAsync(path, item, _sha1))
                 group.TryAdd(
                     $"https://resources.download.minecraft.net/{item[..2]}/{item}",
@@ -69,7 +71,14 @@ public class CompleteAssetsStage : StageBase
         _downloader.Enqueue(group);
         if (group.Wait())
             return Next(
-                new CompleteLibrariesStage(_instance, _polylock, _sha1, _fileBase, _downloader, _assetManager)
+                new CompleteLibrariesStage(
+                    _instance,
+                    _polylock,
+                    _sha1,
+                    _fileBase,
+                    _downloader,
+                    _assetManager
+                )
             );
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }

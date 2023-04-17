@@ -4,10 +4,16 @@ namespace Polymerium.Abstractions.Resources;
 
 public record File : ResourceBase
 {
-    public File(string id, string name, string version, string author, Uri? iconSource, Uri? reference, string summary,
+    public File(
+        string id,
+        string name,
+        string version,
         string versionId,
         string fileName,
-        string? hash, Uri source) : base(id, name, version, author, iconSource, reference, summary, versionId, null!)
+        string? hash,
+        Uri source
+    )
+        : base(id, name, version, string.Empty, null, null, string.Empty, versionId, null, null)
     {
         FileName = fileName;
         Hash = hash;

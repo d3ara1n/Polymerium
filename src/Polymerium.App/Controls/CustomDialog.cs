@@ -34,9 +34,12 @@ public class CustomDialog : ContentControl
 
     // Using a DependencyProperty as the backing store for OperationHorizontalAlignment.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty OperationHorizontalAlignmentProperty =
-        DependencyProperty.Register(nameof(OperationHorizontalAlignment), typeof(HorizontalAlignment),
-            typeof(CustomDialog), new PropertyMetadata(HorizontalAlignment.Stretch));
-
+        DependencyProperty.Register(
+            nameof(OperationHorizontalAlignment),
+            typeof(HorizontalAlignment),
+            typeof(CustomDialog),
+            new PropertyMetadata(HorizontalAlignment.Stretch)
+        );
 
     private readonly Storyboard fadeoutStoryboard;
     private readonly Storyboard scaleXOutStoryboard;
@@ -76,7 +79,6 @@ public class CustomDialog : ContentControl
             Dismissed?.Invoke(this, new EventArgs());
         };
     }
-
 
     public HorizontalAlignment OperationHorizontalAlignment
     {
@@ -153,11 +155,7 @@ public class CustomDialog : ContentControl
         }
     }
 
-    protected virtual void OnDismiss()
-    {
-    }
+    protected virtual void OnDismiss() { }
 
-    internal virtual void FreeLock()
-    {
-    }
+    internal virtual void FreeLock() { }
 }

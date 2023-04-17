@@ -28,13 +28,21 @@ public class CurseForgeResolver : ResourceResolverBase
     {
         return type switch
         {
+            ResourceType.Update => new Uri($"poly-res://curseforge@update/{projectId}"),
             ResourceType.File => new Uri($"poly-res://curseforge@file/{projectId}/{version}"),
-            _ => new Uri($"poly-res://curseforge@{type.ToString().ToLower()}/{projectId}?version={version}")
+            _
+                => new Uri(
+                    $"poly-res://curseforge@{type.ToString().ToLower()}/{projectId}?version={version}"
+                )
         };
     }
 
-    private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(ResourceType type, string projectId,
-        string version, Func<EternalProject, EternalModFile, ResourceBase> cast)
+    private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(
+        ResourceType type,
+        string projectId,
+        string version,
+        Func<EternalProject, EternalModFile, ResourceBase> cast
+    )
     {
         var pid = PARSER_INT.TryInvoke(projectId);
         // version 其实就是 fileId
@@ -54,42 +62,103 @@ public class CurseForgeResolver : ResourceResolverBase
 
     [ResourceType(ResourceType.Modpack)]
     [ResourceExpression("{projectId}")]
-    public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(string projectId, string version)
+    public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(
+        string projectId,
+        string version
+    )
     {
-        return await GetProjectAsync(ResourceType.Modpack, projectId, version,
-            (project, file) => new Modpack(project.Id.ToString(), project.Name, file.DisplayName,
-                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
-                new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "modpacks").Replace("{1}", project.Slug)),
-                project.Summary,
-                version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
+        return await GetProjectAsync(
+            ResourceType.Modpack,
+            projectId,
+            version,
+            (project, file) =>
+                new Modpack(
+                    project.Id.ToString(),
+                    project.Name,
+                    file.DisplayName,
+                    string.Join(", ", project.Authors.Select(x => x.Name)),
+                    project.Logo?.ThumbnailUrl,
+                    new Uri(
+                        CURSEFORGE_PROJECT_URL
+                            .Replace("{0}", "modpacks")
+                            .Replace("{1}", project.Slug)
+                    ),
+                    project.Summary,
+                    version,
+                    MakeResourceUrl(ResourceType.Update, projectId, version),
+                    MakeResourceUrl(ResourceType.File, projectId, version)
+                )
+        );
     }
 
     [ResourceType(ResourceType.Mod)]
     [ResourceExpression("{projectId}")]
-    public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(string projectId, string version)
+    public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(
+        string projectId,
+        string version
+    )
     {
-        return await GetProjectAsync(ResourceType.Mod, projectId, version,
-            (project, file) => new Mod(project.Id.ToString(), project.Name, file.DisplayName,
-                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
-                new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "mc-mods").Replace("{1}", project.Slug)), project.Summary,
-                version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
+        return await GetProjectAsync(
+            ResourceType.Mod,
+            projectId,
+            version,
+            (project, file) =>
+                new Mod(
+                    project.Id.ToString(),
+                    project.Name,
+                    file.DisplayName,
+                    string.Join(", ", project.Authors.Select(x => x.Name)),
+                    project.Logo?.ThumbnailUrl,
+                    new Uri(
+                        CURSEFORGE_PROJECT_URL
+                            .Replace("{0}", "mc-mods")
+                            .Replace("{1}", project.Slug)
+                    ),
+                    project.Summary,
+                    version,
+                    MakeResourceUrl(ResourceType.Update, projectId, version),
+                    MakeResourceUrl(ResourceType.File, projectId, version)
+                )
+        );
     }
 
     [ResourceType(ResourceType.ResourcePack)]
     [ResourceExpression("{projectId}")]
-    public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(string projectId, string version)
+    public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(
+        string projectId,
+        string version
+    )
     {
-        return await GetProjectAsync(ResourceType.ResourcePack, projectId, version,
-            (project, file) => new ResourcePack(project.Id.ToString(), project.Name, file.DisplayName,
-                string.Join(", ", project.Authors.Select(x => x.Name)), project.Logo?.ThumbnailUrl,
-                new Uri(CURSEFORGE_PROJECT_URL.Replace("{0}", "texture-packs").Replace("{1}", project.Slug)),
-                project.Summary,
-                version, new Uri($"poly-res://curseforge@file/{projectId}/{version}")));
+        return await GetProjectAsync(
+            ResourceType.ResourcePack,
+            projectId,
+            version,
+            (project, file) =>
+                new ResourcePack(
+                    project.Id.ToString(),
+                    project.Name,
+                    file.DisplayName,
+                    string.Join(", ", project.Authors.Select(x => x.Name)),
+                    project.Logo?.ThumbnailUrl,
+                    new Uri(
+                        CURSEFORGE_PROJECT_URL
+                            .Replace("{0}", "texture-packs")
+                            .Replace("{1}", project.Slug)
+                    ),
+                    project.Summary,
+                    version,
+                    MakeResourceUrl(ResourceType.Update, projectId, version),
+                    MakeResourceUrl(ResourceType.File, projectId, version)
+                )
+        );
     }
 
     [ResourceType(ResourceType.File)]
     [ResourceExpression("{projectId}/{fileId}")]
-    public async Task<Result<ResolveResult, ResolveResultError>> GetFileAsync(string projectId, string fileId)
+    public async Task<Result<ResolveResult, ResolveResultError>> GetFileAsync(
+        string projectId,
+        string fileId
+    )
     {
         var pid = PARSER_INT.TryInvoke(projectId);
         // version 其实就是 fileId
@@ -110,10 +179,15 @@ public class CurseForgeResolver : ResourceResolverBase
                     4471 => file.Value.FileName,
                     _ => throw new NotImplementedException()
                 };
-                var result = new File(mod.Value.Id.ToString(), file.Value.DisplayName, file.Value.DisplayName,
-                    string.Empty, null, null,
-                    string.Empty, file.Value.Id.ToString(), fileName, sha1,
-                    file.Value.ExtractDownloadUrl());
+                var result = new File(
+                    mod.Value.Id.ToString(),
+                    file.Value.DisplayName,
+                    file.Value.DisplayName,
+                    file.Value.Id.ToString(),
+                    fileName,
+                    sha1,
+                    file.Value.ExtractDownloadUrl()
+                );
                 return Ok(result, ResourceType.File);
             }
 

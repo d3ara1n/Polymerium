@@ -34,11 +34,15 @@ public static class GameInstanceExtensions
         return new Uri(ConstPath.INSTANCE_POLYLOCKHASH_FILE.Replace("{0}", instance.Id));
     }
 
-    public static bool CheckIfRestored(this GameInstance instance, IFileBaseService fileBase, out string? content)
+    public static bool CheckIfRestored(
+        this GameInstance instance,
+        IFileBaseService fileBase,
+        out string? content
+    )
     {
         content = null;
         return fileBase.TryReadAllText(instance.GetPolylockHashUrl(), out var hash)
-               && hash == instance.ComputeMetadataHash() &&
-               fileBase.TryReadAllText(instance.GetPolylockDataUrl(), out content);
+            && hash == instance.ComputeMetadataHash()
+            && fileBase.TryReadAllText(instance.GetPolylockDataUrl(), out content);
     }
 }

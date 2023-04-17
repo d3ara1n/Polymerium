@@ -81,12 +81,17 @@ public sealed class InstanceManager : IDisposable
         );
         while (_memoryStorage.Instances.Any(x => x.Id != instance.Id && x.FolderName == folderName))
             folderName += '_';
-        var instanceDir = _fileBase.Locate(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)));
+        var instanceDir = _fileBase.Locate(
+            new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id))
+        );
         if (Directory.Exists(instanceDir))
         {
-            var newDir =
-                Path.Combine(Path.GetDirectoryName(instanceDir.EndsWith('\\') ? instanceDir[..^1] : instanceDir)!,
-                    folderName);
+            var newDir = Path.Combine(
+                Path.GetDirectoryName(
+                    instanceDir.EndsWith('\\') ? instanceDir[..^1] : instanceDir
+                )!,
+                folderName
+            );
             try
             {
                 Directory.Move(instanceDir, newDir);

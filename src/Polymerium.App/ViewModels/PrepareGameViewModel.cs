@@ -191,7 +191,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 if (ready)
                 {
                     readyHandler?.Invoke();
-                    if (App.Current.Window.Content.FocusState == FocusState.Unfocused)
+                    if (!App.Current.Window.Visible)
                         new ToastContentBuilder()
                             .SetToastScenario(ToastScenario.Default)
                             .AddText("游戏已准备完毕")
@@ -220,7 +220,9 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         var assetsRoot = new Uri(ConstPath.CACHE_ASSETS_DIR);
         var nativesRoot = new Uri(ConstPath.INSTANCE_NATIVES_DIR.Replace("{0}", Instance!.Id));
         var librariesRoot = new Uri(ConstPath.CACHE_LIBRARIES_DIR);
-        var polylockFile = new Uri(ConstPath.INSTANCE_POLYLOCKDATA_FILE.Replace("{0}", Instance!.Id));
+        var polylockFile = new Uri(
+            ConstPath.INSTANCE_POLYLOCKDATA_FILE.Replace("{0}", Instance!.Id)
+        );
         if (_fileBase.TryReadAllText(polylockFile, out var content))
         {
             var polylock = JsonConvert.DeserializeObject<PolylockData>(content);
@@ -238,10 +240,11 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                 if (
                     verify.TryUnwrap(out var model)
                     && (
-                        (model!.JavaVersion?.StartsWith("1.8") == true
-                            ? "8"
-                            : model.JavaVersion ?? string.Empty)
-                        .StartsWith(polylock.JavaMajorVersionRequired.ToString())
+                        (
+                            model!.JavaVersion?.StartsWith("1.8") == true
+                                ? "8"
+                                : model.JavaVersion ?? string.Empty
+                        ).StartsWith(polylock.JavaMajorVersionRequired.ToString())
                         || (configuration.SkipJavaVersionCheck == true && !autoDetectJava)
                     )
                 )
@@ -264,8 +267,13 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                             )
                         )
                         .WithJvmArguments(
-                            polylock.JvmArguments.Concat(new[] { "-Xmx${jvm_max_memory}m" })
-                                .Concat((configuration.AdditionalJvmArguments ?? string.Empty).Split(' '))
+                            polylock.JvmArguments
+                                .Concat(new[] { "-Xmx${jvm_max_memory}m" })
+                                .Concat(
+                                    (configuration.AdditionalJvmArguments ?? string.Empty).Split(
+                                        ' '
+                                    )
+                                )
                         )
                         .CraftStarship(configure =>
                         {
@@ -277,10 +285,12 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                 .AddCrate("assets_root", _fileBase.Locate(assetsRoot))
                                 .AddCrate("assets_index_name", polylock.AssetIndex.Id)
                                 .AddCrate("auth_uuid", Account!.UUID)
-                                .AddCrate("auth_access_token",
+                                .AddCrate(
+                                    "auth_access_token",
                                     !string.IsNullOrWhiteSpace(Account!.AccessToken)
                                         ? Account!.AccessToken
-                                        : "unauthorized")
+                                        : "unauthorized"
+                                )
                                 .AddCrate("user_type", Account!.LoginType)
                                 .AddCrate("version_type", "Polymerium")
                                 // rule os
@@ -304,13 +314,25 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                     string.Join(
                                         ';',
                                         polylock.Libraries
-                                            .Where(x => x is { PresentInClassPath: true, IsNative: false }).Select(
-                                                x => _fileBase.Locate(new Uri(librariesRoot, x.Path))
+                                            .Where(
+                                                x =>
+                                                    x
+                                                        is {
+                                                            PresentInClassPath: true,
+                                                            IsNative: false
+                                                        }
+                                            )
+                                            .Select(
+                                                x =>
+                                                    _fileBase.Locate(new Uri(librariesRoot, x.Path))
                                             )
                                     )
                                 )
                                 .AddCrate("launcher_name", "Polymerium")
-                                .AddCrate("launcher_version", GetType().Assembly.GetName().Version?.ToString() ?? "0.0")
+                                .AddCrate(
+                                    "launcher_version",
+                                    GetType().Assembly.GetName().Version?.ToString() ?? "0.0"
+                                )
                                 // custom jvm argument patches
                                 .AddCrate(
                                     "jvm_max_memory",
