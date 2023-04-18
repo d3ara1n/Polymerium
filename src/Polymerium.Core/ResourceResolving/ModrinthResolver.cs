@@ -15,7 +15,9 @@ namespace Polymerium.Core.ResourceResolving;
 [ResourceDomain("modrinth")]
 public class ModrinthResolver : ResourceResolverBase
 {
+#pragma warning disable S1075 // URIs should not be hardcoded
     private const string MODRINTH_PROJECT_URL = "https://modrinth.com/{0}/{1}";
+#pragma warning restore S1075 // URIs should not be hardcoded
 
     private readonly IMemoryCache _cache;
 
@@ -24,7 +26,12 @@ public class ModrinthResolver : ResourceResolverBase
         _cache = cache;
     }
 
-    public static Uri MakeResourceUrl(ResourceType type, string projectId, string version, ResourceType raw)
+    public static Uri MakeResourceUrl(
+        ResourceType type,
+        string projectId,
+        string version,
+        ResourceType raw
+    )
     {
         var dir = raw switch
         {
@@ -39,7 +46,7 @@ public class ModrinthResolver : ResourceResolverBase
         return type switch
         {
             ResourceType.Update => new Uri($"poly-res://modrinth@update/{projectId}"),
-            ResourceType.File => new Uri($"poly-res://modrinth@file/{raw }/{version}"),
+            ResourceType.File => new Uri($"poly-res://modrinth@file/{dir}/{version}"),
             _
                 => new Uri(
                     $"poly-res://modrinth@{type.ToString().ToLower()}/{projectId}?version={version}"
@@ -77,13 +84,13 @@ public class ModrinthResolver : ResourceResolverBase
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(
         string projectId,
-        string versionId
+        string version
     )
     {
         return await GetProjectAsync(
             ResourceType.Modpack,
             projectId,
-            versionId,
+            version,
             (project, file, members) =>
                 new Modpack(
                     project.Id ?? project.Slug,
@@ -95,9 +102,9 @@ public class ModrinthResolver : ResourceResolverBase
                         MODRINTH_PROJECT_URL.Replace("{0}", "modpack").Replace("{1}", project.Slug)
                     ),
                     project.Description,
-                    versionId,
-                    MakeResourceUrl(ResourceType.Update, projectId, versionId, ResourceType.Modpack),
-                    MakeResourceUrl(ResourceType.File, projectId, versionId, ResourceType.Modpack)
+                    version,
+                    MakeResourceUrl(ResourceType.Update, projectId, version, ResourceType.Modpack),
+                    MakeResourceUrl(ResourceType.File, projectId, version, ResourceType.Modpack)
                 )
         );
     }
@@ -156,8 +163,18 @@ public class ModrinthResolver : ResourceResolverBase
                     ),
                     project.Description,
                     version,
-                    MakeResourceUrl(ResourceType.Update, projectId, version, ResourceType.ResourcePack),
-                    MakeResourceUrl(ResourceType.File, projectId, version, ResourceType.ResourcePack)
+                    MakeResourceUrl(
+                        ResourceType.Update,
+                        projectId,
+                        version,
+                        ResourceType.ResourcePack
+                    ),
+                    MakeResourceUrl(
+                        ResourceType.File,
+                        projectId,
+                        version,
+                        ResourceType.ResourcePack
+                    )
                 )
         );
     }
@@ -185,7 +202,12 @@ public class ModrinthResolver : ResourceResolverBase
                     ),
                     project.Description,
                     version,
-                    MakeResourceUrl(ResourceType.Update, projectId, version, ResourceType.ShaderPack),
+                    MakeResourceUrl(
+                        ResourceType.Update,
+                        projectId,
+                        version,
+                        ResourceType.ShaderPack
+                    ),
                     MakeResourceUrl(ResourceType.File, projectId, version, ResourceType.ShaderPack)
                 )
         );

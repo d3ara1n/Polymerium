@@ -53,7 +53,10 @@ public sealed partial class SearchDetailDialog : CustomDialog
     {
         VersionSource.Filter = VersionSourceFilter;
         VersionSource.SortDescriptions.Add(
-            new SortDescription("ReleaseDateTime", SortDirection.Descending)
+            new SortDescription(
+                nameof(SearchCenterResultItemVersionModel.ReleaseDateTime),
+                SortDirection.Descending
+            )
         );
         IsOperating = true;
         await DescriptionPresenter.EnsureCoreWebView2Async();
@@ -109,7 +112,7 @@ public sealed partial class SearchDetailDialog : CustomDialog
             var isVersionSupported =
                 !file.File.SupportedCoreVersions.Any()
                 || coreVersion == null
-                || file.File.SupportedCoreVersions.Contains(coreVersion);
+                || file.File.SupportedCoreVersions.Any(x => coreVersion.StartsWith(x));
             return isModLoaderSupported && isVersionSupported;
         }
 

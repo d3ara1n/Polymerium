@@ -48,7 +48,7 @@
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Spacing="5">
-                                    <Button Content="检查更新" HorizontalAlignment="Right" Visibility="Collapsed"/>
+                                    <Button Content="检查更新" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>

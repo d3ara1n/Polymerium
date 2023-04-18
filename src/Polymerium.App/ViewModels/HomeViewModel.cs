@@ -17,6 +17,9 @@ namespace Polymerium.App.ViewModels;
 
 public class HomeViewModel : ObservableObject
 {
+#pragma warning disable S1075 // URIs should not be hardcoded
+    private const string LAUNCH_CONTENT_URL_BASE = "https://launchercontent.mojang.com";
+#pragma warning restore S1075 // URIs should not be hardcoded
     private readonly NavigationService navigationService;
     private readonly IMemoryCache _cache;
 
@@ -77,68 +80,71 @@ public class HomeViewModel : ObservableObject
 
     public async Task LoadNewsAsync(Action<HomeNewsItemModel?> callback)
     {
-        var urlBase = new Uri("https://launchercontent.mojang.com");
+        var urlBase = new Uri(LAUNCH_CONTENT_URL_BASE);
         var newsUrl = new Uri(urlBase, "news.json");
-        var results = await _cache.GetOrCreateAsync("HomeNews", async entry =>
-        {
-            var list = new List<HomeNewsItemModel>();
-            await Wapoo
-                .Wohoo(newsUrl.AbsoluteUri)
-                .ForJsonResult<JObject>(x =>
-                {
-                    if (x.ContainsKey("entries"))
+        var results = await _cache.GetOrCreateAsync(
+            "HomeNews",
+            async entry =>
+            {
+                var list = new List<HomeNewsItemModel>();
+                await Wapoo
+                    .Wohoo(newsUrl.AbsoluteUri)
+                    .ForJsonResult<JObject>(x =>
                     {
-                        var entries = x.Value<JArray>("entries");
-                        foreach (JObject entry in entries)
+                        if (x.ContainsKey("entries"))
                         {
-                            var category = string.Empty;
-                            if (entry.ContainsKey("category"))
-                                category = entry.Value<string>("category");
-                            if (category != "Minecraft: Java Edition")
-                                continue;
-                            var title = string.Empty;
-                            if (entry.ContainsKey("title"))
-                                title = entry.Value<string>("title");
-                            var text = string.Empty;
-                            if (entry.ContainsKey("text"))
-                                text = entry.Value<string>("text");
-                            var readMore = string.Empty;
-                            if (entry.ContainsKey("readMoreLink"))
-                                readMore = entry.Value<string>("readMoreLink");
-                            var imageSource = string.Empty;
-                            if (entry.ContainsKey("playPageImage"))
+                            var entries = x.Value<JArray>("entries");
+                            foreach (var entry in entries!.Values<JObject>())
                             {
-                                var playPageImage = entry.Value<JObject>("playPageImage");
-                                if (playPageImage!.ContainsKey("url"))
-                                    imageSource = playPageImage.Value<string>("url");
+                                var category = string.Empty;
+                                if (entry!.ContainsKey("category"))
+                                    category = entry.Value<string>("category");
+                                if (category != "Minecraft: Java Edition")
+                                    continue;
+                                var title = string.Empty;
+                                if (entry.ContainsKey("title"))
+                                    title = entry.Value<string>("title");
+                                var text = string.Empty;
+                                if (entry.ContainsKey("text"))
+                                    text = entry.Value<string>("text");
+                                var readMore = string.Empty;
+                                if (entry.ContainsKey("readMoreLink"))
+                                    readMore = entry.Value<string>("readMoreLink");
+                                var imageSource = string.Empty;
+                                if (entry.ContainsKey("playPageImage"))
+                                {
+                                    var playPageImage = entry.Value<JObject>("playPageImage");
+                                    if (playPageImage!.ContainsKey("url"))
+                                        imageSource = playPageImage.Value<string>("url");
+                                }
+
+                                var date = string.Empty;
+                                if (entry.ContainsKey("date"))
+                                    date = entry.Value<string>("date");
+
+                                var model = new HomeNewsItemModel(
+                                    title!,
+                                    text!,
+                                    DateTimeOffset.Parse(date!),
+                                    !string.IsNullOrEmpty(readMore) ? new Uri(readMore) : null,
+                                    new Uri(urlBase, imageSource).AbsoluteUri
+                                );
+                                list.Add(model);
                             }
-
-                            var date = string.Empty;
-                            if (entry.ContainsKey("date"))
-                                date = entry.Value<string>("date");
-
-                            var model = new HomeNewsItemModel(
-                                title,
-                                text,
-                                DateTimeOffset.Parse(date),
-                                !string.IsNullOrEmpty(readMore) ? new Uri(readMore) : null,
-                                new Uri(urlBase, imageSource).AbsoluteUri
-                            );
-                            list.Add(model);
                         }
-                    }
-                })
-                .FetchAsync();
-            if (list.Count > 0)
-            {
-                entry.SetSlidingExpiration(TimeSpan.FromMinutes(60));
+                    })
+                    .FetchAsync();
+                if (list.Count > 0)
+                {
+                    entry.SetSlidingExpiration(TimeSpan.FromMinutes(60));
+                }
+                else
+                {
+                    entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
+                }
+                return list;
             }
-            else
-            {
-                entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
-            }
-            return list;
-        });
+        );
         foreach (var item in results)
             callback(item);
         callback(null);

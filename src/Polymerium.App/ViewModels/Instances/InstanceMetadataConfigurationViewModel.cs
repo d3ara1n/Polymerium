@@ -184,8 +184,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         var result = await _resolver.ResolveAsync(attachment.Source, context);
         InstanceAttachmentItemModel model = null!;
         var isLocked =
-            Instance.ReferenceSource != null
-            && attachment.From == Instance.ReferenceSource;
+            Instance.ReferenceSource != null && attachment.From == Instance.ReferenceSource;
         if (result.IsSuccessful)
         {
             var item = result.Value;
@@ -236,11 +235,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     private void RemoveComponentSelf(InstanceComponentItemModel? model)
     {
-        if (
-            Instance.Components.Any(
-                x => x.Identity == model?.Id && x.Version == model.Version
-            )
-        )
+        if (Instance.Components.Any(x => x.Identity == model?.Id && x.Version == model.Version))
         {
             var item = Instance.Components.First(
                 x => x.Identity == model?.Id && x.Version == model.Version

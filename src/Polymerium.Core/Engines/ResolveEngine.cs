@@ -117,7 +117,7 @@ public class ResolveEngine
     {
         var result = await ResolveAsync(url, context);
         if (result.IsSuccessful && result.Value.Type != ResourceType.File)
-            return await ResolveAsync(result.Value.Resource.File, context);
+            return await ResolveAsync(result.Value.Resource.File!, context);
         return result;
     }
 
@@ -142,7 +142,7 @@ public class ResolveEngine
         );
     }
 
-    private record ResolverTuple(
+    private sealed record ResolverTuple(
         ResourceType Type,
         string? DomainName,
         MethodInfo Method,

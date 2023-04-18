@@ -87,11 +87,7 @@ public class InstanceAssetViewModel : ObservableObject
     public async Task FileAccepted(string fileName, Action<AssetRaw> callback)
     {
         var url = new Uri(fileName);
-        var product = await _gameManager.InstallAssetAsync(
-            Instance.Inner,
-            Type!.Value,
-            url
-        );
+        var product = await _gameManager.InstallAssetAsync(Instance.Inner, Type!.Value, url);
         if (product.HasValue)
         {
             callback(new AssetRaw { FileName = url, Type = Type!.Value });
@@ -120,9 +116,7 @@ public class InstanceAssetViewModel : ObservableObject
         var path =
             model != null
                 ? _fileBase.Locate(model.Url)
-                : _fileBase.Locate(
-                    _gameManager.GetAssetDirectory(Instance.Inner, Type!.Value)
-                );
+                : _fileBase.Locate(_gameManager.GetAssetDirectory(Instance.Inner, Type!.Value));
         Process.Start(
             new ProcessStartInfo("explorer.exe")
             {

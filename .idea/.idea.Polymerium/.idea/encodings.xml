@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/src/Polymerium.App/Dialogs/ConfirmationDialog.xaml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/Polymerium.App/Dialogs/InstanceSelectorDialog.xaml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/Polymerium.App/Dialogs/TextInputDialog.xaml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Polymerium.App/Views/InstanceUpdateDialog.xaml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceAssetDrawer.xaml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceLaunchConfigurationView.xaml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/Polymerium.App/Views/MainView.xaml" charset="UTF-8" />
