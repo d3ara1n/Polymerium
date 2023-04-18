@@ -22,15 +22,7 @@ public class RemoteFileResolver : ResourceResolverBase
         var name = Path.GetFileNameWithoutExtension(path);
         var fileName = Path.GetFileName(path);
         return Ok(
-            new File(
-                name,
-                name,
-                name,
-                fileName,
-                path,
-                sha1,
-                new Uri(source)
-            ),
+            new File(name, name, name, fileName, path, sha1, new Uri(source)),
             ResourceType.File
         );
     }

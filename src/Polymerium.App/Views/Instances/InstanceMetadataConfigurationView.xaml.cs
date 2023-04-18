@@ -158,19 +158,22 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         {
             IsReferenceBeingParsed = false;
             ModpackReference =
-                model ?? new InstanceModpackReferenceModel("解析失败", "0", "N/A", "0", "N/A", "无法找到该引用信息或解析期间网络异常");
+                model
+                ?? new InstanceModpackReferenceModel(
+                    "解析失败",
+                    "0",
+                    "N/A",
+                    "0",
+                    "N/A",
+                    "无法找到该引用信息或解析期间网络异常"
+                );
         });
     }
 
     private void AttachmentBox_Loaded(object sender, RoutedEventArgs e)
     {
         IsAttachmentBeingParsed = true;
-        Task.Run(
-            () =>
-                ViewModel.LoadParseAttachmentsAsync(
-                    ViewModel.Instance.Attachments
-                )
-        );
+        Task.Run(() => ViewModel.LoadParseAttachmentsAsync(ViewModel.Instance.Attachments));
     }
 
     private static void FilterCheckBoxChanged(

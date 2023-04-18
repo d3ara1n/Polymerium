@@ -40,12 +40,9 @@ public class AddMetaComponentWizardViewModel : ObservableObject
         Instance = context.AssociatedInstance!;
         _componentManager = componentManager;
         _cache = cache;
-        coreVersion =
-            Instance.Components.Any(x => x.Identity == ComponentMeta.MINECRAFT)
-                ? Instance.Components
-                    .First(x => x.Identity == ComponentMeta.MINECRAFT)
-                    .Version
-                : null;
+        coreVersion = Instance.Components.Any(x => x.Identity == ComponentMeta.MINECRAFT)
+            ? Instance.Components.First(x => x.Identity == ComponentMeta.MINECRAFT).Version
+            : null;
         if (coreVersion != null)
             Metas = _componentManager.GetView(ComponentViewFilter.Modloader);
         else
@@ -91,9 +88,7 @@ public class AddMetaComponentWizardViewModel : ObservableObject
     {
         var identity = SelectedMeta!.Identity;
         var version = SelectedVersion;
-        Instance.Components.Add(
-            new Component { Identity = identity, Version = version! }
-        );
+        Instance.Components.Add(new Component { Identity = identity, Version = version! });
         DismissHandler?.Invoke();
     }
 

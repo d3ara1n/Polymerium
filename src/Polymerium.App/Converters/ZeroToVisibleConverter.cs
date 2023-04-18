@@ -8,7 +8,7 @@ public class ZeroToVisibleConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        return value switch
+        var res = value switch
         {
             int it => it == 0,
             long it => it == 0,
@@ -17,9 +17,9 @@ public class ZeroToVisibleConverter : IValueConverter
             uint it => it == 0,
             ulong it => it == 0,
             _ => false
-        }
-            ? Visibility.Visible
-            : Visibility.Collapsed;
+        };
+        var ser = parameter == null ? res : !res;
+        return ser ? Visibility.Visible : Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
