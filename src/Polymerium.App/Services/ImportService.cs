@@ -6,9 +6,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNext;
+using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Abstractions.Importers;
 using Polymerium.Abstractions.Meta;
+using Polymerium.App.Configurations;
 using Polymerium.Core;
+using Polymerium.Core.Engines;
 using Polymerium.Core.Importers;
 
 namespace Polymerium.App.Services;
@@ -17,15 +20,28 @@ public class ImportService
 {
     private readonly IFileBaseService _fileBase;
     private readonly InstanceManager _instanceManager;
+    private readonly ResolveEngine _resolver;
+    private readonly IServiceProvider _provider;
+    private readonly AppSettings _settings;
 
-    public ImportService(IFileBaseService fileBase, InstanceManager instanceManager)
+    public ImportService(
+        IFileBaseService fileBase,
+        InstanceManager instanceManager,
+        ResolveEngine resolver,
+        IServiceProvider provider,
+        AppSettings settings
+    )
     {
         _fileBase = fileBase;
         _instanceManager = instanceManager;
+        _resolver = resolver;
+        _provider = provider;
+        _settings = settings;
     }
 
     public async Task<Result<ImportResult, GameImportError>> ImportAsync(
         string filePath,
+        Uri? source,
         CancellationToken? token = default
     )
     {
@@ -33,21 +49,21 @@ public class ImportService
         {
             try
             {
+                var forceOffline = _settings.ForceImportOffline;
                 var archive = ZipFile.OpenRead(filePath);
                 var files = archive.Entries.Select(x => x.FullName);
                 if (files.Any(x => x == "modrinth.index.json"))
                 {
-                    var importer = new ModrinthImporter { Token = token ?? CancellationToken.None };
-                    return await importer.ProcessAsync(archive);
+                    var importer = ActivatorUtilities.CreateInstance<ModrinthImporter>(_provider);
+                    importer.Token = token ?? CancellationToken.None;
+                    return await importer.ProcessAsync(archive, source, forceOffline);
                 }
 
                 if (files.Any(x => x == "manifest.json"))
                 {
-                    var importer = new CurseForgeImporter
-                    {
-                        Token = token ?? CancellationToken.None
-                    };
-                    return await importer.ProcessAsync(archive);
+                    var importer = ActivatorUtilities.CreateInstance<CurseForgeImporter>(_provider);
+                    importer.Token = token ?? CancellationToken.None;
+                    return await importer.ProcessAsync(archive, source, forceOffline);
                 }
             }
             catch
@@ -95,7 +111,9 @@ public class ImportService
                     }
 
                 foreach (var file in allocated)
-                    product.Instance.Metadata.Attachments.Add(new Attachment { Source = file });
+                    product.Instance.Metadata.Attachments.Add(
+                        new Attachment { Source = file, From = product.Instance.ReferenceSource }
+                    );
                 _instanceManager.AddInstance(product.Instance);
                 return null;
             })

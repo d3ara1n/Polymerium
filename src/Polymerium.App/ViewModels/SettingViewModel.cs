@@ -6,9 +6,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions.LaunchConfigurations;
+using Polymerium.App.Configurations;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Windows.Storage;
 
 namespace Polymerium.App.ViewModels;
 
@@ -16,6 +18,7 @@ public class SettingViewModel : ObservableObject
 {
     private readonly ConfigurationManager _configurationManager;
     private readonly JavaManager _javaManager;
+    private readonly AppSettings _settings;
 
     private string additionalJvmArguments = string.Empty;
 
@@ -35,11 +38,21 @@ public class SettingViewModel : ObservableObject
 
     private uint windowWidth;
 
-    public SettingViewModel(ConfigurationManager configurationManager, JavaManager javaManager)
+    private bool forceImportOffline;
+    private bool isSuperPowerActivated;
+
+    public SettingViewModel(
+        ConfigurationManager configurationManager,
+        JavaManager javaManager,
+        AppSettings settings
+    )
     {
         _configurationManager = configurationManager;
         _javaManager = javaManager;
+        _settings = settings;
         OpenPickerAsyncCommand = new AsyncRelayCommand(OpenPickerAsync);
+        ForceImportOffline = _settings.ForceImportOffline;
+        IsSuperPowerActivated = _settings.IsSuperPowerActivated;
         Global = configurationManager.Current.GameGlobals;
         AutoDetectJava = Global.AutoDetectJava ?? true;
         SkipJavaVersionCheck = Global.SkipJavaVersionCheck ?? false;
@@ -53,6 +66,26 @@ public class SettingViewModel : ObservableObject
     public ICommand OpenPickerAsyncCommand { get; }
 
     public FileBasedLaunchConfiguration Global { get; }
+
+    public bool ForceImportOffline
+    {
+        get => forceImportOffline;
+        set
+        {
+            SetProperty(ref forceImportOffline, value);
+            _settings.ForceImportOffline = value;
+        }
+    }
+
+    public bool IsSuperPowerActivated
+    {
+        get => isSuperPowerActivated;
+        set
+        {
+            SetProperty(ref isSuperPowerActivated, value);
+            _settings.IsSuperPowerActivated = value;
+        }
+    }
 
     public string JavaSummary
     {

@@ -17,8 +17,9 @@ public struct LabrinthProject
     public string Body { get; set; }
     public Uri? BodyUrl { get; set; }
     public DateTimeOffset Published { get; set; }
-    public DateTimeOffset Updated { get; set; }
-    public DateTimeOffset Approved { get; set; }
+    public DateTimeOffset? Updated { get; set; }
+    public DateTimeOffset? Approved { get; set; }
+    public DateTimeOffset? Queued { get; set; }
     public string Status { get; set; }
     public object? RequestedStatus { get; set; }
     public object? ModeratorMessage { get; set; }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Polymerium.Abstractions.ResourceResolving;
+using Polymerium.App.Configurations;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
 using Polymerium.App.ViewModels.AddAccountWizard;
@@ -116,7 +117,8 @@ public partial class App : Application
                         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                         ".polymerium/"
                     )
-            );
+            )
+            .AddSingleton<AppSettings>();
         // engines
         services.AddScoped<DownloadEngine>().AddScoped<ResolveEngine>().AddScoped<RestoreEngine>();
         // resolvers

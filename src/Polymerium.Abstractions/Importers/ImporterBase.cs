@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading;
@@ -10,7 +11,11 @@ namespace Polymerium.Abstractions.Importers;
 public abstract class ImporterBase
 {
     public CancellationToken Token { get; set; }
-    public abstract Task<Result<ImportResult, GameImportError>> ProcessAsync(ZipArchive archive);
+    public abstract Task<Result<ImportResult, GameImportError>> ProcessAsync(
+        ZipArchive archive,
+        Uri? source,
+        bool forceOffline = false
+    );
 
     public Result<ImportResult, GameImportError> Failed(GameImportError reason)
     {

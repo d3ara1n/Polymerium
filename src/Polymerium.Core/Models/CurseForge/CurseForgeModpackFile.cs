@@ -2,7 +2,7 @@
 
 public struct CurseForgeModpackFile
 {
-    public int ProjectId { get; set; }
-    public int FileId { get; set; }
+    public uint ProjectId { get; set; }
+    public uint FileId { get; set; }
     public bool Required { get; set; }
 }
