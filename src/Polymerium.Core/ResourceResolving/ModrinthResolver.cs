@@ -26,34 +26,6 @@ public class ModrinthResolver : ResourceResolverBase
         _cache = cache;
     }
 
-    public static Uri MakeResourceUrl(
-        ResourceType type,
-        string projectId,
-        string version,
-        ResourceType raw
-    )
-    {
-        var dir = raw switch
-        {
-            ResourceType.Mod => "mods",
-            ResourceType.Modpack => "modpacks",
-            ResourceType.ResourcePack => "resourcepacks",
-            ResourceType.ShaderPack => "shaderpacks",
-            ResourceType.DataPack => "datapacks",
-            ResourceType.Plugin => "plugins",
-            _ => string.Empty
-        };
-        return type switch
-        {
-            ResourceType.Update => new Uri($"poly-res://modrinth@update/{projectId}"),
-            ResourceType.File => new Uri($"poly-res://modrinth@file/{dir}/{version}"),
-            _
-                => new Uri(
-                    $"poly-res://modrinth@{type.ToString().ToLower()}/{projectId}?version={version}"
-                )
-        };
-    }
-
     private string MembersToLine(IEnumerable<LabrinthTeamMember> members)
     {
         return string.Join(
@@ -103,8 +75,18 @@ public class ModrinthResolver : ResourceResolverBase
                     ),
                     project.Description,
                     version,
-                    MakeResourceUrl(ResourceType.Update, projectId, version, ResourceType.Modpack),
-                    MakeResourceUrl(ResourceType.File, projectId, version, ResourceType.Modpack)
+                    ModrinthHelper.MakeResourceUrl(
+                        ResourceType.Update,
+                        projectId,
+                        version,
+                        ResourceType.Modpack
+                    ),
+                    ModrinthHelper.MakeResourceUrl(
+                        ResourceType.File,
+                        projectId,
+                        version,
+                        ResourceType.Modpack
+                    )
                 )
         );
     }
@@ -132,8 +114,18 @@ public class ModrinthResolver : ResourceResolverBase
                     ),
                     project.Description,
                     version,
-                    MakeResourceUrl(ResourceType.Update, projectId, version, ResourceType.Mod),
-                    MakeResourceUrl(ResourceType.File, projectId, version, ResourceType.Mod)
+                    ModrinthHelper.MakeResourceUrl(
+                        ResourceType.Update,
+                        projectId,
+                        version,
+                        ResourceType.Mod
+                    ),
+                    ModrinthHelper.MakeResourceUrl(
+                        ResourceType.File,
+                        projectId,
+                        version,
+                        ResourceType.Mod
+                    )
                 )
         );
     }
@@ -163,13 +155,13 @@ public class ModrinthResolver : ResourceResolverBase
                     ),
                     project.Description,
                     version,
-                    MakeResourceUrl(
+                    ModrinthHelper.MakeResourceUrl(
                         ResourceType.Update,
                         projectId,
                         version,
                         ResourceType.ResourcePack
                     ),
-                    MakeResourceUrl(
+                    ModrinthHelper.MakeResourceUrl(
                         ResourceType.File,
                         projectId,
                         version,
@@ -202,13 +194,18 @@ public class ModrinthResolver : ResourceResolverBase
                     ),
                     project.Description,
                     version,
-                    MakeResourceUrl(
+                    ModrinthHelper.MakeResourceUrl(
                         ResourceType.Update,
                         projectId,
                         version,
                         ResourceType.ShaderPack
                     ),
-                    MakeResourceUrl(ResourceType.File, projectId, version, ResourceType.ShaderPack)
+                    ModrinthHelper.MakeResourceUrl(
+                        ResourceType.File,
+                        projectId,
+                        version,
+                        ResourceType.ShaderPack
+                    )
                 )
         );
     }

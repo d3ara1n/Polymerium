@@ -52,7 +52,7 @@ public class ImportModpackWizardViewModel : ObservableObject
         Action<Result<ImportResult, GameImportError>, bool> callback
     )
     {
-        var result = await _importer.ImportAsync(_fileName!, source.Token);
+        var result = await _importer.ImportAsync(_fileName!, null, source.Token);
         if (result.IsSuccessful)
             _importResult = result.Value;
         if (!source.Token.IsCancellationRequested)

@@ -12,6 +12,7 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
+using Polymerium.App.Configurations;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Core.Engines;
@@ -110,7 +111,7 @@ public class SearchDetailViewModel : ObservableObject
                                         }
                                 )
                                 .First(),
-                            ModrinthResolver.MakeResourceUrl(
+                            ModrinthHelper.MakeResourceUrl(
                                 Resource.Value.Type,
                                 Resource.Value.Id,
                                 x.Id,
@@ -151,7 +152,7 @@ public class SearchDetailViewModel : ObservableObject
                                             ) ?? "unknown_loader"
                                     )
                             },
-                            CurseForgeResolver.MakeResourceUrl(
+                            CurseForgeHelper.MakeResourceUrl(
                                 Resource.Value.Type,
                                 Resource.Value.Id,
                                 x.Id.ToString()
@@ -180,13 +181,11 @@ public class SearchDetailViewModel : ObservableObject
         );
     }
 
-    public void InstallAsset(GameInstance instance, SearchCenterResultItemVersionModel version)
-    {
+    public void InstallAsset(GameInstance instance, SearchCenterResultItemVersionModel version) =>
         InstallAsset(
             new GameInstanceModel(instance, _configurationManager.Current.GameGlobals),
             version
         );
-    }
 
     public async Task InstallModpackAsync(
         SearchCenterResultItemVersionModel version,
@@ -230,20 +229,10 @@ public class SearchDetailViewModel : ObservableObject
 
             report(null, false);
             writer.Close();
-            var importResult = await _importer.ImportAsync(tmpFile, token);
+            var importResult = await _importer.ImportAsync(tmpFile, url, token);
             if (importResult.IsSuccessful)
             {
-                // make it and its attachments tagged
-                importResult.Value.Instance.ReferenceSource = url;
-                importResult.Value.Instance.ThumbnailFile = Resource!.Value.IconSource?.AbsoluteUri;
-                importResult.Value.Instance.Author = Resource!.Value.Author;
                 var postError = await _importer.PostImportAsync(importResult.Value);
-                // make remote and local file attachments tagged
-                var attachments = importResult.Value.Instance.Metadata.Attachments;
-                for (var i = 0; i < attachments.Count; i++)
-                {
-                    attachments[i] = attachments[i] with { From = url };
-                }
                 if (postError.HasValue)
                     EndedError($"添加导入的实例失败: {postError}");
                 else

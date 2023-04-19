@@ -36,6 +36,30 @@ public static class CurseForgeHelper
         { "Quilt", ComponentMeta.QUILT }
     }.AsReadOnly();
 
+    public static Uri MakeResourceUrl(ResourceType type, string projectId, string versionId)
+    {
+        return type switch
+        {
+            ResourceType.Update => new Uri($"poly-res://curseforge@update/{projectId}"),
+            ResourceType.File => new Uri($"poly-res://curseforge@file/{projectId}/{versionId}"),
+            _
+                => new Uri(
+                    $"poly-res://curseforge@{type.ToString().ToLower()}/{projectId}?version={versionId}"
+                )
+        };
+    }
+
+    public static ResourceType GetResourceTypeFromClassId(uint classId) =>
+        classId switch
+        {
+            6 => ResourceType.Mod,
+            12 => ResourceType.ResourcePack,
+            17 => ResourceType.World,
+            4546 => ResourceType.ShaderPack,
+            4471 => ResourceType.Modpack,
+            _ => throw new NotImplementedException()
+        };
+
     private static async Task<T?> GetResourceAsync<T>(
         string service,
         IMemoryCache cache,
@@ -116,13 +140,13 @@ public static class CurseForgeHelper
         };
         var service =
             $"/mods/search?gameId={GAME_ID}&classId={type switch
-        {
-            ResourceType.Modpack => CLASSID_MODPACK,
-            ResourceType.Mod => CLASSID_MOD,
-            ResourceType.ResourcePack => CLASSID_RESOURCEPACK,
-            ResourceType.World => CLASSID_WORLD,
-            _ => throw new NotSupportedException()
-        }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlEncode(query)}&sortField=2&sortOrder=desc"
+            {
+                ResourceType.Modpack => CLASSID_MODPACK,
+                ResourceType.Mod => CLASSID_MOD,
+                ResourceType.ResourcePack => CLASSID_RESOURCEPACK,
+                ResourceType.World => CLASSID_WORLD,
+                _ => throw new NotSupportedException()
+            }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlEncode(query)}&sortField=2&sortOrder=desc"
             + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
             + (
                 (type == ResourceType.Mod || type == ResourceType.Modpack) && modLoaderId != null

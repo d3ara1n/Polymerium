@@ -59,9 +59,10 @@ public sealed class InstanceManager : IDisposable
         if (_memoryStorage.Instances.Any(x => x.Id == instance.Id))
             return InstanceManagerError.DuplicateId;
         instance.FolderName = string.Join(
-            "",
-            instance.FolderName.Select(x => invalidFileNameChars.Contains(x) ? '_' : x)
-        );
+                "",
+                instance.FolderName.Select(x => invalidFileNameChars.Contains(x) ? '_' : x)
+            )
+            .Trim();
         while (_memoryStorage.Instances.Any(x => x.FolderName == instance.FolderName))
             instance.FolderName += '_';
         instance.BoundAccountId ??= _configurationManager.Current.AccountShowcaseId;

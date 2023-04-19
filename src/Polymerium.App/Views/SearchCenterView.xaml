@@ -21,7 +21,7 @@
             <StackPanel Spacing="10">
                 <TextBlock Text="搜索中心" Style="{StaticResource TitleTextBlockStyle}" />
                 <AutoSuggestBox x:Name="SearchBox" PlaceholderText="键入以开始" QueryIcon="Find"
-                                QuerySubmitted="SearchBox_OnQuerySubmitted" />
+                                QuerySubmitted="SearchBox_OnQuerySubmitted"/>
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <TextBlock Text="来自:" VerticalAlignment="Center" />
                     <ComboBox x:Name="RepositoryBox"

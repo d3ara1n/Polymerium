@@ -26,19 +26,6 @@ public class CurseForgeResolver : ResourceResolverBase
         _cache = cache;
     }
 
-    public static Uri MakeResourceUrl(ResourceType type, string projectId, string version)
-    {
-        return type switch
-        {
-            ResourceType.Update => new Uri($"poly-res://curseforge@update/{projectId}"),
-            ResourceType.File => new Uri($"poly-res://curseforge@file/{projectId}/{version}"),
-            _
-                => new Uri(
-                    $"poly-res://curseforge@{type.ToString().ToLower()}/{projectId}?version={version}"
-                )
-        };
-    }
-
     private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(
         ResourceType type,
         string projectId,
@@ -87,8 +74,8 @@ public class CurseForgeResolver : ResourceResolverBase
                     ),
                     project.Summary,
                     version,
-                    MakeResourceUrl(ResourceType.Update, projectId, version),
-                    MakeResourceUrl(ResourceType.File, projectId, version)
+                    CurseForgeHelper.MakeResourceUrl(ResourceType.Update, projectId, version),
+                    CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
     }
@@ -118,8 +105,8 @@ public class CurseForgeResolver : ResourceResolverBase
                     ),
                     project.Summary,
                     version,
-                    MakeResourceUrl(ResourceType.Update, projectId, version),
-                    MakeResourceUrl(ResourceType.File, projectId, version)
+                    CurseForgeHelper.MakeResourceUrl(ResourceType.Update, projectId, version),
+                    CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
     }
@@ -149,8 +136,8 @@ public class CurseForgeResolver : ResourceResolverBase
                     ),
                     project.Summary,
                     version,
-                    MakeResourceUrl(ResourceType.Update, projectId, version),
-                    MakeResourceUrl(ResourceType.File, projectId, version)
+                    CurseForgeHelper.MakeResourceUrl(ResourceType.Update, projectId, version),
+                    CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
     }
@@ -172,13 +159,14 @@ public class CurseForgeResolver : ResourceResolverBase
             if (mod.HasValue && file.HasValue)
             {
                 var sha1 = file.Value.ExtractSha1();
-                var fileName = mod.Value.ClassId switch
+                var type = CurseForgeHelper.GetResourceTypeFromClassId(mod.Value.ClassId);
+                var fileName = type switch
                 {
-                    6 => $"mods/{file.Value.FileName}",
-                    12 => $"resourcepacks/{file.Value.FileName}",
-                    17 => $"worlds/{file.Value.FileName}",
-                    4546 => $"shaderpacks/{file.Value.FileName}",
-                    4471 => file.Value.FileName,
+                    ResourceType.Mod => $"mods/{file.Value.FileName}",
+                    ResourceType.ResourcePack => $"resourcepacks/{file.Value.FileName}",
+                    ResourceType.World => $"worlds/{file.Value.FileName}",
+                    ResourceType.ShaderPack => $"shaderpacks/{file.Value.FileName}",
+                    ResourceType.Modpack => file.Value.FileName,
                     _ => throw new NotImplementedException()
                 };
                 var result = new File(

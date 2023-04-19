@@ -11,7 +11,7 @@ public struct LabrinthVersion
     public string Name { get; set; }
     public string VersionNumber { get; set; }
     public string Changelog { get; set; }
-    public object Dependencies { get; set; }
+    public IEnumerable<LabrinthVersionDependency> Dependencies { get; set; }
     public IEnumerable<string> GameVersions { get; set; }
     public IEnumerable<string> Loaders { get; set; }
     public bool Featured { get; set; }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using DotNext;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions.Resources;
@@ -26,6 +27,44 @@ public static class ModrinthHelper
         { "fabric", ComponentMeta.FABRIC },
         { "quilt", ComponentMeta.QUILT }
     }.AsReadOnly();
+
+    public static Uri MakeResourceUrl(
+        ResourceType type,
+        string projectId,
+        string versionId,
+        ResourceType? raw
+    )
+    {
+        var dir = (raw ?? type) switch
+        {
+            ResourceType.Mod => "mods",
+            ResourceType.Modpack => "modpacks",
+            ResourceType.ResourcePack => "resourcepacks",
+            ResourceType.ShaderPack => "shaderpacks",
+            ResourceType.DataPack => "datapacks",
+            ResourceType.Plugin => "plugins",
+            _ => string.Empty
+        };
+        return type switch
+        {
+            ResourceType.Update => new Uri($"poly-res://modrinth@update/{projectId}"),
+            ResourceType.File => new Uri($"poly-res://modrinth@file/{dir}/{versionId}"),
+            _
+                => new Uri(
+                    $"poly-res://modrinth@{type.ToString().ToLower()}/{projectId}?version={versionId}"
+                )
+        };
+    }
+
+    public static ResourceType GetResourceTypeFromString(string fake) =>
+        fake switch
+        {
+            "modpack" => ResourceType.Modpack,
+            "shader" => ResourceType.ShaderPack,
+            "resourcepack" => ResourceType.ResourcePack,
+            // mod, plugin, datapack
+            _ => ResourceType.Mod,
+        };
 
     private static async Task<T?> GetResourceAsync<T>(
         string service,
@@ -195,5 +234,112 @@ public static class ModrinthHelper
     {
         var service = $"/team/{teamId}/members";
         return await GetResourcesAsync<LabrinthTeamMember>(service, cache, token);
+    }
+
+    public static async Task<(
+        IEnumerable<(LabrinthProject, LabrinthVersion)>,
+        IEnumerable<string>
+    )?> ScanDependenciesAsync(
+        LabrinthVersion origin,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
+    {
+        if (token.IsCancellationRequested)
+            return null;
+        var dep = new List<(LabrinthProject, LabrinthVersion)>();
+        var emb = new List<string>();
+        if (await ScanDependenciesAsyncInternal(dep, emb, origin, cache, token))
+            return (dep, emb);
+        return null;
+    }
+
+    private static async Task<bool> ScanDependenciesAsyncInternal(
+        List<(LabrinthProject, LabrinthVersion)> dep,
+        List<string> emb,
+        LabrinthVersion origin,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
+    {
+        if (!origin.Dependencies.Any())
+            return true;
+        var filter = (string? p, string? v) => !string.IsNullOrEmpty(v) || !string.IsNullOrEmpty(p);
+        var tasks = new List<Task<(LabrinthProject, LabrinthVersion)?>>();
+        foreach (var dependency in origin.Dependencies.Where(x => filter(x.ProjectId, x.VersionId)))
+            tasks.Add(
+                GetVersionPairAsync(dependency.ProjectId, dependency.VersionId, cache, token)
+            );
+        await Task.WhenAll(tasks);
+        if (tasks.All(x => x.IsCompletedSuccessfully && x.Result.HasValue))
+        {
+            foreach (
+                var embedded in origin.Dependencies.Where(
+                    x => !filter(x.ProjectId, x.VersionId) && x.FileName != null
+                )
+            )
+            {
+                emb.Add(embedded.FileName!);
+            }
+            var result = true;
+            foreach (var task in tasks)
+            {
+                var tuple = (task.Result!.Value.Item1, task.Result.Value.Item2);
+                if (
+                    dep.All(
+                        x => (x.Item1.Id ?? x.Item1.Slug) != (tuple.Item1.Id ?? tuple.Item1.Slug)
+                    )
+                )
+                {
+                    dep.Add(tuple);
+                    result &= await ScanDependenciesAsyncInternal(
+                        dep,
+                        emb,
+                        tuple.Item2,
+                        cache,
+                        token
+                    );
+                }
+            }
+            return result;
+        }
+        else
+            return false;
+    }
+
+    private static async Task<(LabrinthProject, LabrinthVersion)?> GetVersionPairAsync(
+        string? projectId,
+        string? versionId,
+        IMemoryCache cache,
+        CancellationToken token
+    )
+    {
+        if (versionId != null)
+        {
+            var version = await GetVersionAsync(versionId, cache, token);
+            if (version.HasValue)
+            {
+                var project = await GetProjectAsync(version.Value.ProjectId, cache, token);
+                if (project.HasValue)
+                {
+                    return (project.Value, version.Value);
+                }
+            }
+            return null;
+        }
+        else if (projectId != null)
+        {
+            var project = await GetProjectAsync(projectId, cache, token);
+            if (project.HasValue)
+            {
+                var version = await GetVersionAsync(project.Value.Versions.Last(), cache, token);
+                if (version.HasValue)
+                {
+                    return (project.Value, version.Value);
+                }
+            }
+            return null;
+        }
+        return null;
     }
 }
