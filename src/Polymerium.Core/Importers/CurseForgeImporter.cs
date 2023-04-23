@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNext;
@@ -34,143 +35,125 @@ public class CurseForgeImporter : ImporterBase
         _resolver = resolver;
     }
 
-    public override async Task<Result<ImportResult, GameImportError>> ProcessAsync(
-        ZipArchive archive,
+    public override async Task<Result<ModpackContent, GameImportError>> ExtractMetadataAsync(
+        string indexContent,
+        IEnumerable<string> rawFileList,
         Uri? source,
         bool forceOffline
     )
     {
-        var indexFile = archive.GetEntry("manifest.json");
-        if (indexFile != null)
+        var index = JsonConvert.DeserializeObject<CurseForgeModpackIndex>(indexContent);
+        if (index.ManifestType == "minecraftModpack")
         {
-            using var reader = new StreamReader(indexFile.Open());
-            var index = JsonConvert.DeserializeObject<CurseForgeModpackIndex>(
-                await reader.ReadToEndAsync()
-            );
-            if (index.ManifestType == "minecraftModpack")
-            {
-                var instance = new GameInstance(
-                    new GameMetadata(),
-                    index.Version,
-                    new FileBasedLaunchConfiguration(),
-                    index.Name,
-                    index.Name
-                )
+            var metadata = new GameMetadata();
+            metadata.Components.Add(
+                new Component
                 {
-                    Author = index.Author
-                };
-                instance.Metadata.Components.Add(
-                    new Component
-                    {
-                        Identity = ComponentMeta.MINECRAFT,
-                        Version = index.Minecraft.Version
-                    }
-                );
-                foreach (var modLoader in index.Minecraft.ModLoaders)
-                {
-                    var split = modLoader.Id.Split("-");
-                    if (split.Length > 1)
-                    {
-                        var name = split[0] switch
-                        {
-                            "forge" => ComponentMeta.FORGE,
-                            "fabric" => ComponentMeta.FABRIC,
-                            _ => null
-                        };
-                        if (name == null)
-                            return Failed(GameImportError.Unsupported);
-                        var version = split[1];
-                        instance.Metadata.Components.Add(
-                            new Component { Identity = name!, Version = version }
-                        );
-                    }
-                    else
-                    {
-                        return Failed(GameImportError.BrokenIndex);
-                    }
+                    Identity = ComponentMeta.MINECRAFT,
+                    Version = index.Minecraft.Version
                 }
-
-                instance.ReferenceSource = source;
-                if (source != null && !forceOffline)
+            );
+            foreach (var modLoader in index.Minecraft.ModLoaders)
+            {
+                var split = modLoader.Id.Split("-");
+                if (split.Length > 1)
                 {
-                    var result = await _resolver.ResolveAsync(
-                        source,
-                        new ResolverContext(instance)
-                    );
-                    if (result.IsSuccessful && result.Value.Resource is Modpack modpack)
+                    var name = split[0] switch
                     {
-                        instance.ReferenceSource = source;
-                        instance.ThumbnailFile = modpack.IconSource?.AbsoluteUri;
-                        var tasks = new List<Task<(EternalProject, EternalModFile)?>>();
-                        foreach (var file in index.Files)
-                            tasks.Add(
-                                GetDependencyInfoAsync(file.ProjectId, file.FileId, _cache, Token)
-                            );
-                        await Task.WhenAll(tasks);
-                        if (tasks.All(x => x.IsCompletedSuccessfully && x.Result.HasValue))
+                        "forge" => ComponentMeta.FORGE,
+                        "fabric" => ComponentMeta.FABRIC,
+                        _ => null
+                    };
+                    if (name == null)
+                        return Failed(GameImportError.Unsupported);
+                    var version = split[1];
+                    metadata.Components.Add(new Component { Identity = name!, Version = version });
+                }
+                else
+                {
+                    return Failed(GameImportError.BrokenIndex);
+                }
+            }
+
+            Uri? thumbnail = null;
+
+            if (source != null && !forceOffline)
+            {
+                var result = await _resolver.ResolveAsync(source, new ResolverContext());
+                if (result.IsSuccessful && result.Value.Resource is Modpack modpack)
+                {
+                    thumbnail = modpack.IconSource;
+                    var tasks = new List<Task<(EternalProject, EternalModFile)?>>();
+                    foreach (var file in index.Files)
+                        tasks.Add(
+                            GetDependencyInfoAsync(file.ProjectId, file.FileId, _cache, Token)
+                        );
+                    await Task.WhenAll(tasks);
+                    if (tasks.All(x => x.IsCompletedSuccessfully && x.Result.HasValue))
+                    {
+                        foreach (var task in tasks)
                         {
-                            foreach (var task in tasks)
-                            {
-                                (var mod, var file) = task.Result!.Value;
-                                var type = CurseForgeHelper.GetResourceTypeFromClassId(mod.ClassId);
-                                instance.Metadata.Attachments.Add(
-                                    new Attachment()
-                                    {
-                                        Source = CurseForgeHelper.MakeResourceUrl(
-                                            type,
-                                            mod.Id.ToString(),
-                                            file.Id.ToString()
-                                        ),
-                                        From = source
-                                    }
-                                );
-                            }
+                            (var mod, var file) = task.Result!.Value;
+                            var type = CurseForgeHelper.GetResourceTypeFromClassId(mod.ClassId);
+                            metadata.Attachments.Add(
+                                new Attachment()
+                                {
+                                    Source = CurseForgeHelper.MakeResourceUrl(
+                                        type,
+                                        mod.Id.ToString(),
+                                        file.Id.ToString()
+                                    ),
+                                    From = source
+                                }
+                            );
                         }
-                        else
-                            return Failed(GameImportError.ResourceNotFound);
                     }
                     else
                         return Failed(GameImportError.ResourceNotFound);
                 }
                 else
+                    return Failed(GameImportError.ResourceNotFound);
+            }
+            else
+            {
+                foreach (var file in index.Files)
                 {
-                    foreach (var file in index.Files)
-                    {
-                        instance.Metadata.Attachments.Add(
-                            new Attachment
-                            {
-                                Source = CurseForgeHelper.MakeResourceUrl(
-                                    ResourceType.File,
-                                    file.ProjectId.ToString(),
-                                    file.FileId.ToString()
-                                )
-                            }
-                        );
-                        ;
-                    }
-                }
-
-                var files = new List<PackedSolidFile>();
-
-                foreach (
-                    var file in archive.Entries.Where(
-                        x => x.FullName.StartsWith(index.Overrides) && !x.FullName.EndsWith("/")
-                    )
-                )
-                    files.Add(
-                        new PackedSolidFile
+                    metadata.Attachments.Add(
+                        new Attachment
                         {
-                            FileName = file.FullName,
-                            Path = Path.GetRelativePath(index.Overrides, file.FullName)
+                            Source = CurseForgeHelper.MakeResourceUrl(
+                                ResourceType.File,
+                                file.ProjectId.ToString(),
+                                file.FileId.ToString()
+                            )
                         }
                     );
-                return Finished(archive, instance, files);
+                    ;
+                }
             }
 
-            return Failed(GameImportError.Unsupported);
+            var files = new List<PackedSolidFile>();
+
+            foreach (var file in rawFileList.Where(x => x.StartsWith(index.Overrides)))
+                files.Add(
+                    new PackedSolidFile
+                    {
+                        FileName = file,
+                        Path = Path.GetRelativePath(index.Overrides, file)
+                    }
+                );
+            return Finished(
+                index.Name,
+                index.Version,
+                index.Author,
+                thumbnail,
+                source,
+                metadata,
+                files
+            );
         }
 
-        return Failed(GameImportError.WrongPackType);
+        return Failed(GameImportError.Unsupported);
     }
 
     private async Task<(EternalProject, EternalModFile)?> GetDependencyInfoAsync(

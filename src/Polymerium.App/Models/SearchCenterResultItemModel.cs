@@ -12,6 +12,8 @@ public class SearchCenterResultItemModel
         string author,
         long downloads,
         string summary,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt,
         ResourceType type,
         RepositoryAssetMeta resource
     )
@@ -21,6 +23,8 @@ public class SearchCenterResultItemModel
         Author = author;
         Downloads = downloads;
         Summary = summary;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
         Type = type;
         Resource = resource;
     }
@@ -30,6 +34,8 @@ public class SearchCenterResultItemModel
     public string Author { get; set; }
     public long Downloads { get; set; }
     public string Summary { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset UpdatedAt { get; set; }
     public ResourceType Type { get; set; }
     public RepositoryAssetMeta Resource { get; set; }
 }

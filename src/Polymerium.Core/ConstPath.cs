@@ -20,5 +20,6 @@ public static class ConstPath
     public const string LOCAL_INSTANCE_BASE = "poly-file:///local/instances/{0}/";
     public const string LOCAL_INSTANCE_LIBRARIES_DIR =
         "poly-file:///local/instances/{0}/libraries/";
+    public const string LOCAL_MODPACK_BASE = "poly-file:///local/modpack/{0}/{1}/";
 }
 #pragma warning restore S1075 // URIs should not be hardcoded

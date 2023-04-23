@@ -71,14 +71,15 @@ public static class ModrinthHelper
         IMemoryCache cache,
         CancellationToken token = default
     )
+        where T : struct
     {
         if (token.IsCancellationRequested)
-            return default;
+            return null;
         return await cache.GetOrCreateAsync<T?>(
                 service,
                 async entry =>
                 {
-                    T? result = default;
+                    T? result = null;
                     var found = false;
                     await Wapoo
                         .Wohoo(ENDPOINT + service)
@@ -92,7 +93,7 @@ public static class ModrinthHelper
                     entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
                     return result;
                 }
-            ) ?? default(T);
+            ) ?? null;
     }
 
     private static async Task<IEnumerable<T>> GetResourcesAsync<T>(

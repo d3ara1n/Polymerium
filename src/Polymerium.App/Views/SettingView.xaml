@@ -208,12 +208,20 @@
                 </controls:ExpanderEx>
                 <TextBlock Text="说明" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBlock>
-                    <Run Text="储存库 " />
+                    <Run Text="储存库" />
                     <Hyperlink NavigateUri="https://github.com/d3ara1n/Polymerium">Github</Hyperlink>
                 </TextBlock>
                 <TextBlock>
-                    <Run Text="图标素材 " />
+                    <Run Text="图标素材" />
                     <Hyperlink NavigateUri="https://icons8.com/icons/fluency">icons8</Hyperlink>
+                </TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords">
+                    <Run Text="CurseForge仓库由" />
+                    <Hyperlink NavigateUri="docs.curseforge.com">CurseForge</Hyperlink>
+                    <Run Text="提供；"/>
+                    <Run Text="Modrinth仓库由" />
+                    <Hyperlink NavigateUri="https://docs.modrinth.com">Modrinth</Hyperlink>
+                    <Run Text="提供。"/>
                 </TextBlock>
             </StackPanel>
         </controls:Card>

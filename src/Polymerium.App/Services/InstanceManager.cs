@@ -7,6 +7,7 @@ using Polymerium.Abstractions;
 using Polymerium.App.Data;
 using Polymerium.App.Messages;
 using Polymerium.Core;
+using Polymerium.Core.Helpers;
 
 namespace Polymerium.App.Services;
 
@@ -53,16 +54,11 @@ public sealed class InstanceManager : IDisposable
 
     public InstanceManagerError? AddInstance(GameInstance instance)
     {
-        var invalidFileNameChars = Path.GetInvalidFileNameChars();
         if (string.IsNullOrWhiteSpace(instance.Name))
             instance.Name = "_";
         if (_memoryStorage.Instances.Any(x => x.Id == instance.Id))
             return InstanceManagerError.DuplicateId;
-        instance.FolderName = string.Join(
-                "",
-                instance.FolderName.Select(x => invalidFileNameChars.Contains(x) ? '_' : x)
-            )
-            .Trim();
+        instance.FolderName = PathHelper.RemoveInvalidCharacters(instance.FolderName).Trim();
         while (_memoryStorage.Instances.Any(x => x.FolderName == instance.FolderName))
             instance.FolderName += '_';
         instance.BoundAccountId ??= _configurationManager.Current.AccountShowcaseId;
@@ -73,13 +69,9 @@ public sealed class InstanceManager : IDisposable
 
     public InstanceManagerError? RenameInstanceSafe(GameInstance instance, string name)
     {
-        var invalidFileNameChars = Path.GetInvalidFileNameChars();
         if (string.IsNullOrWhiteSpace(name))
             name = "_";
-        var folderName = string.Join(
-            "",
-            name.Select(x => invalidFileNameChars.Contains(x) ? '_' : x)
-        );
+        var folderName = PathHelper.RemoveInvalidCharacters(name);
         while (_memoryStorage.Instances.Any(x => x.Id != instance.Id && x.FolderName == folderName))
             folderName += '_';
         var instanceDir = _fileBase.Locate(

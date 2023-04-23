@@ -34,7 +34,7 @@ public class GameInstance
         string name,
         string author,
         string folderName,
-        string? thumbnailFile,
+        Uri? thumbnailFile,
         string? boundAccountId,
         DateTimeOffset? lastPlay,
         DateTimeOffset createdAt,
@@ -70,7 +70,7 @@ public class GameInstance
     public string Name { get; set; }
     public string Author { get; set; }
     public string FolderName { get; set; }
-    public string? ThumbnailFile { get; set; }
+    public Uri? ThumbnailFile { get; set; }
     public string? BoundAccountId { get; set; }
     public DateTimeOffset? LastPlay { get; set; }
     public DateTimeOffset CreatedAt { get; set; }

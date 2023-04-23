@@ -1,22 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO.Compression;
 
 namespace Polymerium.Abstractions.Importers;
 
 public class ImportResult
 {
-    public ImportResult(
-        ZipArchive archive,
-        GameInstance instance,
-        IEnumerable<PackedSolidFile> files
-    )
+    public ImportResult(ZipArchive archive, ModpackContent content)
     {
         Archive = archive;
-        Instance = instance;
-        Files = files;
+        Content = content;
     }
 
     public ZipArchive Archive { get; set; }
-    public GameInstance Instance { get; set; }
-    public IEnumerable<PackedSolidFile> Files { get; set; }
+    public ModpackContent Content { get; set; }
 }

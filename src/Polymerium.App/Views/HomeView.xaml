@@ -114,10 +114,10 @@
                 <ListView ItemsSource="{x:Bind News}" Width="256" SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:HomeNewsItemModel">
-                            <controls:Card Margin="5,5,10,5" Padding="0">
+                            <controls:Card x:Name="Container" Margin="5,5,10,5" Padding="0">
                                 <StackPanel>
                                     <toolkit:ConstrainedBox AspectRatio="350:224">
-                                        <toolkit:ImageEx Source="{x:Bind ImageSource}"
+                                        <toolkit:ImageEx Source="{x:Bind ImageSource}" CornerRadius="{Binding CornerRadius,Mode=OneWay,ElementName=Container,Converter={StaticResource TopCornerRadiusFilterConverter}}"
                                                          ToolTipService.ToolTip="{x:Bind ImageSource}" Stretch="Fill" />
                                     </toolkit:ConstrainedBox>
                                     <Grid RowDefinitions="*,Auto" Margin="12">

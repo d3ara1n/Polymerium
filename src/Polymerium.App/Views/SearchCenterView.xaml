@@ -79,6 +79,8 @@
                                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="9" Spacing="5">
                                         <FontIcon Glyph="&#xE118;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                                         <TextBlock Text="{x:Bind Downloads}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                        <FontIcon Glyph="&#xECC5;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                        <TextBlock Text="{x:Bind UpdatedAt,Converter={StaticResource DateTimeOffsetToHumanStringConverter}}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                                         <FontIcon Glyph="&#xE13D;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                                         <TextBlock Text="{x:Bind Author}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                                     </StackPanel>

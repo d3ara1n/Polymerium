@@ -68,8 +68,12 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
         {
             if (result.IsSuccessful)
             {
-                ViewModel.Exposed = result.Value.Instance;
-                ViewModel.InstanceName = ViewModel.Exposed.Name;
+                ViewModel.Exposed = new Models.ModpackPreviewModel(
+                    result.Value.Content.Name,
+                    result.Value.Content.Version,
+                    result.Value.Content.Author
+                );
+                ViewModel.InstanceName = result.Value.Content.Name;
                 IsOperable = true;
                 VisualStateManager.GoToState(Root, "Default", false);
             }

@@ -15,6 +15,7 @@ using Polymerium.App.ViewModels.Instances;
 using Polymerium.App.Views;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
+using Polymerium.Core.Importers;
 using Polymerium.Core.Managers;
 using Polymerium.Core.ResourceResolving;
 using Polymerium.Core.Resources;
@@ -105,7 +106,13 @@ public partial class App : Application
             .AddSingleton<MemoryStorage>()
             .AddSingleton<ComponentManager>()
             .AddSingleton<JavaManager>()
-            .AddSingleton<ImportService>();
+            .AddSingleton<ImportService>()
+            .Configure<ImportServiceOptions>(
+                configure =>
+                    configure
+                        .Register<CurseForgeImporter>("manifest.json")
+                        .Register<ModrinthImporter>("modrinth.index.json")
+            );
         // global services
         services
             .AddSingleton<AssetManager>()

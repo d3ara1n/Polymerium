@@ -55,6 +55,8 @@ public class CurseForgeRepository : IResourceRepository
                     Downloads = x.DownloadCount,
                     Type = type,
                     Versions = x.LatestFilesIndexes.Select(x => x.FileId.ToString()),
+                    CreatedAt = x.DateCreated,
+                    UpdatedAt = x.DateModified,
                     Description = new Lazy<string>(() =>
                     {
                         var description = CurseForgeHelper
