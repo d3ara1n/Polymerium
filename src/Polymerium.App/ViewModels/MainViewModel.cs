@@ -71,7 +71,7 @@ public sealed class MainViewModel : ObservableObject
                             it.Name,
                             typeof(InstanceView),
                             it,
-                            it.ThumbnailFile
+                            it.ThumbnailFile?.AbsoluteUri
                         )
                 )
         );
@@ -195,7 +195,7 @@ public sealed class MainViewModel : ObservableObject
                                             instance.Name,
                                             typeof(InstanceView),
                                             instance,
-                                            instance.ThumbnailFile
+                                            instance.ThumbnailFile?.AbsoluteUri
                                         )
                                     );
                         }

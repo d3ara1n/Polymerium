@@ -15,24 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Converters/ZeroToVisibleConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/ZeroToVisibleConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/HomeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/HomeViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchDetailDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SearchDetailDialog.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/ResolveEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/ResolveEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/CurseForgeResolver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/CurseForgeResolver.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/ModrinthResolver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/ResourceResolving/ModrinthResolver.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/BankBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/BankBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/PropertyBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/PropertyBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Property.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Property.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/PostBodyNotGivenException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/PostBodyNotGivenException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/WapooException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/WapooException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/HttpMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/HttpMethods.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Wapoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Wapoo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/WapooOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/WapooOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/changelogs/v0.4.md" beforeDir="false" afterPath="$PROJECT_DIR$/changelogs/v0.4.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App (Package)/Package.appxmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App (Package)/Package.appxmanifest" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +52,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "TODO_SCOPE": "All Places",
+    "TODO_SCOPE": "所有位置",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
@@ -75,7 +60,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -140,12 +125,12 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue=".NET Launch Settings Profile.Polymerium.App: Polymerium.App (Unpackaged)" />
-      <item itemvalue=".NET Project.Polymerium.App Unpackaged" />
-      <item itemvalue="Publish to IIS.Polymerium.App: win10-arm64" />
-      <item itemvalue="Publish to IIS.Polymerium.App: win10-x64" />
-      <item itemvalue="Publish to IIS.Polymerium.App: win10-x86" />
+      <item itemvalue=".NET 启动设置配置文件.Polymerium.App: Polymerium.App (Unpackaged)" />
+      <item itemvalue=".NET 项目.Polymerium.App Unpackaged" />
       <item itemvalue="UWP.Polymerium.App" />
+      <item itemvalue="发布到 IIS.Polymerium.App: win10-arm64" />
+      <item itemvalue="发布到 IIS.Polymerium.App: win10-x64" />
+      <item itemvalue="发布到 IIS.Polymerium.App: win10-x86" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -264,6 +249,8 @@
       <workItem from="1681562362427" duration="48000" />
       <workItem from="1681641009764" duration="39000" />
       <workItem from="1681808477654" duration="131000" />
+      <workItem from="1681963556109" duration="98000" />
+      <workItem from="1681963686328" duration="70000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>

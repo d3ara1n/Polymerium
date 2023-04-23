@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -36,144 +37,104 @@ public class ModrinthImporter : ImporterBase
         _resolver = resolver;
     }
 
-    public override async Task<Result<ImportResult, GameImportError>> ProcessAsync(
-        ZipArchive archive,
+    public override async Task<Result<ModpackContent, GameImportError>> ExtractMetadataAsync(
+        string indexContent,
+        IEnumerable<string> rawFileList,
         Uri? source,
         bool forceOffline
     )
     {
-        var indexFile = archive.GetEntry("modrinth.index.json");
-        if (indexFile != null)
+        var index = JsonConvert.DeserializeObject<ModrinthModpackIndex>(indexContent);
+        if (index.Game == "minecraft")
         {
-            using var reader = new StreamReader(indexFile.Open());
-            var index = JsonConvert.DeserializeObject<ModrinthModpackIndex>(
-                await reader.ReadToEndAsync()
-            );
-            if (index.Game == "minecraft")
-            {
-                var instance = new GameInstance(
-                    new GameMetadata(),
-                    index.VersionId,
-                    new FileBasedLaunchConfiguration(),
-                    index.Name,
-                    index.Name
-                );
-                // 由于是本地导入的，所以没有 ReferenceSource，也不上锁
-                // 通过下载中心导入的包会是 poly-res://modrinth@modpack/<id|slug>
-
-                // 不，本地导入的只要是有源包都得上锁且补全信息，除非离线导入（强制无源
-                // 然而 Modrinth 的 mrpack 本身就是离线包，完全与主站数据解耦，查都查不到，而 CurseForge 是在线包，真头大
-
-                // NOTE: 所以，本地导入的包全是离线，需要后一步的在线（上锁）过程：当整合包来自 ReferenceSource/poly-res://modpack 时会在导入后添加锁和补全在线信息
-
-                foreach (var dependency in index.Dependencies)
-                    instance.Metadata.Components.Add(
-                        new Component
-                        {
-                            Version = dependency.Version,
-                            Identity = dependency.Id switch
-                            {
-                                "minecraft" => ComponentMeta.MINECRAFT,
-                                "forge" => ComponentMeta.FORGE,
-                                "fabric-loader" => ComponentMeta.FABRIC,
-                                "quilt-loader" => ComponentMeta.QUILT,
-                                _ => dependency.Id
-                            }
-                        }
-                    );
-
-                instance.ReferenceSource = source;
-                if (source != null && !forceOffline)
-                {
-                    // 合并自在线和 index.files
-
-                    var result = await _resolver.ResolveAsync(
-                        source,
-                        new ResolverContext(instance)
-                    );
-                    if (result.IsSuccessful && result.Value.Resource is Modpack modpack)
+            var metadata = new GameMetadata();
+            foreach (var dependency in index.Dependencies)
+                metadata.Components.Add(
+                    new Component
                     {
-                        var projectId = modpack.Id;
-                        var versionId = modpack.VersionId;
-                        var project = await ModrinthHelper.GetProjectAsync(
-                            projectId,
-                            _cache,
-                            Token
-                        );
-                        var version = await ModrinthHelper.GetVersionAsync(
-                            versionId,
-                            _cache,
-                            Token
-                        );
-                        if (project.HasValue && version.HasValue)
+                        Version = dependency.Version,
+                        Identity = dependency.Id switch
                         {
-                            // merge instance information
-                            instance.ReferenceSource = source;
-                            instance.ThumbnailFile = project.Value.IconUrl.AbsoluteUri;
-                            var team = await ModrinthHelper.GetTeamMembersAsync(
-                                project.Value.Team,
-                                _cache,
-                                Token
-                            );
-                            if (team.Any())
-                                instance.Author = string.Join(
-                                    ",",
-                                    team.Select(
-                                        x =>
-                                            !string.IsNullOrEmpty(x.User.Name)
-                                                ? x.User.Name
-                                                : x.User.Username
-                                    )
-                                );
-                            var tasks = new List<Task<(LabrinthProject, LabrinthVersion)?>>();
-                            // modpack 的 dependency 已经扁平化了，不需要用 ModrinthHelper.ScanDependenciesAsync 去扫
-                            foreach (
-                                var dependency in version.Value.Dependencies.Where(
-                                    x => x.VersionId != null || x.ProjectId != null
+                            "minecraft" => ComponentMeta.MINECRAFT,
+                            "forge" => ComponentMeta.FORGE,
+                            "fabric-loader" => ComponentMeta.FABRIC,
+                            "quilt-loader" => ComponentMeta.QUILT,
+                            _ => dependency.Id
+                        }
+                    }
+                );
+            string? author = null;
+            Uri? thumbnail = null;
+            if (source != null && !forceOffline)
+            {
+                var result = await _resolver.ResolveAsync(source, new ResolverContext());
+                if (result.IsSuccessful && result.Value.Resource is Modpack modpack)
+                {
+                    var projectId = modpack.Id;
+                    var versionId = modpack.VersionId;
+                    var project = await ModrinthHelper.GetProjectAsync(projectId, _cache, Token);
+                    var version = await ModrinthHelper.GetVersionAsync(versionId, _cache, Token);
+                    if (project.HasValue && version.HasValue)
+                    {
+                        thumbnail = project.Value.IconUrl;
+                        var team = await ModrinthHelper.GetTeamMembersAsync(
+                            project.Value.Team,
+                            _cache,
+                            Token
+                        );
+                        if (team.Any())
+                            author = string.Join(
+                                ",",
+                                team.Select(
+                                    x =>
+                                        !string.IsNullOrEmpty(x.User.Name)
+                                            ? x.User.Name
+                                            : x.User.Username
                                 )
+                            );
+                        var tasks = new List<Task<(LabrinthProject, LabrinthVersion)?>>();
+                        // modpack 的 dependency 已经扁平化了，不需要用 ModrinthHelper.ScanDependenciesAsync 去扫
+                        foreach (
+                            var dependency in version.Value.Dependencies.Where(
+                                x => x.VersionId != null || x.ProjectId != null
                             )
-                                tasks.Add(
-                                    GetDependencyInfoAsync(
-                                        dependency.ProjectId,
-                                        dependency.VersionId,
-                                        _cache,
-                                        Token
-                                    )
-                                );
-                            await Task.WhenAll(tasks);
-                            if (tasks.All(x => x.IsCompletedSuccessfully && x.Result.HasValue))
+                        )
+                            tasks.Add(
+                                GetDependencyInfoAsync(
+                                    dependency.ProjectId,
+                                    dependency.VersionId,
+                                    _cache,
+                                    Token
+                                )
+                            );
+                        await Task.WhenAll(tasks);
+                        if (tasks.All(x => x.IsCompletedSuccessfully && x.Result.HasValue))
+                        {
+                            var externals = tasks.Select(x => x.Result!.Value);
+                            var externalFiles = externals.SelectMany(x => x.Item2.Files);
+                            // 将 externals 中存在的在 embededs 中移除，根据 url。其实就是用 url 去反查 version 的过程}
+                            var embeddeds = index.Files
+                                .Where(
+                                    x => !x.Downloads.Any(y => externalFiles.Any(z => z.Url == y))
+                                )
+                                .ToList();
+                            // 校验 externals 中没有 versionId 的那部分(requireds)是否存在于 embeddeds。其实不用校验，这是必然的，出问题了责任在打包方。
+                            foreach ((var externalProject, var externalVersion) in externals)
                             {
-                                var externals = tasks.Select(x => x.Result!.Value);
-                                var externalFiles = externals.SelectMany(x => x.Item2.Files);
-                                // 将 externals 中存在的在 embededs 中移除，根据 url。其实就是用 url 去反查 version 的过程}
-                                var embeddeds = index.Files
-                                    .Where(
-                                        x =>
-                                            !x.Downloads.Any(
-                                                y => externalFiles.Any(z => z.Url == y)
-                                            )
-                                    )
-                                    .ToList();
-                                // 校验 externals 中没有 versionId 的那部分(requireds)是否存在于 embeddeds。其实不用校验，这是必然的，出问题了责任在打包方。
-                                foreach ((var externalProject, var externalVersion) in externals)
-                                {
-                                    var type = ModrinthHelper.GetResourceTypeFromString(
-                                        externalProject.ProjectType
-                                    );
-                                    var attachment = ModrinthHelper.MakeResourceUrl(
-                                        type,
-                                        externalProject.Id ?? externalProject.Slug,
-                                        externalVersion.Id,
-                                        null
-                                    );
-                                    instance.Metadata.Attachments.Add(
-                                        new Attachment() { Source = attachment, From = source }
-                                    );
-                                }
-                                AddFilesTo(instance.Metadata.Attachments, embeddeds);
+                                var type = ModrinthHelper.GetResourceTypeFromString(
+                                    externalProject.ProjectType
+                                );
+                                var attachment = ModrinthHelper.MakeResourceUrl(
+                                    type,
+                                    externalProject.Id ?? externalProject.Slug,
+                                    externalVersion.Id,
+                                    null
+                                );
+                                metadata.Attachments.Add(
+                                    new Attachment() { Source = attachment, From = source }
+                                );
                             }
-                            else
-                                return Failed(GameImportError.ResourceNotFound);
+                            AddFilesTo(metadata.Attachments, embeddeds);
                         }
                         else
                             return Failed(GameImportError.ResourceNotFound);
@@ -182,46 +143,46 @@ public class ModrinthImporter : ImporterBase
                         return Failed(GameImportError.ResourceNotFound);
                 }
                 else
-                {
-                    // 从 index.files 取
-                    AddFilesTo(instance.Metadata.Attachments, index.Files);
-                }
-
-                var files = new List<PackedSolidFile>();
-
-                foreach (
-                    var file in archive.Entries.Where(
-                        x => x.FullName.StartsWith("overrides") && !x.FullName.EndsWith("/")
-                    )
-                )
-                    files.Add(
-                        new PackedSolidFile
-                        {
-                            FileName = file.FullName,
-                            Path = Path.GetRelativePath("overrides", file.FullName)
-                        }
-                    );
-
-                foreach (
-                    var clientFile in archive.Entries.Where(
-                        x => x.FullName.StartsWith("client-overrides") && !x.FullName.EndsWith("/")
-                    )
-                )
-                    files.Add(
-                        new PackedSolidFile
-                        {
-                            FileName = clientFile.FullName,
-                            Path = Path.GetRelativePath("client-overrides", clientFile.FullName)
-                        }
-                    );
-
-                return Finished(archive, instance, files);
+                    return Failed(GameImportError.ResourceNotFound);
+            }
+            else
+            {
+                // 从 index.files 取
+                AddFilesTo(metadata.Attachments, index.Files);
             }
 
-            return Failed(GameImportError.Unsupported);
+            var files = new List<PackedSolidFile>();
+
+            foreach (var file in rawFileList.Where(x => x.StartsWith("overrides")))
+                files.Add(
+                    new PackedSolidFile
+                    {
+                        FileName = file,
+                        Path = Path.GetRelativePath("overrides", file)
+                    }
+                );
+
+            foreach (var clientFile in rawFileList.Where(x => x.StartsWith("client-overrides")))
+                files.Add(
+                    new PackedSolidFile
+                    {
+                        FileName = clientFile,
+                        Path = Path.GetRelativePath("client-overrides", clientFile)
+                    }
+                );
+
+            return Finished(
+                index.Name,
+                index.VersionId,
+                author ?? string.Empty,
+                thumbnail,
+                source,
+                metadata,
+                files
+            );
         }
 
-        return Failed(GameImportError.WrongPackType);
+        return Failed(GameImportError.Unsupported);
     }
 
     private void AddFilesTo(IList<Attachment> container, IEnumerable<ModrinthModpackFile> files)

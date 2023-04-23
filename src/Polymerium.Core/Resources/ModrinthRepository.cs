@@ -58,6 +58,8 @@ public class ModrinthRepository : IResourceRepository
                     IconSource = x.IconUrl,
                     Summary = x.Description,
                     Downloads = x.Downloads,
+                    CreatedAt = x.DateCreated,
+                    UpdatedAt = x.DateModified,
                     Type = type,
                     Versions = x.Versions,
                     Description = new Lazy<string>(() =>

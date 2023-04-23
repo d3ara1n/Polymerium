@@ -3,6 +3,7 @@
 public enum GameImportError
 {
     Unknown,
+    Cancelled,
     FileSystemError,
     ResourceNotFound,
     BrokenIndex,

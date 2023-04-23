@@ -119,7 +119,7 @@ a little bit of personal flavor。
         * [x] 自定义 JVM 参数
         * [x] 先决条件检查
         * [x] Java 版本自动选择和兼容性检查
-    * [ ] 行星搅拌机
+    * [ ] 行星发动机
         * [x] Fire-and-forget 模式
         * [ ] Managed 模式
             * [ ] 订阅日志

@@ -5,29 +5,41 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNext;
+using Polymerium.Abstractions.Meta;
 
 namespace Polymerium.Abstractions.Importers;
 
 public abstract class ImporterBase
 {
     public CancellationToken Token { get; set; }
-    public abstract Task<Result<ImportResult, GameImportError>> ProcessAsync(
-        ZipArchive archive,
+
+    public abstract Task<Result<ModpackContent, GameImportError>> ExtractMetadataAsync(
+        string indexContent,
+        IEnumerable<string> rawFileList,
         Uri? source,
-        bool forceOffline = false
+        bool forceOffline
     );
 
-    public Result<ImportResult, GameImportError> Failed(GameImportError reason)
-    {
-        return new Result<ImportResult, GameImportError>(reason);
-    }
+    protected Result<ModpackContent, GameImportError> Failed(GameImportError reason) =>
+        new Result<ModpackContent, GameImportError>(reason);
 
-    public Result<ImportResult, GameImportError> Finished(
-        ZipArchive archive,
-        GameInstance instance,
-        IEnumerable<PackedSolidFile>? files = null
-    )
-    {
-        return new ImportResult(archive, instance, files ?? Enumerable.Empty<PackedSolidFile>());
-    }
+    protected Result<ModpackContent, GameImportError> Finished(
+        string name,
+        string version,
+        string author,
+        Uri? thumbnail,
+        Uri? reference,
+        GameMetadata metadata,
+        IEnumerable<PackedSolidFile> files
+    ) =>
+        new ModpackContent()
+        {
+            Name = name,
+            Version = version,
+            Author = author,
+            ThumbnailFile = thumbnail,
+            ReferenceSource = reference,
+            Metadata = metadata,
+            Files = files
+        };
 }

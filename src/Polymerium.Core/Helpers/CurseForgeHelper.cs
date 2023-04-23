@@ -65,9 +65,10 @@ public static class CurseForgeHelper
         IMemoryCache cache,
         CancellationToken token = default
     )
+        where T : struct
     {
         if (token.IsCancellationRequested)
-            return default;
+            return null;
         return await cache.GetOrCreateAsync<T?>(
             service,
             async entry =>
@@ -82,6 +83,38 @@ public static class CurseForgeHelper
                         if (x.ContainsKey("data"))
                         {
                             result = x["data"]!.ToObject<T>();
+                            found = true;
+                        }
+                    })
+                    .FetchAsync();
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
+                return result;
+            }
+        );
+    }
+
+    private static async Task<string?> GetStringResourceAsync(
+        string service,
+        IMemoryCache cache,
+        CancellationToken token = default
+    )
+    {
+        if (token.IsCancellationRequested)
+            return null;
+        return await cache.GetOrCreateAsync(
+            service,
+            async entry =>
+            {
+                var found = false;
+                string? result = null;
+                await Wapoo
+                    .Wohoo(ENDPOINT + service)
+                    .WithHeader("x-api-key", API_KEY)
+                    .ForJsonResult<JObject>(x =>
+                    {
+                        if (x.ContainsKey("data"))
+                        {
+                            result = x.Value<string>("data");
                             found = true;
                         }
                     })
@@ -173,7 +206,7 @@ public static class CurseForgeHelper
     )
     {
         var service = $"/mods/{projectId}/description";
-        return await GetResourceAsync<string>(service, cache, token);
+        return await GetStringResourceAsync(service, cache, token);
     }
 
     public static async Task<string?> GetModDownloadUrlAsync(
@@ -184,7 +217,7 @@ public static class CurseForgeHelper
     )
     {
         var service = $"/mods/{projectId}/files/{fileId}/download-url";
-        return await GetResourceAsync<string>(service, cache, token);
+        return await GetStringResourceAsync(service, cache, token);
     }
 
     public static async Task<EternalModFile?> GetModFileInfoAsync(

@@ -42,7 +42,7 @@ public class HomeViewModel : ObservableObject
                     x =>
                         new RecentPlayedItemModel(
                             x.Id,
-                            x.ThumbnailFile,
+                            x.ThumbnailFile?.AbsoluteUri,
                             x.Name,
                             x.LastPlay,
                             GotoRecentItemInstanceViewCommand
@@ -145,7 +145,7 @@ public class HomeViewModel : ObservableObject
                 return list;
             }
         );
-        foreach (var item in results)
+        foreach (var item in results!)
             callback(item);
         callback(null);
     }

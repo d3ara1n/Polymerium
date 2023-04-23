@@ -6,117 +6,174 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNext;
+using DotNext.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
+using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.App.Configurations;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
+using Polymerium.Core.Helpers;
 using Polymerium.Core.Importers;
 
 namespace Polymerium.App.Services;
 
 public class ImportService
 {
+    private readonly ImportServiceOptions _options;
     private readonly IFileBaseService _fileBase;
     private readonly InstanceManager _instanceManager;
     private readonly ResolveEngine _resolver;
     private readonly IServiceProvider _provider;
-    private readonly AppSettings _settings;
 
     public ImportService(
+        IOptions<ImportServiceOptions> options,
         IFileBaseService fileBase,
         InstanceManager instanceManager,
         ResolveEngine resolver,
-        IServiceProvider provider,
-        AppSettings settings
+        IServiceProvider provider
     )
     {
+        _options = options.Value;
         _fileBase = fileBase;
         _instanceManager = instanceManager;
         _resolver = resolver;
         _provider = provider;
-        _settings = settings;
     }
 
-    public async Task<Result<ImportResult, GameImportError>> ImportAsync(
+    public async Task<Result<ImportResult, GameImportError>> ExtractMetadataFromFileAsync(
         string filePath,
-        Uri? source,
-        CancellationToken? token = default
+        Uri? reference,
+        bool forceOffline,
+        CancellationToken token = default
     )
     {
         if (File.Exists(filePath))
         {
             try
             {
-                var forceOffline = _settings.ForceImportOffline;
                 var archive = ZipFile.OpenRead(filePath);
-                var files = archive.Entries.Select(x => x.FullName);
-                if (files.Any(x => x == "modrinth.index.json"))
+                var rawFileList = archive.Entries
+                    .Where(x => !x.FullName.EndsWith('/'))
+                    .Select(x => x.FullName);
+                var importerOption = _options.ImporterTypes.FirstOrNone(
+                    x => rawFileList.Contains(x.Key)
+                );
+                if (importerOption)
                 {
-                    var importer = ActivatorUtilities.CreateInstance<ModrinthImporter>(_provider);
-                    importer.Token = token ?? CancellationToken.None;
-                    return await importer.ProcessAsync(archive, source, forceOffline);
-                }
+                    (var indexFileName, var importerType) = importerOption.Value;
+                    if (token.IsCancellationRequested)
+                        return new Result<ImportResult, GameImportError>(GameImportError.Cancelled);
+                    var importer = (ImporterBase)
+                        ActivatorUtilities.CreateInstance(_provider, importerType);
+                    importer.Token = token;
+                    using var indexFileStream = archive.GetEntry(indexFileName)?.Open();
+                    if (indexFileStream != null)
+                    {
+                        using var reader = new StreamReader(indexFileStream);
+                        var indexFileContent = await reader.ReadToEndAsync();
+                        var result = await importer.ExtractMetadataAsync(
+                            indexFileContent,
+                            rawFileList,
+                            reference,
+                            forceOffline
+                        );
 
-                if (files.Any(x => x == "manifest.json"))
-                {
-                    var importer = ActivatorUtilities.CreateInstance<CurseForgeImporter>(_provider);
-                    importer.Token = token ?? CancellationToken.None;
-                    return await importer.ProcessAsync(archive, source, forceOffline);
+                        return result.IsSuccessful
+                            ? new Result<ImportResult, GameImportError>(
+                                new ImportResult(archive, result.Value)
+                            )
+                            : new Result<ImportResult, GameImportError>(result.Error);
+                    }
+                    else
+                        return new Result<ImportResult, GameImportError>(
+                            GameImportError.ResourceNotFound
+                        );
                 }
+                else
+                    return new Result<ImportResult, GameImportError>(GameImportError.Unsupported);
             }
             catch
             {
-                return new Result<ImportResult, GameImportError>(GameImportError.WrongPackType);
+                return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
             }
-
-            return new Result<ImportResult, GameImportError>(GameImportError.Unsupported);
         }
-
-        return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
+        else
+            return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
     }
 
-    public async Task<GameImportError?> PostImportAsync(ImportResult product)
-    {
-        return await Task.Run(
+    public async Task<GameImportError?> SolidifyAsync(
+        ImportResult product,
+        GameInstance? instance
+    ) =>
+        await Task.Run(
             new Func<GameImportError?>(() =>
             {
-                var allocated = new List<Uri>();
-                foreach (var file in product.Files)
-                    try
+                bool isGenerated = instance == null;
+                instance ??= new GameInstance(
+                    new GameMetadata(),
+                    string.Empty,
+                    new FileBasedLaunchConfiguration(),
+                    string.Empty,
+                    string.Empty
+                );
+                var allocateds = new List<Uri>();
+                var localDir = _fileBase.Locate(
+                    new Uri(ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", instance.Id))
+                );
+                try
+                {
+                    if (Directory.Exists(localDir))
+                        Directory.Delete(localDir, true);
+                    foreach (var file in product.Content.Files)
                     {
                         var path = _fileBase.Locate(
                             new Uri(
-                                new Uri(
-                                    ConstPath.LOCAL_INSTANCE_BASE.Replace(
-                                        "{0}",
-                                        product.Instance.Id
-                                    )
-                                ),
+                                new Uri(ConstPath.LOCAL_INSTANCE_BASE.Replace("{0}", instance.Id)),
                                 file.Path
                             )
                         );
                         var entry = product.Archive.GetEntry(file.FileName)!;
-                        var dir = Path.GetDirectoryName(path);
+                        var dir = Path.GetDirectoryName(path)!;
                         if (!Directory.Exists(dir))
-                            Directory.CreateDirectory(dir!);
-
+                            Directory.CreateDirectory(dir);
                         entry.ExtractToFile(path);
-                        allocated.Add(new Uri(new Uri("poly-res://local@file/"), file.Path));
+                        allocateds.Add(new Uri(new Uri("poly-res://local@file/"), file.Path));
                     }
-                    catch
-                    {
-                        return GameImportError.FileSystemError;
-                    }
+                }
+                catch
+                {
+                    return GameImportError.FileSystemError;
+                }
 
-                foreach (var file in allocated)
-                    product.Instance.Metadata.Attachments.Add(
-                        new Attachment { Source = file, From = product.Instance.ReferenceSource }
+                // update instance info and remain FolderName untouched
+                var old = instance.ReferenceSource;
+                instance.Name = product.Content.Name;
+                instance.Version = product.Content.Version;
+                instance.Author = product.Content.Author;
+                instance.ReferenceSource = product.Content.ReferenceSource;
+                instance.ThumbnailFile = product.Content.ThumbnailFile;
+                instance.Metadata.Components.Clear();
+                foreach (var component in product.Content.Metadata.Components)
+                    instance.Metadata.Components.Add(component);
+                var removings = instance.Metadata.Attachments.Where(x => x.From == old).ToList();
+                foreach (var removing in removings)
+                    instance.Metadata.Attachments.Remove(removing);
+                foreach (var attachment in product.Content.Metadata.Attachments)
+                    instance.Metadata.Attachments.Add(attachment);
+                foreach (var allocated in allocateds)
+                    instance.Metadata.Attachments.Add(
+                        new Attachment() { From = instance.ReferenceSource, Source = allocated }
                     );
-                _instanceManager.AddInstance(product.Instance);
+                if (isGenerated)
+                {
+                    instance.FolderName = PathHelper.RemoveInvalidCharacters(instance.Name);
+                    _instanceManager.AddInstance(instance);
+                }
                 return null;
             })
         );
-    }
 }

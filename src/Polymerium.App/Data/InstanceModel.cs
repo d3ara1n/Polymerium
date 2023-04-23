@@ -37,7 +37,7 @@ public class InstanceModel : RefinedModelBase<GameInstance>
     public string? Name { get; set; }
     public string? Author { get; set; }
     public string? FolderName { get; set; }
-    public string? ThumbnailFile { get; set; }
+    public Uri? ThumbnailFile { get; set; }
     public string? BoundAccountId { get; set; }
     public DateTimeOffset? LastPlay { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
@@ -77,7 +77,7 @@ public class InstanceModel : RefinedModelBase<GameInstance>
             Name!,
             Author ?? string.Empty,
             FolderName!,
-            ThumbnailFile ?? string.Empty,
+            ThumbnailFile,
             BoundAccountId ?? string.Empty,
             LastPlay!,
             CreatedAt ?? DateTimeOffset.Now,

@@ -9,7 +9,7 @@
     <Identity
             Name="2413Dearain.Polymerium"
             Publisher="CN=11C5722E-21B2-4CEC-984F-6BC6DC620005"
-            Version="0.4.1.0"/>
+            Version="0.4.2.0"/>
 
     <Properties>
         <DisplayName>Polymerium</DisplayName>

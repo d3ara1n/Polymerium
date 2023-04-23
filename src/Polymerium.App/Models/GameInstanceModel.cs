@@ -60,10 +60,10 @@ public class GameInstanceModel : ObservableObject
 
     public string ThumbnailFile
     {
-        get => Inner.ThumbnailFile ?? string.Empty;
+        get => Inner.ThumbnailFile?.AbsoluteUri ?? string.Empty;
         set
         {
-            Inner.ThumbnailFile = value;
+            Inner.ThumbnailFile = new Uri(value);
             OnPropertyChanged();
         }
     }

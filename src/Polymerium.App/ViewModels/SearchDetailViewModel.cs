@@ -32,6 +32,7 @@ public class SearchDetailViewModel : ObservableObject
     private readonly MemoryStorage _memoryStorage;
     private readonly INotificationService _notification;
     private readonly ResolveEngine _resolver;
+    private readonly AppSettings _settings;
 
     public SearchDetailViewModel(
         ViewModelContext context,
@@ -41,7 +42,8 @@ public class SearchDetailViewModel : ObservableObject
         INotificationService notification,
         ImportService importer,
         IMemoryCache cache,
-        ComponentManager componentManager
+        ComponentManager componentManager,
+        AppSettings settings
     )
     {
         Instance = context.AssociatedInstance!;
@@ -52,6 +54,7 @@ public class SearchDetailViewModel : ObservableObject
         _importer = importer;
         _cache = cache;
         _componentManager = componentManager;
+        _settings = settings;
     }
 
     public GameInstanceModel Instance { get; }
@@ -229,14 +232,19 @@ public class SearchDetailViewModel : ObservableObject
 
             report(null, false);
             writer.Close();
-            var importResult = await _importer.ImportAsync(tmpFile, url, token);
+            var importResult = await _importer.ExtractMetadataFromFileAsync(
+                tmpFile,
+                url,
+                _settings.ForceImportOffline,
+                token
+            );
             if (importResult.IsSuccessful)
             {
-                var postError = await _importer.PostImportAsync(importResult.Value);
+                var postError = await _importer.SolidifyAsync(importResult.Value, null);
                 if (postError.HasValue)
                     EndedError($"添加导入的实例失败: {postError}");
                 else
-                    EndedSuccess($"{importResult.Value.Instance.Name} 已添加");
+                    EndedSuccess($"{importResult.Value.Content.Name} 已添加");
             }
             else
             {

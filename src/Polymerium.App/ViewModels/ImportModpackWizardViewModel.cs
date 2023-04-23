@@ -5,6 +5,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using DotNext;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
+using Polymerium.App.Configurations;
+using Polymerium.App.Models;
 using Polymerium.App.Services;
 
 namespace Polymerium.App.ViewModels;
@@ -17,7 +19,7 @@ public class ImportModpackWizardViewModel : ObservableObject
     private string? _fileName;
     private ImportResult? _importResult;
 
-    private GameInstance? exposed;
+    private ModpackPreviewModel? exposed;
 
     private string? instanceName = string.Empty;
 
@@ -26,7 +28,7 @@ public class ImportModpackWizardViewModel : ObservableObject
         _importer = importer;
     }
 
-    public GameInstance? Exposed
+    public ModpackPreviewModel? Exposed
     {
         get => exposed;
         set => SetProperty(ref exposed, value);
@@ -52,7 +54,12 @@ public class ImportModpackWizardViewModel : ObservableObject
         Action<Result<ImportResult, GameImportError>, bool> callback
     )
     {
-        var result = await _importer.ImportAsync(_fileName!, null, source.Token);
+        var result = await _importer.ExtractMetadataFromFileAsync(
+            _fileName!,
+            null,
+            true,
+            source.Token
+        );
         if (result.IsSuccessful)
             _importResult = result.Value;
         if (!source.Token.IsCancellationRequested)
@@ -63,7 +70,7 @@ public class ImportModpackWizardViewModel : ObservableObject
         Action<Result<ImportResult, GameImportError>, bool> callback
     )
     {
-        var result = await _importer.PostImportAsync(_importResult!);
+        var result = await _importer.SolidifyAsync(_importResult!, null);
         if (result.HasValue)
             callback(new Result<ImportResult, GameImportError>(result.Value), true);
         else

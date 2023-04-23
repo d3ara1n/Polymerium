@@ -15,7 +15,7 @@ namespace Polymerium.Core.ResourceResolving;
 public class CurseForgeResolver : ResourceResolverBase
 {
 #pragma warning disable S1075 // URIs should not be hardcoded
-    private const string CURSEFORGE_PROJECT_URL = "https://beta.curseforge.com/minecraft/{0}/{1}";
+    private const string CURSEFORGE_PROJECT_URL = "https://www.curseforge.com/minecraft/{0}/{1}";
 #pragma warning restore S1075 // URIs should not be hardcoded
     private static readonly Func<string, uint> PARSER_INT = uint.Parse;
 

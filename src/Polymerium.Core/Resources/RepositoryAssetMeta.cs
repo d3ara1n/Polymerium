@@ -15,6 +15,8 @@ public struct RepositoryAssetMeta
     public long Downloads { get; set; }
     public Lazy<string>? Description { get; set; }
     public Lazy<IEnumerable<(string, Uri)>>? Screenshots { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset UpdatedAt { get; set; }
     public string Summary { get; set; }
     public IEnumerable<string> Versions { get; set; }
 }
