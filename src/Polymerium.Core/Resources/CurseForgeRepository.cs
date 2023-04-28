@@ -54,7 +54,6 @@ public class CurseForgeRepository : IResourceRepository
                     Summary = x.Summary,
                     Downloads = x.DownloadCount,
                     Type = type,
-                    Versions = x.LatestFilesIndexes.Select(x => x.FileId.ToString()),
                     CreatedAt = x.DateCreated,
                     UpdatedAt = x.DateModified,
                     Description = new Lazy<string>(() =>
@@ -91,7 +90,6 @@ public class CurseForgeRepository : IResourceRepository
                     IconSource = project.Value.Logo?.ThumbnailUrl,
                     Type = ResourceType.Mod,
                     Downloads = project.Value.DownloadCount,
-                    Versions = project.Value.LatestFilesIndexes.Select(x => x.FileId.ToString()),
                     Description = new Lazy<string>(() =>
                     {
                         var description = CurseForgeHelper

@@ -88,7 +88,7 @@ public sealed partial class SearchDetailDialog : CustomDialog
             if (model != null)
             {
                 Versions.Add(model);
-                VersionList.SelectedItem ??= model;
+                VersionList.SelectedValue ??= model;
             }
             else
                 IsOperating = false;

@@ -12,6 +12,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Core.Components;
+using Polymerium.Core.Extensions;
 using Polymerium.Core.Resources;
 
 namespace Polymerium.App.ViewModels;
@@ -31,14 +32,14 @@ public class SearchCenterViewModel : ObservableObject
         IOverlayService overlayService
     )
     {
-        Instance = context.AssociatedInstance!;
+        Instance = context.AssociatedInstance;
         _overlayService = overlayService;
         Repositories = repositories;
         SupportedResources = new ObservableCollection<ResourceType>();
         ClearScopeCommand = new RelayCommand(ClearScope);
     }
 
-    public GameInstanceModel Instance { get; set; }
+    public GameInstanceModel? Instance { get; set; }
 
     public IEnumerable<IResourceRepository> Repositories { get; }
     public ICommand ClearScopeCommand { get; }

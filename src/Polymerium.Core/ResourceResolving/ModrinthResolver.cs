@@ -26,13 +26,11 @@ public class ModrinthResolver : ResourceResolverBase
         _cache = cache;
     }
 
-    private string MembersToLine(IEnumerable<LabrinthTeamMember> members)
-    {
-        return string.Join(
+    private string MembersToLine(IEnumerable<LabrinthTeamMember> members) =>
+        string.Join(
             ", ",
             members.Select(x => !string.IsNullOrEmpty(x.User.Name) ? x.User.Name : x.User.Username)
         );
-    }
 
     private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(
         ResourceType type,
@@ -57,9 +55,8 @@ public class ModrinthResolver : ResourceResolverBase
     public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(
         string projectId,
         string version
-    )
-    {
-        return await GetProjectAsync(
+    ) =>
+        await GetProjectAsync(
             ResourceType.Modpack,
             projectId,
             version,
@@ -89,16 +86,14 @@ public class ModrinthResolver : ResourceResolverBase
                     )
                 )
         );
-    }
 
     [ResourceType(ResourceType.Mod)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(
         string projectId,
         string version
-    )
-    {
-        return await GetProjectAsync(
+    ) =>
+        await GetProjectAsync(
             ResourceType.Mod,
             projectId,
             version,
@@ -128,16 +123,14 @@ public class ModrinthResolver : ResourceResolverBase
                     )
                 )
         );
-    }
 
     [ResourceType(ResourceType.ResourcePack)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(
         string projectId,
         string version
-    )
-    {
-        return await GetProjectAsync(
+    ) =>
+        await GetProjectAsync(
             ResourceType.ResourcePack,
             projectId,
             version,
@@ -169,16 +162,14 @@ public class ModrinthResolver : ResourceResolverBase
                     )
                 )
         );
-    }
 
     [ResourceType(ResourceType.ShaderPack)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetShaderPackAsync(
         string projectId,
         string version
-    )
-    {
-        return await GetProjectAsync(
+    ) =>
+        await GetProjectAsync(
             ResourceType.ShaderPack,
             projectId,
             version,
@@ -208,7 +199,6 @@ public class ModrinthResolver : ResourceResolverBase
                     )
                 )
         );
-    }
 
     [ResourceType(ResourceType.File)]
     [ResourceExpression("{dir}/{version}")]
@@ -258,6 +248,35 @@ public class ModrinthResolver : ResourceResolverBase
                 ),
                 ResourceType.File
             );
+        }
+
+        return Err(ResolveResultError.NotFound);
+    }
+
+    [ResourceType(ResourceType.Update)]
+    [ResourceExpression("{projectId}")]
+    public async Task<Result<ResolveResult, ResolveResultError>> GetVersionsAsync(
+        string projectId,
+        string current
+    )
+    {
+        var project = await ModrinthHelper.GetProjectAsync(projectId, _cache);
+        var version = await ModrinthHelper.GetVersionAsync(current, _cache);
+        var versions = await ModrinthHelper.GetProjectVersionsAsync(projectId, _cache);
+        if (project.HasValue && version.HasValue && versions.Any())
+        {
+            var type = ModrinthHelper.GetResourceTypeFromString(project.Value.ProjectType);
+            var updates = versions
+                .OrderByDescending(x => x.DatePublished)
+                .Select(x => ModrinthHelper.MakeResourceUrl(type, projectId, x.Id, null));
+            var result = new Update(
+                projectId,
+                project.Value.Title,
+                version.Value.Name,
+                version.Value.Id,
+                updates
+            );
+            return Ok(result, ResourceType.Update);
         }
 
         return Err(ResolveResultError.NotFound);

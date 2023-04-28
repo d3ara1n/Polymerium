@@ -18,5 +18,4 @@ public struct RepositoryAssetMeta
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
     public string Summary { get; set; }
-    public IEnumerable<string> Versions { get; set; }
 }

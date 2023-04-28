@@ -15,11 +15,6 @@
         <DefaultLanguage>zh-CN</DefaultLanguage>
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
     </PropertyGroup>
-    <ItemGroup>
-        <None Remove="Dialogs\InstanceSelectorDialog.xaml" />
-        <None Remove="Views\Instances\InstanceAssetDrawer.xaml" />
-        <None Remove="Views\InstanceUpdateDialog.xaml" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
@@ -184,5 +179,20 @@
         <Page Update="Views\AddAccountWizards\MicrosoftAccountIntroView.xaml">
             <Generator>MSBuild:Compile</Generator>
         </Page>
+    </ItemGroup>
+    <ItemGroup>
+      <CustomAdditionalCompileInputs Remove="Views\InstanceAttachmentBulkUpdateDialog.xaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="Views\InstanceAttachmentBulkUpdateDialog.xaml" />
+      <None Remove="Views\PlanetView.xaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <Resource Remove="Views\InstanceAttachmentBulkUpdateDialog.xaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <Page Update="Views\PlanetView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
     </ItemGroup>
 </Project>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Polymerium.Cli": {
+      "commandName": "Project",
+      "workingDirectory": "%userprofile%/.polymerium"
+    }
+  }
+}

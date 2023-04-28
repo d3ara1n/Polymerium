@@ -47,7 +47,8 @@ public static class ModrinthHelper
         };
         return type switch
         {
-            ResourceType.Update => new Uri($"poly-res://modrinth@update/{projectId}"),
+            ResourceType.Update
+                => new Uri($"poly-res://modrinth@update/{projectId}?current={versionId}"),
             ResourceType.File => new Uri($"poly-res://modrinth@file/{dir}/{versionId}"),
             _
                 => new Uri(

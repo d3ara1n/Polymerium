@@ -54,9 +54,8 @@ public class CurseForgeResolver : ResourceResolverBase
     public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(
         string projectId,
         string version
-    )
-    {
-        return await GetProjectAsync(
+    ) =>
+        await GetProjectAsync(
             ResourceType.Modpack,
             projectId,
             version,
@@ -78,16 +77,14 @@ public class CurseForgeResolver : ResourceResolverBase
                     CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
-    }
 
     [ResourceType(ResourceType.Mod)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(
         string projectId,
         string version
-    )
-    {
-        return await GetProjectAsync(
+    ) =>
+        await GetProjectAsync(
             ResourceType.Mod,
             projectId,
             version,
@@ -109,16 +106,14 @@ public class CurseForgeResolver : ResourceResolverBase
                     CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
-    }
 
     [ResourceType(ResourceType.ResourcePack)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(
         string projectId,
         string version
-    )
-    {
-        return await GetProjectAsync(
+    ) =>
+        await GetProjectAsync(
             ResourceType.ResourcePack,
             projectId,
             version,
@@ -140,7 +135,6 @@ public class CurseForgeResolver : ResourceResolverBase
                     CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
-    }
 
     [ResourceType(ResourceType.File)]
     [ResourceExpression("{projectId}/{fileId}")]
@@ -184,6 +178,47 @@ public class CurseForgeResolver : ResourceResolverBase
             return Err(ResolveResultError.NotFound);
         }
 
+        return Err(ResolveResultError.InvalidArguments);
+    }
+
+    [ResourceType(ResourceType.Update)]
+    [ResourceExpression("{projectId}")]
+    public async Task<Result<ResolveResult, ResolveResultError>> GetFilesAsync(
+        string projectId,
+        string current
+    )
+    {
+        var pid = PARSER_INT.TryInvoke(projectId);
+        var fid = PARSER_INT.TryInvoke(current);
+        if (pid.IsSuccessful && fid.IsSuccessful)
+        {
+            var mod = await CurseForgeHelper.GetModInfoAsync(pid.Value, _cache);
+            var file = await CurseForgeHelper.GetModFileInfoAsync(pid.Value, fid.Value, _cache);
+            var files = await CurseForgeHelper.GetModFilesAsync(pid.Value, _cache);
+            if (mod.HasValue && file.HasValue && files.Any())
+            {
+                var type = CurseForgeHelper.GetResourceTypeFromClassId(mod.Value.ClassId);
+                var versions = files
+                    .OrderByDescending(x => x.FileDate)
+                    .Select(
+                        x =>
+                            CurseForgeHelper.MakeResourceUrl(
+                                type,
+                                mod.Value.Id.ToString(),
+                                x.Id.ToString()
+                            )
+                    );
+                var result = new Update(
+                    projectId,
+                    mod.Value.Name,
+                    file.Value.DisplayName,
+                    current,
+                    versions
+                );
+                return Ok(result, ResourceType.Update);
+            }
+            return Err(ResolveResultError.NotFound);
+        }
         return Err(ResolveResultError.InvalidArguments);
     }
 }

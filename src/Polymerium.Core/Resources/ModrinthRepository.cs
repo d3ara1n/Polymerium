@@ -61,7 +61,6 @@ public class ModrinthRepository : IResourceRepository
                     CreatedAt = x.DateCreated,
                     UpdatedAt = x.DateModified,
                     Type = type,
-                    Versions = x.Versions,
                     Description = new Lazy<string>(() =>
                     {
                         var project = ModrinthHelper
@@ -95,7 +94,6 @@ public class ModrinthRepository : IResourceRepository
                 IconSource = project.Value.IconUrl,
                 Downloads = project.Value.Downloads,
                 Summary = project.Value.Description,
-                Versions = project.Value.Versions,
                 Type = ResourceType.Mod,
                 Screenshots = new Lazy<IEnumerable<(string, Uri)>>(
                     project.Value.Gallery.Select(x => (x.Title, x.Url))

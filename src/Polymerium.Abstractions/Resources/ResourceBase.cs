@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Polymerium.Abstractions.Resources;
 
+// Uri 约定主体部分相同则判定为同一个资源，即 Uri 的主体部分相同则解析出来之后的结果中 Id 也相同，但 VersionId 可以不一样
+// 该约定可以在解析之前就判断相同资源的不同版本
 public abstract record ResourceBase
 {
     protected ResourceBase(
@@ -35,10 +39,6 @@ public abstract record ResourceBase
     public Uri? IconSource { get; set; }
     public Uri? Reference { get; set; }
     public string Summary { get; set; }
-
-    // 通过 (domain@)type, id, versionId 三元组可以获得特定版本资源的文件三元组 fileName, hash, source
-    // 这一过程通过进一步解析为 file 实现，这要求每一个 domain resolver 都支持 file type
-    // 三元组不可以为空，因为所有资源必须对应到可下载的文件
     public string Id { get; set; }
     public string VersionId { get; set; }
     public Uri? Update { get; set; }

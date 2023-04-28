@@ -1,4 +1,8 @@
-﻿namespace Polymerium.App.Models;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Polymerium.App.Models;
 
 public class InstanceModpackReferenceModel
 {
@@ -8,7 +12,9 @@ public class InstanceModpackReferenceModel
         string version,
         string versionId,
         string author,
-        string summary
+        string summary,
+        IEnumerable<InstanceModpackReferenceVersionModel> versions,
+        Uri reference
     )
     {
         Name = name;
@@ -17,6 +23,8 @@ public class InstanceModpackReferenceModel
         VersionId = versionId;
         Author = author;
         Summary = summary;
+        Versions = versions;
+        Reference = reference;
     }
 
     public string Name { get; set; }
@@ -25,4 +33,6 @@ public class InstanceModpackReferenceModel
     public string VersionId { get; set; }
     public string Author { get; set; }
     public string Summary { get; set; }
+    public IEnumerable<InstanceModpackReferenceVersionModel> Versions { get; set; }
+    public Uri Reference { get; set; }
 }

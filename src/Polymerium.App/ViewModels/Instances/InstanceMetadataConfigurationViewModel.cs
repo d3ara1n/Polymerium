@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DotNext;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
@@ -130,26 +131,59 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     public async Task LoadParseReferenceAsync(Action<InstanceModpackReferenceModel?> callback)
     {
-        var result = await _resolver.ResolveAsync(
-            Instance.ReferenceSource!,
-            new ResolverContext(Instance.Inner)
-        );
-        if (result.IsSuccessful && result.Value.Type == ResourceType.Modpack)
+        var reference = Instance.ReferenceSource!;
+        var context = new ResolverContext(Instance.Inner);
+        var modpackResult = await _resolver.ResolveAsync(reference, context);
+        var updateResult = await _resolver.ResolveToUpdateAsync(reference, context);
+        if (modpackResult.IsSuccessful && modpackResult.Value.Type == ResourceType.Modpack)
         {
-            var model = new InstanceModpackReferenceModel(
-                result.Value.Resource.Name,
-                result.Value.Resource.Id,
-                result.Value.Resource.Version,
-                result.Value.Resource.VersionId,
-                result.Value.Resource.Author,
-                result.Value.Resource.Summary
-            );
-            callback(model);
+            if (
+                updateResult.IsSuccessful
+                && updateResult.Value.Type == ResourceType.Update
+                && updateResult.Value.Resource is Update update
+            )
+            {
+                var versionTasks = update.Versions.Select(
+                    x => (x, _resolver.ResolveAsync(x, context))
+                );
+                await Task.WhenAll(versionTasks.Select(x => x.Item2));
+                if (
+                    versionTasks.All(
+                        x => x.Item2.IsCompletedSuccessfully && x.Item2.Result.IsSuccessful
+                    )
+                )
+                {
+                    var versions = versionTasks.Select(
+                        x =>
+                            new InstanceModpackReferenceVersionModel(
+                                x.Item2.Result.Value.Resource.Id,
+                                x.Item2.Result.Value.Resource.VersionId,
+                                x.Item2.Result.Value.Resource.Version,
+                                x.Item2.Result.Value.Resource.VersionId
+                                    == modpackResult.Value.Resource.VersionId,
+                                x.Item1
+                            )
+                    );
+                    var model = new InstanceModpackReferenceModel(
+                        modpackResult.Value.Resource.Name,
+                        modpackResult.Value.Resource.Id,
+                        modpackResult.Value.Resource.Version,
+                        modpackResult.Value.Resource.VersionId,
+                        modpackResult.Value.Resource.Author,
+                        modpackResult.Value.Resource.Summary,
+                        versions,
+                        reference
+                    );
+                    callback(model);
+                }
+                else
+                    callback(null);
+            }
+            else
+                callback(null);
         }
         else
-        {
             callback(null);
-        }
     }
 
     public async Task LoadParseAttachmentsAsync(IEnumerable<Attachment> newlyAdded)
