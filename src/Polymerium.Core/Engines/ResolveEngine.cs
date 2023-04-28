@@ -121,6 +121,17 @@ public class ResolveEngine
         return result;
     }
 
+    public async Task<Result<ResolveResult, ResolveResultError>> ResolveToUpdateAsync(
+        Uri url,
+        ResolverContext context
+    )
+    {
+        var result = await ResolveAsync(url, context);
+        if (result.IsSuccessful && result.Value.Type != ResourceType.Update)
+            return await ResolveAsync(result.Value.Resource.Update!, context);
+        return result;
+    }
+
     private Task<Result<ResolveResult, ResolveResultError>> ExecuteAsAsyncStateMachine(
         MethodInfo method,
         object subject,

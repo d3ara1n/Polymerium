@@ -17,6 +17,11 @@ public static class GameInstanceExtensions
         return string.Join(string.Empty, md5);
     }
 
+    public static bool ContainsAttachment(this GameInstance instance, Uri attachment) =>
+        instance.Metadata.Attachments.Any(
+            x => x.Source.GetLeftPart(UriPartial.Path) == attachment.GetLeftPart(UriPartial.Path)
+        );
+
     public static string? GetCoreVersion(this GameInstance instance)
     {
         return instance.Metadata.Components.Any(x => x.Identity == ComponentMeta.MINECRAFT)

@@ -35,6 +35,9 @@
                     <WebView2 x:Name="DescriptionPresenter" />
                 </Grid>
             </PivotItem>
+            <PivotItem Header="依赖">
+                <TextBlock Text="来自接口的依赖查询不可靠" Style="{StaticResource HeaderTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </PivotItem>
         </Pivot>
         <ProgressBar x:Name="Progress" Maximum="100" IsIndeterminate="True" VerticalAlignment="Bottom"
                      Visibility="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />

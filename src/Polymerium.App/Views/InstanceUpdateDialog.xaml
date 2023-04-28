@@ -9,9 +9,25 @@
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
-
+        <Grid RowDefinitions="Auto,*">
+            <Grid ColumnDefinitions="Auto,*">
+                <ui:ImageEx CornerRadius="5" Width="60" Height="60"/>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="All the Mods 8"/>
+                    <TextBlock Text="ATM Team"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
+    <controls:CustomDialog.OperationContent>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
+            <Button x:Name="ConfirmButton" Content="确定"
+                    Style="{StaticResource AccentButtonStyle}"  />
+            <Button x:Name="CancelButton" Content="取消"  />
+        </StackPanel>
+    </controls:CustomDialog.OperationContent>
 </controls:CustomDialog>

@@ -31,7 +31,7 @@
                 </Grid.ColumnDefinitions>
                 <AutoSuggestBox x:Name="SearchBar" Height="32" Width="200" HorizontalAlignment="Right"
                                 Margin="25,0,10,0" TextMemberPath="Caption"
-                                PlaceholderText="Search" QueryIcon="Find" AutoMaximizeSuggestionArea="True"
+                                PlaceholderText="搜索实例，资源..." QueryIcon="Find" AutoMaximizeSuggestionArea="True"
                                 TextChanged="SearchBar_OnTextChanged" QuerySubmitted="SearchBar_OnQuerySubmitted">
                     <AutoSuggestBox.ItemTemplate>
                         <DataTemplate x:DataType="models:NavigationSearchBarItemModel">

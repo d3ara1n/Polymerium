@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Changelogs", "Changelogs", 
 		changelogs\v0.4.md = changelogs\v0.4.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polymerium.Cli", "src\Polymerium.Cli\Polymerium.Cli.csproj", "{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -170,6 +172,26 @@ Global
 		{D47CE37A-E31E-4B93-90A2-4FF81616222C}.Release|x64.Build.0 = Release|x64
 		{D47CE37A-E31E-4B93-90A2-4FF81616222C}.Release|x86.ActiveCfg = Release|x86
 		{D47CE37A-E31E-4B93-90A2-4FF81616222C}.Release|x86.Build.0 = Release|x86
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|x64.Build.0 = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Debug|x86.Build.0 = Debug|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|ARM.Build.0 = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|ARM64.Build.0 = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|x64.ActiveCfg = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|x64.Build.0 = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|x86.ActiveCfg = Release|Any CPU
+		{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

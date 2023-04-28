@@ -8,7 +8,7 @@ public class GameManager
     public void LaunchFireForget(PlanetaryEngineBuilder builder)
     {
         var blender = builder.Build();
-        blender.Start();
+        blender.LaunchFireForget();
     }
 
     public void LaunchManaged(PlanetaryEngineBuilder builder)

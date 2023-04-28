@@ -1,5 +1,7 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
@@ -74,6 +76,23 @@ public sealed partial class InstanceMetadataConfigurationView : Page
             new PropertyMetadata(null)
         );
 
+    // Using a DependencyProperty as the backing store for SelectedVersion.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty SelectedModpackVersionProperty =
+        DependencyProperty.Register(
+            nameof(SelectedModpackVersion),
+            typeof(InstanceModpackReferenceVersionModel),
+            typeof(InstanceMetadataConfigurationView),
+            new PropertyMetadata(null)
+        );
+
+    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ModpackVersionsProperty = DependencyProperty.Register(
+        nameof(ModpackVersions),
+        typeof(ObservableCollection<InstanceModpackReferenceVersionModel>),
+        typeof(InstanceMetadataConfigurationView),
+        new PropertyMetadata(new ObservableCollection<InstanceModpackReferenceVersionModel>())
+    );
+
     private static Func<InstanceAttachmentItemModel, bool>? filter;
 
     public InstanceMetadataConfigurationView()
@@ -96,10 +115,16 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         set => SetValue(IsReferenceBeingParsedProperty, value);
     }
 
-    public InstanceModpackReferenceModel ModpackReference
+    public InstanceModpackReferenceModel? ModpackReference
     {
-        get => (InstanceModpackReferenceModel)GetValue(ModpackReferenceProperty);
+        get => (InstanceModpackReferenceModel?)GetValue(ModpackReferenceProperty);
         set => SetValue(ModpackReferenceProperty, value);
+    }
+
+    public InstanceModpackReferenceVersionModel? SelectedModpackVersion
+    {
+        get => (InstanceModpackReferenceVersionModel?)GetValue(SelectedModpackVersionProperty);
+        set => SetValue(SelectedModpackVersionProperty, value);
     }
 
     public bool IsModChecked
@@ -124,6 +149,14 @@ public sealed partial class InstanceMetadataConfigurationView : Page
     {
         get => (bool)GetValue(IsFileCheckedProperty);
         set => SetValue(IsFileCheckedProperty, value);
+    }
+
+    public ObservableCollection<InstanceModpackReferenceVersionModel> ModpackVersions
+    {
+        get =>
+            (ObservableCollection<InstanceModpackReferenceVersionModel>)
+                GetValue(ModpackVersionsProperty);
+        set => SetValue(ModpackVersionsProperty, value);
     }
 
     public InstanceMetadataConfigurationViewModel ViewModel { get; }
@@ -157,17 +190,13 @@ public sealed partial class InstanceMetadataConfigurationView : Page
     {
         DispatcherQueue.TryEnqueue(() =>
         {
+            ModpackReference = model;
+            ModpackVersions.Clear();
+            if (model != null)
+                foreach (var version in model.Versions)
+                    ModpackVersions.Add(version);
+            SelectedModpackVersion = ModpackVersions.FirstOrDefault(x => x.IsCurrent);
             IsReferenceBeingParsed = false;
-            ModpackReference =
-                model
-                ?? new InstanceModpackReferenceModel(
-                    "解析失败",
-                    "0",
-                    "N/A",
-                    "0",
-                    "N/A",
-                    "无法找到该引用信息或解析期间网络异常"
-                );
         });
     }
 

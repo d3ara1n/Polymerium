@@ -30,25 +30,41 @@
                                 IsEnabled="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}" />
                     </Grid>
                 </controls:GroupBox.Header>
-                <Grid>
-                    <StackPanel Margin="15" Spacing="8">
+                <Grid Margin="15">
+                    <ProgressRing IsIndeterminate="True" VerticalAlignment="Center"
+                                              Visibility="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <StackPanel Spacing="8" Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
                         <Grid ColumnDefinitions="Auto,*">
                             <ui:ImageEx Width="64" Height="64"
                                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
                                         Source="{x:Bind ViewModel.Instance.ThumbnailFile}"
                                         Margin="0,0,15,0" CornerRadius="5" />
-                            <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
-                                <ProgressRing IsIndeterminate="True" VerticalAlignment="Center"
-                                              Visibility="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <Grid Grid.Column="1">
                                 <StackPanel VerticalAlignment="Center">
                                     <TextBlock Text="{x:Bind ModpackReference.Name,Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind ModpackReference.Id,Mode=OneWay}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                     <TextBlock Text="{x:Bind ModpackReference.Author,Mode=OneWay}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                    <TextBlock Text="{x:Bind ModpackReference.Version,Mode=OneWay}"
-                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" Spacing="5">
-                                    <Button Content="检查更新" HorizontalAlignment="Right" Visibility="Collapsed"/>
+                                <StackPanel Spacing="5" HorizontalAlignment="Right">
+                                    <Button Content="更新" HorizontalAlignment="Right" IsEnabled="{x:Bind SelectedModpackVersion.IsCurrent,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"/>
+                                    <ComboBox SelectedValue="{x:Bind SelectedModpackVersion,Mode=TwoWay}" ItemsSource="{x:Bind ModpackVersions}" HorizontalAlignment="Right">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate x:DataType="models:InstanceModpackReferenceVersionModel">
+                                                <Grid>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{x:Bind DisplayName}"/>
+                                                        <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Visibility="{x:Bind IsCurrent,Converter={StaticResource BoolToVisibilityConverter}}">
+                                                            <Run Text="("/>
+                                                            <Run Text="当前"/>
+                                                            <Run Text=")"/>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -58,6 +74,15 @@
                             TextWrapping="WrapWholeWords" />
                         <InfoBar IsOpen="True" Title="元数据已锁定" Message="该实例引用自一个整合包，在修改实例部分元数据之前，需要移除引用信息（解锁）。" Severity="Warning"/>
                     </StackPanel>
+                    <Grid Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
+                        <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center" Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reversed}">
+                            <FontIcon Glyph="&#xF384;" FontSize="48" Margin="0,0,8,0"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="获取标签信息失败"/>
+                                <TextBlock Text="可能是不良的互联网链接或不稳定的服务器造成" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </controls:GroupBox>
             <controls:GroupBox>

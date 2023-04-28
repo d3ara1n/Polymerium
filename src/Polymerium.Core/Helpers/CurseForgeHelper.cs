@@ -40,7 +40,8 @@ public static class CurseForgeHelper
     {
         return type switch
         {
-            ResourceType.Update => new Uri($"poly-res://curseforge@update/{projectId}"),
+            ResourceType.Update
+                => new Uri($"poly-res://curseforge@update/{projectId}?current={versionId}"),
             ResourceType.File => new Uri($"poly-res://curseforge@file/{projectId}/{versionId}"),
             _
                 => new Uri(
