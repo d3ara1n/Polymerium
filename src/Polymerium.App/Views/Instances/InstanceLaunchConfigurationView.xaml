@@ -76,9 +76,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEC8F;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="Java 虚拟机分配的最大内存" />
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Header" Text="Java 虚拟机分配的最大内存" />
                                     <LineBreak />
-                                    <Run Text="没有自动分配算法，根据经验来设置"
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Subheader" Text="没有自动分配算法，根据经验来设置"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -95,9 +95,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE140;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="Java 虚拟机附加参数" />
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Header" Text="Java 虚拟机附加参数" />
                                     <LineBreak />
-                                    <Run Text="非必要的用于调整虚拟机性能的额外参数"
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Subheader" Text="非必要的用于调整虚拟机性能的额外参数"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>

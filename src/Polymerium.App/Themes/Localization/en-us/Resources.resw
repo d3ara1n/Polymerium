@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>Polymerium</value>
+  </data>
   <data name="HomeView_HelloLabel.Text" xml:space="preserve">
     <value>Hello </value>
   </data>
@@ -129,6 +132,42 @@
   <data name="HomeView_RecentPlayLabel.Text" xml:space="preserve">
     <value>Recently played</value>
   </data>
+  <data name="InstanceAdvancedConfigurationView_Danger_DeleteButton.Content" xml:space="preserve">
+    <value>Do the dangerous ACTION!</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Danger_DeleteLabel.Text" xml:space="preserve">
+    <value>Delete instance and files</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Danger_Header.Text" xml:space="preserve">
+    <value>Danger zone</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Danger_ResetButton.Content" xml:space="preserve">
+    <value>Do the ACTION!</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Danger_ResetLabel.Text" xml:space="preserve">
+    <value>Reset the instance data</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Danger_Subheader.Text" xml:space="preserve">
+    <value>Think twice before pressing the button</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Export_Header.Text" xml:space="preserve">
+    <value>Export metadata</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Export_OpenWizardButton.Content" xml:space="preserve">
+    <value>Open export wizard</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Export_Subheader.Text" xml:space="preserve">
+    <value>As Polypack modpack</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_InstanceName_Header.Text" xml:space="preserve">
+    <value>Instance name</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_InstanceName_RenameButton.Content" xml:space="preserve">
+    <value>Safe rename</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Label0.Text" xml:space="preserve">
+    <value>(: a smiling face</value>
+  </data>
   <data name="InstanceLaunchConfigurationView_AutoSelectJava_Header.Text" xml:space="preserve">
     <value>Auto-select Java</value>
   </data>
@@ -140,6 +179,18 @@
   </data>
   <data name="InstanceLaunchConfigurationView_AutoSelectJava_OpenPickerButton.Content" xml:space="preserve">
     <value>Open picker dialog</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_JavaAdditionalArguments_Header.Text" xml:space="preserve">
+    <value>Java additional argument</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_JavaAdditionalArguments_Subheader.Text" xml:space="preserve">
+    <value>Arguments are splited by spaces in one line</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_JavaMemory_Header.Text" xml:space="preserve">
+    <value>Java max memory</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_JavaMemory_Subheader.Text" xml:space="preserve">
+    <value>Set this according to your system memory</value>
   </data>
   <data name="InstanceLaunchConfigurationView_Label0.Text" xml:space="preserve">
     <value>Instance's configuration is inherited from the global one and will not effect in the opposite direction.</value>
