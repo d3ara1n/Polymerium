@@ -1,0 +1,23 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Polymerium.App.Themes"
+    xmlns:converters="using:Polymerium.App.Converters">
+
+    <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
+    <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
+    <converters:NullToParameterConverter x:Key="NullToParameterConverter" />
+    <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter" />
+    <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+    <converters:AccountToBustAvatarConverter x:Key="AccountToBustAvatarConverter" />
+    <converters:AccountToFaceAvatarConverter x:Key="AccountToFaceAvatarConverter" />
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <converters:EnumerableToStringConverter x:Key="EnumerableToStringConverter" />
+    <converters:DateTimeOffsetToHumanStringConverter x:Key="DateTimeOffsetToHumanStringConverter" />
+    <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter" />
+    <converters:ZeroToVisibleConverter x:Key="ZeroToVisibleConverter" />
+    <converters:ResourceTypeToStringConverter x:Key="ResourceTypeToStringConverter"/>
+</ResourceDictionary>

@@ -29,9 +29,9 @@
                     <ColumnDefinition x:FieldModifier="Public" x:Name="ColumnLeft" Width="Auto" />
                     <ColumnDefinition x:FieldModifier="Public" x:Name="ColumnRight" Width="*" />
                 </Grid.ColumnDefinitions>
-                <AutoSuggestBox x:Name="SearchBar" Height="32" Width="200" HorizontalAlignment="Right"
-                                Margin="25,0,10,0" TextMemberPath="Caption"
-                                PlaceholderText="搜索实例，资源..." QueryIcon="Find" AutoMaximizeSuggestionArea="True"
+                <AutoSuggestBox x:Uid="MainView_SearchBar" x:Name="SearchBar" Height="32" Width="200" HorizontalAlignment="Right"
+                                Margin="25,0,10,0" TextMemberPath="Caption" PlaceholderText="搜索实例，资源..."
+                                QueryIcon="Find" AutoMaximizeSuggestionArea="True"
                                 TextChanged="SearchBar_OnTextChanged" QuerySubmitted="SearchBar_OnQuerySubmitted">
                     <AutoSuggestBox.ItemTemplate>
                         <DataTemplate x:DataType="models:NavigationSearchBarItemModel">
@@ -86,9 +86,9 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
                                 <Grid>
-                                    <Button Content="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"
+                                    <Button x:Uid="MainView_AddAccountButton" Content="添加账号" Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"
                                             HorizontalAlignment="Right" />
-                                    <Button Content="注销当前"
+                                    <Button x:Uid="MainView_RemoveAccountButton" Content="注销当前"
                                             IsEnabled="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
                                             Command="{x:Bind ViewModel.RemoveAccountCommand}"
                                             HorizontalAlignment="Left" />

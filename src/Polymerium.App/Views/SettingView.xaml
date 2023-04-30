@@ -13,14 +13,14 @@
                 <StackPanel.ChildrenTransitions>
                     <EntranceThemeTransition />
                 </StackPanel.ChildrenTransitions>
-                <TextBlock Text="应用" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingView_Application_Header" Text="应用" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE18A;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="使用超能力" />
+                                    <Run x:Uid="SettingView_Application_SuperPower_Header" Text="使用超能力" />
                                 </TextBlock>
                             </StackPanel>
                             <ToggleSwitch IsOn="{x:Bind ViewModel.IsSuperPowerActivated,Mode=TwoWay}" HorizontalAlignment="Right" Margin="0,0,-85,0" />
@@ -28,10 +28,10 @@
                     </controls:ExpanderEx.Header>
                     <StackPanel Spacing="1">
                         <controls:ExpanderExItem>
-                            <TextBlock Text="其实没有超能力" />
+                            <TextBlock x:Uid="SettingView_Application_SuperPower_Label0" Text="其实没有超能力" />
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
-                            <Button Content="点这个按钮也没用" />
+                            <Button x:Uid="SettingView_Application_SuperPower_UselessButton" Content="点这个按钮也没用" />
                         </controls:ExpanderExItem>
                     </StackPanel>
                 </controls:ExpanderEx>
@@ -41,9 +41,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE164;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="语言" />
+                                    <Run x:Uid="SettingView_Application_Language_Header" Text="语言" />
                                     <LineBreak />
-                                    <Run Text="重启生效"
+                                    <Run x:Uid="SettingView_Application_Language_Subheader" Text="重启生效"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -61,9 +61,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xF384;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="强制离线导入整合包" />
+                                    <Run x:Uid="SettingView_Application_OfflineImport_Header" Text="强制离线导入整合包" />
                                     <LineBreak />
-                                    <Run Text="不对下载中心添加的整合包进行数据合并"
+                                    <Run x:Uid="SettingView_Application_OfflineImport_Subheader" Text="不对下载中心添加的整合包进行数据合并"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -71,11 +71,11 @@
                         </Grid>
                     </controls:ExpanderEx.Header>
                     <StackPanel Spacing="1">
-                        <InfoBar IsOpen="True" IsClosable="False" Title="注意" Severity="Informational" Message="下载中心添加的整合包会使用在线数据替换包内数据，该选项会禁用在线数据获取和替换。使用离线数据将大大加速导入过程，但会使导入的实例失去上下文信息。"/>
+                        <InfoBar x:Uid="SettingView_Application_OfflineImport_InfoBar" IsOpen="True" IsClosable="False" Title="注意" Severity="Informational" Message="下载中心添加的整合包会使用在线数据替换包内数据，该选项会禁用在线数据获取和替换。使用离线数据将大大加速导入过程，但会使导入的实例失去上下文信息。"/>
                     </StackPanel>
                 </controls:ExpanderEx>
-                <TextBlock Text="游戏全局配置" Style="{StaticResource SubtitleTextBlockStyle}" />
-                <TextBlock Text="私有实例配置中未设置的项目将会继承全局配置中的对应项目"
+                <TextBlock x:Uid="SettingView_GameGlobal_Header" Text="游戏全局配置" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingView_GameGlobal_Label0" Text="私有实例配置中未设置的项目将会继承全局配置中的对应项目"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
@@ -83,7 +83,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE8B7;" Margin="20" />
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="自动检测 Java 版本" />
+                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Header" Text="自动检测 Java 版本" />
                                     <TextBlock Text="{x:Bind ViewModel.JavaSummary,Mode=OneWay}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
@@ -98,14 +98,14 @@
                         <StackPanel Spacing="1">
                             <controls:ExpanderExItem>
                                 <Grid>
-                                    <TextBlock Text="使用系统中已经预装的 Java 实例" VerticalAlignment="Center" />
-                                    <Button x:Name="OpenJavaDialogButton" Content="打开选取对话框" HorizontalAlignment="Right"
+                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Label0" Text="使用系统中已经预装的 Java 实例" VerticalAlignment="Center" />
+                                    <Button x:Uid="SettingView_GameGlobal_AutoSelectJava_OpenPickerButton" x:Name="OpenJavaDialogButton" Content="打开选取对话框" HorizontalAlignment="Right"
                                             Command="{x:Bind ViewModel.OpenPickerAsyncCommand}" />
                                 </Grid>
                             </controls:ExpanderExItem>
                             <controls:ExpanderExItem>
                                 <Grid>
-                                    <TextBlock Text="使用自定义 Java 路径(精确到 bin/java.exe,lib 所在目录)"
+                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Label1" Text="使用自定义 Java 路径(精确到 bin/java.exe,lib 所在目录)"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Left" />
                                     <ToggleSwitch x:Name="CustomJavaHomeSwitch" Margin="0,0,-85,0" IsOn="False"
@@ -126,9 +126,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE9D5;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="跳过 Java 兼容性检查" />
+                                    <Run x:Uid="SettingView_GameGlobal_SkipJavaCheck_Header" Text="跳过 Java 兼容性检查" />
                                     <LineBreak />
-                                    <Run Text="当确定 Java 版本兼容时可开启此项"
+                                    <Run x:Uid="SettingView_GameGlobal_SkipJavaCheck_Subheader" Text="当确定 Java 版本兼容时可开启此项"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -143,9 +143,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEC8F;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="Java 虚拟机分配的最大内存" />
+                                    <Run x:Uid="SettingView_GameGlobal_JavaMemory_Header" Text="Java 虚拟机分配的最大内存" />
                                     <LineBreak />
-                                    <Run Text="没有自动分配算法，根据经验来设置"
+                                    <Run x:Uid="SettingView_GameGlobal_JavaMemory_Subheader" Text="没有自动分配算法，根据经验来设置"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -162,9 +162,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE140;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="Java 虚拟机附加参数" />
+                                    <Run x:Uid="SettingView_GameGlobal_JavaAdditionalArguments_Header" Text="Java 虚拟机附加参数" />
                                     <LineBreak />
-                                    <Run Text="非必要的用于调整虚拟机性能的额外参数"
+                                    <Run x:Uid="SettingView_GameGlobal_JavaAdditionalArguments_Subheader" Text="非必要的用于调整虚拟机性能的额外参数"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -183,9 +183,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE2B2;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run Text="游戏窗口初始大小" />
+                                    <Run x:Uid="SettingView_GameGlobal_WindowSize_Header" Text="游戏窗口初始大小" />
                                     <LineBreak />
-                                    <Run Text="默认 854x480"
+                                    <Run x:Uid="SettingView_GameGlobal_WindowSize_Subheader" Text="默认 854x480"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -194,34 +194,34 @@
                     <StackPanel Spacing="1">
                         <controls:ExpanderExItem>
                             <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock Text="宽" VerticalAlignment="Center" />
+                                <TextBlock x:Uid="SettingView_GameGlobal_WindowSize_WidthLabel" Text="宽" VerticalAlignment="Center" />
                                 <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}" />
                             </Grid>
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
                             <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock Text="高" VerticalAlignment="Center" />
+                                <TextBlock x:Uid="SettingView_GameGlobal_WindowSize_HeightLabel" Text="高" VerticalAlignment="Center" />
                                 <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}" />
                             </Grid>
                         </controls:ExpanderExItem>
                     </StackPanel>
                 </controls:ExpanderEx>
-                <TextBlock Text="说明" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingView_About_Header" Text="说明" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBlock>
-                    <Run Text="储存库" />
+                    <Run x:Uid="SettingView_About_RepositoryLabel" Text="储存库" />
                     <Hyperlink NavigateUri="https://github.com/d3ara1n/Polymerium">Github</Hyperlink>
                 </TextBlock>
                 <TextBlock>
-                    <Run Text="图标素材" />
+                    <Run x:Uid="SettingView_About_IconReferenceLabel" Text="图标素材" />
                     <Hyperlink NavigateUri="https://icons8.com/icons/fluency">icons8</Hyperlink>
                 </TextBlock>
-                <TextBlock TextWrapping="WrapWholeWords">
-                    <Run Text="CurseForge仓库由" />
+                <TextBlock>
+                    <Run x:Uid="SettingView_About_CurseForgeLabel" Text="CurseForge 来自" />
                     <Hyperlink NavigateUri="docs.curseforge.com">CurseForge</Hyperlink>
-                    <Run Text="提供；"/>
-                    <Run Text="Modrinth仓库由" />
+                </TextBlock>
+                <TextBlock>
+                    <Run x:Uid="SettingView_About_ModrinthLabel" Text="Modrinth 来自" />
                     <Hyperlink NavigateUri="https://docs.modrinth.com">Modrinth</Hyperlink>
-                    <Run Text="提供。"/>
                 </TextBlock>
             </StackPanel>
         </controls:Card>
