@@ -23,8 +23,8 @@
                                Visibility="{x:Bind ViewModel.Instance.IsTagged,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
-                        <TextBlock Text="标签" Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <Button x:Name="UnlockButton" Content="解锁" HorizontalAlignment="Right"
+                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Header" Text="标签" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <Button x:Uid="InstanceMetadataConfigurationView_Tag_UnlockButton" x:Name="UnlockButton" Content="解锁" HorizontalAlignment="Right"
                                 Click="UnlockButton_Click"
                                 Style="{StaticResource IconButtonStyle}"
                                 IsEnabled="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}" />
@@ -48,7 +48,7 @@
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
                                 <StackPanel Spacing="5" HorizontalAlignment="Right">
-                                    <Button x:Name="UpdateButton" Content="更新" HorizontalAlignment="Right" Click="UpdateButton_Click" IsEnabled="{x:Bind SelectedModpackVersion.IsCurrent,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"/>
+                                    <Button x:Uid="InstanceMetadataConfigurationView_Tag_UpdateButton" x:Name="UpdateButton" Content="更新" HorizontalAlignment="Right" Click="UpdateButton_Click" IsEnabled="{x:Bind SelectedModpackVersion.IsCurrent,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"/>
                                     <ComboBox SelectedValue="{x:Bind SelectedModpackVersion,Mode=TwoWay}" ItemsSource="{x:Bind ModpackVersions}" HorizontalAlignment="Right">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate x:DataType="models:InstanceModpackReferenceVersionModel">
@@ -56,9 +56,7 @@
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="{x:Bind DisplayName}"/>
                                                         <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Visibility="{x:Bind IsCurrent,Converter={StaticResource BoolToVisibilityConverter}}">
-                                                            <Run Text="("/>
-                                                            <Run Text="当前"/>
-                                                            <Run Text=")"/>
+                                                            <Run x:Uid="InstanceMetadataConfigurationView_Tag_CurrentLabel" Text="(当前)"/>
                                                         </TextBlock>
                                                     </StackPanel>
                                                 </Grid>
@@ -72,14 +70,14 @@
                             Text="{x:Bind ModpackReference.Summary,Mode=OneWay}"
                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                             TextWrapping="WrapWholeWords" />
-                        <InfoBar IsOpen="True" Title="元数据已锁定" Message="该实例引用自一个整合包，在修改实例部分元数据之前，需要移除引用信息（解锁）。" Severity="Warning"/>
+                        <InfoBar x:Uid="InstanceMetadataConfigurationView_Tag_InfoBar" IsOpen="True" Title="元数据已锁定" Message="该实例引用自一个整合包，在修改实例部分元数据之前，需要移除引用信息（解锁）。" Severity="Warning"/>
                     </StackPanel>
                     <Grid Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center" Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reversed}">
                             <FontIcon Glyph="&#xF384;" FontSize="48" Margin="0,0,8,0"/>
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="获取标签信息失败"/>
-                                <TextBlock Text="可能是不良的互联网链接或不稳定的服务器造成" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Error_Header" Text="获取标签信息失败"/>
+                                <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Error_Subheader" Text="可能是不良的互联网链接或不稳定的服务器造成" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -88,15 +86,15 @@
             <controls:GroupBox>
                 <controls:GroupBox.Header>
                     <Grid>
-                        <TextBlock Text="组件" Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <Button x:Name="AddComponentButton" Content="添加" HorizontalAlignment="Right"
+                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Componet_Header" Text="组件" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <Button x:Uid="InstanceMetadataConfigurationView_Componet_AddButton" x:Name="AddComponentButton" Content="添加" HorizontalAlignment="Right"
                                 Style="{StaticResource IconButtonStyle}"
                                 IsEnabled="{x:Bind ViewModel.Instance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
                                 Command="{x:Bind ViewModel.AddComponentCommand}" />
                     </Grid>
                 </controls:GroupBox.Header>
                 <StackPanel>
-                    <TextBlock Text="大部分组件都是 Mod Loader 且目前支持的组件也只有 Mod Loader。由于 Mod Loader 的特性，只支持同时启用一个除本体以外的组件。"
+                    <TextBlock x:Uid="InstanceMetadataConfigurationView_Componet_Label0" Text="大部分组件都是 Mod Loader 且目前支持的组件也只有 Mod Loader。由于 Mod Loader 的特性，只支持同时启用一个除本体以外的组件。"
                                TextWrapping="WrapWholeWords"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Margin="0,0,0,15" />
                     <ListView ItemsSource="{x:Bind ViewModel.Components}"
@@ -116,7 +114,7 @@
                                         </TextBlock>
                                     </StackPanel>
                                     <Grid Grid.Column="1">
-                                        <Button x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
+                                        <Button x:Uid="InstanceMetadataConfigurationView_Componet_RemoveButton" x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
                                                 Command="{x:Bind RemoveCommand}" CommandParameter="{x:Bind}"
                                                 IsEnabled="{x:Bind CanBeRemoved}"
                                                 ToolTipService.ToolTip="移除">
@@ -157,9 +155,9 @@
             <controls:GroupBox x:Name="AttachmentBox" Padding="0" Loaded="AttachmentBox_Loaded">
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
-                        <TextBlock Text="附件" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_Header" Text="附件" Style="{StaticResource SubtitleTextBlockStyle}" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="5">
-                            <Button x:Name="AddAttachmentButton" Content="添加"
+                            <Button x:Uid="InstanceMetadataConfigurationView_Attachment_AddButton" x:Name="AddAttachmentButton" Content="添加"
                                     Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.GotoSearchCenterCommand}" />
                         </StackPanel>
                     </Grid>
@@ -169,24 +167,24 @@
                     <StackPanel>
                         <ProgressBar IsIndeterminate="True"
                                      Visibility="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-                        <TextBlock Text="此处做出的修改会在下一次还原时被应用到实例目录文件，包括移除附件也会使实例目录中的对应文件被删除。"
+                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_Label0" Text="此处做出的修改会在下一次还原时被应用到实例目录文件，包括移除附件也会使实例目录中的对应文件被删除。"
                                    TextWrapping="WrapWholeWords"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                    Margin="15,15,15,7" />
                         <Grid ColumnDefinitions="*,Auto" Margin="15,7,15,7">
-                            <AutoSuggestBox x:Name="AttachmentSearchBox" QueryIcon="Find" PlaceholderText="搜索已添加的附件"
+                            <AutoSuggestBox x:Uid="InstanceMetadataConfigurationView_Attachment_SearchBox" x:Name="AttachmentSearchBox" QueryIcon="Find" PlaceholderText="搜索已添加的附件"
                                             TextChanged="AttachmentSearchBox_TextChanged" />
                             <Button Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
                                 <Button.Flyout>
                                     <Flyout>
                                         <Grid>
                                             <StackPanel>
-                                                <CheckBox Content="模组" IsChecked="{x:Bind IsModChecked,Mode=TwoWay}" />
-                                                <CheckBox Content="资源包"
+                                                <CheckBox x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ModBox" Content="模组" IsChecked="{x:Bind IsModChecked,Mode=TwoWay}" />
+                                                <CheckBox x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ResourcePackBox" Content="资源包"
                                                           IsChecked="{x:Bind IsResourcepackChecked,Mode=TwoWay}" />
-                                                <CheckBox Content="着色器包"
+                                                <CheckBox x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ShaderPackBox" Content="着色器包"
                                                           IsChecked="{x:Bind IsShaderChecked,Mode=TwoWay}" />
-                                                <CheckBox Content="文件" IsChecked="{x:Bind IsFileChecked,Mode=TwoWay}" />
+                                                <CheckBox x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_FileBox" Content="文件" IsChecked="{x:Bind IsFileChecked,Mode=TwoWay}" />
                                             </StackPanel>
                                         </Grid>
                                     </Flyout>
@@ -206,11 +204,11 @@
                                           ToolTipService.ToolTip="{x:Bind Summary}">
                                         <Grid.ContextFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="访问外部链接"
+                                                <MenuFlyoutItem x:Uid="InstanceMetadataConfigurationView_Attachment_ExternalLink" Text="访问外部链接"
                                                                 IsEnabled="{x:Bind Reference,Converter={StaticResource NotNullToBoolConverter}}"
                                                                 Command="{x:Bind OpenReferenceCommand}"
                                                                 CommandParameter="{x:Bind Reference}" />
-                                                <MenuFlyoutItem Text="移除"
+                                                <MenuFlyoutItem x:Uid="InstanceMetadataConfigurationView_Attachment_Remove" Text="移除"
                                                                 IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
                                                                 Command="{x:Bind RemoveCommand}"
                                                                 CommandParameter="{x:Bind}" />
@@ -227,11 +225,11 @@
                                                 <TextBlock Text="{x:Bind Summary}" />
                                             </StackPanel>
                                             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                                <TextBlock Text="版本:"
+                                                <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_VersionLabel" Text="版本:"
                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                                 <TextBlock Text="{x:Bind Version}"
                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                                <TextBlock Text=" 作者:"
+                                                <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_AuthorLabel" Text=" 作者:"
                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                                 <TextBlock Text="{x:Bind Author}"
                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />

@@ -19,15 +19,15 @@
         <ContentControl Margin="5,0,10,5" HorizontalContentAlignment="Stretch"
                         IsEnabled="{x:Bind IsDataLoading,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
             <StackPanel Spacing="10">
-                <TextBlock Text="搜索中心" Style="{StaticResource TitleTextBlockStyle}" />
-                <AutoSuggestBox x:Name="SearchBox" PlaceholderText="键入以开始" QueryIcon="Find"
+                <TextBlock x:Uid="SearchCenterView_Header" Text="搜索中心" Style="{StaticResource TitleTextBlockStyle}" />
+                <AutoSuggestBox x:Uid="SearchCenterView_SearchBox" x:Name="SearchBox" PlaceholderText="键入以开始" QueryIcon="Find"
                                 QuerySubmitted="SearchBox_OnQuerySubmitted"/>
                 <StackPanel Orientation="Horizontal" Spacing="5">
-                    <TextBlock Text="来自:" VerticalAlignment="Center" />
+                    <TextBlock x:Uid="SearchCenterView_RepositoryLabel" Text="来自:" VerticalAlignment="Center" />
                     <ComboBox x:Name="RepositoryBox"
                               SelectedItem="{x:Bind ViewModel.SelectedRepository,Mode=TwoWay}"
                               ItemsSource="{x:Bind ViewModel.Repositories}" DisplayMemberPath="Label" />
-                    <TextBlock Text="类型:" VerticalAlignment="Center" />
+                    <TextBlock x:Uid="SearchCenterView_TypeLabel" Text="类型:" VerticalAlignment="Center" />
                     <ComboBox x:Name="ResourceBox" SelectedItem="{x:Bind ViewModel.SelectedResourceType,Mode=TwoWay}"
                               ItemsSource="{x:Bind ViewModel.SupportedResources}">
                         <ComboBox.ItemTemplate>
@@ -38,7 +38,7 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" Spacing="10"
                                 Visibility="{x:Bind ViewModel.InstanceScope,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource NotNullToVisibleConverter}}">
-                        <TextBlock Text="结果已为实例过滤: " VerticalAlignment="Center" />
+                        <TextBlock x:Uid="SearchCenterView_FilterLabel" Text="结果已为实例过滤: " VerticalAlignment="Center" />
                         <TextBox Text="{x:Bind ViewModel.InstanceScope.Name,Mode=OneWay,FallbackValue={x:Null}}"
                                  IsEnabled="False" />
                         <Button x:Name="ClearScopeButton" Command="{x:Bind ViewModel.ClearScopeCommand}">
@@ -96,7 +96,7 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <TextBlock x:Name="NoResultLabel" Text="列表为空" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <TextBlock x:Uid="SearchCenterView_EmptyLabel" x:Name="NoResultLabel" Text="列表为空" HorizontalAlignment="Center" VerticalAlignment="Center"
                        Visibility="Visible" />
         </Grid>
     </Grid>

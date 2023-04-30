@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="HomeView_HelloLabel.Text" xml:space="preserve">
+    <value>Hello </value>
+  </data>
+  <data name="HomeView_NewsLabel.Text" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="HomeView_News_ReadMoreLink.Content" xml:space="preserve">
+    <value>Read more</value>
+  </data>
+  <data name="HomeView_RecentPlayLabel.Text" xml:space="preserve">
+    <value>Recently played</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_AutoSelectJava_Header.Text" xml:space="preserve">
+    <value>Auto-select Java</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_AutoSelectJava_Label0.Text" xml:space="preserve">
+    <value>Using system preinstalled Java version</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_AutoSelectJava_Label1.Text" xml:space="preserve">
+    <value>Using custom Java version</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_AutoSelectJava_OpenPickerButton.Content" xml:space="preserve">
+    <value>Open picker dialog</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_Label0.Text" xml:space="preserve">
+    <value>Instance's configuration is inherited from the global one and will not effect in the opposite direction.</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_SkipJavaCheck_Header.Text" xml:space="preserve">
+    <value>Skip Java version check</value>
+  </data>
+  <data name="InstanceLaunchConfigurationView_SkipJavaCheck_Subheader.Text" xml:space="preserve">
+    <value>May cause game launching crashes</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_AddButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_AuthorLabel.Text" xml:space="preserve">
+    <value>Author: </value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_ExternalLink.Text" xml:space="preserve">
+    <value>Visit external link</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Filter_FileBox.Content" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Filter_ModBox.Content" xml:space="preserve">
+    <value>Mods</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Filter_ResourcePackBox.Content" xml:space="preserve">
+    <value>Resource packs</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Filter_ShaderPackBox.Content" xml:space="preserve">
+    <value>Shader packs</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Header.Text" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Label0.Text" xml:space="preserve">
+    <value>Attachments are those "files" created only in restore stage and managed by restore engine. If removed, corresponding file will be removed.</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Remove.Text" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_SearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search in list</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_VersionLabel.Text" xml:space="preserve">
+    <value>Version: </value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Componet_AddButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Componet_Header.Text" xml:space="preserve">
+    <value>Components</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Componet_Label0.Text" xml:space="preserve">
+    <value>Components are mod loaders more often while they may be conflict with the other.</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Componet_RemoveButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Remove componet</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Tag_CurrentLabel.Text" xml:space="preserve">
+    <value>(Current)</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Tag_Error_Header.Text" xml:space="preserve">
+    <value>Failed to parse reference</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Tag_Error_Subheader.Text" xml:space="preserve">
+    <value>Check your Internet connection and try again</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Tag_Header.Text" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Tag_InfoBar.Message" xml:space="preserve">
+    <value>The instance metadata is uneditable according to a reference lock(or tag attched). Components and some attachments are locked before tag removed.</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Tag_InfoBar.Title" xml:space="preserve">
+    <value>Locked metadata</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Tag_UnlockButton.Content" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Tag_UpdateButton.Content" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="InstanceView_Asset_ModLabel.Text" xml:space="preserve">
+    <value>Mods</value>
+  </data>
+  <data name="InstanceView_Asset_ResourcePackLabel.Text" xml:space="preserve">
+    <value>Resource packs</value>
+  </data>
+  <data name="InstanceView_Asset_ShaderPackLabel.Text" xml:space="preserve">
+    <value>Shader packs</value>
+  </data>
+  <data name="InstanceView_Asset_UnsupportedLabel.Text" xml:space="preserve">
+    <value>Unsupported</value>
+  </data>
+  <data name="InstanceView_Header_EditButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Edit metadata</value>
+  </data>
+  <data name="InstanceView_Header_GameVersionLabel.Text" xml:space="preserve">
+    <value>Game version: </value>
+  </data>
+  <data name="InstanceView_Header_ReferenceLabel_Attachment.Text" xml:space="preserve">
+    <value>ATTACHMENTS</value>
+  </data>
+  <data name="InstanceView_Header_ReferenceLabel_Import.Text" xml:space="preserve">
+    <value>Imported from</value>
+  </data>
+  <data name="InstanceView_Header_ReferenceLabel_Modpack.Text" xml:space="preserve">
+    <value>MODPACK</value>
+  </data>
+  <data name="InstanceView_Header_ReferenceLabel_With.Text" xml:space="preserve">
+    <value>with</value>
+  </data>
+  <data name="InstanceView_Header_RestoreLabel_No.Text" xml:space="preserve">
+    <value>Prepared</value>
+  </data>
+  <data name="InstanceView_Header_RestoreLabel_Yes.Text" xml:space="preserve">
+    <value>To be restored</value>
+  </data>
+  <data name="InstanceView_Header_StartButton.Content" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="InstanceView_Other_Header.Text" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="InstanceView_Save_Header.Text" xml:space="preserve">
+    <value>Worlds</value>
+  </data>
+  <data name="InstanceView_Server_AddButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="InstanceView_Server_Header.Text" xml:space="preserve">
+    <value>Servers</value>
+  </data>
+  <data name="MainView_AddAccountButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MainView_RemoveAccountButton.Content" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="MainView_SearchBar.PlaceholderText" xml:space="preserve">
+    <value>Search for...</value>
+  </data>
+  <data name="NewInstanceView_Empty_Label0.Text" xml:space="preserve">
+    <value>Create from empty template</value>
+  </data>
+  <data name="NewInstanceView_Empty_Label1.Text" xml:space="preserve">
+    <value>and edit details later...</value>
+  </data>
+  <data name="NewInstanceView_Empty_OpenWizardButton.Content" xml:space="preserve">
+    <value>Open creation wizard</value>
+  </data>
+  <data name="NewInstanceView_Import_Label0.Text" xml:space="preserve">
+    <value>Import from files</value>
+  </data>
+  <data name="NewInstanceView_Import_Label1.Text" xml:space="preserve">
+    <value>by dropping the zip down here</value>
+  </data>
+  <data name="NewInstanceView_Online_GoSearchLabel.Text" xml:space="preserve">
+    <value>Go to Search Center</value>
+  </data>
+  <data name="NewInstanceView_Online_Label0.Text" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="NewInstanceView_Online_Label1.Text" xml:space="preserve">
+    <value>the Internet</value>
+  </data>
+  <data name="NewInstanceView_Online_Label2.Text" xml:space="preserve">
+    <value>(CurseForge, Modrinth)</value>
+  </data>
+  <data name="NewInstanceView_Online_Label3.Text" xml:space="preserve">
+    <value>download</value>
+  </data>
+  <data name="NewInstanceView_Online_Label4.Text" xml:space="preserve">
+    <value>modpacks!</value>
+  </data>
+  <data name="SearchCenterView_EmptyLabel.Text" xml:space="preserve">
+    <value>No results</value>
+  </data>
+  <data name="SearchCenterView_FilterLabel.Text" xml:space="preserve">
+    <value>Filtered by</value>
+  </data>
+  <data name="SearchCenterView_Header.Text" xml:space="preserve">
+    <value>Search Center</value>
+  </data>
+  <data name="SearchCenterView_RepositoryLabel.Text" xml:space="preserve">
+    <value>Repository</value>
+  </data>
+  <data name="SearchCenterView_SearchBox.PlaceholderText" xml:space="preserve">
+    <value>Type something...</value>
+  </data>
+  <data name="SearchCenterView_TypeLabel.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="SettingView_About_CurseForgeLabel.Text" xml:space="preserve">
+    <value>CurseForge:</value>
+  </data>
+  <data name="SettingView_About_Header.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingView_About_IconReferenceLabel.Text" xml:space="preserve">
+    <value>Icon references</value>
+  </data>
+  <data name="SettingView_About_ModrinthLabel.Text" xml:space="preserve">
+    <value>Modrinth:</value>
+  </data>
+  <data name="SettingView_About_RepositoryLabel.Text" xml:space="preserve">
+    <value>Repo</value>
+  </data>
+  <data name="SettingView_Application_Header.Text" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="SettingView_Application_Language_Header.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingView_Application_Language_Subheader.Text" xml:space="preserve">
+    <value>Restart required</value>
+  </data>
+  <data name="SettingView_Application_OfflineImport_Header.Text" xml:space="preserve">
+    <value>Force to import modpacks offline</value>
+  </data>
+  <data name="SettingView_Application_OfflineImport_InfoBar.Message" xml:space="preserve">
+    <value>Nothing more but be aware of potential mistakes caused by bad Internet connection which are difficult to be figured out. If you are suffering from abnormal game experience or having no confidence in network quality, just turn it on.</value>
+  </data>
+  <data name="SettingView_Application_OfflineImport_InfoBar.Title" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="SettingView_Application_OfflineImport_Subheader.Text" xml:space="preserve">
+    <value>Will not replace the metadata with online one</value>
+  </data>
+  <data name="SettingView_Application_SuperPower_Header.Text" xml:space="preserve">
+    <value>Activate SuperPower</value>
+  </data>
+  <data name="SettingView_Application_SuperPower_Label0.Text" xml:space="preserve">
+    <value>Not a SuperPower actually...</value>
+  </data>
+  <data name="SettingView_Application_SuperPower_UselessButton.Content" xml:space="preserve">
+    <value>Button, but the same effectless</value>
+  </data>
+  <data name="SettingView_GameGlobal_AutoSelectJava_Header.Text" xml:space="preserve">
+    <value>Auto-select Java</value>
+  </data>
+  <data name="SettingView_GameGlobal_AutoSelectJava_Label0.Text" xml:space="preserve">
+    <value>Using system preinstalled Java version</value>
+  </data>
+  <data name="SettingView_GameGlobal_AutoSelectJava_Label1.Text" xml:space="preserve">
+    <value>Using custom Java version(The Java Home directory)</value>
+  </data>
+  <data name="SettingView_GameGlobal_AutoSelectJava_OpenPickerButton.Content" xml:space="preserve">
+    <value>Open picker dialog</value>
+  </data>
+  <data name="SettingView_GameGlobal_Header.Text" xml:space="preserve">
+    <value>Game Configuration</value>
+  </data>
+  <data name="SettingView_GameGlobal_JavaAdditionalArguments_Header.Text" xml:space="preserve">
+    <value>Java additional argument</value>
+  </data>
+  <data name="SettingView_GameGlobal_JavaAdditionalArguments_Subheader.Text" xml:space="preserve">
+    <value>Arguments are splited by spaces in one line</value>
+  </data>
+  <data name="SettingView_GameGlobal_JavaMemory_Header.Text" xml:space="preserve">
+    <value>Java max memory</value>
+  </data>
+  <data name="SettingView_GameGlobal_JavaMemory_Subheader.Text" xml:space="preserve">
+    <value>Set this according to your system memory</value>
+  </data>
+  <data name="SettingView_GameGlobal_Label0.Text" xml:space="preserve">
+    <value>These settings will be inherited if the instance's corresponding one doesn't present</value>
+  </data>
+  <data name="SettingView_GameGlobal_SkipJavaCheck_Header.Text" xml:space="preserve">
+    <value>Skip Java version check</value>
+  </data>
+  <data name="SettingView_GameGlobal_SkipJavaCheck_Subheader.Text" xml:space="preserve">
+    <value>May cause game launching crashes</value>
+  </data>
+  <data name="SettingView_GameGlobal_WindowSize_Header.Text" xml:space="preserve">
+    <value>Game window initial size</value>
+  </data>
+  <data name="SettingView_GameGlobal_WindowSize_HeightLabel.Text" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="SettingView_GameGlobal_WindowSize_Subheader.Text" xml:space="preserve">
+    <value>Default is 854x480 (Maybe)</value>
+  </data>
+  <data name="SettingView_GameGlobal_WindowSize_WidthLabel.Text" xml:space="preserve">
+    <value>Width</value>
+  </data>
+</root>

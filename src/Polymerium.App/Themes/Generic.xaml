@@ -19,21 +19,8 @@
     <SolidColorBrush x:Key="FloatLayerBackgroundBrush" Color="{ThemeResource CardBackgroundFillColorDefault}" />
     <CornerRadius x:Key="ContentAreaCornerRadius">10</CornerRadius>
     <CornerRadius x:Key="ItemAreaCornerRadius">5</CornerRadius>
-
-    <converters:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
-    <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
-    <converters:NullToParameterConverter x:Key="NullToParameterConverter" />
-    <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter" />
-    <converters:ReverseBoolConverter x:Key="ReverseBoolConverter" />
-    <converters:AccountToBustAvatarConverter x:Key="AccountToBustAvatarConverter" />
-    <converters:AccountToFaceAvatarConverter x:Key="AccountToFaceAvatarConverter" />
-    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <converters:EnumerableToStringConverter x:Key="EnumerableToStringConverter" />
-    <converters:DateTimeOffsetToHumanStringConverter x:Key="DateTimeOffsetToHumanStringConverter" />
-    <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter" />
-    <converters:ZeroToVisibleConverter x:Key="ZeroToVisibleConverter" />
-    <converters:ResourceTypeToStringConverter x:Key="ResourceTypeToStringConverter"/>
-
+    
+    <!-- Unnammed Style 文件只能放在 Generic 字典 -->
     <Style TargetType="controls:ExpanderExItem" BasedOn="{StaticResource DefaultExpanderExItemStyle}" />
 
     <Style x:Key="DefaultExpanderExItemStyle" TargetType="controls:ExpanderExItem">
