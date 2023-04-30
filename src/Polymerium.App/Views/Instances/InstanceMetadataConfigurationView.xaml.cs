@@ -268,4 +268,20 @@ public sealed partial class InstanceMetadataConfigurationView : Page
         if (result == ContentDialogResult.Primary)
             ViewModel.Unlock();
     }
+
+    private void UpdateButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (ModpackReference != null && SelectedModpackVersion != null)
+        {
+            var dialog = new InstanceUpdateDialog(
+                ViewModel.Instance,
+                ModpackReference,
+                SelectedModpackVersion
+            )
+            {
+                OverlayService = ViewModel.OverlayService
+            };
+            ViewModel.OverlayService.Show(dialog);
+        }
+    }
 }

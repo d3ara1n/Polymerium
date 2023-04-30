@@ -48,7 +48,7 @@
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
                                 <StackPanel Spacing="5" HorizontalAlignment="Right">
-                                    <Button Content="更新" HorizontalAlignment="Right" IsEnabled="{x:Bind SelectedModpackVersion.IsCurrent,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"/>
+                                    <Button x:Name="UpdateButton" Content="更新" HorizontalAlignment="Right" Click="UpdateButton_Click" IsEnabled="{x:Bind SelectedModpackVersion.IsCurrent,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"/>
                                     <ComboBox SelectedValue="{x:Bind SelectedModpackVersion,Mode=TwoWay}" ItemsSource="{x:Bind ModpackVersions}" HorizontalAlignment="Right">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate x:DataType="models:InstanceModpackReferenceVersionModel">

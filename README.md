@@ -111,7 +111,6 @@ a little bit of personal flavor。
         * [ ] Polypack
         * [x] CurseForge
         * [x] Modrinth
-        * [ ] MultiMC
     * [ ] 导出为 Polypack
 * [ ] 启动游戏
     * [x] Polylock 文件
@@ -172,7 +171,7 @@ a little bit of personal flavor。
     * [x] SearchBar
         * [x] 托管的实例搜索
         * [x] 搜索中心联动
-* [ ] 软件设置
+* [x] 软件设置
 * [ ] 游戏实例设置
     * [x] 元数据编辑
     * [x] 私有启动配置页面

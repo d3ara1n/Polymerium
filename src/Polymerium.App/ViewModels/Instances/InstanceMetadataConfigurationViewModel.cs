@@ -23,7 +23,6 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 {
     private readonly ComponentManager _componentManager;
     private readonly NavigationService _navigationService;
-    private readonly IOverlayService _overlayService;
     private readonly ResolveEngine _resolver;
 
     private Action<InstanceAttachmentItemModel?>? addAttachmentCallback;
@@ -37,8 +36,8 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     )
     {
         Instance = context.AssociatedInstance!;
+        OverlayService = overlayService;
         _componentManager = componentManager;
-        _overlayService = overlayService;
         _resolver = resolver;
         _navigationService = navigation;
         AddComponentCommand = new RelayCommand(AddComponent);
@@ -59,6 +58,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         Instance.Attachments.CollectionChanged += Attachments_CollectionChanged;
     }
 
+    public IOverlayService OverlayService { get; }
     public GameInstanceModel Instance { get; }
     public ObservableCollection<InstanceComponentItemModel> Components { get; }
     public ObservableCollection<InstanceAttachmentItemModel> Attachments { get; }
@@ -263,8 +263,8 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     private void AddComponent()
     {
-        var dialog = new AddMetaComponentWizardDialog { OverlayService = _overlayService };
-        _overlayService.Show(dialog);
+        var dialog = new AddMetaComponentWizardDialog { OverlayService = OverlayService };
+        OverlayService.Show(dialog);
     }
 
     private void RemoveComponentSelf(InstanceComponentItemModel? model)
