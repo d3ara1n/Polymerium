@@ -6,6 +6,7 @@ using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.ApplicationModel.Resources;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.App.Configurations;
 using Polymerium.App.Services;
@@ -113,11 +114,13 @@ public partial class App : Application
                     configure
                         .Register<CurseForgeImporter>("manifest.json")
                         .Register<ModrinthImporter>("modrinth.index.json")
-            );
+            )
+            .AddSingleton<LocalizationService>();
         // global services
         services
             .AddSingleton<AssetManager>()
             .AddSingleton<GameManager>()
+            .AddSingleton<ResourceManager>()
             .AddSingleton<IFileBaseService, MainFileBaseService>()
             .Configure<MainFileBaseOptions>(
                 configure =>

@@ -31,7 +31,7 @@
                      Executable="$targetnametoken$.exe"
                      EntryPoint="$targetentrypoint$">
             <uap:VisualElements
-                    DisplayName="Polymerium"
+                    DisplayName="ms-resource:AppDisplayName"
                     Description="Yet another Minecraft instance manager"
                     BackgroundColor="transparent"
                     Square150x150Logo="Images\Square150x150Logo.png"
