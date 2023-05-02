@@ -11,17 +11,17 @@ using Polymerium.App.ViewModels.AddAccountWizard;
 
 namespace Polymerium.App.Views.AddAccountWizards;
 
-public sealed partial class SelectionView : Page
+public sealed partial class AccountSelectionView : Page
 {
     private AddAccountWizardStateHandler? handler;
 
-    public SelectionView()
+    public AccountSelectionView()
     {
-        ViewModel = App.Current.Provider.GetRequiredService<SelectionViewModel>();
+        ViewModel = App.Current.Provider.GetRequiredService<AccountSelectionViewModel>();
         InitializeComponent();
     }
 
-    public SelectionViewModel ViewModel { get; }
+    public AccountSelectionViewModel ViewModel { get; }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {

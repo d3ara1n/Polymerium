@@ -29,7 +29,7 @@ public sealed partial class AddAccountWizardDialog : CustomDialog
         InitializeComponent();
         OverlayService = overlayService;
         handler = SetState;
-        Root.Navigate(typeof(SelectionView), (handler, ViewModel.Source.Token, (object?)null));
+        Root.Navigate(typeof(AccountSelectionView), (handler, ViewModel.Source.Token, (object?)null));
     }
 
     public AddAccountWizardViewModel ViewModel { get; }

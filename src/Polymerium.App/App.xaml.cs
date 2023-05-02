@@ -80,7 +80,7 @@ public partial class App : Application
             .AddTransient<SettingViewModel>()
             .AddTransient<PrepareGameViewModel>()
             .AddTransient<AddAccountWizardViewModel>()
-            .AddTransient<SelectionViewModel>()
+            .AddTransient<AccountSelectionViewModel>()
             .AddTransient<OfflineAccountViewModel>()
             .AddTransient<MicrosoftAccountIntroViewModel>()
             .AddTransient<MicrosoftAccountAuthViewModel>()

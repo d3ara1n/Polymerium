@@ -12,11 +12,11 @@
 
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock Text="登录微软账号(1/3)" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="MicrosoftAccountIntroView_Header" Text="登录微软账号(1/3)" Style="{StaticResource SubtitleTextBlockStyle}" />
             <controls:Card Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
-                <TextBlock Text="PLACEHOLDER_MICROSOFT_ACCOUNT_README" />
+                <TextBlock x:Uid="MicrosoftAccountIntroView_Readme" Text="PLACEHOLDER_MICROSOFT_ACCOUNT_README" />
             </controls:Card>
-            <TextBlock Text="单击下一步进入授权流程" />
+            <TextBlock x:Uid="MicrosoftAccountIntroView_TipLabel" Text="单击下一步进入授权流程" />
         </StackPanel>
     </Grid>
 </Page>

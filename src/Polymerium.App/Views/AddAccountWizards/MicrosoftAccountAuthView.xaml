@@ -11,8 +11,8 @@
     mc:Ignorable="d" Loaded="MicrosoftAccountAuthView_OnLoaded">
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock Text="登录微软账号(2/3)" Style="{StaticResource SubtitleTextBlockStyle}" />
-            <TextBlock Text="在浏览器中输入以下验证码" />
+            <TextBlock x:Uid="MicrosoftAuthView_Header" Text="登录微软账号(2/3)" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="MicrosoftAuthView_UserCodeLabel" Text="在浏览器中输入以下验证码" />
             <controls:Card Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
                 <Grid>
                     <Button x:Name="CopyButton" Style="{StaticResource IconButtonStyle}" Margin="7"
@@ -26,17 +26,13 @@
                                   Visibility="{x:Bind UserCode,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reverse}" />
                 </Grid>
             </controls:Card>
-            <Button x:Name="OpenBrowserButton" HorizontalAlignment="Stretch"
+            <Button x:Uid="MicrosoftAuthView_OpenBrowserButton" x:Name="OpenBrowserButton" HorizontalAlignment="Stretch"
                     IsEnabled="{x:Bind VerificationUrl,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
-                    Style="{StaticResource AccentButtonStyle}" Click="OpenBrowserButton_OnClick">
-                <Grid>
-                    <TextBlock Text="在浏览器中验证" HorizontalAlignment="Center" />
-                </Grid>
-            </Button>
+                    Style="{StaticResource AccentButtonStyle}" Click="OpenBrowserButton_OnClick" Content="在浏览器中验证"/>
             <TextBlock>
-                <Run Text="验证码会在15分钟内失效" />
+                <Run x:Uid="MicrosoftAuthView_TipLabel0" Text="验证码会在15分钟内失效" />
                 <LineBreak />
-                <Run Text="届时你需要返回上一页面重新开始登录流程" />
+                <Run x:Uid="MicrosoftAuthView_TipLabel1" Text="届时你需要返回上一页面重新开始登录流程" />
             </TextBlock>
         </StackPanel>
     </Grid>

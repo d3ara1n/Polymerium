@@ -11,8 +11,8 @@
     mc:Ignorable="d">
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock Text="登录微软账号(3/3)" Style="{StaticResource SubtitleTextBlockStyle}" />
-            <TextBlock Text="确认您的信息" />
+            <TextBlock x:Uid="MicrosoftFinishView_Header" Text="登录微软账号(3/3)" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="MicrosoftFinishView_Label0" Text="确认您的信息" />
             <ui:ImageEx Stretch="Fill" Width="82" Height="82" HorizontalAlignment="Center"
                         Source="{x:Bind AvatarUrl,Mode=OneWay}" />
             <TextBlock Text="{x:Bind Username}" HorizontalAlignment="Center" />

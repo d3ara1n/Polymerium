@@ -37,14 +37,14 @@
         </ContentControl.Template>
         <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
             <StackPanel Spacing="12" Margin="25">
-                <TextBlock Text="从整合包导入" Style="{StaticResource SubtitleTextBlockStyle}" />
-                <TextBlock Text="实例名" />
+                <TextBlock x:Uid="ImportModpackWizardDialog_Header" Text="从整合包导入" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="ImportModpackWizardDialog_NameLabel" Text="实例名" />
                 <TextBox Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}"
                          PlaceholderText="{x:Bind ViewModel.Exposed.Name,Mode=OneWay}" />
-                <TextBlock Text="版本" />
+                <TextBlock x:Uid="ImportModpackWizardDialog_VersionLabel" Text="版本" />
                 <TextBlock Text="{x:Bind ViewModel.Exposed.Version,Mode=OneWay}"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                <TextBlock Text="作者" />
+                <TextBlock x:Uid="ImportModpackWizardDialog_AuthorLabel" Text="作者" />
                 <TextBlock Text="{x:Bind ViewModel.Exposed.Author,Mode=OneWay}"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
             </StackPanel>
@@ -52,9 +52,9 @@
     </ContentControl>
     <controls:CustomDialog.OperationContent>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-            <Button x:Name="ConfirmButton" Content="确定" IsEnabled="{x:Bind IsOperable,Mode=OneWay}"
+            <Button x:Uid="ImportModpackWizardDialog_FinishButton" x:Name="ConfirmButton" Content="确定" IsEnabled="{x:Bind IsOperable,Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" Click="ConfirmButton_OnClick" />
-            <Button x:Name="CancelButton" Content="取消" Click="CancelButton_OnClick" />
+            <Button x:Uid="ImportModpackWizardDialog_CancelButton" x:Name="CancelButton" Content="取消" Click="CancelButton_OnClick" />
         </StackPanel>
     </controls:CustomDialog.OperationContent>
 </controls:CustomDialog>
