@@ -8,9 +8,9 @@ using Polymerium.Core.Accounts;
 
 namespace Polymerium.App.ViewModels.AddAccountWizard;
 
-public class SelectionViewModel : ObservableObject
+public class AccountSelectionViewModel : ObservableObject
 {
-    public SelectionViewModel(MemoryStorage storage)
+    public AccountSelectionViewModel(MemoryStorage storage)
     {
         var entries = new List<AccountWizardEntryModel>
         {

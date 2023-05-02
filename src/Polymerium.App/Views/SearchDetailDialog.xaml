@@ -21,7 +21,7 @@
                     <Setter Property="Margin" Value="0" />
                 </Style>
             </Pivot.Resources>
-            <PivotItem Header="展示">
+            <PivotItem x:Uid="SearchDetailDialog_Gallery_Header" Header="展示">
                 <FlipView x:Name="Gallery" Margin="15" ItemsSource="{x:Bind Screenshots}">
                     <FlipView.ItemTemplate>
                         <DataTemplate x:DataType="models:SearchCenterResultItemScreenshotModel">
@@ -30,13 +30,10 @@
                     </FlipView.ItemTemplate>
                 </FlipView>
             </PivotItem>
-            <PivotItem Header="描述">
+            <PivotItem x:Uid="SearchDetailDialog_Description_Header" Header="描述">
                 <Grid>
                     <WebView2 x:Name="DescriptionPresenter" />
                 </Grid>
-            </PivotItem>
-            <PivotItem Header="依赖">
-                <TextBlock Text="来自接口的依赖查询不可靠" Style="{StaticResource HeaderTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </PivotItem>
         </Pivot>
         <ProgressBar x:Name="Progress" Maximum="100" IsIndeterminate="True" VerticalAlignment="Bottom"
@@ -76,11 +73,11 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <StackPanel Grid.Column="2" Spacing="10" Orientation="Horizontal">
-                            <Button x:Name="InstallButton" Style="{StaticResource AccentButtonStyle}" Content="安装"
+                            <Button x:Uid="SearchDetailDialog_InstallButton" x:Name="InstallButton" Style="{StaticResource AccentButtonStyle}" Content="安装"
                                     IsEnabled="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
                                     Visibility="{x:Bind VersionList.SelectedItem,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}"
                                     Click="InstallButton_Click" />
-                            <Button x:Name="CancelButton" Content="关闭" Click="CancelButton_Click" />
+                            <Button x:Uid="SearchDetailDialog_CancelButton" x:Name="CancelButton" Content="关闭" Click="CancelButton_Click" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>
