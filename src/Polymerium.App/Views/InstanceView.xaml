@@ -44,42 +44,42 @@
                                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                         <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                            <Run x:Uid="InstanceView_Header_ReferenceLabel_Import" Text="导入自" />
+                                            <Run x:Uid="InstanceView_Header_ReferenceLabel_Import"  />
                                             <Hyperlink NavigateUri="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}"
                                                        ToolTipService.ToolTip="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}">
-                                                <Run x:Uid="InstanceView_Header_ReferenceLabel_Modpack" Text="整合包"/>
+                                                <Run x:Uid="InstanceView_Header_ReferenceLabel_Modpack" />
                                             </Hyperlink>
                                         </TextBlock>
                                         <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                            <Run x:Uid="InstanceView_Header_ReferenceLabel_With" Text="带有" />
+                                            <Run x:Uid="InstanceView_Header_ReferenceLabel_With"  />
                                             <Hyperlink>
-                                                <Run x:Uid="InstanceView_Header_ReferenceLabel_Attachment" Text="附件"/>
+                                                <Run x:Uid="InstanceView_Header_ReferenceLabel_Attachment" />
                                             </Hyperlink>
                                         </TextBlock>
                                     </StackPanel>
                                 </ContentControl>
                                 <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                        <Run x:Uid="InstanceView_Header_GameVersionLabel" Text="游戏版本: " />
+                                        <Run x:Uid="InstanceView_Header_GameVersionLabel"  />
                                         <Run Text="{x:Bind ViewModel.CoreVersion,Mode=OneWay}" />
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Spacing="3">
                                 <Button x:Uid="InstanceView_Header_StartButton" x:Name="StartButton" VerticalAlignment="Top" HorizontalAlignment="Right"
-                                        Content="运行" Width="114" Click="StartButton_Click"
+                                         Width="114" Click="StartButton_Click"
                                         Style="{StaticResource AccentButtonStyle}">
                                 </Button>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                             Visibility="{x:Bind ViewModel.IsRestorationNeeded,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Spacing="3">
                                     <FontIcon Glyph="&#xE946;" FontSize="12" />
-                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_Yes" Text="需要还原" />
+                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_Yes"  />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                             Visibility="{x:Bind ViewModel.IsRestorationNeeded,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
                                             Spacing="3">
                                     <FontIcon Glyph="&#xE73E;" FontSize="12" />
-                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_No" Text="准备就绪" />
+                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_No"  />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
@@ -118,7 +118,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Button x:Uid="InstanceView_Header_EditButton" x:Name="EditButton" HorizontalAlignment="Right"
                                             Style="{StaticResource IconButtonStyle}"
-                                            VerticalAlignment="Bottom" ToolTipService.ToolTip="修改实例的元数据"
+                                            VerticalAlignment="Bottom" ToolTipService.ToolTip=""
                                             Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
                                         <FontIcon Glyph="&#xE104;" FontSize="14" />
                                     </Button>
@@ -138,7 +138,7 @@
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-basil-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock x:Uid="InstanceView_Asset_ResourcePackLabel" Text="资源包" FontSize="16" />
+                                <TextBlock x:Uid="InstanceView_Asset_ResourcePackLabel"  FontSize="16" />
                                 <TextBlock Text="{x:Bind ViewModel.ResourcePackCount,Mode=OneWay}"
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
@@ -150,12 +150,12 @@
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-plugin-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock x:Uid="InstanceView_Asset_ModLabel" Text="模组" FontSize="16" />
+                                <TextBlock x:Uid="InstanceView_Asset_ModLabel"  FontSize="16" />
                                 <Grid>
                                     <TextBlock Text="{x:Bind ViewModel.ModCount,Mode=OneWay}"
                                                Visibility="{x:Bind ViewModel.IsModSupported,Converter={StaticResource BoolToVisibilityConverter}}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                    <TextBlock x:Uid="InstanceView_Asset_UnsupportedLabel" Text="不支持"
+                                    <TextBlock x:Uid="InstanceView_Asset_UnsupportedLabel" 
                                                Visibility="{x:Bind ViewModel.IsModSupported,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </Grid>
@@ -168,12 +168,12 @@
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-color-wheel-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock x:Uid="InstanceView_Asset_ShaderPackLabel" Text="着色器包" FontSize="16" />
+                                <TextBlock x:Uid="InstanceView_Asset_ShaderPackLabel"  FontSize="16" />
                                 <Grid>
                                     <TextBlock Text="{x:Bind ViewModel.ShaderPackCount,Mode=OneWay}"
                                                Visibility="{x:Bind ViewModel.IsShaderSupported,Converter={StaticResource BoolToVisibilityConverter}}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                    <TextBlock x:Uid="InstanceView_Asset_UnsupportedLabel" Text="不支持"
+                                    <TextBlock x:Uid="InstanceView_Asset_UnsupportedLabel" 
                                                Visibility="{x:Bind ViewModel.IsShaderSupported,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </Grid>
@@ -200,7 +200,7 @@
                 <Grid ColumnDefinitions="1*,1*" MaxHeight="512">
                     <controls:GroupBox Margin="5,5,5,5">
                         <controls:GroupBox.Header>
-                            <TextBlock x:Uid="InstanceView_Save_Header" Text="存档" Style="{StaticResource SubtitleTextBlockStyle}" />
+                            <TextBlock x:Uid="InstanceView_Save_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
                         </controls:GroupBox.Header>
                         <Grid>
                             <Grid.ChildrenTransitions>
@@ -246,8 +246,8 @@
                     <controls:GroupBox Margin="5,5,10,5" Grid.Column="1" Visibility="Collapsed">
                         <controls:GroupBox.Header>
                             <Grid>
-                                <TextBlock x:Uid="InstanceView_Server_Header" Text="服务器" Style="{StaticResource SubtitleTextBlockStyle}" />
-                                <Button x:Uid="InstanceView_Server_AddButton" Content="添加" Style="{StaticResource IconButtonStyle}"
+                                <TextBlock x:Uid="InstanceView_Server_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <Button x:Uid="InstanceView_Server_AddButton"  Style="{StaticResource IconButtonStyle}"
                                         HorizontalAlignment="Right" />
                             </Grid>
                         </controls:GroupBox.Header>
@@ -263,7 +263,7 @@
             </ScrollViewer>
             <controls:GroupBox Margin="5,5,10,10">
                 <controls:GroupBox.Header>
-                    <TextBlock x:Uid="InstanceView_Other_Header" Text="其他信息" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <TextBlock x:Uid="InstanceView_Other_Header"  Style="{StaticResource BodyStrongTextBlockStyle}" />
                 </controls:GroupBox.Header>
                 <Grid>
                     <Grid.ChildrenTransitions>

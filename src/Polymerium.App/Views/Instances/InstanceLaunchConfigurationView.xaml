@@ -10,7 +10,7 @@
     <ScrollViewer>
         <controls:Card Margin="5,0,10,10">
             <StackPanel Spacing="5">
-                <TextBlock x:Uid="InstanceLaunchConfigurationView_Label0" Text="实例启动参数会从全局设置中继承，对实例的修改会被保存，且只在该实例生效，不会影响全局设置" TextWrapping="WrapWholeWords"
+                <TextBlock x:Uid="InstanceLaunchConfigurationView_Label0"  TextWrapping="WrapWholeWords"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
@@ -18,7 +18,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE8B7;" Margin="20" />
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Header" Text="自动检测 Java 版本" />
+                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Header"  />
                                     <TextBlock
                                         Text="{x:Bind ViewModel.Configuration.JavaHome,Mode=OneWay,FallbackValue=默认}"
                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
@@ -34,14 +34,14 @@
                         <StackPanel Spacing="1">
                             <controls:ExpanderExItem>
                                 <Grid>
-                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Label0" Text="使用系统中已经预装的 Java 实例" VerticalAlignment="Center" />
-                                    <Button x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_OpenPickerButton" x:Name="OpenJavaDialogButton" Content="打开选取对话框" HorizontalAlignment="Right"
+                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Label0"  VerticalAlignment="Center" />
+                                    <Button x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_OpenPickerButton" x:Name="OpenJavaDialogButton"  HorizontalAlignment="Right"
                                             Command="{x:Bind ViewModel.OpenPickerAsyncCommand}" />
                                 </Grid>
                             </controls:ExpanderExItem>
                             <controls:ExpanderExItem>
                                 <Grid>
-                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Label1" Text="使用自定义 Java 路径(精确到 bin/java.exe,lib 所在目录)"
+                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Label1" 
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Left" />
                                 </Grid>
@@ -58,9 +58,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE9D5;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceLaunchConfigurationView_SkipJavaCheck_Header" Text="跳过 Java 兼容性检查" />
+                                    <Run x:Uid="InstanceLaunchConfigurationView_SkipJavaCheck_Header"  />
                                     <LineBreak />
-                                    <Run x:Uid="InstanceLaunchConfigurationView_SkipJavaCheck_Subheader" Text="当确定 Java 版本兼容时可开启此项"
+                                    <Run x:Uid="InstanceLaunchConfigurationView_SkipJavaCheck_Subheader" 
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -76,9 +76,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEC8F;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Header" Text="Java 虚拟机分配的最大内存" />
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Header"  />
                                     <LineBreak />
-                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Subheader" Text="没有自动分配算法，根据经验来设置"
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Subheader" 
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -95,9 +95,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE140;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Header" Text="Java 虚拟机附加参数" />
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Header"  />
                                     <LineBreak />
-                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Subheader" Text="非必要的用于调整虚拟机性能的额外参数"
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Subheader" 
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>

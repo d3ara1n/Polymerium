@@ -38,5 +38,11 @@ namespace Polymerium.App.Services
             var candiate = _resourceManager.MainResourceMap.TryGetValue($"Resources/{key}", _resourceContext);
             return candiate?.ValueAsString ?? fallback;
         }
+
+        public void SetLanguageByKey(string key)
+        {
+            ApplicationLanguages.PrimaryLanguageOverride = key;
+            _resourceContext.QualifierValues["Language"] = key;
+        }
     }
 }

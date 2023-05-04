@@ -11,10 +11,10 @@
 
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock x:Uid="OfflineAccountView_Header" Text="添加离线账号" Style="{StaticResource SubtitleTextBlockStyle}" />
-            <TextBlock x:Uid="OfflineAccountView_UsernameLabel" Text="玩家名" />
+            <TextBlock x:Uid="OfflineAccountView_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="OfflineAccountView_UsernameLabel"  />
             <TextBox Text="{x:Bind ViewModel.Nickname,Mode=TwoWay}" />
-            <TextBlock x:Uid="OfflineAccountView_UuidLabel" Text="UUID" />
+            <TextBlock x:Uid="OfflineAccountView_UuidLabel"  />
             <TextBox Text="{x:Bind ViewModel.UUID,Mode=TwoWay}"
                      PlaceholderText="{x:Bind ViewModel.EmptyUUID,Mode=OneWay}" />
             <TextBlock Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" />

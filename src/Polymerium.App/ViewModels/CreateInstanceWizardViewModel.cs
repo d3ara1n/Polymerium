@@ -105,10 +105,10 @@ public class CreateInstanceWizardViewModel : ObservableValidator
                                             x.Id,
                                             x.Type switch
                                             {
-                                                ReleaseType.Release => _localizationService.GetString("ReleaseType_Release", "Release"),
-                                                ReleaseType.Snapshot => _localizationService.GetString("ReleaseType_Snapshot", "Snapshot"),
-                                                ReleaseType.Old_Alpha => _localizationService.GetString("ReleaseType_Alpha", "Alpha"),
-                                                ReleaseType.Old_Beta => _localizationService.GetString("ReleaseType_Beta", "Beta"),
+                                                ReleaseType.Release => _localizationService.GetString("ReleaseType_Release"),
+                                                ReleaseType.Snapshot => _localizationService.GetString("ReleaseType_Snapshot"),
+                                                ReleaseType.Old_Alpha => _localizationService.GetString("ReleaseType_Alpha"),
+                                                ReleaseType.Old_Beta => _localizationService.GetString("ReleaseType_Beta"),
                                                 _ => throw new ArgumentOutOfRangeException()
                                             }
                                         )

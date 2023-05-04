@@ -30,7 +30,7 @@
                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png" />
                         <StackPanel Grid.Column="1" Margin="15" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">
-                                <Run x:Uid="HomeView_HelloLabel" Text="你好" />
+                                <Run x:Uid="HomeView_HelloLabel"  />
                                 <Run
                                     Text="{x:Bind ViewModel.Context.SelectedAccount.Nickname,Mode=OneWay,Converter={StaticResource NullToParameterConverter},ConverterParameter=未登录}" />
                             </TextBlock>
@@ -44,7 +44,7 @@
             <ScrollViewer Grid.Row="1">
                 <StackPanel>
                     <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,5">
-                        <TextBlock x:Uid="HomeView_RecentPlayLabel.Text" Text="最近游玩" />
+                        <TextBlock x:Uid="HomeView_RecentPlayLabel.Text"  />
                     </Grid>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                         <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}" Margin="0,0,0,5">
@@ -109,7 +109,7 @@
             <ProgressRing IsIndeterminate="True" Grid.RowSpan="9" VerticalAlignment="Center"
                           HorizontalAlignment="Center"
                           Visibility="{x:Bind IsNewsLoading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-            <TextBlock x:Uid="HomeView_NewsLabel" Text="新闻" Margin="5,0,10,5" />
+            <TextBlock x:Uid="HomeView_NewsLabel"  Margin="5,0,10,5" />
             <Grid Grid.Row="1">
                 <ListView ItemsSource="{x:Bind News}" Width="256" SelectionMode="None">
                     <ListView.ItemTemplate>
@@ -132,7 +132,7 @@
                                                 Text="{x:Bind Date,Converter={StaticResource DateTimeOffsetToHumanStringConverter}}"
                                                 Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                                 HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                            <HyperlinkButton x:Uid="HomeView_News_ReadMoreLink" Content="查看详情" ToolTipService.ToolTip="{x:Bind ReadMore}"
+                                            <HyperlinkButton x:Uid="HomeView_News_ReadMoreLink"  ToolTipService.ToolTip="{x:Bind ReadMore}"
                                                              NavigateUri="{x:Bind ReadMore}"
                                                              HorizontalAlignment="Right" VerticalAlignment="Center" />
                                         </Grid>

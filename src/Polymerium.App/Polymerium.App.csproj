@@ -194,12 +194,16 @@
     <CustomAdditionalCompileInputs Remove="Views\InstanceAttachmentBulkUpdateDialog.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="MultilingualResources\Polymerium.App.zh-CN.xlf" />
     <None Remove="Themes\Converters.xaml" />
     <None Remove="Views\InstanceAttachmentBulkUpdateDialog.xaml" />
     <None Remove="Views\PlanetView.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Views\InstanceAttachmentBulkUpdateDialog.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <XliffResource Include="MultilingualResources\Polymerium.App.zh-CN.xlf" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Themes\Converters.xaml">

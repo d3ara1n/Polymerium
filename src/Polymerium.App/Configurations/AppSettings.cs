@@ -24,5 +24,11 @@ namespace Polymerium.App.Configurations
             set =>
                 ApplicationData.Current.LocalSettings.Values[nameof(IsSuperPowerActivated)] = value;
         }
+
+        public string LanguageKey
+        {
+            get => (string?)ApplicationData.Current.LocalSettings.Values[nameof(LanguageKey)] ?? "en-US";
+            set => ApplicationData.Current.LocalSettings.Values[nameof(LanguageKey)] = value;
+        }
     }
 }
