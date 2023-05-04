@@ -12,7 +12,7 @@
 
     <Grid>
         <StackPanel Spacing="12">
-            <TextBlock Text="选择一种登录方式" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="AccountSelectionView_Header" Text="选择一种登录方式" Style="{StaticResource SubtitleTextBlockStyle}" />
             <ComboBox x:Name="FirstPage" SelectionChanged="FirstPage_SelectionChanged" IsEditable="False"
                       HorizontalAlignment="Stretch" SelectedIndex="0" HorizontalContentAlignment="Stretch"
                       ItemsSource="{x:Bind ViewModel.Entries}">
