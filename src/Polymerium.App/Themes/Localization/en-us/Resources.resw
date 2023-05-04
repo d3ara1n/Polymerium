@@ -136,7 +136,7 @@
     <value>Cancel</value>
   </data>
   <data name="AddMetaComponentWizardDialog_FinishButton.Content" xml:space="preserve">
-    <value>Comfirm</value>
+    <value>Confirm</value>
   </data>
   <data name="AddMetaComponentWizardDialog_Header.Text" xml:space="preserve">
     <value>Add a componet</value>
@@ -157,7 +157,7 @@
     <value>Cancel</value>
   </data>
   <data name="CreateInstanceWizardDialog_FinishButton.Content" xml:space="preserve">
-    <value>Comfirm</value>
+    <value>Confirm</value>
   </data>
   <data name="CreateInstanceWizardDialog_Header.Text" xml:space="preserve">
     <value>Create new instance</value>
@@ -202,7 +202,7 @@
     <value>Cancel</value>
   </data>
   <data name="ImportModpackWizardDialog_FinishButton.Content" xml:space="preserve">
-    <value>Comfirm</value>
+    <value>Confirm</value>
   </data>
   <data name="ImportModpackWizardDialog_Header.Text" xml:space="preserve">
     <value>Import from modpack</value>
@@ -502,10 +502,10 @@
     <value>Beta</value>
   </data>
   <data name="ReleaseType_Release" xml:space="preserve">
-    <value>正式</value>
+    <value>Release</value>
   </data>
   <data name="ReleaseType_Snapshot" xml:space="preserve">
-    <value>快照</value>
+    <value>Snapshot</value>
   </data>
   <data name="ResourceType_DataPack" xml:space="preserve">
     <value>Data packs</value>
