@@ -31,8 +31,8 @@
                     <ComboBox x:Name="ResourceBox" SelectedItem="{x:Bind ViewModel.SelectedResourceType,Mode=TwoWay}"
                               ItemsSource="{x:Bind ViewModel.SupportedResources}">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="resources:ResourceType">
-                                <TextBlock Text="{x:Bind Converter={StaticResource ResourceTypeToStringConverter}}"/>
+                            <DataTemplate x:DataType="models:SearchCenterResourceTagModel">
+                                <TextBlock Text="{x:Bind Display}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>

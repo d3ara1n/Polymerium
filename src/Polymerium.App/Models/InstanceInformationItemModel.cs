@@ -9,6 +9,13 @@ public class InstanceInformationItemModel
         Content = content;
     }
 
+    public InstanceInformationItemModel()
+    {
+        IconGlyph = string.Empty;
+        Caption = string.Empty;
+        Content = string.Empty;
+    }
+
     public string IconGlyph { get; set; }
     public string Caption { get; set; }
     public string Content { get; set; }

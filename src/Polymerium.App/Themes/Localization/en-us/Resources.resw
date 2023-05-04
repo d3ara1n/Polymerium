@@ -495,6 +495,45 @@
   <data name="PrepareGameDialog_PlayButtonLabel.Text" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="ReleaseType_Alpha" xml:space="preserve">
+    <value>Alpha</value>
+  </data>
+  <data name="ReleaseType_Beta" xml:space="preserve">
+    <value>Beta</value>
+  </data>
+  <data name="ReleaseType_Release" xml:space="preserve">
+    <value>正式</value>
+  </data>
+  <data name="ReleaseType_Snapshot" xml:space="preserve">
+    <value>快照</value>
+  </data>
+  <data name="ResourceType_DataPack" xml:space="preserve">
+    <value>Data packs</value>
+  </data>
+  <data name="ResourceType_File" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="ResourceType_Mod" xml:space="preserve">
+    <value>Mods</value>
+  </data>
+  <data name="ResourceType_Modpack" xml:space="preserve">
+    <value>Modpacks</value>
+  </data>
+  <data name="ResourceType_Plugin" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="ResourceType_ResourcePack" xml:space="preserve">
+    <value>Resource packs</value>
+  </data>
+  <data name="ResourceType_ShaderPack" xml:space="preserve">
+    <value>Shader packs</value>
+  </data>
+  <data name="ResourceType_Update" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="ResourceType_World" xml:space="preserve">
+    <value>Worlds</value>
+  </data>
   <data name="SearchCenterView_EmptyLabel.Text" xml:space="preserve">
     <value>No results</value>
   </data>
@@ -524,6 +563,36 @@
   </data>
   <data name="SearchDetailDialog_InstallButton.Content" xml:space="preserve">
     <value>Install</value>
+  </data>
+  <data name="SearchDetailViewModel_ImportModpack_Failure_Message" xml:space="preserve">
+    <value>Importing modpack from the file failed: {0}</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallAsset_Failure_Caption" xml:space="preserve">
+    <value>It never happen</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallAsset_Failure_Message" xml:space="preserve">
+    <value>I promise</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallAsset_Success_Caption" xml:space="preserve">
+    <value>Install asset successfully</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallAsset_Success_Message" xml:space="preserve">
+    <value>Reference of {0} has been added to {1}</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallModpack_Failure_Caption" xml:space="preserve">
+    <value>Failed to install modpack</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallModpack_Success_Caption" xml:space="preserve">
+    <value>Install modpack successfully</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallModpack_Success_Message" xml:space="preserve">
+    <value>{0} has been added</value>
+  </data>
+  <data name="SearchDetailViewModel_ResolveModpack_Failure_Message" xml:space="preserve">
+    <value>Failed to resolving the modpack reference: {0}</value>
+  </data>
+  <data name="SearchDetailViewModel_SolidifyModpack_Failure_Message" xml:space="preserve">
+    <value>Solidifying instance refered to a modpack failed: {0}</value>
   </data>
   <data name="SettingView_About_CurseForgeLabel.Text" xml:space="preserve">
     <value>CurseForge:</value>

@@ -9,7 +9,7 @@ public delegate void TaskFinishedDelegate(string message, string? details = null
 
 public abstract class StageBase
 {
-    public abstract string StageName { get; }
+    public abstract string StageNameKey { get; }
     public bool IsCompletedSuccessfully { get; protected set; }
     public CancellationToken Token { get; set; } = CancellationToken.None;
     public Exception? Exception { get; protected set; }

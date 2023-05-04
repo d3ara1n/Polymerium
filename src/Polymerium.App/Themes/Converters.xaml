@@ -19,5 +19,4 @@
     <converters:DateTimeOffsetToHumanStringConverter x:Key="DateTimeOffsetToHumanStringConverter" />
     <converters:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverter" />
     <converters:ZeroToVisibleConverter x:Key="ZeroToVisibleConverter" />
-    <converters:ResourceTypeToStringConverter x:Key="ResourceTypeToStringConverter"/>
 </ResourceDictionary>

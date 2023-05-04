@@ -37,7 +37,7 @@ public class CompleteLibrariesStage : StageBase
         _assetManager = assetManager;
     }
 
-    public override string StageName => "补全游戏依赖库文件";
+    public override string StageNameKey => "补全游戏依赖库文件";
 
     public override async Task<Option<StageBase>> StartAsync()
     {

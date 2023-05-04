@@ -22,6 +22,7 @@ public class CreateInstanceWizardViewModel : ObservableValidator
 {
     private readonly IMemoryCache _cache;
     private readonly InstanceManager _instanceManager;
+    private readonly LocalizationService _localizationService;
 
     private string? autoSelectedVersion = string.Empty;
 
@@ -33,10 +34,11 @@ public class CreateInstanceWizardViewModel : ObservableValidator
 
     private string version = string.Empty;
 
-    public CreateInstanceWizardViewModel(InstanceManager instanceManager, IMemoryCache cache)
+    public CreateInstanceWizardViewModel(InstanceManager instanceManager, IMemoryCache cache, LocalizationService localizationService)
     {
         _instanceManager = instanceManager;
         _cache = cache;
+        _localizationService = localizationService;
 
         InstanceName = string.Empty;
         SelectedVersion = null;
@@ -103,10 +105,10 @@ public class CreateInstanceWizardViewModel : ObservableValidator
                                             x.Id,
                                             x.Type switch
                                             {
-                                                ReleaseType.Release => "正式",
-                                                ReleaseType.Snapshot => "快照",
-                                                ReleaseType.Old_Alpha => "Alpha",
-                                                ReleaseType.Old_Beta => "Beta",
+                                                ReleaseType.Release => _localizationService.GetString("ReleaseType_Release", "Release"),
+                                                ReleaseType.Snapshot => _localizationService.GetString("ReleaseType_Snapshot", "Snapshot"),
+                                                ReleaseType.Old_Alpha => _localizationService.GetString("ReleaseType_Alpha", "Alpha"),
+                                                ReleaseType.Old_Beta => _localizationService.GetString("ReleaseType_Beta", "Beta"),
                                                 _ => throw new ArgumentOutOfRangeException()
                                             }
                                         )

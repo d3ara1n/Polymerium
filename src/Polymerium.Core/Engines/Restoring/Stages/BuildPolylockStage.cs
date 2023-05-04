@@ -64,7 +64,7 @@ public class BuildPolylockStage : StageBase
         };
     }
 
-    public override string StageName => "解析元数据中的组件信息";
+    public override string StageNameKey => "解析元数据中的组件信息";
 
     public override async Task<Option<StageBase>> StartAsync()
     {

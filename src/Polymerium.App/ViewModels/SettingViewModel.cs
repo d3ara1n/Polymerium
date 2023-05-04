@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -19,6 +20,7 @@ public class SettingViewModel : ObservableObject
     private readonly ConfigurationManager _configurationManager;
     private readonly JavaManager _javaManager;
     private readonly AppSettings _settings;
+    private readonly LocalizationService _localizationService;
 
     private string additionalJvmArguments = string.Empty;
 
@@ -44,12 +46,15 @@ public class SettingViewModel : ObservableObject
     public SettingViewModel(
         ConfigurationManager configurationManager,
         JavaManager javaManager,
-        AppSettings settings
+        AppSettings settings,
+        LocalizationService localizationService
     )
     {
         _configurationManager = configurationManager;
         _javaManager = javaManager;
         _settings = settings;
+        _localizationService = localizationService;
+        Languages = localizationService.GetSupportedLanguages().Select(x => new SettingLanguageItemModel(x.Item1, x.Item2));
         OpenPickerAsyncCommand = new AsyncRelayCommand(OpenPickerAsync);
         ForceImportOffline = _settings.ForceImportOffline;
         IsSuperPowerActivated = _settings.IsSuperPowerActivated;
@@ -66,6 +71,8 @@ public class SettingViewModel : ObservableObject
     public ICommand OpenPickerAsyncCommand { get; }
 
     public FileBasedLaunchConfiguration Global { get; }
+
+    public IEnumerable<SettingLanguageItemModel> Languages { get; }
 
     public bool ForceImportOffline
     {

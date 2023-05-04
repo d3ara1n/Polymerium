@@ -33,6 +33,7 @@ public class SearchDetailViewModel : ObservableObject
     private readonly INotificationService _notification;
     private readonly ResolveEngine _resolver;
     private readonly AppSettings _settings;
+    private readonly LocalizationService _localizationService;
 
     public SearchDetailViewModel(
         ViewModelContext context,
@@ -43,7 +44,8 @@ public class SearchDetailViewModel : ObservableObject
         ImportService importer,
         IMemoryCache cache,
         ComponentManager componentManager,
-        AppSettings settings
+        AppSettings settings,
+        LocalizationService localizationService
     )
     {
         Instance = context.AssociatedInstance!;
@@ -55,6 +57,7 @@ public class SearchDetailViewModel : ObservableObject
         _cache = cache;
         _componentManager = componentManager;
         _settings = settings;
+        _localizationService = localizationService;
     }
 
     public GameInstanceModel Instance { get; }
@@ -178,8 +181,8 @@ public class SearchDetailViewModel : ObservableObject
     {
         instance.Attachments.Add(new Attachment { Source = version.ResourceUrl, From = null });
         _notification.Enqueue(
-            "添加资产成功",
-            $"对 {Resource!.Value.Name} 的引用被添加到 {instance.Name}",
+            _localizationService.GetString("SearchDetailViewModel_InstallAsset_Success_Caption", "添加资产成功"),
+            _localizationService.GetString("SearchDetailViewModel_InstallAsset_Success_Message", "对 {0} 的引用被添加到 {1}").Replace("{0}", Resource!.Value.Name).Replace("{1}", instance.Name),
             InfoBarSeverity.Success
         );
     }
@@ -242,13 +245,13 @@ public class SearchDetailViewModel : ObservableObject
             {
                 var postError = await _importer.SolidifyAsync(importResult.Value, null);
                 if (postError.HasValue)
-                    EndedError($"添加导入的实例失败: {postError}");
+                    EndedError(_localizationService.GetString("SearchDetailViewModel_SolidifyModpack_Failure_Message", "添加导入的实例失败: {0}").Replace("{0}", postError.ToString()));
                 else
-                    EndedSuccess($"{importResult.Value.Content.Name} 已添加");
+                    EndedSuccess(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Success_Message", "{0} 已添加").Replace("{0}", importResult.Value.Content.Name));
             }
             else
             {
-                EndedError($"导入下载的整合包文件失败: {importResult.Error}");
+                EndedError(_localizationService.GetString("SearchDetailViewModel_ImportModpack_Failure_Message", "导入下载的整合包文件失败: {0}").Replace("{0}", importResult.Error.ToString()));
             }
 
             report(null, true);
@@ -256,18 +259,18 @@ public class SearchDetailViewModel : ObservableObject
         else
         {
             report(null, true);
-            EndedError($"解析整合包所在资源链接失败: {resolveResult.Error}");
+            EndedError(_localizationService.GetString("SearchDetailViewModel_ResolveModpack_Failure_Message", "解析整合包所在资源链接失败: {0}").Replace("{0}", resolveResult.Error.ToString()));
         }
     }
 
     private void EndedError(string message)
     {
-        _notification.Enqueue("安装整合包失败", message, InfoBarSeverity.Error);
+        _notification.Enqueue(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Failure_Caption", "安装整合包失败"), message, InfoBarSeverity.Error);
     }
 
     private void EndedSuccess(string message)
     {
-        _notification.Enqueue("安装整合包完成", message, InfoBarSeverity.Success);
+        _notification.Enqueue(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Success_Caption", "安装整合包完成"), message, InfoBarSeverity.Success);
     }
 
     public string? GetModloaderFriendlyName(string identity)

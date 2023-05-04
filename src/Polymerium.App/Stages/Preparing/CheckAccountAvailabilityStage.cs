@@ -18,7 +18,7 @@ public class CheckAccountAvailabilityStage : StageBase
         _account = account;
     }
 
-    public override string StageName => "检查账号可用性";
+    public override string StageNameKey => "检查账号可用性";
 
     public override async Task<Option<StageBase>> StartAsync()
     {
