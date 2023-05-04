@@ -41,7 +41,7 @@ public class CompleteAssetsStage : StageBase
         _assetManager = assetManager;
     }
 
-    public override string StageName => "补全游戏资源文件";
+    public override string StageNameKey => "补全游戏资源文件";
 
     public override async Task<Option<StageBase>> StartAsync()
     {

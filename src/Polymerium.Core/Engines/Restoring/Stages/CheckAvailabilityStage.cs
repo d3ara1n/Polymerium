@@ -45,7 +45,7 @@ public class CheckAvailabilityStage : StageBase
         _assetManager = assetManager;
     }
 
-    public override string StageName => "检查资源可用性";
+    public override string StageNameKey => "检查资源可用性";
 
     public override Task<Option<StageBase>> StartAsync()
     {

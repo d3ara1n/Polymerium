@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Accounts;
 using Polymerium.Abstractions.Models;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Services;
 using Polymerium.App.Stages.Preparing;
 using Polymerium.Core;
@@ -130,7 +131,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         var stage = _restore.ProduceStage(Instance!, _memoryStorage.SupportedComponents);
         stage.TaskFinishedCallback = UpdateTaskProgressSafe;
         stage.Token = token;
-        UpdateLabelSafe(stage.StageName);
+        UpdateLabelSafe(stage.StageNameKey);
         var hasNext = false;
         var appended = false;
         do
@@ -145,7 +146,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                     stage = lastStage!;
                     stage.Token = token;
                     stage.TaskFinishedCallback = UpdateTaskProgressSafe;
-                    UpdateLabelSafe(stage.StageName);
+                    UpdateLabelSafe(stage.StageNameKey);
                 }
                 else if (!appended && stage.IsCompletedSuccessfully)
                 {
@@ -157,7 +158,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             catch (Exception ex)
             {
                 Instance!.ExceptionCount++;
-                CriticalError($"{stage.StageName}\n{ex.Message}:\n{ex.StackTrace}");
+                CriticalError($"{stage.StageNameKey}\n{ex.Message}:\n{ex.StackTrace}");
                 return;
             }
         } while (hasNext);
@@ -175,7 +176,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
             {
                 Instance.ExceptionCount++;
                 CriticalError(
-                    $"{stage.StageName}\n{stage.ErrorMessage}:\n{stage.Exception?.StackTrace}"
+                    $"{stage.StageNameKey}\n{stage.ErrorMessage}:\n{stage.Exception?.StackTrace}"
                 );
             }
         }
@@ -359,11 +360,12 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         _dispatcher.TryEnqueue(async () =>
         {
             _overlayService.Dismiss();
-            var dialog = new ContentDialog();
-            dialog.XamlRoot = App.Current.Window.Content.XamlRoot;
-            dialog.Title = "关键错误";
-            dialog.Content = msg;
-            dialog.CloseButtonText = "晓得了";
+            var dialog = new MessageDialog()
+            {
+                XamlRoot = App.Current.Window.Content.XamlRoot,
+                Title = "关键错误",
+                Content = msg
+            };
             await dialog.ShowAsync();
         });
     }

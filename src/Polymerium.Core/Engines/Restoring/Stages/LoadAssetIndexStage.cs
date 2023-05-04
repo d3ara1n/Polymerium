@@ -38,7 +38,7 @@ public class LoadAssetIndexStage : StageBase
         _assetManager = assetManager;
     }
 
-    public override string StageName => "获取游戏资产资源清单";
+    public override string StageNameKey => "获取游戏资产资源清单";
 
     public override async Task<Option<StageBase>> StartAsync()
     {

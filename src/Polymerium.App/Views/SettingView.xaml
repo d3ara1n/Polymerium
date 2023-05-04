@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:models="using:Polymerium.App.Models"
     mc:Ignorable="d">
     <ScrollViewer>
         <controls:Card Margin="5,0,10,10" Padding="50">
@@ -47,10 +48,12 @@
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
-                            <ComboBox SelectedIndex="0" IsEditable="False" HorizontalAlignment="Right"
-                                      VerticalAlignment="Center">
-                                <x:String>简体中文</x:String>
-                                <x:String>还是简体中文</x:String>
+                            <ComboBox ItemsSource="{x:Bind ViewModel.Languages}" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:SettingLanguageItemModel">
+                                        <TextBlock Text="{x:Bind DisplayName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                             </ComboBox>
                         </Grid>
                     </controls:ExpanderEx.Header>

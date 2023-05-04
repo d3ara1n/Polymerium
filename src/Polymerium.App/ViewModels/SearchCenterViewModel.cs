@@ -20,22 +20,25 @@ namespace Polymerium.App.ViewModels;
 public class SearchCenterViewModel : ObservableObject
 {
     private readonly IOverlayService _overlayService;
+    private readonly LocalizationService _localizationService;
 
     private GameInstanceModel? instanceScope;
     private IResourceRepository? selectedRepository;
 
-    private ResourceType? selectedResourceType;
+    private SearchCenterResourceTagModel? selectedResourceType;
 
     public SearchCenterViewModel(
         ViewModelContext context,
         IEnumerable<IResourceRepository> repositories,
-        IOverlayService overlayService
+        IOverlayService overlayService,
+        LocalizationService localizationService
     )
     {
         Instance = context.AssociatedInstance;
         _overlayService = overlayService;
+        _localizationService = localizationService;
         Repositories = repositories;
-        SupportedResources = new ObservableCollection<ResourceType>();
+        SupportedResources = new ObservableCollection<SearchCenterResourceTagModel>();
         ClearScopeCommand = new RelayCommand(ClearScope);
     }
 
@@ -43,7 +46,7 @@ public class SearchCenterViewModel : ObservableObject
 
     public IEnumerable<IResourceRepository> Repositories { get; }
     public ICommand ClearScopeCommand { get; }
-    public ObservableCollection<ResourceType> SupportedResources { get; set; }
+    public ObservableCollection<SearchCenterResourceTagModel> SupportedResources { get; set; }
 
     public GameInstanceModel? InstanceScope
     {
@@ -51,7 +54,7 @@ public class SearchCenterViewModel : ObservableObject
         set => SetProperty(ref instanceScope, value);
     }
 
-    public ResourceType? SelectedResourceType
+    public SearchCenterResourceTagModel? SelectedResourceType
     {
         get => selectedResourceType;
         set => SetProperty(ref selectedResourceType, value);
@@ -81,7 +84,7 @@ public class SearchCenterViewModel : ObservableObject
                 && (supported & type) == type
                 && (InstanceScope == null || type != ResourceType.Modpack)
             )
-                SupportedResources.Add(type);
+                SupportedResources.Add(new SearchCenterResourceTagModel(type, _localizationService.GetString($"ResourceType_{type.ToString()}", type.ToString())));
         }
 
         SelectedResourceType = SupportedResources.Any(x => x == old)

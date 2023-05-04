@@ -120,7 +120,7 @@ public partial class App : Application
         services
             .AddSingleton<AssetManager>()
             .AddSingleton<GameManager>()
-            .AddSingleton<ResourceManager>()
+            .AddSingleton<IResourceManager, ResourceManager>()
             .AddSingleton<IFileBaseService, MainFileBaseService>()
             .Configure<MainFileBaseOptions>(
                 configure =>

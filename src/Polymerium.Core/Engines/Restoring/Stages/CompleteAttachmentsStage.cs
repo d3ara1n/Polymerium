@@ -39,7 +39,7 @@ public class CompleteAttachmentsStage : StageBase
         _assetManager = assetManager;
     }
 
-    public override string StageName => "补全实例元数据中的附件";
+    public override string StageNameKey => "补全实例元数据中的附件";
 
     public override async Task<Option<StageBase>> StartAsync()
     {

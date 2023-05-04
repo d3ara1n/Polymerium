@@ -52,7 +52,7 @@ public sealed partial class SearchCenterView : Page
                 {
                     var type = ViewModel.SelectedRepository.SupportedResources & arguments.Type;
                     if (type == arguments.Type)
-                        ViewModel.SelectedResourceType = arguments.Type;
+                        ViewModel.SelectedResourceType = ViewModel.SupportedResources.FirstOrDefault(x => x.Tag == arguments.Type);
                     else
                         found = false;
                 }
@@ -78,9 +78,9 @@ public sealed partial class SearchCenterView : Page
 
     private void QuerySubmitted(string query)
     {
-        if (ViewModel.SelectedResourceType.HasValue)
+        if (ViewModel.SelectedResourceType != null)
         {
-            var type = ViewModel.SelectedResourceType.Value;
+            var type = ViewModel.SelectedResourceType;
             ResultList.ItemsSource = new IncrementalLoadingCollection<
                 IncrementalFactorySource<SearchCenterResultItemModel>,
                 SearchCenterResultItemModel
@@ -89,7 +89,7 @@ public sealed partial class SearchCenterView : Page
                     async (offset, limit, token) =>
                     {
                         IsDataLoading = true;
-                        var results = await ViewModel.QueryAsync(query, type, offset, limit, token);
+                        var results = await ViewModel.QueryAsync(query, type.Tag, offset, limit, token);
                         IsDataLoading = false;
                         return results;
                     }
