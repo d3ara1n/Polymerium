@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -42,6 +43,7 @@ public class SettingViewModel : ObservableObject
 
     private bool forceImportOffline;
     private bool isSuperPowerActivated;
+    private SettingLanguageItemModel selectedLanguage;
 
     public SettingViewModel(
         ConfigurationManager configurationManager,
@@ -54,9 +56,10 @@ public class SettingViewModel : ObservableObject
         _javaManager = javaManager;
         _settings = settings;
         _localizationService = localizationService;
-        Languages = localizationService.GetSupportedLanguages().Select(x => new SettingLanguageItemModel(x.Item1, x.Item2));
         OpenPickerAsyncCommand = new AsyncRelayCommand(OpenPickerAsync);
+        Languages = new ObservableCollection<SettingLanguageItemModel>(localizationService.GetSupportedLanguages().Select(x => new SettingLanguageItemModel(x.Item1, x.Item2)));
         ForceImportOffline = _settings.ForceImportOffline;
+        SelectedLanguage = Languages.First(x => x.Key == _settings.LanguageKey);
         IsSuperPowerActivated = _settings.IsSuperPowerActivated;
         Global = configurationManager.Current.GameGlobals;
         AutoDetectJava = Global.AutoDetectJava ?? true;
@@ -72,7 +75,17 @@ public class SettingViewModel : ObservableObject
 
     public FileBasedLaunchConfiguration Global { get; }
 
-    public IEnumerable<SettingLanguageItemModel> Languages { get; }
+    public ObservableCollection<SettingLanguageItemModel> Languages { get; }
+
+    public SettingLanguageItemModel SelectedLanguage
+    {
+        get => selectedLanguage;
+        set
+        {
+            SetProperty(ref selectedLanguage, value);
+            _settings.LanguageKey = value.Key;
+        }
+    }
 
     public bool ForceImportOffline
     {

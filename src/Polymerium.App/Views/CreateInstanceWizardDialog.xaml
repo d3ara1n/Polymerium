@@ -40,15 +40,15 @@
         <Grid>
             <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
                 <StackPanel Spacing="12" Margin="25">
-                    <TextBlock x:Uid="CreateInstanceWizardDialog_Header" Text="创建空实例" Style="{ThemeResource SubtitleTextBlockStyle}" />
-                    <TextBlock x:Uid="CreateInstanceWizardDialog_NameLabel" Text="最后给实例起一个名字" />
+                    <TextBlock x:Uid="CreateInstanceWizardDialog_Header"  Style="{ThemeResource SubtitleTextBlockStyle}" />
+                    <TextBlock x:Uid="CreateInstanceWizardDialog_NameLabel"  />
                     <TextBox x:Uid="CreateInstanceWizardDialog_NameBox" x:Name="InstanceName" Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}"
-                             PlaceholderText="会以此标识该实例" />
+                             PlaceholderText="" />
                     <TextBlock>
-                        <Run x:Uid="CreateInstanceWizardDialog_VersionLabel" Text="游戏版本: " />
+                        <Run x:Uid="CreateInstanceWizardDialog_VersionLabel"  />
                         <Run Text="{x:Bind ViewModel.SelectedVersion.Id,Mode=OneWay}" />
                     </TextBlock>
-                    <AutoSuggestBox x:Uid="CreateInstanceWizardDialog_VersionBox" x:Name="VersionBox" PlaceholderText="键入以搜索" TextMemberPath="Id"
+                    <AutoSuggestBox x:Uid="CreateInstanceWizardDialog_VersionBox" x:Name="VersionBox" PlaceholderText="" TextMemberPath="Id"
                                     TextChanged="VersionBox_TextChanged"
                                     SuggestionChosen="VersionBox_SuggestionChosen">
                         <AutoSuggestBox.ItemTemplate>
@@ -67,12 +67,12 @@
                             </DataTemplate>
                         </AutoSuggestBox.ItemTemplate>
                     </AutoSuggestBox>
-                    <TextBlock x:Uid="CreateInstanceWizardDialog_AuthorLabel" Text="作者" />
-                    <TextBox x:Uid="CreateInstanceWizardDialog_AuthorBox" PlaceholderText="空字符串也可以是作者名..." />
-                    <Expander x:Uid="CreateInstanceWizardDialog_Optional_Header" Header="高级" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <TextBlock x:Uid="CreateInstanceWizardDialog_AuthorLabel"  />
+                    <TextBox x:Uid="CreateInstanceWizardDialog_AuthorBox" PlaceholderText="" />
+                    <Expander x:Uid="CreateInstanceWizardDialog_Optional_Header"  HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
                         <StackPanel Spacing="12">
-                            <TextBlock x:Uid="CreateInstanceWizardDialog_Optional_VersionLabel" Text="实例版本" />
-                            <TextBox x:Uid="CreateInstanceWizardDialog_Optional_VersionBox" Text="{x:Bind ViewModel.Version,Mode=TwoWay}" PlaceholderText="当作为整合包发布时使用" />
+                            <TextBlock x:Uid="CreateInstanceWizardDialog_Optional_VersionLabel"  />
+                            <TextBox x:Uid="CreateInstanceWizardDialog_Optional_VersionBox" Text="{x:Bind ViewModel.Version,Mode=TwoWay}" PlaceholderText="" />
                         </StackPanel>
                     </Expander>
                 </StackPanel>
@@ -83,9 +83,9 @@
         <StackPanel>
             <TextBlock Text="{x:Bind ErrorMessage,Mode=OneWay}" Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
-                <Button x:Uid="CreateInstanceWizardDialog_FinishButton" x:Name="AddButton" Content="添加" IsEnabled="{x:Bind IsOperable,Mode=OneWay}"
+                <Button x:Uid="CreateInstanceWizardDialog_FinishButton" x:Name="AddButton"  IsEnabled="{x:Bind IsOperable,Mode=OneWay}"
                         Style="{ThemeResource AccentButtonStyle}" Click="AddButton_Click" />
-                <Button x:Uid="CreateInstanceWizardDialog_CancelButton" x:Name="CloseButton" Content="取消" Click="CloseButton_OnClick" />
+                <Button x:Uid="CreateInstanceWizardDialog_CancelButton" x:Name="CloseButton"  Click="CloseButton_OnClick" />
             </StackPanel>
         </StackPanel>
     </controls:CustomDialog.OperationContent>

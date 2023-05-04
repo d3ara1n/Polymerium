@@ -5,6 +5,9 @@ using System;
 using Windows.Graphics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.Extensions.DependencyInjection;
+using Polymerium.App.Services;
+using Polymerium.App.Configurations;
 
 namespace Polymerium.App.Views;
 
@@ -12,6 +15,11 @@ public sealed partial class MainWindow : Window
 {
     public MainWindow()
     {
+        var settings = App.Current.Provider.GetRequiredService<AppSettings>();
+        var localization = App.Current.Provider.GetRequiredService<LocalizationService>();
+        var languageKey = settings.LanguageKey;
+        localization.SetLanguageByKey(languageKey);
+
         InitializeComponent();
 
         Title = "Polymerium";
