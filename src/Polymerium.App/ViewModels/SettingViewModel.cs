@@ -43,7 +43,7 @@ public class SettingViewModel : ObservableObject
 
     private bool forceImportOffline;
     private bool isSuperPowerActivated;
-    private SettingLanguageItemModel selectedLanguage;
+    private SettingLanguageItemModel selectedLanguage = null!;
 
     public SettingViewModel(
         ConfigurationManager configurationManager,
@@ -84,6 +84,7 @@ public class SettingViewModel : ObservableObject
         {
             SetProperty(ref selectedLanguage, value);
             _settings.LanguageKey = value.Key;
+            _localizationService.SetLanguageByKey(value.Key);
         }
     }
 

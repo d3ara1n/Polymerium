@@ -15,11 +15,6 @@ public sealed partial class MainWindow : Window
 {
     public MainWindow()
     {
-        var settings = App.Current.Provider.GetRequiredService<AppSettings>();
-        var localization = App.Current.Provider.GetRequiredService<LocalizationService>();
-        var languageKey = settings.LanguageKey;
-        localization.SetLanguageByKey(languageKey);
-
         InitializeComponent();
 
         Title = "Polymerium";
