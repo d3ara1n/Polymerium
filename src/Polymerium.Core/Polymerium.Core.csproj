@@ -25,6 +25,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\submodules\Duffet\src\Duffet\Duffet.csproj" />
+        <ProjectReference Include="..\..\submodules\FluentPipeline\src\FluentPipeline\FluentPipeline.csproj" />
         <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj" />
         <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj" />
     </ItemGroup>

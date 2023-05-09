@@ -133,7 +133,7 @@ a little bit of personal flavor。
     * [x] Microsoft 账号登录
         * [x] 开始游戏前验证账号有效性或刷新
 * [x] 还原引擎
-    * [x] 基于 Stage 模型
+    * [ ] 基于 Pipeline 模型
     * [x] 组件安装
         * [x] 香草
         * [x] Forge

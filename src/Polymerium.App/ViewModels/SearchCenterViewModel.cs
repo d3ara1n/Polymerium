@@ -130,6 +130,7 @@ public class SearchCenterViewModel : ObservableObject
                     x.Author,
                     x.Downloads,
                     x.Summary,
+                    x.Tags,
                     x.CreatedAt,
                     x.UpdatedAt,
                     type,

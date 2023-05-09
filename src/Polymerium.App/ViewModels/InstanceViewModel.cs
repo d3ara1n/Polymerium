@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI;
 using Humanizer;
+using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
@@ -194,7 +195,7 @@ public class InstanceViewModel : ObservableObject
 
     public void GotoConfigurationView()
     {
-        _navigationService.Navigate<InstanceConfigurationView>();
+        _navigationService.Navigate<InstanceConfigurationView>(new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
     }
 
     public void LoadAssets()

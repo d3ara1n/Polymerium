@@ -7,6 +7,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.UI.Xaml.Media.Animation;
 using Newtonsoft.Json.Linq;
 using Polymerium.App.Models;
 using Polymerium.App.Services;

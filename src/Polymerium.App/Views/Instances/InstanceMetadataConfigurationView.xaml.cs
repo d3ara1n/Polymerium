@@ -163,7 +163,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
 
     private void AddAttachmentHandler(InstanceAttachmentItemModel? model)
     {
-        DispatcherQueue.TryEnqueue(() =>
+        DispatcherQueue?.TryEnqueue(() =>
         {
             if (model != null)
             {

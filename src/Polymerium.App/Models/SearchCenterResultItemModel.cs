@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Resources;
 
@@ -12,6 +13,7 @@ public class SearchCenterResultItemModel
         string author,
         long downloads,
         string summary,
+        IEnumerable<string> tags,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt,
         ResourceType type,
@@ -23,6 +25,7 @@ public class SearchCenterResultItemModel
         Author = author;
         Downloads = downloads;
         Summary = summary;
+        Tags = tags;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
         Type = type;
@@ -34,6 +37,7 @@ public class SearchCenterResultItemModel
     public string Author { get; set; }
     public long Downloads { get; set; }
     public string Summary { get; set; }
+    public IEnumerable<string> Tags { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
     public ResourceType Type { get; set; }
