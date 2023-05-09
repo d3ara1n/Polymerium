@@ -120,7 +120,11 @@
                 </Style>
             </NavigationView.MenuItemContainerStyle>
         </NavigationView>
-        <Frame x:Name="RootFrame" Grid.Row="1" Grid.Column="1" />
+        <Frame x:Name="RootFrame" Grid.Row="1" Grid.Column="1" >
+            <Frame.Transitions>
+                <NavigationThemeTransition/>
+            </Frame.Transitions>
+        </Frame>
         <!-- WinUI 的对话框没有自定义选项，这里引入 WPF 的 in-app 对话框风格 -->
         <ContentPresenter x:Name="TopOverlay" Grid.RowSpan="9" Grid.ColumnSpan="9"
                           Content="{x:Bind ViewModel.Overlay, Mode=OneWay}" />

@@ -54,6 +54,7 @@ public class CurseForgeRepository : IResourceRepository
                     Summary = x.Summary,
                     Downloads = x.DownloadCount,
                     Type = type,
+                    Tags = x.Categories.Select(x => x.Name),
                     CreatedAt = x.DateCreated,
                     UpdatedAt = x.DateModified,
                     Description = new Lazy<string>(() =>
@@ -68,43 +69,5 @@ public class CurseForgeRepository : IResourceRepository
                     )
                 }
         );
-    }
-
-    public async Task<RepositoryAssetMeta?> GetModAsync(
-        string id,
-        CancellationToken token = default
-    )
-    {
-        if (uint.TryParse(id, out var projectId))
-        {
-            var project = await CurseForgeHelper.GetModInfoAsync(projectId, _cache, token);
-            if (project.HasValue)
-            {
-                var result = new RepositoryAssetMeta
-                {
-                    Repository = RepositoryLabel.CurseForge,
-                    Id = id,
-                    Name = project.Value.Name,
-                    Author = string.Join(", ", project.Value.Authors.Select(x => x.Name)),
-                    Summary = project.Value.Summary,
-                    IconSource = project.Value.Logo?.ThumbnailUrl,
-                    Type = ResourceType.Mod,
-                    Downloads = project.Value.DownloadCount,
-                    Description = new Lazy<string>(() =>
-                    {
-                        var description = CurseForgeHelper
-                            .GetModDescriptionAsync(project.Value.Id, _cache, token)
-                            .Result;
-                        return description ?? string.Empty;
-                    }),
-                    Screenshots = new Lazy<IEnumerable<(string, Uri)>>(
-                        project.Value.Screenshots.Select(x => (x.Title, x.Url))
-                    )
-                };
-                return result;
-            }
-        }
-
-        return null;
     }
 }

@@ -51,6 +51,7 @@
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\submodules\FluentPipeline\src\FluentPipeline\FluentPipeline.csproj" />
     <ProjectReference Include="..\..\submodules\Wupoo\src\Wupoo\Wupoo.csproj" />
     <ProjectReference Include="..\Polymerium.Abstractions\Polymerium.Abstractions.csproj" />
     <ProjectReference Include="..\Polymerium.Core\Polymerium.Core.csproj" />

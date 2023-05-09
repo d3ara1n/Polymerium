@@ -60,6 +60,7 @@ public class ModrinthRepository : IResourceRepository
                     Downloads = x.Downloads,
                     CreatedAt = x.DateCreated,
                     UpdatedAt = x.DateModified,
+                    Tags = x.Categories,
                     Type = type,
                     Description = new Lazy<string>(() =>
                     {
@@ -75,34 +76,5 @@ public class ModrinthRepository : IResourceRepository
                     )
                 }
         );
-    }
-
-    public async Task<RepositoryAssetMeta?> GetModAsync(
-        string id,
-        CancellationToken token = default
-    )
-    {
-        var project = await ModrinthHelper.GetProjectAsync(id, _cache, token);
-        if (project.HasValue)
-        {
-            var result = new RepositoryAssetMeta
-            {
-                Repository = RepositoryLabel.Modrinth,
-                Id = id,
-                Name = project.Value.Title,
-                Author = project.Value.Team,
-                IconSource = project.Value.IconUrl,
-                Downloads = project.Value.Downloads,
-                Summary = project.Value.Description,
-                Type = ResourceType.Mod,
-                Screenshots = new Lazy<IEnumerable<(string, Uri)>>(
-                    project.Value.Gallery.Select(x => (x.Title, x.Url))
-                ),
-                Description = new Lazy<string>(project.Value.Body)
-            };
-            return result;
-        }
-
-        return null;
     }
 }

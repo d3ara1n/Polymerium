@@ -19,6 +19,4 @@ public interface IResourceRepository
         uint limit = 10,
         CancellationToken token = default
     );
-
-    Task<RepositoryAssetMeta?> GetModAsync(string id, CancellationToken token = default);
 }

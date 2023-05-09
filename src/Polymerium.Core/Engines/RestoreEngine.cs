@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using DotNext;
+using FluentPipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.Models;
 using Polymerium.Core.Components;
+using Polymerium.Core.Engines.Restoring;
 using Polymerium.Core.Engines.Restoring.Stages;
 using Polymerium.Core.Managers;
 using Polymerium.Core.StageModels;
@@ -58,5 +62,42 @@ public class RestoreEngine
             _scope.ServiceProvider,
             _assetManager
         );
+    }
+
+    public Pipeline<RestoreError, GameInstance> ProducePipeline()
+    {
+        return PipelineBuilder<RestoreError, GameInstance>
+            .Create(BuildPolylockData)
+            .Produces(x => (RestoreContext)x)
+            .Then<RestoreContext>(CompleteAssets)
+            .Produces(x => (RestoreContext)x)
+            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+            .Then<RestoreContext>(CompleteLibraries)
+            .Produces(x => (RestoreContext)x)
+            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+            .Then<RestoreContext>(CompleteAttachments)
+            .Produces(x => (RestoreContext)x)
+            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+            .Setup().Build();
+    }
+
+    private Result<object?, RestoreError> BuildPolylockData(GameInstance instance)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Result<object?, RestoreError> CompleteAssets(GameInstance instance, RestoreContext polylock)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Result<object?, RestoreError> CompleteLibraries(GameInstance instance, RestoreContext polylock)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Result<object?, RestoreError> CompleteAttachments(GameInstance instance, RestoreContext polylock)
+    {
+        throw new NotImplementedException();
     }
 }

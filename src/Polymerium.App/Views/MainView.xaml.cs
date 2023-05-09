@@ -47,8 +47,9 @@ public sealed partial class MainView : Page
         RootFrame.GoBack();
     }
 
-    private void Navigate(Type view, object? parameter)
+    private void Navigate(Type view, object? parameter, NavigationTransitionInfo? transitionInfo)
     {
+        transitionInfo ??= new SuppressNavigationTransitionInfo();
         if (view == typeof(InstanceView) && parameter is string instanceId)
         {
             if (
@@ -73,7 +74,7 @@ public sealed partial class MainView : Page
             )
                 MainNavigationBar.SelectedItem = pinned;
             else
-                RootFrame.Navigate(view, parameter, new SuppressNavigationTransitionInfo());
+                RootFrame.Navigate(view, parameter, transitionInfo);
         }
     }
 

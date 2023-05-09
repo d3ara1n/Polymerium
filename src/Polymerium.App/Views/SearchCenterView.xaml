@@ -13,15 +13,16 @@
     mc:Ignorable="d">
 
     <Grid RowDefinitions="Auto,*">
-        <Grid.Transitions>
-            <EntranceThemeTransition />
-        </Grid.Transitions>
         <ContentControl Margin="5,0,10,5" HorizontalContentAlignment="Stretch"
                         IsEnabled="{x:Bind IsDataLoading,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
             <StackPanel Spacing="10">
                 <TextBlock x:Uid="SearchCenterView_Header"  Style="{StaticResource TitleTextBlockStyle}" />
-                <AutoSuggestBox x:Uid="SearchCenterView_SearchBox" x:Name="SearchBox" PlaceholderText="" QueryIcon="Find"
+                <StackPanel>
+                    <AutoSuggestBox x:Uid="SearchCenterView_SearchBox" x:Name="SearchBox" PlaceholderText="" QueryIcon="Find"
                                 QuerySubmitted="SearchBox_OnQuerySubmitted"/>
+                    <ProgressBar IsIndeterminate="True"
+                             Visibility="{x:Bind IsDataLoading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                </StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <TextBlock x:Uid="SearchCenterView_RepositoryLabel"  VerticalAlignment="Center" />
                     <ComboBox x:Name="RepositoryBox"
@@ -46,8 +47,6 @@
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <ProgressBar IsIndeterminate="True"
-                             Visibility="{x:Bind IsDataLoading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
             </StackPanel>
         </ContentControl>
         <Grid Grid.Row="1">
@@ -65,25 +64,21 @@
                                                 PlaceholderStretch="Fill"
                                                 PlaceholderSource="ms-appx:///Assets/Placeholders/default_dirt.png"
                                                 IsCacheEnabled="True" CacheMode="BitmapCache" />
-                                    <Grid Grid.Column="1" ColumnDefinitions="*,Auto">
-                                        <Grid RowDefinitions="Auto,*">
-                                            <TextBlock Text="{x:Bind Caption}"
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{x:Bind Caption}"
                                                        Style="{StaticResource SubtitleTextBlockStyle}" />
-                                            <TextBlock Text="{x:Bind Summary}" Grid.Row="1" MaxLines="2"
-                                                       TextWrapping="WrapWholeWords" />
-                                        </Grid>
-                                        <StackPanel Grid.Column="1" >
-                                            <!-- category icons -->
+                                        <TextBlock Text="{x:Bind Summary}" Grid.Row="1" TextWrapping="WrapWholeWords" MaxLines="2"/>
+                                    </StackPanel>
+                                    <Grid Grid.Row="2" Grid.ColumnSpan="9">
+                                        <StackPanel Orientation="Horizontal" Spacing="5">
+                                            <FontIcon Glyph="&#xE118;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                            <TextBlock Text="{x:Bind Downloads,Converter={StaticResource NumberToHumanStringConverter}}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                            <FontIcon Glyph="&#xECC5;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                            <TextBlock Text="{x:Bind UpdatedAt,Converter={StaticResource DateTimeOffsetToHumanStringConverter}}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                            <FontIcon Glyph="&#xE13D;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                            <TextBlock Text="{x:Bind Author}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                                         </StackPanel>
                                     </Grid>
-                                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="9" Spacing="5">
-                                        <FontIcon Glyph="&#xE118;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
-                                        <TextBlock Text="{x:Bind Downloads}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
-                                        <FontIcon Glyph="&#xECC5;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
-                                        <TextBlock Text="{x:Bind UpdatedAt,Converter={StaticResource DateTimeOffsetToHumanStringConverter}}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
-                                        <FontIcon Glyph="&#xE13D;" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
-                                        <TextBlock Text="{x:Bind Author}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
-                                    </StackPanel>
                                 </Grid>
                             </Button>
                         </Grid>

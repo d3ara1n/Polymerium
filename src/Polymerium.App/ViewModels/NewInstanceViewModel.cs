@@ -2,6 +2,7 @@ using System.IO;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 
@@ -30,7 +31,7 @@ public class NewInstanceViewModel : ObservableObject
 
     public void GotoSearchPage()
     {
-        _navigationService.Navigate<SearchCenterView>();
+        _navigationService.Navigate<SearchCenterView>(new SlideNavigationTransitionInfo(){ Effect = SlideNavigationTransitionEffect.FromRight});
     }
 
     public void ArchiveAccepted(string fileName)

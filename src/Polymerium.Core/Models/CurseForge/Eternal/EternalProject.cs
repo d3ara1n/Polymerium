@@ -15,7 +15,7 @@ public struct EternalProject
     public uint DownloadCount { get; set; }
     public bool IsFeatured { get; set; }
     public uint PrimaryCategoryId { get; set; }
-    public object Categories { get; set; }
+    public IEnumerable<EternalProjectCategory> Categories { get; set; }
     public uint ClassId { get; set; }
     public IEnumerable<EternalProjectAuthor> Authors { get; set; }
     public EternalProjectLogo? Logo { get; set; }
