@@ -9,6 +9,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DotNext;
+using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
@@ -258,7 +259,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     private void GotoSearchCenter()
     {
-        _navigationService.Navigate<SearchCenterView>();
+        _navigationService.Navigate<SearchCenterView>(new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
     }
 
     private void AddComponent()
