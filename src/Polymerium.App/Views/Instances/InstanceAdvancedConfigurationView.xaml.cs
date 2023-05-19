@@ -23,14 +23,14 @@ public sealed partial class InstanceAdvancedConfigurationView : Page
         var dialog = new ConfirmationDialog
         {
             XamlRoot = XamlRoot,
-            Title = "Really?",
-            Text = "这一操作不可撤销"
+            Title = ViewModel.Localization.GetString("InstanceAdvancedConfigurationView_Confirm_Title"),
+            Text = ViewModel.Localization.GetString("InstanceAdvancedConfigurationView_Confirm_Text")
         };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             if (ViewModel.DeleteInstance())
-                ViewModel.PopNotification("删除完成", "实例文件和其本地对象已被清空");
+                ViewModel.PopNotification(ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Caption"), ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Success_Message"));
             else
-                ViewModel.PopNotification("删除失败", "意料之外的文件系统错误", InfoBarSeverity.Error);
+                ViewModel.PopNotification(ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Caption"), ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Failure_Message"), InfoBarSeverity.Error);
     }
 
     private async void ResetInstanceButton_Click(object sender, RoutedEventArgs e)
@@ -38,23 +38,23 @@ public sealed partial class InstanceAdvancedConfigurationView : Page
         var dialog = new ConfirmationDialog
         {
             XamlRoot = XamlRoot,
-            Title = "Really?",
-            Text = "这一操作不可撤销"
+            Title = ViewModel.Localization.GetString("InstanceAdvancedConfigurationView_Confirm_Title"),
+            Text = ViewModel.Localization.GetString("InstanceAdvancedConfigurationView_Confirm_Text")
         };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             if (ViewModel.ResetInstance())
-                ViewModel.PopNotification("重置完成", "实例文件已被清空");
+                ViewModel.PopNotification(ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Caption"), ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Success_Message"));
             else
-                ViewModel.PopNotification("重置失败", "意料之外的文件系统错误", InfoBarSeverity.Error);
+                ViewModel.PopNotification(ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Caption"), ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Failure_Message"), InfoBarSeverity.Error);
     }
 
     private async void RenameButton_Click(object sender, RoutedEventArgs e)
     {
         var instance = ViewModel.Context.AssociatedInstance;
         var dialog = new TextInputDialog();
-        dialog.Title = "重命名";
+        dialog.Title = ViewModel.Localization.GetString("InstanceAdvancedConfigurationView_Rename_Title");
         dialog.InputTextPlaceholder = instance!.Name;
-        dialog.Description = "这会同样会作用于实例所在目录";
+        dialog.Description = ViewModel.Localization.GetString("InstanceAdvancedConfigurationView_Rename_Description");
         dialog.XamlRoot = App.Current.Window.Content.XamlRoot;
         if (await dialog.ShowAsync() == ContentDialogResult.Primary)
         {
@@ -64,7 +64,7 @@ public sealed partial class InstanceAdvancedConfigurationView : Page
                 var errorDialog = new MessageDialog
                 {
                     XamlRoot = App.Current.Window.Content.XamlRoot,
-                    Title = "重命名失败",
+                    Title = ViewModel.Localization.GetString("InstanceAdvancedConfigurationView_Rename_Title"),
                     Message = result.Value.ToString()
                 };
                 await errorDialog.ShowAsync();

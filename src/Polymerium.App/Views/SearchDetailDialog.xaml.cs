@@ -172,7 +172,7 @@ public sealed partial class SearchDetailDialog : CustomDialog
                 if (progressPercent.HasValue)
                 {
                     Progress.IsIndeterminate = false;
-                    Progress.Value = progressPercent.Value * 100;
+                    Progress.Value = progressPercent.Value;
                 }
                 else
                 {

@@ -50,6 +50,7 @@ public class RestoreEngine
         _wapooOptions = new WapooOptions { JsonSerializerOptions = settings };
     }
 
+    [Obsolete]
     public StageBase ProduceStage(GameInstance instance, IEnumerable<ComponentMeta> metas)
     {
         return new CheckAvailabilityStage(
@@ -68,16 +69,16 @@ public class RestoreEngine
     {
         return PipelineBuilder<RestoreError, GameInstance>
             .Create(BuildPolylockData)
-            .Produces(x => (RestoreContext)x)
+                .Produces(x => (RestoreContext)x)
             .Then<RestoreContext>(CompleteAssets)
-            .Produces(x => (RestoreContext)x)
-            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+                .Produces(x => (RestoreContext)x)
+                .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
             .Then<RestoreContext>(CompleteLibraries)
-            .Produces(x => (RestoreContext)x)
-            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+                .Produces(x => (RestoreContext)x)
+                .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
             .Then<RestoreContext>(CompleteAttachments)
-            .Produces(x => (RestoreContext)x)
-            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+                .Produces(x => (RestoreContext)x)
+                .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
             .Setup().Build();
     }
 
