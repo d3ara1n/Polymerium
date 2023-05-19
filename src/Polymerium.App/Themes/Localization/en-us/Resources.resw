@@ -213,6 +213,12 @@
   <data name="ImportModpackWizardDialog_VersionLabel.Text" xml:space="preserve">
     <value>Version</value>
   </data>
+  <data name="InstanceAdvancedConfigurationView_Confirm_Text" xml:space="preserve">
+    <value>This operation is irreversible</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Confirm_Title" xml:space="preserve">
+    <value>Really?</value>
+  </data>
   <data name="InstanceAdvancedConfigurationView_Danger_DeleteButton.Content" xml:space="preserve">
     <value>Do the dangerous ACTION!</value>
   </data>
@@ -248,6 +254,39 @@
   </data>
   <data name="InstanceAdvancedConfigurationView_Label0.Text" xml:space="preserve">
     <value>(: a smiling face</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Rename_Description" xml:space="preserve">
+    <value>This also affects the directory name</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Rename_Title" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Delete_Caption" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Delete_Failure_Message" xml:space="preserve">
+    <value>Unknown error occurred</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Delete_Success_Message" xml:space="preserve">
+    <value>Files have been removed</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Reset_Caption" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Reset_Failure_Message" xml:space="preserve">
+    <value>Unknown error occurred</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Reset_Success_Message" xml:space="preserve">
+    <value>Files have been removed</value>
+  </data>
+  <data name="InstanceConfigurationView_Advanced_Label" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="InstanceConfigurationView_Launch_Label" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="InstanceConfigurationView_Metadata_Label" xml:space="preserve">
+    <value>Metadata</value>
   </data>
   <data name="InstanceLaunchConfigurationView_AutoSelectJava_Header.Text" xml:space="preserve">
     <value>Auto-select Java</value>
@@ -581,6 +620,9 @@
   </data>
   <data name="SearchDetailViewModel_InstallModpack_Failure_Caption" xml:space="preserve">
     <value>Failed to install modpack</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallModpack_Failure_Message" xml:space="preserve">
+    <value>Exception thrown: {0}</value>
   </data>
   <data name="SearchDetailViewModel_InstallModpack_Success_Caption" xml:space="preserve">
     <value>Install modpack successfully</value>

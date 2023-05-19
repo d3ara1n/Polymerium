@@ -766,6 +766,62 @@
           <source>Width</source>
           <target state="translated">宽</target>
         </trans-unit>
+        <trans-unit id="InstanceConfigurationView_Advanced_Label" translate="yes" xml:space="preserve">
+          <source>Advanced</source>
+          <target state="translated">高级</target>
+        </trans-unit>
+        <trans-unit id="InstanceConfigurationView_Launch_Label" translate="yes" xml:space="preserve">
+          <source>Parameters</source>
+          <target state="translated">启动参数</target>
+        </trans-unit>
+        <trans-unit id="InstanceConfigurationView_Metadata_Label" translate="yes" xml:space="preserve">
+          <source>Metadata</source>
+          <target state="translated">元数据</target>
+        </trans-unit>
+        <trans-unit id="SearchDetailViewModel_InstallModpack_Failure_Message" translate="yes" xml:space="preserve">
+          <source>Exception thrown: {0}</source>
+          <target state="translated">意外发生: {0}</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurationView_Confirm_Text" translate="yes" xml:space="preserve">
+          <source>This operation is irreversible</source>
+          <target state="translated">该操作是不可逆的</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurationView_Confirm_Title" translate="yes" xml:space="preserve">
+          <source>Really?</source>
+          <target state="new">Really?</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurationView_Rename_Description" translate="yes" xml:space="preserve">
+          <source>This also affects the directory name</source>
+          <target state="translated">这也会影响实例所在目录</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurationView_Rename_Title" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="translated">重命名</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurtationView_Delete_Failure_Message" translate="yes" xml:space="preserve">
+          <source>Unknown error occurred</source>
+          <target state="translated">意料之外的文件系统异常</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurtationView_Delete_Success_Message" translate="yes" xml:space="preserve">
+          <source>Files have been removed</source>
+          <target state="translated">实例文件和本地已被移除</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurtationView_Reset_Failure_Message" translate="yes" xml:space="preserve">
+          <source>Unknown error occurred</source>
+          <target state="translated">意料之外的文件系统异常</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurtationView_Reset_Success_Message" translate="yes" xml:space="preserve">
+          <source>Files have been removed</source>
+          <target state="translated">实例文件已被移除</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurtationView_Delete_Caption" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">失败</target>
+        </trans-unit>
+        <trans-unit id="InstanceAdvancedConfigurtationView_Reset_Caption" translate="yes" xml:space="preserve">
+          <source>Reset</source>
+          <target state="translated">重置</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -204,63 +204,75 @@ public class SearchDetailViewModel : ObservableObject
         if (resolveResult.IsSuccessful && resolveResult.Value.Resource is File file)
         {
             report(0, false);
-            var tmpFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-            if (!Directory.Exists(Path.GetDirectoryName(tmpFile)))
-                Directory.CreateDirectory(Path.GetDirectoryName(tmpFile)!);
-            using var client = new HttpClient();
-            var response = await client.GetAsync(file.Source, token);
-            ulong? totalSize = null;
-            if (
-                response.Content.Headers.ContentLength.HasValue
-                && response.Content.Headers.ContentLength.Value > 0
-            )
-                totalSize = (ulong)response.Content.Headers.ContentLength.Value;
-            using var stream = await response.Content.ReadAsStreamAsync(token);
-            var writer = new FileStream(tmpFile, FileMode.Create, FileAccess.Write);
-            var buffer = new byte[4096];
-            var read = 0;
-            var totalRead = 0ul;
-            var reportCount = 0u;
-            do
+            try
             {
-                read = await stream.ReadAsync(buffer, token);
-                if (read != 0)
+                var tmpFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                if (!Directory.Exists(Path.GetDirectoryName(tmpFile)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(tmpFile)!);
+                using var client = new HttpClient();
+                var response = await client.GetAsync(file.Source, token);
+                ulong? totalSize = null;
+                if (
+                    response.Content.Headers.ContentLength.HasValue
+                    && response.Content.Headers.ContentLength.Value > 0
+                )
+                    totalSize = (ulong)response.Content.Headers.ContentLength.Value;
+                using var stream = await response.Content.ReadAsStreamAsync(token);
+                var writer = new FileStream(tmpFile, FileMode.Create, FileAccess.Write);
+                var buffer = new byte[4096];
+                var read = 0;
+                var totalRead = 0ul;
+                ulong? lastReport = 0ul;
+                do
                 {
-                    await writer.WriteAsync(buffer, 0, read);
-                    totalRead += (ulong)read;
-                    if (reportCount++ % 100 == 0)
-                        report(totalSize.HasValue ? (double)totalRead / totalSize : null, false);
-                }
-            } while (read != 0);
+                    read = await stream.ReadAsync(buffer, token);
+                    if (read != 0)
+                    {
+                        await writer.WriteAsync(buffer, 0, read);
+                        totalRead += (ulong)read;
+                        var progress = totalSize.HasValue ? totalRead * 100 / totalSize : null;
+                        if (progress != lastReport)
+                        {
+                            report(progress, false);
+                            lastReport = progress;
+                        }
+                    }
+                } while (read != 0);
 
-            report(null, false);
-            writer.Close();
-            var importResult = await _importer.ExtractMetadataFromFileAsync(
+                report(null, false);
+                writer.Close();
+                var importResult = await _importer.ExtractMetadataFromFileAsync(
                 tmpFile,
                 url,
                 _settings.ForceImportOffline,
                 token
             );
-            if (importResult.IsSuccessful)
-            {
-                var postError = await _importer.SolidifyAsync(importResult.Value, null);
-                if (postError.HasValue)
-                    EndedError(_localizationService.GetString("SearchDetailViewModel_SolidifyModpack_Failure_Message").Replace("{0}", postError.ToString()));
+                if (importResult.IsSuccessful)
+                {
+                    var postError = await _importer.SolidifyAsync(importResult.Value, null);
+                    if (postError.HasValue)
+                        EndedError(_localizationService.GetString("SearchDetailViewModel_SolidifyModpack_Failure_Message").Replace("{0}", postError.ToString()));
+                    else
+                        EndedSuccess(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Success_Message").Replace("{0}", importResult.Value.Content.Name));
+                }
                 else
-                    EndedSuccess(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Success_Message").Replace("{0}", importResult.Value.Content.Name));
-            }
-            else
-            {
-                EndedError(_localizationService.GetString("SearchDetailViewModel_ImportModpack_Failure_Message").Replace("{0}", importResult.Error.ToString()));
-            }
+                {
+                    EndedError(_localizationService.GetString("SearchDetailViewModel_ImportModpack_Failure_Message").Replace("{0}", importResult.Error.ToString()));
+                }
 
-            report(null, true);
+            }
+            catch (Exception e)
+            {
+                EndedError(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Failure_Message").Replace("{0}", e.Message));
+            }
         }
         else
         {
-            report(null, true);
             EndedError(_localizationService.GetString("SearchDetailViewModel_ResolveModpack_Failure_Message").Replace("{0}", resolveResult.Error.ToString()));
         }
+
+
+        report(null, true);
     }
 
     private void EndedError(string message)

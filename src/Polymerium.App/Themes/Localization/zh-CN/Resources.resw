@@ -564,4 +564,43 @@
   <data name="SettingView_GameGlobal_WindowSize_WidthLabel.Text" xml:space="preserve">
     <value>宽</value>
   </data>
+  <data name="InstanceConfigurationView_Advanced_Label" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="InstanceConfigurationView_Launch_Label" xml:space="preserve">
+    <value>启动参数</value>
+  </data>
+  <data name="InstanceConfigurationView_Metadata_Label" xml:space="preserve">
+    <value>元数据</value>
+  </data>
+  <data name="SearchDetailViewModel_InstallModpack_Failure_Message" xml:space="preserve">
+    <value>意外发生: {0}</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Confirm_Text" xml:space="preserve">
+    <value>该操作是不可逆的</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Rename_Description" xml:space="preserve">
+    <value>这也会影响实例所在目录</value>
+  </data>
+  <data name="InstanceAdvancedConfigurationView_Rename_Title" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Delete_Failure_Message" xml:space="preserve">
+    <value>意料之外的文件系统异常</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Delete_Success_Message" xml:space="preserve">
+    <value>实例文件和本地已被移除</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Reset_Failure_Message" xml:space="preserve">
+    <value>意料之外的文件系统异常</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Reset_Success_Message" xml:space="preserve">
+    <value>实例文件已被移除</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Delete_Caption" xml:space="preserve">
+    <value>失败</value>
+  </data>
+  <data name="InstanceAdvancedConfigurtationView_Reset_Caption" xml:space="preserve">
+    <value>重置</value>
+  </data>
 </root>

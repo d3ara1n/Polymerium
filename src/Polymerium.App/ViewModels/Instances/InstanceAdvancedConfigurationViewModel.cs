@@ -23,10 +23,12 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
         IFileBaseService fileBase,
         ConfigurationManager configurationManager,
         INotificationService notification,
+        LocalizationService localizationService,
         ILogger<InstanceAdvancedConfigurationViewModel> logger
     )
     {
         Context = context;
+        Localization = localizationService;
         _instanceManager = instanceManager;
         _fileBase = fileBase;
         _logger = logger;
@@ -35,6 +37,8 @@ public class InstanceAdvancedConfigurationViewModel : ObservableObject
     }
 
     public ViewModelContext Context { get; }
+
+    public LocalizationService Localization { get; }
 
     // NOTE: 重置对于已解锁的实例只会删除目录，但对于具有 ReferenceSource 的实例，会重新导入元数据
 
