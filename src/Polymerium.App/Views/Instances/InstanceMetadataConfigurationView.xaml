@@ -23,8 +23,10 @@
                                Visibility="{x:Bind ViewModel.Instance.IsTagged,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
-                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <Button x:Uid="InstanceMetadataConfigurationView_Tag_UnlockButton" x:Name="UnlockButton"  HorizontalAlignment="Right"
+                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Header"
+                                   Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <Button x:Uid="InstanceMetadataConfigurationView_Tag_UnlockButton" x:Name="UnlockButton"
+                                HorizontalAlignment="Right"
                                 Click="UnlockButton_Click"
                                 Style="{StaticResource IconButtonStyle}"
                                 IsEnabled="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}" />
@@ -32,8 +34,9 @@
                 </controls:GroupBox.Header>
                 <Grid Margin="15">
                     <ProgressRing IsIndeterminate="True" VerticalAlignment="Center"
-                                              Visibility="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <StackPanel Spacing="8" Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
+                                  Visibility="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <StackPanel Spacing="8"
+                                Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
                         <Grid ColumnDefinitions="Auto,*">
                             <ui:ImageEx Width="64" Height="64"
                                         PlaceholderSource="ms-appx:///Assets/Placeholders/default_world_icon.png"
@@ -48,15 +51,22 @@
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
                                 <StackPanel Spacing="5" HorizontalAlignment="Right">
-                                    <Button x:Uid="InstanceMetadataConfigurationView_Tag_UpdateButton" x:Name="UpdateButton"  HorizontalAlignment="Right" Click="UpdateButton_Click" IsEnabled="{x:Bind SelectedModpackVersion.IsCurrent,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"/>
-                                    <ComboBox SelectedItem="{x:Bind SelectedModpackVersion,Mode=TwoWay}" ItemsSource="{x:Bind ModpackVersions}" HorizontalAlignment="Right">
+                                    <Button x:Uid="InstanceMetadataConfigurationView_Tag_UpdateButton"
+                                            x:Name="UpdateButton" HorizontalAlignment="Right"
+                                            Click="UpdateButton_Click"
+                                            IsEnabled="{x:Bind SelectedModpackVersion.IsCurrent,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}" />
+                                    <ComboBox SelectedItem="{x:Bind SelectedModpackVersion,Mode=TwoWay}"
+                                              ItemsSource="{x:Bind ModpackVersions}" HorizontalAlignment="Right">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate x:DataType="models:InstanceModpackReferenceVersionModel">
                                                 <Grid>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="{x:Bind DisplayName}"/>
-                                                        <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Visibility="{x:Bind IsCurrent,Converter={StaticResource BoolToVisibilityConverter}}">
-                                                            <Run x:Uid="InstanceMetadataConfigurationView_Tag_CurrentLabel" />
+                                                        <TextBlock Text="{x:Bind DisplayName}" />
+                                                        <TextBlock
+                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                            Visibility="{x:Bind IsCurrent,Converter={StaticResource BoolToVisibilityConverter}}">
+                                                            <Run
+                                                                x:Uid="InstanceMetadataConfigurationView_Tag_CurrentLabel" />
                                                         </TextBlock>
                                                     </StackPanel>
                                                 </Grid>
@@ -70,14 +80,17 @@
                             Text="{x:Bind ModpackReference.Summary,Mode=OneWay}"
                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                             TextWrapping="WrapWholeWords" />
-                        <InfoBar x:Uid="InstanceMetadataConfigurationView_Tag_InfoBar" IsOpen="True"   Severity="Warning"/>
+                        <InfoBar x:Uid="InstanceMetadataConfigurationView_Tag_InfoBar" IsOpen="True" Severity="Warning" />
                     </StackPanel>
-                    <Grid Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
-                        <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center" Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reversed}">
-                            <FontIcon Glyph="&#xF384;" FontSize="48" Margin="0,0,8,0"/>
+                    <Grid
+                        Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
+                        <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center"
+                              Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reversed}">
+                            <FontIcon Glyph="&#xF384;" FontSize="48" Margin="0,0,8,0" />
                             <StackPanel Grid.Column="1">
                                 <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Error_Header" />
-                                <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Error_Subheader"  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Error_Subheader"
+                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -86,15 +99,17 @@
             <controls:GroupBox>
                 <controls:GroupBox.Header>
                     <Grid>
-                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Componet_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <Button x:Uid="InstanceMetadataConfigurationView_Componet_AddButton" x:Name="AddComponentButton"  HorizontalAlignment="Right"
+                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Componet_Header"
+                                   Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <Button x:Uid="InstanceMetadataConfigurationView_Componet_AddButton"
+                                x:Name="AddComponentButton" HorizontalAlignment="Right"
                                 Style="{StaticResource IconButtonStyle}"
                                 IsEnabled="{x:Bind ViewModel.Instance.IsTagged,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
                                 Command="{x:Bind ViewModel.AddComponentCommand}" />
                     </Grid>
                 </controls:GroupBox.Header>
                 <StackPanel>
-                    <TextBlock x:Uid="InstanceMetadataConfigurationView_Componet_Label0" 
+                    <TextBlock x:Uid="InstanceMetadataConfigurationView_Componet_Label0"
                                TextWrapping="WrapWholeWords"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Margin="0,0,0,15" />
                     <ListView ItemsSource="{x:Bind ViewModel.Components}"
@@ -114,7 +129,8 @@
                                         </TextBlock>
                                     </StackPanel>
                                     <Grid Grid.Column="1">
-                                        <Button x:Uid="InstanceMetadataConfigurationView_Componet_RemoveButton" x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
+                                        <Button x:Uid="InstanceMetadataConfigurationView_Componet_RemoveButton"
+                                                x:Name="RemoveButton" Style="{StaticResource IconButtonStyle}"
                                                 Command="{x:Bind RemoveCommand}" CommandParameter="{x:Bind}"
                                                 IsEnabled="{x:Bind CanBeRemoved}"
                                                 ToolTipService.ToolTip="">
@@ -155,36 +171,46 @@
             <controls:GroupBox x:Name="AttachmentBox" Padding="0" Loaded="AttachmentBox_Loaded">
                 <controls:GroupBox.Header>
                     <Grid Margin="15">
-                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_Header"
+                                   Style="{StaticResource SubtitleTextBlockStyle}" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="5">
-                            <Button x:Uid="InstanceMetadataConfigurationView_Attachment_AddButton" x:Name="AddAttachmentButton" 
-                                    Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.GotoSearchCenterCommand}" />
+                            <Button x:Uid="InstanceMetadataConfigurationView_Attachment_AddButton"
+                                    x:Name="AddAttachmentButton"
+                                    Style="{StaticResource IconButtonStyle}"
+                                    Command="{x:Bind ViewModel.GotoSearchCenterCommand}" />
                         </StackPanel>
                     </Grid>
                 </controls:GroupBox.Header>
                 <ContentControl HorizontalContentAlignment="Stretch"
-                    IsEnabled="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                                IsEnabled="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
                     <StackPanel>
                         <ProgressBar IsIndeterminate="True"
                                      Visibility="{x:Bind IsAttachmentBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_Label0" 
+                        <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_Label0"
                                    TextWrapping="WrapWholeWords"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                    Margin="15,15,15,7" />
                         <Grid ColumnDefinitions="*,Auto" Margin="15,7,15,7">
-                            <AutoSuggestBox x:Uid="InstanceMetadataConfigurationView_Attachment_SearchBox" x:Name="AttachmentSearchBox" QueryIcon="Find" PlaceholderText=""
+                            <AutoSuggestBox x:Uid="InstanceMetadataConfigurationView_Attachment_SearchBox"
+                                            x:Name="AttachmentSearchBox" QueryIcon="Find" PlaceholderText=""
                                             TextChanged="AttachmentSearchBox_TextChanged" />
                             <Button Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
                                 <Button.Flyout>
                                     <Flyout>
                                         <Grid>
                                             <StackPanel>
-                                                <CheckBox x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ModBox"  IsChecked="{x:Bind IsModChecked,Mode=TwoWay}" />
-                                                <CheckBox x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ResourcePackBox" 
-                                                          IsChecked="{x:Bind IsResourcepackChecked,Mode=TwoWay}" />
-                                                <CheckBox x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ShaderPackBox" 
-                                                          IsChecked="{x:Bind IsShaderChecked,Mode=TwoWay}" />
-                                                <CheckBox x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_FileBox"  IsChecked="{x:Bind IsFileChecked,Mode=TwoWay}" />
+                                                <CheckBox
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ModBox"
+                                                    IsChecked="{x:Bind IsModChecked,Mode=TwoWay}" />
+                                                <CheckBox
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ResourcePackBox"
+                                                    IsChecked="{x:Bind IsResourcepackChecked,Mode=TwoWay}" />
+                                                <CheckBox
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_ShaderPackBox"
+                                                    IsChecked="{x:Bind IsShaderChecked,Mode=TwoWay}" />
+                                                <CheckBox
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_Filter_FileBox"
+                                                    IsChecked="{x:Bind IsFileChecked,Mode=TwoWay}" />
                                             </StackPanel>
                                         </Grid>
                                     </Flyout>
@@ -204,14 +230,16 @@
                                           ToolTipService.ToolTip="{x:Bind Summary}">
                                         <Grid.ContextFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem x:Uid="InstanceMetadataConfigurationView_Attachment_ExternalLink" 
-                                                                IsEnabled="{x:Bind Reference,Converter={StaticResource NotNullToBoolConverter}}"
-                                                                Command="{x:Bind OpenReferenceCommand}"
-                                                                CommandParameter="{x:Bind Reference}" />
-                                                <MenuFlyoutItem x:Uid="InstanceMetadataConfigurationView_Attachment_Remove" 
-                                                                IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
-                                                                Command="{x:Bind RemoveCommand}"
-                                                                CommandParameter="{x:Bind}" />
+                                                <MenuFlyoutItem
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_ExternalLink"
+                                                    IsEnabled="{x:Bind Reference,Converter={StaticResource NotNullToBoolConverter}}"
+                                                    Command="{x:Bind OpenReferenceCommand}"
+                                                    CommandParameter="{x:Bind Reference}" />
+                                                <MenuFlyoutItem
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_Remove"
+                                                    IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
+                                                    Command="{x:Bind RemoveCommand}"
+                                                    CommandParameter="{x:Bind}" />
                                             </MenuFlyout>
                                         </Grid.ContextFlyout>
                                         <ui:ImageEx Width="48" Height="48" Margin="0,0,10,0"
@@ -225,12 +253,14 @@
                                                 <TextBlock Text="{x:Bind Summary}" />
                                             </StackPanel>
                                             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                                <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_VersionLabel" 
-                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                <TextBlock
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_VersionLabel"
+                                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                                 <TextBlock Text="{x:Bind Version}"
                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                                <TextBlock x:Uid="InstanceMetadataConfigurationView_Attachment_AuthorLabel" 
-                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                <TextBlock
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_AuthorLabel"
+                                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                                 <TextBlock Text="{x:Bind Author}"
                                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                             </StackPanel>

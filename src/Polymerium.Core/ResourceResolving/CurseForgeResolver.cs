@@ -54,8 +54,9 @@ public class CurseForgeResolver : ResourceResolverBase
     public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(
         string projectId,
         string version
-    ) =>
-        await GetProjectAsync(
+    )
+    {
+        return await GetProjectAsync(
             ResourceType.Modpack,
             projectId,
             version,
@@ -77,14 +78,16 @@ public class CurseForgeResolver : ResourceResolverBase
                     CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
+    }
 
     [ResourceType(ResourceType.Mod)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(
         string projectId,
         string version
-    ) =>
-        await GetProjectAsync(
+    )
+    {
+        return await GetProjectAsync(
             ResourceType.Mod,
             projectId,
             version,
@@ -106,14 +109,16 @@ public class CurseForgeResolver : ResourceResolverBase
                     CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
+    }
 
     [ResourceType(ResourceType.ResourcePack)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(
         string projectId,
         string version
-    ) =>
-        await GetProjectAsync(
+    )
+    {
+        return await GetProjectAsync(
             ResourceType.ResourcePack,
             projectId,
             version,
@@ -135,6 +140,7 @@ public class CurseForgeResolver : ResourceResolverBase
                     CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
                 )
         );
+    }
 
     [ResourceType(ResourceType.File)]
     [ResourceExpression("{projectId}/{fileId}")]
@@ -217,8 +223,10 @@ public class CurseForgeResolver : ResourceResolverBase
                 );
                 return Ok(result, ResourceType.Update);
             }
+
             return Err(ResolveResultError.NotFound);
         }
+
         return Err(ResolveResultError.InvalidArguments);
     }
 }

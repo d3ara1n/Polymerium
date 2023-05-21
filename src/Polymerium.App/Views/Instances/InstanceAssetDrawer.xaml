@@ -34,14 +34,16 @@
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
                             <FontIcon Glyph="&#xE1E3;" FontSize="44" VerticalAlignment="Center" Margin="0,0,10,0" />
                             <StackPanel>
-                                <TextBlock Text="从文件添加" Style="{StaticResource SubtitleTextBlockStyle}" />
-                                <TextBlock Text="拖入文件以添加" Style="{StaticResource BodyTextBlockStyle}"
+                                <TextBlock x:Uid="InstanceAssetDrawer_ImportLabel0"
+                                           Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <TextBlock x:Uid="InstanceAssetDrawer_ImportLabel1"
+                                           Style="{StaticResource BodyTextBlockStyle}"
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </StackPanel>
                     </Grid>
                 </ui:ConstrainedBox>
-                <AutoSuggestBox x:Name="AssetSearch" QueryIcon="Find" PlaceholderText="搜索已安装的游戏资产"
+                <AutoSuggestBox x:Uid="InstanceAssetDrawer_AssetSearch" x:Name="AssetSearch" QueryIcon="Find"
                                 TextChanged="AssetSearch_TextChanged" />
                 <ProgressBar IsIndeterminate="True"
                              Visibility="{x:Bind IsParsing,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -49,11 +51,11 @@
                     <HyperlinkButton x:Name="OpenInExplorerButton" Command="{x:Bind ViewModel.OpenInExplorerCommand}"
                                      CommandParameter="{x:Bind AssetList.SelectedItem,Mode=OneWay}"
                                      HorizontalAlignment="Left">
-                        <TextBlock Text="在资源管理器中查看" />
+                        <TextBlock x:Uid="InstanceAssetDrawer_OpenExplorerLink" />
                     </HyperlinkButton>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                 Visibility="{x:Bind AssetList.SelectedItem,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
-                        <Button Style="{StaticResource IconButtonStyle}" Content="删除"
+                        <Button x:Uid="InstanceAssetDrawer_DeleteButton" Style="{StaticResource IconButtonStyle}"
                                 Command="{x:Bind ViewModel.DeleteAssetCommand}"
                                 CommandParameter="{x:Bind AssetList.SelectedItem,Mode=OneWay}" />
                     </StackPanel>
@@ -70,7 +72,7 @@
                                 <TextBlock Text="{x:Bind Name}" Style="{StaticResource BodyStrongTextBlockStyle}" />
                                 <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                            Visibility="{x:Bind Version,Converter={StaticResource NotNullToVisibleConverter}}">
-                                    <Run Text="版本" />
+                                    <Run x:Uid="InstanceAssetDrawer_VersionLabel" />
                                     <Run Text="{x:Bind Version,FallbackValue=N/A}" />
                                 </TextBlock>
                             </StackPanel>

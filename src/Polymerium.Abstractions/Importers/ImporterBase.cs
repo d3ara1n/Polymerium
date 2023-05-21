@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Compression;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNext;
@@ -20,8 +18,10 @@ public abstract class ImporterBase
         bool forceOffline
     );
 
-    protected Result<ModpackContent, GameImportError> Failed(GameImportError reason) =>
-        new Result<ModpackContent, GameImportError>(reason);
+    protected Result<ModpackContent, GameImportError> Failed(GameImportError reason)
+    {
+        return new Result<ModpackContent, GameImportError>(reason);
+    }
 
     protected Result<ModpackContent, GameImportError> Finished(
         string name,
@@ -31,8 +31,9 @@ public abstract class ImporterBase
         Uri? reference,
         GameMetadata metadata,
         IEnumerable<PackedSolidFile> files
-    ) =>
-        new ModpackContent()
+    )
+    {
+        return new ModpackContent
         {
             Name = name,
             Version = version,
@@ -42,4 +43,5 @@ public abstract class ImporterBase
             Metadata = metadata,
             Files = files
         };
+    }
 }

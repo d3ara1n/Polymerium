@@ -13,21 +13,19 @@ using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
-using Polymerium.App.Configurations;
 using Polymerium.Core;
 using Polymerium.Core.Engines;
 using Polymerium.Core.Helpers;
-using Polymerium.Core.Importers;
 
 namespace Polymerium.App.Services;
 
 public class ImportService
 {
-    private readonly ImportServiceOptions _options;
     private readonly IFileBaseService _fileBase;
     private readonly InstanceManager _instanceManager;
-    private readonly ResolveEngine _resolver;
+    private readonly ImportServiceOptions _options;
     private readonly IServiceProvider _provider;
+    private readonly ResolveEngine _resolver;
 
     public ImportService(
         IOptions<ImportServiceOptions> options,
@@ -52,7 +50,6 @@ public class ImportService
     )
     {
         if (File.Exists(filePath))
-        {
             try
             {
                 var archive = ZipFile.OpenRead(filePath);
@@ -64,7 +61,7 @@ public class ImportService
                 );
                 if (importerOption)
                 {
-                    (var indexFileName, var importerType) = importerOption.Value;
+                    var (indexFileName, importerType) = importerOption.Value;
                     if (token.IsCancellationRequested)
                         return new Result<ImportResult, GameImportError>(GameImportError.Cancelled);
                     var importer = (ImporterBase)
@@ -88,31 +85,31 @@ public class ImportService
                             )
                             : new Result<ImportResult, GameImportError>(result.Error);
                     }
-                    else
-                        return new Result<ImportResult, GameImportError>(
-                            GameImportError.ResourceNotFound
-                        );
+
+                    return new Result<ImportResult, GameImportError>(
+                        GameImportError.ResourceNotFound
+                    );
                 }
-                else
-                    return new Result<ImportResult, GameImportError>(GameImportError.Unsupported);
+
+                return new Result<ImportResult, GameImportError>(GameImportError.Unsupported);
             }
             catch
             {
                 return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
             }
-        }
-        else
-            return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
+
+        return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
     }
 
     public async Task<GameImportError?> SolidifyAsync(
         ImportResult product,
         GameInstance? instance
-    ) =>
-        await Task.Run(
+    )
+    {
+        return await Task.Run(
             new Func<GameImportError?>(() =>
             {
-                bool isGenerated = instance == null;
+                var isGenerated = instance == null;
                 instance ??= new GameInstance(
                     new GameMetadata(),
                     string.Empty,
@@ -166,14 +163,16 @@ public class ImportService
                     instance.Metadata.Attachments.Add(attachment);
                 foreach (var allocated in allocateds)
                     instance.Metadata.Attachments.Add(
-                        new Attachment() { From = instance.ReferenceSource, Source = allocated }
+                        new Attachment { From = instance.ReferenceSource, Source = allocated }
                     );
                 if (isGenerated)
                 {
                     instance.FolderName = PathHelper.RemoveInvalidCharacters(instance.Name);
                     _instanceManager.AddInstance(instance);
                 }
+
                 return null;
             })
         );
+    }
 }

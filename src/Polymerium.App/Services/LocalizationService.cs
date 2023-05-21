@@ -1,48 +1,43 @@
-﻿using Microsoft.Windows.ApplicationModel.Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Windows.Globalization;
+using Microsoft.Windows.ApplicationModel.Resources;
 
-namespace Polymerium.App.Services
+namespace Polymerium.App.Services;
+
+public class LocalizationService
 {
-    public class LocalizationService
+    private readonly ResourceMap _languageManifest;
+    private readonly ResourceContext _resourceContext;
+    private readonly IResourceManager _resourceManager;
+
+
+    public LocalizationService(IResourceManager resourceManager)
     {
-        private readonly IResourceManager _resourceManager;
-        private readonly ResourceContext _resourceContext;
-        private readonly ResourceMap _languageManifest;
+        _resourceManager = resourceManager;
+        _resourceContext = resourceManager.CreateResourceContext();
+        _languageManifest = resourceManager.MainResourceMap.GetSubtree("LanguageManifest");
+    }
 
-
-        public LocalizationService(IResourceManager resourceManager)
+    public IEnumerable<(string, string)> GetSupportedLanguages()
+    {
+        var count = _languageManifest.ResourceCount;
+        for (uint i = 0; i < count; i++)
         {
-            _resourceManager = resourceManager;
-            _resourceContext = resourceManager.CreateResourceContext();
-            _languageManifest = resourceManager.MainResourceMap.GetSubtree("LanguageManifest");
+            var item = _languageManifest.GetValueByIndex(i, _resourceContext);
+            yield return (item.Key, item.Value.ValueAsString);
         }
+    }
 
-        public IEnumerable<(string, string)> GetSupportedLanguages()
-        {
-            var count = _languageManifest.ResourceCount;
-            for(uint i = 0; i < count ; i++)
-            {
-                var item = _languageManifest.GetValueByIndex(i, _resourceContext);
-                yield return (item.Key, item.Value.ValueAsString);
-            }
-        }
+    public string GetString(string key, string? fallback = null)
+    {
+        fallback ??= key;
+        var candiate = _resourceManager.MainResourceMap.TryGetValue($"Resources/{key}", _resourceContext);
+        return candiate?.ValueAsString ?? fallback;
+    }
 
-        public string GetString(string key, string? fallback = null)
-        {
-            fallback ??= key;
-            var candiate = _resourceManager.MainResourceMap.TryGetValue($"Resources/{key}", _resourceContext);
-            return candiate?.ValueAsString ?? fallback;
-        }
-
-        public void SetLanguageByKey(string key)
-        {
-            ApplicationLanguages.PrimaryLanguageOverride = key;
-            _resourceContext.QualifierValues["Language"] = key;
-        }
+    public void SetLanguageByKey(string key)
+    {
+        ApplicationLanguages.PrimaryLanguageOverride = key;
+        _resourceContext.QualifierValues["Language"] = key;
     }
 }

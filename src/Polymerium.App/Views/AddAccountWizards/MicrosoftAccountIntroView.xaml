@@ -12,11 +12,11 @@
 
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock x:Uid="MicrosoftAccountIntroView_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="MicrosoftAccountIntroView_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
             <controls:Card Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
-                <TextBlock x:Uid="MicrosoftAccountIntroView_Readme"  />
+                <TextBlock x:Uid="MicrosoftAccountIntroView_Readme" />
             </controls:Card>
-            <TextBlock x:Uid="MicrosoftAccountIntroView_TipLabel"  />
+            <TextBlock x:Uid="MicrosoftAccountIntroView_TipLabel" />
         </StackPanel>
     </Grid>
 </Page>

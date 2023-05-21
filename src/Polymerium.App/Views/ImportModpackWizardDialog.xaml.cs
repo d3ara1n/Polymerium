@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Polymerium.Abstractions.Importers;
 using Polymerium.App.Controls;
 using Polymerium.App.Dialogs;
+using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 
 namespace Polymerium.App.Views;
@@ -68,7 +69,7 @@ public sealed partial class ImportModpackWizardDialog : CustomDialog
         {
             if (result.IsSuccessful)
             {
-                ViewModel.Exposed = new Models.ModpackPreviewModel(
+                ViewModel.Exposed = new ModpackPreviewModel(
                     result.Value.Content.Name,
                     result.Value.Content.Version,
                     result.Value.Content.Author

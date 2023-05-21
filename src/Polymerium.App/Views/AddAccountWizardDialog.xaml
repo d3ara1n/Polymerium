@@ -13,11 +13,14 @@
     <Frame x:Name="Root" />
     <controls:CustomDialog.OperationContent>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-            <Button x:Uid="AddAccountWizardDialog_PreviousButton" x:Name="PreviousButton" IsEnabled="{x:Bind Root.CanGoBack,Mode=OneWay}"
+            <Button x:Uid="AddAccountWizardDialog_PreviousButton" x:Name="PreviousButton"
+                    IsEnabled="{x:Bind Root.CanGoBack,Mode=OneWay}"
                     Click="PreviousButton_Click" />
-            <Button x:Uid="AddAccountWizardDialog_NextButton" x:Name="NextButton" Style="{ThemeResource AccentButtonStyle}" IsEnabled="False"
+            <Button x:Uid="AddAccountWizardDialog_NextButton" x:Name="NextButton"
+                    Style="{ThemeResource AccentButtonStyle}" IsEnabled="False"
                     Click="NextButton_Click" />
-            <Button x:Uid="AddAccountWizardDialog_FinishButton" x:Name="FinishButton" Style="{ThemeResource AccentButtonStyle}" Visibility="Collapsed"
+            <Button x:Uid="AddAccountWizardDialog_FinishButton" x:Name="FinishButton"
+                    Style="{ThemeResource AccentButtonStyle}" Visibility="Collapsed"
                     Click="FinishButton_Click" />
             <Button x:Uid="AddAccountWizardDialog_CancelButton" x:Name="CloseButton" Click="CloseButton_Click" />
         </StackPanel>

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +11,6 @@ using Polymerium.App.Configurations;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Windows.Storage;
 
 namespace Polymerium.App.ViewModels;
 
@@ -20,12 +18,15 @@ public class SettingViewModel : ObservableObject
 {
     private readonly ConfigurationManager _configurationManager;
     private readonly JavaManager _javaManager;
-    private readonly AppSettings _settings;
     private readonly LocalizationService _localizationService;
+    private readonly AppSettings _settings;
 
     private string additionalJvmArguments = string.Empty;
 
     private bool autoDetectJava;
+
+    private bool forceImportOffline;
+    private bool isSuperPowerActivated;
 
     private string javaHome = string.Empty;
 
@@ -34,16 +35,13 @@ public class SettingViewModel : ObservableObject
     private uint jvmMaxMemory;
 
     private JavaInstallationModel? selectedJava;
+    private SettingLanguageItemModel selectedLanguage = null!;
 
     private bool skipJavaVersionCheck;
 
     private uint windowHeight;
 
     private uint windowWidth;
-
-    private bool forceImportOffline;
-    private bool isSuperPowerActivated;
-    private SettingLanguageItemModel selectedLanguage = null!;
 
     public SettingViewModel(
         ConfigurationManager configurationManager,
@@ -57,7 +55,8 @@ public class SettingViewModel : ObservableObject
         _settings = settings;
         _localizationService = localizationService;
         OpenPickerAsyncCommand = new AsyncRelayCommand(OpenPickerAsync);
-        Languages = new ObservableCollection<SettingLanguageItemModel>(localizationService.GetSupportedLanguages().Select(x => new SettingLanguageItemModel(x.Item1, x.Item2)));
+        Languages = new ObservableCollection<SettingLanguageItemModel>(localizationService.GetSupportedLanguages()
+            .Select(x => new SettingLanguageItemModel(x.Item1, x.Item2)));
         ForceImportOffline = _settings.ForceImportOffline;
         SelectedLanguage = Languages.First(x => x.Key == _settings.LanguageKey);
         IsSuperPowerActivated = _settings.IsSuperPowerActivated;

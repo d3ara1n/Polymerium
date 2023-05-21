@@ -12,15 +12,14 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Core.Components;
-using Polymerium.Core.Extensions;
 using Polymerium.Core.Resources;
 
 namespace Polymerium.App.ViewModels;
 
 public class SearchCenterViewModel : ObservableObject
 {
-    private readonly IOverlayService _overlayService;
     private readonly LocalizationService _localizationService;
+    private readonly IOverlayService _overlayService;
 
     private GameInstanceModel? instanceScope;
     private IResourceRepository? selectedRepository;
@@ -84,7 +83,8 @@ public class SearchCenterViewModel : ObservableObject
                 && (supported & type) == type
                 && (InstanceScope == null || type != ResourceType.Modpack)
             )
-                SupportedResources.Add(new SearchCenterResourceTagModel(type, _localizationService.GetString($"ResourceType_{type.ToString()}", type.ToString())));
+                SupportedResources.Add(new SearchCenterResourceTagModel(type,
+                    _localizationService.GetString($"ResourceType_{type.ToString()}", type.ToString())));
         }
 
         SelectedResourceType = SupportedResources.Any(x => x == old)

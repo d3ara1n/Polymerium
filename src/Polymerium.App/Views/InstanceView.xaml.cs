@@ -38,6 +38,7 @@ public sealed partial class InstanceView : Page
     {
         ViewModel.LoadAssets();
         ViewModel.LoadSaves();
+        ViewModel.LoadScreenshots();
         Dialog_Dismissed(null, new EventArgs());
     }
 

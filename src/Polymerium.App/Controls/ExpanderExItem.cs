@@ -2,4 +2,6 @@
 
 namespace Polymerium.App.Controls;
 
-public class ExpanderExItem : ContentControl { }
+public class ExpanderExItem : ContentControl
+{
+}

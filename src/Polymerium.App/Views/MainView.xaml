@@ -29,7 +29,8 @@
                     <ColumnDefinition x:FieldModifier="Public" x:Name="ColumnLeft" Width="Auto" />
                     <ColumnDefinition x:FieldModifier="Public" x:Name="ColumnRight" Width="*" />
                 </Grid.ColumnDefinitions>
-                <AutoSuggestBox x:Uid="MainView_SearchBar" x:Name="SearchBar" Height="32" Width="200" HorizontalAlignment="Right"
+                <AutoSuggestBox x:Uid="MainView_SearchBar" x:Name="SearchBar" Height="32" Width="200"
+                                HorizontalAlignment="Right"
                                 Margin="25,0,10,0" TextMemberPath="Caption" PlaceholderText=""
                                 QueryIcon="Find" AutoMaximizeSuggestionArea="True"
                                 TextChanged="SearchBar_OnTextChanged" QuerySubmitted="SearchBar_OnQuerySubmitted">
@@ -86,9 +87,10 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
                                 <Grid>
-                                    <Button x:Uid="MainView_AddAccountButton"  Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"
+                                    <Button x:Uid="MainView_AddAccountButton"
+                                            Command="{x:Bind ViewModel.OpenAddAccountWizardCommand}"
                                             HorizontalAlignment="Right" />
-                                    <Button x:Uid="MainView_RemoveAccountButton" 
+                                    <Button x:Uid="MainView_RemoveAccountButton"
                                             IsEnabled="{x:Bind ViewModel.Context.SelectedAccount,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
                                             Command="{x:Bind ViewModel.RemoveAccountCommand}"
                                             HorizontalAlignment="Left" />
@@ -120,9 +122,9 @@
                 </Style>
             </NavigationView.MenuItemContainerStyle>
         </NavigationView>
-        <Frame x:Name="RootFrame" Grid.Row="1" Grid.Column="1" >
+        <Frame x:Name="RootFrame" Grid.Row="1" Grid.Column="1">
             <Frame.Transitions>
-                <NavigationThemeTransition/>
+                <NavigationThemeTransition />
             </Frame.Transitions>
         </Frame>
         <!-- WinUI 的对话框没有自定义选项，这里引入 WPF 的 in-app 对话框风格 -->

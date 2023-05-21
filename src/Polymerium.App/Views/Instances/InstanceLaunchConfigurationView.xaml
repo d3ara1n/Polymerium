@@ -10,7 +10,7 @@
     <ScrollViewer>
         <controls:Card Margin="5,0,10,10">
             <StackPanel Spacing="5">
-                <TextBlock x:Uid="InstanceLaunchConfigurationView_Label0"  TextWrapping="WrapWholeWords"
+                <TextBlock x:Uid="InstanceLaunchConfigurationView_Label0" TextWrapping="WrapWholeWords"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
@@ -18,7 +18,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE8B7;" Margin="20" />
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Header"  />
+                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Header" />
                                     <TextBlock
                                         Text="{x:Bind ViewModel.Configuration.JavaHome,Mode=OneWay,FallbackValue=默认}"
                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
@@ -34,14 +34,16 @@
                         <StackPanel Spacing="1">
                             <controls:ExpanderExItem>
                                 <Grid>
-                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Label0"  VerticalAlignment="Center" />
-                                    <Button x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_OpenPickerButton" x:Name="OpenJavaDialogButton"  HorizontalAlignment="Right"
+                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Label0"
+                                               VerticalAlignment="Center" />
+                                    <Button x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_OpenPickerButton"
+                                            x:Name="OpenJavaDialogButton" HorizontalAlignment="Right"
                                             Command="{x:Bind ViewModel.OpenPickerAsyncCommand}" />
                                 </Grid>
                             </controls:ExpanderExItem>
                             <controls:ExpanderExItem>
                                 <Grid>
-                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Label1" 
+                                    <TextBlock x:Uid="InstanceLaunchConfigurationView_AutoSelectJava_Label1"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Left" />
                                 </Grid>
@@ -58,9 +60,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE9D5;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceLaunchConfigurationView_SkipJavaCheck_Header"  />
+                                    <Run x:Uid="InstanceLaunchConfigurationView_SkipJavaCheck_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="InstanceLaunchConfigurationView_SkipJavaCheck_Subheader" 
+                                    <Run x:Uid="InstanceLaunchConfigurationView_SkipJavaCheck_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -76,9 +78,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEC8F;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Header"  />
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Subheader" 
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaMemory_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -95,9 +97,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE140;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Header"  />
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Subheader" 
+                                    <Run x:Uid="InstanceLaunchConfigurationView_JavaAdditionalArguments_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>

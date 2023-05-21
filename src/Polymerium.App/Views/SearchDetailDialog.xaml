@@ -21,7 +21,7 @@
                     <Setter Property="Margin" Value="0" />
                 </Style>
             </Pivot.Resources>
-            <PivotItem x:Uid="SearchDetailDialog_Gallery_Header" >
+            <PivotItem x:Uid="SearchDetailDialog_Gallery_Header">
                 <FlipView x:Name="Gallery" Margin="15" ItemsSource="{x:Bind Screenshots}">
                     <FlipView.ItemTemplate>
                         <DataTemplate x:DataType="models:SearchCenterResultItemScreenshotModel">
@@ -30,7 +30,7 @@
                     </FlipView.ItemTemplate>
                 </FlipView>
             </PivotItem>
-            <PivotItem x:Uid="SearchDetailDialog_Description_Header" >
+            <PivotItem x:Uid="SearchDetailDialog_Description_Header">
                 <Grid>
                     <WebView2 x:Name="DescriptionPresenter" />
                 </Grid>
@@ -41,12 +41,12 @@
     </Grid>
     <controls:CustomDialog.OperationContent>
         <Grid ColumnDefinitions="Auto,*">
-            <ui:ImageEx Width="80" Height="80" Source="{x:Bind ViewModel.Resource.Value.IconSource}" CornerRadius="5" />
+            <ui:ImageEx Width="80" Height="80" Source="{x:Bind ViewModel.IconSource}" CornerRadius="5" />
             <Grid Grid.Column="1">
                 <StackPanel Margin="12,0,12,0" VerticalAlignment="Center">
-                    <TextBlock Text="{x:Bind ViewModel.Resource.Value.Name}"
+                    <TextBlock Text="{x:Bind ViewModel.Name}"
                                Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="{x:Bind ViewModel.Resource.Value.Author}"
+                    <TextBlock Text="{x:Bind ViewModel.Author}"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                     <Grid ColumnDefinitions="*,5,Auto" Margin="0,5">
                         <ComboBox x:Name="VersionList"
@@ -73,11 +73,13 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <StackPanel Grid.Column="2" Spacing="10" Orientation="Horizontal">
-                            <Button x:Uid="SearchDetailDialog_InstallButton" x:Name="InstallButton" Style="{StaticResource AccentButtonStyle}" 
+                            <Button x:Uid="SearchDetailDialog_InstallButton" x:Name="InstallButton"
+                                    Style="{StaticResource AccentButtonStyle}"
                                     IsEnabled="{x:Bind IsOperating,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}"
                                     Visibility="{x:Bind VersionList.SelectedItem,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}"
                                     Click="InstallButton_Click" />
-                            <Button x:Uid="SearchDetailDialog_CancelButton" x:Name="CancelButton"  Click="CancelButton_Click" />
+                            <Button x:Uid="SearchDetailDialog_CancelButton" x:Name="CancelButton"
+                                    Click="CancelButton_Click" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>

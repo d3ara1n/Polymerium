@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DotNext;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
@@ -52,7 +51,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         );
         Components = new ObservableCollection<InstanceComponentItemModel>(
             Instance.Components.Select(FromComponent)
-                ?? Enumerable.Empty<InstanceComponentItemModel>()
+            ?? Enumerable.Empty<InstanceComponentItemModel>()
         );
         Attachments = new ObservableCollection<InstanceAttachmentItemModel>();
         Instance.Components.CollectionChanged += Components_OnCollectionChanged;
@@ -161,7 +160,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
                                 x.Item2.Result.Value.Resource.VersionId,
                                 x.Item2.Result.Value.Resource.Version,
                                 x.Item2.Result.Value.Resource.VersionId
-                                    == modpackResult.Value.Resource.VersionId,
+                                == modpackResult.Value.Resource.VersionId,
                                 x.Item1
                             )
                     );
@@ -178,13 +177,19 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
                     callback(model);
                 }
                 else
+                {
                     callback(null);
+                }
             }
             else
+            {
                 callback(null);
+            }
         }
         else
+        {
             callback(null);
+        }
     }
 
     public async Task LoadParseAttachmentsAsync(IEnumerable<Attachment> newlyAdded)
@@ -259,7 +264,8 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     private void GotoSearchCenter()
     {
-        _navigationService.Navigate<SearchCenterView>(new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+        _navigationService.Navigate<SearchCenterView>(new SlideNavigationTransitionInfo
+            { Effect = SlideNavigationTransitionEffect.FromRight });
     }
 
     private void AddComponent()

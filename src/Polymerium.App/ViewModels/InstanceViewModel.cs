@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -26,9 +28,10 @@ namespace Polymerium.App.ViewModels;
 
 public class InstanceViewModel : ObservableObject
 {
+    private readonly AssetManager _assetManager;
     private readonly ComponentManager _componentManager;
     private readonly IFileBaseService _fileBase;
-    private readonly AssetManager _assetManager;
+    private readonly LocalizationService _localizationService;
     private readonly NavigationService _navigationService;
     private readonly ResolveEngine _resolver;
 
@@ -51,7 +54,8 @@ public class InstanceViewModel : ObservableObject
         IFileBaseService fileBase,
         ComponentManager componentManager,
         NavigationService navigationService,
-        AssetManager assetManager
+        AssetManager assetManager,
+        LocalizationService localizationService
     )
     {
         _componentManager = componentManager;
@@ -59,6 +63,7 @@ public class InstanceViewModel : ObservableObject
         _navigationService = navigationService;
         _assetManager = assetManager;
         _fileBase = fileBase;
+        _localizationService = localizationService;
         Instance = context.AssociatedInstance!;
         OverlayService = overlayService;
         CoreVersion = Instance.Inner.GetCoreVersion() ?? "N/A";
@@ -68,35 +73,42 @@ public class InstanceViewModel : ObservableObject
         );
         InformationItems = new ObservableCollection<InstanceInformationItemModel>
         {
-            new("\uF427", "标志符", Instance.Id),
-            new("\uE125", "作者", string.IsNullOrEmpty(Instance.Author) ? "(未标注)" : Instance.Author),
-            new("\uE121", "游戏时间", Instance.PlayTime.Humanize()),
+            new("\uF427", _localizationService.GetString("InstanceView_Other_Identity_Label"), Instance.Id),
+            new("\uE125", _localizationService.GetString("InstanceView_Other_Author_Label"),
+                string.IsNullOrEmpty(Instance.Author)
+                    ? _localizationService.GetString("InstanceView_Other_Author_Unknown")
+                    : Instance.Author),
+            new("\uE121", _localizationService.GetString("InstanceView_Other_PlayTime_Label"),
+                Instance.PlayTime.Humanize()),
             new(
                 "\uEC92",
-                "最近一次游玩",
-                Instance.LastPlay == null ? "从未" : Instance.LastPlay.Humanize()
+                _localizationService.GetString("InstanceView_Other_LastPlay_Label"),
+                Instance.LastPlay == null
+                    ? _localizationService.GetString("InstanceView_Other_LastPlay_Unknown")
+                    : Instance.LastPlay.Humanize()
             ),
-            new("\uEB50", "游玩次数", $"{Instance.PlayCount} 次"),
+            new("\uEB50", _localizationService.GetString("InstanceView_Other_PlayCount_Label"),
+                $"{Instance.PlayCount}"),
             new(
                 "\uEB05",
-                "启动成功率",
+                _localizationService.GetString("InstanceView_Other_SuccessRate_Label"),
                 Instance.PlayCount == 0
-                    ? "N/A"
+                    ? _localizationService.GetString("InstanceView_Other_SuccessRate_Unknown")
                     : $"{(Instance.PlayCount - Instance.ExceptionCount) / (float)Instance.PlayCount * 100}%"
             ),
-            new("\uEC92", "创建时间", Instance.CreatedAt.Humanize())
-            {
-                Caption = "创建时间",
-                IconGlyph = "\uEC92",
-                Content = Instance.CreatedAt.Humanize()
-            },
+            new("\uEC92", _localizationService.GetString("InstanceView_Other_CreateDate_Label"),
+                Instance.CreatedAt.Humanize()),
             new(
                 "\uEC92",
-                "最近一次还原",
-                Instance.LastRestore == null ? "从未" : Instance.LastRestore.Humanize()
+                _localizationService.GetString("InstanceView_Other_LastRestore_Label"),
+                Instance.LastRestore == null
+                    ? _localizationService.GetString("InstanceView_Other_LastRestore_Unknown")
+                    : Instance.LastRestore.Humanize()
             )
         };
+        OpenInExplorerCommand = new RelayCommand<string>(OpenInExplorer);
         Saves = new ObservableCollection<InstanceWorldSaveModel>();
+        Screenshots = new ObservableCollection<InstanceScreenshotModel>();
         RawAssetSource = new ObservableCollection<AssetRaw>();
         RawShaderPacks = new AdvancedCollectionView
         {
@@ -126,10 +138,12 @@ public class InstanceViewModel : ObservableObject
     public ObservableCollection<ComponentTagItemModel> Components { get; }
     public ObservableCollection<InstanceInformationItemModel> InformationItems { get; }
     public ObservableCollection<InstanceWorldSaveModel> Saves { get; }
+    public ObservableCollection<InstanceScreenshotModel> Screenshots { get; }
     public ObservableCollection<AssetRaw> RawAssetSource { get; }
     public IAdvancedCollectionView RawShaderPacks { get; }
     public IAdvancedCollectionView RawMods { get; }
     public IAdvancedCollectionView RawResourcePacks { get; }
+    public IRelayCommand<string> OpenInExplorerCommand { get; }
 
     public bool IsModSupported
     {
@@ -177,6 +191,18 @@ public class InstanceViewModel : ObservableObject
     public IOverlayService OverlayService { get; }
     public ICommand GotoConfigurationViewCommand { get; }
 
+    private void OpenInExplorer(string? dir)
+    {
+        var path = Path.Combine(_fileBase.Locate(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Instance.Id))), dir);
+        Process.Start(
+            new ProcessStartInfo("explorer.exe")
+            {
+                UseShellExecute = true,
+                Arguments = Directory.Exists(path) ? path : $"/select, {path}"
+            }
+        );
+    }
+
     private IEnumerable<ComponentTagItemModel> BuildComponentModels(
         IEnumerable<Component> components
     )
@@ -195,7 +221,8 @@ public class InstanceViewModel : ObservableObject
 
     public void GotoConfigurationView()
     {
-        _navigationService.Navigate<InstanceConfigurationView>(new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+        _navigationService.Navigate<InstanceConfigurationView>(new SlideNavigationTransitionInfo
+            { Effect = SlideNavigationTransitionEffect.FromRight });
     }
 
     public void LoadAssets()
@@ -232,6 +259,17 @@ public class InstanceViewModel : ObservableObject
                 save
             );
             Saves.Add(model);
+        }
+    }
+
+    public void LoadScreenshots()
+    {
+        var screenshots = _assetManager.ScanScreenshots(Instance.Inner);
+        Screenshots.Clear();
+        foreach (var screenshot in screenshots)
+        {
+            var model = new InstanceScreenshotModel(screenshot.FileName);
+            Screenshots.Add(model);
         }
     }
 

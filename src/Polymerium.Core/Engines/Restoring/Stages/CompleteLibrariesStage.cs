@@ -13,12 +13,12 @@ namespace Polymerium.Core.Engines.Restoring.Stages;
 
 public class CompleteLibrariesStage : StageBase
 {
+    private readonly AssetManager _assetManager;
     private readonly DownloadEngine _downloader;
     private readonly IFileBaseService _fileBase;
     private readonly GameInstance _instance;
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
-    private readonly AssetManager _assetManager;
 
     public CompleteLibrariesStage(
         GameInstance instance,

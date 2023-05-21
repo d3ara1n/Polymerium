@@ -822,6 +822,130 @@
           <source>Reset</source>
           <target state="translated">重置</target>
         </trans-unit>
+        <trans-unit id="InstanceSelectorDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">取消</target>
+        </trans-unit>
+        <trans-unit id="InstanceSelectorDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Confirm</source>
+          <target state="translated">确定</target>
+        </trans-unit>
+        <trans-unit id="InstanceSelectorDialog.Title" translate="yes" xml:space="preserve">
+          <source>Pick an instance to apply</source>
+          <target state="translated">选择一个实例以继续</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_Author_Label" translate="yes" xml:space="preserve">
+          <source>Author</source>
+          <target state="translated">作者</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_Author_Unknown" translate="yes" xml:space="preserve">
+          <source>(Unidentified)</source>
+          <target state="translated">(未标注)</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_CreateDate_Label" translate="yes" xml:space="preserve">
+          <source>Created at</source>
+          <target state="translated">创建时间</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_Identity_Label" translate="yes" xml:space="preserve">
+          <source>Identity</source>
+          <target state="translated">标识符</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_LastPlay_Label" translate="yes" xml:space="preserve">
+          <source>Last played at</source>
+          <target state="translated">最后一次游玩</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_LastPlay_Unknown" translate="yes" xml:space="preserve">
+          <source>Never</source>
+          <target state="translated">从未</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_LastRestore_Label" translate="yes" xml:space="preserve">
+          <source>Last restored at</source>
+          <target state="translated">最后一次还原</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_LastRestore_Unknown" translate="yes" xml:space="preserve">
+          <source>Never</source>
+          <target state="translated">从未</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_PlayCount_Label" translate="yes" xml:space="preserve">
+          <source>Play count</source>
+          <target state="translated">游戏次数</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_PlayTime_Label" translate="yes" xml:space="preserve">
+          <source>Play time</source>
+          <target state="translated">游戏时间</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_SuccessRate_Label" translate="yes" xml:space="preserve">
+          <source>Successfully launched</source>
+          <target state="translated">启动成功率</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Other_SuccessRate_Unknown" translate="yes" xml:space="preserve">
+          <source>N/A</source>
+          <target state="new">N/A</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Save_Empty.Text" translate="yes" xml:space="preserve">
+          <source>Empty</source>
+          <target state="translated">空</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Screenshot_Empty.Text" translate="yes" xml:space="preserve">
+          <source>Nothing to present. Press F2 in game to generate one</source>
+          <target state="translated">没有截图可以展示，游戏中按下 F2 生成截图</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Screenshot_Header.Text" translate="yes" xml:space="preserve">
+          <source>Screenshots</source>
+          <target state="translated">截图</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Save_OpenExplorerButton.Content" translate="yes" xml:space="preserve">
+          <source>Open in explorer</source>
+          <target state="translated">打开目录</target>
+        </trans-unit>
+        <trans-unit id="InstanceView_Screenshot_OpenExplorerButton.Content" translate="yes" xml:space="preserve">
+          <source>Open in explorer</source>
+          <target state="translated">打开目录</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetViewModel_AddFile_Accepted_Caption" translate="yes" xml:space="preserve">
+          <source>File accepted</source>
+          <target state="translated">添加成功</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetViewModel_AddFile_Accepted_Message" translate="yes" xml:space="preserve">
+          <source>{0} was added as {1}</source>
+          <target state="translated">{0} 作为 {1} 被添加</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetViewModel_AddFile_Rejected_Caption" translate="yes" xml:space="preserve">
+          <source>File rejected</source>
+          <target state="translated">添加失败</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetViewModel_AddFile_Rejected_Message" translate="yes" xml:space="preserve">
+          <source>Unknown format. Try add it manually</source>
+          <target state="translated">选择的包无法识别，可打开目录手动添加</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetViewModel_DeleteFile_Failure_Caption" translate="yes" xml:space="preserve">
+          <source>Delete failed</source>
+          <target state="translated">删除失败</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetDrawer_ImportLabel0.Text" translate="yes" xml:space="preserve">
+          <source>Add file</source>
+          <target state="translated">从文件添加</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetDrawer_AssetSearch.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Search for installed assets...</source>
+          <target state="translated">搜索已安装的游戏资产</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetDrawer_DeleteButton.Content" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">删除</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetDrawer_ImportLabel1.Text" translate="yes" xml:space="preserve">
+          <source>by dropping it down here</source>
+          <target state="translated">拖入文件以添加</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetDrawer_OpenExplorerLink.Text" translate="yes" xml:space="preserve">
+          <source>Show in explorer</source>
+          <target state="translated">在资源管理器中查看</target>
+        </trans-unit>
+        <trans-unit id="InstanceAssetDrawer_VersionLabel.Text" translate="yes" xml:space="preserve">
+          <source>Version</source>
+          <target state="translated">版本</target>
+        </trans-unit>
       </group>
     </body>
   </file>

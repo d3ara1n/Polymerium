@@ -14,6 +14,7 @@ namespace Polymerium.Core.Engines.Restoring.Stages;
 
 public class CheckAvailabilityStage : StageBase
 {
+    private readonly AssetManager _assetManager;
     private readonly DownloadEngine _downloader;
     private readonly IFileBaseService _fileBase;
 
@@ -22,7 +23,6 @@ public class CheckAvailabilityStage : StageBase
     private readonly IServiceProvider _provider;
     private readonly ResolveEngine _resolver;
     private readonly SHA1 _sha1;
-    private readonly AssetManager _assetManager;
 
     public CheckAvailabilityStage(
         GameInstance instance,

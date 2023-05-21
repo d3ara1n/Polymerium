@@ -43,15 +43,9 @@ public sealed partial class InstanceAssetDrawer : Drawer
         _view = view;
         _source = new CancellationTokenSource();
         ViewModel = App.Current.Provider.GetRequiredService<InstanceAssetViewModel>();
-        ViewModel.Type = type;
+        ViewModel.SetType(type);
         InitializeComponent();
-        Title = type switch
-        {
-            ResourceType.Mod => "模组",
-            ResourceType.ShaderPack => "着色器包",
-            ResourceType.ResourcePack => "资源包",
-            _ => throw new NotImplementedException()
-        };
+        Title = ViewModel.TypeFriendlyName ?? string.Empty;
     }
 
     public string Title

@@ -277,8 +277,8 @@ public class AssetManager
             {
                 var file = new FileInfo(_fileBase.Locate(x.Target));
                 return file.LinkTarget == null
-                    && file.Exists
-                    && !_fileBase.CheckIfTheSameAsync(x.Target, x.Source).Result;
+                       && file.Exists
+                       && !_fileBase.CheckIfTheSameAsync(x.Target, x.Source).Result;
             })
         )
             return RenewableAssetDeploymentError.TargetConflict;
@@ -342,5 +342,19 @@ public class AssetManager
         }
 
         return list;
+    }
+
+    public IEnumerable<Screenshot> ScanScreenshots(GameInstance instance)
+    {
+        var screenshotDir = new Uri(
+            new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", instance.Id)),
+            "screenshots/"
+        );
+        var dirPath = _fileBase.Locate(screenshotDir);
+        if (Directory.Exists(dirPath))
+        {
+            var files = Directory.GetFiles(dirPath, "*.png");
+            foreach (var file in files) yield return new Screenshot { FileName = file };
+        }
     }
 }

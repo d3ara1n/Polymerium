@@ -34,7 +34,8 @@ public class CreateInstanceWizardViewModel : ObservableValidator
 
     private string version = string.Empty;
 
-    public CreateInstanceWizardViewModel(InstanceManager instanceManager, IMemoryCache cache, LocalizationService localizationService)
+    public CreateInstanceWizardViewModel(InstanceManager instanceManager, IMemoryCache cache,
+        LocalizationService localizationService)
     {
         _instanceManager = instanceManager;
         _cache = cache;
@@ -105,10 +106,14 @@ public class CreateInstanceWizardViewModel : ObservableValidator
                                             x.Id,
                                             x.Type switch
                                             {
-                                                ReleaseType.Release => _localizationService.GetString("ReleaseType_Release"),
-                                                ReleaseType.Snapshot => _localizationService.GetString("ReleaseType_Snapshot"),
-                                                ReleaseType.Old_Alpha => _localizationService.GetString("ReleaseType_Alpha"),
-                                                ReleaseType.Old_Beta => _localizationService.GetString("ReleaseType_Beta"),
+                                                ReleaseType.Release => _localizationService.GetString(
+                                                    "ReleaseType_Release"),
+                                                ReleaseType.Snapshot => _localizationService.GetString(
+                                                    "ReleaseType_Snapshot"),
+                                                ReleaseType.Old_Alpha => _localizationService.GetString(
+                                                    "ReleaseType_Alpha"),
+                                                ReleaseType.Old_Beta => _localizationService.GetString(
+                                                    "ReleaseType_Beta"),
                                                 _ => throw new ArgumentOutOfRangeException()
                                             }
                                         )

@@ -91,7 +91,9 @@ public sealed partial class SearchDetailDialog : CustomDialog
                 VersionList.SelectedValue ??= model;
             }
             else
+            {
                 IsOperating = false;
+            }
         });
     }
 

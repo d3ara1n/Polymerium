@@ -9,7 +9,7 @@
     xmlns:abstractions="using:Polymerium.Abstractions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Title="选择一个实例以继续" CloseButtonText="取消" PrimaryButtonText="确认"
-    Style="{StaticResource DefaultContentDialogStyle}"
+    Style="{StaticResource DefaultContentDialogStyle}" x:Uid="InstanceSelectorDialog"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}">
 
     <Grid>

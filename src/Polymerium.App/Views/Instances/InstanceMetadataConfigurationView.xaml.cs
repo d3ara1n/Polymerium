@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -155,7 +154,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
     {
         get =>
             (ObservableCollection<InstanceModpackReferenceVersionModel>)
-                GetValue(ModpackVersionsProperty);
+            GetValue(ModpackVersionsProperty);
         set => SetValue(ModpackVersionsProperty, value);
     }
 

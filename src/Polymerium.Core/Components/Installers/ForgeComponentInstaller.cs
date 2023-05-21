@@ -85,13 +85,13 @@ public sealed class ForgeComponentInstaller : ComponentInstallerBase
             {
                 foreach (
                     var argument in versionJson.Value.Arguments.Value.Game
-                        ?? Enumerable.Empty<string>()
+                                    ?? Enumerable.Empty<string>()
                 )
                     Context.AppendGameArgument(argument);
 
                 foreach (
                     var argument in versionJson.Value.Arguments.Value.Jvm
-                        ?? Enumerable.Empty<string>()
+                                    ?? Enumerable.Empty<string>()
                 )
                     Context.AppendJvmArguments(argument);
             }

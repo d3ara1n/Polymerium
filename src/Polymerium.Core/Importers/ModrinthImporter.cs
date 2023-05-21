@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using DotNext;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
-using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
@@ -21,7 +17,6 @@ using Polymerium.Core.Engines;
 using Polymerium.Core.Helpers;
 using Polymerium.Core.Models.Modrinth;
 using Polymerium.Core.Models.Modrinth.Labrinth;
-using Polymerium.Core.Models.Mojang;
 using AFile = Polymerium.Abstractions.Resources.File;
 
 namespace Polymerium.Core.Importers;
@@ -119,7 +114,7 @@ public class ModrinthImporter : ImporterBase
                                 )
                                 .ToList();
                             // 校验 externals 中没有 versionId 的那部分(requireds)是否存在于 embeddeds。其实不用校验，这是必然的，出问题了责任在打包方。
-                            foreach ((var externalProject, var externalVersion) in externals)
+                            foreach (var (externalProject, externalVersion) in externals)
                             {
                                 var type = ModrinthHelper.GetResourceTypeFromString(
                                     externalProject.ProjectType
@@ -131,19 +126,26 @@ public class ModrinthImporter : ImporterBase
                                     null
                                 );
                                 metadata.Attachments.Add(
-                                    new Attachment() { Source = attachment, From = source }
+                                    new Attachment { Source = attachment, From = source }
                                 );
                             }
+
                             AddFilesTo(metadata.Attachments, embeddeds);
                         }
                         else
+                        {
                             return Failed(GameImportError.ResourceNotFound);
+                        }
                     }
                     else
+                    {
                         return Failed(GameImportError.ResourceNotFound);
+                    }
                 }
                 else
+                {
                     return Failed(GameImportError.ResourceNotFound);
+                }
             }
             else
             {
@@ -191,10 +193,8 @@ public class ModrinthImporter : ImporterBase
             var file in files.Where(
                 x =>
                     !x.Envs.HasValue
-                    || (
-                        x.Envs.Value.Client == ModrinthModpackEnv.Optional
-                        || x.Envs.Value.Client == ModrinthModpackEnv.Required
-                    )
+                    || x.Envs.Value.Client == ModrinthModpackEnv.Optional
+                    || x.Envs.Value.Client == ModrinthModpackEnv.Required
             )
         )
             container.Add(
@@ -242,6 +242,7 @@ public class ModrinthImporter : ImporterBase
                     return (project.Value, version.Value);
             }
         }
+
         return null;
     }
 }

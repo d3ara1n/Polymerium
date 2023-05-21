@@ -37,11 +37,11 @@
         </ContentControl.Template>
         <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
             <StackPanel Spacing="12">
-                <TextBlock x:Uid="AddMetaComponentWizardDialog_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="AddMetaComponentWizardDialog_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <ComboBox x:Name="MetaSelection" SelectionChanged="MetaSelection_OnSelectionChanged" IsEditable="False"
                           ItemsSource="{x:Bind ViewModel.Metas}" DisplayMemberPath="FriendlyName"
                           SelectedValue="{x:Bind ViewModel.SelectedMeta,Mode=TwoWay}" HorizontalAlignment="Stretch" />
-                <TextBlock x:Uid="AddMetaComponentWizardDialog_VersionLabel"  />
+                <TextBlock x:Uid="AddMetaComponentWizardDialog_VersionLabel" />
                 <ComboBox IsEditable="False" ItemsSource="{x:Bind ViewModel.Versions,Mode=OneWay}"
                           SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}" HorizontalAlignment="Stretch" />
             </StackPanel>
@@ -49,9 +49,10 @@
     </ContentControl>
     <controls:CustomDialog.OperationContent>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-            <Button x:Uid="AddMetaComponentWizardDialog_FinishButton"  IsEnabled="{x:Bind IsOperable,Mode=OneWay}" Style="{StaticResource AccentButtonStyle}"
+            <Button x:Uid="AddMetaComponentWizardDialog_FinishButton" IsEnabled="{x:Bind IsOperable,Mode=OneWay}"
+                    Style="{StaticResource AccentButtonStyle}"
                     Command="{x:Bind ViewModel.AddComponentCommand}" />
-            <Button x:Uid="AddMetaComponentWizardDialog_CancelButton"  Command="{x:Bind ViewModel.CancelCommand}" />
+            <Button x:Uid="AddMetaComponentWizardDialog_CancelButton" Command="{x:Bind ViewModel.CancelCommand}" />
         </StackPanel>
     </controls:CustomDialog.OperationContent>
 </controls:CustomDialog>

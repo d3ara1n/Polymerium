@@ -11,8 +11,8 @@
     mc:Ignorable="d">
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock x:Uid="MicrosoftFinishView_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
-            <TextBlock x:Uid="MicrosoftFinishView_Label0"  />
+            <TextBlock x:Uid="MicrosoftFinishView_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="MicrosoftFinishView_Label0" />
             <ui:ImageEx Stretch="Fill" Width="82" Height="82" HorizontalAlignment="Center"
                         Source="{x:Bind AvatarUrl,Mode=OneWay}" />
             <TextBlock Text="{x:Bind Username}" HorizontalAlignment="Center" />

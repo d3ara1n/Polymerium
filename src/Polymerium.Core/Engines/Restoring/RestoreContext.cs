@@ -1,19 +1,13 @@
 ﻿using Polymerium.Abstractions.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Polymerium.Core.Engines.Restoring
+namespace Polymerium.Core.Engines.Restoring;
+
+public class RestoreContext
 {
-    public class RestoreContext
+    public RestoreContext(PolylockData polylock)
     {
-        public PolylockData Polylock { get; }
-
-        public RestoreContext(PolylockData polylock)
-        {
-            Polylock = polylock;
-        }
+        Polylock = polylock;
     }
+
+    public PolylockData Polylock { get; }
 }

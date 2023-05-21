@@ -9,6 +9,7 @@ namespace Polymerium.App.ViewModels.Instances;
 public class InstanceConfigurationViewModel : ObservableObject
 {
     private readonly LocalizationService _localizationService;
+
     public InstanceConfigurationViewModel(ViewModelContext context, LocalizationService localizationService)
     {
         _localizationService = localizationService;

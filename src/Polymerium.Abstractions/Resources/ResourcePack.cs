@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Polymerium.Abstractions.Resources;
 
@@ -18,5 +17,6 @@ public record ResourcePack : ResourceBase
         Uri file
     )
         : base(id, name, version, author, iconSource, reference, summary, versionId, update, file)
-    { }
+    {
+    }
 }

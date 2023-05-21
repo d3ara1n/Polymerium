@@ -1,3 +1,5 @@
 ﻿namespace Polymerium.App.Services;
 
-public class FilePoolService { }
+public class FilePoolService
+{
+}

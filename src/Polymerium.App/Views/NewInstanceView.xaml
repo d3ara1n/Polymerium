@@ -18,12 +18,13 @@
                         <EntranceThemeTransition />
                     </Grid.ChildrenTransitions>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                        <TextBlock x:Uid="NewInstanceView_Empty_Label0"  Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <TextBlock x:Uid="NewInstanceView_Empty_Label1"  Style="{StaticResource BodyTextBlockStyle}"
+                        <TextBlock x:Uid="NewInstanceView_Empty_Label0" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <TextBlock x:Uid="NewInstanceView_Empty_Label1" Style="{StaticResource BodyTextBlockStyle}"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                    VerticalAlignment="Bottom" />
                     </StackPanel>
-                    <Button x:Uid="NewInstanceView_Empty_OpenWizardButton" x:Name="OpenWizardButton"  Grid.Row="1" HorizontalAlignment="Center"
+                    <Button x:Uid="NewInstanceView_Empty_OpenWizardButton" x:Name="OpenWizardButton" Grid.Row="1"
+                            HorizontalAlignment="Center"
                             Command="{x:Bind ViewModel.OpenWizardCommand}" />
                 </Grid>
             </controls:Card>
@@ -33,23 +34,26 @@
                         <EntranceThemeTransition />
                     </Grid.ChildrenTransitions>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock x:Uid="NewInstanceView_Online_Label0"  Style="{StaticResource BodyTextBlockStyle}"
+                        <TextBlock x:Uid="NewInstanceView_Online_Label0" Style="{StaticResource BodyTextBlockStyle}"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Uid="NewInstanceView_Online_Label1"  Style="{StaticResource SubtitleTextBlockStyle}" />
-                            <TextBlock x:Uid="NewInstanceView_Online_Label2"  Style="{StaticResource BodyTextBlockStyle}"
+                            <TextBlock x:Uid="NewInstanceView_Online_Label1"
+                                       Style="{StaticResource SubtitleTextBlockStyle}" />
+                            <TextBlock x:Uid="NewInstanceView_Online_Label2"
+                                       Style="{StaticResource BodyTextBlockStyle}"
                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                        VerticalAlignment="Bottom" />
                         </StackPanel>
-                        <TextBlock x:Uid="NewInstanceView_Online_Label3"  Style="{StaticResource BodyTextBlockStyle}"
+                        <TextBlock x:Uid="NewInstanceView_Online_Label3" Style="{StaticResource BodyTextBlockStyle}"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                        <TextBlock x:Uid="NewInstanceView_Online_Label4"  Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <TextBlock x:Uid="NewInstanceView_Online_Label4"
+                                   Style="{StaticResource SubtitleTextBlockStyle}" />
                     </StackPanel>
                     <HyperlinkButton x:Name="GotoSearchButton" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                                      Margin="30" Command="{x:Bind ViewModel.GotoSearchPageCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Uid="NewInstanceView_Online_GoSearchLabel"  />
-                            <FontIcon Glyph="&#xE0AB;" FontSize="12"/>
+                            <TextBlock x:Uid="NewInstanceView_Online_GoSearchLabel" />
+                            <FontIcon Glyph="&#xE0AB;" FontSize="12" />
                         </StackPanel>
                     </HyperlinkButton>
                 </Grid>
@@ -69,8 +73,8 @@
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
                 <FontIcon Glyph="&#xE1E3;" FontSize="44" VerticalAlignment="Center" Margin="0,0,10,0" />
                 <StackPanel>
-                    <TextBlock x:Uid="NewInstanceView_Import_Label0"  Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <TextBlock x:Uid="NewInstanceView_Import_Label1"  Style="{StaticResource BodyTextBlockStyle}"
+                    <TextBlock x:Uid="NewInstanceView_Import_Label0" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock x:Uid="NewInstanceView_Import_Label1" Style="{StaticResource BodyTextBlockStyle}"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 </StackPanel>
             </StackPanel>

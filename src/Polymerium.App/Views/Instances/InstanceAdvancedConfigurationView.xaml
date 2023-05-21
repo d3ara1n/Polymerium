@@ -13,7 +13,7 @@
     <ScrollViewer>
         <controls:Card Margin="5,0,10,10">
             <StackPanel Spacing="5">
-                <TextBlock x:Uid="InstanceAdvancedConfigurationView_Label0" 
+                <TextBlock x:Uid="InstanceAdvancedConfigurationView_Label0"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                            TextWrapping="WrapWholeWords" />
                 <controls:ExpanderEx>
@@ -22,14 +22,15 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE13E;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceAdvancedConfigurationView_InstanceName_Header"  />
+                                    <Run x:Uid="InstanceAdvancedConfigurationView_InstanceName_Header" />
                                     <LineBreak />
                                     <Run
                                         Text="{x:Bind ViewModel.Context.AssociatedInstance.Name,Mode=OneWay,FallbackValue=(未定义)}"
                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
-                            <Button x:Uid="InstanceAdvancedConfigurationView_InstanceName_RenameButton" x:Name="RenameButton"  HorizontalAlignment="Right"
+                            <Button x:Uid="InstanceAdvancedConfigurationView_InstanceName_RenameButton"
+                                    x:Name="RenameButton" HorizontalAlignment="Right"
                                     Click="RenameButton_Click" />
                         </Grid>
                     </controls:ExpanderEx.Header>
@@ -40,14 +41,15 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEDE1;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceAdvancedConfigurationView_Export_Header"  />
+                                    <Run x:Uid="InstanceAdvancedConfigurationView_Export_Header" />
                                     <LineBreak />
                                     <Run x:Uid="InstanceAdvancedConfigurationView_Export_Subheader"
-                                        
-                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
-                            <Button x:Uid="InstanceAdvancedConfigurationView_Export_OpenWizardButton"  HorizontalAlignment="Right"
+                            <Button x:Uid="InstanceAdvancedConfigurationView_Export_OpenWizardButton"
+                                    HorizontalAlignment="Right"
                                     IsEnabled="False" />
                         </Grid>
                     </controls:ExpanderEx.Header>
@@ -58,9 +60,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEBE8;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="InstanceAdvancedConfigurationView_Danger_Header"  />
+                                    <Run x:Uid="InstanceAdvancedConfigurationView_Danger_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="InstanceAdvancedConfigurationView_Danger_Subheader" 
+                                    <Run x:Uid="InstanceAdvancedConfigurationView_Danger_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -69,16 +71,20 @@
                     <StackPanel Spacing="1">
                         <controls:ExpanderExItem>
                             <Grid>
-                                <TextBlock x:Uid="InstanceAdvancedConfigurationView_Danger_ResetLabel"  VerticalAlignment="Center" />
-                                <Button x:Uid="InstanceAdvancedConfigurationView_Danger_ResetButton" x:Name="ResetInstanceButton"  HorizontalAlignment="Right"
+                                <TextBlock x:Uid="InstanceAdvancedConfigurationView_Danger_ResetLabel"
+                                           VerticalAlignment="Center" />
+                                <Button x:Uid="InstanceAdvancedConfigurationView_Danger_ResetButton"
+                                        x:Name="ResetInstanceButton" HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
                                         Click="ResetInstanceButton_Click" />
                             </Grid>
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
                             <Grid>
-                                <TextBlock x:Uid="InstanceAdvancedConfigurationView_Danger_DeleteLabel"  VerticalAlignment="Center" />
-                                <Button x:Uid="InstanceAdvancedConfigurationView_Danger_DeleteButton" x:Name="DeleteInstanceButton"  HorizontalAlignment="Right"
+                                <TextBlock x:Uid="InstanceAdvancedConfigurationView_Danger_DeleteLabel"
+                                           VerticalAlignment="Center" />
+                                <Button x:Uid="InstanceAdvancedConfigurationView_Danger_DeleteButton"
+                                        x:Name="DeleteInstanceButton" HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
                                         Style="{StaticResource AccentButtonStyle}"
                                         Click="DeleteInstanceButton_Click" />

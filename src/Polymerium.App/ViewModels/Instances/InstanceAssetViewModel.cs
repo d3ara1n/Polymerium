@@ -21,21 +21,24 @@ namespace Polymerium.App.ViewModels.Instances;
 
 public class InstanceAssetViewModel : ObservableObject
 {
+    private readonly AssetManager _assetManager;
     private readonly IFileBaseService _fileBase;
-    private readonly AssetManager _gameManager;
+    private readonly LocalizationService _localizationService;
     private readonly INotificationService _notification;
 
     public InstanceAssetViewModel(
         ViewModelContext context,
-        AssetManager gameManager,
+        AssetManager assetManager,
         INotificationService notification,
-        IFileBaseService fileBase
+        IFileBaseService fileBase,
+        LocalizationService localizationService
     )
     {
         Instance = context.AssociatedInstance!;
         _notification = notification;
-        _gameManager = gameManager;
+        _assetManager = assetManager;
         _fileBase = fileBase;
+        _localizationService = localizationService;
         OpenInExplorerCommand = new RelayCommand<InstanceAssetModel>(OpenInExplorer);
         DeleteAssetCommand = new RelayCommand<InstanceAssetModel>(DeleteAsset);
         Assets = new ObservableCollection<InstanceAssetModel>();
@@ -43,11 +46,24 @@ public class InstanceAssetViewModel : ObservableObject
 
     public GameInstanceModel Instance { get; }
     public ObservableCollection<InstanceAssetModel> Assets { get; }
-
     public ResourceType? Type { get; set; }
+
+    public string? TypeFriendlyName { get; set; }
 
     public ICommand OpenInExplorerCommand { get; }
     public ICommand DeleteAssetCommand { get; }
+
+    public void SetType(ResourceType type)
+    {
+        Type = type;
+        TypeFriendlyName = type switch
+        {
+            ResourceType.Mod => _localizationService.GetString("ResourceType_Mod"),
+            ResourceType.ResourcePack => _localizationService.GetString("ResourceType_ResourcePack"),
+            ResourceType.ShaderPack => _localizationService.GetString("ResourceType_ShaderPack"),
+            _ => string.Empty
+        };
+    }
 
     public async Task LoadAssetsAsync(
         IEnumerable<AssetRaw> assets,
@@ -70,7 +86,7 @@ public class InstanceAssetViewModel : ObservableObject
     {
         if (token.IsCancellationRequested)
             return;
-        var result = await _gameManager.ExtractAssetInfoAsync(raw, token);
+        var result = await _assetManager.ExtractAssetInfoAsync(raw, token);
         if (result.HasValue)
         {
             var model = new InstanceAssetModel(
@@ -87,13 +103,14 @@ public class InstanceAssetViewModel : ObservableObject
     public async Task FileAccepted(string fileName, Action<AssetRaw> callback)
     {
         var url = new Uri(fileName);
-        var product = await _gameManager.InstallAssetAsync(Instance.Inner, Type!.Value, url);
+        var product = await _assetManager.InstallAssetAsync(Instance.Inner, Type!.Value, url);
         if (product.HasValue)
         {
             callback(new AssetRaw { FileName = url, Type = Type!.Value });
             _notification.Enqueue(
-                "添加成功",
-                $"{product.Value.Name} 作为 {Type!.Value} 被添加",
+                _localizationService.GetString("InstanceAssetViewModel_AddFile_Accepted_Caption"),
+                _localizationService.GetString("InstanceAssetViewModel_AddFile_Accepted_Message")
+                    .Replace("{0}", product.Value.Name).Replace("{1}", Type!.Value.ToString()),
                 InfoBarSeverity.Success
             );
             var model = new InstanceAssetModel(
@@ -107,7 +124,9 @@ public class InstanceAssetViewModel : ObservableObject
         }
         else
         {
-            _notification.Enqueue("添加失败", "选择的包无法识别，可打开目录手动添加", InfoBarSeverity.Warning);
+            _notification.Enqueue(_localizationService.GetString("InstanceAssetViewModel_AddFile_Rejected_Caption"),
+                _localizationService.GetString("InstanceAssetViewModel_AddFile_Rejected_Caption"),
+                InfoBarSeverity.Warning);
         }
     }
 
@@ -116,7 +135,7 @@ public class InstanceAssetViewModel : ObservableObject
         var path =
             model != null
                 ? _fileBase.Locate(model.Url)
-                : _fileBase.Locate(_gameManager.GetAssetDirectory(Instance.Inner, Type!.Value));
+                : _fileBase.Locate(_assetManager.GetAssetDirectory(Instance.Inner, Type!.Value));
         Process.Start(
             new ProcessStartInfo("explorer.exe")
             {
@@ -139,7 +158,9 @@ public class InstanceAssetViewModel : ObservableObject
                 }
                 catch (Exception e)
                 {
-                    _notification.Enqueue("删除失败", e.Message, InfoBarSeverity.Error);
+                    _notification.Enqueue(
+                        _localizationService.GetString("InstanceAssetViewModel_DeleteFile_Failure_Caption"), e.Message,
+                        InfoBarSeverity.Error);
                 }
 
             Assets.Remove(model);
