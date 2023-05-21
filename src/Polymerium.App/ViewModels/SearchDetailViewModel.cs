@@ -17,7 +17,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Core.Engines;
 using Polymerium.Core.Helpers;
-using Polymerium.Core.ResourceResolving;
 using Polymerium.Core.Resources;
 using File = Polymerium.Abstractions.Resources.File;
 
@@ -29,11 +28,11 @@ public class SearchDetailViewModel : ObservableObject
     private readonly ComponentManager _componentManager;
     private readonly ConfigurationManager _configurationManager;
     private readonly ImportService _importer;
+    private readonly LocalizationService _localizationService;
     private readonly MemoryStorage _memoryStorage;
     private readonly INotificationService _notification;
     private readonly ResolveEngine _resolver;
     private readonly AppSettings _settings;
-    private readonly LocalizationService _localizationService;
 
     public SearchDetailViewModel(
         ViewModelContext context,
@@ -62,12 +61,17 @@ public class SearchDetailViewModel : ObservableObject
 
     public GameInstanceModel Instance { get; }
     public RepositoryAssetMeta? Resource { get; private set; }
-
+    public string? Name { get; private set; }
+    public string? Author { get; private set; }
+    public Uri? IconSource { get; private set; }
     public GameInstanceModel? Scope { get; private set; }
 
     public void GotResources(RepositoryAssetMeta resource, GameInstanceModel? scope)
     {
         Resource = resource;
+        Name = resource.Name;
+        Author = resource.Author;
+        IconSource = resource.IconSource;
         Scope = scope;
     }
 
@@ -182,16 +186,21 @@ public class SearchDetailViewModel : ObservableObject
         instance.Attachments.Add(new Attachment { Source = version.ResourceUrl, From = null });
         _notification.Enqueue(
             _localizationService.GetString("SearchDetailViewModel_InstallAsset_Success_Caption"),
-            _localizationService.GetString("SearchDetailViewModel_InstallAsset_Success_Message").Replace("{0}", Resource!.Value.Name).Replace("{1}", instance.Name),
+            _localizationService
+                .GetString("SearchDetailViewModel_InstallAsset_Success_Message")
+                .Replace("{0}", Resource!.Value.Name)
+                .Replace("{1}", instance.Name),
             InfoBarSeverity.Success
         );
     }
 
-    public void InstallAsset(GameInstance instance, SearchCenterResultItemVersionModel version) =>
+    public void InstallAsset(GameInstance instance, SearchCenterResultItemVersionModel version)
+    {
         InstallAsset(
             new GameInstanceModel(instance, _configurationManager.Current.GameGlobals),
             version
         );
+    }
 
     public async Task InstallModpackAsync(
         SearchCenterResultItemVersionModel version,
@@ -242,47 +251,73 @@ public class SearchDetailViewModel : ObservableObject
                 report(null, false);
                 writer.Close();
                 var importResult = await _importer.ExtractMetadataFromFileAsync(
-                tmpFile,
-                url,
-                _settings.ForceImportOffline,
-                token
-            );
+                    tmpFile,
+                    url,
+                    _settings.ForceImportOffline,
+                    token
+                );
                 if (importResult.IsSuccessful)
                 {
                     var postError = await _importer.SolidifyAsync(importResult.Value, null);
                     if (postError.HasValue)
-                        EndedError(_localizationService.GetString("SearchDetailViewModel_SolidifyModpack_Failure_Message").Replace("{0}", postError.ToString()));
+                        EndedError(
+                            _localizationService
+                                .GetString("SearchDetailViewModel_SolidifyModpack_Failure_Message")
+                                .Replace("{0}", postError.ToString())
+                        );
                     else
-                        EndedSuccess(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Success_Message").Replace("{0}", importResult.Value.Content.Name));
+                        EndedSuccess(
+                            _localizationService
+                                .GetString("SearchDetailViewModel_InstallModpack_Success_Message")
+                                .Replace("{0}", importResult.Value.Content.Name)
+                        );
                 }
                 else
                 {
-                    EndedError(_localizationService.GetString("SearchDetailViewModel_ImportModpack_Failure_Message").Replace("{0}", importResult.Error.ToString()));
+                    EndedError(
+                        _localizationService
+                            .GetString("SearchDetailViewModel_ImportModpack_Failure_Message")
+                            .Replace("{0}", importResult.Error.ToString())
+                    );
                 }
-
             }
             catch (Exception e)
             {
-                EndedError(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Failure_Message").Replace("{0}", e.Message));
+                EndedError(
+                    _localizationService
+                        .GetString("SearchDetailViewModel_InstallModpack_Failure_Message")
+                        .Replace("{0}", e.Message)
+                );
             }
         }
         else
         {
-            EndedError(_localizationService.GetString("SearchDetailViewModel_ResolveModpack_Failure_Message").Replace("{0}", resolveResult.Error.ToString()));
+            EndedError(
+                _localizationService
+                    .GetString("SearchDetailViewModel_ResolveModpack_Failure_Message")
+                    .Replace("{0}", resolveResult.Error.ToString())
+            );
         }
-
 
         report(null, true);
     }
 
     private void EndedError(string message)
     {
-        _notification.Enqueue(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Failure_Caption"), message, InfoBarSeverity.Error);
+        _notification.Enqueue(
+            _localizationService.GetString("SearchDetailViewModel_InstallModpack_Failure_Caption"),
+            message,
+            InfoBarSeverity.Error
+        );
     }
 
     private void EndedSuccess(string message)
     {
-        _notification.Enqueue(_localizationService.GetString("SearchDetailViewModel_InstallModpack_Success_Caption"), message, InfoBarSeverity.Success);
+        _notification.Enqueue(
+            _localizationService.GetString("SearchDetailViewModel_InstallModpack_Success_Caption"),
+            message,
+            InfoBarSeverity.Success
+        );
     }
 
     public string? GetModloaderFriendlyName(string identity)

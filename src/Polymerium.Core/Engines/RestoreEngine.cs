@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
-using Polymerium.Abstractions.Models;
 using Polymerium.Core.Components;
 using Polymerium.Core.Engines.Restoring;
 using Polymerium.Core.Engines.Restoring.Stages;
@@ -19,6 +18,7 @@ namespace Polymerium.Core.Engines;
 
 public class RestoreEngine
 {
+    private readonly AssetManager _assetManager;
     private readonly DownloadEngine _downloader;
     private readonly IFileBaseService _fileBase;
     private readonly ILogger _logger;
@@ -27,7 +27,6 @@ public class RestoreEngine
     private readonly IServiceScope _scope;
     private readonly SHA1 _sha1 = SHA1.Create();
     private readonly WapooOptions _wapooOptions;
-    private readonly AssetManager _assetManager;
 
     public RestoreEngine(
         ILogger<RestoreEngine> logger,
@@ -69,16 +68,16 @@ public class RestoreEngine
     {
         return PipelineBuilder<RestoreError, GameInstance>
             .Create(BuildPolylockData)
-                .Produces(x => (RestoreContext)x)
+            .Produces(x => (RestoreContext)x)
             .Then<RestoreContext>(CompleteAssets)
-                .Produces(x => (RestoreContext)x)
-                .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+            .Produces(x => (RestoreContext)x)
+            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
             .Then<RestoreContext>(CompleteLibraries)
-                .Produces(x => (RestoreContext)x)
-                .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+            .Produces(x => (RestoreContext)x)
+            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
             .Then<RestoreContext>(CompleteAttachments)
-                .Produces(x => (RestoreContext)x)
-                .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
+            .Produces(x => (RestoreContext)x)
+            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
             .Setup().Build();
     }
 

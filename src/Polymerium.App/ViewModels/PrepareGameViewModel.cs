@@ -8,8 +8,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.Notifications;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Accounts;
@@ -31,11 +29,11 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
     private readonly ConfigurationManager _configurationManager;
     private readonly DispatcherQueue _dispatcher;
     private readonly IFileBaseService _fileBase;
+    private readonly GameManager _gameManager;
     private readonly JavaManager _javaManager;
     private readonly MemoryStorage _memoryStorage;
     private readonly IOverlayService _overlayService;
     private readonly RestoreEngine _restore;
-    private readonly GameManager _gameManager;
 
     private readonly CancellationTokenSource source = new();
     private IGameAccount? account;
@@ -318,7 +316,8 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                             .Where(
                                                 x =>
                                                     x
-                                                        is {
+                                                        is
+                                                        {
                                                             PresentInClassPath: true,
                                                             IsNative: false
                                                         }
@@ -360,7 +359,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
         _dispatcher.TryEnqueue(async () =>
         {
             _overlayService.Dismiss();
-            var dialog = new MessageDialog()
+            var dialog = new MessageDialog
             {
                 XamlRoot = App.Current.Window.Content.XamlRoot,
                 Title = "关键错误",

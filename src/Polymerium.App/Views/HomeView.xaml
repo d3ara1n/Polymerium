@@ -30,7 +30,7 @@
                                          PlaceholderSource="ms-appx:///Assets/Placeholders/default_avatar_bust.png" />
                         <StackPanel Grid.Column="1" Margin="15" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}">
-                                <Run x:Uid="HomeView_HelloLabel"  />
+                                <Run x:Uid="HomeView_HelloLabel" />
                                 <Run
                                     Text="{x:Bind ViewModel.Context.SelectedAccount.Nickname,Mode=OneWay,Converter={StaticResource NullToParameterConverter},ConverterParameter=未登录}" />
                             </TextBlock>
@@ -44,7 +44,7 @@
             <ScrollViewer Grid.Row="1">
                 <StackPanel>
                     <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,5">
-                        <TextBlock x:Uid="HomeView_RecentPlayLabel.Text"  />
+                        <TextBlock x:Uid="HomeView_RecentPlayLabel" />
                     </Grid>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                         <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}" Margin="0,0,0,5">
@@ -109,7 +109,7 @@
             <ProgressRing IsIndeterminate="True" Grid.RowSpan="9" VerticalAlignment="Center"
                           HorizontalAlignment="Center"
                           Visibility="{x:Bind IsNewsLoading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
-            <TextBlock x:Uid="HomeView_NewsLabel"  Margin="5,0,10,5" />
+            <TextBlock x:Uid="HomeView_NewsLabel" Margin="5,0,10,5" />
             <Grid Grid.Row="1">
                 <ListView ItemsSource="{x:Bind News}" Width="256" SelectionMode="None">
                     <ListView.ItemTemplate>
@@ -117,7 +117,8 @@
                             <controls:Card x:Name="Container" Margin="5,5,10,5" Padding="0">
                                 <StackPanel>
                                     <toolkit:ConstrainedBox AspectRatio="350:224">
-                                        <toolkit:ImageEx Source="{x:Bind ImageSource}" CornerRadius="{Binding CornerRadius,Mode=OneWay,ElementName=Container,Converter={StaticResource TopCornerRadiusFilterConverter}}"
+                                        <toolkit:ImageEx Source="{x:Bind ImageSource}"
+                                                         CornerRadius="{Binding CornerRadius,Mode=OneWay,ElementName=Container,Converter={StaticResource TopCornerRadiusFilterConverter}}"
                                                          ToolTipService.ToolTip="{x:Bind ImageSource}" Stretch="Fill" />
                                     </toolkit:ConstrainedBox>
                                     <Grid RowDefinitions="*,Auto" Margin="12">
@@ -132,7 +133,8 @@
                                                 Text="{x:Bind Date,Converter={StaticResource DateTimeOffsetToHumanStringConverter}}"
                                                 Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                                 HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                            <HyperlinkButton x:Uid="HomeView_News_ReadMoreLink"  ToolTipService.ToolTip="{x:Bind ReadMore}"
+                                            <HyperlinkButton x:Uid="HomeView_News_ReadMoreLink"
+                                                             ToolTipService.ToolTip="{x:Bind ReadMore}"
                                                              NavigateUri="{x:Bind ReadMore}"
                                                              HorizontalAlignment="Right" VerticalAlignment="Center" />
                                         </Grid>

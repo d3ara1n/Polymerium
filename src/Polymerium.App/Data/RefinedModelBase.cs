@@ -7,11 +7,9 @@ public abstract class RefinedModelBase<T>
 {
     private static readonly JsonSerializerSettings serializerSettings = new();
 
-    [JsonIgnore]
-    public abstract Uri Location { get; }
+    [JsonIgnore] public abstract Uri Location { get; }
 
-    [JsonIgnore]
-    public virtual JsonSerializerSettings SerializerSettings { get; } = serializerSettings;
+    [JsonIgnore] public virtual JsonSerializerSettings SerializerSettings { get; } = serializerSettings;
 
     public abstract T Extract();
 

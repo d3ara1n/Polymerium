@@ -1,7 +1,7 @@
-using Polymerium.Core.Stars.Facilities;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Polymerium.Core.Stars.Facilities;
 
 namespace Polymerium.Core.Stars;
 
@@ -9,17 +9,24 @@ public class PlanetaryEngine : IDisposable
 {
     private readonly PlanetaryEngineOptions _options;
 
+    private readonly bool isDisposing = false;
+
+    private ulong lineReceived;
+
+    public PlanetaryEngine(PlanetaryEngineOptions options)
+    {
+        _options = options;
+    }
+
     public bool IsFired { get; private set; }
 
     public Process? Core { get; private set; }
 
     public StreamBuffer<PlanetScrap> Output { get; } = new();
 
-    private ulong lineReceived = 0;
-
-    public PlanetaryEngine(PlanetaryEngineOptions options)
+    public void Dispose()
     {
-        _options = options;
+        Dispose(isDisposing);
     }
 
     public void LaunchFireForget()
@@ -70,7 +77,7 @@ public class PlanetaryEngine : IDisposable
 
     private void OutputDataReceived(string line, PlanetScrapSeverity severity)
     {
-        var scrap = new PlanetScrap()
+        var scrap = new PlanetScrap
         {
             Index = lineReceived++,
             Line = line,
@@ -80,16 +87,9 @@ public class PlanetaryEngine : IDisposable
         Output.Add(scrap);
     }
 
-    public void Dispose() => Dispose(isDisposing);
-
-    private bool isDisposing = false;
-
     protected void Dispose(bool disposed)
     {
-        if (!disposed)
-        {
-            disposed = true;
-            // do clean
-        }
+        if (!disposed) disposed = true;
+        // do clean
     }
 }

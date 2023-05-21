@@ -1,11 +1,12 @@
-﻿using CliFx;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CliFx;
 
-namespace Polymerium.Cli
+namespace Polymerium.Cli;
+
+internal static class Program
 {
-    internal static class Program
+    private static async Task<int> Main()
     {
-        static async Task<int> Main() =>
-            await new CliApplicationBuilder().AddCommandsFromThisAssembly().Build().RunAsync();
+        return await new CliApplicationBuilder().AddCommandsFromThisAssembly().Build().RunAsync();
     }
 }

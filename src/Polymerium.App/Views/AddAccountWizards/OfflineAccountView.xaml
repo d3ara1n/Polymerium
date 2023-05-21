@@ -11,10 +11,10 @@
 
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock x:Uid="OfflineAccountView_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
-            <TextBlock x:Uid="OfflineAccountView_UsernameLabel"  />
+            <TextBlock x:Uid="OfflineAccountView_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="OfflineAccountView_UsernameLabel" />
             <TextBox Text="{x:Bind ViewModel.Nickname,Mode=TwoWay}" />
-            <TextBlock x:Uid="OfflineAccountView_UuidLabel"  />
+            <TextBlock x:Uid="OfflineAccountView_UuidLabel" />
             <TextBox Text="{x:Bind ViewModel.UUID,Mode=TwoWay}"
                      PlaceholderText="{x:Bind ViewModel.EmptyUUID,Mode=OneWay}" />
             <TextBlock Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" />

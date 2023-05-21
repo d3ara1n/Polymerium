@@ -7,7 +7,6 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.UI.Xaml.Media.Animation;
 using Newtonsoft.Json.Linq;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -21,8 +20,8 @@ public class HomeViewModel : ObservableObject
 #pragma warning disable S1075 // URIs should not be hardcoded
     private const string LAUNCH_CONTENT_URL_BASE = "https://launchercontent.mojang.com";
 #pragma warning restore S1075 // URIs should not be hardcoded
-    private readonly NavigationService navigationService;
     private readonly IMemoryCache _cache;
+    private readonly NavigationService navigationService;
 
     public HomeViewModel(
         MemoryStorage memoryStorage,
@@ -136,13 +135,9 @@ public class HomeViewModel : ObservableObject
                     })
                     .FetchAsync();
                 if (list.Count > 0)
-                {
                     entry.SetSlidingExpiration(TimeSpan.FromMinutes(60));
-                }
                 else
-                {
                     entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
-                }
                 return list;
             }
         );

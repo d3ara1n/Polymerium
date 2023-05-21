@@ -5,9 +5,6 @@ using System;
 using Windows.Graphics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.Extensions.DependencyInjection;
-using Polymerium.App.Services;
-using Polymerium.App.Configurations;
 
 namespace Polymerium.App.Views;
 

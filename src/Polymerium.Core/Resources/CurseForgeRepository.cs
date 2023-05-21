@@ -19,6 +19,7 @@ public class CurseForgeRepository : IResourceRepository
     }
 
     public RepositoryLabel Label => RepositoryLabel.CurseForge;
+
     public ResourceType SupportedResources =>
         ResourceType.Modpack | ResourceType.Mod | ResourceType.ResourcePack;
 

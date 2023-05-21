@@ -16,12 +16,16 @@ public static class MicrosoftAccountHelper
 {
     private const string DEVICE_ENDPOINT =
         "https://login.microsoftonline.com/consumers/oauth2/v2.0/devicecode";
+
     private const string TOKEN_ENDPOINT =
         "https://login.microsoftonline.com/consumers/oauth2/v2.0/token";
+
     private const string XBOX_ENDPOINT = "https://user.auth.xboxlive.com/user/authenticate";
     private const string XSTS_ENDPOINT = "https://xsts.auth.xboxlive.com/xsts/authorize";
+
     private const string MINECRAFT_ENDPOINT =
         "https://api.minecraftservices.com/authentication/login_with_xbox";
+
     private const string STORE_ENDPOINT = "https://api.minecraftservices.com/entitlements/mcstore";
     private const string PROFILE_ENDPOINT = "https://api.minecraftservices.com/minecraft/profile";
     private const string CLIENT_ID = "66b049dc-22a1-4fd8-a17d-2ccd01332101";

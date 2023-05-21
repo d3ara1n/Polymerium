@@ -28,9 +28,14 @@ public sealed partial class InstanceAdvancedConfigurationView : Page
         };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             if (ViewModel.DeleteInstance())
-                ViewModel.PopNotification(ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Caption"), ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Success_Message"));
+                ViewModel.PopNotification(
+                    ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Caption"),
+                    ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Success_Message"));
             else
-                ViewModel.PopNotification(ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Caption"), ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Failure_Message"), InfoBarSeverity.Error);
+                ViewModel.PopNotification(
+                    ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Caption"),
+                    ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Delete_Failure_Message"),
+                    InfoBarSeverity.Error);
     }
 
     private async void ResetInstanceButton_Click(object sender, RoutedEventArgs e)
@@ -43,9 +48,14 @@ public sealed partial class InstanceAdvancedConfigurationView : Page
         };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             if (ViewModel.ResetInstance())
-                ViewModel.PopNotification(ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Caption"), ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Success_Message"));
+                ViewModel.PopNotification(
+                    ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Caption"),
+                    ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Success_Message"));
             else
-                ViewModel.PopNotification(ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Caption"), ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Failure_Message"), InfoBarSeverity.Error);
+                ViewModel.PopNotification(
+                    ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Caption"),
+                    ViewModel.Localization.GetString("InstanceAdvancedConfigurtationView_Reset_Failure_Message"),
+                    InfoBarSeverity.Error);
     }
 
     private async void RenameButton_Click(object sender, RoutedEventArgs e)

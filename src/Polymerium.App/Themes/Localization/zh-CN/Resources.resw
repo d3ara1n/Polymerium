@@ -603,4 +603,94 @@
   <data name="InstanceAdvancedConfigurtationView_Reset_Caption" xml:space="preserve">
     <value>重置</value>
   </data>
+  <data name="InstanceSelectorDialog.CloseButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="InstanceSelectorDialog.PrimaryButtonText" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="InstanceSelectorDialog.Title" xml:space="preserve">
+    <value>选择一个实例以继续</value>
+  </data>
+  <data name="InstanceView_Other_Author_Label" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="InstanceView_Other_Author_Unknown" xml:space="preserve">
+    <value>(未标注)</value>
+  </data>
+  <data name="InstanceView_Other_CreateDate_Label" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="InstanceView_Other_Identity_Label" xml:space="preserve">
+    <value>标识符</value>
+  </data>
+  <data name="InstanceView_Other_LastPlay_Label" xml:space="preserve">
+    <value>最后一次游玩</value>
+  </data>
+  <data name="InstanceView_Other_LastPlay_Unknown" xml:space="preserve">
+    <value>从未</value>
+  </data>
+  <data name="InstanceView_Other_LastRestore_Label" xml:space="preserve">
+    <value>最后一次还原</value>
+  </data>
+  <data name="InstanceView_Other_LastRestore_Unknown" xml:space="preserve">
+    <value>从未</value>
+  </data>
+  <data name="InstanceView_Other_PlayCount_Label" xml:space="preserve">
+    <value>游戏次数</value>
+  </data>
+  <data name="InstanceView_Other_PlayTime_Label" xml:space="preserve">
+    <value>游戏时间</value>
+  </data>
+  <data name="InstanceView_Other_SuccessRate_Label" xml:space="preserve">
+    <value>启动成功率</value>
+  </data>
+  <data name="InstanceView_Save_Empty.Text" xml:space="preserve">
+    <value>空</value>
+  </data>
+  <data name="InstanceView_Screenshot_Empty.Text" xml:space="preserve">
+    <value>没有截图可以展示，游戏中按下 F2 生成截图</value>
+  </data>
+  <data name="InstanceView_Screenshot_Header.Text" xml:space="preserve">
+    <value>截图</value>
+  </data>
+  <data name="InstanceView_Save_OpenExplorerButton.Content" xml:space="preserve">
+    <value>打开目录</value>
+  </data>
+  <data name="InstanceView_Screenshot_OpenExplorerButton.Content" xml:space="preserve">
+    <value>打开目录</value>
+  </data>
+  <data name="InstanceAssetViewModel_AddFile_Accepted_Caption" xml:space="preserve">
+    <value>添加成功</value>
+  </data>
+  <data name="InstanceAssetViewModel_AddFile_Accepted_Message" xml:space="preserve">
+    <value>{0} 作为 {1} 被添加</value>
+  </data>
+  <data name="InstanceAssetViewModel_AddFile_Rejected_Caption" xml:space="preserve">
+    <value>添加失败</value>
+  </data>
+  <data name="InstanceAssetViewModel_AddFile_Rejected_Message" xml:space="preserve">
+    <value>选择的包无法识别，可打开目录手动添加</value>
+  </data>
+  <data name="InstanceAssetViewModel_DeleteFile_Failure_Caption" xml:space="preserve">
+    <value>删除失败</value>
+  </data>
+  <data name="InstanceAssetDrawer_ImportLabel0.Text" xml:space="preserve">
+    <value>从文件添加</value>
+  </data>
+  <data name="InstanceAssetDrawer_AssetSearch.PlaceholderText" xml:space="preserve">
+    <value>搜索已安装的游戏资产</value>
+  </data>
+  <data name="InstanceAssetDrawer_DeleteButton.Content" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="InstanceAssetDrawer_ImportLabel1.Text" xml:space="preserve">
+    <value>拖入文件以添加</value>
+  </data>
+  <data name="InstanceAssetDrawer_OpenExplorerLink.Text" xml:space="preserve">
+    <value>在资源管理器中查看</value>
+  </data>
+  <data name="InstanceAssetDrawer_VersionLabel.Text" xml:space="preserve">
+    <value>版本</value>
+  </data>
 </root>

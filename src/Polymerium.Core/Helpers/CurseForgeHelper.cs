@@ -50,8 +50,9 @@ public static class CurseForgeHelper
         };
     }
 
-    public static ResourceType GetResourceTypeFromClassId(uint classId) =>
-        classId switch
+    public static ResourceType GetResourceTypeFromClassId(uint classId)
+    {
+        return classId switch
         {
             6 => ResourceType.Mod,
             12 => ResourceType.ResourcePack,
@@ -60,6 +61,7 @@ public static class CurseForgeHelper
             4471 => ResourceType.Modpack,
             _ => throw new NotImplementedException()
         };
+    }
 
     private static async Task<T?> GetResourceAsync<T>(
         string service,
@@ -70,7 +72,7 @@ public static class CurseForgeHelper
     {
         if (token.IsCancellationRequested)
             return null;
-        return await cache.GetOrCreateAsync<T?>(
+        return await cache.GetOrCreateAsync(
             service,
             async entry =>
             {
@@ -135,23 +137,23 @@ public static class CurseForgeHelper
         if (token.IsCancellationRequested)
             return Enumerable.Empty<T>();
         return await cache.GetOrCreateAsync(
-                service,
-                async entry =>
-                {
-                    IEnumerable<T>? results = null;
-                    await Wapoo
-                        .Wohoo(ENDPOINT + service)
-                        .WithHeader("x-api-key", API_KEY)
-                        .ForJsonResult<JObject>(x =>
-                        {
-                            if (x.ContainsKey("data"))
-                                results = x["data"]!.ToObject<IEnumerable<T>>();
-                        })
-                        .FetchAsync();
-                    entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
-                    return results ?? Enumerable.Empty<T>();
-                }
-            ) ?? Enumerable.Empty<T>();
+            service,
+            async entry =>
+            {
+                IEnumerable<T>? results = null;
+                await Wapoo
+                    .Wohoo(ENDPOINT + service)
+                    .WithHeader("x-api-key", API_KEY)
+                    .ForJsonResult<JObject>(x =>
+                    {
+                        if (x.ContainsKey("data"))
+                            results = x["data"]!.ToObject<IEnumerable<T>>();
+                    })
+                    .FetchAsync();
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
+                return results ?? Enumerable.Empty<T>();
+            }
+        ) ?? Enumerable.Empty<T>();
     }
 
     public static async Task<IEnumerable<EternalProject>> SearchProjectsAsync(

@@ -84,15 +84,16 @@
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform x:Name="AccountTranslateTransform" />
                                     </TextBlock.RenderTransform>
-                                    <Run x:Uid="PrepareGameDialog_PlayAsLabel0"  />
+                                    <Run x:Uid="PrepareGameDialog_PlayAsLabel0" />
                                     <Run x:Name="DisplayName" Text="{x:Bind ViewModel.Account.Nickname}" />
-                                    <Run x:Uid="PrepareGameDialog_PlayAsLabel1"  />
+                                    <Run x:Uid="PrepareGameDialog_PlayAsLabel1" />
                                 </TextBlock>
                             </StackPanel>
-                            <controls:GlowingButton x:Name="GameReadyButton" Opacity="0" IsEnabled="{x:Bind IsReady,Mode=OneWay}"
+                            <controls:GlowingButton x:Name="GameReadyButton" Opacity="0"
+                                                    IsEnabled="{x:Bind IsReady,Mode=OneWay}"
                                                     HorizontalAlignment="Center" VerticalAlignment="Center"
                                                     Command="{x:Bind ViewModel.StartCommand}">
-                                <TextBlock x:Uid="PrepareGameDialog_PlayButtonLabel"  FontSize="26" />
+                                <TextBlock x:Uid="PrepareGameDialog_PlayButtonLabel" FontSize="26" />
                             </controls:GlowingButton>
                         </Grid>
                         <Grid x:Name="Prompt" ToolTipService.ToolTip="{x:Bind ViewModel.ProgressDetails,Mode=OneWay}"

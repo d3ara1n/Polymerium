@@ -37,14 +37,14 @@
         </ContentControl.Template>
         <ScrollViewer IsEnabled="{x:Bind IsOperable,Mode=OneWay}">
             <StackPanel Spacing="12" Margin="25">
-                <TextBlock x:Uid="ImportModpackWizardDialog_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
-                <TextBlock x:Uid="ImportModpackWizardDialog_NameLabel"  />
+                <TextBlock x:Uid="ImportModpackWizardDialog_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="ImportModpackWizardDialog_NameLabel" />
                 <TextBox Text="{x:Bind ViewModel.InstanceName,Mode=TwoWay}"
                          PlaceholderText="{x:Bind ViewModel.Exposed.Name,Mode=OneWay}" />
-                <TextBlock x:Uid="ImportModpackWizardDialog_VersionLabel"  />
+                <TextBlock x:Uid="ImportModpackWizardDialog_VersionLabel" />
                 <TextBlock Text="{x:Bind ViewModel.Exposed.Version,Mode=OneWay}"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                <TextBlock x:Uid="ImportModpackWizardDialog_AuthorLabel"  />
+                <TextBlock x:Uid="ImportModpackWizardDialog_AuthorLabel" />
                 <TextBlock Text="{x:Bind ViewModel.Exposed.Author,Mode=OneWay}"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
             </StackPanel>
@@ -52,9 +52,10 @@
     </ContentControl>
     <controls:CustomDialog.OperationContent>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-            <Button x:Uid="ImportModpackWizardDialog_FinishButton" x:Name="ConfirmButton"  IsEnabled="{x:Bind IsOperable,Mode=OneWay}"
+            <Button x:Uid="ImportModpackWizardDialog_FinishButton" x:Name="ConfirmButton"
+                    IsEnabled="{x:Bind IsOperable,Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" Click="ConfirmButton_OnClick" />
-            <Button x:Uid="ImportModpackWizardDialog_CancelButton" x:Name="CancelButton"  Click="CancelButton_OnClick" />
+            <Button x:Uid="ImportModpackWizardDialog_CancelButton" x:Name="CancelButton" Click="CancelButton_OnClick" />
         </StackPanel>
     </controls:CustomDialog.OperationContent>
 </controls:CustomDialog>

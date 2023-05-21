@@ -44,7 +44,7 @@
                                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                         <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                            <Run x:Uid="InstanceView_Header_ReferenceLabel_Import"  />
+                                            <Run x:Uid="InstanceView_Header_ReferenceLabel_Import" />
                                             <Hyperlink NavigateUri="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}"
                                                        ToolTipService.ToolTip="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}">
                                                 <Run x:Uid="InstanceView_Header_ReferenceLabel_Modpack" />
@@ -52,7 +52,7 @@
                                         </TextBlock>
                                         <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                            <Run x:Uid="InstanceView_Header_ReferenceLabel_With"  />
+                                            <Run x:Uid="InstanceView_Header_ReferenceLabel_With" />
                                             <Hyperlink>
                                                 <Run x:Uid="InstanceView_Header_ReferenceLabel_Attachment" />
                                             </Hyperlink>
@@ -60,26 +60,26 @@
                                     </StackPanel>
                                 </ContentControl>
                                 <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
-                                        <Run x:Uid="InstanceView_Header_GameVersionLabel"  />
-                                        <Run Text="{x:Bind ViewModel.CoreVersion,Mode=OneWay}" />
+                                    <Run x:Uid="InstanceView_Header_GameVersionLabel" />
+                                    <Run Text="{x:Bind ViewModel.CoreVersion,Mode=OneWay}" />
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Spacing="3">
-                                <Button x:Uid="InstanceView_Header_StartButton" x:Name="StartButton" VerticalAlignment="Top" HorizontalAlignment="Right"
-                                         Width="114" Click="StartButton_Click"
-                                        Style="{StaticResource AccentButtonStyle}">
-                                </Button>
+                                <Button x:Uid="InstanceView_Header_StartButton" x:Name="StartButton"
+                                        VerticalAlignment="Top" HorizontalAlignment="Right"
+                                        Width="114" Click="StartButton_Click"
+                                        Style="{StaticResource AccentButtonStyle}" />
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                             Visibility="{x:Bind ViewModel.IsRestorationNeeded,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
                                             Spacing="3">
                                     <FontIcon Glyph="&#xE946;" FontSize="12" />
-                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_Yes"  />
+                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_Yes" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                             Visibility="{x:Bind ViewModel.IsRestorationNeeded,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
                                             Spacing="3">
                                     <FontIcon Glyph="&#xE73E;" FontSize="12" />
-                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_No"  />
+                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_No" />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
@@ -116,7 +116,8 @@
                             </ScrollViewer>
                             <Grid Grid.Column="1">
                                 <StackPanel Orientation="Horizontal">
-                                    <Button x:Uid="InstanceView_Header_EditButton" x:Name="EditButton" HorizontalAlignment="Right"
+                                    <Button x:Uid="InstanceView_Header_EditButton" x:Name="EditButton"
+                                            HorizontalAlignment="Right"
                                             Style="{StaticResource IconButtonStyle}"
                                             VerticalAlignment="Bottom" ToolTipService.ToolTip=""
                                             Command="{x:Bind ViewModel.GotoConfigurationViewCommand}">
@@ -138,7 +139,7 @@
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-basil-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock x:Uid="InstanceView_Asset_ResourcePackLabel"  FontSize="16" />
+                                <TextBlock x:Uid="InstanceView_Asset_ResourcePackLabel" FontSize="16" />
                                 <TextBlock Text="{x:Bind ViewModel.ResourcePackCount,Mode=OneWay}"
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
@@ -150,12 +151,12 @@
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-plugin-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock x:Uid="InstanceView_Asset_ModLabel"  FontSize="16" />
+                                <TextBlock x:Uid="InstanceView_Asset_ModLabel" FontSize="16" />
                                 <Grid>
                                     <TextBlock Text="{x:Bind ViewModel.ModCount,Mode=OneWay}"
                                                Visibility="{x:Bind ViewModel.IsModSupported,Converter={StaticResource BoolToVisibilityConverter}}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                    <TextBlock x:Uid="InstanceView_Asset_UnsupportedLabel" 
+                                    <TextBlock x:Uid="InstanceView_Asset_UnsupportedLabel"
                                                Visibility="{x:Bind ViewModel.IsModSupported,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </Grid>
@@ -168,12 +169,12 @@
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center">
                             <ImageIcon Source="ms-appx:///Assets/Icons/icons8-color-wheel-48.png" Margin="0,0,10,0" />
                             <StackPanel Grid.Column="1" Spacing="5" VerticalAlignment="Center">
-                                <TextBlock x:Uid="InstanceView_Asset_ShaderPackLabel"  FontSize="16" />
+                                <TextBlock x:Uid="InstanceView_Asset_ShaderPackLabel" FontSize="16" />
                                 <Grid>
                                     <TextBlock Text="{x:Bind ViewModel.ShaderPackCount,Mode=OneWay}"
                                                Visibility="{x:Bind ViewModel.IsShaderSupported,Converter={StaticResource BoolToVisibilityConverter}}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                    <TextBlock x:Uid="InstanceView_Asset_UnsupportedLabel" 
+                                    <TextBlock x:Uid="InstanceView_Asset_UnsupportedLabel"
                                                Visibility="{x:Bind ViewModel.IsShaderSupported,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </Grid>
@@ -182,17 +183,31 @@
                     </Button>
                 </Grid>
             </controls:Card>
-            <controls:GroupBox Margin="5,5,10,5" Visibility="Collapsed">
+            <controls:GroupBox Margin="5,5,10,5">
                 <controls:GroupBox.Header>
-                    <TextBlock Text="截图" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <Grid>
+                        <TextBlock x:Uid="InstanceView_Screenshot_Header"
+                                   Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <Button x:Uid="InstanceView_Screenshot_OpenExplorerButton"
+                                Style="{StaticResource IconButtonStyle}" HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.OpenInExplorerCommand}" CommandParameter="screenshots" />
+                    </Grid>
                 </controls:GroupBox.Header>
                 <toolkit:ConstrainedBox AspectRatio="16:9">
                     <Grid>
                         <Grid.ChildrenTransitions>
                             <ContentThemeTransition />
                         </Grid.ChildrenTransitions>
-                        <TextBlock Text="没有截图可以展示，游戏中按下 F2 生成截图" VerticalAlignment="Center"
+                        <TextBlock x:Uid="InstanceView_Screenshot_Empty" VerticalAlignment="Center"
                                    HorizontalAlignment="Center" />
+                        <FlipView ItemsSource="{x:Bind ViewModel.Screenshots}"
+                                  Visibility="{x:Bind ViewModel.Screenshots.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibleConverter},ConverterParameter=reversed}">
+                            <FlipView.ItemTemplate>
+                                <DataTemplate x:DataType="models:InstanceScreenshotModel">
+                                    <toolkit:ImageEx Source="{x:Bind FileName}" Stretch="Uniform" />
+                                </DataTemplate>
+                            </FlipView.ItemTemplate>
+                        </FlipView>
                     </Grid>
                 </toolkit:ConstrainedBox>
             </controls:GroupBox>
@@ -200,7 +215,13 @@
                 <Grid ColumnDefinitions="1*,1*" MaxHeight="512">
                     <controls:GroupBox Margin="5,5,5,5">
                         <controls:GroupBox.Header>
-                            <TextBlock x:Uid="InstanceView_Save_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
+                            <Grid>
+                                <TextBlock x:Uid="InstanceView_Save_Header"
+                                           Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <Button x:Uid="InstanceView_Save_OpenExplorerButton"
+                                        Style="{StaticResource IconButtonStyle}" HorizontalAlignment="Right"
+                                        Command="{x:Bind ViewModel.OpenInExplorerCommand}" CommandParameter="saves" />
+                            </Grid>
                         </controls:GroupBox.Header>
                         <Grid>
                             <Grid.ChildrenTransitions>
@@ -238,7 +259,7 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <TextBlock Text="空" VerticalAlignment="Center"
+                            <TextBlock x:Uid="InstanceView_Save_Empty" VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
                                        Visibility="{x:Bind ViewModel.Saves.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibleConverter}}" />
                         </Grid>
@@ -246,8 +267,9 @@
                     <controls:GroupBox Margin="5,5,10,5" Grid.Column="1" Visibility="Collapsed">
                         <controls:GroupBox.Header>
                             <Grid>
-                                <TextBlock x:Uid="InstanceView_Server_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
-                                <Button x:Uid="InstanceView_Server_AddButton"  Style="{StaticResource IconButtonStyle}"
+                                <TextBlock x:Uid="InstanceView_Server_Header"
+                                           Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <Button x:Uid="InstanceView_Server_AddButton" Style="{StaticResource IconButtonStyle}"
                                         HorizontalAlignment="Right" />
                             </Grid>
                         </controls:GroupBox.Header>
@@ -255,7 +277,7 @@
                             <Grid.ChildrenTransitions>
                                 <ContentThemeTransition />
                             </Grid.ChildrenTransitions>
-                            <TextBlock Text="WIP" VerticalAlignment="Center"
+                            <TextBlock Text="空" VerticalAlignment="Center"
                                        HorizontalAlignment="Center" />
                         </Grid>
                     </controls:GroupBox>
@@ -263,7 +285,7 @@
             </ScrollViewer>
             <controls:GroupBox Margin="5,5,10,10">
                 <controls:GroupBox.Header>
-                    <TextBlock x:Uid="InstanceView_Other_Header"  Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <TextBlock x:Uid="InstanceView_Other_Header" Style="{StaticResource BodyStrongTextBlockStyle}" />
                 </controls:GroupBox.Header>
                 <Grid>
                     <Grid.ChildrenTransitions>

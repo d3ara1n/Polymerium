@@ -26,11 +26,13 @@ public class ModrinthResolver : ResourceResolverBase
         _cache = cache;
     }
 
-    private string MembersToLine(IEnumerable<LabrinthTeamMember> members) =>
-        string.Join(
+    private string MembersToLine(IEnumerable<LabrinthTeamMember> members)
+    {
+        return string.Join(
             ", ",
             members.Select(x => !string.IsNullOrEmpty(x.User.Name) ? x.User.Name : x.User.Username)
         );
+    }
 
     private async Task<Result<ResolveResult, ResolveResultError>> GetProjectAsync(
         ResourceType type,
@@ -55,8 +57,9 @@ public class ModrinthResolver : ResourceResolverBase
     public async Task<Result<ResolveResult, ResolveResultError>> GetModpackAsync(
         string projectId,
         string version
-    ) =>
-        await GetProjectAsync(
+    )
+    {
+        return await GetProjectAsync(
             ResourceType.Modpack,
             projectId,
             version,
@@ -86,14 +89,16 @@ public class ModrinthResolver : ResourceResolverBase
                     )
                 )
         );
+    }
 
     [ResourceType(ResourceType.Mod)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetModAsync(
         string projectId,
         string version
-    ) =>
-        await GetProjectAsync(
+    )
+    {
+        return await GetProjectAsync(
             ResourceType.Mod,
             projectId,
             version,
@@ -123,14 +128,16 @@ public class ModrinthResolver : ResourceResolverBase
                     )
                 )
         );
+    }
 
     [ResourceType(ResourceType.ResourcePack)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetResourcePackAsync(
         string projectId,
         string version
-    ) =>
-        await GetProjectAsync(
+    )
+    {
+        return await GetProjectAsync(
             ResourceType.ResourcePack,
             projectId,
             version,
@@ -162,14 +169,16 @@ public class ModrinthResolver : ResourceResolverBase
                     )
                 )
         );
+    }
 
     [ResourceType(ResourceType.ShaderPack)]
     [ResourceExpression("{projectId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetShaderPackAsync(
         string projectId,
         string version
-    ) =>
-        await GetProjectAsync(
+    )
+    {
+        return await GetProjectAsync(
             ResourceType.ShaderPack,
             projectId,
             version,
@@ -199,6 +208,7 @@ public class ModrinthResolver : ResourceResolverBase
                     )
                 )
         );
+    }
 
     [ResourceType(ResourceType.File)]
     [ResourceExpression("{dir}/{version}")]

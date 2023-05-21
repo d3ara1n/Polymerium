@@ -5,8 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:models="using:Polymerium.App.Models"
     mc:Ignorable="d">
     <ScrollViewer>
         <controls:Card Margin="5,0,10,10" Padding="50">
@@ -14,25 +12,26 @@
                 <StackPanel.ChildrenTransitions>
                     <EntranceThemeTransition />
                 </StackPanel.ChildrenTransitions>
-                <TextBlock x:Uid="SettingView_Application_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingView_Application_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
                         <Grid>
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE18A;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="SettingView_Application_SuperPower_Header"  />
+                                    <Run x:Uid="SettingView_Application_SuperPower_Header" />
                                 </TextBlock>
                             </StackPanel>
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.IsSuperPowerActivated,Mode=TwoWay}" HorizontalAlignment="Right" Margin="0,0,-85,0" />
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.IsSuperPowerActivated,Mode=TwoWay}"
+                                          HorizontalAlignment="Right" Margin="0,0,-85,0" />
                         </Grid>
                     </controls:ExpanderEx.Header>
                     <StackPanel Spacing="1">
                         <controls:ExpanderExItem>
-                            <TextBlock x:Uid="SettingView_Application_SuperPower_Label0"  />
+                            <TextBlock x:Uid="SettingView_Application_SuperPower_Label0" />
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
-                            <Button x:Uid="SettingView_Application_SuperPower_UselessButton"  />
+                            <Button x:Uid="SettingView_Application_SuperPower_UselessButton" />
                         </controls:ExpanderExItem>
                     </StackPanel>
                 </controls:ExpanderEx>
@@ -42,13 +41,15 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE164;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="SettingView_Application_Language_Header"  />
+                                    <Run x:Uid="SettingView_Application_Language_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="SettingView_Application_Language_Subheader" 
+                                    <Run x:Uid="SettingView_Application_Language_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
-                            <ComboBox SelectedItem="{x:Bind ViewModel.SelectedLanguage,Mode=TwoWay}" DisplayMemberPath="DisplayName" ItemsSource="{x:Bind ViewModel.Languages}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <ComboBox SelectedItem="{x:Bind ViewModel.SelectedLanguage,Mode=TwoWay}"
+                                      DisplayMemberPath="DisplayName" ItemsSource="{x:Bind ViewModel.Languages}"
+                                      VerticalAlignment="Center" HorizontalAlignment="Right" />
                         </Grid>
                     </controls:ExpanderEx.Header>
                 </controls:ExpanderEx>
@@ -58,21 +59,23 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xF384;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="SettingView_Application_OfflineImport_Header"  />
+                                    <Run x:Uid="SettingView_Application_OfflineImport_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="SettingView_Application_OfflineImport_Subheader" 
+                                    <Run x:Uid="SettingView_Application_OfflineImport_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.ForceImportOffline,Mode=TwoWay}" HorizontalAlignment="Right" Margin="0,0,-85,0" />
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.ForceImportOffline,Mode=TwoWay}"
+                                          HorizontalAlignment="Right" Margin="0,0,-85,0" />
                         </Grid>
                     </controls:ExpanderEx.Header>
                     <StackPanel Spacing="1">
-                        <InfoBar x:Uid="SettingView_Application_OfflineImport_InfoBar" IsOpen="True" IsClosable="False"  Severity="Informational" />
+                        <InfoBar x:Uid="SettingView_Application_OfflineImport_InfoBar" IsOpen="True" IsClosable="False"
+                                 Severity="Informational" />
                     </StackPanel>
                 </controls:ExpanderEx>
-                <TextBlock x:Uid="SettingView_GameGlobal_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
-                <TextBlock x:Uid="SettingView_GameGlobal_Label0" 
+                <TextBlock x:Uid="SettingView_GameGlobal_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingView_GameGlobal_Label0"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                 <controls:ExpanderEx Padding="0">
                     <controls:ExpanderEx.Header>
@@ -80,7 +83,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE8B7;" Margin="20" />
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Header"  />
+                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Header" />
                                     <TextBlock Text="{x:Bind ViewModel.JavaSummary,Mode=OneWay}"
                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
@@ -95,14 +98,16 @@
                         <StackPanel Spacing="1">
                             <controls:ExpanderExItem>
                                 <Grid>
-                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Label0"  VerticalAlignment="Center" />
-                                    <Button x:Uid="SettingView_GameGlobal_AutoSelectJava_OpenPickerButton" x:Name="OpenJavaDialogButton"  HorizontalAlignment="Right"
+                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Label0"
+                                               VerticalAlignment="Center" />
+                                    <Button x:Uid="SettingView_GameGlobal_AutoSelectJava_OpenPickerButton"
+                                            x:Name="OpenJavaDialogButton" HorizontalAlignment="Right"
                                             Command="{x:Bind ViewModel.OpenPickerAsyncCommand}" />
                                 </Grid>
                             </controls:ExpanderExItem>
                             <controls:ExpanderExItem>
                                 <Grid>
-                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Label1" 
+                                    <TextBlock x:Uid="SettingView_GameGlobal_AutoSelectJava_Label1"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Left" />
                                     <ToggleSwitch x:Name="CustomJavaHomeSwitch" Margin="0,0,-85,0" IsOn="False"
@@ -123,9 +128,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE9D5;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="SettingView_GameGlobal_SkipJavaCheck_Header"  />
+                                    <Run x:Uid="SettingView_GameGlobal_SkipJavaCheck_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="SettingView_GameGlobal_SkipJavaCheck_Subheader" 
+                                    <Run x:Uid="SettingView_GameGlobal_SkipJavaCheck_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -140,9 +145,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xEC8F;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="SettingView_GameGlobal_JavaMemory_Header"  />
+                                    <Run x:Uid="SettingView_GameGlobal_JavaMemory_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="SettingView_GameGlobal_JavaMemory_Subheader" 
+                                    <Run x:Uid="SettingView_GameGlobal_JavaMemory_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -159,9 +164,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE140;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="SettingView_GameGlobal_JavaAdditionalArguments_Header"  />
+                                    <Run x:Uid="SettingView_GameGlobal_JavaAdditionalArguments_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="SettingView_GameGlobal_JavaAdditionalArguments_Subheader" 
+                                    <Run x:Uid="SettingView_GameGlobal_JavaAdditionalArguments_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -180,9 +185,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="&#xE2B2;" Margin="20" />
                                 <TextBlock VerticalAlignment="Center">
-                                    <Run x:Uid="SettingView_GameGlobal_WindowSize_Header"  />
+                                    <Run x:Uid="SettingView_GameGlobal_WindowSize_Header" />
                                     <LineBreak />
-                                    <Run x:Uid="SettingView_GameGlobal_WindowSize_Subheader" 
+                                    <Run x:Uid="SettingView_GameGlobal_WindowSize_Subheader"
                                          Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </TextBlock>
                             </StackPanel>
@@ -191,33 +196,35 @@
                     <StackPanel Spacing="1">
                         <controls:ExpanderExItem>
                             <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock x:Uid="SettingView_GameGlobal_WindowSize_WidthLabel"  VerticalAlignment="Center" />
+                                <TextBlock x:Uid="SettingView_GameGlobal_WindowSize_WidthLabel"
+                                           VerticalAlignment="Center" />
                                 <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}" />
                             </Grid>
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
                             <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock x:Uid="SettingView_GameGlobal_WindowSize_HeightLabel"  VerticalAlignment="Center" />
+                                <TextBlock x:Uid="SettingView_GameGlobal_WindowSize_HeightLabel"
+                                           VerticalAlignment="Center" />
                                 <TextBox Grid.Column="1" Text="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}" />
                             </Grid>
                         </controls:ExpanderExItem>
                     </StackPanel>
                 </controls:ExpanderEx>
-                <TextBlock x:Uid="SettingView_About_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingView_About_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBlock>
-                    <Run x:Uid="SettingView_About_RepositoryLabel"  />
+                    <Run x:Uid="SettingView_About_RepositoryLabel" />
                     <Hyperlink NavigateUri="https://github.com/d3ara1n/Polymerium">Github</Hyperlink>
                 </TextBlock>
                 <TextBlock>
-                    <Run x:Uid="SettingView_About_IconReferenceLabel"  />
+                    <Run x:Uid="SettingView_About_IconReferenceLabel" />
                     <Hyperlink NavigateUri="https://icons8.com/icons/fluency">icons8</Hyperlink>
                 </TextBlock>
                 <TextBlock>
-                    <Run x:Uid="SettingView_About_CurseForgeLabel"  />
+                    <Run x:Uid="SettingView_About_CurseForgeLabel" />
                     <Hyperlink NavigateUri="docs.curseforge.com">CurseForge</Hyperlink>
                 </TextBlock>
                 <TextBlock>
-                    <Run x:Uid="SettingView_About_ModrinthLabel"  />
+                    <Run x:Uid="SettingView_About_ModrinthLabel" />
                     <Hyperlink NavigateUri="https://docs.modrinth.com">Modrinth</Hyperlink>
                 </TextBlock>
             </StackPanel>

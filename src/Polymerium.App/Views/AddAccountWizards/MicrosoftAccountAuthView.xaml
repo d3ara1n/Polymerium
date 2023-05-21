@@ -11,8 +11,8 @@
     mc:Ignorable="d" Loaded="MicrosoftAccountAuthView_OnLoaded">
     <Grid>
         <StackPanel Spacing="8">
-            <TextBlock x:Uid="MicrosoftAuthView_Header"  Style="{StaticResource SubtitleTextBlockStyle}" />
-            <TextBlock x:Uid="MicrosoftAuthView_UserCodeLabel"  />
+            <TextBlock x:Uid="MicrosoftAuthView_Header" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="MicrosoftAuthView_UserCodeLabel" />
             <controls:Card Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
                 <Grid>
                     <Button x:Name="CopyButton" Style="{StaticResource IconButtonStyle}" Margin="7"
@@ -26,13 +26,14 @@
                                   Visibility="{x:Bind UserCode,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reverse}" />
                 </Grid>
             </controls:Card>
-            <Button x:Uid="MicrosoftAuthView_OpenBrowserButton" x:Name="OpenBrowserButton" HorizontalAlignment="Stretch"
+            <Button x:Uid="MicrosoftAuthView_OpenBrowserButton" x:Name="OpenBrowserButton"
+                    HorizontalAlignment="Stretch"
                     IsEnabled="{x:Bind VerificationUrl,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}"
                     Style="{StaticResource AccentButtonStyle}" Click="OpenBrowserButton_OnClick" />
             <TextBlock>
-                <Run x:Uid="MicrosoftAuthView_TipLabel0"  />
+                <Run x:Uid="MicrosoftAuthView_TipLabel0" />
                 <LineBreak />
-                <Run x:Uid="MicrosoftAuthView_TipLabel1"  />
+                <Run x:Uid="MicrosoftAuthView_TipLabel1" />
             </TextBlock>
         </StackPanel>
     </Grid>

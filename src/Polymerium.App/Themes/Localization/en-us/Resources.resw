@@ -279,6 +279,39 @@
   <data name="InstanceAdvancedConfigurtationView_Reset_Success_Message" xml:space="preserve">
     <value>Files have been removed</value>
   </data>
+  <data name="InstanceAssetDrawer_AssetSearch.PlaceholderText" xml:space="preserve">
+    <value>Search for installed assets...</value>
+  </data>
+  <data name="InstanceAssetDrawer_DeleteButton.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="InstanceAssetDrawer_ImportLabel0.Text" xml:space="preserve">
+    <value>Add file</value>
+  </data>
+  <data name="InstanceAssetDrawer_ImportLabel1.Text" xml:space="preserve">
+    <value>by dropping it down here</value>
+  </data>
+  <data name="InstanceAssetDrawer_OpenExplorerLink.Text" xml:space="preserve">
+    <value>Show in explorer</value>
+  </data>
+  <data name="InstanceAssetDrawer_VersionLabel.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="InstanceAssetViewModel_AddFile_Accepted_Caption" xml:space="preserve">
+    <value>File accepted</value>
+  </data>
+  <data name="InstanceAssetViewModel_AddFile_Accepted_Message" xml:space="preserve">
+    <value>{0} was added as {1}</value>
+  </data>
+  <data name="InstanceAssetViewModel_AddFile_Rejected_Caption" xml:space="preserve">
+    <value>File rejected</value>
+  </data>
+  <data name="InstanceAssetViewModel_AddFile_Rejected_Message" xml:space="preserve">
+    <value>Unknown format. Try add it manually</value>
+  </data>
+  <data name="InstanceAssetViewModel_DeleteFile_Failure_Caption" xml:space="preserve">
+    <value>Delete failed</value>
+  </data>
   <data name="InstanceConfigurationView_Advanced_Label" xml:space="preserve">
     <value>Advanced</value>
   </data>
@@ -393,6 +426,15 @@
   <data name="InstanceMetadataConfigurationView_Tag_UpdateButton.Content" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="InstanceSelectorDialog.CloseButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="InstanceSelectorDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="InstanceSelectorDialog.Title" xml:space="preserve">
+    <value>Pick an instance to apply</value>
+  </data>
   <data name="InstanceView_Asset_ModLabel.Text" xml:space="preserve">
     <value>Mods</value>
   </data>
@@ -432,11 +474,62 @@
   <data name="InstanceView_Header_StartButton.Content" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="InstanceView_Other_Author_Label" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="InstanceView_Other_Author_Unknown" xml:space="preserve">
+    <value>(Unidentified)</value>
+  </data>
+  <data name="InstanceView_Other_CreateDate_Label" xml:space="preserve">
+    <value>Created at</value>
+  </data>
   <data name="InstanceView_Other_Header.Text" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="InstanceView_Other_Identity_Label" xml:space="preserve">
+    <value>Identity</value>
+  </data>
+  <data name="InstanceView_Other_LastPlay_Label" xml:space="preserve">
+    <value>Last played at</value>
+  </data>
+  <data name="InstanceView_Other_LastPlay_Unknown" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="InstanceView_Other_LastRestore_Label" xml:space="preserve">
+    <value>Last restored at</value>
+  </data>
+  <data name="InstanceView_Other_LastRestore_Unknown" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="InstanceView_Other_PlayCount_Label" xml:space="preserve">
+    <value>Play count</value>
+  </data>
+  <data name="InstanceView_Other_PlayTime_Label" xml:space="preserve">
+    <value>Play time</value>
+  </data>
+  <data name="InstanceView_Other_SuccessRate_Label" xml:space="preserve">
+    <value>Successfully launched</value>
+  </data>
+  <data name="InstanceView_Other_SuccessRate_Unknown" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="InstanceView_Save_Empty.Text" xml:space="preserve">
+    <value>Empty</value>
+  </data>
   <data name="InstanceView_Save_Header.Text" xml:space="preserve">
     <value>Worlds</value>
+  </data>
+  <data name="InstanceView_Save_OpenExplorerButton.Content" xml:space="preserve">
+    <value>Open in explorer</value>
+  </data>
+  <data name="InstanceView_Screenshot_Empty.Text" xml:space="preserve">
+    <value>Nothing to present. Press F2 in game to generate one</value>
+  </data>
+  <data name="InstanceView_Screenshot_Header.Text" xml:space="preserve">
+    <value>Screenshots</value>
+  </data>
+  <data name="InstanceView_Screenshot_OpenExplorerButton.Content" xml:space="preserve">
+    <value>Open in explorer</value>
   </data>
   <data name="InstanceView_Server_AddButton.Content" xml:space="preserve">
     <value>Add</value>

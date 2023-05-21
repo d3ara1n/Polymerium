@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Polymerium.Core.Resources;
 
 namespace Polymerium.App.Models;

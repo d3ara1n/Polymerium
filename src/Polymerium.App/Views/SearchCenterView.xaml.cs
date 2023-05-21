@@ -52,7 +52,8 @@ public sealed partial class SearchCenterView : Page
                 {
                     var type = ViewModel.SelectedRepository.SupportedResources & arguments.Type;
                     if (type == arguments.Type)
-                        ViewModel.SelectedResourceType = ViewModel.SupportedResources.FirstOrDefault(x => x.Tag == arguments.Type);
+                        ViewModel.SelectedResourceType =
+                            ViewModel.SupportedResources.FirstOrDefault(x => x.Tag == arguments.Type);
                     else
                         found = false;
                 }

@@ -15,10 +15,10 @@ namespace Polymerium.Core.Engines.Restoring.Stages;
 
 public class CompleteAttachmentsStage : StageBase
 {
+    private readonly AssetManager _assetManager;
     private readonly DownloadEngine _downloader;
     private readonly IFileBaseService _fileBase;
     private readonly GameInstance _instance;
-    private readonly AssetManager _assetManager;
     private readonly PolylockData _polylock;
     private readonly SHA1 _sha1;
 
@@ -72,13 +72,11 @@ public class CompleteAttachmentsStage : StageBase
                 );
                 // 可再生资源，可再生资源被视作只读资源
                 if (!await _fileBase.VerifyHashAsync(pooled, attachment.Sha1, _sha1))
-                {
                     group.TryAdd(
                         attachment.Source.AbsoluteUri,
                         _fileBase.Locate(pooled),
                         out var _
                     );
-                }
 
                 merge.Add((attachment, pooled));
             }
@@ -102,6 +100,7 @@ public class CompleteAttachmentsStage : StageBase
                 ? Error("部署最终可再生资源出错: 即将部署的文件路径被另一个的文件占用。没有更详细信息，因为传递不出来更多参数Orz")
                 : Finish();
         }
+
         return Error($"{group.TotalCount - group.DownloadedCount} 个文件下载次数超过限定");
     }
 }

@@ -19,10 +19,10 @@ public enum InstanceManagerError
 
 public sealed class InstanceManager : IDisposable
 {
+    private readonly ConfigurationManager _configurationManager;
     private readonly DataStorage _dataStorage;
     private readonly IFileBaseService _fileBase;
     private readonly MemoryStorage _memoryStorage;
-    private readonly ConfigurationManager _configurationManager;
 
     public InstanceManager(
         DataStorage dataStorage,

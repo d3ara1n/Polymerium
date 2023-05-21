@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNext;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
-using Polymerium.Abstractions;
 using Polymerium.Abstractions.Importers;
-using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
@@ -90,13 +85,12 @@ public class CurseForgeImporter : ImporterBase
                         );
                     await Task.WhenAll(tasks);
                     if (tasks.All(x => x.IsCompletedSuccessfully && x.Result.HasValue))
-                    {
                         foreach (var task in tasks)
                         {
-                            (var mod, var file) = task.Result!.Value;
+                            var (mod, file) = task.Result!.Value;
                             var type = CurseForgeHelper.GetResourceTypeFromClassId(mod.ClassId);
                             metadata.Attachments.Add(
-                                new Attachment()
+                                new Attachment
                                 {
                                     Source = CurseForgeHelper.MakeResourceUrl(
                                         type,
@@ -107,12 +101,13 @@ public class CurseForgeImporter : ImporterBase
                                 }
                             );
                         }
-                    }
                     else
                         return Failed(GameImportError.ResourceNotFound);
                 }
                 else
+                {
                     return Failed(GameImportError.ResourceNotFound);
+                }
             }
             else
             {
@@ -165,6 +160,6 @@ public class CurseForgeImporter : ImporterBase
     {
         var mod = await CurseForgeHelper.GetModInfoAsync(projectId, cache, token);
         var file = await CurseForgeHelper.GetModFileInfoAsync(projectId, fileId, _cache, token);
-        return (mod.HasValue && file.HasValue) ? (mod.Value, file.Value) : null;
+        return mod.HasValue && file.HasValue ? (mod.Value, file.Value) : null;
     }
 }

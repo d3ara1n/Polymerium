@@ -12,8 +12,8 @@ public class PlanetaryEngineBuilder : IBuilder<PlanetaryEngine>
     private string javaPath = string.Empty;
     private IEnumerable<string> jvmArguments = Enumerable.Empty<string>();
     private string mainClass = string.Empty;
-    private string workingDirectory = string.Empty;
     private PlanetaryEngineMode mode = PlanetaryEngineMode.FireAndForget;
+    private string workingDirectory = string.Empty;
 
     public PlanetaryEngine Build()
     {

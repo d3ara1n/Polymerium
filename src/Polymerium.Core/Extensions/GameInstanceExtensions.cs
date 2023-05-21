@@ -17,10 +17,12 @@ public static class GameInstanceExtensions
         return string.Join(string.Empty, md5);
     }
 
-    public static bool ContainsAttachment(this GameInstance instance, Uri attachment) =>
-        instance.Metadata.Attachments.Any(
+    public static bool ContainsAttachment(this GameInstance instance, Uri attachment)
+    {
+        return instance.Metadata.Attachments.Any(
             x => x.Source.GetLeftPart(UriPartial.Path) == attachment.GetLeftPart(UriPartial.Path)
         );
+    }
 
     public static string? GetCoreVersion(this GameInstance instance)
     {
@@ -47,7 +49,7 @@ public static class GameInstanceExtensions
     {
         content = null;
         return fileBase.TryReadAllText(instance.GetPolylockHashUrl(), out var hash)
-            && hash == instance.ComputeMetadataHash()
-            && fileBase.TryReadAllText(instance.GetPolylockDataUrl(), out content);
+               && hash == instance.ComputeMetadataHash()
+               && fileBase.TryReadAllText(instance.GetPolylockDataUrl(), out content);
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using DotNext;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions.Resources;
@@ -57,15 +56,17 @@ public static class ModrinthHelper
         };
     }
 
-    public static ResourceType GetResourceTypeFromString(string fake) =>
-        fake switch
+    public static ResourceType GetResourceTypeFromString(string fake)
+    {
+        return fake switch
         {
             "modpack" => ResourceType.Modpack,
             "shader" => ResourceType.ShaderPack,
             "resourcepack" => ResourceType.ResourcePack,
             // mod, plugin, datapack
-            _ => ResourceType.Mod,
+            _ => ResourceType.Mod
         };
+    }
 
     private static async Task<T?> GetResourceAsync<T>(
         string service,
@@ -76,25 +77,25 @@ public static class ModrinthHelper
     {
         if (token.IsCancellationRequested)
             return null;
-        return await cache.GetOrCreateAsync<T?>(
-                service,
-                async entry =>
-                {
-                    T? result = null;
-                    var found = false;
-                    await Wapoo
-                        .Wohoo(ENDPOINT + service)
-                        .ForJsonResult<T>(x =>
-                        {
-                            result = x;
-                            found = true;
-                        })
-                        .ViaGet()
-                        .FetchAsync(token);
-                    entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
-                    return result;
-                }
-            ) ?? null;
+        return await cache.GetOrCreateAsync(
+            service,
+            async entry =>
+            {
+                T? result = null;
+                var found = false;
+                await Wapoo
+                    .Wohoo(ENDPOINT + service)
+                    .ForJsonResult<T>(x =>
+                    {
+                        result = x;
+                        found = true;
+                    })
+                    .ViaGet()
+                    .FetchAsync(token);
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
+                return result;
+            }
+        ) ?? null;
     }
 
     private static async Task<IEnumerable<T>> GetResourcesAsync<T>(
@@ -106,22 +107,19 @@ public static class ModrinthHelper
         if (token.IsCancellationRequested)
             return Enumerable.Empty<T>();
         return await cache.GetOrCreateAsync(
-                service,
-                async entry =>
-                {
-                    IEnumerable<T>? results = null;
-                    await Wapoo
-                        .Wohoo(ENDPOINT + service)
-                        .ForJsonResult<JArray>(x =>
-                        {
-                            results = x.ToObject<IEnumerable<T>>();
-                        })
-                        .ViaGet()
-                        .FetchAsync(token);
-                    entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
-                    return results ?? Enumerable.Empty<T>();
-                }
-            ) ?? Enumerable.Empty<T>();
+            service,
+            async entry =>
+            {
+                IEnumerable<T>? results = null;
+                await Wapoo
+                    .Wohoo(ENDPOINT + service)
+                    .ForJsonResult<JArray>(x => { results = x.ToObject<IEnumerable<T>>(); })
+                    .ViaGet()
+                    .FetchAsync(token);
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
+                return results ?? Enumerable.Empty<T>();
+            }
+        ) ?? Enumerable.Empty<T>();
     }
 
     private static async Task<IEnumerable<T>> GetHitsAsync<T>(
@@ -133,22 +131,22 @@ public static class ModrinthHelper
         if (token.IsCancellationRequested)
             return Enumerable.Empty<T>();
         return await cache.GetOrCreateAsync(
-                service,
-                async entry =>
-                {
-                    IEnumerable<T>? results = null;
-                    await Wapoo
-                        .Wohoo(ENDPOINT + service)
-                        .ForJsonResult<JObject>(x =>
-                        {
-                            if (x.ContainsKey("hits"))
-                                results = x["hits"]!.ToObject<IEnumerable<T>>();
-                        })
-                        .ViaGet()
-                        .FetchAsync(token);
-                    return results ?? Enumerable.Empty<T>();
-                }
-            ) ?? Enumerable.Empty<T>();
+            service,
+            async entry =>
+            {
+                IEnumerable<T>? results = null;
+                await Wapoo
+                    .Wohoo(ENDPOINT + service)
+                    .ForJsonResult<JObject>(x =>
+                    {
+                        if (x.ContainsKey("hits"))
+                            results = x["hits"]!.ToObject<IEnumerable<T>>();
+                    })
+                    .ViaGet()
+                    .FetchAsync(token);
+                return results ?? Enumerable.Empty<T>();
+            }
+        ) ?? Enumerable.Empty<T>();
     }
 
     public static async Task<LabrinthProject?> GetProjectAsync(
@@ -241,7 +239,7 @@ public static class ModrinthHelper
     public static async Task<(
         IEnumerable<(LabrinthProject, LabrinthVersion)>,
         IEnumerable<string>
-    )?> ScanDependenciesAsync(
+        )?> ScanDependenciesAsync(
         LabrinthVersion origin,
         IMemoryCache cache,
         CancellationToken token = default
@@ -280,9 +278,7 @@ public static class ModrinthHelper
                     x => !filter(x.ProjectId, x.VersionId) && x.FileName != null
                 )
             )
-            {
                 emb.Add(embedded.FileName!);
-            }
             var result = true;
             foreach (var task in tasks)
             {
@@ -303,10 +299,11 @@ public static class ModrinthHelper
                     );
                 }
             }
+
             return result;
         }
-        else
-            return false;
+
+        return false;
     }
 
     private static async Task<(LabrinthProject, LabrinthVersion)?> GetVersionPairAsync(
@@ -322,26 +319,24 @@ public static class ModrinthHelper
             if (version.HasValue)
             {
                 var project = await GetProjectAsync(version.Value.ProjectId, cache, token);
-                if (project.HasValue)
-                {
-                    return (project.Value, version.Value);
-                }
+                if (project.HasValue) return (project.Value, version.Value);
             }
+
             return null;
         }
-        else if (projectId != null)
+
+        if (projectId != null)
         {
             var project = await GetProjectAsync(projectId, cache, token);
             if (project.HasValue)
             {
                 var version = await GetVersionAsync(project.Value.Versions.Last(), cache, token);
-                if (version.HasValue)
-                {
-                    return (project.Value, version.Value);
-                }
+                if (version.HasValue) return (project.Value, version.Value);
             }
+
             return null;
         }
+
         return null;
     }
 }
