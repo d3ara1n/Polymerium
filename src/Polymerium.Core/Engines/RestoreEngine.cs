@@ -68,35 +68,29 @@ public class RestoreEngine
     {
         return PipelineBuilder<RestoreError, GameInstance>
             .Create(BuildPolylockData)
-            .Produces(x => (RestoreContext)x)
-            .Then<RestoreContext>(CompleteAssets)
-            .Produces(x => (RestoreContext)x)
-            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
-            .Then<RestoreContext>(CompleteLibraries)
-            .Produces(x => (RestoreContext)x)
-            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
-            .Then<RestoreContext>(CompleteAttachments)
-            .Produces(x => (RestoreContext)x)
-            .Requires<DownloadEngine, RestoreContext>(x => (RestoreContext)x)
-            .Setup().Build();
+            .Then(CompleteAssets)
+            .Then(CompleteLibraries)
+            .Then(CompleteAttachments)
+            .Setup()
+            .Build();
     }
 
-    private Result<object?, RestoreError> BuildPolylockData(GameInstance instance)
+    private Result<RestoreContext, RestoreError> BuildPolylockData(GameInstance instance)
     {
         throw new NotImplementedException();
     }
 
-    private Result<object?, RestoreError> CompleteAssets(GameInstance instance, RestoreContext polylock)
+    private Result<RestoreContext, RestoreError> CompleteAssets(GameInstance instance, RestoreContext context)
     {
         throw new NotImplementedException();
     }
 
-    private Result<object?, RestoreError> CompleteLibraries(GameInstance instance, RestoreContext polylock)
+    private Result<RestoreContext, RestoreError> CompleteLibraries(GameInstance instance, RestoreContext context)
     {
         throw new NotImplementedException();
     }
 
-    private Result<object?, RestoreError> CompleteAttachments(GameInstance instance, RestoreContext polylock)
+    private Result<RestoreError> CompleteAttachments(GameInstance instance, RestoreContext context)
     {
         throw new NotImplementedException();
     }
