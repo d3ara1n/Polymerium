@@ -360,6 +360,15 @@
   <data name="InstanceMetadataConfigurationView_Attachment_AuthorLabel.Text" xml:space="preserve">
     <value>Author: </value>
   </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Disable.Text" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_DisabledLabel.Text" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="InstanceMetadataConfigurationView_Attachment_Enable.Text" xml:space="preserve">
+    <value>Enable</value>
+  </data>
   <data name="InstanceMetadataConfigurationView_Attachment_ExternalLink.Text" xml:space="preserve">
     <value>Visit external link</value>
   </data>

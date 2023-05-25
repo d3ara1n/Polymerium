@@ -70,12 +70,14 @@ public class ImportModpackWizardViewModel : ObservableObject
     {
         if (!string.IsNullOrEmpty(InstanceName))
         {
-            _importResult!.Content = _importResult.Content with
-            {
-                Name = InstanceName
-            };
+            _importResult!.Content = _importResult.Content with { Name = InstanceName };
         }
         var result = await _importer.SolidifyAsync(_importResult!, null);
-        callback(result.HasValue ? new Result<ImportResult, GameImportError>(result.Value) : _importResult!, true);
+        callback(
+            result.HasValue
+                ? new Result<ImportResult, GameImportError>(result.Value)
+                : _importResult!,
+            true
+        );
     }
 }

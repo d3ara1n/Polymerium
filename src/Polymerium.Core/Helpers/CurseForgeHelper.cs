@@ -137,23 +137,23 @@ public static class CurseForgeHelper
         if (token.IsCancellationRequested)
             return Enumerable.Empty<T>();
         return await cache.GetOrCreateAsync(
-            service,
-            async entry =>
-            {
-                IEnumerable<T>? results = null;
-                await Wapoo
-                    .Wohoo(ENDPOINT + service)
-                    .WithHeader("x-api-key", API_KEY)
-                    .ForJsonResult<JObject>(x =>
-                    {
-                        if (x.ContainsKey("data"))
-                            results = x["data"]!.ToObject<IEnumerable<T>>();
-                    })
-                    .FetchAsync();
-                entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
-                return results ?? Enumerable.Empty<T>();
-            }
-        ) ?? Enumerable.Empty<T>();
+                service,
+                async entry =>
+                {
+                    IEnumerable<T>? results = null;
+                    await Wapoo
+                        .Wohoo(ENDPOINT + service)
+                        .WithHeader("x-api-key", API_KEY)
+                        .ForJsonResult<JObject>(x =>
+                        {
+                            if (x.ContainsKey("data"))
+                                results = x["data"]!.ToObject<IEnumerable<T>>();
+                        })
+                        .FetchAsync();
+                    entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
+                    return results ?? Enumerable.Empty<T>();
+                }
+            ) ?? Enumerable.Empty<T>();
     }
 
     public static async Task<IEnumerable<EternalProject>> SearchProjectsAsync(

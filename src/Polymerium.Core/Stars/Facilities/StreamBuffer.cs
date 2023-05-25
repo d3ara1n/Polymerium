@@ -5,9 +5,7 @@ namespace Polymerium.Core.Stars.Facilities;
 public class StreamBuffer<T> : ObservableCollection<T>
 {
     public StreamBuffer()
-        : this(999)
-    {
-    }
+        : this(999) { }
 
     public StreamBuffer(uint capacity)
     {
@@ -19,6 +17,7 @@ public class StreamBuffer<T> : ObservableCollection<T>
     protected override void InsertItem(int index, T item)
     {
         base.InsertItem(index, item);
-        if (Count > Capacity) RemoveAt(0);
+        if (Count > Capacity)
+            RemoveAt(0);
     }
 }

@@ -154,7 +154,7 @@ public sealed partial class InstanceMetadataConfigurationView : Page
     {
         get =>
             (ObservableCollection<InstanceModpackReferenceVersionModel>)
-            GetValue(ModpackVersionsProperty);
+                GetValue(ModpackVersionsProperty);
         set => SetValue(ModpackVersionsProperty, value);
     }
 

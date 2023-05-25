@@ -46,12 +46,18 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
         RemoveAttachmentSelfCommand = new RelayCommand<InstanceAttachmentItemModel>(
             RemoveAttachmentSelf
         );
+        EnableAttachmentSelfCommand = new RelayCommand<InstanceAttachmentItemModel>(
+            EnableAttachmentSelf
+        );
+        DisableAttachmentSelfCommand = new RelayCommand<InstanceAttachmentItemModel>(
+            DisableAttachmentSelf
+        );
         RemoveComponentSelfCommand = new RelayCommand<InstanceComponentItemModel>(
             RemoveComponentSelf
         );
         Components = new ObservableCollection<InstanceComponentItemModel>(
             Instance.Components.Select(FromComponent)
-            ?? Enumerable.Empty<InstanceComponentItemModel>()
+                ?? Enumerable.Empty<InstanceComponentItemModel>()
         );
         Attachments = new ObservableCollection<InstanceAttachmentItemModel>();
         Instance.Components.CollectionChanged += Components_OnCollectionChanged;
@@ -66,6 +72,8 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     public ICommand GotoSearchCenterCommand { get; }
     public ICommand OpenReferenceUrlCommand { get; }
     public ICommand RemoveAttachmentSelfCommand { get; }
+    public ICommand EnableAttachmentSelfCommand { get; }
+    public ICommand DisableAttachmentSelfCommand { get; }
     public IRelayCommand<InstanceComponentItemModel> RemoveComponentSelfCommand { get; }
 
     public void SetCallback(Action<InstanceAttachmentItemModel?> callback)
@@ -160,7 +168,7 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
                                 x.Item2.Result.Value.Resource.VersionId,
                                 x.Item2.Result.Value.Resource.Version,
                                 x.Item2.Result.Value.Resource.VersionId
-                                == modpackResult.Value.Resource.VersionId,
+                                    == modpackResult.Value.Resource.VersionId,
                                 x.Item1
                             )
                     );
@@ -239,7 +247,9 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
                 attachment,
                 isLocked,
                 OpenReferenceUrlCommand,
-                RemoveAttachmentSelfCommand
+                RemoveAttachmentSelfCommand,
+                EnableAttachmentSelfCommand,
+                DisableAttachmentSelfCommand
             );
         }
         else
@@ -255,7 +265,9 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
                 attachment,
                 isLocked,
                 OpenReferenceUrlCommand,
-                RemoveAttachmentSelfCommand
+                RemoveAttachmentSelfCommand,
+                EnableAttachmentSelfCommand,
+                DisableAttachmentSelfCommand
             );
         }
 
@@ -264,8 +276,9 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
 
     private void GotoSearchCenter()
     {
-        _navigationService.Navigate<SearchCenterView>(new SlideNavigationTransitionInfo
-            { Effect = SlideNavigationTransitionEffect.FromRight });
+        _navigationService.Navigate<SearchCenterView>(
+            new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight }
+        );
     }
 
     private void AddComponent()
@@ -295,6 +308,22 @@ public class InstanceMetadataConfigurationViewModel : ObservableObject
     {
         if (reference != null)
             Process.Start(new ProcessStartInfo(reference.AbsoluteUri) { UseShellExecute = true });
+    }
+
+    private void EnableAttachmentSelf(InstanceAttachmentItemModel? model)
+    {
+        if (model != null)
+        {
+            model.IsEnabled = true;
+        }
+    }
+
+    private void DisableAttachmentSelf(InstanceAttachmentItemModel? model)
+    {
+        if (model != null)
+        {
+            model.IsEnabled = false;
+        }
     }
 
     public void Unlock()

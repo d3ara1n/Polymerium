@@ -3,7 +3,11 @@ using Microsoft.UI.Xaml.Media.Animation;
 
 namespace Polymerium.App.Services;
 
-public delegate void NavigateHandler(Type view, object? parameter, NavigationTransitionInfo? transitionInfo);
+public delegate void NavigateHandler(
+    Type view,
+    object? parameter,
+    NavigationTransitionInfo? transitionInfo
+);
 
 public class NavigationService
 {

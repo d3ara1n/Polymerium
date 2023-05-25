@@ -2,6 +2,4 @@
 
 namespace Polymerium.App.ViewModels;
 
-public class InstanceUpdateViewModel : ObservableObject
-{
-}
+public class InstanceUpdateViewModel : ObservableObject { }

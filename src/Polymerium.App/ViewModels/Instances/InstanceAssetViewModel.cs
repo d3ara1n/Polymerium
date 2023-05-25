@@ -59,7 +59,8 @@ public class InstanceAssetViewModel : ObservableObject
         TypeFriendlyName = type switch
         {
             ResourceType.Mod => _localizationService.GetString("ResourceType_Mod"),
-            ResourceType.ResourcePack => _localizationService.GetString("ResourceType_ResourcePack"),
+            ResourceType.ResourcePack
+                => _localizationService.GetString("ResourceType_ResourcePack"),
             ResourceType.ShaderPack => _localizationService.GetString("ResourceType_ShaderPack"),
             _ => string.Empty
         };
@@ -109,8 +110,10 @@ public class InstanceAssetViewModel : ObservableObject
             callback(new AssetRaw { FileName = url, Type = Type!.Value });
             _notification.Enqueue(
                 _localizationService.GetString("InstanceAssetViewModel_AddFile_Accepted_Caption"),
-                _localizationService.GetString("InstanceAssetViewModel_AddFile_Accepted_Message")
-                    .Replace("{0}", product.Value.Name).Replace("{1}", Type!.Value.ToString()),
+                _localizationService
+                    .GetString("InstanceAssetViewModel_AddFile_Accepted_Message")
+                    .Replace("{0}", product.Value.Name)
+                    .Replace("{1}", Type!.Value.ToString()),
                 InfoBarSeverity.Success
             );
             var model = new InstanceAssetModel(
@@ -124,9 +127,11 @@ public class InstanceAssetViewModel : ObservableObject
         }
         else
         {
-            _notification.Enqueue(_localizationService.GetString("InstanceAssetViewModel_AddFile_Rejected_Caption"),
+            _notification.Enqueue(
                 _localizationService.GetString("InstanceAssetViewModel_AddFile_Rejected_Caption"),
-                InfoBarSeverity.Warning);
+                _localizationService.GetString("InstanceAssetViewModel_AddFile_Rejected_Caption"),
+                InfoBarSeverity.Warning
+            );
         }
     }
 
@@ -159,8 +164,12 @@ public class InstanceAssetViewModel : ObservableObject
                 catch (Exception e)
                 {
                     _notification.Enqueue(
-                        _localizationService.GetString("InstanceAssetViewModel_DeleteFile_Failure_Caption"), e.Message,
-                        InfoBarSeverity.Error);
+                        _localizationService.GetString(
+                            "InstanceAssetViewModel_DeleteFile_Failure_Caption"
+                        ),
+                        e.Message,
+                        InfoBarSeverity.Error
+                    );
                 }
 
             Assets.Remove(model);

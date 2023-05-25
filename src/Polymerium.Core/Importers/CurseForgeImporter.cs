@@ -90,15 +90,14 @@ public class CurseForgeImporter : ImporterBase
                             var (mod, file) = task.Result!.Value;
                             var type = CurseForgeHelper.GetResourceTypeFromClassId(mod.ClassId);
                             metadata.Attachments.Add(
-                                new Attachment
-                                {
-                                    Source = CurseForgeHelper.MakeResourceUrl(
+                                new Attachment(
+                                    CurseForgeHelper.MakeResourceUrl(
                                         type,
                                         mod.Id.ToString(),
                                         file.Id.ToString()
                                     ),
-                                    From = source
-                                }
+                                    source
+                                )
                             );
                         }
                     else
@@ -114,16 +113,14 @@ public class CurseForgeImporter : ImporterBase
                 foreach (var file in index.Files)
                 {
                     metadata.Attachments.Add(
-                        new Attachment
-                        {
-                            Source = CurseForgeHelper.MakeResourceUrl(
+                        new Attachment(
+                            CurseForgeHelper.MakeResourceUrl(
                                 ResourceType.File,
                                 file.ProjectId.ToString(),
                                 file.FileId.ToString()
                             )
-                        }
+                        )
                     );
-                    ;
                 }
             }
 

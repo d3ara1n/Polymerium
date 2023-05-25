@@ -946,6 +946,18 @@
           <source>Version</source>
           <target state="translated">版本</target>
         </trans-unit>
+        <trans-unit id="InstanceMetadataConfigurationView_Attachment_Disable.Text" translate="yes" xml:space="preserve">
+          <source>Disable</source>
+          <target state="new">Disable</target>
+        </trans-unit>
+        <trans-unit id="InstanceMetadataConfigurationView_Attachment_DisabledLabel.Text" translate="yes" xml:space="preserve">
+          <source>Disabled</source>
+          <target state="new">Disabled</target>
+        </trans-unit>
+        <trans-unit id="InstanceMetadataConfigurationView_Attachment_Enable.Text" translate="yes" xml:space="preserve">
+          <source>Enable</source>
+          <target state="new">Enable</target>
+        </trans-unit>
       </group>
     </body>
   </file>

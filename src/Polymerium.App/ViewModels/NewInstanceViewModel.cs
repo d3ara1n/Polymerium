@@ -31,8 +31,9 @@ public class NewInstanceViewModel : ObservableObject
 
     public void GotoSearchPage()
     {
-        _navigationService.Navigate<SearchCenterView>(new SlideNavigationTransitionInfo
-            { Effect = SlideNavigationTransitionEffect.FromRight });
+        _navigationService.Navigate<SearchCenterView>(
+            new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight }
+        );
     }
 
     public void ArchiveAccepted(string fileName)

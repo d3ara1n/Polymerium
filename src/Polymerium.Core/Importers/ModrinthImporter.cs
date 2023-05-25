@@ -125,9 +125,7 @@ public class ModrinthImporter : ImporterBase
                                     externalVersion.Id,
                                     null
                                 );
-                                metadata.Attachments.Add(
-                                    new Attachment { Source = attachment, From = source }
-                                );
+                                metadata.Attachments.Add(new Attachment(attachment, source));
                             }
 
                             AddFilesTo(metadata.Attachments, embeddeds);
@@ -198,12 +196,11 @@ public class ModrinthImporter : ImporterBase
             )
         )
             container.Add(
-                new Attachment
-                {
-                    Source = new Uri(
+                new Attachment(
+                    new Uri(
                         $"poly-res://remote@file/{file.Path}?sha1={file.Hashes.Sha1}&source={HttpUtility.UrlEncode(file.Downloads.First().ToString())}"
                     )
-                }
+                )
             );
     }
 

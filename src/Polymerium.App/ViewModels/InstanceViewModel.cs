@@ -73,13 +73,23 @@ public class InstanceViewModel : ObservableObject
         );
         InformationItems = new ObservableCollection<InstanceInformationItemModel>
         {
-            new("\uF427", _localizationService.GetString("InstanceView_Other_Identity_Label"), Instance.Id),
-            new("\uE125", _localizationService.GetString("InstanceView_Other_Author_Label"),
+            new(
+                "\uF427",
+                _localizationService.GetString("InstanceView_Other_Identity_Label"),
+                Instance.Id
+            ),
+            new(
+                "\uE125",
+                _localizationService.GetString("InstanceView_Other_Author_Label"),
                 string.IsNullOrEmpty(Instance.Author)
                     ? _localizationService.GetString("InstanceView_Other_Author_Unknown")
-                    : Instance.Author),
-            new("\uE121", _localizationService.GetString("InstanceView_Other_PlayTime_Label"),
-                Instance.PlayTime.Humanize()),
+                    : Instance.Author
+            ),
+            new(
+                "\uE121",
+                _localizationService.GetString("InstanceView_Other_PlayTime_Label"),
+                Instance.PlayTime.Humanize()
+            ),
             new(
                 "\uEC92",
                 _localizationService.GetString("InstanceView_Other_LastPlay_Label"),
@@ -87,8 +97,11 @@ public class InstanceViewModel : ObservableObject
                     ? _localizationService.GetString("InstanceView_Other_LastPlay_Unknown")
                     : Instance.LastPlay.Humanize()
             ),
-            new("\uEB50", _localizationService.GetString("InstanceView_Other_PlayCount_Label"),
-                $"{Instance.PlayCount}"),
+            new(
+                "\uEB50",
+                _localizationService.GetString("InstanceView_Other_PlayCount_Label"),
+                $"{Instance.PlayCount}"
+            ),
             new(
                 "\uEB05",
                 _localizationService.GetString("InstanceView_Other_SuccessRate_Label"),
@@ -96,8 +109,11 @@ public class InstanceViewModel : ObservableObject
                     ? _localizationService.GetString("InstanceView_Other_SuccessRate_Unknown")
                     : $"{(Instance.PlayCount - Instance.ExceptionCount) / (float)Instance.PlayCount * 100}%"
             ),
-            new("\uEC92", _localizationService.GetString("InstanceView_Other_CreateDate_Label"),
-                Instance.CreatedAt.Humanize()),
+            new(
+                "\uEC92",
+                _localizationService.GetString("InstanceView_Other_CreateDate_Label"),
+                Instance.CreatedAt.Humanize()
+            ),
             new(
                 "\uEC92",
                 _localizationService.GetString("InstanceView_Other_LastRestore_Label"),
@@ -193,7 +209,10 @@ public class InstanceViewModel : ObservableObject
 
     private void OpenInExplorer(string? dir)
     {
-        var path = Path.Combine(_fileBase.Locate(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Instance.Id))), dir);
+        var path = Path.Combine(
+            _fileBase.Locate(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Instance.Id))),
+            dir
+        );
         Process.Start(
             new ProcessStartInfo("explorer.exe")
             {
@@ -221,8 +240,9 @@ public class InstanceViewModel : ObservableObject
 
     public void GotoConfigurationView()
     {
-        _navigationService.Navigate<InstanceConfigurationView>(new SlideNavigationTransitionInfo
-            { Effect = SlideNavigationTransitionEffect.FromRight });
+        _navigationService.Navigate<InstanceConfigurationView>(
+            new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight }
+        );
     }
 
     public void LoadAssets()

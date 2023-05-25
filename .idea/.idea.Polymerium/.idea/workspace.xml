@@ -16,11 +16,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/CSharpierPlugin.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/changelogs/v0.4.md" beforeDir="false" afterPath="$PROJECT_DIR$/changelogs/v0.4.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ImportModpackWizardViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/RestoreEngine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Attachment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Attachment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceAttachmentItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceAttachmentItemModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchDetailViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchDetailViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/BuildPolylockStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/BuildPolylockStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Importers/CurseForgeImporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Importers/CurseForgeImporter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Importers/ModrinthImporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Importers/ModrinthImporter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Duffet" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Duffet/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" afterDir="false" />
@@ -290,6 +294,7 @@
       <workItem from="1684807050493" duration="3869000" />
       <workItem from="1684835145990" duration="552000" />
       <workItem from="1684843059980" duration="5844000" />
+      <workItem from="1685003120051" duration="49000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>

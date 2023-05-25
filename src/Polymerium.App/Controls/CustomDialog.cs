@@ -155,11 +155,7 @@ public class CustomDialog : ContentControl
         }
     }
 
-    protected virtual void OnDismiss()
-    {
-    }
+    protected virtual void OnDismiss() { }
 
-    internal virtual void FreeLock()
-    {
-    }
+    internal virtual void FreeLock() { }
 }

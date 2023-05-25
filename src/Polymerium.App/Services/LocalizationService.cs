@@ -10,7 +10,6 @@ public class LocalizationService
     private readonly ResourceContext _resourceContext;
     private readonly IResourceManager _resourceManager;
 
-
     public LocalizationService(IResourceManager resourceManager)
     {
         _resourceManager = resourceManager;
@@ -31,7 +30,10 @@ public class LocalizationService
     public string GetString(string key, string? fallback = null)
     {
         fallback ??= key;
-        var candiate = _resourceManager.MainResourceMap.TryGetValue($"Resources/{key}", _resourceContext);
+        var candiate = _resourceManager.MainResourceMap.TryGetValue(
+            $"Resources/{key}",
+            _resourceContext
+        );
         return candiate?.ValueAsString ?? fallback;
     }
 
