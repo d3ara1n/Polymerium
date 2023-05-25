@@ -133,12 +133,18 @@ public sealed class MainViewModel : ObservableObject
 
     private void EnqueueNotification(string caption, string text, InfoBarSeverity severity)
     {
-        _dispatcher.TryEnqueue(() => { Notifications.Add(new InAppNotificationItem(caption, text, severity)); });
+        _dispatcher.TryEnqueue(() =>
+        {
+            Notifications.Add(new InAppNotificationItem(caption, text, severity));
+        });
     }
 
     private void PushOverlay(ContentControl content)
     {
-        _dispatcher.TryEnqueue(() => { Overlay = content; });
+        _dispatcher.TryEnqueue(() =>
+        {
+            Overlay = content;
+        });
     }
 
     private ContentControl? PullOverlay()
@@ -178,35 +184,35 @@ public sealed class MainViewModel : ObservableObject
                 {
                     case NotifyCollectionChangedAction.Add:
 
-                    {
-                        if (e.NewItems != null)
-                            foreach (GameInstance instance in e.NewItems)
-                                NavigationPages.Insert(
-                                    NavigationPages.Count - 1,
-                                    new NavigationItemModel(
-                                        "\xF158",
-                                        instance.Name,
-                                        typeof(InstanceView),
-                                        instance,
-                                        instance.ThumbnailFile?.AbsoluteUri
-                                    )
-                                );
-                    }
+                        {
+                            if (e.NewItems != null)
+                                foreach (GameInstance instance in e.NewItems)
+                                    NavigationPages.Insert(
+                                        NavigationPages.Count - 1,
+                                        new NavigationItemModel(
+                                            "\xF158",
+                                            instance.Name,
+                                            typeof(InstanceView),
+                                            instance,
+                                            instance.ThumbnailFile?.AbsoluteUri
+                                        )
+                                    );
+                        }
                         break;
 
                     case NotifyCollectionChangedAction.Remove:
 
-                    {
-                        if (e.OldItems != null)
-                            foreach (GameInstance instance in e.OldItems)
-                            {
-                                var item = NavigationPages.FirstOrDefault(
-                                    x => x.GameInstance?.Id == instance.Id
-                                );
-                                if (item != null)
-                                    NavigationPages.Remove(item);
-                            }
-                    }
+                        {
+                            if (e.OldItems != null)
+                                foreach (GameInstance instance in e.OldItems)
+                                {
+                                    var item = NavigationPages.FirstOrDefault(
+                                        x => x.GameInstance?.Id == instance.Id
+                                    );
+                                    if (item != null)
+                                        NavigationPages.Remove(item);
+                                }
+                        }
                         break;
                 }
             }

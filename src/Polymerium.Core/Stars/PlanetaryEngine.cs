@@ -89,7 +89,8 @@ public class PlanetaryEngine : IDisposable
 
     protected void Dispose(bool disposed)
     {
-        if (!disposed) disposed = true;
+        if (!disposed)
+            disposed = true;
         // do clean
     }
 }

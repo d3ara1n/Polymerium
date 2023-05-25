@@ -316,8 +316,7 @@ public sealed class PrepareGameViewModel : ObservableObject, IDisposable
                                             .Where(
                                                 x =>
                                                     x
-                                                        is
-                                                        {
+                                                        is {
                                                             PresentInClassPath: true,
                                                             IsNative: false
                                                         }

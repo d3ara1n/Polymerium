@@ -32,9 +32,7 @@ public class Drawer : HeaderedContentControl
         VisualStateManager.GoToState(this, "Opened", false);
     }
 
-    protected virtual void OnClosing()
-    {
-    }
+    protected virtual void OnClosing() { }
 
     public void Close()
     {

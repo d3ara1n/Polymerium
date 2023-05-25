@@ -10,7 +10,10 @@ public class InstanceConfigurationViewModel : ObservableObject
 {
     private readonly LocalizationService _localizationService;
 
-    public InstanceConfigurationViewModel(ViewModelContext context, LocalizationService localizationService)
+    public InstanceConfigurationViewModel(
+        ViewModelContext context,
+        LocalizationService localizationService
+    )
     {
         _localizationService = localizationService;
         Instance = context.AssociatedInstance!;

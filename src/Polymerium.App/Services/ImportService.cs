@@ -101,10 +101,7 @@ public class ImportService
         return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
     }
 
-    public async Task<GameImportError?> SolidifyAsync(
-        ImportResult product,
-        GameInstance? instance
-    )
+    public async Task<GameImportError?> SolidifyAsync(ImportResult product, GameInstance? instance)
     {
         return await Task.Run(
             new Func<GameImportError?>(() =>
@@ -163,7 +160,7 @@ public class ImportService
                     instance.Metadata.Attachments.Add(attachment);
                 foreach (var allocated in allocateds)
                     instance.Metadata.Attachments.Add(
-                        new Attachment { From = instance.ReferenceSource, Source = allocated }
+                        new Attachment(allocated, instance.ReferenceSource)
                     );
                 if (isGenerated)
                 {

@@ -98,84 +98,84 @@ a little bit of personal flavor。
 ## Roadmap
 
 * [x] 创建该项目
-    * [x] 起名字
-    * [x] 创建 Git 项目仓库
-    * [x] 在目录里随处撒上魔术粉
+  * [x] 起名字
+  * [x] 创建 Git 项目仓库
+  * [x] 在目录里随处撒上魔术粉
 * [ ] 实例管理
-    * [x] 从空模板创建
-    * [x] 删除
-    * [x] 解锁（转换为 untagged 实例）
-    * [ ] 根据引用源更新实例元数据
-    * [ ] 导入
-        * [x] 导入预览对话框
-        * [ ] Polypack
-        * [x] CurseForge
-        * [x] Modrinth
-    * [ ] 导出为 Polypack
+  * [x] 从空模板创建
+  * [x] 删除
+  * [x] 解锁（转换为 untagged 实例）
+  * [ ] 根据引用源更新实例元数据
+  * [ ] 导入
+    * [x] 导入预览对话框
+    * [ ] Polypack
+    * [x] CurseForge
+    * [x] Modrinth
+  * [ ] 导出为 Polypack
 * [ ] 启动游戏
-    * [x] Polylock 文件
-    * [x] 可选参数
-        * [x] 自定义 JVM 参数
-        * [x] 先决条件检查
-        * [x] Java 版本自动选择和兼容性检查
-    * [ ] 行星发动机
-        * [x] Fire-and-forget 模式
-        * [ ] Managed 模式
-            * [ ] 订阅日志
-                * [ ] 保存到文件
-            * [ ] 进程管理
-        * [x] 参数解析
+  * [x] Polylock 文件
+  * [x] 可选参数
+    * [x] 自定义 JVM 参数
+    * [x] 先决条件检查
+    * [x] Java 版本自动选择和兼容性检查
+  * [ ] 行星发动机
+    * [x] Fire-and-forget 模式
+    * [ ] Managed 模式
+      * [ ] 订阅日志
+        * [ ] 保存到文件
+      * [ ] 进程管理
+    * [x] 参数解析
 * [x] 账号管理
-    * [x] 管理模型
-        * [x] 添加
-        * [x] 移除
-    * [x] 离线模式
-    * [x] Microsoft 账号登录
-        * [x] 开始游戏前验证账号有效性或刷新
+  * [x] 管理模型
+    * [x] 添加
+    * [x] 移除
+  * [x] 离线模式
+  * [x] Microsoft 账号登录
+    * [x] 开始游戏前验证账号有效性或刷新
 * [x] 还原引擎
-    * [ ] 基于 Pipeline 模型
-    * [x] 组件安装
-        * [x] 香草
-        * [x] Forge
-        * [x] Fabric
-        * [x] Quilt
-    * [x] 附件安装
-    * [x] 基于文件池
+  * [ ] 基于 Pipeline 模型
+  * [x] 组件安装
+    * [x] 香草
+    * [x] Forge
+    * [x] Fabric
+    * [x] Quilt
+  * [x] 附件安装
+  * [x] 基于文件池
 * [x] 资源附件
-    * [x] 资源解析引擎
-        * [x] {var} 参数
-        * [x] {*vars} 参数
-        * [x] Url 类型转换
-    * [x] 内置解析器
-        * [x] 整合包
-            * [x] Modrinth
-            * [x] CurseForge
-        * [x] 模组
-            * [x] Modrinth
-            * [x] CurseForge
-        * [x] 资源包
-            * [x] Modrinth
-            * [x] CurseForge
-        * [x] 着色器包
-            * [x] Modrinth
-        * [x] 文件附件
-            * [x] 本地仓库
-            * [x] 远程资源
+  * [x] 资源解析引擎
+    * [x] {var} 参数
+    * [x] {*vars} 参数
+    * [x] Url 类型转换
+  * [x] 内置解析器
+    * [x] 整合包
+      * [x] Modrinth
+      * [x] CurseForge
+    * [x] 模组
+      * [x] Modrinth
+      * [x] CurseForge
+    * [x] 资源包
+      * [x] Modrinth
+      * [x] CurseForge
+    * [x] 着色器包
+      * [x] Modrinth
+    * [x] 文件附件
+      * [x] 本地仓库
+      * [x] 远程资源
 * [ ] 搜索
-    * [ ] 搜索中心
-        * [x] 互联网资源搜索
-        * [x] 导入在线整合包
-        * [x] 添加在线资源到本地实例
-            * [ ] 在本地实例中筛选出合适列表并提供开关以显示全部
-        * [ ] 收藏合集：为一个（新）实例添加一系列资源，用以对公共整合包快速个性化
-    * [x] SearchBar
-        * [x] 托管的实例搜索
-        * [x] 搜索中心联动
+  * [ ] 搜索中心
+    * [x] 互联网资源搜索
+    * [x] 导入在线整合包
+    * [x] 添加在线资源到本地实例
+      * [ ] 在本地实例中筛选出合适列表并提供开关以显示全部
+    * [ ] 收藏合集：为一个（新）实例添加一系列资源，用以对公共整合包快速个性化
+  * [x] SearchBar
+    * [x] 托管的实例搜索
+    * [x] 搜索中心联动
 * [x] 软件设置
 * [ ] 游戏实例设置
-    * [x] 元数据编辑
-    * [x] 私有启动配置页面
-    * [x] 重置实例
+  * [x] 元数据编辑
+  * [x] 私有启动配置页面
+  * [x] 重置实例
 * [ ] 本地化
 
 更多细节请在 [Issues](https://github.com/d3ara1n/Polymerium/issues) 中查询。
@@ -186,7 +186,9 @@ a little bit of personal flavor。
 
 * 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher)
 *
+
 游戏启动流程: [教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8)
+
 * Forge: [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
 * 微软验证: [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
 * Forge 版本和下载: [BMCLApi](https://bmclapidoc.bangbang93.com/)

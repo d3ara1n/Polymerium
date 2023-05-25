@@ -1,5 +1,3 @@
 ﻿namespace Polymerium.App.Models;
 
-public class InstanceServerModel
-{
-}
+public class InstanceServerModel { }

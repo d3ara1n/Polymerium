@@ -2,11 +2,7 @@
 
 internal class InstanceMachine
 {
-    public void Load(string manifestJsonPath)
-    {
-    }
+    public void Load(string manifestJsonPath) { }
 
-    public void Save(string manifestJsonPath)
-    {
-    }
+    public void Save(string manifestJsonPath) { }
 }

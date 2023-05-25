@@ -55,8 +55,11 @@ public class SettingViewModel : ObservableObject
         _settings = settings;
         _localizationService = localizationService;
         OpenPickerAsyncCommand = new AsyncRelayCommand(OpenPickerAsync);
-        Languages = new ObservableCollection<SettingLanguageItemModel>(localizationService.GetSupportedLanguages()
-            .Select(x => new SettingLanguageItemModel(x.Item1, x.Item2)));
+        Languages = new ObservableCollection<SettingLanguageItemModel>(
+            localizationService
+                .GetSupportedLanguages()
+                .Select(x => new SettingLanguageItemModel(x.Item1, x.Item2))
+        );
         ForceImportOffline = _settings.ForceImportOffline;
         SelectedLanguage = Languages.First(x => x.Key == _settings.LanguageKey);
         IsSuperPowerActivated = _settings.IsSuperPowerActivated;

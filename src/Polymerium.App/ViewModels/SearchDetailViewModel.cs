@@ -183,7 +183,7 @@ public class SearchDetailViewModel : ObservableObject
 
     public void InstallAsset(GameInstanceModel instance, SearchCenterResultItemVersionModel version)
     {
-        instance.Attachments.Add(new Attachment { Source = version.ResourceUrl, From = null });
+        instance.Attachments.Add(new Attachment(version.ResourceUrl));
         _notification.Enqueue(
             _localizationService.GetString("SearchDetailViewModel_InstallAsset_Success_Caption"),
             _localizationService

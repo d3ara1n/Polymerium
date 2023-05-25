@@ -17,6 +17,5 @@ public record ShaderPack : ResourceBase
         Uri file
     )
         : base(id, name, version, author, iconSource, reference, summary, versionId, update, file)
-    {
-    }
+    { }
 }

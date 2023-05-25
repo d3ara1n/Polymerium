@@ -236,6 +236,18 @@
                                                     Command="{x:Bind OpenReferenceCommand}"
                                                     CommandParameter="{x:Bind Reference}" />
                                                 <MenuFlyoutItem
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_Enable"
+                                                    IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
+                                                    Visibility="{x:Bind IsEnabled,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
+                                                    Command="{x:Bind EnableCommand}"
+                                                    CommandParameter="{x:Bind}"/>
+                                                <MenuFlyoutItem 
+                                                    x:Uid="InstanceMetadataConfigurationView_Attachment_Disable"
+                                                    IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
+                                                    Visibility="{x:Bind IsEnabled,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                                                    Command="{x:Bind DisableCommand}"
+                                                    CommandParameter="{x:Bind}"/>
+                                                <MenuFlyoutItem
                                                     x:Uid="InstanceMetadataConfigurationView_Attachment_Remove"
                                                     IsEnabled="{x:Bind IsLocked,Converter={StaticResource ReverseBoolConverter}}"
                                                     Command="{x:Bind RemoveCommand}"
@@ -245,14 +257,20 @@
                                         <ui:ImageEx Width="48" Height="48" Margin="0,0,10,0"
                                                     Source="{x:Bind IconSource}"
                                                     IsCacheEnabled="True" CacheMode="BitmapCache" Stretch="Fill"
-                                                    PlaceholderSource="ms-appx:///Assets/Placeholders/default_dirt.png" />
+                                                    PlaceholderSource="ms-appx:///Assets/Placeholders/default_dirt.png"/>
                                         <Grid Grid.Column="1" RowDefinitions="*,Auto">
                                             <StackPanel>
-                                                <TextBlock Text="{x:Bind Caption}"
-                                                           Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                <Grid>
+                                                    <TextBlock Text="{x:Bind Caption}" TextDecorations="Strikethrough"
+                                                               Visibility="{x:Bind IsEnabled,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
+                                                               Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                    <TextBlock Text="{x:Bind Caption}"
+                                                               Visibility="{x:Bind IsEnabled,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                                                               Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                </Grid>
                                                 <TextBlock Text="{x:Bind Summary}" />
                                             </StackPanel>
-                                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="2">
                                                 <TextBlock
                                                     x:Uid="InstanceMetadataConfigurationView_Attachment_VersionLabel"
                                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />

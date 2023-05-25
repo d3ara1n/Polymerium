@@ -10,7 +10,8 @@ namespace Polymerium.Cli.Commands;
 [Command("instance unlock")]
 internal class InstanceUnlockCommand : ICommand
 {
-    [CommandParameter(0)] public required string InstanceId { get; set; }
+    [CommandParameter(0)]
+    public required string InstanceId { get; set; }
 
     public ValueTask ExecuteAsync(IConsole console)
     {

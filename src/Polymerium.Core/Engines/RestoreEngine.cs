@@ -80,12 +80,18 @@ public class RestoreEngine
         throw new NotImplementedException();
     }
 
-    private Result<RestoreContext, RestoreError> CompleteAssets(GameInstance instance, RestoreContext context)
+    private Result<RestoreContext, RestoreError> CompleteAssets(
+        GameInstance instance,
+        RestoreContext context
+    )
     {
         throw new NotImplementedException();
     }
 
-    private Result<RestoreContext, RestoreError> CompleteLibraries(GameInstance instance, RestoreContext context)
+    private Result<RestoreContext, RestoreError> CompleteLibraries(
+        GameInstance instance,
+        RestoreContext context
+    )
     {
         throw new NotImplementedException();
     }

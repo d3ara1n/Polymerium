@@ -49,7 +49,7 @@ public static class GameInstanceExtensions
     {
         content = null;
         return fileBase.TryReadAllText(instance.GetPolylockHashUrl(), out var hash)
-               && hash == instance.ComputeMetadataHash()
-               && fileBase.TryReadAllText(instance.GetPolylockDataUrl(), out content);
+            && hash == instance.ComputeMetadataHash()
+            && fileBase.TryReadAllText(instance.GetPolylockDataUrl(), out content);
     }
 }

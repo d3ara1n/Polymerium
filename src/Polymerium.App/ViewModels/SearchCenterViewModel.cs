@@ -83,8 +83,15 @@ public class SearchCenterViewModel : ObservableObject
                 && (supported & type) == type
                 && (InstanceScope == null || type != ResourceType.Modpack)
             )
-                SupportedResources.Add(new SearchCenterResourceTagModel(type,
-                    _localizationService.GetString($"ResourceType_{type.ToString()}", type.ToString())));
+                SupportedResources.Add(
+                    new SearchCenterResourceTagModel(
+                        type,
+                        _localizationService.GetString(
+                            $"ResourceType_{type.ToString()}",
+                            type.ToString()
+                        )
+                    )
+                );
         }
 
         SelectedResourceType = SupportedResources.Any(x => x == old)

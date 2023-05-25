@@ -277,8 +277,8 @@ public class AssetManager
             {
                 var file = new FileInfo(_fileBase.Locate(x.Target));
                 return file.LinkTarget == null
-                       && file.Exists
-                       && !_fileBase.CheckIfTheSameAsync(x.Target, x.Source).Result;
+                    && file.Exists
+                    && !_fileBase.CheckIfTheSameAsync(x.Target, x.Source).Result;
             })
         )
             return RenewableAssetDeploymentError.TargetConflict;
@@ -354,7 +354,8 @@ public class AssetManager
         if (Directory.Exists(dirPath))
         {
             var files = Directory.GetFiles(dirPath, "*.png");
-            foreach (var file in files) yield return new Screenshot { FileName = file };
+            foreach (var file in files)
+                yield return new Screenshot { FileName = file };
         }
     }
 }

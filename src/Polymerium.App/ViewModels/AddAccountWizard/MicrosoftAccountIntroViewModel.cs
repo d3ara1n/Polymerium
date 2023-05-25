@@ -2,6 +2,4 @@
 
 namespace Polymerium.App.ViewModels.AddAccountWizard;
 
-public class MicrosoftAccountIntroViewModel : ObservableObject
-{
-}
+public class MicrosoftAccountIntroViewModel : ObservableObject { }
