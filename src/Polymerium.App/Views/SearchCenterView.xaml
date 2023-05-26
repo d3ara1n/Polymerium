@@ -8,14 +8,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:ui="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:lab="using:CommunityToolkit.Labs.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Grid RowDefinitions="Auto,*">
         <ContentControl Margin="5,0,10,5" HorizontalContentAlignment="Stretch"
                         IsEnabled="{x:Bind IsDataLoading,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
-            <StackPanel Spacing="10">
-                <TextBlock x:Uid="SearchCenterView_Header" Style="{StaticResource TitleTextBlockStyle}" />
+            <StackPanel Spacing="6">
+                <Grid>
+                    <TextBlock x:Uid="SearchCenterView_Header" Style="{StaticResource TitleTextBlockStyle}" />
+                    <lab:Segmented HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <lab:SegmentedItem>
+                            <FontIcon Glyph="&#xEA37;" FontSize="12"/>
+                        </lab:SegmentedItem>
+                        <lab:SegmentedItem>
+                            <FontIcon Glyph="&#xF0E2;" FontSize="12"/>
+                        </lab:SegmentedItem>
+                    </lab:Segmented>
+                </Grid>
                 <StackPanel>
                     <AutoSuggestBox x:Uid="SearchCenterView_SearchBox" x:Name="SearchBox" PlaceholderText=""
                                     QueryIcon="Find"
@@ -50,8 +61,7 @@
             </StackPanel>
         </ContentControl>
         <Grid Grid.Row="1">
-            <ListView x:Name="ResultList" IncrementalLoadingTrigger="Edge" SelectionMode="None"
-                      Margin="0,5,0,0">
+            <ListView x:Name="ResultList" IncrementalLoadingTrigger="Edge" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:SearchCenterResultItemModel">
                         <Grid Margin="5,3,10,3">
