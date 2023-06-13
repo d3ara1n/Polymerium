@@ -8,15 +8,23 @@
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" IsEnabled="{x:Bind IsProcessing,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
 
-    <Grid>
-        <TextBlock Text="尚未完成" />
-    </Grid>
+    <StackPanel>
+        <TextBlock Text="更新" Style="{StaticResource HeaderTextBlockStyle}"/>
+        <TextBlock Text="到版本"/>
+        <TextBlock Text="{x:Bind Version.DisplayName}"/>
+        <CheckBox IsChecked="{x:Bind ApplyLocalFileReset,Mode=TwoWay}" Content="应用配置更新"/>
+    </StackPanel>
     <controls:CustomDialog.OperationContent>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="10">
-            <Button x:Name="ConfirmButton" Content="确定"
-                    Style="{StaticResource AccentButtonStyle}" />
+            <Button x:Name="ConfirmButton"
+                    Style="{StaticResource AccentButtonStyle}" Click="ConfirmButton_Click">
+                <Grid>
+                    <TextBlock Text="更新" Visibility="{x:Bind IsProcessing,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"/>
+                    <ProgressRing Height="18" Width="18" IsIndeterminate="True" Visibility="{x:Bind IsProcessing,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </Grid>
+            </Button>
             <Button x:Name="CancelButton" Content="取消" Click="CancelButton_Click" />
         </StackPanel>
     </controls:CustomDialog.OperationContent>

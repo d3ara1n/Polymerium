@@ -242,7 +242,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [WinUI-url]: https://microsoft.github.io/microsoft-ui-xaml/
 
-[WindowsAppSDK]: https://img.shields.io/badge/Windows%20App%20SDK-1.2-348753?style=for-the-badge&logoColor=white
+[WindowsAppSDK]: https://img.shields.io/badge/Windows%20App%20SDK-1.3-20000?style=for-the-badge&logoColor=white
 
 [WindowsAppSDK-url]: https://github.com/microsoft/WindowsAppSDK
 
