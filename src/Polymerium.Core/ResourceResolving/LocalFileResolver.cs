@@ -22,7 +22,7 @@ public class LocalFileResolver : ResourceResolverBase
                 new File(
                     name,
                     name,
-                    name,
+                    fileName,
                     fileName,
                     path,
                     null,

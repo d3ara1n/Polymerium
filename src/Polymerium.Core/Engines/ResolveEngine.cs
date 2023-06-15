@@ -61,6 +61,31 @@ public class ResolveEngine
             }
     }
 
+    public async Task<Result<IEnumerable<ResolveResult>, ResolveResultError>> ResolveAsync(
+        IEnumerable<Uri> resources,
+        ResolverContext context
+    )
+    {
+        var tasks = new List<Task<Result<ResolveResult, ResolveResultError>>>();
+        foreach (var resource in resources)
+        {
+            tasks.Add(ResolveAsync(resource, context));
+        }
+        await Task.WhenAll(tasks);
+        if (tasks.All(x => x.IsCompletedSuccessfully && x.Result.IsSuccessful))
+        {
+            return new Result<IEnumerable<ResolveResult>, ResolveResultError>(
+                tasks.Select(x => x.Result.Value)
+            );
+        }
+        else
+        {
+            return new Result<IEnumerable<ResolveResult>, ResolveResultError>(
+                tasks.First(x => !x.Result.IsSuccessful).Result.Error
+            );
+        }
+    }
+
     public async Task<Result<ResolveResult, ResolveResultError>> ResolveAsync(
         Uri resource,
         ResolverContext context

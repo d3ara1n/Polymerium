@@ -215,11 +215,11 @@ public class SearchDetailViewModel : ObservableObject
             report(0, false);
             try
             {
+                using var client = new HttpClient();
+                var response = await client.GetAsync(file.Source, token);
                 var tmpFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
                 if (!Directory.Exists(Path.GetDirectoryName(tmpFile)))
                     Directory.CreateDirectory(Path.GetDirectoryName(tmpFile)!);
-                using var client = new HttpClient();
-                var response = await client.GetAsync(file.Source, token);
                 ulong? totalSize = null;
                 if (
                     response.Content.Headers.ContentLength.HasValue

@@ -17,27 +17,13 @@
   <component name="ChangeListManager">
     <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Attachment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Abstractions/Meta/Attachment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceAttachmentItemModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceAttachmentItemModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/ImportService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchDetailViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SearchDetailViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/Instances/InstanceMetadataConfigurationView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/BuildPolylockStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Engines/Restoring/Stages/BuildPolylockStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Importers/CurseForgeImporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Importers/CurseForgeImporter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Core/Importers/ModrinthImporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Core/Importers/ModrinthImporter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/changelogs/v0.4.md" beforeDir="false" afterPath="$PROJECT_DIR$/changelogs/v0.4.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainWindow.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Duffet" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Duffet/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Bank.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/BankBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/BankBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/PropertyBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Builders/PropertyBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Property.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/src/Duffet/Property.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/FluentPipeline" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/FluentPipeline" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Wupoo" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Wupoo/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/PostBodyNotGivenException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/PostBodyNotGivenException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/WapooException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Exceptions/WapooException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/HttpMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/HttpMethods.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Wapoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/Wapoo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/WapooOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/WapooOptions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,30 +54,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;TODO_SCOPE&quot;: &quot;所有位置&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.csharpier.CSharpierSettingsComponent&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "TODO_SCOPE": "所有位置",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\zqy02\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\zqy02\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="UWP.Polymerium.App">
     <configuration name="Polymerium.App: win10-arm64" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish publish_profile="win10-arm64.pubxml" pubxml_path="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App/Properties/PublishProfiles/win10-arm64.pubxml" uuid_high="-3135381123620779117" uuid_low="-8024763659079769556" />
@@ -295,6 +281,7 @@
       <workItem from="1684835145990" duration="552000" />
       <workItem from="1684843059980" duration="5844000" />
       <workItem from="1685003120051" duration="49000" />
+      <workItem from="1686820984859" duration="114000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>

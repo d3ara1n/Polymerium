@@ -58,7 +58,12 @@ public sealed partial class MainView : Page
                     .FirstOrDefault(x => x.GameInstance?.Id == instanceId) is
                 { } instanceView
             )
-                MainNavigationBar.SelectedItem = instanceView;
+            {
+                if (MainNavigationBar.SelectedItem == instanceView)
+                    OnSelectionChanged(MainNavigationBar, null!);
+                else
+                    MainNavigationBar.SelectedItem = instanceView;
+            }
             else
                 throw new ArgumentException($"parameter {parameter} not found as game instance id");
         }
