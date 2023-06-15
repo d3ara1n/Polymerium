@@ -16,7 +16,7 @@ public sealed partial class MainWindow : Window
 
         Title = "Polymerium";
 
-        AppWindow.Resize(new SizeInt32(780, 600));
+        AppWindow.Resize(new SizeInt32(900, 640));
 
         if (Environment.OSVersion.Version.Major >= 10)
         {
@@ -33,7 +33,7 @@ public sealed partial class MainWindow : Window
         }
         else
         {
-            // only windows 10+ supports msix so...
+            // only windows 10+ supports msix so...it might not reach here
             (Main.ColumnRight.Width, Main.ColumnLeft.Width) = (
                 Main.ColumnLeft.Width,
                 Main.ColumnRight.Width

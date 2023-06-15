@@ -48,7 +48,7 @@ a little bit of personal flavor。
 
 ### Why another launcher?
 
-这不是 *launcher*，这也不是压缩毛巾，这是 Polymerium —— *游戏实例管理器*。
+这不是 *launcher*，也不是压缩毛巾，这是 Polymerium —— *游戏实例管理器*。
 初衷是在用 PrismLauncher 的时候遇到一些问题并想出一些改进的的方法，不过在写代码、与 forge installer
 斗智斗勇的过程中已经忘记哪些改进了（囧。现在要回答这个问题的话，那么答案是：没有为什么，小孩子不懂事写着玩的。
 

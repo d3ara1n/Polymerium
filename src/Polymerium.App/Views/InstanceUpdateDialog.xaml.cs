@@ -3,9 +3,11 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
+using Polymerium.Abstractions;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,8 +29,6 @@ public sealed partial class InstanceUpdateDialog : CustomDialog
         InitializeComponent();
     }
 
-
-
     public bool IsProcessing
     {
         get { return (bool)GetValue(IsProcessingProperty); }
@@ -36,10 +36,12 @@ public sealed partial class InstanceUpdateDialog : CustomDialog
     }
 
     // Using a DependencyProperty as the backing store for IsProcessing.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsProcessingProperty =
-        DependencyProperty.Register(nameof(IsProcessing), typeof(bool), typeof(InstanceUpdateDialog), new PropertyMetadata(false));
-
-
+    public static readonly DependencyProperty IsProcessingProperty = DependencyProperty.Register(
+        nameof(IsProcessing),
+        typeof(bool),
+        typeof(InstanceUpdateDialog),
+        new PropertyMetadata(false)
+    );
 
     public bool ApplyLocalFileReset
     {
@@ -49,9 +51,12 @@ public sealed partial class InstanceUpdateDialog : CustomDialog
 
     // Using a DependencyProperty as the backing store for ApplyLocalFileReset.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty ApplyLocalFileResetProperty =
-        DependencyProperty.Register(nameof(ApplyLocalFileReset), typeof(bool), typeof(InstanceUpdateDialog), new PropertyMetadata(true));
-
-
+        DependencyProperty.Register(
+            nameof(ApplyLocalFileReset),
+            typeof(bool),
+            typeof(InstanceUpdateDialog),
+            new PropertyMetadata(true)
+        );
 
     public InstanceUpdateViewModel ViewModel { get; }
     public GameInstanceModel Instance { get; }
@@ -63,8 +68,27 @@ public sealed partial class InstanceUpdateDialog : CustomDialog
         Dismiss();
     }
 
-    private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+    private async void ConfirmButton_Click(object sender, RoutedEventArgs e)
     {
         IsProcessing = true;
+        var reset = ApplyLocalFileReset;
+        await Task.Run(
+            () =>
+                ViewModel.ApplyUpdateAsync(
+                    Instance.Inner,
+                    Version.Resource,
+                    reset,
+                    UpdateFinishHandler
+                )
+        );
+    }
+
+    private void UpdateFinishHandler()
+    {
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            Dismiss();
+            ViewModel.NavigationService.Navigate<InstanceView>(Instance.Id);
+        });
     }
 }

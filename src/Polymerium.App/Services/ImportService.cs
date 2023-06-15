@@ -145,9 +145,7 @@ public class ImportService
 
                 // update instance info and remain FolderName untouched
                 var old = instance.ReferenceSource;
-                instance.Name = product.Content.Name;
                 instance.Version = product.Content.Version;
-                instance.Author = product.Content.Author;
                 instance.ReferenceSource = product.Content.ReferenceSource;
                 instance.ThumbnailFile = product.Content.ThumbnailFile;
                 instance.Metadata.Components.Clear();
@@ -164,6 +162,8 @@ public class ImportService
                     );
                 if (isGenerated)
                 {
+                    instance.Name = product.Content.Name;
+                    instance.Author = product.Content.Author;
                     instance.FolderName = PathHelper.RemoveInvalidCharacters(instance.Name);
                     _instanceManager.AddInstance(instance);
                 }
