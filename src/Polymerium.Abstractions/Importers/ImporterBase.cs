@@ -12,6 +12,7 @@ public abstract class ImporterBase
     public CancellationToken Token { get; set; }
 
     public abstract Task<Result<ModpackContent, GameImportError>> ExtractMetadataAsync(
+        string fileName,
         string indexContent,
         IEnumerable<string> rawFileList,
         Uri? source,

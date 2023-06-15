@@ -33,6 +33,7 @@ public class ModrinthImporter : ImporterBase
     }
 
     public override async Task<Result<ModpackContent, GameImportError>> ExtractMetadataAsync(
+        string fileName,
         string indexContent,
         IEnumerable<string> rawFileList,
         Uri? source,
