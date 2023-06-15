@@ -73,6 +73,7 @@ public class ImportService
                         using var reader = new StreamReader(indexFileStream);
                         var indexFileContent = await reader.ReadToEndAsync();
                         var result = await importer.ExtractMetadataAsync(
+                            filePath,
                             indexFileContent,
                             rawFileList,
                             reference,

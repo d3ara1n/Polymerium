@@ -114,6 +114,7 @@ public partial class App : Application
                     configure
                         .Register<CurseForgeImporter>("manifest.json")
                         .Register<ModrinthImporter>("modrinth.index.json")
+                        .Register<PrismImporter>("mmc-pack.json")
             )
             .AddSingleton<LocalizationService>();
         // global services
