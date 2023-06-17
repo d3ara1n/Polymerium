@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -256,8 +257,17 @@ public sealed class MainViewModel : ObservableObject
 
     public void GotoSearchView(string query)
     {
-        _navigationService.Navigate<SearchCenterView>(
-            new SearchCenterNavigationArguments(query, true)
-        );
+        switch (query.ToLower().Trim())
+        {
+            case "github":
+                Process.Start(new ProcessStartInfo("https://github.com/d3ara1n/Polymerium")
+                {
+                    UseShellExecute = true
+                });
+                break;
+            default:
+                _navigationService.Navigate<SearchCenterView>(new SearchCenterNavigationArguments(query, true));
+                break;
+        }
     }
 }
