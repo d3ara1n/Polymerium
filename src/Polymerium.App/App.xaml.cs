@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
@@ -43,9 +44,22 @@ public partial class App : Application
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        UnhandledException += App_UnhandledException;
         Window = new MainWindow();
         Window.Closed += Window_Closed;
         Window.Activate();
+    }
+
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium", "exception_dump.txt");
+        var builder = new StringBuilder();
+        builder.AppendLine(e.Exception.GetType().FullName);
+        builder.AppendLine(DateTime.Now.ToString());
+        builder.AppendLine(e.Message);
+        builder.AppendLine("==========================");
+        builder.AppendLine(e.Exception.ToString());
+        File.WriteAllText(path, builder.ToString());
     }
 
     private void Window_Closed(object sender, WindowEventArgs args)

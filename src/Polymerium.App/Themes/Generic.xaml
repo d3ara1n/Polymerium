@@ -157,38 +157,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="controls:RecentPlayedItemControl" BasedOn="{StaticResource DefaultRecentPlayedItem}" />
-
-    <Style x:Key="DefaultRecentPlayedItemStyle" TargetType="controls:RecentPlayedItemControl">
-        <Setter Property="Padding" Value="5" />
-        <Setter Property="CornerRadius" Value="{ThemeResource ContentAreaCornerRadius}" />
-        <Setter Property="Background" Value="{ThemeResource FloatLayerBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeBrush}" />
-        <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="controls:RecentPlayedItemControl">
-                    <Grid Margin="{TemplateBinding Padding}">
-                        <Border x:Name="PART_Border" BorderThickness="{TemplateBinding BorderThickness}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                CornerRadius="{TemplateBinding CornerRadius}">
-                            <Border.OpacityTransition>
-                                <ScalarTransition />
-                            </Border.OpacityTransition>
-                        </Border>
-                        <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}"
-                                CornerRadius="{TemplateBinding CornerRadius}">
-                            <Border.OpacityTransition>
-                                <ScalarTransition />
-                            </Border.OpacityTransition>
-                        </Border>
-                        <ContentPresenter />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="IconButtonStyle" TargetType="Button">
         <Style.Setters>
             <Setter Property="Background" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />

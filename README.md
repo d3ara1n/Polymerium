@@ -111,6 +111,7 @@ a little bit of personal flavor。
     * [ ] Polypack
     * [x] CurseForge
     * [x] Modrinth
+	* [x] MMC-Pack
   * [ ] 导出为 Polypack
 * [ ] 启动游戏
   * [x] Polylock 文件
