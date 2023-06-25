@@ -50,10 +50,9 @@
                         <ListView ItemsSource="{x:Bind ViewModel.RecentPlays}" Margin="0,0,0,5">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:RecentPlayedItemModel">
-                                    <controls:RecentPlayedItemControl
-                                        Style="{StaticResource DefaultRecentPlayedItemStyle}"
+                                    <Button Margin="5"
                                         Command="{x:Bind Command}"
-                                        CommandParameter="{x:Bind InstanceId}">
+                                        CommandParameter="{x:Bind InstanceId}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
                                         <Grid RowDefinitions="Auto,*" MaxWidth="100">
                                             <toolkit:ImageEx Width="80" Height="80" Margin="10,10,10,5"
                                                              CornerRadius="10"
@@ -81,7 +80,7 @@
                                                 </Grid>
                                             </Grid>
                                         </Grid>
-                                    </controls:RecentPlayedItemControl>
+                                    </Button>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                             <ListView.ItemsPanel>
