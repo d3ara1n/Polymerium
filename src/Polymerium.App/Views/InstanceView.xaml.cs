@@ -4,6 +4,7 @@ using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views.Instances;
@@ -46,7 +47,7 @@ public sealed partial class InstanceView : Page
     {
         DispatcherQueue.TryEnqueue(() =>
         {
-            ViewModel.IsRestorationNeeded = isNeeded;
+            RestoreMarquee.Switch(isNeeded ? 0 : 1);
             ViewModel.ReferenceUrl = url;
             IsPending = false;
         });
@@ -54,10 +55,35 @@ public sealed partial class InstanceView : Page
 
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
-        var dialog = new PrepareGameDialog(ViewModel.Instance.Inner, ViewModel.OverlayService);
-        dialog.Dismissed += Dialog_Dismissed;
-        ViewModel.OverlayService.Show(dialog);
+        //var dialog = new PrepareGameDialog(ViewModel.Instance.Inner, ViewModel.OverlayService);
+        //dialog.Dismissed += Dialog_Dismissed;
+        //ViewModel.OverlayService.Show(dialog);
+        RestoreMarquee.Switch(2);
+        VisualStateManager.GoToState(this, "Preparing", false);
+        Task.Run(() => ViewModel.Start(StartHandler));
     }
+
+    private void StartHandler(int? precentage, bool? success) =>
+    DispatcherQueue.TryEnqueue(() =>
+        {
+            if (success == true)
+            {
+                VisualStateManager.GoToState(this, "Running", false);
+            }
+            else if (success == false)
+            {
+                VisualStateManager.GoToState(this, "Ready", false);
+            }
+            else
+            {
+                StartButton_Progress.IsIndeterminate = !precentage.HasValue;
+                if (precentage.HasValue)
+                {
+                    StartButton_Progress.Value = precentage.Value;
+                }
+            }
+        });
+
 
     private void Dialog_Dismissed(object? sender, EventArgs e)
     {

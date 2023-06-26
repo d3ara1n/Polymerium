@@ -604,7 +604,7 @@
 
     <Style TargetType="controls:Drawer" BasedOn="{StaticResource DefaultDrawerStyle}" />
 
-    <Style x:Name="DefaultDrawerStyle" TargetType="controls:Drawer">
+    <Style x:Key="DefaultDrawerStyle" TargetType="controls:Drawer">
         <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Background" Value="{ThemeResource ContentDialogBackground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}" />
@@ -677,6 +677,24 @@
                                 <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" />
                             </Grid>
                         </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:Marquee" BasedOn="{StaticResource DefaultMarqueeStyle}"/>
+
+    <Style x:Key="DefaultMarqueeStyle" TargetType="controls:Marquee">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:Marquee">
+                    <Grid>
+                        <ContentPresenter x:Name="PART_Container" RenderTransformOrigin="0.5,0.5">
+                            <ContentPresenter.RenderTransform>
+                                <TranslateTransform x:Name="PART_Translate"/>
+                            </ContentPresenter.RenderTransform>
+                        </ContentPresenter>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

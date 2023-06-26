@@ -34,6 +34,7 @@ public class InstanceViewModel : ObservableObject
     private readonly LocalizationService _localizationService;
     private readonly NavigationService _navigationService;
     private readonly ResolveEngine _resolver;
+    private readonly RestoreEngine _restoreEngine;
 
     private string coreVersion = string.Empty;
 
@@ -55,7 +56,8 @@ public class InstanceViewModel : ObservableObject
         ComponentManager componentManager,
         NavigationService navigationService,
         AssetManager assetManager,
-        LocalizationService localizationService
+        LocalizationService localizationService,
+        RestoreEngine restoreEngine
     )
     {
         _componentManager = componentManager;
@@ -64,6 +66,7 @@ public class InstanceViewModel : ObservableObject
         _assetManager = assetManager;
         _fileBase = fileBase;
         _localizationService = localizationService;
+        _restoreEngine = restoreEngine;
         Instance = context.AssociatedInstance!;
         OverlayService = overlayService;
         CoreVersion = Instance.Inner.GetCoreVersion() ?? "N/A";
@@ -191,12 +194,6 @@ public class InstanceViewModel : ObservableObject
         set => SetProperty(ref shaderPackCount, value);
     }
 
-    public bool IsRestorationNeeded
-    {
-        get => isRestorationNeeded;
-        set => SetProperty(ref isRestorationNeeded, value);
-    }
-
     public Uri? ReferenceUrl
     {
         get => referenceUrl;
@@ -308,5 +305,10 @@ public class InstanceViewModel : ObservableObject
         }
 
         callback(url, isNeeded);
+    }
+
+    public void Start(Action<int?, bool?> callback)
+    {
+        
     }
 }
