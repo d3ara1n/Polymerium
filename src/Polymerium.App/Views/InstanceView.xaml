@@ -14,7 +14,7 @@
     <ScrollViewer>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="Common">
-                <VisualState x:Name="Ready"/>
+                <VisualState x:Name="Idle"/>
                 <VisualState x:Name="Preparing">
                     <VisualState.Setters>
                         <!-- 不是必须的，日后按钮能取消还原时移除 -->
@@ -56,8 +56,7 @@
                             <StackPanel>
                                 <TextBlock Text="{x:Bind ViewModel.Instance.Name,Mode=OneWay}"
                                            Style="{StaticResource TitleTextBlockStyle}" />
-                                <ContentControl
-                                    IsEnabled="{x:Bind IsPending,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
+                                <ContentControl  IsEnabled="{x:Bind IsPending,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal" Spacing="5"
                                                 Visibility="{x:Bind ViewModel.Instance.IsTagged,Converter={StaticResource BoolToVisibilityConverter}}">
                                         <FontIcon Glyph="&#xE946;" FontSize="12"

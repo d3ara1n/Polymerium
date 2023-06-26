@@ -14,17 +14,21 @@ namespace Polymerium.Core.Importers
 {
     public class PrismImporter : ImporterBase
     {
-        public override Task<Result<ModpackContent, GameImportError>> ExtractMetadataAsync(string fileName, string indexContent, IEnumerable<string> rawFileList, Uri? source, bool forceOffline)
+        public override Task<Result<ModpackContent, GameImportError>> ExtractMetadataAsync(
+            string fileName,
+            string indexContent,
+            IEnumerable<string> rawFileList,
+            Uri? source,
+            bool forceOffline
+        )
         {
             var model = JsonConvert.DeserializeObject<PrismModpackIndex>(indexContent);
             var metadata = new GameMetadata();
             foreach (var component in model.Components)
             {
-                metadata.Components.Add(new Component()
-                {
-                    Identity = component.Uid,
-                    Version = component.Version
-                });
+                metadata.Components.Add(
+                    new Component() { Identity = component.Uid, Version = component.Version }
+                );
             }
             var list = new List<PackedSolidFile>();
             foreach (var raw in rawFileList.Where(x => x.StartsWith("minecraft")))
@@ -47,7 +51,9 @@ namespace Polymerium.Core.Importers
             }
             var name = Path.GetFileNameWithoutExtension(fileName);
             var version = Path.GetFileName(fileName);
-            return Task.FromResult(Finished(name, version, string.Empty, null, null, metadata, list));
+            return Task.FromResult(
+                Finished(name, version, string.Empty, null, null, metadata, list)
+            );
         }
     }
 }

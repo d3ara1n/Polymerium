@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI;
 using Humanizer;
 using Microsoft.UI.Xaml.Media.Animation;
+using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
@@ -23,6 +24,7 @@ using Polymerium.Core.Engines;
 using Polymerium.Core.Extensions;
 using Polymerium.Core.GameAssets;
 using Polymerium.Core.Managers;
+using Polymerium.Core.Managers.GameModels;
 
 namespace Polymerium.App.ViewModels;
 
@@ -34,22 +36,22 @@ public class InstanceViewModel : ObservableObject
     private readonly LocalizationService _localizationService;
     private readonly NavigationService _navigationService;
     private readonly ResolveEngine _resolver;
-    private readonly RestoreEngine _restoreEngine;
+    private readonly GameManager _gameManager;
 
     private string coreVersion = string.Empty;
 
     private bool isModSupported;
 
-    private bool isRestorationNeeded;
     private bool isShaderSupported;
     private uint modCount;
     private Uri? referenceUrl;
     private uint resourcePackCount;
     private uint shaderPackCount;
 
+    private Action<InstanceState>? stateChangeHandler;
+
     public InstanceViewModel(
         ViewModelContext context,
-        InstanceManager instanceManager,
         ResolveEngine resolver,
         IOverlayService overlayService,
         IFileBaseService fileBase,
@@ -57,7 +59,7 @@ public class InstanceViewModel : ObservableObject
         NavigationService navigationService,
         AssetManager assetManager,
         LocalizationService localizationService,
-        RestoreEngine restoreEngine
+        GameManager gameManager
     )
     {
         _componentManager = componentManager;
@@ -66,7 +68,7 @@ public class InstanceViewModel : ObservableObject
         _assetManager = assetManager;
         _fileBase = fileBase;
         _localizationService = localizationService;
-        _restoreEngine = restoreEngine;
+        _gameManager = gameManager;
         Instance = context.AssociatedInstance!;
         OverlayService = overlayService;
         CoreVersion = Instance.Inner.GetCoreVersion() ?? "N/A";
@@ -208,7 +210,7 @@ public class InstanceViewModel : ObservableObject
     {
         var path = Path.Combine(
             _fileBase.Locate(new Uri(ConstPath.INSTANCE_BASE.Replace("{0}", Instance.Id))),
-            dir
+            dir!
         );
         Process.Start(
             new ProcessStartInfo("explorer.exe")
@@ -307,8 +309,31 @@ public class InstanceViewModel : ObservableObject
         callback(url, isNeeded);
     }
 
+    public void SetStateChangeHandler(Action<InstanceState> handler) =>
+        stateChangeHandler = handler;
+
     public void Start(Action<int?, bool?> callback)
     {
-        
+        stateChangeHandler?.Invoke(InstanceState.Preparing);
+        var tracker = _gameManager.Prepare(Instance.Inner, callback);
+    }
+
+    public InstanceState QueryInstanceState(Action<int?, bool?> prepareCallback)
+    {
+        // ������ Ready ״̬ʱ��ص����������� Running ������ Idle������Ҫ������
+        if (_gameManager.IsPreparing(Instance.Id, out var prepare))
+        {
+            prepare!.Callback = prepareCallback;
+            return InstanceState.Preparing;
+        }
+        else if (_gameManager.IsRunning(Instance.Id, out var run))
+        {
+            // TODO
+            return InstanceState.Running;
+        }
+        else
+        {
+            return InstanceState.Idle;
+        }
     }
 }

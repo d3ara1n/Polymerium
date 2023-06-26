@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views.Instances;
+using Polymerium.Core.Managers.GameModels;
 
 namespace Polymerium.App.Views;
 
@@ -25,6 +26,7 @@ public sealed partial class InstanceView : Page
     {
         ViewModel = App.Current.Provider.GetRequiredService<InstanceViewModel>();
         InitializeComponent();
+        ViewModel.SetStateChangeHandler(StateChangeHandler);
     }
 
     public bool IsPending
@@ -37,38 +39,49 @@ public sealed partial class InstanceView : Page
 
     private void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        ViewModel.LoadAssets();
         ViewModel.LoadSaves();
         ViewModel.LoadScreenshots();
-        Dialog_Dismissed(null, new EventArgs());
+        ViewModel.LoadAssets();
+        StateChangeHandler(ViewModel.QueryInstanceState(PrepareCallbackHandler));
+        IsPending = true;
+        Task.Run(() => ViewModel.LoadInstanceInformationAsync(LoadInformationHandler));
     }
+
+    private void StateChangeHandler(InstanceState state) =>
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            VisualStateManager.GoToState(this, state.ToString(), false);
+            RestoreMarquee.Switch(
+                state switch
+                {
+                    InstanceState.Preparing => 2,
+                    InstanceState.Running => 1,
+                    InstanceState.Idle => -1,
+                    _ => 1
+                }
+            );
+        });
 
     private void LoadInformationHandler(Uri? url, bool isNeeded)
     {
         DispatcherQueue.TryEnqueue(() =>
         {
-            RestoreMarquee.Switch(isNeeded ? 0 : 1);
-            ViewModel.ReferenceUrl = url;
+            if (ViewModel.QueryInstanceState(PrepareCallbackHandler) == InstanceState.Idle)
+                RestoreMarquee.Switch(isNeeded ? 0 : 1);
+            // HACK: Ӧ���б�İ취����ֹ��ȡ url ʧ�ܺ����Եķ���
+            ViewModel.ReferenceUrl = url ?? new Uri("https://example.com");
             IsPending = false;
         });
     }
 
-    private void StartButton_Click(object sender, RoutedEventArgs e)
-    {
-        //var dialog = new PrepareGameDialog(ViewModel.Instance.Inner, ViewModel.OverlayService);
-        //dialog.Dismissed += Dialog_Dismissed;
-        //ViewModel.OverlayService.Show(dialog);
-        RestoreMarquee.Switch(2);
-        VisualStateManager.GoToState(this, "Preparing", false);
-        Task.Run(() => ViewModel.Start(StartHandler));
-    }
-
-    private void StartHandler(int? precentage, bool? success) =>
-    DispatcherQueue.TryEnqueue(() =>
+    private void PrepareCallbackHandler(int? precentage, bool? success) =>
+        DispatcherQueue.TryEnqueue(() =>
         {
             if (success == true)
             {
-                VisualStateManager.GoToState(this, "Running", false);
+                // go to launch
+                // TO BE REMOVED
+                StateChangeHandler(InstanceState.Running);
             }
             else if (success == false)
             {
@@ -84,12 +97,9 @@ public sealed partial class InstanceView : Page
             }
         });
 
-
-    private void Dialog_Dismissed(object? sender, EventArgs e)
+    private void StartButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.LoadAssets();
-        IsPending = true;
-        Task.Run(() => ViewModel.LoadInstanceInformationAsync(LoadInformationHandler));
+        Task.Run(() => ViewModel.Start(PrepareCallbackHandler));
     }
 
     private void OpenAssetDrawer(ResourceType type, IAdvancedCollectionView view)

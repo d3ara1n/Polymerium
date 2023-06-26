@@ -260,13 +260,17 @@ public sealed class MainViewModel : ObservableObject
         switch (query.ToLower().Trim())
         {
             case "github":
-                Process.Start(new ProcessStartInfo("https://github.com/d3ara1n/Polymerium")
-                {
-                    UseShellExecute = true
-                });
+                Process.Start(
+                    new ProcessStartInfo("https://github.com/d3ara1n/Polymerium")
+                    {
+                        UseShellExecute = true
+                    }
+                );
                 break;
             default:
-                _navigationService.Navigate<SearchCenterView>(new SearchCenterNavigationArguments(query, true));
+                _navigationService.Navigate<SearchCenterView>(
+                    new SearchCenterNavigationArguments(query, true)
+                );
                 break;
         }
     }
