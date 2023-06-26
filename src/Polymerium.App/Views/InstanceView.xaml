@@ -12,6 +12,26 @@
     xmlns:models="using:Polymerium.App.Models"
     mc:Ignorable="d" Loaded="Page_Loaded">
     <ScrollViewer>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Common">
+                <VisualState x:Name="Ready"/>
+                <VisualState x:Name="Preparing">
+                    <VisualState.Setters>
+                        <!-- 不是必须的，日后按钮能取消还原时移除 -->
+                        <Setter Target="StartButton.IsEnabled" Value="False"/>
+                        <Setter Target="StartButton_Ready.Visibility" Value="Collapsed"/>
+                        <Setter Target="StartButton_Preparing.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Running">
+                    <VisualState.Setters>
+                        <Setter Target="StartButton.IsEnabled" Value="False"/>
+                        <Setter Target="StartButton_Ready.Visibility" Value="Collapsed"/>
+                        <Setter Target="StartButton_Running.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <StackPanel>
             <controls:Card x:Name="Header" Height="220" Padding="0" Margin="5,0,10,5"
                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
@@ -65,22 +85,44 @@
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Spacing="3">
-                                <Button x:Uid="InstanceView_Header_StartButton" x:Name="StartButton"
+                                <!-- InstanceView_Header_StartButton -->
+                                <!-- InstanceView_Header_RestoreLabel_Yes -->
+                                <!-- InstanceView_Header_RestoreLabel_No -->
+                                <!-- &#xE946; &#xE73E; &#xE896; -->
+                                <Button x:Name="StartButton"
                                         VerticalAlignment="Top" HorizontalAlignment="Right"
-                                        Width="114" Click="StartButton_Click"
-                                        Style="{StaticResource AccentButtonStyle}" />
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                                            Visibility="{x:Bind ViewModel.IsRestorationNeeded,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                                        Width="96" Click="StartButton_Click"
+                                        Style="{StaticResource AccentButtonStyle}">
+                                    <Grid>
+                                        <StackPanel x:Name="StartButton_Ready" Orientation="Horizontal" Spacing="8">
+                                            <TextBlock Text="运行"/>
+                                        </StackPanel>
+                                        <StackPanel x:Name="StartButton_Preparing" Visibility="Collapsed" Orientation="Horizontal" Spacing="8">
+                                            <ProgressRing x:Name="StartButton_Progress" Foreground="White" Background="#A0FFFFFF" Height="14" Width="14"/>
+                                            <TextBlock Text="准备中"/>
+                                        </StackPanel>
+                                        <StackPanel x:Name="StartButton_Running" Visibility="Collapsed" Orientation="Horizontal" Spacing="8">
+                                            <TextBlock Text="运行中"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                                <controls:Marquee x:Name="RestoreMarquee">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                             Spacing="3">
-                                    <FontIcon Glyph="&#xE946;" FontSize="12" />
-                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_Yes" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                                            Visibility="{x:Bind ViewModel.IsRestorationNeeded,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
+                                        <FontIcon Glyph="&#xE946;" FontSize="12" />
+                                        <TextBlock Text="需要还原"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                             Spacing="3">
-                                    <FontIcon Glyph="&#xE73E;" FontSize="12" />
-                                    <TextBlock x:Uid="InstanceView_Header_RestoreLabel_No" />
-                                </StackPanel>
+                                        <FontIcon Glyph="&#xE73E;" FontSize="12" />
+                                        <TextBlock Text="准备就绪"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                            Spacing="3">
+                                        <FontIcon Glyph="&#xE896;" FontSize="12" />
+                                        <TextBlock Text="正在还原"/>
+                                    </StackPanel>
+                                </controls:Marquee>
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Row="1" ColumnDefinitions="*,Auto">

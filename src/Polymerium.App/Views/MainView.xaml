@@ -133,6 +133,11 @@
         <ItemsControl x:Name="NotificationContainer" HorizontalAlignment="Center" VerticalAlignment="Bottom"
                       Grid.RowSpan="9" Grid.ColumnSpan="9" Margin="0,0,0,46"
                       ItemsSource="{x:Bind ViewModel.Notifications}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Spacing="8"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:InAppNotificationItem">
                     <Grid x:Name="NotificationItem" Loaded="NotificationItem_Loaded">
