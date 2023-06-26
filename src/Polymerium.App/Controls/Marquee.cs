@@ -23,27 +23,35 @@ namespace Polymerium.App.Controls
         public Marquee()
         {
             enter = new Storyboard();
-            enter.Children.Add(new DoubleAnimation()
-            {
-                Duration = new Duration(TimeSpan.FromMilliseconds(150)),
-                To = 0
-            });
-            enter.Children.Add(new DoubleAnimation()
-            {
-                Duration = new Duration(TimeSpan.FromMilliseconds(100)),
-                To = 1
-            });
+            enter.Children.Add(
+                new DoubleAnimation()
+                {
+                    Duration = new Duration(TimeSpan.FromMilliseconds(150)),
+                    To = 0
+                }
+            );
+            enter.Children.Add(
+                new DoubleAnimation()
+                {
+                    Duration = new Duration(TimeSpan.FromMilliseconds(100)),
+                    To = 1
+                }
+            );
             leave = new Storyboard();
-            leave.Children.Add(new DoubleAnimation()
-            {
-                Duration = new Duration(TimeSpan.FromMilliseconds(150)),
-                From = 0
-            });
-            leave.Children.Add(new DoubleAnimation()
-            {
-                Duration = new Duration(TimeSpan.FromMilliseconds(100)),
-                To = 0
-            });
+            leave.Children.Add(
+                new DoubleAnimation()
+                {
+                    Duration = new Duration(TimeSpan.FromMilliseconds(150)),
+                    From = 0
+                }
+            );
+            leave.Children.Add(
+                new DoubleAnimation()
+                {
+                    Duration = new Duration(TimeSpan.FromMilliseconds(100)),
+                    To = 0
+                }
+            );
             leave.Completed += Leave_Completed;
         }
 
@@ -70,7 +78,8 @@ namespace Polymerium.App.Controls
 
         private void Leave_Completed(object? sender, object e)
         {
-            var obj = Items[SelectedIndex];
+            var obj =
+                SelectedIndex < 0 || SelectedIndex >= Items.Count ? null : Items[SelectedIndex];
             _container.Content = obj;
             ((DoubleAnimation)enter.Children[0]).From = ActualHeight / 2;
             enter.Begin();

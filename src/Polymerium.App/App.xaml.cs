@@ -50,9 +50,16 @@ public partial class App : Application
         Window.Activate();
     }
 
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    private void App_UnhandledException(
+        object sender,
+        Microsoft.UI.Xaml.UnhandledExceptionEventArgs e
+    )
     {
-        var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium", "exception_dump.txt");
+        var path = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            ".polymerium",
+            "exception_dump.txt"
+        );
         var builder = new StringBuilder();
         builder.AppendLine(e.Exception.GetType().FullName);
         builder.AppendLine(DateTime.Now.ToString());
