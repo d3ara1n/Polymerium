@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Polymerium.Core.Models.Forge.InstallerVersions;
+using System;
 using System.Collections.Generic;
-using Polymerium.Core.Models.Forge.InstallerVersions;
 
 namespace Polymerium.Core.Models.Forge;
 

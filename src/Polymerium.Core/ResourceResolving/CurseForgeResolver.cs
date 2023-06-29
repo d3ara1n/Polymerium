@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using DotNext;
+﻿using DotNext;
 using Microsoft.Extensions.Caching.Memory;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.ResourceResolving.Attributes;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Helpers;
 using Polymerium.Core.Models.CurseForge.Eternal;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Polymerium.Core.ResourceResolving;
 

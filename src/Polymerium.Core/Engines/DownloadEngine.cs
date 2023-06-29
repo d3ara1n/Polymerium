@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Polymerium.Core.Engines.Downloading;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
@@ -5,8 +7,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Polymerium.Core.Engines.Downloading;
 
 namespace Polymerium.Core.Engines;
 

@@ -1,13 +1,13 @@
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels.AddAccountWizard;
 using Polymerium.Core.Accounts;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace Polymerium.App.Views.AddAccountWizards;
 

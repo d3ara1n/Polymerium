@@ -1,8 +1,6 @@
 ﻿using Polymerium.Abstractions;
+using Polymerium.Core.Engines.Restoring;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +20,7 @@ namespace Polymerium.Core.Managers.GameModels
         // precentage null for indeterminate, success null for processing
         public Action<int?>? UpdateCallback { get; set; }
 
-        public Action<bool>? FinishCallback { get; set; }
+        public Action<bool, PrepareError?, Exception?, RestoreError?>? FinishCallback { get; set; }
 
         internal Task? Task { get; set; }
     }

@@ -1,7 +1,7 @@
-using Windows.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
+using Windows.UI;
 
 namespace Polymerium.App.Controls;
 

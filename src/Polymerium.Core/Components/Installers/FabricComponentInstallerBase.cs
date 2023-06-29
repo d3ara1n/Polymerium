@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Polymerium.Abstractions.Meta;
+﻿using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.Models.Game;
 using Polymerium.Core.Extensions;
 using Polymerium.Core.Models.Fabric;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Wupoo;
 
 namespace Polymerium.Core.Components.Installers;

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Polymerium.App.ViewModels.Instances;
 

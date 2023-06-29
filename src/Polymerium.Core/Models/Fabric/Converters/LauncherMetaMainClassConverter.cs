@@ -1,7 +1,7 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Polymerium.Core.Models.Fabric.FabricVersions;
+using System;
 
 namespace Polymerium.Core.Models.Fabric.Converters;
 

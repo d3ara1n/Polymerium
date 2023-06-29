@@ -1,5 +1,5 @@
-﻿using System;
-using Polymerium.Core.Resources;
+﻿using Polymerium.Core.Resources;
+using System;
 
 namespace Polymerium.App.Models;
 

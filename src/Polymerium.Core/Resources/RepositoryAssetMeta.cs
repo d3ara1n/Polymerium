@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Polymerium.Abstractions.Resources;
+using System;
 using System.Collections.Generic;
-using Polymerium.Abstractions.Resources;
 
 namespace Polymerium.Core.Resources;
 

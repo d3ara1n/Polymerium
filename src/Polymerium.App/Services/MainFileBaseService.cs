@@ -1,10 +1,10 @@
+using Microsoft.Extensions.Options;
+using Polymerium.Core;
 using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using Polymerium.Core;
 
 namespace Polymerium.App.Services;
 

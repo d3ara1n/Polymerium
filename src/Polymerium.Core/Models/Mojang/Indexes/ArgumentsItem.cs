@@ -1,8 +1,8 @@
+using Newtonsoft.Json;
+using Polymerium.Core.Models.Mojang.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Polymerium.Core.Models.Mojang.Converters;
 
 namespace Polymerium.Core.Models.Mojang.Indexes;
 

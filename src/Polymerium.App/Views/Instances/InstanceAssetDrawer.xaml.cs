@@ -1,8 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
 using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -12,6 +7,11 @@ using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels.Instances;
 using Polymerium.Core.GameAssets;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using File = System.IO.File;
 
 namespace Polymerium.App.Views.Instances;

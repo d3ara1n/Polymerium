@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Windows.ApplicationModel.Resources;
+using System.Collections.Generic;
 using Windows.Globalization;
-using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace Polymerium.App.Services;
 

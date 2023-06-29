@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Polymerium.Abstractions.Resources;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Polymerium.Abstractions.Resources;
 
 namespace Polymerium.Core.Resources;
 

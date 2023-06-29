@@ -1,4 +1,3 @@
-using System.Linq;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -6,6 +5,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System.Linq;
 
 namespace Polymerium.App.Views;
 

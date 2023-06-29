@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions;
@@ -18,6 +11,13 @@ using Polymerium.App.Services;
 using Polymerium.Core.Engines;
 using Polymerium.Core.Helpers;
 using Polymerium.Core.Resources;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using File = Polymerium.Abstractions.Resources.File;
 
 namespace Polymerium.App.ViewModels;

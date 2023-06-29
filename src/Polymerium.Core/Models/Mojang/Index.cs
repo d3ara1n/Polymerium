@@ -1,6 +1,6 @@
+using Polymerium.Core.Models.Mojang.Indexes;
 using System;
 using System.Collections.Generic;
-using Polymerium.Core.Models.Mojang.Indexes;
 
 namespace Polymerium.Core.Models.Mojang;
 

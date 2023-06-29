@@ -1,3 +1,9 @@
+using DotNext;
+using Duffet;
+using Duffet.Builders;
+using Polymerium.Abstractions.ResourceResolving;
+using Polymerium.Abstractions.ResourceResolving.Attributes;
+using Polymerium.Abstractions.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +12,6 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
-using DotNext;
-using Duffet;
-using Duffet.Builders;
-using Polymerium.Abstractions.ResourceResolving;
-using Polymerium.Abstractions.ResourceResolving.Attributes;
-using Polymerium.Abstractions.Resources;
 
 namespace Polymerium.Core.Engines;
 

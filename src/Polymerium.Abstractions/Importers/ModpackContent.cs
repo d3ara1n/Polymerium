@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Polymerium.Abstractions.Meta;
+using System;
 using System.Collections.Generic;
-using Polymerium.Abstractions.Meta;
 
 namespace Polymerium.Abstractions.Importers;
 

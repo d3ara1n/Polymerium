@@ -1,8 +1,3 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -10,6 +5,11 @@ using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.Views;
 

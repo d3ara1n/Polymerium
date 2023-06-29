@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Polymerium.Core.Models.Forge.InstallerProfiles;
+﻿using Polymerium.Core.Models.Forge.InstallerProfiles;
+using System.Collections.Generic;
 
 namespace Polymerium.Core.Models.Forge;
 

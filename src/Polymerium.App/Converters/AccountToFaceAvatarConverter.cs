@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.UI.Xaml.Data;
+﻿using Microsoft.UI.Xaml.Data;
 using Polymerium.Abstractions.Accounts;
+using System;
 
 namespace Polymerium.App.Converters;
 

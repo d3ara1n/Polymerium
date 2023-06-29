@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using DotNext;
+﻿using DotNext;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Polymerium.Abstractions.Importers;
@@ -16,6 +10,12 @@ using Polymerium.Core.Engines;
 using Polymerium.Core.Helpers;
 using Polymerium.Core.Models.CurseForge;
 using Polymerium.Core.Models.CurseForge.Eternal;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.Core.Importers;
 

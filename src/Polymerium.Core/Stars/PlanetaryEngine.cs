@@ -1,7 +1,7 @@
+using Polymerium.Core.Stars.Facilities;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using Polymerium.Core.Stars.Facilities;
 
 namespace Polymerium.Core.Stars;
 

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DotNext;
 using Polymerium.Abstractions.Importers;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.ViewModels;
 

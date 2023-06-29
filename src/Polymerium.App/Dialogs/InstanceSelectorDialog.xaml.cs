@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Polymerium.App.Dialogs;
 

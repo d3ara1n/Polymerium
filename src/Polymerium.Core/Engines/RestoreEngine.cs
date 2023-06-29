@@ -1,33 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Threading.Tasks;
 using DotNext;
-using DotNext.Threading;
 using FluentPipeline;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Models;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Components;
 using Polymerium.Core.Components.Installers;
-using Polymerium.Core.Engines.Downloading;
 using Polymerium.Core.Engines.Restoring;
-using Polymerium.Core.Engines.Restoring.Stages;
 using Polymerium.Core.Extensions;
 using Polymerium.Core.GameAssets;
-using Polymerium.Core.Managers;
 using Polymerium.Core.Models.Mojang;
-using Polymerium.Core.StageModels;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using Wupoo;
 using RFile = Polymerium.Abstractions.Resources.File;
 
@@ -35,50 +27,20 @@ namespace Polymerium.Core.Engines;
 
 public class RestoreEngine
 {
-    private readonly AssetManager _assetManager;
-    private readonly DownloadEngine _downloader;
     private readonly IFileBaseService _fileBase;
-    private readonly ILogger _logger;
-    private readonly AssetManager _manager;
     private readonly ResolveEngine _resolver;
     private readonly IServiceProvider _provider;
     private readonly SHA1 _sha1 = SHA1.Create();
-    private readonly WapooOptions _wapooOptions;
 
     public RestoreEngine(
-        ILogger<RestoreEngine> logger,
-        AssetManager manager,
         ResolveEngine resolver,
-        DownloadEngine downloader,
         IFileBaseService fileBase,
-        IServiceProvider provider,
-        AssetManager assetManager
+        IServiceProvider provider
     )
     {
-        _logger = logger;
-        _manager = manager;
         _resolver = resolver;
-        _downloader = downloader;
         _fileBase = fileBase;
-        _assetManager = assetManager;
         _provider = provider;
-        var settings = new JsonSerializerSettings();
-        _wapooOptions = new WapooOptions { JsonSerializerOptions = settings };
-    }
-
-    [Obsolete]
-    public StageBase ProduceStage(GameInstance instance, IEnumerable<ComponentMeta> metas)
-    {
-        return new CheckAvailabilityStage(
-            instance,
-            _sha1,
-            metas,
-            _downloader,
-            _resolver,
-            _fileBase,
-            _provider,
-            _assetManager
-        );
     }
 
     public Pipeline<RestoreError, GameInstance> ProducePipeline()
@@ -253,13 +215,14 @@ public class RestoreEngine
                     var download = new RestoreDownload() { Source = item.Url, Target = libPath };
                     if (item.IsNative)
                     {
-                        download.PostAction = (s) =>
+                        download.PostAction = _ =>
                             ZipFile.ExtractToDirectory(
-                                _fileBase.Locate(s),
+                                _fileBase.Locate(libPath),
                                 _fileBase.Locate(nativesDir),
                                 true
                             );
                     }
+                    context.Tasks.Add(download);
                 }
                 else
                 {
@@ -303,7 +266,6 @@ public class RestoreEngine
                 var pooled = new Uri(
                     ConstPath.CACHE_OBJECTS_FILE.Replace("{0}", attachment.CachedObjectPath)
                 );
-                // ��������Դ����������Դ������ֻ����Դ
                 if (!_fileBase.VerifyHashAsync(pooled, attachment.Sha1, _sha1).Result)
                     context.Tasks.Add(
                         new RestoreDownload() { Source = attachment.Source, Target = pooled }
