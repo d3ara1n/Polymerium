@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Changelogs", "Changelogs", 
 	ProjectSection(SolutionItems) = preProject
 		changelogs\v0.3.md = changelogs\v0.3.md
 		changelogs\v0.4.md = changelogs\v0.4.md
+		changelogs\v0.5.md = changelogs\v0.5.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polymerium.Cli", "src\Polymerium.Cli\Polymerium.Cli.csproj", "{FC15B269-21E1-4E36-BAEE-8581CB29BC3D}"

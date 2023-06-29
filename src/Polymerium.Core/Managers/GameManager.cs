@@ -1,9 +1,12 @@
 ﻿using Polymerium.Abstractions;
 using Polymerium.Core.Engines;
+using Polymerium.Core.Engines.Downloading;
+using Polymerium.Core.Engines.Restoring;
 using Polymerium.Core.Managers.GameModels;
 using Polymerium.Core.Stars;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,10 +18,21 @@ namespace Polymerium.Core.Managers;
 public class GameManager
 {
     private readonly RestoreEngine _restore;
+    private readonly DownloadEngine _download;
+    private readonly AssetManager _assetManager;
+    private readonly IFileBaseService _fileBase;
 
-    public GameManager(RestoreEngine restore)
+    public GameManager(
+        RestoreEngine restore,
+        DownloadEngine download,
+        AssetManager assetManager,
+        IFileBaseService fileBase
+    )
     {
         _restore = restore;
+        _download = download;
+        _assetManager = assetManager;
+        _fileBase = fileBase;
     }
 
     private List<PrepareTracker> preparings = new();
@@ -36,10 +50,10 @@ public class GameManager
         return tracker != null;
     }
 
-    public PrepareTracker Prepare(GameInstance instance, Action<int?, bool?> callback)
+    public PrepareTracker Prepare(GameInstance instance, Action<int?> callback)
     {
         // throw if been preparing
-        var tracker = new PrepareTracker(instance) { Callback = callback };
+        var tracker = new PrepareTracker(instance) { UpdateCallback = callback };
         tracker.Task = Task.Run(() => PrepareInternal(tracker));
         preparings.Add(tracker);
         return tracker;
@@ -48,20 +62,50 @@ public class GameManager
     private void PrepareInternal(PrepareTracker tracker)
     {
         var pipeline = _restore.ProducePipeline();
-        // setup pipeline
-        //pipeline.Pump(tracker.Instance, tracker.TokenSource.Token);
-        tracker.Callback?.Invoke(null, null);
-        Thread.Sleep(1500);
-        tracker.Callback?.Invoke(0, null);
-        Thread.Sleep(1500);
-        tracker.Callback?.Invoke(15, null);
-        Thread.Sleep(1500);
-        tracker.Callback?.Invoke(50, null);
-        Thread.Sleep(1500);
-        tracker.Callback?.Invoke(100, null);
-        Thread.Sleep(1500);
-        tracker.Callback?.Invoke(null, true);
-        // call back to update
+        // setup pipeline's requires
+        if (
+            pipeline.Pump(tracker.Instance, tracker.TokenSource.Token)
+            && pipeline.HandleWaste<RestoreContext>(out var waste)
+        )
+        {
+            var count = 0;
+            tracker.UpdateCallback?.Invoke(0);
+            // wait to download
+            var group = new DownloadTaskGroup() { Token = tracker.TokenSource.Token };
+            foreach (var task in waste!.Tasks)
+            {
+                var target = _fileBase.Locate(task.Target);
+                if (task.Source.Scheme == "poly-file")
+                {
+                    var source = _fileBase.Locate(task.Source);
+                    var dir = Path.GetDirectoryName(target);
+                    if (!Directory.Exists(dir))
+                        Directory.CreateDirectory(dir!);
+                    File.Copy(source, target, true);
+                    tracker.UpdateCallback?.Invoke((++count) * 100 / waste.Tasks.Count);
+                }
+                else
+                {
+                    if (group.TryAdd(task.Source.AbsoluteUri, target, out var post))
+                    {
+                        post!.CompletedCallback = (_, s) =>
+                        {
+                            if (s)
+                            {
+                                task.PostAction?.Invoke(task.Source);
+                                tracker.UpdateCallback?.Invoke((++count) * 100 / waste.Tasks.Count);
+                            }
+                        };
+                    }
+                }
+            }
+            _download.Enqueue(group);
+            group.Wait();
+            tracker.UpdateCallback?.Invoke(null);
+            _assetManager.DeployRenewableAssets(tracker.Instance, waste.MergedStates);
+            tracker.FinishCallback?.Invoke(true);
+        }
+        tracker.FinishCallback?.Invoke(false);
     }
 
     public bool IsPreparing(string id, out PrepareTracker? tracker)

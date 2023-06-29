@@ -5,8 +5,8 @@ public enum RestoreError
     ResourceNotReacheable,
     ResourceNotFound,
     SerializationFailure,
-    OsNotSupport,
+    ComponentInstallationFailure,
     Canceled,
-    ExceptionOccurred,
-    Unknown
+    IOException,
+    ComponentNotFound
 }

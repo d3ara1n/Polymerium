@@ -56,28 +56,26 @@
                             <StackPanel>
                                 <TextBlock Text="{x:Bind ViewModel.Instance.Name,Mode=OneWay}"
                                            Style="{StaticResource TitleTextBlockStyle}" />
-                                <ContentControl  IsEnabled="{x:Bind IsPending,Mode=OneWay,Converter={StaticResource ReverseBoolConverter}}">
-                                    <StackPanel Orientation="Horizontal" Spacing="5"
-                                                Visibility="{x:Bind ViewModel.Instance.IsTagged,Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <FontIcon Glyph="&#xE946;" FontSize="12"
+                                <StackPanel Orientation="Horizontal" Spacing="5"
+                                                Visibility="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
+                                    <FontIcon Glyph="&#xE946;" FontSize="12"
                                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                        <TextBlock
+                                    <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                             <Run x:Uid="InstanceView_Header_ReferenceLabel_Import" />
                                             <Hyperlink NavigateUri="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}"
                                                        ToolTipService.ToolTip="{x:Bind ViewModel.ReferenceUrl,Mode=OneWay}">
                                                 <Run x:Uid="InstanceView_Header_ReferenceLabel_Modpack" />
                                             </Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock
+                                    </TextBlock>
+                                    <TextBlock
                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                             <Run x:Uid="InstanceView_Header_ReferenceLabel_With" />
                                             <Hyperlink>
-                                                <Run x:Uid="InstanceView_Header_ReferenceLabel_Attachment" />
+                                             <Run x:Uid="InstanceView_Header_ReferenceLabel_Attachment" />
                                             </Hyperlink>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </ContentControl>
+                                    </TextBlock>
+                                </StackPanel>
                                 <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
                                     <Run x:Uid="InstanceView_Header_GameVersionLabel" />
                                     <Run Text="{x:Bind ViewModel.CoreVersion,Mode=OneWay}" />

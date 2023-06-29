@@ -10,11 +10,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI;
 using Humanizer;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.Abstractions;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.Resources;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views.Instances;
@@ -37,7 +39,7 @@ public class InstanceViewModel : ObservableObject
     private readonly NavigationService _navigationService;
     private readonly ResolveEngine _resolver;
     private readonly GameManager _gameManager;
-
+    private readonly AccountManager _accountManager;
     private string coreVersion = string.Empty;
 
     private bool isModSupported;
@@ -59,7 +61,8 @@ public class InstanceViewModel : ObservableObject
         NavigationService navigationService,
         AssetManager assetManager,
         LocalizationService localizationService,
-        GameManager gameManager
+        GameManager gameManager,
+        AccountManager accountManager
     )
     {
         _componentManager = componentManager;
@@ -69,6 +72,7 @@ public class InstanceViewModel : ObservableObject
         _fileBase = fileBase;
         _localizationService = localizationService;
         _gameManager = gameManager;
+        _accountManager = accountManager;
         Instance = context.AssociatedInstance!;
         OverlayService = overlayService;
         CoreVersion = Instance.Inner.GetCoreVersion() ?? "N/A";
@@ -312,18 +316,43 @@ public class InstanceViewModel : ObservableObject
     public void SetStateChangeHandler(Action<InstanceState> handler) =>
         stateChangeHandler = handler;
 
-    public void Start(Action<int?, bool?> callback)
+    public void Prepare(Action<int?> callback)
     {
         stateChangeHandler?.Invoke(InstanceState.Preparing);
-        var tracker = _gameManager.Prepare(Instance.Inner, callback);
+        var _ = _gameManager.Prepare(Instance.Inner, callback);
+        // prepare account!
+        if (_accountManager.TryFindById(Instance.BoundAccountId!, out var account))
+        {
+            if (account!.ValidateAsync().Result || account.RefreshAsync().Result)
+            {
+                return;
+            }
+        }
+        StartAbort();
     }
 
-    public InstanceState QueryInstanceState(Action<int?, bool?> prepareCallback)
+    private void StartAbort()
     {
-        // ������ Ready ״̬ʱ��ص����������� Running ������ Idle������Ҫ������
+        DispatcherQueue
+            .GetForCurrentThread()
+            .TryEnqueue(() =>
+            {
+                var messageBox = new MessageDialog()
+                {
+                    Title = "����",
+                    Message = "Ŀǰģ���޷���ô�����Դ�������ǻ�ԭ����Ҳ�������˺���֤����"
+                };
+                messageBox.ShowAsync();
+            });
+    }
+
+    public void Launch() { }
+
+    public InstanceState QueryInstanceState(Action<int?> prepareCallback)
+    {
         if (_gameManager.IsPreparing(Instance.Id, out var prepare))
         {
-            prepare!.Callback = prepareCallback;
+            prepare!.UpdateCallback = prepareCallback;
             return InstanceState.Preparing;
         }
         else if (_gameManager.IsRunning(Instance.Id, out var run))
