@@ -1,5 +1,5 @@
-﻿using System;
-using Polymerium.Abstractions.Resources;
+﻿using Polymerium.Abstractions.Resources;
+using System;
 
 namespace Polymerium.Abstractions.ResourceResolving.Attributes;
 

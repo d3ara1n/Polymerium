@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using CliFx;
+﻿using CliFx;
+using System.Threading.Tasks;
 
 namespace Polymerium.Cli;
 

@@ -1,14 +1,13 @@
-using System;
-using System.Threading.Tasks;
 using CommunityToolkit.WinUI.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.Abstractions.Resources;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views.Instances;
 using Polymerium.Core.Managers.GameModels;
+using System;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.Views;
 
@@ -73,6 +72,11 @@ public sealed partial class InstanceView : Page
         });
     }
 
+    private void StartButton_Click(object sender, RoutedEventArgs e)
+    {
+        Task.Run(() => ViewModel.Start(PrepareCallbackHandler));
+    }
+
     private void PrepareCallbackHandler(int? precentage) =>
         DispatcherQueue.TryEnqueue(() =>
         {
@@ -82,11 +86,6 @@ public sealed partial class InstanceView : Page
                 StartButton_Progress.Value = precentage.Value;
             }
         });
-
-    private void StartButton_Click(object sender, RoutedEventArgs e)
-    {
-        Task.Run(() => ViewModel.Prepare(PrepareCallbackHandler));
-    }
 
     private void OpenAssetDrawer(ResourceType type, IAdvancedCollectionView view)
     {

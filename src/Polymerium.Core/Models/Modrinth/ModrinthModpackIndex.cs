@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Polymerium.Core.Models.Modrinth.Converters;
+using System.Collections.Generic;
 
 namespace Polymerium.Core.Models.Modrinth;
 

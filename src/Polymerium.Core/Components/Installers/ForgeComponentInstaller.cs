@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Polymerium.Abstractions.Meta;
+using Polymerium.Abstractions.Models.Game;
+using Polymerium.Core.Extensions;
+using Polymerium.Core.Models.Forge;
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Polymerium.Abstractions.Meta;
-using Polymerium.Abstractions.Models.Game;
-using Polymerium.Core.Extensions;
-using Polymerium.Core.Models.Forge;
 
 namespace Polymerium.Core.Components.Installers;
 

@@ -1,7 +1,7 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Polymerium.Abstractions.Meta;
+﻿using Polymerium.Abstractions.Meta;
 using Polymerium.Core.Components.Installers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.Core.Components;
 

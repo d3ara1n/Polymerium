@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels.AddAccountWizard;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading;
 
 namespace Polymerium.App.Views.AddAccountWizards;
 

@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Polymerium.App.Controls;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
 using Polymerium.App.Views.AddAccountWizards;
+using System;
 
 namespace Polymerium.App.Views;
 

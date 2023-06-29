@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
@@ -14,6 +9,11 @@ using Polymerium.Core.Components;
 using Polymerium.Core.Models.BmclApi.Forge;
 using Polymerium.Core.Models.Fabric;
 using Polymerium.Core.Models.Mojang.VersionManifests;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Wupoo;
 
 namespace Polymerium.App.ViewModels;

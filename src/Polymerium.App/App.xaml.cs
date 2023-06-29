@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
-using System;
-using System.IO;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
@@ -21,6 +18,9 @@ using Polymerium.Core.Importers;
 using Polymerium.Core.Managers;
 using Polymerium.Core.ResourceResolving;
 using Polymerium.Core.Resources;
+using System;
+using System.IO;
+using System.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -99,7 +99,6 @@ public partial class App : Application
             .AddTransient<InstanceViewModel>()
             .AddTransient<HomeViewModel>()
             .AddTransient<SettingViewModel>()
-            .AddTransient<PrepareGameViewModel>()
             .AddTransient<AddAccountWizardViewModel>()
             .AddTransient<AccountSelectionViewModel>()
             .AddTransient<OfflineAccountViewModel>()

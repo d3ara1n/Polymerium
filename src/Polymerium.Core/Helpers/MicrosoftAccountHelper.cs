@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Polymerium.Abstractions;
 using Polymerium.Core.Models.Microsoft;
 using Polymerium.Core.Models.Minecraft;
 using Polymerium.Core.Models.XboxLive;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Wupoo;
 
 namespace Polymerium.Core.Helpers;

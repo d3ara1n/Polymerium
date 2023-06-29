@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using DotNext;
+﻿using DotNext;
 using Polymerium.Abstractions.ResourceResolving;
 using Polymerium.Abstractions.ResourceResolving.Attributes;
 using Polymerium.Abstractions.Resources;
+using System;
+using System.IO;
 using File = Polymerium.Abstractions.Resources.File;
 
 namespace Polymerium.Core.ResourceResolving;

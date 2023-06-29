@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Services;
 using Polymerium.Core.Accounts;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.ViewModels.AddAccountWizard;
 

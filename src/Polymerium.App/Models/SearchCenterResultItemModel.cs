@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Polymerium.Abstractions.Resources;
+﻿using Polymerium.Abstractions.Resources;
 using Polymerium.Core.Resources;
+using System;
+using System.Collections.Generic;
 
 namespace Polymerium.App.Models;
 

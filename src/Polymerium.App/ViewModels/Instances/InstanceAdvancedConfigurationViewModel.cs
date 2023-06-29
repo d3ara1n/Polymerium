@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Core;
+using System;
+using System.IO;
 
 namespace Polymerium.App.ViewModels.Instances;
 

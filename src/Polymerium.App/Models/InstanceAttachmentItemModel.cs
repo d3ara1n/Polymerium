@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Abstractions.Resources;
+using System;
+using System.Windows.Input;
 
 namespace Polymerium.App.Models;
 

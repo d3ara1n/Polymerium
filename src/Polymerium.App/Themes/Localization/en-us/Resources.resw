@@ -474,15 +474,6 @@
   <data name="InstanceView_Header_ReferenceLabel_With.Text" xml:space="preserve">
     <value>with</value>
   </data>
-  <data name="InstanceView_Header_RestoreLabel_No.Text" xml:space="preserve">
-    <value>Prepared</value>
-  </data>
-  <data name="InstanceView_Header_RestoreLabel_Yes.Text" xml:space="preserve">
-    <value>To be restored</value>
-  </data>
-  <data name="InstanceView_Header_StartButton.Content" xml:space="preserve">
-    <value>Start</value>
-  </data>
   <data name="InstanceView_Other_Author_Label" xml:space="preserve">
     <value>Author</value>
   </data>

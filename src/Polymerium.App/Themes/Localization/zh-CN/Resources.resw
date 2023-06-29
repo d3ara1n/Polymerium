@@ -276,15 +276,6 @@
   <data name="InstanceView_Header_ReferenceLabel_With.Text" xml:space="preserve">
     <value>带有</value>
   </data>
-  <data name="InstanceView_Header_RestoreLabel_No.Text" xml:space="preserve">
-    <value>准备就绪</value>
-  </data>
-  <data name="InstanceView_Header_RestoreLabel_Yes.Text" xml:space="preserve">
-    <value>需要还原</value>
-  </data>
-  <data name="InstanceView_Header_StartButton.Content" xml:space="preserve">
-    <value>运行</value>
-  </data>
   <data name="InstanceView_Other_Header.Text" xml:space="preserve">
     <value>其他信息</value>
   </data>

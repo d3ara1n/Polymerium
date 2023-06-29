@@ -362,18 +362,6 @@
           <source>with</source>
           <target state="translated">带有</target>
         </trans-unit>
-        <trans-unit id="InstanceView_Header_RestoreLabel_No.Text" translate="yes" xml:space="preserve">
-          <source>Prepared</source>
-          <target state="translated">准备就绪</target>
-        </trans-unit>
-        <trans-unit id="InstanceView_Header_RestoreLabel_Yes.Text" translate="yes" xml:space="preserve">
-          <source>To be restored</source>
-          <target state="translated">需要还原</target>
-        </trans-unit>
-        <trans-unit id="InstanceView_Header_StartButton.Content" translate="yes" xml:space="preserve">
-          <source>Start</source>
-          <target state="translated">运行</target>
-        </trans-unit>
         <trans-unit id="InstanceView_Other_Header.Text" translate="yes" xml:space="preserve">
           <source>Details</source>
           <target state="translated">其他信息</target>

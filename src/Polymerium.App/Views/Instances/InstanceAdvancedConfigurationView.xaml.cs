@@ -1,9 +1,9 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.ViewModels.Instances;
+using System;
 
 namespace Polymerium.App.Views.Instances;
 

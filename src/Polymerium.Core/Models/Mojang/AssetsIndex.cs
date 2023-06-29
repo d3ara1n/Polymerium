@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using Polymerium.Core.Models.Mojang.Converters;
+using System.Collections.Generic;
 
 namespace Polymerium.Core.Models.Mojang;
 

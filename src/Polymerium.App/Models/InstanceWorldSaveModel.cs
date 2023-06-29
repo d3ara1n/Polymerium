@@ -1,5 +1,5 @@
-﻿using System;
-using Polymerium.Core.GameAssets;
+﻿using Polymerium.Core.GameAssets;
+using System;
 
 namespace Polymerium.App.Models;
 

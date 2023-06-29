@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using DotNext;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -8,6 +6,8 @@ using Polymerium.App.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.Views;
 

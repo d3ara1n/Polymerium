@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views.AddAccountWizards;
 using Polymerium.Core.Accounts;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Polymerium.App.ViewModels.AddAccountWizard;
 

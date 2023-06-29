@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Polymerium.Core.Managers;
@@ -62,7 +61,6 @@ public class GameManager
     private void PrepareInternal(PrepareTracker tracker)
     {
         var pipeline = _restore.ProducePipeline();
-        // setup pipeline's requires
         if (
             pipeline.Pump(tracker.Instance, tracker.TokenSource.Token)
             && pipeline.HandleWaste<RestoreContext>(out var waste)
@@ -102,10 +100,31 @@ public class GameManager
             _download.Enqueue(group);
             group.Wait();
             tracker.UpdateCallback?.Invoke(null);
-            _assetManager.DeployRenewableAssets(tracker.Instance, waste.MergedStates);
-            tracker.FinishCallback?.Invoke(true);
+            if (group.DownloadedCount == group.TotalCount)
+            {
+                _assetManager.DeployRenewableAssets(tracker.Instance, waste.MergedStates);
+                tracker.FinishCallback?.Invoke(true, null, null, null);
+            }
+            else
+            {
+                // download failure
+                tracker.FinishCallback?.Invoke(false, PrepareError.DownloadFailure, null, null);
+            }
         }
-        tracker.FinishCallback?.Invoke(false);
+        else if (pipeline.HandleError(out var error))
+        {
+            tracker.FinishCallback?.Invoke(false, PrepareError.PrepareFailure, null, error);
+        }
+        else if (pipeline.HandleException(out var e))
+        {
+            tracker.FinishCallback?.Invoke(false, PrepareError.ExceptionOcurred, e, null);
+        }
+        else
+        {
+            tracker.FinishCallback?.Invoke(false, PrepareError.Unknown, null, null);
+        }
+        preparings.Remove(tracker);
+        // FinishCallback 的传参没有 rustlike enum 多难受哇
     }
 
     public bool IsPreparing(string id, out PrepareTracker? tracker)

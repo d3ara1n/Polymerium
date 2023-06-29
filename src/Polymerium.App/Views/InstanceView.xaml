@@ -82,10 +82,6 @@
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Spacing="3">
-                                <!-- InstanceView_Header_StartButton -->
-                                <!-- InstanceView_Header_RestoreLabel_Yes -->
-                                <!-- InstanceView_Header_RestoreLabel_No -->
-                                <!-- &#xE946; &#xE73E; &#xE896; -->
                                 <Button x:Name="StartButton"
                                         VerticalAlignment="Top" HorizontalAlignment="Right"
                                         Width="96" Click="StartButton_Click"
@@ -95,7 +91,7 @@
                                             <TextBlock Text="运行"/>
                                         </StackPanel>
                                         <StackPanel x:Name="StartButton_Preparing" Visibility="Collapsed" Orientation="Horizontal" Spacing="8">
-                                            <ProgressRing x:Name="StartButton_Progress" Foreground="White" Background="#A0FFFFFF" Height="14" Width="14"/>
+                                            <ProgressRing x:Name="StartButton_Progress" Foreground="White" Background="#80FFFFFF" Height="14" Width="14"/>
                                             <TextBlock Text="准备中"/>
                                         </StackPanel>
                                         <StackPanel x:Name="StartButton_Running" Visibility="Collapsed" Orientation="Horizontal" Spacing="8">

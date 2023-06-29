@@ -108,11 +108,6 @@
         </Page>
     </ItemGroup>
     <ItemGroup>
-        <Page Update="Views\PrepareGameDialog.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
         <Page Update="Views\SettingView.xaml">
             <Generator>MSBuild:Compile</Generator>
         </Page>

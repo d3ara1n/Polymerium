@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views.Instances;
+using System.Collections.ObjectModel;
 
 namespace Polymerium.App.ViewModels.Instances;
 

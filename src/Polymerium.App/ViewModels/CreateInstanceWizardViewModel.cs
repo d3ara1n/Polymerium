@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
@@ -14,6 +9,11 @@ using Polymerium.App.Services;
 using Polymerium.Core.Components;
 using Polymerium.Core.Models;
 using Polymerium.Core.Models.Mojang.VersionManifests;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 using Wupoo;
 
 namespace Polymerium.App.ViewModels;

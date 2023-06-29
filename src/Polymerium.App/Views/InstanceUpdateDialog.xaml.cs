@@ -3,7 +3,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
-using Polymerium.Abstractions;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;

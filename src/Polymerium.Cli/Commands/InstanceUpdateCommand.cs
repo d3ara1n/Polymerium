@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using CliFx;
+﻿using CliFx;
 using CliFx.Attributes;
 using CliFx.Infrastructure;
+using System;
+using System.Threading.Tasks;
 
 namespace Polymerium.Cli.Commands;
 

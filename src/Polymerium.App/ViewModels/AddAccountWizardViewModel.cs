@@ -1,5 +1,5 @@
-using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Threading;
 
 namespace Polymerium.App.ViewModels;
 

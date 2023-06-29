@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.Abstractions.Resources;
@@ -15,6 +7,14 @@ using Polymerium.App.Services;
 using Polymerium.Core;
 using Polymerium.Core.GameAssets;
 using Polymerium.Core.Managers;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using File = System.IO.File;
 
 namespace Polymerium.App.ViewModels.Instances;

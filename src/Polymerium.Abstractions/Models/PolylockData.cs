@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Polymerium.Abstractions.Models.Game;
+﻿using Polymerium.Abstractions.Models.Game;
+using System.Collections.Generic;
 
 namespace Polymerium.Abstractions.Models;
 

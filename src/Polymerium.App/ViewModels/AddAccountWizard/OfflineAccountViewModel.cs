@@ -1,10 +1,10 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using Polymerium.App.Services;
+using Polymerium.Core.Accounts;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Polymerium.App.Services;
-using Polymerium.Core.Accounts;
 
 namespace Polymerium.App.ViewModels.AddAccountWizard;
 

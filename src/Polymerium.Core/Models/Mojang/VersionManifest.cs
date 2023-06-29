@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Polymerium.Core.Models.Mojang.VersionManifests;
+using System.Collections.Generic;
 
 namespace Polymerium.Core.Models.Mojang;
 

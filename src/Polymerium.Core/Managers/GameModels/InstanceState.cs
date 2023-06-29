@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Polymerium.Core.Managers.GameModels
+﻿namespace Polymerium.Core.Managers.GameModels
 {
     public enum InstanceState
     {
