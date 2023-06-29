@@ -68,38 +68,24 @@ public sealed partial class InstanceView : Page
         {
             if (ViewModel.QueryInstanceState(PrepareCallbackHandler) == InstanceState.Idle)
                 RestoreMarquee.Switch(isNeeded ? 0 : 1);
-            // HACK: Ӧ���б�İ취����ֹ��ȡ url ʧ�ܺ����Եķ���
-            ViewModel.ReferenceUrl = url ?? new Uri("https://example.com");
+            ViewModel.ReferenceUrl = url;
             IsPending = false;
         });
     }
 
-    private void PrepareCallbackHandler(int? precentage, bool? success) =>
+    private void PrepareCallbackHandler(int? precentage) =>
         DispatcherQueue.TryEnqueue(() =>
         {
-            if (success == true)
+            StartButton_Progress.IsIndeterminate = !precentage.HasValue;
+            if (precentage.HasValue)
             {
-                // go to launch
-                // TO BE REMOVED
-                StateChangeHandler(InstanceState.Running);
-            }
-            else if (success == false)
-            {
-                VisualStateManager.GoToState(this, "Ready", false);
-            }
-            else
-            {
-                StartButton_Progress.IsIndeterminate = !precentage.HasValue;
-                if (precentage.HasValue)
-                {
-                    StartButton_Progress.Value = precentage.Value;
-                }
+                StartButton_Progress.Value = precentage.Value;
             }
         });
 
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
-        Task.Run(() => ViewModel.Start(PrepareCallbackHandler));
+        Task.Run(() => ViewModel.Prepare(PrepareCallbackHandler));
     }
 
     private void OpenAssetDrawer(ResourceType type, IAdvancedCollectionView view)
