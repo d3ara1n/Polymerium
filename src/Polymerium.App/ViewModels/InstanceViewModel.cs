@@ -48,6 +48,7 @@ public class InstanceViewModel : ObservableObject
     private readonly ResolveEngine _resolver;
     private readonly GameManager _gameManager;
     private readonly AccountManager _accountManager;
+    private readonly DispatcherQueue _dispatcher;
     private string coreVersion = string.Empty;
 
     private bool isModSupported;
@@ -87,6 +88,7 @@ public class InstanceViewModel : ObservableObject
         _notificationService = notificationService;
         _gameManager = gameManager;
         _accountManager = accountManager;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
         Instance = context.AssociatedInstance!;
         OverlayService = overlayService;
         CoreVersion = Instance.Inner.GetCoreVersion() ?? "N/A";
@@ -401,12 +403,13 @@ public class InstanceViewModel : ObservableObject
 
     private void StartAbort(string message)
     {
-        DispatcherQueue
-            .GetForCurrentThread()
+        _dispatcher
             .TryEnqueue(() =>
             {
-                var messageBox = new MessageDialog() { Title = "挂起", Message = message };
-                messageBox.ShowAsync().AsTask().Wait();
+                var messageBox = new MessageDialog() { XamlRoot = App.Current.Window.Content.XamlRoot, Title = "挂起", Message = message };
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+                messageBox.ShowAsync();
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
             });
     }
 
