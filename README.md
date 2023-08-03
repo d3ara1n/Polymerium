@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/d3ara1n/Polymerium">
-    <img src="assets/images/Logo.png" alt="Logo" width="80" height="80">
+    <img src="assets/images/Logo.png" alt="Logo" width="128" height="128">
   </a>
 
 <h3 align="center">Polymerium</h3>
@@ -105,7 +105,7 @@ a little bit of personal flavor。
   * [x] 从空模板创建
   * [x] 删除
   * [x] 解锁（转换为 untagged 实例）
-  * [ ] 根据引用源更新实例元数据
+  * [x] 根据引用源更新实例元数据
   * [ ] 导入
     * [x] 导入预览对话框
     * [ ] Polypack
@@ -134,7 +134,7 @@ a little bit of personal flavor。
   * [x] Microsoft 账号登录
     * [x] 开始游戏前验证账号有效性或刷新
 * [x] 还原引擎
-  * [ ] 基于 Pipeline 模型
+  * [x] 基于 Pipeline 模型
   * [x] 组件安装
     * [x] 香草
     * [x] Forge
@@ -169,15 +169,16 @@ a little bit of personal flavor。
     * [x] 添加在线资源到本地实例
       * [ ] 在本地实例中筛选出合适列表并提供开关以显示全部
     * [ ] 收藏合集：为一个（新）实例添加一系列资源，用以对公共整合包快速个性化
-  * [x] SearchBar
+  * [x] 搜索栏
     * [x] 托管的实例搜索
     * [x] 搜索中心联动
+    * [x] 作弊码
 * [x] 软件设置
-* [ ] 游戏实例设置
+* [x] 游戏实例设置
   * [x] 元数据编辑
   * [x] 私有启动配置页面
   * [x] 重置实例
-* [ ] 本地化
+* [x] 本地化
 
 更多细节请在 [Issues](https://github.com/d3ara1n/Polymerium/issues) 中查询。
 

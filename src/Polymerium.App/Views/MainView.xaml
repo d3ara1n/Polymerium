@@ -140,7 +140,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:InAppNotificationItem">
-                    <Grid x:Name="NotificationItem" Loaded="NotificationItem_Loaded">
+                    <Grid x:Name="NotificationItem" Loaded="NotificationItem_Loaded" DataContext="{x:Bind Severity}">
                         <InfoBar Title="{x:Bind Caption}" Message="{x:Bind Text}" Severity="{x:Bind Severity}"
                                  IsOpen="True" />
                     </Grid>

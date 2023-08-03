@@ -257,7 +257,7 @@ public sealed class MainViewModel : ObservableObject
 
     public void GotoSearchView(string query)
     {
-        switch (query.ToLower().Trim())
+        switch (query.Trim())
         {
             case "github":
                 Process.Start(
@@ -266,6 +266,9 @@ public sealed class MainViewModel : ObservableObject
                         UseShellExecute = true
                     }
                 );
+                break;
+            case "I promise I will buy the game.":
+                UnseenTriggers.OfflineAccountCheat = true;
                 break;
             default:
                 _navigationService.Navigate<SearchCenterView>(

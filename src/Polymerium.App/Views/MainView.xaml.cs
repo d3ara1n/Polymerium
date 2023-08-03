@@ -126,6 +126,7 @@ public sealed partial class MainView : Page
     private void NotificationItem_Loaded(object sender, RoutedEventArgs e)
     {
         var grid = (Grid)sender;
+        if(grid.DataContext is InfoBarSeverity.Error || grid.DataContext is InfoBarSeverity.Warning) return;
         var fadeIn = new Storyboard();
         Storyboard.SetTarget(fadeIn, grid);
         Storyboard.SetTargetProperty(fadeIn, "Opacity");
