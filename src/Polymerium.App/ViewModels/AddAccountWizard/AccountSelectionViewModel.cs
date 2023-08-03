@@ -20,7 +20,7 @@ public class AccountSelectionViewModel : ObservableObject
                 typeof(MicrosoftAccountIntroView)
             )
         };
-        if (storage.Accounts.Any(x => x is MicrosoftAccount))
+        if (UnseenTriggers.OfflineAccountCheat || storage.Accounts.Any(x => x is MicrosoftAccount))
             entries.Add(
                 new AccountWizardEntryModel(
                     "离线账号",

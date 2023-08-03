@@ -31,7 +31,7 @@
                             <TextBlock x:Uid="SettingView_Application_SuperPower_Label0" />
                         </controls:ExpanderExItem>
                         <controls:ExpanderExItem>
-                            <Button x:Uid="SettingView_Application_SuperPower_UselessButton" />
+                            <Button x:Uid="SettingView_Application_SuperPower_UselessButton" IsEnabled="{x:Bind ViewModel.IsSuperPowerActivated,Mode=OneWay}"/>
                         </controls:ExpanderExItem>
                     </StackPanel>
                 </controls:ExpanderEx>

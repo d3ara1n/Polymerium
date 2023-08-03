@@ -9,7 +9,7 @@
     <Identity
             Name="2413Dearain.Polymerium"
             Publisher="CN=11C5722E-21B2-4CEC-984F-6BC6DC620005"
-            Version="0.4.5.0"/>
+            Version="0.5.0.0"/>
 
     <Properties>
         <DisplayName>Polymerium</DisplayName>
@@ -41,7 +41,6 @@
                                  Square310x310Logo="Images\LargeTile.png" ShortName="Polymerium">
                 </uap:DefaultTile>
                 <uap:SplashScreen Image="Images\SplashScreen.png"/>
-                <uap:LockScreen BadgeLogo="Images\BadgeLogo.png" Notification="badge"/>
                 <uap:InitialRotationPreference>
                     <uap:Rotation Preference="landscape"/>
                     <uap:Rotation Preference="portrait"/>

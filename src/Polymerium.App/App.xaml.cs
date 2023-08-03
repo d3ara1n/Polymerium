@@ -76,12 +76,21 @@ public partial class App : Application
 
     private IServiceProvider ConfigureServices()
     {
+        var workDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium/");
         var services = new ServiceCollection();
         // application services registration
         services
             .AddLogging(
                 logging =>
                     logging
+                        .AddFile(configure =>
+                        {
+                            var logDir = Path.Combine(workDir, "logs/");
+                            if (!Directory.Exists(logDir))
+                                Directory.CreateDirectory(logDir);
+                            configure.RootPath = logDir;
+                            configure.IncludeScopes = true;
+                        })
                         .AddSimpleConsole()
                         .AddDebug()
 #if DEBUG
@@ -145,10 +154,7 @@ public partial class App : Application
             .AddSingleton<IFileBaseService, MainFileBaseService>()
             .Configure<MainFileBaseOptions>(
                 configure =>
-                    configure.BaseFolder = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                        ".polymerium/"
-                    )
+                    configure.BaseFolder = workDir
             )
             .AddSingleton<AppSettings>();
         // engines
