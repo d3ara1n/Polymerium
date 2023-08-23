@@ -4,6 +4,9 @@ using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.ViewModels.Instances;
 using System;
+using System.IO;
+using System.Linq;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace Polymerium.App.Views.Instances;
 
@@ -113,6 +116,31 @@ public sealed partial class InstanceAdvancedConfigurationView : Page
                 };
                 await errorDialog.ShowAsync();
             }
+        }
+    }
+
+    private void DragDropPane_DragEnter(object sender, DragEventArgs e)
+    {
+        DragDropPane.Opacity = 1.0;
+        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            e.AcceptedOperation = DataPackageOperation.Link;
+    }
+
+    private void DragDropPane_DragLeave(object sender, DragEventArgs e)
+    {
+        DragDropPane.Opacity = 0.3;
+    }
+
+    private async void DragDropPane_Drop(object sender, DragEventArgs e)
+    {
+        DragDropPane.Opacity = 0.3;
+        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+        {
+            var items = await e.DataView.GetStorageItemsAsync();
+            var file = items!.First()!;
+            e.Handled = true;
+            //if (File.Exists(file.Path))
+                //await ViewModel.FileAccepted(file.Path, raw => _view.Add(raw));
         }
     }
 }

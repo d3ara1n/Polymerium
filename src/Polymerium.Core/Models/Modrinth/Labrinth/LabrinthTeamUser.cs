@@ -13,7 +13,7 @@ public struct LabrinthTeamUser
     public string Bio { get; set; }
     public object PayoutData { get; set; }
     public string Id { get; set; }
-    public int GithubId { get; set; }
+    public int? GithubId { get; set; }
     public Uri AvatarUrl { get; set; }
     public DateTimeOffset Created { get; set; }
     public string Role { get; set; }

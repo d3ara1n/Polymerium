@@ -1,8 +1,9 @@
-﻿using System.IO.Compression;
+﻿using System;
+using System.IO.Compression;
 
 namespace Polymerium.Abstractions.Importers;
 
-public class ImportResult
+public class ImportResult: IDisposable
 {
     public ImportResult(ZipArchive archive, ModpackContent content)
     {
@@ -12,4 +13,9 @@ public class ImportResult
 
     public ZipArchive Archive { get; set; }
     public ModpackContent Content { get; set; }
+
+    public void Dispose()
+    {
+        Archive.Dispose();
+    }
 }

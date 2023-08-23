@@ -16,15 +16,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0700d120-e94a-4633-9823-73816932dc2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/changelogs/v0.4.md" beforeDir="false" afterPath="$PROJECT_DIR$/changelogs/v0.4.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MainWindow.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Duffet/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Duffet/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/submodules/FluentPipeline" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/FluentPipeline" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/WapooOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/submodules/Wupoo/src/Wupoo/WapooOptions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +39,10 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="Toolset" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
   <component name="ProjectId" id="2Ktfzq8nZ9dBOj3dbdkIqTrqJ4S" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -72,8 +69,8 @@
   },
   "keyToStringList": {
     "rider.external.source.directories": [
-      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
       "C:\\Users\\zqy02\\AppData\\Local\\Symbols\\src"
     ]
   }
@@ -282,6 +279,7 @@
       <workItem from="1684843059980" duration="5844000" />
       <workItem from="1685003120051" duration="49000" />
       <workItem from="1686820984859" duration="114000" />
+      <workItem from="1692192603630" duration="53000" />
     </task>
     <task id="LOCAL-00001" summary=":art: 格式化。Polylock文件用于储存元数据到实际的中间状态。重构还原部分，加入了stage模型。启动游戏部分也需要使用stage模型重构。">
       <created>1675109386108</created>
