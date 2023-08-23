@@ -589,7 +589,7 @@
     <value>实例文件已被移除</value>
   </data>
   <data name="InstanceAdvancedConfigurtationView_Delete_Caption" xml:space="preserve">
-    <value>失败</value>
+    <value>删除</value>
   </data>
   <data name="InstanceAdvancedConfigurtationView_Reset_Caption" xml:space="preserve">
     <value>重置</value>

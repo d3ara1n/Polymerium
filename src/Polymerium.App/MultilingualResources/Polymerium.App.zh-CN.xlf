@@ -804,7 +804,7 @@
         </trans-unit>
         <trans-unit id="InstanceAdvancedConfigurtationView_Delete_Caption" translate="yes" xml:space="preserve">
           <source>Delete</source>
-          <target state="translated">失败</target>
+          <target state="translated">删除</target>
         </trans-unit>
         <trans-unit id="InstanceAdvancedConfigurtationView_Reset_Caption" translate="yes" xml:space="preserve">
           <source>Reset</source>

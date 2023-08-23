@@ -7,6 +7,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:controls="using:Polymerium.App.Controls"
     mc:Ignorable="d">
 
@@ -53,6 +54,44 @@
                                     IsEnabled="False" />
                         </Grid>
                     </controls:ExpanderEx.Header>
+                </controls:ExpanderEx>
+                <controls:ExpanderEx>
+                    <controls:ExpanderEx.Header>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE150;" Margin="20" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <Run Text="从文件更新" />
+                                    <LineBreak />
+                                    <Run Text="无视来源直接替换更新到某一个整合包的选择版本"
+                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </controls:ExpanderEx.Header>
+                    <toolkit:ConstrainedBox AspectRatio="2:1">
+                        <Grid x:Name="DragDropPane" Opacity="0.3" AllowDrop="True" Margin="1"
+                          CornerRadius="{ThemeResource OverlayCornerRadius}"
+                          DragEnter="DragDropPane_DragEnter" DragLeave="DragDropPane_DragLeave"
+                          Drop="DragDropPane_Drop">
+                            <Grid.OpacityTransition>
+                                <ScalarTransition />
+                            </Grid.OpacityTransition>
+                            <Rectangle Fill="Transparent" StrokeDashArray="8 4"
+                                   Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                   StrokeThickness="2" />
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE1E3;" FontSize="44" VerticalAlignment="Center" Margin="0,0,10,0" />
+                                <StackPanel>
+                                    <TextBlock Text="从文件更新"
+                                           Style="{StaticResource SubtitleTextBlockStyle}" />
+                                    <TextBlock Text="拖放整合包文件以导入更新"
+                                           Style="{StaticResource BodyTextBlockStyle}"
+                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </toolkit:ConstrainedBox>
                 </controls:ExpanderEx>
                 <controls:ExpanderEx>
                     <controls:ExpanderEx.Header>
