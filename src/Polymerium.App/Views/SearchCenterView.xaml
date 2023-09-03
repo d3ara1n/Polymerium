@@ -18,14 +18,6 @@
             <StackPanel Spacing="6">
                 <Grid>
                     <TextBlock x:Uid="SearchCenterView_Header" Style="{StaticResource TitleTextBlockStyle}" />
-                    <lab:Segmented HorizontalAlignment="Right" VerticalAlignment="Bottom" IsEnabled="False" SelectedIndex="0">
-                        <lab:SegmentedItem>
-                            <FontIcon Glyph="&#xEA37;" FontSize="12"/>
-                        </lab:SegmentedItem>
-                        <lab:SegmentedItem>
-                            <FontIcon Glyph="&#xF0E2;" FontSize="12"/>
-                        </lab:SegmentedItem>
-                    </lab:Segmented>
                 </Grid>
                 <StackPanel>
                     <AutoSuggestBox x:Uid="SearchCenterView_SearchBox" x:Name="SearchBox" PlaceholderText=""
