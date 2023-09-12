@@ -142,6 +142,37 @@ public class CurseForgeResolver : ResourceResolverBase
         );
     }
 
+    [ResourceType(ResourceType.ShaderPack)]
+    [ResourceExpression("{projectId}")]
+    public async Task<Result<ResolveResult, ResolveResultError>> GetShaderAsync(
+    string projectId,
+    string version
+)
+    {
+        return await GetProjectAsync(
+            ResourceType.ResourcePack,
+            projectId,
+            version,
+            (project, file) =>
+                new ShaderPack(
+                    project.Id.ToString(),
+                    project.Name,
+                    file.DisplayName,
+                    string.Join(", ", project.Authors.Select(x => x.Name)),
+                    project.Logo?.ThumbnailUrl,
+                    new Uri(
+                        CURSEFORGE_PROJECT_URL
+                            .Replace("{0}", "shaders")
+                            .Replace("{1}", project.Slug)
+                    ),
+                    project.Summary,
+                    version,
+                    CurseForgeHelper.MakeResourceUrl(ResourceType.Update, projectId, version),
+                    CurseForgeHelper.MakeResourceUrl(ResourceType.File, projectId, version)
+                )
+        );
+    }
+
     [ResourceType(ResourceType.File)]
     [ResourceExpression("{projectId}/{fileId}")]
     public async Task<Result<ResolveResult, ResolveResultError>> GetFileAsync(
