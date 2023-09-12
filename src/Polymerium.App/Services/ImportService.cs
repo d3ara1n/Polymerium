@@ -94,7 +94,7 @@ public class ImportService
 
                 return new Result<ImportResult, GameImportError>(GameImportError.Unsupported);
             }
-            catch
+            catch(Exception ex)
             {
                 return new Result<ImportResult, GameImportError>(GameImportError.FileSystemError);
             }
@@ -139,7 +139,7 @@ public class ImportService
                         allocateds.Add(new Uri(new Uri("poly-res://local@file/"), file.Path));
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
                     return GameImportError.FileSystemError;
                 }
