@@ -106,8 +106,9 @@
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavigationItemModel">
-                    <Grid Height="64" Margin="0,0,-10,0" ToolTipService.ToolTip="{x:Bind Caption}">
-                        <Grid VerticalAlignment="Center" Margin="0">
+                    <Grid Height="64" Margin="0,0,-10,0" >
+                        <!-- TODO: 使用外置 popup 显示悬浮窗，右键查看更多信息 -->
+                        <Grid VerticalAlignment="Center" Margin="0" ToolTipService.ToolTip="{x:Bind Caption}" ToolTipService.Placement="Right">
                             <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center" />
                             <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center"
                                              VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}"
@@ -140,7 +141,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:InAppNotificationItem">
-                    <Grid x:Name="NotificationItem" Loaded="NotificationItem_Loaded" DataContext="{x:Bind Severity}">
+                    <Grid x:Name="NotificationItem" Loaded="NotificationItem_Loaded" DataContext="{x:Bind Severity}" HorizontalAlignment="Center">
                         <InfoBar Title="{x:Bind Caption}" Message="{x:Bind Text}" Severity="{x:Bind Severity}"
                                  IsOpen="True" />
                     </Grid>

@@ -82,12 +82,13 @@ public sealed partial class InstanceUpdateDialog : CustomDialog
         );
     }
 
-    private void UpdateFinishHandler()
+    private void UpdateFinishHandler(bool succ)
     {
         DispatcherQueue.TryEnqueue(() =>
         {
             Dismiss();
-            ViewModel.NavigationService.Navigate<InstanceView>(Instance.Id);
+            if (succ)
+                ViewModel.NavigationService.Navigate<InstanceView>(Instance.Id);
         });
     }
 }

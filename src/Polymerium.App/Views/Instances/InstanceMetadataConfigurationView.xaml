@@ -82,15 +82,14 @@
                             TextWrapping="WrapWholeWords" />
                         <InfoBar x:Uid="InstanceMetadataConfigurationView_Tag_InfoBar" IsOpen="True" Severity="Warning" />
                     </StackPanel>
-                    <Grid
-                        Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}">
+                    <Grid Visibility="{x:Bind IsReferenceBeingParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}">
                         <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Center"
-                              Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reversed}">
+          Visibility="{x:Bind ModpackReference,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter},ConverterParameter=reversed}">
                             <FontIcon Glyph="&#xF384;" FontSize="48" Margin="0,0,8,0" />
                             <StackPanel Grid.Column="1">
                                 <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Error_Header" />
                                 <TextBlock x:Uid="InstanceMetadataConfigurationView_Tag_Error_Subheader"
-                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
                     </Grid>

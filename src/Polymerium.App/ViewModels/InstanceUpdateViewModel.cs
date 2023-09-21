@@ -44,10 +44,11 @@ public class InstanceUpdateViewModel : ObservableObject
         GameInstance instance,
         Uri reference,
         bool resetLocal,
-        Action callback
+        Action<bool> callback
     )
     {
         var context = new ResolverContext(instance);
+        var succ = false;
         var fileResult = await _resolver.ResolveToFileAsync(reference, context);
         if (fileResult.IsSuccessful && fileResult.Value.Resource is RFile file)
         {
@@ -116,6 +117,7 @@ public class InstanceUpdateViewModel : ObservableObject
                             $"版本更新到 {file.Name}",
                             InfoBarSeverity.Success
                         );
+                        succ = true;
                     }
                 }
                 else
@@ -132,7 +134,7 @@ public class InstanceUpdateViewModel : ObservableObject
         {
             EndedError($"解析信息错误: {fileResult.Error}");
         }
-        callback();
+        callback(succ);
     }
 
     private void EndedError(string message)

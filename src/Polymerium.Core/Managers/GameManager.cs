@@ -102,8 +102,15 @@ public class GameManager
             tracker.UpdateCallback?.Invoke(null);
             if (group.DownloadedCount == group.TotalCount)
             {
-                _assetManager.DeployRenewableAssets(tracker.Instance, waste.MergedStates);
-                tracker.FinishCallback?.Invoke(true, null, null, null);
+                try
+                {
+                    _assetManager.DeployRenewableAssets(tracker.Instance, waste.MergedStates);
+                    tracker.FinishCallback?.Invoke(true, null, null, null);
+                }
+                catch (Exception e)
+                {
+                    tracker.FinishCallback?.Invoke(false, PrepareError.ExceptionOcurred, e, null);
+                }
             }
             else
             {

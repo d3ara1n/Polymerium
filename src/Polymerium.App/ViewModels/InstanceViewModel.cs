@@ -377,7 +377,7 @@ public class InstanceViewModel : ObservableObject
                         reason = "已拉取文件列表，但下载时部分文件出错，该错误可通过重试尝试解决";
                         break;
                     case PrepareError.ExceptionOcurred:
-                        reason = $"意料之外的错误发生，{exception!.Message}";
+                        reason = $"意料之外的错误发生，{exception!}";
                         break;
                 }
                 StartAbort(reason);
