@@ -69,8 +69,8 @@ public class SettingViewModel : ObservableObject
         JavaHome = Global.JavaHome ?? string.Empty;
         JvmMaxMemory = Global.JvmMaxMemory ?? 4096;
         AdditionalJvmArugments = Global.AdditionalJvmArguments ?? string.Empty;
-        WindowWidth = Global.WindowWidth ?? 480;
-        WindowHeight = Global.WindowHeight ?? 854;
+        WindowWidth = Global.WindowWidth ?? 854;
+        WindowHeight = Global.WindowHeight ?? 480;
     }
 
     public ICommand OpenPickerAsyncCommand { get; }
