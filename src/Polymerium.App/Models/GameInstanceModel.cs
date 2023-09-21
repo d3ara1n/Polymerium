@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.ExtraData;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Core.LaunchConfigurations;
@@ -17,6 +18,7 @@ public class GameInstanceModel : ObservableObject
         Configuration = new ConfigurationModel(
             new CompoundLaunchConfiguration(Inner.Configuration, fallback)
         );
+        Todos = new SynchronizedMappedCollection<TodoItem, GameInstanceTodoItemModel>(Inner.Todos, x => x.Inner, x => new GameInstanceTodoItemModel(x));
     }
 
     public GameInstance Inner { get; }
@@ -77,6 +79,14 @@ public class GameInstanceModel : ObservableObject
             OnPropertyChanged();
         }
     }
+
+    public string Note
+    {
+        get => Inner.Note;
+        set => Inner.Note = value;
+    }
+
+    public SynchronizedMappedCollection<TodoItem, GameInstanceTodoItemModel> Todos { get; }
 
     public DateTimeOffset CreatedAt
     {

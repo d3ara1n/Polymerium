@@ -1,10 +1,14 @@
+using CommunityToolkit.WinUI.UI.Controls.TextToolbarSymbols;
+using Markdig.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Polymerium.Abstractions;
+using Polymerium.Abstractions.ExtraData;
 using Polymerium.Abstractions.LaunchConfigurations;
 using Polymerium.Abstractions.Meta;
 using Polymerium.Core;
 using System;
+using System.Collections.Generic;
 
 namespace Polymerium.App.Data;
 
@@ -37,6 +41,8 @@ public class InstanceModel : RefinedModelBase<GameInstance>
     public string? Name { get; set; }
     public string? Author { get; set; }
     public string? FolderName { get; set; }
+    public string? Note { get; set; }
+    public IList<TodoItem>? Todos { get; set; }
     public Uri? ThumbnailFile { get; set; }
     public string? BoundAccountId { get; set; }
     public DateTimeOffset? LastPlay { get; set; }
@@ -58,6 +64,8 @@ public class InstanceModel : RefinedModelBase<GameInstance>
         BoundAccountId = instance.BoundAccountId;
         LastPlay = instance.LastPlay;
         CreatedAt = instance.CreatedAt;
+        Note = instance.Note;
+        Todos = instance.Todos;
         LastRestore = instance.LastRestore;
         PlayTime = instance.PlayTime;
         PlayCount = instance.PlayCount;
@@ -79,6 +87,8 @@ public class InstanceModel : RefinedModelBase<GameInstance>
             FolderName!,
             ThumbnailFile,
             BoundAccountId ?? string.Empty,
+            Note ?? string.Empty,
+            Todos ?? new List<TodoItem>(),
             LastPlay!,
             CreatedAt ?? DateTimeOffset.Now,
             LastRestore!,

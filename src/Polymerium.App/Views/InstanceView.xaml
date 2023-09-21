@@ -220,34 +220,63 @@
                     </Button>
                 </Grid>
             </controls:Card>
-            <controls:GroupBox Margin="5,5,10,5">
-                <controls:GroupBox.Header>
-                    <Grid>
-                        <TextBlock x:Uid="InstanceView_Screenshot_Header"
-                                   Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <Button x:Uid="InstanceView_Screenshot_OpenExplorerButton"
-                                Style="{StaticResource IconButtonStyle}" HorizontalAlignment="Right"
-                                Command="{x:Bind ViewModel.OpenInExplorerCommand}" CommandParameter="screenshots" />
-                    </Grid>
-                </controls:GroupBox.Header>
-                <toolkit:ConstrainedBox AspectRatio="16:9">
-                    <Grid>
-                        <Grid.ChildrenTransitions>
-                            <ContentThemeTransition />
-                        </Grid.ChildrenTransitions>
-                        <TextBlock x:Uid="InstanceView_Screenshot_Empty" VerticalAlignment="Center"
-                                   HorizontalAlignment="Center" />
-                        <FlipView ItemsSource="{x:Bind ViewModel.Screenshots}"
-                                  Visibility="{x:Bind ViewModel.Screenshots.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibleConverter},ConverterParameter=reversed}">
-                            <FlipView.ItemTemplate>
-                                <DataTemplate x:DataType="models:InstanceScreenshotModel">
-                                    <toolkit:ImageEx Source="{x:Bind FileName}" Stretch="Uniform" />
-                                </DataTemplate>
-                            </FlipView.ItemTemplate>
-                        </FlipView>
-                    </Grid>
-                </toolkit:ConstrainedBox>
-            </controls:GroupBox>
+            <ScrollViewer>
+                <Grid ColumnDefinitions="3*,2*" MaxHeight="512">
+                    <controls:GroupBox Margin="5,5,5,5" VerticalAlignment="Top">
+                        <controls:GroupBox.Header>
+                            <Grid>
+                                <TextBlock Text="笔记"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                            </Grid>
+                        </controls:GroupBox.Header>
+                        <Grid>
+                            <Grid.ChildrenTransitions>
+                                <ContentThemeTransition />
+                            </Grid.ChildrenTransitions>
+                            <TextBox Text="{x:Bind ViewModel.Instance.Note,Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" PlaceholderText="..."/>
+                        </Grid>
+                    </controls:GroupBox>
+                    <controls:GroupBox Margin="5,5,10,5" Grid.Column="1">
+                        <controls:GroupBox.Header>
+                            <Grid>
+                                <TextBlock Text="待办"
+                                    Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Content="删除" Visibility="{x:Bind TodoList.SelectedValue,Mode=OneWay,Converter={StaticResource NotNullToVisibleConverter}}" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.DeleteTodoItemCommand}" CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}"/>
+                                    <Button Content="添加" Style="{StaticResource IconButtonStyle}" Command="{x:Bind ViewModel.AddTodoItemCommand}"/>
+                                </StackPanel>
+                            </Grid>
+                        </controls:GroupBox.Header>
+                        <Grid>
+                            <Grid.ChildrenTransitions>
+                                <ContentThemeTransition />
+                            </Grid.ChildrenTransitions>
+                            <ListView x:Name="TodoList" SelectionMode="Single" ItemsSource="{x:Bind ViewModel.Instance.Todos}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:GameInstanceTodoItemModel">
+                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                            <CheckBox IsChecked="{x:Bind IsChecked,Mode=TwoWay}" Margin="0,0,-85,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+                                            <TextBox Grid.Column="1" Text="{x:Bind Inner.Content,Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="{x:Bind IsEditMode,Mode=OneWay}"/>
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Button Style="{StaticResource IconButtonStyle}" Visibility="{x:Bind IsEditMode,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=reversed}"
+                                                        Command="{x:Bind EditCommand}" CommandParameter="{x:Bind}">
+                                                    <FontIcon Glyph="&#xE104;" FontSize="10"/>
+                                                </Button>
+                                                <Button Style="{StaticResource IconButtonStyle}" Visibility="{x:Bind IsEditMode,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                                                        Command="{x:Bind CompleteEditCommand}" CommandParameter="{x:Bind}">
+                                                    <FontIcon Glyph="&#xE10B;" FontSize="10"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <TextBlock Text="空" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Visibility="{x:Bind ViewModel.Instance.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibleConverter}}" />
+                        </Grid>
+                    </controls:GroupBox>
+                </Grid>
+            </ScrollViewer>
             <ScrollViewer>
                 <Grid ColumnDefinitions="1*,1*" MaxHeight="512">
                     <controls:GroupBox Margin="5,5,5,5">
@@ -301,7 +330,7 @@
                                        Visibility="{x:Bind ViewModel.Saves.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibleConverter}}" />
                         </Grid>
                     </controls:GroupBox>
-                    <controls:GroupBox Margin="5,5,10,5" Grid.Column="1" Visibility="Collapsed">
+                    <controls:GroupBox Margin="5,5,10,5" Grid.Column="1">
                         <controls:GroupBox.Header>
                             <Grid>
                                 <TextBlock x:Uid="InstanceView_Server_Header"
@@ -320,6 +349,47 @@
                     </controls:GroupBox>
                 </Grid>
             </ScrollViewer>
+            <controls:GroupBox Margin="5,5,10,5">
+                <controls:GroupBox.Header>
+                    <Grid>
+                        <TextBlock x:Uid="InstanceView_Screenshot_Header"
+                       Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <Button x:Uid="InstanceView_Screenshot_OpenExplorerButton"
+                    Style="{StaticResource IconButtonStyle}" HorizontalAlignment="Right"
+                    Command="{x:Bind ViewModel.OpenInExplorerCommand}" CommandParameter="screenshots" />
+                    </Grid>
+                </controls:GroupBox.Header>
+                <toolkit:ConstrainedBox AspectRatio="16:9">
+                    <Grid>
+                        <Grid.ChildrenTransitions>
+                            <ContentThemeTransition />
+                        </Grid.ChildrenTransitions>
+                        <TextBlock x:Uid="InstanceView_Screenshot_Empty" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" />
+                        <FlipView ItemsSource="{x:Bind ViewModel.Screenshots}"
+                      Visibility="{x:Bind ViewModel.Screenshots.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibleConverter},ConverterParameter=reversed}">
+                            <FlipView.ItemTemplate>
+                                <DataTemplate x:DataType="models:InstanceScreenshotModel">
+                                    <toolkit:ImageEx Source="{x:Bind FileName}" Stretch="Uniform" />
+                                </DataTemplate>
+                            </FlipView.ItemTemplate>
+                        </FlipView>
+                    </Grid>
+                </toolkit:ConstrainedBox>
+            </controls:GroupBox>
+            <controls:GroupBox Margin="5,5,10,5" Height="184">
+                <controls:GroupBox.Header>
+                    <Grid>
+                        <TextBlock Text="记录"
+                            Style="{StaticResource SubtitleTextBlockStyle}" />
+                    </Grid>
+                </controls:GroupBox.Header>
+                <Grid>
+                    <Grid.ChildrenTransitions>
+                        <ContentThemeTransition />
+                    </Grid.ChildrenTransitions>
+                </Grid>
+            </controls:GroupBox>
             <controls:GroupBox Margin="5,5,10,10">
                 <controls:GroupBox.Header>
                     <TextBlock x:Uid="InstanceView_Other_Header" Style="{StaticResource BodyStrongTextBlockStyle}" />

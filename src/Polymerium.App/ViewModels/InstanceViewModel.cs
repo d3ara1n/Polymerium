@@ -92,7 +92,6 @@ public class InstanceViewModel : ObservableObject
         Instance = context.AssociatedInstance!;
         OverlayService = overlayService;
         CoreVersion = Instance.Inner.GetCoreVersion() ?? "N/A";
-        GotoConfigurationViewCommand = new RelayCommand(GotoConfigurationView);
         Components = new ObservableCollection<ComponentTagItemModel>(
             BuildComponentModels(Instance.Components)
         );
@@ -147,7 +146,10 @@ public class InstanceViewModel : ObservableObject
                     : Instance.LastRestore.Humanize()
             )
         };
+        GotoConfigurationViewCommand = new RelayCommand(GotoConfigurationView);
         OpenInExplorerCommand = new RelayCommand<string>(OpenInExplorer);
+        AddTodoItemCommand = new RelayCommand(AddTodoItem);
+        DeleteTodoItemCommand = new RelayCommand<GameInstanceTodoItemModel?>(DeleteTodoItem);
         Saves = new ObservableCollection<InstanceWorldSaveModel>();
         Screenshots = new ObservableCollection<InstanceScreenshotModel>();
         RawAssetSource = new ObservableCollection<AssetRaw>();
@@ -184,7 +186,6 @@ public class InstanceViewModel : ObservableObject
     public IAdvancedCollectionView RawShaderPacks { get; }
     public IAdvancedCollectionView RawMods { get; }
     public IAdvancedCollectionView RawResourcePacks { get; }
-    public IRelayCommand<string> OpenInExplorerCommand { get; }
 
     public bool IsModSupported
     {
@@ -224,7 +225,10 @@ public class InstanceViewModel : ObservableObject
 
     public GameInstanceModel Instance { get; }
     public IOverlayService OverlayService { get; }
-    public ICommand GotoConfigurationViewCommand { get; }
+    public IRelayCommand GotoConfigurationViewCommand { get; }
+    public IRelayCommand<string> OpenInExplorerCommand { get; }
+    public IRelayCommand AddTodoItemCommand { get; }
+    public IRelayCommand<GameInstanceTodoItemModel?> DeleteTodoItemCommand { get; }
 
     private void OpenInExplorer(string? dir)
     {
@@ -239,6 +243,14 @@ public class InstanceViewModel : ObservableObject
                 Arguments = Directory.Exists(path) ? path : $"/select, {path}"
             }
         );
+    }
+
+    private void AddTodoItem() => Instance.Todos.Add(GameInstanceTodoItemModel.CreateEdit());
+
+    private void DeleteTodoItem(GameInstanceTodoItemModel? item)
+    {
+        if (item != null)
+            Instance.Todos.Remove(item);
     }
 
     private IEnumerable<ComponentTagItemModel> BuildComponentModels(
