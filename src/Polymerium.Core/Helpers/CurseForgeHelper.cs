@@ -26,6 +26,7 @@ public static class CurseForgeHelper
     private const uint CLASSID_MOD = 6;
     private const uint CLASSID_WORLD = 17;
     private const uint CLASSID_RESOURCEPACK = 12;
+    private const uint CLASSID_SHADERPACK = 6552;
 
     public static readonly IReadOnlyDictionary<string, string> MODLOADERS_MAPPINGS = new Dictionary<
         string,
@@ -55,12 +56,11 @@ public static class CurseForgeHelper
     {
         return classId switch
         {
-            6 => ResourceType.Mod,
-            12 => ResourceType.ResourcePack,
-            17 => ResourceType.World,
-            4546 => ResourceType.ShaderPack,
-            4471 => ResourceType.Modpack,
-            6552 => ResourceType.ShaderPack,
+            CLASSID_MOD => ResourceType.Mod,
+            CLASSID_RESOURCEPACK => ResourceType.ResourcePack,
+            CLASSID_WORLD => ResourceType.World,
+            CLASSID_MODPACK => ResourceType.Modpack,
+            CLASSID_SHADERPACK => ResourceType.ShaderPack,
             _ => throw new NotImplementedException()
         };
     }
@@ -183,6 +183,7 @@ public static class CurseForgeHelper
                 ResourceType.Mod => CLASSID_MOD,
                 ResourceType.ResourcePack => CLASSID_RESOURCEPACK,
                 ResourceType.World => CLASSID_WORLD,
+                ResourceType.ShaderPack => CLASSID_SHADERPACK,
                 _ => throw new NotSupportedException()
             }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlPathEncode(query)}&sortField=2&sortOrder=desc"
             + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
