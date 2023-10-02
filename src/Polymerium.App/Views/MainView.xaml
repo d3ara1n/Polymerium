@@ -106,9 +106,12 @@
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavigationItemModel">
-                    <Grid Height="64" Margin="0,0,-10,0" >
+                    <Grid Height="64" Margin="0,0,-10,0" ToolTipService.Placement="Right">
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{x:Bind Caption}"/>
+                        </ToolTipService.ToolTip>
                         <!-- TODO: 使用外置 popup 显示悬浮窗，右键查看更多信息 -->
-                        <Grid VerticalAlignment="Center" Margin="0" ToolTipService.ToolTip="{x:Bind Caption}" ToolTipService.Placement="Right">
+                        <Grid VerticalAlignment="Center" Margin="0">
                             <FontIcon Glyph="{x:Bind Glyph}" HorizontalAlignment="Center" />
                             <toolkit:ImageEx Height="40" Width="40" HorizontalAlignment="Center"
                                              VerticalAlignment="Center" Source="{x:Bind ThumbnailSource}"

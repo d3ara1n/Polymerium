@@ -380,7 +380,7 @@
             <controls:GroupBox Margin="5,5,10,5" Height="184">
                 <controls:GroupBox.Header>
                     <Grid>
-                        <TextBlock Text="记录"
+                        <TextBlock Text="历史"
                             Style="{StaticResource SubtitleTextBlockStyle}" />
                     </Grid>
                 </controls:GroupBox.Header>
