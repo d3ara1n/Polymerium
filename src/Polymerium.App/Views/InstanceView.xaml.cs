@@ -72,9 +72,9 @@ public sealed partial class InstanceView : Page
         });
     }
 
-    private void StartButton_Click(object sender, RoutedEventArgs e)
+    private void StartButton_Click(object _, RoutedEventArgs __)
     {
-        Task.Run(() => ViewModel.Start(PrepareCallbackHandler));
+        Task.Run(() => ViewModel.TryStart(PrepareCallbackHandler));
     }
 
     private void PrepareCallbackHandler(int? precentage) =>

@@ -344,13 +344,33 @@ public class InstanceViewModel : ObservableObject
     public void SetStateChangeHandler(Action<InstanceState> handler) =>
         stateChangeHandler = handler;
 
-    public void Start(Action<int?> prepare)
+    public void TryStart(Action<int?> callback)
     {
-        stateChangeHandler?.Invoke(InstanceState.Preparing);
-        if (Prepare(prepare) && Launch())
-            stateChangeHandler?.Invoke(InstanceState.Running);
-        else
+        if (_gameManager.IsPreparing(Instance.Id, out var prepare))
+        {
+            prepare!.TokenSource.Cancel();
             stateChangeHandler?.Invoke(InstanceState.Idle);
+        }
+        else if (_gameManager.IsRunning(Instance.Id, out var run))
+        {
+            throw new NotImplementedException();
+        }
+        else
+        {
+            Instance.LastRestore = DateTimeOffset.Now;
+            stateChangeHandler?.Invoke(InstanceState.Preparing);
+            if (Prepare(callback) && Launch())
+            {
+                stateChangeHandler?.Invoke(InstanceState.Running);
+            }
+            else
+            {
+                stateChangeHandler?.Invoke(InstanceState.Idle);
+                Instance.ExceptionCount++;
+            }
+            Instance.PlayCount++;
+            Instance.LastPlay = DateTimeOffset.Now;
+        }
     }
 
     // true if can continue
@@ -363,7 +383,7 @@ public class InstanceViewModel : ObservableObject
         {
             succ = successful;
             handle.Set();
-            if (!succ)
+            if (!succ && prepareError != PrepareError.Canceled)
             {
                 var reason = "未知原因";
                 switch (prepareError)
@@ -392,7 +412,7 @@ public class InstanceViewModel : ObservableObject
                         reason = $"意料之外的错误发生，{exception!}";
                         break;
                 }
-                StartAbort(reason);
+                StartAbortNotify(reason);
             }
         };
         handle.WaitOne();
@@ -402,18 +422,18 @@ public class InstanceViewModel : ObservableObject
             {
                 if (!account!.ValidateAsync().Result && !account.RefreshAsync().Result)
                 {
-                    StartAbort("或账号无法验证");
+                    StartAbortNotify("或账号无法验证");
                 }
             }
             else
             {
-                StartAbort("未配置账号");
+                StartAbortNotify("未配置账号");
             }
         }
         return succ;
     }
 
-    private void StartAbort(string message)
+    private void StartAbortNotify(string message)
     {
         _dispatcher
             .TryEnqueue(() =>
@@ -552,19 +572,18 @@ public class InstanceViewModel : ObservableObject
                             );
                     });
                 _gameManager.LaunchFireForget(builder);
-                Instance.LastPlay = DateTimeOffset.Now;
                 _notificationService.Enqueue("游戏发射", "就是游戏发射的意思");
                 // false 'cause Launch**FireForge**
                 return false;
             }
             else
             {
-                StartAbort("JavaHome 的配置项目不可用或没有找到系统中已安装适配版本的 Java 版本");
+                StartAbortNotify("JavaHome 的配置项目不可用或没有找到系统中已安装适配版本的 Java 版本");
             }
         }
         else
         {
-            StartAbort("Polylock 文件以错误的方式出现，这可能是还原过程不够彻底或发生未察觉的异常导致");
+            StartAbortNotify("Polylock 文件以错误的方式出现，这可能是还原过程不够彻底或发生未察觉的异常导致");
         }
         return false;
     }

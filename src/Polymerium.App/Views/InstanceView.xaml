@@ -17,8 +17,6 @@
                 <VisualState x:Name="Idle"/>
                 <VisualState x:Name="Preparing">
                     <VisualState.Setters>
-                        <!-- 不是必须的，日后按钮能取消还原时移除 -->
-                        <Setter Target="StartButton.IsEnabled" Value="False"/>
                         <Setter Target="StartButton_Ready.Visibility" Value="Collapsed"/>
                         <Setter Target="StartButton_Preparing.Visibility" Value="Visible"/>
                     </VisualState.Setters>
@@ -91,7 +89,10 @@
                                             <TextBlock Text="运行"/>
                                         </StackPanel>
                                         <StackPanel x:Name="StartButton_Preparing" Visibility="Collapsed" Orientation="Horizontal" Spacing="8">
-                                            <ProgressRing x:Name="StartButton_Progress" Foreground="White" Background="#80FFFFFF" Height="14" Width="14"/>
+                                            <Grid>
+                                                <ProgressRing x:Name="StartButton_Progress" Foreground="White" Background="#80FFFFFF" Height="14" Width="14" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                <FontIcon Glyph="&#xE73B;" FontSize="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </Grid>
                                             <TextBlock Text="准备中"/>
                                         </StackPanel>
                                         <StackPanel x:Name="StartButton_Running" Visibility="Collapsed" Orientation="Horizontal" Spacing="8">

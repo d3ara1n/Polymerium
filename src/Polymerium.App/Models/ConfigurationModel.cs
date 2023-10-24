@@ -14,7 +14,7 @@ public class ConfigurationModel : ObservableObject
 
     public string JavaHome
     {
-        get => Inner.JavaHome ?? "未定义";
+        get => Inner.JavaHome ?? "UNDEFINED";
         set
         {
             Inner.JavaHome = value;

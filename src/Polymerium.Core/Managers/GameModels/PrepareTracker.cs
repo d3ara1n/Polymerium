@@ -18,9 +18,9 @@ namespace Polymerium.Core.Managers.GameModels
         public CancellationTokenSource TokenSource { get; }
 
         // precentage null for indeterminate, success null for processing
-        public Action<int?>? UpdateCallback { get; set; }
+        public Action<int?>? UpdateCallback { internal get; set; }
 
-        public Action<bool, PrepareError?, Exception?, RestoreError?>? FinishCallback { get; set; }
+        public Action<bool, PrepareError?, Exception?, RestoreError?>? FinishCallback { internal get; set; }
 
         internal Task? Task { get; set; }
     }
