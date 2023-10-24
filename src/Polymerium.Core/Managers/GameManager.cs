@@ -70,6 +70,7 @@ public class GameManager
             tracker.UpdateCallback?.Invoke(0);
             // wait to download
             var group = new DownloadTaskGroup() { Token = tracker.TokenSource.Token };
+            if (tracker.TokenSource.IsCancellationRequested) return;
             foreach (var task in waste!.Tasks)
             {
                 var target = _fileBase.Locate(task.Target);
@@ -97,6 +98,7 @@ public class GameManager
                     }
                 }
             }
+            if (tracker.TokenSource.IsCancellationRequested) return;
             _download.Enqueue(group);
             group.Wait();
             tracker.UpdateCallback?.Invoke(null);
@@ -125,6 +127,10 @@ public class GameManager
         else if (pipeline.HandleException(out var e))
         {
             tracker.FinishCallback?.Invoke(false, PrepareError.ExceptionOcurred, e, null);
+        }
+        else if (tracker.TokenSource.IsCancellationRequested)
+        {
+            tracker.FinishCallback?.Invoke(false, PrepareError.Canceled, null, null);
         }
         else
         {
