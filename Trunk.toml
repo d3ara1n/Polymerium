@@ -1,0 +1,10 @@
+[build]
+target = "./ui/index.html"
+
+[watch]
+ignore = ["./tauri", "./submodules"]
+
+[serve]
+address = "127.0.0.1"
+port = 1420
+open = false

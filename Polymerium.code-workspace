@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"emmet.includeLanguages": {
+			"rust": "html"
+		},
+		"tailwindCSS.includeLanguages": {
+			"rust": "html",
+			"*.rs": "html"
+		},
+		"cSpell.words": [
+			"bindgen",
+			"chrono",
+			"curseforge",
+			"fabricmc",
+			"fullscreen",
+			"hasher",
+			"leptos",
+			"libpolymerium",
+			"libtrident",
+			"minecraftforge",
+			"modpack",
+			"NEOFORGE",
+			"neoforged",
+			"packageurl",
+			"polylock",
+			"Polymerium",
+			"quiltmc",
+			"reqwest",
+			"resourcepack",
+			"shaderpack",
+			"tauri",
+			"thiserror"
+		],
+	}
+}
