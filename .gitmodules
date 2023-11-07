@@ -1,9 +1,0 @@
-[submodule "submodules/Wupoo"]
-	path = submodules/Wupoo
-	url = git@github.com:d3ara1n/Wupoo
-[submodule "submodules/Duffet"]
-	path = submodules/Duffet
-	url = git@github.com:d3ara1n/Duffet
-[submodule "submodules/FluentPipeline"]
-	path = submodules/FluentPipeline
-	url = git@github.com:d3ara1n/FluentPipeline
