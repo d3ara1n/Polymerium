@@ -3,11 +3,11 @@
     "beforeDevCommand": "trunk serve",
     "beforeBuildCommand": "trunk build",
     "devPath": "http://localhost:1420",
-    "distDir": "../ui/dist",
+    "distDir": "../dist",
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "polymerium",
+    "productName": "Polymerium",
     "version": "0.0.0"
   },
   "tauri": {
@@ -37,8 +37,8 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Polymerium",
-        "width": 1080,
+        "title": "Polymerium Dev",
+        "width": 1280,
         "height": 720
       }
     ]

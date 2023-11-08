@@ -1,10 +1,10 @@
 [package]
-name = "polymerium-tauri"
+name = "polymerium"
 version = "0.0.0"
-description = "Polymerium powered by trident.rs"
-authors = ["Chien Zhang(zqy0224@live.com)"]
-license = "MIT"
-repository = "https://github.com/d3ara1n/Polymerium"
+description = "A Tauri App"
+authors = ["you"]
+license = ""
+repository = ""
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

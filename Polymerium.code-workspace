@@ -29,10 +29,12 @@
 			"packageurl",
 			"polylock",
 			"Polymerium",
+			"preline",
 			"quiltmc",
 			"reqwest",
 			"resourcepack",
 			"shaderpack",
+			"tailwindcss",
 			"tauri",
 			"thiserror"
 		],

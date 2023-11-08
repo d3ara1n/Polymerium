@@ -21,3 +21,7 @@ Cargo.lock
 
 # Tauri
 /**/dist
+
+# npm
+package-lock.json
+node_modules/
