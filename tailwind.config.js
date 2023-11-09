@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    "index.html",
-    "src/**/*.rs",
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
     'node_modules/preline/dist/*.js',
   ],
   theme: {

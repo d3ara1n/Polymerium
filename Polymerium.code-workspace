@@ -1,42 +1,46 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"emmet.includeLanguages": {
-			"rust": "html"
-		},
-		"tailwindCSS.includeLanguages": {
-			"rust": "html",
-			"*.rs": "html"
-		},
-		"cSpell.words": [
-			"bindgen",
-			"chrono",
-			"curseforge",
-			"fabricmc",
-			"fullscreen",
-			"hasher",
-			"leptos",
-			"libpolymerium",
-			"libtrident",
-			"minecraftforge",
-			"modpack",
-			"NEOFORGE",
-			"neoforged",
-			"packageurl",
-			"polylock",
-			"Polymerium",
-			"preline",
-			"quiltmc",
-			"reqwest",
-			"resourcepack",
-			"shaderpack",
-			"tailwindcss",
-			"tauri",
-			"thiserror"
-		],
-	}
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "emmet.includeLanguages": {
+            "rust": "html"
+        },
+        "tailwindCSS.includeLanguages": {
+            "rust": "html",
+            "*.rs": "html"
+        },
+        "[html]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "cSpell.words": [
+            "bindgen",
+            "chrono",
+            "curseforge",
+            "fabricmc",
+            "fullscreen",
+            "hasher",
+            "leptos",
+            "libpolymerium",
+            "libtrident",
+            "minecraftforge",
+            "modpack",
+            "NEOFORGE",
+            "neoforged",
+            "packageurl",
+            "polylock",
+            "Polymerium",
+            "preline",
+            "quiltmc",
+            "reqwest",
+            "resourcepack",
+            "shaderpack",
+            "tailwindcss",
+            "tauri",
+            "thiserror"
+        ],
+        "rust-analyzer.showUnlinkedFileNotification": false
+    }
 }
