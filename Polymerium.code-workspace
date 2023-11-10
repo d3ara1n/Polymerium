@@ -37,6 +37,7 @@
             "reqwest",
             "resourcepack",
             "shaderpack",
+            "solidjs",
             "tailwindcss",
             "tauri",
             "thiserror"

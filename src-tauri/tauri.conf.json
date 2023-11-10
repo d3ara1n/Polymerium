@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "Polymerium",
+    "productName": "polymerium",
     "version": "0.0.0"
   },
   "tauri": {
@@ -29,9 +29,11 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "polymerium",
-        "width": 1270,
-        "height": 720
+        "title": "Polymerium",
+        "width": 800,
+        "height": 600,
+        "titleBarStyle": "Overlay",
+        "transparent": true
       }
     ]
   },

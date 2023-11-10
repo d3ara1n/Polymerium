@@ -1,3 +1,3 @@
 # Polymerium
 
-in Tauri!
+Built with Tauri + Vite + SolidJS + TailwindCSS + PrelineUI, powered by Trident.
