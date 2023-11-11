@@ -1,17 +1,20 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+use tauri::Manager;
 
 fn main() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_window::init())
+        .setup(|app| {
+            // let window = app.get_window("main").unwrap();
+            // #[cfg(target_os = "windows")]
+            // window_vibrancy::apply_mica(&window, None)
+            //     .expect("Unsupported platform! 'apply_mica' is only supported on Windows");
+            // 怎么把我的 TitleBar 给亚克力了
+            Ok(())
+        })
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![greet])
+        .plugin(tauri_plugin_window::init())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

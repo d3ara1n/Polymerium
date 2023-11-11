@@ -1,0 +1,3 @@
+[submodule "submodules/trideng"] 
+  path = submodules/trident
+  url = git@github.com:theGravityLab/trident

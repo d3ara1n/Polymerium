@@ -32,14 +32,10 @@
         "title": "Polymerium",
         "width": 800,
         "height": 600,
-        "titleBarStyle": "Overlay",
-        "transparent": true
+        "decorations": true,
+        "transparent": false
       }
     ]
   },
-  "plugins": {
-    "shell": {
-      "open": true
-    }
-  }
+  "plugins": {}
 }
