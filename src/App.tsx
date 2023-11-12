@@ -1,18 +1,25 @@
-import SideBar from "./components/SideBar";
-import TitleBar from "./components/TitleBar";
-
-import "./App.css";
+import { House } from "phosphor-solid";
+import NavigationButton from "./components/NavigationButton";
 
 function App() {
 
   return (
-    <div class="flex flex-col h-full dark:bg-gray-800">
-      <TitleBar />
-      <div class="flex-1">
-        <div class="flex flex-row h-full">
-          <SideBar />
-          <div class="flex-1 shadow-inner rounded-md bg-gray-50"></div>
+    <div class="flex flex-row h-full bg-gray-100 dark:bg-slate-900">
+      {/* sidebar */}
+      <div class="bg-gray-100 dark:bg-slate-950">
+        <NavigationButton>
+          <House weight="duotone" size={24} />
+        </NavigationButton>
+      </div>
+      {/* titlebar */}
+      <div class="flex-1 flex flex-col h-full">
+        <div class="p-4 flex flex-row items-center space-x-2">
+          <p class="text-sm dark:text-white">
+            <span class="font-bold">Polymer</span>
+            <span>ium</span>
+          </p>
         </div>
+        <div class="flex-1"></div>
       </div>
     </div>
   );

@@ -6,7 +6,12 @@ export default {
     "node_modules/preline/dist/*.js",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: ['Graphik', 'sans-serif'],
+      serif: ['serif'],
+    },
+    extend: {
+    }
   },
   plugins: [require("@tailwindcss/forms"), require("preline/plugin")],
 };

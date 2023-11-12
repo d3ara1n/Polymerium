@@ -12,9 +12,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@solidjs/router": "^0.9.0",
+    "@solidjs/router": "^0.9.1",
     "@tauri-apps/api": "^2.0.0-alpha.11",
     "@tauri-apps/plugin-shell": "^2.0.0-alpha.3",
+    "phosphor-solid": "^1.1.5",
     "preline": "^2.0.0",
     "solid-js": "^1.7.8"
   },
