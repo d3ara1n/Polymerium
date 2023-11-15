@@ -1,31 +1,52 @@
-import {Navigate, Route, Routes} from "@solidjs/router";
-import {IconContext} from "phosphor-solid";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import NavBar, {NavItem} from "@/components/sidebar/NavBar.tsx";
+import {Gear, House, Package, Storefront} from "@phosphor-icons/react";
+import {Separator} from "@/components/ui/separator.tsx";
+import TitleBar from "@/components/titlebar/TitleBar.tsx";
 
 function App() {
+    const routes: NavItem[] = [
+        {
+            path: "/home",
+            icon: House,
+            title: "主页"
+        },
+        {
+            path: "/instances",
+            icon: Package,
+            title: "实例"
+        },
+        {
+            path: "/resources",
+            icon: Storefront,
+            title: "资源"
+        },
+        {
+            path: "/settings",
+            icon: Gear,
+            title: "设置"
+        }
+    ];
     return (
-        <div class="flex flex-row h-full">
-            <IconContext.Provider
-                value={{
-                    size: 28,
-                    weight: "duotone",
-                }}>
-                <div class="flex flex-col w-16 bg-zinc-300 justify-between">
-                    <img class="m-3" src="/logo.png" alt="logo"/>
-                    <div class="flex flex-1 flex-col items-center space-x-2">
+        <Router>
+            <div className="grid grid-cols-[4rem_auto] h-full">
+                <div className="flex flex-col bg-zinc-200">
+                    <img className="m-3" alt="logo" src="/logo.png"/>
+                    <NavBar items={routes}/>
+                </div>
+                <div className="flex flex-col bg-zinc-300">
+                    <div className="h-16">
+                        <TitleBar/>
+                    </div>
+                    <div className="flex-1">
+                        <Routes>
+                            <Route path="/home" element={<p>This is Home</p>}>
+                            </Route>
+                        </Routes>
                     </div>
                 </div>
-            </IconContext.Provider>
-            <div class="flex-1 bg-zinc-200 drop-shadow">
-                <Routes>
-                    <Route path="/" element={<Navigate href="/home"/>}/>
-                    <Route path="/home" element={
-                        <div>
-                            <p>Home</p>
-                        </div>
-                    }/>
-                </Routes>
             </div>
-        </div>
+        </Router>
     );
 }
 

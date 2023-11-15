@@ -29,11 +29,9 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Polymerium Dev",
+        "title": "Polymerium: Powered by Trident",
         "width": 800,
-        "height": 600,
-        "transparent": true,
-        "decorations": true
+        "height": 600
       }
     ]
   },
