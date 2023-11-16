@@ -73,6 +73,7 @@
 
     html {
         @apply h-full;
+        font-family: "HarmonyOS Sans SC", -apple-system, system-ui, sans-serif;
     }
 
     body {
