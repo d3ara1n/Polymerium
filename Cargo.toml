@@ -1,0 +1,3 @@
+[workspace]
+members = ["submodules/trident/src/libtrident", "src-tauri"]
+resolver = "2"
