@@ -22,6 +22,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import ConstructionView from "@/views/construction.tsx";
 import WorkshopView from "./views/workshop";
 import MarketView from "./views/market";
+import { Separator } from "./components/ui/separator";
 
 interface NavItem {
     path: string,
@@ -66,7 +67,7 @@ function App() {
     const downButtons = downRoutes.map(ofButton);
     return (
         <div className="grid grid-cols-[4rem_auto] grid-rows-[2rem_auto] h-full bg-zinc-200 dark:bg-zinc-950">
-            <div className="col-start-1 row-start-2 flex flex-col">
+            <div id="sidebar" className="col-start-1 row-start-2 flex flex-col">
                 <ToggleGroup type="single" className="flex-1">
                     <div className="flex flex-col h-full items-center">
                         <IconContext.Provider
@@ -86,13 +87,14 @@ function App() {
                             }}>
                             <div className="flex flex-col items-center m-1"
                                 data-tauri-drag-region={true}>
+                                <Separator className="w-[90%]" />
                                 {downButtons}
                             </div>
                         </IconContext.Provider>
                     </div>
                 </ToggleGroup>
             </div>
-            <div className="col-start-1 row-start-1 col-span-2">
+            <div id="titlebar" className="col-start-1 row-start-1 col-span-2">
                 <div className="flex items-center h-full justify-between" data-tauri-drag-region={true}>
                     <p className="m-[0_0.75rem] text-md select-none align text-left dark:text-white">
                         <span className="font-bold" data-tauri-drag-region={true}>
@@ -115,8 +117,8 @@ function App() {
                     </div>
                 </div>
             </div>
-            <div className="col-start-2 row-start-2 flex flex-col">
-                <div className="flex-1 dark:text-white">
+            <div id="page" className="col-start-2 row-start-2 flex flex-col h-full">
+                <div className="flex-1 dark:text-white h-full">
                     <Routes>
                         <Route path="/" element={<Navigate to="/instances" />} />
                         <Route path="/instances" element={<></>}>

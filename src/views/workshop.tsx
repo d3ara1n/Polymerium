@@ -20,7 +20,7 @@ export default function WorkshopView() {
                             <span className="font-bold text-lg">特定版本</span>
                             的新实例
                         </p>
-                        <Button className="w-min self-center" variant="outline">
+                        <Button className="m-4 w-min self-center" variant="outline">
                             打开创建向导
                         </Button>
                     </div>
@@ -41,7 +41,7 @@ export default function WorkshopView() {
                             检索并下载
                             <span className="font-bold text-xl">整合包</span>
                         </p>
-                        <Button asChild className="self-end p-[1rem_0_1rem_0]" variant="link">
+                        <Button asChild className="m-4 self-end p-0" variant="link">
                             <Link to="/market">
                                 转到资源中心→
                             </Link>
