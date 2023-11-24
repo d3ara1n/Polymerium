@@ -5,13 +5,6 @@
         }
     ],
     "settings": {
-        "emmet.includeLanguages": {
-            "rust": "html"
-        },
-        "tailwindCSS.includeLanguages": {
-            "rust": "html",
-            "*.rs": "html"
-        },
         "[html]": {
             "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
@@ -27,6 +20,7 @@
             "libtrident",
             "minecraftforge",
             "modpack",
+            "modrinth",
             "NEOFORGE",
             "neoforged",
             "packageurl",

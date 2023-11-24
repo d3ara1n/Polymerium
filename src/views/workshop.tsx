@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 export default function WorkshopView() {
     return (
         <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full p-[0rem_0.5rem_0.5rem_0]">
-            <div className="relative rounded dark:bg-zinc-900 overflow-hidden">
-                <div className="absolute -bottom-[30%] -right-[25%] w-full h-full dark:text-zinc-950">
+            <div className="relative rounded bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
+                <div className="absolute -bottom-[30%] -right-[25%] w-full h-full text-zinc-200 dark:text-zinc-950">
                     <FileDashed size="100%" />
                 </div>
                 <div className="absolute flex flex-col items-center justify-center h-full w-full">
@@ -26,8 +26,8 @@ export default function WorkshopView() {
                     </div>
                 </div>
             </div>
-            <div className="relative rounded dark:bg-zinc-900 overflow-hidden">
-                <div className="absolute -bottom-[30%] -right-[30%] w-full h-full dark:text-zinc-950">
+            <div className="relative rounded bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
+                <div className="absolute -bottom-[30%] -right-[30%] w-full h-full text-zinc-200 dark:text-zinc-950">
                     <Storefront size="100%" />
                 </div>
                 <div className="absolute flex flex-col items-center justify-center h-full w-full">
@@ -49,7 +49,7 @@ export default function WorkshopView() {
                     </div>
                 </div>
             </div>
-            <div className="col-span-2 rounded dark:bg-zinc-900 flex flex-col items-center justify-center">
+            <div className="col-span-2 rounded bg-zinc-100 dark:bg-zinc-900 flex flex-col items-center justify-center">
                 <p>Import function not available</p>
             </div>
         </div>

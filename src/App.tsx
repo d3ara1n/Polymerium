@@ -23,26 +23,48 @@ import ConstructionView from "@/views/construction.tsx";
 import WorkshopView from "./views/workshop";
 import MarketView from "./views/market";
 import { Separator } from "./components/ui/separator";
+import { Toggle } from "./components/ui/toggle";
 
 interface NavItem {
     path: string,
     icon: Icon,
+    title: string | null,
     style: IconWeight
 }
 
 function App() {
     const window = getCurrent();
     const upRoutes: NavItem[] = [
+        {
+            path: "/workshop",
+            icon: House,
+            title: "主页",
+            style: "duotone"
+        },
+        {
+            path: "/instances",
+            icon: Package,
+            title: "实例",
+            style: "duotone"
+        },
+        {
+            path: "/market",
+            icon: Storefront,
+            title: "资源",
+            style: "duotone"
+        },
     ];
     const downRoutes: NavItem[] = [
         {
-            path: "/workshop",
-            icon: PlusCircle,
+            path: "/settings",
+            icon: Gear,
+            title: null,
             style: "regular"
         },
         {
-            path: "/settings",
-            icon: Gear,
+            path: "/about",
+            icon: Info,
+            title: null,
             style: "regular"
         }
     ];
@@ -51,15 +73,17 @@ function App() {
     function ofButton(item: NavItem) {
         let Icon = item.icon;
         return (
-            <ToggleGroupItem asChild value={item.path} key={item.path}
-                className={"h-12 m-1 p-3 dark:text-zinc-50"}
+            <Toggle asChild value={item.path} key={item.path}
+                className={item.title === null ? "h-10 m-1 p-3  dark:text-zinc-50" : "h-16 m-1 p-3 dark:text-zinc-50"}
+                pressed={location.pathname.startsWith(item.path)}
                 disabled={location.pathname.startsWith(item.path)}>
                 <Link to={item.path}>
                     <div className="flex flex-col items-center">
                         <Icon weight={location.pathname.startsWith(item.path) ? "fill" : item.style} />
+                        <p className="text-primary">{item.title}</p>
                     </div>
                 </Link>
-            </ToggleGroupItem>
+            </Toggle>
         );
     }
 
@@ -68,7 +92,6 @@ function App() {
     return (
         <div className="grid grid-cols-[4rem_auto] grid-rows-[2rem_auto] h-full bg-zinc-200 dark:bg-zinc-950">
             <div id="sidebar" className="col-start-1 row-start-2 flex flex-col">
-                <ToggleGroup type="single" className="flex-1">
                     <div className="flex flex-col h-full items-center">
                         <IconContext.Provider
                             value={{
@@ -92,10 +115,9 @@ function App() {
                             </div>
                         </IconContext.Provider>
                     </div>
-                </ToggleGroup>
             </div>
             <div id="titlebar" className="col-start-1 row-start-1 col-span-2">
-                <div className="flex items-center h-full justify-between" data-tauri-drag-region={true}>
+                <div className="flex items-center h-full justify-between  overflow-hidden" data-tauri-drag-region={true}>
                     <p className="m-[0_0.75rem] text-md select-none align text-left dark:text-white">
                         <span className="font-bold" data-tauri-drag-region={true}>
                             Polymer
@@ -105,13 +127,13 @@ function App() {
                         </span>
                     </p>
                     <div className="m-[0_0] flex dark:text-zinc-400">
-                        <Button className="p-2 hover:bg-transparent dark:hover:bg-transparent" variant="ghost" size="icon" onClick={() => window.minimize()}>
+                        <Button className="p-2" variant="ghost" size="icon" onClick={() => window.minimize()}>
                             <Minus />
                         </Button>
-                        <Button className="p-2 hover:bg-transparent dark:hover:bg-transparent" variant="ghost" size="icon" onClick={() => window.toggleMaximize()}>
+                        <Button className="p-2" variant="ghost" size="icon" onClick={() => window.toggleMaximize()}>
                             <Square />
                         </Button>
-                        <Button className="p-2 hover:bg-transparent dark:hover:bg-transparent" variant="ghost" size="icon" onClick={() => window.close()}>
+                        <Button className="p-2 hover:bg-red-400 dark:hover:bg-red-400" variant="ghost" size="icon" onClick={() => window.close()}>
                             <X />
                         </Button>
                     </div>
@@ -120,11 +142,11 @@ function App() {
             <div id="page" className="col-start-2 row-start-2 flex flex-col h-full">
                 <div className="flex-1 dark:text-white h-full">
                     <Routes>
-                        <Route path="/" element={<Navigate to="/instances" />} />
-                        <Route path="/instances" element={<></>}>
+                        <Route path="/" element={<Navigate to="/workshop" />} />
+                        <Route path="/workshop" element={<WorkshopView />} />
+                        <Route path="/instances" element={<InstanceView></InstanceView>}>
                             <Route path="/instances/:id" element={<InstanceView />} />
                         </Route>
-                        <Route path="/workshop" element={<WorkshopView />} />
                         <Route path="/market" element={<MarketView />} />
                         <Route path="/settings" element={<ConstructionView />} />
                     </Routes>
