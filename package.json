@@ -23,7 +23,7 @@
     "@tauri-apps/plugin-shell": "^2.0.0-alpha.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "lucide-react": "^0.292.0",
+    "lucide-react": "^0.294.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
@@ -33,15 +33,15 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^2.0.0-alpha.17",
+    "@tauri-apps/cli": "^2.0.0-alpha.18",
     "@types/node": "^20.10.0",
-    "@types/react": "^18.2.38",
+    "@types/react": "^18.2.39",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.3.2",
-    "vite": "^5.0.2"
+    "vite": "^5.0.3"
   }
 }

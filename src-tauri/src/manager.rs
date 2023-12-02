@@ -1,11 +1,11 @@
-use libtrident::{instance::Instance, machine::InstantMachine};
+use libtrident::{machine::InstantMachine, profile::Entry};
 
 // 包含 instant machine，
 // 保存 deploy 和 run 的 engine，并驱动进度，根据进度发布事件给前端
 
 pub struct Manager {
     machine: InstantMachine,
-    instances: Vec<Instance>,
+    entries: Vec<Entry>,
 }
 
 impl Manager {
@@ -13,8 +13,8 @@ impl Manager {
         ManagerBuilder::new()
     }
 
-    pub fn entries(&self) -> &[Instance] {
-        &self.instances
+    pub fn entries(&self) -> &[Entry] {
+        &self.entries
     }
 }
 
@@ -35,11 +35,10 @@ impl ManagerBuilder {
 
     pub fn build(self) -> anyhow::Result<Manager> {
         let machine = self.machine;
-        let instances = machine
-            .entries()
-            .iter()
-            .filter_map(|e| machine.get_instance(e).ok())
-            .collect();
-        Ok(Manager { machine, instances })
+        let entries = machine.scan();
+        Ok(Manager {
+            machine,
+            entries,
+        })
     }
 }

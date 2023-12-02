@@ -4,23 +4,17 @@
 mod manager;
 mod plugins;
 
-use std::sync::OnceLock;
-
-use manager::{Manager, ManagerBuilder};
-
-static MANAGER: OnceLock<Manager> = OnceLock::new();
+use manager::ManagerBuilder;
 
 fn main() -> anyhow::Result<()> {
     let builder = ManagerBuilder::new();
     let manager = builder.build()?;
-    if let Ok(_) = MANAGER.set(manager) {
-        tauri::Builder::default()
-            .plugin(tauri_plugin_window::init())
-            .plugin(tauri_plugin_shell::init())
-            .plugin(plugins::instance::init())
-            .run(tauri::generate_context!())
-            .map_err(|e| e.into())
-    } else {
-        Err(anyhow::anyhow!("internal setup error"))
-    }
+
+    tauri::Builder::default()
+        .manage(manager)
+        .plugin(tauri_plugin_window::init())
+        .plugin(tauri_plugin_shell::init())
+        .plugin(plugins::instance::init())
+        .run(tauri::generate_context!())
+        .map_err(|e| e.into())
 }
