@@ -1,0 +1,76 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cSpell.words": [
+			"Polymerium",
+			"Avalonia",
+			"avares"
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				// Use IntelliSense to find out which attributes exist for C# debugging
+				// Use hover for the description of the existing attributes
+				// For further information visit https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md
+				"name": "Polymerium.App",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "build",
+				// If you have changed target frameworks, make sure to update the program path.
+				"program": "${workspaceFolder}/src/Polymerium.App/bin/Debug/net8.0/Polymerium.App.dll",
+				"args": [],
+				"cwd": "${workspaceFolder}/src/Polymerium.App",
+				// For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+				"console": "internalConsole",
+				"stopAtEntry": false
+			}
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "build",
+				"command": "dotnet",
+				"type": "process",
+				"args": [
+					"build",
+					"${workspaceFolder}/Polymerium.sln",
+					"/property:GenerateFullPaths=true",
+					"/consoleloggerparameters:NoSummary;ForceNoAlign"
+				],
+				"problemMatcher": "$msCompile"
+			},
+			{
+				"label": "publish",
+				"command": "dotnet",
+				"type": "process",
+				"args": [
+					"publish",
+					"${workspaceFolder}/Polymerium.sln",
+					"/property:GenerateFullPaths=true",
+					"/consoleloggerparameters:NoSummary;ForceNoAlign"
+				],
+				"problemMatcher": "$msCompile"
+			},
+			{
+				"label": "watch",
+				"command": "dotnet",
+				"type": "process",
+				"args": [
+					"watch",
+					"run",
+					"--project",
+					"${workspaceFolder}/Polymerium.sln"
+				],
+				"problemMatcher": "$msCompile"
+			}
+		]
+	}
+}
