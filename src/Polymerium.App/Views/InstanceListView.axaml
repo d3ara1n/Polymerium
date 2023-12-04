@@ -11,7 +11,7 @@
             
         </Grid>
         <Grid>
-            <Border CornerRadius="5" Margin="15" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Red" BorderThickness="1" BorderBrush="{DynamicResource SystemControlBackgroundBaseMediumBrush}">
+            <Border CornerRadius="5" Margin="15" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Red">
                 <StackPanel>
                     <TextBlock Text="All The Mods 9"/>
                     <Separator/>
