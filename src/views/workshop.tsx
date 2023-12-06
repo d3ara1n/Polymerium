@@ -1,57 +1,52 @@
-import { Button } from "@/components/ui/button";
-import { FileDashed, Storefront } from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
+import {Button, Card, CardBody, CardFooter, CardHeader, Image} from "@nextui-org/react";
+import {ArrowLineDown, Clock, User} from "@phosphor-icons/react";
 
 export default function WorkshopView() {
     return (
-        <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full p-[0rem_0.5rem_0.5rem_0]">
-            <div className="relative rounded bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
-                <div className="absolute -bottom-[30%] -right-[25%] w-full h-full text-zinc-200 dark:text-zinc-950">
-                    <FileDashed size="100%" />
-                </div>
-                <div className="absolute flex flex-col items-center justify-center h-full w-full">
-                    <div className="flex flex-col">
-                        <p>
-                            从
-                            <span className="font-bold text-xl">空模板</span>
-                        </p>
-                        <p>
-                            创建
-                            <span className="font-bold text-lg">特定版本</span>
-                            的新实例
-                        </p>
-                        <Button className="m-4 w-min self-center" variant="outline">
-                            打开创建向导
-                        </Button>
-                    </div>
-                </div>
-            </div>
-            <div className="relative rounded bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
-                <div className="absolute -bottom-[30%] -right-[30%] w-full h-full text-zinc-200 dark:text-zinc-950">
-                    <Storefront size="100%" />
-                </div>
-                <div className="absolute flex flex-col items-center justify-center h-full w-full">
-                    <div className="flex flex-col">
-                        <p>
-                            访问
-                            <span className="font-bold text-lg">资源中心</span>
+        <div className="p-[0_1rem_1rem_1rem]">
+            <Card className="w-[12rem] relative">
+                <CardHeader>
+                    <h2 className="text-xl">All The Mods 9</h2>
+                </CardHeader>
+                <CardBody className="p-4">
+                    <Image isBlurred={true}
+                           src="https://media.forgecdn.net/avatars/902/338/638350403793040080.png"/>
+                </CardBody>
+                <CardFooter className="flex flex-col items-stretch">
+                    <div className="py-1 flex flex-col">
+                        <h4 className="text-foreground/60 text-tiny flex flex-row items-center space-x-1">
+                            <span>
+                                <User/>
+                            </span>
+                            <span>ATM Team</span></h4>
 
-                        </p>
-                        <p>
-                            检索并下载
-                            <span className="font-bold text-xl">整合包</span>
-                        </p>
-                        <Button asChild className="m-4 self-end p-0" variant="link">
-                            <Link to="/market">
-                                转到资源中心→
-                            </Link>
+                        <div className="flex flex-row justify-between">
+                            <p className="text-foreground/60 text-tiny flex flex-row items-center space-x-1">
+                            <span>
+                                <Clock/>
+                            </span>
+                                <span>2023.2.4</span>
+                            </p>
+                            <p className="text-foreground/60 text-tiny flex flex-row items-center space-x-1">
+                            <span>
+                                <ArrowLineDown/>
+                            </span>
+                                <span>
+                                2.3M
+                            </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex flex-row space-x-2">
+                        <Button fullWidth={true} size="sm">
+                            查看
+                        </Button>
+                        <Button color="primary" fullWidth={true} size="sm">
+                            添加
                         </Button>
                     </div>
-                </div>
-            </div>
-            <div className="col-span-2 rounded bg-zinc-100 dark:bg-zinc-900 flex flex-col items-center justify-center">
-                <p>Import function not available</p>
-            </div>
+                </CardFooter>
+            </Card>
         </div>
     );
 }

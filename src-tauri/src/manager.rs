@@ -3,26 +3,25 @@ use libtrident::{machine::InstantMachine, profile::Entry};
 // 包含 instant machine，
 // 保存 deploy 和 run 的 engine，并驱动进度，根据进度发布事件给前端
 
-pub struct Manager {
-    machine: InstantMachine,
-    entries: Vec<Entry>,
-}
-
-impl Manager {
-    pub fn builder() -> ManagerBuilder {
-        ManagerBuilder::new()
-    }
-
-    pub fn entries(&self) -> &[Entry] {
-        &self.entries
-    }
-}
-
-pub struct ManagerBuilder {
+pub struct GameManager {
     machine: InstantMachine,
 }
 
-impl ManagerBuilder {
+impl GameManager {
+    pub fn builder() -> GameManagerBuilder {
+        GameManagerBuilder::new()
+    }
+
+    pub fn scan(&self) -> Vec<Entry> {
+        self.machine.scan()
+    }
+}
+
+pub struct GameManagerBuilder {
+    machine: InstantMachine,
+}
+
+impl GameManagerBuilder {
     pub fn new() -> Self {
         #[cfg(debug_assertions)]
         let root = std::env::current_dir().unwrap().join(".trident");
@@ -33,12 +32,11 @@ impl ManagerBuilder {
         }
     }
 
-    pub fn build(self) -> anyhow::Result<Manager> {
+    pub fn build(self) -> anyhow::Result<GameManager> {
         let machine = self.machine;
         let entries = machine.scan();
-        Ok(Manager {
+        Ok(GameManager {
             machine,
-            entries,
         })
     }
 }

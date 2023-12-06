@@ -1,4 +1,4 @@
 # Polymerium
 
-Built with **Tauri** + **Vite** + **React** + **TailwindCSS** + **ShadcnUI**, powered
+Built with **Tauri** + **Vite** + **React** + **TailwindCSS** + **NextUI**, powered
 by [Trident](https://github.com/theGravityLab/trident).

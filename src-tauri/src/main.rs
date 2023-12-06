@@ -4,14 +4,15 @@
 mod manager;
 mod plugins;
 
-use manager::ManagerBuilder;
+use std::sync::Mutex;
+use manager::GameManagerBuilder;
 
 fn main() -> anyhow::Result<()> {
-    let builder = ManagerBuilder::new();
+    let builder = GameManagerBuilder::new();
     let manager = builder.build()?;
 
     tauri::Builder::default()
-        .manage(manager)
+        .manage(Mutex::new(manager))
         .plugin(tauri_plugin_window::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(plugins::instance::init())
