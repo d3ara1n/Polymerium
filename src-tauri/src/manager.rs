@@ -1,3 +1,5 @@
+use std::path::Path;
+use dirs::home_dir;
 use libtrident::{machine::InstantMachine, profile::Entry};
 
 // 包含 instant machine，
@@ -23,10 +25,7 @@ pub struct GameManagerBuilder {
 
 impl GameManagerBuilder {
     pub fn new() -> Self {
-        #[cfg(debug_assertions)]
-        let root = std::env::current_dir().unwrap().join(".trident");
-        #[cfg(not(debug_assertions))]
-        let root = Path::new("~/.trident");
+        let root = home_dir().unwrap().join(".trident");
         Self {
             machine: InstantMachine::new(root),
         }

@@ -3,6 +3,7 @@
 
 mod manager;
 mod plugins;
+mod models;
 
 use std::sync::Mutex;
 use manager::GameManagerBuilder;
@@ -15,6 +16,7 @@ fn main() -> anyhow::Result<()> {
         .manage(Mutex::new(manager))
         .plugin(tauri_plugin_window::init())
         .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(plugins::instance::init())
         .run(tauri::generate_context!())
         .map_err(|e| e.into())

@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, Outlet, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {
     Gear,
     House,
@@ -14,7 +14,6 @@ import {Button, Divider, Link, NextUIProvider} from "@nextui-org/react";
 import {getCurrent} from "@tauri-apps/api/window";
 import WorkshopView from "@/views/workshop.tsx";
 import ConstructionView from "@/views/construction.tsx";
-import InstanceListView from "@/views/instance-list.tsx";
 
 interface NavItem {
     path: string,
@@ -23,7 +22,7 @@ interface NavItem {
     style: IconWeight
 }
 
-function App() {
+function Layout() {
     const navigate = useNavigate();
     const window = getCurrent();
     const upRoutes: NavItem[] = [
@@ -66,9 +65,9 @@ function App() {
         let Icon = item.icon;
         return (
             <Button key={item.path}
-                className={(item.title === null ? "w-12 h-12" : "w-12 h-14") + " " + (location.pathname.startsWith(item.path) ? "bg-zinc-200" : "")}
-                size="sm" isIconOnly={true}
-                variant="light" as={Link} href={item.path}>
+                    className={(item.title === null ? "w-12 h-12" : "w-12 h-14") + " " + (location.pathname.startsWith(item.path) ? "bg-zinc-200" : "")}
+                    size="sm" isIconOnly={true}
+                    variant="light" as={Link} href={item.path}>
                 <div className="flex flex-col items-center">
                     <Icon weight={location.pathname.startsWith(item.path) ? "fill" : item.style}/>
                     <p>{item.title}</p>
@@ -112,15 +111,16 @@ function App() {
                     <div className="relative flex flex-col">
                         <div className="flex-1 order-last h-[calc(100vh-4rem)]">
                             <div className="h-full w-full">
-                                <Routes>
-                                    <Route path="/" element={<Navigate to="/home"/>}/>
-                                    <Route path="/home" element={<ConstructionView/>}/>
-                                    <Route path="/instances" element={<InstanceListView/>}>
-                                        <Route path="/instances/:id" element={<></>}/>
-                                    </Route>
-                                    <Route path="/workshop" element={<WorkshopView/>}/>
-                                    <Route path="/settings" element={<></>}/>
-                                </Routes>
+                                {/*<Routes>*/}
+                                {/*    <Route path="/" element={<Navigate to="/home"/>}/>*/}
+                                {/*    <Route path="/home" element={<ConstructionView/>}/>*/}
+                                {/*    <Route path="/instances" lazy={() => import("@/views/instances.tsx")}>*/}
+                                {/*        <Route path="/instances/:id" element={<></>}/>*/}
+                                {/*    </Route>*/}
+                                {/*    <Route path="/workshop" element={<WorkshopView/>}/>*/}
+                                {/*    <Route path="/settings" element={<></>}/>*/}
+                                {/*</Routes>*/}
+                                <Outlet/>
                             </div>
                         </div>
                         <div
@@ -154,4 +154,4 @@ function App() {
     );
 }
 
-export default App;
+export default Layout;
