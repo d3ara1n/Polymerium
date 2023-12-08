@@ -18,6 +18,7 @@ fn main() -> anyhow::Result<()> {
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(plugins::instance::init())
+        .plugin(plugins::market::init())
         .run(tauri::generate_context!())
         .map_err(|e| e.into())
 }

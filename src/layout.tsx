@@ -33,13 +33,13 @@ function Layout() {
             style: "duotone"
         },
         {
-            path: "/instances",
+            path: "/showroom",
             icon: Package,
             title: "实例",
             style: "duotone"
         },
         {
-            path: "/workshop",
+            path: "/market",
             icon: Storefront,
             title: "资源",
             style: "duotone"
@@ -80,7 +80,7 @@ function Layout() {
     const downButtons = downRoutes.map(ofButton);
     return (
         <NextUIProvider navigate={navigate} className="h-full">
-            <div className="flex flex-row h-full">
+            <div className="flex flex-row h-[100vh] w-[100vw]">
                 <div id="sidebar" className="w-16 flex flex-col bg-white">
                     <div className="flex flex-col h-full items-center">
                         <IconContext.Provider
@@ -88,7 +88,7 @@ function Layout() {
                                 size: 24,
                                 color: "currentColor"
                             }}>
-                            <div className="flex-1 flex flex-col items-center w-full space-y-2 m-2"
+                            <div className="flex-1 flex flex-col items-center w-full space-y-2 m-2 overflow-clip"
                                  data-tauri-drag-region={true}>
                                 <img alt="logo" src="/logo.png" className="w-[3rem]" data-tauri-drag-region={true}/>
                                 {upButtons}
@@ -107,45 +107,27 @@ function Layout() {
                         </IconContext.Provider>
                     </div>
                 </div>
-                <div className="flex-1 h-full shrink-0 overflow-scroll bg-zinc-100">
-                    <div className="relative flex flex-col">
-                        <div className="flex-1 order-last h-[calc(100vh-4rem)]">
-                            <div className="h-full w-full">
-                                {/*<Routes>*/}
-                                {/*    <Route path="/" element={<Navigate to="/home"/>}/>*/}
-                                {/*    <Route path="/home" element={<ConstructionView/>}/>*/}
-                                {/*    <Route path="/instances" lazy={() => import("@/views/instances.tsx")}>*/}
-                                {/*        <Route path="/instances/:id" element={<></>}/>*/}
-                                {/*    </Route>*/}
-                                {/*    <Route path="/workshop" element={<WorkshopView/>}/>*/}
-                                {/*    <Route path="/settings" element={<></>}/>*/}
-                                {/*</Routes>*/}
+                <div className="flex-1 h-full bg-zinc-100 overflow-clip">
+                    <div className="relative h-full flex flex-col">
+                        <div className="flex-1 h-full">
+                            <div className="h-full w-full overflow-auto">
                                 <Outlet/>
                             </div>
                         </div>
-                        <div
-                            className="sticky top-0 h-[4rem] z-[999] backdrop-blur flex flex-row justify-between items-center p-4"
-                            data-tauri-drag-region={true}>
-                            <div>
-                                <p className="flex flex-row items-center select-none">
-                                    <span className="font-bold" data-tauri-drag-region={true}>Polymer</span>
-                                    <span data-tauri-drag-region={true}>ium</span>
-                                </p>
-                            </div>
-                            <div>
-                            </div>
-                            <div className="flex flex-row">
-                                <Button variant="light" isIconOnly={true} onClick={() => window.minimize()}>
-                                    <Minus/>
-                                </Button>
-                                <Button variant="light" isIconOnly={true} onClick={() => window.toggleMaximize()}>
-                                    <Square/>
-                                </Button>
-                                <Button className="data-[hover=true]:bg-red-300" variant="light" isIconOnly={true}
-                                        onClick={() => window.close()}>
-                                    <X/>
-                                </Button>
-                            </div>
+                        <div className="absolute z-[100] top-0 right-0 h-8 flex flex-row-reverse overflow-clip">
+                            <Button className="rounded-none h-8 w-8 data-[hover=true]:bg-red-300" variant="light"
+                                    isIconOnly={true}
+                                    onClick={() => window.close()}>
+                                <X/>
+                            </Button>
+                            <Button className="rounded-none h-8 w-8" variant="light" isIconOnly={true}
+                                    onClick={() => window.toggleMaximize()}>
+                                <Square/>
+                            </Button>
+                            <Button className="rounded-none h-8 w-8" variant="light" isIconOnly={true}
+                                    onClick={() => window.minimize()}>
+                                <Minus/>
+                            </Button>
                         </div>
                     </div>
                 </div>

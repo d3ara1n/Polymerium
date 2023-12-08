@@ -24,6 +24,7 @@ serde = { version = "1.0.193", features = ["derive"] }
 dirs = "5.0"
 ts-rs = "7.0"
 packageurl = "0.3"
+reqwest = "0.11"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

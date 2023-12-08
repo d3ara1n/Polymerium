@@ -2,7 +2,7 @@ import {
     Button,
     Card,
     CardFooter,
-    CardHeader, Divider, Image,
+    CardHeader, Divider, Image, Input,
     Popover,
     PopoverContent,
     PopoverTrigger, Tooltip
@@ -47,17 +47,14 @@ function ofEntry(entry: Summary) {
 }
 
 export async function loader({}) {
-    let res = await invoke("plugin:instance|scan", {});
-    console.log(res);
-    return res;
+    return await invoke("plugin:instance|scan", {});
 }
 
 export function Component() {
     const entries = useLoaderData() as Summary[];
     return (
-        <div className="p-[0_1rem_1rem_1rem]">
+        <div className="p-4 flex flex-col space-y-8">
             <div className="flex flex-row justify-between">
-                <div></div>
                 <div className="flex flex-row space-x-2">
                     <Button color="primary" size="sm" startContent={<Plus/>}>
                         创建
@@ -65,6 +62,14 @@ export function Component() {
                     <Button size="sm" startContent={<ArrowLineDown/>}>
                         导入
                     </Button>
+                </div>
+                <div className="flex flex-row space-x-2">
+                    <Input className="w-[35vw]" size="sm" classNames={
+                        {
+                            inputWrapper: "bg-zinc-50"
+                        }
+                    } labelPlacement="outside" />
+
                     <Popover placement="bottom">
                         <PopoverTrigger>
                             <Button size="sm" isIconOnly={true}>
@@ -76,8 +81,14 @@ export function Component() {
                         </PopoverContent>
                     </Popover>
                 </div>
+                <div className="w-32">
+                    {/*布局占位置*/}
+                </div>
             </div>
-            {entries.map(ofEntry)}
+            <div className="flex-1">
+
+                {entries.map(ofEntry)}
+            </div>
         </div>
     );
 }
