@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style
+        x:Key="GhostButtonStyle"
+        BasedOn="{StaticResource DefaultButtonStyle}"
+        TargetType="Button">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="IconButtonStyle" TargetType="Button">
+        <Style.Setters>
+            <Setter Property="Background" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource HyperlinkButtonBorderThemeBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource HyperlinkButtonBorderThemeThickness}" />
+            <Setter Property="Padding" Value="{ThemeResource ButtonPadding}" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="Common">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Storyboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background"
+                                                                               Storyboard.TargetProperty="Opacity">
+                                                    <LinearDoubleKeyFrame
+                                                        KeyTime="{StaticResource ControlFasterAnimationDuration}"
+                                                        Value="1.0" />
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform"
+                                                                 Storyboard.TargetProperty="ScaleX"
+                                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                                 From="1.05" To="1.0">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <SineEase EasingMode="EaseIn" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform"
+                                                                 Storyboard.TargetProperty="ScaleY"
+                                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                                 From="1.05" To="1.0">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <SineEase EasingMode="EaseIn" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </VisualState.Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="PART_Background.Opacity" Value="1" />
+                                            <Setter Target="PART_Background.Background"
+                                                    Value="{ThemeResource HyperlinkButtonBackgroundPressed}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="PART_Container.Foreground"
+                                                    Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition To="Normal">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="PART_Background"
+                                                    Storyboard.TargetProperty="Opacity">
+                                                    <LinearDoubleKeyFrame
+                                                        KeyTime="{StaticResource ControlFasterAnimationDuration}"
+                                                        Value="0.0" />
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform"
+                                                                 Storyboard.TargetProperty="ScaleX"
+                                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                                 From="1.0" To="0.95" />
+                                                <DoubleAnimation Storyboard.TargetName="PART_Transform"
+                                                                 Storyboard.TargetProperty="ScaleY"
+                                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                                 From="1.0" To="0.95" />
+                                            </Storyboard>
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Border x:Name="PART_Background" Opacity="0" Background="{TemplateBinding Background}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}" RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <ScaleTransform x:Name="PART_Transform" />
+                                </Border.RenderTransform>
+                            </Border>
+                            <ContentPresenter x:Name="PART_Container" Margin="{TemplateBinding Padding}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="PageBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="{ThemeResource LayerFillColorDefaultBrush}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="1,1,0,0"/>
+        <Setter Property="CornerRadius" Value="8,0,0,0"/>
+        <Setter Property="Padding" Value="48"/>
+    </Style>
+
+</ResourceDictionary>

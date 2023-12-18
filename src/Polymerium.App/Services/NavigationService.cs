@@ -1,43 +1,39 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Media.Animation;
+using Polymerium.App.Models;
+using Polymerium.App.ViewModels;
+using Polymerium.App.Views;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Polymerium.App.Services;
-
-public delegate void NavigateHandler(
-    Type view,
-    object? parameter,
-    NavigationTransitionInfo? transitionInfo
-);
-
-public class NavigationService
+namespace Polymerium.App.Services
 {
-    private NavigateHandler? _handler;
-
-    public void Register(NavigateHandler handler)
+    public class NavigationService(ILogger<NavigationService> logger)
     {
-        _handler = handler;
-    }
+        private Action<Type, object?, NavigationTransitionInfo?, bool>? handler;
 
-    public void Navigate<TView>(object? parameter, NavigationTransitionInfo? transitionInfo)
-    {
-        if (_handler != null)
-            _handler(typeof(TView), parameter, transitionInfo);
-        else
-            throw new ArgumentNullException(nameof(_handler));
-    }
+        public void SetHandler(Action<Type, object?, NavigationTransitionInfo?, bool> action) => handler = action;
 
-    public void Navigate<TView>(object? parameter)
-    {
-        Navigate<TView>(parameter, null);
-    }
+        public IEnumerable<NavItem> MainNavMenu = new NavItem[]
+        {
+            new("Home", "/Assets/Icons/House.svg", typeof(HomeView)),
+            new("Instance", "/Assets/Icons/Package.svg", typeof(InstanceListView)),
+            new("Account", "/Assets/Icons/Japanese dolls.svg", typeof(AccountView)),
+            new("Market", "/Assets/Icons/Shopping bags.svg", typeof(MarketView)),
+        };
 
-    public void Navigate<TView>()
-    {
-        Navigate<TView>(null, null);
-    }
+        public IEnumerable<NavItem> SideNavMenu = new NavItem[]
+        {
+            new("Settings", "/Assets/Icons/Gear.svg",typeof(SettingView)),
+            new("Information", "/Assets/Icons/Information.svg", typeof(InformationView))
+        };
 
-    public void Navigate<TView>(NavigationTransitionInfo transitionInfo)
-    {
-        Navigate<TView>(null, transitionInfo);
+        public void Navigate(Type view, object? parameter = null, NavigationTransitionInfo? info = null, bool isRoot = false)
+        {
+            logger.LogInformation("Navigating to {} with {} as {} in {}", view.Name, parameter, isRoot ? "root" : "subpage", info?.GetType().Name ?? "default transition");
+            handler?.Invoke(view, parameter, info, isRoot);
+        }
     }
 }

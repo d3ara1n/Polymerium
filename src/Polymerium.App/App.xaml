@@ -1,6 +1,4 @@
-<!-- Copyright (c) Microsoft Corporation and Contributors. -->
-<!-- Licensed under the MIT License. -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <Application
     x:Class="Polymerium.App.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,24 +6,16 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!-- 上一个版本的资源字典无法找到资源的原因找到了 -->
+                <!-- 资源字典单元素优化会丢失其他资源 -->
+                <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/4811#issuecomment-819916453 -->
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                <ResourceDictionary Source="/Themes/Converters.xaml" />
-                <ResourceDictionary Source="/Themes/Generic.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/Generic.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/Converters.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/AlternativeControls.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/CustomControls.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Light" />
-                <ResourceDictionary x:Key="Dark" />
-            </ResourceDictionary.ThemeDictionaries>
-            <!-- TitleBar Transparent -->
-            <StaticResource x:Key="WindowCaptionBackground" ResourceKey="ControlFillColorTransparentBrush" />
-            <StaticResource x:Key="WindowCaptionBackgroundDisabled" ResourceKey="ControlFillColorTransparentBrush" />
-            <StaticResource x:Key="AppBarButtonSubItemChevronForeground" ResourceKey="ControlFillColorTransparentBrush" />
-            <StaticResource x:Key="AppBarButtonSubItemChevronForegroundPointerOver"
-                            ResourceKey="ControlFillColorTransparentBrush" />
-            <StaticResource x:Key="AppBarButtonSubItemChevronForegroundPressed"
-                            ResourceKey="ControlFillColorTransparentBrush" />
-            <StaticResource x:Key="AppBarButtonSubItemChevronForegroundSubMenuOpened"
-                            ResourceKey="ControlFillColorTransparentBrush" />
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,53 +1,18 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Polymerium.App.Models;
-using Polymerium.App.ViewModels;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
-namespace Polymerium.App.Views;
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
-public sealed partial class HomeView : Page
+namespace Polymerium.App.Views
 {
-    // Using a DependencyProperty as the backing store for IsNewsLoading.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsNewsLoadingProperty = DependencyProperty.Register(
-        nameof(IsNewsLoading),
-        typeof(bool),
-        typeof(HomeView),
-        new PropertyMetadata(false)
-    );
-
-    public HomeView()
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class HomeView : Page
     {
-        ViewModel = App.Current.Provider.GetRequiredService<HomeViewModel>();
-        InitializeComponent();
-    }
-
-    public bool IsNewsLoading
-    {
-        get => (bool)GetValue(IsNewsLoadingProperty);
-        set => SetValue(IsNewsLoadingProperty, value);
-    }
-
-    public HomeViewModel ViewModel { get; }
-
-    public ObservableCollection<HomeNewsItemModel> News { get; } = new();
-
-    private void Page_Loaded(object sender, RoutedEventArgs e)
-    {
-        IsNewsLoading = true;
-        Task.Run(() => ViewModel.LoadNewsAsync(AddNewsHandler));
-    }
-
-    private void AddNewsHandler(HomeNewsItemModel? model)
-    {
-        DispatcherQueue.TryEnqueue(() =>
+        public HomeView()
         {
-            if (model != null)
-                News.Add(model);
-            else
-                IsNewsLoading = false;
-        });
+            this.InitializeComponent();
+        }
     }
 }

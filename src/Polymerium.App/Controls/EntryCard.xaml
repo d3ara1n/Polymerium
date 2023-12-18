@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
+    xmlns:local="using:Polymerium.App.Controls">
+
+    <Style TargetType="local:EntryCard" BasedOn="{StaticResource DefaultEntryCard}"/>
+
+    <Style x:Key="DefaultEntryCard" TargetType="local:EntryCard">
+        <Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}"/>
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="{ThemeResource CardBorderThickness}"/>
+        <Setter Property="Padding" Value="{ThemeResource CardContentPadding}"/>
+        <Setter Property="HeaderPadding" Value="8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:EntryCard">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="Common">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_ScaleTransform" Storyboard.TargetProperty="ScaleX"  To="1" Duration="0:0:0.1" >
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="PART_ScaleTransform" Storyboard.TargetProperty="ScaleY"  To="1" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_ScaleTransform" Storyboard.TargetProperty="ScaleX"  To="1.2" Duration="0:0:0.1" >
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="PART_ScaleTransform" Storyboard.TargetProperty="ScaleY"  To="1.2" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Grid.RowSpan="2">
+                                <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" RenderTransformOrigin="0.5,0.5">
+                                    <ContentPresenter.RenderTransform>
+                                        <ScaleTransform x:Name="PART_ScaleTransform"/>
+                                    </ContentPresenter.RenderTransform>
+                                </ContentPresenter>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Rectangle>
+                                    <Rectangle.Fill>
+                                        <AcrylicBrush/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <ContentPresenter Content="{TemplateBinding Header}" Margin="{TemplateBinding HeaderPadding}"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

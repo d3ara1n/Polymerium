@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Polymerium.App (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Polymerium.App (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
