@@ -19,8 +19,8 @@ namespace Polymerium.App.Services
         public IEnumerable<NavItem> MainNavMenu = new NavItem[]
         {
             new("Home", "/Assets/Icons/House.svg", typeof(HomeView)),
-            new("Instance", "/Assets/Icons/Package.svg", typeof(InstanceListView)),
-            new("Account", "/Assets/Icons/Japanese dolls.svg", typeof(AccountView)),
+            new("Instances", "/Assets/Icons/Package.svg", typeof(InstanceListView)),
+            new("Accounts", "/Assets/Icons/Japanese dolls.svg", typeof(AccountView)),
             new("Market", "/Assets/Icons/Shopping bags.svg", typeof(MarketView)),
         };
 

@@ -5,18 +5,157 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded"  >
-
+    mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="Layouting">
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="628"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="320"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RowContainer.Rows" Value="2"/>
+                        <Setter Target="RowContainer.Columns" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="128"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RowContainer.Rows" Value="4"/>
+                        <Setter Target="RowContainer.Columns" Value="1"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="48">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <toolkit:UniformGrid x:Name="RowContainer" Columns="4" Rows="1" ColumnSpacing="24" RowSpacing="24">
+                <controls:Card>
+                    <controls:Card.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#84fab0"/>
+                            <GradientStop Offset="1" Color="#d4fc79"/>
+                        </LinearGradientBrush>
+                    </controls:Card.Background>
+                    <toolkit:ConstrainedBox AspectRatio="4:3">
+                        <Grid>
+                            <TextBlock Text="Account" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Dearain" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                            <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                                <Viewbox.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        <TranslateTransform X="40" Y="40"/>
+                                    </TransformGroup>
+                                </Viewbox.RenderTransform>
+                                <FontIcon Glyph="&#xE902;"/>
+                            </Viewbox>
+                        </Grid>
+                    </toolkit:ConstrainedBox>
+                </controls:Card>
+                <controls:Card>
+                    <controls:Card.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#a1c4fd"/>
+                            <GradientStop Offset="1" Color="#c2e9fb"/>
+                        </LinearGradientBrush>
+                    </controls:Card.Background>
+                    <toolkit:ConstrainedBox AspectRatio="4:3">
+                        <Grid>
+                            <TextBlock Text="Statistic" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <TextBlock Text="6.3 Hrs" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                            <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                                <Viewbox.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        <TranslateTransform X="40" Y="40"/>
+                                    </TransformGroup>
+                                </Viewbox.RenderTransform>
+                                <FontIcon Glyph="&#xE916;"/>
+                            </Viewbox>
+                        </Grid>
+                    </toolkit:ConstrainedBox>
+                </controls:Card>
+                <controls:Card>
+                    <controls:Card.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#fcb69f"/>
+                            <GradientStop Offset="1" Color="#ffecd2"/>
+                        </LinearGradientBrush>
+                    </controls:Card.Background>
+                    <toolkit:ConstrainedBox AspectRatio="4:3">
+                        <Grid>
+                            <TextBlock Text="Configuration" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Profile1" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                            <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                                <Viewbox.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        <TranslateTransform X="40" Y="40"/>
+                                    </TransformGroup>
+                                </Viewbox.RenderTransform>
+                                <FontIcon Glyph="&#xE81E;"/>
+                            </Viewbox>
+                        </Grid>
+                    </toolkit:ConstrainedBox>
+                </controls:Card>
+                <controls:Card>
+                    <controls:Card.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#a18cd1"/>
+                            <GradientStop Offset="1" Color="#fbc2eb"/>
+                        </LinearGradientBrush>
+                    </controls:Card.Background>
+                    <toolkit:ConstrainedBox AspectRatio="4:3">
+                        <Grid>
+                            <TextBlock Text="Attachments" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <TextBlock Text="114" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                            <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                                <Viewbox.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        <TranslateTransform X="40" Y="40"/>
+                                    </TransformGroup>
+                                </Viewbox.RenderTransform>
+                                <FontIcon Glyph="&#xEA86;"/>
+                            </Viewbox>
+                        </Grid>
+                    </toolkit:ConstrainedBox>
+                </controls:Card>
+            </toolkit:UniformGrid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Grid>
         <Grid Grid.Row="1">
             <Border Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
-                <Grid Margin="10">
-                    <TextBlock Text="Border"/>
+                <Grid Margin="24">
+                    <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <SymbolIcon Symbol="Play"/>
+                            <TextBlock Text="Play"/>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Border>
         </Grid>

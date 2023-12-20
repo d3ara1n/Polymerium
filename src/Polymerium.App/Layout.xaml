@@ -32,8 +32,8 @@
                 </VisualState>
                 <VisualState x:Name="Compact">
                     <VisualState.Setters>
-                        <Setter Target="AccountDetailPanel.Visibility" Value="Collapsed"/>
-                        <Setter Target="AccountAvatar.Width" Value="16"/>
+                        <Setter Target="CountPanel.Visibility" Value="Collapsed"/>
+                        <Setter Target="CountBox.Width" Value="16"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Top">
@@ -100,15 +100,21 @@
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
             <NavigationView.PaneCustomContent>
-                <Button Style="{StaticResource GhostButtonStyle}" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="10" HorizontalContentAlignment="Left">
+                <Grid Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="10">
                     <StackPanel Spacing="10" Orientation="Horizontal">
-                        <toolkit:ImageEx x:Name="AccountAvatar" Width="36" Source="/Assets/Placeholders/default_avatar_face.png"/>
-                        <StackPanel x:Name="AccountDetailPanel">
-                            <TextBlock Text="Hello World"/>
-                            <TextBlock Text="Microsoft"/>
+                        <toolkit:ConstrainedBox x:Name="CountBox" AspectRatio="1:1" Width="40">
+                            <Border BorderThickness="2" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="20">
+                                <TextBlock Text="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </toolkit:ConstrainedBox>
+                        <StackPanel x:Name="CountPanel" VerticalAlignment="Center">
+                            <TextBlock Text="No running instances"/>
+                            <TextBlock>
+                                <Hyperlink>Manage</Hyperlink>
+                            </TextBlock>
                         </StackPanel>
                     </StackPanel>
-                </Button>
+                </Grid>
             </NavigationView.PaneCustomContent>
             <Frame x:Name="Root"/>
         </NavigationView>

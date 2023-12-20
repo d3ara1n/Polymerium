@@ -90,6 +90,18 @@ namespace Polymerium.App
             layout.SetMainMenu(navigation.MainNavMenu);
             layout.SetSideMenu(navigation.SideNavMenu);
             layout.SetHandler((view, info) => navigation.Navigate(view, null, info, true));
+            var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (settings.Values.ContainsKey("Window.Height")
+                && settings.Values["Window.Height"] is int height
+                && settings.Values.ContainsKey("Window.Width")
+                && settings.Values["Window.Width"] is int width)
+            {
+                window.AppWindow.Resize(new Windows.Graphics.SizeInt32(width, height));
+            }
+            else
+            {
+                window.AppWindow.Resize(new Windows.Graphics.SizeInt32(1128, 660));
+            }
             return window;
         }
     }

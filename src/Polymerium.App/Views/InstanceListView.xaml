@@ -47,10 +47,20 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="models:EntryModel">
                         <controls:EntryCard Width="156" Height="156" Padding="0" ToolTipService.ToolTip="{x:Bind Summary}" Command="{x:Bind GotoDetailCommand}" CommandParameter="{x:Bind Key}">
+                            <controls:EntryCard.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Icon="View" Text="View" Command="{x:Bind GotoDetailCommand}" CommandParameter="{x:Bind Key}"/>
+                                    <MenuFlyoutItem Icon="Favorite" Text="Mark"/>
+                                    <MenuFlyoutSeparator/>
+                                    <MenuFlyoutItem Icon="Play" Text="Launch"/>
+                                    <MenuFlyoutSeparator/>
+                                    <MenuFlyoutItem Icon="Delete" Text="Delete" Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"/>
+                                </MenuFlyout>
+                            </controls:EntryCard.ContextFlyout>
                             <toolkit:ImageEx Source="{x:Bind Thumbnail}"/>
                             <controls:EntryCard.Header>
                                 <StackPanel>
-                                    <TextBlock Text="{x:Bind Category}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                    <TextBlock Text="{x:Bind Category,Converter={StaticResource StringUppercaseConverter}}" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.7"/>
                                     <TextBlock Text="{x:Bind Title}" Style="{StaticResource BodyTextBlockStyle}"/>
                                 </StackPanel>
                             </controls:EntryCard.Header>

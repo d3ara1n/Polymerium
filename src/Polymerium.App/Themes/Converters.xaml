@@ -2,7 +2,10 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:Polymerium.App.Converters"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Converters"
     xmlns:local="using:Polymerium.App.Themes">
 
-    
+    <toolkit:FormatStringConverter x:Key="FormatStringConverter"/>
+    <converters:StringUppercaseConverter x:Key="StringUppercaseConverter"/>
 </ResourceDictionary>

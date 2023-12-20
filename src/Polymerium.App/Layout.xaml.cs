@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,8 +36,8 @@ namespace Polymerium.App
 
         public void OnNavigate(Type view, object? parameter, NavigationTransitionInfo? info, bool isRoot)
         {
-            if (isRoot) Root.BackStack.Clear();
             Root.Navigate(view, parameter, info);
+            if (isRoot) Root.BackStack.Clear();
         }
         public void SetMainMenu(IEnumerable<NavItem> menu)
         {

@@ -22,12 +22,17 @@
                             <VisualStateGroup x:Name="Common">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_ScaleTransform" Storyboard.TargetProperty="ScaleX"  To="1" Duration="0:0:0.1" >
+                                        <DoubleAnimation Storyboard.TargetName="PART_ImageScale" Storyboard.TargetProperty="ScaleX"  To="1" Duration="0:0:0.1" >
                                             <DoubleAnimation.EasingFunction>
                                                 <SineEase/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
-                                        <DoubleAnimation Storyboard.TargetName="PART_ScaleTransform" Storyboard.TargetProperty="ScaleY"  To="1" Duration="0:0:0.1">
+                                        <DoubleAnimation Storyboard.TargetName="PART_ImageScale" Storyboard.TargetProperty="ScaleY"  To="1" Duration="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="PART_OverlayScale" Storyboard.TargetProperty="ScaleY"  To="0.0" Duration="0:0:0.1" BeginTime="0:0:0.05">
                                             <DoubleAnimation.EasingFunction>
                                                 <SineEase/>
                                             </DoubleAnimation.EasingFunction>
@@ -36,12 +41,17 @@
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_ScaleTransform" Storyboard.TargetProperty="ScaleX"  To="1.2" Duration="0:0:0.1" >
+                                        <DoubleAnimation Storyboard.TargetName="PART_ImageScale" Storyboard.TargetProperty="ScaleX"  To="1.2" Duration="0:0:0.2" >
                                             <DoubleAnimation.EasingFunction>
                                                 <SineEase/>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
-                                        <DoubleAnimation Storyboard.TargetName="PART_ScaleTransform" Storyboard.TargetProperty="ScaleY"  To="1.2" Duration="0:0:0.1">
+                                        <DoubleAnimation Storyboard.TargetName="PART_ImageScale" Storyboard.TargetProperty="ScaleY"  To="1.2" Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="PART_OverlayScale" Storyboard.TargetProperty="ScaleY"  To="1.0" Duration="0:0:0.2" BeginTime="0:0:0.1">
                                             <DoubleAnimation.EasingFunction>
                                                 <SineEase/>
                                             </DoubleAnimation.EasingFunction>
@@ -58,11 +68,14 @@
                             <Grid Grid.Row="0" Grid.RowSpan="2">
                                 <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" RenderTransformOrigin="0.5,0.5">
                                     <ContentPresenter.RenderTransform>
-                                        <ScaleTransform x:Name="PART_ScaleTransform"/>
+                                        <ScaleTransform x:Name="PART_ImageScale"/>
                                     </ContentPresenter.RenderTransform>
                                 </ContentPresenter>
                             </Grid>
-                            <Grid Grid.Row="1">
+                            <Grid Grid.Row="1" RenderTransformOrigin="0.5,1.0">
+                                <Grid.RenderTransform>
+                                    <ScaleTransform x:Name="PART_OverlayScale" ScaleY="0"/>
+                                </Grid.RenderTransform>
                                 <Rectangle>
                                     <Rectangle.Fill>
                                         <AcrylicBrush/>
