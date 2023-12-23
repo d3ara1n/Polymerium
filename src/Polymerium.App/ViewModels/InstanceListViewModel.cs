@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -26,7 +27,7 @@ namespace Polymerium.App.ViewModels
             GotoDetailCommand = new RelayCommand<string>(GotoDetail);
 
             _navigation = navigation;
-            Entries = entryManager.Entries.Select(x => new EntryModel(x.Key, x.Name, ExtractCategory(x.Reference), x.Thumbnail?.AbsoluteUri ?? string.Empty, x.Summary, x.IsLiked, GotoDetailCommand));
+            Entries = entryManager.Entries.Select(x => new EntryModel(x.Key, x.Name, ExtractCategory(x.Reference), x.Thumbnail?.AbsoluteUri ?? string.Empty, x.IsLiked, GotoDetailCommand));
         }
 
         private string ExtractCategory(string? purl)

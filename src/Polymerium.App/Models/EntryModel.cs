@@ -7,5 +7,5 @@ using System.Windows.Input;
 
 namespace Polymerium.App.Models
 {
-    public record EntryModel(string Key, string Title, string Category, string Thumbnail, string Summary,bool IsLiked, ICommand GotoDetailCommand);
+    public record EntryModel(string Key, string Title, string Category, string Thumbnail,bool IsLiked, ICommand GotoDetailCommand);
 }

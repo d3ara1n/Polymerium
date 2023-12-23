@@ -8,5 +8,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ms-appx:///Controls/Card.xaml"/>
         <ResourceDictionary Source="ms-appx:///Controls/EntryCard.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Controls/IconLabel.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -46,7 +46,7 @@
             <ItemsControl ItemsSource="{x:Bind ViewModel.Entries}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="models:EntryModel">
-                        <controls:EntryCard Width="156" Height="156" Padding="0" ToolTipService.ToolTip="{x:Bind Summary}" Command="{x:Bind GotoDetailCommand}" CommandParameter="{x:Bind Key}">
+                        <controls:EntryCard Width="156" Height="156" Padding="0" Command="{x:Bind GotoDetailCommand}" CommandParameter="{x:Bind Key}">
                             <controls:EntryCard.ContextFlyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem Icon="View" Text="View" Command="{x:Bind GotoDetailCommand}" CommandParameter="{x:Bind Key}"/>

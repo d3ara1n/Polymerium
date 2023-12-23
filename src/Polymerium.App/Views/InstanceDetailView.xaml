@@ -9,151 +9,158 @@
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+    <Page.Resources>
+        <x:Double x:Key="SmallGap">4</x:Double>
+        <x:Double x:Key="BigGap">12</x:Double>
+    </Page.Resources>
     <Grid>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="Layouting">
-                <VisualState x:Name="Wide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="628"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState x:Name="Normal">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="320"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="RowContainer.Rows" Value="2"/>
-                        <Setter Target="RowContainer.Columns" Value="2"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Narrow">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="128"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="RowContainer.Rows" Value="4"/>
-                        <Setter Target="RowContainer.Columns" Value="1"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="48">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <toolkit:UniformGrid x:Name="RowContainer" Columns="4" Rows="1" ColumnSpacing="24" RowSpacing="24">
-                <controls:Card>
-                    <controls:Card.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Offset="0" Color="#84fab0"/>
-                            <GradientStop Offset="1" Color="#d4fc79"/>
-                        </LinearGradientBrush>
-                    </controls:Card.Background>
-                    <toolkit:ConstrainedBox AspectRatio="4:3">
-                        <Grid>
-                            <TextBlock Text="Account" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                            <TextBlock Text="Dearain" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                            <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
-                                <Viewbox.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-                                        <TranslateTransform X="40" Y="40"/>
-                                    </TransformGroup>
-                                </Viewbox.RenderTransform>
-                                <FontIcon Glyph="&#xE902;"/>
-                            </Viewbox>
-                        </Grid>
-                    </toolkit:ConstrainedBox>
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
+            <StackPanel Margin="48" Spacing="12">
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource BigGap}">
+                    <Border>
+                        <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/902/338/638350403793040080.png" Width="64" CornerRadius="6"/>
+                    </Border>
+                    <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="All The Mods 9"/>
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource BigGap}">
+                        <controls:IconLabel VerticalAlignment="Bottom">
+                            <controls:IconLabel.Icon>
+                                <FontIcon Glyph="&#xE7FC;" FontSize="30"/>
+                            </controls:IconLabel.Icon>
+                            <controls:IconLabel.Header>
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TYPE"/>
+                            </controls:IconLabel.Header>
+                            <TextBlock Text="Vanilla"/>
+                        </controls:IconLabel>
+                        <controls:IconLabel VerticalAlignment="Bottom">
+                            <controls:IconLabel.Icon>
+                                <FontIcon Glyph="&#xE734;" FontSize="30"/>
+                            </controls:IconLabel.Icon>
+                            <controls:IconLabel.Header>
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="VERSION"/>
+                            </controls:IconLabel.Header>
+                            <TextBlock Text="1.20.1"/>
+                        </controls:IconLabel>
+                        <controls:IconLabel VerticalAlignment="Bottom">
+                            <controls:IconLabel.Icon>
+                                <FontIcon Glyph="&#xE787;" FontSize="30"/>
+                            </controls:IconLabel.Icon>
+                            <controls:IconLabel.Header>
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="LASTPLAY"/>
+                            </controls:IconLabel.Header>
+                            <TextBlock Text="Yesterday"/>
+                        </controls:IconLabel>
+                        <controls:IconLabel VerticalAlignment="Bottom">
+                            <controls:IconLabel.Icon>
+                                <FontIcon Glyph="&#xE823;" FontSize="30"/>
+                            </controls:IconLabel.Icon>
+                            <controls:IconLabel.Header>
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="PLAYTIME"/>
+                            </controls:IconLabel.Header>
+                            <TextBlock Text="6.3 Hrs"/>
+                        </controls:IconLabel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <Button>
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Configuration"/>
+                                    <MenuFlyoutItem Text="Metadata"/>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                            <SymbolIcon Symbol="Setting"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <controls:Card Padding="4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                            <HyperlinkButton IsEnabled="False" Content="Mods"/>
+                            <HyperlinkButton IsEnabled="False" Content="Resource Packs"/>
+                            <HyperlinkButton IsEnabled="False" Content="Shader Packs"/>
+                            <HyperlinkButton IsEnabled="False" Content="Saves"/>
+                        </StackPanel>
+                        <HyperlinkButton Grid.Column="1">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                <FontIcon Glyph="&#xE8A7;" FontSize="16"/>
+                                <TextBlock Text="Open Folder"/>
+                            </StackPanel>
+                        </HyperlinkButton>
+                    </Grid>
                 </controls:Card>
-                <controls:Card>
-                    <controls:Card.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Offset="0" Color="#a1c4fd"/>
-                            <GradientStop Offset="1" Color="#c2e9fb"/>
-                        </LinearGradientBrush>
-                    </controls:Card.Background>
-                    <toolkit:ConstrainedBox AspectRatio="4:3">
-                        <Grid>
-                            <TextBlock Text="Statistic" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                            <TextBlock Text="6.3 Hrs" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                            <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
-                                <Viewbox.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-                                        <TranslateTransform X="40" Y="40"/>
-                                    </TransformGroup>
-                                </Viewbox.RenderTransform>
-                                <FontIcon Glyph="&#xE916;"/>
-                            </Viewbox>
-                        </Grid>
-                    </toolkit:ConstrainedBox>
-                </controls:Card>
-                <controls:Card>
-                    <controls:Card.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Offset="0" Color="#fcb69f"/>
-                            <GradientStop Offset="1" Color="#ffecd2"/>
-                        </LinearGradientBrush>
-                    </controls:Card.Background>
-                    <toolkit:ConstrainedBox AspectRatio="4:3">
-                        <Grid>
-                            <TextBlock Text="Configuration" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                            <TextBlock Text="Profile1" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                            <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
-                                <Viewbox.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-                                        <TranslateTransform X="40" Y="40"/>
-                                    </TransformGroup>
-                                </Viewbox.RenderTransform>
-                                <FontIcon Glyph="&#xE81E;"/>
-                            </Viewbox>
-                        </Grid>
-                    </toolkit:ConstrainedBox>
-                </controls:Card>
-                <controls:Card>
-                    <controls:Card.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Offset="0" Color="#a18cd1"/>
-                            <GradientStop Offset="1" Color="#fbc2eb"/>
-                        </LinearGradientBrush>
-                    </controls:Card.Background>
-                    <toolkit:ConstrainedBox AspectRatio="4:3">
-                        <Grid>
-                            <TextBlock Text="Attachments" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                            <TextBlock Text="114" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                            <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
-                                <Viewbox.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-                                        <TranslateTransform X="40" Y="40"/>
-                                    </TransformGroup>
-                                </Viewbox.RenderTransform>
-                                <FontIcon Glyph="&#xEA86;"/>
-                            </Viewbox>
-                        </Grid>
-                    </toolkit:ConstrainedBox>
-                </controls:Card>
-            </toolkit:UniformGrid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-            </Grid>
-        </Grid>
+                <toolkit:ConstrainedBox AspectRatio="8:3">
+                    <Grid ColumnSpacing="{StaticResource BigGap}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <controls:Card Grid.Column="0" Grid.ColumnSpan="2">
+                            <Grid ColumnSpacing="{StaticResource BigGap}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="1"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Spacing="{StaticResource BigGap}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                        <FontIcon Glyph="&#xE70B;" FontSize="16"/>
+                                        <TextBlock Text="Note"/>
+                                    </StackPanel>
+                                    <TextBox AcceptsReturn="True"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1,0,0,0"/>
+                                <toolkit:ConstrainedBox Grid.Column="2" AspectRatio="2:3">
+                                    <StackPanel Spacing="{StaticResource BigGap}">
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                            <FontIcon Glyph="&#xE9D5;" FontSize="16"/>
+                                            <TextBlock Text="Todo"/>
+                                        </StackPanel>
+                                        <ListView>
+                                            <ListViewItem>Buy some coffee</ListViewItem>
+                                        </ListView>
+                                    </StackPanel>
+                                </toolkit:ConstrainedBox>
+                            </Grid>
+                        </controls:Card>
+                        <controls:Card Grid.Column="2"/>
+                    </Grid>
+                </toolkit:ConstrainedBox>
+            </StackPanel>
+        </ScrollViewer>
         <Grid Grid.Row="1">
             <Border Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
-                <Grid Margin="24">
+                <Grid Margin="12">
+                    <HyperlinkButton HorizontalAlignment="Left">
+                        <Grid ColumnSpacing="{StaticResource BigGap}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <toolkit:ImageEx Grid.Column="0" Source="/Assets/Placeholders/default_avatar_face.png" Width="36"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Dearain"/>
+                                <TextBlock Text="Microsoft"/>
+                            </StackPanel>
+                        </Grid>
+                    </HyperlinkButton>
                     <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right">
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <SymbolIcon Symbol="Play"/>
-                            <TextBlock Text="Play"/>
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource BigGap}">
+                            <Image Source="/Assets/Icons/Rocket.svg" Width="16"/>
+                            <TextBlock Text="PLAY"/>
                         </StackPanel>
                     </Button>
                 </Grid>

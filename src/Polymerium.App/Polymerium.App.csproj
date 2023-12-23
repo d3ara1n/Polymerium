@@ -21,6 +21,7 @@
   <ItemGroup>
     <None Remove="Controls\Card.xaml" />
     <None Remove="Controls\EntryCard.xaml" />
+    <None Remove="Controls\IconLabel.xaml" />
     <None Remove="Themes\Generic.xaml" />
     <None Remove="Views\InstanceDetailView.xaml" />
   </ItemGroup>
@@ -37,6 +38,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.0.230907" />
     <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
@@ -69,6 +71,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\IconLabel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Themes\Generic.xaml">

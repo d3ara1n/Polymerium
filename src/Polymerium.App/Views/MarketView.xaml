@@ -4,11 +4,38 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Views"
+    xmlns:lab="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0.0,0.0" EndPoint="1.0,1.0">
+                    <GradientStop Offset="0" Color="#fda085"/>
+                    <GradientStop Offset="1" Color="#f6d365"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <StackPanel Margin="48" Spacing="10">
+                <Grid>
+                    <lab:Segmented HorizontalAlignment="Left" Style="{StaticResource PivotSegmentedStyle}" SelectedIndex="0" SelectionMode="Single">
+                        <lab:SegmentedItem Content="CURSEFORGE"/>
+                        <lab:SegmentedItem Content="MODRINTH"/>
+                    </lab:Segmented>
+                </Grid>
+                <AutoSuggestBox QueryIcon="Find"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
