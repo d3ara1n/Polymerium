@@ -1,21 +1,15 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Polymerium.App.Controls
 {
-    public class EntryCard: Button
+    public class EntryCard : Button
     {
 
 
         public object Header
         {
-            get { return (object)GetValue(HeaderProperty); }
+            get { return GetValue(HeaderProperty); }
             set { SetValue(HeaderProperty, value); }
         }
 
@@ -33,7 +27,7 @@ namespace Polymerium.App.Controls
 
         // Using a DependencyProperty as the backing store for HeaderPadding.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HeaderPaddingProperty =
-            DependencyProperty.Register("HeaderPadding", typeof(Thickness), typeof(EntryCard), new PropertyMetadata(new Thickness(0,0,0,0)));
+            DependencyProperty.Register("HeaderPadding", typeof(Thickness), typeof(EntryCard), new PropertyMetadata(new Thickness(0, 0, 0, 0)));
 
 
 

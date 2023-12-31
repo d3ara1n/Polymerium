@@ -1,16 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
+using Polly;
 using Polymerium.App.Extensions;
 using Polymerium.App.Services;
-using Polymerium.Trident.Managers;
-using Polymerium.Trident;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Polymerium.App.ViewModels;
-using Polymerium.App.Views;
-using Microsoft.Extensions.Logging;
+using Polymerium.Trident.Managers;
+using Polymerium.Trident.Repositories;
+using System;
+using System.IO;
+using System.Reflection;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -50,6 +50,14 @@ namespace Polymerium.App
                     .AddDebug()
                     .AddConsole();
                 })
+                .AddMemoryCache()
+                .AddHttpClient()
+                .ConfigureHttpClientDefaults(builder => builder.ConfigureHttpClient(client =>
+                    {
+                        client.DefaultRequestHeaders.Add("Accept", "application/json");
+                        client.DefaultRequestHeaders.Add("User-Agent", $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+                    })
+                    .AddTransientHttpErrorPolicy(builder => builder.RetryAsync()))
                 .AddNavigation();
 
             services
@@ -65,7 +73,12 @@ namespace Polymerium.App
                 .AddViewModel<AccountViewModel>()
                 .AddViewModel<MarketViewModel>()
                 .AddViewModel<SettingViewModel>()
-                .AddViewModel<InformationViewModel>();
+                .AddViewModel<InformationViewModel>()
+                .AddViewModel<ModpackViewModel>();
+
+            services
+                .AddRepository<CurseForgeRepository>()
+                .AddRepository<ModrinthRepository>();
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -90,18 +103,18 @@ namespace Polymerium.App
             layout.SetMainMenu(navigation.MainNavMenu);
             layout.SetSideMenu(navigation.SideNavMenu);
             layout.SetHandler((view, info) => navigation.Navigate(view, null, info, true));
-            var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            if (settings.Values.ContainsKey("Window.Height")
-                && settings.Values["Window.Height"] is int height
-                && settings.Values.ContainsKey("Window.Width")
-                && settings.Values["Window.Width"] is int width)
-            {
-                window.AppWindow.Resize(new Windows.Graphics.SizeInt32(width, height));
-            }
-            else
-            {
-                window.AppWindow.Resize(new Windows.Graphics.SizeInt32(1128, 660));
-            }
+            //var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            //if (settings.Values.ContainsKey("Window.Height")
+            //    && settings.Values["Window.Height"] is int height
+            //    && settings.Values.ContainsKey("Window.Width")
+            //    && settings.Values["Window.Width"] is int width)
+            //{
+            //    window.AppWindow.Resize(new Windows.Graphics.SizeInt32(width, height));
+            //}
+            //else
+            //{
+            //    window.AppWindow.Resize(new Windows.Graphics.SizeInt32(1128, 660));
+            //}
             return window;
         }
     }

@@ -5,6 +5,7 @@ using Polymerium.Trident.Data;
 using Polymerium.Trident.Managers;
 using System;
 using System.Text.Json;
+using Trident.Abstractions.Repositories;
 
 namespace Polymerium.App.Extensions
 {
@@ -12,12 +13,12 @@ namespace Polymerium.App.Extensions
     {
         public static IServiceCollection AddNavigation(this IServiceCollection services)
         {
-            services.AddSingleton<NavigationService>();  
+            services.AddSingleton<NavigationService>();
             return services;
         }
 
         public static IServiceCollection AddViewModel<TViewModel>(this IServiceCollection services)
-            where TViewModel: ViewModelBase
+            where TViewModel : ViewModelBase
         {
             services.AddScoped<TViewModel>();
             return services;
@@ -40,6 +41,13 @@ namespace Polymerium.App.Extensions
             configure(options);
             //options.MakeReadOnly();
             services.AddSingleton(options);
+            return services;
+        }
+
+        public static IServiceCollection AddRepository<T>(this IServiceCollection services)
+        where T : class, IRepository
+        {
+            services.AddTransient<IRepository, T>();
             return services;
         }
     }

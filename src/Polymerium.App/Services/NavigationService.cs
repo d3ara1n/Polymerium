@@ -1,12 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
-using Polymerium.App.ViewModels;
 using Polymerium.App.Views;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Polymerium.App.Services
 {

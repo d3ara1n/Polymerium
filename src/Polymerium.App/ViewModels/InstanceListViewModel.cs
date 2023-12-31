@@ -1,16 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Trident;
 using Polymerium.Trident.Managers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Polymerium.App.ViewModels
 {

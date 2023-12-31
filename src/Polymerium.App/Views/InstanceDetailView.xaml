@@ -9,17 +9,13 @@
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
-    <Page.Resources>
-        <x:Double x:Key="SmallGap">4</x:Double>
-        <x:Double x:Key="BigGap">12</x:Double>
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
-            <StackPanel Margin="48" Spacing="12">
+            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource BigGap}">
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource BigGap}">
                     <Border>
                         <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/902/338/638350403793040080.png" Width="64" CornerRadius="6"/>

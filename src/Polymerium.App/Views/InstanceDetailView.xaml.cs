@@ -1,9 +1,5 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels;
 
@@ -17,14 +13,12 @@ namespace Polymerium.App.Views
     /// </summary>
     public sealed partial class InstanceDetailView : Page
     {
-        public InstanceDetailViewModel ViewModel { get; }
+        public InstanceDetailViewModel ViewModel { get; } = App.ViewModel<InstanceDetailViewModel>();
 
         private object? parameter;
 
         public InstanceDetailView()
         {
-            ViewModel = App.ViewModel<InstanceDetailViewModel>();
-
             this.InitializeComponent();
         }
 

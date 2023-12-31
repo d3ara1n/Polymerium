@@ -4,38 +4,81 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Views"
+    xmlns:models="using:Polymerium.App.Models"
     xmlns:lab="using:CommunityToolkit.WinUI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0.0,0.0" EndPoint="1.0,1.0">
-                    <GradientStop Offset="0" Color="#fda085"/>
-                    <GradientStop Offset="1" Color="#f6d365"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-            <StackPanel Margin="48" Spacing="10">
+        <Grid x:Name="HeaderPane" Grid.Row="0">
+            <Grid.BackgroundTransition>
+                <BrushTransition/>
+            </Grid.BackgroundTransition>
+            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource BigGap}">
                 <Grid>
-                    <lab:Segmented HorizontalAlignment="Left" Style="{StaticResource PivotSegmentedStyle}" SelectedIndex="0" SelectionMode="Single">
-                        <lab:SegmentedItem Content="CURSEFORGE"/>
-                        <lab:SegmentedItem Content="MODRINTH"/>
-                    </lab:Segmented>
+                    <Pivot x:Name="RepositorySelector" ItemsSource="{x:Bind ViewModel.Repositories}" SelectionChanged="RepositorySelector_SelectionChanged">
+                        <Pivot.HeaderTemplate>
+                            <DataTemplate x:DataType="models:RepositoryModel">
+                                <TextBlock Text="{x:Bind Inner.Label,Converter={StaticResource StringUppercaseConverter}}"/>
+                            </DataTemplate>
+                        </Pivot.HeaderTemplate>
+                        <Pivot.ItemTemplate>
+                            <DataTemplate>
+                                <Grid/>
+                            </DataTemplate>
+                        </Pivot.ItemTemplate>
+                    </Pivot>
                 </Grid>
-                <AutoSuggestBox QueryIcon="Find"/>
+                <AutoSuggestBox x:Name="SearchBox" QueryIcon="Find" QuerySubmitted="SearchBox_QuerySubmitted"/>
             </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ListView x:Name="ExhibitList" IncrementalLoadingTrigger="Edge" SelectionMode="None" Padding="16">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ModpackModel">
+                        <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource ControlContentMargin}" HorizontalContentAlignment="Stretch" Margin="4" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Command="{x:Bind GotoModpackViewCommand}" CommandParameter="{x:Bind}">
+                            <Grid ColumnSpacing="{StaticResource BigGap}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="1"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="64"/>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                                    <TextBlock Text="{x:Bind Inner.ProjectName}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                                    <TextBlock Text="{x:Bind Inner.Summary}" TextWrapping="Wrap" MaxLines="2"/>
+                                </StackPanel>
+                                <Border Grid.Column="2" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"/>
+                                <StackPanel Grid.Column="3" Spacing="{StaticResource SmallGap}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                        <FontIcon Glyph="&#xE77B;" FontSize="12"/>
+                                        <TextBlock Text="{x:Bind Inner.Author}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                        <FontIcon Glyph="&#xEC92;" FontSize="12"/>
+                                        <TextBlock Text="{x:Bind UpdatedAt}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                        <FontIcon Glyph="&#xE896;" FontSize="12"/>
+                                        <TextBlock Text="{x:Bind DownloadCount}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </HyperlinkButton>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
         </Grid>
     </Grid>
 </Page>

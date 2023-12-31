@@ -17,7 +17,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Margin="48">
+    <Grid Margin="{StaticResource PageContentMargin}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="4*"/>

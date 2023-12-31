@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Microsoft.UI.Xaml;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
+using Polymerium.App.Models;
+using Polymerium.App.ViewModels;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,9 +14,35 @@ namespace Polymerium.App.Views
     /// </summary>
     public sealed partial class MarketView : Page
     {
+        public MarketViewModel ViewModel { get; } = App.ViewModel<MarketViewModel>();
+
         public MarketView()
         {
             this.InitializeComponent();
+        }
+
+        private void RepositorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var first = (RepositoryModel?)e.AddedItems.FirstOrDefault();
+            if (first != null)
+            {
+                HeaderPane.Background = first.Background;
+
+                Submit(first, SearchBox.Text);
+            }
+        }
+
+        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            Submit((RepositoryModel)RepositorySelector.SelectedItem, args.QueryText);
+        }
+
+        private void Submit(RepositoryModel repository, string query)
+        {
+            ExhibitList.ItemsSource = new IncrementalLoadingCollection<IncrementalFactorySource<ModpackModel>, ModpackModel>(new IncrementalFactorySource<ModpackModel>(async (page, limit, token) =>
+            {
+                return await ViewModel.SearchAsync(repository.Inner, query, page, limit, token);
+            }), 10);
         }
     }
 }

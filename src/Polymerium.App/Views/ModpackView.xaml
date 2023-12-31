@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Polymerium.App.Views.ModpackView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Polymerium.App.Views"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:lab="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Margin="{StaticResource PageContentMargin}" ColumnSpacing="{StaticResource BigGap}" RowSpacing="{StaticResource BigGap}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:Card Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <toolkit:DockPanel>
+                <toolkit:ImageEx toolkit:DockPanel.Dock="Left" Source="https://media.forgecdn.net/avatars/892/869/638335502317050699.png" Width="58"/>
+                <StackPanel Margin="12,0" VerticalAlignment="Center">
+                    <TextBlock Text="Fear Nightfall" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <FontIcon Glyph="&#xE77B;" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                        <TextBlock Text="LunaPixelStudios" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                        <FontIcon Glyph="&#xEC92;" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                        <TextBlock Text="Yesterday" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                        <FontIcon Glyph="&#xE896;" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                        <TextBlock Text="1.3M" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                    </StackPanel>
+                </StackPanel>
+                <Grid toolkit:DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <HyperlinkButton>
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                            <FontIcon Glyph="&#xE8A7;" FontSize="12"/>
+                            <TextBlock Text="CurseForge"/>
+                        </StackPanel>
+                    </HyperlinkButton>
+                </Grid>
+            </toolkit:DockPanel>
+        </controls:Card>
+        <controls:Card Grid.Row="1" Grid.Column="0">
+            <ScrollViewer>
+                <StackPanel>
+                    <toolkit:ConstrainedBox AspectRatio="32:9" VerticalAlignment="Stretch" HorizontalAlignment="Center">
+                        <FlipView x:Name="Gallery">
+                            <toolkit:ImageEx Source="https://media.forgecdn.net/attachments/289/977/crop-fields.png"/>
+                        </FlipView>
+                    </toolkit:ConstrainedBox>
+                </StackPanel>
+            </ScrollViewer>
+        </controls:Card>
+        <controls:Card Grid.Row="1" Grid.Column="1" Width="256">
+            <toolkit:DockPanel>
+                <lab:Segmented x:Name="SubmenuSelector" toolkit:DockPanel.Dock="Top" HorizontalAlignment="Center" SelectionMode="Single" SelectedIndex="0" SelectedValuePath="Tag">
+                    <lab:SegmentedItem Content="Versions" Tag="CASE_VERSIONS"/>
+                    <lab:SegmentedItem Content="Information" Tag="CASE_INFORMATION"/>
+                </lab:Segmented>
+                <toolkit:SwitchPresenter Value="{x:Bind SubmenuSelector.SelectedValue, Mode=OneWay}" Margin="0,12,0,0">
+                    <toolkit:Case Value="CASE_VERSIONS">
+                        <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
+                            <ItemsControl>
+                                <HyperlinkButton>
+                                    <StackPanel>
+                                        <TextBlock Text="Prominence II [FABRIC] v2.3.5"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                            <Grid>
+                                                <Rectangle Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}" Width="20" Height="20"/>
+                                                <TextBlock Text="R" Foreground="{ThemeResource SystemFillColorSuccessBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                            <TextBlock Text="1.20.1"/>
+                                            <TextBlock Text="·"/>
+                                            <TextBlock Text="Fabric"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </HyperlinkButton>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </toolkit:Case>
+                    <toolkit:Case Value="CASE_INFORMATION">
+                        <TextBlock Text="Info"/>
+                    </toolkit:Case>
+                </toolkit:SwitchPresenter>
+            </toolkit:DockPanel>
+        </controls:Card>
+    </Grid>
+</Page>

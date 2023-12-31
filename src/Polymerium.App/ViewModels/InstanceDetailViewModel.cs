@@ -1,28 +1,32 @@
-﻿using Polymerium.Trident;
+﻿using Polymerium.App.Services;
+using Polymerium.Trident;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Managers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels
 {
     using Model = (Entry, Handle<Profile>);
 
-    public class InstanceDetailViewModel(EntryManager entryManager) : ViewModelBase
+    public class InstanceDetailViewModel : ViewModelBase
     {
+        private EntryManager _entryManager;
+
+        public InstanceDetailViewModel(EntryManager entryManager, NavigationService navigation)
+        {
+            _entryManager = entryManager;
+        }
+
         public Model? Model { get; private set; }
 
         public override bool OnAttached(object? maybeKey)
         {
             if (maybeKey is string key && key != null)
             {
-                var entry = entryManager.Entries.FirstOrDefault(x => x.Key == key);
+                var entry = _entryManager.Entries.FirstOrDefault(x => x.Key == key);
                 if (entry == null) return false;
-                var profile = entryManager.GetProfile(key);
+                var profile = _entryManager.GetProfile(key);
                 if (profile == null) return false;
                 Model = (entry, profile);
                 return true;
