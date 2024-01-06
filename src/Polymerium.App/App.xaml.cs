@@ -77,8 +77,7 @@ namespace Polymerium.App
                 .AddViewModel<ModpackViewModel>();
 
             services
-                .AddRepository<CurseForgeRepository>()
-                .AddRepository<ModrinthRepository>();
+                .AddRepository<CurseForgeRepository>();
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)

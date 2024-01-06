@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.Eternal
 {
-    public struct EternalModFileHash
+    public struct EternalFileHash
     {
         public string Value { get; set; }
 

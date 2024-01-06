@@ -7,5 +7,9 @@
     xmlns:local="using:Polymerium.App.Themes">
 
     <toolkit:FormatStringConverter x:Key="FormatStringConverter"/>
+    <toolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <toolkit:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter"/>
     <converters:StringUppercaseConverter x:Key="StringUppercaseConverter"/>
+    <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter"/>
+
 </ResourceDictionary>

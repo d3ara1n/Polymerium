@@ -4,6 +4,7 @@ public enum ResourceError
 {
     Unknown,
     NotFound,
+    InvalidParameter,
     BadNetwork,
     InvalidFormat,
     Unsupported,

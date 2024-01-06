@@ -1,10 +1,15 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using DotNext;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using PackageUrl;
 using Polymerium.Trident.Models.Eternal;
+using Polymerium.Trident.Repositories;
+using System.Linq;
 using System.Net.Http.Json;
 using System.Web;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
+using static Trident.Abstractions.Metadata.Layer;
 
 namespace Polymerium.Trident.Helpers
 {
@@ -12,6 +17,7 @@ namespace Polymerium.Trident.Helpers
     {
         private const string API_KEY = "$2a$10$cjd5uExXA6oMi3lSnylNC.xsFJiujI8uQ/pV1eGltFe/hlDO2mjzm";
         private const string ENDPOINT = "https://api.curseforge.com/v1";
+        private const string PROJECT_URL = "https://www.curseforge.com/minecraft/{0}/{1}";
 
         private const uint GAME_ID = 432;
         private const uint CLASSID_MODPACK = 4471;
@@ -21,16 +27,29 @@ namespace Polymerium.Trident.Helpers
 
         public static readonly IReadOnlyDictionary<string, string> MODLOADERS_MAPPINGS = new Dictionary<string, string>
         {
-            { "Forge", Profile.Loader.COMPONENT_FORGE },
-            { "NeoForge", Profile.Loader.COMPONENT_NEOFORGE },
-            { "Fabric", Profile.Loader.COMPONENT_FABRIC },
-            { "Quilt", Profile.Loader.COMPONENT_QUILT }
+            { "Forge", Loader.COMPONENT_FORGE },
+            { "NeoForge", Loader.COMPONENT_NEOFORGE },
+            { "Fabric", Loader.COMPONENT_FABRIC },
+            { "Quilt", Loader.COMPONENT_QUILT }
         }.AsReadOnly();
 
         public class ResponseWrapper<T>
         {
             public T? Data { get; set; }
         }
+
+        public static string MakePurl(uint projectId, uint? versionId = null)
+            => new PackageURL(RepositoryLabels.CURSEFORGE, null, projectId.ToString(), versionId?.ToString(), null, null).ToString();
+
+        public static string GetUrlTypeStringFromKind(ResourceKind kind) => kind switch
+        {
+            ResourceKind.Modpack => "modpacks",
+            ResourceKind.Mod => "mods",
+            ResourceKind.World => "worlds",
+            ResourceKind.ResourcePack => "texture-packs",
+            ResourceKind.ShaderPack => "shaders",
+            _ => "unknown"
+        };
 
         public static ResourceKind GetResourceTypeFromClassId(uint classId)
         {
@@ -47,38 +66,69 @@ namespace Polymerium.Trident.Helpers
         }
 
         private static async Task<T?> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory, string service, IMemoryCache cache, CancellationToken token = default)
-        where T : struct
+            where T : struct
         {
             if (token.IsCancellationRequested)
                 return null;
             return await cache.GetOrCreateAsync(
-                service,
-                async entry =>
+            service,
+            async entry =>
+            {
+                var found = false;
+                T? result = default;
+                var client = factory.CreateClient();
+                client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
+                try
                 {
-                    var found = false;
-                    T? result = default;
-                    var client = factory.CreateClient();
-                    client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
-                    try
+                    var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(ENDPOINT + service, token);
+                    if (response?.Data != null)
                     {
-                        var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(ENDPOINT + service, token);
-                        if (response?.Data != null)
-                        {
-                            result = response.Data;
-                            found = true;
-                        }
+                        result = response.Data;
+                        found = true;
                     }
-                    catch (Exception e)
-                    {
-                        logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
-                    }
-                    entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
-                    return result;
                 }
+                catch (Exception e)
+                {
+                    logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
+                }
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
+                return result;
+            }
             );
         }
 
-        public static async Task<IEnumerable<T>> GetResourcesAsync<T>(ILogger logger, IHttpClientFactory factory, string service, IMemoryCache cache, CancellationToken token = default)
+        private static async Task<string?> GetStringAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, string service, CancellationToken token = default)
+        {
+            if (token.IsCancellationRequested)
+                return null;
+            return await cache.GetOrCreateAsync(
+            service,
+            async entry =>
+            {
+                var found = false;
+                string? result = default;
+                var client = factory.CreateClient();
+                client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
+                try
+                {
+                    var response = await client.GetFromJsonAsync<ResponseWrapper<string>>(ENDPOINT + service, token);
+                    if (response?.Data != null)
+                    {
+                        result = response.Data;
+                        found = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
+                }
+                entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
+                return result;
+            }
+            );
+        }
+
+        private static async Task<IEnumerable<T>> GetResourcesAsync<T>(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, string service, CancellationToken token = default)
             where T : struct
         {
             if (token.IsCancellationRequested)
@@ -112,9 +162,9 @@ namespace Polymerium.Trident.Helpers
         {
             var modLoaderType = modLoaderId switch
             {
-                Profile.Loader.COMPONENT_FORGE => 1,
-                Profile.Loader.COMPONENT_FABRIC => 4,
-                Profile.Loader.COMPONENT_QUILT => 5,
+                Loader.COMPONENT_FORGE => 1,
+                Loader.COMPONENT_FABRIC => 4,
+                Loader.COMPONENT_QUILT => 5,
                 _ => 0
             };
             var service =
@@ -132,7 +182,100 @@ namespace Polymerium.Trident.Helpers
                         ? $"&modLoaderType={modLoaderType}"
                         : ""
                 );
-            return await GetResourcesAsync<EternalProject>(logger, factory, service, cache, token);
+            return await GetResourcesAsync<EternalProject>(logger, factory, cache, service, token);
+        }
+
+        public static async Task<EternalProject?> GetModInfoAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, uint projectId, CancellationToken token = default)
+        {
+            var service = $"/mods/{projectId}";
+            return await GetResourceAsync<EternalProject>(logger, factory, service, cache, token);
+        }
+
+        public static async Task<string?> GetModDescriptionAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, uint projectId, CancellationToken token = default)
+        {
+            var service = $"/mods/{projectId}/description";
+            return await GetStringAsync(logger, factory, cache, service, token);
+        }
+
+        public static async Task<string?> GetModDownloadUrlAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, uint projectId, uint fileId, CancellationToken token = default)
+        {
+            var service = $"/mods/{projectId}/files/{fileId}/download-url";
+            return await GetStringAsync(logger, factory, cache, service, token);
+        }
+
+        public static async Task<string?> GetModFileChangelogAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, uint projectId, uint fileId, CancellationToken token = default)
+        {
+            var service = $"/mods/{projectId}/files/{fileId}/changelog";
+            return await GetStringAsync(logger, factory, cache, service, token);
+        }
+
+        public static async Task<IEnumerable<EternalVersion>> GetModFilesAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, uint projectId, CancellationToken token = default)
+        {
+            var services = $"/mods/{projectId}/files";
+            return await GetResourcesAsync<EternalVersion>(logger, factory, cache, services, token);
+        }
+
+        public static async Task<Project?> GetProjectAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, uint projectId, CancellationToken token = default)
+        {
+            var mod = await GetModInfoAsync(logger, factory, cache, projectId, token);
+            var modDesc = await GetModDescriptionAsync(logger, factory, cache, projectId, token);
+            if (mod.HasValue && modDesc != null)
+            {
+                var files = await GetModFilesAsync(logger, factory, cache, projectId, token);
+                if (files != null && files.Any())
+                {
+                    var versionTasks = files.Where(x => x.IsAvailable && !x.IsServerPack && x.FileStatus == 4).OrderByDescending(x => x.FileDate).Select(async x =>
+                    {
+                        var changelog = await GetModFileChangelogAsync(logger, factory, cache, projectId, x.Id, token);
+                        if (changelog != null)
+                        {
+                            var gameReq = new List<string>();
+                            var loaderReq = new List<string>();
+                            foreach (var v in x.GameVersions)
+                            {
+                                if (MODLOADERS_MAPPINGS.Keys.Contains(v))
+                                    loaderReq.Add(MODLOADERS_MAPPINGS[v]);
+                                else
+                                    gameReq.Add(v);
+                            }
+                            var dependencies = x.Dependencies.Where(x => x.RelationType == 3 || x.RelationType == 2).Select(x => new Dependency(MakePurl(projectId), x.RelationType == 3));
+                            return new Project.Version(x.DisplayName, changelog, x.ReleaseType switch
+                            {
+                                1 => ReleaseType.Release,
+                                2 => ReleaseType.Beta,
+                                3 => ReleaseType.Alpha,
+                                _ => ReleaseType.Release
+                            }, x.FileDate, x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(), new Requirement(gameReq, loaderReq), dependencies);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    });
+                    await Task.WhenAll(versionTasks);
+                    var versions = versionTasks.Where(x => x.IsCompletedSuccessfully && x.Result != null).Select(x => x.Result!);
+                    var kind = GetResourceTypeFromClassId(mod.Value.ClassId);
+                    return new Project(
+                        mod.Value.Id.ToString(),
+                        mod.Value.Name,
+                        mod.Value.Logo?.ThumbnailUrl, string.Join(", ", mod.Value.Authors.Select(x => x.Name)),
+                        mod.Value.Summary,
+                        new Uri(PROJECT_URL.Replace("{0}", GetUrlTypeStringFromKind(kind)).Replace("{1}", mod.Value.Slug)),
+                        kind,
+                        mod.Value.DateCreated,
+                        mod.Value.DateModified,
+                        mod.Value.DownloadCount, modDesc, mod.Value.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)),
+                        versions);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

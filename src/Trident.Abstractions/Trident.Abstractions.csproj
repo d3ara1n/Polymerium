@@ -10,4 +10,8 @@
     <Folder Include="Resolving\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="DotNext" Version="4.15.2" />
+  </ItemGroup>
+
 </Project>

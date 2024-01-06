@@ -19,7 +19,5 @@
         public string AssetDir => Path.Combine(HomeDir, DIR_CACHE_ASSET);
         public string ObjectDir => Path.Combine(HomeDir, DIR_CACHE_OBJECT);
 
-        public string ManifestFile => Path.Combine(HomeDir, FILE_ENTRY_MANIFEST);
-
     }
 }

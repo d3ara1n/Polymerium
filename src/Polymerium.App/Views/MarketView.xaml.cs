@@ -39,7 +39,7 @@ namespace Polymerium.App.Views
 
         private void Submit(RepositoryModel repository, string query)
         {
-            ExhibitList.ItemsSource = new IncrementalLoadingCollection<IncrementalFactorySource<ModpackModel>, ModpackModel>(new IncrementalFactorySource<ModpackModel>(async (page, limit, token) =>
+            ExhibitList.ItemsSource = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
             {
                 return await ViewModel.SearchAsync(repository.Inner, query, page, limit, token);
             }), 10);

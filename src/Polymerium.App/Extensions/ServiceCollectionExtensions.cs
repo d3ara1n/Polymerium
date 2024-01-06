@@ -20,7 +20,7 @@ namespace Polymerium.App.Extensions
         public static IServiceCollection AddViewModel<TViewModel>(this IServiceCollection services)
             where TViewModel : ViewModelBase
         {
-            services.AddScoped<TViewModel>();
+            services.AddTransient<TViewModel>();
             return services;
         }
 

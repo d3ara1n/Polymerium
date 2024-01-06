@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using DotNext;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Helpers;
 using System.Text.Json;
+using Trident.Abstractions.Errors;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
@@ -24,12 +26,27 @@ namespace Polymerium.Trident.Repositories
 
         public string Label => RepositoryLabels.CURSEFORGE;
 
-        public Project Query(string projectId)
+        public async Task<Result<Project, ResourceError>> QueryAsync(string projectId, CancellationToken token)
         {
-            throw new NotImplementedException();
+            if (uint.TryParse(projectId, out var id))
+            {
+                var result = await CurseForgeHelper.GetProjectAsync(_logger, _clientFactory, _cache, id, token);
+                if (result != null)
+                {
+                    return new Result<Project, ResourceError>(result);
+                }
+                else
+                {
+                    return new Result<Project, ResourceError>(ResourceError.NotFound);
+                }
+            }
+            else
+            {
+                return new Result<Project, ResourceError>(ResourceError.InvalidParameter);
+            }
         }
 
-        public Package Resolve(string projectId, string? versionId, Filter filter)
+        public Task<Result<Package, ResourceError>> ResolveAsync(string projectId, string? versionId, Filter filter, CancellationToken token)
         {
             throw new NotImplementedException();
         }

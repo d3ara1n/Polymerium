@@ -1,50 +1,54 @@
-﻿using Polymerium.Trident.Data;
+﻿using Microsoft.Extensions.Logging;
+using Polymerium.Trident.Data;
 using System.Text.Json;
 using Trident.Abstractions;
 
 namespace Polymerium.Trident.Managers;
 
-public class EntryManager : IDisposable
+public class EntryManager
 {
-    private PolymeriumContext _context;
-    private JsonSerializerOptions _options;
+    private readonly ILogger _logger;
+    private readonly PolymeriumContext _context;
+    private readonly JsonSerializerOptions _options;
 
-    private Store<List<Entry>> entryStore;
-    public IList<Entry> Entries => entryStore.Value;
-
-    public EntryManager(PolymeriumContext context, JsonSerializerOptions options)
+    public EntryManager(ILogger<EntryManager> logger, PolymeriumContext context, JsonSerializerOptions options)
     {
+        _logger = logger;
         _context = context;
         _options = options;
-
-        entryStore = new Store<List<Entry>>(context.ManifestFile, options);
     }
 
     public Handle<Profile>? GetProfile(string key)
         => Handle<Profile>.Create(Path.Combine(_context.InstanceDir, $"{key}.json"), _options);
 
-    private bool disposedValue;
-
-    protected virtual void Dispose(bool disposing)
+    public IEnumerable<Entry> Scan()
     {
-        if (!disposedValue)
+        var entries = new List<Entry>();
+        foreach (var file in Directory.GetFiles(_context.InstanceDir, "*.json"))
         {
-            if (disposing)
+            try
             {
-                // TODO: 释放托管状态(托管对象)
-                entryStore.Dispose();
+                var content = File.ReadAllText(file);
+                var profile = JsonSerializer.Deserialize<Profile>(content);
+                if (profile != null)
+                {
+                    entries.Add(new Entry(Path.GetFileNameWithoutExtension(file), profile));
+                    _logger.LogInformation("Appended profile {0}", profile.Name);
+                }
+                else
+                {
+                    _logger.LogWarning("JsonSerializer.Deserialze got null returned while processing {0}, but, why?", Path.GetFileName(file));
+                }
             }
-
-            // TODO: 释放未托管的资源(未托管的对象)并重写终结器
-            // TODO: 将大型字段设置为 null
-            disposedValue = true;
+            catch (JsonException e)
+            {
+                _logger.LogWarning("Broken profile format detected in {0} for {1}", Path.GetFileName(file), e.Message);
+            }
+            catch
+            {
+                _logger.LogWarning("Bad file operation in {0}", Path.GetFileName(file));
+            }
         }
-    }
-
-    public void Dispose()
-    {
-        // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
+        return entries;
     }
 }

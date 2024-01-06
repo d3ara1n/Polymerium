@@ -40,8 +40,8 @@
         <Grid Grid.Row="1">
             <ListView x:Name="ExhibitList" IncrementalLoadingTrigger="Edge" SelectionMode="None" Padding="16">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:ModpackModel">
-                        <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource ControlContentMargin}" HorizontalContentAlignment="Stretch" Margin="4" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Command="{x:Bind GotoModpackViewCommand}" CommandParameter="{x:Bind}">
+                    <DataTemplate x:DataType="models:ExhibitModel">
+                        <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource ControlContentMargin}" HorizontalContentAlignment="Stretch" Margin="4" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
                             <Grid ColumnSpacing="{StaticResource BigGap}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -51,7 +51,7 @@
                                 </Grid.ColumnDefinitions>
                                 <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="64"/>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Text="{x:Bind Inner.ProjectName}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                                    <TextBlock Text="{x:Bind Inner.Name}" Style="{StaticResource SubtitleTextBlockStyle}"/>
                                     <TextBlock Text="{x:Bind Inner.Summary}" TextWrapping="Wrap" MaxLines="2"/>
                                 </StackPanel>
                                 <Border Grid.Column="2" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"/>

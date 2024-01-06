@@ -1,20 +1,8 @@
-﻿namespace Polymerium.Trident;
+﻿using Trident.Abstractions;
 
-public record Entry(string Key, string Name, Uri? Thumbnail, string? Reference, bool IsLiked, Entry.RecordData Records)
+namespace Polymerium.Trident;
+
+// Generated at runtime by scanning the instance directory
+public record Entry(string Key, Profile Profile)
 {
-    public record RecordData(string Note, IList<RecordData.TimelinePoint> Timeline, IList<RecordData.Todo> Todos)
-    {
-        public record TimelinePoint(bool Success, string Source, DateTimeOffset BeginTime, DateTimeOffset EndTime)
-        {
-            public enum TimelimeAction
-            {
-                Create,
-                Update,
-                Deploy,
-                Play
-            }
-        }
-
-        public record Todo(bool Completed, string Text);
-    }
 }

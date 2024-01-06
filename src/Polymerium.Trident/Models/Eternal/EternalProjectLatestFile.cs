@@ -10,14 +10,14 @@
         public string FileName { get; set; }
         public int ReleaseType { get; set; }
         public int FileStatus { get; set; }
-        public IEnumerable<EternalModFileHash> Hashes { get; set; }
+        public IEnumerable<EternalFileHash> Hashes { get; set; }
         public DateTimeOffset FileDate { get; set; }
         public long FileLength { get; set; }
         public long DownloadCount { get; set; }
         public Uri DownloadUrl { get; set; }
         public IEnumerable<string> GameVersions { get; set; }
         public object SortableGameVersions { get; set; }
-        public object Dependencies { get; set; }
+        public IEnumerable<EternalDependency> Dependencies { get; set; }
         public bool ExposeAsAlternative { get; set; }
         public uint ParentProjectFileId { get; set; }
         public uint AlternateFileId { get; set; }

@@ -57,10 +57,10 @@ namespace Polymerium.App.ViewModels
                         }
                     });
             });
-            GotoModpackViewCommand = new RelayCommand<ModpackModel>(GotoModpackView);
+            GotoModpackViewCommand = new RelayCommand<ExhibitModel>(GotoModpackView);
         }
 
-        private void GotoModpackView(ModpackModel? model)
+        private void GotoModpackView(ExhibitModel? model)
         {
             if (model != null) _navigation.Navigate(typeof(ModpackView), model, new SlideNavigationTransitionInfo()
             {
@@ -68,9 +68,9 @@ namespace Polymerium.App.ViewModels
             });
         }
 
-        public async Task<IEnumerable<ModpackModel>> SearchAsync(IRepository repository, string query, uint page, uint limit, CancellationToken token)
+        public async Task<IEnumerable<ExhibitModel>> SearchAsync(IRepository repository, string query, uint page, uint limit, CancellationToken token)
         {
-            return (await repository.SearchAsync(query, page, limit, FILTER, token)).Select(x => new ModpackModel(x, GotoModpackViewCommand));
+            return (await repository.SearchAsync(query, page, limit, FILTER, token)).Select(x => new ExhibitModel(x, repository, GotoModpackViewCommand));
         }
     }
 }
