@@ -9,7 +9,7 @@
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" NavigationCacheMode="Required">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,7 +38,7 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
-            <ListView x:Name="ExhibitList" IncrementalLoadingTrigger="Edge" SelectionMode="None" Padding="16">
+            <ListView ItemsSource="{x:Bind ViewModel.Results,Mode=OneWay}" IncrementalLoadingTrigger="Edge" SelectionMode="None" Padding="16">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ExhibitModel">
                         <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource ControlContentMargin}" HorizontalContentAlignment="Stretch" Margin="4" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
@@ -49,7 +49,7 @@
                                     <ColumnDefinition Width="1"/>
                                     <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
-                                <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="64"/>
+                                <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="64" CacheMode="BitmapCache"/>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
                                     <TextBlock Text="{x:Bind Inner.Name}" Style="{StaticResource SubtitleTextBlockStyle}"/>
                                     <TextBlock Text="{x:Bind Inner.Summary}" TextWrapping="Wrap" MaxLines="2"/>

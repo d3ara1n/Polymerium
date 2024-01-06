@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 using System.Linq;
+using System.Threading;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -39,10 +40,7 @@ namespace Polymerium.App.Views
 
         private void Submit(RepositoryModel repository, string query)
         {
-            ExhibitList.ItemsSource = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
-            {
-                return await ViewModel.SearchAsync(repository.Inner, query, page, limit, token);
-            }), 10);
+            ViewModel.UpdateSource(repository.Inner, query, CancellationToken.None);
         }
     }
 }

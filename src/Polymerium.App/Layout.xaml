@@ -116,7 +116,7 @@
                     </StackPanel>
                 </Grid>
             </NavigationView.PaneCustomContent>
-            <Frame x:Name="Root"/>
+            <Frame x:Name="Root" CacheSize="9"/>
         </NavigationView>
     </Grid>
 </UserControl>

@@ -120,6 +120,7 @@
                                                                     </Grid>
                                                                 </toolkit:Case>
                                                             </toolkit:SwitchPresenter>
+                                                            <TextBlock Text="{x:Bind PublishedAt}"/>
                                                             <TextBlock Text="{x:Bind Labels}"/>
                                                         </StackPanel>
                                                     </StackPanel>

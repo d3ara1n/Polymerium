@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
@@ -23,6 +24,9 @@ namespace Polymerium.App.ViewModels
         public IEnumerable<RepositoryModel> Repositories { get; }
 
         private readonly Filter FILTER = new(null, null, ResourceKind.Modpack);
+
+        private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
+        public IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? Results { get => results; set => SetProperty(ref results, value); }
 
         private readonly NavigationService _navigation;
 
@@ -68,9 +72,11 @@ namespace Polymerium.App.ViewModels
             });
         }
 
-        public async Task<IEnumerable<ExhibitModel>> SearchAsync(IRepository repository, string query, uint page, uint limit, CancellationToken token)
+        public void UpdateSource(IRepository repository, string query, CancellationToken token)
         {
-            return (await repository.SearchAsync(query, page, limit, FILTER, token)).Select(x => new ExhibitModel(x, repository, GotoModpackViewCommand));
+            Results = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
+            (await repository.SearchAsync(query, page, limit, FILTER, token)).Select(x => new ExhibitModel(x, repository, GotoModpackViewCommand))),
+            10);
         }
     }
 }
