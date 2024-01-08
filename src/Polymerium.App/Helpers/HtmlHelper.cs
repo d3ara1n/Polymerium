@@ -24,7 +24,7 @@ namespace Polymerium.App.Helpers
                             {
                                 var src = node.GetAttributeValue("src", "https://placehold.co/400x200");
                                 var width = node.GetAttributeValue("width", 400);
-                                var height = node.GetAttributeValue("height", 400);
+                                var height = node.GetAttributeValue("height", 200);
                                 if (Uri.IsWellFormedUriString(src, UriKind.Absolute))
                                     collection.Add(new InlineUIContainer()
                                     {

@@ -76,7 +76,7 @@ namespace Polymerium.Trident.Helpers
             {
                 var found = false;
                 T? result = default;
-                var client = factory.CreateClient();
+                using var client = factory.CreateClient();
                 client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
                 try
                 {
@@ -107,7 +107,7 @@ namespace Polymerium.Trident.Helpers
             {
                 var found = false;
                 string? result = default;
-                var client = factory.CreateClient();
+                using var client = factory.CreateClient();
                 client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
                 try
                 {
@@ -138,7 +138,7 @@ namespace Polymerium.Trident.Helpers
                     async entry =>
                     {
                         IEnumerable<T>? results = null;
-                        var client = factory.CreateClient();
+                        using var client = factory.CreateClient();
                         client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
                         try
                         {
