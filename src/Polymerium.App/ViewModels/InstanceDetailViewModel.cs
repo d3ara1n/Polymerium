@@ -2,8 +2,6 @@
 using Polymerium.Trident;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Managers;
-using System;
-using System.Linq;
 using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels

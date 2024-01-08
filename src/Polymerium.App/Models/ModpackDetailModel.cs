@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trident.Abstractions.Resources;
+﻿using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models
 {

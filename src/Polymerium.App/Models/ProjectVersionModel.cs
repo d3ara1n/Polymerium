@@ -1,6 +1,5 @@
 ﻿using Humanizer;
 using System.Linq;
-using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 using static Trident.Abstractions.Metadata.Layer;
 

@@ -1,13 +1,10 @@
-﻿using DotNext;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using PackageUrl;
 using Polymerium.Trident.Models.Eternal;
 using Polymerium.Trident.Repositories;
-using System.Linq;
 using System.Net.Http.Json;
 using System.Web;
-using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 using static Trident.Abstractions.Metadata.Layer;
 

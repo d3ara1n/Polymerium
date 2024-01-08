@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels

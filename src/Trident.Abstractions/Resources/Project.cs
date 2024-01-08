@@ -9,6 +9,6 @@
     {
         public record Screenshot(string Title, Uri Url);
 
-        public record Version(string Name, string ChangelogHtml, ReleaseType ReleaseType, DateTimeOffset PublishedAt, string FileName, string? Hash, Uri Download, Requirement Requirements,IEnumerable<Dependency> Dependencies);
+        public record Version(string Name, string ChangelogHtml, ReleaseType ReleaseType, DateTimeOffset PublishedAt, string FileName, string? Hash, Uri Download, Requirement Requirements, IEnumerable<Dependency> Dependencies);
     }
 }
