@@ -15,8 +15,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
-            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource BigGap}">
-                <StackPanel Orientation="Horizontal" Spacing="{StaticResource BigGap}">
+            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                     <Border>
                         <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/902/338/638350403793040080.png" Width="64" CornerRadius="6"/>
                     </Border>
@@ -27,7 +27,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource BigGap}">
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                         <controls:IconLabel VerticalAlignment="Bottom">
                             <controls:IconLabel.Icon>
                                 <FontIcon Glyph="&#xE7FC;" FontSize="30"/>
@@ -83,14 +83,14 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                             <HyperlinkButton IsEnabled="False" Content="Mods"/>
                             <HyperlinkButton IsEnabled="False" Content="Resource Packs"/>
                             <HyperlinkButton IsEnabled="False" Content="Shader Packs"/>
                             <HyperlinkButton IsEnabled="False" Content="Saves"/>
                         </StackPanel>
                         <HyperlinkButton Grid.Column="1">
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                 <FontIcon Glyph="&#xE8A7;" FontSize="16"/>
                                 <TextBlock Text="Open Folder"/>
                             </StackPanel>
@@ -98,21 +98,21 @@
                     </Grid>
                 </controls:Card>
                 <toolkit:ConstrainedBox AspectRatio="8:3">
-                    <Grid ColumnSpacing="{StaticResource BigGap}">
+                    <Grid ColumnSpacing="{StaticResource SmallGap}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <controls:Card Grid.Column="0" Grid.ColumnSpan="2">
-                            <Grid ColumnSpacing="{StaticResource BigGap}">
+                            <Grid ColumnSpacing="{StaticResource SmallGap}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="1"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Spacing="{StaticResource BigGap}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                <StackPanel Grid.Column="0" Spacing="{StaticResource SmallGap}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                         <FontIcon Glyph="&#xE70B;" FontSize="16"/>
                                         <TextBlock Text="Note"/>
                                     </StackPanel>
@@ -120,8 +120,8 @@
                                 </StackPanel>
                                 <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1,0,0,0"/>
                                 <toolkit:ConstrainedBox Grid.Column="2" AspectRatio="2:3">
-                                    <StackPanel Spacing="{StaticResource BigGap}">
-                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                    <StackPanel Spacing="{StaticResource SmallGap}">
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                             <FontIcon Glyph="&#xE9D5;" FontSize="16"/>
                                             <TextBlock Text="Todo"/>
                                         </StackPanel>
@@ -141,7 +141,7 @@
             <Border Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
                 <Grid Margin="12">
                     <HyperlinkButton HorizontalAlignment="Left">
-                        <Grid ColumnSpacing="{StaticResource BigGap}">
+                        <Grid ColumnSpacing="{StaticResource SmallGap}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -154,7 +154,7 @@
                         </Grid>
                     </HyperlinkButton>
                     <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right">
-                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource BigGap}">
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                             <Image Source="/Assets/Icons/Rocket.svg" Width="16"/>
                             <TextBlock Text="PLAY"/>
                         </StackPanel>

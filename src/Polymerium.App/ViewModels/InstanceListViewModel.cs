@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Media.Animation;
-using PackageUrl;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
@@ -23,20 +22,7 @@ namespace Polymerium.App.ViewModels
             GotoDetailCommand = new RelayCommand<string>(GotoDetail);
 
             _navigation = navigation;
-            Entries = entryManager.Scan().Select(x => new EntryModel(x.Key, x.Profile.Name, ExtractCategory(x.Profile.Reference), x.Profile.Thumbnail?.AbsoluteUri ?? string.Empty, GotoDetailCommand));
-        }
-
-        private string ExtractCategory(string? purl)
-        {
-            try
-            {
-                var pkg = new PackageURL(purl);
-                return pkg.Type;
-            }
-            catch (MalformedPackageUrlException)
-            {
-                return "custom";
-            }
+            Entries = entryManager.Scan().Select(x => new EntryModel(x.Key, x.Profile, GotoDetailCommand)).OrderByDescending(x => x.LastPlayAtRaw);
         }
 
         private void GotoDetail(string? key)

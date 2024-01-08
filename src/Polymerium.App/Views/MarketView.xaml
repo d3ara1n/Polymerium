@@ -19,7 +19,7 @@
             <Grid.BackgroundTransition>
                 <BrushTransition/>
             </Grid.BackgroundTransition>
-            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource BigGap}">
+            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
                 <Grid>
                     <Pivot x:Name="RepositorySelector" ItemsSource="{x:Bind ViewModel.Repositories}" SelectionChanged="RepositorySelector_SelectionChanged">
                         <Pivot.HeaderTemplate>
@@ -41,8 +41,8 @@
             <ListView ItemsSource="{x:Bind ViewModel.Results,Mode=OneWay}" IncrementalLoadingTrigger="Edge" SelectionMode="None" Padding="16">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ExhibitModel">
-                        <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource ControlContentMargin}" HorizontalContentAlignment="Stretch" Margin="4" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
-                            <Grid ColumnSpacing="{StaticResource BigGap}">
+                        <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource SmallMargin}" HorizontalContentAlignment="Stretch" Margin="4" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
+                            <Grid ColumnSpacing="{StaticResource SmallGap}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="8*"/>
@@ -55,16 +55,16 @@
                                     <TextBlock Text="{x:Bind Inner.Summary}" TextWrapping="Wrap" MaxLines="2"/>
                                 </StackPanel>
                                 <Border Grid.Column="2" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"/>
-                                <StackPanel Grid.Column="3" Spacing="{StaticResource SmallGap}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                <StackPanel Grid.Column="3" Spacing="{StaticResource TinyGap}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                         <FontIcon Glyph="&#xE77B;" FontSize="12"/>
                                         <TextBlock Text="{x:Bind Inner.Author}"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                         <FontIcon Glyph="&#xEC92;" FontSize="12"/>
                                         <TextBlock Text="{x:Bind UpdatedAt}"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                         <FontIcon Glyph="&#xE896;" FontSize="12"/>
                                         <TextBlock Text="{x:Bind DownloadCount}"/>
                                     </StackPanel>

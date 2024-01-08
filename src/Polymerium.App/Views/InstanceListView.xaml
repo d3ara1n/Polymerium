@@ -30,7 +30,7 @@
         <AutoSuggestBox QueryIcon="Find" PlaceholderText="Search" Grid.Row="0" Grid.Column="0"/>
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Spacing="10">
             <Button>
-                <StackPanel Orientation="Horizontal" Spacing="5">
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                     <SymbolIcon Symbol="Import"/>
                     <TextBlock Text="Import"/>
                 </StackPanel>
@@ -43,36 +43,90 @@
             </Button>
         </StackPanel>
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="9" Margin="0,15,0,15">
-            <ItemsControl ItemsSource="{x:Bind ViewModel.Entries}">
-                <ItemsControl.ItemTemplate>
+            <ListView ItemsSource="{x:Bind ViewModel.Entries}" SelectionMode="None">
+                <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:EntryModel">
-                        <controls:EntryCard Width="156" Height="156" Padding="0" Command="{x:Bind GotoDetailCommand}" CommandParameter="{x:Bind Key}">
-                            <controls:EntryCard.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Icon="View" Text="View" Command="{x:Bind GotoDetailCommand}" CommandParameter="{x:Bind Key}"/>
-                                    <MenuFlyoutItem Icon="Favorite" Text="Mark"/>
-                                    <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Icon="Play" Text="Launch"/>
-                                    <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Icon="Delete" Text="Delete" Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"/>
-                                </MenuFlyout>
-                            </controls:EntryCard.ContextFlyout>
-                            <toolkit:ImageEx Source="{x:Bind Thumbnail}"/>
-                            <controls:EntryCard.Header>
-                                <StackPanel>
-                                    <TextBlock Text="{x:Bind Category,Converter={StaticResource StringUppercaseConverter}}" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.7"/>
-                                    <TextBlock Text="{x:Bind Title}" Style="{StaticResource BodyTextBlockStyle}"/>
-                                </StackPanel>
-                            </controls:EntryCard.Header>
-                        </controls:EntryCard>
+                        <Border BorderThickness="0,1,0,0" BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}">
+                            <StackPanel Margin="{StaticResource MediumMargin}">
+                                <Grid ColumnSpacing="{StaticResource SmallGap}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48"/>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Style="{StaticResource CaptionTextBlockStyle}">
+                                                <Run Text="{x:Bind Category,Converter={StaticResource StringUppercaseConverter}}"/>
+                                                <Run Text=" / "/>
+                                                <Run Text="{x:Bind Key}"/>
+                                        </TextBlock>
+                                        <TextBlock Text="{x:Bind Inner.Name}" Style="{StaticResource TitleTextBlockStyle}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                            <Button Command="{x:Bind GotoDetailCommand}" CommandParameter="{x:Bind Key}">
+                                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                                    <SymbolIcon Symbol="View"/>
+                                                    <TextBlock Text="View"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <DropDownButton>
+                                                <SymbolIcon Symbol="More"/>
+                                                <DropDownButton.Flyout>
+                                                    <MenuFlyout>
+                                                        <MenuFlyoutItem Icon="Favorite" Text="Mark"/>
+                                                        <MenuFlyoutSeparator/>
+                                                        <MenuFlyoutItem Icon="Play" Text="Launch"/>
+                                                        <MenuFlyoutSeparator/>
+                                                        <MenuFlyoutItem Icon="Delete" Text="Delete" Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"/>
+                                                    </MenuFlyout>
+                                                </DropDownButton.Flyout>
+                                            </DropDownButton>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Spacing="{StaticResource TinyGap}">
+                                        <Border Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}" Padding="{StaticResource TinyMargin}">
+                                            <TextBlock Text="RUNNING" Foreground="{ThemeResource SystemFillColorSuccessBrush}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                        </Border>
+                                        <Border Background="{ThemeResource SystemFillColorCautionBackgroundBrush}" Padding="{StaticResource TinyMargin}">
+                                            <TextBlock Text="DEPLOYING" Foreground="{ThemeResource SystemFillColorCautionBrush}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                        </Border>
+                                        <Border Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}" Padding="{StaticResource TinyMargin}">
+                                            <TextBlock Text="STOPPED" Foreground="{ThemeResource SystemFillColorCriticalBrush}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                        </Border>
+                                        <Border Background="{ThemeResource SystemFillColorSolidNeutralBackgroundBrush}" Padding="{StaticResource TinyMargin}">
+                                            <TextBlock Text="IDLE" Foreground="{ThemeResource SystemFillColorSolidNeutralBrush}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                        </Border>
+                                        <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}" Padding="{StaticResource TinyMargin}">
+                                            <TextBlock Text="{x:Bind Type}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                        </Border>
+                                        <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}" Padding="{StaticResource TinyMargin}">
+                                            <TextBlock Text="{x:Bind Version}" Style="{StaticResource CaptionTextBlockStyle}"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Spacing="{StaticResource TinyGap}">
+                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Right">
+                                            <Run Text="CREATED:"/>
+                                            <Run Text="{x:Bind CreatedAt}"/>
+                                        </TextBlock>
+                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Right">
+                                            <Run Text="DEPLOYED:"/>
+                                            <Run Text="{x:Bind DeployAt}"/>
+                                        </TextBlock>
+                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Style="{StaticResource CaptionTextBlockStyle}" HorizontalAlignment="Right">
+                                            <Run Text="PLAYED:"/>
+                                            <Run Text="{x:Bind PlayedAt}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <toolkit:WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                </ListView.ItemTemplate>
+            </ListView>
         </ScrollViewer>
     </Grid>
 </Page>
