@@ -1,9 +1,8 @@
-﻿namespace Trident.Abstractions.Resources
+﻿namespace Trident.Abstractions.Resources;
+
+public enum ReleaseType
 {
-    public enum ReleaseType
-    {
-        Release,
-        Beta,
-        Alpha
-    }
+    Release,
+    Beta,
+    Alpha
 }

@@ -1,6 +1,5 @@
-﻿namespace Polymerium.App.ViewModels
+﻿namespace Polymerium.App.ViewModels;
+
+public class SettingViewModel : ViewModelBase
 {
-    public class SettingViewModel : ViewModelBase
-    {
-    }
 }

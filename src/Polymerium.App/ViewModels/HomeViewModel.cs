@@ -1,6 +1,5 @@
-﻿namespace Polymerium.App.ViewModels
+﻿namespace Polymerium.App.ViewModels;
+
+public class HomeViewModel : ViewModelBase
 {
-    public class HomeViewModel : ViewModelBase
-    {
-    }
 }

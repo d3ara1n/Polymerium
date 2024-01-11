@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using HtmlAgilityPack;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
@@ -8,38 +9,36 @@ using Polymerium.App.ViewModels;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Polymerium.App.Views
+namespace Polymerium.App.Views;
+
+public sealed partial class ModpackView : Page
 {
-    public sealed partial class ModpackView : Page
+    public ModpackView()
     {
-        public ModpackViewModel ViewModel { get; } = App.ViewModel<ModpackViewModel>();
+        InitializeComponent();
+    }
 
-        public ModpackView()
+    public ModpackViewModel ViewModel { get; } = App.ViewModel<ModpackViewModel>();
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+        ViewModel.OnAttached(e.Parameter);
+        ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+    }
+
+    private void ViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ViewModel.Project) && ViewModel.Project != null)
         {
-            this.InitializeComponent();
+            DescriptionView.Blocks.Clear();
+            var html = ViewModel.Project.Inner.DescriptionHtml.Replace("&nbsp;", " ");
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            var paragraph = new Paragraph();
+            HtmlHelper.ParseNodeToInline(paragraph.Inlines, doc.DocumentNode,
+                ViewModel.Project.Inner.Reference.AbsoluteUri);
+            DescriptionView.Blocks.Add(paragraph);
         }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            ViewModel.OnAttached(e.Parameter);
-            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
-        }
-
-        private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(ViewModel.Project) && ViewModel.Project != null)
-            {
-                DescriptionView.Blocks.Clear();
-                var html = ViewModel.Project.Inner.DescriptionHtml.Replace("&nbsp;", " ");
-                var doc = new HtmlDocument();
-                doc.LoadHtml(html);
-                var paragraph = new Paragraph();
-                HtmlHelper.ParseNodeToInline(paragraph.Inlines, doc.DocumentNode, ViewModel.Project.Inner.Reference.AbsoluteUri);
-                DescriptionView.Blocks.Add(paragraph);
-            }
-        }
-
-
     }
 }

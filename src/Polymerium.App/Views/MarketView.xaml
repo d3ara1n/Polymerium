@@ -1,72 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <Page
     x:Class="Polymerium.App.Views.MarketView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Polymerium.App.Views"
     xmlns:models="using:Polymerium.App.Models"
-    xmlns:lab="using:CommunityToolkit.WinUI.Controls"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" NavigationCacheMode="Required">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid x:Name="HeaderPane" Grid.Row="0">
             <Grid.BackgroundTransition>
-                <BrushTransition/>
+                <BrushTransition />
             </Grid.BackgroundTransition>
             <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
                 <Grid>
-                    <Pivot x:Name="RepositorySelector" ItemsSource="{x:Bind ViewModel.Repositories}" SelectionChanged="RepositorySelector_SelectionChanged">
+                    <Pivot x:Name="RepositorySelector" ItemsSource="{x:Bind ViewModel.Repositories}"
+                           SelectionChanged="RepositorySelector_SelectionChanged">
                         <Pivot.HeaderTemplate>
                             <DataTemplate x:DataType="models:RepositoryModel">
-                                <TextBlock Text="{x:Bind Inner.Label,Converter={StaticResource StringUppercaseConverter}}"/>
+                                <TextBlock Text="{x:Bind Label,Converter={StaticResource StringUppercaseConverter}}" />
                             </DataTemplate>
                         </Pivot.HeaderTemplate>
                         <Pivot.ItemTemplate>
                             <DataTemplate>
-                                <Grid/>
+                                <Grid />
                             </DataTemplate>
                         </Pivot.ItemTemplate>
                     </Pivot>
                 </Grid>
-                <AutoSuggestBox x:Name="SearchBox" QueryIcon="Find" QuerySubmitted="SearchBox_QuerySubmitted"/>
+                <AutoSuggestBox x:Name="SearchBox" QueryIcon="Find" QuerySubmitted="SearchBox_QuerySubmitted" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
-            <ListView ItemsSource="{x:Bind ViewModel.Results,Mode=OneWay}" IncrementalLoadingTrigger="Edge" SelectionMode="None" Padding="16">
+            <ListView ItemsSource="{x:Bind ViewModel.Results,Mode=OneWay}" IncrementalLoadingTrigger="Edge"
+                      SelectionMode="None" Padding="16">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ExhibitModel">
-                        <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource SmallMargin}" HorizontalContentAlignment="Stretch" Margin="4" Foreground="{ThemeResource TextFillColorPrimaryBrush}" Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
+                        <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource SmallMargin}"
+                                         HorizontalContentAlignment="Stretch" Margin="4"
+                                         Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                         Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
                             <Grid ColumnSpacing="{StaticResource SmallGap}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="8*"/>
-                                    <ColumnDefinition Width="1"/>
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="8*" />
+                                    <ColumnDefinition Width="1" />
+                                    <ColumnDefinition Width="2*" />
                                 </Grid.ColumnDefinitions>
-                                <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="64" CacheMode="BitmapCache"/>
+                                <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="64"
+                                                 CacheMode="BitmapCache" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Text="{x:Bind Inner.Name}" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                                    <TextBlock Text="{x:Bind Inner.Summary}" TextWrapping="Wrap" MaxLines="2"/>
+                                    <TextBlock Text="{x:Bind Inner.Name}"
+                                               Style="{StaticResource SubtitleTextBlockStyle}" MaxLines="1"
+                                               TextTrimming="WordEllipsis" />
+                                    <TextBlock Text="{x:Bind Inner.Summary}" TextWrapping="Wrap" MaxLines="2"
+                                               TextTrimming="WordEllipsis" />
                                 </StackPanel>
-                                <Border Grid.Column="2" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"/>
+                                <Border Grid.Column="2" BorderThickness="1,0,0,0"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" />
                                 <StackPanel Grid.Column="3" Spacing="{StaticResource TinyGap}">
                                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon Glyph="&#xE77B;" FontSize="12"/>
-                                        <TextBlock Text="{x:Bind Inner.Author}"/>
+                                        <FontIcon Glyph="&#xE77B;" FontSize="12" />
+                                        <TextBlock Text="{x:Bind Inner.Author}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon Glyph="&#xEC92;" FontSize="12"/>
-                                        <TextBlock Text="{x:Bind UpdatedAt}"/>
+                                        <FontIcon Glyph="&#xEC92;" FontSize="12" />
+                                        <TextBlock Text="{x:Bind UpdatedAt}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon Glyph="&#xE896;" FontSize="12"/>
-                                        <TextBlock Text="{x:Bind DownloadCount}"/>
+                                        <FontIcon Glyph="&#xE896;" FontSize="12" />
+                                        <TextBlock Text="{x:Bind DownloadCount}" />
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
@@ -75,7 +84,7 @@
                 </ListView.ItemTemplate>
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsStackPanel/>
+                        <ItemsStackPanel />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>

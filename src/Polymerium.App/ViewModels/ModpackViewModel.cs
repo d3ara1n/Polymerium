@@ -1,78 +1,85 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Dispatching;
-using Polymerium.App.Models;
-using System;
+﻿using System;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Dispatching;
+using Polymerium.App.Models;
+using Polymerium.Trident.Services;
 using Trident.Abstractions.Resources;
 
-namespace Polymerium.App.ViewModels
+namespace Polymerium.App.ViewModels;
+
+public class ModpackViewModel : ViewModelBase
 {
-    public class ModpackViewModel : ViewModelBase
+    private readonly DispatcherQueue _dispatcher;
+    private readonly RepositoryService _repositoryService;
+    private ExhibitModel? _modpackModel;
+    private DataLoadingState dataState = DataLoadingState.Loading;
+
+    private ProjectModel project = ProjectModel.DUMMY;
+
+    public ModpackViewModel(RepositoryService repositoryService)
     {
-        private DataLoadingState dataState = DataLoadingState.Loading;
-        public DataLoadingState DataState { get => dataState; set => SetProperty(ref dataState, value); }
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
+        _repositoryService = repositoryService;
+        OpenReferenceCommand = new RelayCommand<Uri>(OpenReference);
+    }
 
-        private ProjectModel? project;
-        public ProjectModel? Project { get => project; set => SetProperty(ref project, value); }
+    public DataLoadingState DataState
+    {
+        get => dataState;
+        set => SetProperty(ref dataState, value);
+    }
 
-        public ICommand OpenReferenceCommand { get; }
+    public ProjectModel Project
+    {
+        get => project;
+        set => SetProperty(ref project, value);
+    }
 
-        private DispatcherQueue _dispatcher;
-        private ExhibitModel? _modpackModel;
+    public ICommand OpenReferenceCommand { get; }
 
-        public ModpackViewModel()
+    public override bool OnAttached(object? maybeModpackModel)
+    {
+        if (maybeModpackModel is ExhibitModel model)
         {
-            _dispatcher = DispatcherQueue.GetForCurrentThread();
-
-            OpenReferenceCommand = new RelayCommand<Uri>(OpenReference);
+            _modpackModel = model;
+            Task.Run(LoadProjectAsync);
         }
 
-        public override bool OnAttached(object? maybeModpackModel)
+        return false;
+    }
+
+    private async Task LoadProjectAsync()
+    {
+        Project? got = null;
+        if (_modpackModel != null)
         {
-            if (maybeModpackModel is ExhibitModel model)
+            var result = await _repositoryService.QueryAsync(_modpackModel.RepositoryLabel, _modpackModel.Inner.Id);
+            if (result.IsSuccessful) got = result.Value;
+        }
+
+        _dispatcher.TryEnqueue(() =>
+        {
+            if (got != null)
             {
-                _modpackModel = model;
-                Task.Run(LoadProjectAsync);
+                Project = new ProjectModel(got, _modpackModel!.RepositoryLabel);
+                DataState = DataLoadingState.Done;
             }
-
-            return false;
-        }
-
-        private async Task LoadProjectAsync()
-        {
-            Project? project = null;
-            if (_modpackModel != null)
+            else
             {
-                var result = await _modpackModel.Repository.QueryAsync(_modpackModel.Inner.Id, CancellationToken.None);
-                if (result.IsSuccessful)
-                {
-                    project = result.Value;
-                }
+                DataState = DataLoadingState.Failed;
             }
-            _dispatcher.TryEnqueue(() =>
-            {
-                if (project != null)
-                {
-                    Project = new ProjectModel(project, _modpackModel!.Repository);
-                    DataState = DataLoadingState.Done;
-                }
-                else
-                {
-                    DataState = DataLoadingState.Failed;
-                }
-            });
-        }
+        });
+    }
 
-        private void OpenReference(Uri? reference)
-        {
-            if (reference != null) Process.Start(new ProcessStartInfo(reference.AbsoluteUri)
+    private void OpenReference(Uri? reference)
+    {
+        if (reference != null)
+            Process.Start(new ProcessStartInfo(reference.AbsoluteUri)
             {
                 UseShellExecute = true
             });
-        }
-
     }
 }

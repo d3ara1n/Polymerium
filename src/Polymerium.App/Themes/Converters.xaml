@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="using:Polymerium.App.Converters"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Converters"
-    xmlns:local="using:Polymerium.App.Themes">
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Converters">
 
-    <toolkit:FormatStringConverter x:Key="FormatStringConverter"/>
-    <toolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-    <toolkit:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter"/>
-    <converters:StringUppercaseConverter x:Key="StringUppercaseConverter"/>
-    <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter"/>
+    <toolkit:FormatStringConverter x:Key="FormatStringConverter" />
+    <toolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <toolkit:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
+    <converters:StringUppercaseConverter x:Key="StringUppercaseConverter" />
+    <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter" />
 
 </ResourceDictionary>

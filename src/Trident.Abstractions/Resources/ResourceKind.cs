@@ -1,12 +1,11 @@
-﻿namespace Trident.Abstractions.Resources
+﻿namespace Trident.Abstractions.Resources;
+
+public enum ResourceKind
 {
-    public enum ResourceKind
-    {
-        Modpack,
-        Mod,
-        World,
-        DataPack,
-        ResourcePack,
-        ShaderPack
-    }
+    Modpack,
+    Mod,
+    World,
+    DataPack,
+    ResourcePack,
+    ShaderPack
 }

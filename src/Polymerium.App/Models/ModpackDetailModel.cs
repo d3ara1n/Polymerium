@@ -1,8 +1,7 @@
 ﻿using Trident.Abstractions.Resources;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public record ModpackDetailModel(Project Inner, ExhibitModel Model)
 {
-    public record ModpackDetailModel(Project Inner, ExhibitModel Model)
-    {
-    }
 }

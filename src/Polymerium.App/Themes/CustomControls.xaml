@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:local="using:Polymerium.App.Themes">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///Controls/Card.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Controls/EntryCard.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Controls/IconLabel.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Controls/Card.xaml" />
+        <ResourceDictionary Source="ms-appx:///Controls/EntryCard.xaml" />
+        <ResourceDictionary Source="ms-appx:///Controls/IconLabel.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

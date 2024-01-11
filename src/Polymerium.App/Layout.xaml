@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <UserControl
     x:Class="Polymerium.App.Layout"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Polymerium.App"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -27,13 +27,13 @@
                 <VisualState x:Name="Minimal">
                     <VisualState.Setters>
                         <Setter Target="AppTitleBar.Margin" Value="96,0,0,0" />
-                        <Setter Target="NavigationViewControl.IsPaneToggleButtonVisible" Value="True"/>
+                        <Setter Target="NavigationViewControl.IsPaneToggleButtonVisible" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Compact">
                     <VisualState.Setters>
-                        <Setter Target="CountPanel.Visibility" Value="Collapsed"/>
-                        <Setter Target="CountBox.Width" Value="16"/>
+                        <Setter Target="CountPanel.Visibility" Value="Collapsed" />
+                        <Setter Target="CountBox.Width" Value="16" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Top">
@@ -56,7 +56,7 @@
             x:Name="AppTitleBar"
             Grid.Column="1"
             Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
-            Margin="48,0,0,0"
+            Margin="64,0,0,0"
             VerticalAlignment="Stretch"
             Canvas.ZIndex="1">
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
@@ -65,7 +65,7 @@
                     x:Name="AppTitle"
                     Margin="12,0,0,0"
                     VerticalAlignment="Center"
-                    Style="{StaticResource CaptionTextBlockStyle}" Text="Polymerium"/>
+                    Style="{StaticResource CaptionTextBlockStyle}" Text="Polymerium" />
             </StackPanel>
         </Border>
         <NavigationView
@@ -84,8 +84,6 @@
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             SelectionChanged="NavigationViewControl_SelectionChanged">
             <NavigationView.Resources>
-                <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0,0,0,0</CornerRadius>
-                <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
                 <!--<Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
                 <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />-->
@@ -94,7 +92,7 @@
                 <DataTemplate x:DataType="models:NavItem">
                     <NavigationViewItem Content="{x:Bind Key}">
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="{x:Bind IconKey}"/>
+                            <ImageIcon Source="{x:Bind IconKey}" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                 </DataTemplate>
@@ -103,12 +101,14 @@
                 <Grid Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="10">
                     <StackPanel Spacing="10" Orientation="Horizontal">
                         <toolkit:ConstrainedBox x:Name="CountBox" AspectRatio="1:1" Width="40">
-                            <Border BorderThickness="2" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="20">
-                                <TextBlock Text="0" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border BorderThickness="2" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    CornerRadius="20">
+                                <TextBlock Text="0" Style="{StaticResource SubtitleTextBlockStyle}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                         </toolkit:ConstrainedBox>
                         <StackPanel x:Name="CountPanel" VerticalAlignment="Center">
-                            <TextBlock Text="No running instances"/>
+                            <TextBlock Text="No running instances" />
                             <TextBlock>
                                 <Hyperlink>Manage</Hyperlink>
                             </TextBlock>
@@ -116,7 +116,7 @@
                     </StackPanel>
                 </Grid>
             </NavigationView.PaneCustomContent>
-            <Frame x:Name="Root" CacheSize="9"/>
+            <Frame x:Name="Root" CacheSize="9" />
         </NavigationView>
     </Grid>
 </UserControl>

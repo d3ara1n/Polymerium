@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <Page
     x:Class="Polymerium.App.Views.ModpackView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Polymerium.App.Views"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:lab="using:CommunityToolkit.WinUI.Controls"
@@ -15,50 +15,63 @@
 
     <toolkit:SwitchPresenter Value="{x:Bind ViewModel.DataState,Mode=OneWay}" TargetType="models:DataLoadingState">
         <toolkit:SwitchPresenter.ContentTransitions>
-            <PopupThemeTransition/>
+            <PopupThemeTransition />
         </toolkit:SwitchPresenter.ContentTransitions>
         <toolkit:Case Value="Loading">
             <Grid>
-                <ProgressRing IsIndeterminate="True" Height="40" Width="40"/>
+                <ProgressRing IsIndeterminate="True" Height="40" Width="40" />
             </Grid>
         </toolkit:Case>
         <toolkit:Case Value="Failed">
-            <TextBlock Text="Fetching data failed"/>
+            <TextBlock Text="Fetching data failed" />
         </toolkit:Case>
         <toolkit:Case Value="Done">
-            <Grid Margin="{StaticResource PageContentMargin}" ColumnSpacing="{StaticResource SmallGap}" RowSpacing="{StaticResource SmallGap}">
+            <Grid Margin="{StaticResource PageContentMargin}" ColumnSpacing="{StaticResource SmallGap}"
+                  RowSpacing="{StaticResource SmallGap}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <controls:Card Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <toolkit:DockPanel>
-                        <toolkit:ImageEx toolkit:DockPanel.Dock="Left" Source="{x:Bind ViewModel.Project.Thumbnail,Mode=OneWay}" Width="58"/>
+                        <toolkit:ImageEx toolkit:DockPanel.Dock="Left"
+                                         Source="{x:Bind ViewModel.Project.Thumbnail,Mode=OneWay}" Width="58" />
                         <StackPanel Margin="12,0" VerticalAlignment="Center">
-                            <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                            <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}"
+                                       Style="{StaticResource TitleTextBlockStyle}" MaxLines="1"
+                                       TextTrimming="WordEllipsis" />
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                <FontIcon Glyph="&#xE77B;" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                                <TextBlock Text="{x:Bind ViewModel.Project.Inner.Author,Mode=OneWay}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                                <FontIcon Glyph="&#xEC92;" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                                <TextBlock Text="{x:Bind ViewModel.Project.UpdatedAt,Mode=OneWay}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                                <FontIcon Glyph="&#xE896;" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
-                                <TextBlock Text="{x:Bind ViewModel.Project.DownloadCount,Mode=OneWay}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                <FontIcon Glyph="&#xE77B;" FontSize="12"
+                                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <TextBlock Text="{x:Bind ViewModel.Project.Inner.Author,Mode=OneWay}"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <FontIcon Glyph="&#xEC92;" FontSize="12"
+                                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <TextBlock Text="{x:Bind ViewModel.Project.UpdatedAt,Mode=OneWay}"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <FontIcon Glyph="&#xE896;" FontSize="12"
+                                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <TextBlock Text="{x:Bind ViewModel.Project.DownloadCount,Mode=OneWay}"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                             </StackPanel>
                         </StackPanel>
                         <Grid toolkit:DockPanel.Dock="Right" HorizontalAlignment="Right">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Provided by" HorizontalAlignment="Center"/>
-                            <HyperlinkButton Grid.Row="1" HorizontalAlignment="Center" Command="{x:Bind ViewModel.OpenReferenceCommand}" CommandParameter="{x:Bind ViewModel.Project.Inner.Reference,Mode=OneWay}">
+                            <TextBlock Grid.Row="0" Text="Provided by" HorizontalAlignment="Center" />
+                            <HyperlinkButton Grid.Row="1" HorizontalAlignment="Center"
+                                             Command="{x:Bind ViewModel.OpenReferenceCommand}"
+                                             CommandParameter="{x:Bind ViewModel.Project.Inner.Reference,Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                    <FontIcon Glyph="&#xE8A7;" FontSize="12"/>
-                                    <TextBlock Text="{x:Bind ViewModel.Project.Repository.Label,Mode=OneWay,Converter={StaticResource StringUppercaseConverter}}"/>
+                                    <FontIcon Glyph="&#xE8A7;" FontSize="12" />
+                                    <TextBlock
+                                        Text="{x:Bind ViewModel.Project.RepositoryLabel,Mode=OneWay,Converter={StaticResource StringUppercaseConverter}}" />
                                 </StackPanel>
                             </HyperlinkButton>
                         </Grid>
@@ -67,61 +80,85 @@
                 <controls:Card Grid.Row="1" Grid.Column="0" Padding="0">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <toolkit:ConstrainedBox Grid.Row="0" AspectRatio="32:9" VerticalAlignment="Stretch" HorizontalAlignment="Center" Visibility="{x:Bind ViewModel.Project.Gallery,Mode=OneWay,Converter={StaticResource CollectionVisibilityConverter}}">
+                        <toolkit:ConstrainedBox Grid.Row="0" AspectRatio="32:9" VerticalAlignment="Stretch"
+                                                HorizontalAlignment="Center"
+                                                Visibility="{x:Bind ViewModel.Project.Gallery,Mode=OneWay,Converter={StaticResource CollectionVisibilityConverter}}">
                             <FlipView ItemsSource="{x:Bind ViewModel.Project.Gallery,Mode=OneWay}">
                                 <FlipView.ItemTemplate>
                                     <DataTemplate x:DataType="models:GalleryItemModel">
-                                        <toolkit:ImageEx Source="{x:Bind Url}"/>
+                                        <toolkit:ImageEx Source="{x:Bind Url}" />
                                     </DataTemplate>
                                 </FlipView.ItemTemplate>
                             </FlipView>
                         </toolkit:ConstrainedBox>
-                        <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
-                            <RichTextBlock x:Name="DescriptionView" Padding="{StaticResource CardContentPadding}"/>
+                        <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
+                            <RichTextBlock x:Name="DescriptionView" Padding="{StaticResource CardContentPadding}" />
                         </ScrollViewer>
                     </Grid>
                 </controls:Card>
                 <controls:Card Grid.Row="1" Grid.Column="1" Width="256" Padding="0">
                     <toolkit:DockPanel>
-                        <lab:Segmented x:Name="SubmenuSelector" Margin="{StaticResource CardContentPadding}" toolkit:DockPanel.Dock="Top" HorizontalAlignment="Center" SelectionMode="Single" SelectedIndex="0" SelectedValuePath="Tag">
-                            <lab:SegmentedItem Content="Versions" Tag="CASE_VERSIONS"/>
-                            <lab:SegmentedItem Content="Information" Tag="CASE_INFORMATION"/>
+                        <lab:Segmented x:Name="SubmenuSelector" Margin="{StaticResource MediumUpperMargin}"
+                                       toolkit:DockPanel.Dock="Top" HorizontalAlignment="Center" SelectionMode="Single"
+                                       SelectedIndex="0" SelectedValuePath="Tag">
+                            <lab:SegmentedItem Content="Versions" Tag="CASE_VERSIONS" />
+                            <lab:SegmentedItem Content="Information" Tag="CASE_INFORMATION" />
                         </lab:Segmented>
                         <toolkit:SwitchPresenter Value="{x:Bind SubmenuSelector.SelectedValue, Mode=OneWay}">
                             <toolkit:Case Value="CASE_VERSIONS">
                                 <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                                    <ListView ItemsSource="{x:Bind ViewModel.Project.Versions,Mode=OneWay}" SelectionMode="None">
+                                    <ListView ItemsSource="{x:Bind ViewModel.Project.Versions,Mode=OneWay}"
+                                              SelectionMode="None">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="models:ProjectVersionModel">
-                                                <HyperlinkButton HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="{StaticResource TinyMargin}">
+                                                <HyperlinkButton HorizontalAlignment="Stretch"
+                                                                 HorizontalContentAlignment="Stretch">
                                                     <StackPanel>
-                                                        <TextBlock Text="{x:Bind Inner.Name}"/>
-                                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                                            <toolkit:SwitchPresenter Value="{x:Bind Inner.ReleaseType}" TargetType="resources:ReleaseType">
+                                                        <TextBlock Text="{x:Bind Inner.Name}" />
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    Spacing="{StaticResource TinyGap}">
+                                                            <toolkit:SwitchPresenter Value="{x:Bind Inner.ReleaseType}"
+                                                                TargetType="resources:ReleaseType">
                                                                 <toolkit:Case Value="Release">
                                                                     <Grid>
-                                                                        <Rectangle Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}" Width="20" Height="20"/>
-                                                                        <TextBlock Text="R" Foreground="{ThemeResource SystemFillColorSuccessBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                        <Rectangle
+                                                                            Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                                            Width="20" Height="20" />
+                                                                        <TextBlock Text="R"
+                                                                            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                                                            VerticalAlignment="Center"
+                                                                            HorizontalAlignment="Center" />
                                                                     </Grid>
                                                                 </toolkit:Case>
                                                                 <toolkit:Case Value="Beta">
                                                                     <Grid>
-                                                                        <Rectangle Fill="{ThemeResource SystemFillColorAttentionBackgroundBrush}" Width="20" Height="20"/>
-                                                                        <TextBlock Text="B" Foreground="{ThemeResource SystemFillColorAttentionBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                        <Rectangle
+                                                                            Fill="{ThemeResource SystemFillColorAttentionBackgroundBrush}"
+                                                                            Width="20" Height="20" />
+                                                                        <TextBlock Text="B"
+                                                                            Foreground="{ThemeResource SystemFillColorAttentionBrush}"
+                                                                            VerticalAlignment="Center"
+                                                                            HorizontalAlignment="Center" />
                                                                     </Grid>
                                                                 </toolkit:Case>
                                                                 <toolkit:Case Value="Alpha">
                                                                     <Grid>
-                                                                        <Rectangle Fill="{ThemeResource SystemFillColorCautionBackgroundBrush}" Width="20" Height="20"/>
-                                                                        <TextBlock Text="A" Foreground="{ThemeResource SystemFillColorCautionBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                        <Rectangle
+                                                                            Fill="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                                            Width="20" Height="20" />
+                                                                        <TextBlock Text="A"
+                                                                            Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                                            VerticalAlignment="Center"
+                                                                            HorizontalAlignment="Center" />
                                                                     </Grid>
                                                                 </toolkit:Case>
                                                             </toolkit:SwitchPresenter>
-                                                            <TextBlock Text="{x:Bind PublishedAt}"/>
-                                                            <TextBlock Text="{x:Bind Labels}"/>
+                                                            <TextBlock Text="{x:Bind PublishedAt}" />
+                                                            <TextBlock Text="{x:Bind Labels}" />
                                                         </StackPanel>
                                                     </StackPanel>
                                                 </HyperlinkButton>
@@ -131,7 +168,24 @@
                                 </ScrollViewer>
                             </toolkit:Case>
                             <toolkit:Case Value="CASE_INFORMATION">
-                                <TextBlock Text="Info"/>
+                                <StackPanel Margin="{StaticResource MediumMargin}">
+                                    <StackPanel.Resources>
+                                        <Style x:Key="CaptionStyle" TargetType="TextBlock">
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <TextBlock Text="Project Id" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}" />
+                                    <TextBlock Text="Project Name" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}" />
+                                    <TextBlock Text="Project Name" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}" />
+                                    <TextBlock Text="Author" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Author,Mode=OneWay}" />
+                                    <TextBlock Text="Summary" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Summary,Mode=OneWay}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
                             </toolkit:Case>
                         </toolkit:SwitchPresenter>
                     </toolkit:DockPanel>

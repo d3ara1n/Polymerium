@@ -1,4 +1,10 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
+using Windows.Foundation;
+using Windows.UI;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -6,76 +12,81 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Windows.Input;
+using Polymerium.Trident.Services;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
-using Windows.UI;
 
-namespace Polymerium.App.ViewModels
+namespace Polymerium.App.ViewModels;
+
+public class MarketViewModel : ViewModelBase
 {
-    public class MarketViewModel : ViewModelBase
+    private readonly NavigationService _navigation;
+    private readonly RepositoryService _repositoryService;
+
+    private readonly Filter FILTER = new(null, null, ResourceKind.Modpack);
+
+    private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
+
+    public MarketViewModel(RepositoryService repositoryService, NavigationService navigation)
     {
-        public ICommand GotoModpackViewCommand { get; }
-        public IEnumerable<RepositoryModel> Repositories { get; }
-
-        private readonly Filter FILTER = new(null, null, ResourceKind.Modpack);
-
-        private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
-        public IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? Results { get => results; set => SetProperty(ref results, value); }
-
-        private readonly NavigationService _navigation;
-
-        public MarketViewModel(IEnumerable<IRepository> repositories, NavigationService navigation)
+        _repositoryService = repositoryService;
+        _navigation = navigation;
+        Repositories = repositoryService.Repositories.Select(x =>
         {
-            _navigation = navigation;
-            Repositories = repositories.Select(x =>
+            ((byte, byte, byte), (byte, byte, byte)) color = x.Label switch
             {
-                ((byte, byte, byte), (byte, byte, byte)) color = x.Label switch
+                RepositoryLabels.CURSEFORGE => ((246, 211, 101), (253, 160, 133)),
+                RepositoryLabels.MODRINTH => ((212, 252, 121), (150, 230, 161)),
+                _ => throw new NotImplementedException()
+            };
+            return new RepositoryModel(x.Label,
+                new LinearGradientBrush
                 {
-                    RepositoryLabels.CURSEFORGE => ((246, 211, 101), (253, 160, 133)),
-                    RepositoryLabels.MODRINTH => ((212, 252, 121), (150, 230, 161)),
-                    _ => throw new NotImplementedException()
-                };
-                return new RepositoryModel(x,
-                    new LinearGradientBrush()
-                    {
-                        StartPoint = new(1, 0),
-                        EndPoint = new(0, 1),
-                        GradientStops = new()
+                    StartPoint = new Point(1, 0),
+                    EndPoint = new Point(0, 1),
+                    GradientStops =
+                    [
+                        new GradientStop
                         {
-                            new()
-                            {
-                                Offset = 0,
-                                Color = Color.FromArgb(255, color.Item1.Item1, color.Item1.Item2, color.Item1.Item3)
-                            },
-                            new()
-                            {
-                                Offset = 1,
-                                Color = Color.FromArgb(255, color.Item2.Item1, color.Item2.Item2, color.Item2.Item3)
-                            }
-                        }
-                    });
-            });
-            GotoModpackViewCommand = new RelayCommand<ExhibitModel>(GotoModpackView);
-        }
+                            Offset = 0,
+                            Color = Color.FromArgb(255, color.Item1.Item1, color.Item1.Item2, color.Item1.Item3)
+                        },
 
-        private void GotoModpackView(ExhibitModel? model)
-        {
-            if (model != null) _navigation.Navigate(typeof(ModpackView), model, new SlideNavigationTransitionInfo()
+                        new GradientStop
+                        {
+                            Offset = 1,
+                            Color = Color.FromArgb(255, color.Item2.Item1, color.Item2.Item2, color.Item2.Item3)
+                        }
+                    ]
+                });
+        });
+        GotoModpackViewCommand = new RelayCommand<ExhibitModel>(GotoModpackView);
+    }
+
+    public ICommand GotoModpackViewCommand { get; }
+    public IEnumerable<RepositoryModel> Repositories { get; }
+
+    public IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? Results
+    {
+        get => results;
+        set => SetProperty(ref results, value);
+    }
+
+    private void GotoModpackView(ExhibitModel? model)
+    {
+        if (model != null)
+            _navigation.Navigate(typeof(ModpackView), model, new SlideNavigationTransitionInfo
             {
                 Effect = SlideNavigationTransitionEffect.FromRight
             });
-        }
+    }
 
-        public void UpdateSource(IRepository repository, string query, CancellationToken token)
-        {
-            Results = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
-            (await repository.SearchAsync(query, page, limit, FILTER, token)).Select(x => new ExhibitModel(x, repository, GotoModpackViewCommand))),
+    public void UpdateSource(string label, string query)
+    {
+        Results = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(
+            new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
+                (await _repositoryService.SearchAsync(label, query, page, limit, FILTER, token)).Select(x =>
+                    new ExhibitModel(x, label, GotoModpackViewCommand))),
             10);
-        }
     }
 }

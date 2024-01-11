@@ -1,29 +1,20 @@
-﻿using CommunityToolkit.Common.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.Common.Collections;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public class IncrementalFactorySource<T>(Func<uint, uint, CancellationToken, Task<IEnumerable<T>>> factory)
+    : IIncrementalSource<T>
 {
-    public class IncrementalFactorySource<T> : IIncrementalSource<T>
+    public async Task<IEnumerable<T>> GetPagedItemsAsync(
+        int page,
+        int limit,
+        CancellationToken token = default
+    )
     {
-        private readonly Func<uint, uint, CancellationToken, Task<IEnumerable<T>>> _factory;
-
-        public IncrementalFactorySource(
-            Func<uint, uint, CancellationToken, Task<IEnumerable<T>>> factory
-        )
-        {
-            _factory = factory;
-        }
-
-        public async Task<IEnumerable<T>> GetPagedItemsAsync(
-            int page,
-            int limit,
-            CancellationToken token = default
-        )
-        {
-            return await _factory((uint)(page * limit), (uint)limit, token);
-        }
+        return await factory((uint)(page * limit), (uint)limit, token);
     }
 }

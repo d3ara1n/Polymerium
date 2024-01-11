@@ -1,0 +1,29 @@
+﻿using System;
+using System.Linq;
+using Trident.Abstractions;
+using static Trident.Abstractions.Metadata.Layer;
+using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
+
+namespace Polymerium.App.Extensions;
+
+public static class ProfileExtensions
+{
+    public static string ExtractTypeDisplay(this Profile self)
+    {
+        var modloader = self.Metadata.Layers.SelectMany(x => x.Loaders)
+            .FirstOrDefault(x => Loader.MODLOADER_NAME_MAPPINGS.Keys.Contains(x.Id));
+        return modloader != null ? Loader.MODLOADER_NAME_MAPPINGS[modloader.Id] : "Vanilla";
+    }
+
+    public static DateTimeOffset? ExtractDateTime(this Profile self, TimelimeAction action)
+    {
+        return self.Records.Timeline
+            .Where(x => x.Action == action).MaxBy(x => x.EndTime)?.EndTime;
+    }
+
+    public static TimeSpan ExtractTimeSpan(this Profile self, TimelimeAction action)
+    {
+        return self.Records.Timeline.Where(x => x.Action == action).Select(x => x.EndTime - x.BeginTime)
+            .Aggregate(TimeSpan.Zero, (a, b) => a + b);
+    }
+}

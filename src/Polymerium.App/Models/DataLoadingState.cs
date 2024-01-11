@@ -1,9 +1,8 @@
-﻿namespace Polymerium.App.Models
+﻿namespace Polymerium.App.Models;
+
+public enum DataLoadingState
 {
-    public enum DataLoadingState
-    {
-        Loading,
-        Done,
-        Failed
-    }
+    Loading,
+    Done,
+    Failed
 }
