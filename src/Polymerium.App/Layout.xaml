@@ -52,13 +52,13 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Border
-            x:Name="AppTitleBar"
-            Grid.Column="1"
-            Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
-            Margin="64,0,0,0"
-            VerticalAlignment="Stretch"
-            Canvas.ZIndex="1">
+        <Border Grid.Row="0"
+                x:Name="AppTitleBar"
+                Grid.Column="1"
+                Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+                Margin="64,0,0,0"
+                VerticalAlignment="Stretch"
+                Canvas.ZIndex="1">
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                 <Image Width="24" Source="ms-appx:///Assets/Square44x44Logo.scale-100.png" />
                 <TextBlock
@@ -68,25 +68,26 @@
                     Style="{StaticResource CaptionTextBlockStyle}" Text="Polymerium" />
             </StackPanel>
         </Border>
-        <NavigationView
-            x:Name="NavigationViewControl"
-            Grid.RowSpan="2"
-            Grid.Column="1"
-            Canvas.ZIndex="0"
-            IsTabStop="False"
-            PaneDisplayMode="Auto"
-            IsSettingsVisible="False"
-            IsPaneToggleButtonVisible="False"
-            OpenPaneLength="220"
-            IsBackEnabled="{x:Bind Root.CanGoBack, Mode=OneWay}"
-            IsTitleBarAutoPaddingEnabled="True"
-            BackRequested="NavigationViewControl_BackRequested"
-            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-            SelectionChanged="NavigationViewControl_SelectionChanged">
+        <NavigationView Grid.Row="0"
+                        x:Name="NavigationViewControl"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        Canvas.ZIndex="0"
+                        IsTabStop="False"
+                        PaneDisplayMode="Auto"
+                        IsSettingsVisible="False"
+                        IsPaneToggleButtonVisible="False"
+                        IsBackEnabled="{x:Bind Root.CanGoBack, Mode=OneWay}"
+                        IsTitleBarAutoPaddingEnabled="True"
+                        BackRequested="NavigationViewControl_BackRequested"
+                        DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+                        SelectionChanged="NavigationViewControl_SelectionChanged">
             <NavigationView.Resources>
                 <!--<Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
                 <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />-->
+                <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
+                <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
             </NavigationView.Resources>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavItem">

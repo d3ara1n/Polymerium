@@ -9,21 +9,12 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Repositories;
 
-public class CurseForgeRepository : IRepository
+public class CurseForgeRepository(
+    IHttpClientFactory clientFactory,
+    ILogger<CurseForgeRepository> logger,
+    IMemoryCache cache)
+    : IRepository
 {
-    private readonly IMemoryCache _cache;
-    private readonly IHttpClientFactory _clientFactory;
-    private readonly ILogger _logger;
-    private readonly JsonSerializerOptions _options;
-
-    public CurseForgeRepository(IHttpClientFactory clientFactory, JsonSerializerOptions options,
-        ILogger<CurseForgeRepository> logger, IMemoryCache cache)
-    {
-        _clientFactory = clientFactory;
-        _options = options;
-        _logger = logger;
-        _cache = cache;
-    }
 
     public string Label => RepositoryLabels.CURSEFORGE;
 
@@ -31,7 +22,7 @@ public class CurseForgeRepository : IRepository
     {
         if (uint.TryParse(projectId, out var id))
         {
-            var result = await CurseForgeHelper.GetProjectAsync(_logger, _clientFactory, _cache, id, token);
+            var result = await CurseForgeHelper.GetProjectAsync(logger, clientFactory, cache, id, token);
             if (result != null)
                 return new Result<Project, ResourceError>(result);
             return new Result<Project, ResourceError>(ResourceError.NotFound);
@@ -40,17 +31,23 @@ public class CurseForgeRepository : IRepository
         return new Result<Project, ResourceError>(ResourceError.InvalidParameter);
     }
 
-    public Task<Result<Package, ResourceError>> ResolveAsync(string projectId, string? versionId, Filter filter,
-        CancellationToken token)
+    public async Task<Result<Package, ResourceError>> ResolveAsync(string projectId, string versionId, CancellationToken token)
     {
-        throw new NotImplementedException();
+        if (uint.TryParse(projectId, out var pid) && uint.TryParse(versionId, out var vid))
+        {
+            var result = await CurseForgeHelper.GetPackageAsync(logger, clientFactory, cache, pid, vid, token);
+            if (result != null)
+                return new Result<Package, ResourceError>(result);
+        }
+
+        return new Result<Package, ResourceError>(ResourceError.NotFound);
     }
 
     public async Task<IEnumerable<Exhibit>> SearchAsync(string keyword, uint page, uint limit, Filter filter,
         CancellationToken token)
     {
         var kind = filter.Kind ?? ResourceKind.Modpack;
-        return (await CurseForgeHelper.SearchProjectsAsync(_logger, _clientFactory, _cache, keyword, kind,
+        return (await CurseForgeHelper.SearchProjectsAsync(logger, clientFactory, cache, keyword, kind,
                 filter.Version, filter.ModLoader, page, limit, token))
             .Select(x => new Exhibit(x.Id.ToString(), x.Name, x.Logo?.ThumbnailUrl, kind,
                 string.Join(", ", x.Authors.Select(y => y.Name)), x.Summary, x.DateCreated, x.DateModified,

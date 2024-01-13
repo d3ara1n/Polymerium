@@ -1,4 +1,3 @@
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels;
@@ -13,8 +12,6 @@ namespace Polymerium.App.Views;
 /// </summary>
 public sealed partial class InstanceView : Page
 {
-    private object? parameter;
-
     public InstanceView()
     {
         InitializeComponent();
@@ -24,17 +21,13 @@ public sealed partial class InstanceView : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
+        ViewModel.OnAttached(e.Parameter);
         base.OnNavigatedTo(e);
-        parameter = e.Parameter;
     }
 
-    private void Page_Loaded(object sender, RoutedEventArgs e)
-    {
-        ViewModel.OnAttached(parameter);
-    }
-
-    private void Page_Unloaded(object sender, RoutedEventArgs e)
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
         ViewModel.OnDetached();
+        base.OnNavigatedFrom(e);
     }
 }

@@ -13,6 +13,8 @@ public record Package(
     string Summary,
     Uri Reference,
     ResourceKind Kind,
+    ReleaseType ReleaseType,
+    DateTimeOffset PublishedAt,
     string FileName,
     Uri Download,
     string? Hash,

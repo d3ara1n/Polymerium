@@ -224,6 +224,13 @@ public static class CurseForgeHelper
         return await GetResourcesAsync<EternalVersion>(logger, factory, cache, services, token);
     }
 
+    public static async Task<EternalVersion?> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
+        IMemoryCache cache, uint projectId, uint versionId, CancellationToken token = default)
+    {
+        var service = $"/mods/{projectId}/files/{versionId}";
+        return await GetResourceAsync<EternalVersion>(logger, factory, service, cache, token);
+    }
+
     public static async Task<Project?> GetProjectAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
         uint projectId, CancellationToken token = default)
     {
@@ -232,32 +239,16 @@ public static class CurseForgeHelper
         if (mod.HasValue && modDesc != null)
         {
             var files = await GetModFilesAsync(logger, factory, cache, projectId, token);
-            if (files != null && files.Any())
+            if (files.Any())
             {
-                var versionTasks = files.Where(x => x.IsAvailable && !x.IsServerPack && x.FileStatus == 4)
+                var versionTasks = files.Where(x => x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 })
                     .OrderByDescending(x => x.FileDate).Select(async x =>
                     {
                         var changelog = await GetModFileChangelogAsync(logger, factory, cache, projectId, x.Id, token);
                         if (changelog != null)
-                        {
-                            var gameReq = new List<string>();
-                            var loaderReq = new List<string>();
-                            foreach (var v in x.GameVersions)
-                                if (MODLOADERS_MAPPINGS.Keys.Contains(v))
-                                    loaderReq.Add(MODLOADERS_MAPPINGS[v]);
-                                else
-                                    gameReq.Add(v);
-                            var dependencies = x.Dependencies.Where(x => x.RelationType == 3 || x.RelationType == 2)
-                                .Select(x => new Dependency(MakePurl(projectId), x.RelationType == 3));
-                            return new Project.Version(x.DisplayName, changelog, x.ReleaseType switch
-                                {
-                                    1 => ReleaseType.Release,
-                                    2 => ReleaseType.Beta,
-                                    3 => ReleaseType.Alpha,
-                                    _ => ReleaseType.Release
-                                }, x.FileDate, x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
-                                new Requirement(gameReq, loaderReq), dependencies);
-                        }
+                            return new Project.Version(x.DisplayName, changelog, x.ExtractReleaseType(), x.FileDate,
+                                x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
+                                x.ExtractRequirement(), ExtractDependencies(x, mod.Value.Id));
 
                         return null;
                     });
@@ -268,7 +259,8 @@ public static class CurseForgeHelper
                 return new Project(
                     mod.Value.Id.ToString(),
                     mod.Value.Name,
-                    mod.Value.Logo?.ThumbnailUrl, string.Join(", ", mod.Value.Authors.Select(x => x.Name)),
+                    mod.Value.Logo?.ThumbnailUrl,
+                    string.Join(", ", mod.Value.Authors.Select(x => x.Name)),
                     mod.Value.Summary,
                     new Uri(PROJECT_URL.Replace("{0}", GetUrlTypeStringFromKind(kind)).Replace("{1}", mod.Value.Slug)),
                     kind,
@@ -283,6 +275,54 @@ public static class CurseForgeHelper
         }
 
         return null;
+    }
+
+    public static async Task<Package?> GetPackageAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
+        uint projectId, uint versionId, CancellationToken token = default)
+    {
+        var mod = await GetModInfoAsync(logger, factory, cache, projectId, token);
+        if (mod.HasValue)
+        {
+            var kind = GetResourceTypeFromClassId(mod.Value.ClassId);
+            var file = await GetModFileInfoAsync(logger, factory, cache, projectId, versionId, token);
+            if (file.HasValue)
+            {
+                var package = new Package(
+                    mod.Value.Id.ToString(),
+                    mod.Value.Name,
+                    file.Value.Id.ToString(),
+                    file.Value.DisplayName, mod.Value.Logo?.Url,
+                    string.Join(", ", mod.Value.Authors.Select(x => x.Name)),
+                    mod.Value.Summary,
+                    new Uri(PROJECT_URL.Replace("{0}", GetUrlTypeStringFromKind(kind))
+                        .Replace("{1}", mod.Value.Slug)),
+                    kind,
+                    file.Value.ExtractReleaseType(),
+                    file.Value.FileDate,
+                    file.Value.FileName,
+                    file.Value.ExtractDownloadUrl(),
+                    file.Value.ExtractSha1(),
+                    file.Value.ExtractRequirement(),
+                    ExtractDependencies(file.Value, mod.Value.Id)
+                );
+                return package;
+            }
+        }
+        return null;
+    }
+
+    private static IEnumerable<Dependency> ExtractDependencies(EternalVersion file, uint projectId)
+    {
+        return file.Dependencies
+            .Where(x => x.RelationType == 3 || x.RelationType == 2)
+            .Select(x => new Dependency(MakePurl(projectId), x.RelationType == 3));
+    }
+
+    private static IEnumerable<Dependency> ExtractDependencies(EternalProjectLatestFile file, uint projectId)
+    {
+        return file.Dependencies
+            .Where(x => x.RelationType == 3 || x.RelationType == 2)
+            .Select(x => new Dependency(MakePurl(projectId), x.RelationType == 3));
     }
 
     public class ResponseWrapper<T>

@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -11,10 +12,23 @@ namespace Polymerium.App.Views;
 /// </summary>
 public sealed partial class WorkbenchView : Page
 {
+
+    public WorkbenchViewModel ViewModel { get; } = App.ViewModel<WorkbenchViewModel>();
+
     public WorkbenchView()
     {
         InitializeComponent();
     }
 
-    public WorkbenchViewModel ViewModel { get; } = App.ViewModel<WorkbenchViewModel>();
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        ViewModel.OnAttached(e.Parameter);
+        base.OnNavigatedTo(e);
+    }
+
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
+    {
+        ViewModel.OnDetached();
+        base.OnNavigatedFrom(e);
+    }
 }

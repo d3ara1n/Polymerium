@@ -5,14 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Controls">
 
-    <CornerRadius x:Key="CardCornerRadius">10</CornerRadius>
+    <CornerRadius x:Key="CardSmallCornerRadius">5</CornerRadius>
+    <CornerRadius x:Key="CardMediumCornerRadius">10</CornerRadius>
+    <CornerRadius x:Key="CardLargeCornerRadius">15</CornerRadius>
     <Thickness x:Key="CardBorderThickness">1</Thickness>
     <Thickness x:Key="CardContentPadding">15</Thickness>
 
     <Style TargetType="local:Card" BasedOn="{StaticResource DefaultCardStyle}" />
 
     <Style x:Key="DefaultCardStyle" TargetType="local:Card">
-        <Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{StaticResource CardSmallCornerRadius}" />
         <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="{ThemeResource CardBorderThickness}" />

@@ -6,119 +6,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" />
-            <ColumnDefinition Width="1" />
-            <ColumnDefinition Width="5*" />
-        </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.Column="0">
-            <StackPanel Margin="{StaticResource PageContentMargin}">
-                <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                    <Expander.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="True" />
-                            <TextBlock Text="Custom" VerticalAlignment="Center" />
-                            <HyperlinkButton VerticalAlignment="Center">
-                                <FontIcon Glyph="&#xE70F;" FontSize="10" />
-                            </HyperlinkButton>
-                        </StackPanel>
-                    </Expander.Header>
-                    <StackPanel>
-                        <TextBlock Text="Loaders" Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <controls:Card Padding="0" HorizontalAlignment="Left" Width="268">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0"
-                                        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
-                                    <Image Width="64" Source="/Assets/Components/net.neoforged.png"
-                                           Margin="{StaticResource MediumMargin}" VerticalAlignment="Center" />
-                                </Border>
-                                <Grid Grid.Column="1" Margin="{StaticResource CardContentPadding}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <StackPanel Grid.Row="0">
-                                        <TextBlock Text="NeoForge" Style="{StaticResource BodyStrongTextBlockStyle}" />
-                                        <TextBlock Text="43.11.23" />
-                                    </StackPanel>
-                                    <TextBlock Grid.Row="1">
-                                        <Hyperlink>
-                                            <Run Text="Remove" />
-                                        </Hyperlink>
-                                    </TextBlock>
-                                </Grid>
-                            </Grid>
-                        </controls:Card>
-                        <TextBlock Text="Attachments" Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <controls:Card HorizontalAlignment="Stretch">
-                            <Grid ColumnSpacing="{StaticResource SmallGap}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <toolkit:ImageEx Grid.Column="0"
-                                                 Source="https://media.forgecdn.net/avatars/342/357/637486273248094570.png"
-                                                 Width="32" />
-                                <StackPanel Grid.Column="1">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <Border Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
-                                                Padding="{StaticResource TinyMargin}" HorizontalAlignment="Left">
-                                            <TextBlock Text="Mod" Style="{StaticResource CaptionTextBlockStyle}" />
-                                        </Border>
-                                        <TextBlock Text="Pipez" VerticalAlignment="Center"
-                                                   Style="{StaticResource BodyStrongTextBlockStyle}" />
-                                    </StackPanel>
-                                    <TextBlock
-                                        Text="This mod adds simple and highly configurable pipes that are designed to create as little lag as possible."
-                                        TextTrimming="WordEllipsis" />
-                                </StackPanel>
-                                <Grid Grid.Column="2">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="Pipez-1.20.1.zip" HorizontalAlignment="Right" />
-                                    <StackPanel Grid.Row="1" Orientation="Horizontal"
-                                                Spacing="{StaticResource TinyGap}" VerticalAlignment="Bottom"
-                                                HorizontalAlignment="Right">
-                                        <TextBlock>
-                                            <Hyperlink>
-                                                <Run Text="Modify" />
-                                            </Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock>
-                                            <Hyperlink>
-                                                <Run Text="Delete" />
-                                            </Hyperlink>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </controls:Card>
-                    </StackPanel>
-                </Expander>
-            </StackPanel>
-        </ScrollViewer>
-        <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}"
-                BorderThickness="1,0,0,0" />
-        <Grid Grid.Column="2">
+    <SplitView x:Name="SplitView" PanePlacement="Right" OpenPaneLength="680">
+        <SplitView.Pane>
             <ScrollViewer>
                 <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource TinyGap}">
                     <InfoBar IsOpen="True" Message="Turn on the switch to override values from the global."
-                             IsClosable="False" />
+                         IsClosable="False" />
                     <labs:SettingsExpander Header="Jvm Version"
-                                           Description="The directory contains bin/java.exe executable file.">
+                                       Description="The directory contains bin/java.exe executable file.">
                         <labs:SettingsExpander.Items>
                             <CheckBox Grid.Column="1" Content="Skip Java runtime version check" />
                             <Grid>
@@ -127,7 +28,7 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="Selected Java version in vault"
-                                           VerticalAlignment="Center" />
+                                       VerticalAlignment="Center" />
                                 <ComboBox Grid.Column="1" Text="8">
                                     <ComboBoxItem Content="8" />
                                     <ComboBoxItem Content="11" />
@@ -138,22 +39,198 @@
                         <ToggleSwitch />
                     </labs:SettingsExpander>
                     <labs:SettingsExpander Header="Jvm Max Memory"
-                                           Description="The max heap memory that jvm can allocate.">
+                                       Description="The max heap memory that jvm can allocate.">
                         <labs:SettingsExpander.Items>
                             <TextBox Text="8192" />
                         </labs:SettingsExpander.Items>
                         <ToggleSwitch />
                     </labs:SettingsExpander>
                     <labs:SettingsExpander Header="Jvm Addition Arguments"
-                                           Description="These arguments will be appended after jvm created.">
+                                       Description="These arguments will be appended after jvm created.">
                         <labs:SettingsExpander.Items>
                             <TextBox
-                                Text="-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Xms256m" />
+                            Text="-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Xms256m" />
                         </labs:SettingsExpander.Items>
                         <ToggleSwitch />
                     </labs:SettingsExpander>
                 </StackPanel>
             </ScrollViewer>
+        </SplitView.Pane>
+        <Grid>
+            <ScrollViewer>
+                <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Style="{StaticResource TitleTextBlockStyle}">
+                            <Run Text="Core Version:"/>
+                            <Run Text="{x:Bind ViewModel.Model.Inner.Metadata.Version,Mode=OneWay}"/>
+                        </TextBlock>
+                        <ToggleButton Grid.Column="1" Content="Configuration" IsThreeState="False" IsChecked="{x:Bind SplitView.IsPaneOpen,Mode=TwoWay}"/>
+                    </Grid>
+                    <InfoBar IsOpen="True" IsClosable="False" Message="You can't change core version due to loaders and attachments version incompatibility."/>
+                    <TextBlock Text="Layers" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <ListView SelectionMode="None" ItemsSource="{x:Bind ViewModel.Model.Layers,Mode=OneWay}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="{StaticResource SmallGap}"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:LayerModel">
+                                <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Expander.Header>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox Grid.Column="0" IsChecked="{x:Bind Enabled.Value,Mode=TwoWay}">
+                                                <TextBlock Text="{x:Bind Summary.Value,Mode=TwoWay}" TextTrimming="WordEllipsis"/>
+                                            </CheckBox>
+                                            <HyperlinkButton Grid.Column="1" VerticalAlignment="Center" >
+                                                <FontIcon Glyph="&#xE70F;" FontSize="10" />
+                                            </HyperlinkButton>
+                                        </Grid>
+                                    </Expander.Header>
+                                    <StackPanel Spacing="{StaticResource SmallGap}">
+                                        <TextBlock Text="Loaders" Style="{StaticResource SubtitleTextBlockStyle}" />
+                                        <ListView SelectionMode="None" ItemsSource="{x:Bind Loaders}">
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <toolkit:WrapPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="models:LoaderModel">
+                                                    <controls:Card Padding="0" HorizontalAlignment="Left" Width="268" CornerRadius="{StaticResource CardMediumCornerRadius}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border Grid.Column="0"
+                                                            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
+                                                                <Image Width="64" Source="{x:Bind Thumbnail}"
+                                                               Margin="{StaticResource MediumMargin}" VerticalAlignment="Center" />
+                                                            </Border>
+                                                            <Grid Grid.Column="1" Margin="{StaticResource CardContentPadding}">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
+                                                                <StackPanel Grid.Row="0">
+                                                                    <TextBlock Text="{x:Bind Name}" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                                    <TextBlock Text="{x:Bind Inner.Version}" />
+                                                                </StackPanel>
+                                                                <TextBlock Grid.Row="1">
+                                                            <Hyperlink>
+                                                                <Run Text="Remove" />
+                                                            </Hyperlink>
+                                                                </TextBlock>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </controls:Card>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                        <TextBlock Text="Attachments" Style="{StaticResource SubtitleTextBlockStyle}" />
+                                        <ListView SelectionMode="None" ItemsSource="{x:Bind Attachments}">
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Spacing="{StaticResource TinyGap}"/>
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="models:AttachmentModel">
+                                                    <controls:Card>
+                                                        <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind State.Value,Mode=OneWay}">
+                                                            <toolkit:Case Value="Loading">
+                                                                <StackPanel Spacing="{StaticResource TinyGap}">
+                                                                    <TextBlock Text="{x:Bind Inner}" HorizontalAlignment="Center"/>
+                                                                    <ProgressBar IsIndeterminate="True" Width="256" HorizontalAlignment="Center"/>
+                                                                </StackPanel>
+                                                            </toolkit:Case>
+                                                            <toolkit:Case Value="Done">
+                                                                <Grid ColumnSpacing="{StaticResource SmallGap}">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <toolkit:ImageEx Grid.Column="0"
+                                                                             Source="{x:Bind Thumbnail.Value,Mode=OneWay}"
+                                                                             Width="32" />
+                                                                    <StackPanel Grid.Column="1">
+                                                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                                                            <Border Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
+                                                                            Padding="{StaticResource TinyMargin}" HorizontalAlignment="Left">
+                                                                                <TextBlock Text="{x:Bind Kind.Value,Mode=OneWay}" Style="{StaticResource CaptionTextBlockStyle}" />
+                                                                            </Border>
+                                                                            <TextBlock Text="{x:Bind ProjectName.Value,Mode=OneWay}" VerticalAlignment="Center"
+                                                                               Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                                        </StackPanel>
+                                                                        <TextBlock
+                                                                    Text="{x:Bind Summary.Value,Mode=OneWay}"
+                                                                    TextTrimming="WordEllipsis" />
+                                                                    </StackPanel>
+                                                                    <Grid Grid.Column="2">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition Height="Auto" />
+                                                                            <RowDefinition Height="*" />
+                                                                        </Grid.RowDefinitions>
+                                                                        <TextBlock Grid.Row="0" Text="{x:Bind VersionName.Value,Mode=OneWay}" HorizontalAlignment="Right" />
+                                                                        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                                                                            Spacing="{StaticResource TinyGap}" VerticalAlignment="Bottom"
+                                                                            HorizontalAlignment="Right">
+                                                                            <TextBlock>
+                                                                                <Hyperlink>
+                                                                                    <Run Text="Modify" />
+                                                                                </Hyperlink>
+                                                                            </TextBlock>
+                                                                            <TextBlock>
+                                                                                <Hyperlink>
+                                                                                    <Run Text="Delete" />
+                                                                                </Hyperlink>
+                                                                            </TextBlock>
+                                                                        </StackPanel>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </toolkit:Case>
+                                                            <toolkit:Case Value="Failed">
+                                                                <StackPanel Spacing="{StaticResource TinyGap}" VerticalAlignment="Center">
+                                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="{StaticResource TinyGap}">
+                                                                        <TextBlock Text="Failed to retrieve data"/>
+                                                                        <TextBlock Text="{x:Bind Inner}" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="{StaticResource TinyGap}">
+                                                                        <TextBlock>
+                                                                            <Hyperlink>
+                                                                                <Run Text="Retry"/>
+                                                                            </Hyperlink>
+                                                                        </TextBlock>
+                                                                        <TextBlock>
+                                                                            <Hyperlink>
+                                                                                <Run Text="Delete"/>
+                                                                            </Hyperlink>
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                            </toolkit:Case>
+                                                        </toolkit:SwitchPresenter>
+                                                    </controls:Card>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                </Expander>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
-    </Grid>
+    </SplitView>
 </Page>

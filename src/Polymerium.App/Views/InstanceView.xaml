@@ -8,7 +8,7 @@
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+    mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

@@ -35,10 +35,10 @@ public class InstanceViewModel : ViewModelBase
     {
         if (maybeKey is string key)
         {
-            var handle = _profileManager.GetProfile(key);
-            if (handle != null)
-                Model = new ProfileModel(key, handle);
-            return handle != null;
+            var profile = _profileManager.GetProfile(key);
+            if (profile != null)
+                Model = new ProfileModel(key, profile);
+            return profile != null;
         }
 
         return false;

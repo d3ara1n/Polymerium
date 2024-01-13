@@ -10,7 +10,7 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <StartupObject>Polymerium.App.Program</StartupObject>
+    <StartupObject></StartupObject>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <PublishAot>False</PublishAot>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -82,7 +82,6 @@
   <ItemGroup>
     <Folder Include="Assets\Icons\" />
     <Folder Include="Assets\Placeholders\" />
-    <Folder Include="Assets\Components\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj" />

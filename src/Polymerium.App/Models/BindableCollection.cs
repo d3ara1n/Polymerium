@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Polymerium.App.Models;
 
-public class SynchronizedCollection<T>(IList<T> from) : ObservableCollection<T>(from)
+public class BindableCollection<T>(IList<T> from) : ObservableCollection<T>(from)
 {
     protected override void InsertItem(int index, T item)
     {

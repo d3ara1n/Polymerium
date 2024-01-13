@@ -15,8 +15,7 @@ public class DummyRepository : IRepository
     }
 
 
-    public Task<Result<Package, ResourceError>> ResolveAsync(string projectId, string? versionId, Filter filter,
-        CancellationToken token)
+    public Task<Result<Package, ResourceError>> ResolveAsync(string projectId, string versionId, CancellationToken token)
     {
         return Task.FromResult(new Result<Package, ResourceError>(ResourceError.NotFound));
     }

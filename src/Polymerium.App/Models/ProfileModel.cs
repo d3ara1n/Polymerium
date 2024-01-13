@@ -27,5 +27,5 @@ public record ProfileModel(string Key, Profile Inner)
         set => Inner.Records.Note = value;
     }
 
-    public SynchronizedCollection<Profile.RecordData.Todo> Todos { get; } = new(Inner.Records.Todos);
+    public BindableCollection<Profile.RecordData.Todo> Todos { get; } = new(Inner.Records.Todos);
 }
