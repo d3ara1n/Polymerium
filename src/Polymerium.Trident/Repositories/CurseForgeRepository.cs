@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using DotNext;
+﻿using DotNext;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Helpers;
@@ -15,14 +14,13 @@ public class CurseForgeRepository(
     IMemoryCache cache)
     : IRepository
 {
-
     public string Label => RepositoryLabels.CURSEFORGE;
 
     public async Task<Result<Project, ResourceError>> QueryAsync(string projectId, CancellationToken token)
     {
         if (uint.TryParse(projectId, out var id))
         {
-            var result = await CurseForgeHelper.GetProjectAsync(logger, clientFactory, cache, id, token);
+            var result = await CurseForgeHelper.GetIntoProjectAsync(logger, clientFactory, cache, id, token);
             if (result != null)
                 return new Result<Project, ResourceError>(result);
             return new Result<Project, ResourceError>(ResourceError.NotFound);
@@ -31,11 +29,14 @@ public class CurseForgeRepository(
         return new Result<Project, ResourceError>(ResourceError.InvalidParameter);
     }
 
-    public async Task<Result<Package, ResourceError>> ResolveAsync(string projectId, string versionId, CancellationToken token)
+    public async Task<Result<Package, ResourceError>> ResolveAsync(string projectId, string? versionId, Filter filter,
+        CancellationToken token)
     {
-        if (uint.TryParse(projectId, out var pid) && uint.TryParse(versionId, out var vid))
+        if (uint.TryParse(projectId, out var pid))
         {
-            var result = await CurseForgeHelper.GetPackageAsync(logger, clientFactory, cache, pid, vid, token);
+            var vid = versionId != null && uint.TryParse(versionId, out var r) ? r : (uint?)null;
+            var result = await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, cache, pid, vid,
+                filter.Version, filter.ModLoader, token);
             if (result != null)
                 return new Result<Package, ResourceError>(result);
         }

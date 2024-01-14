@@ -32,8 +32,7 @@
                 </VisualState>
                 <VisualState x:Name="Compact">
                     <VisualState.Setters>
-                        <Setter Target="CountPanel.Visibility" Value="Collapsed" />
-                        <Setter Target="CountBox.Width" Value="16" />
+                        <Setter Target="TaskPanel.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Top">
@@ -99,19 +98,25 @@
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
             <NavigationView.PaneCustomContent>
-                <Grid Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="10">
-                    <StackPanel Spacing="10" Orientation="Horizontal">
-                        <toolkit:ConstrainedBox x:Name="CountBox" AspectRatio="1:1" Width="40">
-                            <Border BorderThickness="2" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    CornerRadius="20">
-                                <TextBlock Text="0" Style="{StaticResource SubtitleTextBlockStyle}"
-                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Border>
+                <Grid Margin="{StaticResource SmallMargin}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                    <StackPanel x:Name="TaskPanel" Spacing="10" Orientation="Horizontal">
+                        <toolkit:ConstrainedBox AspectRatio="1:1" Width="40">
+                            <Grid>
+                                <ProgressRing Background="LightGray" IsIndeterminate="False"/>
+                                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
                         </toolkit:ConstrainedBox>
                         <StackPanel x:Name="CountPanel" VerticalAlignment="Center">
-                            <TextBlock Text="No running instances" />
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout Placement="RightEdgeAlignedTop">
+                                    <TextBlock Text="TODO"/>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
+                            <TextBlock Text="No running tasks" />
                             <TextBlock>
-                                <Hyperlink>Manage</Hyperlink>
+                                <Hyperlink Click="Hyperlink_OnClick">
+                                    <Run Text="Manage"/>
+                                </Hyperlink>
                             </TextBlock>
                         </StackPanel>
                     </StackPanel>

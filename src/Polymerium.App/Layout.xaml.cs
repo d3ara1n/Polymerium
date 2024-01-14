@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
+using Polymerium.App.Views;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -70,12 +73,16 @@ public sealed partial class Layout : UserControl
     private void NavigationViewControl_SelectionChanged(NavigationView sender,
         NavigationViewSelectionChangedEventArgs args)
     {
-        var item = args.SelectedItem as NavItem;
-        if (item != null) selectHandler?.Invoke(item.View, args.RecommendedNavigationTransitionInfo);
+        if (args.SelectedItem is NavItem item) selectHandler?.Invoke(item.View, args.RecommendedNavigationTransitionInfo);
     }
 
     private void NavigationViewControl_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
     {
         Root.GoBack();
+    }
+
+    private void Hyperlink_OnClick(Hyperlink sender, HyperlinkClickEventArgs args)
+    {
+        FlyoutBase.ShowAttachedFlyout(CountPanel);
     }
 }

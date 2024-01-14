@@ -122,7 +122,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\InformationView.xaml">
+    <Page Update="Views\ToolboxView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

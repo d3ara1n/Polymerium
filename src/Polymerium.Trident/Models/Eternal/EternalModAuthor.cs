@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.Eternal;
 
-public struct EternalProjectAuthor
+public struct EternalModAuthor
 {
     public uint Id { get; set; }
     public string Name { get; set; }

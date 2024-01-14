@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.Eternal;
 
-public struct EternalProjectLatestFileIndex
+public struct EternalModLatestFileIndex
 {
     public string GameVersion { get; set; }
     public uint FileId { get; set; }

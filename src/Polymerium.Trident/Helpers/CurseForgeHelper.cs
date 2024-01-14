@@ -63,8 +63,7 @@ public static class CurseForgeHelper
         };
     }
 
-    private static async Task<T?> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory, string service,
-        IMemoryCache cache, CancellationToken token = default)
+    private static async Task<T?> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, string service, CancellationToken token = default)
         where T : struct
     {
         if (token.IsCancellationRequested)
@@ -97,8 +96,7 @@ public static class CurseForgeHelper
         );
     }
 
-    private static async Task<string?> GetStringAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
-        string service, CancellationToken token = default)
+    private static async Task<string?> GetStringAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache, string service, CancellationToken token = default)
     {
         if (token.IsCancellationRequested)
             return null;
@@ -160,7 +158,7 @@ public static class CurseForgeHelper
         ) ?? Enumerable.Empty<T>();
     }
 
-    public static async Task<IEnumerable<EternalProject>> SearchProjectsAsync(ILogger logger,
+    public static async Task<IEnumerable<EternalMod>> SearchProjectsAsync(ILogger logger,
         IHttpClientFactory factory, IMemoryCache cache, string query, ResourceKind kind, string? gameVersion = null,
         string? modLoaderId = null, uint offset = 0, uint limit = 10, CancellationToken token = default)
     {
@@ -186,14 +184,14 @@ public static class CurseForgeHelper
                     ? $"&modLoaderType={modLoaderType}"
                     : ""
             );
-        return await GetResourcesAsync<EternalProject>(logger, factory, cache, service, token);
+        return await GetResourcesAsync<EternalMod>(logger, factory, cache, service, token);
     }
 
-    public static async Task<EternalProject?> GetModInfoAsync(ILogger logger, IHttpClientFactory factory,
+    public static async Task<EternalMod?> GetModInfoAsync(ILogger logger, IHttpClientFactory factory,
         IMemoryCache cache, uint projectId, CancellationToken token = default)
     {
         var service = $"/mods/{projectId}";
-        return await GetResourceAsync<EternalProject>(logger, factory, service, cache, token);
+        return await GetResourceAsync<EternalMod>(logger, factory, cache, service, token);
     }
 
     public static async Task<string?> GetModDescriptionAsync(ILogger logger, IHttpClientFactory factory,
@@ -217,21 +215,21 @@ public static class CurseForgeHelper
         return await GetStringAsync(logger, factory, cache, service, token);
     }
 
-    public static async Task<IEnumerable<EternalVersion>> GetModFilesAsync(ILogger logger, IHttpClientFactory factory,
+    public static async Task<IEnumerable<EternalModInfo>> GetModFilesAsync(ILogger logger, IHttpClientFactory factory,
         IMemoryCache cache, uint projectId, CancellationToken token = default)
     {
         var services = $"/mods/{projectId}/files";
-        return await GetResourcesAsync<EternalVersion>(logger, factory, cache, services, token);
+        return await GetResourcesAsync<EternalModInfo>(logger, factory, cache, services, token);
     }
 
-    public static async Task<EternalVersion?> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
+    public static async Task<EternalModInfo?> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
         IMemoryCache cache, uint projectId, uint versionId, CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{versionId}";
-        return await GetResourceAsync<EternalVersion>(logger, factory, service, cache, token);
+        return await GetResourceAsync<EternalModInfo>(logger, factory, cache, service, token);
     }
 
-    public static async Task<Project?> GetProjectAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
+    public static async Task<Project?> GetIntoProjectAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
         uint projectId, CancellationToken token = default)
     {
         var mod = await GetModInfoAsync(logger, factory, cache, projectId, token);
@@ -277,14 +275,39 @@ public static class CurseForgeHelper
         return null;
     }
 
-    public static async Task<Package?> GetPackageAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
-        uint projectId, uint versionId, CancellationToken token = default)
+    public static async Task<Package?> GetIntoPackageAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
+        uint projectId, uint? versionId, string? gameVersion, string? modLoader, CancellationToken token = default)
     {
         var mod = await GetModInfoAsync(logger, factory, cache, projectId, token);
         if (mod.HasValue)
         {
             var kind = GetResourceTypeFromClassId(mod.Value.ClassId);
-            var file = await GetModFileInfoAsync(logger, factory, cache, projectId, versionId, token);
+            EternalModInfo? file = null;
+            if (versionId.HasValue)
+            {
+                file = await GetModFileInfoAsync(logger, factory, cache, projectId, versionId.Value, token);
+
+            }
+            else
+            {
+                var files = await GetModFilesAsync(logger, factory, cache, projectId, token);
+                var filterd = files.Where(x =>
+                    {
+                        var valid = x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 };
+                        var game = gameVersion == null || x.GameVersions.Contains(gameVersion);
+                        if (modLoader != null && MODLOADERS_MAPPINGS.Values.Any(y => y == modLoader))
+                        {
+                            var loaderName = MODLOADERS_MAPPINGS.First(y => y.Value == modLoader).Key;
+                            var loader = x.GameVersions.Contains(loaderName);
+                            return valid && game && loader;
+                        }
+                        return valid && game;
+                    });
+                if (filterd.Any())
+                {
+                    file = filterd.MaxBy(x => x.FileDate);
+                }
+            }
             if (file.HasValue)
             {
                 var package = new Package(
@@ -311,14 +334,14 @@ public static class CurseForgeHelper
         return null;
     }
 
-    private static IEnumerable<Dependency> ExtractDependencies(EternalVersion file, uint projectId)
+    private static IEnumerable<Dependency> ExtractDependencies(EternalModInfo file, uint projectId)
     {
         return file.Dependencies
             .Where(x => x.RelationType == 3 || x.RelationType == 2)
             .Select(x => new Dependency(MakePurl(projectId), x.RelationType == 3));
     }
 
-    private static IEnumerable<Dependency> ExtractDependencies(EternalProjectLatestFile file, uint projectId)
+    private static IEnumerable<Dependency> ExtractDependencies(EternalModLatestFile file, uint projectId)
     {
         return file.Dependencies
             .Where(x => x.RelationType == 3 || x.RelationType == 2)

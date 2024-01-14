@@ -57,8 +57,12 @@ public partial class App : Application
                     client.DefaultRequestHeaders.Add("User-Agent",
                         $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
                 })
-                .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync()))
-            .AddNavigation();
+                .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync()));
+
+        services
+            .AddSingleton<NavigationService>()
+            .AddSingleton<TaskService>()
+            .AddSingleton<NotificationService>();
 
         // Trident Services
         services
@@ -76,7 +80,7 @@ public partial class App : Application
             .AddViewModel<AccountViewModel>()
             .AddViewModel<MarketViewModel>()
             .AddViewModel<SettingViewModel>()
-            .AddViewModel<InformationViewModel>()
+            .AddViewModel<ToolboxViewModel>()
             .AddViewModel<ModpackViewModel>()
             .AddViewModel<WorkbenchViewModel>();
 

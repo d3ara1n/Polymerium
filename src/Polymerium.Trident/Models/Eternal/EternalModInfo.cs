@@ -3,7 +3,7 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Models.Eternal;
 
-public struct EternalVersion
+public struct EternalModInfo
 {
     public uint Id { get; set; }
     public uint GameId { get; set; }
@@ -29,7 +29,7 @@ public struct EternalVersion
     public uint? ServerPackFileId { get; set; }
     public bool? IsEarlyAccessContent { get; set; }
     public DateTimeOffset? EarlyAccessEndDate { get; set; }
-    public long FileFingerpring { get; set; }
+    public long FileFingerprint { get; set; }
     public object Modules { get; set; }
 
     public Uri ExtractDownloadUrl()

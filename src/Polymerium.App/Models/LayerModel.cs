@@ -5,21 +5,40 @@ using Reactive.Bindings.Extensions;
 using Reactive.Bindings.TinyLinq;
 using Trident.Abstractions;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public record LayerModel
 {
-    public record LayerModel(RepositoryService Service, DispatcherQueue Dispatcher, Metadata.Layer Inner, WorkpieceModel Root)
+    private bool editMode;
+
+    public LayerModel(RepositoryService service, DispatcherQueue dispatcher, Metadata.Layer inner,
+        WorkpieceModel root)
     {
-        public Bindable<Metadata.Layer, bool> Enabled { get; } = new(Inner, (x) => x.Enabled, (x, v) => x.Enabled = v);
-        public Bindable<Metadata.Layer, string> Summary { get; } = new(Inner, (x) => x.Summary, (x, v) => x.Summary = v);
+        Service = service;
+        Dispatcher = dispatcher;
+        Inner = inner;
+        Root = root;
 
-        public ReadOnlyReactivePropertySlim<bool> IsLocked { get; } = Root.Reference.ObserveProperty(x => x.Value).Select(x => x == Inner.Source)
+        Enabled = new Bindable<Metadata.Layer, bool>(Inner, x => x.Enabled, (x, v) => x.Enabled = v);
+        Summary = new Bindable<Metadata.Layer, string>(Inner, x => x.Summary, (x, v) => x.Summary = v);
+        IsLocked = Root.Reference.ObserveProperty(x => x.Value).Select(x => x == Inner.Source)
             .ToReadOnlyReactivePropertySlim();
-
-        public ReadOnlyReactiveCollection<LoaderModel> Loaders { get; }
-            = new BindableCollection<Metadata.Layer.Loader>(Inner.Loaders).ToReadOnlyReactiveCollection(x => new LoaderModel(x));
-
-        public ReadOnlyReactiveCollection<AttachmentModel> Attachments { get; }
-            = new BindableCollection<string>(Inner.Attachments).ToReadOnlyReactiveCollection(x =>
-                new AttachmentModel(Service, Dispatcher, x));
+        Loaders = new BindableCollection<Metadata.Layer.Loader>(Inner.Loaders).ToReadOnlyReactiveCollection(x =>
+            new LoaderModel(x));
+        Attachments = new BindableCollection<string>(Inner.Attachments).ToReadOnlyReactiveCollection(x =>
+            new AttachmentModel(Service, Dispatcher, x, Root));
+        EditMode = new Bindable<LayerModel, bool>(this, x => x.editMode, (x, v) => x.editMode = v);
     }
+
+    public RepositoryService Service { get; }
+    public DispatcherQueue Dispatcher { get; }
+    public Metadata.Layer Inner { get; }
+    public WorkpieceModel Root { get; }
+
+    public Bindable<Metadata.Layer, bool> Enabled { get; }
+    public Bindable<Metadata.Layer, string> Summary { get; }
+    public ReadOnlyReactivePropertySlim<bool> IsLocked { get; }
+    public ReadOnlyReactiveCollection<LoaderModel> Loaders { get; }
+    public ReadOnlyReactiveCollection<AttachmentModel> Attachments { get; }
+    public Bindable<LayerModel, bool> EditMode { get; }
 }

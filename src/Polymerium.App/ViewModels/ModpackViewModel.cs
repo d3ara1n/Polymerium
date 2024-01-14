@@ -18,6 +18,7 @@ public class ModpackViewModel : ViewModelBase
     private DataLoadingState dataState = DataLoadingState.Loading;
 
     private ProjectModel project = ProjectModel.DUMMY;
+    private ProjectVersionModel? selectedVersion;
 
     public ModpackViewModel(RepositoryService repositoryService)
     {
@@ -36,6 +37,12 @@ public class ModpackViewModel : ViewModelBase
     {
         get => project;
         set => SetProperty(ref project, value);
+    }
+
+    public ProjectVersionModel? SelectedVersion
+    {
+        get => selectedVersion;
+        set => SetProperty(ref selectedVersion, value);
     }
 
     public ICommand OpenReferenceCommand { get; }

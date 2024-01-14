@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Trident.Abstractions;
+using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Resources;
 using static Trident.Abstractions.Metadata.Layer;
 using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
 
@@ -25,5 +27,12 @@ public static class ProfileExtensions
     {
         return self.Records.Timeline.Where(x => x.Action == action).Select(x => x.EndTime - x.BeginTime)
             .Aggregate(TimeSpan.Zero, (a, b) => a + b);
+    }
+
+    public static Filter ExtractFilter(this Profile self, ResourceKind? kind = null)
+    {
+        return new Filter(self.Metadata.Version,
+            self.Metadata.Layers.SelectMany(x => x.Loaders)
+                .FirstOrDefault(x => Loader.MODLOADER_NAME_MAPPINGS.ContainsKey(x.Id))?.Id, kind);
     }
 }

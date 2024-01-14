@@ -3,7 +3,7 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Models.Eternal;
 
-public struct EternalProjectLatestFile
+public struct EternalModLatestFile
 {
     public uint Id { get; set; }
     public uint GameId { get; set; }

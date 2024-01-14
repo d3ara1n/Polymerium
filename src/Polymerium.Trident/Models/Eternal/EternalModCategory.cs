@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.Eternal;
 
-public struct EternalProjectCategory
+public struct EternalModCategory
 {
     public uint Id { get; set; }
     public uint GameId { get; set; }

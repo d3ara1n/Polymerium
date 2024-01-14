@@ -1,7 +1,8 @@
-﻿using Microsoft.UI.Dispatching;
+﻿using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
 using Polymerium.Trident.Services;
-using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels;
 
@@ -12,11 +13,6 @@ public class WorkbenchViewModel : ViewModelBase
     private readonly RepositoryService _repositoryService;
 
     private WorkpieceModel model;
-    public WorkpieceModel Model
-    {
-        get => model;
-        set => SetProperty(ref model, value);
-    }
 
     public WorkbenchViewModel(RepositoryService repositoryService, ProfileManager profileManager)
     {
@@ -24,8 +20,19 @@ public class WorkbenchViewModel : ViewModelBase
         _repositoryService = repositoryService;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
 
-        model = new(_repositoryService, _dispatcher, ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE);
+        FetchAttachmentCommand = new RelayCommand<AttachmentModel>(FetchAttachment);
+
+        model = new WorkpieceModel(_repositoryService, _dispatcher, ProfileManager.DUMMY_KEY,
+            ProfileManager.DUMMY_PROFILE, FetchAttachmentCommand);
     }
+
+    public WorkpieceModel Model
+    {
+        get => model;
+        set => SetProperty(ref model, value);
+    }
+
+    public ICommand FetchAttachmentCommand { get; }
 
     public override bool OnAttached(object? maybeKey)
     {
@@ -33,7 +40,7 @@ public class WorkbenchViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new WorkpieceModel(_repositoryService, _dispatcher, key, profile);
+                Model = new WorkpieceModel(_repositoryService, _dispatcher, key, profile, FetchAttachmentCommand);
             return profile != null;
         }
 
@@ -43,5 +50,10 @@ public class WorkbenchViewModel : ViewModelBase
     public override void OnDetached()
     {
         if (Model.Key != ProfileManager.DUMMY_KEY) _profileManager.Flush(Model.Key);
+    }
+
+    private void FetchAttachment(AttachmentModel? model)
+    {
+        if (model != null) model.Fetch();
     }
 }

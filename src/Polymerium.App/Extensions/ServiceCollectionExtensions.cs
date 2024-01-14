@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
-using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Services;
@@ -11,12 +10,6 @@ namespace Polymerium.App.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddNavigation(this IServiceCollection services)
-    {
-        services.AddSingleton<NavigationService>();
-        return services;
-    }
-
     public static IServiceCollection AddViewModel<TViewModel>(this IServiceCollection services)
         where TViewModel : ViewModelBase
     {

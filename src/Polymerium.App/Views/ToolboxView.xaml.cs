@@ -8,9 +8,9 @@ namespace Polymerium.App.Views;
 /// <summary>
 ///     An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class InformationView : Page
+public sealed partial class ToolboxView : Page
 {
-    public InformationView()
+    public ToolboxView()
     {
         InitializeComponent();
     }

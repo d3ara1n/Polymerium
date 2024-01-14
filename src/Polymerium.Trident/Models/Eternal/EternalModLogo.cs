@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.Eternal;
 
-public struct EternalProjectLogo
+public struct EternalModLogo
 {
     public uint Id { get; set; }
     public uint ModId { get; set; }

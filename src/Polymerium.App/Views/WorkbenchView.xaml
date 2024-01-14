@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -70,7 +71,7 @@
                         </TextBlock>
                         <ToggleButton Grid.Column="1" Content="Configuration" IsThreeState="False" IsChecked="{x:Bind SplitView.IsPaneOpen,Mode=TwoWay}"/>
                     </Grid>
-                    <InfoBar IsOpen="True" IsClosable="False" Message="You can't change core version due to loaders and attachments version incompatibility."/>
+                    <InfoBar IsOpen="True" IsClosable="False" Message="You can't change core version due to loaders and attachments version incompatibility." />
                     <TextBlock Text="Layers" Style="{StaticResource TitleTextBlockStyle}"/>
                     <ListView SelectionMode="None" ItemsSource="{x:Bind ViewModel.Model.Layers,Mode=OneWay}">
                         <ListView.ItemsPanel>
@@ -78,43 +79,78 @@
                                 <StackPanel Spacing="{StaticResource SmallGap}"/>
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:LayerModel">
                                 <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                     <Expander.Header>
                                         <Grid>
+                                            <CheckBox IsChecked="{x:Bind Enabled.Value,Mode=TwoWay}" HorizontalAlignment="Left">
+                                                <TextBlock Text="Enabled"/>
+                                            </CheckBox>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="{StaticResource SmallGap}">
+                                                <toolkit:SwitchPresenter HorizontalAlignment="Center" Value="{x:Bind EditMode.Value,Mode=OneWay}">
+                                                    <toolkit:Case>
+                                                        <toolkit:Case.Value>
+                                                            <x:Boolean>False</x:Boolean>
+                                                        </toolkit:Case.Value>
+                                                        <TextBlock Text="{x:Bind Summary.Value,Mode=OneWay}" VerticalAlignment="Center"/>
+                                                    </toolkit:Case>
+                                                    <toolkit:Case>
+                                                        <toolkit:Case.Value>
+                                                            <x:Boolean>True</x:Boolean>
+                                                        </toolkit:Case.Value>
+                                                        <TextBox Text="{x:Bind Summary.Value,Mode=TwoWay}" VerticalAlignment="Center"/>
+                                                    </toolkit:Case>
+                                                </toolkit:SwitchPresenter>
+                                                <ToggleButton IsChecked="{x:Bind EditMode.Value,Mode=TwoWay}">
+                                                    <FontIcon Glyph="&#xE70F;" FontSize="12" />
+                                                </ToggleButton>
+                                            </StackPanel>
+                                            <FontIcon Glyph="&#xE72E;" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="{x:Bind IsLocked.Value,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                        </Grid>
+                                    </Expander.Header>
+                                    <StackPanel Spacing="{StaticResource SmallGap}">
+                                        <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <CheckBox Grid.Column="0" IsChecked="{x:Bind Enabled.Value,Mode=TwoWay}">
-                                                <TextBlock Text="{x:Bind Summary.Value,Mode=TwoWay}" TextTrimming="WordEllipsis"/>
-                                            </CheckBox>
-                                            <HyperlinkButton Grid.Column="1" VerticalAlignment="Center" >
-                                                <FontIcon Glyph="&#xE70F;" FontSize="10" />
-                                            </HyperlinkButton>
+                                            <TextBlock Grid.Column="0" Text="Loaders" Style="{StaticResource SubtitleTextBlockStyle}" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                                <HyperlinkButton IsEnabled="{x:Bind IsLocked.Value,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}">
+                                                    <TextBlock Text="Add"/>
+                                                </HyperlinkButton>
+                                            </StackPanel>
                                         </Grid>
-                                    </Expander.Header>
-                                    <StackPanel Spacing="{StaticResource SmallGap}">
-                                        <TextBlock Text="Loaders" Style="{StaticResource SubtitleTextBlockStyle}" />
-                                        <ListView SelectionMode="None" ItemsSource="{x:Bind Loaders}">
+                                        <ListView SelectionMode="None" ItemsSource="{x:Bind Loaders}" IsEnabled="{x:Bind IsLocked.Value,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}">
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <toolkit:WrapPanel/>
+                                                    <toolkit:WrapPanel HorizontalSpacing="{StaticResource SmallGap}" VerticalSpacing="{StaticResource SmallGap}"/>
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Padding" Value="0"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
                                             <ListView.ItemTemplate>
                                                 <DataTemplate x:DataType="models:LoaderModel">
-                                                    <controls:Card Padding="0" HorizontalAlignment="Left" Width="268" CornerRadius="{StaticResource CardMediumCornerRadius}">
+                                                    <controls:Card Padding="0" Width="268" CornerRadius="{StaticResource CardMediumCornerRadius}">
                                                         <Grid>
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto" />
                                                                 <ColumnDefinition Width="*" />
                                                             </Grid.ColumnDefinitions>
                                                             <Border Grid.Column="0"
-                                                            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
+                                                                        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
                                                                 <Image Width="64" Source="{x:Bind Thumbnail}"
-                                                               Margin="{StaticResource MediumMargin}" VerticalAlignment="Center" />
+                                                                           Margin="{StaticResource MediumMargin}" VerticalAlignment="Center" />
                                                             </Border>
                                                             <Grid Grid.Column="1" Margin="{StaticResource CardContentPadding}">
                                                                 <Grid.RowDefinitions>
@@ -126,9 +162,9 @@
                                                                     <TextBlock Text="{x:Bind Inner.Version}" />
                                                                 </StackPanel>
                                                                 <TextBlock Grid.Row="1">
-                                                            <Hyperlink>
-                                                                <Run Text="Remove" />
-                                                            </Hyperlink>
+                                                                        <Hyperlink>
+                                                                            <Run Text="Remove" />
+                                                                        </Hyperlink>
                                                                 </TextBlock>
                                                             </Grid>
                                                         </Grid>
@@ -136,13 +172,30 @@
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>
-                                        <TextBlock Text="Attachments" Style="{StaticResource SubtitleTextBlockStyle}" />
-                                        <ListView SelectionMode="None" ItemsSource="{x:Bind Attachments}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="Attachments" Style="{StaticResource SubtitleTextBlockStyle}" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                                <HyperlinkButton IsEnabled="{x:Bind IsLocked.Value,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}">
+                                                    <TextBlock Text="Get"/>
+                                                </HyperlinkButton>
+                                            </StackPanel>
+                                        </Grid>
+                                        <ListView SelectionMode="None" ItemsSource="{x:Bind Attachments}" IsEnabled="{x:Bind IsLocked.Value,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}">
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <StackPanel Spacing="{StaticResource TinyGap}"/>
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Padding" Value="0"/>
+                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
                                             <ListView.ItemTemplate>
                                                 <DataTemplate x:DataType="models:AttachmentModel">
                                                     <controls:Card>
@@ -207,7 +260,7 @@
                                                                     </StackPanel>
                                                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="{StaticResource TinyGap}">
                                                                         <TextBlock>
-                                                                            <Hyperlink>
+                                                                            <Hyperlink ui:HyperlinkExtensions.Command="{x:Bind Root.FetchAttachmentCommand}" ui:HyperlinkExtensions.CommandParameter="{x:Bind}">
                                                                                 <Run Text="Retry"/>
                                                                             </Hyperlink>
                                                                         </TextBlock>

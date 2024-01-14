@@ -21,8 +21,8 @@ public class NavigationService(ILogger<NavigationService> logger)
 
     public IEnumerable<NavItem> SideNavMenu = new NavItem[]
     {
-        new("Settings", "/Assets/Icons/Gear.svg", typeof(SettingView)),
-        new("Information", "/Assets/Icons/Information.svg", typeof(InformationView))
+        new("Toolbox", "/Assets/Icons/Toolbox.svg", typeof(ToolboxView)),
+        new("Settings", "/Assets/Icons/Gear.svg", typeof(SettingView))
     };
 
     public void SetHandler(Action<Type, object?, NavigationTransitionInfo?, bool> action)

@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Models.Eternal;
 
-public struct EternalProject
+public struct EternalMod
 {
     public uint Id { get; set; }
     public uint GameId { get; set; }
@@ -12,14 +12,14 @@ public struct EternalProject
     public uint DownloadCount { get; set; }
     public bool IsFeatured { get; set; }
     public uint PrimaryCategoryId { get; set; }
-    public IEnumerable<EternalProjectCategory> Categories { get; set; }
+    public IEnumerable<EternalModCategory> Categories { get; set; }
     public uint ClassId { get; set; }
-    public IEnumerable<EternalProjectAuthor> Authors { get; set; }
-    public EternalProjectLogo? Logo { get; set; }
+    public IEnumerable<EternalModAuthor> Authors { get; set; }
+    public EternalModLogo? Logo { get; set; }
     public IEnumerable<EternalScreenshot> Screenshots { get; set; }
     public uint MainFileId { get; set; }
-    public IEnumerable<EternalProjectLatestFile> LatestFiles { get; set; }
-    public IEnumerable<EternalProjectLatestFileIndex> LatestFilesIndexes { get; set; }
+    public IEnumerable<EternalModLatestFile> LatestFiles { get; set; }
+    public IEnumerable<EternalModLatestFileIndex> LatestFilesIndexes { get; set; }
     public DateTimeOffset DateCreated { get; set; }
     public DateTimeOffset DateModified { get; set; }
     public DateTimeOffset DateReleased { get; set; }
