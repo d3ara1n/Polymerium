@@ -85,8 +85,6 @@
                 <!--<Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
                 <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />-->
-                <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
-                <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
             </NavigationView.Resources>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavItem">
@@ -98,24 +96,24 @@
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
             <NavigationView.PaneCustomContent>
-                <Grid Margin="{StaticResource SmallMargin}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                <Grid Margin="{StaticResource SmallMargin}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <StackPanel x:Name="TaskPanel" Spacing="10" Orientation="Horizontal">
                         <toolkit:ConstrainedBox AspectRatio="1:1" Width="40">
                             <Grid>
-                                <ProgressRing Background="LightGray" IsIndeterminate="False"/>
-                                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <ProgressRing Background="LightGray" IsIndeterminate="False" />
+                                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                         </toolkit:ConstrainedBox>
                         <StackPanel x:Name="CountPanel" VerticalAlignment="Center">
                             <FlyoutBase.AttachedFlyout>
                                 <Flyout Placement="RightEdgeAlignedTop">
-                                    <TextBlock Text="TODO"/>
+                                    <TextBlock Text="TODO" />
                                 </Flyout>
                             </FlyoutBase.AttachedFlyout>
                             <TextBlock Text="No running tasks" />
                             <TextBlock>
                                 <Hyperlink Click="Hyperlink_OnClick">
-                                    <Run Text="Manage"/>
+                                    <Run Text="Manage" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>

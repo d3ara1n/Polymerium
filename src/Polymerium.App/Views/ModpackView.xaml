@@ -77,7 +77,8 @@
                         </Grid>
                     </toolkit:DockPanel>
                 </controls:Card>
-                <toolkit:SwitchPresenter Grid.Row="1" Grid.Column="0" Value="{x:Bind ViewModel.SelectedVersion,Converter={StaticResource NotNullToBoolConverter},Mode=OneWay}">
+                <toolkit:SwitchPresenter Grid.Row="1" Grid.Column="0"
+                                         Value="{x:Bind ViewModel.SelectedVersion,Converter={StaticResource NotNullToBoolConverter},Mode=OneWay}">
                     <toolkit:Case>
                         <toolkit:Case.Value>
                             <x:Boolean>False</x:Boolean>
@@ -89,8 +90,8 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <toolkit:ConstrainedBox Grid.Row="0" AspectRatio="32:9" VerticalAlignment="Stretch"
-                                    HorizontalAlignment="Center"
-                                    Visibility="{x:Bind ViewModel.Project.Gallery,Mode=OneWay,Converter={StaticResource CollectionVisibilityConverter}}">
+                                                        HorizontalAlignment="Center"
+                                                        Visibility="{x:Bind ViewModel.Project.Gallery,Mode=OneWay,Converter={StaticResource CollectionVisibilityConverter}}">
                                     <FlipView ItemsSource="{x:Bind ViewModel.Project.Gallery,Mode=OneWay}">
                                         <FlipView.ItemTemplate>
                                             <DataTemplate x:DataType="models:GalleryItemModel">
@@ -100,8 +101,9 @@
                                     </FlipView>
                                 </toolkit:ConstrainedBox>
                                 <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
-                          HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto" Padding="{StaticResource CardContentPadding}" Content="{x:Bind ViewModel.Project.Description,Mode=OneWay}">
-                                </ScrollViewer>
+                                              HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto"
+                                              Padding="{StaticResource CardContentPadding}"
+                                              Content="{x:Bind ViewModel.Project.Description,Mode=OneWay}" />
                             </Grid>
                         </controls:Card>
                     </toolkit:Case>
@@ -113,16 +115,19 @@
                             <StackPanel Spacing="{StaticResource TinyGap}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.SelectedVersion.Inner.Name,FallbackValue=N/A,Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                                    <TextBlock Grid.Column="0"
+                                               Text="{x:Bind ViewModel.SelectedVersion.Inner.Name,FallbackValue=N/A,Mode=OneWay}"
+                                               Style="{StaticResource SubtitleTextBlockStyle}" />
                                     <Button Grid.Column="1" Style="{StaticResource AccentButtonStyle}">
-                                        <TextBlock Text="Install"/>
+                                        <TextBlock Text="Install" />
                                     </Button>
                                 </Grid>
                                 <!-- 更为详细的信息，例如依赖啥的 -->
-                                <ContentControl Content="{x:Bind ViewModel.SelectedVersion.Changelog,FallbackValue=N/A,Mode=OneWay}"/>
+                                <ContentControl
+                                    Content="{x:Bind ViewModel.SelectedVersion.Changelog,FallbackValue=N/A,Mode=OneWay}" />
                             </StackPanel>
                         </controls:Card>
                     </toolkit:Case>
@@ -138,47 +143,49 @@
                         <toolkit:SwitchPresenter Value="{x:Bind SubmenuSelector.SelectedValue, Mode=OneWay}">
                             <toolkit:Case Value="CASE_VERSIONS">
                                 <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                                    <ListView ItemsSource="{x:Bind ViewModel.Project.Versions,Mode=OneWay}" Padding="{StaticResource TinyMargin}"
-                                              SelectionMode="Single" SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}">
+                                    <ListView ItemsSource="{x:Bind ViewModel.Project.Versions,Mode=OneWay}"
+                                              Padding="{StaticResource TinyMargin}"
+                                              SelectionMode="Single"
+                                              SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="models:ProjectVersionModel">
                                                 <StackPanel Margin="{StaticResource SmallMargin}">
                                                     <TextBlock Text="{x:Bind Inner.Name}" />
                                                     <StackPanel Orientation="Horizontal"
-                                                                    Spacing="{StaticResource TinyGap}">
+                                                                Spacing="{StaticResource TinyGap}">
                                                         <toolkit:SwitchPresenter Value="{x:Bind Inner.ReleaseType}"
-                                                                TargetType="resources:ReleaseType">
+                                                            TargetType="resources:ReleaseType">
                                                             <toolkit:Case Value="Release">
                                                                 <Grid>
                                                                     <Rectangle
-                                                                            Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
-                                                                            Width="20" Height="20" />
+                                                                        Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                                        Width="20" Height="20" />
                                                                     <TextBlock Text="R"
-                                                                            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                                                                            VerticalAlignment="Center"
-                                                                            HorizontalAlignment="Center" />
+                                                                               Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center" />
                                                                 </Grid>
                                                             </toolkit:Case>
                                                             <toolkit:Case Value="Beta">
                                                                 <Grid>
                                                                     <Rectangle
-                                                                            Fill="{ThemeResource SystemFillColorAttentionBackgroundBrush}"
-                                                                            Width="20" Height="20" />
+                                                                        Fill="{ThemeResource SystemFillColorAttentionBackgroundBrush}"
+                                                                        Width="20" Height="20" />
                                                                     <TextBlock Text="B"
-                                                                            Foreground="{ThemeResource SystemFillColorAttentionBrush}"
-                                                                            VerticalAlignment="Center"
-                                                                            HorizontalAlignment="Center" />
+                                                                               Foreground="{ThemeResource SystemFillColorAttentionBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center" />
                                                                 </Grid>
                                                             </toolkit:Case>
                                                             <toolkit:Case Value="Alpha">
                                                                 <Grid>
                                                                     <Rectangle
-                                                                            Fill="{ThemeResource SystemFillColorCautionBackgroundBrush}"
-                                                                            Width="20" Height="20" />
+                                                                        Fill="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                                        Width="20" Height="20" />
                                                                     <TextBlock Text="A"
-                                                                            Foreground="{ThemeResource SystemFillColorCautionBrush}"
-                                                                            VerticalAlignment="Center"
-                                                                            HorizontalAlignment="Center" />
+                                                                               Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center" />
                                                                 </Grid>
                                                             </toolkit:Case>
                                                         </toolkit:SwitchPresenter>
