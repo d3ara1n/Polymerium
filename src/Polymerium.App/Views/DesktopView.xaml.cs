@@ -1,5 +1,7 @@
+using System;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
+using Polymerium.App.Dialogs;
 using Polymerium.App.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -18,4 +20,13 @@ public sealed partial class DesktopView : Page
     }
 
     public DesktopViewModel ViewModel { get; } = App.ViewModel<DesktopViewModel>();
+
+    private async void ImportButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var dialog = new DragDropInputDialog
+            { XamlRoot = XamlRoot, CaptionText = "Drag and drop", BodyText = "Any modpack file here" };
+        if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+        {
+        }
+    }
 }

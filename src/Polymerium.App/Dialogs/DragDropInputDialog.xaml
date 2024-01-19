@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentDialog
+    x:Class="Polymerium.App.Dialogs.DragDropInputDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}"
+    PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
+    Title="Drag drop dialog" PrimaryButtonText="Ok" CloseButtonText="Cancel">
+
+    <StackPanel Spacing="{StaticResource SmallGap}">
+        <controls:DragDropArea Padding="{StaticResource LargeMargin}" DragEnter="UIElement_OnDragEnter"
+                               Drop="UIElement_OnDrop">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                <FontIcon Glyph="{x:Bind IconGlyph}" FontSize="44" VerticalAlignment="Center" Margin="0,0,10,0" />
+                <StackPanel>
+                    <TextBlock Text="{x:Bind CaptionText}" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="{x:Bind BodyText}"
+                               Style="{StaticResource BodyTextBlockStyle}"
+                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                </StackPanel>
+            </StackPanel>
+        </controls:DragDropArea>
+        <Grid ColumnSpacing="{StaticResource TinyGap}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{x:Bind ResultPath,Mode=TwoWay}" Grid.Column="0" />
+            <Button x:Name="ChooseButton" Grid.Column="1" Content="Choose" Click="ChooseButton_OnClick" />
+        </Grid>
+    </StackPanel>
+</ContentDialog>

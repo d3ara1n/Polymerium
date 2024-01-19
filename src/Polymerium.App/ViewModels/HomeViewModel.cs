@@ -7,18 +7,14 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using Reactive.Bindings;
-using Trident.Abstractions;
 using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
 
 namespace Polymerium.App.ViewModels;
 
 public class HomeViewModel : ViewModelBase
 {
-    private readonly ProfileManager _profileManger;
     private readonly NavigationService _navigationService;
-    public IEnumerable<RecentModel> Recents { get; }
-    public ICommand GotoInstanceViewCommand { get; }
+    private readonly ProfileManager _profileManger;
 
     public HomeViewModel(ProfileManager profileManger, NavigationService navigationService)
     {
@@ -30,8 +26,11 @@ public class HomeViewModel : ViewModelBase
             .Select(x => (x.Value.Value.ExtractDateTime(TimelimeAction.Play), x.Value.Value, x.Key))
             .Where(x => x.Item1 != null)
             .OrderByDescending(x => x.Item1)
-            .Select(x => new RecentModel(x.Item3, x.Item2,  GotoInstanceViewCommand));
+            .Select(x => new RecentModel(x.Item3, x.Item2, GotoInstanceViewCommand));
     }
+
+    public IEnumerable<RecentModel> Recents { get; }
+    public ICommand GotoInstanceViewCommand { get; }
 
     private void GotoInstanceView(string? key)
     {

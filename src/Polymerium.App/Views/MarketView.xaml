@@ -34,7 +34,8 @@
                         </Pivot.ItemTemplate>
                     </Pivot>
                 </Grid>
-                <AutoSuggestBox x:Name="SearchBox" PlaceholderText="Search for modpacks..." QueryIcon="Find" QuerySubmitted="SearchBox_QuerySubmitted" />
+                <AutoSuggestBox x:Name="SearchBox" PlaceholderText="Search for modpacks..." QueryIcon="Find"
+                                QuerySubmitted="SearchBox_QuerySubmitted" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">

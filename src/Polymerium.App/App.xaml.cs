@@ -32,6 +32,8 @@ public partial class App : Application
 
     public IServiceProvider Provider { get; }
 
+    public Window Window { get; private set; }
+
     public static T ViewModel<T>()
         where T : ViewModelBase
     {
@@ -70,7 +72,8 @@ public partial class App : Application
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium")));
         services
             .AddSingleton<ProfileManager>()
-            .AddSingleton<RepositoryAgent>();
+            .AddSingleton<RepositoryAgent>()
+            .AddSingleton<DownloadManager>();
 
         // ViewModels
         services
@@ -91,7 +94,8 @@ public partial class App : Application
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        Spawn(Provider.GetRequiredService<NavigationService>()).Activate();
+        Window = Spawn(Provider.GetRequiredService<NavigationService>());
+        Window.Activate();
     }
 
     private Window Spawn(NavigationService navigation)
@@ -111,7 +115,7 @@ public partial class App : Application
         navigation.SetHandler(layout.OnNavigate);
         layout.SetMainMenu(navigation.MainNavMenu);
         layout.SetSideMenu(navigation.SideNavMenu);
-        layout.SetHandler((view, parameter,info) => navigation.Navigate(view, parameter, info, true));
+        layout.SetHandler((view, parameter, info) => navigation.Navigate(view, parameter, info, true));
         //var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
         //if (settings.Values.ContainsKey("Window.Height")
         //    && settings.Values["Window.Height"] is int height

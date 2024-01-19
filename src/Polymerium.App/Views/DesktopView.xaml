@@ -23,7 +23,7 @@
             </Grid.ColumnDefinitions>
             <AutoSuggestBox QueryIcon="Find" PlaceholderText="Search" Grid.Column="0" />
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
-                <Button>
+                <Button x:Name="ImportButton" Click="ImportButton_OnClick">
                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                         <SymbolIcon Symbol="Import" />
                         <TextBlock Text="Import" />

@@ -31,11 +31,11 @@ public sealed partial class Layout
 
     public void OnNavigate(Type view, object? parameter, NavigationTransitionInfo? info, bool isRoot)
     {
-            if (info != null)
-                Root.Navigate(view, parameter, info);
-            else
-                Root.Navigate(view, parameter);
-            if (isRoot) Root.BackStack.Clear();
+        if (info != null)
+            Root.Navigate(view, parameter, info);
+        else
+            Root.Navigate(view, parameter);
+        if (isRoot) Root.BackStack.Clear();
     }
 
     public void SetMainMenu(IEnumerable<NavItem> menu)

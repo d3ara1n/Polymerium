@@ -64,7 +64,6 @@ public sealed class ProfileManager : IDisposable
         handle.Flush();
         _logger.LogInformation("Flush triggered for {0}", key);
         return true;
-
     }
 
     private void Scan()

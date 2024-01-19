@@ -9,5 +9,6 @@
         <ResourceDictionary Source="ms-appx:///Controls/EntryCard.xaml" />
         <ResourceDictionary Source="ms-appx:///Controls/IconLabel.xaml" />
         <ResourceDictionary Source="ms-appx:///Controls/CardButton.xaml" />
+        <ResourceDictionary Source="ms-appx:///Controls/DragDropArea.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

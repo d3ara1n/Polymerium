@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Resolving\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Resolving\"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DotNext" Version="5.0.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="DotNext" Version="5.0.0"/>
+    </ItemGroup>
 
 </Project>

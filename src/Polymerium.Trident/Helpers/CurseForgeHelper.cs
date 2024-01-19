@@ -63,105 +63,81 @@ public static class CurseForgeHelper
         };
     }
 
-    private static async Task<T?> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
+    private static async Task<T?> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory,
         string service, CancellationToken token = default)
         where T : struct
     {
         if (token.IsCancellationRequested)
             return null;
-        return await cache.GetOrCreateAsync(
-            service,
-            async entry =>
+        T? result = default;
+        using var client = factory.CreateClient();
+        client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
+        try
+        {
+            var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(ENDPOINT + service, token);
+            if (response?.Data != null)
             {
-                var found = false;
-                T? result = default;
-                using var client = factory.CreateClient();
-                client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
-                try
-                {
-                    var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(ENDPOINT + service, token);
-                    if (response?.Data != null)
-                    {
-                        result = response.Data;
-                        found = true;
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
-                }
-
-                entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
-                return result;
+                result = response.Data;
             }
-        );
+        }
+        catch (Exception e)
+        {
+            logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
+        }
+
+        return result;
     }
 
-    private static async Task<string?> GetStringAsync(ILogger logger, IHttpClientFactory factory, IMemoryCache cache,
-        string service, CancellationToken token = default)
+    private static async Task<string?> GetStringAsync(ILogger logger, IHttpClientFactory factory, string service,
+        CancellationToken token = default)
     {
         if (token.IsCancellationRequested)
             return null;
-        return await cache.GetOrCreateAsync(
-            service,
-            async entry =>
+        var found = false;
+        string? result = default;
+        using var client = factory.CreateClient();
+        client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
+        try
+        {
+            var response = await client.GetFromJsonAsync<ResponseWrapper<string>>(ENDPOINT + service, token);
+            if (response?.Data != null)
             {
-                var found = false;
-                string? result = default;
-                using var client = factory.CreateClient();
-                client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
-                try
-                {
-                    var response = await client.GetFromJsonAsync<ResponseWrapper<string>>(ENDPOINT + service, token);
-                    if (response?.Data != null)
-                    {
-                        result = response.Data;
-                        found = true;
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
-                }
-
-                entry.SetSlidingExpiration(TimeSpan.FromSeconds(found ? 60 * 60 : 1));
-                return result;
+                result = response.Data;
             }
-        );
+        }
+        catch (Exception e)
+        {
+            logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
+        }
+
+        return result;
     }
 
     private static async Task<IEnumerable<T>> GetResourcesAsync<T>(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache, string service, CancellationToken token = default)
+        string service, CancellationToken token = default)
         where T : struct
     {
         if (token.IsCancellationRequested)
             return Enumerable.Empty<T>();
-        return await cache.GetOrCreateAsync(
-            service,
-            async entry =>
-            {
-                IEnumerable<T>? results = null;
-                using var client = factory.CreateClient();
-                client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
-                try
-                {
-                    var response =
-                        await client.GetFromJsonAsync<ResponseWrapper<IEnumerable<T>>>(ENDPOINT + service, token);
-                    if (response?.Data != null) results = response.Data;
-                }
-                catch (Exception e)
-                {
-                    logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
-                }
+        IEnumerable<T>? results = null;
+        using var client = factory.CreateClient();
+        client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
+        try
+        {
+            var response =
+                await client.GetFromJsonAsync<ResponseWrapper<IEnumerable<T>>>(ENDPOINT + service, token);
+            if (response?.Data != null) results = response.Data;
+        }
+        catch (Exception e)
+        {
+            logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
+        }
 
-                entry.SetSlidingExpiration(TimeSpan.FromSeconds(results != null ? 60 * 60 : 1));
-                return results ?? Enumerable.Empty<T>();
-            }
-        ) ?? Enumerable.Empty<T>();
+        return results ?? Enumerable.Empty<T>();
     }
 
     public static async Task<IEnumerable<EternalMod>> SearchProjectsAsync(ILogger logger,
-        IHttpClientFactory factory, IMemoryCache cache, string query, ResourceKind kind, string? gameVersion = null,
+        IHttpClientFactory factory, string query, ResourceKind kind, string? gameVersion = null,
         string? modLoaderId = null, uint offset = 0, uint limit = 10, CancellationToken token = default)
     {
         var modLoaderType = modLoaderId switch
@@ -186,66 +162,65 @@ public static class CurseForgeHelper
                     ? $"&modLoaderType={modLoaderType}"
                     : ""
             );
-        return await GetResourcesAsync<EternalMod>(logger, factory, cache, service, token);
+        return await GetResourcesAsync<EternalMod>(logger, factory, service, token);
     }
 
-    public static async Task<EternalMod?> GetModInfoAsync(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache, uint projectId, CancellationToken token = default)
+    public static async Task<EternalMod?> GetModInfoAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
+        CancellationToken token = default)
     {
         var service = $"/mods/{projectId}";
-        return await GetResourceAsync<EternalMod>(logger, factory, cache, service, token);
+        return await GetResourceAsync<EternalMod>(logger, factory, service, token);
     }
 
-    public static async Task<string?> GetModDescriptionAsync(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache, uint projectId, CancellationToken token = default)
+    public static async Task<string?> GetModDescriptionAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
+        CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/description";
-        return await GetStringAsync(logger, factory, cache, service, token);
+        return await GetStringAsync(logger, factory, service, token);
     }
 
-    public static async Task<string?> GetModDownloadUrlAsync(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache, uint projectId, uint fileId, CancellationToken token = default)
+    public static async Task<string?> GetModDownloadUrlAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
+        uint fileId, CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{fileId}/download-url";
-        return await GetStringAsync(logger, factory, cache, service, token);
+        return await GetStringAsync(logger, factory, service, token);
     }
 
     public static async Task<string?> GetModFileChangelogAsync(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache, uint projectId, uint fileId, CancellationToken token = default)
+        uint projectId, uint fileId, CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{fileId}/changelog";
-        return await GetStringAsync(logger, factory, cache, service, token);
+        return await GetStringAsync(logger, factory, service, token);
     }
 
     public static async Task<IEnumerable<EternalModInfo>> GetModFilesAsync(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache, uint projectId, CancellationToken token = default)
+        uint projectId, CancellationToken token = default)
     {
         var services = $"/mods/{projectId}/files";
-        return await GetResourcesAsync<EternalModInfo>(logger, factory, cache, services, token);
+        return await GetResourcesAsync<EternalModInfo>(logger, factory, services, token);
     }
 
     public static async Task<EternalModInfo?> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache, uint projectId, uint versionId, CancellationToken token = default)
+        uint projectId, uint versionId, CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{versionId}";
-        return await GetResourceAsync<EternalModInfo>(logger, factory, cache, service, token);
+        return await GetResourceAsync<EternalModInfo>(logger, factory, service, token);
     }
 
     public static async Task<Project?> GetIntoProjectAsync(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache,
         uint projectId, CancellationToken token = default)
     {
-        var mod = await GetModInfoAsync(logger, factory, cache, projectId, token);
-        var modDesc = await GetModDescriptionAsync(logger, factory, cache, projectId, token);
+        var mod = await GetModInfoAsync(logger, factory, projectId, token);
+        var modDesc = await GetModDescriptionAsync(logger, factory, projectId, token);
         if (mod.HasValue && modDesc != null)
         {
-            var files = await GetModFilesAsync(logger, factory, cache, projectId, token);
+            var files = await GetModFilesAsync(logger, factory, projectId, token);
             if (files.Any())
             {
                 var versionTasks = files.Where(x => x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 })
                     .OrderByDescending(x => x.FileDate).Select(async x =>
                     {
-                        var changelog = await GetModFileChangelogAsync(logger, factory, cache, projectId, x.Id, token);
+                        var changelog = await GetModFileChangelogAsync(logger, factory, projectId, x.Id, token);
                         if (changelog != null)
                             return new Project.Version(x.DisplayName, changelog, x.ExtractReleaseType(), x.FileDate,
                                 x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
@@ -279,21 +254,20 @@ public static class CurseForgeHelper
     }
 
     public static async Task<Package?> GetIntoPackageAsync(ILogger logger, IHttpClientFactory factory,
-        IMemoryCache cache,
         uint projectId, uint? versionId, string? gameVersion, string? modLoader, CancellationToken token = default)
     {
-        var mod = await GetModInfoAsync(logger, factory, cache, projectId, token);
+        var mod = await GetModInfoAsync(logger, factory, projectId, token);
         if (mod.HasValue)
         {
             var kind = GetResourceTypeFromClassId(mod.Value.ClassId);
             EternalModInfo? file = null;
             if (versionId.HasValue)
             {
-                file = await GetModFileInfoAsync(logger, factory, cache, projectId, versionId.Value, token);
+                file = await GetModFileInfoAsync(logger, factory, projectId, versionId.Value, token);
             }
             else
             {
-                var files = await GetModFilesAsync(logger, factory, cache, projectId, token);
+                var files = await GetModFilesAsync(logger, factory, projectId, token);
                 var filterd = files.Where(x =>
                 {
                     var valid = x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 };

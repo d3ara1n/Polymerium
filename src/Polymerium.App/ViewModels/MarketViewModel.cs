@@ -21,9 +21,9 @@ namespace Polymerium.App.ViewModels;
 public class MarketViewModel : ViewModelBase
 {
     private readonly NavigationService _navigation;
-    private readonly RepositoryAgent repositoryAgent;
 
     private readonly Filter FILTER = new(null, null, ResourceKind.Modpack);
+    private readonly RepositoryAgent repositoryAgent;
 
     private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
 

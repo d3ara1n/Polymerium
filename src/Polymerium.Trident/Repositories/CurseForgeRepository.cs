@@ -10,8 +10,7 @@ namespace Polymerium.Trident.Repositories;
 
 public class CurseForgeRepository(
     IHttpClientFactory clientFactory,
-    ILogger<CurseForgeRepository> logger,
-    IMemoryCache cache)
+    ILogger<CurseForgeRepository> logger)
     : IRepository
 {
     public string Label => RepositoryLabels.CURSEFORGE;
@@ -20,7 +19,7 @@ public class CurseForgeRepository(
     {
         if (uint.TryParse(projectId, out var id))
         {
-            var result = await CurseForgeHelper.GetIntoProjectAsync(logger, clientFactory, cache, id, token);
+            var result = await CurseForgeHelper.GetIntoProjectAsync(logger, clientFactory, id, token);
             if (result != null)
                 return new Result<Project, ResourceError>(result);
             return new Result<Project, ResourceError>(ResourceError.NotFound);
@@ -35,7 +34,7 @@ public class CurseForgeRepository(
         if (uint.TryParse(projectId, out var pid))
         {
             var vid = versionId != null && uint.TryParse(versionId, out var r) ? r : (uint?)null;
-            var result = await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, cache, pid, vid,
+            var result = await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, pid, vid,
                 filter.Version, filter.ModLoader, token);
             if (result != null)
                 return new Result<Package, ResourceError>(result);
@@ -48,7 +47,7 @@ public class CurseForgeRepository(
         CancellationToken token)
     {
         var kind = filter.Kind ?? ResourceKind.Modpack;
-        return (await CurseForgeHelper.SearchProjectsAsync(logger, clientFactory, cache, keyword, kind,
+        return (await CurseForgeHelper.SearchProjectsAsync(logger, clientFactory, keyword, kind,
                 filter.Version, filter.ModLoader, page, limit, token))
             .Select(x => new Exhibit(x.Id.ToString(), x.Name, x.Logo?.ThumbnailUrl, kind,
                 string.Join(", ", x.Authors.Select(y => y.Name)), x.Summary, x.DateCreated, x.DateModified,
