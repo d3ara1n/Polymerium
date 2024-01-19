@@ -1,5 +1,9 @@
+using System;
 using System.Linq;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 
@@ -20,13 +24,24 @@ public sealed partial class MarketView : Page
 
     public MarketViewModel ViewModel { get; } = App.ViewModel<MarketViewModel>();
 
+    public static readonly DependencyProperty HeaderImageProperty = DependencyProperty.Register(nameof(HeaderImage),
+        typeof(Brush), typeof(MarketView), new PropertyMetadata(null));
+
+    public Brush? HeaderImage
+    {
+        get => (Brush?)GetValue(HeaderImageProperty);
+        set => SetValue(HeaderImageProperty, value);
+    }
+
     private void RepositorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var first = (RepositoryModel?)e.AddedItems.FirstOrDefault();
         if (first != null)
         {
-            HeaderPane.Background = first.Background;
-
+            HeaderImage = new ImageBrush()
+            {
+                ImageSource = new BitmapImage(new Uri($"ms-appx://{first.Background}"))
+            };
             Submit(first, SearchBox.Text);
         }
     }

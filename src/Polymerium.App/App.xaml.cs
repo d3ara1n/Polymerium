@@ -89,7 +89,8 @@ public partial class App : Application
 
         // Repositories
         services
-            .AddRepository<CurseForgeRepository>();
+            .AddRepository<CurseForgeRepository>()
+            .AddRepository<ModrinthRepository>();
     }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)

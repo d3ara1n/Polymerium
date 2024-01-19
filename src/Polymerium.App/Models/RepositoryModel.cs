@@ -2,4 +2,4 @@
 
 namespace Polymerium.App.Models;
 
-public record RepositoryModel(string Label, Brush Background);
+public record RepositoryModel(string Label, string Background);

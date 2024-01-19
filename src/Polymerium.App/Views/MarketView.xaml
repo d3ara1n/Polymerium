@@ -6,33 +6,33 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:lab="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" NavigationCacheMode="Required">
+    <Page.Resources>
+        <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid x:Name="HeaderPane" Grid.Row="0">
+        <Grid Grid.Row="0" Background="{x:Bind HeaderImage,Mode=OneWay}">
             <Grid.BackgroundTransition>
                 <BrushTransition />
             </Grid.BackgroundTransition>
             <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
                 <Grid>
-                    <Pivot x:Name="RepositorySelector" ItemsSource="{x:Bind ViewModel.Repositories}"
-                           SelectionChanged="RepositorySelector_SelectionChanged">
-                        <Pivot.HeaderTemplate>
+                    <lab:Segmented x:Name="RepositorySelector" ItemsSource="{x:Bind ViewModel.Repositories}"
+                                   Style="{StaticResource PivotSegmentedStyle}" SelectedIndex="0"
+                                   SelectionChanged="RepositorySelector_SelectionChanged">
+                        <lab:Segmented.ItemTemplate>
                             <DataTemplate x:DataType="models:RepositoryModel">
                                 <TextBlock Text="{x:Bind Label,Converter={StaticResource StringUppercaseConverter}}" />
                             </DataTemplate>
-                        </Pivot.HeaderTemplate>
-                        <Pivot.ItemTemplate>
-                            <DataTemplate>
-                                <Grid />
-                            </DataTemplate>
-                        </Pivot.ItemTemplate>
-                    </Pivot>
+                        </lab:Segmented.ItemTemplate>
+                    </lab:Segmented>
                 </Grid>
                 <AutoSuggestBox x:Name="SearchBox" PlaceholderText="Search for modpacks..." QueryIcon="Find"
                                 QuerySubmitted="SearchBox_QuerySubmitted" />

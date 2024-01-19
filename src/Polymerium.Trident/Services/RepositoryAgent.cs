@@ -24,7 +24,15 @@ public class RepositoryAgent(
     public async Task<IEnumerable<Exhibit>> SearchAsync(string label, string query, uint page, uint limit,
         Filter filter, CancellationToken token = default)
     {
-        return await OfRepository(label).SearchAsync(query, page, limit, filter, token);
+        try
+        {
+            return await OfRepository(label).SearchAsync(query, page, limit, filter, token);
+        }
+        catch (Exception e)
+        {
+            logger.LogError("Exception occurred: {message}", e.Message);
+            return Enumerable.Empty<Exhibit>();
+        }
     }
 
     private async Task<Result<T, ResourceError>> RetrieveCachedResultAsync<T>(string? path, Func<T, string?>? saveTo,
@@ -79,7 +87,8 @@ public class RepositoryAgent(
                 }
                 catch (Exception e)
                 {
-                    logger.LogError("Cache missed and record failed: {obj} for {message}", result.Value, e.Message);
+                    logger.LogInformation("Cache missed and record failed: {obj} for {message}", result.Value,
+                        e.Message);
                 }
             else
                 logger.LogInformation("Cache missed and retrieve failed: {path}", path);

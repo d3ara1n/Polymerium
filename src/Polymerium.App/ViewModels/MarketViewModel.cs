@@ -31,35 +31,13 @@ public class MarketViewModel : ViewModelBase
     {
         this.repositoryAgent = repositoryAgent;
         _navigation = navigation;
-        Repositories = repositoryAgent.Repositories.Select(x =>
-        {
-            ((byte, byte, byte), (byte, byte, byte)) color = x.Label switch
-            {
-                RepositoryLabels.CURSEFORGE => ((246, 211, 101), (253, 160, 133)),
-                RepositoryLabels.MODRINTH => ((212, 252, 121), (150, 230, 161)),
-                _ => throw new NotImplementedException()
-            };
-            return new RepositoryModel(x.Label,
-                new LinearGradientBrush
+        Repositories = repositoryAgent.Repositories.Select(x => new RepositoryModel(x.Label, x.Label switch
                 {
-                    StartPoint = new Point(1, 0),
-                    EndPoint = new Point(0, 1),
-                    GradientStops =
-                    [
-                        new GradientStop
-                        {
-                            Offset = 0,
-                            Color = Color.FromArgb(255, color.Item1.Item1, color.Item1.Item2, color.Item1.Item3)
-                        },
-
-                        new GradientStop
-                        {
-                            Offset = 1,
-                            Color = Color.FromArgb(255, color.Item2.Item1, color.Item2.Item2, color.Item2.Item3)
-                        }
-                    ]
-                });
-        });
+                    RepositoryLabels.CURSEFORGE => AssetPath.HEADER_CURSEFORGE,
+                    RepositoryLabels.MODRINTH => AssetPath.HEADER_MODRINTH
+                }
+            )
+        );
         GotoModpackViewCommand = new RelayCommand<ExhibitModel>(GotoModpackView);
     }
 
