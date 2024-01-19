@@ -8,8 +8,8 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Services;
 
-public class RepositoryService(
-    ILogger<RepositoryService> logger,
+public class RepositoryAgent(
+    ILogger<RepositoryAgent> logger,
     IEnumerable<IRepository> repositories,
     PolymeriumContext context)
 {

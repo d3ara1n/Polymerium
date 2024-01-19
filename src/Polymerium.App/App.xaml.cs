@@ -70,7 +70,7 @@ public partial class App : Application
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium")));
         services
             .AddSingleton<ProfileManager>()
-            .AddSingleton<RepositoryService>();
+            .AddSingleton<RepositoryAgent>();
 
         // ViewModels
         services
@@ -111,7 +111,7 @@ public partial class App : Application
         navigation.SetHandler(layout.OnNavigate);
         layout.SetMainMenu(navigation.MainNavMenu);
         layout.SetSideMenu(navigation.SideNavMenu);
-        layout.SetHandler((view, info) => navigation.Navigate(view, null, info, true));
+        layout.SetHandler((view, parameter,info) => navigation.Navigate(view, parameter, info, true));
         //var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
         //if (settings.Values.ContainsKey("Window.Height")
         //    && settings.Values["Window.Height"] is int height

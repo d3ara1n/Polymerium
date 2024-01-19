@@ -6,6 +6,162 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:models="using:Polymerium.App.Models"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
-
+    <ScrollViewer>
+        <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
+            <TextBlock Text="Quick start" Style="{StaticResource TitleTextBlockStyle}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <AutoSuggestBox Grid.Column="1" PlaceholderText="Search for managed instances..." QueryIcon="Find"/>
+            </Grid>
+            <TextBlock Text="Or check" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" ColumnSpacing="{StaticResource SmallGap}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <controls:CardButton Grid.Column="0">
+                        <controls:CardButton.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0" Color="#84fab0"/>
+                                <GradientStop Offset="1" Color="#d4fc79"/>
+                            </LinearGradientBrush>
+                        </controls:CardButton.Background>
+                        <toolkit:ConstrainedBox AspectRatio="4:3">
+                            <Grid>
+                                <TextBlock Text="Account" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                <TextBlock Text="Dearain" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                                <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                                    <Viewbox.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                            <TranslateTransform X="40" Y="40"/>
+                                        </TransformGroup>
+                                    </Viewbox.RenderTransform>
+                                    <FontIcon Glyph="&#xE902;"/>
+                                </Viewbox>
+                            </Grid>
+                        </toolkit:ConstrainedBox>
+                    </controls:CardButton>
+                    <controls:CardButton Grid.Column="1">
+                        <controls:CardButton.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0" Color="#a1c4fd"/>
+                                <GradientStop Offset="1" Color="#c2e9fb"/>
+                            </LinearGradientBrush>
+                        </controls:CardButton.Background>
+                        <toolkit:ConstrainedBox AspectRatio="4:3">
+                            <Grid>
+                                <TextBlock Text="Statistic" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                <TextBlock Text="6.3 Hrs" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                                <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                                    <Viewbox.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                            <TranslateTransform X="40" Y="40"/>
+                                        </TransformGroup>
+                                    </Viewbox.RenderTransform>
+                                    <FontIcon Glyph="&#xE916;"/>
+                                </Viewbox>
+                            </Grid>
+                        </toolkit:ConstrainedBox>
+                    </controls:CardButton>
+                    <controls:CardButton Grid.Column="2">
+                        <controls:CardButton.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0" Color="#fcb69f"/>
+                                <GradientStop Offset="1" Color="#ffecd2"/>
+                            </LinearGradientBrush>
+                        </controls:CardButton.Background>
+                        <toolkit:ConstrainedBox AspectRatio="4:3">
+                            <Grid>
+                                <TextBlock Text="Configuration" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                <TextBlock Text="Profile1" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                                <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                                    <Viewbox.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                            <TranslateTransform X="40" Y="40"/>
+                                        </TransformGroup>
+                                    </Viewbox.RenderTransform>
+                                    <FontIcon Glyph="&#xE81E;"/>
+                                </Viewbox>
+                            </Grid>
+                        </toolkit:ConstrainedBox>
+                    </controls:CardButton>
+                    <controls:CardButton Grid.Column="3">
+                        <controls:CardButton.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0" Color="#a18cd1"/>
+                                <GradientStop Offset="1" Color="#fbc2eb"/>
+                            </LinearGradientBrush>
+                        </controls:CardButton.Background>
+                        <toolkit:ConstrainedBox AspectRatio="4:3">
+                            <Grid>
+                                <TextBlock Text="Attachments" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                <TextBlock Text="114" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                                <Viewbox Stretch="Uniform" VerticalAlignment="Bottom" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                                    <Viewbox.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                            <TranslateTransform X="40" Y="40"/>
+                                        </TransformGroup>
+                                    </Viewbox.RenderTransform>
+                                    <FontIcon Glyph="&#xEA86;"/>
+                                </Viewbox>
+                            </Grid>
+                        </toolkit:ConstrainedBox>
+                    </controls:CardButton>
+                </Grid>
+            </Grid>
+            <TextBlock Text="Recently" Style="{StaticResource TitleTextBlockStyle}"/>
+            <ListView SelectionMode="None" ItemsSource="{x:Bind ViewModel.Recents}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:RecentModel">
+                        <controls:CardButton Padding="0" Command="{x:Bind GotoInstanceViewCommand}" CommandParameter="{x:Bind Key}">
+                            <StackPanel>
+                                <toolkit:ConstrainedBox AspectRatio="1:1">
+                                    <toolkit:ImageEx Source="{x:Bind Inner.Thumbnail}" Stretch="UniformToFill" Width="198"/>
+                                </toolkit:ConstrainedBox>
+                                <StackPanel Margin="{StaticResource CardContentPadding}" Spacing="{StaticResource TinyGap}">
+                                    <TextBlock Text="{x:Bind Inner.Name}" Style="{StaticResource BodyStrongTextBlockStyle}" MaxLines="1" TextTrimming="WordEllipsis"/>
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                        <FontIcon Glyph="&#xE823;" FontSize="12"/>
+                                        <TextBlock Text="{x:Bind PlayedAt}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </controls:CardButton>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

@@ -240,7 +240,7 @@
                                                                     </Grid.ColumnDefinitions>
                                                                     <toolkit:ImageEx Grid.Column="0"
                                                                         Source="{x:Bind Thumbnail.Value,Mode=OneWay}"
-                                                                        Width="32" />
+                                                                        Width="36" />
                                                                     <StackPanel Grid.Column="1">
                                                                         <StackPanel Orientation="Horizontal"
                                                                             Spacing="{StaticResource TinyGap}">

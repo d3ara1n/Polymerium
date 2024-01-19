@@ -11,10 +11,10 @@ public record LayerModel
 {
     private bool editMode;
 
-    public LayerModel(RepositoryService service, DispatcherQueue dispatcher, Metadata.Layer inner,
+    public LayerModel(RepositoryAgent agent, DispatcherQueue dispatcher, Metadata.Layer inner,
         WorkpieceModel root)
     {
-        Service = service;
+        Agent = agent;
         Dispatcher = dispatcher;
         Inner = inner;
         Root = root;
@@ -26,11 +26,11 @@ public record LayerModel
         Loaders = new BindableCollection<Metadata.Layer.Loader>(Inner.Loaders).ToReadOnlyReactiveCollection(x =>
             new LoaderModel(x));
         Attachments = new BindableCollection<string>(Inner.Attachments).ToReadOnlyReactiveCollection(x =>
-            new AttachmentModel(Service, Dispatcher, x, Root));
+            new AttachmentModel(Agent, Dispatcher, x, Root));
         EditMode = new Bindable<LayerModel, bool>(this, x => x.editMode, (x, v) => x.editMode = v);
     }
 
-    public RepositoryService Service { get; }
+    public RepositoryAgent Agent { get; }
     public DispatcherQueue Dispatcher { get; }
     public Metadata.Layer Inner { get; }
     public WorkpieceModel Root { get; }

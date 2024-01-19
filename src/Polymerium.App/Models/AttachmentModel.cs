@@ -22,9 +22,9 @@ public record AttachmentModel
     private string versionId = string.Empty;
     private string versionName = string.Empty;
 
-    public AttachmentModel(RepositoryService service, DispatcherQueue dispatcher, string inner, WorkpieceModel root)
+    public AttachmentModel(RepositoryAgent agent, DispatcherQueue dispatcher, string inner, WorkpieceModel root)
     {
-        Service = service;
+        Agent = agent;
         Dispatcher = dispatcher;
         Inner = inner;
         Root = root;
@@ -43,7 +43,7 @@ public record AttachmentModel
         Fetch();
     }
 
-    public RepositoryService Service { get; }
+    public RepositoryAgent Agent { get; }
     public DispatcherQueue Dispatcher { get; }
     public string Inner { get; }
     public WorkpieceModel Root { get; }
@@ -67,7 +67,7 @@ public record AttachmentModel
     {
         if (PurlHelper.TryParse(Inner, out var result) && result.HasValue)
         {
-            var resolved = await Service.ResolveAsync(result.Value.Item1, result.Value.Item2, result.Value.Item3,
+            var resolved = await Agent.ResolveAsync(result.Value.Item1, result.Value.Item2, result.Value.Item3,
                 Root.Inner.ExtractFilter());
             if (resolved.IsSuccessful)
                 Dispatcher.TryEnqueue(() =>

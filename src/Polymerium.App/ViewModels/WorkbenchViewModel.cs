@@ -10,19 +10,19 @@ public class WorkbenchViewModel : ViewModelBase
 {
     private readonly DispatcherQueue _dispatcher;
     private readonly ProfileManager _profileManager;
-    private readonly RepositoryService _repositoryService;
+    private readonly RepositoryAgent repositoryAgent;
 
     private WorkpieceModel model;
 
-    public WorkbenchViewModel(RepositoryService repositoryService, ProfileManager profileManager)
+    public WorkbenchViewModel(RepositoryAgent repositoryAgent, ProfileManager profileManager)
     {
         _profileManager = profileManager;
-        _repositoryService = repositoryService;
+        this.repositoryAgent = repositoryAgent;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
 
         FetchAttachmentCommand = new RelayCommand<AttachmentModel>(FetchAttachment);
 
-        model = new WorkpieceModel(_repositoryService, _dispatcher, ProfileManager.DUMMY_KEY,
+        model = new WorkpieceModel(this.repositoryAgent, _dispatcher, ProfileManager.DUMMY_KEY,
             ProfileManager.DUMMY_PROFILE, FetchAttachmentCommand);
     }
 
@@ -40,7 +40,7 @@ public class WorkbenchViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new WorkpieceModel(_repositoryService, _dispatcher, key, profile, FetchAttachmentCommand);
+                Model = new WorkpieceModel(repositoryAgent, _dispatcher, key, profile, FetchAttachmentCommand);
             return profile != null;
         }
 

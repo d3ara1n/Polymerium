@@ -15,9 +15,9 @@ public class DesktopViewModel : ViewModelBase
 
     public DesktopViewModel(NavigationService navigation, ProfileManager profileManager)
     {
+        _navigation = navigation;
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
-        _navigation = navigation;
         Entries = profileManager.Managed.Select(x => new EntryModel(x.Key, x.Value.Value, GotoInstanceViewCommand))
             .OrderByDescending(x => x.LastPlayAtRaw);
     }
@@ -28,6 +28,7 @@ public class DesktopViewModel : ViewModelBase
 
     private void GotoInstanceView(string? key)
     {
-        _navigation.Navigate(typeof(InstanceView), key, new DrillInNavigationTransitionInfo());
+        if (key != null)
+            _navigation.Navigate(typeof(InstanceView), key, new DrillInNavigationTransitionInfo());
     }
 }

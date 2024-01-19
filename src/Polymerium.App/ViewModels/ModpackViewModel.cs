@@ -13,17 +13,17 @@ namespace Polymerium.App.ViewModels;
 public class ModpackViewModel : ViewModelBase
 {
     private readonly DispatcherQueue _dispatcher;
-    private readonly RepositoryService _repositoryService;
+    private readonly RepositoryAgent repositoryAgent;
     private ExhibitModel? _modpackModel;
     private DataLoadingState dataState = DataLoadingState.Loading;
 
     private ProjectModel project = ProjectModel.DUMMY;
     private ProjectVersionModel? selectedVersion;
 
-    public ModpackViewModel(RepositoryService repositoryService)
+    public ModpackViewModel(RepositoryAgent repositoryAgent)
     {
         _dispatcher = DispatcherQueue.GetForCurrentThread();
-        _repositoryService = repositoryService;
+        this.repositoryAgent = repositoryAgent;
         OpenReferenceCommand = new RelayCommand<Uri>(OpenReference);
     }
 
@@ -63,7 +63,7 @@ public class ModpackViewModel : ViewModelBase
         Project? got = null;
         if (_modpackModel != null)
         {
-            var result = await _repositoryService.QueryAsync(_modpackModel.RepositoryLabel, _modpackModel.Inner.Id);
+            var result = await repositoryAgent.QueryAsync(_modpackModel.RepositoryLabel, _modpackModel.Inner.Id);
             if (result.IsSuccessful) got = result.Value;
         }
 

@@ -13,9 +13,9 @@ using Polymerium.App.Models;
 
 namespace Polymerium.App;
 
-public sealed partial class Layout : UserControl
+public sealed partial class Layout
 {
-    private Action<Type, NavigationTransitionInfo>? selectHandler;
+    private Action<Type, object?, NavigationTransitionInfo>? selectHandler;
 
     public Layout()
     {
@@ -31,11 +31,11 @@ public sealed partial class Layout : UserControl
 
     public void OnNavigate(Type view, object? parameter, NavigationTransitionInfo? info, bool isRoot)
     {
-        if (info != null)
-            Root.Navigate(view, parameter, info);
-        else
-            Root.Navigate(view, parameter);
-        if (isRoot) Root.BackStack.Clear();
+            if (info != null)
+                Root.Navigate(view, parameter, info);
+            else
+                Root.Navigate(view, parameter);
+            if (isRoot) Root.BackStack.Clear();
     }
 
     public void SetMainMenu(IEnumerable<NavItem> menu)
@@ -49,7 +49,7 @@ public sealed partial class Layout : UserControl
         NavigationViewControl.FooterMenuItemsSource = menu;
     }
 
-    public void SetHandler(Action<Type, NavigationTransitionInfo> handler)
+    public void SetHandler(Action<Type, object?, NavigationTransitionInfo> handler)
     {
         selectHandler = handler;
     }
@@ -73,7 +73,7 @@ public sealed partial class Layout : UserControl
         NavigationViewSelectionChangedEventArgs args)
     {
         if (args.SelectedItem is NavItem item)
-            selectHandler?.Invoke(item.View, args.RecommendedNavigationTransitionInfo);
+            selectHandler?.Invoke(item.View, null, args.RecommendedNavigationTransitionInfo);
     }
 
     private void NavigationViewControl_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)

@@ -21,17 +21,17 @@ namespace Polymerium.App.ViewModels;
 public class MarketViewModel : ViewModelBase
 {
     private readonly NavigationService _navigation;
-    private readonly RepositoryService _repositoryService;
+    private readonly RepositoryAgent repositoryAgent;
 
     private readonly Filter FILTER = new(null, null, ResourceKind.Modpack);
 
     private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
 
-    public MarketViewModel(RepositoryService repositoryService, NavigationService navigation)
+    public MarketViewModel(RepositoryAgent repositoryAgent, NavigationService navigation)
     {
-        _repositoryService = repositoryService;
+        this.repositoryAgent = repositoryAgent;
         _navigation = navigation;
-        Repositories = repositoryService.Repositories.Select(x =>
+        Repositories = repositoryAgent.Repositories.Select(x =>
         {
             ((byte, byte, byte), (byte, byte, byte)) color = x.Label switch
             {
@@ -85,7 +85,7 @@ public class MarketViewModel : ViewModelBase
     {
         Results = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(
             new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
-                (await _repositoryService.SearchAsync(label, query, page, limit, FILTER, token)).Select(x =>
+                (await repositoryAgent.SearchAsync(label, query, page, limit, FILTER, token)).Select(x =>
                     new ExhibitModel(x, label, GotoModpackViewCommand))),
             10);
     }

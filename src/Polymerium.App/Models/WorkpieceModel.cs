@@ -8,10 +8,10 @@ namespace Polymerium.App.Models;
 
 public record WorkpieceModel
 {
-    public WorkpieceModel(RepositoryService service, DispatcherQueue dispatcher, string key, Profile inner,
+    public WorkpieceModel(RepositoryAgent agent, DispatcherQueue dispatcher, string key, Profile inner,
         ICommand fetchAttachmentCommand)
     {
-        Service = service;
+        Agent = agent;
         Dispatcher = dispatcher;
         Key = key;
         Inner = inner;
@@ -19,10 +19,10 @@ public record WorkpieceModel
 
         Reference = new Bindable<Profile, string?>(Inner, x => x.Reference, (x, v) => x.Reference = v);
         Layers = new BindableCollection<Metadata.Layer>(Inner.Metadata.Layers).ToReadOnlyReactiveCollection(x =>
-            new LayerModel(Service, Dispatcher, x, this));
+            new LayerModel(Agent, Dispatcher, x, this));
     }
 
-    public RepositoryService Service { get; }
+    public RepositoryAgent Agent { get; }
     public DispatcherQueue Dispatcher { get; }
     public string Key { get; }
     public Profile Inner { get; }

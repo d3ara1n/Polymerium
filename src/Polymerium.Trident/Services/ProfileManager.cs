@@ -31,6 +31,7 @@ public sealed class ProfileManager : IDisposable
     }
 
     public IDictionary<string, Handle<Profile>> Managed { get; } = new Dictionary<string, Handle<Profile>>();
+    public IEnumerable<Profile> Profiles => Managed.Values.Select(x => x.Value);
 
     public void Dispose()
     {
@@ -41,7 +42,7 @@ public sealed class ProfileManager : IDisposable
 
     public Profile? GetProfile(string key)
     {
-        return Managed.ContainsKey(key) ? Managed[key].Value : null;
+        return Managed.TryGetValue(key, out var value) ? value.Value : null;
     }
 
     private void FlushAll()
@@ -59,14 +60,11 @@ public sealed class ProfileManager : IDisposable
 
     public bool Flush(string key)
     {
-        if (Managed.TryGetValue(key, out var handle))
-        {
-            handle.Flush();
-            _logger.LogInformation("Flush triggered for {0}", key);
-            return true;
-        }
+        if (!Managed.TryGetValue(key, out var handle)) return false;
+        handle.Flush();
+        _logger.LogInformation("Flush triggered for {0}", key);
+        return true;
 
-        return false;
     }
 
     private void Scan()
