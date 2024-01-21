@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
-    Title="Drag drop dialog" PrimaryButtonText="Ok" CloseButtonText="Cancel">
+    Title="Drag drop dialog" PrimaryButtonText="Confirm" CloseButtonText="Cancel">
 
     <StackPanel Spacing="{StaticResource SmallGap}">
         <controls:DragDropArea Padding="{StaticResource LargeMargin}" DragEnter="UIElement_OnDragEnter"

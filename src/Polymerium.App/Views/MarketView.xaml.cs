@@ -17,15 +17,15 @@ namespace Polymerium.App.Views;
 /// </summary>
 public sealed partial class MarketView : Page
 {
+    public static readonly DependencyProperty HeaderImageProperty = DependencyProperty.Register(nameof(HeaderImage),
+        typeof(Brush), typeof(MarketView), new PropertyMetadata(null));
+
     public MarketView()
     {
         InitializeComponent();
     }
 
     public MarketViewModel ViewModel { get; } = App.ViewModel<MarketViewModel>();
-
-    public static readonly DependencyProperty HeaderImageProperty = DependencyProperty.Register(nameof(HeaderImage),
-        typeof(Brush), typeof(MarketView), new PropertyMetadata(null));
 
     public Brush? HeaderImage
     {
@@ -38,7 +38,7 @@ public sealed partial class MarketView : Page
         var first = (RepositoryModel?)e.AddedItems.FirstOrDefault();
         if (first != null)
         {
-            HeaderImage = new ImageBrush()
+            HeaderImage = new ImageBrush
             {
                 ImageSource = new BitmapImage(new Uri($"ms-appx://{first.Background}"))
             };

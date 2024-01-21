@@ -3,6 +3,7 @@
 public enum ResourceError
 {
     Unknown,
+    Cancelled,
     NotFound,
     InvalidParameter,
     BadNetwork,

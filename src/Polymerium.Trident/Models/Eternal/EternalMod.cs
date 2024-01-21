@@ -2,29 +2,29 @@
 
 public struct EternalMod
 {
-    public uint Id { get; set; }
-    public uint GameId { get; set; }
-    public string Name { get; set; }
-    public string Slug { get; set; }
-    public object Links { get; set; }
-    public string Summary { get; set; }
-    public int Status { get; set; }
-    public uint DownloadCount { get; set; }
-    public bool IsFeatured { get; set; }
-    public uint PrimaryCategoryId { get; set; }
-    public IEnumerable<EternalModCategory> Categories { get; set; }
-    public uint ClassId { get; set; }
-    public IEnumerable<EternalModAuthor> Authors { get; set; }
-    public EternalModLogo? Logo { get; set; }
-    public IEnumerable<EternalScreenshot> Screenshots { get; set; }
-    public uint MainFileId { get; set; }
-    public IEnumerable<EternalModLatestFile> LatestFiles { get; set; }
-    public IEnumerable<EternalModLatestFileIndex> LatestFilesIndexes { get; set; }
-    public DateTimeOffset DateCreated { get; set; }
-    public DateTimeOffset DateModified { get; set; }
-    public DateTimeOffset DateReleased { get; set; }
-    public bool? AllowModDistribution { get; set; }
-    public uint GamePopularityRank { get; set; }
-    public bool IsAvailable { get; set; }
-    public int ThumbsUpCount { get; set; }
+    public uint Id { get; init; }
+    public uint GameId { get; init; }
+    public string Name { get; init; }
+    public string Slug { get; init; }
+    public object Links { get; init; }
+    public string Summary { get; init; }
+    public int Status { get; init; }
+    public uint DownloadCount { get; init; }
+    public bool IsFeatured { get; init; }
+    public uint PrimaryCategoryId { get; init; }
+    public IEnumerable<EternalModCategory> Categories { get; init; }
+    public uint ClassId { get; init; }
+    public IEnumerable<EternalModAuthor> Authors { get; init; }
+    public EternalModLogo? Logo { get; init; }
+    public IEnumerable<EternalScreenshot> Screenshots { get; init; }
+    public uint MainFileId { get; init; }
+    public IEnumerable<EternalModLatestFile> LatestFiles { get; init; }
+    public IEnumerable<EternalModLatestFileIndex> LatestFilesIndexes { get; init; }
+    public DateTimeOffset DateCreated { get; init; }
+    public DateTimeOffset DateModified { get; init; }
+    public DateTimeOffset DateReleased { get; init; }
+    public bool? AllowModDistribution { get; init; }
+    public uint GamePopularityRank { get; init; }
+    public bool IsAvailable { get; init; }
+    public int ThumbsUpCount { get; init; }
 }

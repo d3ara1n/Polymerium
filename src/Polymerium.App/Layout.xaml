@@ -11,19 +11,9 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <!--  TitleBar  -->
-            <RowDefinition Height="*" />
-            <!--  NavView  -->
-        </Grid.RowDefinitions>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="TitleBarStates">
-                <VisualState x:Name="Default" />
+                <VisualState x:Name="Normal" />
                 <VisualState x:Name="Minimal">
                     <VisualState.Setters>
                         <Setter Target="AppTitleBar.Margin" Value="96,0,0,0" />
@@ -50,78 +40,91 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <Border Grid.Row="0"
-                x:Name="AppTitleBar"
-                Grid.Column="1"
-                Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
-                Margin="64,0,0,0"
-                VerticalAlignment="Stretch"
-                Canvas.ZIndex="1">
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                <Image Width="24" Source="ms-appx:///Assets/Square44x44Logo.scale-100.png" />
-                <TextBlock
-                    x:Name="AppTitle"
-                    Margin="12,0,0,0"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource CaptionTextBlockStyle}" Text="Polymerium" />
-            </StackPanel>
-        </Border>
-        <NavigationView Grid.Row="0"
-                        x:Name="NavigationViewControl"
-                        Grid.RowSpan="2"
-                        Grid.Column="1"
-                        Canvas.ZIndex="0"
-                        IsTabStop="False"
-                        PaneDisplayMode="Auto"
-                        IsSettingsVisible="False"
-                        IsPaneToggleButtonVisible="False"
-                        IsBackEnabled="{x:Bind Root.CanGoBack, Mode=OneWay}"
-                        IsTitleBarAutoPaddingEnabled="True"
-                        BackRequested="NavigationViewControl_BackRequested"
-                        DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-                        SelectionChanged="NavigationViewControl_SelectionChanged">
-            <NavigationView.Resources>
-                <!-- ReSharper disable once Xaml.RedundantResource -->
-                <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
-                <!-- ReSharper disable once Xaml.RedundantResource -->
-                <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
-            </NavigationView.Resources>
-            <NavigationView.MenuItemTemplate>
-                <DataTemplate x:DataType="models:NavItem">
-                    <NavigationViewItem Content="{x:Bind Key}">
-                        <NavigationViewItem.Icon>
-                            <ImageIcon Source="{x:Bind IconKey}" />
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
-                </DataTemplate>
-            </NavigationView.MenuItemTemplate>
-            <NavigationView.PaneCustomContent>
-                <Grid Margin="{StaticResource SmallMargin}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <StackPanel x:Name="TaskPanel" Spacing="10" Orientation="Horizontal">
-                        <toolkit:ConstrainedBox AspectRatio="1:1" Width="40">
-                            <Grid>
-                                <ProgressRing Background="LightGray" IsIndeterminate="False" />
-                                <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Grid>
-                        </toolkit:ConstrainedBox>
-                        <StackPanel x:Name="CountPanel" VerticalAlignment="Center">
-                            <FlyoutBase.AttachedFlyout>
-                                <Flyout Placement="RightEdgeAlignedTop">
-                                    <TextBlock Text="TODO" />
-                                </Flyout>
-                            </FlyoutBase.AttachedFlyout>
-                            <TextBlock Text="No running tasks" />
-                            <TextBlock>
-                                <Hyperlink Click="Hyperlink_OnClick">
-                                    <Run Text="Manage" />
-                                </Hyperlink>
-                            </TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!--  TitleBar  -->
+                <RowDefinition Height="*" />
+                <!--  NavView  -->
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0"
+                    x:Name="AppTitleBar"
+                    Grid.Column="1"
+                    Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+                    Margin="64,0,0,0"
+                    VerticalAlignment="Stretch"
+                    Canvas.ZIndex="1">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <Image Width="24" Source="ms-appx:///Assets/Square44x44Logo.scale-100.png" />
+                    <TextBlock
+                        x:Name="AppTitle"
+                        Margin="12,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource CaptionTextBlockStyle}" Text="Polymerium" />
+                </StackPanel>
+            </Border>
+            <NavigationView Grid.Row="0"
+                            x:Name="NavigationViewControl"
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            Canvas.ZIndex="0"
+                            IsTabStop="False"
+                            PaneDisplayMode="Auto"
+                            IsSettingsVisible="False"
+                            IsPaneToggleButtonVisible="False"
+                            IsBackEnabled="{x:Bind Root.CanGoBack, Mode=OneWay}"
+                            IsTitleBarAutoPaddingEnabled="True"
+                            BackRequested="NavigationViewControl_BackRequested"
+                            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+                            SelectionChanged="NavigationViewControl_SelectionChanged">
+                <NavigationView.Resources>
+                    <!-- ReSharper disable once Xaml.RedundantResource -->
+                    <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
+                    <!-- ReSharper disable once Xaml.RedundantResource -->
+                    <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
+                </NavigationView.Resources>
+                <NavigationView.MenuItemTemplate>
+                    <DataTemplate x:DataType="models:NavItem">
+                        <NavigationViewItem Content="{x:Bind Key}">
+                            <NavigationViewItem.Icon>
+                                <ImageIcon Source="{x:Bind IconKey}" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </DataTemplate>
+                </NavigationView.MenuItemTemplate>
+                <NavigationView.PaneCustomContent>
+                    <Grid Margin="{StaticResource SmallMargin}" VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch">
+                        <StackPanel x:Name="TaskPanel" Spacing="10" Orientation="Horizontal">
+                            <toolkit:ConstrainedBox AspectRatio="1:1" Width="40">
+                                <Grid>
+                                    <ProgressRing Background="LightGray" IsIndeterminate="False" />
+                                    <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                            </toolkit:ConstrainedBox>
+                            <StackPanel x:Name="CountPanel" VerticalAlignment="Center">
+                                <FlyoutBase.AttachedFlyout>
+                                    <Flyout Placement="RightEdgeAlignedTop">
+                                        <TextBlock Text="TODO" />
+                                    </Flyout>
+                                </FlyoutBase.AttachedFlyout>
+                                <TextBlock Text="No running tasks" />
+                                <TextBlock>
+                                    <Hyperlink Click="Hyperlink_OnClick">
+                                        <Run Text="Manage" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </NavigationView.PaneCustomContent>
-            <Frame x:Name="Root" CacheSize="9" />
-        </NavigationView>
+                    </Grid>
+                </NavigationView.PaneCustomContent>
+                <Frame x:Name="Root" CacheSize="9" />
+            </NavigationView>
+        </Grid>
+        <toolkit:InAppNotification x:Name="NotificationContainer" />
     </Grid>
 </UserControl>

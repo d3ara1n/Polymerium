@@ -21,6 +21,7 @@ public record Project(
     public record Screenshot(string Title, Uri Url);
 
     public record Version(
+        string Id,
         string Name,
         string ChangelogHtml,
         ReleaseType ReleaseType,

@@ -1,12 +1,10 @@
 ﻿using System.Net.Http.Json;
 using System.Web;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using PackageUrl;
 using Polymerium.Trident.Models.Eternal;
 using Polymerium.Trident.Repositories;
 using Trident.Abstractions.Resources;
-using static Trident.Abstractions.Metadata.Layer;
 
 namespace Polymerium.Trident.Helpers;
 
@@ -22,7 +20,7 @@ public static class CurseForgeHelper
     private const uint CLASSID_WORLD = 17;
     private const uint CLASSID_RESOURCEPACK = 12;
 
-    public static readonly IReadOnlyDictionary<string, string> MODLOADERS_MAPPINGS = new Dictionary<string, string>
+    public static readonly IReadOnlyDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
     {
         { "Forge", Loader.COMPONENT_FORGE },
         { "NeoForge", Loader.COMPONENT_NEOFORGE },
@@ -32,7 +30,12 @@ public static class CurseForgeHelper
 
     public static string MakePurl(uint projectId, uint? versionId = null)
     {
-        return new PackageURL(RepositoryLabels.CURSEFORGE, null, projectId.ToString(), versionId?.ToString(), null,
+        return MakePurl(projectId.ToString(), versionId?.ToString());
+    }
+
+    public static string MakePurl(string projectId, string? versionId = null)
+    {
+        return new PackageURL(RepositoryLabels.CURSEFORGE, null, projectId, versionId, null,
             null).ToString();
     }
 
@@ -75,10 +78,7 @@ public static class CurseForgeHelper
         try
         {
             var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(ENDPOINT + service, token);
-            if (response?.Data != null)
-            {
-                result = response.Data;
-            }
+            if (response?.Data != null) result = response.Data;
         }
         catch (Exception e)
         {
@@ -93,17 +93,13 @@ public static class CurseForgeHelper
     {
         if (token.IsCancellationRequested)
             return null;
-        var found = false;
         string? result = default;
         using var client = factory.CreateClient();
         client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
         try
         {
             var response = await client.GetFromJsonAsync<ResponseWrapper<string>>(ENDPOINT + service, token);
-            if (response?.Data != null)
-            {
-                result = response.Data;
-            }
+            if (response?.Data != null) result = response.Data;
         }
         catch (Exception e)
         {
@@ -222,7 +218,9 @@ public static class CurseForgeHelper
                     {
                         var changelog = await GetModFileChangelogAsync(logger, factory, projectId, x.Id, token);
                         if (changelog != null)
-                            return new Project.Version(x.DisplayName, changelog, x.ExtractReleaseType(), x.FileDate,
+                            return new Project.Version(x.Id.ToString(), x.DisplayName, changelog,
+                                x.ExtractReleaseType(),
+                                x.FileDate,
                                 x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
                                 x.ExtractRequirement(), ExtractDependencies(x, mod.Value.Id));
 
@@ -272,9 +270,9 @@ public static class CurseForgeHelper
                 {
                     var valid = x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 };
                     var game = gameVersion == null || x.GameVersions.Contains(gameVersion);
-                    if (modLoader != null && MODLOADERS_MAPPINGS.Values.Any(y => y == modLoader))
+                    if (modLoader != null && MODLOADER_MAPPINGS.Values.Any(y => y == modLoader))
                     {
-                        var loaderName = MODLOADERS_MAPPINGS.First(y => y.Value == modLoader).Key;
+                        var loaderName = MODLOADER_MAPPINGS.First(y => y.Value == modLoader).Key;
                         var loader = x.GameVersions.Contains(loaderName);
                         return valid && game && loader;
                     }

@@ -2,6 +2,7 @@ using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Dialogs;
+using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -12,7 +13,7 @@ namespace Polymerium.App.Views;
 /// <summary>
 ///     An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class DesktopView : Page
+public sealed partial class DesktopView
 {
     public DesktopView()
     {
@@ -23,10 +24,19 @@ public sealed partial class DesktopView : Page
 
     private async void ImportButton_OnClick(object sender, RoutedEventArgs e)
     {
-        var dialog = new DragDropInputDialog
-            { XamlRoot = XamlRoot, CaptionText = "Drag and drop", BodyText = "Any modpack file here" };
-        if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+        var inputDialog = new DragDropInputDialog(XamlRoot)
+            { CaptionText = "Drag and drop", BodyText = "Any modpack file here" };
+        if (await inputDialog.ShowAsync() == ContentDialogResult.Primary)
         {
+            var path = inputDialog.ResultPath;
+            var result = ViewModel.ExtractModpack(path);
+            if (result != null)
+            {
+                var model = new ModpackPreviewModel(result);
+                var previewDialog = new ModpackPreviewDialog(XamlRoot, model);
+                if (await previewDialog.ShowAsync() == ContentDialogResult.Primary)
+                    ViewModel.ApplyExtractedModpack(model);
+            }
         }
     }
 }

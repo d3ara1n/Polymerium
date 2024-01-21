@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using Microsoft.UI.Dispatching;
+using Polymerium.App.Extensions;
 using Polymerium.Trident.Services;
-using Reactive.Bindings;
 using Trident.Abstractions;
 
 namespace Polymerium.App.Models;
@@ -18,7 +18,7 @@ public record WorkpieceModel
         FetchAttachmentCommand = fetchAttachmentCommand;
 
         Reference = new Bindable<Profile, string?>(Inner, x => x.Reference, (x, v) => x.Reference = v);
-        Layers = new BindableCollection<Metadata.Layer>(Inner.Metadata.Layers).ToReadOnlyReactiveCollection(x =>
+        Layers = new BindableCollection<Metadata.Layer>(Inner.Metadata.Layers).Observe(x =>
             new LayerModel(Agent, Dispatcher, x, this));
     }
 
@@ -29,5 +29,5 @@ public record WorkpieceModel
     public ICommand FetchAttachmentCommand { get; }
 
     public Bindable<Profile, string?> Reference { get; }
-    public ReadOnlyReactiveCollection<LayerModel> Layers { get; }
+    public ReactiveCollection<Metadata.Layer, LayerModel> Layers { get; }
 }

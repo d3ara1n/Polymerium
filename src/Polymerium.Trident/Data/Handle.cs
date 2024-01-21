@@ -33,7 +33,7 @@ public class Handle<T> : IDisposable
             {
                 var content = File.ReadAllText(path);
                 var inst = JsonSerializer.Deserialize<T>(content, options);
-                if (inst != null)
+                if (inst != default)
                     return new Handle<T>(inst, path, options);
             }
             catch

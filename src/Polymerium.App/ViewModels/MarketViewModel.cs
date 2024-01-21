@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using Windows.Foundation;
-using Windows.UI;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -34,7 +31,8 @@ public class MarketViewModel : ViewModelBase
         Repositories = repositoryAgent.Repositories.Select(x => new RepositoryModel(x.Label, x.Label switch
                 {
                     RepositoryLabels.CURSEFORGE => AssetPath.HEADER_CURSEFORGE,
-                    RepositoryLabels.MODRINTH => AssetPath.HEADER_MODRINTH
+                    RepositoryLabels.MODRINTH => AssetPath.HEADER_MODRINTH,
+                    _ => throw new NotImplementedException()
                 }
             )
         );

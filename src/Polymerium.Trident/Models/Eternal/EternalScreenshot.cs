@@ -2,10 +2,10 @@
 
 public struct EternalScreenshot
 {
-    public uint Id { get; set; }
-    public uint ModId { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public Uri ThumbnailUrl { get; set; }
-    public Uri Url { get; set; }
+    public uint Id { get; init; }
+    public uint ModId { get; init; }
+    public string Title { get; init; }
+    public string Description { get; init; }
+    public Uri ThumbnailUrl { get; init; }
+    public Uri Url { get; init; }
 }

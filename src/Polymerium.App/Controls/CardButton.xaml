@@ -44,7 +44,8 @@
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Margin="{ThemeResource CardButtonHighlightBorderThickness}">
-                                <ContentPresenter Margin="{TemplateBinding Padding}" />
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
                             </Border>
                         </Border>
                     </Grid>

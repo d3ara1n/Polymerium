@@ -24,8 +24,9 @@ public sealed partial class DragDropInputDialog
     public static readonly DependencyProperty ResultPathProperty = DependencyProperty.Register(nameof(ResultPath),
         typeof(string), typeof(DragDropInputDialog), new PropertyMetadata(string.Empty));
 
-    public DragDropInputDialog()
+    public DragDropInputDialog(XamlRoot root)
     {
+        XamlRoot = root;
         InitializeComponent();
     }
 
@@ -53,13 +54,13 @@ public sealed partial class DragDropInputDialog
         set => SetValue(ResultPathProperty, value);
     }
 
-    private void UIElement_OnDrop(object sender, DragEventArgs e)
+    private void UIElement_OnDragEnter(object sender, DragEventArgs e)
     {
         if (e.DataView.Contains(StandardDataFormats.StorageItems))
             e.AcceptedOperation = DataPackageOperation.Link;
     }
 
-    private async void UIElement_OnDragEnter(object sender, DragEventArgs e)
+    private async void UIElement_OnDrop(object sender, DragEventArgs e)
     {
         if (e.DataView.Contains(StandardDataFormats.StorageItems))
         {

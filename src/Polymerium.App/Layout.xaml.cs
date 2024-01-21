@@ -15,7 +15,7 @@ namespace Polymerium.App;
 
 public sealed partial class Layout
 {
-    private Action<Type, object?, NavigationTransitionInfo>? selectHandler;
+    private Action<Type, object?, NavigationTransitionInfo>? navigateHandler;
 
     public Layout()
     {
@@ -38,6 +38,11 @@ public sealed partial class Layout
         if (isRoot) Root.BackStack.Clear();
     }
 
+    public void OnEnqueueNotification(string text)
+    {
+        NotificationContainer.Show(text);
+    }
+
     public void SetMainMenu(IEnumerable<NavItem> menu)
     {
         NavigationViewControl.MenuItemsSource = menu;
@@ -51,7 +56,7 @@ public sealed partial class Layout
 
     public void SetHandler(Action<Type, object?, NavigationTransitionInfo> handler)
     {
-        selectHandler = handler;
+        navigateHandler = handler;
     }
 
 
@@ -65,7 +70,7 @@ public sealed partial class Layout
             {
                 NavigationViewDisplayMode.Minimal => "Minimal",
                 NavigationViewDisplayMode.Compact => "Compact",
-                _ => "Default"
+                _ => "Normal"
             }, true);
     }
 
@@ -73,7 +78,7 @@ public sealed partial class Layout
         NavigationViewSelectionChangedEventArgs args)
     {
         if (args.SelectedItem is NavItem item)
-            selectHandler?.Invoke(item.View, null, args.RecommendedNavigationTransitionInfo);
+            navigateHandler?.Invoke(item.View, null, args.RecommendedNavigationTransitionInfo);
     }
 
     private void NavigationViewControl_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)

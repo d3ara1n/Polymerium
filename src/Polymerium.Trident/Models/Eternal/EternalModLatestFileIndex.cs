@@ -2,12 +2,12 @@
 
 public struct EternalModLatestFileIndex
 {
-    public string GameVersion { get; set; }
-    public uint FileId { get; set; }
-    public string FileName { get; set; }
-    public int ReleaseType { get; set; }
+    public string GameVersion { get; init; }
+    public uint FileId { get; init; }
+    public string FileName { get; init; }
+    public int ReleaseType { get; init; }
 
-    public uint? GameVersionTypeId { get; set; }
+    public uint? GameVersionTypeId { get; init; }
 
     // 0=Any
     // 1=Forge
@@ -15,5 +15,5 @@ public struct EternalModLatestFileIndex
     // 3=LiteLoader
     // 4=Fabric
     // 5=Quilt
-    public uint? ModLoader { get; set; }
+    public uint? ModLoader { get; init; }
 }

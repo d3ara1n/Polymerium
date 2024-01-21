@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Polymerium.App.Helpers;
 using Trident.Abstractions.Resources;
-using static Trident.Abstractions.Metadata.Layer;
 
 namespace Polymerium.App.Models;
 

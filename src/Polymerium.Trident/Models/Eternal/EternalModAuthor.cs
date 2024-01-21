@@ -2,7 +2,7 @@
 
 public struct EternalModAuthor
 {
-    public uint Id { get; set; }
-    public string Name { get; set; }
-    public Uri Url { get; set; }
+    public uint Id { get; init; }
+    public string Name { get; init; }
+    public Uri Url { get; init; }
 }

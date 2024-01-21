@@ -19,7 +19,7 @@
             <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                     <toolkit:ImageEx Source="{x:Bind ViewModel.Model.Thumbnail,Mode=OneWay}" Width="64"
-                                     CornerRadius="6" />
+                                     CornerRadius="{StaticResource TinyCornerRadius}" />
                     <TextBlock Style="{StaticResource HeaderTextBlockStyle}"
                                Text="{x:Bind ViewModel.Model.Inner.Name,Mode=OneWay}" TextTrimming="WordEllipsis" />
                 </StackPanel>

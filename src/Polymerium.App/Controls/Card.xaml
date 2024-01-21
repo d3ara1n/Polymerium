@@ -31,7 +31,8 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                        <ContentPresenter Margin="{TemplateBinding Padding}" />
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

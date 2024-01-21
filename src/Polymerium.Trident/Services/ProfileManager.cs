@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Data;
+using Polymerium.Trident.Helpers;
 using Trident.Abstractions;
 using static Trident.Abstractions.Profile.RecordData;
 
@@ -40,6 +41,26 @@ public sealed class ProfileManager : IDisposable
         GC.SuppressFinalize(this);
     }
 
+    public string RequestKey(string key)
+    {
+        var output = FileNameHelper.Sanitize(key);
+        while (Managed.ContainsKey(output)) output += '_';
+        return output;
+    }
+
+    public Profile Create(string key, string name, Uri? thumbnail, string? reference, Metadata metadata)
+    {
+        var now = DateTimeOffset.Now;
+        var profile = new Profile(name, thumbnail, reference, new Profile.RecordData(
+            new List<TimelinePoint>
+            {
+                new(true, null, TimelinePoint.TimelimeAction.Create,
+                    now, now)
+            }, new List<Todo>(), string.Empty), metadata, new Dictionary<string, object>(), null);
+        Managed.Add(key, new Handle<Profile>(profile, Path.Combine(_context.InstanceDir, $"{key}.json"), _options));
+        return profile;
+    }
+
     public Profile? GetProfile(string key)
     {
         return Managed.TryGetValue(key, out var value) ? value.Value : null;
@@ -73,12 +94,11 @@ public sealed class ProfileManager : IDisposable
         foreach (var file in Directory.GetFiles(_context.InstanceDir, "*.json"))
             try
             {
-                var content = File.ReadAllText(file);
-                var profile = JsonSerializer.Deserialize<Profile>(content);
-                if (profile != null)
+                var handle = Handle<Profile>.Create(file, _options);
+                if (handle != null)
                 {
-                    Managed.Add(Path.GetFileNameWithoutExtension(file), new Handle<Profile>(profile, file, _options));
-                    _logger.LogInformation("Appended profile {0}", profile.Name);
+                    Managed.Add(Path.GetFileNameWithoutExtension(file), handle);
+                    _logger.LogInformation("Appended profile {0}", handle.Value.Name);
                 }
                 else
                 {

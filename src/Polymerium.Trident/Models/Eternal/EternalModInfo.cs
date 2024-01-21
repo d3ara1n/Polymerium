@@ -1,36 +1,35 @@
-﻿using Trident.Abstractions;
-using Trident.Abstractions.Resources;
+﻿using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Models.Eternal;
 
 public struct EternalModInfo
 {
-    public uint Id { get; set; }
-    public uint GameId { get; set; }
-    public uint ModId { get; set; }
-    public bool IsAvailable { get; set; }
-    public string DisplayName { get; set; }
-    public string FileName { get; set; }
-    public uint ReleaseType { get; set; }
-    public uint FileStatus { get; set; }
-    public IEnumerable<EternalFileHash> Hashes { get; set; }
-    public DateTimeOffset FileDate { get; set; }
-    public ulong FileLength { get; set; }
-    public ulong DownloadCount { get; set; }
-    public ulong? FileSizeOnDisk { get; set; }
+    public uint Id { get; init; }
+    public uint GameId { get; init; }
+    public uint ModId { get; init; }
+    public bool IsAvailable { get; init; }
+    public string DisplayName { get; init; }
+    public string FileName { get; init; }
+    public uint ReleaseType { get; init; }
+    public uint FileStatus { get; init; }
+    public IEnumerable<EternalFileHash> Hashes { get; init; }
+    public DateTimeOffset FileDate { get; init; }
+    public ulong FileLength { get; init; }
+    public ulong DownloadCount { get; init; }
+    public ulong? FileSizeOnDisk { get; init; }
     public Uri? DownloadUrl { get; set; }
-    public IEnumerable<string> GameVersions { get; set; }
-    public object SortableGameVersions { get; set; }
-    public IEnumerable<EternalDependency> Dependencies { get; set; }
-    public bool? ExposeAsAlternative { get; set; }
-    public uint? ParentProjectFileId { get; set; }
-    public uint? AlternateFileId { get; set; }
-    public bool IsServerPack { get; set; }
-    public uint? ServerPackFileId { get; set; }
-    public bool? IsEarlyAccessContent { get; set; }
-    public DateTimeOffset? EarlyAccessEndDate { get; set; }
-    public long FileFingerprint { get; set; }
-    public object Modules { get; set; }
+    public IEnumerable<string> GameVersions { get; init; }
+    public object SortableGameVersions { get; init; }
+    public IEnumerable<EternalDependency> Dependencies { get; init; }
+    public bool? ExposeAsAlternative { get; init; }
+    public uint? ParentProjectFileId { get; init; }
+    public uint? AlternateFileId { get; init; }
+    public bool IsServerPack { get; init; }
+    public uint? ServerPackFileId { get; init; }
+    public bool? IsEarlyAccessContent { get; init; }
+    public DateTimeOffset? EarlyAccessEndDate { get; init; }
+    public long FileFingerprint { get; init; }
+    public object Modules { get; init; }
 
     public Uri ExtractDownloadUrl()
     {
@@ -59,8 +58,8 @@ public struct EternalModInfo
         var gameReq = new List<string>();
         var loaderReq = new List<string>();
         foreach (var v in GameVersions)
-            if (Metadata.Layer.Loader.MODLOADER_NAME_MAPPINGS.Keys.Contains(v))
-                loaderReq.Add(Metadata.Layer.Loader.MODLOADER_NAME_MAPPINGS[v]);
+            if (Loader.MODLOADER_NAME_MAPPINGS.Keys.Contains(v))
+                loaderReq.Add(Loader.MODLOADER_NAME_MAPPINGS[v]);
             else
                 gameReq.Add(v);
         return new Requirement(gameReq, loaderReq);

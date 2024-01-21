@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.ViewModels;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Services;
+using Trident.Abstractions.Extractors;
 using Trident.Abstractions.Repositories;
 
 namespace Polymerium.App.Extensions;
@@ -32,9 +33,8 @@ internal static class ServiceCollectionExtensions
     public static IServiceCollection AddSerializationOptions(this IServiceCollection services,
         Action<JsonSerializerOptions> configure)
     {
-        var options = new JsonSerializerOptions();
+        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
         configure(options);
-        //options.MakeReadOnly();
         services.AddSingleton(options);
         return services;
     }
@@ -43,6 +43,13 @@ internal static class ServiceCollectionExtensions
         where T : class, IRepository
     {
         services.AddTransient<IRepository, T>();
+        return services;
+    }
+
+    public static IServiceCollection AddExtractor<T>(this IServiceCollection services)
+        where T : class, IExtractor
+    {
+        services.AddTransient<IExtractor, T>();
         return services;
     }
 }

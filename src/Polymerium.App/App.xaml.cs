@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Windows.Graphics;
+using Windows.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
@@ -9,6 +11,7 @@ using Polly;
 using Polymerium.App.Extensions;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
+using Polymerium.Trident.Extractors;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
 
@@ -17,7 +20,7 @@ using Polymerium.Trident.Services;
 
 namespace Polymerium.App;
 
-public partial class App : Application
+public partial class App
 {
     public App()
     {
@@ -32,7 +35,7 @@ public partial class App : Application
 
     public IServiceProvider Provider { get; }
 
-    public Window Window { get; private set; }
+    public Window Window { get; private set; } = null!;
 
     public static T ViewModel<T>()
         where T : ViewModelBase
@@ -73,7 +76,9 @@ public partial class App : Application
         services
             .AddSingleton<ProfileManager>()
             .AddSingleton<RepositoryAgent>()
-            .AddSingleton<DownloadManager>();
+            .AddSingleton<DownloadManager>()
+            .AddSingleton<ModpackExtractor>()
+            .AddSingleton<StorageManager>();
 
         // ViewModels
         services
@@ -91,16 +96,21 @@ public partial class App : Application
         services
             .AddRepository<CurseForgeRepository>()
             .AddRepository<ModrinthRepository>();
+
+        // Extractors
+        services
+            .AddExtractor<CurseForgeExtractor>();
     }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        Window = Spawn(Provider.GetRequiredService<NavigationService>());
-        Window.Activate();
+        Spawn(Provider.GetRequiredService<NavigationService>(), Provider.GetRequiredService<NotificationService>());
     }
 
-    private Window Spawn(NavigationService navigation)
+    private void Spawn(NavigationService navigation, NotificationService notification)
     {
+        const string KEY_HEIGHT = "Window.Height";
+        const string KEY_WIDTH = "Window.Width";
         var layout = new Layout();
         var window = new Window
         {
@@ -109,26 +119,27 @@ public partial class App : Application
             Content = layout,
             SystemBackdrop = new MicaBackdrop()
         };
+        var settings = ApplicationData.Current.LocalSettings;
         window.SetTitleBar(layout.Titlebar);
         window.Activated += (_, args) =>
             layout.OnActivate(args.WindowActivationState != WindowActivationState.Deactivated);
-        window.Closed += (_, args) => ((IDisposable)Provider).Dispose();
+        window.Closed += (_, args) =>
+        {
+            var size = window.AppWindow.Size;
+            settings.Values[KEY_HEIGHT] = size.Height;
+            settings.Values[KEY_WIDTH] = size.Width;
+            ((IDisposable)Provider).Dispose();
+        };
         navigation.SetHandler(layout.OnNavigate);
+        notification.SetHandler(layout.OnEnqueueNotification);
         layout.SetMainMenu(navigation.MainNavMenu);
         layout.SetSideMenu(navigation.SideNavMenu);
         layout.SetHandler((view, parameter, info) => navigation.Navigate(view, parameter, info, true));
-        //var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
-        //if (settings.Values.ContainsKey("Window.Height")
-        //    && settings.Values["Window.Height"] is int height
-        //    && settings.Values.ContainsKey("Window.Width")
-        //    && settings.Values["Window.Width"] is int width)
-        //{
-        //    window.AppWindow.Resize(new Windows.Graphics.SizeInt32(width, height));
-        //}
-        //else
-        //{
-        //    window.AppWindow.Resize(new Windows.Graphics.SizeInt32(1128, 660));
-        //}
-        return window;
+        if (settings.Values.TryGetValue(KEY_HEIGHT, out var h) && h is int height
+                                                               && settings.Values.TryGetValue(KEY_WIDTH, out var w) &&
+                                                               w is int width)
+            window.AppWindow.Resize(new SizeInt32(width, height));
+        Window = window;
+        window.Activate();
     }
 }

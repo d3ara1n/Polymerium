@@ -1,15 +1,26 @@
 ﻿using System;
-using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Polymerium.App.Models;
 
 public class Bindable<TOwner, TValue>(TOwner owner, Func<TOwner, TValue> getter, Action<TOwner, TValue> setter)
-    : ObservableObject
+    : INotifyPropertyChanged
     where TOwner : class
 {
     public TValue Value
     {
         get => getter(owner);
-        set => SetProperty(getter(owner), value, owner, setter);
+        set
+        {
+            var old = Value;
+            if (!EqualityComparer<TValue>.Default.Equals(old, value))
+            {
+                setter(owner, value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+            }
+        }
     }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

@@ -1,9 +1,8 @@
 ﻿using Microsoft.UI.Dispatching;
+using Polymerium.App.Extensions;
 using Polymerium.Trident.Services;
-using Reactive.Bindings;
-using Reactive.Bindings.Extensions;
-using Reactive.Bindings.TinyLinq;
 using Trident.Abstractions;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models;
 
@@ -21,11 +20,10 @@ public record LayerModel
 
         Enabled = new Bindable<Metadata.Layer, bool>(Inner, x => x.Enabled, (x, v) => x.Enabled = v);
         Summary = new Bindable<Metadata.Layer, string>(Inner, x => x.Summary, (x, v) => x.Summary = v);
-        IsLocked = Root.Reference.ObserveProperty(x => x.Value).Select(x => x == Inner.Source)
-            .ToReadOnlyReactivePropertySlim();
-        Loaders = new BindableCollection<Metadata.Layer.Loader>(Inner.Loaders).ToReadOnlyReactiveCollection(x =>
+        IsLocked = Root.Reference.Observe(x => x == Inner.Source);
+        Loaders = new BindableCollection<Loader>(Inner.Loaders).Observe(x =>
             new LoaderModel(x));
-        Attachments = new BindableCollection<string>(Inner.Attachments).ToReadOnlyReactiveCollection(x =>
+        Attachments = new BindableCollection<string>(Inner.Attachments).Observe(x =>
             new AttachmentModel(Agent, Dispatcher, x, Root));
         EditMode = new Bindable<LayerModel, bool>(this, x => x.editMode, (x, v) => x.editMode = v);
     }
@@ -37,8 +35,8 @@ public record LayerModel
 
     public Bindable<Metadata.Layer, bool> Enabled { get; }
     public Bindable<Metadata.Layer, string> Summary { get; }
-    public ReadOnlyReactivePropertySlim<bool> IsLocked { get; }
-    public ReadOnlyReactiveCollection<LoaderModel> Loaders { get; }
-    public ReadOnlyReactiveCollection<AttachmentModel> Attachments { get; }
+    public Reactive<Profile, string?, bool> IsLocked { get; }
+    public ReactiveCollection<Loader, LoaderModel> Loaders { get; }
+    public ReactiveCollection<string, AttachmentModel> Attachments { get; }
     public Bindable<LayerModel, bool> EditMode { get; }
 }

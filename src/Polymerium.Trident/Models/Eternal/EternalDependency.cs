@@ -2,7 +2,7 @@
 
 public struct EternalDependency
 {
-    public uint ModId { get; set; }
+    public uint ModId { get; init; }
 
     /// <summary>
     ///     1 = EmbeddedLibrary
@@ -12,5 +12,5 @@ public struct EternalDependency
     ///     5 = Incompatible
     ///     6 = Include
     /// </summary>
-    public uint RelationType { get; set; }
+    public uint RelationType { get; init; }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using Polymerium.Trident.Models.Labrinth;
 
 namespace Polymerium.Trident.Helpers;
 
