@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Helpers;
+using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions;
 using static Trident.Abstractions.Profile.RecordData;
 
@@ -21,6 +22,8 @@ public sealed class ProfileManager : IDisposable
     private readonly JsonSerializerOptions _options;
 
     private bool disposedValue;
+
+    public event ProfileCollectionChangedDelegate? ProfileChanged;
 
     public ProfileManager(ILogger<ProfileManager> logger, PolymeriumContext context, JsonSerializerOptions options)
     {
@@ -44,6 +47,7 @@ public sealed class ProfileManager : IDisposable
     public string RequestKey(string key)
     {
         var output = FileNameHelper.Sanitize(key);
+        if (string.IsNullOrEmpty(output)) output += "_";
         while (Managed.ContainsKey(output)) output += '_';
         return output;
     }

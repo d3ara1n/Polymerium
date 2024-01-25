@@ -8,7 +8,7 @@ using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
 
 namespace Polymerium.App.Models;
 
-public record EntryModel(string Key, Profile Inner, ICommand GotoInstanceViewCommand)
+public record EntryModel(string Key, Profile Inner, InstanceState State, ICommand GotoInstanceViewCommand)
 {
     public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? "/Assets/Placeholders/default_dirt.png";
     public string Version => Inner.Metadata.Version;

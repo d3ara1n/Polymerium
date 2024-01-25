@@ -33,8 +33,9 @@ public class DesktopViewModel : ViewModelBase
         _storageManager = storageManager;
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
-        Entries = profileManager.Managed.Select(x => new EntryModel(x.Key, x.Value.Value, GotoInstanceViewCommand))
-            .OrderByDescending(x => x.LastPlayAtRaw);
+        Entries = profileManager.Managed.Select(x =>
+                new EntryModel(x.Key, x.Value.Value, InstanceState.Idle, GotoInstanceViewCommand))
+            .OrderByDescending(x => x.LastPlayAtRaw).ToList();
     }
 
     public IEnumerable<EntryModel> Entries { get; private set; }

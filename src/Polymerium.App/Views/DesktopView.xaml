@@ -25,128 +25,149 @@
             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
                 <Button x:Name="ImportButton" Click="ImportButton_OnClick">
                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                        <SymbolIcon Symbol="Import" />
+                        <FontIcon Glyph="&#xE8B5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
                         <TextBlock Text="Import" />
                     </StackPanel>
                 </Button>
                 <Button Style="{StaticResource AccentButtonStyle}">
                     <StackPanel Orientation="Horizontal" Spacing="5">
-                        <SymbolIcon Symbol="Add" />
+                        <FontIcon Glyph="&#xE710;" FontSize="{StaticResource ButtonFontIconFontSize}" />
                         <TextBlock Text="Create" />
                     </StackPanel>
                 </Button>
             </StackPanel>
         </Grid>
-        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="9">
-            <ListView ItemsSource="{x:Bind ViewModel.Entries}" SelectionMode="None"
-                      Padding="{StaticResource PageContentNoHeaderMargin}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:EntryModel">
-                        <Border BorderThickness="0,1,0,0"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}">
-                            <StackPanel Margin="{StaticResource MediumMargin}">
-                                <Grid ColumnSpacing="{StaticResource SmallGap}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48" />
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                   Style="{StaticResource CaptionTextBlockStyle}">
-                                            <Run
-                                                Text="{x:Bind Category,Converter={StaticResource StringUppercaseConverter}}" />
-                                            <Run Text=" / " />
-                                            <Run Text="{x:Bind Key}" />
-                                        </TextBlock>
-                                        <TextBlock Text="{x:Bind Inner.Name}"
-                                                   Style="{StaticResource TitleTextBlockStyle}" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2">
-                                        <SplitButton Command="{x:Bind GotoInstanceViewCommand}"
-                                                     CommandParameter="{x:Bind Key}">
-                                            <SplitButton.Flyout>
-                                                <MenuFlyout>
-                                                    <MenuFlyoutItem Icon="Favorite" Text="Mark" />
-                                                    <MenuFlyoutSeparator />
-                                                    <MenuFlyoutItem Icon="Play" Text="Launch" />
-                                                    <MenuFlyoutSeparator />
-                                                    <MenuFlyoutItem Icon="Delete" Text="Delete"
-                                                                    Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
-                                                </MenuFlyout>
-                                            </SplitButton.Flyout>
-                                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                                <SymbolIcon Symbol="View" />
-                                                <TextBlock Text="View" />
-                                            </StackPanel>
-                                        </SplitButton>
-                                    </StackPanel>
-                                </Grid>
-                                <Grid>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
-                                                VerticalAlignment="Bottom" Spacing="{StaticResource TinyGap}">
-                                        <Border Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
-                                                Padding="{StaticResource TinyMargin}">
-                                            <TextBlock Text="RUNNING"
-                                                       Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                                                       Style="{StaticResource CaptionTextBlockStyle}" />
-                                        </Border>
-                                        <Border Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
-                                                Padding="{StaticResource TinyMargin}">
-                                            <TextBlock Text="DEPLOYING"
-                                                       Foreground="{ThemeResource SystemFillColorCautionBrush}"
-                                                       Style="{StaticResource CaptionTextBlockStyle}" />
-                                        </Border>
-                                        <Border Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
-                                                Padding="{StaticResource TinyMargin}">
-                                            <TextBlock Text="STOPPED"
-                                                       Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                                                       Style="{StaticResource CaptionTextBlockStyle}" />
-                                        </Border>
-                                        <Border Background="{ThemeResource SystemFillColorSolidNeutralBackgroundBrush}"
-                                                Padding="{StaticResource TinyMargin}">
-                                            <TextBlock Text="IDLE"
-                                                       Foreground="{ThemeResource SystemFillColorSolidNeutralBrush}"
-                                                       Style="{StaticResource CaptionTextBlockStyle}" />
-                                        </Border>
-                                        <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
-                                                Padding="{StaticResource TinyMargin}">
-                                            <TextBlock Text="{x:Bind Type}"
-                                                       Style="{StaticResource CaptionTextBlockStyle}" />
-                                        </Border>
-                                        <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
-                                                Padding="{StaticResource TinyMargin}">
-                                            <TextBlock Text="{x:Bind Version}"
-                                                       Style="{StaticResource CaptionTextBlockStyle}" />
-                                        </Border>
-                                    </StackPanel>
-                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                   Style="{StaticResource CaptionTextBlockStyle}"
-                                                   HorizontalAlignment="Right">
-                                            <Run Text="CREATED:" />
-                                            <Run Text="{x:Bind CreatedAt}" />
-                                        </TextBlock>
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                   Style="{StaticResource CaptionTextBlockStyle}"
-                                                   HorizontalAlignment="Right">
-                                            <Run Text="DEPLOYED:" />
-                                            <Run Text="{x:Bind DeployAt}" />
-                                        </TextBlock>
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                   Style="{StaticResource CaptionTextBlockStyle}"
-                                                   HorizontalAlignment="Right">
-                                            <Run Text="PLAYED:" />
-                                            <Run Text="{x:Bind PlayedAt}" />
-                                        </TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollViewer>
+        <Grid Grid.Row="1" Grid.ColumnSpan="9">
+            <ScrollViewer>
+                <ListView ItemsSource="{x:Bind ViewModel.Entries}" SelectionMode="None"
+                          Padding="{StaticResource PageContentNoHeaderMargin}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:EntryModel">
+                            <Border BorderThickness="0,1,0,0"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}">
+                                <StackPanel Margin="{StaticResource MediumMargin}">
+                                    <Grid ColumnSpacing="{StaticResource SmallGap}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48" />
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                       Style="{StaticResource CaptionTextBlockStyle}">
+                                                <Run
+                                                    Text="{x:Bind Category,Converter={StaticResource StringUppercaseConverter}}" />
+                                                <Run Text=" / " />
+                                                <Run Text="{x:Bind Key}" />
+                                            </TextBlock>
+                                            <TextBlock Text="{x:Bind Inner.Name}"
+                                                       Style="{StaticResource TitleTextBlockStyle}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <SplitButton Command="{x:Bind GotoInstanceViewCommand}"
+                                                         CommandParameter="{x:Bind Key}">
+                                                <SplitButton.Flyout>
+                                                    <MenuFlyout>
+                                                        <MenuFlyoutItem Icon="Favorite" Text="Mark" />
+                                                        <MenuFlyoutSeparator />
+                                                        <MenuFlyoutItem Icon="Play" Text="Launch" />
+                                                        <MenuFlyoutSeparator />
+                                                        <MenuFlyoutItem Icon="Delete" Text="Delete"
+                                                                        Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
+                                                    </MenuFlyout>
+                                                </SplitButton.Flyout>
+                                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                                    <FontIcon Glyph="&#xE890;"
+                                                              FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                                    <TextBlock Text="View" />
+                                                </StackPanel>
+                                            </SplitButton>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
+                                                    VerticalAlignment="Bottom" Spacing="{StaticResource TinyGap}">
+                                            <toolkit:SwitchPresenter Value="{x:Bind State}" TargetType="models:InstanceState">
+                                                <toolkit:Case Value="Idle">
+                                                    <Border
+                                                        Background="{ThemeResource SystemFillColorSolidNeutralBackgroundBrush}"
+                                                        Padding="{StaticResource TinyMargin}">
+                                                        <TextBlock Text="IDLE"
+                                                                   Foreground="{ThemeResource SystemFillColorSolidNeutralBrush}"
+                                                                   Style="{StaticResource CaptionTextBlockStyle}" />
+                                                    </Border>
+                                                </toolkit:Case>
+                                                <toolkit:Case Value="Deploying">
+                                                    <Border
+                                                        Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                        Padding="{StaticResource TinyMargin}">
+                                                        <TextBlock Text="DEPLOYING"
+                                                                   Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                                   Style="{StaticResource CaptionTextBlockStyle}" />
+                                                    </Border>
+                                                </toolkit:Case>
+                                                <toolkit:Case Value="Running">
+                                                    <Border
+                                                        Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                        Padding="{StaticResource TinyMargin}">
+                                                        <TextBlock Text="RUNNING"
+                                                                   Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                                                   Style="{StaticResource CaptionTextBlockStyle}" />
+                                                    </Border>
+                                                </toolkit:Case>
+                                                <toolkit:Case Value="Stopped">
+                                                    <Border
+                                                        Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                                        Padding="{StaticResource TinyMargin}">
+                                                        <TextBlock Text="STOPPED"
+                                                                   Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                                                   Style="{StaticResource CaptionTextBlockStyle}" />
+                                                    </Border>
+                                                </toolkit:Case>
+                                            </toolkit:SwitchPresenter>
+                                            <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
+                                                    Padding="{StaticResource TinyMargin}">
+                                                <TextBlock Text="{x:Bind Type}"
+                                                           Style="{StaticResource CaptionTextBlockStyle}" />
+                                            </Border>
+                                            <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
+                                                    Padding="{StaticResource TinyMargin}">
+                                                <TextBlock Text="{x:Bind Version}"
+                                                           Style="{StaticResource CaptionTextBlockStyle}" />
+                                            </Border>
+                                        </StackPanel>
+                                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                                       HorizontalAlignment="Right">
+                                                <Run Text="CREATED:" />
+                                                <Run Text="{x:Bind CreatedAt}" />
+                                            </TextBlock>
+                                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                                       HorizontalAlignment="Right">
+                                                <Run Text="DEPLOYED:" />
+                                                <Run Text="{x:Bind DeployAt}" />
+                                            </TextBlock>
+                                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                                       HorizontalAlignment="Right">
+                                                <Run Text="PLAYED:" />
+                                                <Run Text="{x:Bind PlayedAt}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Nothing to show yet"
+                           Visibility="{x:Bind ViewModel.Entries,Converter={StaticResource EmptyCollectionVisibilityConverter}}" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

@@ -14,6 +14,7 @@
     <converters:StringUppercaseConverter x:Key="StringUppercaseConverter" />
     <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter" />
     <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
+    <converters:EmptyCollectionVisibilityConverter x:Key="EmptyCollectionVisibilityConverter"/>
 
 
 </ResourceDictionary>

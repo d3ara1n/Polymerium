@@ -22,8 +22,7 @@ public class WorkbenchViewModel : ViewModelBase
 
         FetchAttachmentCommand = new RelayCommand<AttachmentModel>(FetchAttachment);
 
-        model = new WorkpieceModel(this.repositoryAgent, _dispatcher, ProfileManager.DUMMY_KEY,
-            ProfileManager.DUMMY_PROFILE, FetchAttachmentCommand);
+        model = new WorkpieceModel(ProfileManager.DUMMY_KEY);
     }
 
     public WorkpieceModel Model
@@ -40,7 +39,7 @@ public class WorkbenchViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new WorkpieceModel(repositoryAgent, _dispatcher, key, profile, FetchAttachmentCommand);
+                Model = new WorkpieceModel(key);
             return profile != null;
         }
 
@@ -54,6 +53,6 @@ public class WorkbenchViewModel : ViewModelBase
 
     private void FetchAttachment(AttachmentModel? model)
     {
-        if (model != null) model.Fetch();
+        //if (model != null) model.Fetch();
     }
 }
