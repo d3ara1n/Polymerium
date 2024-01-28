@@ -120,11 +120,9 @@ public sealed partial class Layout
 
     private void ClearTasks()
     {
-        var toClears = Tasks.Where(x => x.State.Value != TaskState.Idle || x.State.Value != TaskState.Running)
+        var toClears = Tasks.Where(x => x.State.Value != TaskState.Idle && x.State.Value != TaskState.Running)
             .ToArray();
         foreach (var clear in toClears) Tasks.Remove(clear);
-
-        RunningTaskCount.Value = 0;
     }
 
     private void OnTaskUpdate(TaskBase task, TaskProgressUpdatedEventArgs args)

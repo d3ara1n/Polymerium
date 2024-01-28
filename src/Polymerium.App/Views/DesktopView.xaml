@@ -168,7 +168,7 @@
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="No entries" Style="{StaticResource SubtitleTextBlockStyle}"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                           Visibility="{x:Bind ViewModel.Entries,Converter={StaticResource EmptyCollectionVisibilityConverter}}" />
+                           Visibility="{x:Bind ViewModel.Entries.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
             </StackPanel>
         </Grid>
     </Grid>

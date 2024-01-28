@@ -192,10 +192,13 @@
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                             </ListView>
+                                            <TextBlock HorizontalAlignment="Center" Text="None" Style="{StaticResource SubtitleTextBlockStyle}"
+                                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                        Visibility="{x:Bind Tasks.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
                                         </StackPanel>
                                     </Flyout>
                                 </FlyoutBase.AttachedFlyout>
-                                <TextBlock Text="Of all the tasks is running" />
+                                <TextBlock Text="Of tasks are running" />
                                 <TextBlock>
                                     <Hyperlink Click="Hyperlink_OnClick">
                                         <Run Text="Manage" />
