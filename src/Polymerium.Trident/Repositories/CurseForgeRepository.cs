@@ -48,7 +48,7 @@ public class CurseForgeRepository(
         var kind = filter.Kind ?? ResourceKind.Modpack;
         return (await CurseForgeHelper.SearchProjectsAsync(logger, clientFactory, keyword, kind,
                 filter.Version, filter.ModLoader, page, limit, token))
-            .Select(x => new Exhibit(x.Id.ToString(), x.Name, x.Logo?.ThumbnailUrl, kind,
+            .Select(x => new Exhibit(x.Id.ToString(), x.Name, RepositoryLabels.CURSEFORGE, x.Logo?.ThumbnailUrl, kind,
                 string.Join(", ", x.Authors.Select(y => y.Name)), x.Summary, x.DateCreated, x.DateModified,
                 x.DownloadCount));
     }

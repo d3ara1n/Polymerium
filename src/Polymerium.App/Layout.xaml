@@ -6,6 +6,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:tasks="using:Trident.Abstractions.Tasks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -23,6 +25,9 @@
                 <VisualState x:Name="Compact">
                     <VisualState.Setters>
                         <Setter Target="TaskPanel.Visibility" Value="Collapsed" />
+                        <Setter Target="CountBox.Margin" Value="0"/>
+                        <Setter Target="CountBox.FontSize" Value="20"/>
+                        <Setter Target="CountContainer.Width" Value="24"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Top">
@@ -99,20 +104,98 @@
                 <NavigationView.PaneCustomContent>
                     <Grid Margin="{StaticResource SmallMargin}" VerticalAlignment="Stretch"
                           HorizontalAlignment="Stretch">
-                        <StackPanel x:Name="TaskPanel" Spacing="10" Orientation="Horizontal">
-                            <toolkit:ConstrainedBox AspectRatio="1:1" Width="40">
-                                <Grid>
-                                    <ProgressRing Background="LightGray" IsIndeterminate="False" />
-                                    <TextBlock Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </Grid>
-                            </toolkit:ConstrainedBox>
-                            <StackPanel x:Name="CountPanel" VerticalAlignment="Center">
+                        <StackPanel Spacing="10" Orientation="Horizontal">
+                            <Grid x:Name="CountContainer" Width="48">
+                                <TextBlock x:Name="CountBox" Text="{x:Bind RunningTaskCount.Value,Mode=OneWay}" FontSize="34" FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center">
+                                    <TextBlock.Foreground>
+                                        <LinearGradientBrush StartPoint="0.2,0" EndPoint="1,1">
+                                            <GradientStop Offset="0" Color="#8fd3f4"/>
+                                            <GradientStop Offset="0.3" Color="#a18cd1"/>
+                                            <GradientStop Offset="1" Color="#fbc2eb"/>
+                                        </LinearGradientBrush>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </Grid>
+                            <StackPanel x:Name="TaskPanel" VerticalAlignment="Center">
                                 <FlyoutBase.AttachedFlyout>
-                                    <Flyout Placement="RightEdgeAlignedTop">
-                                        <TextBlock Text="TODO" />
+                                    <Flyout Placement="BottomEdgeAlignedLeft">
+                                        <StackPanel Spacing="{StaticResource SmallGap}" Width="380">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="Tasks"
+                                                           Style="{StaticResource SubtitleTextBlockStyle}" />
+                                                <HyperlinkButton Grid.Column="1" Command="{x:Bind ClearTasksCommand}">
+                                                    <TextBlock Text="Clear" />
+                                                </HyperlinkButton>
+                                            </Grid>
+                                            <ListView SelectionMode="None" ItemsSource="{x:Bind Tasks}">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate x:DataType="models:TaskModel">
+                                                        <controls:Card>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <StackPanel Grid.Column="0">
+                                                                    <TextBlock
+                                                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                                                                        <Run Text="{x:Bind Key}" />
+                                                                        <Run Text="·" />
+                                                                        <Run Text="{x:Bind CreatedAt}" />
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="{x:Bind Title}" />
+                                                                    <TextBlock
+                                                                        Text="{x:Bind Subtitle}"
+                                                                        Style="{StaticResource CaptionTextBlockStyle}" />
+                                                                </StackPanel>
+                                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                                    <toolkit:SwitchPresenter
+                                                                        Value="{x:Bind State.Value,Mode=OneWay}"
+                                                                        TargetType="tasks:TaskState">
+                                                                        <toolkit:Case Value="Idle">
+                                                                            <TextBlock Text="Idle" />
+                                                                        </toolkit:Case>
+                                                                        <toolkit:Case Value="Running">
+                                                                            <HyperlinkButton
+                                                                                Command="{x:Bind AbortCommand}"
+                                                                                CommandParameter="{x:Bind Inner}">
+                                                                                <Grid>
+                                                                                    <FontIcon Glyph="&#xE73B;"
+                                                                                        FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                                                                    <ProgressRing
+                                                                                        IsIndeterminate="{x:Bind IsIndeterminate.Value,Mode=OneWay}"
+                                                                                        Value="{x:Bind Progress.Value,Mode=OneWay}"
+                                                                                        Maximum="100" />
+                                                                                </Grid>
+                                                                            </HyperlinkButton>
+                                                                        </toolkit:Case>
+                                                                        <toolkit:Case Value="Finished">
+                                                                            <TextBlock Text="Finished" />
+                                                                        </toolkit:Case>
+                                                                        <toolkit:Case Value="Aborted">
+                                                                            <TextBlock Text="Aborted" />
+                                                                        </toolkit:Case>
+                                                                        <toolkit:Case Value="Faulted">
+                                                                            <TextBlock Text="Faulted" />
+                                                                        </toolkit:Case>
+                                                                    </toolkit:SwitchPresenter>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </controls:Card>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </StackPanel>
                                     </Flyout>
                                 </FlyoutBase.AttachedFlyout>
-                                <TextBlock Text="No running tasks" />
+                                <TextBlock Text="Of all the tasks is running" />
                                 <TextBlock>
                                     <Hyperlink Click="Hyperlink_OnClick">
                                         <Run Text="Manage" />

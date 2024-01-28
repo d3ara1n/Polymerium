@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Windows.Graphics;
 using Windows.Storage;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
@@ -38,7 +39,7 @@ public partial class App
     public Window Window { get; private set; } = null!;
 
     public static T ViewModel<T>()
-        where T : ViewModelBase
+        where T : ObservableObject
     {
         return Current.Provider.GetRequiredService<T>();
     }
@@ -67,7 +68,8 @@ public partial class App
         services
             .AddSingleton<NavigationService>()
             .AddSingleton<TaskService>()
-            .AddSingleton<NotificationService>();
+            .AddSingleton<NotificationService>()
+            .AddSingleton<MessageService>();
 
         // Trident Services
         services
@@ -104,10 +106,12 @@ public partial class App
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        Spawn(Provider.GetRequiredService<NavigationService>(), Provider.GetRequiredService<NotificationService>());
+        Spawn(Provider.GetRequiredService<NavigationService>(), Provider.GetRequiredService<NotificationService>(),
+            Provider.GetRequiredService<TaskService>(), Provider.GetRequiredService<MessageService>());
     }
 
-    private void Spawn(NavigationService navigation, NotificationService notification)
+    private void Spawn(NavigationService navigation, NotificationService notification, TaskService task,
+        MessageService _)
     {
         const string KEY_HEIGHT = "Window.Height";
         const string KEY_WIDTH = "Window.Width";
@@ -132,6 +136,7 @@ public partial class App
         };
         navigation.SetHandler(layout.OnNavigate);
         notification.SetHandler(layout.OnEnqueueNotification);
+        task.SetHandler(layout.OnEnqueueTask);
         layout.SetMainMenu(navigation.MainNavMenu);
         layout.SetSideMenu(navigation.SideNavMenu);
         layout.SetHandler((view, parameter, info) => navigation.Navigate(view, parameter, info, true));

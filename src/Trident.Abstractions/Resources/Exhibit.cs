@@ -6,6 +6,7 @@
 public record Exhibit(
     string Id,
     string Name,
+    string Label,
     Uri? Thumbnail,
     ResourceKind Kind,
     string Author,

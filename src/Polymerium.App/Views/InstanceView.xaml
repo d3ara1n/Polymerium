@@ -136,7 +136,7 @@
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Row="1">
-            <Border Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+            <Border Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
                 <Grid Margin="12">
                     <HyperlinkButton HorizontalAlignment="Left">
                         <Grid ColumnSpacing="{StaticResource SmallGap}">

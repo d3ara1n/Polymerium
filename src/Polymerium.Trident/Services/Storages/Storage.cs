@@ -22,11 +22,11 @@ public class Storage
             File.Delete(file);
     }
 
-    public void Write(string fileName, ReadOnlySpan<byte> content)
+    public async Task WriteAsync(string fileName, byte[] content)
     {
         var path = Path.Combine(_path, fileName);
         var dir = Path.GetDirectoryName(path);
         if (dir != null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
-        File.WriteAllBytes(path, content.ToArray());
+        await File.WriteAllBytesAsync(path, content);
     }
 }

@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
+using Trident.Abstractions.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -16,11 +20,21 @@ namespace Polymerium.App;
 public sealed partial class Layout
 {
     private Action<Type, object?, NavigationTransitionInfo>? navigateHandler;
+    private int runningTaskCount;
 
     public Layout()
     {
         InitializeComponent();
+
+        RunningTaskCount = new Bindable<Layout, int>(this, x => x.runningTaskCount, (x, v) => x.runningTaskCount = v);
+        AbortTaskCommand = new RelayCommand<TaskBase>(AbortTask);
+        ClearTasksCommand = new RelayCommand(ClearTasks);
     }
+
+    public ObservableCollection<TaskModel> Tasks { get; } = new();
+    public ICommand AbortTaskCommand { get; }
+    public ICommand ClearTasksCommand { get; }
+    public Bindable<Layout, int> RunningTaskCount { get; }
 
     public Border Titlebar => AppTitleBar;
 
@@ -41,6 +55,14 @@ public sealed partial class Layout
     public void OnEnqueueNotification(string text)
     {
         NotificationContainer.Show(text);
+    }
+
+
+    public void OnEnqueueTask(TaskBase task)
+    {
+        task.Subscribe(OnTaskUpdate);
+        var models = new TaskModel(task, DispatcherQueue, AbortTaskCommand);
+        Tasks.Add(models);
     }
 
     public void SetMainMenu(IEnumerable<NavItem> menu)
@@ -88,6 +110,43 @@ public sealed partial class Layout
 
     private void Hyperlink_OnClick(Hyperlink sender, HyperlinkClickEventArgs args)
     {
-        FlyoutBase.ShowAttachedFlyout(CountPanel);
+        FlyoutBase.ShowAttachedFlyout(TaskPanel);
+    }
+
+    private void AbortTask(TaskBase? task)
+    {
+        task?.Abort();
+    }
+
+    private void ClearTasks()
+    {
+        var toClears = Tasks.Where(x => x.State.Value != TaskState.Idle || x.State.Value != TaskState.Running)
+            .ToArray();
+        foreach (var clear in toClears) Tasks.Remove(clear);
+
+        RunningTaskCount.Value = 0;
+    }
+
+    private void OnTaskUpdate(TaskBase task, TaskProgressUpdatedEventArgs args)
+    {
+        if (args.State == task.State) return;
+        var offset = 0;
+        if (args.State == TaskState.Idle)
+        {
+            // do nothing
+        }
+        else if (args.State == TaskState.Running)
+        {
+            offset = +1;
+        }
+        else
+        {
+            offset = -1;
+        }
+
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            RunningTaskCount.Value += offset;
+        });
     }
 }

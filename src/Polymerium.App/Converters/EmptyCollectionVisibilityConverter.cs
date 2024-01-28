@@ -1,11 +1,8 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Data;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
 
 namespace Polymerium.App.Converters;
 
@@ -20,7 +17,9 @@ public class EmptyCollectionVisibilityConverter : IValueConverter
             ICollection<object> it => it.Count,
             ICollection it => it.Count,
             _ => 114514
-        } == 0 ? Visibility.Visible : Visibility.Collapsed;
+        } == 0
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -28,4 +27,3 @@ public class EmptyCollectionVisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
-

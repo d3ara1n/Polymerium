@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Web;
 using Microsoft.Extensions.Logging;
-using PackageUrl;
 using Polymerium.Trident.Models.Eternal;
 using Polymerium.Trident.Repositories;
 using Trident.Abstractions.Resources;
@@ -35,8 +34,7 @@ public static class CurseForgeHelper
 
     public static string MakePurl(string projectId, string? versionId = null)
     {
-        return new PackageURL(RepositoryLabels.CURSEFORGE, null, projectId, versionId, null,
-            null).ToString();
+        return PurlHelper.MakePurl(RepositoryLabels.CURSEFORGE, projectId, versionId);
     }
 
     public static string GetUrlTypeStringFromKind(ResourceKind kind)
@@ -225,14 +223,15 @@ public static class CurseForgeHelper
                                 x.ExtractRequirement(), ExtractDependencies(x, mod.Value.Id));
 
                         return null;
-                    });
+                    }).ToList();
                 await Task.WhenAll(versionTasks);
                 var versions = versionTasks.Where(x => x.IsCompletedSuccessfully && x.Result != null)
-                    .Select(x => x.Result!);
+                    .Select(x => x.Result!).ToList();
                 var kind = GetResourceTypeFromClassId(mod.Value.ClassId);
                 return new Project(
                     mod.Value.Id.ToString(),
                     mod.Value.Name,
+                    RepositoryLabels.CURSEFORGE,
                     mod.Value.Logo?.ThumbnailUrl,
                     string.Join(", ", mod.Value.Authors.Select(x => x.Name)),
                     mod.Value.Summary,
@@ -241,7 +240,7 @@ public static class CurseForgeHelper
                     mod.Value.DateCreated,
                     mod.Value.DateModified,
                     mod.Value.DownloadCount, modDesc,
-                    mod.Value.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)),
+                    mod.Value.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList(),
                     versions);
             }
 
@@ -288,7 +287,9 @@ public static class CurseForgeHelper
                     mod.Value.Id.ToString(),
                     mod.Value.Name,
                     file.Value.Id.ToString(),
-                    file.Value.DisplayName, mod.Value.Logo?.Url,
+                    file.Value.DisplayName,
+                    RepositoryLabels.CURSEFORGE,
+                    mod.Value.Logo?.Url,
                     string.Join(", ", mod.Value.Authors.Select(x => x.Name)),
                     mod.Value.Summary,
                     new Uri(PROJECT_URL.Replace("{0}", GetUrlTypeStringFromKind(kind))

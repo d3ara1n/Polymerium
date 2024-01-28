@@ -88,7 +88,8 @@
                                     <Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
                                                     VerticalAlignment="Bottom" Spacing="{StaticResource TinyGap}">
-                                            <toolkit:SwitchPresenter Value="{x:Bind State}" TargetType="models:InstanceState">
+                                            <toolkit:SwitchPresenter Value="{x:Bind State}"
+                                                                     TargetType="models:InstanceState">
                                                 <toolkit:Case Value="Idle">
                                                     <Border
                                                         Background="{ThemeResource SystemFillColorSolidNeutralBackgroundBrush}"
@@ -165,7 +166,8 @@
                 </ListView>
             </ScrollViewer>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Nothing to show yet"
+                <TextBlock Text="No entries" Style="{StaticResource SubtitleTextBlockStyle}"
+                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                            Visibility="{x:Bind ViewModel.Entries,Converter={StaticResource EmptyCollectionVisibilityConverter}}" />
             </StackPanel>
         </Grid>

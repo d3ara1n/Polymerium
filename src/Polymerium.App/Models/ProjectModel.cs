@@ -6,17 +6,19 @@ using Humanizer;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Polymerium.App.Helpers;
+using Polymerium.Trident.Repositories;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models;
 
-public record ProjectModel(Project Inner, string RepositoryLabel)
+public record ProjectModel(Project Inner)
 {
     public static readonly ProjectModel DUMMY =
         new(
-            new Project(string.Empty, string.Empty, null, string.Empty, string.Empty, new Uri("https://example.com"),
+            new Project(string.Empty, string.Empty, RepositoryLabels.VOID, null, string.Empty, string.Empty,
+                new Uri("https://example.com"),
                 ResourceKind.Mod, DateTimeOffset.Now, DateTimeOffset.Now, 0, string.Empty,
-                Enumerable.Empty<Project.Screenshot>(), Enumerable.Empty<Project.Version>()), string.Empty);
+                Enumerable.Empty<Project.Screenshot>(), Enumerable.Empty<Project.Version>()));
 
     public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? "/Assets/Placeholders/default_dirt.png";
     public string CreatedAt => Inner.CreatedAt.Humanize();

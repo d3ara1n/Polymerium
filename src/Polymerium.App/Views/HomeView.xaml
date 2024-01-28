@@ -22,7 +22,7 @@
                 <AutoSuggestBox Grid.Column="1" PlaceholderText="Search for managed instances..." QueryIcon="Find" />
             </Grid>
             <TextBlock Text="Or check" Style="{StaticResource SubtitleTextBlockStyle}" />
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <toolkit:WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <controls:CardButton Padding="0">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -86,7 +86,7 @@
                         </Grid>
                     </Grid>
                 </controls:CardButton>
-            </StackPanel>
+            </toolkit:WrapPanel>
             <TextBlock Text="Recently" Style="{StaticResource TitleTextBlockStyle}" />
             <ListView SelectionMode="None" ItemsSource="{x:Bind ViewModel.Recents}"
                       ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"

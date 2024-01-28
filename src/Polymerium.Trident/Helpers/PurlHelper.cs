@@ -1,6 +1,6 @@
 ﻿using PackageUrl;
 
-namespace Polymerium.App.Helpers;
+namespace Polymerium.Trident.Helpers;
 
 public static class PurlHelper
 {
@@ -23,5 +23,11 @@ public static class PurlHelper
         }
 
         return false;
+    }
+
+    public static string MakePurl(string label, string projectId, string? versionId = null)
+    {
+        return new PackageURL(label, null, projectId, versionId, null,
+            null).ToString();
     }
 }

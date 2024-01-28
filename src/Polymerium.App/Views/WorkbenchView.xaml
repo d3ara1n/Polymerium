@@ -6,11 +6,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:models="using:Polymerium.App.Models"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:winui="using:CommunityToolkit.WinUI"
-    xmlns:ui="using:CommunityToolkit.WinUI.UI"
-    xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid Margin="{StaticResource PageContentMargin}">
@@ -22,7 +17,7 @@
             <controls:Card>
                 <StackPanel>
                     <TextBlock Text="Version" />
-                    <TextBlock Text="24w40a" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <TextBlock Text="24w40a" Style="{StaticResource TitleTextBlockStyle}" />
                 </StackPanel>
             </controls:Card>
         </StackPanel>

@@ -4,7 +4,7 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models;
 
-public record ExhibitModel(Exhibit Inner, string RepositoryLabel, ICommand GotoDetailViewCommand)
+public record ExhibitModel(Exhibit Inner, ICommand GotoDetailViewCommand)
 {
     public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? AssetPath.PLACEHOLDER_DEFAULT_DIRT;
     public string CreatedAt => Inner.CreatedAt.Humanize();

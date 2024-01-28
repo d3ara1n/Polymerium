@@ -8,6 +8,7 @@ public record Package(
     string ProjectName,
     string VersionId,
     string VersionName,
+    string Label,
     Uri? Thumbnail,
     string Author,
     string Summary,

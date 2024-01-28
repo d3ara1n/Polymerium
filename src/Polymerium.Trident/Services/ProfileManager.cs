@@ -21,9 +21,9 @@ public sealed class ProfileManager : IDisposable
     private readonly ILogger _logger;
     private readonly JsonSerializerOptions _options;
 
-    private bool disposedValue;
+    private readonly IList<ReservedKey> reservedKeys = new List<ReservedKey>();
 
-    public event ProfileCollectionChangedDelegate? ProfileChanged;
+    private bool disposedValue;
 
     public ProfileManager(ILogger<ProfileManager> logger, PolymeriumContext context, JsonSerializerOptions options)
     {
@@ -39,21 +39,34 @@ public sealed class ProfileManager : IDisposable
 
     public void Dispose()
     {
-        // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
-        Dispose(true);
-        GC.SuppressFinalize(this);
+        if (!disposedValue)
+        {
+            FlushAll();
+            Managed.Clear();
+            disposedValue = true;
+        }
     }
 
-    public string RequestKey(string key)
+    public event ProfileCollectionChangedDelegate? ProfileCollectionChanged;
+
+    public ReservedKey RequestKey(string key)
     {
-        var output = FileNameHelper.Sanitize(key);
+        var output = FileNameHelper.Sanitize(key).ToLower();
         if (string.IsNullOrEmpty(output)) output += "_";
-        while (Managed.ContainsKey(output)) output += '_';
-        return output;
+        while (reservedKeys.Any(x => x.Key == output) || Managed.ContainsKey(output)) output += '_';
+        var reserved = new ReservedKey(this, output);
+        reservedKeys.Add(reserved);
+        return reserved;
     }
 
-    public Profile Create(string key, string name, Uri? thumbnail, string? reference, Metadata metadata)
+    internal void ReleaseKey(ReservedKey key)
     {
+        if (reservedKeys.Contains(key)) reservedKeys.Remove(key);
+    }
+
+    public Profile Append(ReservedKey key, string name, Uri? thumbnail, string? reference, Metadata metadata)
+    {
+        if (key.Disposed) throw new ArgumentException($"Disposed key: {key.Key}");
         var now = DateTimeOffset.Now;
         var profile = new Profile(name, thumbnail, reference, new Profile.RecordData(
             new List<TimelinePoint>
@@ -61,7 +74,12 @@ public sealed class ProfileManager : IDisposable
                 new(true, null, TimelinePoint.TimelimeAction.Create,
                     now, now)
             }, new List<Todo>(), string.Empty), metadata, new Dictionary<string, object>(), null);
-        Managed.Add(key, new Handle<Profile>(profile, Path.Combine(_context.InstanceDir, $"{key}.json"), _options));
+        Managed.Add(key.Key,
+            new Handle<Profile>(profile, Path.Combine(_context.InstanceDir, $"{key.Key}.json"), _options));
+        if (!key.Disposed) key.Dispose();
+        ProfileCollectionChanged?.Invoke(this,
+            new ProfileCollectionChangedEventArgs(ProfileCollectionChangedAction.Add, key.Key, profile));
+        _logger.LogInformation("Profile appended {name}({key})", name, key.Key);
         return profile;
     }
 
@@ -95,6 +113,7 @@ public sealed class ProfileManager : IDisposable
     {
         FlushAll();
         Managed.Clear();
+        if (!Directory.Exists(_context.InstanceDir)) Directory.CreateDirectory(_context.InstanceDir);
         foreach (var file in Directory.GetFiles(_context.InstanceDir, "*.json"))
             try
             {
@@ -118,22 +137,5 @@ public sealed class ProfileManager : IDisposable
             {
                 _logger.LogWarning("Bad file operation in {0}", Path.GetFileName(file));
             }
-    }
-
-    private void Dispose(bool disposing)
-    {
-        if (!disposedValue)
-        {
-            if (disposing)
-            {
-                // TODO: 释放托管状态(托管对象)
-                FlushAll();
-                Managed.Clear();
-            }
-
-            // TODO: 释放未托管的资源(未托管的对象)并重写终结器
-            // TODO: 将大型字段设置为 null
-            disposedValue = true;
-        }
     }
 }

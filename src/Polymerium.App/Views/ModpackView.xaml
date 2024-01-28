@@ -71,7 +71,7 @@
                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                     <FontIcon Glyph="&#xE8A7;" FontSize="12" />
                                     <TextBlock
-                                        Text="{x:Bind ViewModel.Project.RepositoryLabel,Mode=OneWay,Converter={StaticResource StringUppercaseConverter}}" />
+                                        Text="{x:Bind ViewModel.Project.Inner.Label,Mode=OneWay,Converter={StaticResource StringUppercaseConverter}}" />
                                 </StackPanel>
                             </HyperlinkButton>
                         </Grid>
@@ -121,7 +121,9 @@
                                     <TextBlock Grid.Column="0"
                                                Text="{x:Bind ViewModel.SelectedVersion.Inner.Name,FallbackValue=N/A,Mode=OneWay}"
                                                Style="{StaticResource SubtitleTextBlockStyle}" />
-                                    <Button Grid.Column="1" Style="{StaticResource AccentButtonStyle}">
+                                    <Button Grid.Column="1" Style="{StaticResource AccentButtonStyle}"
+                                            Command="{x:Bind ViewModel.InstallModpackCommand}"
+                                            CommandParameter="{x:Bind ViewModel.SelectedVersion,Mode=OneWay}">
                                         <TextBlock Text="Install" />
                                     </Button>
                                 </Grid>
@@ -209,8 +211,8 @@
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}" />
                                     <TextBlock Text="Project Name" Style="{StaticResource CaptionStyle}" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}" />
-                                    <TextBlock Text="Project Name" Style="{StaticResource CaptionStyle}" />
-                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}" />
+                                    <TextBlock Text="Type" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Kind,Mode=OneWay}" />
                                     <TextBlock Text="Author" Style="{StaticResource CaptionStyle}" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Author,Mode=OneWay}" />
                                     <TextBlock Text="Summary" Style="{StaticResource CaptionStyle}" />

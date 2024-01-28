@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
-using Polymerium.App.ViewModels;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Services;
 using Trident.Abstractions.Extractors;
@@ -12,7 +12,7 @@ namespace Polymerium.App.Extensions;
 internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddViewModel<TViewModel>(this IServiceCollection services)
-        where TViewModel : ViewModelBase
+        where TViewModel : ObservableObject
     {
         services.AddTransient<TViewModel>();
         return services;

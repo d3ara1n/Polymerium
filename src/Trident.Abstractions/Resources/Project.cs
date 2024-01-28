@@ -6,6 +6,7 @@
 public record Project(
     string Id,
     string Name,
+    string Label,
     Uri? Thumbnail,
     string Author,
     string Summary,

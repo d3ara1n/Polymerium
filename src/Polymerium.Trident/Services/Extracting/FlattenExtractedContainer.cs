@@ -1,14 +1,20 @@
 ﻿using System.IO.Compression;
 using Trident.Abstractions.Extractors;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Services.Extracting;
 
-public class FlattenExtractedContainer(ExtractedContainer original, IEnumerable<FlattenContainedLayer> layers)
+public class FlattenExtractedContainer(
+    ExtractedContainer original,
+    IEnumerable<FlattenContainedLayer> layers,
+    (Project, Project.Version)? reference)
 {
     public ExtractedContainer Original { get; } = original;
     public IEnumerable<FlattenContainedLayer> Layers { get; } = layers;
+    public (Project, Project.Version)? Reference { get; } = reference;
 
-    public static FlattenExtractedContainer FromExtracted(ExtractedContainer extracted, ZipArchive archive)
+    public static FlattenExtractedContainer FromExtracted(ExtractedContainer extracted, ZipArchive archive,
+        (Project, Project.Version)? reference)
     {
         var layers = new List<FlattenContainedLayer>();
         foreach (var layer in extracted.Layers)
@@ -33,6 +39,6 @@ public class FlattenExtractedContainer(ExtractedContainer original, IEnumerable<
             layers.Add(new FlattenContainedLayer(layer, files));
         }
 
-        return new FlattenExtractedContainer(extracted, layers);
+        return new FlattenExtractedContainer(extracted, layers, reference);
     }
 }

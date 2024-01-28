@@ -62,7 +62,7 @@ public class MarketViewModel : ViewModelBase
         Results = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(
             new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
                 (await repositoryAgent.SearchAsync(label, query, page, limit, FILTER, token)).Select(x =>
-                    new ExhibitModel(x, label, GotoModpackViewCommand))),
+                    new ExhibitModel(x, GotoModpackViewCommand))),
             10);
     }
 }

@@ -37,20 +37,20 @@ public class CurseForgeExtractor(JsonSerializerOptions options) : IExtractor
                 return Task.FromResult(new Result<ExtractedContainer, ExtractError>(ExtractError.Unsupported));
             var required = new ContainedLayer
             {
-                Summary = "(Modpack Essential)",
+                Summary = manifest.Name,
                 OverrideDirectoryName = manifest.Overrides
             };
             required.Loaders.AddAll(loaders.Where(x => x.Primary).Select(x => x.Item1!));
             required.Attachments.AddAll(manifest.Files.Where(x => x.Required).Select(ToAttachment));
             var optional = new ContainedLayer
             {
-                Summary = "(Modpack Optional)"
+                Summary = $"{manifest.Name}(Optional)"
             };
             optional.Loaders.AddAll(loaders.Where(x => !x.Primary).Select(x => x.Item1!));
             optional.Attachments.AddAll(manifest.Files.Where(x => !x.Required).Select(ToAttachment));
             var container = new ExtractedContainer(manifest.Name, manifest.Minecraft.Version);
-            container.Layers.Add(required);
-            container.Layers.Add(optional);
+            if (required.Loaders.Any() && required.Attachments.Any()) container.Layers.Add(required);
+            if (optional.Loaders.Any() && optional.Attachments.Any()) container.Layers.Add(optional);
             return Task.FromResult(new Result<ExtractedContainer, ExtractError>(container));
         }
         catch (JsonException)

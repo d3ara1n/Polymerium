@@ -1,46 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Media.Animation;
-using NanoidDotNet;
-using Polymerium.App.Extensions;
+using Polymerium.App.Messages;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Extracting;
-using Trident.Abstractions;
-using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels;
 
-public class DesktopViewModel : ViewModelBase
+public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMessage>
 {
+    private readonly DispatcherQueue _dispatcher;
     private readonly ModpackExtractor _extractor;
     private readonly NavigationService _navigation;
     private readonly NotificationService _notification;
-    private readonly ProfileManager _profileManager;
-    private readonly StorageManager _storageManager;
 
     public DesktopViewModel(NavigationService navigation, ProfileManager profileManager, ModpackExtractor extractor,
-        NotificationService notification, StorageManager storageManager)
+        NotificationService notification)
     {
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
         _navigation = navigation;
         _extractor = extractor;
         _notification = notification;
-        _profileManager = profileManager;
-        _storageManager = storageManager;
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
-        Entries = profileManager.Managed.Select(x =>
+        Entries = new ObservableCollection<EntryModel>(profileManager.Managed.Select(x =>
                 new EntryModel(x.Key, x.Value.Value, InstanceState.Idle, GotoInstanceViewCommand))
-            .OrderByDescending(x => x.LastPlayAtRaw).ToList();
+            .OrderByDescending(x => x.LastPlayAtRaw));
+
+        IsActive = true;
     }
 
-    public IEnumerable<EntryModel> Entries { get; private set; }
+    public ObservableCollection<EntryModel> Entries { get; }
 
     public RelayCommand<string> GotoInstanceViewCommand { get; }
+
+    public void Receive(ProfileAddedMessage message)
+    {
+        _dispatcher.TryEnqueue(() =>
+        {
+            Entries.Add(new EntryModel(message.Key, message.Item, InstanceState.Idle, GotoInstanceViewCommand));
+        });
+    }
 
     private void GotoInstanceView(string? key)
     {
@@ -50,7 +58,8 @@ public class DesktopViewModel : ViewModelBase
 
     public FlattenExtractedContainer? ExtractModpack(string path)
     {
-        var result = _extractor.ExtractAsync(path, null).GetAwaiter().GetResult();
+        using var stream = File.OpenRead(path);
+        var result = _extractor.ExtractAsync(stream, null).GetAwaiter().GetResult();
         if (result.IsSuccessful) return result.Value;
 
         _notification.Enqueue($"Invalid input {Path.GetFileName(path)}: {result.Error.ToString()}");
@@ -59,33 +68,6 @@ public class DesktopViewModel : ViewModelBase
 
     public void ApplyExtractedModpack(ModpackPreviewModel model)
     {
-        var key = _profileManager.RequestKey(model.InstanceName);
-        var layers = new List<Metadata.Layer>();
-
-        var metadata = new Metadata(model.Version, layers);
-        foreach (var item in model.Inner.Layers)
-        {
-            var loaders = new List<Loader>();
-
-            loaders.AddRange(item.Original.Loaders);
-
-            if (item.SolidFiles.Any())
-            {
-                var id = Nanoid.Generate(size: 11);
-                var storageKey = _storageManager.RequestKey($"{key}.{id}");
-                var storage = _storageManager.Open(storageKey);
-                storage.EnsureEmpty();
-                foreach (var file in item.SolidFiles)
-                    storage.Write(file.FileName, file.Data.Span);
-                var storageLoader = new Loader(Loader.COMPONENT_BUILTIN_STORAGE, storageKey);
-                loaders.Add(storageLoader);
-            }
-
-            var attachments = item.Original.Attachments.Select(x => x.ToPurl()).ToList();
-            var layer = new Metadata.Layer(null, true, item.Original.Summary, loaders, attachments);
-            layers.Add(layer);
-        }
-
-        _profileManager.Create(key, model.InstanceName, null, null, metadata);
+        _extractor.SolidifyAsync(model.Inner, model.InstanceName).RunSynchronously();
     }
 }

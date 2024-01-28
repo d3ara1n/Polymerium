@@ -5,7 +5,10 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
+using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Tasks;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels;
@@ -13,18 +16,24 @@ namespace Polymerium.App.ViewModels;
 public class ModpackViewModel : ViewModelBase
 {
     private readonly DispatcherQueue _dispatcher;
-    private readonly RepositoryAgent repositoryAgent;
+    private readonly NotificationService _notificationService;
+    private readonly RepositoryAgent _repositoryAgent;
+    private readonly TaskService _taskService;
     private ExhibitModel? _modpackModel;
     private DataLoadingState dataState = DataLoadingState.Loading;
 
     private ProjectModel project = ProjectModel.DUMMY;
     private ProjectVersionModel? selectedVersion;
 
-    public ModpackViewModel(RepositoryAgent repositoryAgent)
+    public ModpackViewModel(RepositoryAgent repositoryAgent, TaskService taskService,
+        NotificationService notificationService)
     {
         _dispatcher = DispatcherQueue.GetForCurrentThread();
-        this.repositoryAgent = repositoryAgent;
+        _repositoryAgent = repositoryAgent;
+        _taskService = taskService;
+        _notificationService = notificationService;
         OpenReferenceCommand = new RelayCommand<Uri>(OpenReference);
+        InstallModpackCommand = new RelayCommand<ProjectVersionModel>(InstallModpack);
     }
 
     public DataLoadingState DataState
@@ -46,6 +55,7 @@ public class ModpackViewModel : ViewModelBase
     }
 
     public ICommand OpenReferenceCommand { get; }
+    public ICommand InstallModpackCommand { get; }
 
     public override bool OnAttached(object? maybeModpackModel)
     {
@@ -63,7 +73,7 @@ public class ModpackViewModel : ViewModelBase
         Project? got = null;
         if (_modpackModel != null)
         {
-            var result = await repositoryAgent.QueryAsync(_modpackModel.RepositoryLabel, _modpackModel.Inner.Id);
+            var result = await _repositoryAgent.QueryAsync(_modpackModel.Inner.Label, _modpackModel.Inner.Id);
             if (result.IsSuccessful) got = result.Value;
         }
 
@@ -71,7 +81,7 @@ public class ModpackViewModel : ViewModelBase
         {
             if (got != null)
             {
-                Project = new ProjectModel(got, _modpackModel!.RepositoryLabel);
+                Project = new ProjectModel(got);
                 DataState = DataLoadingState.Done;
             }
             else
@@ -88,5 +98,17 @@ public class ModpackViewModel : ViewModelBase
             {
                 UseShellExecute = true
             });
+    }
+
+    private void InstallModpack(ProjectVersionModel? version)
+    {
+        if (version != null)
+        {
+            var task = _taskService.Create<InstallModpackTask>(Project.Inner, version.Inner, PurlHelper.MakePurl(
+                Project.Inner.Label,
+                Project.Inner.Id,
+                version.Inner.Id));
+            _taskService.Enqueue(task);
+        }
     }
 }

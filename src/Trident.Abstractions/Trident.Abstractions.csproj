@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Resolving\"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="DotNext" Version="5.0.0"/>
     </ItemGroup>
 
