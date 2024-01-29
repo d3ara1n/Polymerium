@@ -3,18 +3,17 @@
 
 using Polymerium.App.ViewModels;
 
-namespace Polymerium.App.Views
-{
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class RuntimeView
-    {
-        public RuntimeViewModel ViewModel { get; } = App.ViewModel<RuntimeViewModel>();
+namespace Polymerium.App.Views;
 
-        public RuntimeView()
-        {
-            this.InitializeComponent();
-        }
+/// <summary>
+///     An empty page that can be used on its own or navigated to within a Frame.
+/// </summary>
+public sealed partial class RuntimeView
+{
+    public RuntimeView()
+    {
+        InitializeComponent();
     }
+
+    public RuntimeViewModel ViewModel { get; } = App.ViewModel<RuntimeViewModel>();
 }

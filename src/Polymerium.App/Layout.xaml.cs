@@ -142,9 +142,6 @@ public sealed partial class Layout
             offset = -1;
         }
 
-        DispatcherQueue.TryEnqueue(() =>
-        {
-            RunningTaskCount.Value += offset;
-        });
+        DispatcherQueue.TryEnqueue(() => { RunningTaskCount.Value += offset; });
     }
 }

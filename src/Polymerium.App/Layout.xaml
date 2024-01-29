@@ -25,9 +25,9 @@
                 <VisualState x:Name="Compact">
                     <VisualState.Setters>
                         <Setter Target="TaskPanel.Visibility" Value="Collapsed" />
-                        <Setter Target="CountBox.Margin" Value="0"/>
-                        <Setter Target="CountBox.FontSize" Value="20"/>
-                        <Setter Target="CountContainer.Width" Value="24"/>
+                        <Setter Target="CountBox.Margin" Value="0" />
+                        <Setter Target="CountBox.FontSize" Value="20" />
+                        <Setter Target="CountContainer.Width" Value="24" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Top">
@@ -106,14 +106,15 @@
                           HorizontalAlignment="Stretch">
                         <StackPanel Spacing="10" Orientation="Horizontal">
                             <Grid x:Name="CountContainer" Width="48">
-                                <TextBlock x:Name="CountBox" Text="{x:Bind RunningTaskCount.Value,Mode=OneWay}" FontSize="34" FontWeight="Bold"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center">
+                                <TextBlock x:Name="CountBox" Text="{x:Bind RunningTaskCount.Value,Mode=OneWay}"
+                                           FontSize="34" FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center">
                                     <TextBlock.Foreground>
                                         <LinearGradientBrush StartPoint="0.2,0" EndPoint="1,1">
-                                            <GradientStop Offset="0" Color="#8fd3f4"/>
-                                            <GradientStop Offset="0.3" Color="#a18cd1"/>
-                                            <GradientStop Offset="1" Color="#fbc2eb"/>
+                                            <GradientStop Offset="0" Color="#8fd3f4" />
+                                            <GradientStop Offset="0.3" Color="#a18cd1" />
+                                            <GradientStop Offset="1" Color="#fbc2eb" />
                                         </LinearGradientBrush>
                                     </TextBlock.Foreground>
                                 </TextBlock>
@@ -192,9 +193,10 @@
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                             </ListView>
-                                            <TextBlock HorizontalAlignment="Center" Text="None" Style="{StaticResource SubtitleTextBlockStyle}"
-                                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                                        Visibility="{x:Bind Tasks.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
+                                            <TextBlock HorizontalAlignment="Center" Text="None"
+                                                       Style="{StaticResource SubtitleTextBlockStyle}"
+                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                       Visibility="{x:Bind Tasks.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
                                         </StackPanel>
                                     </Flyout>
                                 </FlyoutBase.AttachedFlyout>

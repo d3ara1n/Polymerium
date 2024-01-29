@@ -123,15 +123,15 @@
     </Style>
 
     <Style x:Key="FontAwesomeRegulerFontIconStyle" TargetType="FontIcon">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeRegularFontFamily}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeRegularFontFamily}" />
     </Style>
 
     <Style x:Key="FontAwesomeSolidFontIconStyle" TargetType="FontIcon">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolidFontFamily}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolidFontFamily}" />
     </Style>
 
     <Style x:Key="FontAwesomeBrandsFontIconStyle" TargetType="FontIcon">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrandsFontFamily}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrandsFontFamily}" />
     </Style>
 
 </ResourceDictionary>

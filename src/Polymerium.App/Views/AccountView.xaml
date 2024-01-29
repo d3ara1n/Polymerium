@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -17,20 +16,25 @@
                 <Border CornerRadius="{StaticResource CardSmallCornerRadius}" Width="160" Height="160">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                            <GradientStop Offset="0" Color="#839EFF"/>
-                            <GradientStop Offset="1" Color="#79FFCF"/>
+                            <GradientStop Offset="0" Color="#839EFF" />
+                            <GradientStop Offset="1" Color="#79FFCF" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <toolkit:ImageEx Width="140" Source="https://starlightskins.lunareclipse.studio/skin-render/default/Dearain/face" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <toolkit:ImageEx Width="140"
+                                     Source="https://starlightskins.lunareclipse.studio/skin-render/default/Dearain/face"
+                                     VerticalAlignment="Bottom" HorizontalAlignment="Center" />
                 </Border>
-                <TextBlock Text="Dearain" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="Dearain" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Microsoft" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
-                    <FontIcon Grid.Column="1" Glyph="&#xf058;" Foreground="{ThemeResource SystemFillColorSuccessBrush}" FontSize="{StaticResource ButtonFontIconFontSize}" Style="{StaticResource FontAwesomeSolidFontIconStyle}"/>
+                    <TextBlock Grid.Column="0" Text="Microsoft" Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                    <FontIcon Grid.Column="1" Glyph="&#xf058;" Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                              FontSize="{StaticResource ButtonFontIconFontSize}"
+                              Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
                 </Grid>
             </StackPanel>
         </controls:CardButton>
