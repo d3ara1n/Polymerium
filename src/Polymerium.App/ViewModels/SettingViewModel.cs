@@ -1,5 +1,7 @@
-﻿namespace Polymerium.App.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public class SettingViewModel : ViewModelBase
+namespace Polymerium.App.ViewModels;
+
+public class SettingViewModel : ObservableObject
 {
 }

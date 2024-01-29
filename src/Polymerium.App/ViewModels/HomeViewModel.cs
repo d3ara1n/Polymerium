@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Extensions;
 using Polymerium.App.Models;
@@ -11,7 +12,7 @@ using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
 
 namespace Polymerium.App.ViewModels;
 
-public class HomeViewModel : ViewModelBase
+public class HomeViewModel : ObservableObject
 {
     private readonly NavigationService _navigationService;
     private readonly ProfileManager _profileManger;

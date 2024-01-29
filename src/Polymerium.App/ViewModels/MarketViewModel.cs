@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -15,7 +16,7 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels;
 
-public class MarketViewModel : ViewModelBase
+public class MarketViewModel : ObservableObject
 {
     private readonly NavigationService _navigation;
 

@@ -18,7 +18,7 @@
     <Properties>
         <DisplayName>Polymerium</DisplayName>
         <PublisherDisplayName>Dearain</PublisherDisplayName>
-        <Logo>Assets\StoreLogo.png</Logo>
+        <Logo>Assets\Store\StoreLogo.png</Logo>
     </Properties>
 
     <Dependencies>
@@ -38,11 +38,16 @@
                     DisplayName="Polymerium"
                     Description="Polymerium.App"
                     BackgroundColor="transparent"
-                    Square150x150Logo="Assets\Square150x150Logo.png"
-                    Square44x44Logo="Assets\Square44x44Logo.png">
-                <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png"
-                                 Square310x310Logo="Assets\LargeTile.png"/>
-                <uap:SplashScreen Image="Assets\SplashScreen.png"/>
+                    Square150x150Logo="Assets\Store\Square150x150Logo.png"
+                    Square44x44Logo="Assets\Store\Square44x44Logo.png">
+                <uap:DefaultTile Wide310x150Logo="Assets\Store\Wide310x150Logo.png" Square71x71Logo="Assets\Store\SmallTile.png"
+                                 Square310x310Logo="Assets\Store\LargeTile.png" ShortName="Polymerium">
+                    <uap:ShowNameOnTiles>
+                        <uap:ShowOn Tile="square150x150Logo"/>
+                    </uap:ShowNameOnTiles>
+                </uap:DefaultTile >
+                <uap:SplashScreen Image="Assets\Store\SplashScreen.png"/>
+                <uap:LockScreen BadgeLogo="Assets\Store\BadgeLogo.png" Notification="badge"/>
             </uap:VisualElements>
         </Application>
     </Applications>

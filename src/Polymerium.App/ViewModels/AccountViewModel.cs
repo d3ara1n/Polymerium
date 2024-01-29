@@ -1,5 +1,7 @@
-﻿namespace Polymerium.App.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public class AccountViewModel : ViewModelBase
+namespace Polymerium.App.ViewModels;
+
+public class AccountViewModel : ObservableObject
 {
 }

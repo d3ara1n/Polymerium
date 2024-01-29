@@ -12,6 +12,7 @@
                 <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/4811#issuecomment-819916453 -->
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="ms-appx:///Themes/Generic.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/Fonts.xaml" />
                 <ResourceDictionary Source="ms-appx:///Themes/Converters.xaml" />
                 <ResourceDictionary Source="ms-appx:///Themes/AlternativeControls.xaml" />
                 <ResourceDictionary Source="ms-appx:///Themes/CustomControls.xaml" />

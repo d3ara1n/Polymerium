@@ -11,40 +11,28 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <controls:CardButton Padding="0" Width="198" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg"
-                                     Stretch="Fill">
-                        <media:UIElementExtensions.VisualFactory>
-                            <media:PipelineVisualFactory>
-                                <media:BlurEffect Amount="30" />
-                            </media:PipelineVisualFactory>
-                        </media:UIElementExtensions.VisualFactory>
-                    </toolkit:ImageEx>
-                    <Rectangle Fill="{ThemeResource ControlFillColorDefaultBrush}" />
-                    <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg"
-                                     Margin="{StaticResource LargeMargin}"
-                                     CornerRadius="{StaticResource TinyCornerRadius}" />
+    <toolkit:WrapPanel Margin="{StaticResource PageContentMargin}">
+        <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}">
+            <StackPanel Spacing="{StaticResource SmallGap}">
+                <Border CornerRadius="{StaticResource CardSmallCornerRadius}" Width="160" Height="160">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#839EFF"/>
+                            <GradientStop Offset="1" Color="#79FFCF"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <toolkit:ImageEx Width="140" Source="https://starlightskins.lunareclipse.studio/skin-render/default/Dearain/face" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Dearain" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Microsoft" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                    <FontIcon Grid.Column="1" Glyph="&#xf058;" Foreground="{ThemeResource SystemFillColorSuccessBrush}" FontSize="{StaticResource ButtonFontIconFontSize}" Style="{StaticResource FontAwesomeSolidFontIconStyle}"/>
                 </Grid>
-                <Grid Grid.Row="1" Margin="{StaticResource SmallMargin}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0">
-                        <TextBlock Text="Salty´s realistic forging" Style="{StaticResource BodyStrongTextBlockStyle}" />
-                        <TextBlock
-                            Text="Have you ever been bothered by the Shallow Minecraft Smelting mechanics? Probably not.. But I Have."
-                            MaxLines="2" TextWrapping="Wrap" Style="{StaticResource CaptionTextBlockStyle}" />
-                    </StackPanel>
-                </Grid>
-            </Grid>
+            </StackPanel>
         </controls:CardButton>
-    </Grid>
+    </toolkit:WrapPanel>
 </Page>
