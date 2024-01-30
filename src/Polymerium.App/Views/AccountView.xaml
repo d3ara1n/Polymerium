@@ -38,5 +38,16 @@
                 </Grid>
             </StackPanel>
         </controls:CardButton>
+        <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}" Background="Transparent">
+            <StackPanel Spacing="{StaticResource SmallGap}">
+                <Grid>
+                    <Rectangle Fill="Transparent" RadiusX="12" RadiusY="12" StrokeDashArray="8 4" Width="160" Height="160"
+                    Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                    StrokeThickness="3" Opacity="0.3"/>
+                    <FontIcon Glyph="&#xf2c2;" FontSize="48" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{StaticResource FontAwesomeSolidFontIconStyle}"/>
+                </Grid>
+                <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </controls:CardButton>
     </toolkit:WrapPanel>
 </Page>

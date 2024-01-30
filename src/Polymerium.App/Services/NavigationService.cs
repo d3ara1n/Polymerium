@@ -16,6 +16,7 @@ public class NavigationService(ILogger<NavigationService> logger)
         new("Home", "/Assets/Icons/House.svg", typeof(HomeView)),
         new("Instances", "/Assets/Icons/Package.svg", typeof(DesktopView)),
         new("Accounts", "/Assets/Icons/Japanese dolls.svg", typeof(AccountView)),
+        new("Runtimes", "/Assets/Icons/Hot beverage.svg", typeof(RuntimeView)),
         new("Market", "/Assets/Icons/Shopping bags.svg", typeof(MarketView))
     };
 

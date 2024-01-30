@@ -27,6 +27,12 @@ public class Storage
         var path = Path.Combine(_path, fileName);
         var dir = Path.GetDirectoryName(path);
         if (dir != null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
-        await File.WriteAllBytesAsync(path, content);
+        try
+        {
+            await File.WriteAllBytesAsync(path, content);
+        }catch(Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 }
