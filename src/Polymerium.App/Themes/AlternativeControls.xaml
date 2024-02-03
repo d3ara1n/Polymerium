@@ -122,7 +122,7 @@
         <Setter Property="Padding" Value="48" />
     </Style>
 
-    <Style x:Key="FontAwesomeRegulerFontIconStyle" TargetType="FontIcon">
+    <Style x:Key="FontAwesomeRegularFontIconStyle" TargetType="FontIcon">
         <Setter Property="FontFamily" Value="{StaticResource FontAwesomeRegularFontFamily}" />
     </Style>
 

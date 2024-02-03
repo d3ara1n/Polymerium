@@ -21,7 +21,8 @@ public class FlattenExtractedContainer(
         {
             var files = new List<SolidFile>();
             if (layer.OverrideDirectoryName != null)
-                foreach (var entry in archive.Entries.Where(x => x.FullName.StartsWith(layer.OverrideDirectoryName) && !string.IsNullOrEmpty(x.Name)))
+                foreach (var entry in archive.Entries.Where(x =>
+                             x.FullName.StartsWith(layer.OverrideDirectoryName) && !string.IsNullOrEmpty(x.Name)))
                 {
                     if (entry.Length > 1024 * 1024 * 16)
                         throw new OverflowException(

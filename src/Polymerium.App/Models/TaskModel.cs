@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Microsoft.UI.Dispatching;
+using Polymerium.App.Extensions;
 using Polymerium.Trident.Tasks;
 using Trident.Abstractions.Tasks;
 
@@ -32,9 +33,9 @@ public record TaskModel
         }
 
         CreatedAt = inner.CreatedAt.ToString("HH:mm");
-        Progress = new Bindable<TaskModel, double>(this, x => x.progress, (x, v) => x.progress = v);
-        IsIndeterminate = new Bindable<TaskModel, bool>(this, x => x.isIndeterminate, (x, v) => x.isIndeterminate = v);
-        State = new Bindable<TaskModel, TaskState>(this, x => x.state, (x, v) => x.state = v);
+        Progress = this.ToBindable(x => x.progress, (x, v) => x.progress = v);
+        IsIndeterminate = this.ToBindable(x => x.isIndeterminate, (x, v) => x.isIndeterminate = v);
+        State = this.ToBindable(x => x.state, (x, v) => x.state = v);
 
         inner.Subscribe(OnUpdate);
     }

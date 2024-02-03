@@ -2,12 +2,12 @@
 <br />
 <div align="center">
   <a href="https://github.com/d3ara1n/Polymerium">
-    <img src="assets/images/Logo.png" alt="Logo" width="128" height="128">
+    <img src="assets/images/Logo.png" alt="Logo" width="180" height="180">
   </a>
 
 <h3 align="center">Polymerium</h3>
 
-  <p align="center">
+  <p>
     为 Minecraft 准备的游戏实例管理器
     <br />
     <a href="https://github.com/d3ara1n/Polymerium/wiki"><strong>查看文档 »</strong></a>
@@ -37,11 +37,11 @@
 ### 理念
 
 正如其缝合的名字一样，Polymerium 的主要目标是整合 Minecraft
-的游戏资源，而非单单启动游戏。其使用与启动器完全不同的思路来管理游戏资源：创建实例元数据，使用还原引擎将游戏本地文件还原到元数据所描述的状态；Polymerium
-不维护游戏文件，只维护实例元数据。
+的游戏资源，而非单单启动游戏。其使用与启动器完全不同的思路来管理游戏资源：创建实例元数据，使用部署引擎将游戏本地文件还原到元数据所描述的状态；
+Polymerium不维护游戏文件，只维护实例元数据。
 
-相比于其他国产的游戏核心概念和版本隔离模式，Polymerium 以更为抽象的“游戏体验”概念和其具象表现“实例”来管理游戏。这种方式结合了国际主流的现代化管理方式和
-a little bit of personal flavor。
+相比于其他国产的游戏核心概念和版本隔离模式，Polymerium 以更为抽象的“游戏体验”概念和其具象表现“实例”来管理游戏。
+这种方式结合了国际主流的现代化管理方式和 a little bit of personal flavor。
 
 有关于 Polymerium
 的模式请参阅[核心概念](https://github.com/d3ara1n/Polymerium/wiki/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)。
@@ -70,16 +70,28 @@ a little bit of personal flavor。
 
 ## 安装使用
 
-### 微软商店(推荐)
+### 下载
 
 [![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/apps/9NGQHHCT2Q6Z)
 
-### 预编译
+### 开启 Windows 开发者模式
 
-在 [Release]("https://github.com/d3ara1n/Polymerium/releases") 中下载程序包(.msixbundle)。
+由于部署采用了 [Symbolic Link](https://www.wikiwand.com/en/Symbolic_link)，该功能需要管理员权限。
+Windows
+没有为打包的应用提供管理员权限申请能力，但提供了 [开发者模式](https://blogs.windows.com/windowsdeveloper/2016/12/02/symlinks-windows-10/)
+来降低创建软连接的特权要求。
 
-1. 在 Windows 设置，`隐私和安全性` 中的 `开发者选项` 打开 `开发者模式`
-2. 双击程序包进入安装环节
+#### Windows 10
+
+`设置` 👉 `更新和安全` 👉 `开发者选项` 👉 `开发人员模式`
+
+#### Windows 11
+
+`设置` 👉 `系统` 👉 `开发者选项` 👉 `开发人员模式`
+
+#### 其他系统或其他 Windows
+
+不需要。只有 Windows 需要在创建软连接时提供管理员权限。
 
 ### 配置
 
@@ -87,7 +99,7 @@ a little bit of personal flavor。
 
 ### 添加实例
 
-目前仅支持创建原版实例（并在随后的实例配置页面添加 Mod Loader ）或导入 Modrinth，CurseForge 整合包。
+目前仅支持创建原版实例（并在随后的实例配置页面添加 Mod Loader）或导入 Modrinth，CurseForge 整合包。
 
 #### 导入整合包
 
@@ -102,98 +114,68 @@ a little bit of personal flavor。
     * [x] 创建 Git 项目仓库
     * [x] 在目录里随处撒上魔术粉
 * [ ] 实例管理
-    * [x] 从空模板创建
-    * [x] 删除
-    * [x] 解锁（转换为 untagged 实例）
-    * [x] 根据引用源更新实例元数据
+    * [ ] 从空模板创建
     * [ ] 导入
         * [x] 导入预览对话框
-        * [ ] Polypack
+        * [ ] Poly-Pack
         * [x] CurseForge
-        * [x] Modrinth
-        * [x] MMC-Pack
-    * [ ] 导出为 Polypack
-* [ ] 启动游戏
-    * [x] Polylock 文件
-    * [x] 可选参数
-        * [x] 自定义 JVM 参数
-        * [x] 先决条件检查
-        * [x] Java 版本自动选择和兼容性检查
-    * [ ] 行星发动机
-        * [x] Fire-and-forget 模式
-        * [ ] Managed 模式
-            * [ ] 订阅日志
-                * [ ] 保存到文件
-            * [ ] 进程管理
-        * [x] 参数解析
-* [x] 账号管理
-    * [x] 管理模型
-        * [x] 添加
-        * [x] 移除
-    * [x] 离线模式
-    * [x] Microsoft 账号登录
-        * [x] 开始游戏前验证账号有效性或刷新
-* [x] 还原引擎
-    * [x] 基于 Pipeline 模型
-    * [x] 组件安装
-        * [x] 香草
-        * [x] Forge
-        * [x] Fabric
-        * [x] Quilt
-    * [x] 附件安装
-    * [x] 基于文件池
-* [x] 资源附件
-    * [x] 资源解析引擎
-        * [x] {var} 参数
-        * [x] {*vars} 参数
-        * [x] Url 类型转换
-    * [x] 内置解析器
-        * [x] 整合包
-            * [x] Modrinth
-            * [x] CurseForge
-        * [x] 模组
-            * [x] Modrinth
-            * [x] CurseForge
-        * [x] 资源包
-            * [x] Modrinth
-            * [x] CurseForge
-        * [x] 着色器包
-            * [x] Modrinth
-        * [x] 文件附件
-            * [x] 本地仓库
-            * [x] 远程资源
+        * [ ] Modrinth
+        * [ ] MMC-Pack
+    * [ ] 导出为 Poly-Pack
+* [ ] 发射引擎
+    * [ ] Polylock 文件
+* [ ] 账号管理
+    * [ ] 账号提供方
+        * [ ] Microsoft 账号登录
+            * [ ] 可用性检查与刷新
+            * [ ] 回退到离线模式
+        * [ ] authlib-injector 账号注入
+* [ ] 部署引擎
+    * [ ] 基于 Iterator 模型
+    * [ ] 香草安装
+    * [ ] 加载器安装
+        * [ ] Forge
+        * [ ] NeoForge
+        * [ ] Fabric
+        * [ ] Quilt
+        * [ ] Trident Storage
+    * [ ] 附件安装
+    * [ ] 基于文件池
+* [ ] 资源附件
+    * [ ] CurseForge
+        * [ ] 整合包
+        * [ ] 模组
+        * [ ] 资源包
+        * [ ] 世界
+    * [ ] Modrinth
+        * [ ] 整合包
+        * [ ] 模组
+        * [ ] 资源包
+        * [ ] 世界
+        * [ ] 着色器包
 * [ ] 搜索
     * [ ] 搜索中心
         * [x] 互联网资源搜索
-        * [x] 导入在线整合包
-        * [x] 添加在线资源到本地实例
+        * [ ] 导入在线整合包
+        * [ ] 添加在线资源到本地实例
             * [ ] 在本地实例中筛选出合适列表并提供开关以显示全部
         * [ ] 收藏合集：为一个（新）实例添加一系列资源，用以对公共整合包快速个性化
-    * [x] 搜索栏
-        * [x] 托管的实例搜索
-        * [x] 搜索中心联动
-        * [x] 作弊码
-* [x] 软件设置
-* [x] 游戏实例设置
-    * [x] 元数据编辑
-    * [x] 私有启动配置页面
-    * [x] 重置实例
-* [x] 本地化
+* [ ] 软件设置
+* [ ] 游戏实例设置
+    * [ ] 元数据编辑
+    * [ ] 私有启动配置页面
+* [ ] 本地化
 
 更多细节请在 [Issues](https://github.com/d3ara1n/Polymerium/issues) 中查询。
 
 <!-- REFERENCES -->
 
-## 外部资料和参考
+## 资料和参考
 
-* 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher)
-*
-
-游戏启动流程: [教程/编写启动器](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8)
-
-* Forge: [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper)
-* 微软验证: [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme)
-* Forge 版本和下载: [BMCLApi](https://bmclapidoc.bangbang93.com/)
+* 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher][Inside-A-Minecraft-Launcher]
+* 游戏启动流程: [教程/编写启动器][Tutorial-Making-Launcher]
+* Forge: [ForgeWrapper][ForgeWrapperRepo]
+* 微软验证: [Microsoft Authentication Scheme][Microsoft-Authentication-Scheme]
 
 十分感谢以上作者和所著文章。
 
@@ -259,3 +241,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [VSCode]: https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white
 
 [VSCode-url]: https://code.visualstudio.com/
+
+[Inside-A-Minecraft-Launcher]: https://ryanccn.dev/posts/inside-a-minecraft-launcher
+
+[Tutorial-Making-Launcher]: https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8
+
+[ForgeWrapperRepo]: https://github.com/ZekerZhayard/ForgeWrapper
+
+[Microsoft-Authentication-Scheme]: https://wiki.vg/Microsoft_Authentication_Scheme

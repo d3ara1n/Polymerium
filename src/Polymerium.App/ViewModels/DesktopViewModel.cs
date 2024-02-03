@@ -40,7 +40,7 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
 
     public ObservableCollection<EntryModel> Entries { get; }
 
-    public RelayCommand<string> GotoInstanceViewCommand { get; }
+    private RelayCommand<string> GotoInstanceViewCommand { get; }
 
     public void Receive(ProfileAddedMessage message)
     {

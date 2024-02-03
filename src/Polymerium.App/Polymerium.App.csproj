@@ -76,6 +76,7 @@
         <None Remove="Assets\Store\Wide310x150Logo.scale-150.png"/>
         <None Remove="Assets\Store\Wide310x150Logo.scale-200.png"/>
         <None Remove="Assets\Store\Wide310x150Logo.scale-400.png"/>
+        <None Remove="Dialogs\InputDialog.xaml"/>
         <None Remove="Themes\Fonts.xaml"/>
         <None Remove="Views\RuntimeView.xaml"/>
     </ItemGroup>
@@ -93,8 +94,8 @@
         <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2"/>
         <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2"/>
         <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2"/>
-        <PackageReference Include="DotNext" Version="5.0.0"/>
-        <PackageReference Include="HtmlAgilityPack" Version="1.11.57"/>
+        <PackageReference Include="DotNext" Version="5.0.1"/>
+        <PackageReference Include="HtmlAgilityPack" Version="1.11.58"/>
         <PackageReference Include="Humanizer" Version="2.14.1"/>
         <PackageReference Include="IBuilder" Version="0.1.0"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0"/>
@@ -126,6 +127,11 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Dialogs\InputDialog.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Views\RuntimeView.xaml">

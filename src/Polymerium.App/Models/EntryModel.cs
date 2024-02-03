@@ -3,8 +3,7 @@ using System.Windows.Input;
 using Humanizer;
 using PackageUrl;
 using Polymerium.App.Extensions;
-using Trident.Abstractions;
-using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
+using Trident.Abstractions.Profiles;
 
 namespace Polymerium.App.Models;
 

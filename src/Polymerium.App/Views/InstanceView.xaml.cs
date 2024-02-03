@@ -1,5 +1,8 @@
+using System;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using Polymerium.App.Dialogs;
 using Polymerium.App.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -29,5 +32,14 @@ public sealed partial class InstanceView : Page
     {
         ViewModel.OnDetached();
         base.OnNavigatedFrom(e);
+    }
+
+    private async void AddTodoButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var dialog = new InputDialog(XamlRoot)
+        {
+            Message = "Describe your task or memo"
+        };
+        if (await dialog.ShowAsync() == ContentDialogResult.Primary) ViewModel.AddTodo(dialog.Result);
     }
 }

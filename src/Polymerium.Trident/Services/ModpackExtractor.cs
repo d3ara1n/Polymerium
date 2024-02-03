@@ -4,9 +4,9 @@ using Microsoft.Extensions.Logging;
 using NanoidDotNet;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services.Extracting;
-using Trident.Abstractions;
 using Trident.Abstractions.Errors;
 using Trident.Abstractions.Extractors;
+using Trident.Abstractions.Profiles;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Services;

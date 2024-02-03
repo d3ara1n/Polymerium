@@ -8,7 +8,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
+using Trident.Abstractions.Profiles;
 
 namespace Polymerium.App.ViewModels;
 

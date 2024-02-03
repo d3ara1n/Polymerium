@@ -1,90 +1,101 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace Polymerium.App.Models;
 
-public class BindableCollection<T>(IList<T> from) : IList<T>, INotifyCollectionChanged
+public class BindableCollection<T>(IList<T> from)
+    : Collection<T>(from), INotifyCollectionChanged, INotifyPropertyChanged
 {
-    public IEnumerator<T> GetEnumerator()
-    {
-        return from.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return from.GetEnumerator();
-    }
-
-    public void Add(T item)
-    {
-        from.Add(item);
-        CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
-    }
-
-    public void Clear()
-    {
-        from.Clear();
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset, null, -1));
-    }
-
-    public bool Contains(T item)
-    {
-        return from.Contains(item);
-    }
-
-    public void CopyTo(T[] array, int arrayIndex)
-    {
-        from.CopyTo(array, arrayIndex);
-    }
-
-    public bool Remove(T item)
-    {
-        var index = from.IndexOf(item);
-        if (from.Remove(item))
-            CollectionChanged?.Invoke(this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
-
-        return false;
-    }
-
-    public int Count => from.Count;
-    public bool IsReadOnly => from.IsReadOnly;
-
-    public int IndexOf(T item)
-    {
-        return from.IndexOf(item);
-    }
-
-    public void Insert(int index, T item)
-    {
-        from.Insert(index, item);
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index));
-    }
-
-    public void RemoveAt(int index)
-    {
-        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, from.Count);
-        var item = from[index];
-        from.RemoveAt(index);
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
-    }
-
-    public T this[int index]
-    {
-        get => from[index];
-        set
-        {
-            var old = from[index];
-            from[index] = value;
-            CollectionChanged?.Invoke(this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, value, old));
-        }
-    }
-
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected override void ClearItems()
+    {
+        base.ClearItems();
+
+        OnCountPropertyChanged();
+        OnIndexerPropertyChanged();
+        OnCollectionReset();
+    }
+
+    protected override void RemoveItem(int index)
+    {
+        var removedItem = this[index];
+
+        base.RemoveItem(index);
+
+        OnCountPropertyChanged();
+        OnIndexerPropertyChanged();
+        OnCollectionChanged(NotifyCollectionChangedAction.Remove, removedItem, index);
+    }
+
+    protected override void InsertItem(int index, T item)
+    {
+        base.InsertItem(index, item);
+
+        OnCountPropertyChanged();
+        OnIndexerPropertyChanged();
+        OnCollectionChanged(NotifyCollectionChangedAction.Add, item, index);
+    }
+
+    protected override void SetItem(int index, T item)
+    {
+        var originalItem = this[index];
+        base.SetItem(index, item);
+
+        OnIndexerPropertyChanged();
+        OnCollectionSet(item, originalItem, index);
+    }
+
+    protected virtual void MoveItem(int oldIndex, int newIndex)
+    {
+        var removedItem = this[oldIndex];
+
+        base.RemoveItem(oldIndex);
+        base.InsertItem(newIndex, removedItem);
+
+        OnIndexerPropertyChanged();
+        OnCollectionChanged(NotifyCollectionChangedAction.Move, removedItem, newIndex, oldIndex);
+    }
+
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, T item, int index)
+    {
+        CollectionChanged?.Invoke(this,
+            new NotifyCollectionChangedEventArgs(action, item, index));
+    }
+
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, T item, int newIndex, int oldIndex)
+    {
+        CollectionChanged?.Invoke(this,
+            new NotifyCollectionChangedEventArgs(action, item, newIndex, oldIndex));
+    }
+
+    private void OnCollectionSet(T add, T old, int index)
+    {
+        CollectionChanged?.Invoke(this,
+            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, add, old, index));
+    }
+
+    private void OnCollectionReset()
+    {
+        CollectionChanged?.Invoke(this,
+            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+    }
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void OnCountPropertyChanged()
+    {
+        OnPropertyChanged(nameof(Count));
+    }
+
+    private void OnIndexerPropertyChanged()
+    {
+        OnPropertyChanged("Item[]");
+    }
 }

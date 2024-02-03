@@ -30,7 +30,8 @@ public class Storage
         try
         {
             await File.WriteAllBytesAsync(path, content);
-        }catch(Exception e)
+        }
+        catch (Exception e)
         {
             Console.WriteLine(e);
         }

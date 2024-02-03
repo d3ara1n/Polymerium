@@ -26,7 +26,8 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle Fill="Transparent" x:Name="PART_Border" StrokeDashArray="8 4" RadiusX="6" RadiusY="6"
+                        <Rectangle Fill="Transparent" x:Name="PART_Border" StrokeDashArray="8 4" RadiusX="6"
+                                   RadiusY="6"
                                    Stroke="{TemplateBinding BorderBrush}"
                                    StrokeThickness="2" Opacity="0.3">
                             <Rectangle.OpacityTransition>

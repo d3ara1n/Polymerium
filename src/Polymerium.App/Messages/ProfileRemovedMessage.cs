@@ -1,4 +1,4 @@
-﻿using Trident.Abstractions;
+﻿using Trident.Abstractions.Profiles;
 
 namespace Polymerium.App.Messages;
 

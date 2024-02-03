@@ -16,6 +16,7 @@
     <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
     <converters:EmptyCollectionVisibilityConverter x:Key="EmptyCollectionVisibilityConverter" />
     <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
+    <converters:BoolToFontStyleStrikethroughConverter x:Key="BoolToFontStyleStrikethroughConverter" />
 
 
 </ResourceDictionary>

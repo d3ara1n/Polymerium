@@ -6,6 +6,7 @@ using Windows.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Polly;
@@ -46,6 +47,9 @@ public partial class App
 
     private void ConfigureServices(IServiceCollection services)
     {
+        var context = new PolymeriumContext(
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium"));
+
         // App Services
         services
             .AddSerializationOptions(options => { options.WriteIndented = true; })
@@ -73,8 +77,7 @@ public partial class App
 
         // Trident Services
         services
-            .AddSingleton(new PolymeriumContext(
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium")));
+            .AddSingleton(context);
         services
             .AddSingleton<ProfileManager>()
             .AddSingleton<RepositoryAgent>()
@@ -130,9 +133,13 @@ public partial class App
             layout.OnActivate(args.WindowActivationState != WindowActivationState.Deactivated);
         window.Closed += (_, args) =>
         {
-            var size = window.AppWindow.Size;
-            settings.Values[KEY_HEIGHT] = size.Height;
-            settings.Values[KEY_WIDTH] = size.Width;
+            if (window.AppWindow.Presenter.Kind == AppWindowPresenterKind.Default)
+            {
+                var size = window.AppWindow.Size;
+                settings.Values[KEY_HEIGHT] = size.Height;
+                settings.Values[KEY_WIDTH] = size.Width;
+            }
+
             ((IDisposable)Provider).Dispose();
         };
         navigation.SetHandler(layout.OnNavigate);

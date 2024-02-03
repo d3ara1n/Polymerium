@@ -1,73 +1,94 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Polymerium.App.Models;
 
-public class ReactiveCollection<TSource, TValue> : IReadOnlyList<TValue>, INotifyCollectionChanged
+public class ReactiveCollection<TSource, TValue>(
+    IList<TSource> from,
+    Func<TSource, TValue> selector,
+    Func<TValue, TSource> mapper)
+    : Collection<TValue>(from.Select(selector).ToList()), INotifyCollectionChanged, INotifyPropertyChanged
 {
-    private readonly Func<TSource, TValue> _selector;
-    private readonly BindableCollection<TSource> _source;
-
-    public ReactiveCollection(BindableCollection<TSource> source, Func<TSource, TValue> selector)
-    {
-        _source = source;
-        _selector = selector;
-        source.CollectionChanged += SourceOnCollectionChanged;
-    }
-
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
+    protected override void ClearItems()
     {
-        return new ReactiveCollectionEnumerator(_source.GetEnumerator(), _selector);
+        base.ClearItems();
+
+        OnCountPropertyChanged();
+        OnIndexerPropertyChanged();
+        OnCollectionReset();
     }
 
-    public IEnumerator GetEnumerator()
+    protected override void RemoveItem(int index)
     {
-        return ((IEnumerable<TValue>)this).GetEnumerator();
+        var removedItem = this[index];
+
+
+        from.Remove(mapper(removedItem));
+        base.RemoveItem(index);
+
+        OnCountPropertyChanged();
+        OnIndexerPropertyChanged();
+        OnCollectionChanged(NotifyCollectionChangedAction.Remove, removedItem, index);
     }
 
-    public int Count => _source.Count;
-
-    public TValue this[int index] => _selector(_source[index]);
-
-    private void SourceOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    protected override void InsertItem(int index, TValue item)
     {
-        var (changed, index) = e.Action switch
-        {
-            NotifyCollectionChangedAction.Add => (((IEnumerable<TSource>)e.NewItems!).Select(_selector),
-                e.NewStartingIndex),
-            NotifyCollectionChangedAction.Remove => (((IEnumerable<TSource>)e.OldItems!).Select(_selector),
-                e.OldStartingIndex),
-            NotifyCollectionChangedAction.Reset => (Enumerable.Empty<TValue>(), -1),
-            _ => throw new NotImplementedException()
-        };
-        CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(e.Action, changed, index));
+        var value = mapper(item);
+        from.Insert(index, value);
+        base.InsertItem(index, item);
+
+        OnCountPropertyChanged();
+        OnIndexerPropertyChanged();
+        OnCollectionChanged(NotifyCollectionChangedAction.Add, item, index);
     }
 
-    private class ReactiveCollectionEnumerator(IEnumerator<TSource> inner, Func<TSource, TValue> selector)
-        : IEnumerator<TValue>
+    protected override void SetItem(int index, TValue item)
     {
-        public bool MoveNext()
-        {
-            return inner.MoveNext();
-        }
+        var originalItem = this[index];
+        from[index] = mapper(item);
+        base.SetItem(index, item);
 
-        public void Reset()
-        {
-            inner.Reset();
-        }
+        OnIndexerPropertyChanged();
+        OnCollectionSet(item, originalItem, index);
+    }
 
-        public TValue Current => selector(inner.Current);
+    private void OnCollectionChanged(NotifyCollectionChangedAction action, TValue item, int index)
+    {
+        CollectionChanged?.Invoke(this,
+            new NotifyCollectionChangedEventArgs(action, item, index));
+    }
 
-        object? IEnumerator.Current => Current;
+    private void OnCollectionSet(TValue add, TValue old, int index)
+    {
+        CollectionChanged?.Invoke(this,
+            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, add, old, index));
+    }
 
-        public void Dispose()
-        {
-            inner.Dispose();
-        }
+    private void OnCollectionReset()
+    {
+        CollectionChanged?.Invoke(this,
+            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+    }
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void OnCountPropertyChanged()
+    {
+        OnPropertyChanged("Count");
+    }
+
+    private void OnIndexerPropertyChanged()
+    {
+        OnPropertyChanged("Item[]");
     }
 }

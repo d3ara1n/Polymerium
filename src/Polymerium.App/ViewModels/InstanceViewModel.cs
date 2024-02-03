@@ -1,26 +1,38 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
+using Trident.Abstractions.Profiles;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels;
 
 public class InstanceViewModel : ViewModelBase
 {
+    private readonly PolymeriumContext _context;
     private readonly NavigationService _navigation;
     private readonly ProfileManager _profileManager;
 
-    private ProfileModel model = new(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE);
+    private ProfileModel model;
 
-    public InstanceViewModel(ProfileManager profileManager, NavigationService navigation)
+    public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, PolymeriumContext context)
     {
         _profileManager = profileManager;
         _navigation = navigation;
+        _context = context;
 
         GotoWorkbenchViewCommand = new RelayCommand<string>(GotoWorkbenchView);
+        OpenHomeFolderCommand = new RelayCommand(OpenHomeFolder, CanOpenHomeFolder);
+        OpenAssetFolderCommand = new RelayCommand<AssetKind>(OpenAssetFolder, CanOpenAssetFolder);
+        DeleteTodoCommand = new RelayCommand<TodoModel>(DeleteTodo, CanDeleteTodo);
+
+        model = new ProfileModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, DeleteTodoCommand);
     }
 
     public ProfileModel Model
@@ -30,6 +42,9 @@ public class InstanceViewModel : ViewModelBase
     }
 
     public ICommand GotoWorkbenchViewCommand { get; }
+    public ICommand OpenAssetFolderCommand { get; }
+    public ICommand OpenHomeFolderCommand { get; }
+    private ICommand DeleteTodoCommand { get; }
 
     public override bool OnAttached(object? maybeKey)
     {
@@ -37,7 +52,7 @@ public class InstanceViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new ProfileModel(key, profile);
+                Model = new ProfileModel(key, profile, DeleteTodoCommand);
             return profile != null;
         }
 
@@ -56,5 +71,69 @@ public class InstanceViewModel : ViewModelBase
             {
                 Effect = SlideNavigationTransitionEffect.FromRight
             });
+    }
+
+    private string GetHomeFolderPath()
+    {
+        return Path.Combine(_context.InstanceDir, Model.Key);
+    }
+
+    private string GetAssetFolderPath(AssetKind kind)
+    {
+        return Path.Combine(GetHomeFolderPath(), kind switch
+        {
+            AssetKind.Mod => "mods",
+            AssetKind.Save => "saves",
+            AssetKind.Screenshot => "screenshots",
+            AssetKind.ShaderPack => "shaders",
+            AssetKind.ResourcePack => "resourcepacks",
+            AssetKind.DataPack => "datapacks",
+            _ => throw new NotImplementedException()
+        });
+    }
+
+    private bool CanOpenHomeFolder()
+    {
+        return Directory.Exists(GetHomeFolderPath());
+    }
+
+    private void OpenHomeFolder()
+    {
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = "explorer.exe",
+            Arguments = GetHomeFolderPath(),
+            UseShellExecute = true
+        });
+    }
+
+    private bool CanOpenAssetFolder(AssetKind kind)
+    {
+        return false;
+    }
+
+    private void OpenAssetFolder(AssetKind kind)
+    {
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = "explorer.exe",
+            Arguments = GetAssetFolderPath(kind),
+            UseShellExecute = true
+        });
+    }
+
+    public void AddTodo(string text)
+    {
+        Model.Todos.Add(new TodoModel(new Todo(false, text), DeleteTodoCommand));
+    }
+
+    private bool CanDeleteTodo(TodoModel? item)
+    {
+        return item != null;
+    }
+
+    private void DeleteTodo(TodoModel? item)
+    {
+        if (item != null) Model.Todos.Remove(item);
     }
 }

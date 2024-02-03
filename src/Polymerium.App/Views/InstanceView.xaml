@@ -7,6 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:models="using:Polymerium.App.Models"
+    xmlns:resources="using:Trident.Abstractions.Resources"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
@@ -80,13 +82,22 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                            <HyperlinkButton IsEnabled="False" Content="Mods" />
-                            <HyperlinkButton IsEnabled="False" Content="Resource Packs" />
-                            <HyperlinkButton IsEnabled="False" Content="Shader Packs" />
-                            <HyperlinkButton IsEnabled="False" Content="Screenshots" />
-                            <HyperlinkButton IsEnabled="False" Content="Saves" />
+                            <HyperlinkButton Content="Mods" Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
+                                             CommandParameter="{x:Bind resources:AssetKind.Mod}" />
+                            <HyperlinkButton IsEnabled="False" Content="Resource Packs"
+                                             Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
+                                             CommandParameter="{x:Bind resources:AssetKind.ResourcePack}" />
+                            <HyperlinkButton IsEnabled="False" Content="Shader Packs"
+                                             Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
+                                             CommandParameter="{x:Bind resources:AssetKind.ShaderPack}" />
+                            <HyperlinkButton IsEnabled="False" Content="Screenshots"
+                                             Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
+                                             CommandParameter="{x:Bind resources:AssetKind.Screenshot}" />
+                            <HyperlinkButton IsEnabled="False" Content="Saves"
+                                             Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
+                                             CommandParameter="{x:Bind resources:AssetKind.Save}" />
                         </StackPanel>
-                        <HyperlinkButton Grid.Column="1">
+                        <HyperlinkButton Grid.Column="1" Command="{x:Bind ViewModel.OpenHomeFolderCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                 <FontIcon Glyph="&#xE8A7;" FontSize="16" />
                                 <TextBlock Text="Open Folder" />
@@ -109,23 +120,55 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Spacing="{StaticResource SmallGap}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon Glyph="&#xE70B;" FontSize="16" />
-                                        <TextBlock Text="Note" />
-                                    </StackPanel>
-                                    <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal"
+                                                    VerticalAlignment="Center"
+                                                    Spacing="{StaticResource TinyGap}">
+                                            <FontIcon Glyph="&#xE9D5;" FontSize="16" />
+                                            <TextBlock Text="Todo" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                    Spacing="{StaticResource TinyGap}">
+                                            <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
+                                                <TextBlock Text="Add" />
+                                            </HyperlinkButton>
+                                        </StackPanel>
+                                    </Grid>
+                                    <ListView x:Name="TodoList"
+                                              ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:TodoModel">
+                                                <ListViewItem>
+                                                    <ListViewItem.ContextFlyout>
+                                                        <MenuFlyout>
+                                                            <MenuFlyoutItem Text="Delete"
+                                                                            Command="{x:Bind DeleteTodoCommand}"
+                                                                            CommandParameter="{x:Bind}" />
+                                                        </MenuFlyout>
+                                                    </ListViewItem.ContextFlyout>
+                                                    <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}">
+                                                        <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
+                                                    </CheckBox>
+                                                </ListViewItem>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
                                 </StackPanel>
                                 <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                         BorderThickness="1,0,0,0" />
                                 <toolkit:ConstrainedBox Grid.Column="2" AspectRatio="2:3">
                                     <StackPanel Spacing="{StaticResource SmallGap}">
                                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                            <FontIcon Glyph="&#xE9D5;" FontSize="16" />
-                                            <TextBlock Text="Todo" />
+                                            <FontIcon Glyph="&#xE70B;" FontSize="16" />
+                                            <TextBlock Text="Note" />
                                         </StackPanel>
-                                        <ListView>
-                                            <ListViewItem>Buy some coffee</ListViewItem>
-                                        </ListView>
+                                        <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}" />
                                     </StackPanel>
                                 </toolkit:ConstrainedBox>
                             </Grid>
@@ -144,7 +187,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <toolkit:ImageEx Grid.Column="0" Source="/Assets/Placeholders/default_avatar_face.png"
+                            <toolkit:ImageEx Grid.Column="0"
+                                             Source="https://starlightskins.lunareclipse.studio/skin-render/pixel/Dearain/face"
                                              Width="36" />
                             <StackPanel Grid.Column="1">
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Dearain" />

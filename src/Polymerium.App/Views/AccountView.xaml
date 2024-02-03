@@ -10,44 +10,77 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <toolkit:WrapPanel Margin="{StaticResource PageContentMargin}">
-        <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}">
-            <StackPanel Spacing="{StaticResource SmallGap}">
-                <Border CornerRadius="{StaticResource CardSmallCornerRadius}" Width="160" Height="160">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                            <GradientStop Offset="0" Color="#839EFF" />
-                            <GradientStop Offset="1" Color="#79FFCF" />
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <toolkit:ImageEx Width="140"
-                                     Source="https://starlightskins.lunareclipse.studio/skin-render/default/Dearain/face"
-                                     VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-                </Border>
-                <TextBlock Text="Dearain" Style="{StaticResource SubtitleTextBlockStyle}" />
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Microsoft" Style="{StaticResource CaptionTextBlockStyle}"
-                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                    <FontIcon Grid.Column="1" Glyph="&#xf058;" Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                              FontSize="{StaticResource ButtonFontIconFontSize}"
-                              Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
-                </Grid>
-            </StackPanel>
+    <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource TinyGap}">
+        <ListView SelectionMode="None">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <toolkit:WrapPanel />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}">
+                <StackPanel Spacing="{StaticResource SmallGap}">
+                    <Border CornerRadius="{StaticResource CardSmallCornerRadius}" Width="160" Height="160">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                                <GradientStop Offset="0" Color="#839EFF" />
+                                <GradientStop Offset="1" Color="#79FFCF" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <toolkit:ImageEx Width="140"
+                                         Source="https://starlightskins.lunareclipse.studio/skin-render/default/Dearain/face"
+                                         VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="Dearain" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Microsoft" Style="{StaticResource CaptionTextBlockStyle}"
+                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                        <FontIcon Grid.Column="1" Glyph="&#xf058;"
+                                  Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                  FontSize="{StaticResource ButtonFontIconFontSize}"
+                                  Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
+                    </Grid>
+                </StackPanel>
+            </controls:CardButton>
+        </ListView>
+        <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}" Background="Transparent"
+                             BorderBrush="Transparent" Padding="0">
+            <controls:CardButton.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Microsoft">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xf3ca;" Style="{StaticResource FontAwesomeBrandsFontIconStyle}" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="authlib-injector">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xe2ca;" Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </controls:CardButton.Flyout>
+            <Grid>
+                <Rectangle Fill="Transparent" RadiusX="6" RadiusY="6" StrokeDashArray="8 4"
+                           Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                           StrokeThickness="3" Opacity="0.3" />
+                <StackPanel Orientation="Horizontal" Margin="{StaticResource MediumMargin}"
+                            HorizontalAlignment="Center" Spacing="{StaticResource MediumGap}">
+                    <FontIcon Glyph="&#xf007;" FontSize="48"
+                              Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                              Style="{StaticResource FontAwesomeRegularFontIconStyle}" />
+                    <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}"
+                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
         </controls:CardButton>
-        <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}" Background="Transparent">
-            <StackPanel Spacing="{StaticResource SmallGap}">
-                <Grid>
-                    <Rectangle Fill="Transparent" RadiusX="12" RadiusY="12" StrokeDashArray="8 4" Width="160" Height="160"
-                    Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                    StrokeThickness="3" Opacity="0.3"/>
-                    <FontIcon Glyph="&#xf2c2;" FontSize="48" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{StaticResource FontAwesomeSolidFontIconStyle}"/>
-                </Grid>
-                <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" HorizontalAlignment="Center"/>
-            </StackPanel>
-        </controls:CardButton>
-    </toolkit:WrapPanel>
+    </StackPanel>
 </Page>

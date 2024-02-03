@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Windows.Input;
 using Humanizer;
 using Polymerium.App.Extensions;
-using Trident.Abstractions;
-using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
+using Trident.Abstractions.Profiles;
 
 namespace Polymerium.App.Models;
 
-public record ProfileModel(string Key, Profile Inner)
+public record ProfileModel(string Key, Profile Inner, ICommand DeleteTodoCommand)
 {
     public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? AssetPath.PLACEHOLDER_DEFAULT_DIRT;
 
@@ -27,5 +27,6 @@ public record ProfileModel(string Key, Profile Inner)
         set => Inner.Records.Note = value;
     }
 
-    public BindableCollection<Profile.RecordData.Todo> Todos { get; } = new(Inner.Records.Todos);
+    public ReactiveCollection<Todo, TodoModel> Todos { get; } =
+        new(Inner.Records.Todos, x => new TodoModel(x, DeleteTodoCommand), x => x.Inner);
 }

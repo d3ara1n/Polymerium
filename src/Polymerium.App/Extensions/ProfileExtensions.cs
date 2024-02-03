@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Trident.Abstractions;
+using Trident.Abstractions.Profiles;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
-using static Trident.Abstractions.Profile.RecordData.TimelinePoint;
 
 namespace Polymerium.App.Extensions;
 

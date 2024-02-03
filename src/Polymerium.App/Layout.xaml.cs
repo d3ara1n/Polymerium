@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media.Animation;
+using Polymerium.App.Extensions;
 using Polymerium.App.Models;
 using Trident.Abstractions.Tasks;
 
@@ -26,7 +27,7 @@ public sealed partial class Layout
     {
         InitializeComponent();
 
-        RunningTaskCount = new Bindable<Layout, int>(this, x => x.runningTaskCount, (x, v) => x.runningTaskCount = v);
+        RunningTaskCount = this.ToBindable(x => x.runningTaskCount, (x, v) => x.runningTaskCount = v);
         AbortTaskCommand = new RelayCommand<TaskBase>(AbortTask);
         ClearTasksCommand = new RelayCommand(ClearTasks);
     }
