@@ -4,9 +4,9 @@ using Trident.Abstractions;
 
 namespace Polymerium.Trident.Engines;
 // Deploy 包含以下过程：
-// Build polylockdata:
+// Build polylock data:
 //   Resolve attachments, Install game, Process loaders
-// Solidify polylockdata:
+// Solidify polylock data:
 //   Download libraries, Download & link attachments, Restore assets
 
 // {watermark}.trident.json

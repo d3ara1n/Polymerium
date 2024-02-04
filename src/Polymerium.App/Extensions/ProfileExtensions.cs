@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Trident.Abstractions.Profiles;
+using Trident.Abstractions;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
@@ -15,13 +15,13 @@ public static class ProfileExtensions
         return modloader != null ? Loader.MODLOADER_NAME_MAPPINGS[modloader.Id] : "Vanilla";
     }
 
-    public static DateTimeOffset? ExtractDateTime(this Profile self, TimelimeAction action)
+    public static DateTimeOffset? ExtractDateTime(this Profile self, Profile.RecordData.TimelinePoint.TimelimeAction action)
     {
         return self.Records.Timeline
             .Where(x => x.Action == action).MaxBy(x => x.EndTime)?.EndTime;
     }
 
-    public static TimeSpan ExtractTimeSpan(this Profile self, TimelimeAction action)
+    public static TimeSpan ExtractTimeSpan(this Profile self, Profile.RecordData.TimelinePoint.TimelimeAction action)
     {
         return self.Records.Timeline.Where(x => x.Action == action).Select(x => x.EndTime - x.BeginTime)
             .Aggregate(TimeSpan.Zero, (a, b) => a + b);

@@ -59,7 +59,7 @@
             <Border Grid.Row="0"
                     x:Name="AppTitleBar"
                     Grid.Column="1"
-                    Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+                    Height="{StaticResource NavigationViewCompactPaneLength}"
                     Margin="64,0,0,0"
                     VerticalAlignment="Stretch"
                     Canvas.ZIndex="1">
@@ -80,6 +80,7 @@
                             IsTabStop="False"
                             PaneDisplayMode="Auto"
                             IsSettingsVisible="False"
+                            OpenPaneLength="256"
                             IsPaneToggleButtonVisible="False"
                             IsBackEnabled="{x:Bind Root.CanGoBack, Mode=OneWay}"
                             IsTitleBarAutoPaddingEnabled="True"
@@ -94,10 +95,11 @@
                 </NavigationView.Resources>
                 <NavigationView.MenuItemTemplate>
                     <DataTemplate x:DataType="models:NavItem">
-                        <NavigationViewItem Content="{x:Bind Key}">
+                        <NavigationViewItem>
                             <NavigationViewItem.Icon>
                                 <ImageIcon Source="{x:Bind IconKey}" />
                             </NavigationViewItem.Icon>
+                            <TextBlock Text="{x:Bind Key}" HorizontalAlignment="Left"/>
                         </NavigationViewItem>
                     </DataTemplate>
                 </NavigationView.MenuItemTemplate>
@@ -135,6 +137,11 @@
                                                 </HyperlinkButton>
                                             </Grid>
                                             <ListView SelectionMode="None" ItemsSource="{x:Bind Tasks}">
+                                                <ListView.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Spacing="{StaticResource TinyGap}" />
+                                                    </ItemsPanelTemplate>
+                                                </ListView.ItemsPanel>
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="models:TaskModel">
                                                         <controls:Card>
@@ -151,9 +158,9 @@
                                                                         <Run Text="·" />
                                                                         <Run Text="{x:Bind CreatedAt}" />
                                                                     </TextBlock>
-                                                                    <TextBlock Text="{x:Bind Title}" />
+                                                                    <TextBlock Text="{x:Bind Stage.Value,Mode=OneWay}" />
                                                                     <TextBlock
-                                                                        Text="{x:Bind Subtitle}"
+                                                                        Text="{x:Bind Status.Value,Mode=OneWay}"
                                                                         Style="{StaticResource CaptionTextBlockStyle}" />
                                                                 </StackPanel>
                                                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -194,6 +201,7 @@
                                                 </ListView.ItemTemplate>
                                             </ListView>
                                             <TextBlock HorizontalAlignment="Center" Text="None"
+                                                       Margin="{StaticResource MediumMargin}"
                                                        Style="{StaticResource SubtitleTextBlockStyle}"
                                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                                        Visibility="{x:Bind Tasks.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />

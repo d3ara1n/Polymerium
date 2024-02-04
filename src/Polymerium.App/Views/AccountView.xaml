@@ -23,6 +23,20 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}">
+                <controls:CardButton.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem Text="Set as default">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE768;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Remove" Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xECC9;" Style="{StaticResource FontAwesomeRegularFontIconStyle}" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </controls:CardButton.Flyout>
                 <StackPanel Spacing="{StaticResource SmallGap}">
                     <Border CornerRadius="{StaticResource CardSmallCornerRadius}" Width="160" Height="160">
                         <Border.Background>

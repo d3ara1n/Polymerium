@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Humanizer;
 using PackageUrl;
 using Polymerium.App.Extensions;
-using Trident.Abstractions.Profiles;
+using Trident.Abstractions;
 
 namespace Polymerium.App.Models;
 
@@ -12,10 +12,10 @@ public record EntryModel(string Key, Profile Inner, InstanceState State, IComman
     public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? "/Assets/Placeholders/default_dirt.png";
     public string Version => Inner.Metadata.Version;
     public string Category => ExtractCategory();
-    public DateTimeOffset? LastPlayAtRaw => Inner.ExtractDateTime(TimelimeAction.Play);
-    public string PlayedAt => ExtractDateTime(TimelimeAction.Play);
-    public string CreatedAt => ExtractDateTime(TimelimeAction.Create);
-    public string DeployAt => ExtractDateTime(TimelimeAction.Deploy);
+    public DateTimeOffset? LastPlayAtRaw => Inner.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
+    public string PlayedAt => ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
+    public string CreatedAt => ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Create);
+    public string DeployAt => ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Deploy);
     public string Type => Inner.ExtractTypeDisplay();
 
     private string ExtractCategory()
@@ -34,7 +34,7 @@ public record EntryModel(string Key, Profile Inner, InstanceState State, IComman
         return "custom";
     }
 
-    private string ExtractDateTime(TimelimeAction action)
+    private string ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction action)
     {
         var record = Inner.ExtractDateTime(action);
         return record != null ? record.Humanize() : "Never";

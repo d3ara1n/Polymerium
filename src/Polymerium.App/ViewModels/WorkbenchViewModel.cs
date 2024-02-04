@@ -12,7 +12,7 @@ public class WorkbenchViewModel : ViewModelBase
     private readonly ProfileManager _profileManager;
     private readonly RepositoryAgent repositoryAgent;
 
-    private WorkpieceModel model;
+    private WorkpieceModel model = new(ProfileManager.DUMMY_KEY);
 
     public WorkbenchViewModel(RepositoryAgent repositoryAgent, ProfileManager profileManager)
     {
@@ -21,8 +21,6 @@ public class WorkbenchViewModel : ViewModelBase
         _dispatcher = DispatcherQueue.GetForCurrentThread();
 
         FetchAttachmentCommand = new RelayCommand<AttachmentModel>(FetchAttachment);
-
-        model = new WorkpieceModel(ProfileManager.DUMMY_KEY);
     }
 
     public WorkpieceModel Model

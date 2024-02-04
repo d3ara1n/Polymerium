@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using Trident.Abstractions.Profiles;
+using Trident.Abstractions;
 
 namespace Polymerium.Trident.Engines.Deploying;
 

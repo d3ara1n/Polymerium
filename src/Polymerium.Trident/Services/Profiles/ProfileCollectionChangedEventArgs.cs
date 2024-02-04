@@ -1,4 +1,4 @@
-﻿using Trident.Abstractions.Profiles;
+﻿using Trident.Abstractions;
 
 namespace Polymerium.Trident.Services.Profiles;
 

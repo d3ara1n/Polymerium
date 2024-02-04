@@ -33,7 +33,7 @@
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                         <controls:IconLabel VerticalAlignment="Bottom">
                             <controls:IconLabel.Icon>
-                                <FontIcon Glyph="&#xE7FC;" FontSize="30" />
+                                <FontIcon Glyph="&#xE734;" FontSize="30" />
                             </controls:IconLabel.Icon>
                             <controls:IconLabel.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TYPE" />
@@ -42,7 +42,7 @@
                         </controls:IconLabel>
                         <controls:IconLabel VerticalAlignment="Bottom">
                             <controls:IconLabel.Icon>
-                                <FontIcon Glyph="&#xE734;" FontSize="30" />
+                                <FontIcon Glyph="&#xE8EC;" FontSize="30" />
                             </controls:IconLabel.Icon>
                             <controls:IconLabel.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="VERSION" />
@@ -71,7 +71,7 @@
                     <StackPanel Grid.Column="1">
                         <HyperlinkButton Command="{x:Bind ViewModel.GotoWorkbenchViewCommand}"
                                          CommandParameter="{x:Bind ViewModel.Model.Key,Mode=OneWay}">
-                            <SymbolIcon Symbol="Setting" />
+                            <FontIcon Glyph="&#xE932;" />
                         </HyperlinkButton>
                     </StackPanel>
                 </Grid>
@@ -133,6 +133,10 @@
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal"
                                                     Spacing="{StaticResource TinyGap}">
+                                            <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
+                                                             CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
+                                                <TextBlock Text="Delete" />
+                                            </HyperlinkButton>
                                             <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
                                                 <TextBlock Text="Add" />
                                             </HyperlinkButton>
@@ -142,20 +146,14 @@
                                               ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="models:TodoModel">
-                                                <ListViewItem>
-                                                    <ListViewItem.ContextFlyout>
-                                                        <MenuFlyout>
-                                                            <MenuFlyoutItem Text="Delete"
-                                                                            Command="{x:Bind DeleteTodoCommand}"
-                                                                            CommandParameter="{x:Bind}" />
-                                                        </MenuFlyout>
-                                                    </ListViewItem.ContextFlyout>
-                                                    <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}">
-                                                        <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
-                                                                   TextTrimming="CharacterEllipsis"
-                                                                   TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
-                                                    </CheckBox>
-                                                </ListViewItem>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}"
+                                                              MinWidth="0" />
+                                                    <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               VerticalAlignment="Center"
+                                                               TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
+                                                </StackPanel>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
@@ -196,10 +194,10 @@
                             </StackPanel>
                         </Grid>
                     </HyperlinkButton>
-                    <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                            <Image Source="/Assets/Icons/Rocket.svg" Width="16" />
-                            <TextBlock Text="PLAY" />
+                            <Image Source="/Assets/Icons/Rocket.svg" Width="22" />
+                            <TextBlock Text="PLAY" FontSize="16"/>
                         </StackPanel>
                     </Button>
                 </Grid>

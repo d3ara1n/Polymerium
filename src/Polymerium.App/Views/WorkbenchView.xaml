@@ -8,18 +8,23 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Margin="{StaticResource PageContentMargin}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <controls:Card>
-                <StackPanel>
-                    <TextBlock Text="Version" />
-                    <TextBlock Text="24w40a" Style="{StaticResource TitleTextBlockStyle}" />
-                </StackPanel>
-            </controls:Card>
-        </StackPanel>
-    </Grid>
+    <Pivot Margin="{StaticResource PageContentMargin}">
+        <PivotItem Header="Metadata">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </PivotItem>
+    </Pivot>
 </Page>

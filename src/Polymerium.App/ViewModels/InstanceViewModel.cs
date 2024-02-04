@@ -8,7 +8,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using Trident.Abstractions.Profiles;
+using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels;
@@ -19,7 +19,7 @@ public class InstanceViewModel : ViewModelBase
     private readonly NavigationService _navigation;
     private readonly ProfileManager _profileManager;
 
-    private ProfileModel model;
+    private ProfileModel model = new ProfileModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE);
 
     public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, PolymeriumContext context)
     {
@@ -31,8 +31,6 @@ public class InstanceViewModel : ViewModelBase
         OpenHomeFolderCommand = new RelayCommand(OpenHomeFolder, CanOpenHomeFolder);
         OpenAssetFolderCommand = new RelayCommand<AssetKind>(OpenAssetFolder, CanOpenAssetFolder);
         DeleteTodoCommand = new RelayCommand<TodoModel>(DeleteTodo, CanDeleteTodo);
-
-        model = new ProfileModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, DeleteTodoCommand);
     }
 
     public ProfileModel Model
@@ -44,7 +42,7 @@ public class InstanceViewModel : ViewModelBase
     public ICommand GotoWorkbenchViewCommand { get; }
     public ICommand OpenAssetFolderCommand { get; }
     public ICommand OpenHomeFolderCommand { get; }
-    private ICommand DeleteTodoCommand { get; }
+    public ICommand DeleteTodoCommand { get; }
 
     public override bool OnAttached(object? maybeKey)
     {
@@ -52,7 +50,7 @@ public class InstanceViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new ProfileModel(key, profile, DeleteTodoCommand);
+                Model = new ProfileModel(key, profile);
             return profile != null;
         }
 
@@ -124,7 +122,7 @@ public class InstanceViewModel : ViewModelBase
 
     public void AddTodo(string text)
     {
-        Model.Todos.Add(new TodoModel(new Todo(false, text), DeleteTodoCommand));
+        Model.Todos.Add(new TodoModel(new Profile.RecordData.Todo(false, text)));
     }
 
     private bool CanDeleteTodo(TodoModel? item)

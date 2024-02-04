@@ -2,7 +2,7 @@
 
 namespace Polymerium.Trident.Tasks;
 
-public class LaunchInstanceTask(string key) : TaskBase(key)
+public class LaunchInstanceTask(string key) : TaskBase(key, nameof(LaunchInstanceTask), "...")
 {
     protected override Task OnThreadAsync()
     {

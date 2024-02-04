@@ -1,6 +1,6 @@
 ﻿using Trident.Abstractions.Resources;
 
-namespace Trident.Abstractions.Profiles;
+namespace Trident.Abstractions;
 
 public record Metadata(string Version, IList<Metadata.Layer> Layers)
 {

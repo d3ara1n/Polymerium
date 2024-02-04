@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services.Profiles;
-using Trident.Abstractions.Profiles;
+using Trident.Abstractions;
 
 namespace Polymerium.Trident.Services;
 
@@ -12,7 +12,8 @@ public sealed class ProfileManager : IDisposable
     public const string DUMMY_KEY = "_DUMMY";
 
     public static readonly Profile DUMMY_PROFILE = new(string.Empty, null, null,
-        new RecordData(Enumerable.Empty<TimelinePoint>().ToList(), Enumerable.Empty<Todo>().ToList(),
+        new Profile.RecordData(Enumerable.Empty<Profile.RecordData.TimelinePoint>().ToList(),
+            Enumerable.Empty<Profile.RecordData.Todo>().ToList(),
             string.Empty), new Metadata(string.Empty, Enumerable.Empty<Metadata.Layer>().ToList()),
         new Dictionary<string, object>(), null);
 
@@ -67,12 +68,12 @@ public sealed class ProfileManager : IDisposable
     {
         if (key.Disposed) throw new ArgumentException($"Disposed key: {key.Key}");
         var now = DateTimeOffset.Now;
-        var profile = new Profile(name, thumbnail, reference, new RecordData(
-            new List<TimelinePoint>
+        var profile = new Profile(name, thumbnail, reference, new Profile.RecordData(
+            new List<Profile.RecordData.TimelinePoint>
             {
-                new(true, null, TimelimeAction.Create,
+                new(true, null, Profile.RecordData.TimelinePoint.TimelimeAction.Create,
                     now, now)
-            }, new List<Todo>(), string.Empty), metadata, new Dictionary<string, object>(), null);
+            }, new List<Profile.RecordData.Todo>(), string.Empty), metadata, new Dictionary<string, object>(), null);
         Managed.Add(key.Key,
             new Handle<Profile>(profile, Path.Combine(_context.InstanceDir, $"{key.Key}.json"), _options));
         if (!key.Disposed) key.Dispose();

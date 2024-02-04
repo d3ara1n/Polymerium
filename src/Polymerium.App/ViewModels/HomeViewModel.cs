@@ -8,7 +8,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using Trident.Abstractions.Profiles;
+using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels;
 
@@ -24,7 +24,7 @@ public class HomeViewModel : ObservableObject
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
         Recents = _profileManger.Managed
-            .Select(x => (x.Value.Value.ExtractDateTime(TimelimeAction.Play), x.Value.Value, x.Key))
+            .Select(x => (x.Value.Value.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play), x.Value.Value, x.Key))
             .Where(x => x.Item1 != null)
             .OrderByDescending(x => x.Item1)
             .Select(x => new RecentModel(x.Item3, x.Item2, GotoInstanceViewCommand));
