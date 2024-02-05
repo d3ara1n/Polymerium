@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="DotNext" Version="5.0.1"/>
+        <PackageReference Include="IBuilder" Version="0.1.0" />
     </ItemGroup>
 
     <ItemGroup>

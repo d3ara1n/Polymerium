@@ -208,7 +208,10 @@
                                         </Style>
                                     </StackPanel.Resources>
                                     <TextBlock Text="Project Id" Style="{StaticResource CaptionStyle}" />
-                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}" />
+                                    <controls:ClipBox HorizontalAlignment="Left" Command="{x:Bind ViewModel.CopyToClipboardCommand}"
+                                                      CommandParameter="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}">
+                                        <TextBlock Text="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}" />
+                                    </controls:ClipBox>
                                     <TextBlock Text="Project Name" Style="{StaticResource CaptionStyle}" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}" />
                                     <TextBlock Text="Type" Style="{StaticResource CaptionStyle}" />

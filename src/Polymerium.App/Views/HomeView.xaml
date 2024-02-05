@@ -126,6 +126,11 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
+            <TextBlock HorizontalAlignment="Center" Text="None"
+                       Margin="{StaticResource MediumMargin}"
+                       Style="{StaticResource SubtitleTextBlockStyle}"
+                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                       Visibility="{x:Bind ViewModel.Recents.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
         </StackPanel>
     </ScrollViewer>
 </Page>

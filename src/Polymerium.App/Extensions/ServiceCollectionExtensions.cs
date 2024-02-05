@@ -19,12 +19,12 @@ internal static class ServiceCollectionExtensions
     }
 
     public static IServiceCollection AddStore<T>(this IServiceCollection services,
-        Func<PolymeriumContext, string> mappedTo)
+        Func<TridentContext, string> mappedTo)
         where T : class, new()
     {
         services.AddSingleton(provider =>
         {
-            var ctx = provider.GetRequiredService<PolymeriumContext>();
+            var ctx = provider.GetRequiredService<TridentContext>();
             return new Store<T>(mappedTo(ctx));
         });
         return services;

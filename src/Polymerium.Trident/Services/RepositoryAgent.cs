@@ -11,7 +11,7 @@ namespace Polymerium.Trident.Services;
 public class RepositoryAgent(
     ILogger<RepositoryAgent> logger,
     IEnumerable<IRepository> repositories,
-    PolymeriumContext context)
+    TridentContext context)
 {
     private static readonly DummyRepository DUMMY = new();
     public IEnumerable<IRepository> Repositories => repositories;

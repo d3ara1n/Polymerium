@@ -17,7 +17,7 @@ public sealed class ProfileManager : IDisposable
             string.Empty), new Metadata(string.Empty, Enumerable.Empty<Metadata.Layer>().ToList()),
         new Dictionary<string, object>(), null);
 
-    private readonly PolymeriumContext _context;
+    private readonly TridentContext _context;
     private readonly ILogger _logger;
     private readonly JsonSerializerOptions _options;
 
@@ -25,7 +25,7 @@ public sealed class ProfileManager : IDisposable
 
     private bool disposedValue;
 
-    public ProfileManager(ILogger<ProfileManager> logger, PolymeriumContext context, JsonSerializerOptions options)
+    public ProfileManager(ILogger<ProfileManager> logger, TridentContext context, JsonSerializerOptions options)
     {
         _logger = logger;
         _context = context;

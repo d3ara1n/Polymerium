@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Windows.Graphics;
 using Windows.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -47,12 +49,16 @@ public partial class App
 
     private void ConfigureServices(IServiceCollection services)
     {
-        var context = new PolymeriumContext(
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".polymerium"));
+        var context = new TridentContext(
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".trident"));
 
         // App Services
         services
-            .AddSerializationOptions(options => { options.WriteIndented = true; })
+            .AddSerializationOptions(options =>
+            {
+                options.WriteIndented = true;
+                options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            })
             .AddLogging(builder =>
             {
                 builder

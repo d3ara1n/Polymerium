@@ -3,7 +3,7 @@ using Polymerium.Trident.Services.Storages;
 
 namespace Polymerium.Trident.Services;
 
-public class StorageManager(PolymeriumContext context)
+public class StorageManager(TridentContext context)
 {
     public Storage Open(string key)
     {

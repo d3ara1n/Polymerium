@@ -105,75 +105,95 @@
                         </HyperlinkButton>
                     </Grid>
                 </controls:Card>
-                <toolkit:ConstrainedBox AspectRatio="8:3">
-                    <Grid ColumnSpacing="{StaticResource SmallGap}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <controls:Card Grid.Column="0" Grid.ColumnSpan="2">
-                            <Grid ColumnSpacing="{StaticResource SmallGap}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="1" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Spacing="{StaticResource SmallGap}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0" Orientation="Horizontal"
-                                                    VerticalAlignment="Center"
+                <Grid ColumnSpacing="{StaticResource SmallGap}" MinHeight="312">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <controls:Card Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid ColumnSpacing="{StaticResource SmallGap}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6*" />
+                                <ColumnDefinition Width="1" />
+                                <ColumnDefinition Width="4*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Spacing="{StaticResource SmallGap}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal"
+                                                    VerticalAlignment="Top"
                                                     Spacing="{StaticResource TinyGap}">
-                                            <FontIcon Glyph="&#xE9D5;" FontSize="16" />
-                                            <TextBlock Text="Todo" />
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                        <FontIcon Glyph="&#xE9D5;" FontSize="16" />
+                                        <TextBlock Text="Todo" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal"
                                                     Spacing="{StaticResource TinyGap}">
-                                            <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
+                                        <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
                                                              CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
-                                                <TextBlock Text="Delete" />
-                                            </HyperlinkButton>
-                                            <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
-                                                <TextBlock Text="Add" />
-                                            </HyperlinkButton>
-                                        </StackPanel>
-                                    </Grid>
-                                    <ListView x:Name="TodoList"
+                                            <FontIcon Glyph="&#xE74D;"
+                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        </HyperlinkButton>
+                                        <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
+                                            <FontIcon Glyph="&#xECC8;"
+                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        </HyperlinkButton>
+                                    </StackPanel>
+                                </Grid>
+                                <ListView x:Name="TodoList"
                                               ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="models:TodoModel">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}"
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:TodoModel">
+                                            <StackPanel Orientation="Horizontal">
+                                                <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}"
                                                               MinWidth="0" />
-                                                    <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
+                                                <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
                                                                TextTrimming="CharacterEllipsis"
                                                                VerticalAlignment="Center"
                                                                TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </StackPanel>
-                                <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <TextBlock HorizontalAlignment="Center" Text="None"
+                                               Margin="{StaticResource MediumMargin}"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                               Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
+                            </StackPanel>
+                            <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                         BorderThickness="1,0,0,0" />
-                                <toolkit:ConstrainedBox Grid.Column="2" AspectRatio="2:3">
-                                    <StackPanel Spacing="{StaticResource SmallGap}">
-                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                            <FontIcon Glyph="&#xE70B;" FontSize="16" />
-                                            <TextBlock Text="Note" />
-                                        </StackPanel>
-                                        <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}" />
-                                    </StackPanel>
-                                </toolkit:ConstrainedBox>
+                            <StackPanel Grid.Column="2" Spacing="{StaticResource SmallGap}">
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                    <FontIcon Glyph="&#xE70B;" FontSize="16" />
+                                    <TextBlock Text="Note" />
+                                </StackPanel>
+                                <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Grid>
+                    </controls:Card>
+                    <Grid Grid.Column="2" RowSpacing="{StaticResource SmallGap}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <controls:Card Grid.Row="0">
+                            <Grid>
+                                <TextBlock Text="Backups" Style="{StaticResource SubtitleTextBlockStyle}"
+                                               HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                    <TextBlock Text="Manage →" />
+                                </HyperlinkButton>
+                                <TextBlock Text="N/A" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource DisplayTextBlockStyle}" />
                             </Grid>
                         </controls:Card>
-                        <controls:Card Grid.Column="2" />
+                        <controls:Card Grid.Row="1">
+
+                        </controls:Card>
                     </Grid>
-                </toolkit:ConstrainedBox>
+                </Grid>
             </StackPanel>
         </ScrollViewer>
         <Grid Grid.Row="1">
@@ -194,10 +214,11 @@
                             </StackPanel>
                         </Grid>
                     </HyperlinkButton>
-                    <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                    <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right"
+                            VerticalAlignment="Center" Margin="{StaticResource SmallMargin}">
                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                            <Image Source="/Assets/Icons/Rocket.svg" Width="22" />
-                            <TextBlock Text="PLAY" FontSize="16"/>
+                            <FontIcon Glyph="&#xF5B0;" FontSize="16"/>
+                            <TextBlock Text="PLAY" FontSize="16" />
                         </StackPanel>
                     </Button>
                 </Grid>

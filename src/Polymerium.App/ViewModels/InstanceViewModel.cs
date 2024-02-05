@@ -15,13 +15,13 @@ namespace Polymerium.App.ViewModels;
 
 public class InstanceViewModel : ViewModelBase
 {
-    private readonly PolymeriumContext _context;
+    private readonly TridentContext _context;
     private readonly NavigationService _navigation;
     private readonly ProfileManager _profileManager;
 
     private ProfileModel model = new ProfileModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE);
 
-    public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, PolymeriumContext context)
+    public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context)
     {
         _profileManager = profileManager;
         _navigation = navigation;

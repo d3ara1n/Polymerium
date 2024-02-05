@@ -24,13 +24,14 @@ public class HomeViewModel : ObservableObject
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
         Recents = _profileManger.Managed
-            .Select(x => (x.Value.Value.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play), x.Value.Value, x.Key))
+            .Select(x => (x.Value.Value.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play),
+                x.Value.Value, x.Key))
             .Where(x => x.Item1 != null)
             .OrderByDescending(x => x.Item1)
-            .Select(x => new RecentModel(x.Item3, x.Item2, GotoInstanceViewCommand));
+            .Select(x => new RecentModel(x.Item3, x.Item2, GotoInstanceViewCommand)).ToList();
     }
 
-    public IEnumerable<RecentModel> Recents { get; }
+    public IList<RecentModel> Recents { get; }
     public ICommand GotoInstanceViewCommand { get; }
 
     private void GotoInstanceView(string? key)

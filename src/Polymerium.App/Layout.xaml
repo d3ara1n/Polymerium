@@ -80,7 +80,7 @@
                             IsTabStop="False"
                             PaneDisplayMode="Auto"
                             IsSettingsVisible="False"
-                            OpenPaneLength="256"
+                            OpenPaneLength="228"
                             IsPaneToggleButtonVisible="False"
                             IsBackEnabled="{x:Bind Root.CanGoBack, Mode=OneWay}"
                             IsTitleBarAutoPaddingEnabled="True"
@@ -208,7 +208,7 @@
                                         </StackPanel>
                                     </Flyout>
                                 </FlyoutBase.AttachedFlyout>
-                                <TextBlock Text="Of tasks are running" />
+                                <TextBlock Text="Tasks" />
                                 <TextBlock>
                                     <Hyperlink Click="Hyperlink_OnClick">
                                         <Run Text="Manage" />

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.DataTransfer;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
@@ -34,6 +35,7 @@ public class ModpackViewModel : ViewModelBase
         _notificationService = notificationService;
         OpenReferenceCommand = new RelayCommand<Uri>(OpenReference);
         InstallModpackCommand = new RelayCommand<ProjectVersionModel>(InstallModpack);
+        CopyToClipboardCommand = new RelayCommand<string>(CopyToClipboard);
     }
 
     public DataLoadingState DataState
@@ -56,6 +58,7 @@ public class ModpackViewModel : ViewModelBase
 
     public ICommand OpenReferenceCommand { get; }
     public ICommand InstallModpackCommand { get; }
+    public ICommand CopyToClipboardCommand { get; }
 
     public override bool OnAttached(object? maybeModpackModel)
     {
@@ -109,6 +112,19 @@ public class ModpackViewModel : ViewModelBase
                 Project.Inner.Id,
                 version.Inner.Id));
             _taskService.Enqueue(task);
+        }
+    }
+
+    private void CopyToClipboard(string? content)
+    {
+        if (!string.IsNullOrEmpty(content))
+        {
+            var package = new DataPackage()
+            {
+                RequestedOperation = DataPackageOperation.Copy,
+            };
+            package.SetText(content);
+            Clipboard.SetContent(package);
         }
     }
 }
