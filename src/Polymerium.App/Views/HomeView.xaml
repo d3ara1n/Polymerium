@@ -100,7 +100,7 @@
                                     <toolkit:ImageEx Source="{x:Bind Inner.Thumbnail}" Stretch="UniformToFill"
                                                      Width="198" />
                                 </toolkit:ConstrainedBox>
-                                <StackPanel Margin="{StaticResource CardContentPadding}"
+                                <StackPanel Margin="{StaticResource CardContentMargin}"
                                             Spacing="{StaticResource TinyGap}">
                                     <TextBlock Text="{x:Bind Inner.Name}"
                                                Style="{StaticResource BodyStrongTextBlockStyle}" MaxLines="1"

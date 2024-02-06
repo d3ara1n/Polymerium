@@ -12,14 +12,14 @@ public struct EternalModLatestFile
     public string FileName { get; init; }
     public int ReleaseType { get; init; }
     public int FileStatus { get; init; }
-    public IEnumerable<EternalFileHash> Hashes { get; init; }
+    public EternalFileHash[] Hashes { get; init; }
     public DateTimeOffset FileDate { get; init; }
     public long FileLength { get; init; }
     public long DownloadCount { get; init; }
     public Uri DownloadUrl { get; init; }
-    public IEnumerable<string> GameVersions { get; init; }
+    public string[] GameVersions { get; init; }
     public object SortableGameVersions { get; init; }
-    public IEnumerable<EternalDependency> Dependencies { get; init; }
+    public EternalDependency[] Dependencies { get; init; }
     public bool ExposeAsAlternative { get; init; }
     public uint ParentProjectFileId { get; init; }
     public uint AlternateFileId { get; init; }

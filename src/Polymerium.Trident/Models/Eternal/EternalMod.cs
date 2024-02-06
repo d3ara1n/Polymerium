@@ -12,14 +12,14 @@ public struct EternalMod
     public uint DownloadCount { get; init; }
     public bool IsFeatured { get; init; }
     public uint PrimaryCategoryId { get; init; }
-    public IEnumerable<EternalModCategory> Categories { get; init; }
+    public EternalModCategory[] Categories { get; init; }
     public uint ClassId { get; init; }
-    public IEnumerable<EternalModAuthor> Authors { get; init; }
+    public EternalModAuthor[] Authors { get; init; }
     public EternalModLogo? Logo { get; init; }
-    public IEnumerable<EternalScreenshot> Screenshots { get; init; }
+    public EternalScreenshot[] Screenshots { get; init; }
     public uint MainFileId { get; init; }
-    public IEnumerable<EternalModLatestFile> LatestFiles { get; init; }
-    public IEnumerable<EternalModLatestFileIndex> LatestFilesIndexes { get; init; }
+    public EternalModLatestFile[] LatestFiles { get; init; }
+    public EternalModLatestFileIndex[] LatestFilesIndexes { get; init; }
     public DateTimeOffset DateCreated { get; init; }
     public DateTimeOffset DateModified { get; init; }
     public DateTimeOffset DateReleased { get; init; }

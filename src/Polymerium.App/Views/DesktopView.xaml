@@ -71,18 +71,18 @@
                                                     <MenuFlyout>
                                                         <MenuFlyoutItem Text="Mark">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE734;"/>
+                                                                <FontIcon Glyph="&#xE734;" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutItem Text="Launch">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE768;"/>
+                                                                <FontIcon Glyph="&#xE768;" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutItem Text="Delete"
                                                                         Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE74D;"/>
+                                                                <FontIcon Glyph="&#xE74D;" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                     </MenuFlyout>

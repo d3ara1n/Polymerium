@@ -119,9 +119,9 @@ public class ModpackViewModel : ViewModelBase
     {
         if (!string.IsNullOrEmpty(content))
         {
-            var package = new DataPackage()
+            var package = new DataPackage
             {
-                RequestedOperation = DataPackageOperation.Copy,
+                RequestedOperation = DataPackageOperation.Copy
             };
             package.SetText(content);
             Clipboard.SetContent(package);

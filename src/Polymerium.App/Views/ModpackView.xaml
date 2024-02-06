@@ -102,7 +102,7 @@
                                 </toolkit:ConstrainedBox>
                                 <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
                                               HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto"
-                                              Padding="{StaticResource CardContentPadding}"
+                                              Padding="{StaticResource CardContentMargin}"
                                               Content="{x:Bind ViewModel.Project.Description,Mode=OneWay}" />
                             </Grid>
                         </controls:Card>
@@ -208,7 +208,8 @@
                                         </Style>
                                     </StackPanel.Resources>
                                     <TextBlock Text="Project Id" Style="{StaticResource CaptionStyle}" />
-                                    <controls:ClipBox HorizontalAlignment="Left" Command="{x:Bind ViewModel.CopyToClipboardCommand}"
+                                    <controls:ClipBox HorizontalAlignment="Left"
+                                                      Command="{x:Bind ViewModel.CopyToClipboardCommand}"
                                                       CommandParameter="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}">
                                         <TextBlock Text="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}" />
                                     </controls:ClipBox>

@@ -10,14 +10,14 @@ namespace Polymerium.App.Views;
 /// <summary>
 ///     An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class WorkbenchView : Page
+public sealed partial class MetadataView : Page
 {
-    public WorkbenchView()
+    public MetadataView()
     {
         InitializeComponent();
     }
 
-    public WorkbenchViewModel ViewModel { get; } = App.ViewModel<WorkbenchViewModel>();
+    public MetadataViewModel ViewModel { get; } = App.ViewModel<MetadataViewModel>();
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {

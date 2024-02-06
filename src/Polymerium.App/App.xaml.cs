@@ -101,7 +101,7 @@ public partial class App
             .AddViewModel<SettingViewModel>()
             .AddViewModel<ToolboxViewModel>()
             .AddViewModel<ModpackViewModel>()
-            .AddViewModel<WorkbenchViewModel>()
+            .AddViewModel<MetadataViewModel>()
             .AddViewModel<RuntimeViewModel>();
 
         // Repositories

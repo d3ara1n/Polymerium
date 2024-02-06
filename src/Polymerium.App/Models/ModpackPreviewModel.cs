@@ -6,7 +6,7 @@ namespace Polymerium.App.Models;
 public record ModpackPreviewModel(FlattenExtractedContainer Inner)
 {
     public string InstanceName { get; set; } = Inner.Original.Name;
-    public string Version { get; set; } = Inner.Original.Version;
+    public string Version { get; } = Inner.Original.Version;
     public int AttachmentCount => Inner.Layers.SelectMany(x => x.Original.Attachments).Count();
 
     public string Loader =>

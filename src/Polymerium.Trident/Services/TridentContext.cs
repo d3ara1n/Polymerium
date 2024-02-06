@@ -29,8 +29,13 @@ public class TridentContext(string home)
     public string LogDir => Path.Combine(HomeDir, DIR_PRIVATE, DIR_PRIVATE_LOG);
     public string BackupDir => Path.Combine(HomeDir, DIR_PRIVATE, DIR_PRIVATE_BACKUP);
 
-    public string InstanceHomePath(string key) => Path.Combine(InstanceDir, key);
+    public string InstanceHomePath(string key)
+    {
+        return Path.Combine(InstanceDir, key);
+    }
 
-    public string InstanceArtifactPath(string key, string watermark) =>
-        Path.Combine(InstanceDir, key, $"trident.artifact.{watermark}.json");
+    public string InstanceArtifactPath(string key)
+    {
+        return Path.Combine(InstanceDir, key, "trident.artifact.json");
+    }
 }

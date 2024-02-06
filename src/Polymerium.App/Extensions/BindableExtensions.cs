@@ -13,7 +13,7 @@ public static class BindableExtensions
         return new Bindable<TOwner, TValue>(self, getter, setter);
     }
 
-    public static BindableCollection<T> ToBindable<T>(this IList<T> self)
+    public static BindableCollection<T> ToBindableCollection<T>(this IList<T> self)
     {
         return new BindableCollection<T>(self);
     }
@@ -26,7 +26,8 @@ public static class BindableExtensions
         return new Reactive<TOwner, TSource, TValue>(self, selector);
     }
 
-    public static ReactiveCollection<TSource, TValue> ToReactive<TSource, TValue>(this BindableCollection<TSource> self,
+    public static ReactiveCollection<TSource, TValue> ToReactiveCollection<TSource, TValue>(
+        this BindableCollection<TSource> self,
         Func<TSource, TValue> selector, Func<TValue, TSource> mapper)
     {
         return new ReactiveCollection<TSource, TValue>(self, selector, mapper);

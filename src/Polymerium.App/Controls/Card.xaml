@@ -9,7 +9,8 @@
     <CornerRadius x:Key="CardMediumCornerRadius">10</CornerRadius>
     <CornerRadius x:Key="CardLargeCornerRadius">15</CornerRadius>
     <Thickness x:Key="CardBorderThickness">1</Thickness>
-    <Thickness x:Key="CardContentPadding">15</Thickness>
+    <Thickness x:Key="CardContentMargin">15</Thickness>
+    <Thickness x:Key="CardContentUpperMargin">15,15,15,0</Thickness>
 
     <Style TargetType="local:Card" BasedOn="{StaticResource DefaultCardStyle}" />
 
@@ -18,7 +19,7 @@
         <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="{ThemeResource CardBorderThickness}" />
-        <Setter Property="Padding" Value="{ThemeResource CardContentPadding}" />
+        <Setter Property="Padding" Value="{ThemeResource CardContentMargin}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

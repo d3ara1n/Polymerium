@@ -27,12 +27,13 @@
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem Text="Set as default">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE930;"/>
+                                <FontIcon Glyph="&#xE930;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Remove" Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}">
+                        <MenuFlyoutItem Text="Remove"
+                                        Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xECC9;"/>
+                                <FontIcon Glyph="&#xECC9;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                     </MenuFlyout>

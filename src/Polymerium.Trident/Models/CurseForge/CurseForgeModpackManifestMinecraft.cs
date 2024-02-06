@@ -3,5 +3,5 @@
 public struct CurseForgeModpackManifestMinecraft
 {
     public string Version { get; set; }
-    public IEnumerable<CurseForgeModpackManifestMinecraftModLoader> ModLoaders { get; set; }
+    public CurseForgeModpackManifestMinecraftModLoader[] ModLoaders { get; set; }
 }

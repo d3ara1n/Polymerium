@@ -125,52 +125,53 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" Orientation="Horizontal"
-                                                    VerticalAlignment="Top"
-                                                    Spacing="{StaticResource TinyGap}">
+                                                VerticalAlignment="Top"
+                                                Spacing="{StaticResource TinyGap}">
                                         <FontIcon Glyph="&#xE9D5;" FontSize="16" />
                                         <TextBlock Text="Todo" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Orientation="Horizontal"
-                                                    Spacing="{StaticResource TinyGap}">
+                                                Spacing="{StaticResource TinyGap}">
                                         <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
-                                                             CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
+                                                         CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
                                             <FontIcon Glyph="&#xE74D;"
-                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                                      FontSize="{StaticResource ButtonFontIconFontSize}" />
                                         </HyperlinkButton>
                                         <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
                                             <FontIcon Glyph="&#xECC8;"
-                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                                      FontSize="{StaticResource ButtonFontIconFontSize}" />
                                         </HyperlinkButton>
                                     </StackPanel>
                                 </Grid>
                                 <ListView x:Name="TodoList"
-                                              ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
+                                          ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:TodoModel">
                                             <StackPanel Orientation="Horizontal">
                                                 <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}"
-                                                              MinWidth="0" />
+                                                          MinWidth="0" />
                                                 <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
-                                                               TextTrimming="CharacterEllipsis"
-                                                               VerticalAlignment="Center"
-                                                               TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
+                                                           TextTrimming="CharacterEllipsis"
+                                                           VerticalAlignment="Center"
+                                                           TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
                                 <TextBlock HorizontalAlignment="Center" Text="None"
-                                               Margin="{StaticResource MediumMargin}"
-                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                               Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
+                                           Margin="{StaticResource MediumMargin}"
+                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                           Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
                             </StackPanel>
                             <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                        BorderThickness="1,0,0,0" />
+                                    BorderThickness="1,0,0,0" />
                             <StackPanel Grid.Column="2" Spacing="{StaticResource SmallGap}">
                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                     <FontIcon Glyph="&#xE70B;" FontSize="16" />
                                     <TextBlock Text="Note" />
                                 </StackPanel>
-                                <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}" TextWrapping="Wrap"/>
+                                <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}"
+                                         TextWrapping="Wrap" />
                             </StackPanel>
                         </Grid>
                     </controls:Card>
@@ -182,16 +183,15 @@
                         <controls:Card Grid.Row="0">
                             <Grid>
                                 <TextBlock Text="Backups" Style="{StaticResource SubtitleTextBlockStyle}"
-                                               HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                           HorizontalAlignment="Left" VerticalAlignment="Top" />
                                 <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                     <TextBlock Text="Manage →" />
                                 </HyperlinkButton>
-                                <TextBlock Text="N/A" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource DisplayTextBlockStyle}" />
+                                <TextBlock Text="N/A" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                                           Style="{StaticResource DisplayTextBlockStyle}" />
                             </Grid>
                         </controls:Card>
-                        <controls:Card Grid.Row="1">
-
-                        </controls:Card>
+                        <controls:Card Grid.Row="1" />
                     </Grid>
                 </Grid>
             </StackPanel>
@@ -217,7 +217,7 @@
                     <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right"
                             VerticalAlignment="Center" Margin="{StaticResource SmallMargin}">
                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                            <FontIcon Glyph="&#xF5B0;" FontSize="16"/>
+                            <FontIcon Glyph="&#xF5B0;" FontSize="16" />
                             <TextBlock Text="PLAY" FontSize="16" />
                         </StackPanel>
                     </Button>

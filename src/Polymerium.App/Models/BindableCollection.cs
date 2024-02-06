@@ -49,27 +49,10 @@ public class BindableCollection<T>(IList<T> from)
         OnCollectionSet(item, originalItem, index);
     }
 
-    protected virtual void MoveItem(int oldIndex, int newIndex)
-    {
-        var removedItem = this[oldIndex];
-
-        base.RemoveItem(oldIndex);
-        base.InsertItem(newIndex, removedItem);
-
-        OnIndexerPropertyChanged();
-        OnCollectionChanged(NotifyCollectionChangedAction.Move, removedItem, newIndex, oldIndex);
-    }
-
     private void OnCollectionChanged(NotifyCollectionChangedAction action, T item, int index)
     {
         CollectionChanged?.Invoke(this,
             new NotifyCollectionChangedEventArgs(action, item, index));
-    }
-
-    private void OnCollectionChanged(NotifyCollectionChangedAction action, T item, int newIndex, int oldIndex)
-    {
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(action, item, newIndex, oldIndex));
     }
 
     private void OnCollectionSet(T add, T old, int index)

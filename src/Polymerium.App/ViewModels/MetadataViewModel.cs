@@ -6,15 +6,15 @@ using Polymerium.Trident.Services;
 
 namespace Polymerium.App.ViewModels;
 
-public class WorkbenchViewModel : ViewModelBase
+public class MetadataViewModel : ViewModelBase
 {
     private readonly DispatcherQueue _dispatcher;
     private readonly ProfileManager _profileManager;
     private readonly RepositoryAgent repositoryAgent;
 
-    private WorkpieceModel model = new(ProfileManager.DUMMY_KEY);
+    private MetadataModel model = new(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE);
 
-    public WorkbenchViewModel(RepositoryAgent repositoryAgent, ProfileManager profileManager)
+    public MetadataViewModel(RepositoryAgent repositoryAgent, ProfileManager profileManager)
     {
         _profileManager = profileManager;
         this.repositoryAgent = repositoryAgent;
@@ -23,7 +23,7 @@ public class WorkbenchViewModel : ViewModelBase
         FetchAttachmentCommand = new RelayCommand<AttachmentModel>(FetchAttachment);
     }
 
-    public WorkpieceModel Model
+    public MetadataModel Model
     {
         get => model;
         set => SetProperty(ref model, value);
@@ -37,7 +37,7 @@ public class WorkbenchViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new WorkpieceModel(key);
+                Model = new MetadataModel(key, profile);
             return profile != null;
         }
 
@@ -49,7 +49,7 @@ public class WorkbenchViewModel : ViewModelBase
         if (Model.Key != ProfileManager.DUMMY_KEY) _profileManager.Flush(Model.Key);
     }
 
-    private void FetchAttachment(AttachmentModel? model)
+    private void FetchAttachment(AttachmentModel? item)
     {
         //if (model != null) model.Fetch();
     }

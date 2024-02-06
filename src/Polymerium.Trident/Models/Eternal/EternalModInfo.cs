@@ -12,15 +12,15 @@ public struct EternalModInfo
     public string FileName { get; init; }
     public uint ReleaseType { get; init; }
     public uint FileStatus { get; init; }
-    public IEnumerable<EternalFileHash> Hashes { get; init; }
+    public EternalFileHash[] Hashes { get; init; }
     public DateTimeOffset FileDate { get; init; }
     public ulong FileLength { get; init; }
     public ulong DownloadCount { get; init; }
     public ulong? FileSizeOnDisk { get; init; }
     public Uri? DownloadUrl { get; set; }
-    public IEnumerable<string> GameVersions { get; init; }
+    public string[] GameVersions { get; init; }
     public object SortableGameVersions { get; init; }
-    public IEnumerable<EternalDependency> Dependencies { get; init; }
+    public EternalDependency[] Dependencies { get; init; }
     public bool? ExposeAsAlternative { get; init; }
     public uint? ParentProjectFileId { get; init; }
     public uint? AlternateFileId { get; init; }

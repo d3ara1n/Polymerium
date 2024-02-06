@@ -9,5 +9,5 @@ public struct CurseForgeModpackManifest
     public string Version { get; init; }
     public string Author { get; init; }
     public string Overrides { get; init; }
-    public IEnumerable<CurseForgeModpackManifestFile> Files { get; init; }
+    public CurseForgeModpackManifestFile[] Files { get; init; }
 }

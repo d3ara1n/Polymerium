@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using Trident.Abstractions;
 using Trident.Abstractions.Building;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages;
@@ -15,13 +14,21 @@ public class CheckArtifactStage(string artifactPath) : StageBase
             {
                 var content = await File.ReadAllTextAsync(artifactPath);
                 var artifact = JsonSerializer.Deserialize<Artifact>(content);
-                Context.Artifact = artifact;
-                Logger.LogInformation("Using artifact: {path}", Path.GetFileName(artifactPath));
+                if (artifact != null && artifact.Verify(Context.Key, Context.Watermark, Context.Context.HomeDir))
+                {
+                    Context.Artifact = artifact;
+                    Logger.LogInformation("Using artifact: {path}", Path.GetFileName(artifactPath));
+                }
+                else
+                {
+                    Context.ArtifactBuilder = Artifact.Builder();
+                    Logger.LogInformation("Bad artifact");
+                }
             }
             catch (JsonException e)
             {
-                Logger.LogWarning("Load artifact in disk failed: {message}", e.Message);
                 Context.ArtifactBuilder = Artifact.Builder();
+                Logger.LogWarning("Load artifact in disk failed: {message}", e.Message);
             }
         }
         else

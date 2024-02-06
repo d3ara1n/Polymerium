@@ -15,7 +15,8 @@ public static class ProfileExtensions
         return modloader != null ? Loader.MODLOADER_NAME_MAPPINGS[modloader.Id] : "Vanilla";
     }
 
-    public static DateTimeOffset? ExtractDateTime(this Profile self, Profile.RecordData.TimelinePoint.TimelimeAction action)
+    public static DateTimeOffset? ExtractDateTime(this Profile self,
+        Profile.RecordData.TimelinePoint.TimelimeAction action)
     {
         return self.Records.Timeline
             .Where(x => x.Action == action).MaxBy(x => x.EndTime)?.EndTime;

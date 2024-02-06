@@ -30,9 +30,9 @@ public class DeployEngine(IServiceProvider provider) : IEngine<DeployContext, St
 
     public class DeployEngineEnumerator : IEnumerator<StageBase>
     {
-        private readonly IServiceProvider _provider;
-        private readonly ILoggerFactory _loggerFactory;
         private readonly DeployContext _context;
+        private readonly ILoggerFactory _loggerFactory;
+        private readonly IServiceProvider _provider;
         private readonly TridentContext _trident;
 
         private readonly string artifactPath;
@@ -45,7 +45,7 @@ public class DeployEngine(IServiceProvider provider) : IEngine<DeployContext, St
             _context = context;
             _trident = trident;
 
-            artifactPath = _trident.InstanceArtifactPath(context.Key, context.Watermark);
+            artifactPath = _trident.InstanceArtifactPath(context.Key);
 
             Current = CheckArtifact();
         }
@@ -61,18 +61,25 @@ public class DeployEngine(IServiceProvider provider) : IEngine<DeployContext, St
             // 水印是 Metadata 最后一次修改的时间
             if (_context.Token.IsCancellationRequested) return false;
             if (_context.Artifact != null)
-            {
                 // solidify
                 return false;
-            }
-            else if (_context.ArtifactBuilder != null)
-            {
+            if (_context.ArtifactBuilder != null)
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+
+        public StageBase Current { get; }
+
+        object IEnumerator.Current => Current;
+
+        public void Dispose()
+        {
+            // do nothing
         }
 
         private CheckArtifactStage CheckArtifact()
@@ -88,20 +95,6 @@ public class DeployEngine(IServiceProvider provider) : IEngine<DeployContext, St
             stage.Provider = _provider;
             stage.Context = _context;
             return stage;
-        }
-
-        public void Reset()
-        {
-            throw new NotImplementedException();
-        }
-
-        public StageBase Current { get; private set; }
-
-        object IEnumerator.Current => Current;
-
-        public void Dispose()
-        {
-            // do nothing
         }
     }
 }

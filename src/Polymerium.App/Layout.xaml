@@ -99,7 +99,7 @@
                             <NavigationViewItem.Icon>
                                 <ImageIcon Source="{x:Bind IconKey}" />
                             </NavigationViewItem.Icon>
-                            <TextBlock Text="{x:Bind Key}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{x:Bind Key}" HorizontalAlignment="Left" />
                         </NavigationViewItem>
                     </DataTemplate>
                 </NavigationView.MenuItemTemplate>

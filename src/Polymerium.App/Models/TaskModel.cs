@@ -10,8 +10,8 @@ public record TaskModel
     private readonly DispatcherQueue _dispatcher;
     private bool isIndeterminate = true;
     private double progress;
-    private TaskState state = TaskState.Idle;
     private string stage = string.Empty;
+    private TaskState state = TaskState.Idle;
     private string status = string.Empty;
 
     public TaskModel(TaskBase inner, DispatcherQueue dispatcher, ICommand abortCommand)

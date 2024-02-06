@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Input;
 using Humanizer;
 using Polymerium.App.Extensions;
 using Trident.Abstractions;

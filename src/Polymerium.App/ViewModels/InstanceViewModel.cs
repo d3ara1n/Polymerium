@@ -19,7 +19,7 @@ public class InstanceViewModel : ViewModelBase
     private readonly NavigationService _navigation;
     private readonly ProfileManager _profileManager;
 
-    private ProfileModel model = new ProfileModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE);
+    private ProfileModel model = new(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE);
 
     public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context)
     {
@@ -65,7 +65,7 @@ public class InstanceViewModel : ViewModelBase
     private void GotoWorkbenchView(string? key)
     {
         if (key != null && key != ProfileManager.DUMMY_KEY)
-            _navigation.Navigate(typeof(WorkbenchView), key, new SlideNavigationTransitionInfo
+            _navigation.Navigate(typeof(MetadataView), key, new SlideNavigationTransitionInfo
             {
                 Effect = SlideNavigationTransitionEffect.FromRight
             });
