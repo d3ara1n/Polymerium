@@ -1,6 +1,7 @@
 ﻿using System;
 using Humanizer;
 using Polymerium.App.Extensions;
+using Polymerium.Trident.Extensions;
 using Trident.Abstractions;
 
 namespace Polymerium.App.Models;
@@ -12,11 +13,11 @@ public record ProfileModel(string Key, Profile Inner)
     public string Type => Inner.ExtractTypeDisplay();
 
     public DateTimeOffset? PlayedAtRaw =>
-        Inner.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
+        Inner.Records.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
 
     public string PlayedAt => PlayedAtRaw?.Humanize() ?? "Never";
 
-    public TimeSpan PlayTimeRaw => Inner.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
+    public TimeSpan PlayTimeRaw => Inner.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
 
     public string PlayTime => PlayTimeRaw.Humanize();
 

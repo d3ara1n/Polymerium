@@ -10,7 +10,7 @@
     <Style x:Key="DefaultClipBoxStyle" TargetType="local:ClipBox">
         <Setter Property="BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource CardBorderThickness}" />
-        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorSecondaryBrush}" />
+        <Setter Property="Background" Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="Padding" Value="{StaticResource TinyMargin}" />

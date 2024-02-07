@@ -3,10 +3,10 @@ using System.Linq;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Polymerium.App.Extensions;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
 using Trident.Abstractions;
 
@@ -24,7 +24,7 @@ public class HomeViewModel : ObservableObject
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
         Recents = _profileManger.Managed
-            .Select(x => (x.Value.Value.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play),
+            .Select(x => (x.Value.Value.Records.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play),
                 x.Value.Value, x.Key))
             .Where(x => x.Item1 != null)
             .OrderByDescending(x => x.Item1)

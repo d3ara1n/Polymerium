@@ -1,7 +1,5 @@
-﻿using DotNext;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Helpers;
-using Trident.Abstractions.Errors;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
@@ -14,32 +12,32 @@ public class CurseForgeRepository(
 {
     public string Label => RepositoryLabels.CURSEFORGE;
 
-    public async Task<Result<Project, ResourceError>> QueryAsync(string projectId, CancellationToken token)
+    public async Task<Project> QueryAsync(string projectId, CancellationToken token)
     {
         if (uint.TryParse(projectId, out var id))
-        {
-            var result = await CurseForgeHelper.GetIntoProjectAsync(logger, clientFactory, id, token);
-            if (result != null)
-                return new Result<Project, ResourceError>(result);
-            return new Result<Project, ResourceError>(ResourceError.NotFound);
-        }
+            return await CurseForgeHelper.GetIntoProjectAsync(logger, clientFactory, id, token);
 
-        return new Result<Project, ResourceError>(ResourceError.InvalidParameter);
+        throw new ArgumentException("uint needed", nameof(projectId));
     }
 
-    public async Task<Result<Package, ResourceError>> ResolveAsync(string projectId, string? versionId, Filter filter,
+    public async Task<Package> ResolveAsync(string projectId, string? versionId, Filter filter,
         CancellationToken token)
     {
         if (uint.TryParse(projectId, out var pid))
         {
-            var vid = versionId != null && uint.TryParse(versionId, out var r) ? r : (uint?)null;
-            var result = await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, pid, vid,
+            if (versionId != null)
+            {
+                if (uint.TryParse(versionId, out var vid))
+                    return await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, pid, vid,
+                        filter.Version, filter.ModLoader, token);
+                throw new ArgumentException("uint needed", nameof(versionId));
+            }
+
+            return await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, pid, null,
                 filter.Version, filter.ModLoader, token);
-            if (result != null)
-                return new Result<Package, ResourceError>(result);
         }
 
-        return new Result<Package, ResourceError>(ResourceError.NotFound);
+        throw new ArgumentException("uint needed", nameof(projectId));
     }
 
     public async Task<IEnumerable<Exhibit>> SearchAsync(string keyword, uint page, uint limit, Filter filter,

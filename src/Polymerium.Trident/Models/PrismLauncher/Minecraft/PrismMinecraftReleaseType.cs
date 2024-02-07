@@ -4,6 +4,7 @@ public enum PrismMinecraftReleaseType
 {
     Release,
     Snapshot,
+    Experiment,
 
     // ReSharper disable once InconsistentNaming
     Old_Snapshot,

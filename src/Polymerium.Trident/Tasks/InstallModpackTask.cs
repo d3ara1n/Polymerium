@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Polymerium.Trident.Exceptions;
+using Polymerium.Trident.Extractors;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using Trident.Abstractions.Resources;
@@ -15,9 +15,6 @@ public class InstallModpackTask(
     ModpackExtractor extractor,
     IHttpClientFactory factory) : TaskBase(key, $"Install {project.Name}", "Preparing...")
 {
-    public Project Project => project;
-    public Project.Version Version => version;
-
     protected override async Task OnThreadAsync()
     {
         ReportProgress(status: "Downloading pack file...");

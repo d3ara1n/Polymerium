@@ -12,6 +12,7 @@ public abstract class TaskBase(string key, string stage, string status)
     public bool IsAborted => Token.IsCancellationRequested;
     public string Key => key;
     public DateTimeOffset CreatedAt { get; } = DateTimeOffset.Now;
+    public DateTimeOffset? EndedAt { get; private set; }
 
     public TaskState State { get; private set; } = TaskState.Idle;
     public uint? Progress { get; private set; }
@@ -42,6 +43,7 @@ public abstract class TaskBase(string key, string stage, string status)
         var task = Task.Run(OnThreadAsync, Token);
         task.ContinueWith(t =>
         {
+            EndedAt = DateTimeOffset.Now;
             if (t.IsCompletedSuccessfully)
                 OnFinish();
             else if (t.IsCanceled)
@@ -83,5 +85,11 @@ public abstract class TaskBase(string key, string stage, string status)
     public void Subscribe(Action<TaskBase, TaskProgressUpdatedEventArgs> callback)
     {
         subscribers.Add((new WeakReference(callback.Target), callback.Method));
+    }
+
+    public void Unsubscribe(Action<TaskBase, TaskProgressUpdatedEventArgs> callback)
+    {
+        var first = subscribers.FirstOrDefault(x => x.Item1 == callback.Target && x.Item2 == callback.Method);
+        if (!first.Equals(default)) subscribers.Remove(first);
     }
 }

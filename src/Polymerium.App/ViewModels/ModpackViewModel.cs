@@ -22,6 +22,7 @@ public class ModpackViewModel : ViewModelBase
     private readonly TaskService _taskService;
     private ExhibitModel? _modpackModel;
     private DataLoadingState dataState = DataLoadingState.Loading;
+    private string failureReason = string.Empty;
 
     private ProjectModel project = ProjectModel.DUMMY;
     private ProjectVersionModel? selectedVersion;
@@ -56,6 +57,12 @@ public class ModpackViewModel : ViewModelBase
         set => SetProperty(ref selectedVersion, value);
     }
 
+    public string FailureReason
+    {
+        get => failureReason;
+        set => SetProperty(ref failureReason, value);
+    }
+
     public ICommand OpenReferenceCommand { get; }
     public ICommand InstallModpackCommand { get; }
     public ICommand CopyToClipboardCommand { get; }
@@ -74,11 +81,16 @@ public class ModpackViewModel : ViewModelBase
     private async Task LoadProjectAsync()
     {
         Project? got = null;
+        Exception? exception = null;
         if (_modpackModel != null)
-        {
-            var result = await _repositoryAgent.QueryAsync(_modpackModel.Inner.Label, _modpackModel.Inner.Id);
-            if (result.IsSuccessful) got = result.Value;
-        }
+            try
+            {
+                got = await _repositoryAgent.QueryAsync(_modpackModel.Inner.Label, _modpackModel.Inner.Id);
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
 
         _dispatcher.TryEnqueue(() =>
         {
@@ -89,6 +101,7 @@ public class ModpackViewModel : ViewModelBase
             }
             else
             {
+                FailureReason = exception?.Message ?? "Unknown";
                 DataState = DataLoadingState.Failed;
             }
         });

@@ -15,6 +15,7 @@ using Polly;
 using Polymerium.App.Extensions;
 using Polymerium.App.Services;
 using Polymerium.App.ViewModels;
+using Polymerium.Trident.Engines;
 using Polymerium.Trident.Extractors;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
@@ -112,6 +113,11 @@ public partial class App
         // Extractors
         services
             .AddExtractor<CurseForgeExtractor>();
+
+        // Engines
+        services
+            .AddEngine<DeployEngine>()
+            .AddEngine<ResolveEngine>();
     }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)

@@ -7,16 +7,34 @@ public class ArtifactBuilder : IBuilder<Artifact>
     private readonly IList<string> gameArguments = new List<string>();
     private readonly IList<string> jvmArguments = new List<string>();
 
-    private readonly IList<Library> libraries = new List<Library>();
+    private readonly IList<Artifact.Library> libraries = new List<Artifact.Library>();
+    private readonly IList<Artifact.Parcel> parcels = new List<Artifact.Parcel>();
 
-    private readonly IList<Parcel> parcels = new List<Parcel>();
+    private readonly IList<Artifact.Processor> processors = new List<Artifact.Processor>();
+    private Artifact.AssetData? assetIndex;
+    private uint? javaMajorVersion;
+    private string? mainClassPath;
+
+    private Artifact.ViabilityData? viabilityData;
 
     public Artifact Build()
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(viabilityData);
+        ArgumentNullException.ThrowIfNull(assetIndex);
+        ArgumentNullException.ThrowIfNull(javaMajorVersion);
+        ArgumentNullException.ThrowIfNull(mainClassPath);
+        var artifact = new Artifact(viabilityData, mainClassPath, javaMajorVersion.Value, assetIndex, gameArguments,
+            jvmArguments, libraries, parcels, processors);
+        return artifact;
     }
 
-    public ArtifactBuilder AppendGameArgument(string arg)
+    public ArtifactBuilder SetViability(Artifact.ViabilityData viability)
+    {
+        viabilityData = viability;
+        return this;
+    }
+
+    public ArtifactBuilder AddGameArgument(string arg)
     {
         arg = arg.Trim();
         if (!gameArguments.Contains(arg))
@@ -24,7 +42,7 @@ public class ArtifactBuilder : IBuilder<Artifact>
         return this;
     }
 
-    public ArtifactBuilder AppendJvmArgument(string arg)
+    public ArtifactBuilder AddJvmArgument(string arg)
     {
         arg = arg.Trim();
         if (!jvmArguments.Contains(arg))
@@ -32,15 +50,33 @@ public class ArtifactBuilder : IBuilder<Artifact>
         return this;
     }
 
-    public ArtifactBuilder AddParcel(Parcel parcel)
+    public ArtifactBuilder AddParcel(Artifact.Parcel parcel)
     {
         parcels.Add(parcel);
         return this;
     }
 
-    public ArtifactBuilder AddLibrary(Library library)
+    public ArtifactBuilder AddLibrary(Artifact.Library library)
     {
         libraries.Add(library);
+        return this;
+    }
+
+    public ArtifactBuilder SetAssetIndex(Artifact.AssetData index)
+    {
+        assetIndex = index;
+        return this;
+    }
+
+    public ArtifactBuilder SetJavaMajorVersion(uint version)
+    {
+        javaMajorVersion = version;
+        return this;
+    }
+
+    public ArtifactBuilder SetMainClass(string mainClass)
+    {
+        mainClassPath = mainClass;
         return this;
     }
 }

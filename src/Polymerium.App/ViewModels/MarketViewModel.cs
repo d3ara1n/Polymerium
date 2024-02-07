@@ -20,7 +20,7 @@ public class MarketViewModel : ObservableObject
 {
     private readonly NavigationService _navigation;
 
-    private readonly Filter FILTER = new(null, null, ResourceKind.Modpack);
+    private readonly Filter filter = new(null, null, ResourceKind.Modpack);
     private readonly RepositoryAgent repositoryAgent;
 
     private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
@@ -60,9 +60,10 @@ public class MarketViewModel : ObservableObject
 
     public void UpdateSource(string label, string query)
     {
+        // TODO: display start loading status and error in ui
         Results = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(
             new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
-                (await repositoryAgent.SearchAsync(label, query, page, limit, FILTER, token)).Select(x =>
+                (await repositoryAgent.SearchAsync(label, query, page, limit, filter, token)).Select(x =>
                     new ExhibitModel(x, GotoModpackViewCommand))),
             10);
     }

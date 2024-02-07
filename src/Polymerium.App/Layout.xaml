@@ -81,6 +81,7 @@
                             PaneDisplayMode="Auto"
                             IsSettingsVisible="False"
                             OpenPaneLength="228"
+                            Background="Transparent"
                             IsPaneToggleButtonVisible="False"
                             IsBackEnabled="{x:Bind Root.CanGoBack, Mode=OneWay}"
                             IsTitleBarAutoPaddingEnabled="True"
@@ -92,6 +93,9 @@
                     <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
                     <!-- ReSharper disable once Xaml.RedundantResource -->
                     <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
+                    <StaticResource x:Key="NavigationViewContentBackground"
+                                    ResourceKey="LayerOnAcrylicFillColorDefaultBrush" />
+
                 </NavigationView.Resources>
                 <NavigationView.MenuItemTemplate>
                     <DataTemplate x:DataType="models:NavItem">
@@ -158,10 +162,12 @@
                                                                         <Run Text="·" />
                                                                         <Run Text="{x:Bind CreatedAt}" />
                                                                     </TextBlock>
-                                                                    <TextBlock Text="{x:Bind Stage.Value,Mode=OneWay}" />
+                                                                    <TextBlock Text="{x:Bind Stage.Value,Mode=OneWay}"
+                                                                               TextTrimming="CharacterEllipsis" />
                                                                     <TextBlock
                                                                         Text="{x:Bind Status.Value,Mode=OneWay}"
-                                                                        Style="{StaticResource CaptionTextBlockStyle}" />
+                                                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                                                        TextTrimming="CharacterEllipsis" />
                                                                 </StackPanel>
                                                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                                                     <toolkit:SwitchPresenter
@@ -200,11 +206,18 @@
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                             </ListView>
-                                            <TextBlock HorizontalAlignment="Center" Text="None"
-                                                       Margin="{StaticResource MediumMargin}"
-                                                       Style="{StaticResource SubtitleTextBlockStyle}"
-                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                                       Visibility="{x:Bind Tasks.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
+
+                                            <StackPanel HorizontalAlignment="Center"
+                                                        Margin="{StaticResource MediumMargin}"
+                                                        Spacing="{StaticResource TinyGap}"
+                                                        Visibility="{x:Bind Tasks.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}">
+                                                <FontIcon Glyph="&#xF7EC;"
+                                                          FontSize="{StaticResource LargeFontIconFontSize}"
+                                                          HorizontalAlignment="Center" />
+                                                <TextBlock Text="None" HorizontalAlignment="Center"
+                                                           Style="{StaticResource SubtitleTextBlockStyle}"
+                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                            </StackPanel>
                                         </StackPanel>
                                     </Flyout>
                                 </FlyoutBase.AttachedFlyout>

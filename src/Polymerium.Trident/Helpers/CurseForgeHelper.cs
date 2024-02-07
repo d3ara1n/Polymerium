@@ -3,6 +3,7 @@ using System.Web;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Models.Eternal;
 using Polymerium.Trident.Repositories;
+using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Helpers;
@@ -64,70 +65,68 @@ public static class CurseForgeHelper
         };
     }
 
-    private static async Task<T?> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory,
+    private static async Task<T> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory,
         string service, CancellationToken token = default)
         where T : struct
     {
-        if (token.IsCancellationRequested)
-            return null;
-        T? result = default;
+        token.ThrowIfCancellationRequested();
+        var url = ENDPOINT + service;
         using var client = factory.CreateClient();
         client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
         try
         {
-            var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(ENDPOINT + service, token);
-            if (response?.Data != null) result = response.Data;
+            var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(url, token);
+            if (response?.Data != null) return response.Data;
+            throw new BadFormatException(url, "data");
         }
         catch (Exception e)
         {
             logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
+            throw;
         }
-
-        return result;
     }
 
-    private static async Task<string?> GetStringAsync(ILogger logger, IHttpClientFactory factory, string service,
+    private static async Task<string> GetStringAsync(ILogger logger, IHttpClientFactory factory, string service,
         CancellationToken token = default)
     {
-        if (token.IsCancellationRequested)
-            return null;
-        string? result = default;
+        token.ThrowIfCancellationRequested();
+        var url = ENDPOINT + service;
         using var client = factory.CreateClient();
         client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
         try
         {
-            var response = await client.GetFromJsonAsync<ResponseWrapper<string>>(ENDPOINT + service, token);
-            if (response?.Data != null) result = response.Data;
+            var response = await client.GetFromJsonAsync<ResponseWrapper<string>>(url, token);
+            if (response?.Data != null) return response.Data;
+            throw new BadFormatException(url, "data");
         }
         catch (Exception e)
         {
             logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
+            throw;
         }
-
-        return result;
     }
 
     private static async Task<IEnumerable<T>> GetResourcesAsync<T>(ILogger logger, IHttpClientFactory factory,
         string service, CancellationToken token = default)
         where T : struct
     {
-        if (token.IsCancellationRequested)
-            return Enumerable.Empty<T>();
-        IEnumerable<T>? results = null;
+        token.ThrowIfCancellationRequested();
+        var url = ENDPOINT + service;
         using var client = factory.CreateClient();
         client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
         try
         {
             var response =
-                await client.GetFromJsonAsync<ResponseWrapper<IEnumerable<T>>>(ENDPOINT + service, token);
-            if (response?.Data != null) results = response.Data;
+                await client.GetFromJsonAsync<ResponseWrapper<IEnumerable<T>>>(url, token);
+            if (response?.Data != null)
+                return response.Data;
+            throw new BadFormatException(url, "data");
         }
         catch (Exception e)
         {
             logger.LogWarning("Failed to get {} from CurseForge for {}", service, e.Message);
+            throw;
         }
-
-        return results ?? Enumerable.Empty<T>();
     }
 
     public static async Task<IEnumerable<EternalMod>> SearchProjectsAsync(ILogger logger,
@@ -159,28 +158,28 @@ public static class CurseForgeHelper
         return await GetResourcesAsync<EternalMod>(logger, factory, service, token);
     }
 
-    public static async Task<EternalMod?> GetModInfoAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
+    public static async Task<EternalMod> GetModInfoAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
         CancellationToken token = default)
     {
         var service = $"/mods/{projectId}";
         return await GetResourceAsync<EternalMod>(logger, factory, service, token);
     }
 
-    public static async Task<string?> GetModDescriptionAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
+    public static async Task<string> GetModDescriptionAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
         CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/description";
         return await GetStringAsync(logger, factory, service, token);
     }
 
-    public static async Task<string?> GetModDownloadUrlAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
+    public static async Task<string> GetModDownloadUrlAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
         uint fileId, CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{fileId}/download-url";
         return await GetStringAsync(logger, factory, service, token);
     }
 
-    public static async Task<string?> GetModFileChangelogAsync(ILogger logger, IHttpClientFactory factory,
+    public static async Task<string> GetModFileChangelogAsync(ILogger logger, IHttpClientFactory factory,
         uint projectId, uint fileId, CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{fileId}/changelog";
@@ -194,120 +193,105 @@ public static class CurseForgeHelper
         return await GetResourcesAsync<EternalModInfo>(logger, factory, services, token);
     }
 
-    public static async Task<EternalModInfo?> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
+    public static async Task<EternalModInfo> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
         uint projectId, uint versionId, CancellationToken token = default)
     {
         var service = $"/mods/{projectId}/files/{versionId}";
         return await GetResourceAsync<EternalModInfo>(logger, factory, service, token);
     }
 
-    public static async Task<Project?> GetIntoProjectAsync(ILogger logger, IHttpClientFactory factory,
+    public static async Task<Project> GetIntoProjectAsync(ILogger logger, IHttpClientFactory factory,
         uint projectId, CancellationToken token = default)
     {
         var mod = await GetModInfoAsync(logger, factory, projectId, token);
         var modDesc = await GetModDescriptionAsync(logger, factory, projectId, token);
-        if (mod.HasValue && modDesc != null)
-        {
-            var files = await GetModFilesAsync(logger, factory, projectId, token);
-            if (files.Any())
+        var files = (await GetModFilesAsync(logger, factory, projectId, token)).ToArray();
+        var versionTasks = files.Where(x => x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 })
+            .OrderByDescending(x => x.FileDate).Select(async x =>
             {
-                var versionTasks = files.Where(x => x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 })
-                    .OrderByDescending(x => x.FileDate).Select(async x =>
-                    {
-                        var changelog = await GetModFileChangelogAsync(logger, factory, projectId, x.Id, token);
-                        if (changelog != null)
-                            return new Project.Version(x.Id.ToString(), x.DisplayName, changelog,
-                                x.ExtractReleaseType(),
-                                x.FileDate,
-                                x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
-                                x.ExtractRequirement(), ExtractDependencies(x, mod.Value.Id));
-
-                        return null;
-                    }).ToList();
-                await Task.WhenAll(versionTasks);
-                var versions = versionTasks.Where(x => x.IsCompletedSuccessfully && x.Result != null)
-                    .Select(x => x.Result!).ToList();
-                var kind = GetResourceTypeFromClassId(mod.Value.ClassId);
-                return new Project(
-                    mod.Value.Id.ToString(),
-                    mod.Value.Name,
-                    RepositoryLabels.CURSEFORGE,
-                    mod.Value.Logo?.ThumbnailUrl,
-                    string.Join(", ", mod.Value.Authors.Select(x => x.Name)),
-                    mod.Value.Summary,
-                    new Uri(PROJECT_URL.Replace("{0}", GetUrlTypeStringFromKind(kind)).Replace("{1}", mod.Value.Slug)),
-                    kind,
-                    mod.Value.DateCreated,
-                    mod.Value.DateModified,
-                    mod.Value.DownloadCount, modDesc,
-                    mod.Value.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList(),
-                    versions);
-            }
-
-            return null;
-        }
-
-        return null;
+                var changelog = await GetModFileChangelogAsync(logger, factory, projectId, x.Id, token);
+                return new Project.Version(x.Id.ToString(), x.DisplayName, changelog,
+                    x.ExtractReleaseType(),
+                    x.FileDate,
+                    x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
+                    x.ExtractRequirement(), ExtractDependencies(x, mod.Id));
+            }).ToList();
+        await Task.WhenAll(versionTasks);
+        var versions = versionTasks.Where(x => x.IsCompletedSuccessfully)
+            .Select(x => x.Result).ToList();
+        var kind = GetResourceTypeFromClassId(mod.ClassId);
+        return new Project(
+            mod.Id.ToString(),
+            mod.Name,
+            RepositoryLabels.CURSEFORGE,
+            mod.Logo?.ThumbnailUrl,
+            string.Join(", ", mod.Authors.Select(x => x.Name)),
+            mod.Summary,
+            new Uri(PROJECT_URL.Replace("{0}", GetUrlTypeStringFromKind(kind)).Replace("{1}", mod.Slug)),
+            kind,
+            mod.DateCreated,
+            mod.DateModified,
+            mod.DownloadCount, modDesc,
+            mod.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList(),
+            versions);
     }
 
-    public static async Task<Package?> GetIntoPackageAsync(ILogger logger, IHttpClientFactory factory,
+    public static async Task<Package> GetIntoPackageAsync(ILogger logger, IHttpClientFactory factory,
         uint projectId, uint? versionId, string? gameVersion, string? modLoader, CancellationToken token = default)
     {
         var mod = await GetModInfoAsync(logger, factory, projectId, token);
-        if (mod.HasValue)
+        var kind = GetResourceTypeFromClassId(mod.ClassId);
+        EternalModInfo? file = null;
+        if (versionId.HasValue)
         {
-            var kind = GetResourceTypeFromClassId(mod.Value.ClassId);
-            EternalModInfo? file = null;
-            if (versionId.HasValue)
+            file = await GetModFileInfoAsync(logger, factory, projectId, versionId.Value, token);
+        }
+        else
+        {
+            var files = (await GetModFilesAsync(logger, factory, projectId, token)).ToArray();
+            var filtered = files.Where(x =>
             {
-                file = await GetModFileInfoAsync(logger, factory, projectId, versionId.Value, token);
-            }
-            else
-            {
-                var files = await GetModFilesAsync(logger, factory, projectId, token);
-                var filterd = files.Where(x =>
+                var valid = x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 };
+                var game = gameVersion == null || x.GameVersions.Contains(gameVersion);
+                if (modLoader != null && MODLOADER_MAPPINGS.Values.Any(y => y == modLoader))
                 {
-                    var valid = x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 };
-                    var game = gameVersion == null || x.GameVersions.Contains(gameVersion);
-                    if (modLoader != null && MODLOADER_MAPPINGS.Values.Any(y => y == modLoader))
-                    {
-                        var loaderName = MODLOADER_MAPPINGS.First(y => y.Value == modLoader).Key;
-                        var loader = x.GameVersions.Contains(loaderName);
-                        return valid && game && loader;
-                    }
+                    var loaderName = MODLOADER_MAPPINGS.First(y => y.Value == modLoader).Key;
+                    var loader = x.GameVersions.Contains(loaderName);
+                    return valid && game && loader;
+                }
 
-                    return valid && game;
-                });
-                if (filterd.Any()) file = filterd.MaxBy(x => x.FileDate);
-            }
-
-            if (file.HasValue)
-            {
-                var package = new Package(
-                    mod.Value.Id.ToString(),
-                    mod.Value.Name,
-                    file.Value.Id.ToString(),
-                    file.Value.DisplayName,
-                    RepositoryLabels.CURSEFORGE,
-                    mod.Value.Logo?.Url,
-                    string.Join(", ", mod.Value.Authors.Select(x => x.Name)),
-                    mod.Value.Summary,
-                    new Uri(PROJECT_URL.Replace("{0}", GetUrlTypeStringFromKind(kind))
-                        .Replace("{1}", mod.Value.Slug)),
-                    kind,
-                    file.Value.ExtractReleaseType(),
-                    file.Value.FileDate,
-                    file.Value.FileName,
-                    file.Value.ExtractDownloadUrl(),
-                    file.Value.ExtractSha1(),
-                    file.Value.ExtractRequirement(),
-                    ExtractDependencies(file.Value, mod.Value.Id)
-                );
-                return package;
-            }
+                return valid && game;
+            }).ToArray();
+            if (filtered.Any()) file = filtered.MaxBy(x => x.FileDate);
         }
 
-        return null;
+        if (file.HasValue)
+        {
+            var package = new Package(
+                mod.Id.ToString(),
+                mod.Name,
+                file.Value.Id.ToString(),
+                file.Value.DisplayName,
+                RepositoryLabels.CURSEFORGE,
+                mod.Logo?.Url,
+                string.Join(", ", mod.Authors.Select(x => x.Name)),
+                mod.Summary,
+                new Uri(PROJECT_URL.Replace("{0}", GetUrlTypeStringFromKind(kind))
+                    .Replace("{1}", mod.Slug)),
+                kind,
+                file.Value.ExtractReleaseType(),
+                file.Value.FileDate,
+                file.Value.FileName,
+                file.Value.ExtractDownloadUrl(),
+                file.Value.ExtractSha1(),
+                file.Value.ExtractRequirement(),
+                ExtractDependencies(file.Value, mod.Id)
+            );
+            return package;
+        }
+
+        throw new ResourceNotFoundException(
+            $"({RepositoryLabels.CURSEFORGE},{projectId},any,Filter({gameVersion},{modLoader}))");
     }
 
     private static IEnumerable<Dependency> ExtractDependencies(EternalModInfo file, uint projectId)

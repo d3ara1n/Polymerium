@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Engines.Deploying;
@@ -8,19 +9,20 @@ using Trident.Abstractions;
 
 namespace Polymerium.Trident.Engines;
 
-public class DeployEngine(IServiceProvider provider) : IEngine<DeployContext, StageBase>
+public class DeployEngine(
+    IServiceProvider provider,
+    ILoggerFactory loggerFactory,
+    TridentContext trident,
+    IHttpClientFactory clientFactory,
+    JsonSerializerOptions options)
+    : IEngine<StageBase>
 {
     private DeployContext? context;
-
-    public void SetContext(DeployContext fuel)
-    {
-        context = fuel;
-    }
 
     public IEnumerator<StageBase> GetEnumerator()
     {
         ArgumentNullException.ThrowIfNull(context);
-        return ActivatorUtilities.CreateInstance<DeployEngineEnumerator>(provider, context);
+        return new DeployEngineEnumerator(context, provider, loggerFactory, clientFactory);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -28,44 +30,67 @@ public class DeployEngine(IServiceProvider provider) : IEngine<DeployContext, St
         return GetEnumerator();
     }
 
-    public class DeployEngineEnumerator : IEnumerator<StageBase>
+    public void SetProfile(string key, Metadata metadata, CancellationToken token = default)
     {
-        private readonly DeployContext _context;
-        private readonly ILoggerFactory _loggerFactory;
-        private readonly IServiceProvider _provider;
-        private readonly TridentContext _trident;
+        context = new DeployContext(trident, key, metadata, options, token);
+    }
 
-        private readonly string artifactPath;
-
-        public DeployEngineEnumerator(IServiceProvider provider, ILoggerFactory loggerFactory, DeployContext context,
-            TridentContext trident)
-        {
-            _provider = provider;
-            _loggerFactory = loggerFactory;
-            _context = context;
-            _trident = trident;
-
-            artifactPath = _trident.InstanceArtifactPath(context.Key);
-
-            Current = CheckArtifact();
-        }
-
+    public class DeployEngineEnumerator(
+        DeployContext context,
+        IServiceProvider provider,
+        ILoggerFactory loggerFactory,
+        IHttpClientFactory factory)
+        : IEnumerator<StageBase>
+    {
         public bool MoveNext()
         {
+            if (context.Token.IsCancellationRequested || context.IsAborted || context.IsFinished) return false;
+            // trident.artifact.json
             // Deploy 包含以下过程：
             // Build artifact:
-            //   Resolve attachments, Install game, Process loaders
-            // Solidify polylock data:
+            //   Install game, Process loaders, Resolve attachments
+            // Build transient data:
+            //   Run processors
+            // Solidify transient data:
             //   Download libraries, Download & link attachments, Restore assets
-            // trident.artifact.{watermark}.json
-            // 水印是 Metadata 最后一次修改的时间
-            if (_context.Token.IsCancellationRequested) return false;
-            if (_context.Artifact != null)
+            if (context.Transient != null)
                 // solidify
-                return false;
-            if (_context.ArtifactBuilder != null)
                 return true;
-            return false;
+
+            if (context.Artifact != null)
+                // build transient
+                // TODO: 调试先到这里
+                return false;
+            if (context.ArtifactBuilder != null)
+            {
+                if (context.IsAttachmentResolved)
+                {
+                    // build artifact
+                    Current = BuildArtifact();
+                    return true;
+                }
+
+                if (context.IsLoaderProcessed)
+                {
+                    // resolve attachment
+                    Current = ResolveAttachment();
+                    return true;
+                }
+
+                if (context.IsGameInstalled)
+                {
+                    // process loaders
+                    Current = ProcessLoader();
+                    return true;
+                }
+
+                // install game
+                Current = InstallVanilla();
+                return true;
+            }
+
+            Current = CheckArtifact();
+            return true;
         }
 
         public void Reset()
@@ -73,7 +98,7 @@ public class DeployEngine(IServiceProvider provider) : IEngine<DeployContext, St
             throw new NotImplementedException();
         }
 
-        public StageBase Current { get; }
+        public StageBase Current { get; private set; } = null!;
 
         object IEnumerator.Current => Current;
 
@@ -84,16 +109,36 @@ public class DeployEngine(IServiceProvider provider) : IEngine<DeployContext, St
 
         private CheckArtifactStage CheckArtifact()
         {
-            return CreateStage(() => new CheckArtifactStage(artifactPath));
+            return CreateStage(() => new CheckArtifactStage());
+        }
+
+        private BuildArtifactStage BuildArtifact()
+        {
+            return CreateStage(() => new BuildArtifactStage());
+        }
+
+        private InstallVanillaStage InstallVanilla()
+        {
+            return CreateStage(() => new InstallVanillaStage(factory));
+        }
+
+        private ResolveAttachmentStage ResolveAttachment()
+        {
+            var engine = provider.GetRequiredService<ResolveEngine>();
+            return CreateStage(() => new ResolveAttachmentStage(engine));
+        }
+
+        private ProcessLoaderStage ProcessLoader()
+        {
+            return CreateStage(() => new ProcessLoaderStage());
         }
 
         private T CreateStage<T>(Func<T> factory)
             where T : StageBase
         {
             var stage = factory();
-            stage.Logger = _loggerFactory.CreateLogger<T>();
-            stage.Provider = _provider;
-            stage.Context = _context;
+            stage.Logger = loggerFactory.CreateLogger<T>();
+            stage.Context = context;
             return stage;
         }
     }

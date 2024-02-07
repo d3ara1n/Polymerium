@@ -118,51 +118,55 @@
                                 <ColumnDefinition Width="1" />
                                 <ColumnDefinition Width="4*" />
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Spacing="{StaticResource SmallGap}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" Orientation="Horizontal"
-                                                VerticalAlignment="Top"
-                                                Spacing="{StaticResource TinyGap}">
-                                        <FontIcon Glyph="&#xE9D5;" FontSize="16" />
-                                        <TextBlock Text="Todo" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1" Orientation="Horizontal"
-                                                Spacing="{StaticResource TinyGap}">
-                                        <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
-                                                         CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
-                                            <FontIcon Glyph="&#xE74D;"
-                                                      FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                        </HyperlinkButton>
-                                        <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
-                                            <FontIcon Glyph="&#xECC8;"
-                                                      FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                        </HyperlinkButton>
-                                    </StackPanel>
-                                </Grid>
-                                <ListView x:Name="TodoList"
-                                          ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:TodoModel">
-                                            <StackPanel Orientation="Horizontal">
-                                                <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}"
-                                                          MinWidth="0" />
-                                                <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
-                                                           TextTrimming="CharacterEllipsis"
-                                                           VerticalAlignment="Center"
-                                                           TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                                <TextBlock HorizontalAlignment="Center" Text="None"
-                                           Margin="{StaticResource MediumMargin}"
-                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                           Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
-                            </StackPanel>
+                            <Grid Grid.Column="0">
+                                <StackPanel Spacing="{StaticResource SmallGap}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal"
+                                                    VerticalAlignment="Top"
+                                                    Spacing="{StaticResource TinyGap}">
+                                            <FontIcon Glyph="&#xE9D5;" FontSize="16" />
+                                            <TextBlock Text="Todo" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                    Spacing="{StaticResource TinyGap}">
+                                            <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
+                                                             CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
+                                                <FontIcon Glyph="&#xE74D;"
+                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                            </HyperlinkButton>
+                                            <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
+                                                <FontIcon Glyph="&#xECC8;"
+                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                            </HyperlinkButton>
+                                        </StackPanel>
+                                    </Grid>
+                                    <ListView x:Name="TodoList"
+                                              ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:TodoModel">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}"
+                                                              MinWidth="0" />
+                                                    <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               VerticalAlignment="Center"
+                                                               TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackPanel>
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                                            Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}">
+                                    <FontIcon Glyph="&#xE679;" FontSize="{StaticResource LargeGap}" />
+                                    <TextBlock HorizontalAlignment="Center" Text="None"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                </StackPanel>
+                            </Grid>
                             <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                     BorderThickness="1,0,0,0" />
                             <StackPanel Grid.Column="2" Spacing="{StaticResource SmallGap}">
@@ -215,7 +219,8 @@
                         </Grid>
                     </HyperlinkButton>
                     <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right"
-                            VerticalAlignment="Center" Margin="{StaticResource SmallMargin}">
+                            VerticalAlignment="Center" Margin="{StaticResource SmallMargin}"
+                            Command="{x:Bind ViewModel.PlayCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                             <FontIcon Glyph="&#xF5B0;" FontSize="16" />
                             <TextBlock Text="PLAY" FontSize="16" />

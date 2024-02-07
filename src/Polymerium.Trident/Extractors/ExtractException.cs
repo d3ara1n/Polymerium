@@ -1,6 +1,6 @@
 ﻿using Trident.Abstractions.Errors;
 
-namespace Polymerium.Trident.Exceptions;
+namespace Polymerium.Trident.Extractors;
 
 public class ExtractException(ExtractError error, string? reference)
     : Exception($"Extract {reference ?? "in-memory data"} failed for {error}")

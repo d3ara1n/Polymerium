@@ -8,6 +8,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Tasks;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
@@ -18,19 +19,23 @@ public class InstanceViewModel : ViewModelBase
     private readonly TridentContext _context;
     private readonly NavigationService _navigation;
     private readonly ProfileManager _profileManager;
+    private readonly TaskService _taskService;
 
     private ProfileModel model = new(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE);
 
-    public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context)
+    public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context,
+        TaskService taskService)
     {
         _profileManager = profileManager;
         _navigation = navigation;
         _context = context;
+        _taskService = taskService;
 
         GotoWorkbenchViewCommand = new RelayCommand<string>(GotoWorkbenchView);
         OpenHomeFolderCommand = new RelayCommand(OpenHomeFolder, CanOpenHomeFolder);
         OpenAssetFolderCommand = new RelayCommand<AssetKind>(OpenAssetFolder, CanOpenAssetFolder);
         DeleteTodoCommand = new RelayCommand<TodoModel>(DeleteTodo, CanDeleteTodo);
+        PlayCommand = new RelayCommand(Play);
     }
 
     public ProfileModel Model
@@ -43,6 +48,7 @@ public class InstanceViewModel : ViewModelBase
     public ICommand OpenAssetFolderCommand { get; }
     public ICommand OpenHomeFolderCommand { get; }
     public ICommand DeleteTodoCommand { get; }
+    public ICommand PlayCommand { get; }
 
     public override bool OnAttached(object? maybeKey)
     {
@@ -107,7 +113,8 @@ public class InstanceViewModel : ViewModelBase
 
     private bool CanOpenAssetFolder(AssetKind kind)
     {
-        return false;
+        var path = GetAssetFolderPath(kind);
+        return Directory.Exists(path);
     }
 
     private void OpenAssetFolder(AssetKind kind)
@@ -133,5 +140,11 @@ public class InstanceViewModel : ViewModelBase
     private void DeleteTodo(TodoModel? item)
     {
         if (item != null) Model.Todos.Remove(item);
+    }
+
+    private void Play()
+    {
+        var task = _taskService.Create<LaunchInstanceTask>(Model.Key, Model.Inner);
+        _taskService.Enqueue(task);
     }
 }

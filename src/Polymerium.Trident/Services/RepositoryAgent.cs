@@ -1,8 +1,6 @@
 ﻿using System.Text.Json;
-using DotNext;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Repositories;
-using Trident.Abstractions.Errors;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
@@ -35,8 +33,8 @@ public class RepositoryAgent(
         }
     }
 
-    private async Task<Result<T, ResourceError>> RetrieveCachedResultAsync<T>(string? path, Func<T, string?>? saveTo,
-        Func<CancellationToken, Task<Result<T, ResourceError>>> action, TimeSpan expireIn,
+    private async Task<T> RetrieveCachedResultAsync<T>(string? path, Func<T, string?>? saveTo,
+        Func<CancellationToken, Task<T>> action, TimeSpan expireIn,
         CancellationToken token = default)
     {
         if (path != null && File.Exists(path))
@@ -49,7 +47,7 @@ public class RepositoryAgent(
                     if (cached != null)
                     {
                         logger.LogInformation("Cache hit: {path}", path);
-                        return new Result<T, ResourceError>(cached);
+                        return cached;
                     }
 
                     logger.LogInformation("Bad cache hit: {path}", path);
@@ -67,50 +65,39 @@ public class RepositoryAgent(
         try
         {
             var result = await action(token);
-            if (result.IsSuccessful)
-                try
-                {
-                    var save = path ?? saveTo?.Invoke(result.Value);
-                    if (save != null)
-                    {
-                        var content = JsonSerializer.Serialize(result.Value);
-                        var dir = Path.GetDirectoryName(save);
-                        if (!Directory.Exists(dir))
-                            Directory.CreateDirectory(dir!);
-                        await File.WriteAllTextAsync(save, content, token);
-                        logger.LogInformation("Cache missed but recorded: {path}", save);
-                    }
-                    else
-                    {
-                        logger.LogInformation("Cache missed: {obj}", result.Value);
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.LogInformation("Cache missed and record failed: {obj} for {message}", result.Value,
-                        e.Message);
-                }
+            var save = path ?? saveTo?.Invoke(result);
+            if (save != null)
+            {
+                var content = JsonSerializer.Serialize(result);
+                var dir = Path.GetDirectoryName(save);
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir!);
+                await File.WriteAllTextAsync(save, content, token);
+                logger.LogInformation("Cache missed but recorded: {path}", save);
+            }
             else
-                logger.LogInformation("Cache missed and retrieve failed: {path}", path);
+            {
+                logger.LogInformation("Cache missed: {obj}", result!.GetType().Name);
+            }
 
             return result;
         }
         catch (Exception e)
         {
             logger.LogError("Exception occurred: {message}", e.Message);
-            return new Result<T, ResourceError>(ResourceError.Unsupported);
+            throw;
         }
     }
 
 
-    public async Task<Result<Project, ResourceError>> QueryAsync(string label, string projectId,
+    public async Task<Project> QueryAsync(string label, string projectId,
         CancellationToken token = default)
     {
         return await RetrieveCachedResultAsync(Path.Combine(context.MetadataDir, label, $"{projectId}.json"), null,
             async t => await OfRepository(label).QueryAsync(projectId, t), TimeSpan.FromDays(1), token);
     }
 
-    public async Task<Result<Package, ResourceError>> ResolveAsync(string label, string projectId,
+    public async Task<Package> ResolveAsync(string label, string projectId,
         string? versionId, Filter filter, CancellationToken token = default)
     {
         return await RetrieveCachedResultAsync(

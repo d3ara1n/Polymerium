@@ -6,5 +6,5 @@ public struct PrismMinecraftVersionLibrary
     public PrismMinecraftVersionLibraryExtract? Extract { get; init; }
     public string Name { get; init; }
     public PrismMinecraftVersionLibraryNatives? Natives { get; init; }
-    public PrismMinecraftVersionLibraryRule[] Rules { get; init; }
+    public PrismMinecraftVersionLibraryRule[]? Rules { get; init; }
 }

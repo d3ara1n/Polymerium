@@ -4,16 +4,17 @@ using Trident.Abstractions.Building;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages;
 
-public class CheckArtifactStage(string artifactPath) : StageBase
+public class CheckArtifactStage : StageBase
 {
-    public override async Task<bool> ProcessAsync()
+    protected override async Task OnProcessAsync()
     {
+        var artifactPath = Context.ArtifactPath;
         if (File.Exists(artifactPath))
         {
             try
             {
                 var content = await File.ReadAllTextAsync(artifactPath);
-                var artifact = JsonSerializer.Deserialize<Artifact>(content);
+                var artifact = JsonSerializer.Deserialize<Artifact>(content, Context.SerializerOptions);
                 if (artifact != null && artifact.Verify(Context.Key, Context.Watermark, Context.Context.HomeDir))
                 {
                     Context.Artifact = artifact;
@@ -37,6 +38,8 @@ public class CheckArtifactStage(string artifactPath) : StageBase
             Logger.LogInformation("Create empty artifact");
         }
 
-        return true;
+        Context.IsAttachmentResolved = false;
+        Context.IsLoaderProcessed = false;
+        Context.IsGameInstalled = false;
     }
 }

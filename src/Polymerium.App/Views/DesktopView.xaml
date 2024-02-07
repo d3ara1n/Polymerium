@@ -176,7 +176,10 @@
                 </ListView>
             </ScrollViewer>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <FontIcon Glyph="&#xECAA;" FontSize="{StaticResource LargeFontIconFontSize}"
+                          HorizontalAlignment="Center" />
                 <TextBlock Text="No entries" Style="{StaticResource SubtitleTextBlockStyle}"
+                           HorizontalAlignment="Center"
                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                            Visibility="{x:Bind ViewModel.Entries.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}" />
             </StackPanel>

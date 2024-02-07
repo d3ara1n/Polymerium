@@ -3,5 +3,7 @@
 public struct PrismMinecraftVersionLibraryRule
 {
     public PrismMinecraftVersionLibraryRuleAction Action { get; init; }
-    public IDictionary<string, bool> Os { get; init; }
+
+    /// Typically name, arch, version
+    public IDictionary<string, string>? Os { get; init; }
 }

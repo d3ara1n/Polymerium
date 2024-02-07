@@ -7,24 +7,31 @@ using Trident.Abstractions.Building;
 
 namespace Polymerium.Trident.Engines.Deploying;
 
-public class DeployContext
+public class DeployContext(
+    TridentContext context,
+    string key,
+    Metadata metadata,
+    JsonSerializerOptions options,
+    CancellationToken token = default)
 {
     internal Artifact? Artifact;
     internal ArtifactBuilder? ArtifactBuilder;
+    internal bool IsAborted;
+    internal bool IsAttachmentResolved;
+    internal bool IsFinished;
+    internal bool IsGameInstalled;
+    internal bool IsLoaderProcessed;
+    internal TransientData? Transient;
 
-    public DeployContext(TridentContext context, string key, Metadata metadata, CancellationToken token = default)
-    {
-        Context = context;
-        Token = token;
-        Key = key;
-        Metadata = metadata;
+    public CancellationToken Token { get; } = token;
+    public string Key { get; } = key;
+    public Metadata Metadata { get; } = metadata;
 
-        Watermark = BitConverter.ToString(MD5.HashData(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(metadata))));
-    }
+    public string Watermark { get; } =
+        BitConverter.ToString(MD5.HashData(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(metadata))));
 
-    public CancellationToken Token { get; }
-    public string Key { get; }
-    public Metadata Metadata { get; }
-    public string Watermark { get; }
-    public TridentContext Context { get; }
+    public TridentContext Context { get; } = context;
+    public JsonSerializerOptions SerializerOptions { get; } = options;
+
+    public string ArtifactPath => Context.InstanceArtifactPath(Key);
 }

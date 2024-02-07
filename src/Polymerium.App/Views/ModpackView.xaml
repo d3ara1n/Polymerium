@@ -18,12 +18,15 @@
             <PopupThemeTransition />
         </toolkit:SwitchPresenter.ContentTransitions>
         <toolkit:Case Value="Loading">
-            <Grid>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                 <ProgressRing IsIndeterminate="True" Height="40" Width="40" />
             </Grid>
         </toolkit:Case>
         <toolkit:Case Value="Failed">
-            <TextBlock Text="Fetching data failed" />
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Fetching data failed" Style="{StaticResource HeaderTextBlockStyle}" />
+                <TextBlock Text="{x:Bind ViewModel.FailureReason,Mode=OneWay}" />
+            </StackPanel>
         </toolkit:Case>
         <toolkit:Case Value="Done">
             <Grid Margin="{StaticResource PageContentMargin}" ColumnSpacing="{StaticResource SmallGap}"
@@ -201,7 +204,7 @@
                                 </ScrollViewer>
                             </toolkit:Case>
                             <toolkit:Case Value="CASE_INFORMATION">
-                                <StackPanel Margin="{StaticResource MediumMargin}">
+                                <StackPanel Margin="{StaticResource MediumMargin}" Spacing="{StaticResource TinyGap}">
                                     <StackPanel.Resources>
                                         <Style x:Key="CaptionStyle" TargetType="TextBlock">
                                             <Setter Property="FontWeight" Value="Bold" />

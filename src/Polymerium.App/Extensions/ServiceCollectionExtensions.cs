@@ -52,4 +52,11 @@ internal static class ServiceCollectionExtensions
         services.AddTransient<IExtractor, T>();
         return services;
     }
+
+    public static IServiceCollection AddEngine<TEngine>(this IServiceCollection services)
+        where TEngine : class
+    {
+        services.AddTransient<TEngine>();
+        return services;
+    }
 }
