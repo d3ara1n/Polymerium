@@ -5,16 +5,15 @@ using Polymerium.Trident.Services;
 using Trident.Abstractions;
 using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Repositories;
-using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Engines;
 
-public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<Package>
+public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<ResolveResult>
 {
     private readonly IList<string> attachments = new List<string>();
     private Filter? repoFilter;
 
-    public IAsyncEnumerator<Package> GetAsyncEnumerator(CancellationToken token = default)
+    public IAsyncEnumerator<ResolveResult> GetAsyncEnumerator(CancellationToken token = default)
     {
         var context = new ResolveContext(attachments);
         return new ResolveEngineEnumerator(context, agent, repoFilter ?? Filter.EMPTY, token);
@@ -34,10 +33,11 @@ public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<Package>
         ResolveContext context,
         RepositoryAgent agent,
         Filter filter,
-        CancellationToken token) : IAsyncEnumerator<Package>
+        CancellationToken token) : IAsyncEnumerator<ResolveResult>
     {
-        private readonly ConcurrentQueue<Task<Package>> tasks =
+        private readonly ConcurrentQueue<Task<ResolveResult>> tasks =
             new(context.Attachments.Select(x => ResolveAsync(x, agent, filter, token)));
+
 
         public async ValueTask<bool> MoveNextAsync()
         {
@@ -51,7 +51,7 @@ public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<Package>
             return false;
         }
 
-        public Package Current { get; private set; } = null!;
+        public ResolveResult Current { get; private set; } = null!;
 
         public ValueTask DisposeAsync()
         {
@@ -59,7 +59,7 @@ public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<Package>
             return ValueTask.CompletedTask;
         }
 
-        private static async Task<Package> ResolveAsync(string attachment, RepositoryAgent agent, Filter filter,
+        private static async Task<ResolveResult> ResolveAsync(string attachment, RepositoryAgent agent, Filter filter,
             CancellationToken token = default)
         {
             try
@@ -70,11 +70,12 @@ public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<Package>
                 var label = purl.Type;
                 var name = purl.Name;
                 var version = purl.Version;
-                return await agent.ResolveAsync(label, name, version, filter, token);
+                var package = await agent.ResolveAsync(label, name, version, filter, token);
+                return new ResolveResult(attachment, package);
             }
             catch (Exception e)
             {
-                throw new ResolveException(attachment, e);
+                return new ResolveResult(attachment, e);
             }
         }
     }

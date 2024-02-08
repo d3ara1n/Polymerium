@@ -13,9 +13,17 @@ public class ResolveAttachmentStage(ResolveEngine resolver) : StageBase
 
         resolver.SetFilter(Context.Metadata.ExtractFilter());
 
-        await foreach (var package in resolver.ConfigureAwait(false))
-            Context.ArtifactBuilder!.AddParcel($"{package.Label}/{package.ProjectId}/{package.VersionId}.obj",
-                $"mods/{package.FileName}", package.Download, package.Hash);
+        await foreach (var result in resolver.ConfigureAwait(false))
+            if (result.IsResolvedSuccessfully && result.Result != null)
+            {
+                var package = result.Result;
+                Context.ArtifactBuilder!.AddParcel($"{package.Label}/{package.ProjectId}/{package.VersionId}.obj",
+                    $"mods/{package.FileName}", package.Download, package.Hash);
+            }
+            else
+            {
+                throw (Exception?)result.Exception ?? new NotSupportedException();
+            }
 
         Logger.LogInformation("All attachments resolved, refer to artifact file for details");
 

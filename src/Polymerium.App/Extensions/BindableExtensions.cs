@@ -27,7 +27,7 @@ public static class BindableExtensions
     }
 
     public static ReactiveCollection<TSource, TValue> ToReactiveCollection<TSource, TValue>(
-        this BindableCollection<TSource> self,
+        this IList<TSource> self,
         Func<TSource, TValue> selector, Func<TValue, TSource> mapper)
     {
         return new ReactiveCollection<TSource, TValue>(self, selector, mapper);

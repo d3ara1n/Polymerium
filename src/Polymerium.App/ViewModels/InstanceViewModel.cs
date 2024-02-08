@@ -31,7 +31,8 @@ public class InstanceViewModel : ViewModelBase
         _context = context;
         _taskService = taskService;
 
-        GotoWorkbenchViewCommand = new RelayCommand<string>(GotoWorkbenchView);
+        GotoMetadataViewCommand = new RelayCommand<string>(GotoMetadataView);
+        GotoConfigurationViewCommand = new RelayCommand<string>(GotoConfigurationView);
         OpenHomeFolderCommand = new RelayCommand(OpenHomeFolder, CanOpenHomeFolder);
         OpenAssetFolderCommand = new RelayCommand<AssetKind>(OpenAssetFolder, CanOpenAssetFolder);
         DeleteTodoCommand = new RelayCommand<TodoModel>(DeleteTodo, CanDeleteTodo);
@@ -44,7 +45,8 @@ public class InstanceViewModel : ViewModelBase
         set => SetProperty(ref model, value);
     }
 
-    public ICommand GotoWorkbenchViewCommand { get; }
+    public ICommand GotoMetadataViewCommand { get; }
+    public ICommand GotoConfigurationViewCommand { get; }
     public ICommand OpenAssetFolderCommand { get; }
     public ICommand OpenHomeFolderCommand { get; }
     public ICommand DeleteTodoCommand { get; }
@@ -68,10 +70,19 @@ public class InstanceViewModel : ViewModelBase
         if (Model.Key != ProfileManager.DUMMY_KEY) _profileManager.Flush(Model.Key);
     }
 
-    private void GotoWorkbenchView(string? key)
+    private void GotoMetadataView(string? key)
     {
         if (key != null && key != ProfileManager.DUMMY_KEY)
             _navigation.Navigate(typeof(MetadataView), key, new SlideNavigationTransitionInfo
+            {
+                Effect = SlideNavigationTransitionEffect.FromRight
+            });
+    }
+
+    private void GotoConfigurationView(string? key)
+    {
+        if (key != null && key != ProfileManager.DUMMY_KEY)
+            _navigation.Navigate(typeof(ConfigurationView), key, new SlideNavigationTransitionInfo
             {
                 Effect = SlideNavigationTransitionEffect.FromRight
             });

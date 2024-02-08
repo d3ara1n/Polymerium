@@ -24,9 +24,9 @@ public class FlattenExtractedContainer(
                 foreach (var entry in archive.Entries.Where(x =>
                              x.FullName.StartsWith(layer.OverrideDirectoryName) && !string.IsNullOrEmpty(x.Name)))
                 {
-                    if (entry.Length > 1024 * 1024 * 16)
+                    if (entry.Length > 1024 * 1024 * 64)
                         throw new OverflowException(
-                            $"Entry is too big(16MB, got {entry.Length} bytes) for in-memory file buffer");
+                            $"Entry is too big(64MB, got {entry.Length} bytes) for in-memory file buffer");
                     using var stream = entry.Open();
                     var buffer = new byte[entry.Length];
                     _ = entry.Length != stream.Read(buffer, 0, (int)entry.Length);

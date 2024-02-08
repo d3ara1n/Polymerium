@@ -6,6 +6,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:models="using:Polymerium.App.Models"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -20,67 +22,464 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Margin="{StaticResource CardContentUpperMargin}">
+                <StackPanel Grid.Row="0" Margin="{StaticResource LargeUpperMargin}">
                     <TextBlock Text="Version" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                     <TextBlock Text="1.20.1" Style="{StaticResource TitleLargeTextBlockStyle}" />
                 </StackPanel>
                 <ScrollViewer Grid.Row="1">
-                    <ListView x:Name="LayerList" ItemsSource="{x:Bind ViewModel.Model.Layers,Mode=OneWay}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:MetadataModel">
-                                <StackPanel>
-                                    <TextBlock Text="Summary" />
+                    <StackPanel>
+                        <ListView x:Name="LayerList" SelectedValue="{x:Bind ViewModel.SelectedLayer,Mode=TwoWay}"
+                                  ItemsSource="{x:Bind ViewModel.Model.Layers,Mode=OneWay}"
+                                  Margin="{StaticResource MediumUpperMargin}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Margin" Value="{StaticResource TinyMargin}" />
+                                    <Setter Property="Padding" Value="{StaticResource CardContentMargin}" />
+                                    <Setter Property="CornerRadius" Value="{StaticResource CardSmallCornerRadius}" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Grid Background="Transparent">
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup x:Name="Common">
+                                                            <VisualState x:Name="Normal" />
+                                                            <VisualState x:Name="PointerOver">
+                                                                <VisualState.Setters>
+                                                                    <Setter Target="PART_BORDER.BorderBrush"
+                                                                            Value="{ThemeResource ControlElevationBorderBrush}" />
+                                                                </VisualState.Setters>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Pressed">
+                                                                <VisualState.Setters>
+                                                                    <Setter Target="PART_BORDER.Background"
+                                                                            Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush"
+                                                                            Value="{ThemeResource ControlElevationBorderBrush}" />
+                                                                </VisualState.Setters>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Selected">
+                                                                <VisualState.Setters>
+                                                                    <Setter Target="PART_BORDER.Background"
+                                                                            Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush"
+                                                                            Value="{ThemeResource TextControlElevationBorderFocusedBrush}" />
+                                                                </VisualState.Setters>
+                                                            </VisualState>
+                                                            <VisualState x:Name="PointerOverSelected">
+                                                                <VisualState.Setters>
+                                                                    <Setter Target="PART_BORDER.Background"
+                                                                            Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush"
+                                                                            Value="{ThemeResource TextControlElevationBorderFocusedBrush}" />
+                                                                </VisualState.Setters>
+                                                            </VisualState>
+                                                            <VisualState x:Name="PressedSelected">
+                                                                <VisualState.Setters>
+                                                                    <Setter Target="PART_BORDER.Background"
+                                                                            Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush"
+                                                                            Value="{ThemeResource TextControlElevationBorderFocusedBrush}" />
+                                                                </VisualState.Setters>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                    <Border x:Name="PART_BORDER"
+                                                            CornerRadius="{TemplateBinding CornerRadius}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            Padding="{TemplateBinding Padding}">
+                                                        <Border.BackgroundTransition>
+                                                            <BrushTransition />
+                                                        </Border.BackgroundTransition>
+                                                        <ContentPresenter />
+                                                    </Border>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:LayerModel">
+                                    <StackPanel Spacing="{StaticResource SmallGap}">
+                                        <toolkit:DockPanel>
+                                            <Button Style="{StaticResource EllipsisButton}"
+                                                    toolkit:DockPanel.Dock="Right">
+                                                <Button.Flyout>
+                                                    <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                                        <MenuFlyoutItem Text="Rename"
+                                                                        Command="{x:Bind Root.RenameCommand}"
+                                                                        CommandParameter="{x:Bind}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE8AC;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutItem Text="Unlock"
+                                                                        Command="{x:Bind Root.UnlockCommand}"
+                                                                        CommandParameter="{x:Bind}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE785;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutSeparator />
+                                                        <MenuFlyoutItem Text="Move up"
+                                                                        Command="{x:Bind Root.MoveUpCommand}"
+                                                                        CommandParameter="{x:Bind}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE74A;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutItem Text="Move down"
+                                                                        Command="{x:Bind Root.MoveDownCommand}"
+                                                                        CommandParameter="{x:Bind}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE74B;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutSeparator />
+                                                        <MenuFlyoutItem Text="Move to top"
+                                                                        Command="{x:Bind Root.MoveToTopCommand}"
+                                                                        CommandParameter="{x:Bind}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE898;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutItem Text="Move to bottom"
+                                                                        Command="{x:Bind Root.MoveToBottomCommand}"
+                                                                        CommandParameter="{x:Bind}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE896;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutSeparator />
+                                                        <MenuFlyoutItem Text="Remove"
+                                                                        Command="{x:Bind Root.DeleteCommand}"
+                                                                        CommandParameter="{x:Bind}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE738;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                    </MenuFlyout>
+                                                </Button.Flyout>
+                                                <FontIcon Glyph="&#xE712;" />
+                                            </Button>
+                                            <StackPanel Orientation="Horizontal">
+                                                <CheckBox MinWidth="0" IsChecked="{x:Bind Inner.Enabled,Mode=TwoWay}" />
+                                                <TextBlock Text="Enabled" VerticalAlignment="Center" />
+                                                <TextBlock Text="🔒" VerticalAlignment="Center"
+                                                           Visibility="{x:Bind IsLocked.Value,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            </StackPanel>
+                                        </toolkit:DockPanel>
+                                        <Border BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                BorderThickness="1" CornerRadius="{StaticResource TinyCornerRadius}">
+                                            <Grid Margin="{StaticResource SmallMargin}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0">
+                                                    <TextBlock Text="Loaders"
+                                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                    <TextBlock Text="{x:Bind Loaders.Count}" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Text="Attachments"
+                                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                    <TextBlock Text="{x:Bind Attachments.Count}" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Text="{x:Bind Summary.Value,Mode=OneWay}" TextWrapping="Wrap"
+                                                   MaxLines="2" TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <controls:CardButton x:Name="AddLayerButton" Background="Transparent" Padding="0"
+                                             BorderBrush="Transparent" Margin="{StaticResource MediumMargin}"
+                                             Click="AddLayerButton_OnClick">
+                            <controls:DashBorder>
+                                <StackPanel Margin="{StaticResource MediumMargin}">
+                                    <FontIcon Glyph="&#xE710;" FontSize="{StaticResource LargeFontIconFontSize}"
+                                              Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                    <TextBlock Text="Add new layer" HorizontalAlignment="Center"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                            </controls:DashBorder>
+                        </controls:CardButton>
+                    </StackPanel>
                 </ScrollViewer>
             </Grid>
         </controls:Card>
-        <Grid Grid.Column="1" RowSpacing="{StaticResource SmallGap}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <controls:Card Grid.Row="0" Height="128">
-                <ListView>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:LoaderModel">
-                            <controls:Card Padding="0" HorizontalAlignment="Left" Width="268"
-                                           CornerRadius="{StaticResource CardMediumCornerRadius}">
-                                <Grid>
+        <toolkit:SwitchPresenter Grid.Column="1" Value="{x:Bind ViewModel.SelectedLayer,Mode=OneWay}">
+            <toolkit:Case IsDefault="True">
+                <Grid RowSpacing="{StaticResource SmallGap}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <controls:Card Grid.Row="0" Padding="0">
+                        <StackPanel>
+                            <toolkit:DockPanel Margin="{StaticResource CardContentUpperMargin}">
+                                <HyperlinkButton toolkit:DockPanel.Dock="Right">
+                                    <TextBlock Text="Add" />
+                                </HyperlinkButton>
+                                <TextBlock Text="Loaders" Style="{StaticResource SubtitleTextBlockStyle}" />
+                            </toolkit:DockPanel>
+                            <Grid>
+                                <ListView
+                                    ItemsSource="{x:Bind ViewModel.SelectedLayer.Loaders,FallbackValue={x:Null},Mode=OneWay}"
+                                    SelectionMode="None" ScrollViewer.HorizontalScrollMode="Auto"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollMode="Disabled">
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Margin="{StaticResource SmallMargin}" />
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:LoaderModel">
+                                            <controls:Card Padding="0" HorizontalAlignment="Left" Width="268"
+                                                           Background="Transparent"
+                                                           CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <Grid CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Grid.Column="0"
+                                                            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
+                                                        <Border Width="64" Height="64"
+                                                                CornerRadius="{StaticResource TinyCornerRadius}"
+                                                                Margin="{StaticResource MediumMargin}"
+                                                                VerticalAlignment="Center">
+                                                            <Border.Background>
+                                                                <ImageBrush ImageSource="{x:Bind Thumbnail}"
+                                                                            Stretch="Fill" />
+                                                            </Border.Background>
+                                                        </Border>
+                                                    </Border>
+                                                    <Grid Grid.Column="1" Margin="{StaticResource CardContentMargin}">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <StackPanel Grid.Row="0">
+                                                            <TextBlock Text="{x:Bind Name}"
+                                                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                            <TextBlock Text="{x:Bind Inner.Version}" MaxLines="2"
+                                                                       TextWrapping="Wrap"
+                                                                       TextTrimming="CharacterEllipsis" />
+                                                        </StackPanel>
+                                                        <TextBlock Grid.Row="1">
+                                                            <Hyperlink>
+                                                                <Run Text="Remove" />
+                                                            </Hyperlink>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </Grid>
+                                            </controls:Card>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <StackPanel Spacing="{StaticResource TinyGap}"
+                                            Visibility="{x:Bind ViewModel.SelectedLayer.Loaders.Count,FallbackValue=0,Converter={StaticResource ZeroToVisibilityConverter},Mode=OneWay}"
+                                            HorizontalAlignment="Center" Margin="{StaticResource MediumMargin}">
+                                    <FontIcon Glyph="&#xF159;" FontSize="{StaticResource LargeFontIconFontSize}"
+                                              HorizontalAlignment="Center" />
+                                    <TextBlock Text="No loaders"
+                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                               HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </controls:Card>
+                    <controls:Card Grid.Row="1" Padding="0">
+                        <Grid>
+                            <toolkit:DockPanel>
+                                <Grid toolkit:DockPanel.Dock="Top" Margin="{StaticResource CardContentMargin}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="8*" />
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0"
-                                            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
-                                        <Image Width="64" Source="{x:Bind Thumbnail}"
-                                               Margin="{StaticResource MediumMargin}" VerticalAlignment="Center" />
-                                    </Border>
-                                    <Grid Grid.Column="1" Margin="{StaticResource CardContentMargin}">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <StackPanel Grid.Row="0">
-                                            <TextBlock Text="{x:Bind Name}"
-                                                       Style="{StaticResource BodyStrongTextBlockStyle}" />
-                                            <TextBlock Text="{x:Bind Inner.Version}" />
-                                        </StackPanel>
-                                        <TextBlock Grid.Row="1">
-                                            <Hyperlink>
-                                                <Run Text="Remove" />
-                                            </Hyperlink>
-                                        </TextBlock>
-                                    </Grid>
+                                    <TextBlock Grid.Column="0" Text="Attachments"
+                                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                                    <AutoSuggestBox Grid.Column="2" PlaceholderText="Query attachments' names..."
+                                                    QueryIcon="Filter" />
+                                    <HyperlinkButton Grid.Column="4">
+                                        <TextBlock Text="Get" />
+                                    </HyperlinkButton>
                                 </Grid>
-                            </controls:Card>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </controls:Card>
-            <controls:Card Grid.Row="1" />
-        </Grid>
+                                <toolkit:SwitchPresenter
+                                    Value="{x:Bind ViewModel.AttachmentLoadingState,Mode=OneWay}"
+                                    TargetType="models:DataLoadingState">
+                                    <toolkit:Case Value="Loading">
+                                        <ProgressRing Width="32" Height="32" VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center" />
+                                    </toolkit:Case>
+                                    <toolkit:Case Value="Done">
+                                        <Grid>
+                                            <ListView SelectionMode="None"
+                                                      ItemsSource="{x:Bind ViewModel.Attachments,FallbackValue={x:Null},Mode=OneWay}">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate x:DataType="models:AttachmentModel">
+                                                        <controls:Card>
+                                                            <toolkit:SwitchPresenter
+                                                                TargetType="models:DataLoadingState"
+                                                                Value="{x:Bind State.Value,Mode=OneWay}">
+                                                                <toolkit:Case Value="Loading">
+                                                                    <StackPanel Spacing="{StaticResource TinyGap}">
+                                                                        <TextBlock Text="{x:Bind Inner}"
+                                                                            HorizontalAlignment="Center" />
+                                                                        <ProgressBar IsIndeterminate="True" Width="256"
+                                                                            HorizontalAlignment="Center" />
+                                                                    </StackPanel>
+                                                                </toolkit:Case>
+                                                                <toolkit:Case Value="Done">
+                                                                    <Grid ColumnSpacing="{StaticResource SmallGap}">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                            <ColumnDefinition Width="*" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <toolkit:ImageEx Grid.Column="0"
+                                                                            IsCacheEnabled="True"
+                                                                            Source="{x:Bind Thumbnail.Value,Mode=OneWay}"
+                                                                            Width="40" VerticalAlignment="Center" />
+                                                                        <StackPanel Grid.Column="1"
+                                                                            VerticalAlignment="Center">
+                                                                            <toolkit:DockPanel>
+                                                                                <TextBlock
+                                                                                    toolkit:DockPanel.Dock="Right"
+                                                                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                                                                    Text="{x:Bind VersionName.Value,Mode=OneWay}" />
+                                                                                <StackPanel Orientation="Horizontal"
+                                                                                    Spacing="{StaticResource TinyGap}">
+                                                                                    <Border
+                                                                                        Background="{ThemeResource ControlAltFillColorSecondaryBrush}"
+                                                                                        HorizontalAlignment="Left">
+                                                                                        <TextBlock Margin="4,2,4,2"
+                                                                                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                                                                            Text="{x:Bind Kind.Value,Mode=OneWay}"
+                                                                                            Style="{StaticResource CaptionTextBlockStyle}" />
+                                                                                    </Border>
+                                                                                    <TextBlock
+                                                                                        Text="{x:Bind ProjectName.Value,Mode=OneWay}"
+                                                                                        VerticalAlignment="Center"
+                                                                                        Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                                                </StackPanel>
+                                                                            </toolkit:DockPanel>
+                                                                            <toolkit:DockPanel>
+                                                                                <Button toolkit:DockPanel.Dock="Right"
+                                                                                    HorizontalAlignment="Right"
+                                                                                    Style="{StaticResource IconButtonStyle}">
+                                                                                    <Button.Flyout>
+                                                                                        <MenuFlyout
+                                                                                            Placement="LeftEdgeAlignedTop">
+                                                                                            <MenuFlyoutItem
+                                                                                                Text="Modify">
+                                                                                                <MenuFlyoutItem.Icon>
+                                                                                                    <FontIcon
+                                                                                                        Glyph="&#xE70F;" />
+                                                                                                </MenuFlyoutItem.Icon>
+                                                                                            </MenuFlyoutItem>
+                                                                                            <MenuFlyoutItem
+                                                                                                Text="Delete"
+                                                                                                Command="{x:Bind DeleteCommand}"
+                                                                                                CommandParameter="{x:Bind}">
+                                                                                                <MenuFlyoutItem.Icon>
+                                                                                                    <FontIcon
+                                                                                                        Glyph="&#xE738;" />
+                                                                                                </MenuFlyoutItem.Icon>
+                                                                                            </MenuFlyoutItem>
+                                                                                        </MenuFlyout>
+                                                                                    </Button.Flyout>
+                                                                                    <FontIcon Glyph="&#xE712;"
+                                                                                        FontSize="{StaticResource CaptionFontIconFontSize}" />
+                                                                                </Button>
+                                                                                <TextBlock
+                                                                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                                                    Text="{x:Bind Summary.Value,Mode=OneWay}"
+                                                                                    TextTrimming="WordEllipsis"
+                                                                                    MaxLines="1" TextWrapping="NoWrap"
+                                                                                    VerticalAlignment="Bottom" />
+                                                                            </toolkit:DockPanel>
+                                                                        </StackPanel>
+                                                                    </Grid>
+                                                                </toolkit:Case>
+                                                                <toolkit:Case Value="Failed">
+                                                                    <StackPanel Spacing="{StaticResource TinyGap}"
+                                                                        VerticalAlignment="Center">
+                                                                        <StackPanel Orientation="Horizontal"
+                                                                            HorizontalAlignment="Center"
+                                                                            Spacing="{StaticResource TinyGap}">
+                                                                            <TextBlock Text="Failed to retrieve data" />
+                                                                            <TextBlock Text="{x:Bind Inner}"
+                                                                                Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                                                        </StackPanel>
+                                                                        <StackPanel Orientation="Horizontal"
+                                                                            HorizontalAlignment="Center"
+                                                                            Spacing="{StaticResource TinyGap}">
+                                                                            <TextBlock>
+                                                                                <Hyperlink
+                                                                                    ui:HyperlinkExtensions.Command="{x:Bind RetryCommand}"
+                                                                                    ui:HyperlinkExtensions.CommandParameter="{x:Bind}">
+                                                                                    <Run Text="Retry" />
+                                                                                </Hyperlink>
+                                                                            </TextBlock>
+                                                                            <TextBlock
+                                                                                Visibility="{x:Bind Root.IsLocked.Value,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=True}">
+                                                                                <Hyperlink
+                                                                                    ui:HyperlinkExtensions.Command="{x:Bind DeleteCommand}"
+                                                                                    ui:HyperlinkExtensions.CommandParameter="{x:Bind}">
+                                                                                    <Run Text="Delete" />
+                                                                                </Hyperlink>
+                                                                            </TextBlock>
+                                                                        </StackPanel>
+                                                                    </StackPanel>
+                                                                </toolkit:Case>
+                                                            </toolkit:SwitchPresenter>
+                                                        </controls:Card>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+
+                                            </ListView>
+                                            <StackPanel Spacing="{StaticResource TinyGap}"
+                                                        Visibility="{x:Bind ViewModel.Attachments.Count,FallbackValue=0,Converter={StaticResource ZeroToVisibilityConverter},Mode=OneWay}"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <FontIcon Glyph="&#xF158;"
+                                                          FontSize="{StaticResource LargeFontIconFontSize}"
+                                                          HorizontalAlignment="Center" />
+                                                <TextBlock Text="No attachments"
+                                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                           HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </toolkit:Case>
+                                </toolkit:SwitchPresenter>
+                            </toolkit:DockPanel>
+                        </Grid>
+                    </controls:Card>
+                </Grid>
+            </toolkit:Case>
+            <toolkit:Case Value="{x:Null}">
+                <Grid>
+                    <StackPanel Spacing="{StaticResource TinyGap}" VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <FontIcon Glyph="&#xF156;" FontSize="{StaticResource LargeFontIconFontSize}"
+                                  HorizontalAlignment="Center" />
+                        <TextBlock Text="Select a layer in the left panel" HorizontalAlignment="Center"
+                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                    </StackPanel>
+                </Grid>
+            </toolkit:Case>
+        </toolkit:SwitchPresenter>
     </Grid>
 </Page>

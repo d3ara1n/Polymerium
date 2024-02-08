@@ -69,6 +69,12 @@ public class ModpackExtractor(
         var key = profileManager.RequestKey(name);
         var layers = new List<Metadata.Layer>();
 
+        var thumbnail = container.Reference?.Item1.Thumbnail;
+        var reference = container.Reference.HasValue
+            ? PurlHelper.MakePurl(container.Reference.Value.Item1.Label, container.Reference.Value.Item1.Id,
+                container.Reference.Value.Item2.Id)
+            : null;
+
         logger.LogInformation("Modpack {name} requested a key {key}", name, key.Key);
         var metadata = new Metadata(container.Original.Version, layers);
         foreach (var item in container.Layers)
@@ -91,15 +97,10 @@ public class ModpackExtractor(
 
             var attachments = item.Original.Attachments
                 .Select(x => PurlHelper.MakePurl(x.Label, x.ProjectId, x.VersionId)).ToList();
-            var layer = new Metadata.Layer(null, true, item.Original.Summary, loaders, attachments);
+            var layer = new Metadata.Layer(reference, true, item.Original.Summary, loaders, attachments);
             layers.Add(layer);
         }
 
-        var thumbnail = container.Reference?.Item1.Thumbnail;
-        var reference = container.Reference.HasValue
-            ? PurlHelper.MakePurl(container.Reference.Value.Item1.Label, container.Reference.Value.Item1.Id,
-                container.Reference.Value.Item2.Id)
-            : null;
         logger.LogInformation(
             "Modpack {name}({key}) metadata generated, ready to be appended: {version} versioned, {layers} layers",
             name, key.Key, metadata.Version, metadata.Layers.Count);

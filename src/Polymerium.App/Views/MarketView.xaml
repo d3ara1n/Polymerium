@@ -89,7 +89,8 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{StaticResource MediumMargin}"
+            <StackPanel Spacing="{StaticResource TinyGap}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Margin="{StaticResource MediumMargin}"
                         Visibility="{x:Bind ViewModel.Results.Count,Mode=OneWay,FallbackValue=0,Converter={StaticResource ZeroToVisibilityConverter}}">
                 <FontIcon Glyph="&#xE773;" FontSize="{StaticResource LargeFontIconFontSize}"
                           HorizontalAlignment="Center" />

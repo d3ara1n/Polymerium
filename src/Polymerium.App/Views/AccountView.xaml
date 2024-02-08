@@ -83,18 +83,17 @@
                 </MenuFlyout>
             </controls:CardButton.Flyout>
             <Grid>
-                <Rectangle Fill="Transparent" RadiusX="6" RadiusY="6" StrokeDashArray="8 4"
-                           Stroke="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                           StrokeThickness="3" Opacity="0.3" />
-                <StackPanel Orientation="Horizontal" Margin="{StaticResource MediumMargin}"
-                            HorizontalAlignment="Center" Spacing="{StaticResource MediumGap}">
-                    <FontIcon Glyph="&#xf007;" FontSize="48"
-                              Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                              Style="{StaticResource FontAwesomeRegularFontIconStyle}" />
-                    <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}"
-                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                               HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </StackPanel>
+                <controls:DashBorder>
+                    <StackPanel Orientation="Horizontal" Margin="{StaticResource MediumMargin}"
+                                HorizontalAlignment="Center" Spacing="{StaticResource MediumGap}">
+                        <FontIcon Glyph="&#xf007;" FontSize="48"
+                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                  Style="{StaticResource FontAwesomeRegularFontIconStyle}" />
+                        <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}"
+                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </StackPanel>
+                </controls:DashBorder>
             </Grid>
         </controls:CardButton>
     </StackPanel>

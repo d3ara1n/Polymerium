@@ -11,5 +11,6 @@
         <ResourceDictionary Source="ms-appx:///Controls/CardButton.xaml" />
         <ResourceDictionary Source="ms-appx:///Controls/DragDropArea.xaml" />
         <ResourceDictionary Source="ms-appx:///Controls/ClipBox.xaml" />
+        <ResourceDictionary Source="ms-appx:///Controls/DashBorder.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

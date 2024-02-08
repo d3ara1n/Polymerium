@@ -1,5 +1,8 @@
+using System;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using Polymerium.App.Dialogs;
 using Polymerium.App.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -29,5 +32,15 @@ public sealed partial class MetadataView : Page
     {
         ViewModel.OnDetached();
         base.OnNavigatedFrom(e);
+    }
+
+    private async void AddLayerButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var dialog = new InputDialog(XamlRoot)
+        {
+            Message = "Summarize usage of your new layer",
+            Placeholder = "New Layer"
+        };
+        if (await dialog.ShowAsync() == ContentDialogResult.Primary) ViewModel.AddLayer(dialog.Result);
     }
 }

@@ -68,10 +68,14 @@
                             <TextBlock Text="{x:Bind ViewModel.Model.PlayTime,Mode=OneWay}" />
                         </controls:IconLabel>
                     </StackPanel>
-                    <StackPanel Grid.Column="1">
-                        <HyperlinkButton Command="{x:Bind ViewModel.GotoWorkbenchViewCommand}"
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <HyperlinkButton Command="{x:Bind ViewModel.GotoMetadataViewCommand}"
                                          CommandParameter="{x:Bind ViewModel.Model.Key,Mode=OneWay}">
                             <FontIcon Glyph="&#xE932;" />
+                        </HyperlinkButton>
+                        <HyperlinkButton Command="{x:Bind ViewModel.GotoConfigurationViewCommand}"
+                                         CommandParameter="{x:Bind ViewModel.Model.Key,Mode=OneWay}">
+                            <FontIcon Glyph="&#xE713;" />
                         </HyperlinkButton>
                     </StackPanel>
                 </Grid>
@@ -119,19 +123,13 @@
                                 <ColumnDefinition Width="4*" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <StackPanel Spacing="{StaticResource SmallGap}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0" Orientation="Horizontal"
-                                                    VerticalAlignment="Top"
-                                                    Spacing="{StaticResource TinyGap}">
-                                            <FontIcon Glyph="&#xE9D5;" FontSize="16" />
-                                            <TextBlock Text="Todo" />
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                <Grid RowSpacing="{StaticResource SmallGap}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <toolkit:DockPanel Grid.Row="0">
+                                        <StackPanel toolkit:DockPanel.Dock="Right" Orientation="Horizontal"
                                                     Spacing="{StaticResource TinyGap}">
                                             <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
                                                              CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
@@ -143,8 +141,14 @@
                                                           FontSize="{StaticResource ButtonFontIconFontSize}" />
                                             </HyperlinkButton>
                                         </StackPanel>
-                                    </Grid>
-                                    <ListView x:Name="TodoList"
+                                        <StackPanel Orientation="Horizontal"
+                                                    VerticalAlignment="Top"
+                                                    Spacing="{StaticResource TinyGap}">
+                                            <FontIcon Glyph="&#xE9D5;" FontSize="16" />
+                                            <TextBlock Text="Todo" />
+                                        </StackPanel>
+                                    </toolkit:DockPanel>
+                                    <ListView Grid.Row="1" x:Name="TodoList"
                                               ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="models:TodoModel">
@@ -159,8 +163,9 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                </StackPanel>
+                                </Grid>
                                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                                            Spacing="{StaticResource TinyGap}"
                                             Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}">
                                     <FontIcon Glyph="&#xE679;" FontSize="{StaticResource LargeGap}" />
                                     <TextBlock HorizontalAlignment="Center" Text="None"
@@ -175,7 +180,7 @@
                                     <TextBlock Text="Note" />
                                 </StackPanel>
                                 <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}"
-                                         TextWrapping="Wrap" />
+                                         TextWrapping="Wrap" PlaceholderText="Type something..." />
                             </StackPanel>
                         </Grid>
                     </controls:Card>

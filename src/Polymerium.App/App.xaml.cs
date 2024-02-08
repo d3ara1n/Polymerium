@@ -76,11 +76,13 @@ public partial class App
                 })
                 .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync()));
 
+        // UI interaction
         services
             .AddSingleton<NavigationService>()
             .AddSingleton<TaskService>()
             .AddSingleton<NotificationService>()
-            .AddSingleton<MessageService>();
+            .AddSingleton<MessageService>()
+            .AddSingleton<DialogService>();
 
         // Trident Services
         services
@@ -103,7 +105,8 @@ public partial class App
             .AddViewModel<ToolboxViewModel>()
             .AddViewModel<ModpackViewModel>()
             .AddViewModel<MetadataViewModel>()
-            .AddViewModel<RuntimeViewModel>();
+            .AddViewModel<RuntimeViewModel>()
+            .AddViewModel<ConfigurationViewModel>();
 
         // Repositories
         services
@@ -123,11 +126,12 @@ public partial class App
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         Spawn(Provider.GetRequiredService<NavigationService>(), Provider.GetRequiredService<NotificationService>(),
-            Provider.GetRequiredService<TaskService>(), Provider.GetRequiredService<MessageService>());
+            Provider.GetRequiredService<TaskService>(), Provider.GetRequiredService<MessageService>(),
+            Provider.GetRequiredService<DialogService>());
     }
 
     private void Spawn(NavigationService navigation, NotificationService notification, TaskService task,
-        MessageService _)
+        MessageService message, DialogService dialog)
     {
         const string KEY_HEIGHT = "Window.Height";
         const string KEY_WIDTH = "Window.Width";
@@ -143,7 +147,7 @@ public partial class App
         window.SetTitleBar(layout.Titlebar);
         window.Activated += (_, args) =>
             layout.OnActivate(args.WindowActivationState != WindowActivationState.Deactivated);
-        window.Closed += (_, args) =>
+        window.Closed += (_, _) =>
         {
             if (window.AppWindow.Presenter.Kind == AppWindowPresenterKind.Default)
             {

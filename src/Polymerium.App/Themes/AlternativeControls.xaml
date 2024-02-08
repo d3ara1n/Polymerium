@@ -134,4 +134,13 @@
         <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrandsFontFamily}" />
     </Style>
 
+    <Style x:Key="SettingCategoryTextBlockStyle" TargetType="TextBlock"
+           BasedOn="{StaticResource BodyStrongTextBlockStyle}">
+        <Setter Property="Margin" Value="{StaticResource SmallUpperMargin}" />
+    </Style>
+
+    <Style x:Key="SettingTitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource SubtitleTextBlockStyle}">
+        <Setter Property="Margin" Value="{StaticResource SmallUpperMargin}" />
+    </Style>
+
 </ResourceDictionary>

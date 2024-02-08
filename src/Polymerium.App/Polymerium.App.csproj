@@ -77,8 +77,12 @@
         <None Remove="Assets\Store\Wide310x150Logo.scale-200.png"/>
         <None Remove="Assets\Store\Wide310x150Logo.scale-400.png"/>
         <None Remove="Controls\ClipTextBlock.xaml"/>
+        <None Remove="Controls\DashBorder.xaml"/>
+        <None Remove="Controls\TextButton.xaml"/>
+        <None Remove="Dialogs\ConfirmDialog.xaml"/>
         <None Remove="Dialogs\InputDialog.xaml"/>
         <None Remove="Themes\Fonts.xaml"/>
+        <None Remove="Views\ConfigurationView.xaml"/>
         <None Remove="Views\RuntimeView.xaml"/>
     </ItemGroup>
 
@@ -128,6 +132,26 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\TextButton.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Dialogs\ConfirmDialog.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\DashBorder.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\ConfigurationView.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Controls\ClipTextBlock.xaml">
