@@ -36,6 +36,7 @@
                                     <Setter Property="Margin" Value="{StaticResource TinyMargin}" />
                                     <Setter Property="Padding" Value="{StaticResource CardContentMargin}" />
                                     <Setter Property="CornerRadius" Value="{StaticResource CardSmallCornerRadius}" />
+                                    <Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}"/>
                                     <Setter Property="BorderThickness" Value="2" />
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -46,6 +47,8 @@
                                                             <VisualState x:Name="Normal" />
                                                             <VisualState x:Name="PointerOver">
                                                                 <VisualState.Setters>
+                                                                    <Setter Target="PART_BORDER.Background"
+                                                                            Value="{ThemeResource ControlFillColorSecondaryBrush}" />
                                                                     <Setter Target="PART_BORDER.BorderBrush"
                                                                             Value="{ThemeResource ControlElevationBorderBrush}" />
                                                                 </VisualState.Setters>
@@ -53,7 +56,7 @@
                                                             <VisualState x:Name="Pressed">
                                                                 <VisualState.Setters>
                                                                     <Setter Target="PART_BORDER.Background"
-                                                                            Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
+                                                                            Value="{ThemeResource ControlFillColorTertiaryBrush}" />
                                                                     <Setter Target="PART_BORDER.BorderBrush"
                                                                             Value="{ThemeResource ControlElevationBorderBrush}" />
                                                                 </VisualState.Setters>
@@ -217,12 +220,12 @@
         </controls:Card>
         <toolkit:SwitchPresenter Grid.Column="1" Value="{x:Bind ViewModel.SelectedLayer,Mode=OneWay}">
             <toolkit:Case IsDefault="True">
-                <Grid RowSpacing="{StaticResource SmallGap}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <controls:Card Grid.Row="0" Padding="0">
+                    <Grid Grid.Row="0">
                         <StackPanel>
                             <toolkit:DockPanel Margin="{StaticResource CardContentUpperMargin}">
                                 <HyperlinkButton toolkit:DockPanel.Dock="Right">
@@ -245,7 +248,6 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:LoaderModel">
                                             <controls:Card Padding="0" HorizontalAlignment="Left" Width="268"
-                                                           Background="Transparent"
                                                            CornerRadius="{StaticResource SmallCornerRadius}">
                                                 <Grid CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <Grid.ColumnDefinitions>
@@ -264,23 +266,21 @@
                                                             </Border.Background>
                                                         </Border>
                                                     </Border>
-                                                    <Grid Grid.Column="1" Margin="{StaticResource CardContentMargin}">
+                                                    <Grid Grid.Column="1">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*" />
                                                             <RowDefinition Height="Auto" />
                                                         </Grid.RowDefinitions>
-                                                        <StackPanel Grid.Row="0">
+                                                        <StackPanel Grid.Row="0" Margin="{StaticResource CardContentUpperMargin}">
                                                             <TextBlock Text="{x:Bind Name}"
                                                                        Style="{StaticResource BodyStrongTextBlockStyle}" />
                                                             <TextBlock Text="{x:Bind Inner.Version}" MaxLines="2"
                                                                        TextWrapping="Wrap"
                                                                        TextTrimming="CharacterEllipsis" />
                                                         </StackPanel>
-                                                        <TextBlock Grid.Row="1">
-                                                            <Hyperlink>
-                                                                <Run Text="Remove" />
-                                                            </Hyperlink>
-                                                        </TextBlock>
+                                                        <HyperlinkButton Grid.Row="1" Margin="{StaticResource TinyMargin}" Command="{x:Bind RemoveCommand}" CommandParameter="{x:Bind}">
+                                                            <TextBlock Text="Remove"/>
+                                                        </HyperlinkButton>
                                                     </Grid>
                                                 </Grid>
                                             </controls:Card>
@@ -298,8 +298,8 @@
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
-                    </controls:Card>
-                    <controls:Card Grid.Row="1" Padding="0">
+                    </Grid>
+                    <Grid Grid.Row="1">
                         <Grid>
                             <toolkit:DockPanel>
                                 <Grid toolkit:DockPanel.Dock="Top" Margin="{StaticResource CardContentMargin}">
@@ -362,17 +362,15 @@
                                                                                     Text="{x:Bind VersionName.Value,Mode=OneWay}" />
                                                                                 <StackPanel Orientation="Horizontal"
                                                                                     Spacing="{StaticResource TinyGap}">
-                                                                                    <Border
-                                                                                        Background="{ThemeResource ControlAltFillColorSecondaryBrush}"
-                                                                                        HorizontalAlignment="Left">
+                                                                                    <Border VerticalAlignment="Center"
+                                                                                        Background="{ThemeResource ControlAltFillColorSecondaryBrush}">
                                                                                         <TextBlock Margin="4,2,4,2"
                                                                                             Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                                                                             Text="{x:Bind Kind.Value,Mode=OneWay}"
                                                                                             Style="{StaticResource CaptionTextBlockStyle}" />
                                                                                     </Border>
-                                                                                    <TextBlock
+                                                                                    <TextBlock VerticalAlignment="Center"
                                                                                         Text="{x:Bind ProjectName.Value,Mode=OneWay}"
-                                                                                        VerticalAlignment="Center"
                                                                                         Style="{StaticResource BodyStrongTextBlockStyle}" />
                                                                                 </StackPanel>
                                                                             </toolkit:DockPanel>
@@ -466,7 +464,7 @@
                                 </toolkit:SwitchPresenter>
                             </toolkit:DockPanel>
                         </Grid>
-                    </controls:Card>
+                    </Grid>
                 </Grid>
             </toolkit:Case>
             <toolkit:Case Value="{x:Null}">

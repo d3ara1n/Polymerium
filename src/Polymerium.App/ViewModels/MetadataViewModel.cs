@@ -175,7 +175,7 @@ public class MetadataViewModel : ViewModelBase
         return SelectedLayer is { IsLocked.Value: false };
     }
 
-    private async void DeleteAttachment(AttachmentModel? attachment)
+    private void DeleteAttachment(AttachmentModel? attachment)
     {
         if (attachment != null && SelectedLayer != null)
         {

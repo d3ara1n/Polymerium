@@ -41,6 +41,7 @@ public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<ResolveResult>
 
         public async ValueTask<bool> MoveNextAsync()
         {
+            if (token.IsCancellationRequested) return false;
             if (tasks.TryDequeue(out var task))
             {
                 var package = await task;

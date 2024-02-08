@@ -1,8 +1,9 @@
-﻿using Trident.Abstractions.Resources;
+﻿using System.Windows.Input;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models;
 
-public record LoaderModel(Loader Inner)
+public record LoaderModel(Loader Inner, ICommand RemoveCommand)
 {
     public string Name => Loader.MODLOADER_NAME_MAPPINGS.ContainsKey(Inner.Id)
         ? Loader.MODLOADER_NAME_MAPPINGS[Inner.Id]
