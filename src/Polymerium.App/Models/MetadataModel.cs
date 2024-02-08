@@ -191,7 +191,7 @@ public record MetadataModel
             var index = Layers.IndexOf(layer);
             if (index != Layers.Count - 1 && Layers.Remove(layer))
             {
-                Layers.Insert(Layers.Count - 1, layer);
+                Layers.Add(layer);
                 NotifyPositionChange();
             }
         }
