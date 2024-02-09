@@ -34,7 +34,7 @@
                                 <ScalarTransition />
                             </Rectangle.OpacityTransition>
                         </Rectangle>
-                        <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Grid>
                 </ControlTemplate>

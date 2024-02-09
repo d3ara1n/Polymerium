@@ -29,11 +29,21 @@
                         <TextBlock Text="Import" />
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource AccentButtonStyle}">
-                    <StackPanel Orientation="Horizontal" Spacing="5">
-                        <FontIcon Glyph="&#xE710;" FontSize="{StaticResource ButtonFontIconFontSize}" />
-                        <TextBlock Text="Create" />
-                    </StackPanel>
+                <Button x:Name="CreateButton"
+                        IsEnabled="{x:Bind VersionLoadingState,Mode=OneWay,Converter={StaticResource FalseWhenLoadingConverter}}"
+                        Style="{StaticResource AccentButtonStyle}" Click="CreateButton_OnClick">
+                    <toolkit:SwitchPresenter Value="{x:Bind VersionLoadingState,Mode=OneWay}"
+                                             TargetType="models:DataLoadingState">
+                        <toolkit:Case IsDefault="True">
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <FontIcon Glyph="&#xE710;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                <TextBlock Text="Create" />
+                            </StackPanel>
+                        </toolkit:Case>
+                        <toolkit:Case Value="Loading">
+                            <ProgressRing IsIndeterminate="True" Height="16" Width="16"/>
+                        </toolkit:Case>
+                    </toolkit:SwitchPresenter>
                 </Button>
             </StackPanel>
         </Grid>
@@ -51,7 +61,8 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48" />
+                                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48"
+                                                     Stretch="Fill" />
                                     <StackPanel Grid.Column="1">
                                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                    Style="{StaticResource CaptionTextBlockStyle}">

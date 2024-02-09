@@ -3,7 +3,6 @@
 // 游戏本身需要传入 Metadata,IDictionary<string, object> Setup+Overrides, Account.Token
 public record Profile(
     string Name,
-    Uri? Thumbnail,
     string? Reference,
     Profile.RecordData Records,
     Metadata Metadata,
@@ -11,7 +10,6 @@ public record Profile(
     string? AccountId)
 {
     public string Name { get; set; } = Name;
-    public Uri? Thumbnail { get; set; } = Thumbnail;
     public string? Reference { get; set; } = Reference;
     public string? AccountId { get; set; } = AccountId;
 

@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Dialogs;
@@ -22,6 +25,16 @@ public sealed partial class DesktopView
 
     public DesktopViewModel ViewModel { get; } = App.ViewModel<DesktopViewModel>();
 
+    public static readonly DependencyProperty VersionLoadingStateProperty = DependencyProperty.Register(
+        nameof(VersionLoadingState), typeof(DataLoadingState), typeof(DesktopView),
+        new PropertyMetadata(DataLoadingState.Idle));
+
+    public DataLoadingState VersionLoadingState
+    {
+        get => (DataLoadingState)GetValue(VersionLoadingStateProperty);
+        set => SetValue(VersionLoadingStateProperty, value);
+    }
+
     private async void ImportButton_OnClick(object sender, RoutedEventArgs e)
     {
         var inputDialog = new DragDropInputDialog(XamlRoot)
@@ -37,6 +50,36 @@ public sealed partial class DesktopView
                 if (await previewDialog.ShowAsync() == ContentDialogResult.Primary)
                     ViewModel.ApplyExtractedModpack(model);
             }
+        }
+    }
+
+    private void CreateButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (VersionLoadingState != DataLoadingState.Loading)
+        {
+            VersionLoadingState = DataLoadingState.Loading;
+            Task.Run(async () =>
+            {
+                IEnumerable<MinecraftVersionModel> versions;
+                try
+                {
+                    versions = (await ViewModel.FetchVersionAsync());
+                }
+                catch
+                {
+                    versions = [];
+                }
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    VersionLoadingState = DataLoadingState.Done;
+                    var dialog = new CreateProfileDialog(XamlRoot, versions);
+                    if (dialog.ShowAsync().GetResults() == ContentDialogResult.Primary)
+                    {
+                        // TODO
+                    }
+                });
+            });
         }
     }
 }

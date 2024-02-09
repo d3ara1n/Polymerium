@@ -2,6 +2,7 @@
 
 public enum DataLoadingState
 {
+    Idle,
     Loading,
     Done,
     Failed

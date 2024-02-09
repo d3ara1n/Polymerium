@@ -93,8 +93,6 @@
                     <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
                     <!-- ReSharper disable once Xaml.RedundantResource -->
                     <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
-                    <StaticResource x:Key="NavigationViewContentBackground"
-                                    ResourceKey="LayerOnAcrylicFillColorDefaultBrush" />
 
                 </NavigationView.Resources>
                 <NavigationView.MenuItemTemplate>

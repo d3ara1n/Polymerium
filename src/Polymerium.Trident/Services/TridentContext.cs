@@ -12,6 +12,7 @@ public class TridentContext(string home)
     public const string DIR_PRIVATE = ".polymerium";
     public const string DIR_PRIVATE_LOG = "logs";
     public const string DIR_PRIVATE_BACKUP = "backups";
+    public const string DIR_PRIVATE_THUMBNAIL = "thumbnails";
 
     public const string FILE_ACCOUNT_VAULT = "account.vault.json";
     public const string FILE_FAVORITE_LIST = "favorites.json";
@@ -28,6 +29,7 @@ public class TridentContext(string home)
     public string FavoriteListFile => Path.Combine(HomeDir, DIR_PRIVATE, FILE_FAVORITE_LIST);
     public string LogDir => Path.Combine(HomeDir, DIR_PRIVATE, DIR_PRIVATE_LOG);
     public string BackupDir => Path.Combine(HomeDir, DIR_PRIVATE, DIR_PRIVATE_BACKUP);
+    public string ThumbnailDir => Path.Combine(HomeDir, DIR_PRIVATE, DIR_PRIVATE_THUMBNAIL);
 
     public string InstanceHomePath(string key)
     {

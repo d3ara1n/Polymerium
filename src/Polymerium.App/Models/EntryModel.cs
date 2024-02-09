@@ -8,9 +8,14 @@ using Trident.Abstractions;
 
 namespace Polymerium.App.Models;
 
-public record EntryModel(string Key, Profile Inner, InstanceState State, ICommand GotoInstanceViewCommand)
+public record EntryModel(
+    string Key,
+    Profile Inner,
+    string? ThumbnailPath,
+    InstanceState State,
+    ICommand GotoInstanceViewCommand)
 {
-    public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? "/Assets/Placeholders/default_dirt.png";
+    public string Thumbnail => ThumbnailPath ?? "/Assets/Placeholders/default_dirt.png";
     public string Version => Inner.Metadata.Version;
     public string Category => ExtractCategory();
 

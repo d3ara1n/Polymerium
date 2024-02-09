@@ -16,11 +16,14 @@ public class HomeViewModel : ObservableObject
 {
     private readonly NavigationService _navigationService;
     private readonly ProfileManager _profileManger;
+    private readonly ThumbnailSaver _thumbnailSaver;
 
-    public HomeViewModel(ProfileManager profileManger, NavigationService navigationService)
+    public HomeViewModel(ProfileManager profileManger, NavigationService navigationService,
+        ThumbnailSaver thumbnailSaver)
     {
         _profileManger = profileManger;
         _navigationService = navigationService;
+        _thumbnailSaver = thumbnailSaver;
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
         Recents = _profileManger.Managed
@@ -28,7 +31,8 @@ public class HomeViewModel : ObservableObject
                 x.Value.Value, x.Key))
             .Where(x => x.Item1 != null)
             .OrderByDescending(x => x.Item1)
-            .Select(x => new RecentModel(x.Item3, x.Item2, GotoInstanceViewCommand)).ToList();
+            .Select(x => new RecentModel(x.Item3, x.Item2, thumbnailSaver.Get(x.Item3), GotoInstanceViewCommand))
+            .ToList();
     }
 
     public IList<RecentModel> Recents { get; }

@@ -92,7 +92,8 @@ public partial class App
             .AddSingleton<RepositoryAgent>()
             .AddSingleton<DownloadManager>()
             .AddSingleton<ModpackExtractor>()
-            .AddSingleton<StorageManager>();
+            .AddSingleton<StorageManager>()
+            .AddSingleton<ThumbnailSaver>();
 
         // ViewModels
         services

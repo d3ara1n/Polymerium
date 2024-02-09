@@ -11,39 +11,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b31775e-15d5-4977-92ad-0d0d96a23102" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/DashBorder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/DashBorder.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/ConfirmDialog.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/ConfirmDialog.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/AsyncCollection.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/TextEditingState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/DialogService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ConfigurationViewModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ConfigurationView.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ConfigurationView.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Resolving/ResolveResult.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/FalseWhenLoadingConverter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/CreateProfileDialog.xaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/CreateProfileDialog.xaml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/MinecraftVersionModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Helpers/MinecraftHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Helpers/UriFileHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/ThumbnailSaver.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Extensions/BindableExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Extensions/BindableExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Controls/DragDropArea.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Controls/DragDropArea.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/DragDropInputDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/DragDropInputDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/DragDropInputDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/DragDropInputDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Layout.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Layout.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/AttachmentModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/AttachmentModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/LayerModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/LayerModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/MetadataModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/MetadataModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/DataLoadingState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/DataLoadingState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/EntryModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/EntryModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/ProfileModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/ProfileModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/RecentModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/RecentModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/AlternativeControls.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/AlternativeControls.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/CustomControls.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/CustomControls.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/Converters.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/Converters.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/DesktopViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/DesktopViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/HomeViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/HomeViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MetadataViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MetadataViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/AccountView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/AccountView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/HomeView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/HomeView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MarketView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MarketView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MetadataView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MetadataView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MetadataView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MetadataView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/ResolveAttachmentStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/ResolveAttachmentStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/ResolveEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/ResolveEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Extracting/FlattenExtractedContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Extracting/FlattenExtractedContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/InstallVanillaStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/InstallVanillaStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Helpers/CurseForgeHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Helpers/CurseForgeHelper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/ModpackExtractor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/ModpackExtractor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/ProfileManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/ProfileManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/TridentContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/TridentContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Profile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Profile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Resources/ReleaseType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Resources/ReleaseType.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +66,9 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.ObjectModel/src/System/Collections/ObjectModel/ObservableCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.ObjectModel/src/System/Collections/Specialized/NotifyCollectionChangedEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.CoreLib/src/System/Collections/ObjectModel/Collection.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.Uri/src/System/Uri.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.Uri/src/System/UriScheme.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Private.Uri/src/System/UriSyntax.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Threading.Tasks.Parallel/src/System/Threading/Tasks/Parallel.ForEachAsync.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3aa289643b9645bda2164ad2371d9a3b15b0fb0/19/b3aecfa6/IDataPackageMethods.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3aa289643b9645bda2164ad2371d9a3b15b0fb0/6d/fdac7e31/DataPackage.cs" root0="SKIP_HIGHLIGHTING" />
@@ -70,11 +79,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49835710c74a40ed929a74cbe22f510513910/0f/ef90173b/NotifyCollectionChangedAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/537353c91f78421e91297a3940856d841e00/c8/63e22446/Nanoid.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6c32ba1df0e481b9435035b67a6e1c16c6020/31/b5654e79/TextBlock.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6c32ba1df0e481b9435035b67a6e1c16c6020/5a/46453077/Stretch.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6c32ba1df0e481b9435035b67a6e1c16c6020/b0/3832f103/NavigationViewPaneDisplayMode.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6c32ba1df0e481b9435035b67a6e1c16c6020/cf/238e6430/ButtonBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1b5b3deac76d50b7e7649f3d66a56b59674b3ead252b5b73c79871e4a7d321fc/IncrementalLoadingCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2e6f8ee9040cef4eb4ce59beefa194ba4c9301915ef1422dcb68fba64ab3fb/IIncrementalSource.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3e432edeee9469b7cfdb81d6e6bd278cf57afb9e54ab75649b8bb2f52cdde69/ObservableObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4d2b252d7b2a4a4587f8ed7f2532dd4378998/_f8d87/IBuildable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/549eaab5e6174917b0bbec1abf5929ff76eb72b9c55ec2e143dabdea4a4e2bf5/AdvancedCollectionView.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/66d282fb017e24813f686f92232b45189e2f5a37cabafa7e8bc50deadfd51e/BoolToObjectConverter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b797f66ec8c0e78dc58530ee12e58a611be8ee066b6673bed438835010/BoolToVisibilityConverter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9de7b971f7dc6d13d19737fd943d6f316ef4894a97fbca1d2564d089151068/ISupplier0.cs" root0="SKIP_HIGHLIGHTING" />
@@ -210,6 +222,7 @@
       <workItem from="1707334709138" duration="708000" />
       <workItem from="1707335561587" duration="417000" />
       <workItem from="1707372727269" duration="27033000" />
+      <workItem from="1707473438021" duration="21487000" />
     </task>
     <servers />
   </component>

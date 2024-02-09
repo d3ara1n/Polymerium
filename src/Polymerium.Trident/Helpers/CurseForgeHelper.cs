@@ -43,10 +43,11 @@ public static class CurseForgeHelper
         return kind switch
         {
             ResourceKind.Modpack => "modpacks",
-            ResourceKind.Mod => "mods",
+            ResourceKind.Mod => "mc-mods",
             ResourceKind.World => "worlds",
             ResourceKind.ResourcePack => "texture-packs",
             ResourceKind.ShaderPack => "shaders",
+            ResourceKind.DataPack => "data-packs",
             _ => "unknown"
         };
     }

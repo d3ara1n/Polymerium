@@ -3,6 +3,8 @@
 public enum ReleaseType
 {
     Release,
+    Snapshot,
+    Experiment,
     Beta,
     Alpha
 }

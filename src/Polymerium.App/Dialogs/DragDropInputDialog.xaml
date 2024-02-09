@@ -12,7 +12,7 @@
     Title="Drag drop dialog" PrimaryButtonText="Confirm" CloseButtonText="Cancel">
 
     <StackPanel Spacing="{StaticResource SmallGap}">
-        <controls:DragDropArea Padding="{StaticResource LargeMargin}" DragEnter="UIElement_OnDragEnter"
+        <controls:DragDropArea Padding="{StaticResource LargeMargin}" DragOver="UIElement_OnDragOver"
                                Drop="UIElement_OnDrop">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
                 <FontIcon Glyph="{x:Bind IconGlyph}" FontSize="44" VerticalAlignment="Center" Margin="0,0,10,0" />
@@ -30,7 +30,12 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBox Text="{x:Bind ResultPath,Mode=TwoWay}" Grid.Column="0" />
-            <Button x:Name="ChooseButton" Grid.Column="1" Content="Choose" Click="ChooseButton_OnClick" />
+            <Button x:Name="ChooseButton" Grid.Column="1" Click="ChooseButton_OnClick">
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                    <FontIcon Glyph="&#xE8E5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                    <TextBlock Text="Choose"/>
+                </StackPanel>
+            </Button>
         </Grid>
     </StackPanel>
 </ContentDialog>

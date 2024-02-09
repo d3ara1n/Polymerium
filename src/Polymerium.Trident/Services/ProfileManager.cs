@@ -11,7 +11,7 @@ public sealed class ProfileManager : IDisposable
 {
     public const string DUMMY_KEY = "_DUMMY";
 
-    public static readonly Profile DUMMY_PROFILE = new(string.Empty, null, null,
+    public static readonly Profile DUMMY_PROFILE = new(string.Empty, null,
         new Profile.RecordData(Enumerable.Empty<Profile.RecordData.TimelinePoint>().ToList(),
             Enumerable.Empty<Profile.RecordData.Todo>().ToList(),
             string.Empty), new Metadata(string.Empty, Enumerable.Empty<Metadata.Layer>().ToList()),
@@ -64,11 +64,11 @@ public sealed class ProfileManager : IDisposable
         if (reservedKeys.Contains(key)) reservedKeys.Remove(key);
     }
 
-    public Profile Append(ReservedKey key, string name, Uri? thumbnail, string? reference, Metadata metadata)
+    public Profile Append(ReservedKey key, string name, string? reference, Metadata metadata)
     {
         if (key.Disposed) throw new ArgumentException($"Disposed key: {key.Key}");
         var now = DateTimeOffset.Now;
-        var profile = new Profile(name, thumbnail, reference, new Profile.RecordData(
+        var profile = new Profile(name, reference, new Profile.RecordData(
             new List<Profile.RecordData.TimelinePoint>
             {
                 new(true, null, Profile.RecordData.TimelinePoint.TimelimeAction.Create,

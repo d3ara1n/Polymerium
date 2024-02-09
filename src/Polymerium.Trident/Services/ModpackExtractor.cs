@@ -15,7 +15,8 @@ public class ModpackExtractor(
     ILogger<ModpackExtractor> logger,
     IEnumerable<IExtractor> extractors,
     ProfileManager profileManager,
-    StorageManager storageManager)
+    StorageManager storageManager,
+    ThumbnailSaver thumbnailSaver)
 {
     public async Task<Result<FlattenExtractedContainer, ExtractError>> ExtractAsync(Stream stream,
         (Project, Project.Version)? source, CancellationToken token = default)
@@ -104,6 +105,7 @@ public class ModpackExtractor(
         logger.LogInformation(
             "Modpack {name}({key}) metadata generated, ready to be appended: {version} versioned, {layers} layers",
             name, key.Key, metadata.Version, metadata.Layers.Count);
-        profileManager.Append(key, name, thumbnail, reference, metadata);
+        if (thumbnail != null) await thumbnailSaver.SaveAsync(key.Key, thumbnail);
+        profileManager.Append(key, name, reference, metadata);
     }
 }

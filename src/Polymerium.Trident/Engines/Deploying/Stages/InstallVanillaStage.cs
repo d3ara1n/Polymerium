@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
+using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Models.PrismLauncher.Minecraft;
 using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Extensions;
@@ -11,25 +12,16 @@ namespace Polymerium.Trident.Engines.Deploying.Stages;
 
 public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
 {
-    private const string INDEX_URL = "https://meta.prismlauncher.org/v1/net.minecraft/index.json";
-    private const string VERSION_URL = "https://meta.prismlauncher.org/v1/net.minecraft/{version}.json";
-
     protected override async Task OnProcessAsync()
     {
-        // 使用本地创建的 options，和 Polymerium 的文件不共用同一个
-        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-        options.Converters.Add(new JsonStringEnumConverter());
         var builder = Context.ArtifactBuilder!;
         using var client = factory.CreateClient();
-        var manifest = await client.GetFromJsonAsync<PrismMinecraftIndex>(INDEX_URL, options, Context.Token);
-        if (manifest.Equals(default)) throw new BadFormatException($"File({INDEX_URL}) failed to download or parse");
+        var manifest = await MinecraftHelper.GetManifestAsync(factory, Context.Token);
         Logger.LogInformation("Got manifest with {count} entries", manifest.Versions.Length);
         var index = manifest.Versions.FirstOrDefault(x => x.Version == Context.Metadata.Version);
         if (index.Equals(default))
-            throw new BadFormatException(INDEX_URL, $"versions[version:{Context.Metadata.Version}]");
-        var url = VERSION_URL.Replace("{version}", index.Version);
-        var version = await client.GetFromJsonAsync<PrismMinecraftVersion>(url, options, Context.Token);
-        if (version.Equals(default)) throw new BadFormatException($"File({url}) failed to download or parse");
+            throw new BadFormatException("{minecraft_manifest}", $"versions[version:{Context.Metadata.Version}]");
+        var version = await MinecraftHelper.GetVersionAsync(index.Version, factory, Context.Token);
         Logger.LogInformation("Got version index {version}({uid})", version.Version, version.Uid);
 
         // Libraries
@@ -73,7 +65,7 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
             builder.AddLibrary(version.MainJar.Name, version.MainJar.Downloads.Artifact.Value.Url,
                 version.MainJar.Downloads.Artifact.Value.Sha1);
         else
-            throw new BadFormatException(url, "mainJar.downloads.artifact");
+            throw new BadFormatException("{minecraft_version}", "mainJar.downloads.artifact");
 
         Logger.LogInformation("Client jar appended: {name}", version.MainJar.Name);
 
@@ -121,7 +113,7 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
         if (!firstJreVersion.Equals(default))
             builder.SetJavaMajorVersion(firstJreVersion);
         else
-            throw new BadFormatException(url, "compatibleJavaMajors");
+            throw new BadFormatException("{minecraft_version}", "compatibleJavaMajors");
 
         Logger.LogInformation("Set java major version compatibility to {major} in [{all}]", firstJreVersion,
             string.Join(',', version.CompatibleJavaMajors));

@@ -36,7 +36,7 @@
                                     <Setter Property="Margin" Value="{StaticResource TinyMargin}" />
                                     <Setter Property="Padding" Value="{StaticResource CardContentMargin}" />
                                     <Setter Property="CornerRadius" Value="{StaticResource CardSmallCornerRadius}" />
-                                    <Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}"/>
+                                    <Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
                                     <Setter Property="BorderThickness" Value="2" />
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -271,15 +271,19 @@
                                                             <RowDefinition Height="*" />
                                                             <RowDefinition Height="Auto" />
                                                         </Grid.RowDefinitions>
-                                                        <StackPanel Grid.Row="0" Margin="{StaticResource CardContentUpperMargin}">
+                                                        <StackPanel Grid.Row="0"
+                                                                    Margin="{StaticResource CardContentUpperMargin}">
                                                             <TextBlock Text="{x:Bind Name}"
                                                                        Style="{StaticResource BodyStrongTextBlockStyle}" />
                                                             <TextBlock Text="{x:Bind Inner.Version}" MaxLines="2"
                                                                        TextWrapping="Wrap"
                                                                        TextTrimming="CharacterEllipsis" />
                                                         </StackPanel>
-                                                        <HyperlinkButton Grid.Row="1" Margin="{StaticResource TinyMargin}" Command="{x:Bind RemoveCommand}" CommandParameter="{x:Bind}">
-                                                            <TextBlock Text="Remove"/>
+                                                        <HyperlinkButton Grid.Row="1"
+                                                                         Margin="{StaticResource TinyMargin}"
+                                                                         Command="{x:Bind RemoveCommand}"
+                                                                         CommandParameter="{x:Bind}">
+                                                            <TextBlock Text="Remove" />
                                                         </HyperlinkButton>
                                                     </Grid>
                                                 </Grid>
@@ -312,8 +316,10 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Text="Attachments"
                                                Style="{StaticResource SubtitleTextBlockStyle}" />
-                                    <AutoSuggestBox Grid.Column="2" PlaceholderText="Query attachments' names..."
-                                                    QueryIcon="Filter" />
+                                    <AutoSuggestBox Grid.Column="2" x:Name="AttachmentQueryBox"
+                                                    PlaceholderText="Query attachments' names..."
+                                                    QueryIcon="Filter"
+                                                    QuerySubmitted="AttachmentQueryBox_OnQuerySubmitted" />
                                     <HyperlinkButton Grid.Column="4">
                                         <TextBlock Text="Get" />
                                     </HyperlinkButton>
@@ -327,8 +333,7 @@
                                     </toolkit:Case>
                                     <toolkit:Case Value="Done">
                                         <Grid>
-                                            <ListView SelectionMode="None"
-                                                      ItemsSource="{x:Bind ViewModel.Attachments,FallbackValue={x:Null},Mode=OneWay}">
+                                            <ListView SelectionMode="None" ItemsSource="{x:Bind AttachmentView}">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="models:AttachmentModel">
                                                         <controls:Card>
@@ -350,7 +355,7 @@
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
                                                                         <toolkit:ImageEx Grid.Column="0"
-                                                                            IsCacheEnabled="True"
+                                                                            IsCacheEnabled="True" CornerRadius="3"
                                                                             Source="{x:Bind Thumbnail.Value,Mode=OneWay}"
                                                                             Width="40" VerticalAlignment="Center" />
                                                                         <StackPanel Grid.Column="1"
@@ -362,14 +367,15 @@
                                                                                     Text="{x:Bind VersionName.Value,Mode=OneWay}" />
                                                                                 <StackPanel Orientation="Horizontal"
                                                                                     Spacing="{StaticResource TinyGap}">
-                                                                                    <Border VerticalAlignment="Center"
+                                                                                    <Border VerticalAlignment="Center" CornerRadius="2"
                                                                                         Background="{ThemeResource ControlAltFillColorSecondaryBrush}">
                                                                                         <TextBlock Margin="4,2,4,2"
                                                                                             Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                                                                             Text="{x:Bind Kind.Value,Mode=OneWay}"
                                                                                             Style="{StaticResource CaptionTextBlockStyle}" />
                                                                                     </Border>
-                                                                                    <TextBlock VerticalAlignment="Center"
+                                                                                    <TextBlock
+                                                                                        VerticalAlignment="Center"
                                                                                         Text="{x:Bind ProjectName.Value,Mode=OneWay}"
                                                                                         Style="{StaticResource BodyStrongTextBlockStyle}" />
                                                                                 </StackPanel>
@@ -381,6 +387,16 @@
                                                                                     <Button.Flyout>
                                                                                         <MenuFlyout
                                                                                             Placement="LeftEdgeAlignedTop">
+                                                                                            <MenuFlyoutItem
+                                                                                                Text="Open in browser"
+                                                                                                Command="{x:Bind OpenCommand}"
+                                                                                                CommandParameter="{x:Bind}">
+                                                                                                <MenuFlyoutItem.Icon>
+                                                                                                    <FontIcon
+                                                                                                        Glyph="&#xE71B;" />
+                                                                                                </MenuFlyoutItem.Icon>
+                                                                                            </MenuFlyoutItem>
+                                                                                            <MenuFlyoutSeparator />
                                                                                             <MenuFlyoutItem
                                                                                                 Text="Modify">
                                                                                                 <MenuFlyoutItem.Icon>

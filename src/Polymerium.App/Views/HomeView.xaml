@@ -97,7 +97,7 @@
                                              CommandParameter="{x:Bind Key}">
                             <StackPanel>
                                 <toolkit:ConstrainedBox AspectRatio="1:1">
-                                    <toolkit:ImageEx Source="{x:Bind Inner.Thumbnail}" Stretch="UniformToFill"
+                                    <toolkit:ImageEx Source="{x:Bind Thumbnail}" Stretch="UniformToFill"
                                                      Width="198" />
                                 </toolkit:ConstrainedBox>
                                 <StackPanel Margin="{StaticResource CardContentMargin}"

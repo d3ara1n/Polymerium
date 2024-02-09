@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -43,6 +44,7 @@ public class MetadataViewModel : ViewModelBase
 
         model = new MetadataModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, dialogService);
 
+        OpenAttachmentCommand = new RelayCommand<AttachmentModel>(OpenAttachment, CanOpenAttachment);
         RetryAttachmentCommand = new RelayCommand<AttachmentModel>(RetryAttachment);
         DeleteAttachmentCommand = new RelayCommand<AttachmentModel>(DeleteAttachment, CanDeleteAttachment);
     }
@@ -80,6 +82,7 @@ public class MetadataViewModel : ViewModelBase
         set => SetProperty(ref attachmentLoadingState, value);
     }
 
+    private ICommand OpenAttachmentCommand { get; }
     private ICommand RetryAttachmentCommand { get; }
     private ICommand DeleteAttachmentCommand { get; }
 
@@ -99,15 +102,16 @@ public class MetadataViewModel : ViewModelBase
                 {
                     var package = result.Result;
                     var attachment = new AttachmentModel(result.Purl, layer, DataLoadingState.Done, package.ProjectName,
-                        package.VersionName, package.Thumbnail, package.Summary, package.Kind, RetryAttachmentCommand,
+                        package.VersionName, package.Thumbnail, package.Summary, package.Reference, package.Kind,
+                        OpenAttachmentCommand,
+                        RetryAttachmentCommand,
                         DeleteAttachmentCommand);
                     _dispatcher.TryEnqueue(() => { Attachments.Add(attachment); });
                 }
                 else
                 {
                     var attachment = new AttachmentModel(result.Purl, layer, DataLoadingState.Failed, null, null, null,
-                        null,
-                        null, RetryAttachmentCommand, DeleteAttachmentCommand);
+                        null, null, null, OpenAttachmentCommand, RetryAttachmentCommand, DeleteAttachmentCommand);
                     _dispatcher.TryEnqueue(() => { Attachments.Add(attachment); });
                 }
             }
@@ -139,6 +143,22 @@ public class MetadataViewModel : ViewModelBase
         Model.AddLayer(new Metadata.Layer(null, true, summary, new List<Loader>(), new List<string>()));
     }
 
+    private bool CanOpenAttachment(AttachmentModel? attachment)
+    {
+        return attachment != null && attachment.Reference.Value != null;
+    }
+
+    private void OpenAttachment(AttachmentModel? attachment)
+    {
+        if (attachment != null && attachment.Reference.Value != null)
+        {
+            Process.Start(new ProcessStartInfo(attachment.Reference.Value.AbsoluteUri)
+            {
+                UseShellExecute = true
+            });
+        }
+    }
+
     private void RetryAttachment(AttachmentModel? attachment)
     {
         if (attachment != null)
@@ -157,7 +177,8 @@ public class MetadataViewModel : ViewModelBase
                             attachment.State.Value = DataLoadingState.Done;
                             attachment.ProjectName.Value = package.ProjectName;
                             attachment.VersionName.Value = package.VersionName;
-                            attachment.Thumbnail.Value = package.Thumbnail?.AbsoluteUri ?? string.Empty;
+                            attachment.Thumbnail.Value = package.Thumbnail;
+                            attachment.Reference.Value = package.Reference;
                             attachment.Summary.Value = package.Summary;
                             attachment.Kind.Value = package.Kind;
                         });

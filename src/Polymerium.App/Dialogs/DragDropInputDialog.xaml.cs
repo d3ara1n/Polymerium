@@ -54,12 +54,6 @@ public sealed partial class DragDropInputDialog
         set => SetValue(ResultPathProperty, value);
     }
 
-    private void UIElement_OnDragEnter(object sender, DragEventArgs e)
-    {
-        if (e.DataView.Contains(StandardDataFormats.StorageItems))
-            e.AcceptedOperation = DataPackageOperation.Link;
-    }
-
     private async void UIElement_OnDrop(object sender, DragEventArgs e)
     {
         if (e.DataView.Contains(StandardDataFormats.StorageItems))
@@ -80,5 +74,11 @@ public sealed partial class DragDropInputDialog
         picker.SuggestedStartLocation = PickerLocationId.Downloads;
         var file = await picker.PickSingleFileAsync();
         ResultPath = file?.Path ?? ResultPath;
+    }
+
+    private void UIElement_OnDragOver(object sender, DragEventArgs e)
+    {
+        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            e.AcceptedOperation = DataPackageOperation.Link;
     }
 }

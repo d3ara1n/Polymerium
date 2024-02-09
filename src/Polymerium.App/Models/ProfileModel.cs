@@ -6,9 +6,9 @@ using Trident.Abstractions;
 
 namespace Polymerium.App.Models;
 
-public record ProfileModel(string Key, Profile Inner)
+public record ProfileModel(string Key, Profile Inner, string? ThumbnailPath)
 {
-    public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? AssetPath.PLACEHOLDER_DEFAULT_DIRT;
+    public string Thumbnail => ThumbnailPath ?? AssetPath.PLACEHOLDER_DEFAULT_DIRT;
 
     public string Type => Inner.ExtractTypeDisplay();
 

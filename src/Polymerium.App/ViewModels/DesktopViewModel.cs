@@ -1,6 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,8 +14,11 @@ using Polymerium.App.Messages;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.Trident.Helpers;
+using Polymerium.Trident.Models.PrismLauncher.Minecraft;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Extracting;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels;
 
@@ -21,18 +28,23 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
     private readonly ModpackExtractor _extractor;
     private readonly NavigationService _navigation;
     private readonly NotificationService _notification;
+    private readonly ThumbnailSaver _thumbnail;
+    private readonly IHttpClientFactory _factory;
 
     public DesktopViewModel(NavigationService navigation, ProfileManager profileManager, ModpackExtractor extractor,
-        NotificationService notification)
+        NotificationService notification, ThumbnailSaver thumbnail, IHttpClientFactory factory)
     {
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         _navigation = navigation;
         _extractor = extractor;
         _notification = notification;
+        _thumbnail = thumbnail;
+        _factory = factory;
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
         Entries = new ObservableCollection<EntryModel>(profileManager.Managed.Select(x =>
-                new EntryModel(x.Key, x.Value.Value, InstanceState.Idle, GotoInstanceViewCommand))
+                new EntryModel(x.Key, x.Value.Value, _thumbnail.Get(x.Key), InstanceState.Idle,
+                    GotoInstanceViewCommand))
             .OrderByDescending(x => x.LastPlayAtRaw));
 
         IsActive = true;
@@ -46,7 +58,8 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
     {
         _dispatcher.TryEnqueue(() =>
         {
-            Entries.Add(new EntryModel(message.Key, message.Item, InstanceState.Idle, GotoInstanceViewCommand));
+            Entries.Add(new EntryModel(message.Key, message.Item, _thumbnail.Get(message.Key), InstanceState.Idle,
+                GotoInstanceViewCommand));
         });
     }
 
@@ -69,5 +82,20 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
     public void ApplyExtractedModpack(ModpackPreviewModel model)
     {
         _extractor.SolidifyAsync(model.Inner, model.InstanceName).RunSynchronously();
+    }
+
+    public async Task<IEnumerable<MinecraftVersionModel>> FetchVersionAsync()
+    {
+        var manifest = await MinecraftHelper.GetManifestAsync(_factory);
+        return manifest.Versions.Select(x => new MinecraftVersionModel(x.Version, x.Type switch
+        {
+            PrismMinecraftReleaseType.Release => ReleaseType.Release,
+            PrismMinecraftReleaseType.Snapshot => ReleaseType.Snapshot,
+            PrismMinecraftReleaseType.Old_Snapshot => ReleaseType.Snapshot,
+            PrismMinecraftReleaseType.Experiment => ReleaseType.Experiment,
+            PrismMinecraftReleaseType.Old_Alpha => ReleaseType.Alpha,
+            PrismMinecraftReleaseType.Old_Beta => ReleaseType.Beta,
+            _ => throw new NotImplementedException()
+        }, x.ReleaseTime));
     }
 }

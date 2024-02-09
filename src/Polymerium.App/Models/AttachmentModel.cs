@@ -15,13 +15,15 @@ public record AttachmentModel
 
     private string _summary;
 
-    private string _thumbnail;
+    private Uri? _thumbnail;
 
     private string _versionName;
+    private Uri? _reference;
 
     public AttachmentModel(string inner, LayerModel root, DataLoadingState state, string? projectName,
         string? versionName,
-        Uri? thumbnail, string? summary, ResourceKind? kind, ICommand retry, ICommand delete)
+        Uri? thumbnail, string? summary, Uri? reference, ResourceKind? kind, ICommand open, ICommand retry,
+        ICommand delete)
     {
         Inner = inner;
         Root = root;
@@ -30,9 +32,11 @@ public record AttachmentModel
         _projectName = projectName ?? string.Empty;
         _versionName = versionName ?? string.Empty;
         _summary = summary ?? string.Empty;
-        _thumbnail = thumbnail?.AbsoluteUri ?? string.Empty;
+        _thumbnail = thumbnail;
+        _reference = reference;
         _kind = kind ?? ResourceKind.Modpack;
 
+        OpenCommand = open;
         RetryCommand = retry;
         DeleteCommand = delete;
 
@@ -41,6 +45,7 @@ public record AttachmentModel
         VersionName = this.ToBindable(x => x._versionName, (x, v) => x._versionName = v);
         Summary = this.ToBindable(x => x._summary, (x, v) => x._summary = v);
         Thumbnail = this.ToBindable(x => x._thumbnail, (x, v) => x._thumbnail = v);
+        Reference = this.ToBindable(x => x._reference, (x, v) => x._reference = v);
         Kind = this.ToBindable(x => x._kind, (x, v) => x._kind = v);
     }
 
@@ -50,9 +55,11 @@ public record AttachmentModel
     public Bindable<AttachmentModel, string> ProjectName { get; }
     public Bindable<AttachmentModel, string> VersionName { get; }
     public Bindable<AttachmentModel, string> Summary { get; }
-    public Bindable<AttachmentModel, string> Thumbnail { get; }
+    public Bindable<AttachmentModel, Uri?> Thumbnail { get; }
+    public Bindable<AttachmentModel, Uri?> Reference { get; }
     public Bindable<AttachmentModel, ResourceKind> Kind { get; }
 
+    public ICommand OpenCommand { get; }
     public ICommand RetryCommand { get; }
     public ICommand DeleteCommand { get; }
 }
