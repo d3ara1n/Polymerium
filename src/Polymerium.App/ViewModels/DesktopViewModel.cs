@@ -18,6 +18,7 @@ using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Models.PrismLauncher.Minecraft;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Extracting;
+using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels;
@@ -28,22 +29,24 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
     private readonly ModpackExtractor _extractor;
     private readonly NavigationService _navigation;
     private readonly NotificationService _notification;
-    private readonly ThumbnailSaver _thumbnail;
+    private readonly ThumbnailSaver _thumbnailSaver;
     private readonly IHttpClientFactory _factory;
+    private readonly ProfileManager _profileManager;
 
     public DesktopViewModel(NavigationService navigation, ProfileManager profileManager, ModpackExtractor extractor,
-        NotificationService notification, ThumbnailSaver thumbnail, IHttpClientFactory factory)
+        NotificationService notification, ThumbnailSaver thumbnailSaver, IHttpClientFactory factory)
     {
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         _navigation = navigation;
+        _profileManager = profileManager;
         _extractor = extractor;
         _notification = notification;
-        _thumbnail = thumbnail;
+        _thumbnailSaver = thumbnailSaver;
         _factory = factory;
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
         Entries = new ObservableCollection<EntryModel>(profileManager.Managed.Select(x =>
-                new EntryModel(x.Key, x.Value.Value, _thumbnail.Get(x.Key), InstanceState.Idle,
+                new EntryModel(x.Key, x.Value.Value, _thumbnailSaver.Get(x.Key), InstanceState.Idle,
                     GotoInstanceViewCommand))
             .OrderByDescending(x => x.LastPlayAtRaw));
 
@@ -58,7 +61,7 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
     {
         _dispatcher.TryEnqueue(() =>
         {
-            Entries.Add(new EntryModel(message.Key, message.Item, _thumbnail.Get(message.Key), InstanceState.Idle,
+            Entries.Add(new EntryModel(message.Key, message.Item, _thumbnailSaver.Get(message.Key), InstanceState.Idle,
                 GotoInstanceViewCommand));
         });
     }
@@ -97,5 +100,18 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
             PrismMinecraftReleaseType.Old_Beta => ReleaseType.Beta,
             _ => throw new NotImplementedException()
         }, x.ReleaseTime));
+    }
+
+    public async Task CreateProfileAsync(string instanceName, string version, MemoryStream? thumbnail)
+    {
+        var key = _profileManager.RequestKey(instanceName);
+        if (thumbnail != null)
+        {
+            thumbnail.Position = 0;
+            await _thumbnailSaver.SaveAsync(key.Key, thumbnail);
+        }
+
+        _profileManager.Append(key, instanceName, null, new Metadata(version, new List<Metadata.Layer>()));
+        _notification.Enqueue($"{instanceName}({version}) has been added");
     }
 }

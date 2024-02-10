@@ -32,7 +32,7 @@ public static class MinecraftHelper
         CancellationToken token = default)
     {
         using var client = factory.CreateClient();
-        var url = VERSION_URL.Replace("{0}", version);
+        var url = VERSION_URL.Replace("{version}", version);
         var index = await client.GetFromJsonAsync<PrismMinecraftVersion>(url, OPTIONS, token);
         if (index.Equals(default)) throw new BadFormatException($"File({url}) failed to download or parse");
         return index;

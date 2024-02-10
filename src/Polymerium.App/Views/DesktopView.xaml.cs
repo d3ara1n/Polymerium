@@ -70,15 +70,20 @@ public sealed partial class DesktopView
                     versions = [];
                 }
 
-                DispatcherQueue.TryEnqueue(() =>
+                async void Callback()
                 {
                     VersionLoadingState = DataLoadingState.Done;
                     var dialog = new CreateProfileDialog(XamlRoot, versions);
-                    if (dialog.ShowAsync().GetResults() == ContentDialogResult.Primary)
+                    if (await dialog.ShowAsync() == ContentDialogResult.Primary)
                     {
-                        // TODO
+                        await ViewModel.CreateProfileAsync(dialog.InstanceName, dialog.SelectedVersion,
+                            dialog.ThumbnailImage);
                     }
-                });
+
+                    if (dialog.ThumbnailImage != null) await dialog.ThumbnailImage.DisposeAsync();
+                }
+
+                DispatcherQueue.TryEnqueue(Callback);
             });
         }
     }

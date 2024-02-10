@@ -27,7 +27,7 @@
                          IsClosable="False" />
                 <TextBlock Text="Game window" Style="{StaticResource SettingCategoryTextBlockStyle}" />
                 <labs:SettingsExpander Header="Window Initial Size"
-                                       Description="Create game window in the specific size.">
+                                       Description="Create game window in the specific size">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE61F;" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -43,7 +43,7 @@
                 </labs:SettingsExpander>
                 <TextBlock Text="Java virtual machine" Style="{StaticResource SettingCategoryTextBlockStyle}" />
                 <labs:SettingsExpander Header="Jvm Version"
-                                       Description="Specify a certain version instead selecting at launch.">
+                                       Description="Specify a certain version instead selecting at launch">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEC32;" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -62,7 +62,7 @@
                     <ToggleSwitch />
                 </labs:SettingsExpander>
                 <labs:SettingsExpander Header="Jvm Max Memory"
-                                       Description="The max heap memory that jvm can allocate.">
+                                       Description="The max heap memory that jvm can allocate">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEEA0;" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -74,7 +74,7 @@
                     <ToggleSwitch />
                 </labs:SettingsExpander>
                 <labs:SettingsExpander Header="Jvm Additional Arguments"
-                                       Description="These arguments will be appended after jvm created.">
+                                       Description="These arguments will be appended after jvm created">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE8F9;" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -88,7 +88,7 @@
                 </labs:SettingsExpander>
                 <TextBlock Text="Operations" Style="{StaticResource SettingTitleTextBlockStyle}" />
                 <labs:SettingsExpander Header="Profile Information"
-                                       Description="Change name and thumnbnail icon.">
+                                       Description="Change name and thumbnail icon">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE91B;" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -105,14 +105,14 @@
                     </labs:SettingsExpander.Items>
                 </labs:SettingsExpander>
                 <labs:SettingsCard Header="Export as Modpack"
-                                   Description="Export this instance in modpack file.">
+                                   Description="Export this instance in modpack file">
                     <labs:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xEDE1;" />
                     </labs:SettingsCard.HeaderIcon>
                     <Button Content="Open wizard" />
                 </labs:SettingsCard>
                 <labs:SettingsExpander Header="Danger Zone"
-                                       Description="These operations will take effects on instance files.">
+                                       Description="These operations will take effects on instance files">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEBE8;" />
                     </labs:SettingsExpander.HeaderIcon>

@@ -19,6 +19,7 @@
             <controls:DragDropArea DragOver="UIElement_OnDragOver" Drop="UIElement_OnDrop">
                 <Grid>
                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}"
+                                HorizontalAlignment="Center"
                                 Margin="{StaticResource SmallMargin}">
                         <toolkit:ImageEx Source="{x:Bind Image}" Stretch="Fill"
                                          CornerRadius="{StaticResource TinyCornerRadius}"
@@ -26,7 +27,7 @@
                                          PlaceholderStretch="Fill" Width="78" Height="78" HorizontalAlignment="Center" />
                         <StackPanel Spacing="{StaticResource TinyGap}">
                             <TextBlock Text="Thumbnail icon" />
-                            <Button>
+                            <Button x:Name="PickFileButton" Click="PickFileButton_OnClick">
                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                     <FontIcon Glyph="&#xE8E5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
                                     <TextBlock Text="Choose" />
@@ -38,16 +39,19 @@
             </controls:DragDropArea>
             <controls:Card>
                 <StackPanel Spacing="{StaticResource SmallGap}">
-                    <AutoSuggestBox x:Name="VersionBox" PlaceholderText="Game version..." QueryIcon="Library" ItemsSource="{x:Bind Versions}" SuggestionChosen="VersionBox_OnSuggestionChosen">
+                    <AutoSuggestBox x:Name="VersionBox" PlaceholderText="Game version..."
+                                    Text="{x:Bind SelectedVersion,Mode=TwoWay}" QueryIcon="Library"
+                                    ItemsSource="{x:Bind Versions}" TextChanged="VersionBox_TextChanged"
+                                    TextMemberPath="Version">
                         <AutoSuggestBox.ItemTemplate>
                             <DataTemplate x:DataType="models:MinecraftVersionModel">
                                 <toolkit:DockPanel>
                                     <Border toolkit:DockPanel.Dock="Right" CornerRadius="3"
-                        Background="{ThemeResource ControlAltFillColorSecondaryBrush}">
+                                            Background="{ThemeResource ControlAltFillColorSecondaryBrush}">
                                         <TextBlock Margin="6,4,6,4"
-                               Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                               Text="{x:Bind Type}"
-                               Style="{StaticResource CaptionTextBlockStyle}" />
+                                                   Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                                   Text="{x:Bind Type}"
+                                                   Style="{StaticResource CaptionTextBlockStyle}" />
                                     </Border>
                                     <TextBlock Text="{x:Bind Version}" />
                                 </toolkit:DockPanel>
@@ -55,13 +59,14 @@
                         </AutoSuggestBox.ItemTemplate>
                     </AutoSuggestBox>
                     <StackPanel>
-                        <CheckBox Content="Release"/>
-                        <CheckBox Content="Snapshot"/>
-                        <CheckBox Content="Experiment"/>
-                        <CheckBox Content="Legacy"/>
+                        <CheckBox Content="Release" IsChecked="{x:Bind IsReleaseChosen,Mode=TwoWay}" />
+                        <CheckBox Content="Snapshot" IsChecked="{x:Bind IsSnapshotChosen,Mode=TwoWay}" />
+                        <CheckBox Content="Experiment" IsChecked="{x:Bind IsExperimentChosen,Mode=TwoWay}" />
+                        <CheckBox Content="Legacy" IsChecked="{x:Bind IsLegacyChosen,Mode=TwoWay}" />
                     </StackPanel>
                 </StackPanel>
             </controls:Card>
+            <TextBox x:Name="InstanceNameBox" PlaceholderText="{x:Bind SelectedVersion,Mode=OneWay}" />
         </StackPanel>
     </Grid>
 </ContentDialog>

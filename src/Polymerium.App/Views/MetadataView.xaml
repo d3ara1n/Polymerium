@@ -186,13 +186,13 @@
                                                     <TextBlock Text="Loaders"
                                                                Style="{StaticResource CaptionTextBlockStyle}"
                                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                                    <TextBlock Text="{x:Bind Loaders.Count}" />
+                                                    <TextBlock Text="{x:Bind Loaders.Count,Mode=OneWay}" />
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="1">
                                                     <TextBlock Text="Attachments"
                                                                Style="{StaticResource CaptionTextBlockStyle}"
                                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                                    <TextBlock Text="{x:Bind Attachments.Count}" />
+                                                    <TextBlock Text="{x:Bind Attachments.Count,Mode=OneWay}" />
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
