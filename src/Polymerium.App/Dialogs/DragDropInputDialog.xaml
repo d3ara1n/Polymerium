@@ -33,7 +33,7 @@
             <Button x:Name="ChooseButton" Grid.Column="1" Click="ChooseButton_OnClick">
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                     <FontIcon Glyph="&#xE8E5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
-                    <TextBlock Text="Choose"/>
+                    <TextBlock Text="Choose" />
                 </StackPanel>
             </Button>
         </Grid>

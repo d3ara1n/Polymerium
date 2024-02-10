@@ -36,53 +36,57 @@
                                     <Setter Property="Margin" Value="{StaticResource TinyMargin}" />
                                     <Setter Property="Padding" Value="{StaticResource CardContentMargin}" />
                                     <Setter Property="CornerRadius" Value="{StaticResource CardSmallCornerRadius}" />
-                                    <Setter Property="BorderBrush" Value="{ThemeResource ControlElevationBorderBrush}" />
+                                    <Setter Property="BorderBrush"
+                                            Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
                                     <Setter Property="BorderThickness" Value="2" />
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ListViewItem">
                                                 <Grid Background="Transparent">
+                                                    <Grid.Resources>
+                                                        <SolidColorBrush x:Key="SelectedAccentBackgroundBrush"
+                                                                         Opacity="0.1"
+                                                                         Color="{ThemeResource SystemAccentColor}" />
+                                                    </Grid.Resources>
                                                     <VisualStateManager.VisualStateGroups>
                                                         <VisualStateGroup x:Name="Common">
                                                             <VisualState x:Name="Normal" />
                                                             <VisualState x:Name="PointerOver">
                                                                 <VisualState.Setters>
-                                                                    <Setter Target="PART_BORDER.Background"
-                                                                            Value="{ThemeResource ControlFillColorSecondaryBrush}" />
                                                                     <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource ControlElevationBorderBrush}" />
+                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                             <VisualState x:Name="Pressed">
                                                                 <VisualState.Setters>
                                                                     <Setter Target="PART_BORDER.Background"
-                                                                            Value="{ThemeResource ControlFillColorTertiaryBrush}" />
+                                                                            Value="{StaticResource SelectedAccentBackgroundBrush}" />
                                                                     <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource ControlElevationBorderBrush}" />
+                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                             <VisualState x:Name="Selected">
                                                                 <VisualState.Setters>
                                                                     <Setter Target="PART_BORDER.Background"
-                                                                            Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
+                                                                            Value="{StaticResource SelectedAccentBackgroundBrush}" />
                                                                     <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource TextControlElevationBorderFocusedBrush}" />
+                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                             <VisualState x:Name="PointerOverSelected">
                                                                 <VisualState.Setters>
                                                                     <Setter Target="PART_BORDER.Background"
-                                                                            Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
+                                                                            Value="{StaticResource SelectedAccentBackgroundBrush}" />
                                                                     <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource TextControlElevationBorderFocusedBrush}" />
+                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                             <VisualState x:Name="PressedSelected">
                                                                 <VisualState.Setters>
                                                                     <Setter Target="PART_BORDER.Background"
-                                                                            Value="{ThemeResource ControlAltFillColorSecondaryBrush}" />
+                                                                            Value="{ThemeResource SelectedAccentBackgroundBrush}" />
                                                                     <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource TextControlElevationBorderFocusedBrush}" />
+                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                         </VisualStateGroup>
@@ -367,7 +371,8 @@
                                                                                     Text="{x:Bind VersionName.Value,Mode=OneWay}" />
                                                                                 <StackPanel Orientation="Horizontal"
                                                                                     Spacing="{StaticResource TinyGap}">
-                                                                                    <Border VerticalAlignment="Center" CornerRadius="2"
+                                                                                    <Border VerticalAlignment="Center"
+                                                                                        CornerRadius="2"
                                                                                         Background="{ThemeResource ControlAltFillColorSecondaryBrush}">
                                                                                         <TextBlock Margin="4,2,4,2"
                                                                                             Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"

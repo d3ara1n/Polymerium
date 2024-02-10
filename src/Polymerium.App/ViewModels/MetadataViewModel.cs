@@ -151,12 +151,10 @@ public class MetadataViewModel : ViewModelBase
     private void OpenAttachment(AttachmentModel? attachment)
     {
         if (attachment != null && attachment.Reference.Value != null)
-        {
             Process.Start(new ProcessStartInfo(attachment.Reference.Value.AbsoluteUri)
             {
                 UseShellExecute = true
             });
-        }
     }
 
     private void RetryAttachment(AttachmentModel? attachment)

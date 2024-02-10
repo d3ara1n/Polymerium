@@ -115,7 +115,7 @@
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center">
                                     <TextBlock.Foreground>
-                                        <LinearGradientBrush StartPoint="0.2,0" EndPoint="1,1">
+                                        <LinearGradientBrush StartPoint="0.8,0" EndPoint="0,1">
                                             <GradientStop Offset="0" Color="#8fd3f4" />
                                             <GradientStop Offset="0.3" Color="#a18cd1" />
                                             <GradientStop Offset="1" Color="#fbc2eb" />

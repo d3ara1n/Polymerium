@@ -16,9 +16,12 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled"
-                      HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
-            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
+        <Grid Grid.Row="0" Margin="{StaticResource PageContentMargin}" RowSpacing="{StaticResource SmallGap}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Spacing="{StaticResource SmallGap}">
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                     <toolkit:ImageEx Source="{x:Bind ViewModel.Model.Thumbnail,Mode=OneWay}" Width="64" Stretch="Fill"
                                      CornerRadius="{StaticResource TinyCornerRadius}" />
@@ -109,102 +112,112 @@
                         </HyperlinkButton>
                     </Grid>
                 </controls:Card>
-                <Grid ColumnSpacing="{StaticResource SmallGap}" MinHeight="312">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <controls:Card Grid.Column="0" Grid.ColumnSpan="2">
-                        <Grid ColumnSpacing="{StaticResource SmallGap}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="1" />
-                                <ColumnDefinition Width="4*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <Grid RowSpacing="{StaticResource SmallGap}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <toolkit:DockPanel Grid.Row="0">
-                                        <StackPanel toolkit:DockPanel.Dock="Right" Orientation="Horizontal"
-                                                    Spacing="{StaticResource TinyGap}">
-                                            <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
-                                                             CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
-                                                <FontIcon Glyph="&#xE74D;"
-                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                            </HyperlinkButton>
-                                            <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
-                                                <FontIcon Glyph="&#xECC8;"
-                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                            </HyperlinkButton>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal"
-                                                    VerticalAlignment="Top"
-                                                    Spacing="{StaticResource TinyGap}">
-                                            <FontIcon Glyph="&#xE9D5;" FontSize="16" />
-                                            <TextBlock Text="Todo" />
-                                        </StackPanel>
-                                    </toolkit:DockPanel>
-                                    <ListView Grid.Row="1" x:Name="TodoList"
-                                              ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="models:TodoModel">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}"
-                                                              MinWidth="0" />
-                                                    <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
-                                                               TextTrimming="CharacterEllipsis"
-                                                               VerticalAlignment="Center"
-                                                               TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </Grid>
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
-                                            Spacing="{StaticResource TinyGap}"
-                                            Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}">
-                                    <FontIcon Glyph="&#xE679;" FontSize="{StaticResource LargeGap}" />
-                                    <TextBlock HorizontalAlignment="Center" Text="None"
-                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                </StackPanel>
+            </StackPanel>
+            <Grid Grid.Row="1" ColumnSpacing="{StaticResource SmallGap}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <controls:Card Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid ColumnSpacing="{StaticResource SmallGap}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*" />
+                            <ColumnDefinition Width="1" />
+                            <ColumnDefinition Width="4*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid RowSpacing="{StaticResource SmallGap}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <toolkit:DockPanel Grid.Row="0">
+                                    <StackPanel toolkit:DockPanel.Dock="Right" Orientation="Horizontal"
+                                                Spacing="{StaticResource TinyGap}">
+                                        <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
+                                                         CommandParameter="{x:Bind TodoList.SelectedValue,Mode=OneWay}">
+                                            <FontIcon Glyph="&#xE74D;"
+                                                      FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        </HyperlinkButton>
+                                        <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
+                                            <FontIcon Glyph="&#xECC8;"
+                                                      FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        </HyperlinkButton>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"
+                                                VerticalAlignment="Top"
+                                                Spacing="{StaticResource TinyGap}">
+                                        <FontIcon Glyph="&#xE9D5;" FontSize="16" />
+                                        <TextBlock Text="Todo" />
+                                    </StackPanel>
+                                </toolkit:DockPanel>
+                                <ListView Grid.Row="1" x:Name="TodoList"
+                                          ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:TodoModel">
+                                            <StackPanel Orientation="Horizontal">
+                                                <CheckBox IsChecked="{x:Bind Completed.Value,Mode=TwoWay}"
+                                                          MinWidth="0" />
+                                                <TextBlock Text="{x:Bind Text.Value,Mode=TwoWay}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           VerticalAlignment="Center"
+                                                           TextDecorations="{x:Bind Completed.Value,Mode=OneWay,Converter={StaticResource BoolToFontStyleStrikethroughConverter}}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </Grid>
-                            <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="1,0,0,0" />
-                            <StackPanel Grid.Column="2" Spacing="{StaticResource SmallGap}">
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                    <FontIcon Glyph="&#xE70B;" FontSize="16" />
-                                    <TextBlock Text="Note" />
-                                </StackPanel>
-                                <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}"
-                                         TextWrapping="Wrap" PlaceholderText="Type something..." />
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        Spacing="{StaticResource TinyGap}"
+                                        Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}">
+                                <FontIcon Glyph="&#xE679;" FontSize="{StaticResource LargeGap}" />
+                                <TextBlock HorizontalAlignment="Center" Text="None"
+                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                             </StackPanel>
                         </Grid>
-                    </controls:Card>
-                    <Grid Grid.Column="2" RowSpacing="{StaticResource SmallGap}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <controls:Card Grid.Row="0">
-                            <Grid>
-                                <TextBlock Text="Backups" Style="{StaticResource SubtitleTextBlockStyle}"
-                                           HorizontalAlignment="Left" VerticalAlignment="Top" />
-                                <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                                    <TextBlock Text="Manage →" />
-                                </HyperlinkButton>
-                                <TextBlock Text="N/A" VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                                           Style="{StaticResource DisplayTextBlockStyle}" />
-                            </Grid>
-                        </controls:Card>
-                        <controls:Card Grid.Row="1" />
+                        <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1,0,0,0" />
+                        <StackPanel Grid.Column="2" Spacing="{StaticResource SmallGap}">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                <FontIcon Glyph="&#xE70B;" FontSize="16" />
+                                <TextBlock Text="Note" />
+                            </StackPanel>
+                            <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}"
+                                     TextWrapping="Wrap" PlaceholderText="Type something..." />
+                        </StackPanel>
                     </Grid>
+                </controls:Card>
+                <Grid Grid.Column="2" RowSpacing="{StaticResource SmallGap}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <controls:Card Grid.Row="0">
+                        <Grid>
+                            <TextBlock Text="Widgets" Style="{StaticResource SubtitleTextBlockStyle}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                <TextBlock Text="Manage →" />
+                            </HyperlinkButton>
+                            <TextBlock Text="N/A" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                                       Style="{StaticResource DisplayTextBlockStyle}" />
+                        </Grid>
+                    </controls:Card>
+                    <controls:Card Grid.Row="1">
+                        <Grid>
+                            <TextBlock Text="Status" Style="{StaticResource SubtitleTextBlockStyle}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                <TextBlock Text="Dashboard →" />
+                            </HyperlinkButton>
+                            <TextBlock Text="Running" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Style="{StaticResource SubheaderTextBlockStyle}" />
+                        </Grid>
+                    </controls:Card>
                 </Grid>
-            </StackPanel>
-        </ScrollViewer>
+            </Grid>
+        </Grid>
         <Grid Grid.Row="1">
             <Border Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
                 <Grid Margin="12">

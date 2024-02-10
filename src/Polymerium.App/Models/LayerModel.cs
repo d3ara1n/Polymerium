@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Extensions;
 using Trident.Abstractions;
@@ -54,10 +53,9 @@ public record LayerModel
     {
         return loader != null && !IsLocked.Value;
     }
-    private void RemoveLoader(LoaderModel? loader) {
-        if (loader != null)
-        {
-            Loaders.Remove(loader);
-        }
+
+    private void RemoveLoader(LoaderModel? loader)
+    {
+        if (loader != null) Loaders.Remove(loader);
     }
 }

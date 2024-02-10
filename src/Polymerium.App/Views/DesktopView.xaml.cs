@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -18,16 +17,16 @@ namespace Polymerium.App.Views;
 /// </summary>
 public sealed partial class DesktopView
 {
+    public static readonly DependencyProperty VersionLoadingStateProperty = DependencyProperty.Register(
+        nameof(VersionLoadingState), typeof(DataLoadingState), typeof(DesktopView),
+        new PropertyMetadata(DataLoadingState.Idle));
+
     public DesktopView()
     {
         InitializeComponent();
     }
 
     public DesktopViewModel ViewModel { get; } = App.ViewModel<DesktopViewModel>();
-
-    public static readonly DependencyProperty VersionLoadingStateProperty = DependencyProperty.Register(
-        nameof(VersionLoadingState), typeof(DataLoadingState), typeof(DesktopView),
-        new PropertyMetadata(DataLoadingState.Idle));
 
     public DataLoadingState VersionLoadingState
     {
@@ -63,7 +62,7 @@ public sealed partial class DesktopView
                 IEnumerable<MinecraftVersionModel> versions;
                 try
                 {
-                    versions = (await ViewModel.FetchVersionAsync());
+                    versions = await ViewModel.FetchVersionAsync();
                 }
                 catch
                 {
@@ -75,10 +74,8 @@ public sealed partial class DesktopView
                     VersionLoadingState = DataLoadingState.Done;
                     var dialog = new CreateProfileDialog(XamlRoot, versions);
                     if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-                    {
                         await ViewModel.CreateProfileAsync(dialog.InstanceName, dialog.SelectedVersion,
                             dialog.ThumbnailImage);
-                    }
 
                     if (dialog.ThumbnailImage != null) await dialog.ThumbnailImage.DisposeAsync();
                 }

@@ -41,7 +41,7 @@
                             </StackPanel>
                         </toolkit:Case>
                         <toolkit:Case Value="Loading">
-                            <ProgressRing IsIndeterminate="True" Height="16" Width="16"/>
+                            <ProgressRing IsIndeterminate="True" Height="16" Width="16" />
                         </toolkit:Case>
                     </toolkit:SwitchPresenter>
                 </Button>
@@ -62,7 +62,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48"
-                                                     Stretch="Fill"/>
+                                                     Stretch="Fill" />
                                     <StackPanel Grid.Column="1">
                                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                    Style="{StaticResource CaptionTextBlockStyle}">

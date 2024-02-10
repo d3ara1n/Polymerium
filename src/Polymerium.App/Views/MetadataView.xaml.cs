@@ -1,15 +1,11 @@
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using CommunityToolkit.WinUI.UI;
-using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
-using Trident.Abstractions.Resources;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

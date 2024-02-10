@@ -6,7 +6,7 @@ using Trident.Abstractions;
 
 namespace Polymerium.App.Models;
 
-public record RecentModel(string Key, Profile Inner, string? ThumbnailPath,ICommand GotoInstanceViewCommand)
+public record RecentModel(string Key, Profile Inner, string? ThumbnailPath, ICommand GotoInstanceViewCommand)
 {
     public DateTimeOffset? PlayedAtRaw =>
         Inner.Records.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play);

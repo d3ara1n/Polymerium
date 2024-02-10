@@ -10,6 +10,7 @@ public record AttachmentModel
     private ResourceKind _kind;
 
     private string _projectName;
+    private Uri? _reference;
 
     private DataLoadingState _state = DataLoadingState.Loading;
 
@@ -18,7 +19,6 @@ public record AttachmentModel
     private Uri? _thumbnail;
 
     private string _versionName;
-    private Uri? _reference;
 
     public AttachmentModel(string inner, LayerModel root, DataLoadingState state, string? projectName,
         string? versionName,

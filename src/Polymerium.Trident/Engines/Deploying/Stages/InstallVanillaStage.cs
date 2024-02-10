@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Runtime.InteropServices;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Models.PrismLauncher.Minecraft;

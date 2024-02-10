@@ -27,11 +27,11 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
 {
     private readonly DispatcherQueue _dispatcher;
     private readonly ModpackExtractor _extractor;
+    private readonly IHttpClientFactory _factory;
     private readonly NavigationService _navigation;
     private readonly NotificationService _notification;
-    private readonly ThumbnailSaver _thumbnailSaver;
-    private readonly IHttpClientFactory _factory;
     private readonly ProfileManager _profileManager;
+    private readonly ThumbnailSaver _thumbnailSaver;
 
     public DesktopViewModel(NavigationService navigation, ProfileManager profileManager, ModpackExtractor extractor,
         NotificationService notification, ThumbnailSaver thumbnailSaver, IHttpClientFactory factory)

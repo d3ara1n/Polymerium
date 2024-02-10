@@ -11,16 +11,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b31775e-15d5-4977-92ad-0d0d96a23102" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Converters/FalseWhenLoadingConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Converters/FalseWhenLoadingConverter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/CreateProfileDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/CreateProfileDialog.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/CreateProfileDialog.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/CreateProfileDialog.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/DragDropInputDialog.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Dialogs/DragDropInputDialog.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Layout.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Layout.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/AttachmentModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/AttachmentModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/LayerModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/LayerModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/RecentModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/RecentModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/Generic.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/Converters.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/Converters.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/DesktopViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/DesktopViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MetadataViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MetadataViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/ConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ConfigurationView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MetadataView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MetadataView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/MetadataView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/MetadataView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/InstallVanillaStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/InstallVanillaStage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/ThumbnailSaver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/ThumbnailSaver.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -199,6 +209,7 @@
       <workItem from="1707473438021" duration="21487000" />
       <workItem from="1707499108347" duration="176000" />
       <workItem from="1707532524291" duration="4858000" />
+      <workItem from="1707576314400" duration="3454000" />
     </task>
     <task id="LOCAL-00001" summary="wip create profile">
       <option name="closed" value="true" />
