@@ -23,72 +23,78 @@
                         Spacing="{StaticResource TinyGap}">
                 <TextBlock Text="Configuration" Style="{StaticResource SettingTitleTextBlockStyle}" />
                 <InfoBar IsOpen="True"
-                         Message="Turn on the switch to override values from the global."
+                         Message="Turn on the switch to override values from the global"
                          IsClosable="False" />
                 <TextBlock Text="Game window" Style="{StaticResource SettingCategoryTextBlockStyle}" />
                 <labs:SettingsExpander Header="Window Initial Size"
-                                       Description="Create game window in the specific size.">
+                                       Description="Create game window in the specific size">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE61F;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Width">
-                            <TextBox Text="1270" />
+                            <NumberBox Minimum="0"
+                                       Value="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Height">
-                            <TextBox Text="720" />
+                            <NumberBox Minimum="0"
+                                       Value="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
-                    <ToggleSwitch />
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsWindowSizeOverridden,Mode=TwoWay}" />
                 </labs:SettingsExpander>
                 <TextBlock Text="Java virtual machine" Style="{StaticResource SettingCategoryTextBlockStyle}" />
                 <labs:SettingsExpander Header="Jvm Version"
-                                       Description="Specify a certain version instead selecting at launch.">
+                                       Description="Specify a certain version instead of selecting at launch">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEC32;" />
                     </labs:SettingsExpander.HeaderIcon>
-                    <labs:SettingsExpander.ItemsHeader>
-                        <InfoBar Message="Selected a Java home directory containing 'bin/javaw.exe'." IsOpen="True"
-                                 IsClosable="False" />
-                    </labs:SettingsExpander.ItemsHeader>
                     <labs:SettingsExpander.Items>
-                        <labs:SettingsCard Header="(N/A)">
-                            <Button>
-                                <TextBlock Text="Pick" />
-                            </Button>
+                        <labs:SettingsCard Header="Java Home">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                <TextBlock Text="{x:Bind ViewModel.JvmHomeStatus,Mode=OneWay}"
+                                           VerticalAlignment="Center"
+                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                <Button Command="{x:Bind ViewModel.ChooseJavaCommand}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                        <FontIcon Glyph="&#xE8E5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        <TextBlock Text="Choose" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
-                    <ToggleSwitch />
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmHomeOverridden,Mode=TwoWay}" />
                 </labs:SettingsExpander>
                 <labs:SettingsExpander Header="Jvm Max Memory"
-                                       Description="The max heap memory that jvm can allocate.">
+                                       Description="The max heap memory that jvm can allocate">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEEA0;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Memory in megabytes">
                             <NumberBox SpinButtonPlacementMode="Inline" SmallChange="256" LargeChange="1024"
-                                       Minimum="256" />
+                                       Minimum="256" Value="{x:Bind ViewModel.JvmMaxMemory,Mode=TwoWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
-                    <ToggleSwitch />
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmMaxMemoryOverridden,Mode=TwoWay}" />
                 </labs:SettingsExpander>
                 <labs:SettingsExpander Header="Jvm Additional Arguments"
-                                       Description="These arguments will be appended after jvm created.">
+                                       Description="These arguments will be appended after jvm created">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE8F9;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Argument line">
                             <TextBox
-                                Text="-Xms256m" />
+                                Text="{x:Bind ViewModel.JvmAdditionalArguments,Mode=TwoWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
-                    <ToggleSwitch />
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden,Mode=TwoWay}" />
                 </labs:SettingsExpander>
                 <TextBlock Text="Operations" Style="{StaticResource SettingTitleTextBlockStyle}" />
                 <labs:SettingsExpander Header="Profile Information"
-                                       Description="Change name and thumbnail icon.">
+                                       Description="Change name and thumbnail icon">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE91B;" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -105,14 +111,14 @@
                     </labs:SettingsExpander.Items>
                 </labs:SettingsExpander>
                 <labs:SettingsCard Header="Export as Modpack"
-                                   Description="Export this instance in modpack file.">
+                                   Description="Export this instance in modpack file">
                     <labs:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xEDE1;" />
                     </labs:SettingsCard.HeaderIcon>
-                    <Button Content="Open wizard" />
+                    <Button Content="Open wizard" Command="{x:Bind ViewModel.OpenExportWizardCommand}" />
                 </labs:SettingsCard>
                 <labs:SettingsExpander Header="Danger Zone"
-                                       Description="These operations will take effects on instance files.">
+                                       Description="These operations will take effects on instance files">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEBE8;" />
                     </labs:SettingsExpander.HeaderIcon>

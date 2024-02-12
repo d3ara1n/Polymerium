@@ -39,5 +39,7 @@ public class LaunchInstanceTask(string key, Profile profile, DeployEngine deploy
                 logger.LogError(e, "Launch failed while in deployment stage: {stage}", stage.GetType().Name);
                 throw;
             }
+
+        ReportProgress(status: "Done");
     }
 }
