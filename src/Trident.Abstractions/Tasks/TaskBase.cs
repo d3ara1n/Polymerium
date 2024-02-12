@@ -29,12 +29,7 @@ public abstract class TaskBase(string key, string stage, string status)
     {
         if (IsAborted) return;
         source.Cancel();
-        OnAbort();
-    }
-
-    protected virtual void OnAbort()
-    {
-        UpdateProgress(TaskState.Aborted);
+        OnFault(new OperationCanceledException());
     }
 
     protected virtual void OnStart()
@@ -47,7 +42,7 @@ public abstract class TaskBase(string key, string stage, string status)
             if (t.IsCompletedSuccessfully)
                 OnFinish();
             else if (t.IsCanceled)
-                OnAbort();
+                OnFault(new OperationCanceledException());
             else if (t.IsFaulted)
                 OnFault(t.Exception);
             else

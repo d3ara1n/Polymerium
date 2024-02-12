@@ -5,6 +5,5 @@ public enum TaskState
     Idle,
     Running,
     Finished,
-    Aborted,
     Faulted
 }

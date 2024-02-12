@@ -1,11 +1,14 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Extractors;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using Trident.Abstractions.Resources;
 using Trident.Abstractions.Tasks;
 
-namespace Polymerium.Trident.Tasks;
+namespace Polymerium.App.Tasks;
 
 public class InstallModpackTask(
     Project project,

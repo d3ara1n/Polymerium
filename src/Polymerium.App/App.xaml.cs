@@ -82,7 +82,8 @@ public partial class App
             .AddSingleton<TaskService>()
             .AddSingleton<NotificationService>()
             .AddSingleton<MessageService>()
-            .AddSingleton<DialogService>();
+            .AddSingleton<DialogService>()
+            .AddSingleton<InstanceStatusService>();
 
         // Trident Services
         services
@@ -93,7 +94,8 @@ public partial class App
             .AddSingleton<DownloadManager>()
             .AddSingleton<ModpackExtractor>()
             .AddSingleton<StorageManager>()
-            .AddSingleton<ThumbnailSaver>();
+            .AddSingleton<ThumbnailSaver>()
+            .AddSingleton<InstanceManager>();
 
         // ViewModels
         services

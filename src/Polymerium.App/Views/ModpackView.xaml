@@ -218,7 +218,7 @@
                                     </controls:ClipBox>
                                     <TextBlock Text="Project Name" Style="{StaticResource CaptionStyle}" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}" />
-                                    <TextBlock Text="Type" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="Mode" Style="{StaticResource CaptionStyle}" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Kind,Mode=OneWay}" />
                                     <TextBlock Text="Author" Style="{StaticResource CaptionStyle}" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Author,Mode=OneWay}" />

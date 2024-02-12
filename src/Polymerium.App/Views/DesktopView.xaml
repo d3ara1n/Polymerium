@@ -79,14 +79,15 @@
                                                      CommandParameter="{x:Bind Key}">
                                             <SplitButton.Flyout>
                                                 <MenuFlyout>
+                                                    <MenuFlyoutItem Text="Launch" Command="{x:Bind LaunchCommand}"
+                                                                    CommandParameter="{x:Bind}">
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE768;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
                                                     <MenuFlyoutItem Text="Mark">
                                                         <MenuFlyoutItem.Icon>
                                                             <FontIcon Glyph="&#xE734;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
-                                                    <MenuFlyoutItem Text="Launch">
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE768;" />
                                                         </MenuFlyoutItem.Icon>
                                                     </MenuFlyoutItem>
                                                     <MenuFlyoutItem Text="Delete"
@@ -108,7 +109,7 @@
                                 <Grid>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
                                                 VerticalAlignment="Bottom" Spacing="{StaticResource TinyGap}">
-                                        <toolkit:SwitchPresenter Value="{x:Bind State}"
+                                        <toolkit:SwitchPresenter Value="{x:Bind Status.State.Value,Mode=OneWay}"
                                                                  TargetType="models:InstanceState">
                                             <toolkit:Case Value="Idle">
                                                 <Border

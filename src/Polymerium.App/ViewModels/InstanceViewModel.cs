@@ -8,7 +8,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using Polymerium.Trident.Tasks;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
@@ -17,6 +16,7 @@ namespace Polymerium.App.ViewModels;
 public class InstanceViewModel : ViewModelBase
 {
     private readonly TridentContext _context;
+    private readonly InstanceManager _instanceManager;
     private readonly NavigationService _navigation;
     private readonly ProfileManager _profileManager;
     private readonly TaskService _taskService;
@@ -25,13 +25,14 @@ public class InstanceViewModel : ViewModelBase
     private ProfileModel model = new(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, null);
 
     public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context,
-        TaskService taskService, ThumbnailSaver thumbnailSaver)
+        TaskService taskService, ThumbnailSaver thumbnailSaver, InstanceManager instanceManager)
     {
         _profileManager = profileManager;
         _navigation = navigation;
         _context = context;
         _taskService = taskService;
         _thumbnailSaver = thumbnailSaver;
+        _instanceManager = instanceManager;
 
         GotoMetadataViewCommand = new RelayCommand<string>(GotoMetadataView);
         GotoConfigurationViewCommand = new RelayCommand<string>(GotoConfigurationView);
@@ -157,7 +158,8 @@ public class InstanceViewModel : ViewModelBase
 
     private void Play()
     {
-        var task = _taskService.Create<LaunchInstanceTask>(Model.Key, Model.Inner);
-        _taskService.Enqueue(task);
+        // var task = _taskService.Create<DeployInstanceTask>(Model.Key, Model.Inner);
+        // _taskService.Enqueue(task);
+        _instanceManager.Deploy(Model.Key, Model.Inner.Metadata);
     }
 }

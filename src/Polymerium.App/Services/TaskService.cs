@@ -26,7 +26,7 @@ public class TaskService(ILogger<TaskService> logger, IServiceProvider provider)
 
     public void Enqueue(TaskBase task)
     {
-        logger.LogInformation("Start task {key}({type})", task.Key, task.GetType().Name);
+        logger.LogInformation("Start task {key}({mode})", task.Key, task.GetType().Name);
         task.Subscribe(Track);
         tasks.Add(task);
         handler?.Invoke(task);
@@ -42,7 +42,7 @@ public class TaskService(ILogger<TaskService> logger, IServiceProvider provider)
     {
         if (task.EndedAt != null)
         {
-            logger.LogInformation("Task {type}({taak}) ended in {time}s, {state}", task.GetType().Name, args.Key,
+            logger.LogInformation("Task {mode}({taak}) ended in {time}s, {state}", task.GetType().Name, args.Key,
                 (task.EndedAt - task.CreatedAt).Value.Seconds, args.State);
             task.Unsubscribe(Track);
         }

@@ -12,7 +12,8 @@ public record EntryModel(
     string Key,
     Profile Inner,
     string? ThumbnailPath,
-    InstanceState State,
+    InstanceStatusModel Status,
+    ICommand LaunchCommand,
     ICommand GotoInstanceViewCommand)
 {
     public string Thumbnail => ThumbnailPath ?? "/Assets/Placeholders/default_dirt.png";

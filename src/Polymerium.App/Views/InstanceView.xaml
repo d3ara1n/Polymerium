@@ -184,7 +184,7 @@
                                 <TextBlock Text="Note" />
                             </StackPanel>
                             <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}"
-                                     TextWrapping="Wrap" PlaceholderText="Type something..." />
+                                     TextWrapping="Wrap" PlaceholderText="Mode something..." />
                         </StackPanel>
                     </Grid>
                 </controls:Card>

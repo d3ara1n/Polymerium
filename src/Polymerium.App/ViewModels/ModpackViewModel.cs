@@ -7,9 +7,9 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Tasks;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
-using Polymerium.Trident.Tasks;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels;

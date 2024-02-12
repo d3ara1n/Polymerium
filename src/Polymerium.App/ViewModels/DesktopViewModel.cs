@@ -28,13 +28,16 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
     private readonly DispatcherQueue _dispatcher;
     private readonly ModpackExtractor _extractor;
     private readonly IHttpClientFactory _factory;
+    private readonly InstanceManager _instanceManager;
+    private readonly InstanceStatusService _instanceStatusService;
     private readonly NavigationService _navigation;
     private readonly NotificationService _notification;
     private readonly ProfileManager _profileManager;
     private readonly ThumbnailSaver _thumbnailSaver;
 
     public DesktopViewModel(NavigationService navigation, ProfileManager profileManager, ModpackExtractor extractor,
-        NotificationService notification, ThumbnailSaver thumbnailSaver, IHttpClientFactory factory)
+        NotificationService notification, ThumbnailSaver thumbnailSaver, IHttpClientFactory factory,
+        InstanceStatusService instanceStatusService, InstanceManager instanceManager)
     {
         _dispatcher = DispatcherQueue.GetForCurrentThread();
         _navigation = navigation;
@@ -43,10 +46,16 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
         _notification = notification;
         _thumbnailSaver = thumbnailSaver;
         _factory = factory;
+        _instanceStatusService = instanceStatusService;
+        _instanceManager = instanceManager;
+
+        LaunchEntryCommand = new RelayCommand<EntryModel>(LaunchEntry, CanLaunchEntry);
+        DeleteEntryCommand = new RelayCommand<EntryModel>(DeleteEntry, CanDeleteEntry);
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
         Entries = new ObservableCollection<EntryModel>(profileManager.Managed.Select(x =>
-                new EntryModel(x.Key, x.Value.Value, _thumbnailSaver.Get(x.Key), InstanceState.Idle,
+                new EntryModel(x.Key, x.Value.Value, _thumbnailSaver.Get(x.Key), _instanceStatusService.MustHave(x.Key),
+                    LaunchEntryCommand,
                     GotoInstanceViewCommand))
             .OrderByDescending(x => x.LastPlayAtRaw));
 
@@ -55,21 +64,51 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
 
     public ObservableCollection<EntryModel> Entries { get; }
 
+    private RelayCommand<EntryModel> LaunchEntryCommand { get; }
+    private RelayCommand<EntryModel> DeleteEntryCommand { get; }
     private RelayCommand<string> GotoInstanceViewCommand { get; }
 
     public void Receive(ProfileAddedMessage message)
     {
-        _dispatcher.TryEnqueue(() =>
-        {
-            Entries.Add(new EntryModel(message.Key, message.Item, _thumbnailSaver.Get(message.Key), InstanceState.Idle,
-                GotoInstanceViewCommand));
-        });
+        if (this.IsActive)
+            _dispatcher.TryEnqueue(() =>
+            {
+                var status = _instanceStatusService.MustHave(message.Key);
+                Entries.Add(new EntryModel(message.Key, message.Item, _thumbnailSaver.Get(message.Key), status,
+                    LaunchEntryCommand,
+                    GotoInstanceViewCommand));
+            });
     }
 
     private void GotoInstanceView(string? key)
     {
         if (key != null)
             _navigation.Navigate(typeof(InstanceView), key, new DrillInNavigationTransitionInfo());
+    }
+
+    private bool CanDeleteEntry(EntryModel? entry)
+    {
+        return entry is { Status.State.Value: InstanceState.Idle or InstanceState.Stopped };
+    }
+
+    private void DeleteEntry(EntryModel? entry)
+    {
+        if (entry != null)
+        {
+        }
+    }
+
+    private bool CanLaunchEntry(EntryModel? entry)
+    {
+        return entry is { Status.State.Value: InstanceState.Idle or InstanceState.Stopped };
+    }
+
+    private void LaunchEntry(EntryModel? entry)
+    {
+        if (entry != null)
+        {
+            _instanceManager.Deploy(entry.Key, entry.Inner.Metadata);
+        }
     }
 
     public FlattenExtractedContainer? ExtractModpack(string path)

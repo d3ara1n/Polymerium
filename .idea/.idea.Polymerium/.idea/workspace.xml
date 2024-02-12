@@ -11,23 +11,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b31775e-15d5-4977-92ad-0d0d96a23102" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Fonts/FontAwesome_6_Brands_Regular400.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Fonts/FontAwesome_6_Free_Regular400.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Assets/Fonts/FontAwesome_6_Free_Solid900.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/LanguageModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Settings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.App/Tasks/DeployInstanceTask.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Extensions/LaunchOptionsBuilderExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Launching/JavaHomeLocatorDelegate.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Launching/LaunchOptions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Launching/LaunchOptionsBuilder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Launching/LaunchType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/InstanceManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/DeployStage.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/DeployStageUpdatedHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/DeployTracker.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/InstanceDeployingHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/InstanceLaunchingEventArgs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/InstanceLaunchingHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/LaunchTracker.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TrackerBase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TrackerHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TrackerStateUpdatedHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Assets/Fonts/FontAwesome6BrandsRegular400.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Assets/Fonts/FontAwesome6FreeRegular400.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Assets/Fonts/FontAwesome6FreeSolid900.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Themes/Fonts.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Themes/Fonts.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ConfigurationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ConfigurationViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/SettingViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/ConfigurationView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ConfigurationView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/ConfigurationView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/ConfigurationView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/SettingView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Tasks/LaunchInstanceTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Tasks/LaunchInstanceTask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/LaunchStatusModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/LaunchStatusModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ModpackViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/ModpackViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/DesktopView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Tasks/InstallModpackTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Tasks/InstallModpackTask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Tasks/LaunchInstanceTask.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TaskBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TaskBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TaskState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TaskState.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +48,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Collections.Concurrent/src/System/Collections/Concurrent/ConcurrentBag.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Net.Http.Json/src/System/Net/Http/Json/HttpClientJsonExtensions.Get.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Net.Http.Json/src/System/Net/Http/Json/HttpClientJsonExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Net.Http.Json/src/System/Net/Http/Json/JsonHelpers.cs" root0="SKIP_HIGHLIGHTING" />
@@ -69,14 +80,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b797f66ec8c0e78dc58530ee12e58a611be8ee066b6673bed438835010/BoolToVisibilityConverter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9de7b971f7dc6d13d19737fd943d6f316ef4894a97fbca1d2564d089151068/ISupplier0.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e8fa3f3cb1978f42396bad1dea68c496875aece274331e1111e149c6b8c6f6/CarouselPanel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Polymerium.App/Tasks/DeployInstanceTask.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Polymerium.App/Tasks/InstallModpackTask.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net8.0-windows10.0.22621.0/App.g.i.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net8.0-windows10.0.22621.0/Layout.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net8.0-windows10.0.22621.0/Layout.g.i.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net8.0-windows10.0.22621.0/Views/InstanceView.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net8.0-windows10.0.22621.0/Views/InstanceView.g.i.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Polymerium.App/obj/x64/Debug/net8.0-windows10.0.22621.0/Views/SettingView.g.i.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Polymerium.Trident/Tasks/InstallModpackTask.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Polymerium.Trident/Tasks/LaunchInstanceTask.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TaskBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TaskProgressUpdatedEventArgs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TaskState.cs" root0="FORCE_HIGHLIGHTING" />
@@ -211,6 +222,7 @@
       <workItem from="1707576314400" duration="3454000" />
       <workItem from="1707636778122" duration="596000" />
       <workItem from="1707713836040" duration="15234000" />
+      <workItem from="1707736108228" duration="7508000" />
     </task>
     <task id="LOCAL-00001" summary="wip create profile">
       <option name="closed" value="true" />
