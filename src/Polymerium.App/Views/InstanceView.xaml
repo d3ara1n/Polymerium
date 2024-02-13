@@ -198,7 +198,7 @@
                             <TextBlock Text="Widgets" Style="{StaticResource SubtitleTextBlockStyle}"
                                        HorizontalAlignment="Left" VerticalAlignment="Top" />
                             <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                                <TextBlock Text="Manage →" />
+                                <TextBlock Text="Pegboard →" />
                             </HyperlinkButton>
                             <TextBlock Text="N/A" VerticalAlignment="Bottom" HorizontalAlignment="Left"
                                        Style="{StaticResource DisplayTextBlockStyle}" />
@@ -206,46 +206,97 @@
                     </controls:Card>
                     <controls:Card Grid.Row="1">
                         <Grid>
-                            <TextBlock Text="Status" Style="{StaticResource SubtitleTextBlockStyle}"
+                            <TextBlock Text="To put here" Style="{StaticResource SubtitleTextBlockStyle}"
                                        HorizontalAlignment="Left" VerticalAlignment="Top" />
                             <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                                <TextBlock Text="Dashboard →" />
+                                <TextBlock Text="Ignore →" />
                             </HyperlinkButton>
-                            <TextBlock Text="Running" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            <TextBlock Text="NOTHING" VerticalAlignment="Center" HorizontalAlignment="Center"
                                        Style="{StaticResource SubheaderTextBlockStyle}" />
                         </Grid>
                     </controls:Card>
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1">
-            <Border Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
-                <Grid Margin="12">
-                    <HyperlinkButton HorizontalAlignment="Left">
-                        <Grid ColumnSpacing="{StaticResource SmallGap}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <toolkit:ImageEx Grid.Column="0"
-                                             Source="https://starlightskins.lunareclipse.studio/skin-render/pixel/Dearain/face"
-                                             Width="36" />
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Dearain" />
-                                <TextBlock Text="Microsoft" />
-                            </StackPanel>
-                        </Grid>
-                    </HyperlinkButton>
-                    <Button Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right"
+        <Grid Grid.Row="1" Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
+            <HyperlinkButton HorizontalAlignment="Left" Margin="{StaticResource SmallMargin}">
+                <Grid ColumnSpacing="{StaticResource SmallGap}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <toolkit:ImageEx Grid.Column="0"
+                                     Source="https://starlightskins.lunareclipse.studio/skin-render/pixel/Dearain/face"
+                                     Width="36" />
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Dearain" />
+                        <TextBlock Text="Microsoft" />
+                    </StackPanel>
+                </Grid>
+            </HyperlinkButton>
+            <toolkit:SwitchPresenter HorizontalAlignment="Right"
+                                     Value="{x:Bind ViewModel.Model.Status.State.Value,Mode=OneWay}"
+                                     TargetType="models:InstanceState">
+                <toolkit:Case Value="Idle">
+                    <Button Style="{StaticResource AccentButtonStyle}"
                             VerticalAlignment="Center" Margin="{StaticResource SmallMargin}"
                             Command="{x:Bind ViewModel.PlayCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                            <FontIcon Glyph="&#xF5B0;" FontSize="16" />
-                            <TextBlock Text="PLAY" FontSize="16" />
+                            <FontIcon Glyph="&#xF5B0;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                            <TextBlock Text="PLAY" />
                         </StackPanel>
                     </Button>
-                </Grid>
-            </Border>
+                </toolkit:Case>
+                <toolkit:Case Value="Deploying">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="{StaticResource TinyGap}"
+                                Margin="{StaticResource SmallMargin}">
+                        <StackPanel VerticalAlignment="Center" Spacing="{StaticResource SmallGap}">
+                            <TextBlock Text="{x:Bind ViewModel.Model.Status.StageText.Value,Mode=OneWay}"
+                                       HorizontalAlignment="Center" />
+                            <ProgressBar Width="200" IsIndeterminate="True" HorizontalAlignment="Center" />
+                        </StackPanel>
+                        <Button VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                <FontIcon Glyph="&#xEE95;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                <TextBlock Text="DEPLOYING" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </toolkit:Case>
+                <toolkit:Case Value="Running">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                Spacing="{StaticResource SmallGap}" Margin="{StaticResource SmallMargin}">
+                        <HyperlinkButton VerticalAlignment="Center">
+                            <TextBlock Text="Dashboard" />
+                        </HyperlinkButton>
+                        <Border Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                BorderBrush="{ThemeResource SystemFillColorSuccessBrush}" VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}"
+                                        Margin="{StaticResource SmallMargin}">
+                                <FontIcon Glyph="&#xEC61;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                <TextBlock Text="RUNNING" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </toolkit:Case>
+                <toolkit:Case Value="Stopped">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                Spacing="{StaticResource SmallGap}" Margin="{StaticResource SmallMargin}">
+                        <HyperlinkButton VerticalAlignment="Center">
+                            <TextBlock Text="Dashboard" />
+                        </HyperlinkButton>
+                        <Button Style="{StaticResource AccentButtonStyle}"
+                                VerticalAlignment="Center"
+                                Command="{x:Bind ViewModel.PlayCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
+                                <FontIcon Glyph="&#xF5B0;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                <TextBlock Text="PLAY" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </toolkit:Case>
+            </toolkit:SwitchPresenter>
         </Grid>
     </Grid>
 </Page>

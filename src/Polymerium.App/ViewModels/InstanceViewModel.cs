@@ -17,15 +17,17 @@ public class InstanceViewModel : ViewModelBase
 {
     private readonly TridentContext _context;
     private readonly InstanceManager _instanceManager;
+    private readonly InstanceStatusService _instanceStatusService;
     private readonly NavigationService _navigation;
     private readonly ProfileManager _profileManager;
     private readonly TaskService _taskService;
     private readonly ThumbnailSaver _thumbnailSaver;
 
-    private ProfileModel model = new(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, null);
+    private ProfileModel model = ProfileModel.DUMMY;
 
     public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context,
-        TaskService taskService, ThumbnailSaver thumbnailSaver, InstanceManager instanceManager)
+        TaskService taskService, ThumbnailSaver thumbnailSaver, InstanceManager instanceManager,
+        InstanceStatusService instanceStatusService)
     {
         _profileManager = profileManager;
         _navigation = navigation;
@@ -33,6 +35,7 @@ public class InstanceViewModel : ViewModelBase
         _taskService = taskService;
         _thumbnailSaver = thumbnailSaver;
         _instanceManager = instanceManager;
+        _instanceStatusService = instanceStatusService;
 
         GotoMetadataViewCommand = new RelayCommand<string>(GotoMetadataView);
         GotoConfigurationViewCommand = new RelayCommand<string>(GotoConfigurationView);
@@ -61,7 +64,7 @@ public class InstanceViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new ProfileModel(key, profile, _thumbnailSaver.Get(key));
+                Model = new ProfileModel(key, profile, _thumbnailSaver.Get(key), _instanceStatusService.MustHave(key));
             return profile != null;
         }
 

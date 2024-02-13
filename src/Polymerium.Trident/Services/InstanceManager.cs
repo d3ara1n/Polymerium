@@ -52,6 +52,7 @@ public class InstanceManager(IServiceProvider provider, ILogger<InstanceManager>
                         _ => throw new NotImplementedException()
                     };
                     handle.OnStageUpdate(state);
+                    await Task.Delay(1500, token);
                     await stage.ProcessAsync();
                 }
                 catch (DeployException e)
@@ -83,5 +84,14 @@ public class InstanceManager(IServiceProvider provider, ILogger<InstanceManager>
 
         tracker = null;
         return false;
+    }
+
+    public bool IsInUse(string key)
+    {
+        return trackers.ContainsKey(key);
+    }
+
+    public void DeleteInstance(string key)
+    {
     }
 }

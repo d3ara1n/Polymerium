@@ -2,12 +2,16 @@
 using Humanizer;
 using Polymerium.App.Extensions;
 using Polymerium.Trident.Extensions;
+using Polymerium.Trident.Services;
 using Trident.Abstractions;
 
 namespace Polymerium.App.Models;
 
-public record ProfileModel(string Key, Profile Inner, string? ThumbnailPath)
+public record ProfileModel(string Key, Profile Inner, string? ThumbnailPath, InstanceStatusModel Status)
 {
+    public static readonly ProfileModel DUMMY = new(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, null,
+        InstanceStatusModel.DUMMY);
+
     public string Thumbnail => ThumbnailPath ?? AssetPath.PLACEHOLDER_DEFAULT_DIRT;
 
     public string Type => Inner.ExtractTypeDisplay();

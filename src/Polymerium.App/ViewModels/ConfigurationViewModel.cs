@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Windows.Storage.Pickers;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Polymerium.Trident.Services;
 using WinRT.Interop;
 
@@ -12,15 +13,18 @@ namespace Polymerium.App.ViewModels;
 
 public class ConfigurationViewModel : ViewModelBase
 {
+    private readonly InstanceStatusService _instanceStatusService;
     private readonly ProfileManager _profileManager;
     private readonly ThumbnailSaver _thumbnailSaver;
 
-    private ProfileModel model = new(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, null);
+    private ProfileModel model = ProfileModel.DUMMY;
 
-    public ConfigurationViewModel(ProfileManager profileManager, ThumbnailSaver thumbnailSaver)
+    public ConfigurationViewModel(ProfileManager profileManager, ThumbnailSaver thumbnailSaver,
+        InstanceStatusService instanceStatusService)
     {
         _profileManager = profileManager;
         _thumbnailSaver = thumbnailSaver;
+        _instanceStatusService = instanceStatusService;
 
         ChooseJavaCommand = new RelayCommand(ChooseJava, CanChooseJava);
         OpenExportWizardCommand = new RelayCommand(OpenExportWizard, CanOpenExportWizard);
@@ -122,7 +126,7 @@ public class ConfigurationViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new ProfileModel(key, profile, _thumbnailSaver.Get(key));
+                Model = new ProfileModel(key, profile, _thumbnailSaver.Get(key), _instanceStatusService.MustHave(key));
             return profile != null;
         }
 

@@ -131,6 +131,7 @@
     <ItemGroup>
         <Folder Include="Assets\Icons\"/>
         <Folder Include="Assets\Placeholders\"/>
+        <Folder Include="Components\"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj"/>
