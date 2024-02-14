@@ -20,24 +20,26 @@ public class InstanceManager(IServiceProvider provider, ILogger<InstanceManager>
     public event InstanceDeployingHandler? InstanceDeploying;
     public event InstanceLaunchingHandler? InstanceLaunching;
 
-    public DeployTracker Deploy(string key, Metadata metadata)
+    public DeployTracker Deploy(string key, Metadata metadata, ICollection<string>? keywords = null)
     {
         if (trackers.ContainsKey(key))
             throw new InvalidOperationException($"The instance is present in the tracking list: {key}");
-        var tracker = new DeployTracker(DeployInternalAsync, x => trackers.Remove(x.Key), key, metadata);
+        var tracker = new DeployTracker(
+            (tracker, token) => DeployInternalAsync(tracker, keywords ?? new List<string>(), token),
+            x => trackers.Remove(x.Key), key, metadata);
         trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, new InstanceDeployingEventArgs(key, tracker));
         tracker.Start();
         return tracker;
     }
 
-    private async Task DeployInternalAsync(TrackerBase tracker, CancellationToken token)
+    private async Task DeployInternalAsync(TrackerBase tracker, ICollection<string> keywords, CancellationToken token)
     {
         if (tracker is DeployTracker handle)
         {
             logger.LogInformation("Begin launching task for {key}", handle.Key);
             var deployer = provider.GetRequiredService<DeployEngine>();
-            deployer.SetProfile(handle.Key, handle.Metadata, handle.Token);
+            deployer.SetProfile(handle.Key, handle.Metadata, keywords, handle.Token);
             foreach (var stage in deployer)
                 try
                 {
@@ -49,10 +51,16 @@ public class InstanceManager(IServiceProvider provider, ILogger<InstanceManager>
                         ResolveAttachmentStage => DeployStage.ResolveAttachments,
                         ProcessLoaderStage => DeployStage.ProcessLoaders,
                         BuildArtifactStage => DeployStage.BuildArtifact,
+                        BuildTransientStage => DeployStage.BuildTransient,
+                        SolidifyTransientStage => DeployStage.SolidifyTransient,
                         _ => throw new NotImplementedException()
                     };
+                    if (stage is SolidifyTransientStage solidify)
+                        solidify.SetHandler((fileName, finished, total) =>
+                            handle.OnFileSolidified(fileName, finished, total));
+
                     handle.OnStageUpdate(state);
-                    await Task.Delay(1500, token);
+                    await Task.Delay(1000, token);
                     await stage.ProcessAsync();
                 }
                 catch (DeployException e)

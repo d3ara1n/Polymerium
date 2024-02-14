@@ -30,9 +30,10 @@ public class DeployEngine(
         return GetEnumerator();
     }
 
-    public void SetProfile(string key, Metadata metadata, CancellationToken token = default)
+    public void SetProfile(string key, Metadata metadata, ICollection<string> keywords,
+        CancellationToken token = default)
     {
-        context = new DeployContext(trident, key, metadata, options, token);
+        context = new DeployContext(trident, key, metadata, keywords, options, token);
     }
 
     public class DeployEngineEnumerator(
@@ -54,13 +55,22 @@ public class DeployEngine(
             // Solidify transient data:
             //   Download libraries, Download & link attachments, Restore assets
             if (context.Transient != null)
+            {
+                if (context.IsSolidified)
+                    return false;
+
                 // solidify
+                Current = SolidifyTransient();
                 return true;
+            }
 
             if (context.Artifact != null)
+            {
                 // build transient
-                // TODO: 调试先到这里
-                return false;
+                Current = BuildTransient();
+                return true;
+            }
+
             if (context.ArtifactBuilder != null)
             {
                 if (context.IsAttachmentResolved)
@@ -131,6 +141,16 @@ public class DeployEngine(
         private ProcessLoaderStage ProcessLoader()
         {
             return CreateStage(() => new ProcessLoaderStage());
+        }
+
+        private BuildTransientStage BuildTransient()
+        {
+            return CreateStage(() => new BuildTransientStage(factory));
+        }
+
+        private SolidifyTransientStage SolidifyTransient()
+        {
+            return CreateStage(() => new SolidifyTransientStage(factory));
         }
 
         private T CreateStage<T>(Func<T> factory)

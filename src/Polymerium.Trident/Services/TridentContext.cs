@@ -36,8 +36,24 @@ public class TridentContext(string home)
         return Path.Combine(InstanceDir, key);
     }
 
+    public string LibraryPath(string ns, string name, string version, string? platform)
+    {
+        return Path.Combine(LibraryDir, ns,
+            platform != null ? $"{ns}-{name}-{version}-{platform}.jar" : $"{ns}-{name}-{version}.jar");
+    }
+
     public string InstanceArtifactPath(string key)
     {
         return Path.Combine(InstanceDir, key, "trident.artifact.json");
+    }
+
+    public string AssetIndexPath(string index)
+    {
+        return Path.Combine(AssetDir, "indexes", $"{index}.json");
+    }
+
+    public string AssetObjectPath(string hash)
+    {
+        return Path.Combine(AssetDir, "objects", hash[..2], hash);
     }
 }

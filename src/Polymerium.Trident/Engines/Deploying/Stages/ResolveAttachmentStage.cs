@@ -14,7 +14,7 @@ public class ResolveAttachmentStage(ResolveEngine resolver) : StageBase
         resolver.SetFilter(Context.Metadata.ExtractFilter());
 
         await foreach (var result in resolver.ConfigureAwait(false))
-            if (result.IsResolvedSuccessfully && result.Result != null)
+            if (result is { IsResolvedSuccessfully: true, Result: not null })
             {
                 var package = result.Result;
                 Context.ArtifactBuilder!.AddParcel($"{package.Label}/{package.ProjectId}/{package.VersionId}.obj",

@@ -62,6 +62,12 @@ public class ArtifactBuilder : IBuilder<Artifact>
         return this;
     }
 
+    public ArtifactBuilder AddProcessor(Artifact.Processor processor)
+    {
+        processors.Add(processor);
+        return this;
+    }
+
     public ArtifactBuilder SetAssetIndex(Artifact.AssetData index)
     {
         assetIndex = index;

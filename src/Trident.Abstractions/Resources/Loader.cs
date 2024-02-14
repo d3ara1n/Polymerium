@@ -8,7 +8,7 @@ public record Loader(string Id, string Version)
     public const string COMPONENT_FABRIC = "net.fabricmc";
     public const string COMPONENT_QUILT = "org.quiltmc";
     public const string COMPONENT_AUTHLIB_INJECTOR = "moe.yushi.authlib-injector";
-    public const string COMPONENT_BUILTIN_STORAGE = "builtin.trident.storage";
+    public const string COMPONENT_BUILTIN_STORAGE = "loader.trident.storage";
 
     public static readonly IDictionary<string, string> MODLOADER_NAME_MAPPINGS =
         new Dictionary<string, string>

@@ -6,5 +6,7 @@ public enum DeployStage
     InstallVanilla,
     ResolveAttachments,
     ProcessLoaders,
-    BuildArtifact
+    BuildArtifact,
+    BuildTransient,
+    SolidifyTransient
 }

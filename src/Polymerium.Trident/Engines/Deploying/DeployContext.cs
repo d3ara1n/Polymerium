@@ -11,6 +11,7 @@ public class DeployContext(
     TridentContext context,
     string key,
     Metadata metadata,
+    ICollection<string> keywords,
     JsonSerializerOptions options,
     CancellationToken token = default)
 {
@@ -21,11 +22,13 @@ public class DeployContext(
     internal bool IsFinished;
     internal bool IsGameInstalled;
     internal bool IsLoaderProcessed;
+    internal bool IsSolidified;
     internal TransientData? Transient;
 
     public CancellationToken Token { get; } = token;
     public string Key { get; } = key;
     public Metadata Metadata { get; } = metadata;
+    public ICollection<string> Keywords { get; } = keywords;
 
     public string Watermark { get; } =
         BitConverter.ToString(MD5.HashData(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(metadata))));

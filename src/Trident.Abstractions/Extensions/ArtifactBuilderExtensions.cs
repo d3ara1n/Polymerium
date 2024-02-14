@@ -31,6 +31,11 @@ public static class ArtifactBuilderExtensions
         return self.AddLibrary(new Artifact.Library(id, url, sha1, native, present));
     }
 
+    public static ArtifactBuilder AddProcessor(this ArtifactBuilder self, string id, string data, string? condition)
+    {
+        return self.AddProcessor(new Artifact.Processor(condition, id, data));
+    }
+
     public static ArtifactBuilder SetAssetIndex(this ArtifactBuilder self, string id, Uri url, string sha1)
     {
         return self.SetAssetIndex(new Artifact.AssetData(id, url, sha1));

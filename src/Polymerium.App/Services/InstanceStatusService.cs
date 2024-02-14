@@ -14,8 +14,8 @@ namespace Polymerium.App.Services;
 // 具有状态的 Instance 被集中作为列表管理，仅用于 UI 层展示，只需要 Profile 就用 ProfileManager
 public class InstanceStatusService
 {
-    private readonly ObservableCollection<InstanceStatusModel> instances;
     private readonly DispatcherQueue _dispatcher;
+    private readonly ObservableCollection<InstanceStatusModel> instances;
 
     public InstanceStatusService(ProfileManager profileManger, InstanceManager instanceManager)
     {
@@ -51,6 +51,8 @@ public class InstanceStatusService
         if (TryFind(args.Key, out var instance))
         {
             instance.OnStateChanged(InstanceState.Deploying);
+            args.Handle.FileSolidified += (_, count, total) =>
+                _dispatcher.TryEnqueue(() => instance.OnProgressChanged(count, total));
             args.Handle.StageUpdated += (_, stage) => _dispatcher.TryEnqueue(() =>
                 instance.OnStageChanged(stage));
             args.Handle.StateUpdated += (_, state) =>

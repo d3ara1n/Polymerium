@@ -248,12 +248,17 @@
                     </Button>
                 </toolkit:Case>
                 <toolkit:Case Value="Deploying">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="{StaticResource TinyGap}"
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                Spacing="{StaticResource SmallGap}"
                                 Margin="{StaticResource SmallMargin}">
-                        <StackPanel VerticalAlignment="Center" Spacing="{StaticResource SmallGap}">
+                        <StackPanel VerticalAlignment="Center" Spacing="{StaticResource TinyGap}">
                             <TextBlock Text="{x:Bind ViewModel.Model.Status.StageText.Value,Mode=OneWay}"
                                        HorizontalAlignment="Center" />
-                            <ProgressBar Width="200" IsIndeterminate="True" HorizontalAlignment="Center" />
+                            <ProgressBar Width="200"
+                                         HorizontalAlignment="Center"
+                                         IsIndeterminate="{x:Bind ViewModel.Model.Status.Endless.Value,Mode=OneWay}"
+                                         Value="{x:Bind ViewModel.Model.Status.Count.Value,Mode=OneWay}"
+                                         Maximum="{x:Bind ViewModel.Model.Status.TotalCount.Value,Mode=OneWay}" />
                         </StackPanel>
                         <Button VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
