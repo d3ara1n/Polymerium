@@ -16,17 +16,6 @@ public class BuildTransientStage(IHttpClientFactory factory) : StageBase
         var artifact = Context.Artifact!;
         var transient = new TransientData();
 
-        foreach (var parcel in artifact.Parcels)
-            transient.AddFragile(new TransientData.FragileFile(
-                Path.Combine(Context.Context.ObjectDir, parcel.SourcePath),
-                Path.Combine(Context.Context.InstanceHomePath(Context.Key), parcel.TargetPath), parcel.Url,
-                parcel.Sha1));
-
-        foreach (var library in artifact.Libraries)
-            transient.AddPresent(new TransientData.PresentFile(Path.Combine(
-                Context.Context.LibraryPath(library.Id.Namespace, library.Id.Name, library.Id.Version,
-                    library.Id.Platform)), library.Url, library.Sha1));
-
         var indexFile = Context.Context.AssetIndexPath(artifact.AssetIndex.Id);
         transient.AddPresent(
             new TransientData.PresentFile(indexFile, artifact.AssetIndex.Url, artifact.AssetIndex.Sha1));
@@ -39,6 +28,24 @@ public class BuildTransientStage(IHttpClientFactory factory) : StageBase
                 new Uri($"https://resources.download.minecraft.net/{obj.Hash[..2]}/{obj.Hash}", UriKind.Absolute)
                 , obj.Hash));
         }
+
+        foreach (var parcel in artifact.Parcels)
+            transient.AddFragile(new TransientData.FragileFile(
+                Path.Combine(Context.Context.ObjectDir, parcel.SourcePath),
+                Path.Combine(Context.Context.InstanceHomePath(Context.Key), parcel.TargetPath), parcel.Url,
+                parcel.Sha1));
+
+        var nativesDir = Context.Context.NativeDirPath(Context.Key);
+
+        foreach (var library in artifact.Libraries)
+        {
+            var libraryPath = Context.Context.LibraryPath(library.Id.Namespace, library.Id.Name, library.Id.Version,
+                library.Id.Platform);
+            transient.AddPresent(new TransientData.PresentFile(Path.Combine(libraryPath), library.Url, library.Sha1));
+            if (library.IsNative)
+                transient.AddExplosive(new TransientData.ExplosiveFile(libraryPath, nativesDir));
+        }
+
 
         var bag = BuildKeywords(Context.Keywords);
         Logger.LogInformation("Run processors with keywords bag: [{bag}]", string.Join(',', bag));

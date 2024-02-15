@@ -20,20 +20,21 @@ public class InstanceManager(IServiceProvider provider, ILogger<InstanceManager>
     public event InstanceDeployingHandler? InstanceDeploying;
     public event InstanceLaunchingHandler? InstanceLaunching;
 
-    public DeployTracker Deploy(string key, Metadata metadata, ICollection<string>? keywords = null)
+    public DeployTracker Deploy(string key, Metadata metadata, ICollection<string>? keywords = null,
+        CancellationToken cancellationToken = default)
     {
         if (trackers.ContainsKey(key))
             throw new InvalidOperationException($"The instance is present in the tracking list: {key}");
         var tracker = new DeployTracker(
-            (tracker, token) => DeployInternalAsync(tracker, keywords ?? new List<string>(), token),
-            x => trackers.Remove(x.Key), key, metadata);
+            tracker => DeployInternalAsync(tracker, keywords ?? new List<string>()),
+            x => trackers.Remove(x.Key), key, metadata, cancellationToken);
         trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, new InstanceDeployingEventArgs(key, tracker));
         tracker.Start();
         return tracker;
     }
 
-    private async Task DeployInternalAsync(TrackerBase tracker, ICollection<string> keywords, CancellationToken token)
+    private async Task DeployInternalAsync(TrackerBase tracker, ICollection<string> keywords)
     {
         if (tracker is DeployTracker handle)
         {
@@ -60,8 +61,8 @@ public class InstanceManager(IServiceProvider provider, ILogger<InstanceManager>
                             handle.OnFileSolidified(fileName, finished, total));
 
                     handle.OnStageUpdate(state);
-                    await Task.Delay(1000, token);
                     await stage.ProcessAsync();
+                    await Task.Delay(1000, handle.Token);
                 }
                 catch (DeployException e)
                 {

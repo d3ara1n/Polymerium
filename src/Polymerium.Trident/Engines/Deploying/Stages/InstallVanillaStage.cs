@@ -24,7 +24,7 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
         // Libraries
         var osString = $"{GetOs()}-{GetArch()}";
         Logger.LogInformation("Current os string: {string}", osString);
-        var libraries = version.Libraries.Where(x =>
+        var libraries = version.Libraries?.Where(x =>
         {
             if (x.Rules != null && x.Rules.Any())
                 return x.Rules.All(y =>
@@ -38,7 +38,7 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
                 });
 
             return true;
-        });
+        }) ?? Enumerable.Empty<PrismMinecraftVersionLibrary>();
         foreach (var lib in libraries)
         {
             if (lib.Downloads.Artifact.HasValue)
@@ -121,9 +121,10 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
         Logger.LogInformation("Set asset index to {index}", version.AssetIndex.Id);
 
         // Main Class Path
-        builder.SetMainClass(version.MainClass);
+        var real = version.MainClass ?? "net.minecraft.client.main.Main";
+        builder.SetMainClass(real);
 
-        Logger.LogInformation("Set main class path to {mainClass}", version.MainClass);
+        Logger.LogInformation("Set main class path to {mainClass}", real);
 
 
         Context.IsGameInstalled = true;

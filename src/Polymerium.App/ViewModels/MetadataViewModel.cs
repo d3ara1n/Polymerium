@@ -95,7 +95,7 @@ public class MetadataViewModel : ViewModelBase
             engine.SetFilter(Model.Inner.Metadata.ExtractFilter());
             foreach (var item in layer.Attachments)
                 engine.AddAttachment(item);
-            await foreach (var result in engine.WithCancellation(layer.Token))
+            await foreach (var result in engine.WithCancellation(layer.Token).ConfigureAwait(false))
             {
                 if (layer.Token.IsCancellationRequested) break;
                 if (result is { IsResolvedSuccessfully: true, Result: not null })

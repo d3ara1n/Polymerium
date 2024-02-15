@@ -150,7 +150,8 @@ public class DeployEngine(
 
         private SolidifyTransientStage SolidifyTransient()
         {
-            return CreateStage(() => new SolidifyTransientStage(factory));
+            var downloader = provider.GetRequiredService<DownloadEngine>();
+            return CreateStage(() => new SolidifyTransientStage(downloader));
         }
 
         private T CreateStage<T>(Func<T> factory)

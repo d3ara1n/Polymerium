@@ -70,7 +70,7 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
 
     public void Receive(ProfileAddedMessage message)
     {
-        if (this.IsActive)
+        if (IsActive)
             _dispatcher.TryEnqueue(() =>
             {
                 var status = _instanceStatusService.MustHave(message.Key);
@@ -106,9 +106,8 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
     private void LaunchEntry(EntryModel? entry)
     {
         if (entry != null)
-        {
-            _instanceManager.Deploy(entry.Key, entry.Inner.Metadata);
-        }
+            // TODO: Create token for interrupt
+            _instanceManager.Deploy(entry.Key, entry.Inner.Metadata, null, App.Current.Token);
     }
 
     public FlattenExtractedContainer? ExtractModpack(string path)

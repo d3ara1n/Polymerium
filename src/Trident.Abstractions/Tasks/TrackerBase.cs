@@ -1,9 +1,13 @@
 ﻿namespace Trident.Abstractions.Tasks;
 
-public abstract class TrackerBase(string key, TrackerHandler handler, Action<TrackerBase> onCompleted)
+public abstract class TrackerBase(
+    string key,
+    TrackerHandler handler,
+    Action<TrackerBase> onCompleted,
+    CancellationToken token = default)
 {
+    private readonly CancellationTokenSource tokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
     public string Key => key;
-    private readonly CancellationTokenSource tokenSource = new();
     public CancellationToken Token => tokenSource.Token;
     public TaskState State { get; private set; } = TaskState.Idle;
     public Exception? FailureReason { get; private set; }
@@ -24,7 +28,7 @@ public abstract class TrackerBase(string key, TrackerHandler handler, Action<Tra
     {
         State = TaskState.Running;
         StateUpdated?.Invoke(this, State);
-        Task.Run(async () => await handler(this, Token), Token)
+        Task.Run(async () => await handler(this), Token)
             .ContinueWith(t =>
             {
                 if (t.IsCompletedSuccessfully)
@@ -35,7 +39,7 @@ public abstract class TrackerBase(string key, TrackerHandler handler, Action<Tra
                     OnFault(t.Exception);
                 else
                     throw new NotImplementedException();
-            }, Token);
+            }, CancellationToken.None);
     }
 
     protected virtual void OnFinish()

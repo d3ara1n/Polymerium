@@ -66,6 +66,20 @@ Polymerium不维护游戏文件，只维护实例元数据。
 * [![VisualStudio][VisualStudio]][VisualStudio-url]
 * [![VisualStudioCode][VSCode]][VSCode-url]
 
+<!-- FEATURES -->
+
+## Features
+
+### 轻量部署
+
+使用基于文件差异和软链接的部署方式，保证玩到的游戏体验和游戏元数据一致的同时最小化硬盘和网络负担。
+
+### ~~内置下载引擎~~
+
+原先设计先串行检查并计算文件哈希来获取需要下载的文件列表，并行下载，最后再串行写入来最大化利用缓存和减少对硬盘的损伤。实际测了之后发现越
+大的并发数量（不大于逻辑核心数量）不仅在SSD 上更快，在 HDD
+上也有惊人速度提升！这还要啥自行车，直接 `Task.WaitAll(DownloadAllAsync(files))` 一把梭！
+
 <!-- GETTING STARTED -->
 
 ## 安装使用
@@ -149,6 +163,10 @@ Windows
     * [x] 基于 Iterator 并发模型
 * [ ] 发射引擎
     * [x] 不基于 Iterator 模型
+* [ ] 下载引擎
+    * [ ] 基于 Iterator 模型（错误的，什么都往这个模型套是过度设计，除了部署引擎本身就是串行的，其他引擎都是并行的，套到迭代器这种串行模型上面就是错误设计。真正的问题仅需
+      `Parallel.ForEach(x => DownloadAsync(x))` 甚至 `Task.WaitAll`
+      就能解决。但我还是要在未来实现它，因为并行工作用串行收集结果很优雅~）
 * [ ] 资源仓库
     * [x] CurseForge
         * [x] 整合包
@@ -233,11 +251,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [product-screenshot]: assets/images/Screenshot.gif
 
-[CSharp]: https://img.shields.io/badge/C%23-11-239120?style=for-the-badge&logoColor=white
+[CSharp]: https://img.shields.io/badge/C%23-12-239120?style=for-the-badge&logoColor=white
 
 [CSharp-url]: https://learn.microsoft.com/en-us/dotnet/csharp/
 
-[DotNet]: https://img.shields.io/badge/.NET-7-5C2D91?style=for-the-badge&logoColor=white
+[DotNet]: https://img.shields.io/badge/.NET-8-5C2D91?style=for-the-badge&logoColor=white
 
 [DotNet-url]: https://dotnet.microsoft.com/
 
@@ -245,7 +263,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [WinUI-url]: https://microsoft.github.io/microsoft-ui-xaml/
 
-[WindowsAppSDK]: https://img.shields.io/badge/Windows%20App%20SDK-1.3-20000?style=for-the-badge&logoColor=white
+[WindowsAppSDK]: https://img.shields.io/badge/Windows%20App%20SDK-1.4-20000?style=for-the-badge&logoColor=white
 
 [WindowsAppSDK-url]: https://github.com/microsoft/WindowsAppSDK
 

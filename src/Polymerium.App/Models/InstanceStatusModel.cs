@@ -56,6 +56,12 @@ public record InstanceStatusModel
             DeployStage.SolidifyTransient => "Solidifying transient...",
             _ => throw new NotImplementedException()
         };
+        if (changed != DeployStage.SolidifyTransient)
+        {
+            Endless.Value = true;
+            Count.Value = 0;
+            TotalCount.Value = 1;
+        }
     }
 
     public void OnProgressChanged(uint value, uint total)

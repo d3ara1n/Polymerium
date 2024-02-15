@@ -57,7 +57,8 @@ public class AsyncCollection<T>
         State = DataLoadingState.Loading;
         try
         {
-            await foreach (var handle in iter.WithCancellation(_token)) _dispatcher.TryEnqueue(() => { Add(handle); });
+            await foreach (var handle in iter.WithCancellation(_token).ConfigureAwait(false))
+                _dispatcher.TryEnqueue(() => { Add(handle); });
 
             State = DataLoadingState.Done;
         }

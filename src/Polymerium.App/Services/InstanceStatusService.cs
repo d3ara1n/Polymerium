@@ -40,6 +40,8 @@ public class InstanceStatusService
                         instance.OnStateChanged(InstanceState.Running);
                     else if (state == TaskState.Idle)
                         instance.OnStateChanged(InstanceState.Idle);
+                    else if (state == TaskState.Finished)
+                        instance.OnStateChanged(InstanceState.Idle);
                     else
                         instance.OnStateChanged(InstanceState.Stopped);
                 });
@@ -52,7 +54,12 @@ public class InstanceStatusService
         {
             instance.OnStateChanged(InstanceState.Deploying);
             args.Handle.FileSolidified += (_, count, total) =>
-                _dispatcher.TryEnqueue(() => instance.OnProgressChanged(count, total));
+            {
+                var original = instance.Count.Value;
+                var computed = count == total ? 100 : 100 * count / total;
+                if (original != computed)
+                    _dispatcher.TryEnqueue(() => instance.OnProgressChanged(computed, 100));
+            };
             args.Handle.StageUpdated += (_, stage) => _dispatcher.TryEnqueue(() =>
                 instance.OnStageChanged(stage));
             args.Handle.StateUpdated += (_, state) =>
@@ -61,6 +68,8 @@ public class InstanceStatusService
                     if (state == TaskState.Running)
                         instance.OnStateChanged(InstanceState.Deploying);
                     else if (state == TaskState.Idle)
+                        instance.OnStateChanged(InstanceState.Idle);
+                    else if (state == TaskState.Finished)
                         instance.OnStateChanged(InstanceState.Idle);
                     else
                         instance.OnStateChanged(InstanceState.Stopped);

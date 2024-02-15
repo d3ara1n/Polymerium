@@ -56,4 +56,9 @@ public class TridentContext(string home)
     {
         return Path.Combine(AssetDir, "objects", hash[..2], hash);
     }
+
+    public string NativeDirPath(string key)
+    {
+        return Path.Combine(InstanceHomePath(key), "natives");
+    }
 }

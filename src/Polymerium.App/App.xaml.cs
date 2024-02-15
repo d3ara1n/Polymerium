@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
 using Windows.Graphics;
 using Windows.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -27,6 +28,8 @@ namespace Polymerium.App;
 
 public partial class App
 {
+    private readonly CancellationTokenSource tokenSource = new();
+
     public App()
     {
         InitializeComponent();
@@ -41,6 +44,7 @@ public partial class App
     public IServiceProvider Provider { get; }
 
     public Window Window { get; private set; } = null!;
+    public CancellationToken Token => tokenSource.Token;
 
     public static T ViewModel<T>()
         where T : ObservableObject
@@ -60,14 +64,15 @@ public partial class App
                 options.WriteIndented = true;
                 options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
             })
+            .AddMemoryCache()
+            .AddHttpClient()
+            .ConfigureHttpClientDefaults(builder => builder.RemoveAllLoggers())
             .AddLogging(builder =>
             {
                 builder
                     .AddDebug()
                     .AddConsole();
             })
-            .AddMemoryCache()
-            .AddHttpClient()
             .ConfigureHttpClientDefaults(clientBuilder => clientBuilder.ConfigureHttpClient(client =>
                 {
                     client.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -123,7 +128,8 @@ public partial class App
         // Engines
         services
             .AddEngine<DeployEngine>()
-            .AddEngine<ResolveEngine>();
+            .AddEngine<ResolveEngine>()
+            .AddEngine<DownloadEngine>();
     }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -159,6 +165,7 @@ public partial class App
                 settings.Values[KEY_WIDTH] = size.Width;
             }
 
+            tokenSource.Cancel();
             ((IDisposable)Provider).Dispose();
         };
         navigation.SetHandler(layout.OnNavigate);

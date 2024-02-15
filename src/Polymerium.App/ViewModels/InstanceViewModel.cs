@@ -8,6 +8,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
@@ -42,6 +43,7 @@ public class InstanceViewModel : ViewModelBase
         OpenHomeFolderCommand = new RelayCommand(OpenHomeFolder, CanOpenHomeFolder);
         OpenAssetFolderCommand = new RelayCommand<AssetKind>(OpenAssetFolder, CanOpenAssetFolder);
         DeleteTodoCommand = new RelayCommand<TodoModel>(DeleteTodo, CanDeleteTodo);
+        StopCommand = new RelayCommand(Stop);
         PlayCommand = new RelayCommand(Play);
     }
 
@@ -57,6 +59,7 @@ public class InstanceViewModel : ViewModelBase
     public ICommand OpenHomeFolderCommand { get; }
     public ICommand DeleteTodoCommand { get; }
     public ICommand PlayCommand { get; }
+    public ICommand StopCommand { get; }
 
     public override bool OnAttached(object? maybeKey)
     {
@@ -163,6 +166,19 @@ public class InstanceViewModel : ViewModelBase
     {
         // var task = _taskService.Create<DeployInstanceTask>(Model.Key, Model.Inner);
         // _taskService.Enqueue(task);
-        _instanceManager.Deploy(Model.Key, Model.Inner.Metadata);
+        _instanceManager.Deploy(Model.Key, Model.Inner.Metadata, null, App.Current.Token);
+    }
+
+    private void Stop()
+    {
+        if (_instanceManager.IsTracking(Model.Key, out var tracker))
+            switch (tracker)
+            {
+                case DeployTracker deployer:
+                    deployer.Abort();
+                    break;
+                case LaunchTracker launcher:
+                    break;
+            }
     }
 }

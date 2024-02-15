@@ -14,32 +14,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b31775e-15d5-4977-92ad-0d0d96a23102" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/BuildTransientStage.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/SolidifyTransientStage.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Models/Minecraft/MinecraftAssetIndex.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Models/Minecraft/MinecraftAssetIndexObject.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/DeployFileSolidifiedHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Exceptions/ResourceIdentityUnrecognizedException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/DownloadEngine.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Downloading/DownloadResult.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Downloading/DownloadTask.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Polymerium/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/App.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/AsyncCollection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/AsyncCollection.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceStatusModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Models/InstanceStatusModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Polymerium.App.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Services/InstanceStatusService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Services/InstanceStatusService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/DesktopViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/DesktopViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/InstanceViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MetadataViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/ViewModels/MetadataViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.App/Views/InstanceView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/DeployEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/DeployEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/DeployContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/DeployContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/ProcessLoaderStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/ProcessLoaderStage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/ResolveAttachmentStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/ResolveAttachmentStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/BuildTransientStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/BuildTransientStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/InstallVanillaStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/InstallVanillaStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/SolidifyTransientStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/Stages/SolidifyTransientStage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/TransientData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/TransientData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Engines/Deploying/TransientFile.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Helpers/FileNameHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Helpers/FileNameHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Models/PrismLauncher/Minecraft/PrismMinecraftVersion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Models/PrismLauncher/Minecraft/PrismMinecraftVersion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/InstanceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/InstanceManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/DeployStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/DeployStage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/DeployTracker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/Instances/DeployTracker.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Polymerium.Trident/Services/TridentContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Polymerium.Trident/Services/TridentContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Building/Artifact.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Building/Artifact.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Building/ArtifactBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Building/ArtifactBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Exceptions/ResourceNotFoundException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Exceptions/ResourceNotFoundException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Extensions/ArtifactBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Extensions/ArtifactBuilderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Resources/Loader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Resources/Loader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TrackerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TrackerBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TrackerHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Trident.Abstractions/Tasks/TrackerHandler.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +49,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/1381d5ebd2ab1f292848d5b19b80cf71ac332508/src/libraries/System.Collections.Concurrent/src/System/Collections/Concurrent/ConcurrentBag.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Collections.Concurrent/src/System/Collections/Concurrent/ConcurrentBag.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Net.Http.Json/src/System/Net/Http/Json/HttpClientJsonExtensions.Get.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/bf5e279d9239bfef5bb1b8d6212f1b971c434606/src/libraries/System.Net.Http.Json/src/System/Net/Http/Json/HttpClientJsonExtensions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -113,30 +113,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET 启动设置配置文件.Polymerium.App: Polymerium.App (Unpackaged).executor": "Debug",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.completion",
-    "vue.rearranger.settings.migration": "true",
-    "发布到 IIS.Polymerium.App: win10-x64.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET 启动设置配置文件.Polymerium.App: Polymerium.App (Unpackaged).executor&quot;: &quot;Debug&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;发布到 IIS.Polymerium.App: win10-x64.executor&quot;: &quot;Run&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\zqy02\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\zqy02\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\zqy02\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET 启动设置配置文件.Polymerium.App: Polymerium.App (Unpackaged)">
     <configuration name="Polymerium.App: win10-arm64" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
       <riderPublish publish_profile="win10-arm64.pubxml" pubxml_path="$PROJECT_DIR$/src/Polymerium.App/Properties/PublishProfiles/win10-arm64.pubxml" uuid_high="-6328941511625717657" uuid_low="-7791217345810267840" />
@@ -229,6 +229,8 @@
       <workItem from="1707812196286" duration="12021000" />
       <workItem from="1707885864988" duration="1203000" />
       <workItem from="1707889537999" duration="18940000" />
+      <workItem from="1707981143262" duration="9702000" />
+      <workItem from="1708011356937" duration="803000" />
     </task>
     <task id="LOCAL-00001" summary="wip create profile">
       <option name="closed" value="true" />

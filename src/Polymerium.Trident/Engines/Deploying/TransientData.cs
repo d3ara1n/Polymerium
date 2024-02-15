@@ -11,6 +11,7 @@ public class TransientData
     public IList<FragileFile> FragileFiles { get; } = new List<FragileFile>();
     public IList<PersistentFile> PersistentFiles { get; } = new List<PersistentFile>();
     public IList<PresentFile> PresentFiles { get; } = new List<PresentFile>();
+    public IList<ExplosiveFile> ExplosiveFiles { get; } = new List<ExplosiveFile>();
 
     public void AddFragile(FragileFile fragile)
     {
@@ -27,9 +28,16 @@ public class TransientData
         PresentFiles.Add(present);
     }
 
+    public void AddExplosive(ExplosiveFile explosive)
+    {
+        ExplosiveFiles.Add(explosive);
+    }
+
     public record FragileFile(string SourcePath, string TargetPath, Uri Url, string? Sha1);
 
     public record PersistentFile(string SourcePath, string TargetPath);
 
     public record PresentFile(string SourcePath, Uri Url, string? Sha1);
+
+    public record ExplosiveFile(string SourcePath, string TargetDirectory);
 }

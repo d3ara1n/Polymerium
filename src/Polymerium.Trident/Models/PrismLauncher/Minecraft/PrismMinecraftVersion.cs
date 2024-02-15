@@ -8,8 +8,8 @@ public struct PrismMinecraftVersion
     public PrismMinecraftVersionAssetIndex AssetIndex { get; init; }
     public uint[] CompatibleJavaMajors { get; init; }
     public int FormatVersion { get; init; }
-    public PrismMinecraftVersionLibrary[] Libraries { get; init; }
-    public string MainClass { get; init; }
+    public PrismMinecraftVersionLibrary[]? Libraries { get; init; }
+    public string? MainClass { get; init; }
     public PrismMinecraftVersionLibrary MainJar { get; init; }
     public string MinecraftArguments { get; init; }
     public string Name { get; init; }

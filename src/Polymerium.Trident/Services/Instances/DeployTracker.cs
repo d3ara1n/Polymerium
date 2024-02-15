@@ -3,8 +3,13 @@ using Trident.Abstractions.Tasks;
 
 namespace Polymerium.Trident.Services.Instances;
 
-public class DeployTracker(TrackerHandler handler, Action<TrackerBase> onCompleted, string key, Metadata metadata)
-    : TrackerBase(key, handler, onCompleted)
+public class DeployTracker(
+    TrackerHandler handler,
+    Action<TrackerBase> onCompleted,
+    string key,
+    Metadata metadata,
+    CancellationToken token)
+    : TrackerBase(key, handler, onCompleted, token)
 {
     public Metadata Metadata => metadata;
 
