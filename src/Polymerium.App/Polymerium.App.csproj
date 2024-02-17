@@ -17,6 +17,9 @@
         <Nullable>enable</Nullable>
         <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     </PropertyGroup>
+    <ItemGroup>
+        <None Remove="Modals\ExhibitPreviewModal.xaml"/>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
@@ -62,10 +65,14 @@
         <Folder Include="Assets\Icons\"/>
         <Folder Include="Assets\Placeholders\"/>
         <Folder Include="Components\"/>
-        <Folder Include="Modals\"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Modals\ExhibitPreviewModal.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Views\WorkbenchView.xaml">

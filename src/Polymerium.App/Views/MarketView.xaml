@@ -39,7 +39,7 @@
                                 QuerySubmitted="SearchBox_QuerySubmitted" />
             </StackPanel>
             <ProgressBar IsIndeterminate="True" VerticalAlignment="Bottom"
-                         Visibility="{x:Bind ViewModel.Results.IsLoading,Converter={StaticResource BoolToVisibilityConverter}}" />
+                         Visibility="{x:Bind ViewModel.Results.IsLoading,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource BoolToVisibilityConverter}}" />
         </Grid>
         <Grid Grid.Row="1">
             <ListView ItemsSource="{x:Bind ViewModel.Results,Mode=OneWay}" IncrementalLoadingTrigger="Edge"

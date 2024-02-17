@@ -2,7 +2,9 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
 using Trident.Abstractions.Repositories;
@@ -12,13 +14,23 @@ namespace Polymerium.App.ViewModels;
 
 public class WorkbenchViewModel : ViewModelBase
 {
+    private readonly ModalService _modalService;
     private readonly RepositoryAgent _repositoryAgent;
     private readonly ThumbnailSaver _thumbnailSaver;
-
-    private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
-    private LayerModel? model;
     private string? background;
     private Filter baseFilter = Filter.EMPTY;
+    private LayerModel? model;
+
+    private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
+
+    public WorkbenchViewModel(ThumbnailSaver thumbnailSaver, RepositoryAgent repositoryAgent, ModalService modalService)
+    {
+        _thumbnailSaver = thumbnailSaver;
+        _modalService = modalService;
+        _repositoryAgent = repositoryAgent;
+
+        OpenResourceModalCommand = new RelayCommand<ExhibitModel>(OpenResourceModal);
+    }
 
     public LayerModel? Model
     {
@@ -39,14 +51,6 @@ public class WorkbenchViewModel : ViewModelBase
     }
 
     public ICommand OpenResourceModalCommand { get; }
-
-    public WorkbenchViewModel(ThumbnailSaver thumbnailSaver, RepositoryAgent repositoryAgent)
-    {
-        _thumbnailSaver = thumbnailSaver;
-        _repositoryAgent = repositoryAgent;
-
-        OpenResourceModalCommand = new RelayCommand<ExhibitModel>(OpenResourceModal);
-    }
 
     public override bool OnAttached(object? maybeLayer)
     {
@@ -73,6 +77,11 @@ public class WorkbenchViewModel : ViewModelBase
 
     private void OpenResourceModal(ExhibitModel? exhibit)
     {
+        if (exhibit != null)
+        {
+            var modal = new ExhibitPreviewModal(exhibit);
+            _modalService.Pop(modal);
+        }
     }
 
     private ExhibitModel ToModel(Exhibit exhibit)

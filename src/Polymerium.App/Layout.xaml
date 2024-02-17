@@ -44,6 +44,50 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="OverlayStates">
+                <VisualState x:Name="Hidden" />
+                <VisualState x:Name="Shown">
+                    <VisualState.Setters>
+                        <Setter Target="PART_OverlayBorder.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualStateGroup.Transitions>
+                    <VisualTransition To="Shown">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder"
+                                                           Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame Value="Visible" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <PopInThemeAnimation Storyboard.TargetName="PART_OverlayPresenter" FromHorizontalOffset="0"
+                                                 FromVerticalOffset="100" />
+                            <FadeInThemeAnimation Storyboard.TargetName="PART_OverlayBorder" />
+                        </Storyboard>
+                    </VisualTransition>
+                    <VisualTransition To="Hidden">
+                        <Storyboard Completed="HiddenStoryboard_Completed">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder"
+                                                           Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame Value="Visible" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <FadeOutThemeAnimation Storyboard.TargetName="PART_OverlayBorder" />
+                            <DoubleAnimation Storyboard.TargetName="PART_OverlayScale"
+                                             Storyboard.TargetProperty="ScaleY" To="1.1"
+                                             Duration="{StaticResource ControlNormalAnimationDuration}">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseIn" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="PART_OverlayScale"
+                                             Storyboard.TargetProperty="ScaleX" To="1.1"
+                                             Duration="{StaticResource ControlNormalAnimationDuration}">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseIn" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </VisualTransition>
+                </VisualStateGroup.Transitions>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -229,15 +273,28 @@
                 <Frame x:Name="Root" CacheSize="9" />
             </NavigationView>
         </Grid>
-        <ItemsControl x:Name="NotificationContainer" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+        <Grid>
+            <Border x:Name="PART_OverlayBorder" Background="{ThemeResource SmokeFillColorDefaultBrush}"
+                    Visibility="Collapsed">
+                <ContentPresenter x:Name="PART_OverlayPresenter" Content="{x:Bind Overlay,Mode=OneWay}"
+                                  RenderTransformOrigin="0.5,0.5">
+                    <ContentPresenter.RenderTransform>
+                        <ScaleTransform x:Name="PART_OverlayScale" />
+                    </ContentPresenter.RenderTransform>
+                </ContentPresenter>
+            </Border>
+        </Grid>
+        <ItemsControl x:Name="NotificationContainer" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
                       Margin="0,0,0,46"
                       ItemsSource="{x:Bind Notifications}">
             <ItemsControl.Transitions>
-                <AddDeleteThemeTransition />
+                <TransitionCollection>
+                    <AddDeleteThemeTransition />
+                </TransitionCollection>
             </ItemsControl.Transitions>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Spacing="8" />
+                    <StackPanel Spacing="{StaticResource SmallGap}" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>

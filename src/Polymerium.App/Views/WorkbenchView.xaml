@@ -24,7 +24,8 @@
                           SelectionMode="None" Padding="{StaticResource PageContentMargin}">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="models:ExhibitModel">
-                            <controls:CardButton Padding="0" Width="160" Height="260" CornerRadius="6">
+                            <controls:CardButton Padding="0" Width="130" Height="220" CornerRadius="6"
+                                                 Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -53,7 +54,8 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <StackPanel Grid.Row="0">
-                                            <TextBlock Text="{x:Bind Inner.Name}" MaxLines="3"
+                                            <TextBlock Text="{x:Bind Inner.Name}" MaxLines="2" TextWrapping="Wrap"
+                                                       TextTrimming="CharacterEllipsis"
                                                        Style="{StaticResource BodyStrongTextBlockStyle}" />
                                         </StackPanel>
                                         <Grid Grid.Row="1" ColumnSpacing="{StaticResource TinyGap}">
@@ -133,7 +135,7 @@
                     </labs:Segmented>
                 </StackPanel>
                 <ProgressBar VerticalAlignment="Bottom" IsIndeterminate="True"
-                             Visibility="{x:Bind ViewModel.Results.IsLoading,FallbackValue=Collapsed,Converter={StaticResource BoolToVisibilityConverter}}" />
+                             Visibility="{x:Bind ViewModel.Results.IsLoading,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource BoolToVisibilityConverter}}" />
             </Grid>
             <Grid Grid.Row="1" />
         </Grid>

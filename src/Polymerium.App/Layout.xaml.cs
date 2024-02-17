@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Extensions;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Tasks;
 using Trident.Abstractions.Tasks;
@@ -21,8 +22,12 @@ namespace Polymerium.App;
 
 public sealed partial class Layout
 {
+    public static readonly DependencyProperty OverlayProperty =
+        DependencyProperty.Register(nameof(Overlay), typeof(ModalBase), typeof(Layout), new PropertyMetadata(null));
+
     private Action<Type, object?, NavigationTransitionInfo>? navigateHandler;
     private int runningTaskCount;
+
 
     public Layout()
     {
@@ -31,12 +36,21 @@ public sealed partial class Layout
         RunningTaskCount = this.ToBindable(x => x.runningTaskCount, (x, v) => x.runningTaskCount = v);
         AbortTaskCommand = new RelayCommand<TaskBase>(AbortTask);
         ClearTasksCommand = new RelayCommand(ClearTasks);
+        DismissModalCommand = new RelayCommand(DismissModal);
+    }
+
+
+    public ModalBase? Overlay
+    {
+        get => (ModalBase?)GetValue(OverlayProperty);
+        set => SetValue(OverlayProperty, value);
     }
 
     public ObservableCollection<TaskModel> Tasks { get; } = new();
     public ObservableCollection<NotificationItem> Notifications { get; } = new();
     public ICommand AbortTaskCommand { get; }
     public ICommand ClearTasksCommand { get; }
+    public ICommand DismissModalCommand { get; }
     public Bindable<Layout, int> RunningTaskCount { get; }
 
     public Border Titlebar => AppTitleBar;
@@ -58,6 +72,17 @@ public sealed partial class Layout
     public void OnEnqueueNotification(NotificationItem item)
     {
         DispatcherQueue.TryEnqueue(() => Notifications.Add(item));
+    }
+
+    public void OnPopModal(ModalBase modal)
+    {
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            modal.XamlRoot = XamlRoot;
+            modal.DismissCommand = DismissModalCommand;
+            Overlay = modal;
+            VisualStateManager.GoToState(this, "Shown", true);
+        });
     }
 
 
@@ -106,12 +131,12 @@ public sealed partial class Layout
             navigateHandler?.Invoke(item.View, null, args.RecommendedNavigationTransitionInfo);
     }
 
-    private void NavigationViewControl_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+    private void NavigationViewControl_BackRequested(NavigationView _, NavigationViewBackRequestedEventArgs __)
     {
         Root.GoBack();
     }
 
-    private void Hyperlink_OnClick(Hyperlink sender, HyperlinkClickEventArgs args)
+    private void Hyperlink_OnClick(Hyperlink _, HyperlinkClickEventArgs __)
     {
         FlyoutBase.ShowAttachedFlyout(TaskPanel);
     }
@@ -146,5 +171,15 @@ public sealed partial class Layout
         }
 
         DispatcherQueue.TryEnqueue(() => { RunningTaskCount.Value += offset; });
+    }
+
+    private void HiddenStoryboard_Completed(object sender, object e)
+    {
+        Overlay = null;
+    }
+
+    private void DismissModal()
+    {
+        VisualStateManager.GoToState(this, "Hidden", true);
     }
 }

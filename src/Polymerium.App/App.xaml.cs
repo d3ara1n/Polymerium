@@ -90,7 +90,8 @@ public partial class App
             .AddSingleton<NotificationService>()
             .AddSingleton<MessageService>()
             .AddSingleton<DialogService>()
-            .AddSingleton<InstanceStatusService>();
+            .AddSingleton<InstanceStatusService>()
+            .AddSingleton<ModalService>();
 
         // Trident Services
         services
@@ -138,11 +139,11 @@ public partial class App
     {
         Spawn(Provider.GetRequiredService<NavigationService>(), Provider.GetRequiredService<NotificationService>(),
             Provider.GetRequiredService<TaskService>(), Provider.GetRequiredService<MessageService>(),
-            Provider.GetRequiredService<DialogService>());
+            Provider.GetRequiredService<DialogService>(), Provider.GetRequiredService<ModalService>());
     }
 
     private void Spawn(NavigationService navigation, NotificationService notification, TaskService task,
-        MessageService message, DialogService dialog)
+        MessageService message, DialogService dialog, ModalService modal)
     {
         const string KEY_HEIGHT = "Window.Height";
         const string KEY_WIDTH = "Window.Width";
@@ -172,6 +173,7 @@ public partial class App
         };
         navigation.SetHandler(layout.OnNavigate);
         notification.SetHandler(layout.OnEnqueueNotification);
+        modal.SetHandler(layout.OnPopModal);
         task.SetHandler(layout.OnEnqueueTask);
         layout.SetMainMenu(navigation.MainNavMenu);
         layout.SetSideMenu(navigation.SideNavMenu);
