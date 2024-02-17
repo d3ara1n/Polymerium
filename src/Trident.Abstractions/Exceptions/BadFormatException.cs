@@ -15,4 +15,12 @@ public class BadFormatException : Exception
     public BadFormatException(string message) : base(message)
     {
     }
+
+    public BadFormatException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
+
+    public BadFormatException()
+    {
+    }
 }

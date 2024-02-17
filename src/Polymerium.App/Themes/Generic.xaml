@@ -28,6 +28,7 @@
     <Thickness x:Key="PageContentHeaderMargin">0,48,0,0</Thickness>
     <Thickness x:Key="PageContentNoHeaderMargin">32</Thickness>
 
+    <CornerRadius x:Key="MicroCornerRadius">2</CornerRadius>
     <CornerRadius x:Key="TinyCornerRadius">5</CornerRadius>
     <CornerRadius x:Key="SmallCornerRadius">10</CornerRadius>
     <CornerRadius x:Key="MediumCornerRadius">15</CornerRadius>

@@ -1,16 +1,15 @@
 ﻿using System.Collections.Concurrent;
-using PackageUrl;
 using Polymerium.Trident.Engines.Resolving;
 using Polymerium.Trident.Services;
 using Trident.Abstractions;
-using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Engines;
 
 public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<ResolveResult>
 {
-    private readonly IList<string> attachments = new List<string>();
+    private readonly IList<Attachment> attachments = new List<Attachment>();
     private Filter? repoFilter;
 
     public IAsyncEnumerator<ResolveResult> GetAsyncEnumerator(CancellationToken token = default)
@@ -19,9 +18,9 @@ public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<ResolveResult>
         return new ResolveEngineEnumerator(context, agent, repoFilter ?? Filter.EMPTY, token);
     }
 
-    public void AddAttachment(string purl)
+    public void AddAttachment(Attachment attachment)
     {
-        attachments.Add(purl);
+        attachments.Add(attachment);
     }
 
     public void SetFilter(Filter filter)
@@ -60,18 +59,15 @@ public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<ResolveResult>
             return ValueTask.CompletedTask;
         }
 
-        private static async Task<ResolveResult> ResolveAsync(string attachment, RepositoryAgent agent, Filter filter,
+        private static async Task<ResolveResult> ResolveAsync(Attachment attachment, RepositoryAgent agent,
+            Filter filter,
             CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return new ResolveResult(attachment, new OperationCanceledException());
             try
             {
-                var purl = new PackageURL(attachment);
-                if (purl.Type == null) throw new BadFormatException(attachment, "label");
-                if (purl.Name == null) throw new BadFormatException(attachment, "name");
-                var label = purl.Type;
-                var name = purl.Name;
-                var version = purl.Version;
-                var package = await agent.ResolveAsync(label, name, version, filter, token);
+                var package = await agent.ResolveAsync(attachment.Label, attachment.ProjectId, attachment.VersionId,
+                    filter, token);
                 return new ResolveResult(attachment, package);
             }
             catch (Exception e)

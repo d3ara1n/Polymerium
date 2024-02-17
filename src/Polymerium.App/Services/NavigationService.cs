@@ -16,7 +16,6 @@ public class NavigationService(ILogger<NavigationService> logger)
         new("Home", "/Assets/Icons/House.svg", typeof(HomeView)),
         new("Instances", "/Assets/Icons/Package.svg", typeof(DesktopView)),
         new("Accounts", "/Assets/Icons/Japanese dolls.svg", typeof(AccountView)),
-        new("Runtimes", "/Assets/Icons/Hot beverage.svg", typeof(RuntimeView)),
         new("Market", "/Assets/Icons/Shopping bags.svg", typeof(MarketView))
     };
 
@@ -34,7 +33,8 @@ public class NavigationService(ILogger<NavigationService> logger)
     public void Navigate(Type view, object? parameter = null, NavigationTransitionInfo? info = null,
         bool isRoot = false)
     {
-        logger.LogInformation("Navigating to {} with {} as {} in {}", view.Name, parameter, isRoot ? "root" : "subpage",
+        logger.LogInformation("Navigating to {} with \"{}\" as {} in {}", view.Name, parameter,
+            isRoot ? "root" : "subpage",
             info?.GetType().Name ?? "default transition");
         handler?.Invoke(view, parameter, info, isRoot);
     }

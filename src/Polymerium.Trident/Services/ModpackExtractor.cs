@@ -96,8 +96,7 @@ public class ModpackExtractor(
                 loaders.Add(storageLoader);
             }
 
-            var attachments = item.Original.Attachments
-                .Select(x => PurlHelper.MakePurl(x.Label, x.ProjectId, x.VersionId)).ToList();
+            var attachments = item.Original.Attachments;
             var layer = new Metadata.Layer(reference, true, item.Original.Summary, loaders, attachments);
             layers.Add(layer);
         }

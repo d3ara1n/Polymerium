@@ -22,6 +22,7 @@
             <Grid.BackgroundTransition>
                 <BrushTransition />
             </Grid.BackgroundTransition>
+            <Border Background="{ThemeResource LayerFillColorDefaultBrush}" />
             <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
                 <Grid>
                     <lab:Segmented x:Name="RepositorySelector" ItemsSource="{x:Bind ViewModel.Repositories}"
@@ -37,6 +38,8 @@
                 <AutoSuggestBox x:Name="SearchBox" PlaceholderText="Search for modpacks..." QueryIcon="Find"
                                 QuerySubmitted="SearchBox_QuerySubmitted" />
             </StackPanel>
+            <ProgressBar IsIndeterminate="True" VerticalAlignment="Bottom"
+                         Visibility="{x:Bind ViewModel.Results.IsLoading,Converter={StaticResource BoolToVisibilityConverter}}" />
         </Grid>
         <Grid Grid.Row="1">
             <ListView ItemsSource="{x:Bind ViewModel.Results,Mode=OneWay}" IncrementalLoadingTrigger="Edge"
@@ -83,11 +86,6 @@
                         </HyperlinkButton>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
             </ListView>
             <StackPanel Spacing="{StaticResource TinyGap}" HorizontalAlignment="Center" VerticalAlignment="Center"
                         Margin="{StaticResource MediumMargin}"

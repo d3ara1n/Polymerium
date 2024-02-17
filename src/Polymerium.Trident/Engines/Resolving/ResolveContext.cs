@@ -1,6 +1,8 @@
-﻿namespace Polymerium.Trident.Engines.Resolving;
+﻿using Trident.Abstractions.Resources;
 
-public class ResolveContext(IEnumerable<string> attachments)
+namespace Polymerium.Trident.Engines.Resolving;
+
+public class ResolveContext(IEnumerable<Attachment> attachments)
 {
-    public IEnumerable<string> Attachments { get; } = attachments;
+    public IEnumerable<Attachment> Attachments { get; } = attachments;
 }

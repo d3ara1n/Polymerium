@@ -8,7 +8,7 @@ namespace Polymerium.App.Models;
 
 public record LayerModel
 {
-    private CancellationTokenSource tokenSource = new();
+    private CancellationTokenSource tokenSource = CancellationTokenSource.CreateLinkedTokenSource(App.Current.Token);
 
     public LayerModel(Metadata.Layer inner, MetadataModel root)
     {
@@ -34,7 +34,7 @@ public record LayerModel
 
 
     public ReactiveCollection<Loader, LoaderModel> Loaders { get; }
-    public BindableCollection<string> Attachments { get; }
+    public BindableCollection<Attachment> Attachments { get; }
 
     public Bindable<Metadata.Layer, string> Summary { get; }
 

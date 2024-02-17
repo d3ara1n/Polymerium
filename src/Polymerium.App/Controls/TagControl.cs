@@ -4,11 +4,11 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Polymerium.App.Controls;
 
-public class IconLabel : HeaderedContentControl
+public class TagControl : HeaderedContentControl
 {
     // Using a DependencyProperty as the backing store for Icon.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty IconProperty =
-        DependencyProperty.Register("Icon", typeof(IconElement), typeof(IconLabel), new PropertyMetadata(null));
+        DependencyProperty.Register("Icon", typeof(IconElement), typeof(TagControl), new PropertyMetadata(null));
 
 
     public IconElement Icon

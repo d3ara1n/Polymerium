@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Extensions;
 using Polymerium.App.Models;
+using Polymerium.App.Tasks;
 using Trident.Abstractions.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -33,6 +34,7 @@ public sealed partial class Layout
     }
 
     public ObservableCollection<TaskModel> Tasks { get; } = new();
+    public ObservableCollection<NotificationItem> Notifications { get; } = new();
     public ICommand AbortTaskCommand { get; }
     public ICommand ClearTasksCommand { get; }
     public Bindable<Layout, int> RunningTaskCount { get; }
@@ -53,9 +55,9 @@ public sealed partial class Layout
         if (isRoot) Root.BackStack.Clear();
     }
 
-    public void OnEnqueueNotification(string text)
+    public void OnEnqueueNotification(NotificationItem item)
     {
-        NotificationContainer.Show(text);
+        DispatcherQueue.TryEnqueue(() => Notifications.Add(item));
     }
 
 

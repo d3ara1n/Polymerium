@@ -135,7 +135,6 @@ public class SettingViewModel : ObservableObject
     public async Task ScanRuntimeAsync()
     {
         await Task.Delay(TimeSpan.FromMilliseconds(1500));
-        _dispatcher.TryEnqueue(
-            () => _notificationService.Enqueue("Found nothing.\n(Maybe it's just a placebo button?)"));
+        _notificationService.PopInformation("Found nothing.\n(Maybe it's just a placebo button?)");
     }
 }

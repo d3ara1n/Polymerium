@@ -7,8 +7,6 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.App.Tasks;
-using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using Trident.Abstractions.Resources;
 
@@ -118,14 +116,39 @@ public class ModpackViewModel : ViewModelBase
 
     private void InstallModpack(ProjectVersionModel? version)
     {
-        if (version != null)
-        {
-            var task = _taskService.Create<InstallModpackTask>(Project.Inner, version.Inner, PurlHelper.MakePurl(
-                Project.Inner.Label,
-                Project.Inner.Id,
-                version.Inner.Id));
-            _taskService.Enqueue(task);
-        }
+        //if (version != null)
+        //{
+        //    var task = _taskService.Create<InstallModpackTask>(Project.Inner, version.Inner, PurlHelper.MakePurl(
+        //        Project.Inner.Label,
+        //        Project.Inner.Id,
+        //        version.Inner.Id));
+        //    _taskService.Enqueue(task);
+        //}
+
+        //protected override async Task OnThreadAsync()
+        //{
+        //    ReportProgress(status: "Downloading pack file...");
+        //    using var client = factory.CreateClient();
+        //    var stream = await client.GetStreamAsync(version.Download);
+        //    await using var memory = new MemoryStream();
+        //    await stream.CopyToAsync(memory);
+        //    memory.Position = 0;
+        //    ReportProgress(status: "Extracting metadata...");
+        //    var result = await extractor.ExtractAsync(memory, (project, version), Token);
+        //    if (result.IsSuccessful)
+        //    {
+        //        var container = result.Value;
+        //        logger.LogInformation("Downloaded extracted modpack {name} ready to solidify", container.Original.Name);
+        //        ReportProgress(status: "Exporting data & files...");
+        //        await extractor.SolidifyAsync(container, null);
+        //        logger.LogInformation("Solidified {name} as an managed instance", container.Original.Name);
+        //    }
+        //    else
+        //    {
+        //        logger.LogError("Install modpack failed for {error}", result.Error);
+        //        throw new ExtractException(result.Error, PurlHelper.MakePurl(project.Label, project.Id, version.Id));
+        //    }
+        //}
     }
 
     private void CopyToClipboard(string? content)

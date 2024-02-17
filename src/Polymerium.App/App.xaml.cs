@@ -9,6 +9,7 @@ using Windows.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
@@ -44,6 +45,7 @@ public partial class App
     public IServiceProvider Provider { get; }
 
     public Window Window { get; private set; } = null!;
+    public DispatcherQueue Dispatcher => Window.DispatcherQueue;
     public CancellationToken Token => tokenSource.Token;
 
     public static T ViewModel<T>()
@@ -113,8 +115,8 @@ public partial class App
             .AddViewModel<ToolboxViewModel>()
             .AddViewModel<ModpackViewModel>()
             .AddViewModel<MetadataViewModel>()
-            .AddViewModel<RuntimeViewModel>()
-            .AddViewModel<ConfigurationViewModel>();
+            .AddViewModel<ConfigurationViewModel>()
+            .AddViewModel<WorkbenchViewModel>();
 
         // Repositories
         services
@@ -158,7 +160,7 @@ public partial class App
             layout.OnActivate(args.WindowActivationState != WindowActivationState.Deactivated);
         window.Closed += (_, _) =>
         {
-            if (window.AppWindow.Presenter.Kind == AppWindowPresenterKind.Default)
+            if (window.AppWindow.Presenter.Kind is AppWindowPresenterKind.Default or AppWindowPresenterKind.Overlapped)
             {
                 var size = window.AppWindow.Size;
                 settings.Values[KEY_HEIGHT] = size.Height;

@@ -54,6 +54,8 @@ public class ConfigurationViewModel : ViewModelBase
                 ClearValue(Settings.GAME_WINDOW_WIDTH, nameof(WindowWidth));
                 ClearValue(Settings.GAME_WINDOW_HEIGHT, nameof(WindowHeight));
             }
+
+            OnPropertyChanged();
         }
     }
 
@@ -79,6 +81,7 @@ public class ConfigurationViewModel : ViewModelBase
             else
                 ClearValue(Settings.GAME_JVM_HOME, nameof(JvmHomeStatus));
             ChooseJavaCommand.NotifyCanExecuteChanged();
+            OnPropertyChanged();
         }
     }
 
@@ -93,6 +96,7 @@ public class ConfigurationViewModel : ViewModelBase
                 SetToDefault<uint>(Settings.GAME_JVM_MAX_MEMORY, nameof(JvmMaxMemory));
             else
                 ClearValue(Settings.GAME_JVM_MAX_MEMORY, nameof(JvmMaxMemory));
+            OnPropertyChanged();
         }
     }
 
@@ -111,6 +115,7 @@ public class ConfigurationViewModel : ViewModelBase
                 SetToDefault<string>(Settings.GAME_JVM_ADDITIONAL_ARGUMENTS, nameof(JvmAdditionalArguments));
             else
                 ClearValue(Settings.GAME_JVM_ADDITIONAL_ARGUMENTS, nameof(JvmAdditionalArguments));
+            OnPropertyChanged();
         }
     }
 

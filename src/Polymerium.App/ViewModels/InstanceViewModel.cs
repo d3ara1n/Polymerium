@@ -164,6 +164,7 @@ public class InstanceViewModel : ViewModelBase
 
     private void Play()
     {
+        // TODO: 通过创建 Task，让 TaskService 去跟踪后续进度包括任务完成或失败进行弹出通知。
         // var task = _taskService.Create<DeployInstanceTask>(Model.Key, Model.Inner);
         // _taskService.Enqueue(task);
         _instanceManager.Deploy(Model.Key, Model.Inner.Metadata, null, App.Current.Token);

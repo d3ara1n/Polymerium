@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.UI.Dispatching;
@@ -107,6 +106,6 @@ public class InstanceStatusService
     public InstanceStatusModel MustHave(string key)
     {
         if (TryFind(key, out var instance)) return instance;
-        throw new NotImplementedException();
+        return new InstanceStatusModel(key);
     }
 }

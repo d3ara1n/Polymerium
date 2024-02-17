@@ -40,6 +40,7 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
         InstanceStatusService instanceStatusService, InstanceManager instanceManager)
     {
         _dispatcher = DispatcherQueue.GetForCurrentThread();
+        _dispatcher.EnsureSystemDispatcherQueue();
         _navigation = navigation;
         _profileManager = profileManager;
         _extractor = extractor;
@@ -116,7 +117,7 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
         var result = _extractor.ExtractAsync(stream, null).GetAwaiter().GetResult();
         if (result.IsSuccessful) return result.Value;
 
-        _notification.Enqueue($"Invalid input {Path.GetFileName(path)}: {result.Error.ToString()}");
+        _notification.PopInformation($"Invalid input {Path.GetFileName(path)}: {result.Error}");
         return null;
     }
 
@@ -150,6 +151,6 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
         }
 
         _profileManager.Append(key, instanceName, null, new Metadata(version, new List<Metadata.Layer>()));
-        _notification.Enqueue($"{instanceName}({version}) has been added");
+        _notification.PopInformation($"{instanceName}({version}) has been added");
     }
 }

@@ -149,7 +149,7 @@ public static class CurseForgeHelper
                 ResourceKind.ResourcePack => CLASSID_RESOURCEPACK,
                 ResourceKind.World => CLASSID_WORLD,
                 _ => throw new NotSupportedException()
-            }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlPathEncode(query)}&sortField=2&sortOrder=desc"
+            }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlPathEncode(query)}&sortOrder=desc"
             + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
             + (
                 (kind == ResourceKind.Mod || kind == ResourceKind.Modpack) && modLoaderId != null

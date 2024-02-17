@@ -20,7 +20,7 @@ public record AttachmentModel
 
     private string _versionName;
 
-    public AttachmentModel(string inner, LayerModel root, DataLoadingState state, string? projectName,
+    public AttachmentModel(Attachment inner, LayerModel root, DataLoadingState state, string? projectName,
         string? versionName,
         Uri? thumbnail, string? summary, Uri? reference, ResourceKind? kind, ICommand open, ICommand retry,
         ICommand delete)
@@ -49,7 +49,7 @@ public record AttachmentModel
         Kind = this.ToBindable(x => x._kind, (x, v) => x._kind = v);
     }
 
-    public string Inner { get; }
+    public Attachment Inner { get; }
     public LayerModel Root { get; }
     public Bindable<AttachmentModel, DataLoadingState> State { get; }
     public Bindable<AttachmentModel, string> ProjectName { get; }

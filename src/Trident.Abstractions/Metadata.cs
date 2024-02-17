@@ -11,7 +11,7 @@ public record Metadata(string Version, IList<Metadata.Layer> Layers)
         bool Enabled,
         string Summary,
         IList<Loader> Loaders,
-        IList<string> Attachments)
+        IList<Attachment> Attachments)
     {
         public string? Source { get; set; } = Source;
         public bool Enabled { get; set; } = Enabled;

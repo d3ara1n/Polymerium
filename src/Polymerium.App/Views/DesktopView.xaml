@@ -61,7 +61,7 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48"
+                                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48" Height="48"
                                                      Stretch="Fill" />
                                     <StackPanel Grid.Column="1">
                                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"

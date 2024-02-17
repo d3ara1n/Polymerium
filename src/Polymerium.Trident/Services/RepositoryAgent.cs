@@ -46,20 +46,20 @@ public class RepositoryAgent(
                     var cached = JsonSerializer.Deserialize<T>(content);
                     if (cached != null)
                     {
-                        logger.LogInformation("Cache hit: {path}", path);
+                        logger.LogDebug("Cache hit: {path}", path);
                         return cached;
                     }
 
-                    logger.LogInformation("Bad cache hit: {path}", path);
+                    logger.LogDebug("Bad cache hit: {path}", path);
                 }
                 else
                 {
-                    logger.LogInformation("Expired cache hit: {path}", path);
+                    logger.LogDebug("Expired cache hit: {path}", path);
                 }
             }
             catch (Exception e)
             {
-                logger.LogInformation("Broken cache hit: {path} for {message}", path, e.Message);
+                logger.LogError(e, "Broken cache hit: {path}", path);
             }
 
         try
@@ -73,11 +73,11 @@ public class RepositoryAgent(
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir!);
                 await File.WriteAllTextAsync(save, content, token);
-                logger.LogInformation("Cache missed but recorded: {path}", save);
+                logger.LogDebug("Cache missed but recorded: {path}", save);
             }
             else
             {
-                logger.LogInformation("Cache missed: {obj}", result!.GetType().Name);
+                logger.LogDebug("Cache missed: {obj}", result!.GetType().Name);
             }
 
             return result;

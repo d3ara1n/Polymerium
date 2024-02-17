@@ -62,9 +62,15 @@
         <Folder Include="Assets\Icons\"/>
         <Folder Include="Assets\Placeholders\"/>
         <Folder Include="Components\"/>
+        <Folder Include="Modals\"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\WorkbenchView.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Dialogs\CreateProfileDialog.xaml">
@@ -102,11 +108,6 @@
         </Page>
     </ItemGroup>
     <ItemGroup>
-        <Page Update="Views\RuntimeView.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
         <Page Update="Themes\Fonts.xaml">
             <Generator>MSBuild:Compile</Generator>
         </Page>
@@ -132,7 +133,7 @@
         </Page>
     </ItemGroup>
     <ItemGroup>
-        <Page Update="Controls\IconLabel.xaml">
+        <Page Update="Controls\TagControl.xaml">
             <Generator>MSBuild:Compile</Generator>
         </Page>
     </ItemGroup>

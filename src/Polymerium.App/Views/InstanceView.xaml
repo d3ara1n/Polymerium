@@ -34,42 +34,42 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                        <controls:IconLabel VerticalAlignment="Bottom">
-                            <controls:IconLabel.Icon>
+                        <controls:TagControl VerticalAlignment="Bottom">
+                            <controls:TagControl.Icon>
                                 <FontIcon Glyph="&#xE734;" FontSize="30" />
-                            </controls:IconLabel.Icon>
-                            <controls:IconLabel.Header>
+                            </controls:TagControl.Icon>
+                            <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TYPE" />
-                            </controls:IconLabel.Header>
+                            </controls:TagControl.Header>
                             <TextBlock Text="{x:Bind ViewModel.Model.Type,Mode=OneWay}" />
-                        </controls:IconLabel>
-                        <controls:IconLabel VerticalAlignment="Bottom">
-                            <controls:IconLabel.Icon>
+                        </controls:TagControl>
+                        <controls:TagControl VerticalAlignment="Bottom">
+                            <controls:TagControl.Icon>
                                 <FontIcon Glyph="&#xE8EC;" FontSize="30" />
-                            </controls:IconLabel.Icon>
-                            <controls:IconLabel.Header>
+                            </controls:TagControl.Icon>
+                            <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="VERSION" />
-                            </controls:IconLabel.Header>
+                            </controls:TagControl.Header>
                             <TextBlock Text="{x:Bind ViewModel.Model.Inner.Metadata.Version,Mode=OneWay}" />
-                        </controls:IconLabel>
-                        <controls:IconLabel VerticalAlignment="Bottom">
-                            <controls:IconLabel.Icon>
+                        </controls:TagControl>
+                        <controls:TagControl VerticalAlignment="Bottom">
+                            <controls:TagControl.Icon>
                                 <FontIcon Glyph="&#xE787;" FontSize="30" />
-                            </controls:IconLabel.Icon>
-                            <controls:IconLabel.Header>
+                            </controls:TagControl.Icon>
+                            <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="LASTPLAY" />
-                            </controls:IconLabel.Header>
+                            </controls:TagControl.Header>
                             <TextBlock Text="{x:Bind ViewModel.Model.PlayedAt,Mode=OneWay}" />
-                        </controls:IconLabel>
-                        <controls:IconLabel VerticalAlignment="Bottom">
-                            <controls:IconLabel.Icon>
+                        </controls:TagControl>
+                        <controls:TagControl VerticalAlignment="Bottom">
+                            <controls:TagControl.Icon>
                                 <FontIcon Glyph="&#xE823;" FontSize="30" />
-                            </controls:IconLabel.Icon>
-                            <controls:IconLabel.Header>
+                            </controls:TagControl.Icon>
+                            <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="PLAYTIME" />
-                            </controls:IconLabel.Header>
+                            </controls:TagControl.Header>
                             <TextBlock Text="{x:Bind ViewModel.Model.PlayTime,Mode=OneWay}" />
-                        </controls:IconLabel>
+                        </controls:TagControl>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                         <HyperlinkButton Command="{x:Bind ViewModel.GotoMetadataViewCommand}"
@@ -184,7 +184,7 @@
                                 <TextBlock Text="Note" />
                             </StackPanel>
                             <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}"
-                                     TextWrapping="Wrap" PlaceholderText="Mode something..." />
+                                     TextWrapping="Wrap" PlaceholderText="Write something..." />
                         </StackPanel>
                     </Grid>
                 </controls:Card>

@@ -14,4 +14,8 @@ public class BadNetworkException : Exception
         $"Failed to download file({file}): Returned {code}")
     {
     }
+
+    public BadNetworkException()
+    {
+    }
 }

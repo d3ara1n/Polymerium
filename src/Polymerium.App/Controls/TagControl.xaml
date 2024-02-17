@@ -5,12 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Controls">
 
-    <Style TargetType="local:IconLabel" BasedOn="{StaticResource DefaultIconLabelStyle}" />
+    <Style TargetType="local:TagControl" BasedOn="{StaticResource DefaultTagControlStyle}" />
 
-    <Style x:Key="DefaultIconLabelStyle" TargetType="local:IconLabel">
+    <Style x:Key="DefaultTagControlStyle" TargetType="local:TagControl">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:IconLabel">
+                <ControlTemplate TargetType="local:TagControl">
                     <Grid ColumnSpacing="8">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

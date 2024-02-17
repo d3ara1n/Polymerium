@@ -4,17 +4,17 @@ namespace Polymerium.Trident.Engines.Resolving;
 
 public class ResolveResult
 {
-    public ResolveResult(string purl, Exception e)
+    public ResolveResult(Attachment attachment, Exception e)
     {
-        Purl = purl;
+        Attachment = attachment;
         IsResolvedSuccessfully = false;
         Result = null;
-        Exception = new ResolveException(purl, e);
+        Exception = new ResolveException(attachment, e);
     }
 
-    public ResolveResult(string purl, Package package)
+    public ResolveResult(Attachment attachment, Package package)
     {
-        Purl = purl;
+        Attachment = attachment;
         IsResolvedSuccessfully = true;
         Result = package;
         Exception = null;
@@ -25,5 +25,5 @@ public class ResolveResult
     public Package? Result { get; }
 
     public ResolveException? Exception { get; }
-    public string Purl { get; }
+    public Attachment Attachment { get; }
 }

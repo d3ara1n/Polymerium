@@ -1,66 +1,34 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using DotNext.Collections.Generic;
+using Trident.Abstractions.Tasks;
 
-namespace Trident.Abstractions.Tasks;
+namespace Polymerium.App.Tasks;
 
 public abstract class TaskBase(string key, string stage, string status)
 {
-    private readonly CancellationTokenSource source = new();
-
     private readonly IList<(WeakReference, MethodInfo)> subscribers = new List<(WeakReference, MethodInfo)>();
-    protected CancellationToken Token => source.Token;
-    public bool IsAborted => Token.IsCancellationRequested;
     public string Key => key;
     public DateTimeOffset CreatedAt { get; } = DateTimeOffset.Now;
-    public DateTimeOffset? EndedAt { get; private set; }
 
     public TaskState State { get; private set; } = TaskState.Idle;
     public uint? Progress { get; private set; }
     public string Stage { get; private set; } = stage;
     public string Status { get; private set; } = status;
+    public Exception? FailureReason { get; protected set; }
 
-    public void Start()
-    {
-        if (State != TaskState.Idle && !Token.IsCancellationRequested) return;
-        OnStart();
-    }
 
     public void Abort()
     {
-        if (IsAborted) return;
-        source.Cancel();
-        OnFault(new OperationCanceledException());
+        OnAbort();
     }
 
-    protected virtual void OnStart()
+    protected virtual void OnAbort()
     {
-        UpdateProgress(TaskState.Running);
-        var task = Task.Run(OnThreadAsync, Token);
-        task.ContinueWith(t =>
-        {
-            EndedAt = DateTimeOffset.Now;
-            if (t.IsCompletedSuccessfully)
-                OnFinish();
-            else if (t.IsCanceled)
-                OnFault(new OperationCanceledException());
-            else if (t.IsFaulted)
-                OnFault(t.Exception);
-            else
-                throw new NotImplementedException();
-        }, Token);
     }
 
-    protected virtual void OnFinish()
-    {
-        UpdateProgress(TaskState.Finished);
-    }
-
-    protected virtual void OnFault(Exception? error)
-    {
-        UpdateProgress(TaskState.Faulted);
-    }
-
-    protected abstract Task OnThreadAsync();
 
     protected void ReportProgress(uint? progress = null, string? stage = null, string? status = null)
     {

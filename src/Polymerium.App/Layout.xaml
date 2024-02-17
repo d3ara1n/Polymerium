@@ -191,9 +191,6 @@
                                                                         <toolkit:Case Value="Finished">
                                                                             <TextBlock Text="Finished" />
                                                                         </toolkit:Case>
-                                                                        <toolkit:Case Value="Aborted">
-                                                                            <TextBlock Text="Aborted" />
-                                                                        </toolkit:Case>
                                                                         <toolkit:Case Value="Faulted">
                                                                             <TextBlock Text="Faulted" />
                                                                         </toolkit:Case>
@@ -232,6 +229,23 @@
                 <Frame x:Name="Root" CacheSize="9" />
             </NavigationView>
         </Grid>
-        <toolkit:InAppNotification x:Name="NotificationContainer" />
+        <ItemsControl x:Name="NotificationContainer" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                      Margin="0,0,0,46"
+                      ItemsSource="{x:Bind Notifications}">
+            <ItemsControl.Transitions>
+                <AddDeleteThemeTransition />
+            </ItemsControl.Transitions>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Spacing="8" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="models:NotificationItem">
+                    <InfoBar Message="{x:Bind Message}" Severity="{x:Bind Severity}" HorizontalAlignment="Center"
+                             IsOpen="True" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

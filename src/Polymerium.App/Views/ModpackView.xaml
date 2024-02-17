@@ -147,61 +147,59 @@
                         </lab:Segmented>
                         <toolkit:SwitchPresenter Value="{x:Bind SubmenuSelector.SelectedValue, Mode=OneWay}">
                             <toolkit:Case Value="CASE_VERSIONS">
-                                <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                                    <ListView ItemsSource="{x:Bind ViewModel.Project.Versions,Mode=OneWay}"
-                                              Padding="{StaticResource TinyMargin}"
-                                              SelectionMode="Single"
-                                              SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="models:ProjectVersionModel">
-                                                <StackPanel Margin="{StaticResource SmallMargin}">
-                                                    <TextBlock Text="{x:Bind Inner.Name}" />
-                                                    <StackPanel Orientation="Horizontal"
-                                                                Spacing="{StaticResource TinyGap}">
-                                                        <toolkit:SwitchPresenter Value="{x:Bind Inner.ReleaseType}"
-                                                            TargetType="resources:ReleaseType">
-                                                            <toolkit:Case Value="Release">
-                                                                <Grid>
-                                                                    <Rectangle
+                                <ListView ItemsSource="{x:Bind ViewModel.Project.Versions,Mode=OneWay}"
+                                          Padding="{StaticResource TinyMargin}"
+                                          SelectionMode="Single"
+                                          SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ProjectVersionModel">
+                                            <StackPanel Margin="{StaticResource SmallMargin}">
+                                                <TextBlock Text="{x:Bind Inner.Name}" />
+                                                <StackPanel Orientation="Horizontal"
+                                                            Spacing="{StaticResource TinyGap}">
+                                                    <toolkit:SwitchPresenter Value="{x:Bind Inner.ReleaseType}"
+                                                                             TargetType="resources:ReleaseType">
+                                                        <toolkit:Case Value="Release">
+                                                            <Grid>
+                                                                <Rectangle
                                                                         Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
                                                                         Width="20" Height="20" />
-                                                                    <TextBlock Text="R"
-                                                                               Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                                                                               VerticalAlignment="Center"
-                                                                               HorizontalAlignment="Center" />
-                                                                </Grid>
-                                                            </toolkit:Case>
-                                                            <toolkit:Case Value="Beta">
-                                                                <Grid>
-                                                                    <Rectangle
+                                                                <TextBlock Text="R"
+                                                                           Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                                                           VerticalAlignment="Center"
+                                                                           HorizontalAlignment="Center" />
+                                                            </Grid>
+                                                        </toolkit:Case>
+                                                        <toolkit:Case Value="Beta">
+                                                            <Grid>
+                                                                <Rectangle
                                                                         Fill="{ThemeResource SystemFillColorAttentionBackgroundBrush}"
                                                                         Width="20" Height="20" />
-                                                                    <TextBlock Text="B"
-                                                                               Foreground="{ThemeResource SystemFillColorAttentionBrush}"
-                                                                               VerticalAlignment="Center"
-                                                                               HorizontalAlignment="Center" />
-                                                                </Grid>
-                                                            </toolkit:Case>
-                                                            <toolkit:Case Value="Alpha">
-                                                                <Grid>
-                                                                    <Rectangle
+                                                                <TextBlock Text="B"
+                                                                           Foreground="{ThemeResource SystemFillColorAttentionBrush}"
+                                                                           VerticalAlignment="Center"
+                                                                           HorizontalAlignment="Center" />
+                                                            </Grid>
+                                                        </toolkit:Case>
+                                                        <toolkit:Case Value="Alpha">
+                                                            <Grid>
+                                                                <Rectangle
                                                                         Fill="{ThemeResource SystemFillColorCautionBackgroundBrush}"
                                                                         Width="20" Height="20" />
-                                                                    <TextBlock Text="A"
-                                                                               Foreground="{ThemeResource SystemFillColorCautionBrush}"
-                                                                               VerticalAlignment="Center"
-                                                                               HorizontalAlignment="Center" />
-                                                                </Grid>
-                                                            </toolkit:Case>
-                                                        </toolkit:SwitchPresenter>
-                                                        <TextBlock Text="{x:Bind PublishedAt}" />
-                                                        <TextBlock Text="{x:Bind Labels}" />
-                                                    </StackPanel>
+                                                                <TextBlock Text="A"
+                                                                           Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                                           VerticalAlignment="Center"
+                                                                           HorizontalAlignment="Center" />
+                                                            </Grid>
+                                                        </toolkit:Case>
+                                                    </toolkit:SwitchPresenter>
+                                                    <TextBlock Text="{x:Bind PublishedAt}" />
+                                                    <TextBlock Text="{x:Bind Labels}" />
                                                 </StackPanel>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </ScrollViewer>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </toolkit:Case>
                             <toolkit:Case Value="CASE_INFORMATION">
                                 <StackPanel Margin="{StaticResource MediumMargin}" Spacing="{StaticResource TinyGap}">

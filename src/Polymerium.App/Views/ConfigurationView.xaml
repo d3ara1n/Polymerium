@@ -34,11 +34,13 @@
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Width">
                             <NumberBox Minimum="0"
-                                       Value="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}" />
+                                       Value="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}"
+                                       IsEnabled="{x:Bind ViewModel.IsWindowSizeOverridden,Mode=OneWay}" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Height">
                             <NumberBox Minimum="0"
-                                       Value="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}" />
+                                       Value="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}"
+                                       IsEnabled="{x:Bind ViewModel.IsWindowSizeOverridden,Mode=OneWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsWindowSizeOverridden,Mode=TwoWay}" />
@@ -74,7 +76,8 @@
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Memory in megabytes">
                             <NumberBox SpinButtonPlacementMode="Inline" SmallChange="256" LargeChange="1024"
-                                       Minimum="256" Value="{x:Bind ViewModel.JvmMaxMemory,Mode=TwoWay}" />
+                                       Minimum="256" Value="{x:Bind ViewModel.JvmMaxMemory,Mode=TwoWay}"
+                                       IsEnabled="{x:Bind ViewModel.IsJvmMaxMemoryOverridden,Mode=OneWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmMaxMemoryOverridden,Mode=TwoWay}" />
@@ -87,7 +90,8 @@
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Argument line">
                             <TextBox
-                                Text="{x:Bind ViewModel.JvmAdditionalArguments,Mode=TwoWay}" />
+                                Text="{x:Bind ViewModel.JvmAdditionalArguments,Mode=TwoWay}"
+                                IsEnabled="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden,Mode=OneWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden,Mode=TwoWay}" />

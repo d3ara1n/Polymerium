@@ -1,12 +1,15 @@
-﻿namespace Polymerium.Trident.Engines.Resolving;
+﻿using Trident.Abstractions.Resources;
+
+namespace Polymerium.Trident.Engines.Resolving;
 
 public class ResolveException : Exception
 {
-    public ResolveException(string purl, Exception inner) : base($"Failed to resolve {purl}: {inner.Message}", inner)
+    public ResolveException(Attachment attachment, Exception inner) : base(
+        $"Failed to resolve \"{attachment.Label}:{attachment.ProjectId}/{attachment.VersionId ?? "N/A"}\": {inner.Message}",
+        inner)
     {
+        Attachment = attachment;
     }
 
-    public ResolveException(string message) : base(message)
-    {
-    }
+    public Attachment Attachment { get; }
 }
