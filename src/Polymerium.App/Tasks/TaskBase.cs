@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DotNext.Collections.Generic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DotNext.Collections.Generic;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.Tasks;

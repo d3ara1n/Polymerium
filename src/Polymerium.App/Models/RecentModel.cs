@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Input;
-using Humanizer;
+﻿using Humanizer;
 using Polymerium.Trident.Extensions;
+using System;
+using System.Windows.Input;
 using Trident.Abstractions;
 
 namespace Polymerium.App.Models;

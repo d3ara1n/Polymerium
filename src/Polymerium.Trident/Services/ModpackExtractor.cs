@@ -1,9 +1,9 @@
-﻿using System.IO.Compression;
-using DotNext;
+﻿using DotNext;
 using Microsoft.Extensions.Logging;
 using NanoidDotNet;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services.Extracting;
+using System.IO.Compression;
 using Trident.Abstractions;
 using Trident.Abstractions.Errors;
 using Trident.Abstractions.Extractors;

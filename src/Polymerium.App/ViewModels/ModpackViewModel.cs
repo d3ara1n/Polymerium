@@ -1,14 +1,14 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Windows.ApplicationModel.DataTransfer;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Services;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Trident.Abstractions.Resources;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace Polymerium.App.ViewModels;
 
@@ -22,8 +22,8 @@ public class ModpackViewModel : ViewModelBase
     private DataLoadingState dataState = DataLoadingState.Loading;
     private string failureReason = string.Empty;
 
-    private ProjectModel project = ProjectModel.DUMMY;
-    private ProjectVersionModel? selectedVersion;
+    private ModpackModel project = ModpackModel.DUMMY;
+    private ModpackVersionModel? selectedVersion;
 
     public ModpackViewModel(RepositoryAgent repositoryAgent, TaskService taskService,
         NotificationService notificationService)
@@ -33,7 +33,7 @@ public class ModpackViewModel : ViewModelBase
         _taskService = taskService;
         _notificationService = notificationService;
         OpenReferenceCommand = new RelayCommand<Uri>(OpenReference);
-        InstallModpackCommand = new RelayCommand<ProjectVersionModel>(InstallModpack);
+        InstallModpackCommand = new RelayCommand<ModpackVersionModel>(InstallModpack);
         CopyToClipboardCommand = new RelayCommand<string>(CopyToClipboard);
     }
 
@@ -43,13 +43,13 @@ public class ModpackViewModel : ViewModelBase
         set => SetProperty(ref dataState, value);
     }
 
-    public ProjectModel Project
+    public ModpackModel Project
     {
         get => project;
         set => SetProperty(ref project, value);
     }
 
-    public ProjectVersionModel? SelectedVersion
+    public ModpackVersionModel? SelectedVersion
     {
         get => selectedVersion;
         set => SetProperty(ref selectedVersion, value);
@@ -94,7 +94,7 @@ public class ModpackViewModel : ViewModelBase
         {
             if (got != null)
             {
-                Project = new ProjectModel(got);
+                Project = new ModpackModel(got);
                 DataState = DataLoadingState.Done;
             }
             else
@@ -108,13 +108,10 @@ public class ModpackViewModel : ViewModelBase
     private void OpenReference(Uri? reference)
     {
         if (reference != null)
-            Process.Start(new ProcessStartInfo(reference.AbsoluteUri)
-            {
-                UseShellExecute = true
-            });
+            Process.Start(new ProcessStartInfo(reference.AbsoluteUri) { UseShellExecute = true });
     }
 
-    private void InstallModpack(ProjectVersionModel? version)
+    private void InstallModpack(ModpackVersionModel? version)
     {
         //if (version != null)
         //{
@@ -155,10 +152,7 @@ public class ModpackViewModel : ViewModelBase
     {
         if (!string.IsNullOrEmpty(content))
         {
-            var package = new DataPackage
-            {
-                RequestedOperation = DataPackageOperation.Copy
-            };
+            var package = new DataPackage { RequestedOperation = DataPackageOperation.Copy };
             package.SetText(content);
             Clipboard.SetContent(package);
         }

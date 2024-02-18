@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
@@ -14,6 +7,13 @@ using Polymerium.App.Views;
 using Polymerium.Trident.Engines;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
@@ -23,10 +23,10 @@ public class MetadataViewModel : ViewModelBase
 {
     private readonly DialogService _dialogService;
     private readonly DispatcherQueue _dispatcher;
+    private readonly NavigationService _navigationService;
     private readonly ProfileManager _profileManager;
     private readonly IServiceProvider _provider;
     private readonly RepositoryAgent _repositoryAgent;
-    private readonly NavigationService _navigationService;
 
     private DataLoadingState attachmentLoadingState = DataLoadingState.Loading;
 
@@ -157,10 +157,7 @@ public class MetadataViewModel : ViewModelBase
     private void OpenAttachment(AttachmentModel? attachment)
     {
         if (attachment != null && attachment.Reference.Value != null)
-            Process.Start(new ProcessStartInfo(attachment.Reference.Value.AbsoluteUri)
-            {
-                UseShellExecute = true
-            });
+            Process.Start(new ProcessStartInfo(attachment.Reference.Value.AbsoluteUri) { UseShellExecute = true });
     }
 
     private void RetryAttachment(AttachmentModel? attachment)

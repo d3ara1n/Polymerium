@@ -1,5 +1,5 @@
-﻿using System.Windows.Input;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
+using System.Windows.Input;
 
 namespace Polymerium.App.Modals;
 

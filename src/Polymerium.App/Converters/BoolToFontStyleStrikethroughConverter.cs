@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Data;
+using System;
 using Windows.UI.Text;
-using Microsoft.UI.Xaml.Data;
 
 namespace Polymerium.App.Converters;
 

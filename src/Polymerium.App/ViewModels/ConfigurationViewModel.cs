@@ -1,12 +1,12 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using Polymerium.App.Models;
+using Polymerium.App.Services;
+using Polymerium.Trident.Services;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
 using Windows.Storage.Pickers;
-using CommunityToolkit.Mvvm.Input;
-using Polymerium.App.Models;
-using Polymerium.App.Services;
-using Polymerium.Trident.Services;
 using WinRT.Interop;
 
 namespace Polymerium.App.ViewModels;

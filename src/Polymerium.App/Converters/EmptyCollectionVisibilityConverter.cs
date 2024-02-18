@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Data;
 
 namespace Polymerium.App.Converters;
 

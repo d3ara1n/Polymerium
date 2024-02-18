@@ -1,8 +1,8 @@
-﻿using System;
-using Humanizer;
+﻿using Humanizer;
 using Polymerium.App.Extensions;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
+using System;
 using Trident.Abstractions;
 
 namespace Polymerium.App.Models;

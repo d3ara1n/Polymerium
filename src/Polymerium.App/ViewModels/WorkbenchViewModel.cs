@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
+using System.Linq;
+using System.Windows.Input;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
@@ -30,6 +30,8 @@ public class WorkbenchViewModel : ViewModelBase
         _repositoryAgent = repositoryAgent;
 
         OpenResourceModalCommand = new RelayCommand<ExhibitModel>(OpenResourceModal);
+        InstallAttachmentCommand = new RelayCommand<ModpackModel>(InstallAttachment);
+        UninstallAttachmentCommand = new RelayCommand<ModpackModel>(UninstallAttachment);
     }
 
     public LayerModel? Model
@@ -51,6 +53,8 @@ public class WorkbenchViewModel : ViewModelBase
     }
 
     public ICommand OpenResourceModalCommand { get; }
+    private ICommand InstallAttachmentCommand { get; }
+    private ICommand UninstallAttachmentCommand { get; }
 
     public override bool OnAttached(object? maybeLayer)
     {
@@ -69,17 +73,19 @@ public class WorkbenchViewModel : ViewModelBase
     {
         Results = new IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>(
             new IncrementalFactorySource<ExhibitModel>(async (page, limit, token) =>
-                (await _repositoryAgent.SearchAsync(label, query, page, limit, baseFilter with
-                {
-                    Kind = kind
-                }, token)).Select(ToModel)), 10);
+                (await _repositoryAgent.SearchAsync(label, query, page, limit, baseFilter with { Kind = kind }, token))
+                .Select(ToModel)), 10);
     }
 
     private void OpenResourceModal(ExhibitModel? exhibit)
     {
         if (exhibit != null)
         {
-            var modal = new ExhibitPreviewModal(exhibit);
+            Attachment? installed =
+                Model?.Attachments.FirstOrDefault(
+                    x => x.Label == exhibit.Inner.Label && x.ProjectId == exhibit.Inner.Id);
+            ProjectPreviewModal modal = new ProjectPreviewModal(exhibit, _repositoryAgent, installed,
+                InstallAttachmentCommand, UninstallAttachmentCommand);
             _modalService.Pop(modal);
         }
     }
@@ -91,4 +97,8 @@ public class WorkbenchViewModel : ViewModelBase
         result.HasAdded.Value = added;
         return result;
     }
+
+    private void InstallAttachment(ModpackModel? project) { }
+
+    private void UninstallAttachment(ModpackModel? project) { }
 }

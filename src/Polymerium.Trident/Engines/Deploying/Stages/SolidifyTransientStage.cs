@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using System.IO.Compression;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Engines.Downloading;
+using System.Diagnostics;
+using System.IO.Compression;
 using Trident.Abstractions.Exceptions;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages;
@@ -42,11 +42,13 @@ public class SolidifyTransientStage(DownloadEngine downloader) : StageBase
                 case TransientData.FragileFile fragile:
                     entities.Add(new Entity(fragile.TargetPath, fragile.SourcePath));
                     break;
+
                 case TransientData.PersistentFile:
                     throw new NotImplementedException();
                 case TransientData.PresentFile:
                     // do nothing
                     break;
+
                 default:
                     throw new NotImplementedException();
             }
@@ -65,7 +67,6 @@ public class SolidifyTransientStage(DownloadEngine downloader) : StageBase
                 if (dir != null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 File.Copy(presistent.SourcePath, presistent.TargetPath);
             }
-
 
         foreach (var explosive in transient.ExplosiveFiles)
         {

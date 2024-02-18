@@ -1,6 +1,6 @@
-﻿using System.Threading;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Extensions;
+using System.Threading;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 

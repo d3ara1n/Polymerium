@@ -1,7 +1,7 @@
-﻿using System.Security.Cryptography;
+﻿using Polymerium.Trident.Services;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using Polymerium.Trident.Services;
 using Trident.Abstractions;
 using Trident.Abstractions.Building;
 

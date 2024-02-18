@@ -12,13 +12,11 @@ public class DummyRepository : IRepository
         throw new NotImplementedException();
     }
 
-
     public Task<Package> ResolveAsync(string projectId, string? versionId, Filter filter,
         CancellationToken token)
     {
         throw new NotImplementedException();
     }
-
 
     public Task<IEnumerable<Exhibit>> SearchAsync(string keyword, uint page, uint limit, Filter filter,
         CancellationToken token)

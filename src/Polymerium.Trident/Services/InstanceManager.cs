@@ -1,12 +1,12 @@
-﻿using System.Collections.Concurrent;
-using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Engines;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Engines.Deploying.Stages;
 using Polymerium.Trident.Launching;
 using Polymerium.Trident.Services.Instances;
+using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using Trident.Abstractions;
 using Trident.Abstractions.Tasks;
 
@@ -81,7 +81,7 @@ public class InstanceManager(IServiceProvider provider, ILogger<InstanceManager>
         throw new NotImplementedException();
     }
 
-    private async Task LaunchInternalAsync()
+    private void LaunchInternal()
     {
         throw new NotImplementedException();
     }

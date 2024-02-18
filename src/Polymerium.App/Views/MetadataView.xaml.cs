@@ -1,4 +1,3 @@
-using System;
 using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -6,6 +5,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -19,10 +19,7 @@ public sealed partial class MetadataView : Page
 {
     public MetadataView()
     {
-        AttachmentView = new AdvancedCollectionView(ViewModel.Attachments)
-        {
-            Filter = Filter
-        };
+        AttachmentView = new AdvancedCollectionView(ViewModel.Attachments) { Filter = Filter };
         InitializeComponent();
     }
 
@@ -46,8 +43,7 @@ public sealed partial class MetadataView : Page
     {
         var dialog = new InputDialog(XamlRoot)
         {
-            Message = "Summarize usage of your new layer",
-            Placeholder = "New Layer"
+            Message = "Summarize usage of your new layer", Placeholder = "New Layer"
         };
         if (await dialog.ShowAsync() == ContentDialogResult.Primary) ViewModel.AddLayer(dialog.Result);
     }

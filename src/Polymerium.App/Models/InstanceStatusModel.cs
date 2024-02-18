@@ -1,7 +1,7 @@
-﻿using System;
-using Polymerium.App.Extensions;
+﻿using Polymerium.App.Extensions;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using System;
 
 namespace Polymerium.App.Models;
 

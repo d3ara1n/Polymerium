@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -11,6 +7,10 @@ using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
@@ -19,9 +19,9 @@ namespace Polymerium.App.ViewModels;
 public class MarketViewModel : ObservableObject
 {
     private readonly NavigationService _navigation;
+    private readonly RepositoryAgent _repositoryAgent;
 
     private readonly Filter filter = new(null, null, ResourceKind.Modpack);
-    private readonly RepositoryAgent _repositoryAgent;
 
     private IncrementalLoadingCollection<IncrementalFactorySource<ExhibitModel>, ExhibitModel>? results;
 
@@ -52,10 +52,8 @@ public class MarketViewModel : ObservableObject
     private void GotoModpackView(ExhibitModel? model)
     {
         if (model != null)
-            _navigation.Navigate(typeof(ModpackView), model, new SlideNavigationTransitionInfo
-            {
-                Effect = SlideNavigationTransitionEffect.FromRight
-            });
+            _navigation.Navigate(typeof(ModpackView), model,
+                new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
     }
 
     public void UpdateSource(string label, string query)

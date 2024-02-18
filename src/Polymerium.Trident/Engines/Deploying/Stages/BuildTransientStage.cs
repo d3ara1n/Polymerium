@@ -1,8 +1,8 @@
-﻿using System.Net.Http.Json;
+﻿using Microsoft.Extensions.Logging;
+using Polymerium.Trident.Models.Minecraft;
+using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
-using Polymerium.Trident.Models.Minecraft;
 using Trident.Abstractions.Building;
 using Trident.Abstractions.Exceptions;
 
@@ -46,7 +46,6 @@ public class BuildTransientStage(IHttpClientFactory factory) : StageBase
                 transient.AddExplosive(new TransientData.ExplosiveFile(libraryPath, nativesDir));
         }
 
-
         var bag = BuildKeywords(Context.Keywords);
         Logger.LogInformation("Run processors with keywords bag: [{bag}]", string.Join(',', bag));
         var processors = Context.Artifact!.Processors.ToArray();
@@ -72,6 +71,7 @@ public class BuildTransientStage(IHttpClientFactory factory) : StageBase
                         }
 
                         break;
+
                     default:
                         throw new ResourceIdentityUnrecognizedException(processor.Action, nameof(Artifact.Processor));
                 }
@@ -145,7 +145,7 @@ public class BuildTransientStage(IHttpClientFactory factory) : StageBase
         return result;
     }
 
-    private async Task ProcessStorageAsync()
+    private void ProcessStorage()
     {
     }
 }

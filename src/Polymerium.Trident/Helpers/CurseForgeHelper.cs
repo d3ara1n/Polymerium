@@ -1,8 +1,8 @@
-﻿using System.Net.Http.Json;
-using System.Web;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Models.Eternal;
 using Polymerium.Trident.Repositories;
+using System.Net.Http.Json;
+using System.Web;
 using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Resources;
 

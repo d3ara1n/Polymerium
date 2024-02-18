@@ -1,7 +1,7 @@
-﻿using System.Collections.Concurrent;
-using System.Security.Cryptography;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Engines.Downloading;
+using System.Collections.Concurrent;
+using System.Security.Cryptography;
 
 namespace Polymerium.Trident.Engines;
 

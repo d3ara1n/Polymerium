@@ -1,5 +1,5 @@
-﻿using System;
-using Polymerium.App.Modals;
+﻿using Polymerium.App.Modals;
+using System;
 
 namespace Polymerium.App.Services;
 

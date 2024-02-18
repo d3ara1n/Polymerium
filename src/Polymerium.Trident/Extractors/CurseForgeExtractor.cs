@@ -1,8 +1,8 @@
-﻿using System.Text.Json;
-using DotNext;
+﻿using DotNext;
 using DotNext.Collections.Generic;
 using Polymerium.Trident.Models.CurseForge;
 using Polymerium.Trident.Repositories;
+using System.Text.Json;
 using Trident.Abstractions.Errors;
 using Trident.Abstractions.Extractors;
 using Trident.Abstractions.Resources;
@@ -35,17 +35,10 @@ public class CurseForgeExtractor(JsonSerializerOptions options) : IExtractor
             var loaders = manifest.Minecraft.ModLoaders.Select(x => (ToLoader(x), x.Primary)).ToArray();
             if (loaders.Any(x => x.Item1 == null))
                 return Task.FromResult(new Result<ExtractedContainer, ExtractError>(ExtractError.Unsupported));
-            var required = new ContainedLayer
-            {
-                Summary = manifest.Name,
-                OverrideDirectoryName = manifest.Overrides
-            };
+            var required = new ContainedLayer { Summary = manifest.Name, OverrideDirectoryName = manifest.Overrides };
             required.Loaders.AddAll(loaders.Where(x => x.Primary).Select(x => x.Item1!));
             required.Attachments.AddAll(manifest.Files.Where(x => x.Required).Select(ToAttachment));
-            var optional = new ContainedLayer
-            {
-                Summary = $"{manifest.Name}(Optional)"
-            };
+            var optional = new ContainedLayer { Summary = $"{manifest.Name}(Optional)" };
             optional.Loaders.AddAll(loaders.Where(x => !x.Primary).Select(x => x.Item1!));
             optional.Attachments.AddAll(manifest.Files.Where(x => !x.Required).Select(ToAttachment));
             var container = new ExtractedContainer(manifest.Name, manifest.Minecraft.Version);

@@ -152,7 +152,7 @@
                                           SelectionMode="Single"
                                           SelectedValue="{x:Bind ViewModel.SelectedVersion,Mode=TwoWay}">
                                     <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:ProjectVersionModel">
+                                        <DataTemplate x:DataType="models:ModpackVersionModel">
                                             <StackPanel Margin="{StaticResource SmallMargin}">
                                                 <TextBlock Text="{x:Bind Inner.Name}" />
                                                 <StackPanel Orientation="Horizontal"

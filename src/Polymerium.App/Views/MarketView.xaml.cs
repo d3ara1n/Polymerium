@@ -1,11 +1,11 @@
-using System;
-using System.Linq;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -38,10 +38,7 @@ public sealed partial class MarketView : Page
         var first = (RepositoryModel?)e.AddedItems.FirstOrDefault();
         if (first != null)
         {
-            HeaderImage = new ImageBrush
-            {
-                ImageSource = new BitmapImage(new Uri($"ms-appx://{first.Background}"))
-            };
+            HeaderImage = new ImageBrush { ImageSource = new BitmapImage(new Uri($"ms-appx://{first.Background}")) };
             Submit(first, SearchBox.Text);
         }
     }

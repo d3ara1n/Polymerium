@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Polymerium.App.Extensions;
+using System;
 using System.Windows.Input;
-using Polymerium.App.Extensions;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models;

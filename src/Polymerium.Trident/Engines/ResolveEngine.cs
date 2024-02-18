@@ -1,6 +1,6 @@
-﻿using System.Collections.Concurrent;
-using Polymerium.Trident.Engines.Resolving;
+﻿using Polymerium.Trident.Engines.Resolving;
 using Polymerium.Trident.Services;
+using System.Collections.Concurrent;
 using Trident.Abstractions;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
@@ -36,7 +36,6 @@ public class ResolveEngine(RepositoryAgent agent) : IAsyncEngine<ResolveResult>
     {
         private readonly ConcurrentQueue<Task<ResolveResult>> tasks =
             new(context.Attachments.Select(x => ResolveAsync(x, agent, filter, token)));
-
 
         public async ValueTask<bool> MoveNextAsync()
         {

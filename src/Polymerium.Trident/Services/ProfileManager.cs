@@ -1,8 +1,8 @@
-﻿using System.Text.Json;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services.Profiles;
+using System.Text.Json;
 using Trident.Abstractions;
 
 namespace Polymerium.Trident.Services;

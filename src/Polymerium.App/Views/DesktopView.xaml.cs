@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,7 +37,9 @@ public sealed partial class DesktopView
     private async void ImportButton_OnClick(object sender, RoutedEventArgs e)
     {
         var inputDialog = new DragDropInputDialog(XamlRoot)
-            { CaptionText = "Drag and drop", BodyText = "Any modpack file here" };
+        {
+            CaptionText = "Drag and drop", BodyText = "Any modpack file here"
+        };
         if (await inputDialog.ShowAsync() == ContentDialogResult.Primary)
         {
             var path = inputDialog.ResultPath;

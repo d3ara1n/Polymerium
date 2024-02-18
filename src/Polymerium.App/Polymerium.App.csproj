@@ -18,7 +18,7 @@
         <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     </PropertyGroup>
     <ItemGroup>
-        <None Remove="Modals\ExhibitPreviewModal.xaml"/>
+        <None Remove="Modals\ProjectPreviewModal.xaml"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -70,7 +70,7 @@
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj"/>
     </ItemGroup>
     <ItemGroup>
-        <Page Update="Modals\ExhibitPreviewModal.xaml">
+        <Page Update="Modals\ProjectPreviewModal.xaml">
             <Generator>MSBuild:Compile</Generator>
         </Page>
     </ItemGroup>

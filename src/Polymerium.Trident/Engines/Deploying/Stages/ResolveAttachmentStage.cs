@@ -25,6 +25,8 @@ public class ResolveAttachmentStage(ResolveEngine resolver) : StageBase
                 throw (Exception?)result.Exception ?? new NotSupportedException();
             }
 
+        // TODO: 解析依赖，并扁平化
+
         Logger.LogInformation("All attachments resolved, refer to artifact file for details");
 
         Context.IsAttachmentResolved = true;

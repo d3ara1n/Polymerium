@@ -1,14 +1,14 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Input;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
@@ -82,19 +82,15 @@ public class InstanceViewModel : ViewModelBase
     private void GotoMetadataView(string? key)
     {
         if (key != null && key != ProfileManager.DUMMY_KEY)
-            _navigation.Navigate(typeof(MetadataView), key, new SlideNavigationTransitionInfo
-            {
-                Effect = SlideNavigationTransitionEffect.FromRight
-            });
+            _navigation.Navigate(typeof(MetadataView), key,
+                new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
     }
 
     private void GotoConfigurationView(string? key)
     {
         if (key != null && key != ProfileManager.DUMMY_KEY)
-            _navigation.Navigate(typeof(ConfigurationView), key, new SlideNavigationTransitionInfo
-            {
-                Effect = SlideNavigationTransitionEffect.FromRight
-            });
+            _navigation.Navigate(typeof(ConfigurationView), key,
+                new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
     }
 
     private string GetHomeFolderPath()
@@ -125,9 +121,7 @@ public class InstanceViewModel : ViewModelBase
     {
         Process.Start(new ProcessStartInfo
         {
-            FileName = "explorer.exe",
-            Arguments = GetHomeFolderPath(),
-            UseShellExecute = true
+            FileName = "explorer.exe", Arguments = GetHomeFolderPath(), UseShellExecute = true
         });
     }
 
@@ -141,9 +135,7 @@ public class InstanceViewModel : ViewModelBase
     {
         Process.Start(new ProcessStartInfo
         {
-            FileName = "explorer.exe",
-            Arguments = GetAssetFolderPath(kind),
-            UseShellExecute = true
+            FileName = "explorer.exe", Arguments = GetAssetFolderPath(kind), UseShellExecute = true
         });
     }
 

@@ -1,8 +1,8 @@
-﻿using System;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System;
 
 namespace Polymerium.App.Helpers;
 
@@ -18,64 +18,59 @@ public static class HtmlHelper
                 switch (node.Name.ToLower())
                 {
                     case "img":
-                    {
-                        var src = node.GetAttributeValue("src", "https://placehold.co/400x200");
-                        var width = node.GetAttributeValue("width", 400);
-                        var height = node.GetAttributeValue("height", 200);
-                        if (Uri.IsWellFormedUriString(src, UriKind.Absolute))
-                            collection.Add(new InlineUIContainer
+                        {
+                            string? src = node.GetAttributeValue("src", "https://placehold.co/400x200");
+                            int width = node.GetAttributeValue("width", 400);
+                            int height = node.GetAttributeValue("height", 200);
+                            if (Uri.IsWellFormedUriString(src, UriKind.Absolute))
                             {
-                                Child = new Image
+                                collection.Add(new InlineUIContainer
                                 {
-                                    Source = new BitmapImage(new Uri(src, UriKind.Absolute)),
-                                    Width = width,
-                                    Height = height
-                                }
-                            });
-                    }
+                                    Child = new Image
+                                    {
+                                        Source = new BitmapImage(new Uri(src, UriKind.Absolute)),
+                                        Width = width,
+                                        Height = height
+                                    }
+                                });
+                            }
+                        }
                         break;
                     case "a":
-                    {
-                        var href = node.GetAttributeValue("href", reference);
-                        if (Uri.IsWellFormedUriString(href, UriKind.Absolute))
                         {
-                            var run = new Run
-                                { Text = string.IsNullOrEmpty(node.InnerText) ? "[Link]" : node.InnerText };
-                            var link = new Hyperlink
+                            string? href = node.GetAttributeValue("href", reference);
+                            if (Uri.IsWellFormedUriString(href, UriKind.Absolute))
                             {
-                                NavigateUri = new Uri(href, UriKind.Absolute)
-                            };
-                            link.Inlines.Add(run);
-                            collection.Add(link);
-                            ignoreText = true;
+                                Run run = new Run
+                                {
+                                    Text = string.IsNullOrEmpty(node.InnerText) ? "[Link]" : node.InnerText
+                                };
+                                Hyperlink link = new Hyperlink { NavigateUri = new Uri(href, UriKind.Absolute) };
+                                link.Inlines.Add(run);
+                                collection.Add(link);
+                                ignoreText = true;
+                            }
                         }
-                    }
                         break;
                     case "strong":
-                    {
-                        var bold = new Bold();
-                        bold.Inlines.Add(new Run
                         {
-                            Text = node.InnerText
-                        });
-                        collection.Add(bold);
-                        ignoreText = true;
-                    }
+                            Bold bold = new Bold();
+                            bold.Inlines.Add(new Run { Text = node.InnerText });
+                            collection.Add(bold);
+                            ignoreText = true;
+                        }
                         break;
                     case "iframe":
-                    {
-                        var src = node.GetAttributeValue("src", reference);
-                        if (Uri.IsWellFormedUriString(src, UriKind.Absolute))
                         {
-                            var run = new Run { Text = "[Embedded Video]" };
-                            var link = new Hyperlink
+                            string? src = node.GetAttributeValue("src", reference);
+                            if (Uri.IsWellFormedUriString(src, UriKind.Absolute))
                             {
-                                NavigateUri = new Uri(src, UriKind.Absolute)
-                            };
-                            link.Inlines.Add(run);
-                            collection.Add(link);
+                                Run run = new Run { Text = "[Embedded Video]" };
+                                Hyperlink link = new Hyperlink { NavigateUri = new Uri(src, UriKind.Absolute) };
+                                link.Inlines.Add(run);
+                                collection.Add(link);
+                            }
                         }
-                    }
                         break;
                     case "br":
                         collection.Add(new LineBreak());
@@ -86,11 +81,11 @@ public static class HtmlHelper
                         append = false;
                         break;
                     case "li":
-                    {
-                        var dot = new Bold();
-                        dot.Inlines.Add(new Run { Text = " · " });
-                        collection.Add(dot);
-                    }
+                        {
+                            Bold dot = new Bold();
+                            dot.Inlines.Add(new Run { Text = " · " });
+                            collection.Add(dot);
+                        }
                         break;
                     case "span":
                         break;
@@ -99,10 +94,7 @@ public static class HtmlHelper
                     case "p":
                         break;
                     default:
-                        collection.Add(new Run
-                        {
-                            Text = node.InnerHtml
-                        });
+                        collection.Add(new Run { Text = node.InnerHtml });
                         break;
                 }
 

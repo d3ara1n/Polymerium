@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Repositories;
+using System.Text.Json;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 

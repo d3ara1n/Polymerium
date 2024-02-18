@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Dispatching;
@@ -18,6 +11,13 @@ using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Models.PrismLauncher.Minecraft;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Extracting;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 

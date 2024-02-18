@@ -1,5 +1,5 @@
-﻿using System.Text.Json.Serialization;
-using Polymerium.Trident.Models.Minecraft.Converters;
+﻿using Polymerium.Trident.Models.Minecraft.Converters;
+using System.Text.Json.Serialization;
 
 namespace Polymerium.Trident.Models.Minecraft;
 

@@ -1,14 +1,6 @@
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 using CommunityToolkit.WinUI.UI;
 using DotNext.Collections.Generic;
 using Microsoft.UI.Xaml;
@@ -17,17 +9,23 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using MimeDetective;
 using MimeDetective.Definitions;
 using Polymerium.App.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Trident.Abstractions.Resources;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using WinRT.Interop;
 
 namespace Polymerium.App.Dialogs;
 
 public sealed partial class CreateProfileDialog
 {
-    private static readonly ContentInspector INSPECTOR = new ContentInspectorBuilder
-    {
-        Definitions = Default.All()
-    }.Build();
+    private static readonly ContentInspector INSPECTOR =
+        new ContentInspectorBuilder { Definitions = Default.All() }.Build();
 
     // https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.image?view=windows-app-sdk-1.4
     private static readonly string[] SUPPORTED_MIMES =

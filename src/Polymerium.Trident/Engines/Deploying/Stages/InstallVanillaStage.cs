@@ -1,7 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Models.PrismLauncher.Minecraft;
+using System.Runtime.InteropServices;
 using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Extensions;
 
@@ -125,7 +125,6 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
         builder.SetMainClass(real);
 
         Logger.LogInformation("Set main class path to {mainClass}", real);
-
 
         Context.IsGameInstalled = true;
     }

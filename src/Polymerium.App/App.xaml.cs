@@ -1,12 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading;
-using Windows.Graphics;
-using Windows.Storage;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -21,6 +13,14 @@ using Polymerium.Trident.Engines;
 using Polymerium.Trident.Extractors;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading;
+using Windows.Graphics;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -40,7 +40,7 @@ public partial class App
         Provider = services.BuildServiceProvider();
     }
 
-    public new static App Current => (App)Application.Current;
+    public static new App Current => (App)Application.Current;
 
     public IServiceProvider Provider { get; }
 

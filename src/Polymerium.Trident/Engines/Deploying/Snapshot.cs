@@ -20,6 +20,7 @@ public class Snapshot : Collection<Entity>
                 if (file.LinkTarget != null)
                     snapshot.Add(new Entity(file.FullName, file.LinkTarget));
         }
+
         return snapshot;
     }
 

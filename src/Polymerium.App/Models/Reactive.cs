@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Polymerium.App.Models;
 

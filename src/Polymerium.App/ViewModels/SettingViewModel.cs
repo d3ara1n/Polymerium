@@ -1,16 +1,16 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
+using Polymerium.App.Models;
+using Polymerium.App.Services;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage.Pickers;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
-using Polymerium.App.Models;
-using Polymerium.App.Services;
 using WinRT.Interop;
 
 namespace Polymerium.App.ViewModels;

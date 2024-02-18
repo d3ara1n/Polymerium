@@ -1,7 +1,7 @@
-﻿using System.Net.Http.Json;
+﻿using Polymerium.Trident.Models.PrismLauncher.Minecraft;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Polymerium.Trident.Models.PrismLauncher.Minecraft;
 using Trident.Abstractions.Exceptions;
 
 namespace Polymerium.Trident.Helpers;

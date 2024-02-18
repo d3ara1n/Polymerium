@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Microsoft.UI.Dispatching;
+﻿using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.Services;

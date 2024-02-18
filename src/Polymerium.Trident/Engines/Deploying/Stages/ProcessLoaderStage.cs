@@ -19,9 +19,11 @@ public class ProcessLoaderStage : StageBase
                     Context.ArtifactBuilder!.AddProcessor(TransientData.PROCESSOR_TRIDENT_STORAGE, loader.Version,
                         $"component:{Loader.COMPONENT_BUILTIN_STORAGE}");
                     break;
+
                 case Loader.COMPONENT_FORGE:
                     // TODO:
                     break;
+
                 default:
                     throw new ResourceIdentityUnrecognizedException(loader.Id, nameof(Loader));
             }
