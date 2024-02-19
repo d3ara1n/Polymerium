@@ -107,8 +107,7 @@ public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMess
     private void LaunchEntry(EntryModel? entry)
     {
         if (entry != null)
-            // TODO: Create token for interrupt
-            _instanceManager.Deploy(entry.Key, entry.Inner.Metadata, null, App.Current.Token);
+            _notification.PopInformation("Funciton moved to instance detail view");
     }
 
     public FlattenExtractedContainer? ExtractModpack(string path)

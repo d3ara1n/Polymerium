@@ -2,7 +2,6 @@
 using Humanizer;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
-using Polymerium.App.Helpers;
 using Polymerium.Trident.Repositories;
 using System;
 using System.Collections.Generic;
@@ -30,21 +29,5 @@ namespace Polymerium.App.Models
 
         public ICollection<ModpackVersionModel> Versions =>
             Inner.Versions.Select(x => new ModpackVersionModel(x, this)).ToList();
-
-        public RichTextBlock Description
-        {
-            get
-            {
-                string? html = HtmlEntity.DeEntitize(Inner.DescriptionHtml);
-                HtmlDocument doc = new HtmlDocument();
-                doc.LoadHtml(html);
-                Paragraph paragraph = new Paragraph();
-                HtmlHelper.ParseNodeToInline(paragraph.Inlines, doc.DocumentNode,
-                    Inner.Reference.AbsoluteUri);
-                RichTextBlock block = new RichTextBlock();
-                block.Blocks.Add(paragraph);
-                return block;
-            }
-        }
     }
 }

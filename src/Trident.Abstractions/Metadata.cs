@@ -7,13 +7,13 @@ public record Metadata(string Version, IList<Metadata.Layer> Layers)
     public string Version { get; set; } = Version;
 
     public record Layer(
-        string? Source,
+        Attachment? Source,
         bool Enabled,
         string Summary,
         IList<Loader> Loaders,
         IList<Attachment> Attachments)
     {
-        public string? Source { get; set; } = Source;
+        public Attachment? Source { get; set; } = Source;
         public bool Enabled { get; set; } = Enabled;
         public string Summary { get; set; } = Summary;
     }

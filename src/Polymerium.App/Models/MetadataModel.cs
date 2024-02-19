@@ -1,36 +1,36 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Extensions;
 using Polymerium.App.Services;
+using System.Windows.Input;
 using Trident.Abstractions;
 
 namespace Polymerium.App.Models;
 
 public record MetadataModel
 {
-    private readonly DialogService _dialog;
 
-    public MetadataModel(string key, Profile inner, DialogService dialog)
+    public MetadataModel(string key, Profile inner, ICommand rename, ICommand unlock, ICommand update, ICommand delete)
     {
-        _dialog = dialog;
 
         Key = key;
         Inner = inner;
         Layers = inner.Metadata.Layers.ToReactiveCollection(
             ToModel, x => x.Inner);
 
-
-        RenameCommand = new RelayCommand<LayerModel>(RenameLayer, CanRenameLayer);
-        UnlockCommand = new RelayCommand<LayerModel>(UnlockLayer, CanUnlockLayer);
-        DeleteCommand = new RelayCommand<LayerModel>(DeleteLayer, CanDeleteLayer);
+        RenameCommand = rename;
+        UnlockCommand = unlock;
+        UpdateCommand = update;
+        DeleteCommand = delete;
         MoveUpCommand = new RelayCommand<LayerModel>(MoveUpLayer, CanMoveUpLayer);
         MoveDownCommand = new RelayCommand<LayerModel>(MoveDownLayer, CanMoveDownLayer);
         MoveToTopCommand = new RelayCommand<LayerModel>(MoveToTopLayer, CanMoveToTopLayer);
         MoveToBottomCommand = new RelayCommand<LayerModel>(MoveToBottomLayer, CanMoveToBottomLayer);
     }
 
-    public IRelayCommand<LayerModel> RenameCommand { get; }
-    public IRelayCommand<LayerModel> UnlockCommand { get; }
-    public IRelayCommand<LayerModel> DeleteCommand { get; }
+    public ICommand RenameCommand { get; }
+    public ICommand UnlockCommand { get; }
+    public ICommand UpdateCommand { get; }
+    public ICommand DeleteCommand { get; }
     public IRelayCommand<LayerModel> MoveUpCommand { get; }
     public IRelayCommand<LayerModel> MoveDownCommand { get; }
     public IRelayCommand<LayerModel> MoveToTopCommand { get; }
@@ -48,57 +48,6 @@ public record MetadataModel
     public void AddLayer(Metadata.Layer layer)
     {
         Layers.Add(ToModel(layer));
-    }
-
-    private bool CanRenameLayer(LayerModel? layer)
-    {
-        return layer != null;
-    }
-
-    private async void RenameLayer(LayerModel? layer)
-    {
-        if (layer != null)
-        {
-            var summary = await _dialog.RequestTextAsync("Summarize usage of your new layer", layer.Summary.Value);
-            if (summary != null) layer.Summary.Value = summary;
-        }
-    }
-
-    private bool CanUnlockLayer(LayerModel? layer)
-    {
-        if (layer != null) return layer.IsLocked.Value;
-        return false;
-    }
-
-    private async void UnlockLayer(LayerModel? layer)
-    {
-        if (layer != null)
-        {
-            var confirmation = await _dialog.RequestConfirmationAsync(
-                "Unlocking a tagged layer will remove its tag and losing the ability to update metadata. Continue?");
-            if (confirmation)
-                layer.IsLocked.Value = false;
-        }
-    }
-
-
-    private bool CanDeleteLayer(LayerModel? layer)
-    {
-        return layer != null;
-    }
-
-    private async void DeleteLayer(LayerModel? layer)
-    {
-        if (layer != null)
-        {
-            var confirmation = await _dialog.RequestConfirmationAsync(
-                "This operation cannot be revoked. Continue?");
-            if (confirmation)
-            {
-                Layers.Remove(layer);
-                NotifyPositionChange();
-            }
-        }
     }
 
     private bool CanMoveUpLayer(LayerModel? layer)
@@ -197,7 +146,7 @@ public record MetadataModel
         }
     }
 
-    private void NotifyPositionChange()
+    public void NotifyPositionChange()
     {
         MoveUpCommand.NotifyCanExecuteChanged();
         MoveDownCommand.NotifyCanExecuteChanged();

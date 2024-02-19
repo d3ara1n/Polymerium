@@ -1,4 +1,5 @@
-﻿using Polymerium.Trident.Services;
+﻿using Polymerium.Trident.Extensions;
+using Polymerium.Trident.Services;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -30,8 +31,7 @@ public class DeployContext(
     public Metadata Metadata { get; } = metadata;
     public ICollection<string> Keywords { get; } = keywords;
 
-    public string Watermark { get; } =
-        BitConverter.ToString(MD5.HashData(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(metadata))));
+    public string Watermark { get; } = metadata.ComputeWatermark();
 
     public TridentContext Context { get; } = context;
     public JsonSerializerOptions SerializerOptions { get; } = options;

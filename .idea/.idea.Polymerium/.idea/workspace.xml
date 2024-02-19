@@ -205,6 +205,7 @@
       <workItem from="1708011356937" duration="803000" />
       <workItem from="1708173779572" duration="372000" />
       <workItem from="1708187910146" duration="79000" />
+      <workItem from="1708252288476" duration="183000" />
     </task>
     <task id="LOCAL-00001" summary="wip create profile">
       <option name="closed" value="true" />
@@ -238,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708187982656</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="初步做了个展示资源的弹窗，还不能选择版本">
+      <option name="closed" value="true" />
+      <created>1708252461266</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708252461266</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,7 +273,8 @@
     <MESSAGE value="重做了内置通知，粗糙的重做了Task系统（导致导入整合包失效）" />
     <MESSAGE value="Modal added" />
     <MESSAGE value="怎么jb提交文件就只提交一半啊" />
-    <option name="LAST_COMMIT_MESSAGE" value="怎么jb提交文件就只提交一半啊" />
+    <MESSAGE value="初步做了个展示资源的弹窗，还不能选择版本" />
+    <option name="LAST_COMMIT_MESSAGE" value="初步做了个展示资源的弹窗，还不能选择版本" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

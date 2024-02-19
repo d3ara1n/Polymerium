@@ -6,11 +6,11 @@ public static class LaunchOptionsBuilderExtensions
 {
     public static LaunchOptionsBuilder FireAndForget(this LaunchOptionsBuilder self)
     {
-        return self.SetMode(LaunchMode.FireAndForget);
+        return self.WithMode(LaunchMode.FireAndForget);
     }
 
     public static LaunchOptionsBuilder Managed(this LaunchOptionsBuilder self)
     {
-        return self.SetMode(LaunchMode.Managed);
+        return self.WithMode(LaunchMode.Managed);
     }
 }

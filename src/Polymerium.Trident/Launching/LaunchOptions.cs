@@ -1,13 +1,14 @@
-﻿namespace Polymerium.Trident.Launching;
+﻿using System.Drawing;
 
-public class LaunchOptions(
-    LaunchMode launchMode = LaunchMode.Managed,
-    IDictionary<string, string>? crates = null,
-    JavaHomeLocatorDelegate? javaHomeLocator = null)
+namespace Polymerium.Trident.Launching;
+
+public class LaunchOptions(LaunchMode launchMode = LaunchMode.Managed, Size? windowSize = null, uint maxMemory = 4096, string? additionalArguments = null, JavaHomeLocatorDelegate? javaHomeLocator = null)
 {
     public LaunchMode Mode { get; set; } = launchMode;
-    public IDictionary<string, string> Crates { get; } = crates ?? new Dictionary<string, string>();
-    public JavaHomeLocatorDelegate JavaHomeLocator { get; set; } = _ => null;
+    public uint MaxMemory { get; set; } = maxMemory;
+    public Size WindowSize { get; set; } = windowSize ?? new(1270, 720);
+    public string AdditionalArguments { get; set; } = additionalArguments ?? string.Empty;
+    public JavaHomeLocatorDelegate JavaHomeLocator { get; set; } = javaHomeLocator ?? new JavaHomeLocatorDelegate(v => throw new JavaNotFoundException(v));
 
     public static LaunchOptionsBuilder Builder()
     {

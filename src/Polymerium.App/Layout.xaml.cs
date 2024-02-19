@@ -90,7 +90,7 @@ public sealed partial class Layout
     {
         task.Subscribe(OnTaskUpdate);
         var models = new TaskModel(task, DispatcherQueue, AbortTaskCommand);
-        Tasks.Add(models);
+        DispatcherQueue.TryEnqueue(() => Tasks.Add(models));
     }
 
     public void SetMainMenu(IEnumerable<NavItem> menu)
@@ -181,5 +181,11 @@ public sealed partial class Layout
     private void DismissModal()
     {
         VisualStateManager.GoToState(this, "Hidden", true);
+    }
+
+    private void InfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args)
+    {
+        var raw = sender.Tag as NotificationItem;
+        if (raw != null) Notifications.Remove(raw);
     }
 }

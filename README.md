@@ -70,21 +70,10 @@ Polymerium不维护游戏文件，只维护实例元数据。
 
 ## Features
 
-### 面向游戏体验的元数据表达
-
-小标题很抽象，大概意思就是游戏的元数据在描述的时候只考虑想要的游戏体验，而不用关心代价和结果。
-例如想要在 Forge 客户端的基础上添加 "Item Borders" 模组，只需将其作为附件添加即可，至于该模组要求的一堆依赖，都会在部署阶段解析并扁平化。
-甚至附件可以不指定版本，让其始终保持最新。
-
-### 轻量部署
-
-使用基于文件差异和软链接的部署方式，保证玩到的游戏体验和游戏元数据一致的同时最小化硬盘和网络负担。
-
-### ~~内置下载引擎~~
-
-原先设计先串行检查并计算文件哈希来获取需要下载的文件列表，并行下载，最后再串行写入来最大化利用缓存和减少对硬盘的损伤。
-实际测了之后发现越大的并发数量（不大于逻辑核心数量）不仅在 SSD 上更快，在 HDD
-上也有惊人速度提升！这还要啥自行车，直接 `Task.WaitAll(DownloadAllAsync(files))` 一把梭！
+- 🎨 Fluent Design & WinUI3
+- 💾 增量部署，使用软链接节省硬盘空间
+- 🎭 支持多账号且账号与实例绑定
+- 🎟️ 多种在线仓库，与 CurseForge 和 Modrinth 集成
 
 <!-- GETTING STARTED -->
 
@@ -172,7 +161,7 @@ Windows
 * [x] 还原引擎
     * [x] 基于 Iterator 并发模型
 * [ ] 发射引擎
-    * [x] 不基于 Iterator 模型
+    * [ ] 基于 Iterator 模型
 * [ ] 下载引擎
     * [ ] 基于 Iterator 模型（错误的，什么都往这个模型套是过度设计，除了部署引擎本身就是串行的，其他引擎都是并行的，套到迭代器这种串行模型上面就是错误设计。真正的问题仅需
       `Parallel.ForEach(x => DownloadAsync(x))` 甚至 `Task.WaitAll`
@@ -224,6 +213,15 @@ Polymerium 没有遥测。
 * 微软验证: [Microsoft Authentication Scheme][Microsoft-Authentication-Scheme]
 
 十分感谢以上作者和所著文章。
+
+<!-- I_HATE_THIS_WORLD -->
+
+## 吐槽
+
+- Minecraft 官方的 Meta Launcher Api 给出的数据是多态模型
+- CurseForge Api V1 不在文档中标注可能为 null 的数据
+- Modrinth Api V2 不在文档中标注可能为 null 的数据，且不提供 V3 文档
+- PrismLauncher 的 Meta Launcher Api 定义了一系列 "Component"，但每个 Component 都有自己独特的数据结构：他们只是看起来相似，在某些地方，例如对 rules[].os 的定义，是不同的
 
 <!-- LICENSE -->
 

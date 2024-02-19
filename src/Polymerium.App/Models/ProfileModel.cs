@@ -16,6 +16,8 @@ public record ProfileModel(string Key, Profile Inner, string? ThumbnailPath, Ins
 
     public string Type => Inner.ExtractTypeDisplay();
 
+    public string Category => Inner.Reference?.Label ?? "custom";
+
     public DateTimeOffset? PlayedAtRaw =>
         Inner.Records.ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
 
@@ -23,7 +25,7 @@ public record ProfileModel(string Key, Profile Inner, string? ThumbnailPath, Ins
 
     public TimeSpan PlayTimeRaw => Inner.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
 
-    public string PlayTime => PlayTimeRaw.Humanize();
+    public string PlayTime => PlayTimeRaw.Humanize(1, false,null, Humanizer.Localisation.TimeUnit.Hour, Humanizer.Localisation.TimeUnit.Second);
 
     public string Note
     {

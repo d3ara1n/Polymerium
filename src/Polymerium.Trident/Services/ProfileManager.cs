@@ -4,6 +4,7 @@ using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services.Profiles;
 using System.Text.Json;
 using Trident.Abstractions;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Services;
 
@@ -64,14 +65,14 @@ public sealed class ProfileManager : IDisposable
         if (reservedKeys.Contains(key)) reservedKeys.Remove(key);
     }
 
-    public Profile Append(ReservedKey key, string name, string? reference, Metadata metadata)
+    public Profile Append(ReservedKey key, string name, Attachment? reference, Metadata metadata)
     {
         if (key.Disposed) throw new ArgumentException($"Disposed key: {key.Key}");
         var now = DateTimeOffset.Now;
         var profile = new Profile(name, reference, new Profile.RecordData(
             new List<Profile.RecordData.TimelinePoint>
             {
-                new(true, null, Profile.RecordData.TimelinePoint.TimelimeAction.Create,
+                new(true, reference, Profile.RecordData.TimelinePoint.TimelimeAction.Create,
                     now, now)
             }, new List<Profile.RecordData.Todo>(), string.Empty), metadata, new Dictionary<string, object>(), null);
         Managed.Add(key.Key,

@@ -129,6 +129,13 @@
                                                                 <FontIcon Glyph="&#xE785;" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
+                                                        <MenuFlyoutItem Text="Update"
+                                                                        Command="{x:Bind Root.UnlockCommand}"
+                                                                        CommandParameter="{x:Bind}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE753;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
                                                         <MenuFlyoutSeparator />
                                                         <MenuFlyoutItem Text="Move up"
                                                                         Command="{x:Bind Root.MoveUpCommand}"

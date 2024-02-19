@@ -34,8 +34,7 @@ public class DeployInstanceTask : TaskBase
 
     private void Tracker_StateUpdated(TrackerBase sender, TaskState state)
     {
-        if (state == TaskState.Faulted) FailureReason = sender.FailureReason;
-        UpdateProgress(state);
+        UpdateProgress(state, failure: sender.FailureReason);
     }
 
     private void Tracker_FileSolidified(DeployTracker sender, uint finished, uint total)

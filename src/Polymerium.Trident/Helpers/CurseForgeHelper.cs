@@ -20,6 +20,13 @@ public static class CurseForgeHelper
     private const uint CLASSID_WORLD = 17;
     private const uint CLASSID_RESOURCEPACK = 12;
 
+    private static readonly ReverseMarkdown.Converter MARKDOWNER = new(new ReverseMarkdown.Config()
+    {
+        GithubFlavored = true,
+        SmartHrefHandling = true,
+        RemoveComments = true,
+    });
+
     public static readonly IReadOnlyDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
     {
         { "Forge", Loader.COMPONENT_FORGE },
@@ -211,7 +218,7 @@ public static class CurseForgeHelper
             .OrderByDescending(x => x.FileDate).Select(async x =>
             {
                 var changelog = await GetModFileChangelogAsync(logger, factory, projectId, x.Id, token);
-                return new Project.Version(x.Id.ToString(), x.DisplayName, changelog,
+                return new Project.Version(x.Id.ToString(), x.DisplayName, MARKDOWNER.Convert(changelog),
                     x.ExtractReleaseType(),
                     x.FileDate,
                     x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
@@ -232,7 +239,7 @@ public static class CurseForgeHelper
             kind,
             mod.DateCreated,
             mod.DateModified,
-            mod.DownloadCount, modDesc,
+            mod.DownloadCount, MARKDOWNER.Convert(modDesc),
             mod.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList(),
             versions);
     }

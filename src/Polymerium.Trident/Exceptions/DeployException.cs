@@ -1,4 +1,6 @@
-﻿namespace Polymerium.Trident.Engines.Deploying;
+﻿using Polymerium.Trident.Engines.Deploying;
+
+namespace Polymerium.Trident.Exceptions;
 
 public class DeployException : Exception
 {
@@ -7,6 +9,5 @@ public class DeployException : Exception
     {
         Stage = stage;
     }
-
     public StageBase Stage { get; }
 }

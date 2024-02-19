@@ -35,8 +35,9 @@ public abstract class TaskBase(string key, string stage, string status)
         UpdateProgress(TaskState.Running, progress, stage, status);
     }
 
-    protected void UpdateProgress(TaskState state, uint? progress = null, string? stage = null, string? status = null)
+    protected void UpdateProgress(TaskState state, uint? progress = null, string? stage = null, string? status = null, Exception? failure = null)
     {
+        if(failure != null)FailureReason = failure;
         var args = new TaskProgressUpdatedEventArgs(Key, state, stage ?? Stage, status ?? Status, progress);
         subscribers.Where(x => x.Item1.IsAlive).ForEach(x => x.Item2.Invoke(x.Item1.Target, [this, args]));
         State = state;

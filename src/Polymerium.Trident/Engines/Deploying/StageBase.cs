@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Polymerium.Trident.Exceptions;
 
 namespace Polymerium.Trident.Engines.Deploying;
 

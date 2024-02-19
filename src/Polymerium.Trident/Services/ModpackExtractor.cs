@@ -72,8 +72,7 @@ public class ModpackExtractor(
 
         var thumbnail = container.Reference?.Item1.Thumbnail;
         var reference = container.Reference.HasValue
-            ? PurlHelper.MakePurl(container.Reference.Value.Item1.Label, container.Reference.Value.Item1.Id,
-                container.Reference.Value.Item2.Id)
+            ? new Attachment(container.Reference.Value.Item1.Label, container.Reference.Value.Item1.Id, container.Reference.Value.Item2.Id)
             : null;
 
         logger.LogInformation("Modpack {name} requested a key {key}", name, key.Key);

@@ -300,7 +300,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:NotificationItem">
                     <InfoBar Message="{x:Bind Message}" Severity="{x:Bind Severity}" HorizontalAlignment="Center"
-                             IsOpen="True" />
+                             IsOpen="True" Tag="{x:Bind}" Closed="InfoBar_Closed"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

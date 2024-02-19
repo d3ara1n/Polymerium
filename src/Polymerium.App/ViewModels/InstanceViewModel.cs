@@ -1,13 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Media.Animation;
+using Polymerium.App.Extensions;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
+using Polymerium.Trident.Extensions;
+using Polymerium.Trident.Launching;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Windows.Input;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
@@ -121,7 +126,9 @@ public class InstanceViewModel : ViewModelBase
     {
         Process.Start(new ProcessStartInfo
         {
-            FileName = "explorer.exe", Arguments = GetHomeFolderPath(), UseShellExecute = true
+            FileName = "explorer.exe",
+            Arguments = GetHomeFolderPath(),
+            UseShellExecute = true
         });
     }
 
@@ -135,7 +142,9 @@ public class InstanceViewModel : ViewModelBase
     {
         Process.Start(new ProcessStartInfo
         {
-            FileName = "explorer.exe", Arguments = GetAssetFolderPath(kind), UseShellExecute = true
+            FileName = "explorer.exe",
+            Arguments = GetAssetFolderPath(kind),
+            UseShellExecute = true
         });
     }
 
@@ -156,10 +165,24 @@ public class InstanceViewModel : ViewModelBase
 
     private void Play()
     {
-        // TODO: 通过创建 Task，让 TaskService 去跟踪后续进度包括任务完成或失败进行弹出通知。
-        // var task = _taskService.Create<DeployInstanceTask>(Model.Key, Model.Inner);
-        // _taskService.Enqueue(task);
-        _instanceManager.Deploy(Model.Key, Model.Inner.Metadata, null, App.Current.Token);
+        _instanceManager.Deploy(Model.Key, Model.Inner, null, Launch, App.Current.Token);
+    }
+
+    private void Launch()
+    {
+        var builder = LaunchOptions.Builder();
+        builder
+            .WithWindowSize(new Size((int)Model.Inner.GetOverriddenWindowWidth(), (int)Model.Inner.GetOverriddenWindowHeight()))
+            .WithMaxMemory(Model.Inner.GetOverriddenJvmMaxMemory())
+            .WithAdditionalArguments(Model.Inner.GetOverriddenJvmAdditionalArguments())
+            .WithJavaHomeLocator(major =>
+            {
+                var home = Model.Inner.GetOverriddenJvmHome(major);
+                if (!Directory.Exists(home)) throw new JavaNotFoundException(major);
+                return home;
+            })
+            .FireAndForget();
+        _instanceManager.Launch(Model.Key, Model.Inner, builder.Build(), null, App.Current.Token);
     }
 
     private void Stop()

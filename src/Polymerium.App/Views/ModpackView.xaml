@@ -23,9 +23,9 @@
             </Grid>
         </toolkit:Case>
         <toolkit:Case Value="Failed">
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Fetching data failed" Style="{StaticResource HeaderTextBlockStyle}" />
-                <TextBlock Text="{x:Bind ViewModel.FailureReason,Mode=OneWay}" />
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="{StaticResource SmallGap}">
+                <FontIcon Glyph="&#xF384;" FontSize="32" HorizontalAlignment="Center"/>
+                <TextBlock Text="{x:Bind ViewModel.FailureReason,Mode=OneWay}" HorizontalAlignment="Center"/>
             </StackPanel>
         </toolkit:Case>
         <toolkit:Case Value="Done">
@@ -103,10 +103,9 @@
                                         </FlipView.ItemTemplate>
                                     </FlipView>
                                 </toolkit:ConstrainedBox>
-                                <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto"
-                                              HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto"
-                                              Padding="{StaticResource CardContentMargin}"
-                                              Content="{x:Bind ViewModel.Project.Description,Mode=OneWay}" />
+                                <ScrollViewer Grid.Row="1" Padding="{StaticResource CardContentMargin}">
+                                    <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill" Text="{x:Bind ViewModel.Project.Inner.DescriptionMarkdown,Mode=OneWay}" LinkClicked="MarkdownTextBlock_LinkClicked"/>
+                                </ScrollViewer>
                             </Grid>
                         </controls:Card>
                     </toolkit:Case>
@@ -114,27 +113,45 @@
                         <toolkit:Case.Value>
                             <x:Boolean>True</x:Boolean>
                         </toolkit:Case.Value>
-                        <controls:Card>
-                            <StackPanel Spacing="{StaticResource TinyGap}">
+                        <Grid RowSpacing="{StaticResource SmallGap}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <controls:Card Grid.Row="0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0"
-                                               Text="{x:Bind ViewModel.SelectedVersion.Inner.Name,FallbackValue=N/A,Mode=OneWay}"
-                                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                                    <Grid Grid.Column="0" ColumnSpacing="{StaticResource SmallGap}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <HyperlinkButton Command="{x:Bind ViewModel.GoBackCommand}">
+                                            <FontIcon Glyph="&#xE72B;" FontSize="{StaticResource ButtonFontIconFontSize}"/>
+                                        </HyperlinkButton>
+                                        <TextBlock Grid.Column="1" VerticalAlignment="Center"
+                                                   Text="{x:Bind ViewModel.SelectedVersion.Inner.Name,FallbackValue=N/A,Mode=OneWay}"
+                                                   Style="{StaticResource SubtitleTextBlockStyle}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                                    </Grid>
                                     <Button Grid.Column="1" Style="{StaticResource AccentButtonStyle}"
-                                            Command="{x:Bind ViewModel.InstallModpackCommand}"
-                                            CommandParameter="{x:Bind ViewModel.SelectedVersion,Mode=OneWay}">
-                                        <TextBlock Text="Install" />
+                                                Command="{x:Bind ViewModel.InstallModpackCommand}"
+                                                CommandParameter="{x:Bind ViewModel.SelectedVersion,Mode=OneWay}">
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                            <FontIcon Glyph="&#xE896;" FontSize="{StaticResource ButtonFontIconFontSize}"/>
+                                            <TextBlock Text="Install" />
+                                        </StackPanel>
                                     </Button>
                                 </Grid>
-                                <!-- 更为详细的信息，例如依赖啥的 -->
-                                <ContentControl
-                                    Content="{x:Bind ViewModel.SelectedVersion.Changelog,FallbackValue=N/A,Mode=OneWay}" />
-                            </StackPanel>
-                        </controls:Card>
+                            </controls:Card>
+                            <controls:Card Grid.Row="1">
+                                <ScrollViewer Grid.Row="1" Padding="{StaticResource CardContentMargin}">
+                                    <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill" Text="{x:Bind ViewModel.SelectedVersion.Inner.ChangelogMarkdown,Mode=OneWay}" LinkClicked="MarkdownTextBlock_LinkClicked"/>
+                                </ScrollViewer>
+                            </controls:Card>
+                        </Grid>
                     </toolkit:Case>
                 </toolkit:SwitchPresenter>
                 <controls:Card Grid.Row="1" Grid.Column="1" Width="256" Padding="0">

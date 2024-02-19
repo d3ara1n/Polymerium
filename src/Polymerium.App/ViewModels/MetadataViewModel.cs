@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
+using static Trident.Abstractions.Metadata;
 
 namespace Polymerium.App.ViewModels;
 
@@ -39,17 +40,21 @@ public class MetadataViewModel : ViewModelBase
     {
         _profileManager = profileManager;
         _repositoryAgent = repositoryAgent;
-        _dialogService = dialogService;
         _provider = provider;
+        _dialogService = dialogService;
         _navigationService = navigationService;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
 
-        model = new MetadataModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, dialogService);
-
+        RenameLayerCommand = new RelayCommand<LayerModel>(RenameLayer, CanRenameLayer);
+        UnlockLayerCommand = new RelayCommand<LayerModel>(UnlockLayer, CanUnlockLayer);
+        UpdateLayerCommand = new RelayCommand<LayerModel>(UpdateLayer, CanUpdateLayer);
+        DeleteLayerCommand = new RelayCommand<LayerModel>(DeleteLayer, CanDeleteLayer);
         OpenAttachmentCommand = new RelayCommand<AttachmentModel>(OpenAttachment, CanOpenAttachment);
         RetryAttachmentCommand = new RelayCommand<AttachmentModel>(RetryAttachment);
         DeleteAttachmentCommand = new RelayCommand<AttachmentModel>(DeleteAttachment, CanDeleteAttachment);
         GotoWorkbenchViewCommand = new RelayCommand<bool>(GotoWorkbench, CanGotoWorkbench);
+
+        model = new MetadataModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, RenameLayerCommand, UnlockLayerCommand, UpdateLayerCommand, DeleteLayerCommand);
     }
 
     public MetadataModel Model
@@ -85,6 +90,10 @@ public class MetadataViewModel : ViewModelBase
         set => SetProperty(ref attachmentLoadingState, value);
     }
 
+    public ICommand RenameLayerCommand { get; }
+    public ICommand UnlockLayerCommand { get; }
+    public ICommand UpdateLayerCommand { get; }
+    public ICommand DeleteLayerCommand { get; }
     private ICommand OpenAttachmentCommand { get; }
     private ICommand RetryAttachmentCommand { get; }
     private ICommand DeleteAttachmentCommand { get; }
@@ -132,7 +141,7 @@ public class MetadataViewModel : ViewModelBase
         {
             var profile = _profileManager.GetProfile(key);
             if (profile != null)
-                Model = new MetadataModel(key, profile, _dialogService);
+                Model = new MetadataModel(key, profile, RenameLayerCommand, UnlockLayerCommand, UpdateLayerCommand, DeleteLayerCommand);
             return profile != null;
         }
 
@@ -217,5 +226,67 @@ public class MetadataViewModel : ViewModelBase
     {
         if (locked is not true && SelectedLayer != null)
             _navigationService.Navigate(typeof(WorkbenchView), SelectedLayer);
+    }
+
+    private bool CanRenameLayer(LayerModel? layer)
+    {
+        return layer != null;
+    }
+
+    private async void RenameLayer(LayerModel? layer)
+    {
+        if (layer != null)
+        {
+            var summary = await _dialogService.RequestTextAsync("Summarize usage of your new layer", layer.Summary.Value);
+            if (summary != null) layer.Summary.Value = summary;
+        }
+    }
+
+    private bool CanUnlockLayer(LayerModel? layer)
+    {
+        if (layer != null) return layer.IsLocked.Value;
+        return false;
+    }
+
+    private async void UnlockLayer(LayerModel? layer)
+    {
+        if (layer != null)
+        {
+            var confirmation = await _dialogService.RequestConfirmationAsync(
+                "Unlocking a tagged layer will remove its tag and losing the ability to update metadata. Continue?");
+            if (confirmation)
+                layer.IsLocked.Value = false;
+        }
+    }
+
+    private bool CanUpdateLayer(LayerModel? layer)
+    {
+        return layer?.IsLocked.Value ?? false;
+    }
+
+    private void UpdateLayer(LayerModel? layer)
+    {
+        if (layer != null)
+            // TODO: pop UpdateLayerModal
+            return;
+    }
+
+    private bool CanDeleteLayer(LayerModel? layer)
+    {
+        return layer != null;
+    }
+
+    private async void DeleteLayer(LayerModel? layer)
+    {
+        if (layer != null)
+        {
+            var confirmation = await _dialogService.RequestConfirmationAsync(
+                "This operation cannot be revoked. Continue?");
+            if (confirmation)
+            {
+                Model.Layers.Remove(layer);
+                Model.NotifyPositionChange();
+            }
+        }
     }
 }

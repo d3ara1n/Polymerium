@@ -15,7 +15,7 @@ public record Project(
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
     uint DownloadCount,
-    string DescriptionHtml,
+    string DescriptionMarkdown,
     IEnumerable<Project.Screenshot> Gallery,
     IEnumerable<Project.Version> Versions)
 {
@@ -24,7 +24,7 @@ public record Project(
     public record Version(
         string Id,
         string Name,
-        string ChangelogHtml,
+        string ChangelogMarkdown,
         ReleaseType ReleaseType,
         DateTimeOffset PublishedAt,
         string FileName,

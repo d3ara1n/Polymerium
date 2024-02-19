@@ -7,24 +7,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNext" Version="5.0.1"/>
-        <PackageReference Include="IBuilder" Version="0.1.0"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0"/>
-        <PackageReference Include="Nanoid" Version="3.0.0"/>
-        <PackageReference Include="packageurl-dotnet" Version="1.3.0"/>
-        <PackageReference Include="System.Net.Http.Json" Version="8.0.0"/>
+        <PackageReference Include="DotNext" Version="5.0.2" />
+        <PackageReference Include="IBuilder" Version="0.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+        <PackageReference Include="Nanoid" Version="3.0.0" />
+        <PackageReference Include="packageurl-dotnet" Version="1.3.0" />
+        <PackageReference Include="ReverseMarkdown" Version="4.3.0" />
+        <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Trident.Abstractions\Trident.Abstractions.csproj"/>
+        <ProjectReference Include="..\Trident.Abstractions\Trident.Abstractions.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Exceptions\"/>
-        <Folder Include="Models\PrismLauncher\Forge\"/>
-        <Folder Include="Services\Downloading\"/>
+        <Folder Include="Models\PrismLauncher\Forge\" />
+        <Folder Include="Services\Downloading\" />
     </ItemGroup>
 
 </Project>

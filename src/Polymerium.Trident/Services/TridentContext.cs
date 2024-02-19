@@ -14,6 +14,7 @@ public class TridentContext(string home)
     public const string DIR_PRIVATE_BACKUP = "backups";
     public const string DIR_PRIVATE_THUMBNAIL = "thumbnails";
 
+    public const string FILE_ARTIFACT = "trident.artifact.json";
     public const string FILE_ACCOUNT_VAULT = "account.vault.json";
     public const string FILE_FAVORITE_LIST = "favorites.json";
 
@@ -44,7 +45,7 @@ public class TridentContext(string home)
 
     public string InstanceArtifactPath(string key)
     {
-        return Path.Combine(InstanceDir, key, "trident.artifact.json");
+        return Path.Combine(InstanceDir, key, FILE_ARTIFACT);
     }
 
     public string AssetIndexPath(string index)

@@ -31,7 +31,7 @@ public class InstanceStatusService
     {
         if (TryFind(args.Key, out var instance))
         {
-            instance.OnStateChanged(InstanceState.Running);
+            _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
             args.Handle.StateUpdated += (_, state) =>
                 _dispatcher.TryEnqueue(() =>
                 {
@@ -51,7 +51,7 @@ public class InstanceStatusService
     {
         if (TryFind(args.Key, out var instance))
         {
-            instance.OnStateChanged(InstanceState.Deploying);
+            _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
             args.Handle.FileSolidified += (_, count, total) =>
             {
                 var original = instance.Count.Value;

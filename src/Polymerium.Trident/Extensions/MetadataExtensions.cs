@@ -1,4 +1,7 @@
-﻿using Trident.Abstractions;
+﻿using System.Security.Cryptography;
+using System.Text.Json;
+using System.Text;
+using Trident.Abstractions;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
@@ -11,5 +14,10 @@ public static class MetadataExtensions
     {
         return new Filter(self.Version,
             self.ExtractModLoader(), kind);
+    }
+
+    public static string ComputeWatermark(this Metadata self)
+    {
+        return BitConverter.ToString(MD5.HashData(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(self))));
     }
 }

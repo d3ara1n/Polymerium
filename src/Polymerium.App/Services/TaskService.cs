@@ -21,6 +21,7 @@ public class TaskService
         _logger = logger;
 
         instanceManager.InstanceDeploying += InstanceManager_InstanceDeploying;
+        instanceManager.InstanceLaunching += InstanceManager_InstanceLaunching;
     }
 
     private void InstanceManager_InstanceDeploying(InstanceManager sender, InstanceDeployingEventArgs args)
@@ -29,14 +30,21 @@ public class TaskService
         Enqueue(task);
     }
 
+    private void InstanceManager_InstanceLaunching(InstanceManager sender, InstanceLaunchingEventArgs args)
+    {
+        var task = new LaunchInstanceTask(args.Handle);
+        Enqueue(task);
+    }
+
     public void SetHandler(Action<TaskBase> action)
     {
         handler = action;
     }
 
-    private void Enqueue(TaskBase task)
+    public void Enqueue(TaskBase task)
     {
         _logger.LogInformation("Start task {key}({mode})", task.Key, task.GetType().Name);
+        _notificationService.PopInformation($"{task.Stage} started");
         task.Subscribe(Track);
         handler?.Invoke(task);
     }
@@ -48,7 +56,7 @@ public class TaskService
             var time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
             _logger.LogInformation("Task {model}({task}) ended in {time}s, {state}", task.GetType().Name, args.Key,
                 time, args.State);
-            _notificationService.PopInformation($"Task {task.Stage} finished in {time}s");
+            _notificationService.PopSuccess($"{task.Stage} finished in {time}s");
             task.Unsubscribe(Track);
         }
 

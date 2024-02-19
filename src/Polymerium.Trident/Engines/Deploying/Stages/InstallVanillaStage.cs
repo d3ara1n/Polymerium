@@ -22,17 +22,19 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
         Logger.LogInformation("Got version index {version}({uid})", version.Version, version.Uid);
 
         // Libraries
-        var osString = $"{GetOs()}-{GetArch()}";
-        Logger.LogInformation("Current os string: {string}", osString);
-        var libraries = version.Libraries?.Where(x =>
+        var patched = await MinecraftHelper.GetPrismPatchedLibraries(version, factory, Context.Token);
+        var osString = PlatformHelper.GetOsName();
+        var osArchString = $"{osString}-{PlatformHelper.GetOsArch()}";
+        Logger.LogInformation("Current os string: {string}", osArchString);
+        var libraries = patched.Where(x =>
         {
             if (x.Rules != null && x.Rules.Any())
-                return x.Rules.All(y =>
+                return x.Rules.Any(y =>
                 {
                     var pass = true;
                     if (y.Os != null && y.Os.TryGetValue("name", out var os))
                         // name
-                        pass = osString == os;
+                        pass = osArchString == os || osString == os;
 
                     return y.Action == PrismMinecraftVersionLibraryRuleAction.Allow ? pass : !pass;
                 });
@@ -58,16 +60,16 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
         Logger.LogInformation("Libraries added, refer to artifact file for details");
 
         // Main Jar as a Library as well
-        if (version.MainJar.Downloads.Artifact.HasValue)
-            builder.AddLibrary(version.MainJar.Name, version.MainJar.Downloads.Artifact.Value.Url,
-                version.MainJar.Downloads.Artifact.Value.Sha1);
+        if (version.MainJar != null && version.MainJar.Value.Downloads.Artifact.HasValue)
+            builder.AddLibrary(version.MainJar.Value.Name, version.MainJar.Value.Downloads.Artifact.Value.Url,
+                version.MainJar.Value.Downloads.Artifact.Value.Sha1);
         else
             throw new BadFormatException("{minecraft_version}", "mainJar.downloads.artifact");
 
-        Logger.LogInformation("Client jar appended: {name}", version.MainJar.Name);
+        Logger.LogInformation("Client jar appended: {name}", version.MainJar.Value.Name);
 
         // Game Arguments
-        var arguments = version.MinecraftArguments.Split(' ').Concat([
+        var arguments = (version.MinecraftArguments?.Split(' ') ?? Enumerable.Empty<string>()).Concat([
             // 额外添加的窗口设定
             "--width",
             "${resolution_width}",
@@ -90,11 +92,8 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
             "-Dminecraft.launcher.brand=${launcher_name}",
             "-Dminecraft.launcher.version=${launcher_version}",
             // Windows 下的优化，总是 Windows，所以总是添加这一项
+            // TODO: 将这一项移动到后期的 Processors 中
             "-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump",
-            // 操作系统信息
-            "-Dos.name=${os_name}",
-            "-Dos.arch=${os_arch}",
-            "-Dos.version=${os_version}",
             // 最大内存
             "-Xmx${jvm_max_memory}",
             "-cp",
@@ -106,19 +105,21 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
         Logger.LogInformation("Jvm arguments generated, refer to artifact file for details");
 
         // Java Major Version
-        var firstJreVersion = version.CompatibleJavaMajors.FirstOrDefault();
+        var firstJreVersion = version.CompatibleJavaMajors?.FirstOrDefault() ?? 8;
         if (!firstJreVersion.Equals(default))
             builder.SetJavaMajorVersion(firstJreVersion);
         else
             throw new BadFormatException("{minecraft_version}", "compatibleJavaMajors");
 
-        Logger.LogInformation("Set java major version compatibility to {major} in [{all}]", firstJreVersion,
-            string.Join(',', version.CompatibleJavaMajors));
+        Logger.LogInformation("Set java major version compatibility to {major}", firstJreVersion);
 
         // AssetIndex
-        builder.SetAssetIndex(version.AssetIndex.Id, version.AssetIndex.Url, version.AssetIndex.Sha1);
+        if (version.AssetIndex.HasValue)
+            builder.SetAssetIndex(version.AssetIndex.Value.Id, version.AssetIndex.Value.Url, version.AssetIndex.Value.Sha1);
+        else
+            throw new BadFormatException("{minecraft_version}", "assetIndex");
 
-        Logger.LogInformation("Set asset index to {index}", version.AssetIndex.Id);
+        Logger.LogInformation("Set asset index to {index}", version.AssetIndex.Value.Id);
 
         // Main Class Path
         var real = version.MainClass ?? "net.minecraft.client.main.Main";
@@ -129,26 +130,5 @@ public class InstallVanillaStage(IHttpClientFactory factory) : StageBase
         Context.IsGameInstalled = true;
     }
 
-    private static string GetOs()
-    {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            return "windows";
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            return "linux";
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            return "osx";
-        throw new NotSupportedException("Unsupported operating system.");
-    }
 
-    private static string GetArch()
-    {
-        return RuntimeInformation.ProcessArchitecture switch
-        {
-            Architecture.X64 => "x64",
-            Architecture.X86 => "x86",
-            Architecture.Arm => "arm",
-            Architecture.Arm64 => "arm64",
-            _ => throw new NotSupportedException("Unsupported process architecture.")
-        };
-    }
 }

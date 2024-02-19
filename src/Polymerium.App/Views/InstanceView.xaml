@@ -36,7 +36,16 @@
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                         <controls:TagControl VerticalAlignment="Bottom">
                             <controls:TagControl.Icon>
-                                <FontIcon Glyph="&#xE734;" FontSize="30" />
+                                <FontIcon Glyph="&#xE928;" FontSize="30" />
+                            </controls:TagControl.Icon>
+                            <controls:TagControl.Header>
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="IDENTITY" />
+                            </controls:TagControl.Header>
+                            <TextBlock Text="{x:Bind ViewModel.Model.Key,Mode=OneWay}" />
+                        </controls:TagControl>
+                        <controls:TagControl VerticalAlignment="Bottom">
+                            <controls:TagControl.Icon>
+                                <FontIcon Glyph="&#xE97C;" FontSize="30" />
                             </controls:TagControl.Icon>
                             <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TYPE" />
@@ -51,24 +60,6 @@
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="VERSION" />
                             </controls:TagControl.Header>
                             <TextBlock Text="{x:Bind ViewModel.Model.Inner.Metadata.Version,Mode=OneWay}" />
-                        </controls:TagControl>
-                        <controls:TagControl VerticalAlignment="Bottom">
-                            <controls:TagControl.Icon>
-                                <FontIcon Glyph="&#xE787;" FontSize="30" />
-                            </controls:TagControl.Icon>
-                            <controls:TagControl.Header>
-                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="LASTPLAY" />
-                            </controls:TagControl.Header>
-                            <TextBlock Text="{x:Bind ViewModel.Model.PlayedAt,Mode=OneWay}" />
-                        </controls:TagControl>
-                        <controls:TagControl VerticalAlignment="Bottom">
-                            <controls:TagControl.Icon>
-                                <FontIcon Glyph="&#xE823;" FontSize="30" />
-                            </controls:TagControl.Icon>
-                            <controls:TagControl.Header>
-                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="PLAYTIME" />
-                            </controls:TagControl.Header>
-                            <TextBlock Text="{x:Bind ViewModel.Model.PlayTime,Mode=OneWay}" />
                         </controls:TagControl>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -191,7 +182,7 @@
                 <Grid Grid.Column="2" RowSpacing="{StaticResource SmallGap}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <controls:Card Grid.Row="0">
                         <Grid>
@@ -205,15 +196,16 @@
                         </Grid>
                     </controls:Card>
                     <controls:Card Grid.Row="1">
-                        <Grid>
-                            <TextBlock Text="To put here" Style="{StaticResource SubtitleTextBlockStyle}"
-                                       HorizontalAlignment="Left" VerticalAlignment="Top" />
-                            <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                                <TextBlock Text="Ignore →" />
-                            </HyperlinkButton>
-                            <TextBlock Text="NOTHING" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        <StackPanel Spacing="{StaticResource SmallGap}">
+                            <TextBlock Text="Statistics" Style="{StaticResource SubtitleTextBlockStyle}"
+                                       HorizontalAlignment="Left"/>
+                            <TextBlock Text="{x:Bind ViewModel.Model.PlayTime}" HorizontalAlignment="Center"
                                        Style="{StaticResource SubheaderTextBlockStyle}" />
-                        </Grid>
+                            <TextBlock HorizontalAlignment="Right">
+                                <Run Text="Last played at:"  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                <Run Text="{x:Bind ViewModel.Model.PlayedAt}"/>
+                            </TextBlock>
+                        </StackPanel>
                     </controls:Card>
                 </Grid>
             </Grid>
