@@ -1,156 +1,155 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Extensions;
-using Polymerium.App.Services;
 using System.Windows.Input;
 using Trident.Abstractions;
 
-namespace Polymerium.App.Models;
-
-public record MetadataModel
+namespace Polymerium.App.Models
 {
-
-    public MetadataModel(string key, Profile inner, ICommand rename, ICommand unlock, ICommand update, ICommand delete)
+    public record MetadataModel
     {
-
-        Key = key;
-        Inner = inner;
-        Layers = inner.Metadata.Layers.ToReactiveCollection(
-            ToModel, x => x.Inner);
-
-        RenameCommand = rename;
-        UnlockCommand = unlock;
-        UpdateCommand = update;
-        DeleteCommand = delete;
-        MoveUpCommand = new RelayCommand<LayerModel>(MoveUpLayer, CanMoveUpLayer);
-        MoveDownCommand = new RelayCommand<LayerModel>(MoveDownLayer, CanMoveDownLayer);
-        MoveToTopCommand = new RelayCommand<LayerModel>(MoveToTopLayer, CanMoveToTopLayer);
-        MoveToBottomCommand = new RelayCommand<LayerModel>(MoveToBottomLayer, CanMoveToBottomLayer);
-    }
-
-    public ICommand RenameCommand { get; }
-    public ICommand UnlockCommand { get; }
-    public ICommand UpdateCommand { get; }
-    public ICommand DeleteCommand { get; }
-    public IRelayCommand<LayerModel> MoveUpCommand { get; }
-    public IRelayCommand<LayerModel> MoveDownCommand { get; }
-    public IRelayCommand<LayerModel> MoveToTopCommand { get; }
-    public IRelayCommand<LayerModel> MoveToBottomCommand { get; }
-
-    public string Key { get; }
-    public Profile Inner { get; }
-    public ReactiveCollection<Metadata.Layer, LayerModel> Layers { get; }
-
-    private LayerModel ToModel(Metadata.Layer layer)
-    {
-        return new LayerModel(layer, this);
-    }
-
-    public void AddLayer(Metadata.Layer layer)
-    {
-        Layers.Add(ToModel(layer));
-    }
-
-    private bool CanMoveUpLayer(LayerModel? layer)
-    {
-        if (layer != null)
+        public MetadataModel(string key, Profile inner, ICommand rename, ICommand unlock, ICommand update,
+            ICommand delete)
         {
-            var found = Layers.IndexOf(layer);
-            return found > 0;
+            Key = key;
+            Inner = inner;
+            Layers = inner.Metadata.Layers.ToReactiveCollection(
+                ToModel, x => x.Inner);
+
+            RenameCommand = rename;
+            UnlockCommand = unlock;
+            UpdateCommand = update;
+            DeleteCommand = delete;
+            MoveUpCommand = new RelayCommand<LayerModel>(MoveUpLayer, CanMoveUpLayer);
+            MoveDownCommand = new RelayCommand<LayerModel>(MoveDownLayer, CanMoveDownLayer);
+            MoveToTopCommand = new RelayCommand<LayerModel>(MoveToTopLayer, CanMoveToTopLayer);
+            MoveToBottomCommand = new RelayCommand<LayerModel>(MoveToBottomLayer, CanMoveToBottomLayer);
         }
 
-        return false;
-    }
+        public ICommand RenameCommand { get; }
+        public ICommand UnlockCommand { get; }
+        public ICommand UpdateCommand { get; }
+        public ICommand DeleteCommand { get; }
+        public IRelayCommand<LayerModel> MoveUpCommand { get; }
+        public IRelayCommand<LayerModel> MoveDownCommand { get; }
+        public IRelayCommand<LayerModel> MoveToTopCommand { get; }
+        public IRelayCommand<LayerModel> MoveToBottomCommand { get; }
 
-    private void MoveUpLayer(LayerModel? layer)
-    {
-        if (layer != null)
+        public string Key { get; }
+        public Profile Inner { get; }
+        public ReactiveCollection<Metadata.Layer, LayerModel> Layers { get; }
+
+        private LayerModel ToModel(Metadata.Layer layer)
         {
-            var index = Layers.IndexOf(layer);
-            if (index > 0 && Layers.Remove(layer))
+            return new LayerModel(layer, this);
+        }
+
+        public void AddLayer(Metadata.Layer layer)
+        {
+            Layers.Add(ToModel(layer));
+        }
+
+        private bool CanMoveUpLayer(LayerModel? layer)
+        {
+            if (layer != null)
             {
-                Layers.Insert(index - 1, layer);
-                NotifyPositionChange();
+                int found = Layers.IndexOf(layer);
+                return found > 0;
+            }
+
+            return false;
+        }
+
+        private void MoveUpLayer(LayerModel? layer)
+        {
+            if (layer != null)
+            {
+                int index = Layers.IndexOf(layer);
+                if (index > 0 && Layers.Remove(layer))
+                {
+                    Layers.Insert(index - 1, layer);
+                    NotifyPositionChange();
+                }
             }
         }
-    }
 
-    private bool CanMoveDownLayer(LayerModel? layer)
-    {
-        if (layer != null)
+        private bool CanMoveDownLayer(LayerModel? layer)
         {
-            var found = Layers.IndexOf(layer);
-            return found < Layers.Count - 1;
+            if (layer != null)
+            {
+                int found = Layers.IndexOf(layer);
+                return found < Layers.Count - 1;
+            }
+
+            return false;
         }
 
-        return false;
-    }
-
-    private void MoveDownLayer(LayerModel? layer)
-    {
-        if (layer != null)
+        private void MoveDownLayer(LayerModel? layer)
         {
-            var index = Layers.IndexOf(layer);
-            if (index < Layers.Count - 1 && Layers.Remove(layer))
+            if (layer != null)
             {
-                Layers.Insert(index + 1, layer);
-                NotifyPositionChange();
+                int index = Layers.IndexOf(layer);
+                if (index < Layers.Count - 1 && Layers.Remove(layer))
+                {
+                    Layers.Insert(index + 1, layer);
+                    NotifyPositionChange();
+                }
             }
         }
-    }
 
-    private bool CanMoveToTopLayer(LayerModel? layer)
-    {
-        if (layer != null)
+        private bool CanMoveToTopLayer(LayerModel? layer)
         {
-            var found = Layers.IndexOf(layer);
-            return found != 0;
+            if (layer != null)
+            {
+                int found = Layers.IndexOf(layer);
+                return found != 0;
+            }
+
+            return false;
         }
 
-        return false;
-    }
-
-    private void MoveToTopLayer(LayerModel? layer)
-    {
-        if (layer != null)
+        private void MoveToTopLayer(LayerModel? layer)
         {
-            var index = Layers.IndexOf(layer);
-            if (index > 0 && Layers.Remove(layer))
+            if (layer != null)
             {
-                Layers.Insert(0, layer);
-                NotifyPositionChange();
+                int index = Layers.IndexOf(layer);
+                if (index > 0 && Layers.Remove(layer))
+                {
+                    Layers.Insert(0, layer);
+                    NotifyPositionChange();
+                }
             }
         }
-    }
 
-    private bool CanMoveToBottomLayer(LayerModel? layer)
-    {
-        if (layer != null)
+        private bool CanMoveToBottomLayer(LayerModel? layer)
         {
-            var found = Layers.IndexOf(layer);
-            return found != Layers.Count - 1;
+            if (layer != null)
+            {
+                int found = Layers.IndexOf(layer);
+                return found != Layers.Count - 1;
+            }
+
+            return false;
         }
 
-        return false;
-    }
-
-    private void MoveToBottomLayer(LayerModel? layer)
-    {
-        if (layer != null)
+        private void MoveToBottomLayer(LayerModel? layer)
         {
-            var index = Layers.IndexOf(layer);
-            if (index != Layers.Count - 1 && Layers.Remove(layer))
+            if (layer != null)
             {
-                Layers.Add(layer);
-                NotifyPositionChange();
+                int index = Layers.IndexOf(layer);
+                if (index != Layers.Count - 1 && Layers.Remove(layer))
+                {
+                    Layers.Add(layer);
+                    NotifyPositionChange();
+                }
             }
         }
-    }
 
-    public void NotifyPositionChange()
-    {
-        MoveUpCommand.NotifyCanExecuteChanged();
-        MoveDownCommand.NotifyCanExecuteChanged();
-        MoveToTopCommand.NotifyCanExecuteChanged();
-        MoveToBottomCommand.NotifyCanExecuteChanged();
+        public void NotifyPositionChange()
+        {
+            MoveUpCommand.NotifyCanExecuteChanged();
+            MoveDownCommand.NotifyCanExecuteChanged();
+            MoveToTopCommand.NotifyCanExecuteChanged();
+            MoveToBottomCommand.NotifyCanExecuteChanged();
+        }
     }
 }

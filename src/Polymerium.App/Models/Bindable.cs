@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Polymerium.App.Models;
-
-public class Bindable<TOwner, TValue>(TOwner owner, Func<TOwner, TValue> getter, Action<TOwner, TValue> setter)
-    : INotifyPropertyChanged
-    where TOwner : class
+namespace Polymerium.App.Models
 {
-    public TValue Value
+    public class Bindable<TOwner, TValue>(TOwner owner, Func<TOwner, TValue> getter, Action<TOwner, TValue> setter)
+        : INotifyPropertyChanged
+        where TOwner : class
     {
-        get => getter(owner);
-        set
+        public TValue Value
         {
-            var old = Value;
-            if (!EqualityComparer<TValue>.Default.Equals(old, value))
+            get => getter(owner);
+            set
             {
-                setter(owner, value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+                TValue old = Value;
+                if (!EqualityComparer<TValue>.Default.Equals(old, value))
+                {
+                    setter(owner, value);
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+                }
             }
         }
-    }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
+    }
 }

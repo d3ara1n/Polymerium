@@ -198,12 +198,13 @@
                     <controls:Card Grid.Row="1">
                         <StackPanel Spacing="{StaticResource SmallGap}">
                             <TextBlock Text="Statistics" Style="{StaticResource SubtitleTextBlockStyle}"
-                                       HorizontalAlignment="Left"/>
+                                       HorizontalAlignment="Left" />
                             <TextBlock Text="{x:Bind ViewModel.Model.PlayTime}" HorizontalAlignment="Center"
                                        Style="{StaticResource SubheaderTextBlockStyle}" />
                             <TextBlock HorizontalAlignment="Right">
-                                <Run Text="Last played at:"  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
-                                <Run Text="{x:Bind ViewModel.Model.PlayedAt}"/>
+                                <Run Text="Last played at:"
+                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                <Run Text="{x:Bind ViewModel.Model.PlayedAt}" />
                             </TextBlock>
                         </StackPanel>
                     </controls:Card>

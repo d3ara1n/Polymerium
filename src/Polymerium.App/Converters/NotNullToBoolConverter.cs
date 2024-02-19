@@ -1,17 +1,18 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace Polymerium.App.Converters;
-
-public class NotNullToBoolConverter : IValueConverter
+namespace Polymerium.App.Converters
 {
-    public object Convert(object? value, Type targetType, object? parameter, string language)
+    public class NotNullToBoolConverter : IValueConverter
     {
-        return parameter == null ? value != null : value == null;
-    }
+        public object Convert(object? value, Type targetType, object? parameter, string language)
+        {
+            return parameter == null ? value != null : value == null;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

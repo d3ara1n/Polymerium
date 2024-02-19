@@ -2,39 +2,40 @@
 using Polymerium.App.Models;
 using System;
 
-namespace Polymerium.App.Services;
-
-public class NotificationService
+namespace Polymerium.App.Services
 {
-    private Action<NotificationItem>? handler;
-
-    public void SetHandler(Action<NotificationItem> action)
+    public class NotificationService
     {
-        handler = action;
-    }
+        private Action<NotificationItem>? handler;
 
-    public void Pop(InfoBarSeverity severity, string text)
-    {
-        handler?.Invoke(new NotificationItem(severity, text));
-    }
+        public void SetHandler(Action<NotificationItem> action)
+        {
+            handler = action;
+        }
 
-    public void PopInformation(string text)
-    {
-        Pop(InfoBarSeverity.Informational, text);
-    }
+        public void Pop(InfoBarSeverity severity, string text)
+        {
+            handler?.Invoke(new NotificationItem(severity, text));
+        }
 
-    public void PopError(string text)
-    {
-        Pop(InfoBarSeverity.Error, text);
-    }
+        public void PopInformation(string text)
+        {
+            Pop(InfoBarSeverity.Informational, text);
+        }
 
-    public void PopWarning(string text)
-    {
-        Pop(InfoBarSeverity.Warning, text);
-    }
+        public void PopError(string text)
+        {
+            Pop(InfoBarSeverity.Error, text);
+        }
 
-    public void PopSuccess(string text)
-    {
-        Pop(InfoBarSeverity.Success, text);
+        public void PopWarning(string text)
+        {
+            Pop(InfoBarSeverity.Warning, text);
+        }
+
+        public void PopSuccess(string text)
+        {
+            Pop(InfoBarSeverity.Success, text);
+        }
     }
 }

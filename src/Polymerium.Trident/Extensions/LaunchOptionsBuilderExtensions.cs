@@ -1,16 +1,17 @@
 ﻿using Polymerium.Trident.Launching;
 
-namespace Polymerium.Trident.Extensions;
-
-public static class LaunchOptionsBuilderExtensions
+namespace Polymerium.Trident.Extensions
 {
-    public static LaunchOptionsBuilder FireAndForget(this LaunchOptionsBuilder self)
+    public static class LaunchOptionsBuilderExtensions
     {
-        return self.WithMode(LaunchMode.FireAndForget);
-    }
+        public static LaunchOptionsBuilder FireAndForget(this LaunchOptionsBuilder self)
+        {
+            return self.WithMode(LaunchMode.FireAndForget);
+        }
 
-    public static LaunchOptionsBuilder Managed(this LaunchOptionsBuilder self)
-    {
-        return self.WithMode(LaunchMode.Managed);
+        public static LaunchOptionsBuilder Managed(this LaunchOptionsBuilder self)
+        {
+            return self.WithMode(LaunchMode.Managed);
+        }
     }
 }

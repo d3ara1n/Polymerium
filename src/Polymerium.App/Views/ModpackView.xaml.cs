@@ -1,3 +1,4 @@
+using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels;
@@ -6,25 +7,26 @@ using System.Diagnostics;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Polymerium.App.Views;
-
-public sealed partial class ModpackView : Page
+namespace Polymerium.App.Views
 {
-    public ModpackView()
+    public sealed partial class ModpackView : Page
     {
-        InitializeComponent();
-    }
+        public ModpackView()
+        {
+            InitializeComponent();
+        }
 
-    public ModpackViewModel ViewModel { get; } = App.ViewModel<ModpackViewModel>();
+        public ModpackViewModel ViewModel { get; } = App.ViewModel<ModpackViewModel>();
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
-    {
-        base.OnNavigatedTo(e);
-        ViewModel.OnAttached(e.Parameter);
-    }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ViewModel.OnAttached(e.Parameter);
+        }
 
-    private void MarkdownTextBlock_LinkClicked(object sender, CommunityToolkit.WinUI.UI.Controls.LinkClickedEventArgs e)
-    {
-        Process.Start(new ProcessStartInfo(e.Link) { UseShellExecute = true });
+        private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Link) { UseShellExecute = true });
+        }
     }
 }

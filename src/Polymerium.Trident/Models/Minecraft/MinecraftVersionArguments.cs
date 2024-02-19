@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public struct MinecraftVersionArguments
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    public MinecraftVersionArgument[] Game { get; init; }
-    public MinecraftVersionArgument[] Jvm { get; init; }
+    public struct MinecraftVersionArguments
+    {
+        public MinecraftVersionArgument[] Game { get; init; }
+        public MinecraftVersionArgument[] Jvm { get; init; }
+    }
 }

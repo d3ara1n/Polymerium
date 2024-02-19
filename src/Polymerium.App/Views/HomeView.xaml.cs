@@ -4,17 +4,18 @@ using Polymerium.App.ViewModels;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Polymerium.App.Views;
-
-/// <summary>
-///     An empty page that can be used on its own or navigated to within a Frame.
-/// </summary>
-public sealed partial class HomeView : Page
+namespace Polymerium.App.Views
 {
-    public HomeView()
+    /// <summary>
+    ///     An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class HomeView : Page
     {
-        InitializeComponent();
-    }
+        public HomeView()
+        {
+            InitializeComponent();
+        }
 
-    public HomeViewModel ViewModel { get; } = App.ViewModel<HomeViewModel>();
+        public HomeViewModel ViewModel { get; } = App.ViewModel<HomeViewModel>();
+    }
 }

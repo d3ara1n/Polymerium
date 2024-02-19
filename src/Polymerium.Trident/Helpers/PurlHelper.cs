@@ -1,33 +1,34 @@
 ﻿using PackageUrl;
 
-namespace Polymerium.Trident.Helpers;
-
-public static class PurlHelper
+namespace Polymerium.Trident.Helpers
 {
-    public static bool TryParse(string purl, out (string type, string name, string? version)? result)
+    public static class PurlHelper
     {
-        try
+        public static bool TryParse(string purl, out (string type, string name, string? version)? result)
         {
-            var parsed = new PackageURL(purl);
-            if (parsed is { Type: not null, Name: not null })
+            try
             {
-                result = (parsed.Type, parsed.Name, parsed.Version);
-                return true;
+                PackageURL parsed = new(purl);
+                if (parsed is { Type: not null, Name: not null })
+                {
+                    result = (parsed.Type, parsed.Name, parsed.Version);
+                    return true;
+                }
+
+                result = null;
+            }
+            catch (MalformedPackageUrlException)
+            {
+                result = null;
             }
 
-            result = null;
+            return false;
         }
-        catch (MalformedPackageUrlException)
+
+        public static string MakePurl(string label, string projectId, string? versionId = null)
         {
-            result = null;
+            return new PackageURL(label, null, projectId, versionId, null,
+                null).ToString();
         }
-
-        return false;
-    }
-
-    public static string MakePurl(string label, string projectId, string? versionId = null)
-    {
-        return new PackageURL(label, null, projectId, versionId, null,
-            null).ToString();
     }
 }

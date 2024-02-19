@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Services.Profiles;
-
-public enum ProfileCollectionChangedAction
+﻿namespace Polymerium.Trident.Services.Profiles
 {
-    Add,
-    Remove
+    public enum ProfileCollectionChangedAction
+    {
+        Add,
+        Remove
+    }
 }

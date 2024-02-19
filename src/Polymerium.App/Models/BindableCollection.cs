@@ -3,82 +3,83 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Polymerium.App.Models;
-
-public class BindableCollection<T>(IList<T> from)
-    : Collection<T>(from), INotifyCollectionChanged, INotifyPropertyChanged
+namespace Polymerium.App.Models
 {
-    public event NotifyCollectionChangedEventHandler? CollectionChanged;
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected override void ClearItems()
+    public class BindableCollection<T>(IList<T> from)
+        : Collection<T>(from), INotifyCollectionChanged, INotifyPropertyChanged
     {
-        base.ClearItems();
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        OnCountPropertyChanged();
-        OnIndexerPropertyChanged();
-        OnCollectionReset();
-    }
+        protected override void ClearItems()
+        {
+            base.ClearItems();
 
-    protected override void RemoveItem(int index)
-    {
-        var removedItem = this[index];
+            OnCountPropertyChanged();
+            OnIndexerPropertyChanged();
+            OnCollectionReset();
+        }
 
-        base.RemoveItem(index);
+        protected override void RemoveItem(int index)
+        {
+            T removedItem = this[index];
 
-        OnCountPropertyChanged();
-        OnIndexerPropertyChanged();
-        OnCollectionChanged(NotifyCollectionChangedAction.Remove, removedItem, index);
-    }
+            base.RemoveItem(index);
 
-    protected override void InsertItem(int index, T item)
-    {
-        base.InsertItem(index, item);
+            OnCountPropertyChanged();
+            OnIndexerPropertyChanged();
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, removedItem, index);
+        }
 
-        OnCountPropertyChanged();
-        OnIndexerPropertyChanged();
-        OnCollectionChanged(NotifyCollectionChangedAction.Add, item, index);
-    }
+        protected override void InsertItem(int index, T item)
+        {
+            base.InsertItem(index, item);
 
-    protected override void SetItem(int index, T item)
-    {
-        var originalItem = this[index];
-        base.SetItem(index, item);
+            OnCountPropertyChanged();
+            OnIndexerPropertyChanged();
+            OnCollectionChanged(NotifyCollectionChangedAction.Add, item, index);
+        }
 
-        OnIndexerPropertyChanged();
-        OnCollectionSet(item, originalItem, index);
-    }
+        protected override void SetItem(int index, T item)
+        {
+            T originalItem = this[index];
+            base.SetItem(index, item);
 
-    private void OnCollectionChanged(NotifyCollectionChangedAction action, T item, int index)
-    {
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(action, item, index));
-    }
+            OnIndexerPropertyChanged();
+            OnCollectionSet(item, originalItem, index);
+        }
 
-    private void OnCollectionSet(T add, T old, int index)
-    {
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, add, old, index));
-    }
+        private void OnCollectionChanged(NotifyCollectionChangedAction action, T item, int index)
+        {
+            CollectionChanged?.Invoke(this,
+                new NotifyCollectionChangedEventArgs(action, item, index));
+        }
 
-    private void OnCollectionReset()
-    {
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-    }
+        private void OnCollectionSet(T add, T old, int index)
+        {
+            CollectionChanged?.Invoke(this,
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, add, old, index));
+        }
 
-    private void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+        private void OnCollectionReset()
+        {
+            CollectionChanged?.Invoke(this,
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
 
-    private void OnCountPropertyChanged()
-    {
-        OnPropertyChanged(nameof(Count));
-    }
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-    private void OnIndexerPropertyChanged()
-    {
-        OnPropertyChanged("Item[]");
+        private void OnCountPropertyChanged()
+        {
+            OnPropertyChanged(nameof(Count));
+        }
+
+        private void OnIndexerPropertyChanged()
+        {
+            OnPropertyChanged("Item[]");
+        }
     }
 }

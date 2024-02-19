@@ -1,9 +1,10 @@
-﻿namespace Trident.Abstractions.Tasks;
-
-public enum TaskState
+﻿namespace Trident.Abstractions.Tasks
 {
-    Idle,
-    Running,
-    Finished,
-    Faulted
+    public enum TaskState
+    {
+        Idle,
+        Running,
+        Finished,
+        Faulted
+    }
 }

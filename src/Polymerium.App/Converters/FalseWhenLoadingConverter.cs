@@ -2,19 +2,23 @@
 using Polymerium.App.Models;
 using System;
 
-namespace Polymerium.App.Converters;
-
-public class FalseWhenLoadingConverter : IValueConverter
+namespace Polymerium.App.Converters
 {
-    public object Convert(object value, Type targetType, object parameter, string language)
+    public class FalseWhenLoadingConverter : IValueConverter
     {
-        if (value is DataLoadingState state) return state != DataLoadingState.Loading;
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value is DataLoadingState state)
+            {
+                return state != DataLoadingState.Loading;
+            }
 
-        return false;
-    }
+            return false;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

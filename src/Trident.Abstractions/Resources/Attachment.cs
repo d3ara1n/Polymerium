@@ -1,9 +1,10 @@
-﻿namespace Trident.Abstractions.Resources;
-
-public record Attachment(string Label, string ProjectId, string? VersionId)
+﻿namespace Trident.Abstractions.Resources
 {
-    public override string ToString()
+    public record Attachment(string Label, string ProjectId, string? VersionId)
     {
-        return VersionId != null ? $"{Label}:{ProjectId}/{VersionId}" : $"{Label}:{ProjectId}/*";
+        public override string ToString()
+        {
+            return VersionId != null ? $"{Label}:{ProjectId}/{VersionId}" : $"{Label}:{ProjectId}/*";
+        }
     }
 }

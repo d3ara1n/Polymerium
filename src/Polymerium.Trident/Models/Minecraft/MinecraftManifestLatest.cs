@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public struct MinecraftManifestLatest
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    public string Release { get; init; }
-    public string Snapshot { get; init; }
+    public struct MinecraftManifestLatest
+    {
+        public string Release { get; init; }
+        public string Snapshot { get; init; }
+    }
 }

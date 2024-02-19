@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public enum MinecraftVersionRuleAction
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    Allow,
-    Disallow
+    public enum MinecraftVersionRuleAction
+    {
+        Allow,
+        Disallow
+    }
 }

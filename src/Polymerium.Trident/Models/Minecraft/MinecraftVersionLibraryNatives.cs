@@ -1,8 +1,9 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public struct MinecraftVersionLibraryNatives
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    public string Linux { get; init; }
-    public string Osx { get; init; }
-    public string Windows { get; init; }
+    public struct MinecraftVersionLibraryNatives
+    {
+        public string Linux { get; init; }
+        public string Osx { get; init; }
+        public string Windows { get; init; }
+    }
 }

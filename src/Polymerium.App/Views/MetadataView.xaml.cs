@@ -10,58 +10,67 @@ using System;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Polymerium.App.Views;
-
-/// <summary>
-///     An empty page that can be used on its own or navigated to within a Frame.
-/// </summary>
-public sealed partial class MetadataView : Page
+namespace Polymerium.App.Views
 {
-    public MetadataView()
+    /// <summary>
+    ///     An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class MetadataView : Page
     {
-        AttachmentView = new AdvancedCollectionView(ViewModel.Attachments) { Filter = Filter };
-        InitializeComponent();
-    }
-
-    public MetadataViewModel ViewModel { get; } = App.ViewModel<MetadataViewModel>();
-
-    public AdvancedCollectionView AttachmentView { get; }
-
-    protected override void OnNavigatedTo(NavigationEventArgs e)
-    {
-        ViewModel.OnAttached(e.Parameter);
-        base.OnNavigatedTo(e);
-    }
-
-    protected override void OnNavigatedFrom(NavigationEventArgs e)
-    {
-        ViewModel.OnDetached();
-        base.OnNavigatedFrom(e);
-    }
-
-    private async void AddLayerButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        var dialog = new InputDialog(XamlRoot)
+        public MetadataView()
         {
-            Message = "Summarize usage of your new layer", Placeholder = "New Layer"
-        };
-        if (await dialog.ShowAsync() == ContentDialogResult.Primary) ViewModel.AddLayer(dialog.Result);
-    }
-
-    private void AttachmentQueryBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-    {
-        AttachmentView.Refresh();
-    }
-
-    private bool Filter(object obj)
-    {
-        if (obj is AttachmentModel attachment)
-        {
-            var query = AttachmentQueryBox.Text;
-            if (string.IsNullOrWhiteSpace(query)) return true;
-            return attachment.ProjectName.Value.Contains(query, StringComparison.CurrentCultureIgnoreCase);
+            AttachmentView = new AdvancedCollectionView(ViewModel.Attachments) { Filter = Filter };
+            InitializeComponent();
         }
 
-        return false;
+        public MetadataViewModel ViewModel { get; } = App.ViewModel<MetadataViewModel>();
+
+        public AdvancedCollectionView AttachmentView { get; }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel.OnAttached(e.Parameter);
+            base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            ViewModel.OnDetached();
+            base.OnNavigatedFrom(e);
+        }
+
+        private async void AddLayerButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            InputDialog dialog = new(XamlRoot)
+            {
+                Message = "Summarize usage of your new layer", Placeholder = "New Layer"
+            };
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                ViewModel.AddLayer(dialog.Result);
+            }
+        }
+
+        private void AttachmentQueryBox_OnQuerySubmitted(AutoSuggestBox sender,
+            AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            AttachmentView.Refresh();
+        }
+
+        private bool Filter(object obj)
+        {
+            if (obj is AttachmentModel attachment)
+            {
+                string? query = AttachmentQueryBox.Text;
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    return true;
+                }
+
+                return attachment.ProjectName.Value.Contains(query, StringComparison.CurrentCultureIgnoreCase);
+            }
+
+            return false;
+        }
     }
 }

@@ -1,25 +1,26 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace Polymerium.App.Controls;
-
-public class DragDropArea : ContentControl
+namespace Polymerium.App.Controls
 {
-    protected override void OnDragEnter(DragEventArgs e)
+    public class DragDropArea : ContentControl
     {
-        VisualStateManager.GoToState(this, "DragOver", true);
-        base.OnDragEnter(e);
-    }
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "DragOver", true);
+            base.OnDragEnter(e);
+        }
 
-    protected override void OnDragLeave(DragEventArgs e)
-    {
-        VisualStateManager.GoToState(this, "Normal", true);
-        base.OnDragEnter(e);
-    }
+        protected override void OnDragLeave(DragEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "Normal", true);
+            base.OnDragEnter(e);
+        }
 
-    protected override void OnDrop(DragEventArgs e)
-    {
-        VisualStateManager.GoToState(this, "Normal", true);
-        base.OnDrop(e);
+        protected override void OnDrop(DragEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "Normal", true);
+            base.OnDrop(e);
+        }
     }
 }

@@ -3,82 +3,87 @@
 
 using Microsoft.UI.Xaml;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
-namespace Polymerium.App.Dialogs;
-
-public sealed partial class DragDropInputDialog
+namespace Polymerium.App.Dialogs
 {
-    public static readonly DependencyProperty CaptionTextProperty = DependencyProperty.Register(nameof(CaptionText),
-        typeof(string), typeof(DragDropInputDialog), new PropertyMetadata(string.Empty));
-
-    public static readonly DependencyProperty BodyTextProperty = DependencyProperty.Register(nameof(BodyText),
-        typeof(string), typeof(DragDropInputDialog), new PropertyMetadata(string.Empty));
-
-    public static readonly DependencyProperty IconGlyphProperty = DependencyProperty.Register(nameof(IconGlyph),
-        typeof(string), typeof(DragDropInputDialog), new PropertyMetadata("\uE7C9"));
-
-    public static readonly DependencyProperty ResultPathProperty = DependencyProperty.Register(nameof(ResultPath),
-        typeof(string), typeof(DragDropInputDialog), new PropertyMetadata(string.Empty));
-
-    public DragDropInputDialog(XamlRoot root)
+    public sealed partial class DragDropInputDialog
     {
-        XamlRoot = root;
-        InitializeComponent();
-    }
+        public static readonly DependencyProperty CaptionTextProperty = DependencyProperty.Register(nameof(CaptionText),
+            typeof(string), typeof(DragDropInputDialog), new PropertyMetadata(string.Empty));
 
-    public string CaptionText
-    {
-        get => (string)GetValue(CaptionTextProperty);
-        set => SetValue(CaptionTextProperty, value);
-    }
+        public static readonly DependencyProperty BodyTextProperty = DependencyProperty.Register(nameof(BodyText),
+            typeof(string), typeof(DragDropInputDialog), new PropertyMetadata(string.Empty));
 
-    public string BodyText
-    {
-        get => (string)GetValue(BodyTextProperty);
-        set => SetValue(BodyTextProperty, value);
-    }
+        public static readonly DependencyProperty IconGlyphProperty = DependencyProperty.Register(nameof(IconGlyph),
+            typeof(string), typeof(DragDropInputDialog), new PropertyMetadata("\uE7C9"));
 
-    public string IconGlyph
-    {
-        get => (string)GetValue(IconGlyphProperty);
-        set => SetValue(IconGlyphProperty, value);
-    }
+        public static readonly DependencyProperty ResultPathProperty = DependencyProperty.Register(nameof(ResultPath),
+            typeof(string), typeof(DragDropInputDialog), new PropertyMetadata(string.Empty));
 
-    public string ResultPath
-    {
-        get => (string)GetValue(ResultPathProperty);
-        set => SetValue(ResultPathProperty, value);
-    }
-
-    private async void UIElement_OnDrop(object sender, DragEventArgs e)
-    {
-        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+        public DragDropInputDialog(XamlRoot root)
         {
-            var files = await e.DataView.GetStorageItemsAsync();
-            var file = files.FirstOrDefault();
-            ResultPath = file?.Path ?? ResultPath;
-            e.Handled = true;
+            XamlRoot = root;
+            InitializeComponent();
         }
-    }
 
-    private async void ChooseButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        var picker = new FileOpenPicker();
-        InitializeWithWindow.Initialize(picker,
-            WindowNative.GetWindowHandle(App.Current.Window));
-        picker.FileTypeFilter.Add("*");
-        picker.SuggestedStartLocation = PickerLocationId.Downloads;
-        var file = await picker.PickSingleFileAsync();
-        ResultPath = file?.Path ?? ResultPath;
-    }
+        public string CaptionText
+        {
+            get => (string)GetValue(CaptionTextProperty);
+            set => SetValue(CaptionTextProperty, value);
+        }
 
-    private void UIElement_OnDragOver(object sender, DragEventArgs e)
-    {
-        if (e.DataView.Contains(StandardDataFormats.StorageItems))
-            e.AcceptedOperation = DataPackageOperation.Link;
+        public string BodyText
+        {
+            get => (string)GetValue(BodyTextProperty);
+            set => SetValue(BodyTextProperty, value);
+        }
+
+        public string IconGlyph
+        {
+            get => (string)GetValue(IconGlyphProperty);
+            set => SetValue(IconGlyphProperty, value);
+        }
+
+        public string ResultPath
+        {
+            get => (string)GetValue(ResultPathProperty);
+            set => SetValue(ResultPathProperty, value);
+        }
+
+        private async void UIElement_OnDrop(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                IReadOnlyList<IStorageItem>? files = await e.DataView.GetStorageItemsAsync();
+                IStorageItem? file = files.FirstOrDefault();
+                ResultPath = file?.Path ?? ResultPath;
+                e.Handled = true;
+            }
+        }
+
+        private async void ChooseButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker picker = new();
+            InitializeWithWindow.Initialize(picker,
+                WindowNative.GetWindowHandle(App.Current.Window));
+            picker.FileTypeFilter.Add("*");
+            picker.SuggestedStartLocation = PickerLocationId.Downloads;
+            StorageFile? file = await picker.PickSingleFileAsync();
+            ResultPath = file?.Path ?? ResultPath;
+        }
+
+        private void UIElement_OnDragOver(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                e.AcceptedOperation = DataPackageOperation.Link;
+            }
+        }
     }
 }

@@ -4,31 +4,35 @@ using Polymerium.App.Dialogs;
 using System;
 using System.Threading.Tasks;
 
-namespace Polymerium.App.Services;
-
-public class DialogService
+namespace Polymerium.App.Services
 {
-    private XamlRoot XamlRoot
+    public class DialogService
     {
-        get
+        private XamlRoot XamlRoot
         {
-            var xamlRoot = App.Current.Window.Content.XamlRoot;
-            ArgumentNullException.ThrowIfNull(xamlRoot);
-            return xamlRoot;
+            get
+            {
+                XamlRoot? xamlRoot = App.Current.Window.Content.XamlRoot;
+                ArgumentNullException.ThrowIfNull(xamlRoot);
+                return xamlRoot;
+            }
         }
-    }
 
-    public async Task<string?> RequestTextAsync(string message, string defaultValue)
-    {
-        var dialog = new InputDialog(XamlRoot) { Message = message, Placeholder = defaultValue };
-        if (await dialog.ShowAsync() == ContentDialogResult.Primary) return dialog.Result;
+        public async Task<string?> RequestTextAsync(string message, string defaultValue)
+        {
+            InputDialog dialog = new(XamlRoot) { Message = message, Placeholder = defaultValue };
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                return dialog.Result;
+            }
 
-        return null;
-    }
+            return null;
+        }
 
-    public async Task<bool> RequestConfirmationAsync(string message)
-    {
-        var dialog = new ConfirmDialog(XamlRoot) { Message = message };
-        return await dialog.ShowAsync() == ContentDialogResult.Primary;
+        public async Task<bool> RequestConfirmationAsync(string message)
+        {
+            ConfirmDialog dialog = new(XamlRoot) { Message = message };
+            return await dialog.ShowAsync() == ContentDialogResult.Primary;
+        }
     }
 }

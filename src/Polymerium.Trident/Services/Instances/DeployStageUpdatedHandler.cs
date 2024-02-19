@@ -1,3 +1,4 @@
-﻿namespace Polymerium.Trident.Services.Instances;
-
-public delegate void DeployStageUpdatedHandler(DeployTracker sender, DeployStage stage);
+﻿namespace Polymerium.Trident.Services.Instances
+{
+    public delegate void DeployStageUpdatedHandler(DeployTracker sender, DeployStage stage);
+}

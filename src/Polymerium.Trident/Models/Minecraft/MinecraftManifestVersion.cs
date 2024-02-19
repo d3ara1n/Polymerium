@@ -1,10 +1,11 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public struct MinecraftManifestVersion
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    public string Id { get; init; }
-    public MinecraftReleaseType Type { get; init; }
-    public Uri Url { get; init; }
-    public DateTimeOffset Time { get; init; }
-    public DateTimeOffset ReleaseTime { get; init; }
+    public struct MinecraftManifestVersion
+    {
+        public string Id { get; init; }
+        public MinecraftReleaseType Type { get; init; }
+        public Uri Url { get; init; }
+        public DateTimeOffset Time { get; init; }
+        public DateTimeOffset ReleaseTime { get; init; }
+    }
 }

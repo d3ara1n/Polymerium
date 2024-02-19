@@ -1,7 +1,8 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace Polymerium.App.Controls;
-
-public class DashBorder : ContentControl
+namespace Polymerium.App.Controls
 {
+    public class DashBorder : ContentControl
+    {
+    }
 }

@@ -1,8 +1,9 @@
 ﻿using Trident.Abstractions.Resources;
 
-namespace Trident.Abstractions.Repositories;
-
-public record Filter(string? Version, string? ModLoader, ResourceKind? Kind)
+namespace Trident.Abstractions.Repositories
 {
-    public static readonly Filter EMPTY = new(null, null, null);
+    public record Filter(string? Version, string? ModLoader, ResourceKind? Kind)
+    {
+        public static readonly Filter EMPTY = new(null, null, null);
+    }
 }

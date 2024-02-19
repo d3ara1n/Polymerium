@@ -1,5 +1,6 @@
-﻿namespace Trident.Abstractions.Resources;
-
-public record Dependency(string Purl, bool Required)
+﻿namespace Trident.Abstractions.Resources
 {
+    public record Dependency(string Purl, bool Required)
+    {
+    }
 }

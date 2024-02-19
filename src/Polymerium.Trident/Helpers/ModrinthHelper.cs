@@ -2,33 +2,34 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace Polymerium.Trident.Helpers;
-
-public static class ModrinthHelper
+namespace Polymerium.Trident.Helpers
 {
-    public const string ENDPOINT = "https://api.modrinth.com/v3";
-
-    public const string MODRINTH_URL = "";
-
-    private static readonly JsonSerializerOptions OPTIONS = new()
+    public static class ModrinthHelper
     {
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-    };
+        public const string ENDPOINT = "https://api.modrinth.com/v3";
 
-    public static async Task<T> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory, string service,
-        CancellationToken token = default)
-        where T : struct
-    {
-        token.ThrowIfCancellationRequested();
-        using var client = factory.CreateClient();
-        try
+        public const string MODRINTH_URL = "";
+
+        private static readonly JsonSerializerOptions OPTIONS = new()
         {
-            return await client.GetFromJsonAsync<T>(ENDPOINT + service, OPTIONS, token);
-        }
-        catch (Exception e)
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+        };
+
+        public static async Task<T> GetResourceAsync<T>(ILogger logger, IHttpClientFactory factory, string service,
+            CancellationToken token = default)
+            where T : struct
         {
-            logger.LogWarning("Failed to get {} from Modrinth for {}", service, e.Message);
-            throw;
+            token.ThrowIfCancellationRequested();
+            using HttpClient client = factory.CreateClient();
+            try
+            {
+                return await client.GetFromJsonAsync<T>(ENDPOINT + service, OPTIONS, token);
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning("Failed to get {} from Modrinth for {}", service, e.Message);
+                throw;
+            }
         }
     }
 }

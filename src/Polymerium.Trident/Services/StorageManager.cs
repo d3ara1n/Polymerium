@@ -1,38 +1,47 @@
 ﻿using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services.Storages;
 
-namespace Polymerium.Trident.Services;
-
-public class StorageManager(TridentContext context)
+namespace Polymerium.Trident.Services
 {
-    public Storage Open(string key)
+    public class StorageManager(TridentContext context)
     {
-        var path = PathOf(key);
-        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-        return new Storage(key, path);
-    }
-
-    public bool Destroy(string key)
-    {
-        var path = PathOf(key);
-        if (Directory.Exists(path))
+        public Storage Open(string key)
         {
-            Directory.Delete(path, true);
-            return true;
+            string path = PathOf(key);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return new Storage(key, path);
         }
 
-        return false;
-    }
+        public bool Destroy(string key)
+        {
+            string path = PathOf(key);
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+                return true;
+            }
 
-    public string RequestKey(string key)
-    {
-        var output = FileNameHelper.Sanitize(key);
-        while (Directory.Exists(PathOf(output))) key += '_';
-        return output;
-    }
+            return false;
+        }
 
-    private string PathOf(string key)
-    {
-        return Path.Combine(context.StorageDir, key);
+        public string RequestKey(string key)
+        {
+            string output = FileNameHelper.Sanitize(key);
+            while (Directory.Exists(PathOf(output)))
+            {
+                key += '_';
+            }
+
+            return output;
+        }
+
+        private string PathOf(string key)
+        {
+            return Path.Combine(context.StorageDir, key);
+        }
     }
 }

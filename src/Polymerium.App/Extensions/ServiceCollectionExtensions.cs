@@ -7,56 +7,57 @@ using System.Text.Json;
 using Trident.Abstractions.Extractors;
 using Trident.Abstractions.Repositories;
 
-namespace Polymerium.App.Extensions;
-
-internal static class ServiceCollectionExtensions
+namespace Polymerium.App.Extensions
 {
-    public static IServiceCollection AddViewModel<TViewModel>(this IServiceCollection services)
-        where TViewModel : ObservableObject
+    internal static class ServiceCollectionExtensions
     {
-        services.AddTransient<TViewModel>();
-        return services;
-    }
-
-    public static IServiceCollection AddStore<T>(this IServiceCollection services,
-        Func<TridentContext, string> mappedTo)
-        where T : class, new()
-    {
-        services.AddSingleton(provider =>
+        public static IServiceCollection AddViewModel<TViewModel>(this IServiceCollection services)
+            where TViewModel : ObservableObject
         {
-            var ctx = provider.GetRequiredService<TridentContext>();
-            return new Store<T>(mappedTo(ctx));
-        });
-        return services;
-    }
+            services.AddTransient<TViewModel>();
+            return services;
+        }
 
-    public static IServiceCollection AddSerializationOptions(this IServiceCollection services,
-        Action<JsonSerializerOptions> configure)
-    {
-        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-        configure(options);
-        services.AddSingleton(options);
-        return services;
-    }
+        public static IServiceCollection AddStore<T>(this IServiceCollection services,
+            Func<TridentContext, string> mappedTo)
+            where T : class, new()
+        {
+            services.AddSingleton(provider =>
+            {
+                TridentContext ctx = provider.GetRequiredService<TridentContext>();
+                return new Store<T>(mappedTo(ctx));
+            });
+            return services;
+        }
 
-    public static IServiceCollection AddRepository<T>(this IServiceCollection services)
-        where T : class, IRepository
-    {
-        services.AddTransient<IRepository, T>();
-        return services;
-    }
+        public static IServiceCollection AddSerializationOptions(this IServiceCollection services,
+            Action<JsonSerializerOptions> configure)
+        {
+            JsonSerializerOptions options = new(JsonSerializerDefaults.Web);
+            configure(options);
+            services.AddSingleton(options);
+            return services;
+        }
 
-    public static IServiceCollection AddExtractor<T>(this IServiceCollection services)
-        where T : class, IExtractor
-    {
-        services.AddTransient<IExtractor, T>();
-        return services;
-    }
+        public static IServiceCollection AddRepository<T>(this IServiceCollection services)
+            where T : class, IRepository
+        {
+            services.AddTransient<IRepository, T>();
+            return services;
+        }
 
-    public static IServiceCollection AddEngine<TEngine>(this IServiceCollection services)
-        where TEngine : class
-    {
-        services.AddTransient<TEngine>();
-        return services;
+        public static IServiceCollection AddExtractor<T>(this IServiceCollection services)
+            where T : class, IExtractor
+        {
+            services.AddTransient<IExtractor, T>();
+            return services;
+        }
+
+        public static IServiceCollection AddEngine<TEngine>(this IServiceCollection services)
+            where TEngine : class
+        {
+            services.AddTransient<TEngine>();
+            return services;
+        }
     }
 }

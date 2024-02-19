@@ -1,26 +1,27 @@
 ﻿using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
-namespace Polymerium.Trident.Repositories;
-
-public class ModrinthRepository : IRepository
+namespace Polymerium.Trident.Repositories
 {
-    public string Label => RepositoryLabels.MODRINTH;
-
-    public Task<Project> QueryAsync(string projectId, CancellationToken token)
+    public class ModrinthRepository : IRepository
     {
-        throw new NotImplementedException();
-    }
+        public string Label => RepositoryLabels.MODRINTH;
 
-    public Task<Package> ResolveAsync(string projectId, string? versionId, Filter filter,
-        CancellationToken token)
-    {
-        throw new NotImplementedException();
-    }
+        public Task<Project> QueryAsync(string projectId, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
 
-    public Task<IEnumerable<Exhibit>> SearchAsync(string keyword, uint page, uint limit, Filter filter,
-        CancellationToken token)
-    {
-        throw new NotImplementedException();
+        public Task<Package> ResolveAsync(string projectId, string? versionId, Filter filter,
+            CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Exhibit>> SearchAsync(string keyword, uint page, uint limit, Filter filter,
+            CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,10 +1,13 @@
-﻿namespace Polymerium.Trident.Exceptions;
-
-public class LaunchException : Exception
+﻿namespace Polymerium.Trident.Exceptions
 {
-    public LaunchException(string key, Exception inner) : base($"Exception occurred while launching: {inner.Message}", inner)
+    public class LaunchException : Exception
     {
-        Key = key;
+        public LaunchException(string key, Exception inner) : base(
+            $"Exception occurred while launching: {inner.Message}", inner)
+        {
+            Key = key;
+        }
+
+        public string Key { get; }
     }
-    public string Key { get; }
 }

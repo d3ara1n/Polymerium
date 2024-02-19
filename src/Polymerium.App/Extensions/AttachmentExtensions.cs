@@ -1,14 +1,15 @@
 ﻿using PackageUrl;
 using Trident.Abstractions.Resources;
 
-namespace Polymerium.App.Extensions;
-
-public static class AttachmentExtensions
+namespace Polymerium.App.Extensions
 {
-    public static string ToPurl(this Attachment self)
+    public static class AttachmentExtensions
     {
-        return new PackageURL(self.Label, null, self.ProjectId,
-            self.VersionId, null,
-            null).ToString();
+        public static string ToPurl(this Attachment self)
+        {
+            return new PackageURL(self.Label, null, self.ProjectId,
+                self.VersionId, null,
+                null).ToString();
+        }
     }
 }

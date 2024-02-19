@@ -1,7 +1,8 @@
 ﻿using Trident.Abstractions.Resources;
 
-namespace Polymerium.App.Models;
-
-public record ProjectModel(Project Inner)
+namespace Polymerium.App.Models
 {
+    public record ProjectModel(Project Inner)
+    {
+    }
 }

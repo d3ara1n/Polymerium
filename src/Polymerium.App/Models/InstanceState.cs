@@ -1,9 +1,10 @@
-﻿namespace Polymerium.App.Models;
-
-public enum InstanceState
+﻿namespace Polymerium.App.Models
 {
-    Idle,
-    Deploying,
-    Running,
-    Stopped
+    public enum InstanceState
+    {
+        Idle,
+        Deploying,
+        Running,
+        Stopped
+    }
 }

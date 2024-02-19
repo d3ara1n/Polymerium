@@ -4,26 +4,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Polymerium.App.Converters;
-
-public class EmptyCollectionVisibilityConverter : IValueConverter
+namespace Polymerium.App.Converters
 {
-    public object Convert(object value, Type targetType, object parameter, string language)
+    public class EmptyCollectionVisibilityConverter : IValueConverter
     {
-        return value switch
+        public object Convert(object value, Type targetType, object parameter, string language)
         {
-            IList<object> it => it.Count,
-            IList it => it.Count,
-            ICollection<object> it => it.Count,
-            ICollection it => it.Count,
-            _ => 114514
-        } == 0
-            ? Visibility.Visible
-            : Visibility.Collapsed;
-    }
+            return value switch
+            {
+                IList<object> it => it.Count,
+                IList it => it.Count,
+                ICollection<object> it => it.Count,
+                ICollection it => it.Count,
+                _ => 114514
+            } == 0
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

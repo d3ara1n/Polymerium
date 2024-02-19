@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Launching;
-
-public enum LaunchMode
+﻿namespace Polymerium.Trident.Launching
 {
-    FireAndForget,
-    Managed
+    public enum LaunchMode
+    {
+        FireAndForget,
+        Managed
+    }
 }

@@ -2,31 +2,32 @@
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace Polymerium.App.Converters;
-
-public class ZeroToVisibilityConverter : IValueConverter
+namespace Polymerium.App.Converters
 {
-    public object Convert(object value, Type targetType, object parameter, string language)
+    public class ZeroToVisibilityConverter : IValueConverter
     {
-        bool val = value switch
+        public object Convert(object value, Type targetType, object parameter, string language)
         {
-            int it => it == 0,
-            uint it => it == 0,
-            long it => it == 0,
-            _ => false
-        };
-        if (parameter != null)
-        {
-            val = !val;
+            bool val = value switch
+            {
+                int it => it == 0,
+                uint it => it == 0,
+                long it => it == 0,
+                _ => false
+            };
+            if (parameter != null)
+            {
+                val = !val;
+            }
+
+            return val
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
-        return val
-            ? Visibility.Visible
-            : Visibility.Collapsed;
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

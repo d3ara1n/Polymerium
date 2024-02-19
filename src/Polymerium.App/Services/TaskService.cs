@@ -5,69 +5,71 @@ using Polymerium.Trident.Services.Instances;
 using System;
 using Trident.Abstractions.Tasks;
 
-namespace Polymerium.App.Services;
-
-public class TaskService
+namespace Polymerium.App.Services
 {
-    private readonly ILogger<TaskService> _logger;
-    private readonly NotificationService _notificationService;
-
-    private Action<TaskBase>? handler;
-
-    public TaskService(ILogger<TaskService> logger, InstanceManager instanceManager,
-        NotificationService notificationService)
+    public class TaskService
     {
-        _notificationService = notificationService;
-        _logger = logger;
+        private readonly ILogger<TaskService> _logger;
+        private readonly NotificationService _notificationService;
 
-        instanceManager.InstanceDeploying += InstanceManager_InstanceDeploying;
-        instanceManager.InstanceLaunching += InstanceManager_InstanceLaunching;
-    }
+        private Action<TaskBase>? handler;
 
-    private void InstanceManager_InstanceDeploying(InstanceManager sender, InstanceDeployingEventArgs args)
-    {
-        var task = new DeployInstanceTask(args.Handle);
-        Enqueue(task);
-    }
-
-    private void InstanceManager_InstanceLaunching(InstanceManager sender, InstanceLaunchingEventArgs args)
-    {
-        var task = new LaunchInstanceTask(args.Handle);
-        Enqueue(task);
-    }
-
-    public void SetHandler(Action<TaskBase> action)
-    {
-        handler = action;
-    }
-
-    public void Enqueue(TaskBase task)
-    {
-        _logger.LogInformation("Start task {key}({mode})", task.Key, task.GetType().Name);
-        _notificationService.PopInformation($"{task.Stage} started");
-        task.Subscribe(Track);
-        handler?.Invoke(task);
-    }
-
-    private void Track(TaskBase task, TaskProgressUpdatedEventArgs args)
-    {
-        if (args.State == TaskState.Finished)
+        public TaskService(ILogger<TaskService> logger, InstanceManager instanceManager,
+            NotificationService notificationService)
         {
-            var time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
-            _logger.LogInformation("Task {model}({task}) ended in {time}s, {state}", task.GetType().Name, args.Key,
-                time, args.State);
-            _notificationService.PopSuccess($"{task.Stage} finished in {time}s");
-            task.Unsubscribe(Track);
+            _notificationService = notificationService;
+            _logger = logger;
+
+            instanceManager.InstanceDeploying += InstanceManager_InstanceDeploying;
+            instanceManager.InstanceLaunching += InstanceManager_InstanceLaunching;
         }
 
-        if (args.State == TaskState.Faulted)
+        private void InstanceManager_InstanceDeploying(InstanceManager sender, InstanceDeployingEventArgs args)
         {
-            var time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
-            _logger.LogInformation("Task {model}({task}) faulted in {time}s, {state}", task.GetType().Name, args.Key,
-                time, args.State);
-            _notificationService.PopError(
-                $"{task.Stage} failed due to {task.FailureReason?.Message ?? "unknown reason"}");
-            task.Unsubscribe(Track);
+            DeployInstanceTask task = new(args.Handle);
+            Enqueue(task);
+        }
+
+        private void InstanceManager_InstanceLaunching(InstanceManager sender, InstanceLaunchingEventArgs args)
+        {
+            LaunchInstanceTask task = new(args.Handle);
+            Enqueue(task);
+        }
+
+        public void SetHandler(Action<TaskBase> action)
+        {
+            handler = action;
+        }
+
+        public void Enqueue(TaskBase task)
+        {
+            _logger.LogInformation("Start task {key}({mode})", task.Key, task.GetType().Name);
+            _notificationService.PopInformation($"{task.Stage} started");
+            task.Subscribe(Track);
+            handler?.Invoke(task);
+        }
+
+        private void Track(TaskBase task, TaskProgressUpdatedEventArgs args)
+        {
+            if (args.State == TaskState.Finished)
+            {
+                int time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
+                _logger.LogInformation("Task {model}({task}) ended in {time}s, {state}", task.GetType().Name, args.Key,
+                    time, args.State);
+                _notificationService.PopSuccess($"{task.Stage} finished in {time}s");
+                task.Unsubscribe(Track);
+            }
+
+            if (args.State == TaskState.Faulted)
+            {
+                int time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
+                _logger.LogInformation("Task {model}({task}) faulted in {time}s, {state}", task.GetType().Name,
+                    args.Key,
+                    time, args.State);
+                _notificationService.PopError(
+                    $"{task.Stage} failed due to {task.FailureReason?.Message ?? "unknown reason"}");
+                task.Unsubscribe(Track);
+            }
         }
     }
 }

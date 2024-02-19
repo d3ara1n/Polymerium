@@ -2,33 +2,34 @@
 using System;
 using System.ComponentModel;
 
-namespace Polymerium.App.Models;
-
-public class Reactive<TOwner, TSource, TValue>
-    : ObservableObject
-    where TOwner : class
+namespace Polymerium.App.Models
 {
-    private readonly Func<TSource, TValue> _selector;
-    private readonly Bindable<TOwner, TSource> _source;
-
-    public Reactive(Bindable<TOwner, TSource> source, Func<TSource, TValue> selector)
+    public class Reactive<TOwner, TSource, TValue>
+        : ObservableObject
+        where TOwner : class
     {
-        _source = source;
-        _selector = selector;
-        Value = selector(source.Value);
+        private readonly Func<TSource, TValue> _selector;
+        private readonly Bindable<TOwner, TSource> _source;
 
-        _source.PropertyChanged += SourceOnPropertyChanged;
-    }
-
-    public TValue Value { get; private set; }
-
-    private void SourceOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(Bindable<TOwner, TSource>.Value))
+        public Reactive(Bindable<TOwner, TSource> source, Func<TSource, TValue> selector)
         {
-            var changed = _source.Value;
-            Value = _selector(changed);
-            OnPropertyChanged(nameof(Value));
+            _source = source;
+            _selector = selector;
+            Value = selector(source.Value);
+
+            _source.PropertyChanged += SourceOnPropertyChanged;
+        }
+
+        public TValue Value { get; private set; }
+
+        private void SourceOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Bindable<TOwner, TSource>.Value))
+            {
+                TSource changed = _source.Value;
+                Value = _selector(changed);
+                OnPropertyChanged(nameof(Value));
+            }
         }
     }
 }

@@ -1,13 +1,14 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public enum MinecraftReleaseType
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    Release,
-    Snapshot,
+    public enum MinecraftReleaseType
+    {
+        Release,
+        Snapshot,
 
-    // ReSharper disable once InconsistentNaming
-    Old_Alpha,
+        // ReSharper disable once InconsistentNaming
+        Old_Alpha,
 
-    // ReSharper disable once InconsistentNaming
-    Old_Beta
+        // ReSharper disable once InconsistentNaming
+        Old_Beta
+    }
 }

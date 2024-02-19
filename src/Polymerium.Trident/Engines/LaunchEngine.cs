@@ -1,12 +1,13 @@
 ﻿using Polymerium.Trident.Engines.Launching;
 using Trident.Abstractions;
 
-namespace Polymerium.Trident.Engines;
-
-public class LaunchEngine : IAsyncEngine<Scrap>
+namespace Polymerium.Trident.Engines
 {
-    public IAsyncEnumerator<Scrap> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    public class LaunchEngine : IAsyncEngine<Scrap>
     {
-        throw new NotImplementedException();
+        public IAsyncEnumerator<Scrap> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

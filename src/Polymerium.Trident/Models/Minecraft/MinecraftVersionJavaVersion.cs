@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public struct MinecraftVersionJavaVersion
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    public string Component { get; init; }
-    public uint MajorVersion { get; init; }
+    public struct MinecraftVersionJavaVersion
+    {
+        public string Component { get; init; }
+        public uint MajorVersion { get; init; }
+    }
 }

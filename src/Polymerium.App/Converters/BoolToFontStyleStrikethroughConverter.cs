@@ -2,17 +2,18 @@
 using System;
 using Windows.UI.Text;
 
-namespace Polymerium.App.Converters;
-
-public class BoolToFontStyleStrikethroughConverter : IValueConverter
+namespace Polymerium.App.Converters
 {
-    public object Convert(object value, Type targetType, object parameter, string language)
+    public class BoolToFontStyleStrikethroughConverter : IValueConverter
     {
-        return value is true ? TextDecorations.Strikethrough : TextDecorations.None;
-    }
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return value is true ? TextDecorations.Strikethrough : TextDecorations.None;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

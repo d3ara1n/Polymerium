@@ -1,35 +1,32 @@
 ﻿using Polymerium.Trident.Services.Instances;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Trident.Abstractions.Tasks;
 
-namespace Polymerium.App.Tasks;
-
-public class LaunchInstanceTask : TaskBase
+namespace Polymerium.App.Tasks
 {
-    private LaunchTracker _tracker;
-    public LaunchInstanceTask(LaunchTracker tracker) : base(tracker.Key, $"Launching {tracker.Key}", "Preparing...")
+    public class LaunchInstanceTask : TaskBase
     {
-        _tracker = tracker;
-        tracker.StateUpdated += Tracker_StateUpdated;
-        tracker.Fired += Tracker_Fired;
-    }
+        private readonly LaunchTracker _tracker;
 
-    private void Tracker_StateUpdated(TrackerBase sender, TaskState state)
-    {
-        UpdateProgress(state, failure: sender.FailureReason);
-    }
+        public LaunchInstanceTask(LaunchTracker tracker) : base(tracker.Key, $"Launching {tracker.Key}", "Preparing...")
+        {
+            _tracker = tracker;
+            tracker.StateUpdated += Tracker_StateUpdated;
+            tracker.Fired += Tracker_Fired;
+        }
 
-    private void Tracker_Fired(LaunchTracker sender)
-    {
-        UpdateProgress(TaskState.Running, stage: $"Running {_tracker.Key}", status: "Waiting process to exit...");
-    }
+        private void Tracker_StateUpdated(TrackerBase sender, TaskState state)
+        {
+            UpdateProgress(state, failure: sender.FailureReason);
+        }
 
-    protected override void OnAbort()
-    {
-        base.OnAbort();
+        private void Tracker_Fired(LaunchTracker sender)
+        {
+            UpdateProgress(TaskState.Running, stage: $"Running {_tracker.Key}", status: "Waiting process to exit...");
+        }
+
+        protected override void OnAbort()
+        {
+            base.OnAbort();
+        }
     }
 }

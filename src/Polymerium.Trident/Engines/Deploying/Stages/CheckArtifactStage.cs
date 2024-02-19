@@ -2,44 +2,45 @@
 using System.Text.Json;
 using Trident.Abstractions.Building;
 
-namespace Polymerium.Trident.Engines.Deploying.Stages;
-
-public class CheckArtifactStage : StageBase
+namespace Polymerium.Trident.Engines.Deploying.Stages
 {
-    protected override async Task OnProcessAsync()
+    public class CheckArtifactStage : StageBase
     {
-        var artifactPath = Context.ArtifactPath;
-        if (File.Exists(artifactPath))
+        protected override async Task OnProcessAsync()
         {
-            try
+            string artifactPath = Context.ArtifactPath;
+            if (File.Exists(artifactPath))
             {
-                var content = await File.ReadAllTextAsync(artifactPath);
-                var artifact = JsonSerializer.Deserialize<Artifact>(content, Context.SerializerOptions);
-                if (artifact != null && artifact.Verify(Context.Key, Context.Watermark, Context.Context.HomeDir))
+                try
                 {
-                    Context.Artifact = artifact;
-                    Logger.LogInformation("Using artifact: {path}", Path.GetFileName(artifactPath));
+                    string content = await File.ReadAllTextAsync(artifactPath);
+                    Artifact? artifact = JsonSerializer.Deserialize<Artifact>(content, Context.SerializerOptions);
+                    if (artifact != null && artifact.Verify(Context.Key, Context.Watermark, Context.Trident.HomeDir))
+                    {
+                        Context.Artifact = artifact;
+                        Logger.LogInformation("Using artifact: {path}", Path.GetFileName(artifactPath));
+                    }
+                    else
+                    {
+                        Context.ArtifactBuilder = Artifact.Builder();
+                        Logger.LogInformation("Bad artifact");
+                    }
                 }
-                else
+                catch (JsonException e)
                 {
                     Context.ArtifactBuilder = Artifact.Builder();
-                    Logger.LogInformation("Bad artifact");
+                    Logger.LogWarning("Load artifact in disk failed: {message}", e.Message);
                 }
             }
-            catch (JsonException e)
+            else
             {
                 Context.ArtifactBuilder = Artifact.Builder();
-                Logger.LogWarning("Load artifact in disk failed: {message}", e.Message);
+                Logger.LogInformation("Create empty artifact");
             }
-        }
-        else
-        {
-            Context.ArtifactBuilder = Artifact.Builder();
-            Logger.LogInformation("Create empty artifact");
-        }
 
-        Context.IsAttachmentResolved = false;
-        Context.IsLoaderProcessed = false;
-        Context.IsGameInstalled = false;
+            Context.IsAttachmentResolved = false;
+            Context.IsLoaderProcessed = false;
+            Context.IsGameInstalled = false;
+        }
     }
 }

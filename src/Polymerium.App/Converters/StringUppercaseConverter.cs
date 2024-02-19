@@ -1,17 +1,18 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace Polymerium.App.Converters;
-
-public class StringUppercaseConverter : IValueConverter
+namespace Polymerium.App.Converters
 {
-    public object Convert(object value, Type targetType, object parameter, string language)
+    public class StringUppercaseConverter : IValueConverter
     {
-        return value?.ToString()?.ToUpper() ?? parameter;
-    }
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return value?.ToString()?.ToUpper() ?? parameter;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

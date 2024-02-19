@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Models.CurseForge;
-
-public struct CurseForgeModpackManifestMinecraftModLoader
+﻿namespace Polymerium.Trident.Models.CurseForge
 {
-    public string Id { get; set; }
-    public bool Primary { get; set; }
+    public struct CurseForgeModpackManifestMinecraftModLoader
+    {
+        public string Id { get; set; }
+        public bool Primary { get; set; }
+    }
 }

@@ -1,6 +1,7 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public struct MinecraftVersionLogging
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    public MinecraftVersionLoggingSide Client { get; init; }
+    public struct MinecraftVersionLogging
+    {
+        public MinecraftVersionLoggingSide Client { get; init; }
+    }
 }

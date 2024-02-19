@@ -1,7 +1,8 @@
 ﻿using Microsoft.UI.Xaml.Controls.Primitives;
 
-namespace Polymerium.App.Controls;
-
-public class ClipBox : ButtonBase
+namespace Polymerium.App.Controls
 {
+    public class ClipBox : ButtonBase
+    {
+    }
 }

@@ -1,10 +1,11 @@
 ﻿using Trident.Abstractions.Errors;
 
-namespace Polymerium.Trident.Extractors;
-
-public class ExtractException(ExtractError error, string? reference)
-    : Exception($"Extract {reference ?? "in-memory data"} failed for {error}")
+namespace Polymerium.Trident.Extractors
 {
-    public ExtractError Error { get; init; } = error;
-    public string? Reference { get; init; } = reference;
+    public class ExtractException(ExtractError error, string? reference)
+        : Exception($"Extract {reference ?? "in-memory data"} failed for {error}")
+    {
+        public ExtractError Error { get; init; } = error;
+        public string? Reference { get; init; } = reference;
+    }
 }

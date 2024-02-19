@@ -221,7 +221,8 @@ Polymerium 没有遥测。
 - Minecraft 官方的 Meta Launcher Api 给出的数据是多态模型
 - CurseForge Api V1 不在文档中标注可能为 null 的数据
 - Modrinth Api V2 不在文档中标注可能为 null 的数据，且不提供 V3 文档
-- PrismLauncher 的 Meta Launcher Api 定义了一系列 "Component"，但每个 Component 都有自己独特的数据结构：他们只是看起来相似，在某些地方，例如对 rules[].os 的定义，是不同的
+- PrismLauncher 的 Meta Launcher Api 定义了一系列 "Component"，但每个 Component 都有自己独特的数据结构：他们只是看起来相似，在某些地方，例如对
+  rules[].os 的定义，是不同的
 
 <!-- LICENSE -->
 

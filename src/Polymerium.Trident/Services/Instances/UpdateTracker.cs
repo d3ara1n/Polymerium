@@ -1,5 +1,6 @@
-﻿namespace Polymerium.Trident.Services.Instances;
-
-public class UpdateTracker
+﻿namespace Polymerium.Trident.Services.Instances
 {
+    public class UpdateTracker
+    {
+    }
 }

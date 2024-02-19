@@ -5,24 +5,25 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Polymerium.App.Converters;
-
-public class NotEmptyToVisibleConverter : IValueConverter
+namespace Polymerium.App.Converters
 {
-    public object Convert(object? value, Type targetType, object? parameter, string language)
+    public class NotEmptyToVisibleConverter : IValueConverter
     {
-        var res = value switch
+        public object Convert(object? value, Type targetType, object? parameter, string language)
         {
-            string it => !string.IsNullOrEmpty(it),
-            IEnumerable<object> it => it.Any(),
-            IEnumerable it => it.Cast<object>().Any(),
-            _ => value != null
-        };
-        return (parameter == null ? res : !res) ? Visibility.Visible : Visibility.Collapsed;
-    }
+            bool res = value switch
+            {
+                string it => !string.IsNullOrEmpty(it),
+                IEnumerable<object> it => it.Any(),
+                IEnumerable it => it.Cast<object>().Any(),
+                _ => value != null
+            };
+            return (parameter == null ? res : !res) ? Visibility.Visible : Visibility.Collapsed;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

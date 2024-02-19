@@ -1,9 +1,10 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System.Windows.Input;
 
-namespace Polymerium.App.Modals;
-
-public class ModalBase : UserControl
+namespace Polymerium.App.Modals
 {
-    public ICommand DismissCommand { get; internal set; } = null!;
+    public class ModalBase : UserControl
+    {
+        public ICommand DismissCommand { get; internal set; } = null!;
+    }
 }

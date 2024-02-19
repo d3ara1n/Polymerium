@@ -1,6 +1,6 @@
 ﻿namespace Polymerium.Trident.Engines.Launching
 {
-    public record Scrap()
+    public record Scrap
     {
     }
 }

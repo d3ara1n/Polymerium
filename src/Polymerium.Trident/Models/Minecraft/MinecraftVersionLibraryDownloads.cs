@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Models.Minecraft;
-
-public struct MinecraftVersionLibraryDownloads
+﻿namespace Polymerium.Trident.Models.Minecraft
 {
-    public MinecraftVersionArtifact? Artifact { get; init; }
-    public IDictionary<string, MinecraftVersionArtifact> Classifiers { get; init; }
+    public struct MinecraftVersionLibraryDownloads
+    {
+        public MinecraftVersionArtifact? Artifact { get; init; }
+        public IDictionary<string, MinecraftVersionArtifact> Classifiers { get; init; }
+    }
 }

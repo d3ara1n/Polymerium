@@ -1,7 +1,8 @@
-﻿namespace Polymerium.Trident.Launching;
-
-public class JavaNotFoundException : Exception
+﻿namespace Polymerium.Trident.Launching
 {
-    public JavaNotFoundException(uint majorVersion) : base($"Jre version {majorVersion} not found") { }
-    public JavaNotFoundException(string message, Exception? inner = null) : base(message, inner) { }
+    public class JavaNotFoundException : Exception
+    {
+        public JavaNotFoundException(uint majorVersion) : base($"Jre version {majorVersion} not found") { }
+        public JavaNotFoundException(string message, Exception? inner = null) : base(message, inner) { }
+    }
 }

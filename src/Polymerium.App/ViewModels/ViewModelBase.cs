@@ -1,15 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Polymerium.App.ViewModels;
-
-public abstract class ViewModelBase : ObservableObject
+namespace Polymerium.App.ViewModels
 {
-    public virtual bool OnAttached(object? parameter)
+    public abstract class ViewModelBase : ObservableObject
     {
-        return true;
-    }
+        public virtual bool OnAttached(object? parameter)
+        {
+            return true;
+        }
 
-    public virtual void OnDetached()
-    {
+        public virtual void OnDetached()
+        {
+        }
     }
 }

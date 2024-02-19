@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNext" Version="5.0.2" />
-        <PackageReference Include="IBuilder" Version="0.1.0" />
+        <PackageReference Include="DotNext" Version="5.0.2"/>
+        <PackageReference Include="IBuilder" Version="0.1.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Authentication\" />
+        <Folder Include="Authentication\"/>
     </ItemGroup>
 
 </Project>

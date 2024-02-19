@@ -1,20 +1,21 @@
 ﻿using Polymerium.App.Modals;
 using System;
 
-namespace Polymerium.App.Services;
-
-public class ModalService
+namespace Polymerium.App.Services
 {
-    private Action<ModalBase>? popHandler;
-
-    public void SetHandler(Action<ModalBase> handler)
+    public class ModalService
     {
-        popHandler = handler;
-    }
+        private Action<ModalBase>? popHandler;
 
-    public void Pop<T>(T modal)
-        where T : ModalBase
-    {
-        popHandler?.Invoke(modal);
+        public void SetHandler(Action<ModalBase> handler)
+        {
+            popHandler = handler;
+        }
+
+        public void Pop<T>(T modal)
+            where T : ModalBase
+        {
+            popHandler?.Invoke(modal);
+        }
     }
 }

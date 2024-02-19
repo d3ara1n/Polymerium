@@ -1,16 +1,17 @@
-﻿namespace Polymerium.Trident.Models.Eternal;
-
-public struct EternalDependency
+﻿namespace Polymerium.Trident.Models.Eternal
 {
-    public uint ModId { get; init; }
+    public struct EternalDependency
+    {
+        public uint ModId { get; init; }
 
-    /// <summary>
-    ///     1 = EmbeddedLibrary
-    ///     2 = OptionalDependency
-    ///     3 = RequiredDependency
-    ///     4 = Tool
-    ///     5 = Incompatible
-    ///     6 = Include
-    /// </summary>
-    public uint RelationType { get; init; }
+        /// <summary>
+        ///     1 = EmbeddedLibrary
+        ///     2 = OptionalDependency
+        ///     3 = RequiredDependency
+        ///     4 = Tool
+        ///     5 = Incompatible
+        ///     6 = Include
+        /// </summary>
+        public uint RelationType { get; init; }
+    }
 }

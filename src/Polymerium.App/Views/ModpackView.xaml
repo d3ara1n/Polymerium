@@ -24,8 +24,8 @@
         </toolkit:Case>
         <toolkit:Case Value="Failed">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="{StaticResource SmallGap}">
-                <FontIcon Glyph="&#xF384;" FontSize="32" HorizontalAlignment="Center"/>
-                <TextBlock Text="{x:Bind ViewModel.FailureReason,Mode=OneWay}" HorizontalAlignment="Center"/>
+                <FontIcon Glyph="&#xF384;" FontSize="32" HorizontalAlignment="Center" />
+                <TextBlock Text="{x:Bind ViewModel.FailureReason,Mode=OneWay}" HorizontalAlignment="Center" />
             </StackPanel>
         </toolkit:Case>
         <toolkit:Case Value="Done">
@@ -104,7 +104,9 @@
                                     </FlipView>
                                 </toolkit:ConstrainedBox>
                                 <ScrollViewer Grid.Row="1" Padding="{StaticResource CardContentMargin}">
-                                    <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill" Text="{x:Bind ViewModel.Project.Inner.DescriptionMarkdown,Mode=OneWay}" LinkClicked="MarkdownTextBlock_LinkClicked"/>
+                                    <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill"
+                                                               Text="{x:Bind ViewModel.Project.Inner.DescriptionMarkdown,Mode=OneWay}"
+                                                               LinkClicked="MarkdownTextBlock_LinkClicked" />
                                 </ScrollViewer>
                             </Grid>
                         </controls:Card>
@@ -115,8 +117,8 @@
                         </toolkit:Case.Value>
                         <Grid RowSpacing="{StaticResource SmallGap}">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <controls:Card Grid.Row="0">
                                 <Grid>
@@ -126,29 +128,34 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0" ColumnSpacing="{StaticResource SmallGap}">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <HyperlinkButton Command="{x:Bind ViewModel.GoBackCommand}">
-                                            <FontIcon Glyph="&#xE72B;" FontSize="{StaticResource ButtonFontIconFontSize}"/>
+                                            <FontIcon Glyph="&#xE72B;"
+                                                      FontSize="{StaticResource ButtonFontIconFontSize}" />
                                         </HyperlinkButton>
                                         <TextBlock Grid.Column="1" VerticalAlignment="Center"
                                                    Text="{x:Bind ViewModel.SelectedVersion.Inner.Name,FallbackValue=N/A,Mode=OneWay}"
-                                                   Style="{StaticResource SubtitleTextBlockStyle}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                                                   Style="{StaticResource SubtitleTextBlockStyle}"
+                                                   TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
                                     </Grid>
                                     <Button Grid.Column="1" Style="{StaticResource AccentButtonStyle}"
-                                                Command="{x:Bind ViewModel.InstallModpackCommand}"
-                                                CommandParameter="{x:Bind ViewModel.SelectedVersion,Mode=OneWay}">
+                                            Command="{x:Bind ViewModel.InstallModpackCommand}"
+                                            CommandParameter="{x:Bind ViewModel.SelectedVersion,Mode=OneWay}">
                                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                            <FontIcon Glyph="&#xE896;" FontSize="{StaticResource ButtonFontIconFontSize}"/>
+                                            <FontIcon Glyph="&#xE896;"
+                                                      FontSize="{StaticResource ButtonFontIconFontSize}" />
                                             <TextBlock Text="Install" />
                                         </StackPanel>
                                     </Button>
                                 </Grid>
                             </controls:Card>
                             <controls:Card Grid.Row="1">
-                                <ScrollViewer Grid.Row="1" Padding="{StaticResource CardContentMargin}">
-                                    <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill" Text="{x:Bind ViewModel.SelectedVersion.Inner.ChangelogMarkdown,Mode=OneWay}" LinkClicked="MarkdownTextBlock_LinkClicked"/>
+                                <ScrollViewer Padding="{StaticResource CardContentMargin}">
+                                    <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill"
+                                                               Text="{x:Bind ViewModel.SelectedVersion.Inner.ChangelogMarkdown,Mode=OneWay}"
+                                                               LinkClicked="MarkdownTextBlock_LinkClicked" />
                                 </ScrollViewer>
                             </controls:Card>
                         </Grid>
@@ -179,8 +186,8 @@
                                                         <toolkit:Case Value="Release">
                                                             <Grid>
                                                                 <Rectangle
-                                                                        Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
-                                                                        Width="20" Height="20" />
+                                                                    Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                                    Width="20" Height="20" />
                                                                 <TextBlock Text="R"
                                                                            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
                                                                            VerticalAlignment="Center"
@@ -190,8 +197,8 @@
                                                         <toolkit:Case Value="Beta">
                                                             <Grid>
                                                                 <Rectangle
-                                                                        Fill="{ThemeResource SystemFillColorAttentionBackgroundBrush}"
-                                                                        Width="20" Height="20" />
+                                                                    Fill="{ThemeResource SystemFillColorAttentionBackgroundBrush}"
+                                                                    Width="20" Height="20" />
                                                                 <TextBlock Text="B"
                                                                            Foreground="{ThemeResource SystemFillColorAttentionBrush}"
                                                                            VerticalAlignment="Center"
@@ -201,8 +208,8 @@
                                                         <toolkit:Case Value="Alpha">
                                                             <Grid>
                                                                 <Rectangle
-                                                                        Fill="{ThemeResource SystemFillColorCautionBackgroundBrush}"
-                                                                        Width="20" Height="20" />
+                                                                    Fill="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                                    Width="20" Height="20" />
                                                                 <TextBlock Text="A"
                                                                            Foreground="{ThemeResource SystemFillColorCautionBrush}"
                                                                            VerticalAlignment="Center"

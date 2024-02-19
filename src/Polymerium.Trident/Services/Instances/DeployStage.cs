@@ -1,12 +1,13 @@
-﻿namespace Polymerium.Trident.Services.Instances;
-
-public enum DeployStage
+﻿namespace Polymerium.Trident.Services.Instances
 {
-    CheckArtifact,
-    InstallVanilla,
-    ResolveAttachments,
-    ProcessLoaders,
-    BuildArtifact,
-    BuildTransient,
-    SolidifyTransient
+    public enum DeployStage
+    {
+        CheckArtifact,
+        InstallVanilla,
+        ResolveAttachments,
+        ProcessLoaders,
+        BuildArtifact,
+        BuildTransient,
+        SolidifyTransient
+    }
 }
