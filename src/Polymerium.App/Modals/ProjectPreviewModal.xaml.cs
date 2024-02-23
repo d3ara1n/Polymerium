@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Polymerium.App.Models;
 using Polymerium.Trident.Services;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -18,34 +20,37 @@ namespace Polymerium.App.Modals
     {
         // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProjectProperty =
-            DependencyProperty.Register(nameof(Project), typeof(ModpackModel), typeof(ProjectPreviewModal),
+            DependencyProperty.Register(nameof(Project), typeof(ProjectModel), typeof(ProjectPreviewModal),
                 new PropertyMetadata(null));
 
         private readonly RepositoryAgent _agent;
-
-        private readonly Attachment? reference;
+        private readonly Filter _filter;
+        private readonly Attachment? _reference;
 
         private readonly CancellationTokenSource tokenSource =
             CancellationTokenSource.CreateLinkedTokenSource(App.Current.Token);
 
-        public ProjectPreviewModal(ExhibitModel model, RepositoryAgent agent, Attachment? installed,
-            ICommand installCommand, ICommand uninstallCommand)
+        public ProjectPreviewModal(ExhibitModel model, RepositoryAgent agent, Filter filter, Attachment? reference,
+            ICommand installCommand)
         {
-            _agent = agent;
             Exhibit = model;
-            reference = installed;
+            _agent = agent;
+            _reference = reference;
+            _filter = filter;
 
+            InstallCommand = installCommand;
             OpenReferenceCommand = new RelayCommand<Uri>(OpenReference, CanOpenReference);
             InitializeComponent();
         }
 
-        public ModpackModel Project
+        public ProjectModel Project
         {
-            get => (ModpackModel)GetValue(ProjectProperty);
+            get => (ProjectModel)GetValue(ProjectProperty);
             set => SetValue(ProjectProperty, value);
         }
 
         public IRelayCommand<Uri> OpenReferenceCommand { get; }
+        public ICommand InstallCommand { get; }
 
         public ExhibitModel Exhibit { get; }
 
@@ -56,7 +61,7 @@ namespace Polymerium.App.Modals
             {
                 if (project != null)
                 {
-                    Project = new ModpackModel(project);
+                    Project = new ProjectModel(project, _filter);
                     VisualStateManager.GoToState(this, "Done", true);
                 }
                 else
@@ -69,7 +74,7 @@ namespace Polymerium.App.Modals
         private void ModalBase_Loaded(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "Fetching", true);
-            if (reference != null)
+            if (_reference != null)
             {
                 VisualStateManager.GoToState(this, "Installed", true);
             }
@@ -93,6 +98,11 @@ namespace Polymerium.App.Modals
             {
                 Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
             }
+        }
+
+        private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Link) { UseShellExecute = true });
         }
     }
 }

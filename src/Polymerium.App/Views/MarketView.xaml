@@ -7,6 +7,7 @@
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:lab="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" NavigationCacheMode="Required">
@@ -46,10 +47,9 @@
                       SelectionMode="None" Padding="16">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ExhibitModel">
-                        <HyperlinkButton HorizontalAlignment="Stretch" Padding="{StaticResource SmallMargin}"
-                                         HorizontalContentAlignment="Stretch" Margin="4"
-                                         Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                         Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
+                        <controls:CardButton HorizontalAlignment="Stretch"
+                                             HorizontalContentAlignment="Stretch"
+                                             Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
                             <Grid ColumnSpacing="{StaticResource SmallGap}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -58,7 +58,8 @@
                                     <ColumnDefinition Width="2*" />
                                 </Grid.ColumnDefinitions>
                                 <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="64"
-                                                 CacheMode="BitmapCache" />
+                                                 CacheMode="BitmapCache"
+                                                 CornerRadius="{StaticResource TinyCornerRadius}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
                                     <TextBlock Text="{x:Bind Inner.Name}"
                                                Style="{StaticResource SubtitleTextBlockStyle}" MaxLines="1"
@@ -83,7 +84,7 @@
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
-                        </HyperlinkButton>
+                        </controls:CardButton>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

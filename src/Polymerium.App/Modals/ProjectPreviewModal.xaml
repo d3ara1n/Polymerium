@@ -7,15 +7,23 @@
     xmlns:local="using:Polymerium.App.Modals"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:resources="using:Trident.Abstractions.Resources"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" VerticalAlignment="Center" HorizontalAlignment="Center" Width="480" Loaded="ModalBase_Loaded"
+    mc:Ignorable="d" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Loaded="ModalBase_Loaded"
     Unloaded="ModalBase_Unloaded">
 
-    <Grid Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
-          BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-          BorderThickness="{StaticResource CardBorderThickness}" CornerRadius="{StaticResource SmallCornerRadius}"
-          Padding="{StaticResource LargeMargin}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="DataStates">
                 <VisualState x:Name="Idle" />
@@ -46,95 +54,216 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid>
-            <Grid RowSpacing="{StaticResource MediumGap}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="1" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="1" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid ColumnSpacing="{StaticResource MediumGap}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <toolkit:ImageEx Grid.Column="0" CornerRadius="{StaticResource TinyCornerRadius}" Width="64"
-                                         Height="64" VerticalAlignment="Top" HorizontalAlignment="Left"
-                                         Source="{x:Bind Exhibit.Thumbnail}" Stretch="UniformToFill" />
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" MaxLines="2"
-                                   TextTrimming="CharacterEllipsis" TextWrapping="Wrap"
-                                   Text="{x:Bind Exhibit.Inner.Name}" Style="{StaticResource SubtitleTextBlockStyle}" />
-                        <Grid Grid.Column="2">
-                            <HyperlinkButton Command="{x:Bind OpenReferenceCommand}"
-                                             CommandParameter="{x:Bind Project.Inner.Reference,FallbackValue={x:Null},Mode=OneWay}">
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                    <FontIcon Glyph="&#xE8A7;" FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                    <TextBlock
-                                        Text="{x:Bind Exhibit.Inner.Label,Converter={StaticResource StringUppercaseConverter}}" />
-                                </StackPanel>
-                            </HyperlinkButton>
+        <Grid Grid.Column="1" Grid.Row="1" Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+              BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+              BorderThickness="{StaticResource CardBorderThickness}" CornerRadius="{StaticResource SmallCornerRadius}">
+            <Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="{StaticResource MediumUpperMargin}">
+                        <Grid ColumnSpacing="{StaticResource MediumGap}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <toolkit:ImageEx Grid.Column="0" CornerRadius="{StaticResource TinyCornerRadius}"
+                                             Width="64"
+                                             Height="64" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                             Source="{x:Bind Exhibit.Thumbnail}" Stretch="UniformToFill" />
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" MaxLines="2"
+                                       TextTrimming="CharacterEllipsis" TextWrapping="Wrap"
+                                       Text="{x:Bind Exhibit.Inner.Name}"
+                                       Style="{StaticResource SubtitleTextBlockStyle}" />
+                            <Grid Grid.Column="2">
+                                <HyperlinkButton Command="{x:Bind OpenReferenceCommand}"
+                                                 CommandParameter="{x:Bind Project.Inner.Reference,FallbackValue={x:Null},Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                        <FontIcon Glyph="&#xE8A7;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        <TextBlock
+                                            Text="{x:Bind Exhibit.Inner.Label,Converter={StaticResource StringUppercaseConverter}}" />
+                                    </StackPanel>
+                                </HyperlinkButton>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Border Grid.Row="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="0,1,0,0" />
-                <Grid Grid.Row="2">
-                    <StackPanel x:Name="PART_Done" Spacing="{StaticResource SmallGap}" Visibility="Collapsed">
-                        <Grid>
-                            <toolkit:ConstrainedBox AspectRatio="32:9">
-                                <FlipView ItemsSource="{x:Bind Project.Gallery,Mode=OneWay}">
-                                    <FlipView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:GalleryItemModel">
-                                            <toolkit:ImageEx IsCacheEnabled="True" Source="{x:Bind Url}" />
+                    <Grid Grid.Row="1">
+                        <Pivot x:Name="PART_Done" Visibility="Collapsed">
+                            <Pivot.ItemContainerStyle>
+                                <Style TargetType="PivotItem">
+                                    <Setter Property="Margin" Value="0" />
+                                </Style>
+                            </Pivot.ItemContainerStyle>
+                            <PivotItem Header="Description">
+                                <ScrollViewer>
+                                    <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill"
+                                                               Text="{x:Bind Project.Inner.DescriptionMarkdown,Mode=OneWay}"
+                                                               LinkClicked="MarkdownTextBlock_LinkClicked"
+                                                               Margin="{StaticResource MediumMargin}" />
+                                </ScrollViewer>
+                            </PivotItem>
+                            <PivotItem Header="Gallery">
+                                <Grid>
+                                    <FlipView ItemsSource="{x:Bind Project.Gallery,Mode=OneWay}" CornerRadius="0">
+                                        <FlipView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:GalleryItemModel">
+                                                <toolkit:ImageEx IsCacheEnabled="True" Source="{x:Bind Url}" />
+                                            </DataTemplate>
+                                        </FlipView.ItemTemplate>
+                                    </FlipView>
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                Visibility="{x:Bind Project.Gallery.Count,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource ZeroToVisibilityConverter}}">
+                                        <FontIcon Glyph="&#xE91B;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        <TextBlock Text="No images" />
+                                    </StackPanel>
+                                </Grid>
+                            </PivotItem>
+                            <PivotItem Header="Versions">
+                                <ListView x:Name="VersionList" ItemsSource="{x:Bind Project.Versions,Mode=OneWay}"
+                                          Padding="{StaticResource SmallMargin}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ProjectVersionModel">
+                                            <Grid Margin="{StaticResource SmallMargin}"
+                                                  RowSpacing="{StaticResource TinyGap}">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{x:Bind Inner.Name}"
+                                                               FontSize="{StaticResource BodyStrongTextBlockFontSize}"
+                                                               Foreground="{x:Bind Matched,Converter={StaticResource BoolToAccentTextBrushConverter}}"
+                                                               FontWeight="{x:Bind Matched,Converter={StaticResource BoolToFontBoldConverter}}" />
+                                                    <toolkit:SwitchPresenter Grid.Column="1"
+                                                                             Value="{x:Bind Inner.ReleaseType}"
+                                                                             TargetType="resources:ReleaseType">
+                                                        <toolkit:Case Value="Release">
+                                                            <Grid>
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <TextBlock Text="Release"
+                                                                               Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center"
+                                                                               Margin="6,2"
+                                                                               FontSize="{StaticResource CaptionTextBlockFontSize}" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </toolkit:Case>
+                                                        <toolkit:Case Value="Beta">
+                                                            <Grid>
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <TextBlock Text="Beta"
+                                                                               Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center"
+                                                                               Margin="6,2"
+                                                                               FontSize="{StaticResource CaptionTextBlockFontSize}" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </toolkit:Case>
+                                                        <toolkit:Case Value="Alpha">
+                                                            <Grid>
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <TextBlock Text="Alpha"
+                                                                               Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center"
+                                                                               Margin="6,2"
+                                                                               FontSize="{StaticResource CaptionTextBlockFontSize}" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </toolkit:Case>
+                                                    </toolkit:SwitchPresenter>
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel Orientation="Horizontal"
+                                                                Spacing="{StaticResource TinyGap}">
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    Spacing="{StaticResource TinyGap}"
+                                                                    Visibility="{x:Bind LoaderLabel,Converter={StaticResource NotEmptyToVisibleConverter}}">
+                                                            <FontIcon Glyph="&#xF157;"
+                                                                      FontSize="{StaticResource BodyTextBlockFontSize}"
+                                                                      Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                            <TextBlock Text="{x:Bind LoaderLabel}"
+                                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                                       TextTrimming="CharacterEllipsis" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    Spacing="{StaticResource TinyGap}"
+                                                                    Visibility="{x:Bind VersionLabel,Converter={StaticResource NotEmptyToVisibleConverter}}">
+                                                            <FontIcon Glyph="&#xE8EC;"
+                                                                      FontSize="{StaticResource BodyTextBlockFontSize}"
+                                                                      Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                            <TextBlock Text="{x:Bind VersionLabel}"
+                                                                       Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                                       TextTrimming="CharacterEllipsis" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <TextBlock Grid.Column="1" Text="{x:Bind PublishedAt}"
+                                                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                                </Grid>
+                                            </Grid>
                                         </DataTemplate>
-                                    </FlipView.ItemTemplate>
-                                </FlipView>
-                            </toolkit:ConstrainedBox>
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}"
-                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                        Visibility="{x:Bind Project.Gallery.Count,FallbackValue=Collapsed,Converter={StaticResource ZeroToVisibilityConverter}}">
-                                <FontIcon Glyph="&#xE91B;" FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                <TextBlock Text="No entries" />
-                            </StackPanel>
-                        </Grid>
-                        <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="5"
-                                   Text="{x:Bind Project.Inner.Summary,Mode=OneWay}" />
-                    </StackPanel>
-                    <StackPanel x:Name="PART_Failed" Visibility="Collapsed" Spacing="{StaticResource SmallGap}">
-                        <FontIcon Glyph="&#xF384;" FontSize="28" HorizontalAlignment="Center" />
-                        <TextBlock Text="Data loading failed" HorizontalAlignment="Center" />
-                    </StackPanel>
-                    <!-- Loading indicator -->
-                    <ProgressRing x:Name="PART_LodingIndicator" IsActive="False" VerticalAlignment="Center"
-                                  HorizontalAlignment="Center" />
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </PivotItem>
+                        </Pivot>
+                        <StackPanel x:Name="PART_Failed" Visibility="Collapsed" Spacing="{StaticResource SmallGap}">
+                            <FontIcon Glyph="&#xF384;" FontSize="28" HorizontalAlignment="Center" />
+                            <TextBlock Text="Data loading failed" HorizontalAlignment="Center" />
+                        </StackPanel>
+                        <!-- Loading indicator -->
+                        <ProgressRing x:Name="PART_LodingIndicator" IsActive="False" VerticalAlignment="Center"
+                                      HorizontalAlignment="Center" />
+                    </Grid>
+                    <Border Grid.Row="2" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="0,1,0,0" />
+                    <Grid Grid.Row="4" Margin="{StaticResource MediumMargin}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                    Spacing="{StaticResource SmallGap}">
+                            <Button x:Name="PART_InstallButton" Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind InstallCommand}"
+                                    CommandParameter="{x:Bind VersionList.SelectedValue,Mode=OneWay}">
+                                <Grid>
+                                    <StackPanel x:Name="PART_UninstalledState" Orientation="Horizontal"
+                                                Spacing="{StaticResource TinyGap}">
+                                        <FontIcon Glyph="&#xEBD3;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        <TextBlock Text="Install" />
+                                    </StackPanel>
+                                    <StackPanel x:Name="PART_InstalledState" Orientation="Horizontal"
+                                                Spacing="{StaticResource TinyGap}" Visibility="Collapsed">
+                                        <FontIcon Glyph="&#xEC61;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        <TextBlock Text="Installed" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+                            <Button Content="Close" Command="{x:Bind DismissCommand}" />
+                        </StackPanel>
+                    </Grid>
                 </Grid>
-                <Border Grid.Row="3" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="0,1,0,0" />
-                <Grid Grid.Row="4">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="{StaticResource TinyGap}">
-                        <Button x:Name="PART_InstallButton" Style="{StaticResource AccentButtonStyle}">
-                            <Grid>
-                                <StackPanel x:Name="PART_UninstalledState" Orientation="Horizontal"
-                                            Spacing="{StaticResource TinyGap}">
-                                    <FontIcon Glyph="&#xEBD3;" FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                    <TextBlock Text="Install" />
-                                </StackPanel>
-                                <StackPanel x:Name="PART_InstalledState" Orientation="Horizontal"
-                                            Spacing="{StaticResource TinyGap}" Visibility="Collapsed">
-                                    <FontIcon Glyph="&#xEC61;" FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                    <TextBlock Text="Installed" />
-                                </StackPanel>
-                            </Grid>
-                        </Button>
-                        <Button Content="Close" Command="{x:Bind DismissCommand}" />
-                    </StackPanel>
-                </Grid>
-            </Grid>
 
+            </Grid>
         </Grid>
+
     </Grid>
 </local:ModalBase>

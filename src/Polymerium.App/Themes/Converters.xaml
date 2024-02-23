@@ -18,6 +18,9 @@
     <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
     <converters:BoolToFontStyleStrikethroughConverter x:Key="BoolToFontStyleStrikethroughConverter" />
     <converters:FalseWhenLoadingConverter x:Key="FalseWhenLoadingConverter" />
+    <converters:BoolToTranslucentConverter x:Key="BoolToTranslucentConverter" />
+    <converters:BoolToAccentTextBrushConverter x:Key="BoolToAccentTextBrushConverter" />
+    <converters:BoolToFontBoldConverter x:Key="BoolToFontBoldConverter" />
 
 
 </ResourceDictionary>

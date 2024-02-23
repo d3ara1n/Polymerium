@@ -94,11 +94,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:RecentModel">
                         <controls:CardButton Padding="0" Command="{x:Bind GotoInstanceViewCommand}"
-                                             CommandParameter="{x:Bind Key}">
+                                             CommandParameter="{x:Bind Key}" CornerRadius="6">
                             <StackPanel>
                                 <toolkit:ConstrainedBox AspectRatio="1:1">
                                     <toolkit:ImageEx Source="{x:Bind Thumbnail}" Stretch="UniformToFill"
-                                                     Width="198" />
+                                                     Width="198" CornerRadius="6,6,0,0" />
                                 </toolkit:ConstrainedBox>
                                 <StackPanel Margin="{StaticResource CardContentMargin}"
                                             Spacing="{StaticResource TinyGap}">

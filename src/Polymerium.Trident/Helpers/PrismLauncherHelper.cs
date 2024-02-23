@@ -67,7 +67,8 @@ namespace Polymerium.Trident.Helpers
                     );
                     if (lib.Downloads.Classifiers.TryGetValue(classifier, out PrismVersionArtifact download))
                     {
-                        builder.AddLibrary(lib.Name, download.Url, download.Sha1, true, false);
+                        // 假设 native 库本身没有 platform 字段，这是个大胆的假设！
+                        builder.AddLibrary($"{lib.Name}:{classifier}", download.Url, download.Sha1, true, false);
                     }
                 }
             }

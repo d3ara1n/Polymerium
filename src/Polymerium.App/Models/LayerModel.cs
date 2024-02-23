@@ -33,7 +33,6 @@ namespace Polymerium.App.Models
         public Metadata.Layer Inner { get; }
         public MetadataModel Root { get; }
 
-
         public ReactiveCollection<Loader, LoaderModel> Loaders { get; }
         public BindableCollection<Attachment> Attachments { get; }
 

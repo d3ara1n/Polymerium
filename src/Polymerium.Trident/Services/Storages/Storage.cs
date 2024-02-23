@@ -36,14 +36,7 @@
                 Directory.CreateDirectory(dir);
             }
 
-            try
-            {
-                await File.WriteAllBytesAsync(path, content);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            await File.WriteAllBytesAsync(path, content);
         }
     }
 }

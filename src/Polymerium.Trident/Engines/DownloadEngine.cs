@@ -15,7 +15,8 @@ namespace Polymerium.Trident.Engines
         public IAsyncEnumerator<DownloadResult> GetAsyncEnumerator(
             CancellationToken cancellationToken = default)
         {
-            return new DownloadEnumerator(tasks, ((uint)Environment.ProcessorCount / 2) + 1, factory, logger,
+            return new DownloadEnumerator(tasks.DistinctBy(x => x.Target).ToList(),
+                ((uint)Environment.ProcessorCount / 2) + 1, factory, logger,
                 cancellationToken);
         }
 

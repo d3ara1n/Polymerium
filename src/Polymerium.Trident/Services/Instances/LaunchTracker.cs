@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using Polymerium.Trident.Engines.Launching;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.Trident.Services.Instances
@@ -10,11 +10,23 @@ namespace Polymerium.Trident.Services.Instances
         CancellationToken token = default) : TrackerBase(key, handler, onCompleted, token)
     {
         public event LaunchFiredHandler? Fired;
+        public event LaunchOutputHandler? Output;
+        public event LaunchExitedHandler? Exited;
 
-        internal void OnLaunched(Process process)
+        internal void OnFired()
         {
-            // start track
             Fired?.Invoke(this);
+        }
+
+
+        internal void OnOutput(Scrap scrap)
+        {
+            Output?.Invoke(this, scrap);
+        }
+
+        internal void OnExited(int code)
+        {
+            Exited?.Invoke(this, code);
         }
     }
 }

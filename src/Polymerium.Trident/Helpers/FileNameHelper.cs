@@ -4,7 +4,7 @@
     {
         public static string Sanitize(string fileName)
         {
-            string output = fileName.Replace(' ', '_').Replace('-', '_').Replace('.', '_');
+            string output = fileName.Replace(' ', '_');
             foreach (char ch in Path.GetInvalidFileNameChars())
             {
                 output = output.Replace(ch, '_');

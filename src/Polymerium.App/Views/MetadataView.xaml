@@ -349,7 +349,7 @@
                                             <ListView SelectionMode="None" ItemsSource="{x:Bind AttachmentView}">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="models:AttachmentModel">
-                                                        <controls:Card>
+                                                        <controls:Card Margin="0,4,0,0">
                                                             <toolkit:SwitchPresenter
                                                                 TargetType="models:DataLoadingState"
                                                                 Value="{x:Bind State.Value,Mode=OneWay}">

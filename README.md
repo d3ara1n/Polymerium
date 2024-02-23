@@ -74,6 +74,7 @@ Polymerium不维护游戏文件，只维护实例元数据。
 - 💾 增量部署，使用软链接节省硬盘空间
 - 🎭 支持多账号且账号与实例绑定
 - 🎟️ 多种在线仓库，与 CurseForge 和 Modrinth 集成
+- ☕ 运行时智能选择 Java 版本
 
 <!-- GETTING STARTED -->
 

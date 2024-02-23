@@ -36,7 +36,7 @@ namespace Polymerium.App
             RunningTaskCount = this.ToBindable(x => x.runningTaskCount, (x, v) => x.runningTaskCount = v);
             AbortTaskCommand = new RelayCommand<TaskBase>(AbortTask);
             ClearTasksCommand = new RelayCommand(ClearTasks);
-            DismissModalCommand = new RelayCommand(DismissModal);
+            DismissModalCommand = new RelayCommand(OnDismissModal);
         }
 
 
@@ -91,6 +91,11 @@ namespace Polymerium.App
                 Overlay = modal;
                 VisualStateManager.GoToState(this, "Shown", true);
             });
+        }
+
+        public void OnDismissModal()
+        {
+            VisualStateManager.GoToState(this, "Hidden", true);
         }
 
 
@@ -198,11 +203,6 @@ namespace Polymerium.App
         private void HiddenStoryboard_Completed(object sender, object e)
         {
             Overlay = null;
-        }
-
-        private void DismissModal()
-        {
-            VisualStateManager.GoToState(this, "Hidden", true);
         }
 
         private void InfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args)

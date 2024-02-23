@@ -65,7 +65,7 @@ namespace Polymerium.Trident.Services
                 throw new InvalidOperationException($"The instance is present in the tracking list: {key}");
             }
 
-            LaunchTracker tracker = new(key, async x => await LaunchInternalAsync(x, profile.Metadata, options), x =>
+            LaunchTracker tracker = new(key, async x => await LaunchInternalAsync(x, profile, options), x =>
             {
                 trackers.Remove(x.Key);
                 if (x.State == TaskState.Finished)
@@ -136,13 +136,12 @@ namespace Polymerium.Trident.Services
             }
         }
 
-        private async Task LaunchInternalAsync(TrackerBase tracker, Metadata metadata, LaunchOptions options)
+        private async Task LaunchInternalAsync(TrackerBase tracker, Profile profile, LaunchOptions options)
         {
             if (tracker is LaunchTracker handle)
             {
                 logger.LogInformation("Begin launch task for {key}", handle.Key);
-                // build material
-
+                DateTimeOffset beginTime = DateTimeOffset.Now;
                 string artifactPath = trident.InstanceArtifactPath(tracker.Key);
                 bool found = false;
                 if (File.Exists(artifactPath))
@@ -150,14 +149,14 @@ namespace Polymerium.Trident.Services
                     found = true;
                     string content = await File.ReadAllTextAsync(artifactPath);
                     Artifact? artifact = JsonSerializer.Deserialize<Artifact>(content, serializerOptions);
-                    if (artifact != null && artifact.Verify(tracker.Key, metadata.ComputeWatermark(), trident.HomeDir))
+                    if (artifact != null &&
+                        artifact.Verify(tracker.Key, profile.Metadata.ComputeWatermark(), trident.HomeDir))
                     {
                         uint jreVersion = artifact.JavaMajorVersion;
                         try
                         {
-                            // FIXME: replace java.exe with javaw.exe
                             string jreExecutable = Path.Combine(options.JavaHomeLocator.Invoke(jreVersion), "bin",
-                                "java.exe");
+                                "javaw.exe");
                             string working_dir = trident.InstanceHomePath(tracker.Key);
                             string library_dir = trident.LibraryDir;
                             string asset_dir = trident.AssetDir;
@@ -185,7 +184,7 @@ namespace Polymerium.Trident.Services
                                 .SetUserType("legacy")
                                 .SetUserName("Steve")
                                 .SetUserAccessToken("invalid")
-                                .SetVersionName(metadata.Version)
+                                .SetVersionName(profile.Metadata.Version)
                                 .SetWindowSize(options.WindowSize)
                                 .SetMaxMemory(options.MaxMemory)
                                 .SetReleaseType("Polyermium");
@@ -198,24 +197,40 @@ namespace Polymerium.Trident.Services
                             await File.WriteAllLinesAsync(
                                 Path.Combine(trident.InstanceHomePath(tracker.Key), "dump.txt"),
                                 process.StartInfo.ArgumentList);
-                            process.Start();
-                            // call only in Managed
-                            // handle.OnLaunched(process);
-                            // TODO: Redirect & collect launcher's output(only in Managed mode)
-                            // wait process until die
-                            // var launcher = provider.GetRequiredService<LaunchEngine>();
+                            handle.OnFired();
+                            if (options.Mode == LaunchMode.Managed)
+                            {
+                                LaunchEngine launcher = provider.GetRequiredService<LaunchEngine>();
+                                process.Start();
+                                await foreach (Scrap scrap in launcher.WithCancellation(handle.Token)
+                                                   .ConfigureAwait(false))
+                                {
+                                }
+                            }
+                            else
+                            {
+                                process.Start();
+                            }
+
+                            profile.Records.Timeline.Add(new Profile.RecordData.TimelinePoint(true, profile.Reference,
+                                Profile.RecordData.TimelinePoint.TimelimeAction.Play, beginTime, DateTimeOffset.Now));
                             return;
                         }
                         catch (Exception e)
                         {
                             logger.LogError(e, "Compile launch arguments failed due to exception: {ex}", e.Message);
+                            profile.Records.Timeline.Add(new Profile.RecordData.TimelinePoint(false, profile.Reference,
+                                Profile.RecordData.TimelinePoint.TimelimeAction.Play, beginTime, DateTimeOffset.Now));
                             throw new LaunchException(tracker.Key, e);
                         }
                     }
                 }
 
+
                 ArtifactUnavailableException innerException = new(tracker.Key, artifactPath, found);
                 logger.LogError(innerException, $"Artifact of {tracker.Key} not available");
+                profile.Records.Timeline.Add(new Profile.RecordData.TimelinePoint(false, profile.Reference,
+                    Profile.RecordData.TimelinePoint.TimelimeAction.Play, beginTime, DateTimeOffset.Now));
                 throw new LaunchException(tracker.Key, innerException);
             }
 

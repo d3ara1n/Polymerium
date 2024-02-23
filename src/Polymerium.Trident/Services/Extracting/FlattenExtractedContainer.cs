@@ -33,7 +33,8 @@ namespace Polymerium.Trident.Services.Extracting
 
                         using Stream stream = entry.Open();
                         byte[] buffer = new byte[entry.Length];
-                        _ = entry.Length != stream.Read(buffer, 0, (int)entry.Length);
+                        using MemoryStream reader = new(buffer);
+                        stream.CopyTo(reader);
                         string relative = entry.FullName[layer.OverrideDirectoryName.Length..];
                         if (relative.StartsWith('/') || relative.StartsWith('\\'))
                         {

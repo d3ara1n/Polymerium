@@ -104,12 +104,27 @@
                 </Rectangle>
                 <Rectangle Fill="{ThemeResource LayerFillColorDefaultBrush}" />
                 <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
-                    <Border HorizontalAlignment="Left"
-                            Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
-                        <TextBlock Text="{x:Bind ViewModel.Model.Root.Inner.Name,FallbackValue=N/A}"
-                                   Margin="{StaticResource TinyMargin}"
-                                   Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
-                    </Border>
+                    <toolkit:WrapPanel Orientation="Horizontal" HorizontalSpacing="{StaticResource TinyGap}"
+                                       VerticalSpacing="{StaticResource TinyGap}">
+                        <Border HorizontalAlignment="Left"
+                                Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
+                            <TextBlock Text="{x:Bind ViewModel.Model.Root.Inner.Name,FallbackValue=N/A}"
+                                       Margin="{StaticResource TinyMargin}"
+                                       Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
+                        </Border>
+                        <Border HorizontalAlignment="Left"
+                                Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
+                            <TextBlock Text="{x:Bind ViewModel.Model.Root.Inner.Metadata.Version,FallbackValue=N/A}"
+                                       Margin="{StaticResource TinyMargin}"
+                                       Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
+                        </Border>
+                        <Border HorizontalAlignment="Left"
+                                Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
+                            <TextBlock Text="{x:Bind ViewModel.Model.Root.ModLoaderLabel,FallbackValue=N/A}"
+                                       Margin="{StaticResource TinyMargin}"
+                                       Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
+                        </Border>
+                    </toolkit:WrapPanel>
                     <Grid ColumnSpacing="{StaticResource TinyGap}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -137,7 +152,49 @@
                 <ProgressBar VerticalAlignment="Bottom" IsIndeterminate="True"
                              Visibility="{x:Bind ViewModel.Results.IsLoading,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource BoolToVisibilityConverter}}" />
             </Grid>
-            <Grid Grid.Row="1" />
+            <Grid Grid.Row="1">
+                <ListView SelectionMode="None" ItemsSource="{x:Bind ViewModel.Tracked}"
+                          Padding="{StaticResource SmallMargin}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="{StaticResource TinyMargin}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TrackedProjectVersionModel">
+                            <controls:Card>
+                                <Grid ColumnSpacing="{StaticResource SmallGap}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Root.Thumbnail}" Width="48"
+                                                     Height="48" />
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{x:Bind Root.Inner.Name}"
+                                                   Style="{StaticResource SubtitleTextBlockStyle}"
+                                                   TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Grid.Row="1" Text="{x:Bind Inner.Name}"
+                                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                                   TextTrimming="CharacterEllipsis" />
+                                    </Grid>
+                                    <HyperlinkButton Grid.Column="2" Command="{x:Bind UninstallCommand}"
+                                                     CommandParameter="{x:Bind}">
+                                        <FontIcon Glyph="&#xE8BB;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                    </HyperlinkButton>
+                                </Grid>
+                            </controls:Card>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

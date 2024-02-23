@@ -62,7 +62,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Thumbnail}" Width="48" Height="48"
-                                                     Stretch="Fill" />
+                                                     Stretch="Fill" CornerRadius="{StaticResource TinyCornerRadius}" />
                                     <StackPanel Grid.Column="1">
                                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                    Style="{StaticResource CaptionTextBlockStyle}">
@@ -112,48 +112,50 @@
                                         <toolkit:SwitchPresenter Value="{x:Bind Status.State.Value,Mode=OneWay}"
                                                                  TargetType="models:InstanceState">
                                             <toolkit:Case Value="Idle">
-                                                <Border
-                                                    Background="{ThemeResource SystemFillColorSolidNeutralBackgroundBrush}"
-                                                    Padding="{StaticResource TinyMargin}">
+                                                <Border CornerRadius="{StaticResource MicroCornerRadius}"
+                                                        Background="{ThemeResource SystemFillColorSolidNeutralBackgroundBrush}"
+                                                        Padding="{StaticResource TinyMargin}">
                                                     <TextBlock Text="IDLE"
                                                                Foreground="{ThemeResource SystemFillColorSolidNeutralBrush}"
                                                                Style="{StaticResource CaptionTextBlockStyle}" />
                                                 </Border>
                                             </toolkit:Case>
                                             <toolkit:Case Value="Deploying">
-                                                <Border
-                                                    Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
-                                                    Padding="{StaticResource TinyMargin}">
+                                                <Border CornerRadius="{StaticResource MicroCornerRadius}"
+                                                        Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                        Padding="{StaticResource TinyMargin}">
                                                     <TextBlock Text="DEPLOYING"
                                                                Foreground="{ThemeResource SystemFillColorCautionBrush}"
                                                                Style="{StaticResource CaptionTextBlockStyle}" />
                                                 </Border>
                                             </toolkit:Case>
                                             <toolkit:Case Value="Running">
-                                                <Border
-                                                    Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
-                                                    Padding="{StaticResource TinyMargin}">
+                                                <Border CornerRadius="{StaticResource MicroCornerRadius}"
+                                                        Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                        Padding="{StaticResource TinyMargin}">
                                                     <TextBlock Text="RUNNING"
                                                                Foreground="{ThemeResource SystemFillColorSuccessBrush}"
                                                                Style="{StaticResource CaptionTextBlockStyle}" />
                                                 </Border>
                                             </toolkit:Case>
                                             <toolkit:Case Value="Stopped">
-                                                <Border
-                                                    Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
-                                                    Padding="{StaticResource TinyMargin}">
+                                                <Border CornerRadius="{StaticResource MicroCornerRadius}"
+                                                        Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                                        Padding="{StaticResource TinyMargin}">
                                                     <TextBlock Text="STOPPED"
                                                                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                                                                Style="{StaticResource CaptionTextBlockStyle}" />
                                                 </Border>
                                             </toolkit:Case>
                                         </toolkit:SwitchPresenter>
-                                        <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
+                                        <Border CornerRadius="{StaticResource MicroCornerRadius}"
+                                                Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
                                                 Padding="{StaticResource TinyMargin}">
                                             <TextBlock Text="{x:Bind Type}"
                                                        Style="{StaticResource CaptionTextBlockStyle}" />
                                         </Border>
-                                        <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
+                                        <Border CornerRadius="{StaticResource MicroCornerRadius}"
+                                                Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
                                                 Padding="{StaticResource TinyMargin}">
                                             <TextBlock Text="{x:Bind Version}"
                                                        Style="{StaticResource CaptionTextBlockStyle}" />

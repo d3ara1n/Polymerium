@@ -2,6 +2,8 @@
 using Polymerium.App.Extensions;
 using System.Windows.Input;
 using Trident.Abstractions;
+using Trident.Abstractions.Extensions;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models
 {
@@ -37,6 +39,20 @@ namespace Polymerium.App.Models
         public string Key { get; }
         public Profile Inner { get; }
         public ReactiveCollection<Metadata.Layer, LayerModel> Layers { get; }
+
+        public string ModLoaderLabel
+        {
+            get
+            {
+                string? loader = Inner.Metadata.ExtractModLoader();
+                if (loader != null)
+                {
+                    return Loader.MODLOADER_NAME_MAPPINGS[loader];
+                }
+
+                return "Vanilla";
+            }
+        }
 
         private LayerModel ToModel(Metadata.Layer layer)
         {

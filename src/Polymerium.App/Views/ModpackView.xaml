@@ -185,35 +185,44 @@
                                                                              TargetType="resources:ReleaseType">
                                                         <toolkit:Case Value="Release">
                                                             <Grid>
-                                                                <Rectangle
-                                                                    Fill="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
-                                                                    Width="20" Height="20" />
-                                                                <TextBlock Text="R"
-                                                                           Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                                                                           VerticalAlignment="Center"
-                                                                           HorizontalAlignment="Center" />
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <TextBlock Text="Release"
+                                                                               Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center"
+                                                                               Margin="6,2"
+                                                                               FontSize="{StaticResource CaptionTextBlockFontSize}" />
+                                                                </Border>
                                                             </Grid>
                                                         </toolkit:Case>
                                                         <toolkit:Case Value="Beta">
                                                             <Grid>
-                                                                <Rectangle
-                                                                    Fill="{ThemeResource SystemFillColorAttentionBackgroundBrush}"
-                                                                    Width="20" Height="20" />
-                                                                <TextBlock Text="B"
-                                                                           Foreground="{ThemeResource SystemFillColorAttentionBrush}"
-                                                                           VerticalAlignment="Center"
-                                                                           HorizontalAlignment="Center" />
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <TextBlock Text="Beta"
+                                                                               Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center"
+                                                                               Margin="6,2"
+                                                                               FontSize="{StaticResource CaptionTextBlockFontSize}" />
+                                                                </Border>
                                                             </Grid>
                                                         </toolkit:Case>
                                                         <toolkit:Case Value="Alpha">
                                                             <Grid>
-                                                                <Rectangle
-                                                                    Fill="{ThemeResource SystemFillColorCautionBackgroundBrush}"
-                                                                    Width="20" Height="20" />
-                                                                <TextBlock Text="A"
-                                                                           Foreground="{ThemeResource SystemFillColorCautionBrush}"
-                                                                           VerticalAlignment="Center"
-                                                                           HorizontalAlignment="Center" />
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <TextBlock Text="Alpha"
+                                                                               Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               HorizontalAlignment="Center"
+                                                                               Margin="6,2"
+                                                                               FontSize="{StaticResource CaptionTextBlockFontSize}" />
+                                                                </Border>
                                                             </Grid>
                                                         </toolkit:Case>
                                                     </toolkit:SwitchPresenter>

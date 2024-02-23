@@ -132,7 +132,8 @@ namespace Polymerium.App
             services
                 .AddEngine<DeployEngine>()
                 .AddEngine<ResolveEngine>()
-                .AddEngine<DownloadEngine>();
+                .AddEngine<DownloadEngine>()
+                .AddEngine<LaunchEngine>();
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -174,7 +175,8 @@ namespace Polymerium.App
             };
             navigation.SetHandler(layout.OnNavigate);
             notification.SetHandler(layout.OnEnqueueNotification);
-            modal.SetHandler(layout.OnPopModal);
+            modal.SetPopHandler(layout.OnPopModal);
+            modal.SetDismissHandler(layout.OnDismissModal);
             task.SetHandler(layout.OnEnqueueTask);
             layout.SetMainMenu(navigation.MainNavMenu);
             layout.SetSideMenu(navigation.SideNavMenu);

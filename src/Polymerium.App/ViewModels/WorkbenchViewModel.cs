@@ -5,6 +5,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions.Repositories;
@@ -31,8 +32,9 @@ namespace Polymerium.App.ViewModels
             _repositoryAgent = repositoryAgent;
 
             OpenResourceModalCommand = new RelayCommand<ExhibitModel>(OpenResourceModal);
-            InstallAttachmentCommand = new RelayCommand<ModpackModel>(InstallAttachment);
-            UninstallAttachmentCommand = new RelayCommand<ModpackModel>(UninstallAttachment);
+            InstallAttachmentCommand = new RelayCommand<ProjectVersionModel>(InstallAttachment, CanInstallAttachment);
+            UninstallAttachmentCommand =
+                new RelayCommand<TrackedProjectVersionModel>(UninstallAttachment, CanUninstallAttachment);
         }
 
         public LayerModel? Model
@@ -56,6 +58,8 @@ namespace Polymerium.App.ViewModels
         public ICommand OpenResourceModalCommand { get; }
         private ICommand InstallAttachmentCommand { get; }
         private ICommand UninstallAttachmentCommand { get; }
+
+        public ObservableCollection<TrackedProjectVersionModel> Tracked { get; } = new();
 
         public override bool OnAttached(object? maybeLayer)
         {
@@ -86,8 +90,9 @@ namespace Polymerium.App.ViewModels
                 Attachment? installed =
                     Model?.Attachments.FirstOrDefault(
                         x => x.Label == exhibit.Inner.Label && x.ProjectId == exhibit.Inner.Id);
-                ProjectPreviewModal modal = new(exhibit, _repositoryAgent, installed,
-                    InstallAttachmentCommand, UninstallAttachmentCommand);
+                ProjectPreviewModal modal = new(exhibit, _repositoryAgent,
+                    Model?.Root.Inner.Metadata.ExtractFilter() ?? Filter.EMPTY, installed,
+                    InstallAttachmentCommand);
                 _modalService.Pop(modal);
             }
         }
@@ -100,8 +105,42 @@ namespace Polymerium.App.ViewModels
             return result;
         }
 
-        private void InstallAttachment(ModpackModel? project) { }
+        private bool CanInstallAttachment(ProjectVersionModel? version)
+        {
+            return Model != null && version != null;
+        }
 
-        private void UninstallAttachment(ModpackModel? project) { }
+        private void InstallAttachment(ProjectVersionModel? version)
+        {
+            if (Model != null && version != null)
+            {
+                Attachment attachment = new(version.Root.Inner.Label, version.Root.Inner.Id, version.Inner.Id);
+                Model.Attachments.Add(attachment);
+                TrackedProjectVersionModel tracked = new(version.Inner, version.Root, UninstallAttachmentCommand);
+                Tracked.Add(tracked);
+                _modalService.Dimiss();
+            }
+        }
+
+        private bool CanUninstallAttachment(TrackedProjectVersionModel? version)
+        {
+            return Model != null && version != null && Tracked.Contains(version);
+        }
+
+        private void UninstallAttachment(TrackedProjectVersionModel? version)
+        {
+            if (Model != null && version != null && Tracked.Contains(version))
+            {
+                // 不比较版本(x.VersionId==null||x.VersionId==version.Inner.Id)，只要保证最后这个项目被移除即可
+                Attachment? found = Model.Attachments.FirstOrDefault(x =>
+                    x.Label == version.Root.Inner.Label && x.ProjectId == version.Root.Inner.Id);
+                if (found != null)
+                {
+                    Model.Attachments.Remove(found);
+                }
+
+                Tracked.Remove(version);
+            }
+        }
     }
 }

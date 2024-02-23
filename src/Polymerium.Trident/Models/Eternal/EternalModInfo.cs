@@ -1,4 +1,5 @@
-﻿using Trident.Abstractions.Resources;
+﻿using Polymerium.Trident.Helpers;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Models.Eternal
 {
@@ -59,9 +60,9 @@ namespace Polymerium.Trident.Models.Eternal
             List<string> loaderReq = new();
             foreach (string v in GameVersions)
             {
-                if (Loader.MODLOADER_NAME_MAPPINGS.Keys.Contains(v))
+                if (CurseForgeHelper.MODLOADER_MAPPINGS.Keys.Contains(v))
                 {
-                    loaderReq.Add(Loader.MODLOADER_NAME_MAPPINGS[v]);
+                    loaderReq.Add(CurseForgeHelper.MODLOADER_MAPPINGS[v]);
                 }
                 else
                 {
