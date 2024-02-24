@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions.Repositories;
@@ -18,7 +21,7 @@ namespace Polymerium.App.ViewModels
         private readonly ModalService _modalService;
         private readonly RepositoryAgent _repositoryAgent;
         private readonly ThumbnailSaver _thumbnailSaver;
-        private string? background;
+        private BitmapImage? background;
         private Filter baseFilter = Filter.EMPTY;
         private LayerModel? model;
 
@@ -43,7 +46,7 @@ namespace Polymerium.App.ViewModels
             set => SetProperty(ref model, value);
         }
 
-        public string? Background
+        public BitmapImage? Background
         {
             get => background;
             set => SetProperty(ref background, value);
@@ -66,7 +69,12 @@ namespace Polymerium.App.ViewModels
             if (maybeLayer is LayerModel layer)
             {
                 Model = layer;
-                Background = _thumbnailSaver.Get(layer.Root.Key);
+                string? path = _thumbnailSaver.Get(layer.Root.Key);
+                if (path != null && File.Exists(path))
+                {
+                    Background = new BitmapImage(new Uri(path));
+                }
+
                 baseFilter = layer.Root.Inner.Metadata.ExtractFilter();
                 return true;
             }
@@ -88,7 +96,7 @@ namespace Polymerium.App.ViewModels
             if (exhibit != null)
             {
                 Attachment? installed =
-                    Model?.Attachments.FirstOrDefault(
+                    Model?.Root.Inner.Metadata.Layers.SelectMany(x => x.Attachments).FirstOrDefault(
                         x => x.Label == exhibit.Inner.Label && x.ProjectId == exhibit.Inner.Id);
                 ProjectPreviewModal modal = new(exhibit, _repositoryAgent,
                     Model?.Root.Inner.Metadata.ExtractFilter() ?? Filter.EMPTY, installed,
@@ -99,7 +107,8 @@ namespace Polymerium.App.ViewModels
 
         private ExhibitModel ToModel(Exhibit exhibit)
         {
-            bool added = Model?.Attachments.Any(x => x.Label == exhibit.Label && x.ProjectId == exhibit.Id) ?? false;
+            bool added = Model?.Root.Inner.Metadata.Layers.SelectMany(x => x.Attachments)
+                .Any(x => x.Label == exhibit.Label && x.ProjectId == exhibit.Id) ?? false;
             ExhibitModel result = new(exhibit, OpenResourceModalCommand);
             result.HasAdded.Value = added;
             return result;

@@ -19,6 +19,8 @@ namespace Polymerium.Trident.Helpers
         private const uint CLASSID_MODPACK = 4471;
         private const uint CLASSID_MOD = 6;
         private const uint CLASSID_WORLD = 17;
+        private const uint CLASSID_DATAPACK = 4546;
+        private const uint CLASSID_SHADERPACK = 6552;
         private const uint CLASSID_RESOURCEPACK = 12;
 
         private static readonly Converter MARKDOWNER = new(new Config
@@ -58,17 +60,31 @@ namespace Polymerium.Trident.Helpers
             };
         }
 
-        public static ResourceKind GetResourceTypeFromClassId(uint classId)
+        public static ResourceKind GetResourceKindFromClassId(uint classId)
         {
             return classId switch
             {
-                6 => ResourceKind.Mod,
-                12 => ResourceKind.ResourcePack,
-                17 => ResourceKind.World,
-                4546 => ResourceKind.ShaderPack,
-                4471 => ResourceKind.Modpack,
-                6552 => ResourceKind.ShaderPack,
+                CLASSID_MOD => ResourceKind.Mod,
+                CLASSID_RESOURCEPACK => ResourceKind.ResourcePack,
+                CLASSID_WORLD => ResourceKind.World,
+                CLASSID_SHADERPACK => ResourceKind.ShaderPack,
+                CLASSID_MODPACK => ResourceKind.Modpack,
+                CLASSID_DATAPACK => ResourceKind.DataPack,
                 _ => throw new NotImplementedException()
+            };
+        }
+
+        public static uint GetClassIdFromResourceKind(ResourceKind kind)
+        {
+            return kind switch
+            {
+                ResourceKind.Modpack => CLASSID_MODPACK,
+                ResourceKind.Mod => CLASSID_MOD,
+                ResourceKind.ResourcePack => CLASSID_RESOURCEPACK,
+                ResourceKind.ShaderPack => CLASSID_SHADERPACK,
+                ResourceKind.World => CLASSID_WORLD,
+                ResourceKind.DataPack => CLASSID_DATAPACK,
+                _ => throw new NotSupportedException()
             };
         }
 
@@ -159,14 +175,7 @@ namespace Polymerium.Trident.Helpers
                 _ => 0
             };
             string service =
-                $"/mods/search?gameId={GAME_ID}&classId={kind switch
-                {
-                    ResourceKind.Modpack => CLASSID_MODPACK,
-                    ResourceKind.Mod => CLASSID_MOD,
-                    ResourceKind.ResourcePack => CLASSID_RESOURCEPACK,
-                    ResourceKind.World => CLASSID_WORLD,
-                    _ => throw new NotSupportedException()
-                }}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlPathEncode(query)}&sortOrder=desc"
+                $"/mods/search?gameId={GAME_ID}&classId={GetClassIdFromResourceKind(kind)}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlPathEncode(query)}&sortOrder=desc"
                 + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
                 + (
                     (kind == ResourceKind.Mod || kind == ResourceKind.Modpack) && modLoaderId != null
@@ -241,7 +250,7 @@ namespace Polymerium.Trident.Helpers
             await Task.WhenAll(versionTasks);
             List<Project.Version> versions = versionTasks.Where(x => x.IsCompletedSuccessfully)
                 .Select(x => x.Result).ToList();
-            ResourceKind kind = GetResourceTypeFromClassId(mod.ClassId);
+            ResourceKind kind = GetResourceKindFromClassId(mod.ClassId);
             return new Project(
                 mod.Id.ToString(),
                 mod.Name,
@@ -262,7 +271,7 @@ namespace Polymerium.Trident.Helpers
             uint projectId, uint? versionId, string? gameVersion, string? modLoader, CancellationToken token = default)
         {
             EternalMod mod = await GetModInfoAsync(logger, factory, projectId, token);
-            ResourceKind kind = GetResourceTypeFromClassId(mod.ClassId);
+            ResourceKind kind = GetResourceKindFromClassId(mod.ClassId);
             EternalModInfo? file = null;
             if (versionId.HasValue)
             {

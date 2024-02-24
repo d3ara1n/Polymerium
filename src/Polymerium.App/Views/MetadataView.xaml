@@ -24,7 +24,8 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="{StaticResource LargeUpperMargin}">
                     <TextBlock Text="Version" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                    <TextBlock Text="1.20.1" Style="{StaticResource TitleLargeTextBlockStyle}" />
+                    <TextBlock Text="{x:Bind ViewModel.Model.Inner.Metadata.Version,Mode=OneWay}"
+                               Style="{StaticResource TitleLargeTextBlockStyle}" />
                 </StackPanel>
                 <ScrollViewer Grid.Row="1" Width="300">
                     <StackPanel>

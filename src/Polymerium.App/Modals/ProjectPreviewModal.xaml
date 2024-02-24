@@ -228,7 +228,8 @@
                                 </ListView>
                             </PivotItem>
                         </Pivot>
-                        <StackPanel x:Name="PART_Failed" Visibility="Collapsed" Spacing="{StaticResource SmallGap}">
+                        <StackPanel x:Name="PART_Failed" Visibility="Collapsed" Spacing="{StaticResource SmallGap}"
+                                    VerticalAlignment="Center">
                             <FontIcon Glyph="&#xF384;" FontSize="28" HorizontalAlignment="Center" />
                             <TextBlock Text="Data loading failed" HorizontalAlignment="Center" />
                         </StackPanel>

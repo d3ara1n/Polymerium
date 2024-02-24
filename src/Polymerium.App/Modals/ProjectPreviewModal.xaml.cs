@@ -56,19 +56,22 @@ namespace Polymerium.App.Modals
 
         private async Task LoadProjectAsync()
         {
-            Project? project = await _agent.QueryAsync(Exhibit.Inner.Label, Exhibit.Inner.Id, tokenSource.Token);
-            DispatcherQueue.TryEnqueue(() =>
+            try
             {
-                if (project != null)
+                Project project = await _agent.QueryAsync(Exhibit.Inner.Label, Exhibit.Inner.Id, tokenSource.Token);
+                DispatcherQueue.TryEnqueue(() =>
                 {
                     Project = new ProjectModel(project, _filter);
                     VisualStateManager.GoToState(this, "Done", true);
-                }
-                else
+                });
+            }
+            catch
+            {
+                DispatcherQueue.TryEnqueue(() =>
                 {
                     VisualStateManager.GoToState(this, "Failed", true);
-                }
-            });
+                });
+            }
         }
 
         private void ModalBase_Loaded(object sender, RoutedEventArgs e)

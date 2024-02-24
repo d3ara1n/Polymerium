@@ -77,6 +77,7 @@ namespace Polymerium.App
                 })
                 .ConfigureHttpClientDefaults(clientBuilder => clientBuilder.ConfigureHttpClient(client =>
                     {
+                        client.Timeout = TimeSpan.FromSeconds(15);
                         client.DefaultRequestHeaders.Add("Accept", "application/json");
                         client.DefaultRequestHeaders.Add("User-Agent",
                             $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
