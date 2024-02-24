@@ -42,7 +42,9 @@
                 <controls:Card Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <toolkit:DockPanel>
                         <toolkit:ImageEx toolkit:DockPanel.Dock="Left"
-                                         Source="{x:Bind ViewModel.Project.Thumbnail,Mode=OneWay}" Width="58" />
+                                         Source="{x:Bind ViewModel.Project.Thumbnail,Mode=OneWay}" Width="58"
+                                         Height="58" Stretch="UniformToFill"
+                                         CornerRadius="{StaticResource TinyCornerRadius}" />
                         <StackPanel Margin="12,0" VerticalAlignment="Center">
                             <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}"
                                        Style="{StaticResource TitleTextBlockStyle}" MaxLines="1"
@@ -87,28 +89,29 @@
                             <x:Boolean>False</x:Boolean>
                         </toolkit:Case.Value>
                         <controls:Card Padding="0">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <toolkit:ConstrainedBox Grid.Row="0" AspectRatio="32:9" VerticalAlignment="Stretch"
-                                                        HorizontalAlignment="Center"
-                                                        Visibility="{x:Bind ViewModel.Project.Gallery,Mode=OneWay,Converter={StaticResource CollectionVisibilityConverter}}">
-                                    <FlipView ItemsSource="{x:Bind ViewModel.Project.Gallery,Mode=OneWay}">
-                                        <FlipView.ItemTemplate>
-                                            <DataTemplate x:DataType="models:GalleryItemModel">
-                                                <toolkit:ImageEx Source="{x:Bind Url}" />
-                                            </DataTemplate>
-                                        </FlipView.ItemTemplate>
-                                    </FlipView>
-                                </toolkit:ConstrainedBox>
-                                <ScrollViewer Grid.Row="1" Padding="{StaticResource CardContentMargin}">
-                                    <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill"
+                            <ScrollViewer Padding="{StaticResource CardContentMargin}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <toolkit:ConstrainedBox Grid.Row="0" AspectRatio="32:9" VerticalAlignment="Stretch"
+                                                            HorizontalAlignment="Center"
+                                                            Visibility="{x:Bind ViewModel.Project.Gallery,Mode=OneWay,Converter={StaticResource CollectionVisibilityConverter}}">
+                                        <FlipView ItemsSource="{x:Bind ViewModel.Project.Gallery,Mode=OneWay}">
+                                            <FlipView.ItemTemplate>
+                                                <DataTemplate x:DataType="models:GalleryItemModel">
+                                                    <toolkit:ImageEx Source="{x:Bind Url}" />
+                                                </DataTemplate>
+                                            </FlipView.ItemTemplate>
+                                        </FlipView>
+                                    </toolkit:ConstrainedBox>
+                                    <toolkit:MarkdownTextBlock Grid.Row="1" Background="Transparent"
+                                                               ImageStretch="UniformToFill"
                                                                Text="{x:Bind ViewModel.Project.Inner.DescriptionMarkdown,Mode=OneWay}"
                                                                LinkClicked="MarkdownTextBlock_LinkClicked" />
-                                </ScrollViewer>
-                            </Grid>
+                                </Grid>
+                            </ScrollViewer>
                         </controls:Card>
                     </toolkit:Case>
                     <toolkit:Case>
