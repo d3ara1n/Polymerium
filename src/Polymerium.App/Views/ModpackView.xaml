@@ -47,7 +47,7 @@
                                          CornerRadius="{StaticResource TinyCornerRadius}" />
                         <StackPanel Margin="12,0" VerticalAlignment="Center">
                             <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}"
-                                       Style="{StaticResource TitleTextBlockStyle}" MaxLines="1"
+                                       Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap"
                                        TextTrimming="WordEllipsis" />
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                 <FontIcon Glyph="&#xE77B;" FontSize="12"
@@ -95,13 +95,13 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <toolkit:ConstrainedBox Grid.Row="0" AspectRatio="32:9" VerticalAlignment="Stretch"
+                                    <toolkit:ConstrainedBox Grid.Row="0" AspectRatio="16:9" VerticalAlignment="Stretch"
                                                             HorizontalAlignment="Center"
                                                             Visibility="{x:Bind ViewModel.Project.Gallery,Mode=OneWay,Converter={StaticResource CollectionVisibilityConverter}}">
                                         <FlipView ItemsSource="{x:Bind ViewModel.Project.Gallery,Mode=OneWay}">
                                             <FlipView.ItemTemplate>
                                                 <DataTemplate x:DataType="models:GalleryItemModel">
-                                                    <toolkit:ImageEx Source="{x:Bind Url}" />
+                                                    <toolkit:ImageEx Source="{x:Bind Url}" Stretch="Uniform" />
                                                 </DataTemplate>
                                             </FlipView.ItemTemplate>
                                         </FlipView>
@@ -154,7 +154,7 @@
                                     </Button>
                                 </Grid>
                             </controls:Card>
-                            <controls:Card Grid.Row="1">
+                            <controls:Card Grid.Row="1" Padding="0">
                                 <ScrollViewer Padding="{StaticResource CardContentMargin}">
                                     <toolkit:MarkdownTextBlock Background="Transparent" ImageStretch="UniformToFill"
                                                                Text="{x:Bind ViewModel.SelectedVersion.Inner.ChangelogMarkdown,Mode=OneWay}"
@@ -181,7 +181,8 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:ModpackVersionModel">
                                             <StackPanel Margin="{StaticResource SmallMargin}">
-                                                <TextBlock Text="{x:Bind Inner.Name}" />
+                                                <TextBlock Text="{x:Bind Inner.Name}" MaxLines="2" TextWrapping="Wrap"
+                                                           TextTrimming="CharacterEllipsis" />
                                                 <StackPanel Orientation="Horizontal"
                                                             Spacing="{StaticResource TinyGap}">
                                                     <toolkit:SwitchPresenter Value="{x:Bind Inner.ReleaseType}"
@@ -250,9 +251,10 @@
                                                       CommandParameter="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}">
                                         <TextBlock Text="{x:Bind ViewModel.Project.Inner.Id,Mode=OneWay}" />
                                     </controls:ClipBox>
-                                    <TextBlock Text="Project Name" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="Project Name" Style="{StaticResource CaptionStyle}"
+                                               TextWrapping="Wrap" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Name,Mode=OneWay}" />
-                                    <TextBlock Text="Mode" Style="{StaticResource CaptionStyle}" />
+                                    <TextBlock Text="Type" Style="{StaticResource CaptionStyle}" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Kind,Mode=OneWay}" />
                                     <TextBlock Text="Author" Style="{StaticResource CaptionStyle}" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Author,Mode=OneWay}" />
