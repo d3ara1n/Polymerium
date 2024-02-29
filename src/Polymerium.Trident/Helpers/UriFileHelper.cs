@@ -1,4 +1,6 @@
-﻿namespace Polymerium.Trident.Helpers
+﻿using System.Diagnostics;
+
+namespace Polymerium.Trident.Helpers
 {
     public static class UriFileHelper
     {
@@ -26,6 +28,19 @@
             else
             {
                 throw new NotSupportedException("Unsupported url or source file not found");
+            }
+        }
+
+        public static bool OpenInExternal(string url)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

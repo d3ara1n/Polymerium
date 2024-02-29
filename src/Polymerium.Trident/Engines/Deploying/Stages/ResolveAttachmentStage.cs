@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Engines.Resolving;
 using Polymerium.Trident.Extensions;
+using Polymerium.Trident.Helpers;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.Resources;
 
@@ -25,7 +26,8 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 {
                     Package? package = result.Result;
                     Context.ArtifactBuilder!.AddParcel($"{package.Label}/{package.ProjectId}/{package.VersionId}.obj",
-                        $"mods/{package.FileName}", package.Download, package.Hash);
+                        $"{FileNameHelper.GetAssetFolderName(package.Kind)}/{package.FileName}", package.Download,
+                        package.Hash);
                 }
                 else
                 {

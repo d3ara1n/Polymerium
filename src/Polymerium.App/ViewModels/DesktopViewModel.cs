@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DotNext;
 using Microsoft.UI.Dispatching;
@@ -26,7 +25,7 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels
 {
-    public class DesktopViewModel : ObservableRecipient, IRecipient<ProfileAddedMessage>
+    public class DesktopViewModel : RecipientViewModelBase, IRecipient<ProfileAddedMessage>
     {
         private readonly DispatcherQueue _dispatcher;
         private readonly ModpackExtractor _extractor;
@@ -63,8 +62,6 @@ namespace Polymerium.App.ViewModels
                         LaunchEntryCommand,
                         GotoInstanceViewCommand))
                 .OrderByDescending(x => x.LastPlayAtRaw));
-
-            IsActive = true;
         }
 
         public ObservableCollection<EntryModel> Entries { get; }
@@ -85,6 +82,18 @@ namespace Polymerium.App.ViewModels
                         GotoInstanceViewCommand));
                 });
             }
+        }
+
+        public override bool OnAttached(object? parameter)
+        {
+            IsActive = true;
+            return base.OnAttached(parameter);
+        }
+
+        public override void OnDetached()
+        {
+            IsActive = false;
+            base.OnDetached();
         }
 
         private void GotoInstanceView(string? key)

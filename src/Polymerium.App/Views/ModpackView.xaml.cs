@@ -2,7 +2,7 @@ using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels;
-using System.Diagnostics;
+using Polymerium.Trident.Helpers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,7 +26,7 @@ namespace Polymerium.App.Views
 
         private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Link) { UseShellExecute = true });
+            UriFileHelper.OpenInExternal(e.Link);
         }
     }
 }

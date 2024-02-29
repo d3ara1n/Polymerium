@@ -10,7 +10,6 @@ using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Extracting;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -129,7 +128,7 @@ namespace Polymerium.App.ViewModels
         {
             if (reference != null)
             {
-                Process.Start(new ProcessStartInfo(reference.AbsoluteUri) { UseShellExecute = true });
+                UriFileHelper.OpenInExternal(reference.AbsoluteUri);
             }
         }
 

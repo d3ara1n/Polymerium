@@ -7,11 +7,11 @@ using Polymerium.App.Views;
 using Polymerium.Trident.Engines;
 using Polymerium.Trident.Engines.Resolving;
 using Polymerium.Trident.Extensions;
+using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -186,7 +186,7 @@ namespace Polymerium.App.ViewModels
         {
             if (attachment != null && attachment.Reference.Value != null)
             {
-                Process.Start(new ProcessStartInfo(attachment.Reference.Value.AbsoluteUri) { UseShellExecute = true });
+                UriFileHelper.OpenInExternal(attachment.Reference.Value.AbsoluteUri);
             }
         }
 

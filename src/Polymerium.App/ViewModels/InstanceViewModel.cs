@@ -5,11 +5,10 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Extensions;
+using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Launching;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
-using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Input;
@@ -116,16 +115,7 @@ namespace Polymerium.App.ViewModels
 
         private string GetAssetFolderPath(AssetKind kind)
         {
-            return Path.Combine(GetHomeFolderPath(), kind switch
-            {
-                AssetKind.Mod => "mods",
-                AssetKind.Save => "saves",
-                AssetKind.Screenshot => "screenshots",
-                AssetKind.ShaderPack => "shaders",
-                AssetKind.ResourcePack => "resourcepacks",
-                AssetKind.DataPack => "datapacks",
-                _ => throw new NotImplementedException()
-            });
+            return Path.Combine(GetHomeFolderPath(), FileNameHelper.GetAssetFolderName(kind));
         }
 
         private bool CanOpenHomeFolder()
@@ -135,10 +125,7 @@ namespace Polymerium.App.ViewModels
 
         private void OpenHomeFolder()
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "explorer.exe", Arguments = GetHomeFolderPath(), UseShellExecute = true
-            });
+            UriFileHelper.OpenInExternal(GetHomeFolderPath());
         }
 
         private bool CanOpenAssetFolder(AssetKind kind)
@@ -149,10 +136,7 @@ namespace Polymerium.App.ViewModels
 
         private void OpenAssetFolder(AssetKind kind)
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "explorer.exe", Arguments = GetAssetFolderPath(kind), UseShellExecute = true
-            });
+            UriFileHelper.OpenInExternal(GetAssetFolderPath(kind));
         }
 
         public void AddTodo(string text)

@@ -24,6 +24,7 @@
 
     <ItemGroup>
         <Folder Include="Services\Downloading\"/>
+        <Folder Include="Accounts\"/>
     </ItemGroup>
 
 </Project>

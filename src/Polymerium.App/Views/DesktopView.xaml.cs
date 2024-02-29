@@ -94,5 +94,15 @@ namespace Polymerium.App.Views
                 });
             }
         }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.OnDetached();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.OnAttached(null);
+        }
     }
 }

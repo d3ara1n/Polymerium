@@ -82,16 +82,16 @@
                         <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                             <HyperlinkButton Content="Mods" Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
                                              CommandParameter="{x:Bind resources:AssetKind.Mod}" />
-                            <HyperlinkButton IsEnabled="False" Content="Resource Packs"
+                            <HyperlinkButton Content="Resource Packs"
                                              Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
                                              CommandParameter="{x:Bind resources:AssetKind.ResourcePack}" />
-                            <HyperlinkButton IsEnabled="False" Content="Shader Packs"
+                            <HyperlinkButton Content="Shader Packs"
                                              Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
                                              CommandParameter="{x:Bind resources:AssetKind.ShaderPack}" />
-                            <HyperlinkButton IsEnabled="False" Content="Screenshots"
+                            <HyperlinkButton Content="Screenshots"
                                              Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
                                              CommandParameter="{x:Bind resources:AssetKind.Screenshot}" />
-                            <HyperlinkButton IsEnabled="False" Content="Saves"
+                            <HyperlinkButton Content="Saves"
                                              Command="{x:Bind ViewModel.OpenAssetFolderCommand}"
                                              CommandParameter="{x:Bind resources:AssetKind.Save}" />
                         </StackPanel>

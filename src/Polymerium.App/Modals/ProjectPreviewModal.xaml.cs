@@ -2,9 +2,9 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Polymerium.App.Models;
+using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -99,13 +99,13 @@ namespace Polymerium.App.Modals
         {
             if (url != null)
             {
-                Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
+                UriFileHelper.OpenInExternal(url.AbsoluteUri);
             }
         }
 
         private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Link) { UseShellExecute = true });
+            UriFileHelper.OpenInExternal(e.Link);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.ViewModels
 {
-    public abstract class ViewModelBase : ObservableObject
+    public abstract class ViewModelBase : ObservableObject, IAttachedViewModel
     {
         public virtual bool OnAttached(object? parameter)
         {
