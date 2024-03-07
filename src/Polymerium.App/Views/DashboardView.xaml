@@ -50,5 +50,42 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Grid VerticalAlignment="Top" Margin="{StaticResource PageContentMargin}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" CornerRadius="{StaticResource TinyCornerRadius}"
+                  Padding="{StaticResource SmallMargin}" ColumnSpacing="{StaticResource SmallGap}">
+                <Grid.Background>
+                    <AcrylicBrush TintColor="{ThemeResource CardBackgroundFillColorSecondary}" />
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <AutoSuggestBox Grid.Column="0" PlaceholderText="%Level @Sender #Thread" QueryIcon="Filter" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <HyperlinkButton Command="{x:Bind ViewModel.OpenLogFolderCommand}">
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                            <FontIcon Glyph="&#xE8A7;" FontSize="16"
+                                      Foreground="{ThemeResource ApplicationForegroundThemeBrush}" />
+                        </StackPanel>
+                    </HyperlinkButton>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="2" CornerRadius="{StaticResource TinyCornerRadius}">
+                <Grid.Background>
+                    <AcrylicBrush TintColor="{ThemeResource CardBackgroundFillColorSecondary}" />
+                </Grid.Background>
+                <TextBlock Margin="{StaticResource SmallMargin}" VerticalAlignment="Center"
+                           HorizontalAlignment="Center">
+                    <Run Text="{x:Bind ViewModel.Status.Scraps.Count,Mode=OneWay}" />
+                    <Run Text="/" />
+                    <Run Text="9527" />
+                </TextBlock>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

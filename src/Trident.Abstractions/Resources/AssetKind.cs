@@ -4,6 +4,7 @@
     {
         Mod,
         Save,
+        Log,
         Screenshot,
         DataPack,
         ResourcePack,

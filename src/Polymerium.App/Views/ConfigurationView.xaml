@@ -133,11 +133,11 @@
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Reset file status">
                             <Button Command="{x:Bind ViewModel.ResetInstanceCommand}"
-                                    CommandParameter="{x:Bind SafeBox.Text,Mode=TwoWay}" Content="Reset" />
+                                    CommandParameter="{x:Bind SafeBox.Text,Mode=OneWay}" Content="Reset" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Delete instance">
                             <Button Command="{x:Bind ViewModel.DeleteInstanceCommand}"
-                                    CommandParameter="{x:Bind SafeBox.Text,Mode=TwoWay}" Content="DO NOT PUSH"
+                                    CommandParameter="{x:Bind SafeBox.Text,Mode=OneWay}" Content="Delete"
                                     Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                                     Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
                         </labs:SettingsCard>

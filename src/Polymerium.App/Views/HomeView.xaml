@@ -93,18 +93,18 @@
                       ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:RecentModel">
-                        <controls:CardButton Padding="0" Command="{x:Bind GotoInstanceViewCommand}"
+                        <controls:CardButton Padding="0" Command="{x:Bind GotoInstanceViewCommand}" Width="168"
                                              CommandParameter="{x:Bind Key}" CornerRadius="6" Margin="0,0,0,12">
                             <StackPanel>
                                 <toolkit:ConstrainedBox AspectRatio="1:1">
-                                    <toolkit:ImageEx Source="{x:Bind Thumbnail}" Stretch="UniformToFill"
-                                                     Width="168" CornerRadius="6,6,0,0" />
+                                    <toolkit:ImageEx Source="{x:Bind Thumbnail}" Stretch="Fill"
+                                                     CornerRadius="6,6,0,0" />
                                 </toolkit:ConstrainedBox>
                                 <StackPanel Margin="{StaticResource CardContentMargin}"
                                             Spacing="{StaticResource TinyGap}">
                                     <TextBlock Text="{x:Bind Inner.Name}"
                                                Style="{StaticResource BodyStrongTextBlockStyle}" MaxLines="1"
-                                               TextTrimming="WordEllipsis" />
+                                               TextTrimming="CharacterEllipsis" />
                                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                         <FontIcon Glyph="&#xE823;" FontSize="12" />
                                         <TextBlock Text="{x:Bind PlayedAt}" VerticalAlignment="Center" />

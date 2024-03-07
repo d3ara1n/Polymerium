@@ -108,7 +108,7 @@ namespace Polymerium.App.ViewModels
 
         private string GetHomeFolderPath()
         {
-            return Path.Combine(_context.InstanceDir, Model.Key);
+            return _context.InstanceHomePath(Model.Key);
         }
 
         private string GetAssetFolderPath(AssetKind kind)
@@ -157,7 +157,7 @@ namespace Polymerium.App.ViewModels
 
         private void Play()
         {
-            _instanceService.Deploy(Model.Key);
+            _instanceService.Launch(Model.Key);
         }
 
         private void Stop()

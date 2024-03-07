@@ -31,7 +31,7 @@ namespace Polymerium.App.Models
 
         public string Key { get; }
 
-        public LimitedCollection<ScrapModel> Scraps { get; } = new(8895);
+        public LimitedCollection<ScrapModel> Scraps { get; } = new(9527);
 
         public Bindable<InstanceStatusModel, InstanceState> State { get; }
         public Bindable<InstanceStatusModel, string> StageText { get; }

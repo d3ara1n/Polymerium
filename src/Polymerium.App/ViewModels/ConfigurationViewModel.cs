@@ -292,8 +292,7 @@ namespace Polymerium.App.ViewModels
 
         private bool CanDoHarmToInstance(string? entered)
         {
-            return SafeCodeGenerated == entered && (Model.Status.State.Value == InstanceState.Idle ||
-                                                    Model.Status.State.Value == InstanceState.Stopped);
+            return SafeCodeGenerated == entered && _instanceService.CanManipulate(Model.Key);
         }
 
         private void ResetInstance(string? ignore)
