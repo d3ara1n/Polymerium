@@ -32,6 +32,11 @@ namespace Polymerium.App.Services
             if (TryFind(args.Key, out InstanceStatusModel? instance))
             {
                 _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
+                args.Handle.Output += (_, scrap) =>
+                    _dispatcher.TryEnqueue(() =>
+                    {
+                        instance.OnProcessUpdated(scrap);
+                    });
                 args.Handle.StateUpdated += (_, state) =>
                     _dispatcher.TryEnqueue(() =>
                     {

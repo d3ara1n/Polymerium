@@ -264,7 +264,8 @@
                 <toolkit:Case Value="Running">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                 Spacing="{StaticResource SmallGap}" Margin="{StaticResource SmallMargin}">
-                        <HyperlinkButton VerticalAlignment="Center">
+                        <HyperlinkButton VerticalAlignment="Center"
+                                         Command="{x:Bind ViewModel.GotoDashboardViewCommand}">
                             <TextBlock Text="Dashboard" />
                         </HyperlinkButton>
                         <Border Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
@@ -281,7 +282,8 @@
                 <toolkit:Case Value="Stopped">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                 Spacing="{StaticResource SmallGap}" Margin="{StaticResource SmallMargin}">
-                        <HyperlinkButton VerticalAlignment="Center">
+                        <HyperlinkButton VerticalAlignment="Center"
+                                         Command="{x:Bind ViewModel.GotoDashboardViewCommand}">
                             <TextBlock Text="View Log" />
                         </HyperlinkButton>
                         <Button Style="{StaticResource AccentButtonStyle}"

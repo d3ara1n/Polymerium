@@ -1,4 +1,5 @@
 ﻿using Polymerium.App.Extensions;
+using Polymerium.Trident.Engines.Launching;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using System;
@@ -29,6 +30,8 @@ namespace Polymerium.App.Models
         }
 
         public string Key { get; }
+
+        public LimitedCollection<ScrapModel> Scraps { get; } = new(8895);
 
         public Bindable<InstanceStatusModel, InstanceState> State { get; }
         public Bindable<InstanceStatusModel, string> StageText { get; }
@@ -69,6 +72,11 @@ namespace Polymerium.App.Models
             Endless.Value = false;
             Count.Value = value;
             TotalCount.Value = total;
+        }
+
+        public void OnProcessUpdated(Scrap scrap)
+        {
+            Scraps.Add(new ScrapModel(scrap));
         }
     }
 }

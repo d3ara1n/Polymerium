@@ -13,6 +13,7 @@ namespace Polymerium.App.Models
         string? ThumbnailPath,
         InstanceStatusModel Status,
         ICommand LaunchCommand,
+        ICommand DeployCommand,
         ICommand GotoInstanceViewCommand)
     {
         public string Thumbnail => ThumbnailPath ?? "/Assets/Placeholders/default_dirt.png";

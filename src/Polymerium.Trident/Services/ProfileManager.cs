@@ -173,5 +173,14 @@ namespace Polymerium.Trident.Services
                 }
             }
         }
+
+        public void Discard(string key)
+        {
+            if (Managed.TryGetValue(key, out Handle<Profile>? profile))
+            {
+                profile.Activated = false;
+                Managed.Remove(key);
+            }
+        }
     }
 }

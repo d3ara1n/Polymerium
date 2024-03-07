@@ -49,6 +49,11 @@
             return Path.Combine(InstanceDir, key, FILE_ARTIFACT);
         }
 
+        public string InstanceProfilePath(string key)
+        {
+            return Path.Combine(InstanceDir, $"{key}.json");
+        }
+
         public string AssetIndexPath(string index)
         {
             return Path.Combine(AssetDir, "indexes", $"{index}.json");

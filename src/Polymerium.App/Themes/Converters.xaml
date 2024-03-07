@@ -21,6 +21,7 @@
     <converters:BoolToTranslucentConverter x:Key="BoolToTranslucentConverter" />
     <converters:BoolToAccentTextBrushConverter x:Key="BoolToAccentTextBrushConverter" />
     <converters:BoolToFontBoldConverter x:Key="BoolToFontBoldConverter" />
+    <converters:ScrapLevelToBrushConverter x:Key="ScrapLevelToBrushConverter" />
 
 
 </ResourceDictionary>

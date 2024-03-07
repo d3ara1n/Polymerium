@@ -195,16 +195,25 @@ namespace Polymerium.Trident.Services
 
                             Process process = igniter.Build();
                             await File.WriteAllLinesAsync(
-                                Path.Combine(trident.InstanceHomePath(tracker.Key), "dump.txt"),
+                                Path.Combine(trident.InstanceHomePath(tracker.Key), "trident.launchdump.txt"),
                                 process.StartInfo.ArgumentList);
                             handle.OnFired();
                             if (options.Mode == LaunchMode.Managed)
                             {
                                 LaunchEngine launcher = provider.GetRequiredService<LaunchEngine>();
+                                launcher.SetTarget(process);
                                 process.Start();
                                 await foreach (Scrap scrap in launcher.WithCancellation(handle.Token)
                                                    .ConfigureAwait(false))
                                 {
+                                    handle.OnDropped(scrap);
+                                }
+
+                                process.WaitForExit();
+                                if (process.ExitCode != 0)
+                                {
+                                    throw new LaunchException(tracker.Key,
+                                        $"The process has exited with non-zero code {process.ExitCode}");
                                 }
                             }
                             else

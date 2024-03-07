@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using System;
 using System.Diagnostics;
@@ -15,21 +16,36 @@ namespace Polymerium.App.ViewModels
 {
     public class ConfigurationViewModel : ViewModelBase
     {
+        private readonly DialogService _dialogService;
+        private readonly InstanceService _instanceService;
         private readonly InstanceStatusService _instanceStatusService;
+        private readonly NavigationService _navigationService;
+        private readonly NotificationService _notificationService;
         private readonly ProfileManager _profileManager;
         private readonly ThumbnailSaver _thumbnailSaver;
+        private readonly TridentContext _trident;
 
         private ProfileModel model = ProfileModel.DUMMY;
 
         public ConfigurationViewModel(ProfileManager profileManager, ThumbnailSaver thumbnailSaver,
-            InstanceStatusService instanceStatusService)
+            InstanceStatusService instanceStatusService, TridentContext trident,
+            NotificationService notificationService, NavigationService navigationService, DialogService dialogService,
+            InstanceService instanceService)
         {
             _profileManager = profileManager;
             _thumbnailSaver = thumbnailSaver;
             _instanceStatusService = instanceStatusService;
+            _trident = trident;
+            _notificationService = notificationService;
+            _navigationService = navigationService;
+            _dialogService = dialogService;
+            _instanceService = instanceService;
 
             ChooseJavaCommand = new RelayCommand(ChooseJava, CanChooseJava);
             OpenExportWizardCommand = new RelayCommand(OpenExportWizard, CanOpenExportWizard);
+            ResetInstanceCommand = new RelayCommand<string>(ResetInstance, CanDoHarmToInstance);
+            DeleteInstanceCommand = new RelayCommand<string>(DeleteInstance, CanDoHarmToInstance);
+            RenameInstanceCommand = new RelayCommand(RenameInstance);
         }
 
         public ProfileModel Model
@@ -40,6 +56,17 @@ namespace Polymerium.App.ViewModels
 
         public IRelayCommand ChooseJavaCommand { get; }
         public ICommand OpenExportWizardCommand { get; }
+        public ICommand ResetInstanceCommand { get; }
+        public ICommand DeleteInstanceCommand { get; }
+        public ICommand RenameInstanceCommand { get; }
+
+        public string SafeCodeGenerated { get; } = Random.Shared.Next(10000).ToString();
+
+        public string InstanceName
+        {
+            get => Model.Inner.Name;
+            set => SetProperty(Model.Inner.Name, value, Model.Inner, (x, v) => x.Name = v);
+        }
 
         public bool IsWindowSizeOverridden
         {
@@ -252,6 +279,34 @@ namespace Polymerium.App.ViewModels
                 Model.Inner.Overrides[key] = value;
                 OnPropertyChanged(propertyName);
             }
+        }
+
+        private async void RenameInstance()
+        {
+            string? newName = await _dialogService.RequestTextAsync("Input new name", InstanceName);
+            if (newName != null)
+            {
+                InstanceName = newName;
+            }
+        }
+
+        private bool CanDoHarmToInstance(string? entered)
+        {
+            return SafeCodeGenerated == entered && (Model.Status.State.Value == InstanceState.Idle ||
+                                                    Model.Status.State.Value == InstanceState.Stopped);
+        }
+
+        private void ResetInstance(string? ignore)
+        {
+            _instanceService.Reset(Model.Key);
+            _notificationService.PopSuccess($"Instance {Model.Inner.Name} is now cleared");
+        }
+
+        private void DeleteInstance(string? ignore)
+        {
+            _instanceService.Delete(Model.Key);
+            _notificationService.PopSuccess($"Instance {Model.Inner.Name} is now destroyed");
+            _navigationService.Navigate(typeof(DesktopView), isRoot: true);
         }
     }
 }

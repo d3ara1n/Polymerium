@@ -105,12 +105,13 @@
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard>
                             <labs:SettingsCard.Header>
-                                <toolkit:ImageEx Source="/Assets/Placeholders/default_dirt.png" Width="64" />
+                                <toolkit:ImageEx Source="{x:Bind ViewModel.Model.Thumbnail}" Width="64"
+                                                 CornerRadius="{StaticResource TinyCornerRadius}" />
                             </labs:SettingsCard.Header>
-                            <Button Content="Change" />
+                            <Button Content="Change" IsEnabled="False" />
                         </labs:SettingsCard>
-                        <labs:SettingsCard Header="All The Mods 9">
-                            <Button Content="Rename" />
+                        <labs:SettingsCard Header="{x:Bind ViewModel.InstanceName,Mode=OneWay}">
+                            <Button Content="Rename" Command="{x:Bind ViewModel.RenameInstanceCommand}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                 </labs:SettingsExpander>
@@ -127,11 +128,17 @@
                         <FontIcon Glyph="&#xEBE8;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
+                        <labs:SettingsCard Header="Safe: Input code to turn the operations to available">
+                            <TextBox x:Name="SafeBox" PlaceholderText="{x:Bind ViewModel.SafeCodeGenerated}" />
+                        </labs:SettingsCard>
                         <labs:SettingsCard Header="Reset file status">
-                            <Button Content="Reset" />
+                            <Button Command="{x:Bind ViewModel.ResetInstanceCommand}"
+                                    CommandParameter="{x:Bind SafeBox.Text,Mode=TwoWay}" Content="Reset" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Delete instance">
-                            <Button Content="DO NOT PUSH" Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                            <Button Command="{x:Bind ViewModel.DeleteInstanceCommand}"
+                                    CommandParameter="{x:Bind SafeBox.Text,Mode=TwoWay}" Content="DO NOT PUSH"
+                                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                                     Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>

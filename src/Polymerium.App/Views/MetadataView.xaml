@@ -378,7 +378,9 @@
                                                                                 <TextBlock
                                                                                     toolkit:DockPanel.Dock="Right"
                                                                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                                                                    Text="{x:Bind VersionName.Value,Mode=OneWay}" />
+                                                                                    Text="{x:Bind VersionName.Value,Mode=OneWay}"
+                                                                                    TextWrapping="NoWrap"
+                                                                                    TextTrimming="CharacterEllipsis" />
                                                                                 <StackPanel Orientation="Horizontal"
                                                                                     Spacing="{StaticResource TinyGap}">
                                                                                     <Border VerticalAlignment="Center"

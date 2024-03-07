@@ -19,7 +19,7 @@ namespace Polymerium.Trident.Services.Instances
         }
 
 
-        internal void OnOutput(Scrap scrap)
+        internal void OnDropped(Scrap scrap)
         {
             Output?.Invoke(this, scrap);
         }

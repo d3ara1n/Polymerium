@@ -92,7 +92,8 @@ namespace Polymerium.App
                 .AddSingleton<MessageService>()
                 .AddSingleton<DialogService>()
                 .AddSingleton<InstanceStatusService>()
-                .AddSingleton<ModalService>();
+                .AddSingleton<ModalService>()
+                .AddSingleton<InstanceService>();
 
             // Trident Services
             services
@@ -118,7 +119,8 @@ namespace Polymerium.App
                 .AddViewModel<ModpackViewModel>()
                 .AddViewModel<MetadataViewModel>()
                 .AddViewModel<ConfigurationViewModel>()
-                .AddViewModel<WorkbenchViewModel>();
+                .AddViewModel<WorkbenchViewModel>()
+                .AddViewModel<DashboardViewModel>();
 
             // Repositories
             services

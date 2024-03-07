@@ -1,15 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Media.Animation;
-using Polymerium.App.Extensions;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Helpers;
-using Polymerium.Trident.Launching;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
-using System.Drawing;
 using System.IO;
 using System.Windows.Input;
 using Trident.Abstractions;
@@ -22,25 +18,25 @@ namespace Polymerium.App.ViewModels
     {
         private readonly TridentContext _context;
         private readonly InstanceManager _instanceManager;
+        private readonly InstanceService _instanceService;
         private readonly InstanceStatusService _instanceStatusService;
         private readonly NavigationService _navigation;
         private readonly ProfileManager _profileManager;
-        private readonly TaskService _taskService;
         private readonly ThumbnailSaver _thumbnailSaver;
 
         private ProfileModel model = ProfileModel.DUMMY;
 
         public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context,
-            TaskService taskService, ThumbnailSaver thumbnailSaver, InstanceManager instanceManager,
-            InstanceStatusService instanceStatusService)
+            ThumbnailSaver thumbnailSaver, InstanceManager instanceManager,
+            InstanceStatusService instanceStatusService, InstanceService instanceService)
         {
             _profileManager = profileManager;
             _navigation = navigation;
             _context = context;
-            _taskService = taskService;
             _thumbnailSaver = thumbnailSaver;
             _instanceManager = instanceManager;
             _instanceStatusService = instanceStatusService;
+            _instanceService = instanceService;
 
             GotoMetadataViewCommand = new RelayCommand<string>(GotoMetadataView);
             GotoConfigurationViewCommand = new RelayCommand<string>(GotoConfigurationView);
@@ -49,6 +45,7 @@ namespace Polymerium.App.ViewModels
             DeleteTodoCommand = new RelayCommand<TodoModel>(DeleteTodo, CanDeleteTodo);
             StopCommand = new RelayCommand(Stop);
             PlayCommand = new RelayCommand(Play);
+            GotoDashboardViewCommand = new RelayCommand(GotoDashboardView);
         }
 
         public ProfileModel Model
@@ -64,6 +61,7 @@ namespace Polymerium.App.ViewModels
         public ICommand DeleteTodoCommand { get; }
         public ICommand PlayCommand { get; }
         public ICommand StopCommand { get; }
+        public ICommand GotoDashboardViewCommand { get; }
 
         public override bool OnAttached(object? maybeKey)
         {
@@ -159,29 +157,7 @@ namespace Polymerium.App.ViewModels
 
         private void Play()
         {
-            _instanceManager.Deploy(Model.Key, Model.Inner, null, Launch, App.Current.Token);
-        }
-
-        private void Launch()
-        {
-            LaunchOptionsBuilder builder = LaunchOptions.Builder();
-            builder
-                .WithWindowSize(new Size((int)Model.Inner.GetOverriddenWindowWidth(),
-                    (int)Model.Inner.GetOverriddenWindowHeight()))
-                .WithMaxMemory(Model.Inner.GetOverriddenJvmMaxMemory())
-                .WithAdditionalArguments(Model.Inner.GetOverriddenJvmAdditionalArguments())
-                .WithJavaHomeLocator(major =>
-                {
-                    string home = Model.Inner.GetOverriddenJvmHome(major);
-                    if (!Directory.Exists(home))
-                    {
-                        throw new JavaNotFoundException(major);
-                    }
-
-                    return home;
-                })
-                .FireAndForget();
-            _instanceManager.Launch(Model.Key, Model.Inner, builder.Build(), null, App.Current.Token);
+            _instanceService.Deploy(Model.Key);
         }
 
         private void Stop()
@@ -197,6 +173,12 @@ namespace Polymerium.App.ViewModels
                         break;
                 }
             }
+        }
+
+        private void GotoDashboardView()
+        {
+            _navigation.Navigate(typeof(DashboardView), Model.Key,
+                new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
         }
     }
 }

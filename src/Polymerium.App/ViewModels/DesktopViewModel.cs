@@ -30,7 +30,7 @@ namespace Polymerium.App.ViewModels
         private readonly DispatcherQueue _dispatcher;
         private readonly ModpackExtractor _extractor;
         private readonly IHttpClientFactory _factory;
-        private readonly InstanceManager _instanceManager;
+        private readonly InstanceService _instanceService;
         private readonly InstanceStatusService _instanceStatusService;
         private readonly NavigationService _navigation;
         private readonly NotificationService _notification;
@@ -39,7 +39,7 @@ namespace Polymerium.App.ViewModels
 
         public DesktopViewModel(NavigationService navigation, ProfileManager profileManager, ModpackExtractor extractor,
             NotificationService notification, ThumbnailSaver thumbnailSaver, IHttpClientFactory factory,
-            InstanceStatusService instanceStatusService, InstanceManager instanceManager)
+            InstanceStatusService instanceStatusService, InstanceService instanceService)
         {
             _dispatcher = DispatcherQueue.GetForCurrentThread();
             _dispatcher.EnsureSystemDispatcherQueue();
@@ -50,16 +50,17 @@ namespace Polymerium.App.ViewModels
             _thumbnailSaver = thumbnailSaver;
             _factory = factory;
             _instanceStatusService = instanceStatusService;
-            _instanceManager = instanceManager;
+            _instanceService = instanceService;
 
-            LaunchEntryCommand = new RelayCommand<EntryModel>(LaunchEntry, CanLaunchEntry);
-            DeleteEntryCommand = new RelayCommand<EntryModel>(DeleteEntry, CanDeleteEntry);
+            LaunchEntryCommand = new RelayCommand<EntryModel>(LaunchEntry, CanManipulateEntry);
+            DeployEntryCommand = new RelayCommand<EntryModel>(DeployEntry, CanManipulateEntry);
             GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
 
             Entries = new ObservableCollection<EntryModel>(profileManager.Managed.Select(x =>
                     new EntryModel(x.Key, x.Value.Value, _thumbnailSaver.Get(x.Key),
                         _instanceStatusService.MustHave(x.Key),
                         LaunchEntryCommand,
+                        DeployEntryCommand,
                         GotoInstanceViewCommand))
                 .OrderByDescending(x => x.LastPlayAtRaw));
         }
@@ -67,7 +68,7 @@ namespace Polymerium.App.ViewModels
         public ObservableCollection<EntryModel> Entries { get; }
 
         private RelayCommand<EntryModel> LaunchEntryCommand { get; }
-        private RelayCommand<EntryModel> DeleteEntryCommand { get; }
+        private RelayCommand<EntryModel> DeployEntryCommand { get; }
         private RelayCommand<string> GotoInstanceViewCommand { get; }
 
         public void Receive(ProfileAddedMessage message)
@@ -79,6 +80,7 @@ namespace Polymerium.App.ViewModels
                     InstanceStatusModel status = _instanceStatusService.MustHave(message.Key);
                     Entries.Add(new EntryModel(message.Key, message.Item, _thumbnailSaver.Get(message.Key), status,
                         LaunchEntryCommand,
+                        DeployEntryCommand,
                         GotoInstanceViewCommand));
                 });
             }
@@ -104,28 +106,29 @@ namespace Polymerium.App.ViewModels
             }
         }
 
-        private bool CanDeleteEntry(EntryModel? entry)
-        {
-            return entry is { Status.State.Value: InstanceState.Idle or InstanceState.Stopped };
-        }
-
-        private void DeleteEntry(EntryModel? entry)
+        private bool CanManipulateEntry(EntryModel? entry)
         {
             if (entry != null)
             {
+                return _instanceService.CanManipulate(entry.Key);
             }
-        }
 
-        private bool CanLaunchEntry(EntryModel? entry)
-        {
-            return entry is { Status.State.Value: InstanceState.Idle or InstanceState.Stopped };
+            return false;
         }
 
         private void LaunchEntry(EntryModel? entry)
         {
             if (entry != null)
             {
-                _notification.PopInformation("Funciton moved to instance detail view");
+                _instanceService.Launch(entry.Key);
+            }
+        }
+
+        private void DeployEntry(EntryModel? entry)
+        {
+            if (entry != null)
+            {
+                _instanceService.Deploy(entry.Key);
             }
         }
 
