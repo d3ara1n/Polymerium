@@ -1,7 +1,21 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	]
+  "folders": [
+    {
+      "name": "Projects",
+      "path": "./src"
+    },
+    {
+      "name": "Submodules",
+      "path": "./submodules"
+    },
+    {
+      "name": "Changelogs",
+      "path": "./changelogs"
+    }
+  ],
+  "settings": {
+    "cSpell.words": [
+      "Polymerium"
+    ]
+  }
 }

@@ -182,7 +182,7 @@
                                             </HyperlinkButton>
                                             <TextBlock Text="{x:Bind Root.Inner.Name}"
                                                        Style="{StaticResource SubtitleTextBlockStyle}"
-                                                       TextTrimming="CharacterEllipsis" />
+                                                       TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
                                         </toolkit:DockPanel>
                                         <toolkit:DockPanel LastChildFill="True">
                                             <Border toolkit:DockPanel.Dock="Right"
@@ -193,7 +193,7 @@
                                                            Style="{StaticResource CaptionTextBlockStyle}" />
                                             </Border>
                                             <TextBlock Text="{x:Bind Inner.Name}"
-                                                       TextTrimming="CharacterEllipsis" />
+                                                       TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
                                         </toolkit:DockPanel>
                                     </StackPanel>
                                 </Grid>

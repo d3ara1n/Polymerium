@@ -18,6 +18,7 @@
         <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     </PropertyGroup>
     <ItemGroup>
+        <None Remove="Modals\MicrosoftAccountWizardModal.xaml"/>
         <None Remove="Modals\ProjectPreviewModal.xaml"/>
         <None Remove="Views\DashboardView.xaml"/>
     </ItemGroup>
@@ -71,6 +72,11 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Modals\MicrosoftAccountWizardModal.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Views\DashboardView.xaml">

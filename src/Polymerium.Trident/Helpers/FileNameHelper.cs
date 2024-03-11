@@ -30,6 +30,7 @@ namespace Polymerium.Trident.Helpers
                 AssetKind.ShaderPack => "shaderpacks",
                 AssetKind.ResourcePack => "resourcepacks",
                 AssetKind.DataPack => "datapacks",
+                AssetKind.Log => "logs",
                 _ => throw new NotImplementedException()
             };
         }

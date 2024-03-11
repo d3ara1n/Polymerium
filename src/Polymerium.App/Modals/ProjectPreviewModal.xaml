@@ -109,13 +109,24 @@
                             </PivotItem>
                             <PivotItem Header="Gallery">
                                 <Grid>
-                                    <FlipView ItemsSource="{x:Bind Project.Gallery,Mode=OneWay}" CornerRadius="0">
-                                        <FlipView.ItemTemplate>
-                                            <DataTemplate x:DataType="models:GalleryItemModel">
-                                                <toolkit:ImageEx IsCacheEnabled="True" Source="{x:Bind Url}" />
-                                            </DataTemplate>
-                                        </FlipView.ItemTemplate>
-                                    </FlipView>
+                                    <Grid>
+                                        <FlipView x:Name="GalleryBox"
+                                                  ItemsSource="{x:Bind Project.Gallery,Mode=OneWay}" CornerRadius="0">
+                                            <FlipView.ItemTemplate>
+                                                <DataTemplate x:DataType="models:GalleryItemModel">
+                                                    <toolkit:ImageEx IsCacheEnabled="True" Source="{x:Bind Url}" />
+                                                </DataTemplate>
+                                            </FlipView.ItemTemplate>
+                                        </FlipView>
+                                        <Border HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                                CornerRadius="{StaticResource TinyCornerRadius}"
+                                                Padding="{StaticResource TinyMargin}">
+                                            <PipsPager Margin="6,0,6,0"
+                                                       NumberOfPages="{x:Bind Project.Gallery.Count,Mode=OneWay}"
+                                                       SelectedPageIndex="{x:Bind GalleryBox.SelectedIndex,Mode=TwoWay}" />
+                                        </Border>
+                                    </Grid>
                                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}"
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                                                 Visibility="{x:Bind Project.Gallery.Count,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource ZeroToVisibilityConverter}}">

@@ -11,10 +11,40 @@
     mc:Ignorable="d">
 
     <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource TinyGap}">
+        <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}" Background="Transparent"
+                             BorderBrush="Transparent" Padding="0">
+            <controls:CardButton.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Microsoft" Command="{x:Bind ViewModel.OpenMicrosoftWizardCommand}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xf3ca;" Style="{StaticResource FontAwesomeBrandsFontIconStyle}" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Authlib" Command="{x:Bind ViewModel.OpenAuthlibWizardCommand}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xe2ca;" Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </controls:CardButton.Flyout>
+            <Grid>
+                <controls:DashBorder>
+                    <StackPanel Orientation="Horizontal" Margin="{StaticResource MediumMargin}"
+                                HorizontalAlignment="Center" Spacing="{StaticResource MediumGap}">
+                        <FontIcon Glyph="&#xf007;" FontSize="48"
+                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                  Style="{StaticResource FontAwesomeRegularFontIconStyle}" />
+                        <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}"
+                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </StackPanel>
+                </controls:DashBorder>
+            </Grid>
+        </controls:CardButton>
         <ListView SelectionMode="None">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <toolkit:WrapPanel />
+                    <ItemsWrapGrid />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemContainerStyle>
@@ -66,35 +96,5 @@
                 </StackPanel>
             </controls:CardButton>
         </ListView>
-        <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}" Background="Transparent"
-                             BorderBrush="Transparent" Padding="0">
-            <controls:CardButton.Flyout>
-                <MenuFlyout>
-                    <MenuFlyoutItem Text="Microsoft">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xf3ca;" Style="{StaticResource FontAwesomeBrandsFontIconStyle}" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="authlib-injector">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xe2ca;" Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                </MenuFlyout>
-            </controls:CardButton.Flyout>
-            <Grid>
-                <controls:DashBorder>
-                    <StackPanel Orientation="Horizontal" Margin="{StaticResource MediumMargin}"
-                                HorizontalAlignment="Center" Spacing="{StaticResource MediumGap}">
-                        <FontIcon Glyph="&#xf007;" FontSize="48"
-                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                  Style="{StaticResource FontAwesomeRegularFontIconStyle}" />
-                        <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}"
-                                   Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </StackPanel>
-                </controls:DashBorder>
-            </Grid>
-        </controls:CardButton>
     </StackPanel>
 </Page>

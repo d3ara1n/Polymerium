@@ -180,7 +180,7 @@ namespace Polymerium.Trident.Services
                                 .SetOsName(PlatformHelper.GetOsName())
                                 .SetOsArch(PlatformHelper.GetOsArch())
                                 .SetOsVersion(PlatformHelper.GetOsVersion())
-                                .SetUserUuid("178804A6-08D0-4434-AD84-40DD7E9273F1")
+                                .SetUserUuid("178804A6-08D0-4434-AD84- ")
                                 .SetUserType("legacy")
                                 .SetUserName("Steve")
                                 .SetUserAccessToken("invalid")
@@ -202,7 +202,6 @@ namespace Polymerium.Trident.Services
                             {
                                 LaunchEngine launcher = provider.GetRequiredService<LaunchEngine>();
                                 launcher.SetTarget(process);
-                                process.Start();
                                 await foreach (Scrap scrap in launcher.WithCancellation(handle.Token)
                                                    .ConfigureAwait(false))
                                 {

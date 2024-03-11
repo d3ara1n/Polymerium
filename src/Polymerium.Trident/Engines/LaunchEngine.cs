@@ -7,44 +7,12 @@ namespace Polymerium.Trident.Engines
 {
     public class LaunchEngine : IAsyncEngine<Scrap>
     {
-        private const int TIME_DELAY = 500;
-
-        private readonly Regex pattern =
-            new(
-                @"\[(.*)\] \[(?<thread>[a-zA-Z0-9\ \-#@]+)/(?<level>[a-zA-Z]+)\](\ \[(?<source>[a-zA-Z0-9\ \\./\-]+)\])?: (?<message>.*)");
-
         private Process? inner;
 
-        public async IAsyncEnumerator<Scrap> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        public IAsyncEnumerator<Scrap> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
-            if (inner == null)
-            {
-                yield break;
-            }
-
-            while (!inner.HasExited && !cancellationToken.IsCancellationRequested)
-            {
-                if (!inner.StandardOutput.EndOfStream)
-                {
-                    string? line = await inner.StandardOutput.ReadLineAsync();
-                    if (line != null)
-                    {
-                        yield return TryConstruct(line);
-                    }
-                }
-                else if (!inner.StandardError.EndOfStream)
-                {
-                    string? line = await inner.StandardError.ReadLineAsync();
-                    if (line != null)
-                    {
-                        yield return TryConstruct(line);
-                    }
-                }
-                else
-                {
-                    await Task.Delay(TIME_DELAY);
-                }
-            }
+            ArgumentNullException.ThrowIfNull(inner);
+            return new LaunchEngineEnumerator(inner, cancellationToken);
         }
 
         public void SetTarget(Process process)
@@ -54,24 +22,95 @@ namespace Polymerium.Trident.Engines
             process.StartInfo.RedirectStandardOutput = true;
         }
 
-        private Scrap TryConstruct(string data)
+        public class LaunchEngineEnumerator : IAsyncEnumerator<Scrap>
         {
-            Match match = pattern.Match(data);
-            if (match.Success && match.Groups.TryGetValue("level", out Group? level) &&
-                match.Groups.TryGetValue("thread", out Group? thread) &&
-                match.Groups.TryGetValue("message", out Group? message))
+            private const int TIME_DELAY = 500;
+            private readonly CancellationToken cancellationToken;
+
+            private readonly Process inner;
+
+            private readonly Regex pattern =
+                new(
+                    @"\[(.*)\] \[(?<thread>[a-zA-Z0-9\ \-#@]+)/(?<level>[a-zA-Z]+)\](\ \[(?<source>[a-zA-Z0-9\ \\./\-]+)\])?: (?<message>.*)");
+
+            // Send 但不 Sync
+            private readonly Queue<string> queue = new();
+
+            internal LaunchEngineEnumerator(Process process, CancellationToken token = default)
             {
-                match.Groups.TryGetValue("source", out Group? sender);
-                return new Scrap(level.Value.ToUpper() switch
-                {
-                    "INFO" => ScrapLevel.Information,
-                    "WARN" => ScrapLevel.Warning,
-                    "ERROR" => ScrapLevel.Error,
-                    _ => ScrapLevel.Information
-                }, DateTimeOffset.Now, thread.Value, sender?.Value, message.Value);
+                cancellationToken = token;
+                inner = process;
+                process.OutputDataReceived += Process_OutputDataReceived;
+                process.ErrorDataReceived += Process_ErrorDataReceived;
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
             }
 
-            return new Scrap(ScrapLevel.Information, DateTimeOffset.Now, "*", null, data);
+            public Scrap? Current { get; private set; }
+
+            public ValueTask DisposeAsync()
+            {
+                inner.CancelErrorRead();
+                inner.CancelOutputRead();
+
+                // inner.Close()
+                // it throws exception for some reason
+                return ValueTask.CompletedTask;
+            }
+
+            public async ValueTask<bool> MoveNextAsync()
+            {
+                while (!inner.HasExited && !cancellationToken.IsCancellationRequested)
+                {
+                    if (queue.TryDequeue(out string? line) && !string.IsNullOrEmpty(line))
+                    {
+                        Current = TryConstruct(line);
+                        return true;
+                    }
+
+                    await Task.Delay(TIME_DELAY);
+                }
+
+                Current = null;
+                return false;
+            }
+
+            private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    queue.Enqueue(e.Data);
+                }
+            }
+
+            private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    queue.Enqueue(e.Data);
+                }
+            }
+
+            private Scrap TryConstruct(string data)
+            {
+                Match match = pattern.Match(data);
+                if (match.Success && match.Groups.TryGetValue("level", out Group? level) &&
+                    match.Groups.TryGetValue("thread", out Group? thread) &&
+                    match.Groups.TryGetValue("message", out Group? message))
+                {
+                    match.Groups.TryGetValue("source", out Group? sender);
+                    return new Scrap(level.Value.ToUpper() switch
+                    {
+                        "INFO" => ScrapLevel.Information,
+                        "WARN" => ScrapLevel.Warning,
+                        "ERROR" => ScrapLevel.Error,
+                        _ => ScrapLevel.Information
+                    }, DateTimeOffset.Now, thread.Value, sender?.Value, message.Value);
+                }
+
+                return new Scrap(ScrapLevel.Information, DateTimeOffset.Now, "*", null, data);
+            }
         }
     }
 }

@@ -98,13 +98,24 @@
                                     <toolkit:ConstrainedBox Grid.Row="0" AspectRatio="16:9" VerticalAlignment="Stretch"
                                                             HorizontalAlignment="Center"
                                                             Visibility="{x:Bind ViewModel.Project.Gallery,Mode=OneWay,Converter={StaticResource CollectionVisibilityConverter}}">
-                                        <FlipView ItemsSource="{x:Bind ViewModel.Project.Gallery,Mode=OneWay}">
-                                            <FlipView.ItemTemplate>
-                                                <DataTemplate x:DataType="models:GalleryItemModel">
-                                                    <toolkit:ImageEx Source="{x:Bind Url}" Stretch="Uniform" />
-                                                </DataTemplate>
-                                            </FlipView.ItemTemplate>
-                                        </FlipView>
+                                        <Grid>
+                                            <FlipView x:Name="GalleryBox"
+                                                      ItemsSource="{x:Bind ViewModel.Project.Gallery,Mode=OneWay}">
+                                                <FlipView.ItemTemplate>
+                                                    <DataTemplate x:DataType="models:GalleryItemModel">
+                                                        <toolkit:ImageEx Source="{x:Bind Url}" Stretch="Uniform" />
+                                                    </DataTemplate>
+                                                </FlipView.ItemTemplate>
+                                            </FlipView>
+                                            <Border HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                                    CornerRadius="{StaticResource TinyCornerRadius}"
+                                                    Padding="{StaticResource TinyMargin}">
+                                                <PipsPager Margin="6,0,6,0"
+                                                           NumberOfPages="{x:Bind ViewModel.Project.Gallery.Count,Mode=OneWay}"
+                                                           SelectedPageIndex="{x:Bind GalleryBox.SelectedIndex,Mode=TwoWay}" />
+                                            </Border>
+                                        </Grid>
                                     </toolkit:ConstrainedBox>
                                     <toolkit:MarkdownTextBlock Grid.Row="1" Background="Transparent"
                                                                ImageStretch="UniformToFill"
