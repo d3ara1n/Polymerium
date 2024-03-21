@@ -5,16 +5,81 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Modals"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="ModalBase_Loaded"
+    Unloaded="ModalBase_Unloaded">
 
-    <Grid>
-        <toolkit:SwitchPresenter>
-            <toolkit:SwitchPresenter.Transitions>
-                <ContentThemeTransition />
-            </toolkit:SwitchPresenter.Transitions>
-        </toolkit:SwitchPresenter>
+    <Grid Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+          BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+          BorderThickness="{StaticResource CardBorderThickness}" CornerRadius="{StaticResource SmallCornerRadius}"
+          RowSpacing="{StaticResource MediumGap}" Padding="{StaticResource MediumMargin}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CodeStates">
+                <VisualState x:Name="Loading" />
+                <VisualState x:Name="Linking">
+                    <VisualState.Setters>
+                        <Setter Target="LoadingBox.Visibility" Value="Collapsed" />
+                        <Setter Target="CodeBox.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Failed">
+                    <VisualState.Setters>
+                        <Setter Target="LoadingBox.Visibility" Value="Collapsed" />
+                        <Setter Target="FailureBox.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <!-- Loading -->
+            <StackPanel x:Name="LoadingBox">
+                <ProgressRing Margin="{StaticResource MediumMargin}" />
+            </StackPanel>
+            <!-- Shown -->
+            <StackPanel x:Name="CodeBox" Spacing="{StaticResource SmallGap}" Visibility="Collapsed">
+                <Border Background="{ThemeResource SmokeFillColorDefaultBrush}"
+                        CornerRadius="{StaticResource SmallCornerRadius}">
+                    <Grid>
+                        <TextBlock Text="{x:Bind UserCode,Mode=OneWay}" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" Margin="{StaticResource MediumMargin}"
+                                   Style="{StaticResource TitleTextBlockStyle}" />
+                        <HyperlinkButton HorizontalAlignment="Right" VerticalAlignment="Top"
+                                         Margin="{StaticResource SmallMargin}" Click="CopyButton_Click">
+                            <FontIcon Glyph="&#xE8C8;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                        </HyperlinkButton>
+                    </Grid>
+                </Border>
+                <TextBlock>
+                    <Run Text="The code will be expired in 15 minutes." />
+                    <LineBreak />
+                    <Run Text="Please fill this code in the page." />
+                    <LineBreak />
+                    <Run Text="https://aka.ms/devicelogin" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"
+                         FontWeight="Bold" />
+                </TextBlock>
+                <Button HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                        Click="OpenButton_Click">
+                    <TextBlock Text="Open in the browser" />
+                </Button>
+            </StackPanel>
+            <!-- Failed -->
+            <StackPanel x:Name="FailureBox" Visibility="Collapsed">
+                <TextBlock Text="{x:Bind FailureMessage,Mode=OneWay}" Margin="{StaticResource MediumMargin}" />
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="{StaticResource SmallGap}"
+                    HorizontalAlignment="Right">
+            <Button IsEnabled="False" Style="{StaticResource AccentButtonStyle}">
+                <TextBlock Text="Finish" />
+            </Button>
+            <Button Command="{x:Bind DismissCommand}">
+                <TextBlock Text="Cancel" />
+            </Button>
+        </StackPanel>
     </Grid>
 </local:ModalBase>

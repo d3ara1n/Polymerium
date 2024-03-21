@@ -105,7 +105,8 @@ namespace Polymerium.App
                 .AddSingleton<ModpackExtractor>()
                 .AddSingleton<StorageManager>()
                 .AddSingleton<ThumbnailSaver>()
-                .AddSingleton<InstanceManager>();
+                .AddSingleton<InstanceManager>()
+                .AddSingleton<AccountManager>();
 
             // ViewModels
             services

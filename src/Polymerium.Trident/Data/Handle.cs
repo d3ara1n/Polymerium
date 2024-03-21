@@ -2,27 +2,19 @@
 
 namespace Polymerium.Trident.Data
 {
-    public class Handle<T> : IDisposable
+    public class Handle<T>(T instance, string path, JsonSerializerOptions? options = null)
+        : IDisposable
         where T : class
     {
-        private readonly JsonSerializerOptions _options;
-        private bool disposedValue;
+        private readonly JsonSerializerOptions _options = options ?? JsonSerializerOptions.Default;
 
-        public Handle(T instance, string path, JsonSerializerOptions? options = null)
-        {
-            _options = options ?? JsonSerializerOptions.Default;
-            Value = instance;
-            Path = path;
-        }
-
-        public T Value { get; }
-        public string Path { get; }
+        public T Value { get; } = instance;
+        public string Path { get; } = path;
         public bool Activated { get; set; } = true;
 
         public void Dispose()
         {
-            // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
-            Dispose(true);
+            Flush();
             GC.SuppressFinalize(this);
         }
 
@@ -60,22 +52,6 @@ namespace Polymerium.Trident.Data
 
                 string content = JsonSerializer.Serialize(Value, _options);
                 File.WriteAllText(Path, content);
-            }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                    // TODO: 释放托管状态(托管对象)
-                {
-                    Flush();
-                }
-
-                // TODO: 释放未托管的资源(未托管的对象)并重写终结器
-                // TODO: 将大型字段设置为 null
-                disposedValue = true;
             }
         }
     }

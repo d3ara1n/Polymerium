@@ -1,16 +1,8 @@
 {
   "folders": [
     {
-      "name": "Projects",
-      "path": "./src"
-    },
-    {
-      "name": "Submodules",
-      "path": "./submodules"
-    },
-    {
-      "name": "Changelogs",
-      "path": "./changelogs"
+      "name": "Polymerium Workspace",
+      "path": "."
     }
   ],
   "settings": {

@@ -42,7 +42,6 @@ namespace Polymerium.App.ViewModels
             InstanceStatusService instanceStatusService, InstanceService instanceService)
         {
             _dispatcher = DispatcherQueue.GetForCurrentThread();
-            _dispatcher.EnsureSystemDispatcherQueue();
             _navigation = navigation;
             _profileManager = profileManager;
             _extractor = extractor;

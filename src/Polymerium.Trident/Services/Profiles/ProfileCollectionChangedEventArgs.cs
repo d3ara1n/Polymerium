@@ -7,6 +7,6 @@ namespace Polymerium.Trident.Services.Profiles
     {
         public ProfileCollectionChangedAction Action { get; init; } = action;
         public string Key { get; init; } = key;
-        public Profile Item { get; init; } = item;
+        public Profile Profile { get; init; } = item;
     }
 }

@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNext" Version="5.1.0"/>
+        <PackageReference Include="DotNext" Version="5.3.1"/>
         <PackageReference Include="IBuilder" Version="0.2.0"/>
     </ItemGroup>
 
