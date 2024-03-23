@@ -219,11 +219,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <toolkit:ImageEx Grid.Column="0"
-                                     Source="https://starlightskins.lunareclipse.studio/skin-render/pixel/Dearain/face"
+                                     Source="https://starlightskins.lunareclipse.studio/render/pixel/Stewie/face"
                                      Width="36" />
                     <StackPanel Grid.Column="1">
-                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Dearain" />
-                        <TextBlock Text="Microsoft" />
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Stewie" />
+                        <TextBlock Text="Offline" />
                     </StackPanel>
                 </Grid>
             </HyperlinkButton>
