@@ -1,7 +1,7 @@
 ﻿namespace Trident.Abstractions.Resources
 {
     // 用于部署和用户界面展示
-// 从 IRepository.Resolve(string projectId, string? versionId, Filter filter)
+    // 从 IRepository.Resolve(string projectId, string? versionId, Filter filter)
 
     public record Package(
         string ProjectId,

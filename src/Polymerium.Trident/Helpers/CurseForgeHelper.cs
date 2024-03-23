@@ -3,7 +3,6 @@ using Polymerium.Trident.Models.Eternal;
 using Polymerium.Trident.Repositories;
 using ReverseMarkdown;
 using System.Net.Http.Json;
-using System.Web;
 using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Resources;
 
@@ -25,7 +24,9 @@ namespace Polymerium.Trident.Helpers
 
         private static readonly Converter MARKDOWNER = new(new Config
         {
-            GithubFlavored = true, SmartHrefHandling = true, RemoveComments = true
+            GithubFlavored = true,
+            SmartHrefHandling = true,
+            RemoveComments = true
         });
 
         public static readonly IReadOnlyDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
@@ -175,7 +176,7 @@ namespace Polymerium.Trident.Helpers
                 _ => 0
             };
             string service =
-                $"/mods/search?gameId={GAME_ID}&classId={GetClassIdFromResourceKind(kind)}&index={offset}&pageSize={limit}&searchFilter={HttpUtility.UrlPathEncode(query)}&sortOrder=desc"
+                $"/mods/search?gameId={GAME_ID}&classId={GetClassIdFromResourceKind(kind)}&index={offset}&pageSize={limit}&searchFilter={Uri.EscapeDataString(query)}&sortOrder=desc"
                 + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
                 + (
                     (kind == ResourceKind.Mod || kind == ResourceKind.Modpack) && modLoaderId != null

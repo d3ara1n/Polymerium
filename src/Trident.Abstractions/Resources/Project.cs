@@ -1,7 +1,7 @@
 ﻿namespace Trident.Abstractions.Resources
 {
     // 用于表示市场中的一个项目，仅用于展示
-// 从 IRepository.Query(string projectId) 获得
+    // 从 IRepository.Query(string projectId) 获得
 
     public record Project(
         string Id,

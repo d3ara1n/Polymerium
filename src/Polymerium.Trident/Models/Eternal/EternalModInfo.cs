@@ -35,7 +35,7 @@ namespace Polymerium.Trident.Models.Eternal
         public Uri ExtractDownloadUrl()
         {
             return DownloadUrl
-                   ?? new Uri($"https://mediafilez.forgecdn.net/files/{Id / 1000}/{Id % 1000}/{FileName}");
+                   ?? new Uri($"https://mediafilez.forgecdn.net/files/{Id / 1000}/{Id % 1000}/{Uri.EscapeDataString(FileName)}");
         }
 
         public string? ExtractSha1()

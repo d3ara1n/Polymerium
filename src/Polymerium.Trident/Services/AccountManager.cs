@@ -76,7 +76,7 @@ namespace Polymerium.Trident.Services
                 Directory.CreateDirectory(dir);
             }
 
-            List<AccountEntry> list = new List<AccountEntry>();
+            List<AccountEntry> list = new();
             try
             {
                 foreach (IAccount account in Managed)
