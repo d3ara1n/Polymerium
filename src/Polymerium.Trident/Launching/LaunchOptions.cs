@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using Polymerium.Trident.Exceptions;
+using System.Drawing;
 
 namespace Polymerium.Trident.Launching
 {

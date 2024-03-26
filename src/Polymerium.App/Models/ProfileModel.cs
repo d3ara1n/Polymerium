@@ -27,7 +27,7 @@ namespace Polymerium.App.Models
         public TimeSpan PlayTimeRaw =>
             Inner.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Play);
 
-        public string PlayTime => PlayTimeRaw.Humanize(1, false, null, TimeUnit.Hour, TimeUnit.Second);
+        public string PlayTime => PlayTimeRaw.Humanize(2, false, null, TimeUnit.Hour, TimeUnit.Second);
 
         public string Note
         {

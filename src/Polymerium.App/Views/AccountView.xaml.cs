@@ -17,5 +17,15 @@ namespace Polymerium.App.Views
         }
 
         public AccountViewModel ViewModel { get; } = App.ViewModel<AccountViewModel>();
+
+        private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            ViewModel.OnAttached(null);
+        }
+
+        private void Page_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            ViewModel.OnDetached();
+        }
     }
 }

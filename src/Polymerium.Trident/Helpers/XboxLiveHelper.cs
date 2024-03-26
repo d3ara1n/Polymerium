@@ -11,7 +11,7 @@ namespace Polymerium.Trident.Helpers
 
         private static readonly JsonSerializerOptions OPTIONS = new(JsonSerializerDefaults.General)
         {
-            PropertyNameCaseInsensitive = false
+            PropertyNameCaseInsensitive = true
         };
 
         public static async Task<XboxLiveResponse> AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(
@@ -45,7 +45,7 @@ namespace Polymerium.Trident.Helpers
                 RelyingParty = "rp://api.minecraftservices.com/",
                 TokenType = "JWT"
             };
-            HttpResponseMessage response = await client.PatchAsJsonAsync(XSTS_ENDPOINT, parameter, OPTIONS);
+            HttpResponseMessage response = await client.PostAsJsonAsync(XSTS_ENDPOINT, parameter, OPTIONS);
             response.EnsureSuccessStatusCode();
             XboxLiveResponse model = await response.Content.ReadFromJsonAsync<XboxLiveResponse>(OPTIONS);
             return model;

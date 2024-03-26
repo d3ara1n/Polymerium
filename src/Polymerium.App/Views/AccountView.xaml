@@ -9,18 +9,31 @@
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
-    <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource TinyGap}">
-        <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}" Background="Transparent"
+    <Grid Margin="{StaticResource PageContentMargin}" RowSpacing="{StaticResource TinyGap}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:CardButton Grid.Row="0" CornerRadius="{StaticResource CardMediumCornerRadius}" Background="Transparent"
                              BorderBrush="Transparent" Padding="0">
             <controls:CardButton.Flyout>
-                <MenuFlyout>
+                <MenuFlyout Placement="Bottom">
                     <MenuFlyoutItem Text="Microsoft" Command="{x:Bind ViewModel.OpenMicrosoftWizardCommand}">
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xf3ca;" Style="{StaticResource FontAwesomeBrandsFontIconStyle}" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
+                    <MenuFlyoutSubItem Text="Family Guy">
+                        <MenuFlyoutSubItem.Icon>
+                            <FontIcon Glyph="&#xe533;" Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
+                        </MenuFlyoutSubItem.Icon>
+                        <MenuFlyoutItem Text="Stewie" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}" CommandParameter="Stewie"/>
+                        <MenuFlyoutItem Text="Brian" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}" CommandParameter="Brian"/>
+                        <MenuFlyoutItem Text="Peter" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}" CommandParameter="Peter"/>
+                        <MenuFlyoutItem Text="Lois" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}" CommandParameter="Lois"/>
+                    </MenuFlyoutSubItem>
                     <MenuFlyoutItem Text="Authlib" Command="{x:Bind ViewModel.OpenAuthlibWizardCommand}">
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xe2ca;" Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
@@ -42,10 +55,10 @@
                 </controls:DashBorder>
             </Grid>
         </controls:CardButton>
-        <ListView SelectionMode="None" ItemsSource="{x:Bind ViewModel.Entries}">
+        <ListView Grid.Row="1" SelectionMode="None" ItemsSource="{x:Bind ViewModel.Entries}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsWrapGrid />
+                    <toolkit:WrapPanel />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemContainerStyle>
@@ -56,51 +69,51 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:AccountModel">
                     <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}">
-                        <controls:CardButton.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem Text="Set as default">
+                        <controls:CardButton.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Set as default" Command="{x:Bind SetAsDefaultCommand}" CommandParameter="{x:Bind}">
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE930;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem Text="Remove"
+                                <MenuFlyoutItem Text="Remove" Command="{x:Bind RemoveCommand}" CommandParameter="{x:Bind}"
                                                 Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}">
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xECC9;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
-                        </controls:CardButton.Flyout>
+                        </controls:CardButton.ContextFlyout>
                         <StackPanel Spacing="{StaticResource SmallGap}">
                             <Border CornerRadius="{StaticResource CardSmallCornerRadius}" Width="160" Height="160">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                                        <GradientStop Offset="0" Color="#839EFF" />
-                                        <GradientStop Offset="1" Color="#79FFCF" />
+                                        <GradientStop Offset="0" Color="{x:Bind Color1}" />
+                                        <GradientStop Offset="1" Color="{x:Bind Color2}" />
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <toolkit:ImageEx Width="140"
                                                  Source="{x:Bind SkinUrl}"
                                                  VerticalAlignment="Bottom" HorizontalAlignment="Center" />
                             </Border>
-                            <TextBlock Text="{x:Bind Username}" Style="{StaticResource SubtitleTextBlockStyle}" />
+                            <TextBlock Text="{x:Bind Inner.Username}" Style="{StaticResource SubtitleTextBlockStyle}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="Microsoft"
+                                <TextBlock Grid.Column="0" Text="{x:Bind TypeName}"
                                            Style="{StaticResource CaptionTextBlockStyle}"
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                                 <FontIcon Grid.Column="1" Glyph="&#xf058;"
                                           Foreground="{ThemeResource SystemFillColorSuccessBrush}"
                                           FontSize="{StaticResource ButtonFontIconFontSize}"
-                                          Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
+                                          Style="{StaticResource FontAwesomeSolidFontIconStyle}" Visibility="{x:Bind IsDefault.Value,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
                             </Grid>
                         </StackPanel>
                     </controls:CardButton>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+    </Grid>
 </Page>

@@ -36,15 +36,6 @@
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
                         <controls:TagControl VerticalAlignment="Bottom">
                             <controls:TagControl.Icon>
-                                <FontIcon Glyph="&#xE928;" FontSize="30" />
-                            </controls:TagControl.Icon>
-                            <controls:TagControl.Header>
-                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="IDENTITY" />
-                            </controls:TagControl.Header>
-                            <TextBlock Text="{x:Bind ViewModel.Model.Key,Mode=OneWay}" />
-                        </controls:TagControl>
-                        <controls:TagControl VerticalAlignment="Bottom">
-                            <controls:TagControl.Icon>
                                 <FontIcon Glyph="&#xE97C;" FontSize="30" />
                             </controls:TagControl.Icon>
                             <controls:TagControl.Header>
@@ -60,6 +51,15 @@
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="VERSION" />
                             </controls:TagControl.Header>
                             <TextBlock Text="{x:Bind ViewModel.Model.Inner.Metadata.Version,Mode=OneWay}" />
+                        </controls:TagControl>
+                        <controls:TagControl VerticalAlignment="Bottom">
+                            <controls:TagControl.Icon>
+                                <FontIcon Glyph="&#xE928;" FontSize="30" />
+                            </controls:TagControl.Icon>
+                            <controls:TagControl.Header>
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="IDENTITY" />
+                            </controls:TagControl.Header>
+                            <TextBlock Text="{x:Bind ViewModel.Model.Key,Mode=OneWay}" />
                         </controls:TagControl>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">

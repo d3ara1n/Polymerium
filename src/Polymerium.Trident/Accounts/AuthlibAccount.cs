@@ -7,7 +7,6 @@ namespace Polymerium.Trident.Accounts
     {
         public string Server { get; } = server;
         public string Identifier { get; } = identifier;
-        public string UserName { get; } = username;
         public string Username { get; } = username;
         public string AccessToken { get; } = accessToken;
         public string Uuid { get; } = uuid;

@@ -1,8 +1,10 @@
 ﻿using Polymerium.App.Extensions;
 using Polymerium.App.Models;
+using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Launching;
 using Polymerium.Trident.Services;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -14,6 +16,8 @@ namespace Polymerium.App.Services
         InstanceStatusService instanceStatusService,
         InstanceManager instanceManager,
         ProfileManager profileManager,
+        NotificationService notificationService,
+        AccountManager accountManager,
         TridentContext trident)
     {
         public bool CanManipulate(string key)
@@ -22,7 +26,7 @@ namespace Polymerium.App.Services
             return status is { State.Value: InstanceState.Idle or InstanceState.Stopped };
         }
 
-        public void Deploy(string key)
+        public void Deploy(string key, Action? onSuccess = null)
         {
             Profile? profile = profileManager.GetProfile(key);
             if (profile == null)
@@ -30,38 +34,63 @@ namespace Polymerium.App.Services
                 throw new KeyNotFoundException($"The key {key} is not found in managed profiles");
             }
 
-            instanceManager.Deploy(key, profile, null, null, App.Current.Token);
+            instanceManager.Deploy(key, profile, null, onSuccess, App.Current.Token);
         }
 
-        public void Launch(string key)
+        public void Launch(string key, Action? onSuccess = null)
         {
             Profile? profile = profileManager.GetProfile(key);
             if (profile == null)
             {
                 throw new KeyNotFoundException($"The key {key} is not found in managed profiles");
             }
-
-            instanceManager.Deploy(key, profile, null, () =>
-            {
-                LaunchOptionsBuilder builder = LaunchOptions.Builder();
-                builder
-                    .WithWindowSize(new Size((int)profile.GetOverriddenWindowWidth(),
-                        (int)profile.GetOverriddenWindowHeight()))
-                    .WithMaxMemory(profile.GetOverriddenJvmMaxMemory())
-                    .WithAdditionalArguments(profile.GetOverriddenJvmAdditionalArguments())
-                    .WithJavaHomeLocator(major =>
+            LaunchOptionsBuilder builder = LaunchOptions.Builder();
+            builder
+                .WithWindowSize(new Size((int)profile.GetOverriddenWindowWidth(),
+                    (int)profile.GetOverriddenWindowHeight()))
+                .WithMaxMemory(profile.GetOverriddenJvmMaxMemory())
+                .WithAdditionalArguments(profile.GetOverriddenJvmAdditionalArguments())
+                .WithJavaHomeLocator(major =>
+                {
+                    string home = profile.GetOverriddenJvmHome(major);
+                    if (!Directory.Exists(home))
                     {
-                        string home = profile.GetOverriddenJvmHome(major);
-                        if (!Directory.Exists(home))
-                        {
-                            throw new JavaNotFoundException(major);
-                        }
+                        throw new JavaNotFoundException(major);
+                    }
 
-                        return home;
-                    })
-                    .Managed();
-                instanceManager.Launch(key, profile, builder.Build(), null, App.Current.Token);
-            }, App.Current.Token);
+                    return home;
+                })
+                .Managed();
+            if (!string.IsNullOrEmpty(profile.AccountId) && accountManager.TryGetByUuid(profile.AccountId, out var account))
+            {
+                instanceManager.Launch(key, profile, account, builder.Build(), onSuccess, App.Current.Token);
+            }
+            else
+            {
+                throw new AccountNotFoundException();
+            }
+        }
+
+        public void LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(string key)
+        {
+            try
+            {
+                Deploy(key, () =>
+                {
+                    try
+                    {
+                        Launch(key);
+                    }
+                    catch (Exception e)
+                    {
+                        notificationService.PopError($"Launching aborted: {e.Message}");
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                notificationService.PopError($"Deploying aborted: {e.Message}");
+            }
         }
 
         public void Reset(string key)

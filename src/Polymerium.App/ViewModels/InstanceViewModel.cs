@@ -21,14 +21,16 @@ namespace Polymerium.App.ViewModels
         private readonly InstanceService _instanceService;
         private readonly InstanceStatusService _instanceStatusService;
         private readonly NavigationService _navigation;
+        private readonly NotificationService _notification;
         private readonly ProfileManager _profileManager;
         private readonly ThumbnailSaver _thumbnailSaver;
 
         private ProfileModel model = ProfileModel.DUMMY;
+        private AccountModel? account = null;
 
         public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context,
             ThumbnailSaver thumbnailSaver, InstanceManager instanceManager,
-            InstanceStatusService instanceStatusService, InstanceService instanceService)
+            InstanceStatusService instanceStatusService, InstanceService instanceService, NotificationService notification)
         {
             _profileManager = profileManager;
             _navigation = navigation;
@@ -37,6 +39,7 @@ namespace Polymerium.App.ViewModels
             _instanceManager = instanceManager;
             _instanceStatusService = instanceStatusService;
             _instanceService = instanceService;
+            _notification = notification;
 
             GotoMetadataViewCommand = new RelayCommand<string>(GotoMetadataView);
             GotoConfigurationViewCommand = new RelayCommand<string>(GotoConfigurationView);
@@ -52,6 +55,12 @@ namespace Polymerium.App.ViewModels
         {
             get => model;
             set => SetProperty(ref model, value);
+        }
+
+        public AccountModel? Account
+        {
+            get => account;
+            set => SetProperty(ref account, value);
         }
 
         public ICommand GotoMetadataViewCommand { get; }
@@ -157,7 +166,7 @@ namespace Polymerium.App.ViewModels
 
         private void Play()
         {
-            _instanceService.Launch(Model.Key);
+            _instanceService.LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(Model.Key);
         }
 
         private void Stop()

@@ -24,6 +24,26 @@ namespace Polymerium.App.Modals
         public static readonly DependencyProperty UserCodeProperty =
             DependencyProperty.Register(nameof(UserCode), typeof(string), typeof(MicrosoftAccountWizardModal),
                 new PropertyMetadata(string.Empty));
+        public string Username
+        {
+            get { return (string)GetValue(UsernameProperty); }
+            set { SetValue(UsernameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Username.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty UsernameProperty =
+            DependencyProperty.Register(nameof(Username), typeof(string), typeof(MicrosoftAccountWizardModal), new PropertyMetadata(string.Empty));
+
+        public string FaceUrl
+        {
+            get { return (string)GetValue(FaceUrlProperty); }
+            set { SetValue(FaceUrlProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FaceUrl.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FaceUrlProperty =
+            DependencyProperty.Register(nameof(FaceUrl), typeof(string), typeof(MicrosoftAccountWizardModal), new PropertyMetadata(string.Empty));
+
 
         private readonly AccountManager _accountManager;
         private readonly IHttpClientFactory _clientFactory;
@@ -33,6 +53,7 @@ namespace Polymerium.App.Modals
 
         private string deviceCode = string.Empty;
         private string verificationUrl = string.Empty;
+        private MicrosoftAccount? result;
 
         public MicrosoftAccountWizardModal(IHttpClientFactory clientFactory, AccountManager accountManager)
         {
@@ -61,14 +82,20 @@ namespace Polymerium.App.Modals
             {
                 try
                 {
-                    MicrosoftAccount account = await MicrosoftAccount.LoginAsync(_clientFactory, (user, uri) =>
+                    result = await MicrosoftAccount.LoginAsync(_clientFactory, (user, uri) =>
                         DispatcherQueue.TryEnqueue(() =>
                         {
                             verificationUrl = uri?.AbsoluteUri ?? "https://aka.ms/devicecode";
                             UserCode = user;
                             VisualStateManager.GoToState(this, "Linking", true);
                         }), source.Token);
-                    _accountManager.Append(account);
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        // TODO: set AccountModel, ask for finish, then _accountManager.Append(account);
+                        FaceUrl = $"https://starlightskins.lunareclipse.studio/render/pixel/{result.Uuid}/face";
+                        Username = result.Username;
+                        VisualStateManager.GoToState(this, "Shown", true);
+                    });
                 }
                 catch (Exception e)
                 {
@@ -96,6 +123,13 @@ namespace Polymerium.App.Modals
         private void ModalBase_Unloaded(object sender, RoutedEventArgs e)
         {
             source.Cancel();
+        }
+
+        private void FinishButton_Click(object sender, RoutedEventArgs e)
+        {
+            ArgumentNullException.ThrowIfNull(result);
+            _accountManager.Append(result);
+            DismissCommand.Execute(null);
         }
     }
 }

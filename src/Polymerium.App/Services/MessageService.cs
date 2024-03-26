@@ -52,7 +52,7 @@ namespace Polymerium.App.Services
                     WeakReferenceMessenger.Default.Send(new AccountAddedMessage(args.Account));
                     break;
                 case AccountCollectionChangedAction.Remove:
-                    WeakReferenceMessenger.Default.Send(new AccountAddedMessage(args.Account));
+                    WeakReferenceMessenger.Default.Send(new AccountRemovedMessage(args.Account));
                     break;
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace Polymerium.Trident.Launching
+﻿namespace Polymerium.Trident.Exceptions
 {
     public class JavaNotFoundException : Exception
     {

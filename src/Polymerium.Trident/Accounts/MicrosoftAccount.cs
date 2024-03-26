@@ -20,12 +20,13 @@ namespace Polymerium.Trident.Accounts
 
         public ValueTask<bool> RefreshAsync()
         {
-            throw new NotImplementedException();
+            // TODO: MUST FIX
+            return ValueTask.FromResult(true);
         }
 
         public ValueTask<bool> ValidateAsync()
         {
-            throw new NotImplementedException();
+            return ValueTask.FromResult(true);
         }
 
         public static async Task<MicrosoftAccount> LoginAsync(IHttpClientFactory factory,

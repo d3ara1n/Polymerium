@@ -57,7 +57,7 @@ namespace Polymerium.Trident.Services
             return tracker;
         }
 
-        public LaunchTracker Launch(string key, Profile profile, LaunchOptions options, Action? onSuccess = null,
+        public LaunchTracker Launch(string key, Profile profile, IAccount account, LaunchOptions options, Action? onSuccess = null,
             CancellationToken cancellationToken = default)
         {
             if (IsInUse(key))
@@ -65,7 +65,7 @@ namespace Polymerium.Trident.Services
                 throw new InvalidOperationException($"The instance is present in the tracking list: {key}");
             }
 
-            LaunchTracker tracker = new(key, async x => await LaunchInternalAsync(x, profile, options), x =>
+            LaunchTracker tracker = new(key, async x => await LaunchInternalAsync(x, profile, account, options), x =>
             {
                 trackers.Remove(x.Key);
                 if (x.State == TaskState.Finished)
@@ -136,12 +136,18 @@ namespace Polymerium.Trident.Services
             }
         }
 
-        private async Task LaunchInternalAsync(TrackerBase tracker, Profile profile, LaunchOptions options)
+        private async Task LaunchInternalAsync(TrackerBase tracker, Profile profile, IAccount account, LaunchOptions options)
         {
             if (tracker is LaunchTracker handle)
             {
                 logger.LogInformation("Begin launch task for {key}", handle.Key);
                 DateTimeOffset beginTime = DateTimeOffset.Now;
+                // Account
+                if (!await account.ValidateAsync() && !await account.RefreshAsync())
+                {
+                    throw new AccountExpiredException();
+                }
+                // Ignite
                 string artifactPath = trident.InstanceArtifactPath(tracker.Key);
                 bool found = false;
                 if (File.Exists(artifactPath))
@@ -180,10 +186,10 @@ namespace Polymerium.Trident.Services
                                 .SetOsName(PlatformHelper.GetOsName())
                                 .SetOsArch(PlatformHelper.GetOsArch())
                                 .SetOsVersion(PlatformHelper.GetOsVersion())
-                                .SetUserUuid("49aac8fc-2c3d-3430-9777-92b0bf8dec85")
-                                .SetUserType("legacy")
-                                .SetUserName("Stewie")
-                                .SetUserAccessToken("invalid")
+                                .SetUserUuid(account.Uuid)
+                                .SetUserType(account.UserType)
+                                .SetUserName(account.Username)
+                                .SetUserAccessToken(account.AccessToken)
                                 .SetVersionName(profile.Metadata.Version)
                                 .SetWindowSize(options.WindowSize)
                                 .SetMaxMemory(options.MaxMemory)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Accounts;
 using Polymerium.Trident.Services.Accounts;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 using Trident.Abstractions;
@@ -24,6 +25,9 @@ namespace Polymerium.Trident.Services
             Scan();
         }
 
+        private string? defaultUuid;
+        public string? DefaultUuid { get => defaultUuid; set => defaultUuid = value; }
+
         public IList<IAccount> Managed { get; } = new List<IAccount>();
 
         public void Dispose()
@@ -46,14 +50,16 @@ namespace Polymerium.Trident.Services
                 try
                 {
                     string content = File.ReadAllText(path);
-                    List<AccountEntry>? list = JsonSerializer.Deserialize<List<AccountEntry>>(content, _options);
-                    foreach (AccountEntry entry in list ?? Enumerable.Empty<AccountEntry>())
+                    AccountVault? vault = JsonSerializer.Deserialize<AccountVault>(content, _options);
+                    defaultUuid = vault?.Default;
+                    foreach (AccountEntry entry in vault?.Entries ?? Enumerable.Empty<AccountEntry>())
                     {
                         string unmasked = Encoding.UTF8.GetString(entry.Opaque);
                         IAccount? account = JsonSerializer.Deserialize(unmasked, entry.Type switch
                         {
                             nameof(MicrosoftAccount) => typeof(MicrosoftAccount),
                             nameof(AuthlibAccount) => typeof(AuthlibAccount),
+                            nameof(FamilyAccount) => typeof(FamilyAccount),
                             _ => throw new NotSupportedException($"The type of account is not supported: {entry.Type}")
                         }, _options) as IAccount;
                         ArgumentNullException.ThrowIfNull(account);
@@ -86,7 +92,7 @@ namespace Polymerium.Trident.Services
                     list.Add(new AccountEntry(account.GetType().Name, masked));
                 }
 
-                string content = JsonSerializer.Serialize(list, _options);
+                string content = JsonSerializer.Serialize(new AccountVault(defaultUuid, list), _options);
                 File.WriteAllText(path, content);
             }
             catch (Exception e)
@@ -98,6 +104,8 @@ namespace Polymerium.Trident.Services
         public void Append(IAccount account)
         {
             Managed.Add(account);
+            if (string.IsNullOrEmpty(defaultUuid))
+                DefaultUuid = account.Uuid;
             AccountCollectionChanged?.Invoke(this,
                 new AccountCollectionChangedEventArgs(AccountCollectionChangedAction.Add, account));
         }
@@ -111,6 +119,18 @@ namespace Polymerium.Trident.Services
                 AccountCollectionChanged?.Invoke(this,
                     new AccountCollectionChangedEventArgs(AccountCollectionChangedAction.Remove, found));
             }
+        }
+
+        public bool TryGetByUuid(string uuid, [MaybeNullWhen(false)] out IAccount result)
+        {
+            var found = Managed.FirstOrDefault(x => x.Uuid == uuid);
+            if (found != null)
+            {
+                result = found;
+                return true;
+            }
+            result = null;
+            return false;
         }
     }
 }
