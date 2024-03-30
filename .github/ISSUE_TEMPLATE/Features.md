@@ -1,5 +1,5 @@
 ---
-name: 功能请求
+name: 功能请求 Feature request
 about: Suggest an idea for this project
 title: "[Feature]"
 labels: enhancement
