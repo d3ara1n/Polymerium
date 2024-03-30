@@ -23,5 +23,10 @@ namespace Polymerium.App.Models
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public static Bindable<TOwner, TValue> CreateDummy(TOwner owner, TValue value)
+        {
+            return new Bindable<TOwner, TValue>(owner, _ => value, (_, _) => { });
+        }
     }
 }

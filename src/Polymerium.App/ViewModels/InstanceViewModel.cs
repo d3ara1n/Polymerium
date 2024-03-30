@@ -6,7 +6,9 @@ using Polymerium.App.Views;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
@@ -24,13 +26,17 @@ namespace Polymerium.App.ViewModels
         private readonly NotificationService _notification;
         private readonly ProfileManager _profileManager;
         private readonly ThumbnailSaver _thumbnailSaver;
+        private readonly AccountManager _accountManager;
 
-        private ProfileModel model = ProfileModel.DUMMY;
+        private readonly Bindable<AccountManager, string?> defaultUuid;
+
+        private ProfileModel profile = ProfileModel.DUMMY;
         private AccountModel? account = null;
 
         public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context,
             ThumbnailSaver thumbnailSaver, InstanceManager instanceManager,
-            InstanceStatusService instanceStatusService, InstanceService instanceService, NotificationService notification)
+            InstanceStatusService instanceStatusService, InstanceService instanceService,
+            NotificationService notification, AccountManager accountManager)
         {
             _profileManager = profileManager;
             _navigation = navigation;
@@ -40,6 +46,10 @@ namespace Polymerium.App.ViewModels
             _instanceStatusService = instanceStatusService;
             _instanceService = instanceService;
             _notification = notification;
+            _accountManager = accountManager;
+
+            // NOTE: 在 InstanceViewModel 生命周期内，accountManager.DefaultUuid 不应该被修改。因此此处改成 Dummy 对象。
+            defaultUuid = Bindable<AccountManager, string?>.CreateDummy(_accountManager, null);
 
             GotoMetadataViewCommand = new RelayCommand<string>(GotoMetadataView);
             GotoConfigurationViewCommand = new RelayCommand<string>(GotoConfigurationView);
@@ -51,10 +61,10 @@ namespace Polymerium.App.ViewModels
             GotoDashboardViewCommand = new RelayCommand(GotoDashboardView);
         }
 
-        public ProfileModel Model
+        public ProfileModel Profile
         {
-            get => model;
-            set => SetProperty(ref model, value);
+            get => profile;
+            set => SetProperty(ref profile, value);
         }
 
         public AccountModel? Account
@@ -76,14 +86,18 @@ namespace Polymerium.App.ViewModels
         {
             if (maybeKey is string key)
             {
-                Profile? profile = _profileManager.GetProfile(key);
-                if (profile != null)
+                Profile? got = _profileManager.GetProfile(key);
+                if (got != null)
                 {
-                    Model = new ProfileModel(key, profile, _thumbnailSaver.Get(key),
+                    Profile = new ProfileModel(key, got, _thumbnailSaver.Get(key),
                         _instanceStatusService.MustHave(key));
+                    if (got.AccountId != null && _accountManager.TryGetByUuid(got.AccountId, out var result))
+                    {
+                        Account = new AccountModel(result, defaultUuid, DummyCommand.Instance, DummyCommand.Instance);
+                    }
                 }
 
-                return profile != null;
+                return got != null;
             }
 
             return false;
@@ -91,9 +105,9 @@ namespace Polymerium.App.ViewModels
 
         public override void OnDetached()
         {
-            if (Model.Key != ProfileManager.DUMMY_KEY)
+            if (Profile.Key != ProfileManager.DUMMY_KEY)
             {
-                _profileManager.Flush(Model.Key);
+                _profileManager.Flush(Profile.Key);
             }
         }
 
@@ -117,7 +131,7 @@ namespace Polymerium.App.ViewModels
 
         private string GetHomeFolderPath()
         {
-            return _context.InstanceHomePath(Model.Key);
+            return _context.InstanceHomePath(Profile.Key);
         }
 
         private string GetAssetFolderPath(AssetKind kind)
@@ -148,7 +162,7 @@ namespace Polymerium.App.ViewModels
 
         public void AddTodo(string text)
         {
-            Model.Todos.Add(new TodoModel(new Profile.RecordData.Todo(false, text)));
+            Profile.Todos.Add(new TodoModel(new Profile.RecordData.Todo(false, text)));
         }
 
         private bool CanDeleteTodo(TodoModel? item)
@@ -160,18 +174,19 @@ namespace Polymerium.App.ViewModels
         {
             if (item != null)
             {
-                Model.Todos.Remove(item);
+                Profile.Todos.Remove(item);
             }
         }
 
         private void Play()
         {
-            _instanceService.LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(Model.Key);
+            _instanceService.LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(
+                Profile.Key);
         }
 
         private void Stop()
         {
-            if (_instanceManager.IsTracking(Model.Key, out TrackerBase? tracker))
+            if (_instanceManager.IsTracking(Profile.Key, out TrackerBase? tracker))
             {
                 switch (tracker)
                 {
@@ -186,8 +201,20 @@ namespace Polymerium.App.ViewModels
 
         private void GotoDashboardView()
         {
-            _navigation.Navigate(typeof(DashboardView), Model.Key,
+            _navigation.Navigate(typeof(DashboardView), Profile.Key,
                 new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
+        }
+
+        public IList<AccountModel> GetAccountCandidates()
+        {
+            return _accountManager.Managed.Select(x =>
+                new AccountModel(x, defaultUuid, DummyCommand.Instance, DummyCommand.Instance)).ToList();
+        }
+
+        public void SwitchAccountTo(AccountModel model)
+        {
+            Profile.Inner.AccountId = model.Inner.Uuid;
+            Account = model;
         }
     }
 }

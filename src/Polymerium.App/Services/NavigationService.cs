@@ -11,19 +11,19 @@ namespace Polymerium.App.Services
     {
         private Action<Type, object?, NavigationTransitionInfo?, bool>? handler;
 
-        public IEnumerable<NavItem> MainNavMenu = new NavItem[]
-        {
+        public IEnumerable<NavItem> MainNavMenu =
+        [
             new("Home", "/Assets/Icons/House.svg", typeof(HomeView)),
             new("Instances", "/Assets/Icons/Package.svg", typeof(DesktopView)),
             new("Accounts", "/Assets/Icons/Japanese dolls.svg", typeof(AccountView)),
             new("Market", "/Assets/Icons/Shopping bags.svg", typeof(MarketView))
-        };
+        ];
 
-        public IEnumerable<NavItem> SideNavMenu = new NavItem[]
-        {
-            new("Toolbox", "/Assets/Icons/Toolbox.svg", typeof(ToolboxView)),
+        public IEnumerable<NavItem> SideNavMenu =
+        [
+            //new("Toolbox", "/Assets/Icons/Toolbox.svg", typeof(ToolboxView)),
             new("Settings", "/Assets/Icons/Gear.svg", typeof(SettingView))
-        };
+        ];
 
         public void SetHandler(Action<Type, object?, NavigationTransitionInfo?, bool> action)
         {

@@ -19,6 +19,7 @@ namespace Polymerium.Trident.Services
             new Dictionary<string, object>(), null);
 
         private readonly TridentContext _context;
+        private readonly AccountManager _accountManager;
         private readonly ILogger _logger;
         private readonly JsonSerializerOptions _options;
 
@@ -26,11 +27,12 @@ namespace Polymerium.Trident.Services
 
         private bool disposedValue;
 
-        public ProfileManager(ILogger<ProfileManager> logger, TridentContext context, JsonSerializerOptions options)
+        public ProfileManager(ILogger<ProfileManager> logger, TridentContext context, JsonSerializerOptions options, AccountManager accountManager)
         {
             _logger = logger;
             _context = context;
             _options = options;
+            _accountManager = accountManager;
 
             Scan();
         }
@@ -90,7 +92,7 @@ namespace Polymerium.Trident.Services
                         new(true, reference, Profile.RecordData.TimelinePoint.TimelimeAction.Create,
                             now, now)
                     }, new List<Profile.RecordData.Todo>(), string.Empty), metadata, new Dictionary<string, object>(),
-                null);
+                _accountManager.DefaultUuid);
             Managed.Add(key.Key,
                 new Handle<Profile>(profile, Path.Combine(_context.InstanceDir, $"{key.Key}.json"), _options));
             if (!key.Disposed)

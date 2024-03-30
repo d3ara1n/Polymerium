@@ -23,10 +23,11 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Spacing="{StaticResource SmallGap}">
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                    <toolkit:ImageEx Source="{x:Bind ViewModel.Model.Thumbnail,Mode=OneWay}" Width="64" Stretch="Fill"
+                    <toolkit:ImageEx Source="{x:Bind ViewModel.Profile.Thumbnail,Mode=OneWay}" Width="64"
+                                     Stretch="Fill"
                                      CornerRadius="{StaticResource TinyCornerRadius}" />
                     <TextBlock Style="{StaticResource HeaderTextBlockStyle}"
-                               Text="{x:Bind ViewModel.Model.Inner.Name,Mode=OneWay}" TextTrimming="WordEllipsis" />
+                               Text="{x:Bind ViewModel.Profile.Inner.Name,Mode=OneWay}" TextTrimming="WordEllipsis" />
                 </StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -41,7 +42,7 @@
                             <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TYPE" />
                             </controls:TagControl.Header>
-                            <TextBlock Text="{x:Bind ViewModel.Model.Type,Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.Profile.Type,Mode=OneWay}" />
                         </controls:TagControl>
                         <controls:TagControl VerticalAlignment="Bottom">
                             <controls:TagControl.Icon>
@@ -50,7 +51,7 @@
                             <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="VERSION" />
                             </controls:TagControl.Header>
-                            <TextBlock Text="{x:Bind ViewModel.Model.Inner.Metadata.Version,Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.Profile.Inner.Metadata.Version,Mode=OneWay}" />
                         </controls:TagControl>
                         <controls:TagControl VerticalAlignment="Bottom">
                             <controls:TagControl.Icon>
@@ -59,16 +60,16 @@
                             <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="IDENTITY" />
                             </controls:TagControl.Header>
-                            <TextBlock Text="{x:Bind ViewModel.Model.Key,Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.Profile.Key,Mode=OneWay}" />
                         </controls:TagControl>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                         <HyperlinkButton Command="{x:Bind ViewModel.GotoMetadataViewCommand}"
-                                         CommandParameter="{x:Bind ViewModel.Model.Key,Mode=OneWay}">
+                                         CommandParameter="{x:Bind ViewModel.Profile.Key,Mode=OneWay}">
                             <FontIcon Glyph="&#xE932;" />
                         </HyperlinkButton>
                         <HyperlinkButton Command="{x:Bind ViewModel.GotoConfigurationViewCommand}"
-                                         CommandParameter="{x:Bind ViewModel.Model.Key,Mode=OneWay}">
+                                         CommandParameter="{x:Bind ViewModel.Profile.Key,Mode=OneWay}">
                             <FontIcon Glyph="&#xE713;" />
                         </HyperlinkButton>
                     </StackPanel>
@@ -144,7 +145,7 @@
                                     </StackPanel>
                                 </toolkit:DockPanel>
                                 <ListView Grid.Row="1" x:Name="TodoList"
-                                          ItemsSource="{x:Bind ViewModel.Model.Todos,Mode=OneWay}">
+                                          ItemsSource="{x:Bind ViewModel.Profile.Todos,Mode=OneWay}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:TodoModel">
                                             <StackPanel Orientation="Horizontal">
@@ -161,7 +162,7 @@
                             </Grid>
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                                         Spacing="{StaticResource TinyGap}"
-                                        Visibility="{x:Bind ViewModel.Model.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}">
+                                        Visibility="{x:Bind ViewModel.Profile.Todos.Count,Mode=OneWay,Converter={StaticResource ZeroToVisibilityConverter}}">
                                 <FontIcon Glyph="&#xE679;" FontSize="{StaticResource LargeGap}" />
                                 <TextBlock HorizontalAlignment="Center" Text="None"
                                            Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
@@ -174,7 +175,7 @@
                                 <FontIcon Glyph="&#xE70B;" FontSize="16" />
                                 <TextBlock Text="Note" />
                             </StackPanel>
-                            <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Model.Note,Mode=TwoWay}"
+                            <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Profile.Note,Mode=TwoWay}"
                                      TextWrapping="Wrap" PlaceholderText="Write something..." />
                         </StackPanel>
                     </Grid>
@@ -199,12 +200,12 @@
                         <StackPanel Spacing="{StaticResource SmallGap}">
                             <TextBlock Text="Statistics" Style="{StaticResource SubtitleTextBlockStyle}"
                                        HorizontalAlignment="Left" />
-                            <TextBlock Text="{x:Bind ViewModel.Model.PlayTime}" HorizontalAlignment="Center"
+                            <TextBlock Text="{x:Bind ViewModel.Profile.PlayTime}" HorizontalAlignment="Center"
                                        Style="{StaticResource SubheaderTextBlockStyle}" />
                             <TextBlock HorizontalAlignment="Right">
                                 <Run Text="Last played at:"
                                      Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                                <Run Text="{x:Bind ViewModel.Model.PlayedAt}" />
+                                <Run Text="{x:Bind ViewModel.Profile.PlayedAt}" />
                             </TextBlock>
                         </StackPanel>
                     </controls:Card>
@@ -212,23 +213,50 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1" Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
-            <HyperlinkButton HorizontalAlignment="Left" Margin="{StaticResource SmallMargin}">
-                <Grid ColumnSpacing="{StaticResource SmallGap}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <toolkit:ImageEx Grid.Column="0"
-                                     Source="https://starlightskins.lunareclipse.studio/render/pixel/Stewie/face"
-                                     Width="36" />
-                    <StackPanel Grid.Column="1">
-                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Stewie" />
-                        <TextBlock Text="Offline" />
-                    </StackPanel>
-                </Grid>
+            <HyperlinkButton x:Name="SwitchAccountButton" HorizontalAlignment="Left"
+                             Margin="{StaticResource SmallMargin}" Click="SwitchAccountButton_OnClick">
+                <toolkit:SwitchPresenter
+                    Value="{x:Bind ViewModel.Account,Mode=OneWay,Converter={StaticResource NotNullToBoolConverter}}">
+                    <toolkit:Case>
+                        <toolkit:Case.Value>
+                            <x:Boolean>False</x:Boolean>
+                        </toolkit:Case.Value>
+                        <Grid ColumnSpacing="{StaticResource SmallGap}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Grid.Column="0" Glyph="&#xE748;"
+                                      FontSize="36" />
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Account" />
+                                <TextBlock Text="Choose" />
+                            </StackPanel>
+                        </Grid>
+                    </toolkit:Case>
+                    <toolkit:Case>
+                        <toolkit:Case.Value>
+                            <x:Boolean>True</x:Boolean>
+                        </toolkit:Case.Value>
+                        <Grid ColumnSpacing="{StaticResource SmallGap}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0"
+                                             Source="{x:Bind ViewModel.Account.FaceUrl,Mode=OneWay,FallbackValue={x:Null}}"
+                                             Width="36" />
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                                           Text="{x:Bind ViewModel.Account.Inner.Username,Mode=OneWay,FallbackValue=Unknown}" />
+                                <TextBlock Text="{x:Bind ViewModel.Account.TypeName,Mode=OneWay,FallbackValue=N/A}" />
+                            </StackPanel>
+                        </Grid>
+                    </toolkit:Case>
+                </toolkit:SwitchPresenter>
             </HyperlinkButton>
             <toolkit:SwitchPresenter HorizontalAlignment="Right"
-                                     Value="{x:Bind ViewModel.Model.Status.State.Value,Mode=OneWay}"
+                                     Value="{x:Bind ViewModel.Profile.Status.State.Value,Mode=OneWay}"
                                      TargetType="models:InstanceState">
                 <toolkit:Case Value="Idle">
                     <Button Style="{StaticResource AccentButtonStyle}"
@@ -245,13 +273,13 @@
                                 Spacing="{StaticResource SmallGap}"
                                 Margin="{StaticResource SmallMargin}">
                         <StackPanel VerticalAlignment="Center" Spacing="{StaticResource TinyGap}">
-                            <TextBlock Text="{x:Bind ViewModel.Model.Status.StageText.Value,Mode=OneWay}"
+                            <TextBlock Text="{x:Bind ViewModel.Profile.Status.StageText.Value,Mode=OneWay}"
                                        HorizontalAlignment="Center" />
                             <ProgressBar Width="200"
                                          HorizontalAlignment="Center"
-                                         IsIndeterminate="{x:Bind ViewModel.Model.Status.Endless.Value,Mode=OneWay}"
-                                         Value="{x:Bind ViewModel.Model.Status.Count.Value,Mode=OneWay}"
-                                         Maximum="{x:Bind ViewModel.Model.Status.TotalCount.Value,Mode=OneWay}" />
+                                         IsIndeterminate="{x:Bind ViewModel.Profile.Status.Endless.Value,Mode=OneWay}"
+                                         Value="{x:Bind ViewModel.Profile.Status.Count.Value,Mode=OneWay}"
+                                         Maximum="{x:Bind ViewModel.Profile.Status.TotalCount.Value,Mode=OneWay}" />
                         </StackPanel>
                         <Button VerticalAlignment="Center" Command="{x:Bind ViewModel.StopCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">

@@ -4,7 +4,6 @@ using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 using Polymerium.Trident.Services.Extracting;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

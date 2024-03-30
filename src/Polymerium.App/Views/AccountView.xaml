@@ -45,9 +45,8 @@
                 <controls:DashBorder>
                     <StackPanel Orientation="Horizontal" Margin="{StaticResource MediumMargin}"
                                 HorizontalAlignment="Center" Spacing="{StaticResource MediumGap}">
-                        <FontIcon Glyph="&#xf007;" FontSize="48"
-                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                  Style="{StaticResource FontAwesomeRegularFontIconStyle}" />
+                        <FontIcon Glyph="&#xE8FA;" FontSize="36"
+                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
                         <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" />

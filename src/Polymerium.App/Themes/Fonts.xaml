@@ -4,9 +4,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <FontFamily x:Key="FontAwesomeRegularFontFamily">/Assets/Fonts/FontAwesome_6_Free_Regular400.otf#Font Awesome 6 Free</FontFamily>
-    <FontFamily x:Key="FontAwesomeSolidFontFamily">/Assets/Fonts/FontAwesome_6_Free_Solid900.otf#Font Awesome 6 Free Solid</FontFamily>
-    <FontFamily x:Key="FontAwesomeBrandsFontFamily">/Assets/Fonts/FontAwesome_6_Brands_Regular400.otf#Font Awesome 6 Brands</FontFamily>
+    <FontFamily x:Key="FontAwesomeRegularFontFamily">ms-appx:///Assets/Fonts/FontAwesome_6_Free_Regular400.otf#Font Awesome 6 Free</FontFamily>
+    <FontFamily x:Key="FontAwesomeSolidFontFamily">ms-appx:///Assets/Fonts/FontAwesome_6_Free_Solid900.otf#Font Awesome 6 Free Solid</FontFamily>
+    <FontFamily x:Key="FontAwesomeBrandsFontFamily">ms-appx:///Assets/Fonts/FontAwesome_6_Brands_Regular400.otf#Font Awesome 6 Brands</FontFamily>
 
 
 </ResourceDictionary>

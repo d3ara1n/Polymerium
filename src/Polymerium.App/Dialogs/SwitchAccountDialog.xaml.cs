@@ -1,0 +1,32 @@
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+
+using Microsoft.UI.Xaml;
+using Polymerium.App.Models;
+using System.Collections.Generic;
+
+namespace Polymerium.App.Dialogs
+{
+    public sealed partial class SwitchAccountDialog
+    {
+        public IList<AccountModel> Candidates { get; }
+
+        public static readonly DependencyProperty ResultProperty = DependencyProperty.Register(
+            nameof(Result), typeof(AccountModel), typeof(SwitchAccountDialog),
+            new PropertyMetadata(null));
+
+        public AccountModel? Result
+        {
+            get { return (AccountModel?)GetValue(ResultProperty); }
+            set { SetValue(ResultProperty, value); }
+        }
+
+        public SwitchAccountDialog(XamlRoot xamlRoot, IList<AccountModel> candidates)
+        {
+            XamlRoot = xamlRoot;
+            Candidates = candidates;
+
+            this.InitializeComponent();
+        }
+    }
+}

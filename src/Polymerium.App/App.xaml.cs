@@ -40,7 +40,7 @@ namespace Polymerium.App
             Provider = services.BuildServiceProvider();
         }
 
-        public static new App Current => (App)Application.Current;
+        public static App Current => (App)Application.Current;
 
         public IServiceProvider Provider { get; }
 

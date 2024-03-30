@@ -108,7 +108,7 @@ namespace Polymerium.App.ViewModels
             picker.FileTypeFilter.Add("*");
             picker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
             StorageFile? file = await picker.PickSingleFileAsync();
-            if (file.Path != null)
+            if (file?.Path != null)
             {
                 SetJavaInternal(file.Path, setter, propertyName);
             }

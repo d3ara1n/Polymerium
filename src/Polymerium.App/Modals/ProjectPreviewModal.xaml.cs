@@ -18,7 +18,7 @@ namespace Polymerium.App.Modals
 {
     public sealed partial class ProjectPreviewModal
     {
-        // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for Profile.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProjectProperty =
             DependencyProperty.Register(nameof(Project), typeof(ProjectModel), typeof(ProjectPreviewModal),
                 new PropertyMetadata(null));

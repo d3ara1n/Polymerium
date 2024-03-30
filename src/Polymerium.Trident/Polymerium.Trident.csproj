@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,10 +20,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Trident.Abstractions\Trident.Abstractions.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Services\Downloading\"/>
     </ItemGroup>
 
 </Project>
