@@ -9,24 +9,24 @@ namespace Polymerium.App.Dialogs
 {
     public sealed partial class SwitchAccountDialog
     {
-        public IList<AccountModel> Candidates { get; }
-
         public static readonly DependencyProperty ResultProperty = DependencyProperty.Register(
             nameof(Result), typeof(AccountModel), typeof(SwitchAccountDialog),
             new PropertyMetadata(null));
-
-        public AccountModel? Result
-        {
-            get { return (AccountModel?)GetValue(ResultProperty); }
-            set { SetValue(ResultProperty, value); }
-        }
 
         public SwitchAccountDialog(XamlRoot xamlRoot, IList<AccountModel> candidates)
         {
             XamlRoot = xamlRoot;
             Candidates = candidates;
 
-            this.InitializeComponent();
+            InitializeComponent();
+        }
+
+        public IList<AccountModel> Candidates { get; }
+
+        public AccountModel? Result
+        {
+            get => (AccountModel?)GetValue(ResultProperty);
+            set => SetValue(ResultProperty, value);
         }
     }
 }

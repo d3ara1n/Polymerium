@@ -13,10 +13,11 @@
 
     <Grid Margin="{StaticResource PageContentMargin}" RowSpacing="{StaticResource TinyGap}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:CardButton Grid.Row="0" CornerRadius="{StaticResource CardMediumCornerRadius}" Background="Transparent"
+        <controls:CardButton Grid.Row="0" CornerRadius="{StaticResource CardMediumCornerRadius}"
+                             Background="Transparent"
                              BorderBrush="Transparent" Padding="0">
             <controls:CardButton.Flyout>
                 <MenuFlyout Placement="Bottom">
@@ -29,10 +30,14 @@
                         <MenuFlyoutSubItem.Icon>
                             <FontIcon Glyph="&#xe533;" Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
                         </MenuFlyoutSubItem.Icon>
-                        <MenuFlyoutItem Text="Stewie" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}" CommandParameter="Stewie"/>
-                        <MenuFlyoutItem Text="Brian" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}" CommandParameter="Brian"/>
-                        <MenuFlyoutItem Text="Peter" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}" CommandParameter="Peter"/>
-                        <MenuFlyoutItem Text="Lois" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}" CommandParameter="Lois"/>
+                        <MenuFlyoutItem Text="Stewie" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}"
+                                        CommandParameter="Stewie" />
+                        <MenuFlyoutItem Text="Brian" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}"
+                                        CommandParameter="Brian" />
+                        <MenuFlyoutItem Text="Peter" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}"
+                                        CommandParameter="Peter" />
+                        <MenuFlyoutItem Text="Lois" Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}"
+                                        CommandParameter="Lois" />
                     </MenuFlyoutSubItem>
                     <MenuFlyoutItem Text="Authlib" Command="{x:Bind ViewModel.OpenAuthlibWizardCommand}">
                         <MenuFlyoutItem.Icon>
@@ -46,7 +51,7 @@
                     <StackPanel Orientation="Horizontal" Margin="{StaticResource MediumMargin}"
                                 HorizontalAlignment="Center" Spacing="{StaticResource MediumGap}">
                         <FontIcon Glyph="&#xE8FA;" FontSize="36"
-                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"/>
+                                  Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
                         <TextBlock Text="Add" Style="{StaticResource TitleTextBlockStyle}"
                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -70,12 +75,14 @@
                     <controls:CardButton CornerRadius="{StaticResource CardMediumCornerRadius}">
                         <controls:CardButton.ContextFlyout>
                             <MenuFlyout>
-                                <MenuFlyoutItem Text="Set as default" Command="{x:Bind SetAsDefaultCommand}" CommandParameter="{x:Bind}">
+                                <MenuFlyoutItem Text="Set as default" Command="{x:Bind SetAsDefaultCommand}"
+                                                CommandParameter="{x:Bind}">
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xE930;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem Text="Remove" Command="{x:Bind RemoveCommand}" CommandParameter="{x:Bind}"
+                                <MenuFlyoutItem Text="Remove" Command="{x:Bind RemoveCommand}"
+                                                CommandParameter="{x:Bind}"
                                                 Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}">
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xECC9;" />
@@ -107,7 +114,8 @@
                                 <FontIcon Grid.Column="1" Glyph="&#xf058;"
                                           Foreground="{ThemeResource SystemFillColorSuccessBrush}"
                                           FontSize="{StaticResource ButtonFontIconFontSize}"
-                                          Style="{StaticResource FontAwesomeSolidFontIconStyle}" Visibility="{x:Bind IsDefault.Value,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                          Style="{StaticResource FontAwesomeSolidFontIconStyle}"
+                                          Visibility="{x:Bind IsDefault.Value,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" />
                             </Grid>
                         </StackPanel>
                     </controls:CardButton>

@@ -10,18 +10,6 @@ namespace Polymerium.App.Models
 {
     public record AccountModel
     {
-        public IAccount Inner { get; }
-        public Color Color1 { get; }
-        public Color Color2 { get; }
-        public string TypeName { get; }
-        public string FaceUrl { get; }
-        public string SkinUrl { get; }
-
-        public Reactive<AccountManager, string?, bool> IsDefault { get; }
-
-        public ICommand SetAsDefaultCommand { get; }
-        public ICommand RemoveCommand { get; }
-
         public AccountModel(IAccount inner, Bindable<AccountManager, string?> defaultUuid, ICommand setAsDefault,
             ICommand remove)
         {
@@ -57,5 +45,17 @@ namespace Polymerium.App.Models
             RemoveCommand = remove;
             IsDefault = defaultUuid.ToReactive(x => Inner.Uuid == x);
         }
+
+        public IAccount Inner { get; }
+        public Color Color1 { get; }
+        public Color Color2 { get; }
+        public string TypeName { get; }
+        public string FaceUrl { get; }
+        public string SkinUrl { get; }
+
+        public Reactive<AccountManager, string?, bool> IsDefault { get; }
+
+        public ICommand SetAsDefaultCommand { get; }
+        public ICommand RemoveCommand { get; }
     }
 }

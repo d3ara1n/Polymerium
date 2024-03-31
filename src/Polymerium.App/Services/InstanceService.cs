@@ -44,6 +44,7 @@ namespace Polymerium.App.Services
             {
                 throw new KeyNotFoundException($"The key {key} is not found in managed profiles");
             }
+
             LaunchOptionsBuilder builder = LaunchOptions.Builder();
             builder
                 .WithWindowSize(new Size((int)profile.GetOverriddenWindowWidth(),
@@ -61,7 +62,8 @@ namespace Polymerium.App.Services
                     return home;
                 })
                 .Managed();
-            if (!string.IsNullOrEmpty(profile.AccountId) && accountManager.TryGetByUuid(profile.AccountId, out var account))
+            if (!string.IsNullOrEmpty(profile.AccountId) &&
+                accountManager.TryGetByUuid(profile.AccountId, out IAccount? account))
             {
                 instanceManager.Launch(key, profile, account, builder.Build(), onSuccess, App.Current.Token);
             }

@@ -44,7 +44,8 @@
                                  Square310x310Logo="Images\LargeTile.png"/>
                 <uap:SplashScreen Image="Images\SplashScreen.png"/>
                 <uap:InitialRotationPreference>
-                    <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
+                    <uap:Rotation Preference="landscape"/>
+                </uap:InitialRotationPreference>
             </uap:VisualElements>
         </Application>
     </Applications>

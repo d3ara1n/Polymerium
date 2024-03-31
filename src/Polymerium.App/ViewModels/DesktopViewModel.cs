@@ -127,7 +127,8 @@ namespace Polymerium.App.ViewModels
         {
             if (entry != null)
             {
-                _instanceService.LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(entry.Key);
+                _instanceService.LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(
+                    entry.Key);
             }
         }
 

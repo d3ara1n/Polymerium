@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.ViewModels;
 
@@ -18,12 +19,12 @@ namespace Polymerium.App.Views
 
         public AccountViewModel ViewModel { get; } = App.ViewModel<AccountViewModel>();
 
-        private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.OnAttached(null);
         }
 
-        private void Page_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             ViewModel.OnDetached();
         }

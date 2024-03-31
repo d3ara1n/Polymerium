@@ -18,6 +18,7 @@ namespace Polymerium.App.ViewModels
 {
     public class InstanceViewModel : ViewModelBase
     {
+        private readonly AccountManager _accountManager;
         private readonly TridentContext _context;
         private readonly InstanceManager _instanceManager;
         private readonly InstanceService _instanceService;
@@ -26,12 +27,11 @@ namespace Polymerium.App.ViewModels
         private readonly NotificationService _notification;
         private readonly ProfileManager _profileManager;
         private readonly ThumbnailSaver _thumbnailSaver;
-        private readonly AccountManager _accountManager;
 
         private readonly Bindable<AccountManager, string?> defaultUuid;
+        private AccountModel? account;
 
         private ProfileModel profile = ProfileModel.DUMMY;
-        private AccountModel? account = null;
 
         public InstanceViewModel(ProfileManager profileManager, NavigationService navigation, TridentContext context,
             ThumbnailSaver thumbnailSaver, InstanceManager instanceManager,
@@ -91,7 +91,7 @@ namespace Polymerium.App.ViewModels
                 {
                     Profile = new ProfileModel(key, got, _thumbnailSaver.Get(key),
                         _instanceStatusService.MustHave(key));
-                    if (got.AccountId != null && _accountManager.TryGetByUuid(got.AccountId, out var result))
+                    if (got.AccountId != null && _accountManager.TryGetByUuid(got.AccountId, out IAccount? result))
                     {
                         Account = new AccountModel(result, defaultUuid, DummyCommand.Instance, DummyCommand.Instance);
                     }

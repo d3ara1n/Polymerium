@@ -64,9 +64,12 @@ namespace Trident.Abstractions.Building
 
         public ArtifactBuilder AddLibrary(Artifact.Library library)
         {
-            var found = Libraries.Any(x => x == library);
+            bool found = Libraries.Any(x => x == library);
             if (!found)
+            {
                 Libraries.Add(library);
+            }
+
             return this;
         }
 

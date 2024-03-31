@@ -24,25 +24,16 @@ namespace Polymerium.App.Modals
         public static readonly DependencyProperty UserCodeProperty =
             DependencyProperty.Register(nameof(UserCode), typeof(string), typeof(MicrosoftAccountWizardModal),
                 new PropertyMetadata(string.Empty));
-        public string Username
-        {
-            get { return (string)GetValue(UsernameProperty); }
-            set { SetValue(UsernameProperty, value); }
-        }
 
         // Using a DependencyProperty as the backing store for Username.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty UsernameProperty =
-            DependencyProperty.Register(nameof(Username), typeof(string), typeof(MicrosoftAccountWizardModal), new PropertyMetadata(string.Empty));
-
-        public string FaceUrl
-        {
-            get { return (string)GetValue(FaceUrlProperty); }
-            set { SetValue(FaceUrlProperty, value); }
-        }
+            DependencyProperty.Register(nameof(Username), typeof(string), typeof(MicrosoftAccountWizardModal),
+                new PropertyMetadata(string.Empty));
 
         // Using a DependencyProperty as the backing store for FaceUrl.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FaceUrlProperty =
-            DependencyProperty.Register(nameof(FaceUrl), typeof(string), typeof(MicrosoftAccountWizardModal), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(FaceUrl), typeof(string), typeof(MicrosoftAccountWizardModal),
+                new PropertyMetadata(string.Empty));
 
 
         private readonly AccountManager _accountManager;
@@ -52,8 +43,8 @@ namespace Polymerium.App.Modals
             CancellationTokenSource.CreateLinkedTokenSource(App.Current.Token);
 
         private string deviceCode = string.Empty;
-        private string verificationUrl = string.Empty;
         private MicrosoftAccount? result;
+        private string verificationUrl = string.Empty;
 
         public MicrosoftAccountWizardModal(IHttpClientFactory clientFactory, AccountManager accountManager)
         {
@@ -61,6 +52,18 @@ namespace Polymerium.App.Modals
             _accountManager = accountManager;
 
             InitializeComponent();
+        }
+
+        public string Username
+        {
+            get => (string)GetValue(UsernameProperty);
+            set => SetValue(UsernameProperty, value);
+        }
+
+        public string FaceUrl
+        {
+            get => (string)GetValue(FaceUrlProperty);
+            set => SetValue(FaceUrlProperty, value);
         }
 
         public string FailureMessage

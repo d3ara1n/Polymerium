@@ -39,8 +39,7 @@ namespace Polymerium.App.Views
         {
             DragDropInputDialog inputDialog = new(XamlRoot)
             {
-                CaptionText = "Drag and drop",
-                BodyText = "Any modpack file here"
+                CaptionText = "Drag and drop", BodyText = "Any modpack file here"
             };
             if (await inputDialog.ShowAsync() == ContentDialogResult.Primary)
             {

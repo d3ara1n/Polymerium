@@ -30,11 +30,11 @@ namespace Polymerium.App.ViewModels
             _repositoryAgent = repositoryAgent;
             _navigation = navigation;
             Repositories = repositoryAgent.Repositories.Select(x => new RepositoryModel(x.Label, x.Label switch
-            {
-                RepositoryLabels.CURSEFORGE => AssetPath.HEADER_CURSEFORGE,
-                RepositoryLabels.MODRINTH => AssetPath.HEADER_MODRINTH,
-                _ => throw new NotImplementedException()
-            }
+                    {
+                        RepositoryLabels.CURSEFORGE => AssetPath.HEADER_CURSEFORGE,
+                        RepositoryLabels.MODRINTH => AssetPath.HEADER_MODRINTH,
+                        _ => throw new NotImplementedException()
+                    }
                 )
             );
             GotoModpackViewCommand = new RelayCommand<ExhibitModel>(GotoModpackView);

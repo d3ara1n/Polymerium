@@ -81,13 +81,15 @@
             </StackPanel>
             <!-- Shown -->
             <StackPanel x:Name="ProfileBox" Visibility="Collapsed" Spacing="{StaticResource SmallGap}">
-                <toolkit:ImageEx Width="64" Height="64" Source="{x:Bind FaceUrl,Mode=OneWay}" HorizontalAlignment="Center"/>
-                <TextBlock Text="{x:Bind Username,Mode=OneWay}" HorizontalAlignment="Center"/>
+                <toolkit:ImageEx Width="64" Height="64" Source="{x:Bind FaceUrl,Mode=OneWay}"
+                                 HorizontalAlignment="Center" />
+                <TextBlock Text="{x:Bind Username,Mode=OneWay}" HorizontalAlignment="Center" />
             </StackPanel>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="{StaticResource SmallGap}"
                     HorizontalAlignment="Right">
-            <Button x:Name="FinishButton" IsEnabled="False" Style="{StaticResource AccentButtonStyle}" Click="FinishButton_Click">
+            <Button x:Name="FinishButton" IsEnabled="False" Style="{StaticResource AccentButtonStyle}"
+                    Click="FinishButton_Click">
                 <TextBlock Text="Finish" />
             </Button>
             <Button Command="{x:Bind DismissCommand}">

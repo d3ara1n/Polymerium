@@ -57,7 +57,8 @@ namespace Polymerium.Trident.Services
             return tracker;
         }
 
-        public LaunchTracker Launch(string key, Profile profile, IAccount account, LaunchOptions options, Action? onSuccess = null,
+        public LaunchTracker Launch(string key, Profile profile, IAccount account, LaunchOptions options,
+            Action? onSuccess = null,
             CancellationToken cancellationToken = default)
         {
             if (IsInUse(key))
@@ -136,7 +137,8 @@ namespace Polymerium.Trident.Services
             }
         }
 
-        private async Task LaunchInternalAsync(TrackerBase tracker, Profile profile, IAccount account, LaunchOptions options)
+        private async Task LaunchInternalAsync(TrackerBase tracker, Profile profile, IAccount account,
+            LaunchOptions options)
         {
             if (tracker is LaunchTracker handle)
             {
@@ -147,6 +149,7 @@ namespace Polymerium.Trident.Services
                 {
                     throw new AccountExpiredException();
                 }
+
                 // Ignite
                 string artifactPath = trident.InstanceArtifactPath(tracker.Key);
                 bool found = false;

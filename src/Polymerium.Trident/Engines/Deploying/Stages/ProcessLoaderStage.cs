@@ -25,7 +25,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                         break;
 
                     case Loader.COMPONENT_FORGE:
-                        await InstallForgeAsync(builder,PrismLauncherHelper.UID_FORGE, loader.Version);
+                        await InstallForgeAsync(builder, PrismLauncherHelper.UID_FORGE, loader.Version);
                         break;
 
                     case Loader.COMPONENT_NEOFORGE:

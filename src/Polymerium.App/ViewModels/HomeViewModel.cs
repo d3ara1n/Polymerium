@@ -42,7 +42,7 @@ namespace Polymerium.App.ViewModels
         private void GotoInstanceView(string? key)
         {
             if (key != null)
-            // 使用主要页面 DesktopView 来向下跳转到 InstanceView
+                // 使用主要页面 DesktopView 来向下跳转到 InstanceView
             {
                 _navigationService.Navigate(typeof(InstanceView), key);
             }

@@ -38,7 +38,7 @@ namespace Polymerium.App.Views
 
         private async void AddTodoButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new InputDialog(XamlRoot) { Message = "Describe your task or memo" };
+            InputDialog dialog = new InputDialog(XamlRoot) { Message = "Describe your task or memo" };
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             {
                 ViewModel.AddTodo(dialog.Result);
@@ -47,7 +47,8 @@ namespace Polymerium.App.Views
 
         private async void SwitchAccountButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new SwitchAccountDialog(XamlRoot, new List<AccountModel>(ViewModel.GetAccountCandidates()));
+            SwitchAccountDialog dialog =
+                new SwitchAccountDialog(XamlRoot, new List<AccountModel>(ViewModel.GetAccountCandidates()));
             if (await dialog.ShowAsync() == ContentDialogResult.Primary && dialog.Result != null)
             {
                 ViewModel.SwitchAccountTo(dialog.Result);

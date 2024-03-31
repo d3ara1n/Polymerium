@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Polymerium.App.Models;
-
-public class DummyCommand : ICommand
+namespace Polymerium.App.Models
 {
-    public static DummyCommand Instance { get; } = new();
-    public bool CanExecute(object? parameter)
+    public class DummyCommand : ICommand
     {
-        return true;
-    }
+        public static DummyCommand Instance { get; } = new();
 
-    public void Execute(object? parameter)
-    {
-        // do nothing
-    }
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
 
-    public event EventHandler? CanExecuteChanged;
+        public void Execute(object? parameter)
+        {
+            // do nothing
+        }
+
+        public event EventHandler? CanExecuteChanged;
+    }
 }

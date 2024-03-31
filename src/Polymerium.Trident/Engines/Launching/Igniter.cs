@@ -61,8 +61,7 @@ namespace Polymerium.Trident.Engines.Launching
             };
             ProcessStartInfo start = new(Executable!)
             {
-                WorkingDirectory = WorkingDirectory!,
-                UseShellExecute = IsDebug
+                WorkingDirectory = WorkingDirectory!, UseShellExecute = IsDebug
             };
             foreach (string argument in JvmArguments.Where(x => !string.IsNullOrEmpty(x)))
             {

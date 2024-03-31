@@ -16,7 +16,8 @@ using System.Windows.Input;
 
 namespace Polymerium.App.ViewModels
 {
-    public class AccountViewModel : RecipientViewModelBase, IRecipient<AccountAddedMessage>, IRecipient<AccountRemovedMessage>
+    public class AccountViewModel : RecipientViewModelBase, IRecipient<AccountAddedMessage>,
+        IRecipient<AccountRemovedMessage>
     {
         private readonly AccountManager _accountManager;
         private readonly IHttpClientFactory _clientFactory;
@@ -58,18 +59,23 @@ namespace Polymerium.App.ViewModels
             {
                 _dispatcher.TryEnqueue(() =>
                 {
-                    Entries.Add(new AccountModel(message.Account, DefaultUuid, SetAsDefaultEntryCommand, RemoveEntryCommand));
+                    Entries.Add(new AccountModel(message.Account, DefaultUuid, SetAsDefaultEntryCommand,
+                        RemoveEntryCommand));
                 });
             }
         }
+
         public void Receive(AccountRemovedMessage message)
         {
             if (IsActive)
             {
                 _dispatcher.TryEnqueue(() =>
                 {
-                    var found = Entries.FirstOrDefault(x => x.Inner.Uuid == message.Account.Uuid);
-                    if (found != null) Entries.Remove(found);
+                    AccountModel? found = Entries.FirstOrDefault(x => x.Inner.Uuid == message.Account.Uuid);
+                    if (found != null)
+                    {
+                        Entries.Remove(found);
+                    }
                 });
             }
         }
@@ -114,7 +120,9 @@ namespace Polymerium.App.ViewModels
         public void SetAsDefaultEntry(AccountModel? model)
         {
             if (model != null)
+            {
                 DefaultUuid.Value = model.Inner.Uuid;
+            }
         }
 
         public bool CanRemoveEntry(AccountModel? model)
@@ -132,12 +140,12 @@ namespace Polymerium.App.ViewModels
 
         public bool CanAddFamilyGuyAccount(string? who)
         {
-            return !string.IsNullOrEmpty(who) && new string[] { "Stewie", "Brian", "Peter", "Lois" }.Contains(who);
+            return !string.IsNullOrEmpty(who) && new[] { "Stewie", "Brian", "Peter", "Lois" }.Contains(who);
         }
 
         public void AddFamilyGuyAccount(string? who)
         {
-            var account = who switch
+            FamilyAccount account = who switch
             {
                 "Stewie" => FamilyAccount.CreateStewie(),
                 "Brian" => FamilyAccount.CreateBrian(),

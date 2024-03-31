@@ -12,26 +12,6 @@ namespace Polymerium.Trident.Accounts
 
         public string UserType => "legacy";
 
-        public static FamilyAccount CreateStewie()
-        {
-            return new("Stewie", Guid.NewGuid().ToString());
-        }
-
-        public static FamilyAccount CreateBrian()
-        {
-            return new("Brian", Guid.NewGuid().ToString());
-        }
-
-        public static FamilyAccount CreatePeter()
-        {
-            return new("Peter", Guid.NewGuid().ToString());
-        }
-
-        public static FamilyAccount CreateLois()
-        {
-            return new("Lois", Guid.NewGuid().ToString());
-        }
-
         public ValueTask<bool> RefreshAsync()
         {
             return ValueTask.FromResult(true);
@@ -40,6 +20,26 @@ namespace Polymerium.Trident.Accounts
         public ValueTask<bool> ValidateAsync()
         {
             return ValueTask.FromResult(true);
+        }
+
+        public static FamilyAccount CreateStewie()
+        {
+            return new FamilyAccount("Stewie", Guid.NewGuid().ToString());
+        }
+
+        public static FamilyAccount CreateBrian()
+        {
+            return new FamilyAccount("Brian", Guid.NewGuid().ToString());
+        }
+
+        public static FamilyAccount CreatePeter()
+        {
+            return new FamilyAccount("Peter", Guid.NewGuid().ToString());
+        }
+
+        public static FamilyAccount CreateLois()
+        {
+            return new FamilyAccount("Lois", Guid.NewGuid().ToString());
         }
     }
 }

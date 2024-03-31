@@ -300,7 +300,7 @@ namespace Polymerium.App.ViewModels
         private void UpdateLayer(LayerModel? layer)
         {
             if (layer != null)
-            // TODO: pop UpdateLayerModal
+                // TODO: pop UpdateLayerModal
             {
             }
         }

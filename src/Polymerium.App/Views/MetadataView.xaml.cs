@@ -43,8 +43,7 @@ namespace Polymerium.App.Views
         {
             InputDialog dialog = new(XamlRoot)
             {
-                Message = "Summarize usage of your new layer",
-                Placeholder = "New Layer"
+                Message = "Summarize usage of your new layer", Placeholder = "New Layer"
             };
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             {

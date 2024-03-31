@@ -25,8 +25,7 @@ namespace Polymerium.Trident.Services
             Scan();
         }
 
-        private string? defaultUuid;
-        public string? DefaultUuid { get => defaultUuid; set => defaultUuid = value; }
+        public string? DefaultUuid { get; set; }
 
         public IList<IAccount> Managed { get; } = new List<IAccount>();
 
@@ -51,7 +50,7 @@ namespace Polymerium.Trident.Services
                 {
                     string content = File.ReadAllText(path);
                     AccountVault? vault = JsonSerializer.Deserialize<AccountVault>(content, _options);
-                    defaultUuid = vault?.Default;
+                    DefaultUuid = vault?.Default;
                     foreach (AccountEntry entry in vault?.Entries ?? Enumerable.Empty<AccountEntry>())
                     {
                         string unmasked = Encoding.UTF8.GetString(entry.Opaque);
@@ -92,7 +91,7 @@ namespace Polymerium.Trident.Services
                     list.Add(new AccountEntry(account.GetType().Name, masked));
                 }
 
-                string content = JsonSerializer.Serialize(new AccountVault(defaultUuid, list), _options);
+                string content = JsonSerializer.Serialize(new AccountVault(DefaultUuid, list), _options);
                 File.WriteAllText(path, content);
             }
             catch (Exception e)
@@ -104,8 +103,11 @@ namespace Polymerium.Trident.Services
         public void Append(IAccount account)
         {
             Managed.Add(account);
-            if (string.IsNullOrEmpty(defaultUuid))
+            if (string.IsNullOrEmpty(DefaultUuid))
+            {
                 DefaultUuid = account.Uuid;
+            }
+
             AccountCollectionChanged?.Invoke(this,
                 new AccountCollectionChangedEventArgs(AccountCollectionChangedAction.Add, account));
         }
@@ -123,12 +125,13 @@ namespace Polymerium.Trident.Services
 
         public bool TryGetByUuid(string uuid, [MaybeNullWhen(false)] out IAccount result)
         {
-            var found = Managed.FirstOrDefault(x => x.Uuid == uuid);
+            IAccount? found = Managed.FirstOrDefault(x => x.Uuid == uuid);
             if (found != null)
             {
                 result = found;
                 return true;
             }
+
             result = null;
             return false;
         }
