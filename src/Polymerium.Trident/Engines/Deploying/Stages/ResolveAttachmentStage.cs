@@ -11,20 +11,20 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
     {
         protected override async Task OnProcessAsync()
         {
-            IEnumerable<Attachment> attachments =
+            var attachments =
                 Context.Metadata.Layers.Where(x => x.Enabled).SelectMany(x => x.Attachments);
-            foreach (Attachment attachment in attachments)
+            foreach (var attachment in attachments)
             {
                 resolver.AddAttachment(attachment);
             }
 
             resolver.SetFilter(Context.Metadata.ExtractFilter());
 
-            await foreach (ResolveResult result in resolver.ConfigureAwait(false))
+            await foreach (var result in resolver.ConfigureAwait(false))
             {
                 if (result is { IsResolvedSuccessfully: true, Result: not null })
                 {
-                    Package? package = result.Result;
+                    var package = result.Result;
                     Context.ArtifactBuilder!.AddParcel($"{package.Label}/{package.ProjectId}/{package.VersionId}.obj",
                         $"{FileNameHelper.GetAssetFolderName(package.Kind)}/{package.FileName}", package.Download,
                         package.Hash);

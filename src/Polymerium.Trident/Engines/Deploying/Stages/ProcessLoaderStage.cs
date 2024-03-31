@@ -12,9 +12,9 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
     {
         protected override async Task OnProcessAsync()
         {
-            ArtifactBuilder builder = Context.ArtifactBuilder!;
-            IEnumerable<Loader> loaders = Context.Metadata.Layers.Where(x => x.Enabled).SelectMany(x => x.Loaders);
-            foreach (Loader loader in loaders)
+            var builder = Context.ArtifactBuilder!;
+            var loaders = Context.Metadata.Layers.Where(x => x.Enabled).SelectMany(x => x.Loaders);
+            foreach (var loader in loaders)
             {
                 Logger.LogInformation("Process loader: {id}({version})", loader.Id, loader.Version);
                 switch (loader.Id)
@@ -32,6 +32,14 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                         await InstallForgeAsync(builder, PrismLauncherHelper.UID_NEOFORGE, loader.Version);
                         break;
 
+                    case Loader.COMPONENT_FABRIC:
+                        await InstallFabricAsync(builder, PrismLauncherHelper.UID_FABRIC, loader.Version);
+                        break;
+
+                    case Loader.COMPONENT_QUILT:
+                        await InstallFabricAsync(builder, PrismLauncherHelper.UID_QUILT, loader.Version);
+                        break;
+
                     default:
                         throw new ResourceIdentityUnrecognizedException(loader.Id, nameof(Loader));
                 }
@@ -47,14 +55,14 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
 
         private async Task InstallForgeAsync(ArtifactBuilder builder, string uid, string version)
         {
-            PrismVersion index =
+            var index =
                 await PrismLauncherHelper.GetVersionAsync(uid, version, factory,
                     Context.Token);
 
             PrismLauncherHelper.AddValidatedLibrariesToArtifact(builder,
                 index.Libraries ?? Enumerable.Empty<PrismVersionLibrary>());
 
-            foreach (PrismVersionLibrary file in index.MavenFiles ?? Enumerable.Empty<PrismVersionLibrary>())
+            foreach (var file in index.MavenFiles ?? Enumerable.Empty<PrismVersionLibrary>())
             {
                 if (file.Downloads.Artifact.HasValue)
                 {
@@ -68,14 +76,14 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 builder.ClearGameArguments();
             }
 
-            foreach (string argument in index.MinecraftArguments?.Split(' ') ?? Enumerable.Empty<string>())
+            foreach (var argument in index.MinecraftArguments?.Split(' ') ?? Enumerable.Empty<string>())
             {
                 builder.AddGameArgument(argument);
             }
 
             builder.AddJvmArgument("-Dforgewrapper.librariesDir=${library_directory}");
 
-            Artifact.Library? installer = builder.Libraries.FirstOrDefault(x =>
+            var installer = builder.Libraries.FirstOrDefault(x =>
                 x.Id.Platform == "installer" && x.Id.Namespace == uid && x.Id.Name == "forge");
             if (installer != null)
             {
@@ -83,7 +91,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                     $"-Dforgewrapper.installer={Context.Trident.LibraryPath(installer.Id.Namespace, installer.Id.Name, installer.Id.Version, installer.Id.Platform, installer.Id.Extension)}");
             }
 
-            Artifact.Library? minecraft = builder.Libraries.FirstOrDefault(x =>
+            var minecraft = builder.Libraries.FirstOrDefault(x =>
                 x.Id.Platform == "client" && x.Id.Namespace == "com.mojang" && x.Id.Name == "minecraft");
             if (minecraft != null)
             {
@@ -94,6 +102,23 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             // 通过拦截的方式给 ForgeWrapper 注入主要参数，即使没找到也不报错，因为报错需要定义一个异常类型，太麻烦
 
             builder.SetMainClass(index.MainClass ?? "io.github.zekerzhayard.forgewrapper.installer.Main");
+        }
+
+        private async Task InstallFabricAsync(ArtifactBuilder builder, string uid, string version)
+        {
+            var index =
+                await PrismLauncherHelper.GetVersionAsync(uid, version, factory,
+                    Context.Token);
+
+            PrismLauncherHelper.AddValidatedLibrariesToArtifact(builder,
+                index.Libraries ?? Enumerable.Empty<PrismVersionLibrary>());
+
+            var intermediary = await PrismLauncherHelper.GetVersionAsync(PrismLauncherHelper.UID_INTERMEDIARY, Context.Metadata.Version, factory, Context.Token);
+
+            PrismLauncherHelper.AddValidatedLibrariesToArtifact(builder,
+                intermediary.Libraries ?? Enumerable.Empty<PrismVersionLibrary>());
+
+            builder.SetMainClass(index.MainClass ?? "net.fabricmc.loader.impl.launch.knot.KnotClient");
         }
     }
 }

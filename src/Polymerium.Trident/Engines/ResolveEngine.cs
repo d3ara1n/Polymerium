@@ -44,9 +44,9 @@ namespace Polymerium.Trident.Engines
                     return false;
                 }
 
-                if (tasks.TryDequeue(out Task<ResolveResult>? task))
+                if (tasks.TryDequeue(out var task))
                 {
-                    ResolveResult package = await task;
+                    var package = await task;
                     Current = package;
                     return true;
                 }
@@ -73,7 +73,7 @@ namespace Polymerium.Trident.Engines
 
                 try
                 {
-                    Package package = await agent.ResolveAsync(attachment.Label, attachment.ProjectId,
+                    var package = await agent.ResolveAsync(attachment.Label, attachment.ProjectId,
                         attachment.VersionId,
                         filter, token);
                     return new ResolveResult(attachment, package);

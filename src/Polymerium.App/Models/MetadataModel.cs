@@ -44,7 +44,7 @@ namespace Polymerium.App.Models
         {
             get
             {
-                string? loader = Inner.Metadata.ExtractModLoader();
+                var loader = Inner.Metadata.ExtractModLoader();
                 if (loader != null)
                 {
                     return Loader.MODLOADER_NAME_MAPPINGS[loader];
@@ -68,7 +68,7 @@ namespace Polymerium.App.Models
         {
             if (layer != null)
             {
-                int found = Layers.IndexOf(layer);
+                var found = Layers.IndexOf(layer);
                 return found > 0;
             }
 
@@ -79,7 +79,7 @@ namespace Polymerium.App.Models
         {
             if (layer != null)
             {
-                int index = Layers.IndexOf(layer);
+                var index = Layers.IndexOf(layer);
                 if (index > 0 && Layers.Remove(layer))
                 {
                     Layers.Insert(index - 1, layer);
@@ -92,7 +92,7 @@ namespace Polymerium.App.Models
         {
             if (layer != null)
             {
-                int found = Layers.IndexOf(layer);
+                var found = Layers.IndexOf(layer);
                 return found < Layers.Count - 1;
             }
 
@@ -103,7 +103,7 @@ namespace Polymerium.App.Models
         {
             if (layer != null)
             {
-                int index = Layers.IndexOf(layer);
+                var index = Layers.IndexOf(layer);
                 if (index < Layers.Count - 1 && Layers.Remove(layer))
                 {
                     Layers.Insert(index + 1, layer);
@@ -116,7 +116,7 @@ namespace Polymerium.App.Models
         {
             if (layer != null)
             {
-                int found = Layers.IndexOf(layer);
+                var found = Layers.IndexOf(layer);
                 return found != 0;
             }
 
@@ -127,7 +127,7 @@ namespace Polymerium.App.Models
         {
             if (layer != null)
             {
-                int index = Layers.IndexOf(layer);
+                var index = Layers.IndexOf(layer);
                 if (index > 0 && Layers.Remove(layer))
                 {
                     Layers.Insert(0, layer);
@@ -140,7 +140,7 @@ namespace Polymerium.App.Models
         {
             if (layer != null)
             {
-                int found = Layers.IndexOf(layer);
+                var found = Layers.IndexOf(layer);
                 return found != Layers.Count - 1;
             }
 
@@ -151,7 +151,7 @@ namespace Polymerium.App.Models
         {
             if (layer != null)
             {
-                int index = Layers.IndexOf(layer);
+                var index = Layers.IndexOf(layer);
                 if (index != Layers.Count - 1 && Layers.Remove(layer))
                 {
                     Layers.Add(layer);

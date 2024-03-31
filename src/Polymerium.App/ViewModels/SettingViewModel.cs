@@ -107,7 +107,7 @@ namespace Polymerium.App.ViewModels
             picker.FileTypeFilter.Add(".exe");
             picker.FileTypeFilter.Add("*");
             picker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
-            StorageFile? file = await picker.PickSingleFileAsync();
+            var file = await picker.PickSingleFileAsync();
             if (file?.Path != null)
             {
                 SetJavaInternal(file.Path, setter, propertyName);
@@ -116,7 +116,7 @@ namespace Polymerium.App.ViewModels
 
         private void SetJavaInternal(string file, Action<string> setter, string propertyName)
         {
-            string? home = Path.GetDirectoryName(Path.GetDirectoryName(file));
+            var home = Path.GetDirectoryName(Path.GetDirectoryName(file));
             setter(home ?? string.Empty);
             OnPropertyChanged(propertyName);
         }
@@ -125,10 +125,10 @@ namespace Polymerium.App.ViewModels
         {
             if (Directory.Exists(home))
             {
-                string path = Path.Combine(home, "bin", "java.exe");
+                var path = Path.Combine(home, "bin", "java.exe");
                 if (File.Exists(path))
                 {
-                    FileVersionInfo version = FileVersionInfo.GetVersionInfo(path);
+                    var version = FileVersionInfo.GetVersionInfo(path);
                     return $"{version.ProductName ?? "Unknown"}({home})";
                 }
             }

@@ -57,7 +57,7 @@ namespace Polymerium.App.Models
             State = DataLoadingState.Loading;
             try
             {
-                await foreach (T handle in iter.WithCancellation(_token).ConfigureAwait(false))
+                await foreach (var handle in iter.WithCancellation(_token).ConfigureAwait(false))
                 {
                     _dispatcher.TryEnqueue(() => { Add(handle); });
                 }

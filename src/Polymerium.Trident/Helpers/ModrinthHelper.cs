@@ -20,7 +20,7 @@ namespace Polymerium.Trident.Helpers
             where T : struct
         {
             token.ThrowIfCancellationRequested();
-            using HttpClient client = factory.CreateClient();
+            using var client = factory.CreateClient();
             try
             {
                 return await client.GetFromJsonAsync<T>(ENDPOINT + service, OPTIONS, token);

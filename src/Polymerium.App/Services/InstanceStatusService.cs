@@ -29,7 +29,7 @@ namespace Polymerium.App.Services
 
         private void InstanceManagerOnInstanceLaunching(InstanceManager sender, InstanceLaunchingEventArgs args)
         {
-            if (TryFind(args.Key, out InstanceStatusModel? instance))
+            if (TryFind(args.Key, out var instance))
             {
                 _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
                 args.Handle.Output += (_, scrap) =>
@@ -62,13 +62,13 @@ namespace Polymerium.App.Services
 
         private void InstanceManagerOnInstanceDeploying(InstanceManager sender, InstanceDeployingEventArgs args)
         {
-            if (TryFind(args.Key, out InstanceStatusModel? instance))
+            if (TryFind(args.Key, out var instance))
             {
                 _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
                 args.Handle.FileSolidified += (_, count, total) =>
                 {
-                    uint original = instance.Count.Value;
-                    uint computed = count == total ? 100 : 100 * count / total;
+                    var original = instance.Count.Value;
+                    var computed = count == total ? 100 : 100 * count / total;
                     if (original != computed)
                     {
                         _dispatcher.TryEnqueue(() => instance.OnProgressChanged(computed, 100));
@@ -108,7 +108,7 @@ namespace Polymerium.App.Services
                     instances.Add(new InstanceStatusModel(args.Key));
                     break;
                 case ProfileCollectionChangedAction.Remove:
-                    if (TryFind(args.Key, out InstanceStatusModel? instance))
+                    if (TryFind(args.Key, out var instance))
                     {
                         instances.Remove(instance);
                     }
@@ -120,7 +120,7 @@ namespace Polymerium.App.Services
 
         private bool TryFind(string key, [MaybeNullWhen(false)] out InstanceStatusModel result)
         {
-            InstanceStatusModel? instance = instances.FirstOrDefault(x => x.Key == key);
+            var instance = instances.FirstOrDefault(x => x.Key == key);
             if (instance != null)
             {
                 result = instance;
@@ -133,7 +133,7 @@ namespace Polymerium.App.Services
 
         public InstanceStatusModel MustHave(string key)
         {
-            if (TryFind(key, out InstanceStatusModel? instance))
+            if (TryFind(key, out var instance))
             {
                 return instance;
             }

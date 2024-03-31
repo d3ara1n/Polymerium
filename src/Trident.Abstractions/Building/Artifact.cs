@@ -27,7 +27,7 @@
         public record Library(
             Library.Identity Id,
             Uri Url,
-            string Sha1,
+            string? Sha1,
             bool IsNative = false,
             bool IsPresent = true)
         {

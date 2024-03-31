@@ -30,22 +30,22 @@ namespace Polymerium.Trident.Services
             try
             {
                 ZipArchive archive = new(stream, ZipArchiveMode.Read, true);
-                string[] fileNames = archive.Entries.Select(x => x.FullName).ToArray();
-                IExtractor? extractor = extractors.FirstOrDefault(x => fileNames.Contains(x.IdenticalFileName));
+                var fileNames = archive.Entries.Select(x => x.FullName).ToArray();
+                var extractor = extractors.FirstOrDefault(x => fileNames.Contains(x.IdenticalFileName));
                 if (extractor != null)
                 {
                     logger.LogInformation("Modpack in stream matches {label} extractor", extractor.GetType().Name);
                     ExtractorContext context = new(source);
-                    ZipArchiveEntry manifestEntry = archive.GetEntry(extractor.IdenticalFileName)!;
-                    await using Stream manifestStream = manifestEntry.Open();
+                    var manifestEntry = archive.GetEntry(extractor.IdenticalFileName)!;
+                    await using var manifestStream = manifestEntry.Open();
                     using StreamReader manifestReader = new(manifestStream);
-                    string manifestContent = await manifestReader.ReadToEndAsync(token);
-                    Result<ExtractedContainer, ExtractError> result =
+                    var manifestContent = await manifestReader.ReadToEndAsync(token);
+                    var result =
                         await extractor.ExtractAsync(manifestContent, context, token);
                     if (result.IsSuccessful)
                     {
-                        ExtractedContainer extracted = result.Value;
-                        FlattenExtractedContainer flatten =
+                        var extracted = result.Value;
+                        var flatten =
                             FlattenExtractedContainer.FromExtracted(extracted, archive, source);
                         archive.Dispose();
                         return new Result<FlattenExtractedContainer, ExtractError>(flatten);
@@ -72,19 +72,19 @@ namespace Polymerium.Trident.Services
 
         public async Task SolidifyAsync(FlattenExtractedContainer container, string? nameOverride)
         {
-            string name = nameOverride ?? container.Original.Name;
-            ReservedKey key = profileManager.RequestKey(name);
+            var name = nameOverride ?? container.Original.Name;
+            var key = profileManager.RequestKey(name);
             List<Metadata.Layer> layers = new();
 
-            Uri? thumbnail = container.Reference?.Item1.Thumbnail;
-            Attachment? reference = container.Reference.HasValue
+            var thumbnail = container.Reference?.Item1.Thumbnail;
+            var reference = container.Reference.HasValue
                 ? new Attachment(container.Reference.Value.Item1.Label, container.Reference.Value.Item1.Id,
                     container.Reference.Value.Item2.Id)
                 : null;
 
             logger.LogInformation("Modpack {name} requested a key {key}", name, key.Key);
             Metadata metadata = new(container.Original.Version, layers);
-            foreach (FlattenContainedLayer item in container.Layers)
+            foreach (var item in container.Layers)
             {
                 List<Loader> loaders = new();
 
@@ -92,11 +92,11 @@ namespace Polymerium.Trident.Services
 
                 if (item.SolidFiles.Any())
                 {
-                    string? id = await Nanoid.GenerateAsync(size: 12);
-                    string storageKey = storageManager.RequestKey($"{key.Key}.{id}");
-                    Storage storage = storageManager.Open(storageKey);
+                    var id = await Nanoid.GenerateAsync(size: 12);
+                    var storageKey = storageManager.RequestKey($"{key.Key}.{id}");
+                    var storage = storageManager.Open(storageKey);
                     storage.EnsureEmpty();
-                    foreach (SolidFile file in item.SolidFiles)
+                    foreach (var file in item.SolidFiles)
                     {
                         await storage.WriteAsync(file.FileName, file.Data.ToArray());
                     }
@@ -105,7 +105,7 @@ namespace Polymerium.Trident.Services
                     loaders.Add(storageLoader);
                 }
 
-                IList<Attachment> attachments = item.Original.Attachments;
+                var attachments = item.Original.Attachments;
                 Metadata.Layer layer = new(reference, true, item.Original.Summary, loaders, attachments);
                 layers.Add(layer);
             }

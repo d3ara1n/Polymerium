@@ -16,6 +16,9 @@ namespace Polymerium.Trident.Helpers
         public const string UID_MINECRAFT = "net.minecraft";
         public const string UID_FORGE = "net.minecraftforge";
         public const string UID_NEOFORGE = "net.neoforged";
+        public const string UID_INTERMEDIARY = "net.fabricmc.intermediary";
+        public const string UID_FABRIC = "net.fabricmc.fabric-loader";
+        public const string UID_QUILT = "org.quiltmc.quilt-loader";
 
         private static readonly string OsNameString = PlatformHelper.GetOsName();
         private static readonly string OsFullString = $"{OsNameString}-{PlatformHelper.GetOsArch()}";
@@ -34,9 +37,9 @@ namespace Polymerium.Trident.Helpers
             {
                 return lib.Rules.Any(y =>
                 {
-                    bool pass = true;
+                    var pass = true;
                     // name
-                    if (y.Os != null && y.Os.TryGetValue("name", out string? os))
+                    if (y.Os != null && y.Os.TryGetValue("name", out var os))
                     {
                         pass = OsFullString == os || OsNameString == os;
                     }
@@ -53,20 +56,25 @@ namespace Polymerium.Trident.Helpers
         public static void AddValidatedLibrariesToArtifact(ArtifactBuilder builder,
             IEnumerable<PrismVersionLibrary> libraries)
         {
-            foreach (PrismVersionLibrary lib in libraries.Where(ValidateLibraryRule))
+            foreach (var lib in libraries.Where(ValidateLibraryRule))
             {
-                if (lib.Downloads.Artifact.HasValue)
+                if (lib.Url != null)
+                {
+                    // old fashion
+                    builder.AddLibraryPrismFlavor(lib.Name, lib.Url);
+                }
+                else if (lib.Downloads.Artifact.HasValue)
                 {
                     builder.AddLibrary(lib.Name, lib.Downloads.Artifact.Value.Url, lib.Downloads.Artifact.Value.Sha1);
                 }
 
                 if (lib.Natives.HasValue && lib.Natives.Value.Windows != null)
                 {
-                    string classifier = lib.Natives.Value.Windows.Replace(
+                    var classifier = lib.Natives.Value.Windows.Replace(
                         "${arch}",
                         Environment.Is64BitOperatingSystem ? "64" : "32"
                     );
-                    if (lib.Downloads.Classifiers.TryGetValue(classifier, out PrismVersionArtifact download))
+                    if (lib.Downloads.Classifiers.TryGetValue(classifier, out var download))
                     {
                         // NOTE: 假设 native 库本身没有 platform 字段，这是个大胆的假设！
                         builder.AddLibrary($"{lib.Name}:{classifier}", download.Url, download.Sha1, true, false);
@@ -78,8 +86,8 @@ namespace Polymerium.Trident.Helpers
         public static async Task<PrismIndex> GetManifestAsync(string uid, IHttpClientFactory factory,
             CancellationToken token = default)
         {
-            using HttpClient client = factory.CreateClient();
-            PrismIndex manifest =
+            using var client = factory.CreateClient();
+            var manifest =
                 await client.GetFromJsonAsync<PrismIndex>(INDEX_URL.Replace("{uid}", uid), OPTIONS, token);
             if (manifest.Equals(default))
             {
@@ -92,9 +100,9 @@ namespace Polymerium.Trident.Helpers
         public static async Task<PrismVersion> GetVersionAsync(string uid, string version, IHttpClientFactory factory,
             CancellationToken token = default)
         {
-            using HttpClient client = factory.CreateClient();
-            string url = VERSION_URL.Replace("{uid}", uid).Replace("{version}", version);
-            PrismVersion index = await client.GetFromJsonAsync<PrismVersion>(url, OPTIONS, token);
+            using var client = factory.CreateClient();
+            var url = VERSION_URL.Replace("{uid}", uid).Replace("{version}", version);
+            var index = await client.GetFromJsonAsync<PrismVersion>(url, OPTIONS, token);
             if (index.Equals(default))
             {
                 throw new BadFormatException($"File({url}) failed to download or parse");
@@ -107,14 +115,14 @@ namespace Polymerium.Trident.Helpers
             IHttpClientFactory factory, CancellationToken token = default)
         {
             List<PrismVersionLibrary> libraries = new(version.Libraries ?? Enumerable.Empty<PrismVersionLibrary>());
-            using HttpClient client = factory.CreateClient();
-            foreach (PrismRequirement requirement in version.Requires)
+            using var client = factory.CreateClient();
+            foreach (var requirement in version.Requires)
             {
-                string url = VERSION_URL.Replace("{uid}", requirement.Uid).Replace("{version}",
+                var url = VERSION_URL.Replace("{uid}", requirement.Uid).Replace("{version}",
                     requirement.Suggest ?? requirement.Equal ?? throw new BadFormatException($"{version.Uid}.json",
                         $"requires[{requirement.Uid}].equals|suggests"));
-                PrismVersion sub = await client.GetFromJsonAsync<PrismVersion>(url, OPTIONS, token);
-                foreach (PrismVersionLibrary lib in sub.Libraries ?? Enumerable.Empty<PrismVersionLibrary>())
+                var sub = await client.GetFromJsonAsync<PrismVersion>(url, OPTIONS, token);
+                foreach (var lib in sub.Libraries ?? Enumerable.Empty<PrismVersionLibrary>())
                 {
                     libraries.Add(lib);
                 }

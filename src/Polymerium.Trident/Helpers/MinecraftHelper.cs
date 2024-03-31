@@ -24,11 +24,11 @@ namespace Polymerium.Trident.Helpers
         public static async Task<MinecraftLoginResponse> AuthenticateByXboxLiveServiceTokenAsync(
             IHttpClientFactory factory, string token, string hash)
         {
-            using HttpClient client = factory.CreateClient();
+            using var client = factory.CreateClient();
             var parameter = new { IdentityToken = $"XBL3.0 x={hash};{token}" };
-            HttpResponseMessage response = await client.PostAsJsonAsync(LOGIN_ENDPOINT, parameter, REQUEST_OPTIONS);
+            var response = await client.PostAsJsonAsync(LOGIN_ENDPOINT, parameter, REQUEST_OPTIONS);
             response.EnsureSuccessStatusCode();
-            MinecraftLoginResponse model =
+            var model =
                 await response.Content.ReadFromJsonAsync<MinecraftLoginResponse>(RESPONSE_OPTIONS);
             return model;
         }
@@ -36,9 +36,9 @@ namespace Polymerium.Trident.Helpers
         public static async Task<MinecraftStoreResponse> AcquireAccountInventoryByMinecraftTokenAsync(
             IHttpClientFactory factory, string token)
         {
-            using HttpClient client = factory.CreateClient();
+            using var client = factory.CreateClient();
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            MinecraftStoreResponse model =
+            var model =
                 await client.GetFromJsonAsync<MinecraftStoreResponse>(STORE_ENDPOINT, RESPONSE_OPTIONS);
             return model;
         }
@@ -46,9 +46,9 @@ namespace Polymerium.Trident.Helpers
         public static async Task<MinecraftProfileResponse> AcquireAccountProfileByMinecraftTokenAsync(
             IHttpClientFactory factory, string token)
         {
-            using HttpClient client = factory.CreateClient();
+            using var client = factory.CreateClient();
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            MinecraftProfileResponse model =
+            var model =
                 await client.GetFromJsonAsync<MinecraftProfileResponse>(PROFILE_ENDPOINT, RESPONSE_OPTIONS);
             if (!string.IsNullOrEmpty(model.Error))
             {

@@ -69,7 +69,7 @@ namespace Polymerium.App.ViewModels
             if (maybeLayer is LayerModel layer)
             {
                 Model = layer;
-                string? path = _thumbnailSaver.Get(layer.Root.Key);
+                var path = _thumbnailSaver.Get(layer.Root.Key);
                 if (path != null && File.Exists(path))
                 {
                     Background = new BitmapImage(new Uri(path));
@@ -95,7 +95,7 @@ namespace Polymerium.App.ViewModels
         {
             if (exhibit != null)
             {
-                Attachment? installed =
+                var installed =
                     Model?.Root.Inner.Metadata.Layers.SelectMany(x => x.Attachments).FirstOrDefault(
                         x => x.Label == exhibit.Inner.Label && x.ProjectId == exhibit.Inner.Id);
                 ProjectPreviewModal modal = new(exhibit, _repositoryAgent,
@@ -107,7 +107,7 @@ namespace Polymerium.App.ViewModels
 
         private ExhibitModel ToModel(Exhibit exhibit)
         {
-            bool added = Model?.Root.Inner.Metadata.Layers.SelectMany(x => x.Attachments)
+            var added = Model?.Root.Inner.Metadata.Layers.SelectMany(x => x.Attachments)
                 .Any(x => x.Label == exhibit.Label && x.ProjectId == exhibit.Id) ?? false;
             ExhibitModel result = new(exhibit, OpenResourceModalCommand);
             result.HasAdded.Value = added;
@@ -141,7 +141,7 @@ namespace Polymerium.App.ViewModels
             if (Model != null && version != null && Tracked.Contains(version))
             {
                 // 不比较版本(x.VersionId==null||x.VersionId==version.Inner.Id)，只要保证最后这个项目被移除即可
-                Attachment? found = Model.Attachments.FirstOrDefault(x =>
+                var found = Model.Attachments.FirstOrDefault(x =>
                     x.Label == version.Root.Inner.Label && x.ProjectId == version.Root.Inner.Id);
                 if (found != null)
                 {

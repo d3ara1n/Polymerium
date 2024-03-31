@@ -22,7 +22,7 @@ namespace Polymerium.App.Models
 
         protected override void RemoveItem(int index)
         {
-            T removedItem = this[index];
+            var removedItem = this[index];
 
             base.RemoveItem(index);
 
@@ -42,7 +42,7 @@ namespace Polymerium.App.Models
 
         protected override void SetItem(int index, T item)
         {
-            T originalItem = this[index];
+            var originalItem = this[index];
             base.SetItem(index, item);
 
             OnIndexerPropertyChanged();

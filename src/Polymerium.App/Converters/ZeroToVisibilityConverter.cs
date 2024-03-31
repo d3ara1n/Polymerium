@@ -8,7 +8,7 @@ namespace Polymerium.App.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            bool val = value switch
+            var val = value switch
             {
                 int it => it == 0,
                 uint it => it == 0,

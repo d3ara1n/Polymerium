@@ -6,14 +6,14 @@ namespace Polymerium.Trident.Services
     {
         public async Task SaveAsync(string key, Uri url, CancellationToken token = default)
         {
-            string target = GetTargetFileName(key);
+            var target = GetTargetFileName(key);
             await UriFileHelper.SaveAsync(url, target, factory, token);
         }
 
         public async Task SaveAsync(string key, Stream stream, CancellationToken token = default)
         {
-            string target = GetTargetFileName(key);
-            await using FileStream writer = File.OpenWrite(target);
+            var target = GetTargetFileName(key);
+            await using var writer = File.OpenWrite(target);
             await stream.CopyToAsync(writer, token);
         }
 
@@ -24,7 +24,7 @@ namespace Polymerium.Trident.Services
 
         public string? Get(string key)
         {
-            string path = Path.Combine(context.ThumbnailDir, $"{key}.png");
+            var path = Path.Combine(context.ThumbnailDir, $"{key}.png");
             if (File.Exists(path))
             {
                 return path;

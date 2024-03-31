@@ -6,8 +6,8 @@ namespace Polymerium.Trident.Helpers
     {
         public static string Sanitize(string fileName)
         {
-            string output = fileName.Replace(' ', '_');
-            foreach (char ch in Path.GetInvalidFileNameChars())
+            var output = fileName.Replace(' ', '_');
+            foreach (var ch in Path.GetInvalidFileNameChars())
             {
                 output = output.Replace(ch, '_');
             }

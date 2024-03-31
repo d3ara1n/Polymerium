@@ -12,7 +12,7 @@ namespace Polymerium.App.Services
         {
             get
             {
-                XamlRoot? xamlRoot = App.Current.Window.Content.XamlRoot;
+                var xamlRoot = App.Current.Window.Content.XamlRoot;
                 ArgumentNullException.ThrowIfNull(xamlRoot);
                 return xamlRoot;
             }

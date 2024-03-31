@@ -27,7 +27,7 @@ namespace Polymerium.App.Models
 
         protected override void RemoveItem(int index)
         {
-            TValue removedItem = this[index];
+            var removedItem = this[index];
 
 
             from.Remove(mapper(removedItem));
@@ -40,7 +40,7 @@ namespace Polymerium.App.Models
 
         protected override void InsertItem(int index, TValue item)
         {
-            TSource value = mapper(item);
+            var value = mapper(item);
             from.Insert(index, value);
             base.InsertItem(index, item);
 
@@ -51,7 +51,7 @@ namespace Polymerium.App.Models
 
         protected override void SetItem(int index, TValue item)
         {
-            TValue originalItem = this[index];
+            var originalItem = this[index];
             from[index] = mapper(item);
             base.SetItem(index, item);
 

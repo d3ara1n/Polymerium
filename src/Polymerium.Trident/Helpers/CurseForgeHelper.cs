@@ -24,7 +24,9 @@ namespace Polymerium.Trident.Helpers
 
         private static readonly Converter MARKDOWNER = new(new Config
         {
-            GithubFlavored = true, SmartHrefHandling = true, RemoveComments = true
+            GithubFlavored = true,
+            SmartHrefHandling = true,
+            RemoveComments = true
         });
 
         public static readonly IReadOnlyDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
@@ -92,12 +94,12 @@ namespace Polymerium.Trident.Helpers
             where T : struct
         {
             token.ThrowIfCancellationRequested();
-            string url = ENDPOINT + service;
-            using HttpClient client = factory.CreateClient();
+            var url = ENDPOINT + service;
+            using var client = factory.CreateClient();
             client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
             try
             {
-                ResponseWrapper<T>? response = await client.GetFromJsonAsync<ResponseWrapper<T>>(url, token);
+                var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(url, token);
                 if (response?.Data != null)
                 {
                     return response.Data;
@@ -116,12 +118,12 @@ namespace Polymerium.Trident.Helpers
             CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
-            string url = ENDPOINT + service;
-            using HttpClient client = factory.CreateClient();
+            var url = ENDPOINT + service;
+            using var client = factory.CreateClient();
             client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
             try
             {
-                ResponseWrapper<string>? response = await client.GetFromJsonAsync<ResponseWrapper<string>>(url, token);
+                var response = await client.GetFromJsonAsync<ResponseWrapper<string>>(url, token);
                 if (response?.Data != null)
                 {
                     return response.Data;
@@ -141,12 +143,12 @@ namespace Polymerium.Trident.Helpers
             where T : struct
         {
             token.ThrowIfCancellationRequested();
-            string url = ENDPOINT + service;
-            using HttpClient client = factory.CreateClient();
+            var url = ENDPOINT + service;
+            using var client = factory.CreateClient();
             client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
             try
             {
-                ResponseWrapper<IEnumerable<T>>? response =
+                var response =
                     await client.GetFromJsonAsync<ResponseWrapper<IEnumerable<T>>>(url, token);
                 if (response?.Data != null)
                 {
@@ -166,14 +168,14 @@ namespace Polymerium.Trident.Helpers
             IHttpClientFactory factory, string query, ResourceKind kind, string? gameVersion = null,
             string? modLoaderId = null, uint offset = 0, uint limit = 10, CancellationToken token = default)
         {
-            int modLoaderType = modLoaderId switch
+            var modLoaderType = modLoaderId switch
             {
                 Loader.COMPONENT_FORGE => 1,
                 Loader.COMPONENT_FABRIC => 4,
                 Loader.COMPONENT_QUILT => 5,
                 _ => 0
             };
-            string service =
+            var service =
                 $"/mods/search?gameId={GAME_ID}&classId={GetClassIdFromResourceKind(kind)}&index={offset}&pageSize={limit}&searchFilter={Uri.EscapeDataString(query)}&sortOrder=desc"
                 + (gameVersion != null ? $"&gameVersion={gameVersion}" : "")
                 + (
@@ -187,7 +189,7 @@ namespace Polymerium.Trident.Helpers
         public static async Task<EternalMod> GetModInfoAsync(ILogger logger, IHttpClientFactory factory, uint projectId,
             CancellationToken token = default)
         {
-            string service = $"/mods/{projectId}";
+            var service = $"/mods/{projectId}";
             return await GetResourceAsync<EternalMod>(logger, factory, service, token);
         }
 
@@ -195,7 +197,7 @@ namespace Polymerium.Trident.Helpers
             uint projectId,
             CancellationToken token = default)
         {
-            string service = $"/mods/{projectId}/description";
+            var service = $"/mods/{projectId}/description";
             return await GetStringAsync(logger, factory, service, token);
         }
 
@@ -203,14 +205,14 @@ namespace Polymerium.Trident.Helpers
             uint projectId,
             uint fileId, CancellationToken token = default)
         {
-            string service = $"/mods/{projectId}/files/{fileId}/download-url";
+            var service = $"/mods/{projectId}/files/{fileId}/download-url";
             return await GetStringAsync(logger, factory, service, token);
         }
 
         public static async Task<string> GetModFileChangelogAsync(ILogger logger, IHttpClientFactory factory,
             uint projectId, uint fileId, CancellationToken token = default)
         {
-            string service = $"/mods/{projectId}/files/{fileId}/changelog";
+            var service = $"/mods/{projectId}/files/{fileId}/changelog";
             return await GetStringAsync(logger, factory, service, token);
         }
 
@@ -218,28 +220,28 @@ namespace Polymerium.Trident.Helpers
             IHttpClientFactory factory,
             uint projectId, CancellationToken token = default)
         {
-            string services = $"/mods/{projectId}/files";
+            var services = $"/mods/{projectId}/files";
             return await GetResourcesAsync<EternalModInfo>(logger, factory, services, token);
         }
 
         public static async Task<EternalModInfo> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
             uint projectId, uint versionId, CancellationToken token = default)
         {
-            string service = $"/mods/{projectId}/files/{versionId}";
+            var service = $"/mods/{projectId}/files/{versionId}";
             return await GetResourceAsync<EternalModInfo>(logger, factory, service, token);
         }
 
         public static async Task<Project> GetIntoProjectAsync(ILogger logger, IHttpClientFactory factory,
             uint projectId, CancellationToken token = default)
         {
-            EternalMod mod = await GetModInfoAsync(logger, factory, projectId, token);
-            string modDesc = await GetModDescriptionAsync(logger, factory, projectId, token);
-            EternalModInfo[] files = (await GetModFilesAsync(logger, factory, projectId, token)).ToArray();
-            List<Task<Project.Version>> versionTasks = files
+            var mod = await GetModInfoAsync(logger, factory, projectId, token);
+            var modDesc = await GetModDescriptionAsync(logger, factory, projectId, token);
+            var files = (await GetModFilesAsync(logger, factory, projectId, token)).ToArray();
+            var versionTasks = files
                 .Where(x => x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 })
                 .OrderByDescending(x => x.FileDate).Select(async x =>
                 {
-                    string changelog = await GetModFileChangelogAsync(logger, factory, projectId, x.Id, token);
+                    var changelog = await GetModFileChangelogAsync(logger, factory, projectId, x.Id, token);
                     return new Project.Version(x.Id.ToString(), x.DisplayName, MARKDOWNER.Convert(changelog),
                         x.ExtractReleaseType(),
                         x.FileDate,
@@ -247,9 +249,9 @@ namespace Polymerium.Trident.Helpers
                         x.ExtractRequirement(), ExtractDependencies(x, mod.Id));
                 }).ToList();
             await Task.WhenAll(versionTasks);
-            List<Project.Version> versions = versionTasks.Where(x => x.IsCompletedSuccessfully)
+            var versions = versionTasks.Where(x => x.IsCompletedSuccessfully)
                 .Select(x => x.Result).ToList();
-            ResourceKind kind = GetResourceKindFromClassId(mod.ClassId);
+            var kind = GetResourceKindFromClassId(mod.ClassId);
             return new Project(
                 mod.Id.ToString(),
                 mod.Name,
@@ -269,8 +271,8 @@ namespace Polymerium.Trident.Helpers
         public static async Task<Package> GetIntoPackageAsync(ILogger logger, IHttpClientFactory factory,
             uint projectId, uint? versionId, string? gameVersion, string? modLoader, CancellationToken token = default)
         {
-            EternalMod mod = await GetModInfoAsync(logger, factory, projectId, token);
-            ResourceKind kind = GetResourceKindFromClassId(mod.ClassId);
+            var mod = await GetModInfoAsync(logger, factory, projectId, token);
+            var kind = GetResourceKindFromClassId(mod.ClassId);
             EternalModInfo? file = null;
             if (versionId.HasValue)
             {
@@ -278,15 +280,15 @@ namespace Polymerium.Trident.Helpers
             }
             else
             {
-                EternalModInfo[] files = (await GetModFilesAsync(logger, factory, projectId, token)).ToArray();
-                EternalModInfo[] filtered = files.Where(x =>
+                var files = (await GetModFilesAsync(logger, factory, projectId, token)).ToArray();
+                var filtered = files.Where(x =>
                 {
-                    bool valid = x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 };
-                    bool game = gameVersion == null || x.GameVersions.Contains(gameVersion);
+                    var valid = x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 };
+                    var game = gameVersion == null || x.GameVersions.Contains(gameVersion);
                     if (modLoader != null && MODLOADER_MAPPINGS.Values.Any(y => y == modLoader))
                     {
-                        string loaderName = MODLOADER_MAPPINGS.First(y => y.Value == modLoader).Key;
-                        bool loader = x.GameVersions.Contains(loaderName);
+                        var loaderName = MODLOADER_MAPPINGS.First(y => y.Value == modLoader).Key;
+                        var loader = x.GameVersions.Contains(loaderName);
                         return valid && game && loader;
                     }
 

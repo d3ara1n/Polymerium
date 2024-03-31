@@ -86,12 +86,12 @@ namespace Polymerium.App.ViewModels
         {
             if (maybeKey is string key)
             {
-                Profile? got = _profileManager.GetProfile(key);
+                var got = _profileManager.GetProfile(key);
                 if (got != null)
                 {
                     Profile = new ProfileModel(key, got, _thumbnailSaver.Get(key),
                         _instanceStatusService.MustHave(key));
-                    if (got.AccountId != null && _accountManager.TryGetByUuid(got.AccountId, out IAccount? result))
+                    if (got.AccountId != null && _accountManager.TryGetByUuid(got.AccountId, out var result))
                     {
                         Account = new AccountModel(result, defaultUuid, DummyCommand.Instance, DummyCommand.Instance);
                     }
@@ -151,7 +151,7 @@ namespace Polymerium.App.ViewModels
 
         private bool CanOpenAssetFolder(AssetKind kind)
         {
-            string path = GetAssetFolderPath(kind);
+            var path = GetAssetFolderPath(kind);
             return Directory.Exists(path);
         }
 
@@ -180,13 +180,13 @@ namespace Polymerium.App.ViewModels
 
         private void Play()
         {
-            _instanceService.LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(
+            _instanceService.DeployAndLaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(
                 Profile.Key);
         }
 
         private void Stop()
         {
-            if (_instanceManager.IsTracking(Profile.Key, out TrackerBase? tracker))
+            if (_instanceManager.IsTracking(Profile.Key, out var tracker))
             {
                 switch (tracker)
                 {

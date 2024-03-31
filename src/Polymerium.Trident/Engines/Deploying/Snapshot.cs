@@ -14,16 +14,16 @@ namespace Polymerium.Trident.Engines.Deploying
             Snapshot snapshot = new();
             Queue<DirectoryInfo> subs = new();
             subs.Enqueue(new DirectoryInfo(directory));
-            while (subs.TryDequeue(out DirectoryInfo? dir))
+            while (subs.TryDequeue(out var dir))
             {
-                DirectoryInfo[] dirs = dir.GetDirectories();
-                foreach (DirectoryInfo d in dirs)
+                var dirs = dir.GetDirectories();
+                foreach (var d in dirs)
                 {
                     subs.Enqueue(d);
                 }
 
-                FileInfo[] files = dir.GetFiles();
-                foreach (FileInfo file in files)
+                var files = dir.GetFiles();
+                foreach (var file in files)
                 {
                     if (file.LinkTarget != null)
                     {
@@ -37,11 +37,11 @@ namespace Polymerium.Trident.Engines.Deploying
 
         public static void Populate(string directory, IList<Entity> toPopulate)
         {
-            Snapshot current = Take(directory);
+            var current = Take(directory);
             Collection<Entity> entities = new(toPopulate);
-            foreach (Entity exist in current)
+            foreach (var exist in current)
             {
-                Entity? final = entities.FirstOrDefault(x => x.Path == exist.Path);
+                var final = entities.FirstOrDefault(x => x.Path == exist.Path);
                 if (final != null)
                 {
                     if (!exist.Target.Equals(final.Target, StringComparison.InvariantCultureIgnoreCase))
@@ -58,9 +58,9 @@ namespace Polymerium.Trident.Engines.Deploying
                 }
             }
 
-            foreach (Entity remain in entities)
+            foreach (var remain in entities)
             {
-                string? dir = Path.GetDirectoryName(remain.Path);
+                var dir = Path.GetDirectoryName(remain.Path);
                 if (dir != null && !Directory.Exists(dir))
                 {
                     Directory.CreateDirectory(dir);

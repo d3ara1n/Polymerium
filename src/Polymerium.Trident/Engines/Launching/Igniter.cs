@@ -14,7 +14,7 @@ namespace Polymerium.Trident.Engines.Launching
         public string? LibraryRootDirectory { get; set; }
         public string? NativeRootDirectory { get; set; }
         public string? MainClass { get; set; }
-        public string? Executable { get; set; }
+        public string? JavaHome { get; set; }
         public string? AssetIndex { get; set; }
         public string? UserName { get; set; }
         public string? VersionName { get; set; }
@@ -34,7 +34,7 @@ namespace Polymerium.Trident.Engines.Launching
 
         public Process Build()
         {
-            string classPath = string.Join(ClassPathSeparator!.Value, Libraries);
+            var classPath = string.Join(ClassPathSeparator!.Value, Libraries);
             Dictionary<string, string> crates = new()
             {
                 { "${auth_player_name}", UserName! },
@@ -59,23 +59,25 @@ namespace Polymerium.Trident.Engines.Launching
                 { "${classpath_separator}", ClassPathSeparator!.ToString()! },
                 { "${classpath}", classPath }
             };
-            ProcessStartInfo start = new(Executable!)
+            var excecutable = Path.Combine(JavaHome!, "bin", IsDebug ? "java.exe" : "javaw.exe");
+            ProcessStartInfo start = new(excecutable)
             {
-                WorkingDirectory = WorkingDirectory!, UseShellExecute = IsDebug
+                WorkingDirectory = WorkingDirectory!,
+                UseShellExecute = IsDebug
             };
-            foreach (string argument in JvmArguments.Where(x => !string.IsNullOrEmpty(x)))
+            foreach (var argument in JvmArguments.Where(x => !string.IsNullOrEmpty(x)))
             {
-                KeyValuePair<string, string> crate = crates.FirstOrDefault(x => argument.Contains(x.Key));
-                string line = crate.Key == null || crate.Value == null
+                var crate = crates.FirstOrDefault(x => argument.Contains(x.Key));
+                var line = crate.Key == null || crate.Value == null
                     ? argument
                     : argument.Replace(crate.Key, crate.Value);
                 start.ArgumentList.Add(line);
             }
 
             start.ArgumentList.Add(MainClass!);
-            foreach (string argument in GameArguments.Where(x => !string.IsNullOrEmpty(x)))
+            foreach (var argument in GameArguments.Where(x => !string.IsNullOrEmpty(x)))
             {
-                string line = crates.TryGetValue(argument, out string? value) ? value : argument;
+                var line = crates.TryGetValue(argument, out var value) ? value : argument;
                 start.ArgumentList.Add(line);
             }
 
@@ -89,9 +91,9 @@ namespace Polymerium.Trident.Engines.Launching
             return this;
         }
 
-        public Igniter SetJreExecutable(string path)
+        public Igniter SetJavaHome(string path)
         {
-            Executable = path;
+            JavaHome = path;
             return this;
         }
 

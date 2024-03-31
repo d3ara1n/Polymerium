@@ -56,7 +56,7 @@ namespace Polymerium.Trident.Services
 
         public ReservedKey RequestKey(string key)
         {
-            string output = FileNameHelper.Sanitize(key).ToLower();
+            var output = FileNameHelper.Sanitize(key).ToLower();
             if (string.IsNullOrEmpty(output))
             {
                 output += "_";
@@ -87,7 +87,7 @@ namespace Polymerium.Trident.Services
                 throw new ArgumentException($"Disposed key: {key.Key}");
             }
 
-            DateTimeOffset now = DateTimeOffset.Now;
+            var now = DateTimeOffset.Now;
             Profile profile = new(name, reference, new Profile.RecordData(
                     new List<Profile.RecordData.TimelinePoint>
                     {
@@ -110,13 +110,13 @@ namespace Polymerium.Trident.Services
 
         public Profile? GetProfile(string key)
         {
-            return Managed.TryGetValue(key, out Handle<Profile>? value) ? value.Value : null;
+            return Managed.TryGetValue(key, out var value) ? value.Value : null;
         }
 
         private void FlushAll()
         {
-            int count = 0;
-            foreach (Handle<Profile> handle in Managed.Values)
+            var count = 0;
+            foreach (var handle in Managed.Values)
             {
                 handle.Flush();
                 count++;
@@ -130,7 +130,7 @@ namespace Polymerium.Trident.Services
 
         public bool Flush(string key)
         {
-            if (!Managed.TryGetValue(key, out Handle<Profile>? handle))
+            if (!Managed.TryGetValue(key, out var handle))
             {
                 return false;
             }
@@ -149,11 +149,11 @@ namespace Polymerium.Trident.Services
                 Directory.CreateDirectory(_context.InstanceDir);
             }
 
-            foreach (string file in Directory.GetFiles(_context.InstanceDir, "*.json"))
+            foreach (var file in Directory.GetFiles(_context.InstanceDir, "*.json"))
             {
                 try
                 {
-                    Handle<Profile>? handle = Handle<Profile>.Create(file, _options);
+                    var handle = Handle<Profile>.Create(file, _options);
                     if (handle != null)
                     {
                         Managed.Add(Path.GetFileNameWithoutExtension(file), handle);
@@ -180,7 +180,7 @@ namespace Polymerium.Trident.Services
 
         public void Discard(string key)
         {
-            if (Managed.TryGetValue(key, out Handle<Profile>? profile))
+            if (Managed.TryGetValue(key, out var profile))
             {
                 profile.Activated = false;
                 Managed.Remove(key);

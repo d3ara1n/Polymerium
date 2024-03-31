@@ -19,8 +19,8 @@ namespace Polymerium.Trident.Helpers
 
         public static async Task<MicrosoftDeviceCodeResponse> AcquireUserCodeAsync(IHttpClientFactory factory)
         {
-            using HttpClient client = factory.CreateClient();
-            HttpResponseMessage response = await client.PostAsync(DEVICE_ENDPOINT,
+            using var client = factory.CreateClient();
+            var response = await client.PostAsync(DEVICE_ENDPOINT,
                 new FormUrlEncodedContent(new Dictionary<string, string>
                 {
                     { "client_id", CLIENT_ID }, { "scope", SCOPE }
@@ -32,18 +32,18 @@ namespace Polymerium.Trident.Helpers
         public static async Task<MicrosoftAuthenticationResponse> AuthenticateUserAsync(IHttpClientFactory factory,
             string deviceCode, int interval = 5, CancellationToken token = default)
         {
-            using HttpClient client = factory.CreateClient();
+            using var client = factory.CreateClient();
             while (true)
             {
                 token.ThrowIfCancellationRequested();
-                HttpResponseMessage response = await client.PostAsync(TOKEN_ENDPOINT,
+                var response = await client.PostAsync(TOKEN_ENDPOINT,
                     new FormUrlEncodedContent(new Dictionary<string, string>
                     {
                         { "grant_type", "urn:ietf:params:oauth:grant-type:device_code" },
                         { "client_id", CLIENT_ID },
                         { "device_code", deviceCode }
                     }));
-                MicrosoftAuthenticationResponse whoa =
+                var whoa =
                     await response.Content.ReadFromJsonAsync<MicrosoftAuthenticationResponse>(OPTIONS);
                 if (!string.IsNullOrEmpty(whoa.Error))
                 {

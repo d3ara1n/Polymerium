@@ -167,10 +167,10 @@ namespace Polymerium.App
 
         private void ClearTasks()
         {
-            TaskModel[] toClears = Tasks
+            var toClears = Tasks
                 .Where(x => x.State.Value != TaskState.Idle && x.State.Value != TaskState.Running)
                 .ToArray();
-            foreach (TaskModel clear in toClears)
+            foreach (var clear in toClears)
             {
                 Tasks.Remove(clear);
             }
@@ -183,7 +183,7 @@ namespace Polymerium.App
                 return;
             }
 
-            int offset = 0;
+            var offset = 0;
             if (args.State == TaskState.Idle)
             {
                 // do nothing
@@ -207,7 +207,7 @@ namespace Polymerium.App
 
         private void InfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args)
         {
-            NotificationItem? raw = sender.Tag as NotificationItem;
+            var raw = sender.Tag as NotificationItem;
             if (raw != null)
             {
                 Notifications.Remove(raw);

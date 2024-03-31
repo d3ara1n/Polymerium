@@ -53,7 +53,7 @@ namespace Polymerium.App.Services
         {
             if (args.State == TaskState.Finished)
             {
-                int time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
+                var time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
                 _logger.LogInformation("Task {model}({task}) ended in {time}s, {state}", task.GetType().Name, args.Key,
                     time, args.State);
                 _notificationService.PopSuccess($"{task.Stage} finished in {time}s");
@@ -62,7 +62,7 @@ namespace Polymerium.App.Services
 
             if (args.State == TaskState.Faulted)
             {
-                int time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
+                var time = (DateTimeOffset.Now - task.CreatedAt).Seconds;
                 _logger.LogInformation("Task {model}({task}) faulted in {time}s, {state}", task.GetType().Name,
                     args.Key,
                     time, args.State);

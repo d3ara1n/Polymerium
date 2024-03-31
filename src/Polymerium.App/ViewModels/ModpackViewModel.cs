@@ -147,17 +147,17 @@ namespace Polymerium.App.ViewModels
             _logger.LogInformation("Start install modpack {project}({version}) from {repo}", project.Id, version.Id,
                 project.Label);
             task.OnDownload();
-            using HttpClient client = _factory.CreateClient();
-            Stream stream = await client.GetStreamAsync(version.Download);
+            using var client = _factory.CreateClient();
+            var stream = await client.GetStreamAsync(version.Download);
             await using MemoryStream memory = new();
             await stream.CopyToAsync(memory);
             memory.Position = 0;
             task.OnExtract();
-            Result<FlattenExtractedContainer, ExtractError> result =
+            var result =
                 await _extractor.ExtractAsync(memory, (project, version), App.Current.Token);
             if (result.IsSuccessful)
             {
-                FlattenExtractedContainer container = result.Value;
+                var container = result.Value;
                 _logger.LogInformation("Downloaded extracted modpack {name} ready to solidify",
                     container.Original.Name);
                 task.OnExport();

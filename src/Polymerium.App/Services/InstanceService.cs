@@ -22,13 +22,13 @@ namespace Polymerium.App.Services
     {
         public bool CanManipulate(string key)
         {
-            InstanceStatusModel status = instanceStatusService.MustHave(key);
+            var status = instanceStatusService.MustHave(key);
             return status is { State.Value: InstanceState.Idle or InstanceState.Stopped };
         }
 
         public void Deploy(string key, Action? onSuccess = null)
         {
-            Profile? profile = profileManager.GetProfile(key);
+            var profile = profileManager.GetProfile(key);
             if (profile == null)
             {
                 throw new KeyNotFoundException($"The key {key} is not found in managed profiles");
@@ -39,13 +39,13 @@ namespace Polymerium.App.Services
 
         public void Launch(string key, Action? onSuccess = null)
         {
-            Profile? profile = profileManager.GetProfile(key);
+            var profile = profileManager.GetProfile(key);
             if (profile == null)
             {
                 throw new KeyNotFoundException($"The key {key} is not found in managed profiles");
             }
 
-            LaunchOptionsBuilder builder = LaunchOptions.Builder();
+            var builder = LaunchOptions.Builder();
             builder
                 .WithWindowSize(new Size((int)profile.GetOverriddenWindowWidth(),
                     (int)profile.GetOverriddenWindowHeight()))
@@ -53,7 +53,7 @@ namespace Polymerium.App.Services
                 .WithAdditionalArguments(profile.GetOverriddenJvmAdditionalArguments())
                 .WithJavaHomeLocator(major =>
                 {
-                    string home = profile.GetOverriddenJvmHome(major);
+                    var home = profile.GetOverriddenJvmHome(major);
                     if (!Directory.Exists(home))
                     {
                         throw new JavaNotFoundException(major);
@@ -63,7 +63,7 @@ namespace Polymerium.App.Services
                 })
                 .Managed();
             if (!string.IsNullOrEmpty(profile.AccountId) &&
-                accountManager.TryGetByUuid(profile.AccountId, out IAccount? account))
+                accountManager.TryGetByUuid(profile.AccountId, out var account))
             {
                 instanceManager.Launch(key, profile, account, builder.Build(), onSuccess, App.Current.Token);
             }
@@ -73,7 +73,7 @@ namespace Polymerium.App.Services
             }
         }
 
-        public void LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(string key)
+        public void DeployAndLaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(string key)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Polymerium.App.Services
 
         public void Reset(string key)
         {
-            string home = trident.InstanceHomePath(key);
+            var home = trident.InstanceHomePath(key);
             if (Directory.Exists(home))
             {
                 Directory.Delete(home, true);
@@ -106,13 +106,13 @@ namespace Polymerium.App.Services
 
         public void Delete(string key)
         {
-            string home = trident.InstanceHomePath(key);
+            var home = trident.InstanceHomePath(key);
             if (Directory.Exists(home))
             {
                 Directory.Delete(home, true);
             }
 
-            string file = trident.InstanceProfilePath(key);
+            var file = trident.InstanceProfilePath(key);
             if (File.Exists(file))
             {
                 File.Delete(file);

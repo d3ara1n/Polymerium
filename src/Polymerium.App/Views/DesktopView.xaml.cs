@@ -4,7 +4,6 @@ using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 using Polymerium.Trident.Services.Extracting;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -39,12 +38,13 @@ namespace Polymerium.App.Views
         {
             DragDropInputDialog inputDialog = new(XamlRoot)
             {
-                CaptionText = "Drag and drop", BodyText = "Any modpack file here"
+                CaptionText = "Drag and drop",
+                BodyText = "Any modpack file here"
             };
             if (await inputDialog.ShowAsync() == ContentDialogResult.Primary)
             {
-                string path = inputDialog.ResultPath;
-                FlattenExtractedContainer? result = ViewModel.ExtractModpack(path);
+                var path = inputDialog.ResultPath;
+                var result = ViewModel.ExtractModpack(path);
                 if (result != null)
                 {
                     ModpackPreviewModel model = new(result);

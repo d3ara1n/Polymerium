@@ -54,7 +54,7 @@ namespace Polymerium.Trident.Models.Eternal
         {
             List<string> gameReq = new();
             List<string> loaderReq = new();
-            foreach (string v in GameVersions)
+            foreach (var v in GameVersions)
             {
                 if (Loader.MODLOADER_NAME_MAPPINGS.Keys.Contains(v))
                 {

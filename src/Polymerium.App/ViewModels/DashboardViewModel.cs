@@ -47,7 +47,7 @@ namespace Polymerium.App.ViewModels
         {
             if (status != null)
             {
-                string path = Path.Combine(_trident.InstanceHomePath(status.Key),
+                var path = Path.Combine(_trident.InstanceHomePath(status.Key),
                     FileNameHelper.GetAssetFolderName(AssetKind.Log));
                 if (Directory.Exists(path))
                 {

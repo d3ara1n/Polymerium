@@ -52,9 +52,9 @@ namespace Polymerium.Trident.Engines
                 finished = new ConcurrentBag<DownloadResult>();
                 total = bag.Count;
 
-                long needed = Math.Min(maxWorkerCount, tasks.Count);
+                var needed = Math.Min(maxWorkerCount, tasks.Count);
 
-                for (int i = 0; i < needed; i++)
+                for (var i = 0; i < needed; i++)
                 {
                     Thread worker = new(WorkWork)
                     {
@@ -75,7 +75,7 @@ namespace Polymerium.Trident.Engines
             {
                 while (done < total && !_token.IsCancellationRequested)
                 {
-                    if (finished.TryTake(out DownloadResult? taken))
+                    if (finished.TryTake(out var taken))
                     {
                         Current = taken;
                         done++;
@@ -94,15 +94,15 @@ namespace Polymerium.Trident.Engines
             {
                 if (thread is Thread self)
                 {
-                    using HttpClient client = _factory.CreateClient();
-                    while (bag.TryTake(out InternalTask? taken))
+                    using var client = _factory.CreateClient();
+                    while (bag.TryTake(out var taken))
                     {
                         if (_token.IsCancellationRequested)
                         {
                             break;
                         }
 
-                        bool overwritten = false;
+                        var overwritten = false;
                         if (File.Exists(taken.Target))
                         {
                             if (taken.Sha1 == null)
@@ -112,8 +112,8 @@ namespace Polymerium.Trident.Engines
                                 continue;
                             }
 
-                            FileStream reader = File.OpenRead(taken.Target);
-                            string hash = BitConverter.ToString(SHA1.HashData(reader)).Replace("-", string.Empty);
+                            var reader = File.OpenRead(taken.Target);
+                            var hash = BitConverter.ToString(SHA1.HashData(reader)).Replace("-", string.Empty);
                             reader.Dispose();
                             if (hash.Equals(taken.Sha1, StringComparison.InvariantCultureIgnoreCase))
                             {
@@ -127,14 +127,14 @@ namespace Polymerium.Trident.Engines
 
                         try
                         {
-                            string? dir = Path.GetDirectoryName(taken.Target);
+                            var dir = Path.GetDirectoryName(taken.Target);
                             if (dir != null && !Directory.Exists(dir))
                             {
                                 Directory.CreateDirectory(dir);
                             }
 
-                            using Stream stream = client.GetStreamAsync(taken.Source, _token).GetAwaiter().GetResult();
-                            using FileStream writer = File.Create(taken.Target);
+                            using var stream = client.GetStreamAsync(taken.Source, _token).GetAwaiter().GetResult();
+                            using var writer = File.Create(taken.Target);
                             stream.CopyTo(writer);
                             stream.Flush();
                             finished.Add(new DownloadResult(taken.Target, taken.Source, taken.Sha1, taken.Index,

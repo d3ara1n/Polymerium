@@ -11,7 +11,7 @@ namespace Polymerium.App.Converters
     {
         public object Convert(object? value, Type targetType, object? parameter, string language)
         {
-            bool res = value switch
+            var res = value switch
             {
                 string it => !string.IsNullOrEmpty(it),
                 IEnumerable<object> it => it.Any(),

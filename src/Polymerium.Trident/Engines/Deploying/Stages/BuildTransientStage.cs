@@ -14,24 +14,24 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
         protected override async Task OnProcessAsync()
         {
             // transfer basic data from artifact
-            Artifact artifact = Context.Artifact!;
+            var artifact = Context.Artifact!;
             TransientData transient = new();
 
-            string indexFile = Context.Trident.AssetIndexPath(artifact.AssetIndex.Id);
+            var indexFile = Context.Trident.AssetIndexPath(artifact.AssetIndex.Id);
             transient.AddPresent(
                 new TransientData.PresentFile(indexFile, artifact.AssetIndex.Url, artifact.AssetIndex.Sha1));
 
-            MinecraftAssetIndex index =
+            var index =
                 await GetAssetIndexAsync(indexFile, artifact.AssetIndex.Url, artifact.AssetIndex.Sha1);
-            foreach (MinecraftAssetIndexObject obj in index.Objects.Values)
+            foreach (var obj in index.Objects.Values)
             {
-                string path = Context.Trident.AssetObjectPath(obj.Hash);
+                var path = Context.Trident.AssetObjectPath(obj.Hash);
                 transient.AddPresent(new TransientData.PresentFile(path,
                     new Uri($"https://resources.download.minecraft.net/{obj.Hash[..2]}/{obj.Hash}", UriKind.Absolute)
                     , obj.Hash));
             }
 
-            foreach (Artifact.Parcel parcel in artifact.Parcels)
+            foreach (var parcel in artifact.Parcels)
             {
                 transient.AddFragile(new TransientData.FragileFile(
                     Path.Combine(Context.Trident.ObjectDir, parcel.SourcePath),
@@ -39,11 +39,11 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                     parcel.Sha1));
             }
 
-            string nativesDir = Context.Trident.NativeDirPath(Context.Key);
+            var nativesDir = Context.Trident.NativeDirPath(Context.Key);
 
-            foreach (Artifact.Library library in artifact.Libraries)
+            foreach (var library in artifact.Libraries)
             {
-                string libraryPath = Context.Trident.LibraryPath(library.Id.Namespace, library.Id.Name,
+                var libraryPath = Context.Trident.LibraryPath(library.Id.Namespace, library.Id.Name,
                     library.Id.Version,
                     library.Id.Platform, library.Id.Extension);
                 transient.AddPresent(
@@ -54,12 +54,12 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 }
             }
 
-            ICollection<string> bag = BuildKeywords(Context.Keywords);
+            var bag = BuildKeywords(Context.Keywords);
             Logger.LogInformation("Run processors with keywords bag: [{bag}]", string.Join(',', bag));
-            Artifact.Processor[] processors = Context.Artifact!.Processors.ToArray();
-            foreach (Artifact.Processor processor in processors)
+            var processors = Context.Artifact!.Processors.ToArray();
+            foreach (var processor in processors)
             {
-                bool check = CheckCondition(processor.Condition, bag);
+                var check = CheckCondition(processor.Condition, bag);
                 if (check)
                 {
                     Logger.LogInformation("Run processor: {id}", processor.Action);
@@ -67,14 +67,14 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                     switch (processor.Action)
                     {
                         case TransientData.PROCESSOR_TRIDENT_STORAGE:
-                            string storageHome =
+                            var storageHome =
                                 Path.Combine(Context.Trident.StorageDir, processor.Data ?? string.Empty);
                             if (Directory.Exists(storageHome))
                             {
                                 List<string> files = new();
                                 FillAllFilesInDirectory(files, storageHome);
-                                string instanceHome = Context.Trident.InstanceHomePath(Context.Key);
-                                foreach (string file in files)
+                                var instanceHome = Context.Trident.InstanceHomePath(Context.Key);
+                                foreach (var file in files)
                                 {
                                     transient.AddPersistent(new TransientData.PersistentFile(file,
                                         Path.Combine(instanceHome, Path.GetRelativePath(storageHome, file))));
@@ -100,14 +100,14 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
         {
             if (Directory.Exists(dir))
             {
-                string[] directories = Directory.GetDirectories(dir);
-                foreach (string directory in directories)
+                var directories = Directory.GetDirectories(dir);
+                foreach (var directory in directories)
                 {
                     FillAllFilesInDirectory(container, Path.Combine(dir, directory));
                 }
 
-                string[] files = Directory.GetFiles(dir);
-                foreach (string file in files)
+                var files = Directory.GetFiles(dir);
+                foreach (var file in files)
                 {
                     container.Add(file);
                 }
@@ -118,8 +118,8 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
         {
             if (File.Exists(indexFile))
             {
-                await using FileStream reader = File.OpenRead(indexFile);
-                string computed = BitConverter.ToString(await SHA1.HashDataAsync(reader)).Replace("-", string.Empty)
+                await using var reader = File.OpenRead(indexFile);
+                var computed = BitConverter.ToString(await SHA1.HashDataAsync(reader)).Replace("-", string.Empty)
                     .ToLower();
                 reader.Position = 0;
                 if (computed == hash)
@@ -129,16 +129,16 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 }
             }
 
-            using HttpClient client = factory.CreateClient();
+            using var client = factory.CreateClient();
             return await client.GetFromJsonAsync<MinecraftAssetIndex>(url, Context.SerializerOptions);
         }
 
         private ICollection<string> BuildKeywords(ICollection<string> original)
         {
             List<string> bag = new(original);
-            foreach (Loader loader in Context.Metadata.Layers.Where(x => x.Enabled).SelectMany(x => x.Loaders))
+            foreach (var loader in Context.Metadata.Layers.Where(x => x.Enabled).SelectMany(x => x.Loaders))
             {
-                string keyword = $"component:{loader.Id}";
+                var keyword = $"component:{loader.Id}";
                 if (!bag.Contains(keyword))
                 {
                     bag.Add(keyword);
@@ -155,13 +155,13 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 return true;
             }
 
-            bool result = false;
-            IEnumerable<string> subs = condition.Split('|').Where(x => !string.IsNullOrEmpty(x));
-            foreach (string sub in subs)
+            var result = false;
+            var subs = condition.Split('|').Where(x => !string.IsNullOrEmpty(x));
+            foreach (var sub in subs)
             {
-                bool inner = true;
-                IEnumerable<string> pieces = sub.Split('&').Where(x => !string.IsNullOrEmpty(x));
-                foreach (string piece in pieces)
+                var inner = true;
+                var pieces = sub.Split('&').Where(x => !string.IsNullOrEmpty(x));
+                foreach (var piece in pieces)
                 {
                     inner &= piece.StartsWith('!') ? !bag.Contains(piece[1..]) : bag.Contains(piece);
                 }

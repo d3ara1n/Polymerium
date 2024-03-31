@@ -96,7 +96,7 @@ namespace Polymerium.App
 
         public static T GetValue<T>(string key)
         {
-            return inner.Values.TryGetValue(key, out object? v) && v is T r ? r : (T)defaults[key];
+            return inner.Values.TryGetValue(key, out var v) && v is T r ? r : (T)defaults[key];
         }
     }
 }

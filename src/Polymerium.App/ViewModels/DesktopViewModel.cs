@@ -76,7 +76,7 @@ namespace Polymerium.App.ViewModels
             {
                 _dispatcher.TryEnqueue(() =>
                 {
-                    InstanceStatusModel status = _instanceStatusService.MustHave(message.Key);
+                    var status = _instanceStatusService.MustHave(message.Key);
                     Entries.Add(new EntryModel(message.Key, message.Item, _thumbnailSaver.Get(message.Key), status,
                         LaunchEntryCommand,
                         DeployEntryCommand,
@@ -119,7 +119,7 @@ namespace Polymerium.App.ViewModels
         {
             if (entry != null)
             {
-                _instanceService.Launch(entry.Key);
+                _instanceService.DeployAndLaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(entry.Key);
             }
         }
 
@@ -127,15 +127,14 @@ namespace Polymerium.App.ViewModels
         {
             if (entry != null)
             {
-                _instanceService.LaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(
-                    entry.Key);
+                _instanceService.Deploy(entry.Key);
             }
         }
 
         public FlattenExtractedContainer? ExtractModpack(string path)
         {
-            using FileStream stream = File.OpenRead(path);
-            Result<FlattenExtractedContainer, ExtractError> result =
+            using var stream = File.OpenRead(path);
+            var result =
                 _extractor.ExtractAsync(stream, null).GetAwaiter().GetResult();
             if (result.IsSuccessful)
             {
@@ -153,7 +152,7 @@ namespace Polymerium.App.ViewModels
 
         public async Task<IEnumerable<MinecraftVersionModel>> FetchVersionAsync()
         {
-            PrismIndex manifest =
+            var manifest =
                 await PrismLauncherHelper.GetManifestAsync(PrismLauncherHelper.UID_MINECRAFT, _factory,
                     App.Current.Token);
             return manifest.Versions.Select(x => new MinecraftVersionModel(x.Version, x.Type switch
@@ -170,7 +169,7 @@ namespace Polymerium.App.ViewModels
 
         public async Task CreateProfileAsync(string instanceName, string version, MemoryStream? thumbnail)
         {
-            ReservedKey key = _profileManager.RequestKey(instanceName);
+            var key = _profileManager.RequestKey(instanceName);
             if (thumbnail != null)
             {
                 thumbnail.Position = 0;

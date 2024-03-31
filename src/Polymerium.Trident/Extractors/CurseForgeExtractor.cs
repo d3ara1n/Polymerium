@@ -32,14 +32,14 @@ namespace Polymerium.Trident.Extractors
 
             try
             {
-                CurseForgeModpackManifest manifest =
+                var manifest =
                     JsonSerializer.Deserialize<CurseForgeModpackManifest>(manifestContent, options);
                 if (manifest.Equals(default))
                 {
                     return Task.FromResult(new Result<ExtractedContainer, ExtractError>(ExtractError.BadFormat));
                 }
 
-                (Loader?, bool Primary)[] loaders =
+                var loaders =
                     manifest.Minecraft.ModLoaders.Select(x => (ToLoader(x), x.Primary)).ToArray();
                 if (loaders.Any(x => x.Item1 == null))
                 {
@@ -80,12 +80,12 @@ namespace Polymerium.Trident.Extractors
 
         private Loader? ToLoader(CurseForgeModpackManifestMinecraftModLoader loader)
         {
-            int index = loader.Id.IndexOf('-');
+            var index = loader.Id.IndexOf('-');
             if (index != -1)
             {
-                string id = loader.Id[..index];
-                string version = loader.Id[(index + 1)..];
-                if (MODLOADER_MAPPINGS.TryGetValue(id, out string? loaderId))
+                var id = loader.Id[..index];
+                var version = loader.Id[(index + 1)..];
+                if (MODLOADER_MAPPINGS.TryGetValue(id, out var loaderId))
                 {
                     return new Loader(loaderId, version);
                 }

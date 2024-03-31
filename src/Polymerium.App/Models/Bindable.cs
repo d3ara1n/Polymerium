@@ -13,7 +13,7 @@ namespace Polymerium.App.Models
             get => getter(owner);
             set
             {
-                TValue old = Value;
+                var old = Value;
                 if (!EqualityComparer<TValue>.Default.Equals(old, value))
                 {
                     setter(owner, value);

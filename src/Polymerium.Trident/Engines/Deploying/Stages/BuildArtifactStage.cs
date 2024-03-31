@@ -10,10 +10,10 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
         protected override async Task OnProcessAsync()
         {
             Context.ArtifactBuilder!.SetViability(Context.Key, Context.Watermark, Context.Trident.HomeDir);
-            Artifact artifact = Context.ArtifactBuilder!.Build();
-            string path = Context.ArtifactPath;
-            string content = JsonSerializer.Serialize(artifact, Context.SerializerOptions);
-            string? dir = Path.GetDirectoryName(path);
+            var artifact = Context.ArtifactBuilder!.Build();
+            var path = Context.ArtifactPath;
+            var content = JsonSerializer.Serialize(artifact, Context.SerializerOptions);
+            var dir = Path.GetDirectoryName(path);
             if (dir != null && !Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);

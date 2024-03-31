@@ -70,7 +70,7 @@ namespace Polymerium.App.ViewModels
             get => selectedLayer;
             set
             {
-                LayerModel? old = selectedLayer;
+                var old = selectedLayer;
                 if (SetProperty(ref selectedLayer, value))
                 {
                     if (old != null)
@@ -109,14 +109,14 @@ namespace Polymerium.App.ViewModels
             AttachmentLoadingState = DataLoadingState.Loading;
             Task.Run(async () =>
             {
-                ResolveEngine engine = _provider.GetRequiredService<ResolveEngine>();
+                var engine = _provider.GetRequiredService<ResolveEngine>();
                 engine.SetFilter(Model.Inner.Metadata.ExtractFilter());
-                foreach (Attachment item in layer.Attachments)
+                foreach (var item in layer.Attachments)
                 {
                     engine.AddAttachment(item);
                 }
 
-                await foreach (ResolveResult result in engine.WithCancellation(layer.Token))
+                await foreach (var result in engine.WithCancellation(layer.Token))
                 {
                     if (layer.Token.IsCancellationRequested)
                     {
@@ -125,7 +125,7 @@ namespace Polymerium.App.ViewModels
 
                     if (result is { IsResolvedSuccessfully: true, Result: not null })
                     {
-                        Package? package = result.Result;
+                        var package = result.Result;
                         AttachmentModel attachment = new(result.Attachment, layer, DataLoadingState.Done,
                             package.ProjectName,
                             package.VersionName, package.Thumbnail, package.Summary, package.Reference, package.Kind,
@@ -151,7 +151,7 @@ namespace Polymerium.App.ViewModels
         {
             if (maybeKey is string key)
             {
-                Profile? profile = _profileManager.GetProfile(key);
+                var profile = _profileManager.GetProfile(key);
                 if (profile != null)
                 {
                     Model = new MetadataModel(key, profile, RenameLayerCommand, UnlockLayerCommand, UpdateLayerCommand,
@@ -199,7 +199,7 @@ namespace Polymerium.App.ViewModels
                 {
                     try
                     {
-                        Package package = await _repositoryAgent.ResolveAsync(attachment.Inner.Label,
+                        var package = await _repositoryAgent.ResolveAsync(attachment.Inner.Label,
                             attachment.Inner.ProjectId,
                             attachment.Inner.VersionId,
                             Model.Inner.Metadata.ExtractFilter(), CancellationToken.None);
@@ -260,7 +260,7 @@ namespace Polymerium.App.ViewModels
         {
             if (layer != null)
             {
-                string? summary =
+                var summary =
                     await _dialogService.RequestTextAsync("Summarize usage of your new layer", layer.Summary.Value);
                 if (summary != null)
                 {
@@ -283,7 +283,7 @@ namespace Polymerium.App.ViewModels
         {
             if (layer != null)
             {
-                bool confirmation = await _dialogService.RequestConfirmationAsync(
+                var confirmation = await _dialogService.RequestConfirmationAsync(
                     "Unlocking a tagged layer will remove its tag and losing the ability to update metadata. Continue?");
                 if (confirmation)
                 {
@@ -300,7 +300,7 @@ namespace Polymerium.App.ViewModels
         private void UpdateLayer(LayerModel? layer)
         {
             if (layer != null)
-                // TODO: pop UpdateLayerModal
+            // TODO: pop UpdateLayerModal
             {
             }
         }
@@ -314,7 +314,7 @@ namespace Polymerium.App.ViewModels
         {
             if (layer != null)
             {
-                bool confirmation = await _dialogService.RequestConfirmationAsync(
+                var confirmation = await _dialogService.RequestConfirmationAsync(
                     "This operation cannot be revoked. Continue?");
                 if (confirmation)
                 {

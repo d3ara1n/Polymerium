@@ -24,7 +24,7 @@ namespace Polymerium.App.Extensions
         {
             services.AddSingleton(provider =>
             {
-                TridentContext ctx = provider.GetRequiredService<TridentContext>();
+                var ctx = provider.GetRequiredService<TridentContext>();
                 return new Store<T>(mappedTo(ctx));
             });
             return services;

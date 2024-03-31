@@ -173,7 +173,7 @@ namespace Polymerium.App.ViewModels
         {
             if (maybeKey is string key)
             {
-                Profile? profile = _profileManager.GetProfile(key);
+                var profile = _profileManager.GetProfile(key);
                 if (profile != null)
                 {
                     Model = new ProfileModel(key, profile, _thumbnailSaver.Get(key),
@@ -198,10 +198,10 @@ namespace Polymerium.App.ViewModels
         {
             if (Directory.Exists(home))
             {
-                string path = Path.Combine(home, "bin", "java.exe");
+                var path = Path.Combine(home, "bin", "java.exe");
                 if (File.Exists(path))
                 {
-                    FileVersionInfo version = FileVersionInfo.GetVersionInfo(path);
+                    var version = FileVersionInfo.GetVersionInfo(path);
                     return $"{version.ProductName ?? "Unknown"}({home})";
                 }
             }
@@ -231,10 +231,10 @@ namespace Polymerium.App.ViewModels
             picker.FileTypeFilter.Add(".exe");
             picker.FileTypeFilter.Add("*");
             picker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
-            StorageFile? file = await picker.PickSingleFileAsync();
+            var file = await picker.PickSingleFileAsync();
             if (file.Path != null)
             {
-                string? home = Path.GetDirectoryName(Path.GetDirectoryName(file.Path));
+                var home = Path.GetDirectoryName(Path.GetDirectoryName(file.Path));
                 if (home != null)
                 {
                     SetValue(Settings.GAME_JVM_HOME, home, nameof(JvmHomeStatus));
@@ -263,7 +263,7 @@ namespace Polymerium.App.ViewModels
 
         private T GetValue<T>(string key)
         {
-            if (Model.Inner.Overrides.TryGetValue(key, out object? v) && v is T r)
+            if (Model.Inner.Overrides.TryGetValue(key, out var v) && v is T r)
             {
                 return r;
             }
@@ -273,7 +273,7 @@ namespace Polymerium.App.ViewModels
 
         private void SetValue<T>(string key, T value, string propertyName)
         {
-            T old = GetValue<T>(key);
+            var old = GetValue<T>(key);
             if (value != null && old != null && !old.Equals(value))
             {
                 Model.Inner.Overrides[key] = value;
@@ -283,7 +283,7 @@ namespace Polymerium.App.ViewModels
 
         private async void RenameInstance()
         {
-            string? newName = await _dialogService.RequestTextAsync("Input new name", InstanceName);
+            var newName = await _dialogService.RequestTextAsync("Input new name", InstanceName);
             if (newName != null)
             {
                 InstanceName = newName;

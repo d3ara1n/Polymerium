@@ -24,8 +24,8 @@ namespace Polymerium.Trident.Data
             {
                 try
                 {
-                    string content = File.ReadAllText(path);
-                    T? inst = JsonSerializer.Deserialize<T>(content, options);
+                    var content = File.ReadAllText(path);
+                    var inst = JsonSerializer.Deserialize<T>(content, options);
                     if (inst != default)
                     {
                         return new Handle<T>(inst, path, options);
@@ -44,13 +44,13 @@ namespace Polymerium.Trident.Data
         {
             if (Activated)
             {
-                string? parent = System.IO.Path.GetDirectoryName(Path);
+                var parent = System.IO.Path.GetDirectoryName(Path);
                 if (parent != null && !Directory.Exists(parent))
                 {
                     Directory.CreateDirectory(parent);
                 }
 
-                string content = JsonSerializer.Serialize(Value, _options);
+                var content = JsonSerializer.Serialize(Value, _options);
                 File.WriteAllText(Path, content);
             }
         }

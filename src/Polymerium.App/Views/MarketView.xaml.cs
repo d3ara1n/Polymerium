@@ -35,7 +35,7 @@ namespace Polymerium.App.Views
 
         private void RepositorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RepositoryModel? first = (RepositoryModel?)e.AddedItems.FirstOrDefault();
+            var first = (RepositoryModel?)e.AddedItems.FirstOrDefault();
             if (first != null)
             {
                 HeaderImage = new ImageBrush

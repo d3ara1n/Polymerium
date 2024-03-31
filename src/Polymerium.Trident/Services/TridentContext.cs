@@ -39,7 +39,7 @@
 
         public string LibraryPath(string ns, string name, string version, string? platform, string extension)
         {
-            string nsDir = string.Join(Path.DirectorySeparatorChar, ns.Split('.'));
+            var nsDir = string.Join(Path.DirectorySeparatorChar, ns.Split('.'));
             return Path.Combine(LibraryDir, nsDir, name, version,
                 platform != null ? $"{name}-{version}-{platform}.{extension}" : $"{name}-{version}.{extension}");
         }

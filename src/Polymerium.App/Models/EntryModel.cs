@@ -30,7 +30,7 @@ namespace Polymerium.App.Models
 
         private string ExtractDateTime(Profile.RecordData.TimelinePoint.TimelimeAction action)
         {
-            DateTimeOffset? record = Inner.Records.ExtractDateTime(action);
+            var record = Inner.Records.ExtractDateTime(action);
             return record != null ? record.Humanize() : "Never";
         }
     }

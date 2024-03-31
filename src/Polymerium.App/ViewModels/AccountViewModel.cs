@@ -71,7 +71,7 @@ namespace Polymerium.App.ViewModels
             {
                 _dispatcher.TryEnqueue(() =>
                 {
-                    AccountModel? found = Entries.FirstOrDefault(x => x.Inner.Uuid == message.Account.Uuid);
+                    var found = Entries.FirstOrDefault(x => x.Inner.Uuid == message.Account.Uuid);
                     if (found != null)
                     {
                         Entries.Remove(found);
@@ -145,7 +145,7 @@ namespace Polymerium.App.ViewModels
 
         public void AddFamilyGuyAccount(string? who)
         {
-            FamilyAccount account = who switch
+            var account = who switch
             {
                 "Stewie" => FamilyAccount.CreateStewie(),
                 "Brian" => FamilyAccount.CreateBrian(),

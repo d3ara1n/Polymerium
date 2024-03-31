@@ -26,7 +26,7 @@ namespace Polymerium.App.Models
         {
             if (e.PropertyName == nameof(Bindable<TOwner, TSource>.Value))
             {
-                TSource changed = _source.Value;
+                var changed = _source.Value;
                 Value = _selector(changed);
                 OnPropertyChanged(nameof(Value));
             }

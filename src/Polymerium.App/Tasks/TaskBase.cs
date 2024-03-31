@@ -58,7 +58,7 @@ namespace Polymerium.App.Tasks
 
         public void Unsubscribe(Action<TaskBase, TaskProgressUpdatedEventArgs> callback)
         {
-            (WeakReference, MethodInfo) first =
+            var first =
                 subscribers.FirstOrDefault(x => x.Item1 == callback.Target && x.Item2 == callback.Method);
             if (!first.Equals(default))
             {

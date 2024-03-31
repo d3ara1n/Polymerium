@@ -58,7 +58,7 @@ namespace Polymerium.App.Modals
         {
             try
             {
-                Project project = await _agent.QueryAsync(Exhibit.Inner.Label, Exhibit.Inner.Id, tokenSource.Token);
+                var project = await _agent.QueryAsync(Exhibit.Inner.Label, Exhibit.Inner.Id, tokenSource.Token);
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     Project = new ProjectModel(project, _filter);

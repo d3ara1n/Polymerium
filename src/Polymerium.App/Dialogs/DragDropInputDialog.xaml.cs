@@ -60,8 +60,8 @@ namespace Polymerium.App.Dialogs
         {
             if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
-                IReadOnlyList<IStorageItem>? files = await e.DataView.GetStorageItemsAsync();
-                IStorageItem? file = files.FirstOrDefault();
+                var files = await e.DataView.GetStorageItemsAsync();
+                var file = files.FirstOrDefault();
                 ResultPath = file?.Path ?? ResultPath;
                 e.Handled = true;
             }
@@ -74,7 +74,7 @@ namespace Polymerium.App.Dialogs
                 WindowNative.GetWindowHandle(App.Current.Window));
             picker.FileTypeFilter.Add("*");
             picker.SuggestedStartLocation = PickerLocationId.Downloads;
-            StorageFile? file = await picker.PickSingleFileAsync();
+            var file = await picker.PickSingleFileAsync();
             ResultPath = file?.Path ?? ResultPath;
         }
 

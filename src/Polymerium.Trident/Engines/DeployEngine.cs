@@ -140,7 +140,7 @@ namespace Polymerium.Trident.Engines
 
             private ResolveAttachmentStage ResolveAttachment()
             {
-                ResolveEngine engine = provider.GetRequiredService<ResolveEngine>();
+                var engine = provider.GetRequiredService<ResolveEngine>();
                 return CreateStage(() => new ResolveAttachmentStage(engine));
             }
 
@@ -156,14 +156,14 @@ namespace Polymerium.Trident.Engines
 
             private SolidifyTransientStage SolidifyTransient()
             {
-                DownloadEngine downloader = provider.GetRequiredService<DownloadEngine>();
+                var downloader = provider.GetRequiredService<DownloadEngine>();
                 return CreateStage(() => new SolidifyTransientStage(downloader));
             }
 
             private T CreateStage<T>(Func<T> factory)
                 where T : StageBase
             {
-                T stage = factory();
+                var stage = factory();
                 stage.Logger = loggerFactory.CreateLogger<T>();
                 stage.Context = context;
                 return stage;

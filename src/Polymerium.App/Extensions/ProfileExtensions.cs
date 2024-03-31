@@ -8,14 +8,14 @@ namespace Polymerium.App.Extensions
     {
         public static string ExtractTypeDisplay(this Profile self)
         {
-            Loader? modloader = self.Metadata.Layers.SelectMany(x => x.Loaders)
+            var modloader = self.Metadata.Layers.SelectMany(x => x.Loaders)
                 .FirstOrDefault(x => Loader.MODLOADER_NAME_MAPPINGS.Keys.Contains(x.Id));
             return modloader != null ? Loader.MODLOADER_NAME_MAPPINGS[modloader.Id] : "Vanilla";
         }
 
         public static T GetOverriddenValue<T>(this Profile self, string key)
         {
-            if (self.Overrides.TryGetValue(key, out object? value) && value is T result)
+            if (self.Overrides.TryGetValue(key, out var value) && value is T result)
             {
                 return result;
             }
@@ -45,7 +45,7 @@ namespace Polymerium.App.Extensions
 
         public static string GetOverriddenJvmHome(this Profile self, uint major)
         {
-            if (self.Overrides.TryGetValue(Settings.GAME_JVM_HOME, out object? value) && value is string result)
+            if (self.Overrides.TryGetValue(Settings.GAME_JVM_HOME, out var value) && value is string result)
             {
                 return result;
             }

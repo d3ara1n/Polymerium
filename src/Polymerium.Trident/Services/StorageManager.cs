@@ -7,7 +7,7 @@ namespace Polymerium.Trident.Services
     {
         public Storage Open(string key)
         {
-            string path = PathOf(key);
+            var path = PathOf(key);
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -18,7 +18,7 @@ namespace Polymerium.Trident.Services
 
         public bool Destroy(string key)
         {
-            string path = PathOf(key);
+            var path = PathOf(key);
             if (Directory.Exists(path))
             {
                 Directory.Delete(path, true);
@@ -30,7 +30,7 @@ namespace Polymerium.Trident.Services
 
         public string RequestKey(string key)
         {
-            string output = FileNameHelper.Sanitize(key);
+            var output = FileNameHelper.Sanitize(key);
             while (Directory.Exists(PathOf(output)))
             {
                 key += '_';

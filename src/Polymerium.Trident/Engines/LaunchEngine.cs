@@ -63,7 +63,7 @@ namespace Polymerium.Trident.Engines
             {
                 while (!inner.HasExited && !cancellationToken.IsCancellationRequested)
                 {
-                    if (queue.TryDequeue(out string? line) && !string.IsNullOrEmpty(line))
+                    if (queue.TryDequeue(out var line) && !string.IsNullOrEmpty(line))
                     {
                         Current = TryConstruct(line);
                         return true;
@@ -94,12 +94,12 @@ namespace Polymerium.Trident.Engines
 
             private Scrap TryConstruct(string data)
             {
-                Match match = pattern.Match(data);
-                if (match.Success && match.Groups.TryGetValue("level", out Group? level) &&
-                    match.Groups.TryGetValue("thread", out Group? thread) &&
-                    match.Groups.TryGetValue("message", out Group? message))
+                var match = pattern.Match(data);
+                if (match.Success && match.Groups.TryGetValue("level", out var level) &&
+                    match.Groups.TryGetValue("thread", out var thread) &&
+                    match.Groups.TryGetValue("message", out var message))
                 {
-                    match.Groups.TryGetValue("source", out Group? sender);
+                    match.Groups.TryGetValue("source", out var sender);
                     return new Scrap(level.Value.ToUpper() switch
                     {
                         "INFO" => ScrapLevel.Information,

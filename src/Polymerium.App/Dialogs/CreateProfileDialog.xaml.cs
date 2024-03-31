@@ -62,12 +62,12 @@ namespace Polymerium.App.Dialogs
         public CreateProfileDialog(XamlRoot root, IEnumerable<MinecraftVersionModel> versions)
         {
             XamlRoot = root;
-            List<MinecraftVersionModel> array = versions.ToList();
+            var array = versions.ToList();
             InitializeComponent();
             Versions = new AdvancedCollectionView(array) { Filter = Filter };
             Versions.SortDescriptions.Add(new SortDescription(nameof(MinecraftVersionModel.ReleasedAt),
                 SortDirection.Descending));
-            MinecraftVersionModel? def = array.Where(x => x.Type == ReleaseType.Release).MaxBy(x => x.ReleasedAt);
+            var def = array.Where(x => x.Type == ReleaseType.Release).MaxBy(x => x.ReleasedAt);
             if (def != null)
             {
                 SelectedVersion = def.Version;
@@ -125,12 +125,12 @@ namespace Polymerium.App.Dialogs
         {
             if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
-                IReadOnlyList<IStorageItem>? files = await e.DataView.GetStorageItemsAsync();
-                IStorageItem? first = files.FirstOrDefault();
+                var files = await e.DataView.GetStorageItemsAsync();
+                var first = files.FirstOrDefault();
                 if (first != null && File.Exists(first.Path) && first.IsOfType(StorageItemTypes.File))
                 {
-                    await using FileStream reader = File.OpenRead(first.Path);
-                    ImmutableArray<MimeTypeMatch> results = INSPECTOR.Inspect(reader).ByMimeType();
+                    await using var reader = File.OpenRead(first.Path);
+                    var results = INSPECTOR.Inspect(reader).ByMimeType();
                     if (results.Any(x => SUPPORTED_MIMES.Contains(x.MimeType)))
                     {
                         reader.Position = 0;
@@ -140,8 +140,8 @@ namespace Polymerium.App.Dialogs
             }
             else if (e.DataView.Contains(StandardDataFormats.Bitmap))
             {
-                RandomAccessStreamReference? bitmap = await e.DataView.GetBitmapAsync();
-                await using Stream? reader = (await bitmap.OpenReadAsync()).AsStreamForRead();
+                var bitmap = await e.DataView.GetBitmapAsync();
+                await using var reader = (await bitmap.OpenReadAsync()).AsStreamForRead();
                 await SetBitmapAsync(reader);
             }
         }
@@ -194,11 +194,11 @@ namespace Polymerium.App.Dialogs
             new[] { ".jpg", ".jpeg", ".bmp", ".png", ".gif" }.ForEach(picker.FileTypeFilter.Add);
             picker.FileTypeFilter.Add("*");
             picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            StorageFile? file = await picker.PickSingleFileAsync();
+            var file = await picker.PickSingleFileAsync();
             if (file != null && file.Path != null && File.Exists(file.Path))
             {
-                await using FileStream reader = File.OpenRead(file.Path);
-                ImmutableArray<MimeTypeMatch> results = INSPECTOR.Inspect(reader).ByMimeType();
+                await using var reader = File.OpenRead(file.Path);
+                var results = INSPECTOR.Inspect(reader).ByMimeType();
                 if (results.Any(x => SUPPORTED_MIMES.Contains(x.MimeType)))
                 {
                     reader.Position = 0;

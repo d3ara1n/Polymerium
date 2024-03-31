@@ -11,23 +11,23 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
     {
         protected override async Task OnProcessAsync()
         {
-            ArtifactBuilder builder = Context.ArtifactBuilder!;
-            using HttpClient client = factory.CreateClient();
-            PrismIndex manifest =
+            var builder = Context.ArtifactBuilder!;
+            using var client = factory.CreateClient();
+            var manifest =
                 await PrismLauncherHelper.GetManifestAsync(PrismLauncherHelper.UID_MINECRAFT, factory, Context.Token);
             Logger.LogInformation("Got manifest with {count} entries", manifest.Versions.Length);
-            PrismIndexVersion index = manifest.Versions.FirstOrDefault(x => x.Version == Context.Metadata.Version);
+            var index = manifest.Versions.FirstOrDefault(x => x.Version == Context.Metadata.Version);
             if (index.Equals(default))
             {
                 throw new BadFormatException("{minecraft_manifest}", $"versions[version:{Context.Metadata.Version}]");
             }
 
-            PrismVersion version = await PrismLauncherHelper.GetVersionAsync(PrismLauncherHelper.UID_MINECRAFT,
+            var version = await PrismLauncherHelper.GetVersionAsync(PrismLauncherHelper.UID_MINECRAFT,
                 index.Version, factory, Context.Token);
             Logger.LogInformation("Got version index {version}({uid})", version.Version, version.Uid);
 
             // Libraries
-            IEnumerable<PrismVersionLibrary> patched =
+            var patched =
                 await PrismLauncherHelper.GetPatchedLibraries(version, factory, Context.Token);
             PrismLauncherHelper.AddValidatedLibrariesToArtifact(builder, patched);
 
@@ -47,9 +47,9 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             Logger.LogInformation("Client jar appended: {name}", version.MainJar.Value.Name);
 
             // Game Arguments
-            IEnumerable<string> arguments =
+            var arguments =
                 version.MinecraftArguments?.Split(' ') ?? Enumerable.Empty<string>();
-            foreach (string? arg in arguments)
+            foreach (var arg in arguments)
             {
                 builder.AddGameArgument(arg);
             }
@@ -74,7 +74,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 "-cp",
                 "${classpath}"
             ];
-            foreach (string arg in jvmArguments)
+            foreach (var arg in jvmArguments)
             {
                 builder.AddJvmArgument(arg);
             }
@@ -82,7 +82,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             Logger.LogInformation("Jvm arguments generated, refer to artifact file for details");
 
             // Java Major Version
-            uint firstJreVersion = version.CompatibleJavaMajors?.FirstOrDefault() ?? 8;
+            var firstJreVersion = version.CompatibleJavaMajors?.FirstOrDefault() ?? 8;
             if (!firstJreVersion.Equals(default))
             {
                 builder.SetJavaMajorVersion(firstJreVersion);
@@ -108,7 +108,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             Logger.LogInformation("Set asset index to {index}", version.AssetIndex.Value.Id);
 
             // Main Class Path
-            string real = version.MainClass ?? "net.minecraft.client.main.Main";
+            var real = version.MainClass ?? "net.minecraft.client.main.Main";
             builder.SetMainClass(real);
 
             Logger.LogInformation("Set main class path to {mainClass}", real);

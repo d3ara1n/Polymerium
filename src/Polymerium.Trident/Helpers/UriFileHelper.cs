@@ -8,7 +8,7 @@ namespace Polymerium.Trident.Helpers
             CancellationToken token = default)
         {
             string[] web = ["http", "https"];
-            string? dir = Path.GetDirectoryName(target);
+            var dir = Path.GetDirectoryName(target);
             if (dir != null && !Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -20,9 +20,9 @@ namespace Polymerium.Trident.Helpers
             }
             else if (web.Any(x => source.Scheme.Equals(x, StringComparison.InvariantCultureIgnoreCase)))
             {
-                using HttpClient client = factory.CreateClient();
+                using var client = factory.CreateClient();
                 await using FileStream writer = new(target, FileMode.Create, FileAccess.Write);
-                Stream reader = await client.GetStreamAsync(source, token);
+                var reader = await client.GetStreamAsync(source, token);
                 await reader.CopyToAsync(writer, token);
             }
             else

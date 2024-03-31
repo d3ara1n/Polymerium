@@ -5,6 +5,7 @@
         public PrismVersionLibraryDownloads Downloads { get; init; }
         public PrismVersionLibraryExtract? Extract { get; init; }
         public string Name { get; init; }
+        public Uri? Url { get; init; }
         public PrismMinecraftVersionLibraryNatives? Natives { get; init; }
         public PrismVersionLibraryRule[]? Rules { get; init; }
     }

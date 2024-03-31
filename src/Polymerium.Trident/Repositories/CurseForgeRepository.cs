@@ -14,7 +14,7 @@ namespace Polymerium.Trident.Repositories
 
         public async Task<Project> QueryAsync(string projectId, CancellationToken token)
         {
-            if (uint.TryParse(projectId, out uint id))
+            if (uint.TryParse(projectId, out var id))
             {
                 return await CurseForgeHelper.GetIntoProjectAsync(logger, clientFactory, id, token);
             }
@@ -25,11 +25,11 @@ namespace Polymerium.Trident.Repositories
         public async Task<Package> ResolveAsync(string projectId, string? versionId, Filter filter,
             CancellationToken token)
         {
-            if (uint.TryParse(projectId, out uint pid))
+            if (uint.TryParse(projectId, out var pid))
             {
                 if (versionId != null)
                 {
-                    if (uint.TryParse(versionId, out uint vid))
+                    if (uint.TryParse(versionId, out var vid))
                     {
                         return await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, pid, vid,
                             filter.Version, filter.ModLoader, token);
@@ -48,7 +48,7 @@ namespace Polymerium.Trident.Repositories
         public async Task<IEnumerable<Exhibit>> SearchAsync(string keyword, uint page, uint limit, Filter filter,
             CancellationToken token)
         {
-            ResourceKind kind = filter.Kind ?? ResourceKind.Modpack;
+            var kind = filter.Kind ?? ResourceKind.Modpack;
             return (await CurseForgeHelper.SearchProjectsAsync(logger, clientFactory, keyword, kind,
                     filter.Version, filter.ModLoader, page, limit, token))
                 .Select(x => new Exhibit(x.Id.ToString(), x.Name, RepositoryLabels.CURSEFORGE, x.Logo?.ThumbnailUrl,

@@ -59,7 +59,7 @@ namespace Polymerium.Trident.Models.Eternal
         {
             List<string> gameReq = new();
             List<string> loaderReq = new();
-            foreach (string v in GameVersions)
+            foreach (var v in GameVersions)
             {
                 if (CurseForgeHelper.MODLOADER_MAPPINGS.Keys.Contains(v))
                 {

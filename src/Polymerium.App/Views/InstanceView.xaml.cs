@@ -4,7 +4,6 @@ using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
-using System;
 using System.Collections.Generic;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -38,7 +37,7 @@ namespace Polymerium.App.Views
 
         private async void AddTodoButton_OnClick(object sender, RoutedEventArgs e)
         {
-            InputDialog dialog = new InputDialog(XamlRoot) { Message = "Describe your task or memo" };
+            var dialog = new InputDialog(XamlRoot) { Message = "Describe your task or memo" };
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             {
                 ViewModel.AddTodo(dialog.Result);
@@ -47,7 +46,7 @@ namespace Polymerium.App.Views
 
         private async void SwitchAccountButton_OnClick(object sender, RoutedEventArgs e)
         {
-            SwitchAccountDialog dialog =
+            var dialog =
                 new SwitchAccountDialog(XamlRoot, new List<AccountModel>(ViewModel.GetAccountCandidates()));
             if (await dialog.ShowAsync() == ContentDialogResult.Primary && dialog.Result != null)
             {

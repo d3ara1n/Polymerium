@@ -90,15 +90,15 @@ namespace Polymerium.Trident.Services
             if (tracker is DeployTracker handle)
             {
                 logger.LogInformation("Begin deploy task for {key}", handle.Key);
-                DateTimeOffset beginTime = DateTimeOffset.Now;
-                DeployEngine deployer = provider.GetRequiredService<DeployEngine>();
+                var beginTime = DateTimeOffset.Now;
+                var deployer = provider.GetRequiredService<DeployEngine>();
                 deployer.SetProfile(handle.Key, handle.Metadata, keywords, handle.Token);
-                foreach (StageBase stage in deployer)
+                foreach (var stage in deployer)
                 {
                     try
                     {
                         logger.LogInformation("Enter deployment stage {stage}", stage.GetType().Name);
-                        DeployStage state = stage switch
+                        var state = stage switch
                         {
                             CheckArtifactStage => DeployStage.CheckArtifact,
                             InstallVanillaStage => DeployStage.InstallVanilla,
@@ -143,7 +143,7 @@ namespace Polymerium.Trident.Services
             if (tracker is LaunchTracker handle)
             {
                 logger.LogInformation("Begin launch task for {key}", handle.Key);
-                DateTimeOffset beginTime = DateTimeOffset.Now;
+                var beginTime = DateTimeOffset.Now;
                 // Account
                 if (!await account.ValidateAsync() && !await account.RefreshAsync())
                 {
@@ -151,33 +151,32 @@ namespace Polymerium.Trident.Services
                 }
 
                 // Ignite
-                string artifactPath = trident.InstanceArtifactPath(tracker.Key);
-                bool found = false;
+                var artifactPath = trident.InstanceArtifactPath(tracker.Key);
+                var found = false;
                 if (File.Exists(artifactPath))
                 {
                     found = true;
-                    string content = await File.ReadAllTextAsync(artifactPath);
-                    Artifact? artifact = JsonSerializer.Deserialize<Artifact>(content, serializerOptions);
+                    var content = await File.ReadAllTextAsync(artifactPath);
+                    var artifact = JsonSerializer.Deserialize<Artifact>(content, serializerOptions);
                     if (artifact != null &&
                         artifact.Verify(tracker.Key, profile.Metadata.ComputeWatermark(), trident.HomeDir))
                     {
-                        uint jreVersion = artifact.JavaMajorVersion;
+                        var jreVersion = artifact.JavaMajorVersion;
                         try
                         {
-                            string jreExecutable = Path.Combine(options.JavaHomeLocator.Invoke(jreVersion), "bin",
-                                "javaw.exe");
-                            string working_dir = trident.InstanceHomePath(tracker.Key);
-                            string library_dir = trident.LibraryDir;
-                            string asset_dir = trident.AssetDir;
-                            string native_dir = trident.NativeDirPath(tracker.Key);
-                            Igniter igniter = artifact.MakeIgniter(trident);
+                            var jreHome = options.JavaHomeLocator.Invoke(jreVersion);
+                            var working_dir = trident.InstanceHomePath(tracker.Key);
+                            var library_dir = trident.LibraryDir;
+                            var asset_dir = trident.AssetDir;
+                            var native_dir = trident.NativeDirPath(tracker.Key);
+                            var igniter = artifact.MakeIgniter(trident);
                             igniter
                                 .AddGameArgument("--width")
                                 .AddGameArgument("${resolution_width}")
                                 .AddGameArgument("--height")
                                 .AddGameArgument("${resolution_height}");
                             igniter
-                                .SetJreExecutable(jreExecutable)
+                                .SetJavaHome(jreHome)
                                 .SetWorkingDirectory(working_dir)
                                 .SetAssetRootDirectory(asset_dir)
                                 .SetNativetRootDirectory(native_dir)
@@ -197,21 +196,20 @@ namespace Polymerium.Trident.Services
                                 .SetWindowSize(options.WindowSize)
                                 .SetMaxMemory(options.MaxMemory)
                                 .SetReleaseType("Polyermium");
-                            foreach (string additional in options.AdditionalArguments.Split(' '))
+                            foreach (var additional in options.AdditionalArguments.Split(' '))
                             {
                                 igniter.AddJvmArgument(additional);
                             }
-
-                            Process process = igniter.Build();
+                            var process = igniter.Build();
                             await File.WriteAllLinesAsync(
                                 Path.Combine(trident.InstanceHomePath(tracker.Key), "trident.launchdump.txt"),
                                 process.StartInfo.ArgumentList);
                             handle.OnFired();
                             if (options.Mode == LaunchMode.Managed)
                             {
-                                LaunchEngine launcher = provider.GetRequiredService<LaunchEngine>();
+                                var launcher = provider.GetRequiredService<LaunchEngine>();
                                 launcher.SetTarget(process);
-                                await foreach (Scrap scrap in launcher.WithCancellation(handle.Token)
+                                await foreach (var scrap in launcher.WithCancellation(handle.Token)
                                                    .ConfigureAwait(false))
                                 {
                                     handle.OnDropped(scrap);
@@ -235,7 +233,7 @@ namespace Polymerium.Trident.Services
                         }
                         catch (Exception e)
                         {
-                            logger.LogError(e, "Compile launch arguments failed due to exception: {ex}", e.Message);
+                            logger.LogError(e, "Launch failed due to exception: {ex}", e.Message);
                             profile.Records.Timeline.Add(new Profile.RecordData.TimelinePoint(false, profile.Reference,
                                 Profile.RecordData.TimelinePoint.TimelimeAction.Play, beginTime, DateTimeOffset.Now));
                             throw new LaunchException(tracker.Key, e);

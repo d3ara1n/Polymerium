@@ -40,7 +40,7 @@ namespace Polymerium.App
             Provider = services.BuildServiceProvider();
         }
 
-        public static new App Current => (App)Application.Current;
+        public static App Current => (App)Application.Current;
 
         public IServiceProvider Provider { get; }
 
@@ -160,7 +160,7 @@ namespace Polymerium.App
                 Content = layout,
                 SystemBackdrop = new MicaBackdrop()
             };
-            ApplicationDataContainer? settings = ApplicationData.Current.LocalSettings;
+            var settings = ApplicationData.Current.LocalSettings;
             window.SetTitleBar(layout.Titlebar);
             window.Activated += (_, args) =>
                 layout.OnActivate(args.WindowActivationState != WindowActivationState.Deactivated);
@@ -169,7 +169,7 @@ namespace Polymerium.App
                 if (window.AppWindow.Presenter.Kind is AppWindowPresenterKind.Default
                     or AppWindowPresenterKind.Overlapped)
                 {
-                    SizeInt32 size = window.AppWindow.Size;
+                    var size = window.AppWindow.Size;
                     settings.Values[KEY_HEIGHT] = size.Height;
                     settings.Values[KEY_WIDTH] = size.Width;
                 }
@@ -185,9 +185,9 @@ namespace Polymerium.App
             layout.SetMainMenu(navigation.MainNavMenu);
             layout.SetSideMenu(navigation.SideNavMenu);
             layout.SetHandler((view, parameter, info) => navigation.Navigate(view, parameter, info, true));
-            if (settings.Values.TryGetValue(KEY_HEIGHT, out object? h) && h is int height
+            if (settings.Values.TryGetValue(KEY_HEIGHT, out var h) && h is int height
                                                                        && settings.Values.TryGetValue(KEY_WIDTH,
-                                                                           out object? w) &&
+                                                                           out var w) &&
                                                                        w is int width)
             {
                 window.AppWindow.Resize(new SizeInt32(width, height));

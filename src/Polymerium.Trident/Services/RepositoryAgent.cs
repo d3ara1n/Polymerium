@@ -43,8 +43,8 @@ namespace Polymerium.Trident.Services
                 {
                     if (DateTime.UtcNow - File.GetLastWriteTimeUtc(path) < expireIn)
                     {
-                        string content = await File.ReadAllTextAsync(path, token);
-                        T? cached = JsonSerializer.Deserialize<T>(content);
+                        var content = await File.ReadAllTextAsync(path, token);
+                        var cached = JsonSerializer.Deserialize<T>(content);
                         if (cached != null)
                         {
                             logger.LogDebug("Cache hit: {path}", path);
@@ -66,12 +66,12 @@ namespace Polymerium.Trident.Services
 
             try
             {
-                T result = await action(token);
-                string? save = path ?? saveTo?.Invoke(result);
+                var result = await action(token);
+                var save = path ?? saveTo?.Invoke(result);
                 if (save != null)
                 {
-                    string content = JsonSerializer.Serialize(result);
-                    string? dir = Path.GetDirectoryName(save);
+                    var content = JsonSerializer.Serialize(result);
+                    var dir = Path.GetDirectoryName(save);
                     if (!Directory.Exists(dir))
                     {
                         Directory.CreateDirectory(dir!);

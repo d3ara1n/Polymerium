@@ -43,18 +43,18 @@ namespace Polymerium.Trident.Services
         private void Scan()
         {
             Managed.Clear();
-            string path = _trident.AccountVaultFile;
+            var path = _trident.AccountVaultFile;
             if (File.Exists(path))
             {
                 try
                 {
-                    string content = File.ReadAllText(path);
-                    AccountVault? vault = JsonSerializer.Deserialize<AccountVault>(content, _options);
+                    var content = File.ReadAllText(path);
+                    var vault = JsonSerializer.Deserialize<AccountVault>(content, _options);
                     DefaultUuid = vault?.Default;
-                    foreach (AccountEntry entry in vault?.Entries ?? Enumerable.Empty<AccountEntry>())
+                    foreach (var entry in vault?.Entries ?? Enumerable.Empty<AccountEntry>())
                     {
-                        string unmasked = Encoding.UTF8.GetString(entry.Opaque);
-                        IAccount? account = JsonSerializer.Deserialize(unmasked, entry.Type switch
+                        var unmasked = Encoding.UTF8.GetString(entry.Opaque);
+                        var account = JsonSerializer.Deserialize(unmasked, entry.Type switch
                         {
                             nameof(MicrosoftAccount) => typeof(MicrosoftAccount),
                             nameof(AuthlibAccount) => typeof(AuthlibAccount),
@@ -74,8 +74,8 @@ namespace Polymerium.Trident.Services
 
         private void Flush()
         {
-            string path = _trident.AccountVaultFile;
-            string? dir = Path.GetDirectoryName(path);
+            var path = _trident.AccountVaultFile;
+            var dir = Path.GetDirectoryName(path);
             if (dir != null && !Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -84,14 +84,14 @@ namespace Polymerium.Trident.Services
             List<AccountEntry> list = new();
             try
             {
-                foreach (IAccount account in Managed)
+                foreach (var account in Managed)
                 {
-                    string unmasked = JsonSerializer.Serialize(account, _options);
-                    byte[] masked = Encoding.UTF8.GetBytes(unmasked);
+                    var unmasked = JsonSerializer.Serialize(account, _options);
+                    var masked = Encoding.UTF8.GetBytes(unmasked);
                     list.Add(new AccountEntry(account.GetType().Name, masked));
                 }
 
-                string content = JsonSerializer.Serialize(new AccountVault(DefaultUuid, list), _options);
+                var content = JsonSerializer.Serialize(new AccountVault(DefaultUuid, list), _options);
                 File.WriteAllText(path, content);
             }
             catch (Exception e)
@@ -114,7 +114,7 @@ namespace Polymerium.Trident.Services
 
         public void Remove(string uuid)
         {
-            IAccount? found = Managed.FirstOrDefault(x => x.Uuid == uuid);
+            var found = Managed.FirstOrDefault(x => x.Uuid == uuid);
             if (found != null)
             {
                 Managed.Remove(found);
@@ -125,7 +125,7 @@ namespace Polymerium.Trident.Services
 
         public bool TryGetByUuid(string uuid, [MaybeNullWhen(false)] out IAccount result)
         {
-            IAccount? found = Managed.FirstOrDefault(x => x.Uuid == uuid);
+            var found = Managed.FirstOrDefault(x => x.Uuid == uuid);
             if (found != null)
             {
                 result = found;

@@ -8,13 +8,13 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
     {
         protected override async Task OnProcessAsync()
         {
-            string artifactPath = Context.ArtifactPath;
+            var artifactPath = Context.ArtifactPath;
             if (File.Exists(artifactPath))
             {
                 try
                 {
-                    string content = await File.ReadAllTextAsync(artifactPath);
-                    Artifact? artifact = JsonSerializer.Deserialize<Artifact>(content, Context.SerializerOptions);
+                    var content = await File.ReadAllTextAsync(artifactPath);
+                    var artifact = JsonSerializer.Deserialize<Artifact>(content, Context.SerializerOptions);
                     if (artifact != null && artifact.Verify(Context.Key, Context.Watermark, Context.Trident.HomeDir))
                     {
                         Context.Artifact = artifact;

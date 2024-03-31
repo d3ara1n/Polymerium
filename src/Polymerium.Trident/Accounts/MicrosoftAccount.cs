@@ -32,25 +32,25 @@ namespace Polymerium.Trident.Accounts
         public static async Task<MicrosoftAccount> LoginAsync(IHttpClientFactory factory,
             Action<string, Uri?> codeCallback, CancellationToken token = default)
         {
-            MicrosoftDeviceCodeResponse deviceCode = await MicrosoftHelper.AcquireUserCodeAsync(factory);
+            var deviceCode = await MicrosoftHelper.AcquireUserCodeAsync(factory);
             codeCallback(deviceCode.UserCode, deviceCode.VerificationUri);
-            MicrosoftAuthenticationResponse microsoft =
+            var microsoft =
                 await MicrosoftHelper.AuthenticateUserAsync(factory, deviceCode.DeviceCode, deviceCode.Interval, token);
-            XboxLiveResponse xbox =
+            var xbox =
                 await XboxLiveHelper.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(factory, microsoft.AccessToken);
-            XboxLiveResponse xsts =
+            var xsts =
                 await XboxLiveHelper.AuthorizeForServiceTokenByXboxLiveTokenAsync(factory, xbox.Token);
-            MinecraftLoginResponse minecraft =
+            var minecraft =
                 await MinecraftHelper.AuthenticateByXboxLiveServiceTokenAsync(factory, xsts.Token,
                     xsts.DisplayClaims.Xui.First().Uhs);
-            MinecraftStoreResponse inventory =
+            var inventory =
                 await MinecraftHelper.AcquireAccountInventoryByMinecraftTokenAsync(factory, minecraft.AccessToken);
             if (!inventory.Items.Any())
             {
                 throw new AccountAuthenticationException("The account does not own the game");
             }
 
-            MinecraftProfileResponse profile =
+            var profile =
                 await MinecraftHelper.AcquireAccountProfileByMinecraftTokenAsync(factory, minecraft.AccessToken);
             return new MicrosoftAccount(minecraft.AccessToken, microsoft.RefreshToken, profile.Id, profile.Name);
         }

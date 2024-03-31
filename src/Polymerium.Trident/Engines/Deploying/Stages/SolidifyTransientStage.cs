@@ -12,28 +12,28 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
 
         protected override async Task OnProcessAsync()
         {
-            TransientData transient = Context.Transient!;
+            var transient = Context.Transient!;
 
-            foreach (TransientData.FragileFile fragile in transient.FragileFiles)
+            foreach (var fragile in transient.FragileFiles)
             {
                 downloader.AddTask(new DownloadTask(fragile.SourcePath, fragile.Url, fragile.Sha1, fragile));
             }
 
-            foreach (TransientData.PresentFile present in transient.PresentFiles)
+            foreach (var present in transient.PresentFiles)
             {
                 downloader.AddTask(new DownloadTask(present.SourcePath, present.Url, present.Sha1, present));
             }
 
             Logger.LogInformation("Created download tasks of {count}", downloader.Count);
 
-            uint count = 0u;
+            var count = 0u;
             List<Entity> entities = new();
 
-            Stopwatch watch = Stopwatch.StartNew();
+            var watch = Stopwatch.StartNew();
 
-            CancellationTokenSource cancel = CancellationTokenSource.CreateLinkedTokenSource(Context.Token);
+            var cancel = CancellationTokenSource.CreateLinkedTokenSource(Context.Token);
 
-            await foreach (DownloadResult done in downloader.WithCancellation(cancel.Token).ConfigureAwait(false))
+            await foreach (var done in downloader.WithCancellation(cancel.Token).ConfigureAwait(false))
             {
                 if (done.State == DownloadResult.DownloadResultState.Broken)
                 {
@@ -64,11 +64,11 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
 
             Logger.LogInformation("Download finished in {ms}ms", watch.ElapsedMilliseconds);
 
-            foreach (TransientData.PersistentFile presistent in transient.PersistentFiles)
+            foreach (var presistent in transient.PersistentFiles)
             {
                 if (!File.Exists(presistent.TargetPath))
                 {
-                    string? dir = Path.GetDirectoryName(presistent.TargetPath);
+                    var dir = Path.GetDirectoryName(presistent.TargetPath);
                     if (dir != null && !Directory.Exists(dir))
                     {
                         Directory.CreateDirectory(dir);
@@ -78,7 +78,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                 }
             }
 
-            foreach (TransientData.ExplosiveFile explosive in transient.ExplosiveFiles)
+            foreach (var explosive in transient.ExplosiveFiles)
             {
                 if (!Directory.Exists(explosive.TargetDirectory))
                 {
