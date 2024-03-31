@@ -25,7 +25,11 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                         break;
 
                     case Loader.COMPONENT_FORGE:
-                        await InstallForgeAsync(builder, loader.Version);
+                        await InstallForgeAsync(builder,PrismLauncherHelper.UID_FORGE, loader.Version);
+                        break;
+
+                    case Loader.COMPONENT_NEOFORGE:
+                        await InstallForgeAsync(builder, PrismLauncherHelper.UID_NEOFORGE, loader.Version);
                         break;
 
                     default:
@@ -41,10 +45,10 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             return $"component:{component}";
         }
 
-        private async Task InstallForgeAsync(ArtifactBuilder builder, string version)
+        private async Task InstallForgeAsync(ArtifactBuilder builder, string uid, string version)
         {
             PrismVersion index =
-                await PrismLauncherHelper.GetVersionAsync(PrismLauncherHelper.UID_FORGE, version, factory,
+                await PrismLauncherHelper.GetVersionAsync(uid, version, factory,
                     Context.Token);
 
             PrismLauncherHelper.AddValidatedLibrariesToArtifact(builder,
@@ -72,7 +76,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             builder.AddJvmArgument("-Dforgewrapper.librariesDir=${library_directory}");
 
             Artifact.Library? installer = builder.Libraries.FirstOrDefault(x =>
-                x.Id.Platform == "installer" && x.Id.Namespace == "net.minecraftforge" && x.Id.Name == "forge");
+                x.Id.Platform == "installer" && x.Id.Namespace == uid && x.Id.Name == "forge");
             if (installer != null)
             {
                 builder.AddJvmArgument(

@@ -12,7 +12,6 @@
     <UseWinUI>true</UseWinUI>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enbale</ImplicitUsings>
     <RepositoryUrl>https://github.com/d3ara1n/Polymerium</RepositoryUrl>
   </PropertyGroup>
 

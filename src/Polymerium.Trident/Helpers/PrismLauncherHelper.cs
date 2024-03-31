@@ -15,6 +15,7 @@ namespace Polymerium.Trident.Helpers
 
         public const string UID_MINECRAFT = "net.minecraft";
         public const string UID_FORGE = "net.minecraftforge";
+        public const string UID_NEOFORGE = "net.neoforged";
 
         private static readonly string OsNameString = PlatformHelper.GetOsName();
         private static readonly string OsFullString = $"{OsNameString}-{PlatformHelper.GetOsArch()}";
@@ -67,7 +68,7 @@ namespace Polymerium.Trident.Helpers
                     );
                     if (lib.Downloads.Classifiers.TryGetValue(classifier, out PrismVersionArtifact download))
                     {
-                        // 假设 native 库本身没有 platform 字段，这是个大胆的假设！
+                        // NOTE: 假设 native 库本身没有 platform 字段，这是个大胆的假设！
                         builder.AddLibrary($"{lib.Name}:{classifier}", download.Url, download.Sha1, true, false);
                     }
                 }
