@@ -2,11 +2,9 @@
 using Microsoft.Extensions.Logging;
 using NanoidDotNet;
 using Polymerium.Trident.Services.Extracting;
-using Polymerium.Trident.Services.Profiles;
-using Polymerium.Trident.Services.Storages;
 using System.IO.Compression;
 using Trident.Abstractions;
-using Trident.Abstractions.Errors;
+using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Extractors;
 using Trident.Abstractions.Resources;
 
@@ -19,17 +17,14 @@ namespace Polymerium.Trident.Services
         StorageManager storageManager,
         ThumbnailSaver thumbnailSaver)
     {
-        public async Task<Result<FlattenExtractedContainer, ExtractError>> ExtractAsync(Stream stream,
+        public async Task<FlattenExtractedContainer> ExtractAsync(Stream stream,
             (Project, Project.Version)? source, CancellationToken token = default)
         {
-            if (token.IsCancellationRequested)
-            {
-                return new Result<FlattenExtractedContainer, ExtractError>(ExtractError.Cancelled);
-            }
+            token.ThrowIfCancellationRequested();
 
             try
             {
-                ZipArchive archive = new(stream, ZipArchiveMode.Read, true);
+                using ZipArchive archive = new(stream, ZipArchiveMode.Read, true);
                 var fileNames = archive.Entries.Select(x => x.FullName).ToArray();
                 var extractor = extractors.FirstOrDefault(x => fileNames.Contains(x.IdenticalFileName));
                 if (extractor != null)
@@ -40,33 +35,25 @@ namespace Polymerium.Trident.Services
                     await using var manifestStream = manifestEntry.Open();
                     using StreamReader manifestReader = new(manifestStream);
                     var manifestContent = await manifestReader.ReadToEndAsync(token);
-                    var result =
+                    var extracted =
                         await extractor.ExtractAsync(manifestContent, context, token);
-                    if (result.IsSuccessful)
-                    {
-                        var extracted = result.Value;
-                        var flatten =
-                            FlattenExtractedContainer.FromExtracted(extracted, archive, source);
-                        archive.Dispose();
-                        return new Result<FlattenExtractedContainer, ExtractError>(flatten);
-                    }
-
-                    archive.Dispose();
-                    logger.LogInformation("Modpack found no extractor matched");
-                    return new Result<FlattenExtractedContainer, ExtractError>(result.Error);
+                    var flatten =
+                        FlattenExtractedContainer.FromExtracted(extracted, archive, source);
+                    return flatten;
                 }
 
-                return new Result<FlattenExtractedContainer, ExtractError>(ExtractError.Unsupported);
+                logger.LogInformation("Modpack found no extractor matched");
+                throw new NotSupportedException();
             }
-            catch (InvalidDataException)
+            catch (InvalidDataException e)
             {
                 logger.LogInformation("Passing stream contains no valid zip data");
-                return new Result<FlattenExtractedContainer, ExtractError>(ExtractError.FileNotFound);
+                throw new BadFormatException("<stream>", e);
             }
             catch (Exception e)
             {
                 logger.LogError("Unknown exception occurred while processing: {message}", e.Message);
-                return new Result<FlattenExtractedContainer, ExtractError>(ExtractError.Exception);
+                throw;
             }
         }
 

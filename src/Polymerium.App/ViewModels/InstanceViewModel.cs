@@ -12,7 +12,6 @@ using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
-using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.ViewModels
 {

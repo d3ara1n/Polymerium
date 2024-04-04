@@ -3,14 +3,17 @@ using DotNext.Collections.Generic;
 using Polymerium.Trident.Models.CurseForge;
 using Polymerium.Trident.Repositories;
 using System.Text.Json;
-using Trident.Abstractions.Errors;
+using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Extractors;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Extractors
 {
-    public class CurseForgeExtractor(JsonSerializerOptions options) : IExtractor
+    public class CurseForgeExtractor() : IExtractor
     {
+        public string IdenticalFileName => "manifest.json";
+        public static readonly JsonSerializerOptions OPTIONS = new(JsonSerializerDefaults.Web);
+
         private static readonly IDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
         {
             { "forge", Loader.COMPONENT_FORGE },
@@ -19,56 +22,44 @@ namespace Polymerium.Trident.Extractors
             { "quilt", Loader.COMPONENT_QUILT }
         };
 
-        public string IdenticalFileName => "manifest.json";
-
-        public Task<Result<ExtractedContainer, ExtractError>> ExtractAsync(string manifestContent,
+        public Task<ExtractedContainer> ExtractAsync(string manifestContent,
             ExtractorContext context,
             CancellationToken token)
         {
-            if (token.IsCancellationRequested)
+            token.ThrowIfCancellationRequested();
+
+
+            var manifest = JsonSerializer.Deserialize<CurseForgeModpackManifest>(manifestContent, OPTIONS);
+            if (manifest.Equals(default))
             {
-                return Task.FromResult(new Result<ExtractedContainer, ExtractError>(ExtractError.Cancelled));
+                throw new BadFormatException(IdenticalFileName, 0, 0);
             }
 
-            try
+            var loaders =
+                manifest.Minecraft.ModLoaders.Select(x => (ToLoader(x), x.Primary)).ToArray();
+            if (loaders.Any(x => x.Item1 == null))
             {
-                var manifest =
-                    JsonSerializer.Deserialize<CurseForgeModpackManifest>(manifestContent, options);
-                if (manifest.Equals(default))
-                {
-                    return Task.FromResult(new Result<ExtractedContainer, ExtractError>(ExtractError.BadFormat));
-                }
-
-                var loaders =
-                    manifest.Minecraft.ModLoaders.Select(x => (ToLoader(x), x.Primary)).ToArray();
-                if (loaders.Any(x => x.Item1 == null))
-                {
-                    return Task.FromResult(new Result<ExtractedContainer, ExtractError>(ExtractError.Unsupported));
-                }
-
-                ContainedLayer required = new() { Summary = manifest.Name, OverrideDirectoryName = manifest.Overrides };
-                required.Loaders.AddAll(loaders.Where(x => x.Primary).Select(x => x.Item1!));
-                required.Attachments.AddAll(manifest.Files.Where(x => x.Required).Select(ToAttachment));
-                ContainedLayer optional = new() { Summary = $"{manifest.Name}(Optional)" };
-                optional.Loaders.AddAll(loaders.Where(x => !x.Primary).Select(x => x.Item1!));
-                optional.Attachments.AddAll(manifest.Files.Where(x => !x.Required).Select(ToAttachment));
-                ExtractedContainer container = new(manifest.Name, manifest.Minecraft.Version);
-                if (required.Loaders.Any() && required.Attachments.Any())
-                {
-                    container.Layers.Add(required);
-                }
-
-                if (optional.Loaders.Any() && optional.Attachments.Any())
-                {
-                    container.Layers.Add(optional);
-                }
-
-                return Task.FromResult(new Result<ExtractedContainer, ExtractError>(container));
+                throw new NotSupportedException();
             }
-            catch (JsonException)
+
+            ContainedLayer required = new() { Summary = manifest.Name, OverrideDirectoryName = manifest.Overrides };
+            required.Loaders.AddAll(loaders.Where(x => x.Primary).Select(x => x.Item1!));
+            required.Attachments.AddAll(manifest.Files.Where(x => x.Required).Select(ToAttachment));
+            ContainedLayer optional = new() { Summary = $"{manifest.Name}(Optional)" };
+            optional.Loaders.AddAll(loaders.Where(x => !x.Primary).Select(x => x.Item1!));
+            optional.Attachments.AddAll(manifest.Files.Where(x => !x.Required).Select(ToAttachment));
+            ExtractedContainer container = new(manifest.Name, manifest.Minecraft.Version);
+            if (required.Loaders.Any() && required.Attachments.Any())
             {
-                return Task.FromResult(new Result<ExtractedContainer, ExtractError>(ExtractError.BadFormat));
+                container.Layers.Add(required);
             }
+
+            if (optional.Loaders.Any() && optional.Attachments.Any())
+            {
+                container.Layers.Add(optional);
+            }
+
+            return Task.FromResult(container);
         }
 
         private Attachment ToAttachment(CurseForgeModpackManifestFile file)

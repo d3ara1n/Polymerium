@@ -35,7 +35,6 @@ namespace Polymerium.Trident.Engines
             private readonly int total;
 
             private int done;
-            private int previous;
 
             public DownloadEnumerator(
                 ICollection<DownloadTask> tasks,

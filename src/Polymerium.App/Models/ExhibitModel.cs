@@ -19,7 +19,7 @@ namespace Polymerium.App.Models
 
         public Exhibit Inner { get; }
         public ICommand GotoDetailViewCommand { get; }
-        public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? AssetPath.PLACEHOLDER_DEFAULT_DIRT;
+        public string Thumbnail => (Inner.Thumbnail?.IsAbsoluteUri ?? false ? Inner.Thumbnail?.AbsoluteUri : null) ?? AssetPath.PLACEHOLDER_DEFAULT_DIRT;
         public string CreatedAt => Inner.CreatedAt.Humanize();
         public string UpdatedAt => Inner.UpdatedAt.Humanize();
         public string DownloadCount => ((int)Inner.DownloadCount).ToMetric(decimals: 2);

@@ -2,27 +2,40 @@
 {
     public struct LabrinthProject
     {
-        public string Id { get; init; }
-        public string Slug { get; init; }
-        public string Title { get; init; }
-        public string Summary { get; init; }
-        public string Description { get; init; }
-        public string[] Categories { get; init; }
-        public string[] AdditionalCategories { get; init; }
-        public string[] ProjectTypes { get; init; }
-        public string TeamId { get; init; }
-        public string Name { get; init; }
-        public string[] Games { get; init; }
-        public DateTimeOffset Published { get; init; }
-        public DateTimeOffset Updated { get; init; }
-        public DateTimeOffset Approved { get; init; }
-        public DateTimeOffset Queued { get; init; }
-        public string Status { get; init; }
-        public uint Downloads { get; init; }
-        public uint Followers { get; init; }
-        public string[] Loaders { get; init; }
-        public string[] Versions { get; init; }
-        public Uri IconUrl { get; init; }
-        public LabrinthProjectGalleryItem[] Gallery { get; init; }
+        public string? Id { get; set; }
+        public string Title { get; set; }
+        public string Slug { get; set; }
+        public string ProjectType { get; set; }
+        public string Team { get; set; }
+        public string Description { get; set; }
+        public string Body { get; set; }
+        public Uri? BodyUrl { get; set; }
+        public DateTimeOffset Published { get; set; }
+        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? Approved { get; set; }
+        public DateTimeOffset? Queued { get; set; }
+        public string Status { get; set; }
+        public object? RequestedStatus { get; set; }
+        public object? ModeratorMessage { get; set; }
+        public object? License { get; set; }
+        public string ClientSide { get; set; }
+        public string ServerSide { get; set; }
+        public uint Downloads { get; set; }
+        public uint Followers { get; set; }
+        public IEnumerable<string> Categories { get; set; }
+        public IEnumerable<string> AdditionalCategories { get; set; }
+        public IEnumerable<string> GameVersions { get; set; }
+        public IEnumerable<string> Loaders { get; set; }
+        public IEnumerable<string> Versions { get; set; }
+        public Uri IconUrl { get; set; }
+        public Uri? IssuesUrl { get; set; }
+        public Uri? SourceUrl { get; set; }
+        public Uri? WikiUrl { get; set; }
+        public Uri? DiscordUrl { get; set; }
+        public IEnumerable<object> DonationUrls { get; set; }
+        public IEnumerable<LabrinthProjectGalleryItem> Gallery { get; set; }
+        public object? FlameAnvilProject { get; set; }
+        public object? FlameAnvilUser { get; set; }
+        public uint? Color { get; set; }
     }
 }

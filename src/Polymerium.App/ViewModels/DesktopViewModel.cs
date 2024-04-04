@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using DotNext;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Messages;
@@ -11,7 +10,6 @@ using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Models.PrismLauncher;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Extracting;
-using Polymerium.Trident.Services.Profiles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,7 +18,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Trident.Abstractions;
-using Trident.Abstractions.Errors;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.ViewModels
@@ -119,7 +116,9 @@ namespace Polymerium.App.ViewModels
         {
             if (entry != null)
             {
-                _instanceService.DeployAndLaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(entry.Key);
+                _instanceService
+                    .DeployAndLaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(
+                        entry.Key);
             }
         }
 
@@ -134,15 +133,17 @@ namespace Polymerium.App.ViewModels
         public FlattenExtractedContainer? ExtractModpack(string path)
         {
             using var stream = File.OpenRead(path);
-            var result =
-                _extractor.ExtractAsync(stream, null).GetAwaiter().GetResult();
-            if (result.IsSuccessful)
-            {
-                return result.Value;
-            }
 
-            _notification.PopInformation($"Invalid input {Path.GetFileName(path)}: {result.Error}");
-            return null;
+            try
+            {
+                var result = _extractor.ExtractAsync(stream, null).GetAwaiter().GetResult();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _notification.PopInformation($"Invalid input {Path.GetFileName(path)}: {e.Message}");
+                return null;
+            }
         }
 
         public void ApplyExtractedModpack(ModpackPreviewModel model)

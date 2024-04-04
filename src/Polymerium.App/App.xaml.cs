@@ -40,7 +40,7 @@ namespace Polymerium.App
             Provider = services.BuildServiceProvider();
         }
 
-        public static App Current => (App)Application.Current;
+        public static new App Current => (App)Application.Current;
 
         public IServiceProvider Provider { get; }
 
@@ -130,7 +130,8 @@ namespace Polymerium.App
 
             // Extractors
             services
-                .AddExtractor<CurseForgeExtractor>();
+                .AddExtractor<CurseForgeExtractor>()
+                .AddExtractor<ModrinthExtractor>();
 
             // Engines
             services
@@ -186,9 +187,9 @@ namespace Polymerium.App
             layout.SetSideMenu(navigation.SideNavMenu);
             layout.SetHandler((view, parameter, info) => navigation.Navigate(view, parameter, info, true));
             if (settings.Values.TryGetValue(KEY_HEIGHT, out var h) && h is int height
-                                                                       && settings.Values.TryGetValue(KEY_WIDTH,
-                                                                           out var w) &&
-                                                                       w is int width)
+                                                                   && settings.Values.TryGetValue(KEY_WIDTH,
+                                                                       out var w) &&
+                                                                   w is int width)
             {
                 window.AppWindow.Resize(new SizeInt32(width, height));
             }

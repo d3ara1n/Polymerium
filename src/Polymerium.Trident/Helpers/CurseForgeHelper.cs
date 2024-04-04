@@ -71,7 +71,7 @@ namespace Polymerium.Trident.Helpers
                 CLASSID_SHADERPACK => ResourceKind.ShaderPack,
                 CLASSID_MODPACK => ResourceKind.Modpack,
                 CLASSID_DATAPACK => ResourceKind.DataPack,
-                _ => throw new NotImplementedException()
+                _ => throw new NotSupportedException()
             };
         }
 
@@ -100,12 +100,7 @@ namespace Polymerium.Trident.Helpers
             try
             {
                 var response = await client.GetFromJsonAsync<ResponseWrapper<T>>(url, token);
-                if (response?.Data != null)
-                {
-                    return response.Data;
-                }
-
-                throw new BadFormatException(url, "data");
+                return response.Data;
             }
             catch (Exception e)
             {
@@ -124,12 +119,7 @@ namespace Polymerium.Trident.Helpers
             try
             {
                 var response = await client.GetFromJsonAsync<ResponseWrapper<string>>(url, token);
-                if (response?.Data != null)
-                {
-                    return response.Data;
-                }
-
-                throw new BadFormatException(url, "data");
+                return response.Data;
             }
             catch (Exception e)
             {
@@ -148,14 +138,8 @@ namespace Polymerium.Trident.Helpers
             client.DefaultRequestHeaders.Add("x-api-key", API_KEY);
             try
             {
-                var response =
-                    await client.GetFromJsonAsync<ResponseWrapper<IEnumerable<T>>>(url, token);
-                if (response?.Data != null)
-                {
-                    return response.Data;
-                }
-
-                throw new BadFormatException(url, "data");
+                var response = await client.GetFromJsonAsync<ResponseWrapper<IEnumerable<T>>>(url, token);
+                return response.Data;
             }
             catch (Exception e)
             {
@@ -171,6 +155,7 @@ namespace Polymerium.Trident.Helpers
             var modLoaderType = modLoaderId switch
             {
                 Loader.COMPONENT_FORGE => 1,
+                Loader.COMPONENT_NEOFORGE => 6,
                 Loader.COMPONENT_FABRIC => 4,
                 Loader.COMPONENT_QUILT => 5,
                 _ => 0
@@ -246,7 +231,7 @@ namespace Polymerium.Trident.Helpers
                         x.ExtractReleaseType(),
                         x.FileDate,
                         x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
-                        x.ExtractRequirement(), ExtractDependencies(x, mod.Id));
+                        x.ExtractRequirement(), x.ExtractDependencies());
                 }).ToList();
             await Task.WhenAll(versionTasks);
             var versions = versionTasks.Where(x => x.IsCompletedSuccessfully)
@@ -302,7 +287,7 @@ namespace Polymerium.Trident.Helpers
 
             if (file.HasValue)
             {
-                Package package = new(
+                var package = new Package(
                     mod.Id.ToString(),
                     mod.Name,
                     file.Value.Id.ToString(),
@@ -320,32 +305,18 @@ namespace Polymerium.Trident.Helpers
                     file.Value.ExtractDownloadUrl(),
                     file.Value.ExtractSha1(),
                     file.Value.ExtractRequirement(),
-                    ExtractDependencies(file.Value, mod.Id)
+                    file.Value.ExtractDependencies()
                 );
                 return package;
             }
 
             throw new ResourceNotFoundException(
-                $"({RepositoryLabels.CURSEFORGE},{projectId},any,Filter({gameVersion},{modLoader}))");
+                $"({RepositoryLabels.CURSEFORGE},{projectId},{(versionId.HasValue ? versionId.ToString() : "any")},Filter({gameVersion},{modLoader}))");
         }
 
-        private static IEnumerable<Dependency> ExtractDependencies(EternalModInfo file, uint projectId)
+        public struct ResponseWrapper<T>
         {
-            return file.Dependencies
-                .Where(x => x.RelationType == 3 || x.RelationType == 2)
-                .Select(x => new Dependency(MakePurl(projectId), x.RelationType == 3));
-        }
-
-        private static IEnumerable<Dependency> ExtractDependencies(EternalModLatestFile file, uint projectId)
-        {
-            return file.Dependencies
-                .Where(x => x.RelationType == 3 || x.RelationType == 2)
-                .Select(x => new Dependency(MakePurl(projectId), x.RelationType == 3));
-        }
-
-        public class ResponseWrapper<T>
-        {
-            public T? Data { get; set; }
+            public T Data { get; init; }
         }
     }
 }

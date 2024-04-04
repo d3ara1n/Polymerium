@@ -16,7 +16,9 @@ namespace Polymerium.App.Models
                     ResourceKind.Mod, DateTimeOffset.Now, DateTimeOffset.Now, 0, string.Empty,
                     Enumerable.Empty<Project.Screenshot>(), Enumerable.Empty<Project.Version>()));
 
-        public string Thumbnail => Inner.Thumbnail?.AbsoluteUri ?? "/Assets/Placeholders/default_dirt.png";
+        public string Thumbnail => (Inner.Thumbnail?.IsAbsoluteUri ?? false ? Inner.Thumbnail?.AbsoluteUri : null) ??
+                                   AssetPath.PLACEHOLDER_DEFAULT_DIRT;
+
         public string CreatedAt => Inner.CreatedAt.Humanize();
         public string UpdatedAt => Inner.UpdatedAt.Humanize();
         public string DownloadCount => ((int)Inner.DownloadCount).ToMetric(decimals: 2);

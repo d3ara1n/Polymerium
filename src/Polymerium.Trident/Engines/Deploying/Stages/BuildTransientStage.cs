@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using Trident.Abstractions.Building;
 using Trident.Abstractions.Exceptions;
-using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages
 {

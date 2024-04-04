@@ -1,20 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using DotNext;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Tasks;
-using Polymerium.Trident.Extractors;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
-using Polymerium.Trident.Services.Extracting;
 using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Trident.Abstractions.Errors;
 using Trident.Abstractions.Resources;
 using Windows.ApplicationModel.DataTransfer;
 
@@ -153,11 +149,9 @@ namespace Polymerium.App.ViewModels
             await stream.CopyToAsync(memory);
             memory.Position = 0;
             task.OnExtract();
-            var result =
-                await _extractor.ExtractAsync(memory, (project, version), App.Current.Token);
-            if (result.IsSuccessful)
+            try
             {
-                var container = result.Value;
+                var container = await _extractor.ExtractAsync(memory, (project, version), App.Current.Token);
                 _logger.LogInformation("Downloaded extracted modpack {name} ready to solidify",
                     container.Original.Name);
                 task.OnExport();
@@ -165,13 +159,11 @@ namespace Polymerium.App.ViewModels
                 _logger.LogInformation("Solidified {name} as an managed instance", container.Original.Name);
                 task.OnFinish();
             }
-            else
+            catch (Exception e)
             {
-                _logger.LogError("Install modpack failed for {error}", result.Error);
-                ExtractException e = new(result.Error,
-                    PurlHelper.MakePurl(project.Label, project.Id, version.Id));
+                _logger.LogError("Install modpack failed for {error}", e.Message);
                 task.OnError(e);
-                throw e;
+                throw;
             }
         }
 

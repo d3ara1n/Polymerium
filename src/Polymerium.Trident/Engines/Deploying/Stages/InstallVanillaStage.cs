@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Helpers;
-using Polymerium.Trident.Models.PrismLauncher;
-using Trident.Abstractions.Building;
 using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Extensions;
 

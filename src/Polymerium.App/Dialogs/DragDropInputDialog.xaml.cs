@@ -3,10 +3,8 @@
 
 using Microsoft.UI.Xaml;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 

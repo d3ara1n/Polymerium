@@ -1,8 +1,5 @@
 ﻿using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Helpers;
-using Polymerium.Trident.Models.Microsoft;
-using Polymerium.Trident.Models.Minecraft;
-using Polymerium.Trident.Models.XboxLive;
 using Trident.Abstractions;
 
 namespace Polymerium.Trident.Accounts

@@ -45,7 +45,7 @@ namespace Polymerium.Trident.Engines
         {
             public bool MoveNext()
             {
-                if (context.Token.IsCancellationRequested || context.IsAborted || context.IsFinished)
+                if (context.Token.IsCancellationRequested)
                 {
                     return false;
                 }

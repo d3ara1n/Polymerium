@@ -16,9 +16,7 @@ namespace Polymerium.Trident.Engines.Deploying
     {
         internal Artifact? Artifact;
         internal ArtifactBuilder? ArtifactBuilder;
-        internal bool IsAborted;
         internal bool IsAttachmentResolved;
-        internal bool IsFinished;
         internal bool IsGameInstalled;
         internal bool IsLoaderProcessed;
         internal bool IsSolidified;

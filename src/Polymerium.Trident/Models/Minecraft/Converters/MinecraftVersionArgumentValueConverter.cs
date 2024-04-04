@@ -9,7 +9,8 @@ namespace Polymerium.Trident.Models.Minecraft.Converters
         {
             if (reader.TokenType == JsonTokenType.String)
             {
-                return [reader.GetString()];
+                var content = reader.GetString();
+                return content != null ? [content] : [];
             }
 
             if (reader.TokenType == JsonTokenType.StartArray)

@@ -10,6 +10,7 @@ namespace Polymerium.Trident.Models.Minecraft.Converters
         {
             if (reader.TokenType == JsonTokenType.String)
             {
+                var content = reader.GetString();
                 return new MinecraftVersionArgument
                 {
                     Rules =
@@ -21,7 +22,8 @@ namespace Polymerium.Trident.Models.Minecraft.Converters
                             Os = new Dictionary<string, bool>()
                         }
                     ],
-                    Value = [reader.GetString()]
+
+                    Value = content != null ? [content] : []
                 };
             }
 

@@ -1,4 +1,5 @@
 ﻿using Polymerium.Trident.Helpers;
+using Polymerium.Trident.Repositories;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Models.Eternal
@@ -72,6 +73,12 @@ namespace Polymerium.Trident.Models.Eternal
             }
 
             return new Requirement(gameReq, loaderReq);
+        }
+
+        public IEnumerable<Dependency> ExtractDependencies()
+        {
+            return Dependencies.Where(x => x.RelationType == 3 || x.RelationType == 2).Select(x =>
+                new Dependency(RepositoryLabels.CURSEFORGE, x.ModId.ToString(), null, x.RelationType == 3));
         }
     }
 }

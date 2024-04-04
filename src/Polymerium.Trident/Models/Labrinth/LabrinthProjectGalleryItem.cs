@@ -2,11 +2,11 @@
 {
     public struct LabrinthProjectGalleryItem
     {
-        public Uri Url { get; init; }
-        public bool Featured { get; init; }
-        public string Name { get; init; }
-        public string Description { get; init; }
-        public DateTimeOffset Created { get; init; }
-        public int Ordering { get; init; }
+        public string Title { get; set; }
+        public Uri Url { get; set; }
+        public bool Featured { get; set; }
+        public string? Description { get; set; }
+        public DateTimeOffset Created { get; set; }
+        public int Ordering { get; set; }
     }
 }

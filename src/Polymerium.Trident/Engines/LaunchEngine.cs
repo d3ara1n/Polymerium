@@ -47,7 +47,7 @@ namespace Polymerium.Trident.Engines
                 process.BeginErrorReadLine();
             }
 
-            public Scrap? Current { get; private set; }
+            public Scrap Current { get; private set; } = null!;
 
             public ValueTask DisposeAsync()
             {
@@ -72,7 +72,7 @@ namespace Polymerium.Trident.Engines
                     await Task.Delay(TIME_DELAY);
                 }
 
-                Current = null;
+                Current = null!;
                 return false;
             }
 

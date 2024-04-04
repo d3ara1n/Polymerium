@@ -8,7 +8,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using MimeDetective;
 using MimeDetective.Definitions;
-using MimeDetective.Engine;
 using Polymerium.App.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,6 @@ using Trident.Abstractions.Resources;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
 using WinRT.Interop;
 
 namespace Polymerium.App.Dialogs

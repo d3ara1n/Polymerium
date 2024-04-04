@@ -7,8 +7,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
-using Trident.Abstractions;
-using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 

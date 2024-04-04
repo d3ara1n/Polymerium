@@ -5,9 +5,7 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Repositories
 {
-    public class CurseForgeRepository(
-        IHttpClientFactory clientFactory,
-        ILogger<CurseForgeRepository> logger)
+    public class CurseForgeRepository(ILogger<CurseForgeRepository> logger, IHttpClientFactory factory)
         : IRepository
     {
         public string Label => RepositoryLabels.CURSEFORGE;
@@ -16,7 +14,7 @@ namespace Polymerium.Trident.Repositories
         {
             if (uint.TryParse(projectId, out var id))
             {
-                return await CurseForgeHelper.GetIntoProjectAsync(logger, clientFactory, id, token);
+                return await CurseForgeHelper.GetIntoProjectAsync(logger, factory, id, token);
             }
 
             throw new ArgumentException("uint needed", nameof(projectId));
@@ -31,14 +29,14 @@ namespace Polymerium.Trident.Repositories
                 {
                     if (uint.TryParse(versionId, out var vid))
                     {
-                        return await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, pid, vid,
+                        return await CurseForgeHelper.GetIntoPackageAsync(logger, factory, pid, vid,
                             filter.Version, filter.ModLoader, token);
                     }
 
                     throw new ArgumentException("uint needed", nameof(versionId));
                 }
 
-                return await CurseForgeHelper.GetIntoPackageAsync(logger, clientFactory, pid, null,
+                return await CurseForgeHelper.GetIntoPackageAsync(logger, factory, pid, null,
                     filter.Version, filter.ModLoader, token);
             }
 
@@ -49,7 +47,7 @@ namespace Polymerium.Trident.Repositories
             CancellationToken token)
         {
             var kind = filter.Kind ?? ResourceKind.Modpack;
-            return (await CurseForgeHelper.SearchProjectsAsync(logger, clientFactory, keyword, kind,
+            return (await CurseForgeHelper.SearchProjectsAsync(logger, factory, keyword, kind,
                     filter.Version, filter.ModLoader, page, limit, token))
                 .Select(x => new Exhibit(x.Id.ToString(), x.Name, RepositoryLabels.CURSEFORGE, x.Logo?.ThumbnailUrl,
                     kind,

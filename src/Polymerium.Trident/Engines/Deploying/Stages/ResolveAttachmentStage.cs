@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using Polymerium.Trident.Engines.Resolving;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Helpers;
 using Trident.Abstractions.Extensions;
-using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages
 {
