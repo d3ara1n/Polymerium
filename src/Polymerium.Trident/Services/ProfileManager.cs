@@ -95,8 +95,9 @@ namespace Polymerium.Trident.Services
                             now, now)
                     }, new List<Profile.RecordData.Todo>(), string.Empty), metadata, new Dictionary<string, object>(),
                 _accountManager.DefaultUuid);
-            Managed.Add(key.Key,
-                new Handle<Profile>(profile, Path.Combine(_context.InstanceDir, $"{key.Key}.json"), _options));
+            var handle = new Handle<Profile>(profile, Path.Combine(_context.InstanceDir, $"{key.Key}.json"), _options);
+            handle.Flush();
+            Managed.Add(key.Key, handle);
             if (!key.Disposed)
             {
                 key.Dispose();

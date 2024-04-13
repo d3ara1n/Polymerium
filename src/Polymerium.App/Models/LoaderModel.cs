@@ -5,15 +5,15 @@ namespace Polymerium.App.Models
 {
     public record LoaderModel(Loader Inner, ICommand RemoveCommand)
     {
-        public string Name => Loader.MODLOADER_NAME_MAPPINGS.ContainsKey(Inner.Id)
-            ? Loader.MODLOADER_NAME_MAPPINGS[Inner.Id]
-            : Inner.Id switch
+        public string Name => Loader.MODLOADER_NAME_MAPPINGS.ContainsKey(Inner.Identity)
+            ? Loader.MODLOADER_NAME_MAPPINGS[Inner.Identity]
+            : Inner.Identity switch
             {
                 Loader.COMPONENT_BUILTIN_STORAGE => "Linked Storage",
-                _ => Inner.Id
+                _ => Inner.Identity
             };
 
-        public string Thumbnail => Inner.Id switch
+        public string Thumbnail => Inner.Identity switch
         {
             Loader.COMPONENT_FORGE => AssetPath.COMPONENTS_FORGE,
             Loader.COMPONENT_NEOFORGE => AssetPath.COMPONENTS_NEOFORGE,

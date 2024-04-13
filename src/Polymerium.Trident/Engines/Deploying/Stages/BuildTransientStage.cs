@@ -137,7 +137,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             List<string> bag = new(original);
             foreach (var loader in Context.Metadata.Layers.Where(x => x.Enabled).SelectMany(x => x.Loaders))
             {
-                var keyword = $"component:{loader.Id}";
+                var keyword = $"component:{loader.Identity}";
                 if (!bag.Contains(keyword))
                 {
                     bag.Add(keyword);

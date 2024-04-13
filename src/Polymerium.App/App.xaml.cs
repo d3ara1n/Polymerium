@@ -56,7 +56,7 @@ namespace Polymerium.App
 
         private void ConfigureServices(IServiceCollection services)
         {
-            TridentContext context = new(
+            TridentContext trident = new(
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".trident"));
 
             // App Services
@@ -68,21 +68,14 @@ namespace Polymerium.App
                 })
                 .AddMemoryCache()
                 .AddHttpClient()
-                .ConfigureHttpClientDefaults(builder => builder.RemoveAllLoggers())
-                .AddLogging(builder =>
+                .ConfigureHttpClientDefaults(builder => builder.RemoveAllLoggers().ConfigureHttpClient(client =>
                 {
-                    builder
-                        .AddDebug()
-                        .AddConsole();
-                })
-                .ConfigureHttpClientDefaults(clientBuilder => clientBuilder.ConfigureHttpClient(client =>
-                    {
-                        client.Timeout = TimeSpan.FromSeconds(15);
-                        client.DefaultRequestHeaders.Add("Accept", "application/json");
-                        client.DefaultRequestHeaders.Add("User-Agent",
-                            $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
-                    })
-                    .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync()));
+                    client.Timeout = TimeSpan.FromSeconds(15);
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                    client.DefaultRequestHeaders.Add("User-Agent",
+                        $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+                }).AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.RetryAsync()))
+                .AddLogging(builder => builder.AddDebug().AddConsole());
 
             // UI interaction
             services
@@ -97,7 +90,7 @@ namespace Polymerium.App
 
             // Trident Services
             services
-                .AddSingleton(context);
+                .AddSingleton(trident);
             services
                 .AddSingleton<ProfileManager>()
                 .AddSingleton<RepositoryAgent>()

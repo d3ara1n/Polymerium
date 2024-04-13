@@ -12,8 +12,8 @@ namespace Polymerium.App.Models
         public string Loader =>
             string.Join(", ",
                 Inner.Layers.SelectMany(x => x.Original.Loaders).Select(x =>
-                    global::Trident.Abstractions.Resources.Loader.MODLOADER_NAME_MAPPINGS.ContainsKey(x.Id)
-                        ? global::Trident.Abstractions.Resources.Loader.MODLOADER_NAME_MAPPINGS[x.Id]
-                        : x.Id));
+                    global::Trident.Abstractions.Resources.Loader.MODLOADER_NAME_MAPPINGS.ContainsKey(x.Identity)
+                        ? global::Trident.Abstractions.Resources.Loader.MODLOADER_NAME_MAPPINGS[x.Identity]
+                        : x.Identity));
     }
 }

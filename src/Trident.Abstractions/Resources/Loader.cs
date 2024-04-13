@@ -1,6 +1,6 @@
 ﻿namespace Trident.Abstractions.Resources
 {
-    public record Loader(string Id, string Version)
+    public record Loader(string Identity, string Version)
     {
         public const string COMPONENT_MINECRAFT = "net.minecraft";
         public const string COMPONENT_FORGE = "net.minecraftforge";
@@ -19,7 +19,7 @@
                 { COMPONENT_QUILT, "Quilt" }
             };
 
-        public string Id { get; set; } = Id;
+        public string Identity { get; set; } = Identity;
         public string Version { get; set; } = Version;
     }
 }

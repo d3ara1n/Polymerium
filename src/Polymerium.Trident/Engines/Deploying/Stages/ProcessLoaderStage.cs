@@ -16,8 +16,8 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
             var loaders = Context.Metadata.Layers.Where(x => x.Enabled).SelectMany(x => x.Loaders);
             foreach (var loader in loaders)
             {
-                Logger.LogInformation("Process loader: {id}({version})", loader.Id, loader.Version);
-                switch (loader.Id)
+                Logger.LogInformation("Process loader: {id}({version})", loader.Identity, loader.Version);
+                switch (loader.Identity)
                 {
                     case Loader.COMPONENT_BUILTIN_STORAGE:
                         Context.ArtifactBuilder!.AddProcessor(TransientData.PROCESSOR_TRIDENT_STORAGE, loader.Version,
@@ -41,7 +41,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages
                         break;
 
                     default:
-                        throw new ResourceIdentityUnrecognizedException(loader.Id, nameof(Loader));
+                        throw new ResourceIdentityUnrecognizedException(loader.Identity, nameof(Loader));
                 }
             }
 

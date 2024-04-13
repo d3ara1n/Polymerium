@@ -9,8 +9,8 @@ namespace Polymerium.App.Extensions
         public static string ExtractTypeDisplay(this Profile self)
         {
             var modloader = self.Metadata.Layers.SelectMany(x => x.Loaders)
-                .FirstOrDefault(x => Loader.MODLOADER_NAME_MAPPINGS.Keys.Contains(x.Id));
-            return modloader != null ? Loader.MODLOADER_NAME_MAPPINGS[modloader.Id] : "Vanilla";
+                .FirstOrDefault(x => Loader.MODLOADER_NAME_MAPPINGS.Keys.Contains(x.Identity));
+            return modloader != null ? Loader.MODLOADER_NAME_MAPPINGS[modloader.Identity] : "Vanilla";
         }
 
         public static T GetOverriddenValue<T>(this Profile self, string key)

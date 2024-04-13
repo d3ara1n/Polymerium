@@ -26,7 +26,7 @@ namespace Polymerium.Trident.Data
                 {
                     var content = File.ReadAllText(path);
                     var inst = JsonSerializer.Deserialize<T>(content, options);
-                    if (inst != default)
+                    if (inst != null && !inst.Equals(default))
                     {
                         return new Handle<T>(inst, path, options);
                     }
