@@ -5,6 +5,7 @@ using Polymerium.Trident.Services;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using Spectre.Console.Rendering;
+using System.ComponentModel;
 using System.Text.Json;
 using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Resources;
@@ -12,6 +13,7 @@ using Profile = Trident.Abstractions.Profile;
 
 namespace Polymerium.Cli.Commands
 {
+    [Description("Display all the information about the instance")]
     public class InspectCommand(TridentContext trident, JsonSerializerOptions options)
         : Command<InspectCommand.Arguments>
     {
@@ -27,6 +29,7 @@ namespace Polymerium.Cli.Commands
             if (handle == null)
                 throw new BadFormatException("The key is referred to a bad profile file");
 
+            handle.Activated = false;
             var profile = handle.Value;
             var basis = new Dictionary<string, string>() { { "Name", profile.Name } };
             if (profile.Reference != null)

@@ -1,19 +1,19 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Polymerium.Cli.Commands;
-using Polymerium.Trident.Services;
-using Spectre.Console.Cli;
-using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Polly;
+using Polymerium.Cli.Commands;
 using Polymerium.Trident.Repositories;
+using Polymerium.Trident.Services;
 using Spectre.Console;
+using Spectre.Console.Cli;
 using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Trident.Abstractions.Repositories;
 
 namespace Polymerium.Cli;
 
-static class Program
+internal static class Program
 {
     // 针对实例和本地文件的管理
     // trident list
@@ -32,6 +32,7 @@ static class Program
     // trident attachment enable/disable --instance {} $:purl
     // 在线数据源仓库管理
     // trident repository list
+    // trident repository ping
     // 在线资源查询
     // trident resource search --repository {} --take {} --skip --filters {{}} {} $:keyword
     // trident resource resolve $:purl
@@ -40,7 +41,7 @@ static class Program
     // 第一步 Flatten，根据 Metadata 构建出 Polylock
     // 这一步需要解析所有资源文件和依赖并导出，以便下次可以直接仅检查文件完整性即可启动游戏
     // 第二步 Restore，即检查并补全文件到 Polylock 状态
-    static int Main(string[] args)
+    private static int Main(string[] args)
     {
         var trident = new TridentContext(
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".trident"));
@@ -65,7 +66,6 @@ static class Program
         services
             .AddSingleton(trident);
         services
-            .AddSingleton<ProfileManager>()
             .AddSingleton<RepositoryAgent>()
             .AddSingleton<DownloadManager>()
             .AddSingleton<ModpackExtractor>()
@@ -84,12 +84,24 @@ static class Program
             configure.SetExceptionHandler(ex =>
                 AnsiConsole.Markup("[bold red]{0}:[/] {1}", ex.GetType().Name, ex.Message));
             configure
-                .AddCommand<ListCommand>("list")
-                .WithDescription("List all the instances by keys");
+                .AddCommand<ListCommand>("list");
             configure
                 .AddCommand<InspectCommand>("inspect")
-                .WithExample("inspect", "--instance", "my_profile")
-                .WithDescription("Display all the information about the instance");
+                .WithExample("inspect", "--instance", "my_profile");
+            configure
+                .AddBranch("repository", branch =>
+                {
+                    branch
+                        .AddCommand<RepositoryListCommand>("list");
+                });
+            configure
+                .AddBranch("resource", branch =>
+                {
+                    branch
+                        .AddCommand<ResourceSearchCommand>("search");
+                    branch
+                        .AddCommand<ResourceQueryCommand>("query");
+                });
         });
 
         return app.Run(args);

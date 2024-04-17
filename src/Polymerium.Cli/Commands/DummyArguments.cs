@@ -2,8 +2,8 @@
 
 namespace Polymerium.Cli.Commands
 {
-    public sealed class DummyArguments: CommandSettings
+    public sealed class DummyArguments : CommandSettings
     {
-        
+
     }
 }
