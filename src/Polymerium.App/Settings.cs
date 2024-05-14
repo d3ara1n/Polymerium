@@ -6,10 +6,12 @@ namespace Polymerium.App
     public static class Settings
     {
         private const string GENERIC_IS_SUPERPOWER_ACTIVATED = "Generic.IsSuperpowerActivated";
+        private const string GENERIC_STYLE = "Generic.Style";
         private const string GENERIC_LANGUAGE = "Generic.Language";
         private const string RUNTIME_JAVA_8 = "Runtime.Java.8";
         private const string RUNTIME_JAVA_11 = "Runtime.Java.11";
         private const string RUNTIME_JAVA_17 = "Runtime.Java.17";
+        private const string RUNTIME_JAVA_21 = "Runtime.Java.21";
 
         public const string GAME_JVM_MAX_MEMORY = "Game.Jvm.MaxMemory";
         public const string GAME_JVM_ADDITIONAL_ARGUMENTS = "Game.Jvm.AdditionalArguments";
@@ -23,10 +25,12 @@ namespace Polymerium.App
         private static readonly IDictionary<string, object> defaults = new Dictionary<string, object>
         {
             { GENERIC_IS_SUPERPOWER_ACTIVATED, false },
+            { GENERIC_STYLE,  2u},
             { GENERIC_LANGUAGE, "en_US" },
             { RUNTIME_JAVA_8, string.Empty },
             { RUNTIME_JAVA_11, string.Empty },
             { RUNTIME_JAVA_17, string.Empty },
+            { RUNTIME_JAVA_21, string.Empty },
             { GAME_JVM_MAX_MEMORY, 4096u },
             { GAME_JVM_ADDITIONAL_ARGUMENTS, string.Empty },
             { GAME_JVM_HOME, string.Empty },
@@ -38,6 +42,13 @@ namespace Polymerium.App
         {
             get => GetValue<bool>(GENERIC_IS_SUPERPOWER_ACTIVATED);
             set => SetValue(GENERIC_IS_SUPERPOWER_ACTIVATED, value);
+        }
+
+        // 0 None 1 Acrylic 2 Mica
+        public static uint Style
+        {
+            get => GetValue<uint>(GENERIC_STYLE);
+            set => SetValue(GENERIC_STYLE, value);
         }
 
         public static string Language
@@ -63,6 +74,12 @@ namespace Polymerium.App
         {
             get => GetValue<string>(RUNTIME_JAVA_17);
             set => SetValue(RUNTIME_JAVA_17, value);
+        }
+
+        public static string Java21
+        {
+            get => GetValue<string>(RUNTIME_JAVA_21);
+            set => SetValue(RUNTIME_JAVA_21, value);
         }
 
         public static uint GameJvmMaxMemory

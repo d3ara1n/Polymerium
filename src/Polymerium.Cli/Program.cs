@@ -81,7 +81,7 @@ internal static class Program
         var app = new CommandApp(new TypeRegistrar(services));
         app.Configure(configure =>
         {
-            configure.SetExceptionHandler(ex =>
+            configure.SetExceptionHandler((ex, _) =>
                 AnsiConsole.Markup("[bold red]{0}:[/] {1}", ex.GetType().Name, ex.Message));
             configure
                 .AddCommand<ListCommand>("list");

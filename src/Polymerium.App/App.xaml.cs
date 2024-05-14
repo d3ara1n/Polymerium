@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -40,7 +41,7 @@ namespace Polymerium.App
             Provider = services.BuildServiceProvider();
         }
 
-        public static new App Current => (App)Application.Current;
+        public static App Current => (App)Application.Current;
 
         public IServiceProvider Provider { get; }
 
@@ -146,15 +147,15 @@ namespace Polymerium.App
         {
             const string KEY_HEIGHT = "Window.Height";
             const string KEY_WIDTH = "Window.Width";
+            var settings = ApplicationData.Current.LocalSettings;
             Layout layout = new();
             Window window = new()
             {
                 Title = "Polymerium: Powered by Trident",
                 ExtendsContentIntoTitleBar = true,
                 Content = layout,
-                SystemBackdrop = new MicaBackdrop()
+                SystemBackdrop = Settings.Style switch { 0 => null, 1 => new DesktopAcrylicBackdrop(), 2 => new MicaBackdrop(), 3 => new MicaBackdrop() { Kind = MicaKind.BaseAlt }, _ => throw new NotImplementedException() }
             };
-            var settings = ApplicationData.Current.LocalSettings;
             window.SetTitleBar(layout.Titlebar);
             window.Activated += (_, args) =>
                 layout.OnActivate(args.WindowActivationState != WindowActivationState.Deactivated);
@@ -176,8 +177,6 @@ namespace Polymerium.App
             modal.SetPopHandler(layout.OnPopModal);
             modal.SetDismissHandler(layout.OnDismissModal);
             task.SetHandler(layout.OnEnqueueTask);
-            layout.SetMainMenu(navigation.MainNavMenu);
-            layout.SetSideMenu(navigation.SideNavMenu);
             layout.SetHandler((view, parameter, info) => navigation.Navigate(view, parameter, info, true));
             if (settings.Values.TryGetValue(KEY_HEIGHT, out var h) && h is int height
                                                                    && settings.Values.TryGetValue(KEY_WIDTH,

@@ -8,14 +8,14 @@
 <h3 align="center">Polymerium</h3>
 
   <p>
-    为 Minecraft 准备的游戏实例管理器
+    为 Minecraft 准备的游戏实例管理器 | Minecraft-Ready Instance Manager
     <br />
-    <a href="https://github.com/d3ara1n/Polymerium/wiki"><strong>查看文档 »</strong></a>
+    <a href="https://github.com/d3ara1n/Polymerium/wiki"><strong>查看文档 | View Docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/d3ara1n/Polymerium/issues">反馈</a>
+    <a href="https://github.com/d3ara1n/Polymerium/issues">反馈 | Feedback</a>
     ·
-    <a href="https://github.com/d3ara1n/Polymerium/discussions">讨论</a>
+    <a href="https://github.com/d3ara1n/Polymerium/discussions">讨论 | Discussion</a>
   </p>
 </div>
 
@@ -28,13 +28,17 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## 关于
+## I.关于
 
 [![Screenshot][product-screenshot]](#关于)
 
 **这是个 WIP 早期项目，大部分功能还没写完或仅存在于设计，开发进度请参考 [Roadmap](#roadmap)。**
 
-### 理念
+## I.About
+
+**It's in very early stage and most features are under development. Refer to [Roadmap](#roadmap) for progress.**
+
+### 1.理念 
 
 正如其缝合的名字一样，Polymerium 的主要目标是整合 Minecraft
 的游戏资源，而非单单启动游戏。其使用与启动器完全不同的思路来管理游戏资源：创建实例元数据，使用部署引擎将游戏本地文件还原到元数据所描述的状态；
@@ -46,17 +50,29 @@ Polymerium不维护游戏文件，只维护实例元数据。
 有关于 Polymerium
 的模式请参阅[核心概念](https://github.com/d3ara1n/Polymerium/wiki/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)。
 
-### Why another launcher?
+## 1.Philosophy
+
+To introduce the MMC-style of game resource & instance organizing into the domestic ecosystem.
+
+### 2.怎么又来一个?
 
 这不是 *launcher*，也不是压缩毛巾，这是 Polymerium —— *游戏实例管理器*。
 初衷是在用 PrismLauncher 的时候遇到一些问题并想出一些改进的的方法，不过在写代码、与 forge installer
 斗智斗勇的过程中已经忘记哪些改进了（囧。现在要回答这个问题的话，那么答案是：没有为什么，小孩子不懂事写着玩的。
 
-### 跨平台
+### 2.Why another launcher?
+
+Go back read the last section and you get it.
+
+### 3.跨平台
 
 跨。跨了 Windows 10 和 Windows 11 两个“平台”。
 
-### 使用以下技术栈和工具构建
+### 3.Cross-platform
+
+Available in Windows 10&11 only.
+
+### 4.使用以下技术栈和工具构建 | Tech stack and toolchain
 
 * [![C#][CSharp]][CSharp-url]
 * [![dotnet][DotNet]][DotNet-url]
@@ -68,23 +84,23 @@ Polymerium不维护游戏文件，只维护实例元数据。
 
 <!-- FEATURES -->
 
-## Features
+## II.特色 | Features
 
 - 🎨 Fluent Design & WinUI3
-- 💾 增量部署，使用软链接节省硬盘空间
-- 🎭 支持多账号且账号与实例绑定
-- 🎟️ 多种在线仓库，与 CurseForge 和 Modrinth 集成
-- ☕ 运行时智能选择 Java 版本
+- 💾 增量部署，使用软链接节省硬盘空间 | Pooled file objects & Symlink deployment.
+- 🎭 支持多账号且账号与实例绑定 | Instance linked multi account support.
+- 🎟️ 多种在线仓库，与 Curseforge 和 Modrinth 集成 | Integrated with Curseforge & Modrinth.
+- ☕ 手动配置 Java 并在运行时智能选择版本 | No stupid Java auto-detection. Configure Java once, configured every time.
 
 <!-- GETTING STARTED -->
 
-## 安装使用
+##  III.安装和使用 | Getting started
 
-### 下载
+### 1.下载 | Download
 
 [![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/apps/9NGQHHCT2Q6Z)
 
-### 开启 Windows 开发者模式
+### 2.开启 Windows 开发者模式
 
 由于部署采用了 [Symbolic Link](https://www.wikiwand.com/en/Symbolic_link)，该功能需要管理员权限。
 Windows
@@ -103,25 +119,33 @@ Windows
 
 不需要。只有 Windows 需要在创建软连接时提供管理员权限，也只有 Windows 10+ 才能使用 WinUi3 打包应用。
 
-### 配置
+### 2.Enable Windows Developer Mode
+
+Due to Windows constraints in [symlink](https://www.wikiwand.com/en/Symbolic_link), instance deployment requires following additional steps to work.
+
+#### Windows 10
+
+Google it.
+
+#### Windows 11
+
+Google it.
+
+#### Other OS
+
+Install Windows 10 or 11 then Google it.
+
+### 3.配置
 
 开箱即用。
 
-### 添加实例
+### 3.Setup
 
-目前仅支持创建原版实例（并在随后的实例配置页面添加 Mod Loader）或导入 Modrinth，CurseForge 整合包。
-
-### 导入整合包
-
-下载整合包文件，拖动到导入页面的 DragDrop 面板，根据向导添加。
-
-### 导出整合包
-
-目前只支持导出在线包格式，不支持类似 BBSv2 这种 CurseForge Pack 改的离线包格式，在未来也不会支持。
+Available out of the box.
 
 <!-- ROADMAP -->
 
-## Roadmap
+## IV.Roadmap
 
 * [x] 创建该项目
     * [x] 起名字
@@ -195,7 +219,7 @@ Windows
 
 <!-- Privacy -->
 
-## 隐私与数据收集
+## V.隐私与数据收集
 
 Polymerium 没有遥测。
 
@@ -208,7 +232,7 @@ Polymerium 没有遥测。
 
 <!-- REFERENCES -->
 
-## 资料和参考
+## VI.资料和参考 | References
 
 * 游戏启动流程、Fabric/Quilt 部署: [Inside a Minecraft Launcher][Inside-A-Minecraft-Launcher]
 * 游戏启动流程: [教程/编写启动器][Tutorial-Making-Launcher]
@@ -219,13 +243,15 @@ Polymerium 没有遥测。
 
 <!-- I_HATE_THIS_WORLD -->
 
-## 吐槽
+## VII.吐槽
 
 - Minecraft 官方的 Meta Launcher Api 给出的数据是多态模型
 - CurseForge Api V1 不在文档中标注可能为 null 的数据
 - Modrinth Api V2 不在文档中标注可能为 null 的数据，且不提供 V3 文档
 - PrismLauncher 的 Meta Launcher Api 定义了一系列 "Component"，但每个 Component 都有自己独特的数据结构：他们只是看起来相似，在某些地方，例如对
   rules[].os 的定义，是不同的
+- Modrinth 整合包中的资源清单不一定包含元数据，有些有，有些没有，导致无法提取
+- Modrinth Api V2 的 Version.Loaders 字段中存在污染数据需要手动过滤
 
 <!-- LICENSE -->
 
@@ -274,7 +300,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [WinUI-url]: https://microsoft.github.io/microsoft-ui-xaml/
 
-[WindowsAppSDK]: https://img.shields.io/badge/Windows%20App%20SDK-1.4-20000?style=for-the-badge&logoColor=white
+[WindowsAppSDK]: https://img.shields.io/badge/Windows%20App%20SDK-1.5-20000?style=for-the-badge&logoColor=white
 
 [WindowsAppSDK-url]: https://github.com/microsoft/WindowsAppSDK
 

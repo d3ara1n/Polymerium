@@ -10,7 +10,7 @@
     xmlns:tasks="using:Trident.Abstractions.Tasks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="UserControl_Loaded">
 
     <Grid>
         <VisualStateManager.VisualStateGroups>
@@ -108,7 +108,7 @@
                     VerticalAlignment="Stretch"
                     Canvas.ZIndex="1">
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                    <Image Width="18" Source="ms-appx:///Assets/Logo.png" />
+                    <Image Width="20" Source="ms-appx:///Assets/Logo.png" />
                     <TextBlock
                         x:Name="AppTitle"
                         Margin="12,0,0,0"
@@ -137,18 +137,7 @@
                     <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
                     <!-- ReSharper disable once Xaml.RedundantResource -->
                     <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
-
                 </NavigationView.Resources>
-                <NavigationView.MenuItemTemplate>
-                    <DataTemplate x:DataType="models:NavItem">
-                        <NavigationViewItem>
-                            <NavigationViewItem.Icon>
-                                <ImageIcon Source="{x:Bind IconKey}" />
-                            </NavigationViewItem.Icon>
-                            <TextBlock Text="{x:Bind Key}" HorizontalAlignment="Left" />
-                        </NavigationViewItem>
-                    </DataTemplate>
-                </NavigationView.MenuItemTemplate>
                 <NavigationView.PaneCustomContent>
                     <Grid Margin="{StaticResource SmallMargin}" VerticalAlignment="Stretch"
                           HorizontalAlignment="Stretch">
@@ -270,6 +259,40 @@
                         </StackPanel>
                     </Grid>
                 </NavigationView.PaneCustomContent>
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Tag="HOME">
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="/Assets/Icons/House.svg"/>
+                        </NavigationViewItem.Icon>
+                        <TextBlock Text="Home" HorizontalAlignment="Left"/>
+                    </NavigationViewItem>
+                    <NavigationViewItem Tag="INSTANCES">
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="/Assets/Icons/Package.svg"/>
+                        </NavigationViewItem.Icon>
+                        <TextBlock Text="Instances" HorizontalAlignment="Left"/>
+                    </NavigationViewItem>
+                    <NavigationViewItem Tag="ACCOUNTS">
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="/Assets/Icons/Japanese dolls.svg"/>
+                        </NavigationViewItem.Icon>
+                        <TextBlock Text="Accounts" HorizontalAlignment="Left"/>
+                    </NavigationViewItem>
+                    <NavigationViewItem Tag="MARKET">
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="/Assets/Icons/Shopping bags.svg"/>
+                        </NavigationViewItem.Icon>
+                        <TextBlock Text="Market" HorizontalAlignment="Left"/>
+                    </NavigationViewItem>
+                </NavigationView.MenuItems>
+                <NavigationView.FooterMenuItems>
+                    <NavigationViewItem Tag="SETTINGS">
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="/Assets/Icons/Gear.svg"/>
+                        </NavigationViewItem.Icon>
+                        <TextBlock Text="Settings" HorizontalAlignment="Left"/>
+                    </NavigationViewItem>
+                </NavigationView.FooterMenuItems>
                 <Frame x:Name="Root" CacheSize="9" />
             </NavigationView>
         </Grid>
@@ -300,7 +323,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:NotificationItem">
                     <InfoBar Message="{x:Bind Message}" Severity="{x:Bind Severity}" HorizontalAlignment="Center"
-                             IsOpen="True" Tag="{x:Bind}" Closed="InfoBar_Closed" />
+                             IsOpen="True" Tag="{x:Bind}" Closed="InfoBar_Closed"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

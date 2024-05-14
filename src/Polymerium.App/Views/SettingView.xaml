@@ -27,6 +27,14 @@
                               SelectedItem="{x:Bind ViewModel.Language,Mode=TwoWay}"
                               ItemsSource="{x:Bind ViewModel.Languages}" />
                 </labs:SettingsCard>
+                <labs:SettingsCard Header="Style" Description="No restart needed to take effect">
+                    <labs:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE790;" />
+                    </labs:SettingsCard.HeaderIcon>
+                    <ComboBox DisplayMemberPath="Display"
+                              SelectedItem="{x:Bind ViewModel.Style,Mode=TwoWay}"
+                              ItemsSource="{x:Bind ViewModel.Styles}" />
+                </labs:SettingsCard>
                 <TextBlock Text="Java Presets" Style="{StaticResource SettingTitleTextBlockStyle}" />
                 <labs:SettingsExpander Header="Java Runtime Environments"
                                        Description="Instance will select the best matched version in the list at launch">
@@ -72,6 +80,19 @@
                                 </Button>
                             </StackPanel>
                         </labs:SettingsCard>
+                        <labs:SettingsCard Header="Version 21">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                <TextBlock Text="{x:Bind ViewModel.Java21Status,Mode=OneWay}"
+                   VerticalAlignment="Center"
+                   Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}" />
+                                <Button Command="{x:Bind ViewModel.ChooseJava21Command}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                        <FontIcon Glyph="&#xE8E5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        <TextBlock Text="Choose" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                     <Button Command="{x:Bind ViewModel.ScanRuntimeCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
@@ -84,7 +105,7 @@
                 <InfoBar Message="The listing configuration can be overridden by each instance individually"
                          IsOpen="True" IsClosable="False" />
                 <TextBlock Text="Java Virtual Machine" Style="{StaticResource SettingCategoryTextBlockStyle}" />
-                <labs:SettingsCard Header="Jvm Max Memory" Description="How many heap memory can allocate">
+                <labs:SettingsCard Header="Jvm Max Memory" Description="How many heap memory can be allocated">
                     <labs:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xEEA0;" />
                     </labs:SettingsCard.HeaderIcon>

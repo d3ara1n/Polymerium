@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Media;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using System;
@@ -33,6 +35,8 @@ namespace Polymerium.App.ViewModels
                 await ChooseJavaAsync(x => Settings.Java11 = x, nameof(Java11Status)));
             ChooseJava17Command = new AsyncRelayCommand(async () =>
                 await ChooseJavaAsync(x => Settings.Java17 = x, nameof(Java17Status)));
+            ChooseJava21Command = new AsyncRelayCommand(async () =>
+                await ChooseJavaAsync(x => Settings.Java21 = x, nameof(Java21Status)));
             ScanRuntimeCommand = new AsyncRelayCommand(ScanRuntimeAsync);
         }
 
@@ -40,6 +44,14 @@ namespace Polymerium.App.ViewModels
         [
             new LanguageModel("en_US", "Chinglish"),
             new LanguageModel("zh_CN", "简体中文")
+        ];
+
+        public StyleModel[] Styles { get; } =
+        [
+            new StyleModel(0, "None"),
+            new StyleModel(1, "Acrylic"),
+            new StyleModel(2, "Mica"),
+            new StyleModel(3, "MicaAlt")
         ];
 
         public bool IsSuperpowerActivated
@@ -61,12 +73,28 @@ namespace Polymerium.App.ViewModels
             }
         }
 
+        public StyleModel Style
+        {
+            get => Styles.FirstOrDefault(x => x.Id == Settings.Style) ?? Styles.First();
+            set
+            {
+                if (value.Id != Settings.Style)
+                {
+                    Settings.Style = value.Id;
+                    OnPropertyChanged();
+                    App.Current.Window.SystemBackdrop = value.Id switch { 0 => null, 1 => new DesktopAcrylicBackdrop(), 2 => new MicaBackdrop(), 3 => new MicaBackdrop() { Kind = MicaKind.BaseAlt }, _ => throw new NotImplementedException() };
+                }
+            }
+        }
+
 
         public string Java8Status => ValidateJava(Settings.Java8);
 
         public string Java11Status => ValidateJava(Settings.Java11);
 
         public string Java17Status => ValidateJava(Settings.Java17);
+
+        public string Java21Status => ValidateJava(Settings.Java21);
 
         public uint GameJvmMaxMemory
         {
@@ -96,6 +124,7 @@ namespace Polymerium.App.ViewModels
         public ICommand ChooseJava8Command { get; }
         public ICommand ChooseJava11Command { get; }
         public ICommand ChooseJava17Command { get; }
+        public ICommand ChooseJava21Command { get; }
         public ICommand ScanRuntimeCommand { get; }
 
         private async Task ChooseJavaAsync(Action<string> setter, string propertyName)

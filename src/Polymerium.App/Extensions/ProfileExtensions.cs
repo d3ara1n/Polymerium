@@ -55,6 +55,7 @@ namespace Polymerium.App.Extensions
                 8 => Settings.Java8,
                 11 => Settings.Java11,
                 17 => Settings.Java17,
+                21 => Settings.Java21,
                 _ => string.Empty
             };
         }

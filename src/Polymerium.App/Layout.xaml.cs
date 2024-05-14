@@ -8,8 +8,8 @@ using Polymerium.App.Extensions;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Tasks;
+using Polymerium.App.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -106,17 +106,6 @@ namespace Polymerium.App
             DispatcherQueue.TryEnqueue(() => Tasks.Add(models));
         }
 
-        public void SetMainMenu(IEnumerable<NavItem> menu)
-        {
-            NavigationViewControl.MenuItemsSource = menu;
-            NavigationViewControl.SelectedItem = menu.First();
-        }
-
-        public void SetSideMenu(IEnumerable<NavItem> menu)
-        {
-            NavigationViewControl.FooterMenuItemsSource = menu;
-        }
-
         public void SetHandler(Action<Type, object?, NavigationTransitionInfo> handler)
         {
             navigateHandler = handler;
@@ -144,9 +133,22 @@ namespace Polymerium.App
         private void NavigationViewControl_SelectionChanged(NavigationView sender,
             NavigationViewSelectionChangedEventArgs args)
         {
-            if (args.SelectedItem is NavItem item)
+            //if (args.SelectedItem is NavItem item)
+            //{
+            //    navigateHandler?.Invoke(item.View, null, args.RecommendedNavigationTransitionInfo);
+            //}
+            if (args.SelectedItemContainer is NavigationViewItem item && item.Tag is string tag)
             {
-                navigateHandler?.Invoke(item.View, null, args.RecommendedNavigationTransitionInfo);
+                navigateHandler?.Invoke(tag switch
+                {
+                    "HOME" => typeof(HomeView),
+                    "INSTANCES" => typeof(DesktopView),
+                    "ACCOUNTS" => typeof(AccountView),
+                    "MARKET" => typeof(MarketView),
+                    "TOOLBOX" => typeof(ToolboxView),
+                    "SETTINGS" => typeof(SettingView),
+                    _ => throw new NotImplementedException()
+                }, null, args.RecommendedNavigationTransitionInfo); ;
             }
         }
 
@@ -212,6 +214,11 @@ namespace Polymerium.App
             {
                 Notifications.Remove(raw);
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            NavigationViewControl.SelectedItem = NavigationViewControl.MenuItems.First();
         }
     }
 }

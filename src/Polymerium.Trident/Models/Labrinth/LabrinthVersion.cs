@@ -38,7 +38,7 @@ public struct LabrinthVersion
     public Requirement ExtractRequirement()
     {
         return new Requirement(GameVersions,
-            Loaders.Where(x => x != "minecraft").Select(x =>
+            Loaders.Where(x => x != "minecraft" && x != "datapack").Select(x =>
                 ModrinthHelper.MODLOADER_MAPPINGS.ContainsKey(x)
                     ? ModrinthHelper.MODLOADER_MAPPINGS[x]
                     : throw new NotSupportedException()));
