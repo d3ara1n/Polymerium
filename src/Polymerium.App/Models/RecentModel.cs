@@ -1,6 +1,5 @@
 ﻿using Humanizer;
 using Polymerium.Trident.Extensions;
-using System;
 using System.Windows.Input;
 using Trident.Abstractions;
 

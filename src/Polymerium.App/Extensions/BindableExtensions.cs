@@ -1,6 +1,4 @@
 ﻿using Polymerium.App.Models;
-using System;
-using System.Collections.Generic;
 
 namespace Polymerium.App.Extensions
 {

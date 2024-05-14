@@ -1,5 +1,4 @@
 ﻿using Humanizer;
-using System.Linq;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models

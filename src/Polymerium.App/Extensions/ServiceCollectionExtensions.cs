@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Trident.Data;
 using Polymerium.Trident.Services;
-using System;
 using System.Text.Json;
 using Trident.Abstractions.Extractors;
 using Trident.Abstractions.Repositories;

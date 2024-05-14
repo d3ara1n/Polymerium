@@ -130,8 +130,7 @@
                                                                 <FontIcon Glyph="&#xE785;" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
-                                                        <MenuFlyoutItem Text="Update"
-                                                                        Command="{x:Bind Root.UnlockCommand}"
+                                                        <MenuFlyoutItem IsEnabled="False" Text="Update"
                                                                         CommandParameter="{x:Bind}">
                                                             <MenuFlyoutItem.Icon>
                                                                 <FontIcon Glyph="&#xE753;" />

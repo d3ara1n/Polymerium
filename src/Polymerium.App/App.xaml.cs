@@ -14,12 +14,9 @@ using Polymerium.Trident.Engines;
 using Polymerium.Trident.Extractors;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
-using System;
-using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
 using Windows.Graphics;
 using Windows.Storage;
 
@@ -41,7 +38,7 @@ namespace Polymerium.App
             Provider = services.BuildServiceProvider();
         }
 
-        public static App Current => (App)Application.Current;
+        public static new App Current => (App)Application.Current;
 
         public IServiceProvider Provider { get; }
 

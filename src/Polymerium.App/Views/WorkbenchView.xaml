@@ -8,200 +8,151 @@
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
     xmlns:models="using:Polymerium.App.Models"
-    xmlns:labs="using:CommunityToolkit.WinUI.Controls"
+    xmlns:lab="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
+    </Page.Resources>
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid>
-                <GridView IncrementalLoadingTrigger="Edge" ItemsSource="{x:Bind ViewModel.Results,Mode=OneWay}"
-                          SelectionMode="None" Padding="{StaticResource PageContentMargin}">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="models:ExhibitModel">
-                            <controls:CardButton Padding="0" Width="130" Height="220" CornerRadius="6"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Rectangle>
+                <media:UIElementExtensions.VisualFactory>
+                    <media:PipelineVisualFactory>
+                        <media:BlurEffect Amount="30" />
+                    </media:PipelineVisualFactory>
+                </media:UIElementExtensions.VisualFactory>
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="{x:Bind ViewModel.Background,Mode=OneWay}" Stretch="UniformToFill" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle Fill="{ThemeResource LayerFillColorDefaultBrush}" />
+            <StackPanel Margin="{StaticResource PageContentUpperMargin}" Spacing="{StaticResource SmallGap}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border HorizontalAlignment="Left"
+                        Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
+                        <TextBlock Margin="{StaticResource TinyMargin}"
+                                Foreground="{ThemeResource SystemFillColorNeutralBrush}">
+                        <Run Text="{x:Bind ViewModel.Model.Root.Inner.Name}"/>
+                        <Run Text="·"/>
+                        <Run Text="{x:Bind ViewModel.Model.Summary.Value}"/>
+                        </TextBlock>
+                    </Border>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
+                            <TextBlock Text="{x:Bind ViewModel.Model.Root.Inner.Metadata.Version}"
+                                Margin="{StaticResource TinyMargin}"
+                                Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
+                        </Border>
+                        <Border  Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
+                            <TextBlock Text="{x:Bind ViewModel.Model.Root.ModLoaderLabel}"
+                                Margin="{StaticResource TinyMargin}"
+                                Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <AutoSuggestBox x:Name="SearchBox" QueryIcon="Find" PlaceholderText="Search attachments..."
+                                    QuerySubmitted="SearchBox_QuerySubmitted" />
+                <Grid>
+                    <lab:Segmented x:Name="RepositorySelector" ItemsSource="{x:Bind ViewModel.Repositories}"
+                        Style="{StaticResource PivotSegmentedStyle}" SelectedIndex="0"
+                        SelectionChanged="RepositorySelector_SelectionChanged">
+                        <lab:Segmented.ItemTemplate>
+                            <DataTemplate x:DataType="models:RepositoryModel">
+                                <TextBlock Text="{x:Bind Label,Converter={StaticResource StringUppercaseConverter}}" />
+                            </DataTemplate>
+                        </lab:Segmented.ItemTemplate>
+                    </lab:Segmented>
+                    <lab:Segmented x:Name="KindBox" SelectedIndex="0" SelectionMode="Single" HorizontalAlignment="Right">
+                        <lab:Segmented.ItemContainerStyle>
+                            <Style TargetType="lab:SegmentedItem">
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </lab:Segmented.ItemContainerStyle>
+                        <lab:SegmentedItem Content="Mods" />
+                        <lab:SegmentedItem Content="Resource Packs" />
+                        <lab:SegmentedItem Content="Shaders" />
+                    </lab:Segmented>
+                </Grid>
+            </StackPanel>
+            <ProgressBar VerticalAlignment="Bottom" IsIndeterminate="True"
+                             Visibility="{x:Bind ViewModel.Results.IsLoading,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource BoolToVisibilityConverter}}" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <GridView IncrementalLoadingTrigger="Edge" ItemsSource="{x:Bind ViewModel.Results,Mode=OneWay}"
+                          SelectionMode="None" Padding="{StaticResource MediumMargin}">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ExhibitModel">
+                        <controls:CardButton Padding="0" Width="130" Height="220" CornerRadius="6"
                                                  Command="{x:Bind GotoDetailViewCommand}" CommandParameter="{x:Bind}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <toolkit:ImageEx Source="{x:Bind Thumbnail}" Stretch="UniformToFill"
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <toolkit:ImageEx Source="{x:Bind Thumbnail}" Stretch="UniformToFill"
                                                          CornerRadius="6,6,0,0" IsCacheEnabled="True" />
-                                        <Border Margin="{StaticResource SmallMargin}" VerticalAlignment="Bottom"
+                                    <Border Margin="{StaticResource SmallMargin}" VerticalAlignment="Bottom"
                                                 HorizontalAlignment="Right"
                                                 Visibility="{x:Bind HasAdded.Value,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
                                                 Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
                                                 CornerRadius="{StaticResource MicroCornerRadius}">
-                                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}"
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}"
                                                         Margin="6,2,6,2">
-                                                <FontIcon Glyph="&#xEC61;"
+                                            <FontIcon Glyph="&#xEC61;"
                                                           FontSize="{StaticResource CaptionFontIconFontSize}" />
-                                                <TextBlock Text="Added"
+                                            <TextBlock Text="Added"
                                                            FontSize="{StaticResource CaptionTextBlockFontSize}" />
-                                            </StackPanel>
-                                        </Border>
-                                    </Grid>
-                                    <Grid Grid.Row="1" Margin="{StaticResource SmallMargin}">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <StackPanel Grid.Row="0">
-                                            <TextBlock Text="{x:Bind Inner.Name}" MaxLines="2" TextWrapping="Wrap"
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="1" Margin="{StaticResource SmallMargin}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0">
+                                        <TextBlock Text="{x:Bind Inner.Name}" MaxLines="2" TextWrapping="Wrap"
                                                        TextTrimming="CharacterEllipsis"
                                                        Style="{StaticResource BodyStrongTextBlockStyle}" />
-                                        </StackPanel>
-                                        <Grid Grid.Row="1" ColumnSpacing="{StaticResource TinyGap}">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <FontIcon Grid.Column="0" Glyph="&#xE77B;"
+                                    </StackPanel>
+                                    <Grid Grid.Row="1" ColumnSpacing="{StaticResource TinyGap}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <FontIcon Grid.Column="0" Glyph="&#xE77B;"
                                                       FontSize="{StaticResource CaptionFontIconFontSize}" />
-                                            <TextBlock Grid.Column="1" Text="{x:Bind Inner.Author}"
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Inner.Author}"
                                                        TextTrimming="CharacterEllipsis" />
-                                        </Grid>
                                     </Grid>
                                 </Grid>
-                            </controls:CardButton>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-                <StackPanel Spacing="{StaticResource TinyGap}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            </Grid>
+                        </controls:CardButton>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+            <StackPanel Spacing="{StaticResource TinyGap}" HorizontalAlignment="Center" VerticalAlignment="Center"
                             Margin="{StaticResource MediumMargin}"
                             Visibility="{x:Bind ViewModel.Results.Count,Mode=OneWay,FallbackValue=0,Converter={StaticResource ZeroToVisibilityConverter}}">
-                    <FontIcon Glyph="&#xE773;" FontSize="{StaticResource LargeFontIconFontSize}"
+                <FontIcon Glyph="&#xE773;" FontSize="{StaticResource LargeFontIconFontSize}"
                               HorizontalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Center" Text="No entries"
+                <TextBlock HorizontalAlignment="Center" Text="No entries"
                                Style="{StaticResource SubtitleTextBlockStyle}"
                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
-                </StackPanel>
-            </Grid>
-        </Grid>
-        <Grid Grid.Column="1" BorderThickness="1,0,0,0" Width="400"
-              BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Rectangle>
-                    <media:UIElementExtensions.VisualFactory>
-                        <media:PipelineVisualFactory>
-                            <media:BlurEffect Amount="30" />
-                        </media:PipelineVisualFactory>
-                    </media:UIElementExtensions.VisualFactory>
-                    <Rectangle.Fill>
-                        <ImageBrush ImageSource="{x:Bind ViewModel.Background,Mode=OneWay}" Stretch="UniformToFill" />
-                    </Rectangle.Fill>
-                </Rectangle>
-                <Rectangle Fill="{ThemeResource LayerFillColorDefaultBrush}" />
-                <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
-                    <toolkit:WrapPanel Orientation="Horizontal" HorizontalSpacing="{StaticResource TinyGap}"
-                                       VerticalSpacing="{StaticResource TinyGap}">
-                        <Border HorizontalAlignment="Left"
-                                Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
-                            <TextBlock Text="{x:Bind ViewModel.Model.Root.Inner.Name}"
-                                       Margin="{StaticResource TinyMargin}"
-                                       Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
-                        </Border>
-                        <Border HorizontalAlignment="Left"
-                                Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
-                            <TextBlock Text="{x:Bind ViewModel.Model.Root.Inner.Metadata.Version}"
-                                       Margin="{StaticResource TinyMargin}"
-                                       Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
-                        </Border>
-                        <Border HorizontalAlignment="Left"
-                                Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
-                            <TextBlock Text="{x:Bind ViewModel.Model.Root.ModLoaderLabel}"
-                                       Margin="{StaticResource TinyMargin}"
-                                       Foreground="{ThemeResource SystemFillColorNeutralBrush}" />
-                        </Border>
-                    </toolkit:WrapPanel>
-                    <Grid ColumnSpacing="{StaticResource TinyGap}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <FontIcon Grid.Column="0" Glyph="&#xF156;" FontSize="30" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Model.Summary.Value}"
-                                   Style="{StaticResource SubheaderTextBlockStyle}" TextTrimming="CharacterEllipsis"
-                                   TextWrapping="NoWrap" />
-                    </Grid>
-                    <AutoSuggestBox x:Name="SearchBox" QueryIcon="Find" PlaceholderText="Search attachments..."
-                                    QuerySubmitted="SearchBox_QuerySubmitted" />
-                    <labs:Segmented x:Name="KindBox" SelectedIndex="0" SelectionMode="Single"
-                                    HorizontalAlignment="Stretch">
-                        <labs:Segmented.ItemContainerStyle>
-                            <Style TargetType="labs:SegmentedItem">
-                                <Setter Property="Padding" Value="0" />
-                            </Style>
-                        </labs:Segmented.ItemContainerStyle>
-                        <labs:SegmentedItem Content="Mods" />
-                        <labs:SegmentedItem Content="Resource Packs" />
-                        <labs:SegmentedItem Content="Shaders" />
-                    </labs:Segmented>
-                </StackPanel>
-                <ProgressBar VerticalAlignment="Bottom" IsIndeterminate="True"
-                             Visibility="{x:Bind ViewModel.Results.IsLoading,Mode=OneWay,FallbackValue=Collapsed,Converter={StaticResource BoolToVisibilityConverter}}" />
-            </Grid>
-            <Grid Grid.Row="1">
-                <ListView SelectionMode="None" ItemsSource="{x:Bind ViewModel.Tracked}"
-                          Padding="{StaticResource SmallMargin}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Padding" Value="0" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Margin" Value="{StaticResource TinyMargin}" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:TrackedProjectVersionModel">
-                            <controls:Card>
-                                <Grid ColumnSpacing="{StaticResource SmallGap}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind Root.Thumbnail}" Width="48"
-                                                     Height="48" CornerRadius="{StaticResource TinyCornerRadius}" />
-                                    <StackPanel Grid.Column="1">
-                                        <toolkit:DockPanel LastChildFill="True">
-                                            <HyperlinkButton toolkit:DockPanel.Dock="Right"
-                                                             Command="{x:Bind UninstallCommand}"
-                                                             CommandParameter="{x:Bind}">
-                                                <FontIcon Glyph="&#xE8BB;"
-                                                          FontSize="{StaticResource ButtonFontIconFontSize}" />
-                                            </HyperlinkButton>
-                                            <TextBlock Text="{x:Bind Root.Inner.Name}"
-                                                       Style="{StaticResource SubtitleTextBlockStyle}"
-                                                       TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
-                                        </toolkit:DockPanel>
-                                        <toolkit:DockPanel LastChildFill="True">
-                                            <Border toolkit:DockPanel.Dock="Right"
-                                                    Background="{ThemeResource SystemFillColorSolidNeutralBackgroundBrush}"
-                                                    CornerRadius="{StaticResource MicroCornerRadius}">
-                                                <TextBlock Text="{x:Bind Root.Inner.Kind}" Margin="6,2"
-                                                           Foreground="{ThemeResource SystemFillColorNeutralBrush}"
-                                                           Style="{StaticResource CaptionTextBlockStyle}" />
-                                            </Border>
-                                            <TextBlock Text="{x:Bind Inner.Name}"
-                                                       TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
-                                        </toolkit:DockPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </controls:Card>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

@@ -1,8 +1,5 @@
 ﻿using Humanizer;
 using Polymerium.Trident.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models

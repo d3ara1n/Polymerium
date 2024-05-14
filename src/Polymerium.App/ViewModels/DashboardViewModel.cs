@@ -3,7 +3,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
-using System.IO;
 using System.Windows.Input;
 using Trident.Abstractions.Resources;
 

@@ -5,7 +5,6 @@ using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.Services

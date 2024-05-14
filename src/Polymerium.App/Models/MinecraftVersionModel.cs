@@ -1,5 +1,4 @@
-﻿using System;
-using Trident.Abstractions.Resources;
+﻿using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models
 {

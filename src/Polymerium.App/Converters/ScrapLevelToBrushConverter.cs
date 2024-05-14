@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using Polymerium.Trident.Engines.Launching;
-using System;
 
 namespace Polymerium.App.Converters
 {

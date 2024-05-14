@@ -1,5 +1,4 @@
 ﻿using Microsoft.UI.Xaml.Data;
-using System;
 using Windows.UI.Text;
 
 namespace Polymerium.App.Converters

@@ -4,8 +4,6 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
-using System;
-using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

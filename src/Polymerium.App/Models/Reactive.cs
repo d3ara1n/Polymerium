@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.ComponentModel;
 
 namespace Polymerium.App.Models

@@ -2,8 +2,6 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using Microsoft.UI.Xaml;
-using System;
-using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Pickers;
 using WinRT.Interop;

@@ -107,7 +107,7 @@ namespace Polymerium.Trident.Helpers
                     _ => ""
                 }));
 
-            facets.Add(new KeyValuePair<string, string>("project_type", "modpack"));
+            facets.Add(new KeyValuePair<string, string>("project_type", GetUrlTypeStringFromKind(kind)));
             var service =
                 $"/search?query={Uri.EscapeDataString(query)}&offset={offset}&limit={limit}&facets=[{string.Join(',', facets.Select(x => $"[\"{x.Key}:{x.Value}\"]"))}]";
             return (await GetResourceAsync<HitResponseWrapper>(logger, factory, service, token)).Hits;

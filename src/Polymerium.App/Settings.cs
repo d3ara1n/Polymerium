@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Windows.Storage;
+﻿using Windows.Storage;
 
 namespace Polymerium.App
 {

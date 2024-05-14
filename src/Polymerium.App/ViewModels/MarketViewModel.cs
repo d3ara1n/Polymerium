@@ -7,9 +7,6 @@ using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
@@ -34,9 +31,7 @@ namespace Polymerium.App.ViewModels
                 RepositoryLabels.CURSEFORGE => AssetPath.HEADER_CURSEFORGE,
                 RepositoryLabels.MODRINTH => AssetPath.HEADER_MODRINTH,
                 _ => throw new NotImplementedException()
-            }
-                )
-            );
+            }));
             GotoModpackViewCommand = new RelayCommand<ExhibitModel>(GotoModpackView);
         }
 

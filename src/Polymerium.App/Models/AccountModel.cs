@@ -1,7 +1,6 @@
 ﻿using Polymerium.App.Extensions;
 using Polymerium.Trident.Accounts;
 using Polymerium.Trident.Services;
-using System;
 using System.Windows.Input;
 using Trident.Abstractions;
 using Windows.UI;

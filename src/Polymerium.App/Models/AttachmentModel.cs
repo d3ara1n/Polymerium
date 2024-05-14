@@ -1,5 +1,4 @@
 ﻿using Polymerium.App.Extensions;
-using System;
 using System.Windows.Input;
 using Trident.Abstractions.Resources;
 

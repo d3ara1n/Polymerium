@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using Polymerium.App.Models;
-using System;
 
 namespace Polymerium.App.Converters
 {

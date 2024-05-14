@@ -9,9 +9,7 @@ using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Tasks;
 using Polymerium.App.Views;
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions.Tasks;
 

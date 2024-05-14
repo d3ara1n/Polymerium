@@ -5,11 +5,9 @@ using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Extensions;
+using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
-using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
@@ -33,7 +31,12 @@ namespace Polymerium.App.ViewModels
             _thumbnailSaver = thumbnailSaver;
             _modalService = modalService;
             _repositoryAgent = repositoryAgent;
-
+            Repositories = repositoryAgent.Repositories.Select(x => new RepositoryModel(x.Label, x.Label switch
+            {
+                RepositoryLabels.CURSEFORGE => AssetPath.HEADER_CURSEFORGE,
+                RepositoryLabels.MODRINTH => AssetPath.HEADER_MODRINTH,
+                _ => throw new NotImplementedException()
+            }));
             OpenResourceModalCommand = new RelayCommand<ExhibitModel>(OpenResourceModal);
             InstallAttachmentCommand = new RelayCommand<ProjectVersionModel>(InstallAttachment, CanInstallAttachment);
             UninstallAttachmentCommand =
@@ -63,6 +66,7 @@ namespace Polymerium.App.ViewModels
         private ICommand UninstallAttachmentCommand { get; }
 
         public ObservableCollection<TrackedProjectVersionModel> Tracked { get; } = new();
+        public IEnumerable<RepositoryModel> Repositories { get; }
 
         public override bool OnAttached(object? maybeLayer)
         {

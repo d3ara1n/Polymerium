@@ -1,5 +1,4 @@
 ﻿using Polymerium.Trident.Services.Extracting;
-using System.Linq;
 
 namespace Polymerium.App.Models
 {

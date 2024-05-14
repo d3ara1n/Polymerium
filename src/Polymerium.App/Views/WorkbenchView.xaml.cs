@@ -1,8 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
-using Polymerium.Trident.Repositories;
-using System;
 using Trident.Abstractions.Resources;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -34,15 +33,29 @@ namespace Polymerium.App.Views
             base.OnNavigatingFrom(e);
         }
 
-        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private void Submit(RepositoryModel repository, string query)
         {
-            ViewModel.UpdateSource(RepositoryLabels.CURSEFORGE, args.QueryText, KindBox.SelectedIndex switch
+            ViewModel.UpdateSource(repository.Label, query, KindBox.SelectedIndex switch
             {
                 0 => ResourceKind.Mod,
                 1 => ResourceKind.ResourcePack,
                 2 => ResourceKind.ShaderPack,
                 _ => throw new NotImplementedException()
             });
+        }
+
+        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            Submit((RepositoryModel)RepositorySelector.SelectedItem, args.QueryText);
+        }
+
+        private void RepositorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var first = (RepositoryModel?)e.AddedItems.FirstOrDefault();
+            if (first != null)
+            {
+                Submit(first, SearchBox.Text);
+            }
         }
     }
 }

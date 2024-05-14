@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Trident.Abstractions;
+﻿using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Extensions
