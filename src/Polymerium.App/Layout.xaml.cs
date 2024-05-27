@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.UI.Animations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,7 +27,6 @@ namespace Polymerium.App
         private Action<Type, object?, NavigationTransitionInfo>? navigateHandler;
         private int runningTaskCount;
 
-
         public Layout()
         {
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace Polymerium.App
         }
 
         public ObservableCollection<TaskModel> Tasks { get; } = new();
-        public ObservableCollection<NotificationItem> Notifications { get; } = new();
+        public ObservableCollection<InfoBar> Notifications { get; } = new();
         public ICommand AbortTaskCommand { get; }
         public ICommand ClearTasksCommand { get; }
         public ICommand DismissModalCommand { get; }
@@ -77,7 +77,43 @@ namespace Polymerium.App
 
         public void OnEnqueueNotification(NotificationItem item)
         {
-            DispatcherQueue.TryEnqueue(() => Notifications.Add(item));
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                var bar = new InfoBar()
+                {
+                    Message = item.Message,
+                    IsOpen = true,
+                    IsClosable = true,
+                    Severity = item.Severity,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                };
+                bar.Closed += InfoBar_Closed;
+                if (item.Severity != InfoBarSeverity.Error && item.Severity != InfoBarSeverity.Warning)
+                {
+                    var fadeAnimation = new DoubleAnimation()
+                    {
+                        BeginTime = TimeSpan.FromSeconds(5)
+                    };
+                    fadeAnimation.From = 1d;
+                    fadeAnimation.To = 0d;
+                    fadeAnimation.Duration = TimeSpan.FromMilliseconds(250);
+                    fadeAnimation.EasingFunction = new SineEase() { EasingMode = EasingMode.EaseOut };
+                    var storyboard = new Storyboard();
+                    storyboard.Children.Add(fadeAnimation);
+                    storyboard.Completed += (s, e) =>
+                    {
+                        bar.IsOpen = false;
+                    };
+                    Storyboard.SetTarget(storyboard, bar);
+                    Storyboard.SetTargetProperty(storyboard, "Opacity");
+                    Notifications.Add(bar);
+                    storyboard.Begin();
+                }
+                else
+                {
+                    Notifications.Add(bar);
+                }
+            });
         }
 
         public void OnPopModal(ModalBase modal)
@@ -207,11 +243,7 @@ namespace Polymerium.App
 
         private void InfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args)
         {
-            var raw = sender.Tag as NotificationItem;
-            if (raw != null)
-            {
-                Notifications.Remove(raw);
-            }
+            Notifications.Remove(sender);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

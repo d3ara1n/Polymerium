@@ -238,6 +238,9 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </PivotItem>
+                            <PivotItem Header="Dependencies">
+                                <TextBlock Text="WIP" Style="{StaticResource TitleTextBlockStyle}" />
+                            </PivotItem>
                         </Pivot>
                         <StackPanel x:Name="PART_Failed" Visibility="Collapsed" Spacing="{StaticResource SmallGap}"
                                     VerticalAlignment="Center">

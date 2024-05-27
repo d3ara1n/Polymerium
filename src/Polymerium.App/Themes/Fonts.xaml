@@ -8,5 +8,41 @@
     <FontFamily x:Key="FontAwesomeSolidFontFamily">ms-appx:///Assets/Fonts/FontAwesome_6_Free_Solid900.otf#Font Awesome 6 Free Solid</FontFamily>
     <FontFamily x:Key="FontAwesomeBrandsFontFamily">ms-appx:///Assets/Fonts/FontAwesome_6_Brands_Regular400.otf#Font Awesome 6 Brands</FontFamily>
 
+    <FontFamily x:Key="ContentControlThemeFontFamily">ms-appx:///Assets/Fonts/Outfit-VariableFont.ttf#Outfit</FontFamily>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style TargetType="MenuFlyoutItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style TargetType="MenuFlyoutSubItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style TargetType="InfoBar">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+
+    <Style x:Key="CaptionTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource CaptionTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style x:Key="BodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style x:Key="BodyStrongTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BodyStrongTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style x:Key="SubtitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource SubtitleTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style x:Key="TitleLargeTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleLargeTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
+    <Style x:Key="DisplayTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource DisplayTextBlockStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+    </Style>
 
 </ResourceDictionary>

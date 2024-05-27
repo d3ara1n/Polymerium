@@ -413,7 +413,7 @@
                                                                                                 </MenuFlyoutItem.Icon>
                                                                                             </MenuFlyoutItem>
                                                                                             <MenuFlyoutSeparator />
-                                                                                            <MenuFlyoutItem
+                                                                                            <MenuFlyoutItem IsEnabled="False"
                                                                                                 Text="Modify">
                                                                                                 <MenuFlyoutItem.Icon>
                                                                                                     <FontIcon

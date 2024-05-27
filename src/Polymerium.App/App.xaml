@@ -17,7 +17,6 @@
                 <ResourceDictionary Source="ms-appx:///Themes/AlternativeControls.xaml" />
                 <ResourceDictionary Source="ms-appx:///Themes/CustomControls.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

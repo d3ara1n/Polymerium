@@ -109,7 +109,7 @@ namespace Polymerium.Trident.Services
                 versionId != null ? Path.Combine(context.MetadataDir, label, projectId, $"{versionId}.json") : null,
                 r => Path.Combine(context.MetadataDir, label, r.ProjectId, $"{r.VersionId}.json"),
                 async t => await OfRepository(label).ResolveAsync(projectId, versionId, filter, t),
-                TimeSpan.FromDays(15), token);
+                TimeSpan.FromDays(1), token);
         }
     }
 }

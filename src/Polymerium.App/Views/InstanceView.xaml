@@ -22,13 +22,17 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Spacing="{StaticResource SmallGap}">
-                <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                    <toolkit:ImageEx Source="{x:Bind ViewModel.Profile.Thumbnail,Mode=OneWay}" Width="64"
+                <Grid ColumnSpacing="{StaticResource SmallGap}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <toolkit:ImageEx Grid.Column="0" Source="{x:Bind ViewModel.Profile.Thumbnail,Mode=OneWay}" Width="64"
                                      Stretch="Fill"
                                      CornerRadius="{StaticResource TinyCornerRadius}" />
-                    <TextBlock Style="{StaticResource HeaderTextBlockStyle}"
-                               Text="{x:Bind ViewModel.Profile.Inner.Name,Mode=OneWay}" TextTrimming="WordEllipsis" />
-                </StackPanel>
+                    <TextBlock Grid.Column="1" Style="{StaticResource HeaderTextBlockStyle}"
+                               Text="{x:Bind ViewModel.Profile.Inner.Name,Mode=OneWay}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -192,7 +196,7 @@
                             <HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                 <TextBlock Text="Pegboard →" />
                             </HyperlinkButton>
-                            <TextBlock Text="N/A" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                            <TextBlock Text="WIP" VerticalAlignment="Bottom" HorizontalAlignment="Left"
                                        Style="{StaticResource DisplayTextBlockStyle}" />
                         </Grid>
                     </controls:Card>

@@ -205,8 +205,22 @@ namespace Polymerium.Trident.Helpers
             IHttpClientFactory factory,
             uint projectId, CancellationToken token = default)
         {
-            var services = $"/mods/{projectId}/files";
-            return await GetResourcesAsync<EternalModInfo>(logger, factory, services, token);
+            var pageSize = 50;
+            var index = 0;
+            var result = new List<EternalModInfo>();
+            while (true)
+            {
+                var services = $"/mods/{projectId}/files?index={index}&pageSize={pageSize}";
+                var once = await GetResourcesAsync<EternalModInfo>(logger, factory, services, token);
+                var list = once.ToList();
+                result.AddRange(list);
+                index += pageSize;
+                if (list.Count < pageSize || result.Count > 256)
+                {
+                    break;
+                }
+            }
+            return result;
         }
 
         public static async Task<EternalModInfo> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
