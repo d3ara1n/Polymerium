@@ -174,14 +174,20 @@
                         </Grid>
                         <Border Grid.Column="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="1,0,0,0" />
-                        <StackPanel Grid.Column="2" Spacing="{StaticResource SmallGap}">
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                        <Grid Grid.Column="2" RowSpacing="{StaticResource SmallGap}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                 <FontIcon Glyph="&#xE70B;" FontSize="16" />
                                 <TextBlock Text="Note" />
                             </StackPanel>
-                            <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Profile.Note,Mode=TwoWay}"
+                            <ScrollViewer Grid.Row="1">
+                                <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.Profile.Note,Mode=TwoWay}"
                                      TextWrapping="Wrap" PlaceholderText="Write something..." />
-                        </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
                     </Grid>
                 </controls:Card>
                 <Grid Grid.Column="2" RowSpacing="{StaticResource SmallGap}">

@@ -134,7 +134,8 @@ namespace Polymerium.Trident.Engines
 
                             using var stream = client.GetStreamAsync(taken.Source, _token).GetAwaiter().GetResult();
                             using var writer = File.Create(taken.Target);
-                            stream.CopyTo(writer);
+                            // NOTE: 转换到异步，在同步来做到取消，否则该线程不会退出
+                            stream.CopyToAsync(writer, _token).Wait();
                             stream.Flush();
                             finished.Add(new DownloadResult(taken.Target, taken.Source, taken.Sha1, taken.Index,
                                 taken.Total,
