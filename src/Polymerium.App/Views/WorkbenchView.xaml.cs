@@ -2,6 +2,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
+using System;
+using System.Linq;
 using Trident.Abstractions.Resources;
 
 // To learn more about WinUI, the WinUI project structure,

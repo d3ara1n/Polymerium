@@ -3,6 +3,7 @@
 
 using Microsoft.UI.Xaml;
 using Polymerium.App.Models;
+using System.Collections.Generic;
 
 namespace Polymerium.App.Dialogs
 {

@@ -1,4 +1,5 @@
 ﻿using Polymerium.App.Extensions;
+using System;
 using System.Windows.Input;
 using Trident.Abstractions.Resources;
 
@@ -21,7 +22,7 @@ namespace Polymerium.App.Models
 
         public AttachmentModel(Attachment inner, LayerModel root, DataLoadingState state, string? projectName,
             string? versionName,
-            Uri? thumbnail, string? summary, Uri? reference, ResourceKind? kind, ICommand open, ICommand retry,
+            Uri? thumbnail, string? summary, Uri? reference, ResourceKind? kind, ICommand open, ICommand retry, ICommand modify,
             ICommand delete)
         {
             Inner = inner;
@@ -37,6 +38,7 @@ namespace Polymerium.App.Models
 
             OpenCommand = open;
             RetryCommand = retry;
+            ModifyCommand = modify;
             DeleteCommand = delete;
 
             State = this.ToBindable(x => x._state, (x, v) => x._state = v);
@@ -60,6 +62,7 @@ namespace Polymerium.App.Models
 
         public ICommand OpenCommand { get; }
         public ICommand RetryCommand { get; }
+        public ICommand ModifyCommand { get; }
         public ICommand DeleteCommand { get; }
     }
 }

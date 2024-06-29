@@ -4,7 +4,10 @@ using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Launching;
 using Polymerium.Trident.Services;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 namespace Polymerium.App.Services
 {

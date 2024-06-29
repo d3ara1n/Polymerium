@@ -1,34 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentDialog
     x:Class="Polymerium.App.Dialogs.CreateProfileDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:models="using:Polymerium.App.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}"
+    xmlns:models="using:Polymerium.App.Models"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    Title="Create profile dialog"
+    CloseButtonText="Cancel"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
-    Title="Create profile dialog" PrimaryButtonText="Confirm" CloseButtonText="Cancel">
+    PrimaryButtonText="Confirm"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
 
     <Grid>
         <StackPanel Spacing="{StaticResource SmallGap}">
             <controls:DragDropArea DragOver="UIElement_OnDragOver" Drop="UIElement_OnDrop">
                 <Grid>
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}"
-                                HorizontalAlignment="Center"
-                                Margin="{StaticResource SmallMargin}">
-                        <toolkit:ImageEx Source="{x:Bind Image}" Stretch="Fill"
-                                         CornerRadius="{StaticResource TinyCornerRadius}"
-                                         PlaceholderSource="/Assets/Placeholders/default_dirt.png"
-                                         PlaceholderStretch="Fill" Width="78" Height="78" HorizontalAlignment="Center" />
+                    <StackPanel
+                        Margin="{StaticResource SmallMargin}"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="{StaticResource SmallGap}">
+                        <toolkit:ImageEx
+                            Width="78"
+                            Height="78"
+                            HorizontalAlignment="Center"
+                            CornerRadius="{StaticResource TinyCornerRadius}"
+                            PlaceholderSource="/Assets/Placeholders/default_dirt.png"
+                            PlaceholderStretch="Fill"
+                            Source="{x:Bind Image}"
+                            Stretch="Fill" />
                         <StackPanel Spacing="{StaticResource TinyGap}">
                             <TextBlock Text="Thumbnail icon" />
                             <Button x:Name="PickFileButton" Click="PickFileButton_OnClick">
                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                    <FontIcon Glyph="&#xE8E5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                    <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8E5;" />
                                     <TextBlock Text="Choose" />
                                 </StackPanel>
                             </Button>
@@ -38,19 +48,26 @@
             </controls:DragDropArea>
             <controls:Card>
                 <StackPanel Spacing="{StaticResource SmallGap}">
-                    <AutoSuggestBox x:Name="VersionBox" PlaceholderText="Game version..."
-                                    Text="{x:Bind SelectedVersion,Mode=TwoWay}" QueryIcon="Library"
-                                    ItemsSource="{x:Bind Versions}" TextChanged="VersionBox_TextChanged"
-                                    TextMemberPath="Version">
+                    <AutoSuggestBox
+                        x:Name="VersionBox"
+                        ItemsSource="{x:Bind Versions}"
+                        PlaceholderText="Game version..."
+                        QueryIcon="Library"
+                        Text="{x:Bind SelectedVersion, Mode=TwoWay}"
+                        TextChanged="VersionBox_TextChanged"
+                        TextMemberPath="Version">
                         <AutoSuggestBox.ItemTemplate>
                             <DataTemplate x:DataType="models:MinecraftVersionModel">
                                 <toolkit:DockPanel>
-                                    <Border toolkit:DockPanel.Dock="Right" CornerRadius="3"
-                                            Background="{ThemeResource ControlAltFillColorSecondaryBrush}">
-                                        <TextBlock Margin="6,4,6,4"
-                                                   Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                                   Text="{x:Bind Type}"
-                                                   Style="{StaticResource CaptionTextBlockStyle}" />
+                                    <Border
+                                        toolkit:DockPanel.Dock="Right"
+                                        Background="{ThemeResource ControlAltFillColorSecondaryBrush}"
+                                        CornerRadius="3">
+                                        <TextBlock
+                                            Margin="6,4,6,4"
+                                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
+                                            Text="{x:Bind Type}" />
                                     </Border>
                                     <TextBlock Text="{x:Bind Version}" />
                                 </toolkit:DockPanel>
@@ -58,14 +75,14 @@
                         </AutoSuggestBox.ItemTemplate>
                     </AutoSuggestBox>
                     <StackPanel>
-                        <CheckBox Content="Release" IsChecked="{x:Bind IsReleaseChosen,Mode=TwoWay}" />
-                        <CheckBox Content="Snapshot" IsChecked="{x:Bind IsSnapshotChosen,Mode=TwoWay}" />
-                        <CheckBox Content="Experiment" IsChecked="{x:Bind IsExperimentChosen,Mode=TwoWay}" />
-                        <CheckBox Content="Legacy" IsChecked="{x:Bind IsLegacyChosen,Mode=TwoWay}" />
+                        <CheckBox Content="Release" IsChecked="{x:Bind IsReleaseChosen, Mode=TwoWay}" />
+                        <CheckBox Content="Snapshot" IsChecked="{x:Bind IsSnapshotChosen, Mode=TwoWay}" />
+                        <CheckBox Content="Experiment" IsChecked="{x:Bind IsExperimentChosen, Mode=TwoWay}" />
+                        <CheckBox Content="Legacy" IsChecked="{x:Bind IsLegacyChosen, Mode=TwoWay}" />
                     </StackPanel>
                 </StackPanel>
             </controls:Card>
-            <TextBox x:Name="InstanceNameBox" PlaceholderText="{x:Bind SelectedVersion,Mode=OneWay}" />
+            <TextBox x:Name="InstanceNameBox" PlaceholderText="{x:Bind SelectedVersion, Mode=OneWay}" />
         </StackPanel>
     </Grid>
 </ContentDialog>

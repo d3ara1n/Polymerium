@@ -203,24 +203,20 @@ namespace Polymerium.Trident.Helpers
 
         public static async Task<IEnumerable<EternalModInfo>> GetModFilesAsync(ILogger logger,
             IHttpClientFactory factory,
-            uint projectId, CancellationToken token = default)
+            uint projectId, string? gameVersion, string? modLoader, CancellationToken token = default)
         {
-            var pageSize = 50;
-            var index = 0;
-            var result = new List<EternalModInfo>();
-            while (true)
+            var queries = new List<string>();
+            if (gameVersion != null)
             {
-                var services = $"/mods/{projectId}/files?index={index}&pageSize={pageSize}";
-                var once = await GetResourcesAsync<EternalModInfo>(logger, factory, services, token);
-                var list = once.ToList();
-                result.AddRange(list);
-                index += pageSize;
-                if (list.Count < pageSize || result.Count > 256)
-                {
-                    break;
-                }
+                queries.Add("gameVersion=" + gameVersion);
             }
-            return result;
+            if (modLoader != null && MODLOADER_MAPPINGS.Values.Contains(modLoader))
+            {
+                queries.Add("modLoaderType=" + MODLOADER_MAPPINGS.First(x => x.Value == modLoader).Key);
+            }
+            var services = queries.Count > 0 ? $"/mods/{projectId}/files?{string.Join("&", queries)}" : $"/mods/{projectId}/files";
+            return await GetResourcesAsync<EternalModInfo>(logger, factory, services, token);
+
         }
 
         public static async Task<EternalModInfo> GetModFileInfoAsync(ILogger logger, IHttpClientFactory factory,
@@ -235,7 +231,7 @@ namespace Polymerium.Trident.Helpers
         {
             var mod = await GetModInfoAsync(logger, factory, projectId, token);
             var modDesc = await GetModDescriptionAsync(logger, factory, projectId, token);
-            var files = (await GetModFilesAsync(logger, factory, projectId, token)).ToArray();
+            var files = (await GetModFilesAsync(logger, factory, projectId, null, null, token)).ToArray();
             var versionTasks = files
                 .Where(x => x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 })
                 .OrderByDescending(x => x.FileDate).Select(async x =>
@@ -279,24 +275,9 @@ namespace Polymerium.Trident.Helpers
             }
             else
             {
-                var files = (await GetModFilesAsync(logger, factory, projectId, token)).ToArray();
-                var filtered = files.Where(x =>
-                {
-                    var valid = x is { IsAvailable: true, IsServerPack: false, FileStatus: 4 };
-                    var game = gameVersion == null || x.GameVersions.Contains(gameVersion);
-                    if (modLoader != null && MODLOADER_MAPPINGS.Values.Any(y => y == modLoader))
-                    {
-                        var loaderName = MODLOADER_MAPPINGS.First(y => y.Value == modLoader).Key;
-                        var loader = x.GameVersions.Contains(loaderName);
-                        return valid && game && loader;
-                    }
+                var files = (await GetModFilesAsync(logger, factory, projectId, gameVersion, modLoader, token)).ToArray();
 
-                    return valid && game;
-                }).ToArray();
-                if (filtered.Any())
-                {
-                    file = filtered.MaxBy(x => x.FileDate);
-                }
+                file = files.MaxBy(x => x.FileDate);
             }
 
             if (file.HasValue)

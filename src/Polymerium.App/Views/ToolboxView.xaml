@@ -1,40 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <Page
     x:Class="Polymerium.App.Views.ToolboxView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="using:Polymerium.App.Controls"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
         <controls:Card Padding="0">
             <StackPanel>
-                <Image Source="/Assets/Components/net.neoforged.png" Width="100" Height="100"
-                       Margin="{StaticResource MediumUpperMargin}" />
-                <HyperlinkButton HorizontalAlignment="Center" Margin="{StaticResource TinyMargin}">
-                    <TextBlock Text="325ms" Foreground="{StaticResource SystemFillColorSuccessBrush}" />
+                <Image
+                    Width="100"
+                    Height="100"
+                    Margin="{StaticResource MediumUpperMargin}"
+                    Source="/Assets/Components/net.neoforged.png" />
+                <HyperlinkButton Margin="{StaticResource TinyMargin}" HorizontalAlignment="Center">
+                    <TextBlock Foreground="{StaticResource SystemFillColorSuccessBrush}" Text="325ms" />
                 </HyperlinkButton>
                 <Border Background="{ThemeResource SolidBackgroundFillColorBaseAltBrush}">
-                    <TextBlock HorizontalAlignment="Center" FontWeight="Bold" Text="CURSEFORGE API"
-                               Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}"
-                               Margin="{StaticResource TinyMargin}" />
+                    <TextBlock
+                        Margin="{StaticResource TinyMargin}"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}"
+                        Text="CURSEFORGE API" />
                 </Border>
             </StackPanel>
         </controls:Card>
-        <controls:CardButton Padding="0" Width="198">
+        <controls:CardButton Width="198" Padding="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg"
-                                     Stretch="Fill">
+                    <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg" Stretch="Fill">
                         <media:UIElementExtensions.VisualFactory>
                             <media:PipelineVisualFactory>
                                 <media:BlurEffect Amount="30" />
@@ -42,9 +47,10 @@
                         </media:UIElementExtensions.VisualFactory>
                     </toolkit:ImageEx>
                     <Rectangle Fill="{ThemeResource ControlFillColorDefaultBrush}" />
-                    <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg"
-                                     Margin="{StaticResource LargeMargin}"
-                                     CornerRadius="{StaticResource TinyCornerRadius}" />
+                    <toolkit:ImageEx
+                        Margin="{StaticResource LargeMargin}"
+                        CornerRadius="{StaticResource TinyCornerRadius}"
+                        Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg" />
                 </Grid>
                 <Grid Grid.Row="1" Margin="{StaticResource SmallMargin}">
                     <Grid.RowDefinitions>
@@ -52,10 +58,12 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
-                        <TextBlock Text="Salty´s realistic forging" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Salty´s realistic forging" />
                         <TextBlock
+                            MaxLines="2"
+                            Style="{StaticResource CaptionTextBlockStyle}"
                             Text="Have you ever been bothered by the Shallow Minecraft Smelting mechanics? Probably not.. But I Have."
-                            MaxLines="2" TextWrapping="Wrap" Style="{StaticResource CaptionTextBlockStyle}" />
+                            TextWrapping="Wrap" />
                     </StackPanel>
                 </Grid>
             </Grid>

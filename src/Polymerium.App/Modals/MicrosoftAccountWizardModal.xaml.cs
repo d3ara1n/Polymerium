@@ -5,6 +5,10 @@ using Microsoft.UI.Xaml;
 using Polymerium.Trident.Accounts;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
+using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace Polymerium.App.Modals

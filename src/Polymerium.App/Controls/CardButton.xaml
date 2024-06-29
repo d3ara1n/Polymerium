@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,7 +8,7 @@
     <Thickness x:Key="CardButtonHighlightBorderThickness">3</Thickness>
     <SolidColorBrush x:Key="CardButtonHighlightBorderBrush" Color="{ThemeResource SystemAccentColor}" />
 
-    <Style TargetType="local:CardButton" BasedOn="{StaticResource DefaultCardButtonStyle}" />
+    <Style BasedOn="{StaticResource DefaultCardButtonStyle}" TargetType="local:CardButton" />
 
     <Style x:Key="DefaultCardButtonStyle" TargetType="local:CardButton">
         <Setter Property="CornerRadius" Value="{StaticResource CardSmallCornerRadius}" />
@@ -24,30 +24,31 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:CardButton">
                     <Grid>
+                        <Border
+                            x:Name="PART_Border"
+                            BorderThickness="{ThemeResource CardButtonHighlightBorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border
+                                Margin="{ThemeResource CardButtonHighlightBorderThickness}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                                <ContentPresenter Margin="{TemplateBinding Padding}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            </Border>
+                        </Border>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="Common">
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="PointerOver">
                                     <VisualState.Setters>
-                                        <Setter Target="PART_Border.BorderBrush"
-                                                Value="{ThemeResource CardButtonHighlightBorderBrush}" />
+                                        <Setter Target="PART_Border.BorderBrush" Value="{ThemeResource CardButtonHighlightBorderBrush}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="PART_Border" CornerRadius="{TemplateBinding CornerRadius}"
-                                BorderThickness="{ThemeResource CardButtonHighlightBorderThickness}">
-                            <Border CornerRadius="{TemplateBinding CornerRadius}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Margin="{ThemeResource CardButtonHighlightBorderThickness}">
-                                <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
-                            </Border>
-                        </Border>
                     </Grid>
 
                 </ControlTemplate>

@@ -8,7 +8,10 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Accounts;
 using Polymerium.Trident.Services;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net.Http;
 using System.Windows.Input;
 
 namespace Polymerium.App.ViewModels

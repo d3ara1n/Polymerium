@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
@@ -8,8 +9,14 @@ using Polymerium.Trident.Engines;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 using static Trident.Abstractions.Metadata;
 
@@ -22,6 +29,7 @@ namespace Polymerium.App.ViewModels
         private readonly NavigationService _navigationService;
         private readonly ProfileManager _profileManager;
         private readonly IServiceProvider _provider;
+        private readonly ModalService _modalService;
         private readonly RepositoryAgent _repositoryAgent;
 
         private DataLoadingState attachmentLoadingState = DataLoadingState.Loading;
@@ -31,13 +39,14 @@ namespace Polymerium.App.ViewModels
         private LayerModel? selectedLayer;
 
         public MetadataViewModel(RepositoryAgent repositoryAgent, ProfileManager profileManager,
-            DialogService dialogService, IServiceProvider provider, NavigationService navigationService)
+            DialogService dialogService, IServiceProvider provider, NavigationService navigationService, ModalService modalService)
         {
             _profileManager = profileManager;
             _repositoryAgent = repositoryAgent;
             _provider = provider;
             _dialogService = dialogService;
             _navigationService = navigationService;
+            _modalService = modalService;
             _dispatcher = DispatcherQueue.GetForCurrentThread();
 
             RenameLayerCommand = new RelayCommand<LayerModel>(RenameLayer, CanRenameLayer);
@@ -46,6 +55,7 @@ namespace Polymerium.App.ViewModels
             DeleteLayerCommand = new RelayCommand<LayerModel>(DeleteLayer, CanDeleteLayer);
             OpenAttachmentCommand = new RelayCommand<AttachmentModel>(OpenAttachment, CanOpenAttachment);
             RetryAttachmentCommand = new RelayCommand<AttachmentModel>(RetryAttachment);
+            ModifyAttachmentCommand = new RelayCommand<AttachmentModel>(ModifyAttachment, CanModifyAttachment);
             DeleteAttachmentCommand = new RelayCommand<AttachmentModel>(DeleteAttachment, CanDeleteAttachment);
             GotoWorkbenchViewCommand = new RelayCommand<bool>(GotoWorkbench, CanGotoWorkbench);
 
@@ -95,6 +105,7 @@ namespace Polymerium.App.ViewModels
         public ICommand DeleteLayerCommand { get; }
         private ICommand OpenAttachmentCommand { get; }
         private ICommand RetryAttachmentCommand { get; }
+        private ICommand ModifyAttachmentCommand { get; }
         private ICommand DeleteAttachmentCommand { get; }
         public ICommand GotoWorkbenchViewCommand { get; }
 
@@ -125,6 +136,7 @@ namespace Polymerium.App.ViewModels
                             package.VersionName, package.Thumbnail, package.Summary, package.Reference, package.Kind,
                             OpenAttachmentCommand,
                             RetryAttachmentCommand,
+                            ModifyAttachmentCommand,
                             DeleteAttachmentCommand);
                         _dispatcher.TryEnqueue(() => { Attachments.Add(attachment); });
                     }
@@ -132,7 +144,7 @@ namespace Polymerium.App.ViewModels
                     {
                         AttachmentModel attachment = new(result.Attachment, layer, DataLoadingState.Failed, null, null,
                             null,
-                            null, null, null, OpenAttachmentCommand, RetryAttachmentCommand, DeleteAttachmentCommand);
+                            null, null, null, OpenAttachmentCommand, RetryAttachmentCommand, ModifyAttachmentCommand, DeleteAttachmentCommand);
                         _dispatcher.TryEnqueue(() => { Attachments.Add(attachment); });
                     }
                 }
@@ -216,6 +228,28 @@ namespace Polymerium.App.ViewModels
             }
         }
 
+        private bool CanModifyAttachment(AttachmentModel? attachment)
+        {
+            return SelectedLayer is { IsLocked.Value: false };
+        }
+
+        private void ModifyAttachment(AttachmentModel? attachment)
+        {
+            if (attachment != null && SelectedLayer != null)
+            {
+                ProjectPreviewModal modal = new(_repositoryAgent, attachment.Inner.Label, attachment.Inner.ProjectId,
+                    Model.Inner.Metadata.ExtractFilter() ?? Filter.EMPTY, SelectedLayer, it =>
+                    {
+                        var found = Attachments.FirstOrDefault(x => x.Inner.ProjectId == it.Root.Inner.Id);
+                        if (found != null)
+                        {
+                            found.VersionName.Value = it.Inner.Name;
+                        }
+                    });
+                _modalService.Pop(modal);
+            }
+        }
+
         private bool CanDeleteAttachment(AttachmentModel? attachment)
         {
             return SelectedLayer is { IsLocked.Value: false };
@@ -225,7 +259,6 @@ namespace Polymerium.App.ViewModels
         {
             if (attachment != null && SelectedLayer != null)
             {
-                // TODO: 将数据标记为删除，在离开页面时进行删除
                 Attachments.Remove(attachment);
                 SelectedLayer.Attachments.Remove(attachment.Inner);
             }

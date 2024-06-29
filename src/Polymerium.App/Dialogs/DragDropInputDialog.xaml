@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentDialog
     x:Class="Polymerium.App.Dialogs.DragDropInputDialog"
@@ -7,20 +7,33 @@
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}"
+    Title="Drag drop dialog"
+    CloseButtonText="Cancel"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
-    Title="Drag drop dialog" PrimaryButtonText="Confirm" CloseButtonText="Cancel">
+    PrimaryButtonText="Confirm"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
 
     <StackPanel Spacing="{StaticResource SmallGap}">
-        <controls:DragDropArea Padding="{StaticResource LargeMargin}" DragOver="UIElement_OnDragOver"
-                               Drop="UIElement_OnDrop">
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
-                <FontIcon Glyph="{x:Bind IconGlyph}" FontSize="44" VerticalAlignment="Center" Margin="0,0,10,0" />
+        <controls:DragDropArea
+            Padding="{StaticResource LargeMargin}"
+            DragOver="UIElement_OnDragOver"
+            Drop="UIElement_OnDrop">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <FontIcon
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    FontSize="44"
+                    Glyph="{x:Bind IconGlyph}" />
                 <StackPanel>
-                    <TextBlock Text="{x:Bind CaptionText}" Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="{x:Bind BodyText}"
-                               Style="{StaticResource BodyTextBlockStyle}"
-                               Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind CaptionText}" />
+                    <TextBlock
+                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind BodyText}" />
                 </StackPanel>
             </StackPanel>
         </controls:DragDropArea>
@@ -29,10 +42,13 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Text="{x:Bind ResultPath,Mode=TwoWay}" Grid.Column="0" />
-            <Button x:Name="ChooseButton" Grid.Column="1" Click="ChooseButton_OnClick">
+            <TextBox Grid.Column="0" Text="{x:Bind ResultPath, Mode=TwoWay}" />
+            <Button
+                x:Name="ChooseButton"
+                Grid.Column="1"
+                Click="ChooseButton_OnClick">
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                    <FontIcon Glyph="&#xE8E5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                    <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8E5;" />
                     <TextBlock Text="Choose" />
                 </StackPanel>
             </Button>

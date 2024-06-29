@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <Application
     x:Class="Polymerium.App.App"
@@ -7,9 +7,9 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- 上一个版本的资源字典无法找到资源的原因找到了 -->
-                <!-- 资源字典单元素优化会丢失其他资源 -->
-                <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/4811#issuecomment-819916453 -->
+                <!--  上一个版本的资源字典无法找到资源的原因找到了  -->
+                <!--  资源字典单元素优化会丢失其他资源  -->
+                <!--  https://github.com/microsoft/microsoft-ui-xaml/issues/4811#issuecomment-819916453  -->
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="ms-appx:///Themes/Generic.xaml" />
                 <ResourceDictionary Source="ms-appx:///Themes/Fonts.xaml" />

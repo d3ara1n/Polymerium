@@ -2,6 +2,8 @@
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
+using System;
+using System.Collections.Generic;
 
 namespace Polymerium.App.Services
 {

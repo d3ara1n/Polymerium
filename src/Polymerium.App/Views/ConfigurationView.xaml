@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <Page
     x:Class="Polymerium.App.Views.ConfigurationView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -16,114 +16,114 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <!-- Header -->
+            <!--  Header  -->
         </Grid>
         <ScrollViewer Grid.Row="1">
-            <StackPanel Margin="{StaticResource PageContentNoHeaderMargin}"
-                        Spacing="{StaticResource TinyGap}">
-                <TextBlock Text="Configuration" Style="{StaticResource SettingTitleTextBlockStyle}" />
-                <InfoBar IsOpen="True"
-                         Message="Turn on the switch to override values from the global"
-                         IsClosable="False" />
-                <TextBlock Text="Game window" Style="{StaticResource SettingCategoryTextBlockStyle}" />
-                <labs:SettingsExpander Header="Window Initial Size"
-                                       Description="Create game window in the specific size">
+            <StackPanel Margin="{StaticResource PageContentNoHeaderMargin}" Spacing="{StaticResource TinyGap}">
+                <TextBlock Style="{StaticResource SettingTitleTextBlockStyle}" Text="Configuration" />
+                <InfoBar
+                    IsClosable="False"
+                    IsOpen="True"
+                    Message="Turn on the switch to override values from the global" />
+                <TextBlock Style="{StaticResource SettingCategoryTextBlockStyle}" Text="Game window" />
+                <labs:SettingsExpander Description="Create game window in the specific size" Header="Window Initial Size">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE61F;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Width">
-                            <NumberBox Minimum="0"
-                                       Value="{x:Bind ViewModel.WindowWidth,Mode=TwoWay}"
-                                       IsEnabled="{x:Bind ViewModel.IsWindowSizeOverridden,Mode=OneWay}" />
+                            <NumberBox
+                                IsEnabled="{x:Bind ViewModel.IsWindowSizeOverridden, Mode=OneWay}"
+                                Minimum="0"
+                                Value="{x:Bind ViewModel.WindowWidth, Mode=TwoWay}" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Height">
-                            <NumberBox Minimum="0"
-                                       Value="{x:Bind ViewModel.WindowHeight,Mode=TwoWay}"
-                                       IsEnabled="{x:Bind ViewModel.IsWindowSizeOverridden,Mode=OneWay}" />
+                            <NumberBox
+                                IsEnabled="{x:Bind ViewModel.IsWindowSizeOverridden, Mode=OneWay}"
+                                Minimum="0"
+                                Value="{x:Bind ViewModel.WindowHeight, Mode=TwoWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
-                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsWindowSizeOverridden,Mode=TwoWay}" />
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsWindowSizeOverridden, Mode=TwoWay}" />
                 </labs:SettingsExpander>
-                <TextBlock Text="Java virtual machine" Style="{StaticResource SettingCategoryTextBlockStyle}" />
-                <labs:SettingsExpander Header="Jvm Version"
-                                       Description="Specify a certain version instead of selecting at launch">
+                <TextBlock Style="{StaticResource SettingCategoryTextBlockStyle}" Text="Java virtual machine" />
+                <labs:SettingsExpander Description="Specify a certain version instead of selecting at launch" Header="Jvm Version">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEC32;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Java Home">
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                <TextBlock Text="{x:Bind ViewModel.JvmHomeStatus,Mode=OneWay}"
-                                           VerticalAlignment="Center"
-                                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                    Text="{x:Bind ViewModel.JvmHomeStatus, Mode=OneWay}" />
                                 <Button Command="{x:Bind ViewModel.ChooseJavaCommand}">
                                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon Glyph="&#xE8E5;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                                        <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8E5;" />
                                         <TextBlock Text="Choose" />
                                     </StackPanel>
                                 </Button>
                             </StackPanel>
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
-                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmHomeOverridden,Mode=TwoWay}" />
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmHomeOverridden, Mode=TwoWay}" />
                 </labs:SettingsExpander>
-                <labs:SettingsExpander Header="Jvm Max Memory"
-                                       Description="The max heap memory that jvm can allocate">
+                <labs:SettingsExpander Description="The max heap memory that jvm can allocate" Header="Jvm Max Memory">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEEA0;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Memory in megabytes">
-                            <NumberBox SpinButtonPlacementMode="Inline" SmallChange="256" LargeChange="1024"
-                                       Minimum="256" Value="{x:Bind ViewModel.JvmMaxMemory,Mode=TwoWay}"
-                                       IsEnabled="{x:Bind ViewModel.IsJvmMaxMemoryOverridden,Mode=OneWay}" />
+                            <NumberBox
+                                IsEnabled="{x:Bind ViewModel.IsJvmMaxMemoryOverridden, Mode=OneWay}"
+                                LargeChange="1024"
+                                Minimum="256"
+                                SmallChange="256"
+                                SpinButtonPlacementMode="Inline"
+                                Value="{x:Bind ViewModel.JvmMaxMemory, Mode=TwoWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
-                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmMaxMemoryOverridden,Mode=TwoWay}" />
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmMaxMemoryOverridden, Mode=TwoWay}" />
                 </labs:SettingsExpander>
-                <labs:SettingsExpander Header="Jvm Additional Arguments"
-                                       Description="These arguments will be appended after jvm created">
+                <labs:SettingsExpander Description="These arguments will be appended after jvm created" Header="Jvm Additional Arguments">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE8F9;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Argument line">
-                            <TextBox
-                                Text="{x:Bind ViewModel.JvmAdditionalArguments,Mode=TwoWay}"
-                                IsEnabled="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden,Mode=OneWay}" />
+                            <TextBox IsEnabled="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden, Mode=OneWay}" Text="{x:Bind ViewModel.JvmAdditionalArguments, Mode=TwoWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
-                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden,Mode=TwoWay}" />
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden, Mode=TwoWay}" />
                 </labs:SettingsExpander>
-                <TextBlock Text="Operations" Style="{StaticResource SettingTitleTextBlockStyle}" />
-                <labs:SettingsExpander Header="Profile Information"
-                                       Description="Change name and thumbnail icon">
+                <TextBlock Style="{StaticResource SettingTitleTextBlockStyle}" Text="Operations" />
+                <labs:SettingsExpander Description="Change name and thumbnail icon" Header="Profile Information">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE91B;" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard>
                             <labs:SettingsCard.Header>
-                                <toolkit:ImageEx Source="{x:Bind ViewModel.Model.Thumbnail}" Width="64"
-                                                 CornerRadius="{StaticResource TinyCornerRadius}" />
+                                <toolkit:ImageEx
+                                    Width="64"
+                                    CornerRadius="{StaticResource TinyCornerRadius}"
+                                    Source="{x:Bind ViewModel.Model.Thumbnail}" />
                             </labs:SettingsCard.Header>
                             <Button Content="Change" IsEnabled="False" />
                         </labs:SettingsCard>
-                        <labs:SettingsCard Header="{x:Bind ViewModel.InstanceName,Mode=OneWay}">
-                            <Button Content="Rename" Command="{x:Bind ViewModel.RenameInstanceCommand}" />
+                        <labs:SettingsCard Header="{x:Bind ViewModel.InstanceName, Mode=OneWay}">
+                            <Button Command="{x:Bind ViewModel.RenameInstanceCommand}" Content="Rename" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                 </labs:SettingsExpander>
-                <labs:SettingsCard Header="Export as Modpack"
-                                   Description="Export this instance in modpack file">
+                <labs:SettingsCard Description="Export this instance in modpack file" Header="Export as Modpack">
                     <labs:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xEDE1;" />
                     </labs:SettingsCard.HeaderIcon>
-                    <Button Content="Open wizard" Command="{x:Bind ViewModel.OpenExportWizardCommand}" />
+                    <Button Command="{x:Bind ViewModel.OpenExportWizardCommand}" Content="Open wizard" />
                 </labs:SettingsCard>
-                <labs:SettingsExpander Header="Danger Zone"
-                                       Description="These operations will take effects on instance files">
+                <labs:SettingsExpander Description="These operations will take effects on instance files" Header="Danger Zone">
                     <labs:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xEBE8;" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -132,14 +132,18 @@
                             <TextBox x:Name="SafeBox" PlaceholderText="{x:Bind ViewModel.SafeCodeGenerated}" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Reset file status">
-                            <Button Command="{x:Bind ViewModel.ResetInstanceCommand}"
-                                    CommandParameter="{x:Bind SafeBox.Text,Mode=OneWay}" Content="Reset" />
+                            <Button
+                                Command="{x:Bind ViewModel.ResetInstanceCommand}"
+                                CommandParameter="{x:Bind SafeBox.Text, Mode=OneWay}"
+                                Content="Reset" />
                         </labs:SettingsCard>
                         <labs:SettingsCard Header="Delete instance">
-                            <Button Command="{x:Bind ViewModel.DeleteInstanceCommand}"
-                                    CommandParameter="{x:Bind SafeBox.Text,Mode=OneWay}" Content="Delete"
-                                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                                    Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
+                            <Button
+                                Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                Command="{x:Bind ViewModel.DeleteInstanceCommand}"
+                                CommandParameter="{x:Bind SafeBox.Text, Mode=OneWay}"
+                                Content="Delete"
+                                Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                 </labs:SettingsExpander>

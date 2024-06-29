@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Polymerium.App.Controls">
 
-    <Style TargetType="local:ClipBox" BasedOn="{StaticResource DefaultClipBoxStyle}" />
+    <Style BasedOn="{StaticResource DefaultClipBoxStyle}" TargetType="local:ClipBox" />
 
     <Style x:Key="DefaultClipBoxStyle" TargetType="local:ClipBox">
         <Setter Property="BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
@@ -17,23 +17,31 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:ClipBox">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ContentPresenter Grid.Column="0" VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" />
-                            <Button Grid.Column="1" Margin="1" VerticalAlignment="Stretch"
-                                    Padding="{TemplateBinding Padding}" Command="{TemplateBinding Command}"
-                                    CommandParameter="{TemplateBinding CommandParameter}">
-                                <FontIcon Glyph="&#xE8C8;" FontSize="{StaticResource ButtonFontIconFontSize}" />
+                            <ContentPresenter
+                                Grid.Column="0"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <Button
+                                Grid.Column="1"
+                                Margin="1"
+                                Padding="{TemplateBinding Padding}"
+                                VerticalAlignment="Stretch"
+                                Command="{TemplateBinding Command}"
+                                CommandParameter="{TemplateBinding CommandParameter}">
+                                <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8C8;" />
                             </Button>
                         </Grid>
                     </Border>

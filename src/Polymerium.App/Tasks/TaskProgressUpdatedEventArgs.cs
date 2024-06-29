@@ -1,4 +1,5 @@
-﻿using Trident.Abstractions.Tasks;
+﻿using System;
+using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.Tasks
 {

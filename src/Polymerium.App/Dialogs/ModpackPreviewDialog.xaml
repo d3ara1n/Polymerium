@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentDialog
     x:Class="Polymerium.App.Dialogs.ModpackPreviewDialog"
@@ -6,12 +6,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Style="{StaticResource DefaultContentDialogStyle}"
+    Title="Modpack Preview"
+    CloseButtonText="Cancel"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
-    Title="Modpack Preview" PrimaryButtonText="Confirm" CloseButtonText="Cancel">
+    PrimaryButtonText="Confirm"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
 
     <StackPanel Spacing="{StaticResource TinyGap}">
-        <TextBox Text="{x:Bind Model.InstanceName,Mode=TwoWay}" />
+        <TextBox Text="{x:Bind Model.InstanceName, Mode=TwoWay}" />
         <TextBlock>
             <Run Text="Version: " />
             <Run Text="{x:Bind Model.Version}" />

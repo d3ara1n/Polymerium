@@ -7,7 +7,10 @@ using Polymerium.App.Services;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
-using System.Collections.ObjectModel;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
@@ -38,9 +41,6 @@ namespace Polymerium.App.ViewModels
                 _ => throw new NotImplementedException()
             }));
             OpenResourceModalCommand = new RelayCommand<ExhibitModel>(OpenResourceModal);
-            InstallAttachmentCommand = new RelayCommand<ProjectVersionModel>(InstallAttachment, CanInstallAttachment);
-            UninstallAttachmentCommand =
-                new RelayCommand<TrackedProjectVersionModel>(UninstallAttachment, CanUninstallAttachment);
         }
 
         public LayerModel? Model
@@ -62,10 +62,6 @@ namespace Polymerium.App.ViewModels
         }
 
         public ICommand OpenResourceModalCommand { get; }
-        private ICommand InstallAttachmentCommand { get; }
-        private ICommand UninstallAttachmentCommand { get; }
-
-        public ObservableCollection<TrackedProjectVersionModel> Tracked { get; } = new();
         public IEnumerable<RepositoryModel> Repositories { get; }
 
         public override bool OnAttached(object? maybeLayer)
@@ -97,14 +93,10 @@ namespace Polymerium.App.ViewModels
 
         private void OpenResourceModal(ExhibitModel? exhibit)
         {
-            if (exhibit != null)
+            if (Model != null && exhibit != null)
             {
-                var installed =
-                    Model?.Root.Inner.Metadata.Layers.SelectMany(x => x.Attachments).FirstOrDefault(
-                        x => x.Label == exhibit.Inner.Label && x.ProjectId == exhibit.Inner.Id);
-                ProjectPreviewModal modal = new(exhibit, _repositoryAgent,
-                    Model?.Root.Inner.Metadata.ExtractFilter() ?? Filter.EMPTY, installed,
-                    InstallAttachmentCommand);
+                ProjectPreviewModal modal = new(_repositoryAgent, exhibit.Inner.Label, exhibit.Inner.Id,
+                    Model.Root.Inner.Metadata.ExtractFilter() ?? Filter.EMPTY, Model, _ => exhibit.HasAdded.Value = true);
                 _modalService.Pop(modal);
             }
         }
@@ -116,44 +108,6 @@ namespace Polymerium.App.ViewModels
             ExhibitModel result = new(exhibit, OpenResourceModalCommand);
             result.HasAdded.Value = added;
             return result;
-        }
-
-        private bool CanInstallAttachment(ProjectVersionModel? version)
-        {
-            return Model != null && version != null;
-        }
-
-        private void InstallAttachment(ProjectVersionModel? version)
-        {
-            if (Model != null && version != null)
-            {
-                Attachment attachment = new(version.Root.Inner.Label, version.Root.Inner.Id, version.Inner.Id);
-                Model.Attachments.Add(attachment);
-                TrackedProjectVersionModel tracked = new(version.Inner, version.Root, UninstallAttachmentCommand);
-                Tracked.Add(tracked);
-                _modalService.Dimiss();
-            }
-        }
-
-        private bool CanUninstallAttachment(TrackedProjectVersionModel? version)
-        {
-            return Model != null && version != null && Tracked.Contains(version);
-        }
-
-        private void UninstallAttachment(TrackedProjectVersionModel? version)
-        {
-            if (Model != null && version != null && Tracked.Contains(version))
-            {
-                // 不比较版本(x.VersionId==null||x.VersionId==version.Inner.Id)，只要保证最后这个项目被移除即可
-                var found = Model.Attachments.FirstOrDefault(x =>
-                    x.Label == version.Root.Inner.Label && x.ProjectId == version.Root.Inner.Id);
-                if (found != null)
-                {
-                    Model.Attachments.Remove(found);
-                }
-
-                Tracked.Remove(version);
-            }
         }
     }
 }

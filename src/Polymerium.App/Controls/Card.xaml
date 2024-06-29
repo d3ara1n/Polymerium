@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -12,7 +12,7 @@
     <Thickness x:Key="CardContentMargin">15</Thickness>
     <Thickness x:Key="CardContentUpperMargin">15,15,15,0</Thickness>
 
-    <Style TargetType="local:Card" BasedOn="{StaticResource DefaultCardStyle}" />
+    <Style BasedOn="{StaticResource DefaultCardStyle}" TargetType="local:Card" />
 
     <Style x:Key="DefaultCardStyle" TargetType="local:Card">
         <Setter Property="CornerRadius" Value="{StaticResource CardSmallCornerRadius}" />
@@ -27,13 +27,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:Card">
-                    <Border CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                        <ContentPresenter Margin="{TemplateBinding Padding}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    <Border
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <ContentPresenter Margin="{TemplateBinding Padding}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
