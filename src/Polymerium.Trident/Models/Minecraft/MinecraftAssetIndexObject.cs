@@ -1,8 +1,7 @@
-﻿namespace Polymerium.Trident.Models.Minecraft
+﻿namespace Polymerium.Trident.Models.Minecraft;
+
+public struct MinecraftAssetIndexObject
 {
-    public struct MinecraftAssetIndexObject
-    {
-        public string Hash { get; init; }
-        public uint Size { get; init; }
-    }
+    public string Hash { get; init; }
+    public uint Size { get; init; }
 }

@@ -1,9 +1,8 @@
-﻿namespace Polymerium.Trident.Models.CurseForge
+﻿namespace Polymerium.Trident.Models.CurseForge;
+
+public struct CurseForgeModpackManifestFile
 {
-    public struct CurseForgeModpackManifestFile
-    {
-        public uint ProjectId { get; set; }
-        public uint FileId { get; set; }
-        public bool Required { get; set; }
-    }
+    public uint ProjectId { get; set; }
+    public uint FileId { get; set; }
+    public bool Required { get; set; }
 }

@@ -1,6 +1,5 @@
-﻿namespace Trident.Abstractions
+﻿namespace Trident.Abstractions;
+
+public interface IAsyncEngine<out TProd> : IAsyncEnumerable<TProd>
 {
-    public interface IAsyncEngine<out TProd> : IAsyncEnumerable<TProd>
-    {
-    }
 }

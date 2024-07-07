@@ -8,9 +8,8 @@ using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Extractors;
 
-public class ModrinthExtractor() : IExtractor
+public class ModrinthExtractor : IExtractor
 {
-    public string IdenticalFileName => "modrinth.index.json";
     public static readonly JsonSerializerOptions OPTIONS = new(JsonSerializerDefaults.Web);
 
     private static readonly IDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
@@ -20,6 +19,8 @@ public class ModrinthExtractor() : IExtractor
         { "fabric-loader", Loader.COMPONENT_FABRIC },
         { "quilt-loader", Loader.COMPONENT_QUILT }
     };
+
+    public string IdenticalFileName => "modrinth.index.json";
 
     public Task<ExtractedContainer> ExtractAsync(string manifestContent, ExtractorContext context,
         CancellationToken token)
@@ -35,20 +36,24 @@ public class ModrinthExtractor() : IExtractor
         var loader = ExtractLoader(manifest);
 
         // TODO: 可能存在 "client-overrides" 目录作为客户端整合包的重载目录
-        var required = new ContainedLayer() { Summary = manifest.Name, OverrideDirectoryName = "overrides" };
+        var required = new ContainedLayer { Summary = manifest.Name, OverrideDirectoryName = "overrides" };
         if (loader != null)
         {
             required.Loaders.Add(loader);
         }
-        required.Attachments.AddAll(manifest.Files.Where(x => !x.Envs.HasValue || x.Envs.Value.Client == ModrinthModpackEnv.Required).Select(ToAttachment));
-        var optional = new ContainedLayer() { Summary = $"{manifest.Name}(Optional)" };
-        optional.Attachments.AddAll(manifest.Files.Where(x => x.Envs.HasValue && x.Envs.Value.Client == ModrinthModpackEnv.Optional).Select(ToAttachment));
+
+        required.Attachments.AddAll(manifest.Files
+            .Where(x => !x.Envs.HasValue || x.Envs.Value.Client == ModrinthModpackEnv.Required).Select(ToAttachment));
+        var optional = new ContainedLayer { Summary = $"{manifest.Name}(Optional)" };
+        optional.Attachments.AddAll(manifest.Files
+            .Where(x => x.Envs.HasValue && x.Envs.Value.Client == ModrinthModpackEnv.Optional).Select(ToAttachment));
         var container = new ExtractedContainer(manifest.Name, version);
         container.Layers.Add(required);
         if (optional.Loaders.Any() && optional.Attachments.Any())
         {
             container.Layers.Add(optional);
         }
+
         return Task.FromResult(container);
     }
 

@@ -1,8 +1,7 @@
-﻿namespace Polymerium.Trident.Models.PrismLauncher
+﻿namespace Polymerium.Trident.Models.PrismLauncher;
+
+public enum PrismVersionLibraryRuleAction
 {
-    public enum PrismVersionLibraryRuleAction
-    {
-        Allow,
-        Disallow
-    }
+    Allow,
+    Disallow
 }

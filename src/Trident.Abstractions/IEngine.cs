@@ -1,6 +1,5 @@
-﻿namespace Trident.Abstractions
+﻿namespace Trident.Abstractions;
+
+public interface IEngine<out TProd> : IEnumerable<TProd>
 {
-    public interface IEngine<out TProd> : IEnumerable<TProd>
-    {
-    }
 }

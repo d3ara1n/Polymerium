@@ -1,9 +1,8 @@
-﻿namespace Polymerium.Trident.Models.PrismLauncher
+﻿namespace Polymerium.Trident.Models.PrismLauncher;
+
+public struct PrismMinecraftVersionLibraryNatives
 {
-    public struct PrismMinecraftVersionLibraryNatives
-    {
-        public string? Windows { get; init; }
-        public string? Linux { get; init; }
-        public string? Osx { get; init; }
-    }
+    public string? Windows { get; init; }
+    public string? Linux { get; init; }
+    public string? Osx { get; init; }
 }

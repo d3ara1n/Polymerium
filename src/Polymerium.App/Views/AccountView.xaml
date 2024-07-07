@@ -111,6 +111,7 @@
                                     Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
                                     Command="{x:Bind RemoveCommand}"
                                     CommandParameter="{x:Bind}"
+                                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                                     Text="Remove">
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon Glyph="&#xECC9;" />

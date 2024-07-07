@@ -7,167 +7,143 @@ using System.Collections;
 using System.Text.Json;
 using Trident.Abstractions;
 
-namespace Polymerium.Trident.Engines
+namespace Polymerium.Trident.Engines;
+
+public class DeployEngine(
+    IServiceProvider provider,
+    ILoggerFactory loggerFactory,
+    TridentContext trident,
+    IHttpClientFactory clientFactory,
+    JsonSerializerOptions options)
+    : IEngine<StageBase>
 {
-    public class DeployEngine(
+    private DeployContext? context;
+
+    public IEnumerator<StageBase> GetEnumerator()
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        return new DeployEngineEnumerator(context, provider, loggerFactory, clientFactory);
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public void SetProfile(string key, Metadata metadata, ICollection<string> keywords,
+        CancellationToken token = default) =>
+        context = new DeployContext(trident, key, metadata, keywords, options, token);
+
+    public class DeployEngineEnumerator(
+        DeployContext context,
         IServiceProvider provider,
         ILoggerFactory loggerFactory,
-        TridentContext trident,
-        IHttpClientFactory clientFactory,
-        JsonSerializerOptions options)
-        : IEngine<StageBase>
+        IHttpClientFactory factory)
+        : IEnumerator<StageBase>
     {
-        private DeployContext? context;
-
-        public IEnumerator<StageBase> GetEnumerator()
+        public bool MoveNext()
         {
-            ArgumentNullException.ThrowIfNull(context);
-            return new DeployEngineEnumerator(context, provider, loggerFactory, clientFactory);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public void SetProfile(string key, Metadata metadata, ICollection<string> keywords,
-            CancellationToken token = default)
-        {
-            context = new DeployContext(trident, key, metadata, keywords, options, token);
-        }
-
-        public class DeployEngineEnumerator(
-            DeployContext context,
-            IServiceProvider provider,
-            ILoggerFactory loggerFactory,
-            IHttpClientFactory factory)
-            : IEnumerator<StageBase>
-        {
-            public bool MoveNext()
+            if (context.Token.IsCancellationRequested)
             {
-                if (context.Token.IsCancellationRequested)
+                return false;
+            }
+
+            // trident.artifact.json
+            // Deploy 包含以下过程：
+            // Build artifact:
+            //   Install game, Process loaders, Resolve attachments
+            // Build transient data:
+            //   Run processors
+            // Solidify transient data:
+            //   Download libraries, Download & link attachments, Restore assets
+            if (context.Transient != null)
+            {
+                if (context.IsSolidified)
                 {
                     return false;
                 }
 
-                // trident.artifact.json
-                // Deploy 包含以下过程：
-                // Build artifact:
-                //   Install game, Process loaders, Resolve attachments
-                // Build transient data:
-                //   Run processors
-                // Solidify transient data:
-                //   Download libraries, Download & link attachments, Restore assets
-                if (context.Transient != null)
-                {
-                    if (context.IsSolidified)
-                    {
-                        return false;
-                    }
-
-                    // solidify
-                    Current = SolidifyTransient();
-                    return true;
-                }
-
-                if (context.Artifact != null)
-                {
-                    // build transient
-                    Current = BuildTransient();
-                    return true;
-                }
-
-                if (context.ArtifactBuilder != null)
-                {
-                    if (context.IsAttachmentResolved)
-                    {
-                        // build artifact
-                        Current = BuildArtifact();
-                        return true;
-                    }
-
-                    if (context.IsLoaderProcessed)
-                    {
-                        // resolve attachment
-                        Current = ResolveAttachment();
-                        return true;
-                    }
-
-                    if (context.IsGameInstalled)
-                    {
-                        // process loaders
-                        Current = ProcessLoader();
-                        return true;
-                    }
-
-                    // install game
-                    Current = InstallVanilla();
-                    return true;
-                }
-
-                Current = CheckArtifact();
+                // solidify
+                Current = SolidifyTransient();
                 return true;
             }
 
-            public void Reset()
+            if (context.Artifact != null)
             {
-                throw new NotImplementedException();
+                // build transient
+                Current = BuildTransient();
+                return true;
             }
 
-            public StageBase Current { get; private set; } = null!;
-
-            object IEnumerator.Current => Current;
-
-            public void Dispose()
+            if (context.ArtifactBuilder != null)
             {
-                // do nothing
+                if (context.IsAttachmentResolved)
+                {
+                    // build artifact
+                    Current = BuildArtifact();
+                    return true;
+                }
+
+                if (context.IsLoaderProcessed)
+                {
+                    // resolve attachment
+                    Current = ResolveAttachment();
+                    return true;
+                }
+
+                if (context.IsGameInstalled)
+                {
+                    // process loaders
+                    Current = ProcessLoader();
+                    return true;
+                }
+
+                // install game
+                Current = InstallVanilla();
+                return true;
             }
 
-            private CheckArtifactStage CheckArtifact()
-            {
-                return CreateStage(() => new CheckArtifactStage());
-            }
+            Current = CheckArtifact();
+            return true;
+        }
 
-            private BuildArtifactStage BuildArtifact()
-            {
-                return CreateStage(() => new BuildArtifactStage());
-            }
+        public void Reset() => throw new NotImplementedException();
 
-            private InstallVanillaStage InstallVanilla()
-            {
-                return CreateStage(() => new InstallVanillaStage(factory));
-            }
+        public StageBase Current { get; private set; } = null!;
 
-            private ResolveAttachmentStage ResolveAttachment()
-            {
-                var engine = provider.GetRequiredService<ResolveEngine>();
-                return CreateStage(() => new ResolveAttachmentStage(engine));
-            }
+        object IEnumerator.Current => Current;
 
-            private ProcessLoaderStage ProcessLoader()
-            {
-                return CreateStage(() => new ProcessLoaderStage(factory));
-            }
+        public void Dispose()
+        {
+            // do nothing
+        }
 
-            private BuildTransientStage BuildTransient()
-            {
-                return CreateStage(() => new BuildTransientStage(factory));
-            }
+        private CheckArtifactStage CheckArtifact() => CreateStage(() => new CheckArtifactStage());
 
-            private SolidifyTransientStage SolidifyTransient()
-            {
-                var downloader = provider.GetRequiredService<DownloadEngine>();
-                return CreateStage(() => new SolidifyTransientStage(downloader));
-            }
+        private BuildArtifactStage BuildArtifact() => CreateStage(() => new BuildArtifactStage());
 
-            private T CreateStage<T>(Func<T> factory)
-                where T : StageBase
-            {
-                var stage = factory();
-                stage.Logger = loggerFactory.CreateLogger<T>();
-                stage.Context = context;
-                return stage;
-            }
+        private InstallVanillaStage InstallVanilla() => CreateStage(() => new InstallVanillaStage(factory));
+
+        private ResolveAttachmentStage ResolveAttachment()
+        {
+            var engine = provider.GetRequiredService<ResolveEngine>();
+            return CreateStage(() => new ResolveAttachmentStage(engine));
+        }
+
+        private ProcessLoaderStage ProcessLoader() => CreateStage(() => new ProcessLoaderStage(factory));
+
+        private BuildTransientStage BuildTransient() => CreateStage(() => new BuildTransientStage(factory));
+
+        private SolidifyTransientStage SolidifyTransient()
+        {
+            var downloader = provider.GetRequiredService<DownloadEngine>();
+            return CreateStage(() => new SolidifyTransientStage(downloader));
+        }
+
+        private T CreateStage<T>(Func<T> factory)
+            where T : StageBase
+        {
+            var stage = factory();
+            stage.Logger = loggerFactory.CreateLogger<T>();
+            stage.Context = context;
+            return stage;
         }
     }
 }

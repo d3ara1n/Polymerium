@@ -15,8 +15,8 @@
         <RepositoryUrl>https://github.com/d3ara1n/Polymerium</RepositoryUrl>
     </PropertyGroup>
     <ItemGroup>
-      <None Remove="Dialogs\AddLoaderDialog.xaml" />
-      <None Remove="Modals\LayerUpdateModal.xaml" />
+        <None Remove="Dialogs\AddLoaderDialog.xaml" />
+        <None Remove="Modals\LayerUpdateModal.xaml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -44,6 +44,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
         <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.2.0" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240607001" />
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
         <PackageReference Include="Mime-Detective" Version="24.5.1" />
         <PackageReference Include="Nanoid" Version="3.1.0" />
         <PackageReference Include="packageurl-dotnet" Version="1.3.0" />
@@ -54,13 +55,13 @@
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Page Update="Modals\LayerUpdateModal.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
+        <Page Update="Modals\LayerUpdateModal.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
-      <Page Update="Dialogs\AddLoaderDialog.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
+        <Page Update="Dialogs\AddLoaderDialog.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
 </Project>

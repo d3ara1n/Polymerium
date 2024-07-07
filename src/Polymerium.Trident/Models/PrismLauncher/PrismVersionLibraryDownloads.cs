@@ -1,8 +1,7 @@
-﻿namespace Polymerium.Trident.Models.PrismLauncher
+﻿namespace Polymerium.Trident.Models.PrismLauncher;
+
+public struct PrismVersionLibraryDownloads
 {
-    public struct PrismVersionLibraryDownloads
-    {
-        public PrismVersionArtifact? Artifact { get; init; }
-        public IDictionary<string, PrismVersionArtifact> Classifiers { get; init; }
-    }
+    public PrismVersionArtifact? Artifact { get; init; }
+    public IDictionary<string, PrismVersionArtifact> Classifiers { get; init; }
 }

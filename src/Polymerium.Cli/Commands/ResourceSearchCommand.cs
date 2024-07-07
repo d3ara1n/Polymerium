@@ -12,30 +12,13 @@ namespace Polymerium.Cli.Commands;
 [Description("Search in the specific repository")]
 public class ResourceSearchCommand(RepositoryAgent agent) : AsyncCommand<ResourceSearchCommand.Arguments>
 {
-    private readonly IDictionary<string, string> LOADER_MAPPINGS = new Dictionary<string, string>()
+    private readonly IDictionary<string, string> LOADER_MAPPINGS = new Dictionary<string, string>
     {
         { "forge", Loader.COMPONENT_FORGE },
         { "neoforge", Loader.COMPONENT_NEOFORGE },
         { "fabric", Loader.COMPONENT_FABRIC },
         { "quilt", Loader.COMPONENT_QUILT }
     };
-
-    public class Arguments : CommandSettings
-    {
-        [CommandArgument(0, "[query]")] public string? Query { get; init; }
-        [CommandOption("-v|--version")] public string? Version { get; init; }
-        [CommandOption("-l|--loader")] public string? Loader { get; init; }
-        [CommandOption("-r|--repository")] public string? Label { get; init; }
-        [CommandOption("-k|--kind")] public string? Kind { get; init; }
-
-        [CommandOption("-p|--page")]
-        [DefaultValue(0u)]
-        public uint Page { get; init; }
-
-        [CommandOption("-s|--size")]
-        [DefaultValue(10u)]
-        public uint Size { get; init; }
-    }
 
     public override async Task<int> ExecuteAsync(CommandContext context, Arguments settings)
     {
@@ -90,5 +73,22 @@ public class ResourceSearchCommand(RepositoryAgent agent) : AsyncCommand<Resourc
             "shader" or "shaderpack" => ResourceKind.ShaderPack,
             _ => throw new ResourceNotFoundException($"{kind} is not recognized as a resource kind")
         };
+    }
+
+    public class Arguments : CommandSettings
+    {
+        [CommandArgument(0, "[query]")] public string? Query { get; init; }
+        [CommandOption("-v|--version")] public string? Version { get; init; }
+        [CommandOption("-l|--loader")] public string? Loader { get; init; }
+        [CommandOption("-r|--repository")] public string? Label { get; init; }
+        [CommandOption("-k|--kind")] public string? Kind { get; init; }
+
+        [CommandOption("-p|--page")]
+        [DefaultValue(0u)]
+        public uint Page { get; init; }
+
+        [CommandOption("-s|--size")]
+        [DefaultValue(10u)]
+        public uint Size { get; init; }
     }
 }

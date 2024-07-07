@@ -38,7 +38,7 @@
 
 **It's in very early stage and most features are under development. Refer to [Roadmap](#roadmap) for progress.**
 
-### 1.理念 
+### 1.理念
 
 正如其缝合的名字一样，Polymerium 的主要目标是整合 Minecraft
 的游戏资源，而非单单启动游戏。其使用与启动器完全不同的思路来管理游戏资源：创建实例元数据，使用部署引擎将游戏本地文件还原到元数据所描述的状态；
@@ -91,10 +91,12 @@ Available in Windows 10&11 only.
 - 🎭 支持多账号且账号与实例绑定 | Instance linked multi account support.
 - 🎟️ 多种在线仓库，与 Curseforge 和 Modrinth 集成 | Integrated with Curseforge & Modrinth.
 - ☕ 手动配置 Java 并在运行时智能选择版本 | No stupid Java auto-detection. Configure Java once, configured every time.
+- 📜 实例元数据附件分层管理 | Layered attachment management.
+- ✨ 发布所游玩的实例为整合包，自动编写更新日志 | Publish the instance as a modpack with generated changelog.
 
 <!-- GETTING STARTED -->
 
-##  III.安装和使用 | Getting started
+## III.安装和使用 | Getting started
 
 ### 1.下载 | Download
 
@@ -121,7 +123,8 @@ Windows
 
 ### 2.Enable Windows Developer Mode
 
-Due to Windows constraints in [symlink](https://www.wikiwand.com/en/Symbolic_link), instance deployment requires following additional steps to work.
+Due to Windows constraints in [symlink](https://www.wikiwand.com/en/Symbolic_link), instance deployment requires
+following additional steps to work.
 
 #### Windows 10
 

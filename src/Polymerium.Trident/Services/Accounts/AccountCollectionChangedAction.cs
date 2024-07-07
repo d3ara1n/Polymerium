@@ -1,8 +1,7 @@
-﻿namespace Polymerium.Trident.Services.Accounts
+﻿namespace Polymerium.Trident.Services.Accounts;
+
+public enum AccountCollectionChangedAction
 {
-    public enum AccountCollectionChangedAction
-    {
-        Add,
-        Remove
-    }
+    Add,
+    Remove
 }

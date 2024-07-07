@@ -1,4 +1,3 @@
-﻿namespace Trident.Abstractions.Tasks
-{
-    public delegate Task TrackerHandler(TrackerBase handle);
-}
+﻿namespace Trident.Abstractions.Tasks;
+
+public delegate Task TrackerHandler(TrackerBase handle);

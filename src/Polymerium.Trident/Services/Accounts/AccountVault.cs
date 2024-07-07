@@ -1,6 +1,5 @@
-﻿namespace Polymerium.Trident.Services.Accounts
+﻿namespace Polymerium.Trident.Services.Accounts;
+
+public record AccountVault(string? Default, IList<AccountEntry> Entries)
 {
-    public record AccountVault(string? Default, IList<AccountEntry> Entries)
-    {
-    }
 }

@@ -36,12 +36,15 @@ namespace Polymerium.App
         {
             InitializeComponent();
 
+            UnhandledException += App_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             ServiceCollection services = new();
             ConfigureServices(services);
             Provider = services.BuildServiceProvider();
         }
 
-        public static App Current => (App)Application.Current;
+        public static new App Current => (App)Application.Current;
 
         public IServiceProvider Provider { get; }
 
@@ -188,6 +191,25 @@ namespace Polymerium.App
 
             Window = window;
             window.Activate();
+        }
+
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e) => Dump(e.Exception);
+
+        private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e) => Dump(e.ExceptionObject);
+
+        private void Dump(object core)
+        {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".trident", ".polymerium", "dump", $"{DateTimeOffset.Now.ToFileTime()}.txt");
+            var dir = Path.GetDirectoryName(path);
+            try
+            {
+                if (dir != null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                File.WriteAllText(path, core.ToString());
+            }
+            catch
+            {
+                Console.WriteLine(core.ToString());
+            }
         }
     }
 }

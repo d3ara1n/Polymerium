@@ -1,28 +1,27 @@
-﻿namespace Polymerium.Trident.Services.Profiles
+﻿namespace Polymerium.Trident.Services.Profiles;
+
+// RAII, 但是即使被 dispose 了依旧能传递给 ProfileManager.Append
+public record ReservedKey : IDisposable
 {
-    // RAII, 但是即使被 dispose 了依旧能传递给 ProfileManager.Append
-    public record ReservedKey : IDisposable
+    private readonly ProfileManager _parent;
+
+    internal ReservedKey(ProfileManager parent, string key)
     {
-        private readonly ProfileManager _parent;
+        _parent = parent;
+        Key = key;
+    }
 
-        internal ReservedKey(ProfileManager parent, string key)
+    public string Key { get; }
+    public bool Disposed { get; private set; }
+
+    public void Dispose()
+    {
+        if (Disposed)
         {
-            _parent = parent;
-            Key = key;
+            return;
         }
 
-        public string Key { get; }
-        public bool Disposed { get; private set; }
-
-        public void Dispose()
-        {
-            if (Disposed)
-            {
-                return;
-            }
-
-            Disposed = true;
-            _parent.ReleaseKey(this);
-        }
+        Disposed = true;
+        _parent.ReleaseKey(this);
     }
 }

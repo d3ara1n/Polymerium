@@ -1,8 +1,7 @@
 ﻿using Trident.Abstractions.Resources;
 
-namespace Trident.Abstractions.Extractors
+namespace Trident.Abstractions.Extractors;
+
+public record ExtractorContext((Project, Project.Version)? Source)
 {
-    public record ExtractorContext((Project, Project.Version)? Source)
-    {
-    }
 }

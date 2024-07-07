@@ -1,26 +1,25 @@
 ﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Exceptions;
 
-namespace Polymerium.Trident.Engines.Deploying
+namespace Polymerium.Trident.Engines.Deploying;
+
+public abstract class StageBase
 {
-    public abstract class StageBase
+    public DeployContext Context { get; set; } = null!;
+    public ILogger Logger { get; set; } = null!;
+
+    protected abstract Task OnProcessAsync();
+
+    public async Task ProcessAsync()
     {
-        public DeployContext Context { get; set; } = null!;
-        public ILogger Logger { get; set; } = null!;
-
-        protected abstract Task OnProcessAsync();
-
-        public async Task ProcessAsync()
+        try
         {
-            try
-            {
-                await OnProcessAsync();
-            }
-            catch (Exception e)
-            {
-                Logger.LogError("Exception occurred: {message}", e.Message);
-                throw new DeployException(this, e);
-            }
+            await OnProcessAsync();
+        }
+        catch (Exception e)
+        {
+            Logger.LogError("Exception occurred: {message}", e.Message);
+            throw new DeployException(this, e);
         }
     }
 }

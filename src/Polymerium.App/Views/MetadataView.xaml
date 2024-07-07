@@ -257,9 +257,7 @@
                     <Grid Grid.Row="0">
                         <StackPanel>
                             <toolkit:DockPanel Margin="{StaticResource CardContentUpperMargin}">
-                                <HyperlinkButton toolkit:DockPanel.Dock="Right">
-                                    <TextBlock Text="Add" />
-                                </HyperlinkButton>
+                                <Button toolkit:DockPanel.Dock="Right" Content="Add" />
                                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Loaders" />
                             </toolkit:DockPanel>
                             <Grid>
@@ -289,8 +287,8 @@
                                                     </Grid.ColumnDefinitions>
                                                     <Border Grid.Column="0" Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
                                                         <Border
-                                                            Width="64"
-                                                            Height="64"
+                                                            Width="48"
+                                                            Height="48"
                                                             Margin="{StaticResource MediumMargin}"
                                                             VerticalAlignment="Center"
                                                             CornerRadius="{StaticResource TinyCornerRadius}">
@@ -363,12 +361,18 @@
                                         PlaceholderText="Query attachments' names..."
                                         QueryIcon="Filter"
                                         QuerySubmitted="AttachmentQueryBox_OnQuerySubmitted" />
-                                    <HyperlinkButton
+                                    <SplitButton
                                         Grid.Column="4"
                                         Command="{x:Bind ViewModel.GotoWorkbenchViewCommand}"
-                                        CommandParameter="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay}">
-                                        <TextBlock Text="Get" />
-                                    </HyperlinkButton>
+                                        CommandParameter="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay}"
+                                        Content="Get More">
+                                        <SplitButton.Flyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="Bulk Update" />
+                                                <MenuFlyoutItem Text="View Changelog" />
+                                            </MenuFlyout>
+                                        </SplitButton.Flyout>
+                                    </SplitButton>
                                 </Grid>
                                 <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind ViewModel.AttachmentLoadingState, Mode=OneWay}">
                                     <toolkit:Case Value="Loading">

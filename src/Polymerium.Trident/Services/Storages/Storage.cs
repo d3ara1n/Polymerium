@@ -1,42 +1,41 @@
-﻿namespace Polymerium.Trident.Services.Storages
+﻿namespace Polymerium.Trident.Services.Storages;
+
+public class Storage
 {
-    public class Storage
+    private readonly string _path;
+
+    internal Storage(string key, string path)
     {
-        private readonly string _path;
+        Key = key;
+        _path = path;
+    }
 
-        internal Storage(string key, string path)
+    public string Key { get; }
+
+    public void EnsureEmpty()
+    {
+        var dirs = Directory.GetDirectories(_path);
+        var files = Directory.GetFiles(_path);
+        foreach (var dir in dirs)
         {
-            Key = key;
-            _path = path;
+            Directory.Delete(dir, true);
         }
 
-        public string Key { get; }
-
-        public void EnsureEmpty()
+        foreach (var file in files)
         {
-            var dirs = Directory.GetDirectories(_path);
-            var files = Directory.GetFiles(_path);
-            foreach (var dir in dirs)
-            {
-                Directory.Delete(dir, true);
-            }
+            File.Delete(file);
+        }
+    }
 
-            foreach (var file in files)
-            {
-                File.Delete(file);
-            }
+    public async Task WriteAsync(string fileName, byte[] content)
+    {
+        var path = Path.Combine(_path, fileName);
+        var dir = Path.GetDirectoryName(path);
+        if (dir != null && !Directory.Exists(dir))
+        {
+            Directory.CreateDirectory(dir);
         }
 
-        public async Task WriteAsync(string fileName, byte[] content)
-        {
-            var path = Path.Combine(_path, fileName);
-            var dir = Path.GetDirectoryName(path);
-            if (dir != null && !Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            await File.WriteAllBytesAsync(path, content);
-        }
+        await File.WriteAllBytesAsync(path, content);
     }
 }

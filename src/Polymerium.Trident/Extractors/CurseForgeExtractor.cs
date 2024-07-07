@@ -1,5 +1,4 @@
-﻿using DotNext;
-using DotNext.Collections.Generic;
+﻿using DotNext.Collections.Generic;
 using Polymerium.Trident.Models.CurseForge;
 using Polymerium.Trident.Repositories;
 using System.Text.Json;
@@ -7,82 +6,80 @@ using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Extractors;
 using Trident.Abstractions.Resources;
 
-namespace Polymerium.Trident.Extractors
+namespace Polymerium.Trident.Extractors;
+
+public class CurseForgeExtractor : IExtractor
 {
-    public class CurseForgeExtractor() : IExtractor
+    public static readonly JsonSerializerOptions OPTIONS = new(JsonSerializerDefaults.Web);
+
+    private static readonly IDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
     {
-        public string IdenticalFileName => "manifest.json";
-        public static readonly JsonSerializerOptions OPTIONS = new(JsonSerializerDefaults.Web);
+        { "forge", Loader.COMPONENT_FORGE },
+        { "neoforge", Loader.COMPONENT_NEOFORGE },
+        { "fabric", Loader.COMPONENT_FABRIC },
+        { "quilt", Loader.COMPONENT_QUILT }
+    };
 
-        private static readonly IDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
+    public string IdenticalFileName => "manifest.json";
+
+    public Task<ExtractedContainer> ExtractAsync(string manifestContent,
+        ExtractorContext context,
+        CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+
+
+        var manifest = JsonSerializer.Deserialize<CurseForgeModpackManifest>(manifestContent, OPTIONS);
+        if (manifest.Equals(default))
         {
-            { "forge", Loader.COMPONENT_FORGE },
-            { "neoforge", Loader.COMPONENT_NEOFORGE },
-            { "fabric", Loader.COMPONENT_FABRIC },
-            { "quilt", Loader.COMPONENT_QUILT }
-        };
-
-        public Task<ExtractedContainer> ExtractAsync(string manifestContent,
-            ExtractorContext context,
-            CancellationToken token)
-        {
-            token.ThrowIfCancellationRequested();
-
-
-            var manifest = JsonSerializer.Deserialize<CurseForgeModpackManifest>(manifestContent, OPTIONS);
-            if (manifest.Equals(default))
-            {
-                throw new BadFormatException(IdenticalFileName, 0, 0);
-            }
-
-            var loaders =
-                manifest.Minecraft.ModLoaders.Select(x => (ToLoader(x), x.Primary)).ToArray();
-            if (loaders.Any(x => x.Item1 == null))
-            {
-                throw new NotSupportedException();
-            }
-
-            ContainedLayer required = new() { Summary = manifest.Name, OverrideDirectoryName = manifest.Overrides };
-            required.Loaders.AddAll(loaders.Where(x => x.Primary).Select(x => x.Item1!));
-            required.Attachments.AddAll(manifest.Files.Where(x => x.Required).Select(ToAttachment));
-            ContainedLayer optional = new() { Summary = $"{manifest.Name}(Optional)" };
-            optional.Loaders.AddAll(loaders.Where(x => !x.Primary).Select(x => x.Item1!));
-            optional.Attachments.AddAll(manifest.Files.Where(x => !x.Required).Select(ToAttachment));
-            ExtractedContainer container = new(manifest.Name, manifest.Minecraft.Version);
-            if (required.Loaders.Any() && required.Attachments.Any())
-            {
-                container.Layers.Add(required);
-            }
-
-            if (optional.Loaders.Any() && optional.Attachments.Any())
-            {
-                container.Layers.Add(optional);
-            }
-
-            return Task.FromResult(container);
+            throw new BadFormatException(IdenticalFileName, 0, 0);
         }
 
-        private Attachment ToAttachment(CurseForgeModpackManifestFile file)
+        var loaders =
+            manifest.Minecraft.ModLoaders.Select(x => (ToLoader(x), x.Primary)).ToArray();
+        if (loaders.Any(x => x.Item1 == null))
         {
-            return new Attachment(RepositoryLabels.CURSEFORGE,
-                file.ProjectId.ToString(),
-                file.FileId.ToString());
+            throw new NotSupportedException();
         }
 
-        private Loader? ToLoader(CurseForgeModpackManifestMinecraftModLoader loader)
+        ContainedLayer required = new() { Summary = manifest.Name, OverrideDirectoryName = manifest.Overrides };
+        required.Loaders.AddAll(loaders.Where(x => x.Primary).Select(x => x.Item1!));
+        required.Attachments.AddAll(manifest.Files.Where(x => x.Required).Select(ToAttachment));
+        ContainedLayer optional = new() { Summary = $"{manifest.Name}(Optional)" };
+        optional.Loaders.AddAll(loaders.Where(x => !x.Primary).Select(x => x.Item1!));
+        optional.Attachments.AddAll(manifest.Files.Where(x => !x.Required).Select(ToAttachment));
+        ExtractedContainer container = new(manifest.Name, manifest.Minecraft.Version);
+        if (required.Loaders.Any() && required.Attachments.Any())
         {
-            var index = loader.Id.IndexOf('-');
-            if (index != -1)
+            container.Layers.Add(required);
+        }
+
+        if (optional.Loaders.Any() && optional.Attachments.Any())
+        {
+            container.Layers.Add(optional);
+        }
+
+        return Task.FromResult(container);
+    }
+
+    private Attachment ToAttachment(CurseForgeModpackManifestFile file) =>
+        new(RepositoryLabels.CURSEFORGE,
+            file.ProjectId.ToString(),
+            file.FileId.ToString());
+
+    private Loader? ToLoader(CurseForgeModpackManifestMinecraftModLoader loader)
+    {
+        var index = loader.Id.IndexOf('-');
+        if (index != -1)
+        {
+            var id = loader.Id[..index];
+            var version = loader.Id[(index + 1)..];
+            if (MODLOADER_MAPPINGS.TryGetValue(id, out var loaderId))
             {
-                var id = loader.Id[..index];
-                var version = loader.Id[(index + 1)..];
-                if (MODLOADER_MAPPINGS.TryGetValue(id, out var loaderId))
-                {
-                    return new Loader(loaderId, version);
-                }
+                return new Loader(loaderId, version);
             }
-
-            return null;
         }
+
+        return null;
     }
 }

@@ -1,6 +1,5 @@
-﻿namespace Polymerium.Trident.Services
+﻿namespace Polymerium.Trident.Services;
+
+public class DownloadManager
 {
-    public class DownloadManager
-    {
-    }
 }

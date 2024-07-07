@@ -1,9 +1,8 @@
-﻿namespace Polymerium.Trident.Engines.Launching
+﻿namespace Polymerium.Trident.Engines.Launching;
+
+public enum ScrapLevel
 {
-    public enum ScrapLevel
-    {
-        Information,
-        Warning,
-        Error
-    }
+    Information,
+    Warning,
+    Error
 }

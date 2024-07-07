@@ -1,12 +1,11 @@
-﻿namespace Polymerium.Trident.Models.PrismLauncher
+﻿namespace Polymerium.Trident.Models.PrismLauncher;
+
+public struct PrismIndexVersion
 {
-    public struct PrismIndexVersion
-    {
-        public bool Recommended { get; init; }
-        public DateTimeOffset ReleaseTime { get; init; }
-        public PrismRequirement[] Requires { get; init; }
-        public string Sha256 { get; init; }
-        public PrismReleaseType Type { get; init; }
-        public string Version { get; init; }
-    }
+    public bool Recommended { get; init; }
+    public DateTimeOffset ReleaseTime { get; init; }
+    public PrismRequirement[] Requires { get; init; }
+    public string Sha256 { get; init; }
+    public PrismReleaseType Type { get; init; }
+    public string Version { get; init; }
 }

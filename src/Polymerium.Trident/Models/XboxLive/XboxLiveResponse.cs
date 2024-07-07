@@ -1,20 +1,19 @@
-﻿namespace Polymerium.Trident.Models.XboxLive
+﻿namespace Polymerium.Trident.Models.XboxLive;
+
+public struct XboxLiveResponse
 {
-    public struct XboxLiveResponse
+    public DateTimeOffset IssueInstant { get; set; }
+    public DateTimeOffset NotAfter { get; set; }
+    public string Token { get; set; }
+    public XboxLiveUserAuthencationResponseClaims DisplayClaims { get; set; }
+
+    public struct XboxLiveUserAuthencationResponseClaims
     {
-        public DateTimeOffset IssueInstant { get; set; }
-        public DateTimeOffset NotAfter { get; set; }
-        public string Token { get; set; }
-        public XboxLiveUserAuthencationResponseClaims DisplayClaims { get; set; }
+        public IEnumerable<XboxLiveUserAuthenticationResponseXui> Xui { get; set; }
 
-        public struct XboxLiveUserAuthencationResponseClaims
+        public struct XboxLiveUserAuthenticationResponseXui
         {
-            public IEnumerable<XboxLiveUserAuthenticationResponseXui> Xui { get; set; }
-
-            public struct XboxLiveUserAuthenticationResponseXui
-            {
-                public string Uhs { get; set; }
-            }
+            public string Uhs { get; set; }
         }
     }
 }

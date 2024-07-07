@@ -6,134 +6,133 @@ using System.Text;
 using System.Text.Json;
 using Trident.Abstractions;
 
-namespace Polymerium.Trident.Services
+namespace Polymerium.Trident.Services;
+
+public sealed class AccountManager : IDisposable
 {
-    public sealed class AccountManager : IDisposable
+    private readonly ILogger _logger;
+    private readonly JsonSerializerOptions _options;
+    private readonly TridentContext _trident;
+
+    private bool disposedValue;
+
+    public AccountManager(TridentContext trident, ILogger<AccountManager> logger, JsonSerializerOptions options)
     {
-        private readonly ILogger _logger;
-        private readonly JsonSerializerOptions _options;
-        private readonly TridentContext _trident;
+        _trident = trident;
+        _logger = logger;
+        _options = options;
 
-        private bool disposedValue;
+        Scan();
+    }
 
-        public AccountManager(TridentContext trident, ILogger<AccountManager> logger, JsonSerializerOptions options)
+    public string? DefaultUuid { get; set; }
+
+    public IList<IAccount> Managed { get; } = new List<IAccount>();
+
+    public void Dispose()
+    {
+        if (!disposedValue)
         {
-            _trident = trident;
-            _logger = logger;
-            _options = options;
-
-            Scan();
+            Flush();
+            disposedValue = true;
         }
+    }
 
-        public string? DefaultUuid { get; set; }
+    public event AccountCollectionChangedHandler? AccountCollectionChanged;
 
-        public IList<IAccount> Managed { get; } = new List<IAccount>();
-
-        public void Dispose()
+    private void Scan()
+    {
+        Managed.Clear();
+        var path = _trident.AccountVaultFile;
+        if (File.Exists(path))
         {
-            if (!disposedValue)
-            {
-                Flush();
-                disposedValue = true;
-            }
-        }
-
-        public event AccountCollectionChangedHandler? AccountCollectionChanged;
-
-        private void Scan()
-        {
-            Managed.Clear();
-            var path = _trident.AccountVaultFile;
-            if (File.Exists(path))
-            {
-                try
-                {
-                    var content = File.ReadAllText(path);
-                    var vault = JsonSerializer.Deserialize<AccountVault>(content, _options);
-                    DefaultUuid = vault?.Default;
-                    foreach (var entry in vault?.Entries ?? Enumerable.Empty<AccountEntry>())
-                    {
-                        var unmasked = Encoding.UTF8.GetString(entry.Opaque);
-                        var account = JsonSerializer.Deserialize(unmasked, entry.Type switch
-                        {
-                            nameof(MicrosoftAccount) => typeof(MicrosoftAccount),
-                            nameof(AuthlibAccount) => typeof(AuthlibAccount),
-                            nameof(FamilyAccount) => typeof(FamilyAccount),
-                            _ => throw new NotSupportedException($"The type of account is not supported: {entry.Type}")
-                        }, _options) as IAccount;
-                        ArgumentNullException.ThrowIfNull(account);
-                        Managed.Add(account);
-                    }
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e, "Error occurred while loading account vault");
-                }
-            }
-        }
-
-        private void Flush()
-        {
-            var path = _trident.AccountVaultFile;
-            var dir = Path.GetDirectoryName(path);
-            if (dir != null && !Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            List<AccountEntry> list = new();
             try
             {
-                foreach (var account in Managed)
+                var content = File.ReadAllText(path);
+                var vault = JsonSerializer.Deserialize<AccountVault>(content, _options);
+                DefaultUuid = vault?.Default;
+                foreach (var entry in vault?.Entries ?? Enumerable.Empty<AccountEntry>())
                 {
-                    var unmasked = JsonSerializer.Serialize(account, _options);
-                    var masked = Encoding.UTF8.GetBytes(unmasked);
-                    list.Add(new AccountEntry(account.GetType().Name, masked));
+                    var unmasked = Encoding.UTF8.GetString(entry.Opaque);
+                    var account = JsonSerializer.Deserialize(unmasked, entry.Type switch
+                    {
+                        nameof(MicrosoftAccount) => typeof(MicrosoftAccount),
+                        nameof(AuthlibAccount) => typeof(AuthlibAccount),
+                        nameof(FamilyAccount) => typeof(FamilyAccount),
+                        _ => throw new NotSupportedException($"The type of account is not supported: {entry.Type}")
+                    }, _options) as IAccount;
+                    ArgumentNullException.ThrowIfNull(account);
+                    Managed.Add(account);
                 }
-
-                var content = JsonSerializer.Serialize(new AccountVault(DefaultUuid, list), _options);
-                File.WriteAllText(path, content);
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error occurred while saving account vault");
+                _logger.LogError(e, "Error occurred while loading account vault");
             }
         }
+    }
 
-        public void Append(IAccount account)
+    private void Flush()
+    {
+        var path = _trident.AccountVaultFile;
+        var dir = Path.GetDirectoryName(path);
+        if (dir != null && !Directory.Exists(dir))
         {
-            Managed.Add(account);
-            if (string.IsNullOrEmpty(DefaultUuid))
+            Directory.CreateDirectory(dir);
+        }
+
+        List<AccountEntry> list = new();
+        try
+        {
+            foreach (var account in Managed)
             {
-                DefaultUuid = account.Uuid;
+                var unmasked = JsonSerializer.Serialize(account, _options);
+                var masked = Encoding.UTF8.GetBytes(unmasked);
+                list.Add(new AccountEntry(account.GetType().Name, masked));
             }
 
+            var content = JsonSerializer.Serialize(new AccountVault(DefaultUuid, list), _options);
+            File.WriteAllText(path, content);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error occurred while saving account vault");
+        }
+    }
+
+    public void Append(IAccount account)
+    {
+        Managed.Add(account);
+        if (string.IsNullOrEmpty(DefaultUuid))
+        {
+            DefaultUuid = account.Uuid;
+        }
+
+        AccountCollectionChanged?.Invoke(this,
+            new AccountCollectionChangedEventArgs(AccountCollectionChangedAction.Add, account));
+    }
+
+    public void Remove(string uuid)
+    {
+        var found = Managed.FirstOrDefault(x => x.Uuid == uuid);
+        if (found != null)
+        {
+            Managed.Remove(found);
             AccountCollectionChanged?.Invoke(this,
-                new AccountCollectionChangedEventArgs(AccountCollectionChangedAction.Add, account));
+                new AccountCollectionChangedEventArgs(AccountCollectionChangedAction.Remove, found));
         }
+    }
 
-        public void Remove(string uuid)
+    public bool TryGetByUuid(string uuid, [MaybeNullWhen(false)] out IAccount result)
+    {
+        var found = Managed.FirstOrDefault(x => x.Uuid == uuid);
+        if (found != null)
         {
-            var found = Managed.FirstOrDefault(x => x.Uuid == uuid);
-            if (found != null)
-            {
-                Managed.Remove(found);
-                AccountCollectionChanged?.Invoke(this,
-                    new AccountCollectionChangedEventArgs(AccountCollectionChangedAction.Remove, found));
-            }
+            result = found;
+            return true;
         }
 
-        public bool TryGetByUuid(string uuid, [MaybeNullWhen(false)] out IAccount result)
-        {
-            var found = Managed.FirstOrDefault(x => x.Uuid == uuid);
-            if (found != null)
-            {
-                result = found;
-                return true;
-            }
-
-            result = null;
-            return false;
-        }
+        result = null;
+        return false;
     }
 }

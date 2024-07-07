@@ -1,7 +1,6 @@
-﻿namespace Polymerium.Trident.Models.Minecraft
+﻿namespace Polymerium.Trident.Models.Minecraft;
+
+public struct MinecraftVersionLibraryExtract
 {
-    public struct MinecraftVersionLibraryExtract
-    {
-        public string[] Exclude { get; init; }
-    }
+    public string[] Exclude { get; init; }
 }

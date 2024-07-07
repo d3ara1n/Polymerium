@@ -24,29 +24,23 @@ public struct LabrinthVersion
     public Uri? ChangelogUrl { get; init; }
     public IEnumerable<LabrinthVersionFile> Files { get; init; }
 
-    public ReleaseType ExtractReleaseType()
-    {
-        return VersionType switch
+    public ReleaseType ExtractReleaseType() =>
+        VersionType switch
         {
             "release" => ReleaseType.Release,
             "beta" => ReleaseType.Beta,
             "alpha" => ReleaseType.Alpha,
             _ => throw new NotSupportedException()
         };
-    }
 
-    public Requirement ExtractRequirement()
-    {
-        return new Requirement(GameVersions,
+    public Requirement ExtractRequirement() =>
+        new(GameVersions,
             Loaders.Where(x => x != "minecraft" && x != "datapack").Select(x =>
                 ModrinthHelper.MODLOADER_MAPPINGS.ContainsKey(x)
                     ? ModrinthHelper.MODLOADER_MAPPINGS[x]
                     : throw new NotSupportedException()));
-    }
 
-    public IEnumerable<Dependency> ExtractDependencies()
-    {
-        return Dependencies.Where(x => x.ProjectId != null).Select(x =>
+    public IEnumerable<Dependency> ExtractDependencies() =>
+        Dependencies.Where(x => x.ProjectId != null).Select(x =>
             new Dependency(RepositoryLabels.MODRINTH, x.ProjectId!, x.VersionId, x.DependencyType == "required"));
-    }
 }

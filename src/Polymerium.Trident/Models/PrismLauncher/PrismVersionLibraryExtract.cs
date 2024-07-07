@@ -1,7 +1,6 @@
-﻿namespace Polymerium.Trident.Models.PrismLauncher
+﻿namespace Polymerium.Trident.Models.PrismLauncher;
+
+public struct PrismVersionLibraryExtract
 {
-    public struct PrismVersionLibraryExtract
-    {
-        public string[] Exclude { get; init; }
-    }
+    public string[] Exclude { get; init; }
 }

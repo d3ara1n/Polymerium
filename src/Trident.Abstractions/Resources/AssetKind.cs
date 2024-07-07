@@ -1,13 +1,12 @@
-﻿namespace Trident.Abstractions.Resources
+﻿namespace Trident.Abstractions.Resources;
+
+public enum AssetKind
 {
-    public enum AssetKind
-    {
-        Mod,
-        Save,
-        Log,
-        Screenshot,
-        DataPack,
-        ResourcePack,
-        ShaderPack
-    }
+    Mod,
+    Save,
+    Log,
+    Screenshot,
+    DataPack,
+    ResourcePack,
+    ShaderPack
 }

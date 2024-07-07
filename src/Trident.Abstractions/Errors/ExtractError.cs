@@ -1,15 +1,14 @@
-﻿namespace Trident.Abstractions.Errors
+﻿namespace Trident.Abstractions.Errors;
+
+public enum ExtractError
 {
-    public enum ExtractError
-    {
-        Unknown,
-        Cancelled,
-        BadFormat,
-        BadStream,
-        FileNotFound,
-        ItemNotFound,
-        TooLarge,
-        Unsupported,
-        Exception
-    }
+    Unknown,
+    Cancelled,
+    BadFormat,
+    BadStream,
+    FileNotFound,
+    ItemNotFound,
+    TooLarge,
+    Unsupported,
+    Exception
 }
