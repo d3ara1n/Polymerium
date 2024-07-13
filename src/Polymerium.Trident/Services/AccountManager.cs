@@ -86,7 +86,7 @@ public sealed class AccountManager : IDisposable
         {
             foreach (var account in Managed)
             {
-                var unmasked = JsonSerializer.Serialize(account, _options);
+                var unmasked = JsonSerializer.Serialize(account, account.GetType(), _options);
                 var masked = Encoding.UTF8.GetBytes(unmasked);
                 list.Add(new AccountEntry(account.GetType().Name, masked));
             }

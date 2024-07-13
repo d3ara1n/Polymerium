@@ -24,9 +24,12 @@
                     PlaceholderText="Search for managed instances..."
                     QueryIcon="Find" />
             </Grid>
-            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Or check" />
+            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Or" />
             <toolkit:WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <controls:CardButton Padding="0">
+                <controls:CardButton
+                    Padding="0"
+                    Command="{x:Bind ViewModel.OpenExternalUrlCommand}"
+                    CommandParameter="http://github.com/d3ara1n/Polymerium">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -39,17 +42,23 @@
                                     <GradientStop Offset="1" Color="#ffecd2" />
                                 </LinearGradientBrush>
                             </Grid.Background>
-                            <FontIcon Margin="{StaticResource SmallMargin}" Glyph="&#xE7B8;" />
+                            <FontIcon
+                                Margin="{StaticResource SmallMargin}"
+                                Glyph="&#xf09b;"
+                                Style="{StaticResource FontAwesomeBrandsFontIconStyle}" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBlock
                                 Margin="{StaticResource SmallMargin}"
                                 VerticalAlignment="Center"
-                                Text="How to install modpacks" />
+                                Text="Check out source code" />
                         </Grid>
                     </Grid>
                 </controls:CardButton>
-                <controls:CardButton Padding="0">
+                <controls:CardButton
+                    Padding="0"
+                    Command="{x:Bind ViewModel.OpenExternalUrlCommand}"
+                    CommandParameter="http://github.com/d3ara1n/Polymerium">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -62,17 +71,23 @@
                                     <GradientStop Offset="1" Color="#fbc2eb" />
                                 </LinearGradientBrush>
                             </Grid.Background>
-                            <FontIcon Margin="{StaticResource SmallMargin}" Glyph="&#xE70F;" />
+                            <FontIcon
+                                Margin="{StaticResource SmallMargin}"
+                                Glyph="&#xf7b6;"
+                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBlock
                                 Margin="{StaticResource SmallMargin}"
                                 VerticalAlignment="Center"
-                                Text="How to modify an instance" />
+                                Text="Support development" />
                         </Grid>
                     </Grid>
                 </controls:CardButton>
-                <controls:CardButton Padding="0">
+                <controls:CardButton
+                    Padding="0"
+                    Command="{x:Bind ViewModel.OpenExternalUrlCommand}"
+                    CommandParameter="http://github.com/d3ara1n/Polymerium/issues">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -85,13 +100,16 @@
                                     <GradientStop Offset="1" Color="#c2e9fb" />
                                 </LinearGradientBrush>
                             </Grid.Background>
-                            <FontIcon Margin="{StaticResource SmallMargin}" Glyph="&#xF000;" />
+                            <FontIcon
+                                Margin="{StaticResource SmallMargin}"
+                                Glyph="&#xf145;"
+                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBlock
                                 Margin="{StaticResource SmallMargin}"
                                 VerticalAlignment="Center"
-                                Text="Knowledge about deployment" />
+                                Text="Submit an issue or feature" />
                         </Grid>
                     </Grid>
                 </controls:CardButton>

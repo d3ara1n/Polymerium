@@ -4,6 +4,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Extensions;
+using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace Polymerium.App.ViewModels
             _navigationService = navigationService;
             _thumbnailSaver = thumbnailSaver;
             GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
+            OpenExternalUrlCommand = new RelayCommand<string>(OpenExternalUrl);
 
             Recents = _profileManger.Managed
                 .Select(x => (
@@ -37,15 +39,20 @@ namespace Polymerium.App.ViewModels
         }
 
         public IList<RecentModel> Recents { get; }
+        public ICommand OpenExternalUrlCommand { get; }
         public ICommand GotoInstanceViewCommand { get; }
 
         private void GotoInstanceView(string? key)
         {
             if (key != null)
-            // 使用主要页面 DesktopView 来向下跳转到 InstanceView
             {
                 _navigationService.Navigate(typeof(InstanceView), key);
             }
+        }
+
+        private void OpenExternalUrl(string? url)
+        {
+            if (!string.IsNullOrEmpty(url)) UriFileHelper.OpenInExternal(url);
         }
     }
 }

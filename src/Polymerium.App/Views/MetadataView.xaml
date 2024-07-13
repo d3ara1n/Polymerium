@@ -257,7 +257,16 @@
                     <Grid Grid.Row="0">
                         <StackPanel>
                             <toolkit:DockPanel Margin="{StaticResource CardContentUpperMargin}">
-                                <Button toolkit:DockPanel.Dock="Right" Content="Add" />
+                                <DropDownButton toolkit:DockPanel.Dock="Right" Content="Add">
+                                    <DropDownButton.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Text="Forge" />
+                                            <MenuFlyoutItem Text="NeoForge" />
+                                            <MenuFlyoutItem Text="Fabric" />
+                                            <MenuFlyoutItem Text="Quilt" />
+                                        </MenuFlyout>
+                                    </DropDownButton.Flyout>
+                                </DropDownButton>
                                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Loaders" />
                             </toolkit:DockPanel>
                             <Grid>
@@ -370,6 +379,7 @@
                                             <MenuFlyout>
                                                 <MenuFlyoutItem Text="Bulk Update" />
                                                 <MenuFlyoutItem Text="View Changelog" />
+                                                <MenuFlyoutItem Text="Export List" />
                                             </MenuFlyout>
                                         </SplitButton.Flyout>
                                     </SplitButton>

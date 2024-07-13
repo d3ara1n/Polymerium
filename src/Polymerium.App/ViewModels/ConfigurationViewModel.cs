@@ -6,7 +6,9 @@ using Polymerium.Trident.Services;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
+using Trident.Abstractions.Resources;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
@@ -17,6 +19,7 @@ namespace Polymerium.App.ViewModels
         private readonly DialogService _dialogService;
         private readonly InstanceService _instanceService;
         private readonly InstanceStatusService _instanceStatusService;
+        private readonly StorageManager _storageManager;
         private readonly NavigationService _navigationService;
         private readonly NotificationService _notificationService;
         private readonly ProfileManager _profileManager;
@@ -28,7 +31,7 @@ namespace Polymerium.App.ViewModels
         public ConfigurationViewModel(ProfileManager profileManager, ThumbnailSaver thumbnailSaver,
             InstanceStatusService instanceStatusService, TridentContext trident,
             NotificationService notificationService, NavigationService navigationService, DialogService dialogService,
-            InstanceService instanceService)
+            InstanceService instanceService, StorageManager storageManager)
         {
             _profileManager = profileManager;
             _thumbnailSaver = thumbnailSaver;
@@ -38,6 +41,7 @@ namespace Polymerium.App.ViewModels
             _navigationService = navigationService;
             _dialogService = dialogService;
             _instanceService = instanceService;
+            _storageManager = storageManager;
 
             ChooseJavaCommand = new RelayCommand(ChooseJava, CanChooseJava);
             OpenExportWizardCommand = new RelayCommand(OpenExportWizard, CanOpenExportWizard);
@@ -293,15 +297,31 @@ namespace Polymerium.App.ViewModels
             return SafeCodeGenerated == entered && _instanceService.CanManipulate(Model.Key);
         }
 
-        private void ResetInstance(string? ignore)
+        private void ResetInstance(string? _)
         {
             _instanceService.Reset(Model.Key);
             _notificationService.PopSuccess($"Instance {Model.Inner.Name} is now cleared");
         }
 
-        private void DeleteInstance(string? ignore)
+        private void DeleteInstance(string? _)
         {
+            var storages = _profileManager
+                .Managed
+                .Where(x => x.Key != Model.Key)
+                .Select(x => x.Value)
+                .SelectMany(x => x.Value.Metadata.Layers)
+                .SelectMany(x => x.Loaders)
+                .Where(x => x.Identity == Loader.COMPONENT_BUILTIN_STORAGE)
+                .ToList();
+            var toDestroy = Model
+                .Inner
+                .Metadata
+                .Layers
+                .SelectMany(x => x.Loaders)
+                .Where(x => x.Identity == Loader.COMPONENT_BUILTIN_STORAGE)
+                .Where(x => !storages.Any(y => x.Version == y.Version));
             _instanceService.Delete(Model.Key);
+            foreach (var storage in toDestroy) _storageManager.Destroy(storage.Version);
             _notificationService.PopSuccess($"Instance {Model.Inner.Name} is now destroyed");
             _navigationService.Navigate(typeof(DesktopView), isRoot: true);
         }
