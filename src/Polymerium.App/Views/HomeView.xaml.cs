@@ -17,5 +17,10 @@ namespace Polymerium.App.Views
         }
 
         public HomeViewModel ViewModel { get; } = App.ViewModel<HomeViewModel>();
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            ViewModel.QuerySubmitted(sender.Text);
+        }
     }
 }

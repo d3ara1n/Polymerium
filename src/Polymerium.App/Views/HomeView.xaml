@@ -22,7 +22,8 @@
                 <AutoSuggestBox
                     Grid.Column="1"
                     PlaceholderText="Search for managed instances..."
-                    QueryIcon="Find" />
+                    QueryIcon="Find"
+                    QuerySubmitted="AutoSuggestBox_QuerySubmitted" />
             </Grid>
             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Or" />
             <toolkit:WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
