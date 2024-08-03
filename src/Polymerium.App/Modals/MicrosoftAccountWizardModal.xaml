@@ -16,7 +16,7 @@
 
     <Grid
         Padding="{StaticResource MediumMargin}"
-        Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+        Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
         BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
         BorderThickness="{StaticResource CardBorderThickness}"
         CornerRadius="{StaticResource SmallCornerRadius}"
