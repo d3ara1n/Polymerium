@@ -6,6 +6,8 @@ using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 using System;
+using System.Threading.Tasks;
+using Trident.Abstractions.Resources;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,6 +28,19 @@ namespace Polymerium.App.Views
         public MetadataViewModel ViewModel { get; } = App.ViewModel<MetadataViewModel>();
 
         public AdvancedCollectionView AttachmentView { get; }
+
+
+        public DataLoadingState VersionLoadingState
+        {
+            get { return (DataLoadingState)GetValue(VersionLoadingStateProperty); }
+            set { SetValue(VersionLoadingStateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for VersionLoadingState.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty VersionLoadingStateProperty =
+            DependencyProperty.Register(nameof(VersionLoadingState), typeof(DataLoadingState), typeof(MetadataView), new PropertyMetadata(DataLoadingState.Idle));
+
+
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -73,5 +88,30 @@ namespace Polymerium.App.Views
 
             return false;
         }
+
+        private void AddLoader(string identity)
+        {
+            VersionLoadingState = DataLoadingState.Loading;
+            Task.Run(async () =>
+            {
+                var versions = await ViewModel.GetLoaderVersionsAsync(identity);
+
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    VersionLoadingState = DataLoadingState.Idle;
+                    var dialog = new AddLoaderDialog(XamlRoot, identity, versions);
+                    await dialog.ShowAsync();
+                });
+            });
+
+        }
+
+        private void AddForgeButton_Click(object sender, RoutedEventArgs e) => AddLoader(Loader.COMPONENT_FORGE);
+
+        private void AddNeoForgeButton_Click(object sender, RoutedEventArgs e) => AddLoader(Loader.COMPONENT_NEOFORGE);
+
+        private void AddFabricButton_Click(object sender, RoutedEventArgs e) => AddLoader(Loader.COMPONENT_FABRIC);
+
+        private void AddQuiltButton_Click(object sender, RoutedEventArgs e) => AddLoader(Loader.COMPONENT_QUILT);
     }
 }
