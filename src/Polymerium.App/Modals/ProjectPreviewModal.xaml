@@ -30,7 +30,7 @@
         <Grid
             Grid.Row="1"
             Grid.Column="1"
-            Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
             BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
             BorderThickness="{StaticResource CardBorderThickness}"
             CornerRadius="{StaticResource SmallCornerRadius}">
