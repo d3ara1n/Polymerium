@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using ABI.System.Collections.Generic;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Modals;
@@ -10,12 +11,15 @@ using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Resources;
 using static Trident.Abstractions.Metadata;
@@ -31,6 +35,7 @@ namespace Polymerium.App.ViewModels
         private readonly IServiceProvider _provider;
         private readonly ModalService _modalService;
         private readonly RepositoryAgent _repositoryAgent;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         private DataLoadingState attachmentLoadingState = DataLoadingState.Loading;
 
@@ -39,7 +44,7 @@ namespace Polymerium.App.ViewModels
         private LayerModel? selectedLayer;
 
         public MetadataViewModel(RepositoryAgent repositoryAgent, ProfileManager profileManager,
-            DialogService dialogService, IServiceProvider provider, NavigationService navigationService, ModalService modalService)
+            DialogService dialogService, IServiceProvider provider, NavigationService navigationService, ModalService modalService, IHttpClientFactory factory)
         {
             _profileManager = profileManager;
             _repositoryAgent = repositoryAgent;
@@ -47,6 +52,7 @@ namespace Polymerium.App.ViewModels
             _dialogService = dialogService;
             _navigationService = navigationService;
             _modalService = modalService;
+            _httpClientFactory = factory;
             _dispatcher = DispatcherQueue.GetForCurrentThread();
 
             RenameLayerCommand = new RelayCommand<LayerModel>(RenameLayer, CanRenameLayer);
@@ -349,6 +355,20 @@ namespace Polymerium.App.ViewModels
                     Model.NotifyPositionChange();
                 }
             }
+        }
+
+        public async Task<IEnumerable<LoaderVersionModel>> GetLoaderVersionsAsync(string identity)
+        {
+            var uid = identity switch
+            {
+                Loader.COMPONENT_FORGE => PrismLauncherHelper.UID_FORGE,
+                Loader.COMPONENT_NEOFORGE => PrismLauncherHelper.UID_NEOFORGE,
+                Loader.COMPONENT_FABRIC => PrismLauncherHelper.UID_FABRIC,
+                Loader.COMPONENT_QUILT => PrismLauncherHelper.UID_QUILT,
+                _ => throw new ResourceIdentityUnrecognizedException(identity, nameof(Loader))
+            };
+            var manifest = await PrismLauncherHelper.GetManifestAsync(uid, _httpClientFactory);
+            return manifest.Versions.Select(x => new LoaderVersionModel(identity, x.Version, x.ReleaseTime, x.Recommended));
         }
     }
 }

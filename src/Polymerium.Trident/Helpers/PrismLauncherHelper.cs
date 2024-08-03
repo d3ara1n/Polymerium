@@ -23,7 +23,6 @@ public static class PrismLauncherHelper
     private static readonly string OsNameString = PlatformHelper.GetOsName();
     private static readonly string OsFullString = $"{OsNameString}-{PlatformHelper.GetOsArch()}";
 
-    // 使用本地创建的 options，和 Polymerium 的文件不共用同一个
     private static readonly JsonSerializerOptions OPTIONS = new(JsonSerializerDefaults.Web);
 
     static PrismLauncherHelper() => OPTIONS.Converters.Add(new JsonStringEnumConverter());
