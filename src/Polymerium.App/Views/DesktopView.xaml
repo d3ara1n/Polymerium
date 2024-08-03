@@ -189,27 +189,30 @@
                                         </Border>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                        <TextBlock
-                                            HorizontalAlignment="Right"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}">
-                                            <Run Text="CREATED:" />
-                                            <Run Text="{x:Bind CreatedAt}" />
-                                        </TextBlock>
-                                        <TextBlock
-                                            HorizontalAlignment="Right"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}">
-                                            <Run Text="DEPLOYED:" />
-                                            <Run Text="{x:Bind DeployAt}" />
-                                        </TextBlock>
-                                        <TextBlock
-                                            HorizontalAlignment="Right"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}">
-                                            <Run Text="PLAYED:" />
-                                            <Run Text="{x:Bind PlayedAt}" />
-                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                            <FontIcon
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" Glyph="&#xf1b2;" FontSize="{StaticResource CaptionFontIconFontSize}"/>
+                                            <TextBlock
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Text="{x:Bind CreatedAt}" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                            <FontIcon
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" Glyph="&#xf0d1;" FontSize="{StaticResource CaptionFontIconFontSize}"/>
+                                            <TextBlock
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Text="{x:Bind DeployAt}" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                                            <FontIcon
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" Glyph="&#xf135;" FontSize="{StaticResource CaptionFontIconFontSize}"/>
+                                            <TextBlock
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Text="{x:Bind PlayedAt}" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </Grid>
                             </StackPanel>

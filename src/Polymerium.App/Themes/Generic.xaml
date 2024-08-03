@@ -10,7 +10,7 @@
 
     <x:Double x:Key="LargeFontIconFontSize">44</x:Double>
     <x:Double x:Key="ButtonFontIconFontSize">14</x:Double>
-    <x:Double x:Key="CaptionFontIconFontSize">10</x:Double>
+    <x:Double x:Key="CaptionFontIconFontSize">12</x:Double>
 
     <Thickness x:Key="TinyMargin">4</Thickness>
     <Thickness x:Key="TinyUpperMargin">4,4,4,0</Thickness>
