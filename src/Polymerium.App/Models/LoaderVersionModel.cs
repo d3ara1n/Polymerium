@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Trident.Abstractions.Resources;
 
 namespace Polymerium.App.Models
 {
-    public record LoaderVersionModel(string Identity, string Version, DateTimeOffset ReleasedAt,bool Highlighted = false)
+    public record LoaderVersionModel(string Identity, string Version, DateTimeOffset ReleasedAt, ReleaseType Type, bool Highlighted = false)
     {
     }
 }

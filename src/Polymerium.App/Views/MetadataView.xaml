@@ -399,8 +399,7 @@
                                     <SplitButton
                                         Grid.Column="4"
                                         Command="{x:Bind ViewModel.GotoWorkbenchViewCommand}"
-                                        CommandParameter="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay}"
-                                        Content="Get More">
+                                        CommandParameter="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay}">
                                         <SplitButton.Flyout>
                                             <MenuFlyout>
                                                 <MenuFlyoutItem Text="Bulk Update" />
@@ -408,6 +407,10 @@
                                                 <MenuFlyoutItem Text="Export List" />
                                             </MenuFlyout>
                                         </SplitButton.Flyout>
+                                        <StackPanel Orientation="Horizontal" Spacing="5">
+                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xF133;" />
+                                            <TextBlock Text="Get" />
+                                        </StackPanel>
                                     </SplitButton>
                                 </Grid>
                                 <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind ViewModel.AttachmentLoadingState, Mode=OneWay}">

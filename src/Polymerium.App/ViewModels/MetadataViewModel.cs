@@ -1,5 +1,4 @@
-﻿using ABI.System.Collections.Generic;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Polymerium.App.Modals;
@@ -9,9 +8,9 @@ using Polymerium.App.Views;
 using Polymerium.Trident.Engines;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Helpers;
+using Polymerium.Trident.Models.PrismLauncher;
 using Polymerium.Trident.Services;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -359,6 +358,7 @@ namespace Polymerium.App.ViewModels
 
         public async Task<IEnumerable<LoaderVersionModel>> GetLoaderVersionsAsync(string identity)
         {
+
             var uid = identity switch
             {
                 Loader.COMPONENT_FORGE => PrismLauncherHelper.UID_FORGE,
@@ -367,8 +367,17 @@ namespace Polymerium.App.ViewModels
                 Loader.COMPONENT_QUILT => PrismLauncherHelper.UID_QUILT,
                 _ => throw new ResourceIdentityUnrecognizedException(identity, nameof(Loader))
             };
-            var manifest = await PrismLauncherHelper.GetManifestAsync(uid, _httpClientFactory);
-            return manifest.Versions.Select(x => new LoaderVersionModel(identity, x.Version, x.ReleaseTime, x.Recommended));
+            var manifesta = await PrismLauncherHelper.GetManifestAsync(uid, _httpClientFactory);
+            return manifesta.Versions.Where(x => x.Requires.Any(y => y.Uid == PrismLauncherHelper.UID_INTERMEDIARY || (y.Uid == PrismLauncherHelper.UID_MINECRAFT && (y.Equal == model.Inner.Metadata.Version || y.Suggest == model.Inner.Metadata.Version)))).Select(x => new LoaderVersionModel(identity, x.Version, x.ReleaseTime, x.Type switch
+            {
+                PrismReleaseType.Release => ReleaseType.Release,
+                PrismReleaseType.Snapshot => ReleaseType.Snapshot,
+                PrismReleaseType.Old_Snapshot => ReleaseType.Snapshot,
+                PrismReleaseType.Experiment => ReleaseType.Experiment,
+                PrismReleaseType.Old_Alpha => ReleaseType.Alpha,
+                PrismReleaseType.Old_Beta => ReleaseType.Beta,
+                _ => throw new NotImplementedException()
+            }, x.Recommended));
         }
     }
 }

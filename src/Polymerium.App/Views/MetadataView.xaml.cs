@@ -100,7 +100,10 @@ namespace Polymerium.App.Views
                 {
                     VersionLoadingState = DataLoadingState.Idle;
                     var dialog = new AddLoaderDialog(XamlRoot, identity, versions);
-                    await dialog.ShowAsync();
+                    if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+                    {
+                        ViewModel.SelectedLayer?.Loaders.Add(new LoaderModel(new Loader(identity, dialog.SelectedVersion), ViewModel.SelectedLayer.RemoveLoaderCommand));
+                    }
                 });
             });
 

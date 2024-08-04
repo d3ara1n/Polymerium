@@ -76,7 +76,7 @@ namespace Polymerium.App.ViewModels
 
         private async Task UpdateInternal(Metadata metadata)
         {
-            foreach(var layer in metadata.Layers)
+            foreach (var layer in metadata.Layers)
             {
                 // TODO
             }

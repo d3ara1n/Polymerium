@@ -7,6 +7,7 @@
     xmlns:lab="using:CommunityToolkit.WinUI.Controls"
     xmlns:local="using:Polymerium.App.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     Title="Add loader dialog"
     CloseButtonText="Cancel"
@@ -16,6 +17,34 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <AutoSuggestBox QueryIcon="Library" />
+        <AutoSuggestBox
+            x:Name="VersionBox"
+            ItemsSource="{x:Bind Versions}"
+            PlaceholderText="Loader version..."
+            QueryIcon="Library"
+            Text="{x:Bind SelectedVersion, Mode=TwoWay}"
+            TextChanged="VersionBox_TextChanged"
+            TextMemberPath="Version">
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate x:DataType="models:LoaderVersionModel">
+                    <toolkit:DockPanel>
+                        <Border
+                            toolkit:DockPanel.Dock="Right"
+                            Background="{ThemeResource ControlAltFillColorSecondaryBrush}"
+                            CornerRadius="3">
+                            <TextBlock
+                                Margin="6,4,6,4"
+                                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind Type}" />
+                        </Border>
+                        <TextBlock
+                            FontWeight="{x:Bind Highlighted, Converter={StaticResource BoolToFontBoldConverter}}"
+                            Foreground="{x:Bind Highlighted, Converter={StaticResource BoolToAccentTextBrushConverter}}"
+                            Text="{x:Bind Version}" />
+                    </toolkit:DockPanel>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+        </AutoSuggestBox>
     </StackPanel>
 </ContentDialog>
