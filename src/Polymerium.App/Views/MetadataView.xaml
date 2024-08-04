@@ -257,42 +257,44 @@
                     <Grid Grid.Row="0">
                         <StackPanel>
                             <toolkit:DockPanel Margin="{StaticResource CardContentUpperMargin}">
-                                <DropDownButton toolkit:DockPanel.Dock="Right" IsEnabled="{x:Bind VersionLoadingState, Mode=OneWay, Converter={StaticResource FalseWhenLoadingConverter}}">
-                                    <DropDownButton.Flyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem
-                                                x:Name="AddForgeButton"
-                                                Click="AddForgeButton_Click"
-                                                Text="Forge" />
-                                            <MenuFlyoutItem
-                                                x:Name="AddNeoForgeButton"
-                                                Click="AddNeoForgeButton_Click"
-                                                Text="Neoforge" />
-                                            <MenuFlyoutItem
-                                                x:Name="AddFabricButton"
-                                                Click="AddFabricButton_Click"
-                                                Text="Fabric" />
-                                            <MenuFlyoutItem
-                                                x:Name="AddQuiltButton"
-                                                Click="AddQuiltButton_Click"
-                                                Text="Quilt" />
-                                        </MenuFlyout>
-                                    </DropDownButton.Flyout>
-                                    <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind VersionLoadingState, Mode=OneWay}">
-                                        <toolkit:Case IsDefault="True">
-                                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                                <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE710;" />
-                                                <TextBlock Text="Add" />
-                                            </StackPanel>
-                                        </toolkit:Case>
-                                        <toolkit:Case Value="Loading">
-                                            <ProgressRing
-                                                Width="16"
-                                                Height="16"
-                                                IsIndeterminate="True" />
-                                        </toolkit:Case>
-                                    </toolkit:SwitchPresenter>
-                                </DropDownButton>
+                                <ContentControl toolkit:DockPanel.Dock="Right" IsEnabled="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                                    <DropDownButton IsEnabled="{x:Bind VersionLoadingState, Mode=OneWay, Converter={StaticResource FalseWhenLoadingConverter}}">
+                                        <DropDownButton.Flyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    x:Name="AddForgeButton"
+                                                    Click="AddForgeButton_Click"
+                                                    Text="Forge" />
+                                                <MenuFlyoutItem
+                                                    x:Name="AddNeoForgeButton"
+                                                    Click="AddNeoForgeButton_Click"
+                                                    Text="NeoForge" />
+                                                <MenuFlyoutItem
+                                                    x:Name="AddFabricButton"
+                                                    Click="AddFabricButton_Click"
+                                                    Text="Fabric" />
+                                                <MenuFlyoutItem
+                                                    x:Name="AddQuiltButton"
+                                                    Click="AddQuiltButton_Click"
+                                                    Text="Quilt" />
+                                            </MenuFlyout>
+                                        </DropDownButton.Flyout>
+                                        <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind VersionLoadingState, Mode=OneWay}">
+                                            <toolkit:Case IsDefault="True">
+                                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                                    <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE710;" />
+                                                    <TextBlock Text="Add" />
+                                                </StackPanel>
+                                            </toolkit:Case>
+                                            <toolkit:Case Value="Loading">
+                                                <ProgressRing
+                                                    Width="16"
+                                                    Height="16"
+                                                    IsIndeterminate="True" />
+                                            </toolkit:Case>
+                                        </toolkit:SwitchPresenter>
+                                    </DropDownButton>
+                                </ContentControl>
                                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Loaders" />
                             </toolkit:DockPanel>
                             <Grid>
