@@ -11,7 +11,7 @@ Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "Polymerium.Package", "src\P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polymerium.App", "src\Polymerium.App\Polymerium.App.csproj", "{9F53951A-D4E9-4DE1-B08B-1112457FE945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polymerium.Cli", "src\Polymerium.Cli\Polymerium.Cli.csproj", "{2C39044D-3C55-4949-BDB9-2933B2EDA2DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polymerium.Cli", "src\Polymerium.Cli\Polymerium.Cli.csproj", "{2C39044D-3C55-4949-BDB9-2933B2EDA2DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Changelogs", "Changelogs", "{C962083E-074D-4834-B209-47CD665898FB}"
 	ProjectSection(SolutionItems) = preProject
@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{BB6FF6
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polymerium.Avalonia", "src\Polymerium.Avalonia\Polymerium.Avalonia.csproj", "{C3D6F1D3-33D8-477D-BA61-7E380D819AF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polymerium.Avalonia", "src\Polymerium.Avalonia\Polymerium.Avalonia.csproj", "{C3D6F1D3-33D8-477D-BA61-7E380D819AF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

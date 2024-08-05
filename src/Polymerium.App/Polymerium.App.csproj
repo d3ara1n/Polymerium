@@ -14,11 +14,6 @@
         <Nullable>enable</Nullable>
         <RepositoryUrl>https://github.com/d3ara1n/Polymerium</RepositoryUrl>
     </PropertyGroup>
-    <ItemGroup>
-        <None Remove="Dialogs\AddLoaderDialog.xaml" />
-        <None Remove="Dialogs\ExportAttachmentListDialog.xaml" />
-        <None Remove="Modals\LayerUpdateModal.xaml" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
@@ -55,20 +50,5 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-      <Page Update="Dialogs\ExportAttachmentListDialog.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <Page Update="Modals\LayerUpdateModal.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <Page Update="Dialogs\AddLoaderDialog.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
     </ItemGroup>
 </Project>
