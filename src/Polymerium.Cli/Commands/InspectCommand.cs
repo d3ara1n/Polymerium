@@ -28,7 +28,7 @@ public class InspectCommand(TridentContext trident, JsonSerializerOptions option
         var profile = handle.Value;
         var basis = new Dictionary<string, string> { { "Name", profile.Name } };
         if (profile.Reference != null)
-            basis.Add("Reference", profile.Reference.ToPurl());
+            basis.Add("Reference", profile.Reference.ToAurl());
         AnsiConsole.Write(new Rule($"[bold yellow]{Markup.Escape(settings.Key)}[/]"));
         foreach (var (k, v) in basis)
             AnsiConsole.MarkupLine("[bold aqua]{0}:[/] {1}", k, v);
@@ -42,7 +42,7 @@ public class InspectCommand(TridentContext trident, JsonSerializerOptions option
             tree.AddNode($"[aqua]Enabled:[/] {(layer.Enabled ? Emoji.Known.CheckMark : Emoji.Known.CrossMark)}");
             if (layer.Source != null && layer.Source == profile.Reference)
                 tree.AddNode(
-                    $"[aqua]Locked by:[/] {layer.Source.ToPurl()}");
+                    $"[aqua]Locked by:[/] {layer.Source.ToAurl()}");
             var loaders = tree.AddNode($"[aqua]Loaders[/][gray]({layer.Loaders.Count})[/]");
             if (layer.Loaders.Any())
                 loaders.AddNode(new Rows(layer.Loaders.Select(x =>
@@ -53,7 +53,7 @@ public class InspectCommand(TridentContext trident, JsonSerializerOptions option
             if (layer.Attachments.Any())
             {
                 attachments.AddNode(new Rows(layer.Attachments.Take(10).Select<Attachment, IRenderable>(x =>
-                    new Text(x.ToPurl())).Concat(layer.Attachments.Count > 10
+                    new Text(x.ToAurl())).Concat(layer.Attachments.Count > 10
                     ? new[] { new Markup($"[gray]...{layer.Attachments.Count - 10}[/]") }
                     : Enumerable.Empty<IRenderable>())));
                 var groups = layer.Attachments.GroupBy(x => x.Label switch
@@ -80,42 +80,44 @@ public class InspectCommand(TridentContext trident, JsonSerializerOptions option
         }
 
         AnsiConsole.Write(new Rule("[yellow]Timeline[/]"));
-        foreach (var activity in profile.Records.Timeline)
-        {
-            var format = "yyyy/MM/dd HH:mm:ss";
-            var totalTime = profile.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Play) +
+        var format = "yyyy/MM/dd HH:mm:ss";
+        var totalTime = profile.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Play) +
                             profile.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Deploy);
-            var width = AnsiConsole.Console.Profile.Width;
-            if (width - 43 >= 0) width -= 43;
-            else width = 0;
-
-
+        var width = AnsiConsole.Console.Profile.Width;
+        if (width - 43 >= 0) width -= 43;
+        else width = 0;
+        foreach ((var index, var activity) in profile.Records.Timeline.Select((x, i) => (i, x)))
+        {
             switch (activity.Action)
             {
                 case Profile.RecordData.TimelinePoint.TimelimeAction.Create:
                     AnsiConsole.MarkupLine(
-                        $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [yellow]Create[/] {(activity.Source != null ? Markup.Escape(activity.Source.ToPurl()) : "[gray]NO SOURCE[/]")}");
+                        $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [yellow]Create[/] {(activity.Source != null ? Markup.Escape(activity.Source.ToAurl()) : "[gray]NO SOURCE[/]")}");
                     break;
                 case Profile.RecordData.TimelinePoint.TimelimeAction.Update:
                     AnsiConsole.MarkupLine(
-                        $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [fuchsia]Update[/] {(activity.Source != null ? Markup.Escape(activity.Source.ToPurl()) : "[gray]NO SOURCE[/]")}");
+                        $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [fuchsia]Update[/] {(activity.Source != null ? Markup.Escape(activity.Source.ToAurl()) : "[gray]NO SOURCE[/]")}");
                     break;
                 case Profile.RecordData.TimelinePoint.TimelimeAction.Deploy:
+                    if (profile.Records.Timeline.Count - 9 > index) continue;
                     {
                         var time = activity.EndTime - activity.BeginTime;
                         var percent = time / totalTime;
                         var count = (int)Math.Floor(percent * width);
+                        var remaining = width - count;
                         AnsiConsole.MarkupLine(
-                            $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [blue]Deploy {new string('\u2588', count)}[/] [gray]{time:g}[/]");
+                            $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [blue]Deploy {new string('\u2588', count)}{new string(' ', remaining)}[/] [gray]{time:g}[/]");
                     }
                     break;
                 case Profile.RecordData.TimelinePoint.TimelimeAction.Play:
+                    if (profile.Records.Timeline.Count - 9 > index) continue;
                     {
                         var time = activity.EndTime - activity.BeginTime;
                         var percent = time / totalTime;
                         var count = (int)Math.Floor(percent * width);
+                        var remaining = width - count;
                         AnsiConsole.MarkupLine(
-                            $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [red]  Play {new string('\u2588', count)}[/] [gray]{time:g}[/]");
+                            $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [red]  Play {new string('\u2588', count)}{new string(' ', remaining)}[/] [gray]{time:g}[/]");
                     }
                     break;
             }
@@ -124,7 +126,7 @@ public class InspectCommand(TridentContext trident, JsonSerializerOptions option
 
         AnsiConsole.Write(new Rule("[yellow]Note[/]"));
         if (!string.IsNullOrWhiteSpace(profile.Records.Note))
-            AnsiConsole.Write(new Text(profile.Records.Note));
+            AnsiConsole.Write(new Text(profile.Records.Note.Replace('\r', '\n')));
         else
             AnsiConsole.Write(new Rule("[gray]EMPTY[/]").NoBorder());
         return 0;

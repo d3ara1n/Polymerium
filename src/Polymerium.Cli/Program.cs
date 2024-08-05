@@ -4,6 +4,7 @@ using Polly;
 using Polymerium.Cli.Commands;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Services.Profiles;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.Reflection;
@@ -47,6 +48,7 @@ internal static class Program
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".trident"));
         var options = new JsonSerializerOptions(JsonSerializerDefaults.Web) { WriteIndented = true };
         options.Converters.Add(new JsonStringEnumConverter());
+        options.Converters.Add(new ProfileConverter());
 
         var services = new ServiceCollection();
 

@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Polymerium.Cli": {
+      "commandName": "Project"
+    }
+  }
+}
