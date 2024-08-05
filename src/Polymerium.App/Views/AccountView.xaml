@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
@@ -26,15 +27,8 @@
             CornerRadius="{StaticResource CardMediumCornerRadius}">
             <controls:CardButton.Flyout>
                 <MenuFlyout Placement="Bottom">
-                    <MenuFlyoutItem Command="{x:Bind ViewModel.OpenMicrosoftWizardCommand}" Text="Microsoft">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xf3ca;" Style="{StaticResource FontAwesomeBrandsFontIconStyle}" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.OpenMicrosoftWizardCommand}" Text="Microsoft" />
                     <MenuFlyoutSubItem Text="Family Guy">
-                        <MenuFlyoutSubItem.Icon>
-                            <FontIcon Glyph="&#xe533;" Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
-                        </MenuFlyoutSubItem.Icon>
                         <MenuFlyoutItem
                             Command="{x:Bind ViewModel.AddFamilyGuyAccountCommand}"
                             CommandParameter="Stewie"
@@ -52,11 +46,7 @@
                             CommandParameter="Lois"
                             Text="Lois" />
                     </MenuFlyoutSubItem>
-                    <MenuFlyoutItem Command="{x:Bind ViewModel.OpenAuthlibWizardCommand}" Text="Authlib">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xe2ca;" Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.OpenAuthlibWizardCommand}" Text="Authlib" />
                 </MenuFlyout>
             </controls:CardButton.Flyout>
             <Grid>
@@ -66,10 +56,10 @@
                         HorizontalAlignment="Center"
                         Orientation="Horizontal"
                         Spacing="{StaticResource MediumGap}">
-                        <FontIcon
+                        <ic:SymbolIcon
                             FontSize="36"
                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                            Glyph="&#xE8FA;" />
+                            Symbol="PersonAdd" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -147,12 +137,12 @@
                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind TypeName}" />
-                                <FontIcon
+                                <ic:SymbolIcon
                                     Grid.Column="1"
                                     FontSize="{StaticResource ButtonFontIconFontSize}"
                                     Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                                    Glyph="&#xf058;"
-                                    Style="{StaticResource FontAwesomeSolidFontIconStyle}"
+                                    IconVariant="Filled"
+                                    Symbol="CheckmarkCircle"
                                     Visibility="{x:Bind IsDefault.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                             </Grid>
                         </StackPanel>

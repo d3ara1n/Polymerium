@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using CsvHelper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -13,6 +15,8 @@ using Polymerium.Trident.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -35,6 +39,7 @@ namespace Polymerium.App.ViewModels
         private readonly ModalService _modalService;
         private readonly RepositoryAgent _repositoryAgent;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly NotificationService _notificationService;
 
         private DataLoadingState attachmentLoadingState = DataLoadingState.Loading;
 
@@ -43,7 +48,7 @@ namespace Polymerium.App.ViewModels
         private LayerModel? selectedLayer;
 
         public MetadataViewModel(RepositoryAgent repositoryAgent, ProfileManager profileManager,
-            DialogService dialogService, IServiceProvider provider, NavigationService navigationService, ModalService modalService, IHttpClientFactory factory)
+            DialogService dialogService, IServiceProvider provider, NavigationService navigationService, ModalService modalService, IHttpClientFactory factory, NotificationService notificationService)
         {
             _profileManager = profileManager;
             _repositoryAgent = repositoryAgent;
@@ -52,6 +57,7 @@ namespace Polymerium.App.ViewModels
             _navigationService = navigationService;
             _modalService = modalService;
             _httpClientFactory = factory;
+            _notificationService = notificationService;
             _dispatcher = DispatcherQueue.GetForCurrentThread();
 
             RenameLayerCommand = new RelayCommand<LayerModel>(RenameLayer, CanRenameLayer);
@@ -66,6 +72,7 @@ namespace Polymerium.App.ViewModels
 
             model = new MetadataModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, RenameLayerCommand,
                 UnlockLayerCommand, UpdateLayerCommand, DeleteLayerCommand);
+            _notificationService = notificationService;
         }
 
         public MetadataModel Model
@@ -112,7 +119,11 @@ namespace Polymerium.App.ViewModels
         private ICommand RetryAttachmentCommand { get; }
         private ICommand ModifyAttachmentCommand { get; }
         private ICommand DeleteAttachmentCommand { get; }
+
+        // Attachments 列表操作，都针对整个列表操作可以在这里直接访问 SelectedLayer 进行，就不代理到 LayerModel 里了。
         public ICommand GotoWorkbenchViewCommand { get; }
+        public ICommand OpenBulkUpdateModalCommand { get; } = null!;
+        public ICommand OpenChangelogModalCommand { get; } = null!;
 
         private void UpdateAttachmentSource(LayerModel layer)
         {
@@ -378,6 +389,46 @@ namespace Polymerium.App.ViewModels
                 PrismReleaseType.Old_Beta => ReleaseType.Beta,
                 _ => throw new NotImplementedException()
             }, x.Recommended));
+        }
+
+        public string GenerateAttachmentExportFileName()
+        {
+            return FileNameHelper.Sanitize($"export_{Model.Inner.Name}_{SelectedLayer?.Inner.Summary ?? ""}.txt");
+        }
+
+        public void ExportAttachmentsToFileSafe(string path)
+        {
+            if (!File.Exists(path))
+            {
+                try
+                {
+                    var dir = Path.GetDirectoryName(path);
+                    if (dir is not null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                    using var stream = File.OpenWrite(path);
+                    using var writer = new StreamWriter(stream);
+
+                    var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+                    csv.WriteRecords(Attachments.Select((x, i) => new
+                    {
+                        Index = i,
+                        x.Inner.Label,
+                        x.Inner.ProjectId,
+                        x.Inner.VersionId,
+                        ProjectName = x.ProjectName.Value.Replace(",", string.Empty),
+                        VersionName = x.VersionName.Value.Replace(",", string.Empty)
+                    }));
+                    _notificationService.PopSuccess($"Exported to {path}");
+                }
+                catch (Exception e)
+                {
+                    _notificationService.PopError(e.Message);
+                }
+            }
+            else
+            {
+                _notificationService.PopError("File path is not valid or already exist");
+            }
+
         }
     }
 }

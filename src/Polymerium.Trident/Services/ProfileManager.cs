@@ -33,7 +33,8 @@ public sealed class ProfileManager : IDisposable
     {
         _logger = logger;
         _context = context;
-        _options = options;
+        _options = new JsonSerializerOptions(options);
+        _options.Converters.Add(new ProfileConverter());
         _accountManager = accountManager;
 
         Scan();

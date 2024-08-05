@@ -37,12 +37,6 @@ public static class CurseForgeHelper
         { "Quilt", Loader.COMPONENT_QUILT }
     }.AsReadOnly();
 
-    public static string MakePurl(uint projectId, uint? versionId = null) =>
-        MakePurl(projectId.ToString(), versionId?.ToString());
-
-    public static string MakePurl(string projectId, string? versionId = null) =>
-        PurlHelper.MakePurl(RepositoryLabels.CURSEFORGE, projectId, versionId);
-
     public static string GetUrlTypeStringFromKind(ResourceKind kind) =>
         kind switch
         {

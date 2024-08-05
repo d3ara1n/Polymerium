@@ -1,8 +1,11 @@
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.UI.Media;
+using DotNext.Collections.Generic;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Extensions;
 using Polymerium.App.Modals;
@@ -78,6 +81,7 @@ namespace Polymerium.App
 
         public void OnEnqueueNotification(NotificationItem item)
         {
+
             DispatcherQueue.TryEnqueue(() =>
             {
                 var bar = new InfoBar()
@@ -87,6 +91,7 @@ namespace Polymerium.App
                     IsClosable = true,
                     Severity = item.Severity,
                     HorizontalAlignment = HorizontalAlignment.Center,
+                    Background = (Brush)App.Current.Resources["AcrylicInAppFillColorDefaultBrush"]
                 };
                 bar.Closed += InfoBar_Closed;
                 if (item.Severity != InfoBarSeverity.Error && item.Severity != InfoBarSeverity.Warning)

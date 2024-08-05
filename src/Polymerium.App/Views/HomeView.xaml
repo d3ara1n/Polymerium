@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
@@ -43,10 +44,10 @@
                                     <GradientStop Offset="1" Color="#ffecd2" />
                                 </LinearGradientBrush>
                             </Grid.Background>
-                            <FontIcon
+                            <ic:SymbolIcon
                                 Margin="{StaticResource SmallMargin}"
-                                Glyph="&#xf09b;"
-                                Style="{StaticResource FontAwesomeBrandsFontIconStyle}" />
+                                IconVariant="Filled"
+                                Symbol="Code" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBlock
@@ -72,10 +73,10 @@
                                     <GradientStop Offset="1" Color="#fbc2eb" />
                                 </LinearGradientBrush>
                             </Grid.Background>
-                            <FontIcon
+                            <ic:SymbolIcon
                                 Margin="{StaticResource SmallMargin}"
-                                Glyph="&#xf7b6;"
-                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
+                                IconVariant="Filled"
+                                Symbol="DrinkCoffee" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBlock
@@ -101,10 +102,10 @@
                                     <GradientStop Offset="1" Color="#c2e9fb" />
                                 </LinearGradientBrush>
                             </Grid.Background>
-                            <FontIcon
+                            <ic:SymbolIcon
                                 Margin="{StaticResource SmallMargin}"
-                                Glyph="&#xf145;"
-                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" />
+                                IconVariant="Filled"
+                                Symbol="TicketDiagonal" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBlock

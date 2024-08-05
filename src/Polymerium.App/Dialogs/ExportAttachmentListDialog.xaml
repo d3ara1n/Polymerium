@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="Polymerium.App.Dialogs.ExportAttachmentListDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
+    xmlns:lab="using:CommunityToolkit.WinUI.Controls"
+    xmlns:local="using:Polymerium.App.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    Title="Export attachment list dialog"
+    CloseButtonText="Cancel"
+    PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
+    PrimaryButtonText="Confirm"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <StackPanel Spacing="{StaticResource SmallGap}">
+        <Grid ColumnSpacing="{StaticResource TinyGap}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Grid.Column="0"
+                PlaceholderText="Directory"
+                Text="{x:Bind Directory, Mode=TwoWay}" />
+            <Button
+                x:Name="PickFilePathButton"
+                Grid.Column="1"
+                Click="PickFilePathButton_Click">
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
+                    <ic:SymbolIcon Symbol="FolderOpen" />
+                    <TextBlock Text="Pick" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <TextBox PlaceholderText="File name" Text="{x:Bind FileName, Mode=TwoWay}" />
+        <lab:Segmented HorizontalAlignment="Stretch" SelectedIndex="0">
+            <lab:SegmentedItem Content="CSV" />
+        </lab:Segmented>
+    </StackPanel>
+</ContentDialog>

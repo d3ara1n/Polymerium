@@ -122,18 +122,6 @@
         <Setter Property="Padding" Value="48" />
     </Style>
 
-    <Style x:Key="FontAwesomeRegularFontIconStyle" TargetType="FontIcon">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeRegularFontFamily}" />
-    </Style>
-
-    <Style x:Key="FontAwesomeSolidFontIconStyle" TargetType="FontIcon">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolidFontFamily}" />
-    </Style>
-
-    <Style x:Key="FontAwesomeBrandsFontIconStyle" TargetType="FontIcon">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrandsFontFamily}" />
-    </Style>
-
     <Style
         x:Key="SettingCategoryTextBlockStyle"
         BasedOn="{StaticResource BodyStrongTextBlockStyle}"

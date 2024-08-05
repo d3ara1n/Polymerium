@@ -105,6 +105,7 @@
                                         <Grid>
                                             <FlipView
                                                 x:Name="GalleryBox"
+                                                Background="Transparent"
                                                 CornerRadius="0"
                                                 ItemsSource="{x:Bind Project.Gallery, Mode=OneWay}">
                                                 <FlipView.ItemTemplate>

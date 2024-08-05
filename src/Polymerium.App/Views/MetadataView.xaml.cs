@@ -6,6 +6,8 @@ using Polymerium.App.Dialogs;
 using Polymerium.App.Models;
 using Polymerium.App.ViewModels;
 using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Trident.Abstractions.Resources;
 
@@ -116,5 +118,17 @@ namespace Polymerium.App.Views
         private void AddFabricButton_Click(object sender, RoutedEventArgs e) => AddLoader(Loader.COMPONENT_FABRIC);
 
         private void AddQuiltButton_Click(object sender, RoutedEventArgs e) => AddLoader(Loader.COMPONENT_QUILT);
+
+        private async void ExportAttachmentListButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.SelectedLayer != null)
+            {
+                var dialog = new ExportAttachmentListDialog(XamlRoot, ViewModel.GenerateAttachmentExportFileName());
+                if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+                {
+                    ViewModel.ExportAttachmentsToFileSafe(Path.Combine(dialog.Directory, dialog.FileName));
+                }
+            }
+        }
     }
 }

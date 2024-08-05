@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FluentIcons.WinUI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Composition.SystemBackdrops;
@@ -140,6 +141,7 @@ namespace Polymerium.App
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            //this.UseSegoeMetrics();
             Spawn(Provider.GetRequiredService<NavigationService>(), Provider.GetRequiredService<NotificationService>(),
                 Provider.GetRequiredService<TaskService>(), Provider.GetRequiredService<MessageService>(),
                 Provider.GetRequiredService<DialogService>(), Provider.GetRequiredService<ModalService>());

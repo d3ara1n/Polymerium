@@ -61,7 +61,7 @@
                 IsSettingsVisible="False"
                 IsTabStop="False"
                 IsTitleBarAutoPaddingEnabled="True"
-                OpenPaneLength="228"
+                OpenPaneLength="198"
                 PaneDisplayMode="Auto"
                 SelectionChanged="NavigationViewControl_SelectionChanged">
                 <NavigationView.Resources>

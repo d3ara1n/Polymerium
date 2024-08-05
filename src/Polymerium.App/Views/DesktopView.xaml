@@ -5,6 +5,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
@@ -190,28 +191,37 @@
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                            <FontIcon
+                                            <ic:SymbolIcon
+                                                FontSize="{StaticResource CaptionFontIconFontSize}"
                                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" Glyph="&#xf1b2;" FontSize="{StaticResource CaptionFontIconFontSize}"/>
+                                                IconVariant="Filled"
+                                                Symbol="Box" />
                                             <TextBlock
+                                                FontSize="{StaticResource CaptionTextBlockFontSize}"
                                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{x:Bind CreatedAt}" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                                Text="{x:Bind CreatedAt}" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                            <FontIcon
+                                            <ic:SymbolIcon
+                                                FontSize="{StaticResource CaptionFontIconFontSize}"
                                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" Glyph="&#xf0d1;" FontSize="{StaticResource CaptionFontIconFontSize}"/>
+                                                IconVariant="Filled"
+                                                Symbol="Connected" />
                                             <TextBlock
+                                                FontSize="{StaticResource CaptionTextBlockFontSize}"
                                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{x:Bind DeployAt}" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                                Text="{x:Bind DeployAt}" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                            <FontIcon
+                                            <ic:SymbolIcon
+                                                FontSize="{StaticResource CaptionFontIconFontSize}"
                                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Style="{StaticResource FontAwesomeSolidFontIconStyle}" Glyph="&#xf135;" FontSize="{StaticResource CaptionFontIconFontSize}"/>
+                                                IconVariant="Filled"
+                                                Symbol="Rocket" />
                                             <TextBlock
+                                                FontSize="{StaticResource CaptionTextBlockFontSize}"
                                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{x:Bind PlayedAt}" FontSize="{StaticResource CaptionTextBlockFontSize}"/>
+                                                Text="{x:Bind PlayedAt}" />
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
