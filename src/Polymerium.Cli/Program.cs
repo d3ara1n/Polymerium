@@ -30,12 +30,12 @@ internal static class Program
     // trident M add --instance {} $:purl|id
     // trident M remove --instance {} $:purl|id
     // trident M list --instance {}
-    // trident attachment enable/disable --instance {} $:purl
+    // trident layer enable/disable --instance {} $index:int
     // 在线数据源仓库管理
     // trident repository list
     // trident repository ping
     // 在线资源查询
-    // trident resource search --repository {} --take {} --skip --filters {{}} {} $:keyword
+    // trident resource search --repository {} --take {} --skip --filters {{}} {} $keyword:string
     // trident resource resolve $:purl
 
     // deploy
