@@ -4,7 +4,9 @@
     x:Class="Polymerium.App.Views.ConfigurationView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
     xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
@@ -28,7 +30,7 @@
                 <TextBlock Style="{StaticResource SettingCategoryTextBlockStyle}" Text="Game window" />
                 <labs:SettingsExpander Description="Create game window in the specific size" Header="Window Initial Size">
                     <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE61F;" />
+                        <ic:SymbolIcon Symbol="Resize" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Width">
@@ -49,7 +51,7 @@
                 <TextBlock Style="{StaticResource SettingCategoryTextBlockStyle}" Text="Java virtual machine" />
                 <labs:SettingsExpander Description="Specify a certain version instead of selecting at launch" Header="Jvm Version">
                     <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xEC32;" />
+                        <ic:SymbolIcon Symbol="DrinkCoffee" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Java Home">
@@ -59,10 +61,7 @@
                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
                                     Text="{x:Bind ViewModel.JvmHomeStatus, Mode=OneWay}" />
                                 <Button Command="{x:Bind ViewModel.ChooseJavaCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8E5;" />
-                                        <TextBlock Text="Choose" />
-                                    </StackPanel>
+                                    <controls:Label Icon="DocumentArrowRight" Text="Choose" />
                                 </Button>
                             </StackPanel>
                         </labs:SettingsCard>
@@ -71,7 +70,7 @@
                 </labs:SettingsExpander>
                 <labs:SettingsExpander Description="The max heap memory that jvm can allocate" Header="Jvm Max Memory">
                     <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xEEA0;" />
+                        <ic:SymbolIcon Symbol="DeveloperBoard" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Memory in megabytes">
@@ -88,7 +87,7 @@
                 </labs:SettingsExpander>
                 <labs:SettingsExpander Description="These arguments will be appended after jvm created" Header="Jvm Additional Arguments">
                     <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE8F9;" />
+                        <ic:SymbolIcon Symbol="Textbox" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Argument line">
@@ -100,7 +99,7 @@
                 <TextBlock Style="{StaticResource SettingTitleTextBlockStyle}" Text="Operations" />
                 <labs:SettingsExpander Description="Change name and thumbnail icon" Header="Profile Information">
                     <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE91B;" />
+                        <ic:SymbolIcon Symbol="Image" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard>
@@ -119,13 +118,13 @@
                 </labs:SettingsExpander>
                 <labs:SettingsCard Description="Export this instance in modpack file" Header="Export as Modpack">
                     <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xEDE1;" />
+                        <ic:SymbolIcon Symbol="ArrowExport" />
                     </labs:SettingsCard.HeaderIcon>
                     <Button Command="{x:Bind ViewModel.OpenExportWizardCommand}" Content="Open wizard" />
                 </labs:SettingsCard>
                 <labs:SettingsExpander Description="These operations will take effects on instance files" Header="Danger Zone">
                     <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xEBE8;" />
+                        <ic:SymbolIcon Symbol="Bug" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Safe: Input code to turn the operations to available">

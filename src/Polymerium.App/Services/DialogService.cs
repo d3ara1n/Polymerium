@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.Dialogs;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Polymerium.App.Services
@@ -20,7 +21,7 @@ namespace Polymerium.App.Services
 
         public async Task<string?> RequestTextAsync(string message, string defaultValue)
         {
-            InputDialog dialog = new(XamlRoot) { Message = message, Placeholder = defaultValue };
+            var dialog = new InputDialog(XamlRoot) { Message = message, Placeholder = defaultValue };
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
             {
                 return dialog.Result;
@@ -31,8 +32,18 @@ namespace Polymerium.App.Services
 
         public async Task<bool> RequestConfirmationAsync(string message)
         {
-            ConfirmDialog dialog = new(XamlRoot) { Message = message };
+            var dialog = new ConfirmDialog(XamlRoot) { Message = message };
             return await dialog.ShowAsync() == ContentDialogResult.Primary;
+        }
+
+        public async Task<string?> RequsetSavePathAsync(string defaultFileName)
+        {
+            var dialog = new SaveFileDialog(XamlRoot) { FileName = defaultFileName };
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            {
+                return Path.Combine(dialog.Directory, dialog.FileName);
+            }
+            return null;
         }
     }
 }

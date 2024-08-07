@@ -119,16 +119,5 @@ namespace Polymerium.App.Views
 
         private void AddQuiltButton_Click(object sender, RoutedEventArgs e) => AddLoader(Loader.COMPONENT_QUILT);
 
-        private async void ExportAttachmentListButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViewModel.SelectedLayer != null)
-            {
-                var dialog = new ExportAttachmentListDialog(XamlRoot, ViewModel.GenerateAttachmentExportFileName());
-                if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-                {
-                    ViewModel.ExportAttachmentsToFileSafe(Path.Combine(dialog.Directory, dialog.FileName));
-                }
-            }
-        }
     }
 }

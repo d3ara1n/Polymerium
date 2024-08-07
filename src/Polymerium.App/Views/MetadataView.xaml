@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
@@ -113,7 +114,7 @@
                                                             CommandParameter="{x:Bind}"
                                                             Text="Rename">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE8AC;" />
+                                                                <ic:SymbolIcon Symbol="Rename" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutItem
@@ -121,7 +122,7 @@
                                                             CommandParameter="{x:Bind}"
                                                             Text="Unlock">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE785;" />
+                                                                <ic:SymbolIcon Symbol="LockOpen" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutItem
@@ -129,7 +130,15 @@
                                                             IsEnabled="False"
                                                             Text="Update">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE753;" />
+                                                                <ic:SymbolIcon Symbol="Cloud" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutItem
+                                                            Command="{x:Bind Root.DuplicateCommand}"
+                                                            CommandParameter="{x:Bind}"
+                                                            Text="Duplicate">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <ic:SymbolIcon Symbol="Copy" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutSeparator />
@@ -138,7 +147,7 @@
                                                             CommandParameter="{x:Bind}"
                                                             Text="Move up">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE74A;" />
+                                                                <ic:SymbolIcon Symbol="ArrowUp" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutItem
@@ -146,7 +155,7 @@
                                                             CommandParameter="{x:Bind}"
                                                             Text="Move down">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE74B;" />
+                                                                <ic:SymbolIcon Symbol="ArrowDown" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutSeparator />
@@ -155,7 +164,7 @@
                                                             CommandParameter="{x:Bind}"
                                                             Text="Move to top">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE898;" />
+                                                                <ic:SymbolIcon Symbol="ArrowUpload" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutItem
@@ -163,7 +172,7 @@
                                                             CommandParameter="{x:Bind}"
                                                             Text="Move to bottom">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE896;" />
+                                                                <ic:SymbolIcon Symbol="ArrowDownload" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                         <MenuFlyoutSeparator />
@@ -172,12 +181,12 @@
                                                             CommandParameter="{x:Bind}"
                                                             Text="Delete">
                                                             <MenuFlyoutItem.Icon>
-                                                                <FontIcon Glyph="&#xE738;" />
+                                                                <ic:SymbolIcon Symbol="Delete" />
                                                             </MenuFlyoutItem.Icon>
                                                         </MenuFlyoutItem>
                                                     </MenuFlyout>
                                                 </Button.Flyout>
-                                                <FontIcon Glyph="&#xE712;" />
+                                                <ic:SymbolIcon Symbol="MoreHorizontal" />
                                             </Button>
                                             <StackPanel Orientation="Horizontal">
                                                 <CheckBox MinWidth="0" IsChecked="{x:Bind Inner.Enabled, Mode=TwoWay}" />
@@ -231,11 +240,11 @@
                             BorderBrush="Transparent"
                             Click="AddLayerButton_OnClick">
                             <controls:DashBorder>
-                                <StackPanel Margin="{StaticResource MediumMargin}">
-                                    <FontIcon
+                                <StackPanel Margin="{StaticResource MediumMargin}" Spacing="{StaticResource TinyGap}">
+                                    <ic:SymbolIcon
                                         FontSize="{StaticResource LargeFontIconFontSize}"
                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                        Glyph="&#xE710;" />
+                                        Symbol="LayerDiagonalAdd" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
@@ -281,10 +290,7 @@
                                         </DropDownButton.Flyout>
                                         <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind VersionLoadingState, Mode=OneWay}">
                                             <toolkit:Case IsDefault="True">
-                                                <StackPanel Orientation="Horizontal" Spacing="5">
-                                                    <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE710;" />
-                                                    <TextBlock Text="Add" />
-                                                </StackPanel>
+                                                <controls:Label Icon="AddCircle" Text="Add" />
                                             </toolkit:Case>
                                             <toolkit:Case Value="Loading">
                                                 <ProgressRing
@@ -377,10 +383,10 @@
                                     HorizontalAlignment="Center"
                                     Spacing="{StaticResource TinyGap}"
                                     Visibility="{x:Bind ViewModel.SelectedLayer.Loaders.Count, FallbackValue=0, Converter={StaticResource ZeroToVisibilityConverter}, Mode=OneWay}">
-                                    <FontIcon
+                                    <ic:SymbolIcon
                                         HorizontalAlignment="Center"
                                         FontSize="{StaticResource LargeFontIconFontSize}"
-                                        Glyph="&#xF159;" />
+                                        Symbol="VehicleTractor" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
@@ -420,15 +426,12 @@
                                                 <MenuFlyoutItem Text="View Changelog" />
                                                 <MenuFlyoutItem
                                                     x:Name="ExportAttachmentListButton"
-                                                    Click="ExportAttachmentListButton_Click"
-                                                    IsEnabled="{x:Bind ViewModel.AttachmentLoadingState, Mode=OneWay, Converter={StaticResource FalseWhenLoadingConverter}}"
+                                                    Command="{x:Bind ViewModel.ExportAttachmentListCommand}"
+                                                    CommandParameter="{x:Bind ViewModel.AttachmentLoadingState, Mode=OneWay}"
                                                     Text="Export List" />
                                             </MenuFlyout>
                                         </SplitButton.Flyout>
-                                        <StackPanel Orientation="Horizontal" Spacing="5">
-                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xF133;" />
-                                            <TextBlock Text="Get" />
-                                        </StackPanel>
+                                        <controls:Label Icon="GiftOpen" Text="Get" />
                                     </SplitButton>
                                 </Grid>
                                 <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind ViewModel.AttachmentLoadingState, Mode=OneWay}">
@@ -512,7 +515,7 @@
                                                                                                 CommandParameter="{x:Bind}"
                                                                                                 Text="Open in browser">
                                                                                                 <MenuFlyoutItem.Icon>
-                                                                                                    <FontIcon Glyph="&#xE71B;" />
+                                                                                                    <ic:SymbolIcon Symbol="Link" />
                                                                                                 </MenuFlyoutItem.Icon>
                                                                                             </MenuFlyoutItem>
                                                                                             <MenuFlyoutSeparator />
@@ -521,7 +524,7 @@
                                                                                                 CommandParameter="{x:Bind}"
                                                                                                 Text="Modify">
                                                                                                 <MenuFlyoutItem.Icon>
-                                                                                                    <FontIcon Glyph="&#xE70F;" />
+                                                                                                    <ic:SymbolIcon Symbol="Edit" />
                                                                                                 </MenuFlyoutItem.Icon>
                                                                                             </MenuFlyoutItem>
                                                                                             <MenuFlyoutItem
@@ -529,12 +532,12 @@
                                                                                                 CommandParameter="{x:Bind}"
                                                                                                 Text="Delete">
                                                                                                 <MenuFlyoutItem.Icon>
-                                                                                                    <FontIcon Glyph="&#xE738;" />
+                                                                                                    <ic:SymbolIcon Symbol="Delete" />
                                                                                                 </MenuFlyoutItem.Icon>
                                                                                             </MenuFlyoutItem>
                                                                                         </MenuFlyout>
                                                                                     </Button.Flyout>
-                                                                                    <FontIcon FontSize="{StaticResource CaptionFontIconFontSize}" Glyph="&#xE712;" />
+                                                                                    <ic:SymbolIcon FontSize="{StaticResource CaptionFontIconFontSize}" Symbol="MoreHorizontal" />
                                                                                 </Button>
                                                                                 <TextBlock
                                                                                     VerticalAlignment="Bottom"
@@ -584,10 +587,10 @@
                                                 VerticalAlignment="Center"
                                                 Spacing="{StaticResource TinyGap}"
                                                 Visibility="{x:Bind ViewModel.Attachments.Count, FallbackValue=0, Converter={StaticResource ZeroToVisibilityConverter}, Mode=OneWay}">
-                                                <FontIcon
+                                                <ic:SymbolIcon
                                                     HorizontalAlignment="Center"
                                                     FontSize="{StaticResource LargeFontIconFontSize}"
-                                                    Glyph="&#xF158;" />
+                                                    Symbol="Box" />
                                                 <TextBlock
                                                     HorizontalAlignment="Center"
                                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
@@ -607,10 +610,10 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Spacing="{StaticResource TinyGap}">
-                        <FontIcon
+                        <ic:SymbolIcon
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource LargeFontIconFontSize}"
-                            Glyph="&#xF156;" />
+                            Symbol="Layer" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"

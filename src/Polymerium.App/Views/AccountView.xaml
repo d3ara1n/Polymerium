@@ -94,7 +94,7 @@
                                     CommandParameter="{x:Bind}"
                                     Text="Set as default">
                                     <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE930;" />
+                                        <ic:SymbolIcon Symbol="CheckmarkCircle" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                                 <MenuFlyoutItem
@@ -104,7 +104,7 @@
                                     Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                                     Text="Remove">
                                     <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xECC9;" />
+                                        <ic:SymbolIcon Symbol="SubtractCircle" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyout>

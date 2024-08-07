@@ -26,7 +26,7 @@ using static System.Environment;
 
 namespace Polymerium.App.Dialogs
 {
-    public sealed partial class ExportAttachmentListDialog
+    public sealed partial class SaveFileDialog
     {
 
 
@@ -38,7 +38,7 @@ namespace Polymerium.App.Dialogs
 
         // Using a DependencyProperty as the backing store for Directory.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DirectoryProperty =
-            DependencyProperty.Register("Directory", typeof(string), typeof(ExportAttachmentListDialog), new PropertyMetadata(Environment.GetFolderPath(SpecialFolder.MyDocuments)));
+            DependencyProperty.Register("Directory", typeof(string), typeof(SaveFileDialog), new PropertyMetadata(GetFolderPath(SpecialFolder.MyDocuments)));
 
 
 
@@ -50,15 +50,13 @@ namespace Polymerium.App.Dialogs
 
         // Using a DependencyProperty as the backing store for FileName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileNameProperty =
-            DependencyProperty.Register("FileName", typeof(string), typeof(ExportAttachmentListDialog), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("FileName", typeof(string), typeof(SaveFileDialog), new PropertyMetadata(string.Empty));
 
 
-        public ExportAttachmentListDialog(XamlRoot root, string defaultFileName)
+        public SaveFileDialog(XamlRoot root)
         {
             XamlRoot = root;
             InitializeComponent();
-
-            FileName = defaultFileName;
         }
 
         private async void PickFilePathButton_Click(object sender, RoutedEventArgs e)

@@ -9,7 +9,7 @@ namespace Polymerium.App.Models
 {
     public record MetadataModel
     {
-        public MetadataModel(string key, Profile inner, ICommand rename, ICommand unlock, ICommand update,
+        public MetadataModel(string key, Profile inner, ICommand rename, ICommand unlock, ICommand update, ICommand duplicate,
             ICommand delete)
         {
             Key = key;
@@ -20,6 +20,7 @@ namespace Polymerium.App.Models
             RenameCommand = rename;
             UnlockCommand = unlock;
             UpdateCommand = update;
+            DuplicateCommand = duplicate;
             DeleteCommand = delete;
             MoveUpCommand = new RelayCommand<LayerModel>(MoveUpLayer, CanMoveUpLayer);
             MoveDownCommand = new RelayCommand<LayerModel>(MoveDownLayer, CanMoveDownLayer);
@@ -30,6 +31,7 @@ namespace Polymerium.App.Models
         public ICommand RenameCommand { get; }
         public ICommand UnlockCommand { get; }
         public ICommand UpdateCommand { get; }
+        public ICommand DuplicateCommand { get; }
         public ICommand DeleteCommand { get; }
         public IRelayCommand<LayerModel> MoveUpCommand { get; }
         public IRelayCommand<LayerModel> MoveDownCommand { get; }

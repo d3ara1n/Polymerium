@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ic="using:FluentIcons.WinUI"
+    xmlns:local="using:Polymerium.App.Controls">
+
+    <Style x:Key="DefaultLabelStyle" TargetType="local:Label">
+        <Setter Property="Spacing" Value="{StaticResource TinyGap}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Label">
+                    <Grid ColumnSpacing="{TemplateBinding Spacing}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ic:SymbolIcon
+                            Grid.Column="0"
+                            FontSize="{TemplateBinding FontSize}"
+                            Foreground="{TemplateBinding Foreground}"
+                            IconVariant="{TemplateBinding Variant}"
+                            Symbol="{TemplateBinding Icon}" />
+                        <TextBlock
+                            Grid.Column="1"
+                            FontSize="{TemplateBinding FontSize}"
+                            Foreground="{TemplateBinding Foreground}"
+                            Text="{TemplateBinding Text}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultLabelStyle}" TargetType="local:Label" />
+
+</ResourceDictionary>

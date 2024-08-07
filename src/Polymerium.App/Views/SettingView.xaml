@@ -4,7 +4,9 @@
     x:Class="Polymerium.App.Views.SettingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
     xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -15,13 +17,13 @@
                 <TextBlock Style="{StaticResource SettingTitleTextBlockStyle}" Text="Application" />
                 <labs:SettingsCard Description="味大，无需多盐" Header="Activate Superpower">
                     <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE794;" />
+                        <ic:SymbolIcon Symbol="Wand" />
                     </labs:SettingsCard.HeaderIcon>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsSuperpowerActivated, Mode=TwoWay}" />
                 </labs:SettingsCard>
                 <labs:SettingsCard Description="Needs restart to take effect" Header="Language">
                     <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xF2B7;" />
+                        <ic:SymbolIcon Symbol="LocalLanguage" />
                     </labs:SettingsCard.HeaderIcon>
                     <ComboBox
                         DisplayMemberPath="Display"
@@ -30,7 +32,7 @@
                 </labs:SettingsCard>
                 <labs:SettingsCard Description="No restart needed to take effect" Header="Style">
                     <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE790;" />
+                        <ic:SymbolIcon Symbol="Color" />
                     </labs:SettingsCard.HeaderIcon>
                     <ComboBox
                         DisplayMemberPath="Display"
@@ -40,7 +42,7 @@
                 <TextBlock Style="{StaticResource SettingTitleTextBlockStyle}" Text="Java Presets" />
                 <labs:SettingsExpander Description="Instance will select the best matched version in the list at launch" Header="Java Runtime Environments">
                     <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xEC32;" />
+                        <ic:SymbolIcon Symbol="DrinkCoffee" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Version 8">
@@ -50,10 +52,7 @@
                                     Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}"
                                     Text="{x:Bind ViewModel.Java8Status, Mode=OneWay}" />
                                 <Button Command="{x:Bind ViewModel.ChooseJava8Command}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8E5;" />
-                                        <TextBlock Text="Choose" />
-                                    </StackPanel>
+                                    <controls:Label Icon="DocumentArrowRight" Text="Choose" />
                                 </Button>
                             </StackPanel>
                         </labs:SettingsCard>
@@ -64,10 +63,7 @@
                                     Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}"
                                     Text="{x:Bind ViewModel.Java11Status, Mode=OneWay}" />
                                 <Button Command="{x:Bind ViewModel.ChooseJava11Command}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8E5;" />
-                                        <TextBlock Text="Choose" />
-                                    </StackPanel>
+                                    <controls:Label Icon="DocumentArrowRight" Text="Choose" />
                                 </Button>
                             </StackPanel>
                         </labs:SettingsCard>
@@ -78,10 +74,7 @@
                                     Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}"
                                     Text="{x:Bind ViewModel.Java17Status, Mode=OneWay}" />
                                 <Button Command="{x:Bind ViewModel.ChooseJava17Command}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8E5;" />
-                                        <TextBlock Text="Choose" />
-                                    </StackPanel>
+                                    <controls:Label Icon="DocumentArrowRight" Text="Choose" />
                                 </Button>
                             </StackPanel>
                         </labs:SettingsCard>
@@ -92,19 +85,13 @@
                                     Foreground="{StaticResource ApplicationSecondaryForegroundThemeBrush}"
                                     Text="{x:Bind ViewModel.Java21Status, Mode=OneWay}" />
                                 <Button Command="{x:Bind ViewModel.ChooseJava21Command}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                        <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8E5;" />
-                                        <TextBlock Text="Choose" />
-                                    </StackPanel>
+                                    <controls:Label Icon="DocumentArrowRight" Text="Choose" />
                                 </Button>
                             </StackPanel>
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                     <Button Command="{x:Bind ViewModel.ScanRuntimeCommand}">
-                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE721;" />
-                            <TextBlock Text="Scan installed" />
-                        </StackPanel>
+                        <controls:Label Icon="Search" Text="Scan installed" />
                     </Button>
                 </labs:SettingsExpander>
                 <TextBlock Style="{StaticResource SettingTitleTextBlockStyle}" Text="Game Defaults" />
@@ -115,7 +102,7 @@
                 <TextBlock Style="{StaticResource SettingCategoryTextBlockStyle}" Text="Java Virtual Machine" />
                 <labs:SettingsCard Description="How many heap memory can be allocated" Header="Jvm Max Memory">
                     <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xEEA0;" />
+                        <ic:SymbolIcon Symbol="BrainCircuit" />
                     </labs:SettingsCard.HeaderIcon>
                     <NumberBox
                         LargeChange="1024"
@@ -126,11 +113,10 @@
                 </labs:SettingsCard>
                 <labs:SettingsExpander Description="Less is more" Header="Jvm Additional Arguments">
                     <labs:SettingsExpander.HeaderIcon>
-                        <FontIcon Glyph="&#xE8F9;" />
+                        <ic:SymbolIcon Symbol="Textbox" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard>
-
                             <TextBox Text="{x:Bind ViewModel.GameJvmAdditionalArguments, Mode=TwoWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
@@ -138,7 +124,7 @@
                 <TextBlock Style="{StaticResource SettingCategoryTextBlockStyle}" Text="Game Window" />
                 <labs:SettingsCard Description="Create game window in the specific size" Header="Window Initial Size">
                     <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE61F;" />
+                        <ic:SymbolIcon Symbol="Resize" />
                     </labs:SettingsCard.HeaderIcon>
                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                         <NumberBox

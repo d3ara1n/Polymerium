@@ -63,15 +63,17 @@ namespace Polymerium.App.ViewModels
             RenameLayerCommand = new RelayCommand<LayerModel>(RenameLayer, CanRenameLayer);
             UnlockLayerCommand = new RelayCommand<LayerModel>(UnlockLayer, CanUnlockLayer);
             UpdateLayerCommand = new RelayCommand<LayerModel>(UpdateLayer, CanUpdateLayer);
-            DeleteLayerCommand = new RelayCommand<LayerModel>(DeleteLayer, CanDeleteLayer);
+            DuplicateLayerCommand = new RelayCommand<LayerModel>(DuplicateLayer, CanDuplicateLayer);
+            DeleteLayerCommand = new RelayCommand<LayerModel>(DeleteLayerAsync, CanDeleteLayer);
             OpenAttachmentCommand = new RelayCommand<AttachmentModel>(OpenAttachment, CanOpenAttachment);
             RetryAttachmentCommand = new RelayCommand<AttachmentModel>(RetryAttachment);
             ModifyAttachmentCommand = new RelayCommand<AttachmentModel>(ModifyAttachment, CanModifyAttachment);
             DeleteAttachmentCommand = new RelayCommand<AttachmentModel>(DeleteAttachment, CanDeleteAttachment);
             GotoWorkbenchViewCommand = new RelayCommand<bool>(GotoWorkbench, CanGotoWorkbench);
+            ExportAttachmentListCommand = new AsyncRelayCommand<DataLoadingState>(ExportAttachmentListAsync, CanExportAttachmentList);
 
             model = new MetadataModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, RenameLayerCommand,
-                UnlockLayerCommand, UpdateLayerCommand, DeleteLayerCommand);
+                UnlockLayerCommand, UpdateLayerCommand, DuplicateLayerCommand, DeleteLayerCommand);
             _notificationService = notificationService;
         }
 
@@ -114,6 +116,7 @@ namespace Polymerium.App.ViewModels
         public ICommand RenameLayerCommand { get; }
         public ICommand UnlockLayerCommand { get; }
         public ICommand UpdateLayerCommand { get; }
+        public ICommand DuplicateLayerCommand { get; }
         public ICommand DeleteLayerCommand { get; }
         private ICommand OpenAttachmentCommand { get; }
         private ICommand RetryAttachmentCommand { get; }
@@ -124,6 +127,7 @@ namespace Polymerium.App.ViewModels
         public ICommand GotoWorkbenchViewCommand { get; }
         public ICommand OpenBulkUpdateModalCommand { get; } = null!;
         public ICommand OpenChangelogModalCommand { get; } = null!;
+        public ICommand ExportAttachmentListCommand { get; }
 
         private void UpdateAttachmentSource(LayerModel layer)
         {
@@ -176,7 +180,7 @@ namespace Polymerium.App.ViewModels
                 var profile = _profileManager.GetProfile(key);
                 if (profile != null)
                 {
-                    Model = new MetadataModel(key, profile, RenameLayerCommand, UnlockLayerCommand, UpdateLayerCommand,
+                    Model = new MetadataModel(key, profile, RenameLayerCommand, UnlockLayerCommand, UpdateLayerCommand, DuplicateLayerCommand,
                         DeleteLayerCommand);
                 }
 
@@ -353,7 +357,7 @@ namespace Polymerium.App.ViewModels
             return layer != null;
         }
 
-        private async void DeleteLayer(LayerModel? layer)
+        private async void DeleteLayerAsync(LayerModel? layer)
         {
             if (layer != null)
             {
@@ -364,6 +368,22 @@ namespace Polymerium.App.ViewModels
                     Model.Layers.Remove(layer);
                     Model.NotifyPositionChange();
                 }
+            }
+        }
+
+        public bool CanDuplicateLayer(LayerModel? layer)
+        {
+            return layer != null;
+        }
+
+        public void DuplicateLayer(LayerModel? original)
+        {
+            if (original != null)
+            {
+                var created = new Layer(null, false, $"{original.Inner.Summary} - Duplicated", new List<Loader>(original.Inner.Loaders), new List<Attachment>(original.Inner.Attachments));
+                var model = new LayerModel(created, Model);
+
+                Model.Layers.Add(model);
             }
         }
 
@@ -391,14 +411,15 @@ namespace Polymerium.App.ViewModels
             }, x.Recommended));
         }
 
-        public string GenerateAttachmentExportFileName()
+        public bool CanExportAttachmentList(DataLoadingState state)
         {
-            return FileNameHelper.Sanitize($"export_{Model.Inner.Name}_{SelectedLayer?.Inner.Summary ?? ""}.txt");
+            return state == DataLoadingState.Done;
         }
 
-        public void ExportAttachmentsToFileSafe(string path)
+        public async Task ExportAttachmentListAsync(DataLoadingState state)
         {
-            if (!File.Exists(path))
+            var path = await _dialogService.RequsetSavePathAsync(FileNameHelper.Sanitize($"export_{Model.Inner.Name}_{SelectedLayer?.Inner.Summary ?? ""}.txt"));
+            if (path != null && !File.Exists(path))
             {
                 try
                 {
@@ -428,7 +449,6 @@ namespace Polymerium.App.ViewModels
             {
                 _notificationService.PopError("File path is not valid or already exist");
             }
-
         }
     }
 }

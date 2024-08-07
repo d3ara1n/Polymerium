@@ -43,6 +43,7 @@ namespace Polymerium.App
             ServiceCollection services = new();
             ConfigureServices(services);
             Provider = services.BuildServiceProvider();
+            this.UseSegoeMetrics();
         }
 
         public static new App Current => (App)Application.Current;

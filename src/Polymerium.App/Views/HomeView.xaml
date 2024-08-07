@@ -173,10 +173,10 @@
                 VerticalAlignment="Center"
                 Spacing="{StaticResource TinyGap}"
                 Visibility="{x:Bind ViewModel.Recents.Count, Mode=OneWay, Converter={StaticResource ZeroToVisibilityConverter}}">
-                <FontIcon
+                <ic:SymbolIcon
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource LargeFontIconFontSize}"
-                    Glyph="&#xE621;" />
+                    Symbol="Apps" />
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"

@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
     xmlns:lab="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
@@ -118,10 +119,10 @@
                 VerticalAlignment="Center"
                 Spacing="{StaticResource TinyGap}"
                 Visibility="{x:Bind ViewModel.Results.Count, Mode=OneWay, FallbackValue=0, Converter={StaticResource ZeroToVisibilityConverter}}">
-                <FontIcon
+                <ic:SymbolIcon
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource LargeFontIconFontSize}"
-                    Glyph="&#xE773;" />
+                    Symbol="Apps" />
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"

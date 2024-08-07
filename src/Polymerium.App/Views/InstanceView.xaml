@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ic="using:FluentIcons.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:resources="using:Trident.Abstractions.Resources"
@@ -54,7 +55,7 @@
                         Spacing="{StaticResource SmallGap}">
                         <controls:TagControl VerticalAlignment="Bottom">
                             <controls:TagControl.Icon>
-                                <FontIcon FontSize="30" Glyph="&#xE97C;" />
+                                <ic:SymbolIcon FontSize="30" Symbol="SquareMultiple" />
                             </controls:TagControl.Icon>
                             <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TYPE" />
@@ -63,7 +64,7 @@
                         </controls:TagControl>
                         <controls:TagControl VerticalAlignment="Bottom">
                             <controls:TagControl.Icon>
-                                <FontIcon FontSize="30" Glyph="&#xE8EC;" />
+                                <ic:SymbolIcon FontSize="30" Symbol="Tag" />
                             </controls:TagControl.Icon>
                             <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="VERSION" />
@@ -72,7 +73,7 @@
                         </controls:TagControl>
                         <controls:TagControl VerticalAlignment="Bottom">
                             <controls:TagControl.Icon>
-                                <FontIcon FontSize="30" Glyph="&#xE928;" />
+                                <ic:SymbolIcon FontSize="30" Symbol="Fingerprint" />
                             </controls:TagControl.Icon>
                             <controls:TagControl.Header>
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="IDENTITY" />
@@ -82,10 +83,10 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                         <HyperlinkButton Command="{x:Bind ViewModel.GotoMetadataViewCommand}" CommandParameter="{x:Bind ViewModel.Profile.Key, Mode=OneWay}">
-                            <FontIcon Glyph="&#xE932;" />
+                            <ic:SymbolIcon Symbol="Edit" />
                         </HyperlinkButton>
                         <HyperlinkButton Command="{x:Bind ViewModel.GotoConfigurationViewCommand}" CommandParameter="{x:Bind ViewModel.Profile.Key, Mode=OneWay}">
-                            <FontIcon Glyph="&#xE713;" />
+                            <ic:SymbolIcon Symbol="Settings" />
                         </HyperlinkButton>
                     </StackPanel>
                 </Grid>
@@ -121,10 +122,7 @@
                                 Content="Saves" />
                         </StackPanel>
                         <HyperlinkButton Grid.Column="1" Command="{x:Bind ViewModel.OpenHomeFolderCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                <FontIcon FontSize="16" Glyph="&#xE8A7;" />
-                                <TextBlock Text="Open Folder" />
-                            </StackPanel>
+                            <controls:Label Icon="OpenFolder" Text="Open folder" />
                         </HyperlinkButton>
                     </Grid>
                 </controls:Card>
@@ -154,19 +152,16 @@
                                         Orientation="Horizontal"
                                         Spacing="{StaticResource TinyGap}">
                                         <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}" CommandParameter="{x:Bind TodoList.SelectedValue, Mode=OneWay}">
-                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE74D;" />
+                                            <ic:SymbolIcon FontSize="{StaticResource ButtonFontIconFontSize}" Symbol="SubtractCircle" />
                                         </HyperlinkButton>
                                         <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
-                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xECC8;" />
+                                            <ic:SymbolIcon FontSize="{StaticResource ButtonFontIconFontSize}" Symbol="AddCircle" />
                                         </HyperlinkButton>
                                     </StackPanel>
-                                    <StackPanel
+                                    <controls:Label
                                         VerticalAlignment="Top"
-                                        Orientation="Horizontal"
-                                        Spacing="{StaticResource TinyGap}">
-                                        <FontIcon FontSize="16" Glyph="&#xE9D5;" />
-                                        <TextBlock Text="Todo" />
-                                    </StackPanel>
+                                        Icon="TaskList"
+                                        Text="Todo" />
                                 </toolkit:DockPanel>
                                 <ListView
                                     x:Name="TodoList"
@@ -191,7 +186,7 @@
                                 VerticalAlignment="Center"
                                 Spacing="{StaticResource TinyGap}"
                                 Visibility="{x:Bind ViewModel.Profile.Todos.Count, Mode=OneWay, Converter={StaticResource ZeroToVisibilityConverter}}">
-                                <FontIcon FontSize="{StaticResource LargeGap}" Glyph="&#xE679;" />
+                                <ic:SymbolIcon FontSize="{StaticResource LargeFontIconFontSize}" Symbol="Form" />
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
@@ -207,13 +202,10 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <StackPanel
+                            <controls:Label
                                 Grid.Row="0"
-                                Orientation="Horizontal"
-                                Spacing="{StaticResource TinyGap}">
-                                <FontIcon FontSize="16" Glyph="&#xE70B;" />
-                                <TextBlock Text="Note" />
-                            </StackPanel>
+                                Icon="Note"
+                                Text="Note" />
                             <ScrollViewer Grid.Row="1">
                                 <TextBox
                                     AcceptsReturn="True"
@@ -281,10 +273,10 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <FontIcon
+                            <ic:SymbolIcon
                                 Grid.Column="0"
                                 FontSize="36"
-                                Glyph="&#xE748;" />
+                                Symbol="PersonSwap" />
                             <StackPanel Grid.Column="1">
                                 <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Account" />
                                 <TextBlock Text="Choose" />
@@ -322,10 +314,10 @@
                         VerticalAlignment="Center"
                         Command="{x:Bind ViewModel.PlayCommand}"
                         Style="{StaticResource AccentButtonStyle}">
-                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xF5B0;" />
-                            <TextBlock Text="PLAY" />
-                        </StackPanel>
+                        <controls:Label
+                            Icon="Play"
+                            Text="PLAY"
+                            Variant="Filled" />
                     </Button>
                 </toolkit:Case>
                 <toolkit:Case Value="Deploying">
@@ -344,10 +336,10 @@
                                 Value="{x:Bind ViewModel.Profile.Status.Count.Value, Mode=OneWay}" />
                         </StackPanel>
                         <Button VerticalAlignment="Center" Command="{x:Bind ViewModel.StopCommand}">
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                                <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xEE95;" />
-                                <TextBlock Text="DEPLOYING" />
-                            </StackPanel>
+                            <controls:Label
+                                Icon="RecordStop"
+                                Text="DEPLOYING"
+                                Variant="Regular" />
                         </Button>
                     </StackPanel>
                 </toolkit:Case>
@@ -369,8 +361,7 @@
                                 Margin="{StaticResource SmallMargin}"
                                 Orientation="Horizontal"
                                 Spacing="{StaticResource SmallGap}">
-                                <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xEC61;" />
-                                <TextBlock Text="RUNNING" />
+                                <controls:Label Icon="Play" Text="RUNNING" />
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -388,10 +379,10 @@
                             VerticalAlignment="Center"
                             Command="{x:Bind ViewModel.PlayCommand}"
                             Style="{StaticResource AccentButtonStyle}">
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource SmallGap}">
-                                <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xF5B0;" />
-                                <TextBlock Text="RETRY" />
-                            </StackPanel>
+                            <controls:Label
+                                Icon="PlayCircle"
+                                Text="RETRY"
+                                Variant="Filled" />
                         </Button>
                     </StackPanel>
                 </toolkit:Case>
