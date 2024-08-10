@@ -59,4 +59,19 @@ public class Label : Control
     // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register(nameof(Text), typeof(string), typeof(Label), new PropertyMetadata(string.Empty));
+
+
+
+
+    public TextTrimming Trimming
+    {
+        get { return (TextTrimming)GetValue(TrimmingProperty); }
+        set { SetValue(TrimmingProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Trimming.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TrimmingProperty =
+        DependencyProperty.Register(nameof(Trimming), typeof(TextTrimming), typeof(Label), new PropertyMetadata(TextTrimming.None));
+
+
 }

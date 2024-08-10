@@ -25,7 +25,8 @@
                             Grid.Column="1"
                             FontSize="{TemplateBinding FontSize}"
                             Foreground="{TemplateBinding Foreground}"
-                            Text="{TemplateBinding Text}" />
+                            Text="{TemplateBinding Text}"
+                            TextTrimming="{TemplateBinding Trimming}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

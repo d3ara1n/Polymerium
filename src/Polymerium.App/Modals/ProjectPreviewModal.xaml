@@ -4,6 +4,7 @@
     x:Class="Polymerium.App.Modals.ProjectPreviewModal"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Polymerium.App.Modals"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -210,34 +211,25 @@
                                                             <ColumnDefinition Width="*" />
                                                             <ColumnDefinition Width="Auto" />
                                                         </Grid.ColumnDefinitions>
-                                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                                            <StackPanel
-                                                                Orientation="Horizontal"
-                                                                Spacing="{StaticResource TinyGap}"
-                                                                Visibility="{x:Bind LoaderLabel, Converter={StaticResource NotEmptyToVisibleConverter}}">
-                                                                <FontIcon
-                                                                    FontSize="{StaticResource BodyTextBlockFontSize}"
-                                                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                                                    Glyph="&#xF157;" />
-                                                                <TextBlock
-                                                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                                                    Text="{x:Bind LoaderLabel}"
-                                                                    TextTrimming="CharacterEllipsis" />
-                                                            </StackPanel>
-                                                            <StackPanel
-                                                                Orientation="Horizontal"
-                                                                Spacing="{StaticResource TinyGap}"
-                                                                Visibility="{x:Bind VersionLabel, Converter={StaticResource NotEmptyToVisibleConverter}}">
-                                                                <FontIcon
-                                                                    FontSize="{StaticResource BodyTextBlockFontSize}"
-                                                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                                                    Glyph="&#xE8EC;" />
-                                                                <TextBlock
-                                                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                                                    Text="{x:Bind VersionLabel}"
-                                                                    TextTrimming="CharacterEllipsis" />
-                                                            </StackPanel>
-                                                        </StackPanel>
+                                                        <Grid ColumnSpacing="{StaticResource TinyGap}">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <controls:Label
+                                                                Grid.Column="0"
+                                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                                Icon="VehicleTractor"
+                                                                Text="{x:Bind LoaderLabel}"
+                                                                Trimming="CharacterEllipsis"
+                                                                Visibility="{x:Bind LoaderLabel, Converter={StaticResource NotEmptyToVisibleConverter}}" />
+                                                            <controls:Label
+                                                                Grid.Column="1"
+                                                                Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                                Icon="TagCircle"
+                                                                Text="{x:Bind VersionLabel}"
+                                                                Trimming="CharacterEllipsis" />
+                                                        </Grid>
                                                         <TextBlock
                                                             Grid.Column="1"
                                                             Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
