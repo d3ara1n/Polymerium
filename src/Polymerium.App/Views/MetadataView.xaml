@@ -422,10 +422,9 @@
                                         CommandParameter="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay}">
                                         <SplitButton.Flyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="Bulk Update" />
+                                                <MenuFlyoutItem Command="{x:Bind ViewModel.OpenBulkUpdateModalCommand}" Text="Bulk Update" />
                                                 <MenuFlyoutItem Text="View Changelog" />
                                                 <MenuFlyoutItem
-                                                    x:Name="ExportAttachmentListButton"
                                                     Command="{x:Bind ViewModel.ExportAttachmentListCommand}"
                                                     CommandParameter="{x:Bind ViewModel.AttachmentLoadingState, Mode=OneWay}"
                                                     Text="Export List" />

@@ -387,6 +387,20 @@ namespace Polymerium.App.ViewModels
             }
         }
 
+        public bool CanOpenBulkUpdateModal()
+        {
+            return SelectedLayer is not null;
+        }
+
+        public void OpenBulkUpdateModal()
+        {
+            if (SelectedLayer is not null)
+            {
+                var modal = new AttachmentBulkUpdateModal();
+                _modalService.Pop(modal);
+            }
+        }
+
         public async Task<IEnumerable<LoaderVersionModel>> GetLoaderVersionsAsync(string identity)
         {
 
@@ -419,7 +433,9 @@ namespace Polymerium.App.ViewModels
         public async Task ExportAttachmentListAsync(DataLoadingState state)
         {
             var path = await _dialogService.RequsetSavePathAsync(FileNameHelper.Sanitize($"export_{Model.Inner.Name}_{SelectedLayer?.Inner.Summary ?? ""}.txt"));
-            if (path != null && !File.Exists(path))
+            // 取消操作
+            if (path is null) return;
+            if (!File.Exists(path))
             {
                 try
                 {
