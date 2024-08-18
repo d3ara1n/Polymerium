@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <UserControl
     x:Class="Polymerium.App.Layout"
@@ -53,152 +53,20 @@
                 Canvas.ZIndex="0"
                 DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
                 IsBackEnabled="{x:Bind Root.CanGoBack, Mode=OneWay}"
-                IsPaneToggleButtonVisible="False"
+                IsPaneToggleButtonVisible="True"
                 IsSettingsVisible="False"
                 IsTabStop="False"
                 IsTitleBarAutoPaddingEnabled="True"
+                ItemInvoked="NavigationViewControl_OnItemInvoked"
                 OpenPaneLength="198"
                 PaneDisplayMode="Auto"
-                SelectionChanged="NavigationViewControl_SelectionChanged">
+                PaneTitle="Navigation">
                 <NavigationView.Resources>
-                    <!--  ReSharper disable once Xaml.RedundantResource  -->
-                    <CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
-                    <!--  ReSharper disable once Xaml.RedundantResource  -->
-                    <Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
+                    <Thickness x:Key="NavigationViewContentMargin">0,36,0,0</Thickness>
                 </NavigationView.Resources>
-                <NavigationView.PaneCustomContent>
-                    <Grid
-                        Margin="{StaticResource SmallMargin}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal" Spacing="10">
-                            <Grid x:Name="CountContainer" Width="48">
-                                <TextBlock
-                                    x:Name="CountBox"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontSize="34"
-                                    FontWeight="Bold"
-                                    Text="{x:Bind RunningTaskCount.Value, Mode=OneWay}">
-                                    <TextBlock.Foreground>
-                                        <LinearGradientBrush StartPoint="0.8,0" EndPoint="0,1">
-                                            <GradientStop Offset="0" Color="#8fd3f4" />
-                                            <GradientStop Offset="0.3" Color="#a18cd1" />
-                                            <GradientStop Offset="1" Color="#fbc2eb" />
-                                        </LinearGradientBrush>
-                                    </TextBlock.Foreground>
-                                </TextBlock>
-                            </Grid>
-                            <StackPanel x:Name="TaskPanel" VerticalAlignment="Center">
-                                <FlyoutBase.AttachedFlyout>
-                                    <Flyout Placement="BottomEdgeAlignedLeft">
-                                        <StackPanel Width="380" Spacing="{StaticResource SmallGap}">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock
-                                                    Grid.Column="0"
-                                                    Style="{StaticResource SubtitleTextBlockStyle}"
-                                                    Text="Tasks" />
-                                                <HyperlinkButton Grid.Column="1" Command="{x:Bind ClearTasksCommand}">
-                                                    <TextBlock Text="Clear" />
-                                                </HyperlinkButton>
-                                            </Grid>
-                                            <ListView ItemsSource="{x:Bind Tasks}" SelectionMode="None">
-                                                <ListView.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Spacing="{StaticResource TinyGap}" />
-                                                    </ItemsPanelTemplate>
-                                                </ListView.ItemsPanel>
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate x:DataType="models:TaskModel">
-                                                        <controls:Card>
-                                                            <Grid>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*" />
-                                                                    <ColumnDefinition Width="Auto" />
-                                                                </Grid.ColumnDefinitions>
-                                                                <StackPanel Grid.Column="0">
-                                                                    <TextBlock
-                                                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                                                        Style="{StaticResource CaptionTextBlockStyle}">
-                                                                        <Run Text="{x:Bind Key}" />
-                                                                        <Run Text="·" />
-                                                                        <Run Text="{x:Bind CreatedAt}" />
-                                                                    </TextBlock>
-                                                                    <TextBlock Text="{x:Bind Stage.Value, Mode=OneWay}"
-                                                                               TextTrimming="CharacterEllipsis" />
-                                                                    <TextBlock
-                                                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                                                        Text="{x:Bind Status.Value, Mode=OneWay}"
-                                                                        TextTrimming="CharacterEllipsis" />
-                                                                </StackPanel>
-                                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                                    <toolkit:SwitchPresenter
-                                                                        TargetType="tasks:TaskState"
-                                                                        Value="{x:Bind State.Value, Mode=OneWay}">
-                                                                        <toolkit:Case Value="Idle">
-                                                                            <TextBlock Text="Idle" />
-                                                                        </toolkit:Case>
-                                                                        <toolkit:Case Value="Running">
-                                                                            <HyperlinkButton
-                                                                                Command="{x:Bind AbortCommand}"
-                                                                                CommandParameter="{x:Bind Inner}">
-                                                                                <Grid>
-                                                                                    <FontIcon
-                                                                                        FontSize="{StaticResource ButtonFontIconFontSize}"
-                                                                                        Glyph="&#xE73B;" />
-                                                                                    <ProgressRing
-                                                                                        IsIndeterminate="{x:Bind IsIndeterminate.Value, Mode=OneWay}"
-                                                                                        Maximum="100"
-                                                                                        Value="{x:Bind Progress.Value, Mode=OneWay}" />
-                                                                                </Grid>
-                                                                            </HyperlinkButton>
-                                                                        </toolkit:Case>
-                                                                        <toolkit:Case Value="Finished">
-                                                                            <TextBlock Text="Finished" />
-                                                                        </toolkit:Case>
-                                                                        <toolkit:Case Value="Faulted">
-                                                                            <TextBlock Text="Faulted" />
-                                                                        </toolkit:Case>
-                                                                    </toolkit:SwitchPresenter>
-                                                                </StackPanel>
-                                                            </Grid>
-                                                        </controls:Card>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
-
-                                            <StackPanel
-                                                Margin="{StaticResource MediumMargin}"
-                                                HorizontalAlignment="Center"
-                                                Spacing="{StaticResource TinyGap}"
-                                                Visibility="{x:Bind Tasks.Count, Mode=OneWay, Converter={StaticResource ZeroToVisibilityConverter}}">
-                                                <FontIcon
-                                                    HorizontalAlignment="Center"
-                                                    FontSize="{StaticResource LargeFontIconFontSize}"
-                                                    Glyph="&#xF7EC;" />
-                                                <TextBlock
-                                                    HorizontalAlignment="Center"
-                                                    Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
-                                                    Style="{StaticResource SubtitleTextBlockStyle}"
-                                                    Text="None" />
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Flyout>
-                                </FlyoutBase.AttachedFlyout>
-                                <TextBlock Text="Tasks" />
-                                <TextBlock>
-                                    <Hyperlink Click="Hyperlink_OnClick">
-                                        <Run Text="Manage" />
-                                    </Hyperlink>
-                                </TextBlock>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </NavigationView.PaneCustomContent>
+                <NavigationView.AutoSuggestBox>
+                    <AutoSuggestBox PlaceholderText="Instances..." QueryIcon="Find" />
+                </NavigationView.AutoSuggestBox>
                 <NavigationView.MenuItems>
                     <NavigationViewItem Tag="HOME">
                         <NavigationViewItem.Icon>
@@ -274,16 +142,10 @@
                 <VisualState x:Name="Minimal">
                     <VisualState.Setters>
                         <Setter Target="AppTitleBar.Margin" Value="96,0,0,0" />
-                        <Setter Target="NavigationViewControl.IsPaneToggleButtonVisible" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Compact">
-                    <VisualState.Setters>
-                        <Setter Target="TaskPanel.Visibility" Value="Collapsed" />
-                        <Setter Target="CountBox.Margin" Value="0" />
-                        <Setter Target="CountBox.FontSize" Value="20" />
-                        <Setter Target="CountContainer.Width" Value="24" />
-                    </VisualState.Setters>
+                    <VisualState.Setters />
                 </VisualState>
                 <VisualState x:Name="Top">
                     <VisualState.Setters>
@@ -309,8 +171,7 @@
                 <VisualStateGroup.Transitions>
                     <VisualTransition To="Shown">
                         <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder"
-                                                           Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder" Storyboard.TargetProperty="Visibility">
                                 <DiscreteObjectKeyFrame Value="Visible" />
                             </ObjectAnimationUsingKeyFrames>
                             <PopInThemeAnimation
@@ -322,8 +183,7 @@
                     </VisualTransition>
                     <VisualTransition To="Hidden">
                         <Storyboard Completed="HiddenStoryboard_Completed">
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder"
-                                                           Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder" Storyboard.TargetProperty="Visibility">
                                 <DiscreteObjectKeyFrame Value="Visible" />
                             </ObjectAnimationUsingKeyFrames>
                             <FadeOutThemeAnimation Storyboard.TargetName="PART_OverlayBorder" />

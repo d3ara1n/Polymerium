@@ -159,8 +159,11 @@ public partial class App
             Content = layout,
             SystemBackdrop = Settings.Style switch
             {
-                0 => null, 1 => new DesktopAcrylicBackdrop(), 2 => new MicaBackdrop(),
-                3 => new MicaBackdrop { Kind = MicaKind.BaseAlt }, _ => throw new NotImplementedException()
+                0 => null,
+                1 => new DesktopAcrylicBackdrop(),
+                2 => new MicaBackdrop(),
+                3 => new MicaBackdrop { Kind = MicaKind.BaseAlt },
+                _ => throw new NotImplementedException()
             }
         };
         window.SetTitleBar(layout.Titlebar);
@@ -189,9 +192,7 @@ public partial class App
                                                                && settings.Values.TryGetValue(KEY_WIDTH,
                                                                    out var w) &&
                                                                w is int width)
-        {
             window.AppWindow.Resize(new SizeInt32(width, height));
-        }
 
         Window = window;
         window.Activate();

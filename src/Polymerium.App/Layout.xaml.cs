@@ -152,33 +152,8 @@ public sealed partial class Layout
         }
     }
 
-    private void NavigationViewControl_SelectionChanged(NavigationView sender,
-        NavigationViewSelectionChangedEventArgs args)
-    {
-        //if (args.SelectedItem is NavItem item)
-        //{
-        //    navigateHandler?.Invoke(item.View, null, args.RecommendedNavigationTransitionInfo);
-        //}
-        if (args.SelectedItemContainer is NavigationViewItem item && item.Tag is string tag)
-        {
-            navigateHandler?.Invoke(tag switch
-            {
-                "HOME" => typeof(HomeView),
-                "INSTANCES" => typeof(DesktopView),
-                "ACCOUNTS" => typeof(AccountView),
-                "MARKET" => typeof(MarketView),
-                "TOOLBOX" => typeof(ToolboxView),
-                "SETTINGS" => typeof(SettingView),
-                _ => throw new NotImplementedException()
-            }, null, args.RecommendedNavigationTransitionInfo);
-            ;
-        }
-    }
-
     private void NavigationViewControl_BackRequested(NavigationView _, NavigationViewBackRequestedEventArgs __) =>
         Root.GoBack();
-
-    private void Hyperlink_OnClick(Hyperlink _, HyperlinkClickEventArgs __) => FlyoutBase.ShowAttachedFlyout(TaskPanel);
 
     private void AbortTask(TaskBase? task) => task?.Abort();
 
@@ -221,6 +196,26 @@ public sealed partial class Layout
 
     private void InfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args) => Notifications.Remove(sender);
 
-    private void UserControl_Loaded(object sender, RoutedEventArgs e) =>
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
         NavigationViewControl.SelectedItem = NavigationViewControl.MenuItems.First();
+        navigateHandler?.Invoke(typeof(HomeView), null, new SuppressNavigationTransitionInfo());
+    }
+
+    private void NavigationViewControl_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+    {
+        if (args.InvokedItemContainer is { Tag: string tag })
+        {
+            navigateHandler?.Invoke(tag?.ToUpper() switch
+            {
+                "HOME" => typeof(HomeView),
+                "INSTANCES" => typeof(DesktopView),
+                "ACCOUNTS" => typeof(AccountView),
+                "MARKET" => typeof(MarketView),
+                "TOOLBOX" => typeof(ToolboxView),
+                "SETTINGS" => typeof(SettingView),
+                _ => throw new NotImplementedException()
+            }, null, args.RecommendedNavigationTransitionInfo);
+        }
+    }
 }

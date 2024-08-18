@@ -56,8 +56,4 @@ public class HomeViewModel : ObservableObject
     {
         if (!string.IsNullOrEmpty(url)) UriFileHelper.OpenInExternal(url);
     }
-
-    public void QuerySubmitted(string query)
-    {
-    }
 }

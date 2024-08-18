@@ -9,8 +9,8 @@ public static class MicrosoftHelper
 {
     private const string DEVICE_ENDPOINT = "https://login.microsoftonline.com/consumers/oauth2/v2.0/devicecode";
     private const string TOKEN_ENDPOINT = "https://login.microsoftonline.com/consumers/oauth2/v2.0/token";
-    private const string CLIENT_ID = "66b049dc-22a1-4fd8-a17d-2ccd01332101";
-    private const string SCOPE = "XboxLive.signin offline_access";
+    public const string CLIENT_ID = "66b049dc-22a1-4fd8-a17d-2ccd01332101";
+    public const string SCOPE = "XboxLive.signin offline_access";
 
     private static readonly JsonSerializerOptions OPTIONS = new(JsonSerializerDefaults.Web)
     {

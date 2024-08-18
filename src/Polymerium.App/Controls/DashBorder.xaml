@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -20,8 +20,7 @@
                             Stroke="{TemplateBinding BorderBrush}"
                             StrokeDashArray="8 4"
                             StrokeThickness="2" />
-                        <ContentPresenter Margin="{TemplateBinding Padding}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        <ContentPresenter Margin="{TemplateBinding Padding}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

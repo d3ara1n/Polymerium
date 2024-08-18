@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <Page
     x:Class="Polymerium.App.Views.MetadataView"
@@ -25,8 +25,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="{StaticResource LargeUpperMargin}">
                     <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Text="Version" />
-                    <TextBlock Style="{StaticResource TitleLargeTextBlockStyle}"
-                               Text="{x:Bind ViewModel.Model.Inner.Metadata.Version, Mode=OneWay}" />
+                    <TextBlock Style="{StaticResource TitleLargeTextBlockStyle}" Text="{x:Bind ViewModel.Model.Inner.Metadata.Version, Mode=OneWay}" />
                 </StackPanel>
                 <ScrollViewer Grid.Row="1" Width="300">
                     <StackPanel>
@@ -40,8 +39,7 @@
                                     <Setter Property="Margin" Value="{StaticResource TinyMargin}" />
                                     <Setter Property="Padding" Value="{StaticResource CardContentMargin}" />
                                     <Setter Property="CornerRadius" Value="{StaticResource CardSmallCornerRadius}" />
-                                    <Setter Property="BorderBrush"
-                                            Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
+                                    <Setter Property="BorderBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
                                     <Setter Property="BorderThickness" Value="2" />
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -69,40 +67,31 @@
                                                             <VisualState x:Name="Normal" />
                                                             <VisualState x:Name="PointerOver">
                                                                 <VisualState.Setters>
-                                                                    <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                             <VisualState x:Name="Pressed">
                                                                 <VisualState.Setters>
-                                                                    <Setter Target="PART_BORDER.Background"
-                                                                            Value="{StaticResource SelectedAccentBackgroundBrush}" />
-                                                                    <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                                                                    <Setter Target="PART_BORDER.Background" Value="{StaticResource SelectedAccentBackgroundBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                             <VisualState x:Name="Selected">
                                                                 <VisualState.Setters>
-                                                                    <Setter Target="PART_BORDER.Background"
-                                                                            Value="{StaticResource SelectedAccentBackgroundBrush}" />
-                                                                    <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                                                                    <Setter Target="PART_BORDER.Background" Value="{StaticResource SelectedAccentBackgroundBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                             <VisualState x:Name="PointerOverSelected">
                                                                 <VisualState.Setters>
-                                                                    <Setter Target="PART_BORDER.Background"
-                                                                            Value="{StaticResource SelectedAccentBackgroundBrush}" />
-                                                                    <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                                                                    <Setter Target="PART_BORDER.Background" Value="{StaticResource SelectedAccentBackgroundBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                             <VisualState x:Name="PressedSelected">
                                                                 <VisualState.Setters>
-                                                                    <Setter Target="PART_BORDER.Background"
-                                                                            Value="{ThemeResource SelectedAccentBackgroundBrush}" />
-                                                                    <Setter Target="PART_BORDER.BorderBrush"
-                                                                            Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                                                                    <Setter Target="PART_BORDER.Background" Value="{ThemeResource SelectedAccentBackgroundBrush}" />
+                                                                    <Setter Target="PART_BORDER.BorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                                                                 </VisualState.Setters>
                                                             </VisualState>
                                                         </VisualStateGroup>
@@ -117,8 +106,7 @@
                                 <DataTemplate x:DataType="models:LayerModel">
                                     <StackPanel Spacing="{StaticResource SmallGap}">
                                         <toolkit:DockPanel>
-                                            <Button toolkit:DockPanel.Dock="Right"
-                                                    Style="{StaticResource EllipsisButton}">
+                                            <Button toolkit:DockPanel.Dock="Right" Style="{StaticResource EllipsisButton}">
                                                 <Button.Flyout>
                                                     <MenuFlyout Placement="BottomEdgeAlignedLeft">
                                                         <MenuFlyoutItem
@@ -245,7 +233,6 @@
                             </ListView.ItemTemplate>
                         </ListView>
                         <controls:CardButton
-                            x:Name="AddLayerButton"
                             Margin="{StaticResource MediumMargin}"
                             Padding="0"
                             Background="Transparent"
@@ -278,32 +265,17 @@
                     <Grid Grid.Row="0">
                         <StackPanel>
                             <toolkit:DockPanel Margin="{StaticResource SmallUpperMargin}">
-                                <ContentControl toolkit:DockPanel.Dock="Right"
-                                                IsEnabled="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
-                                    <DropDownButton
-                                        IsEnabled="{x:Bind VersionLoadingState, Mode=OneWay, Converter={StaticResource FalseWhenLoadingConverter}}">
+                                <ContentControl toolkit:DockPanel.Dock="Right" IsEnabled="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                                    <DropDownButton IsEnabled="{x:Bind VersionLoadingState, Mode=OneWay, Converter={StaticResource FalseWhenLoadingConverter}}">
                                         <DropDownButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem
-                                                    x:Name="AddForgeButton"
-                                                    Click="AddForgeButton_Click"
-                                                    Text="Forge" />
-                                                <MenuFlyoutItem
-                                                    x:Name="AddNeoForgeButton"
-                                                    Click="AddNeoForgeButton_Click"
-                                                    Text="NeoForge" />
-                                                <MenuFlyoutItem
-                                                    x:Name="AddFabricButton"
-                                                    Click="AddFabricButton_Click"
-                                                    Text="Fabric" />
-                                                <MenuFlyoutItem
-                                                    x:Name="AddQuiltButton"
-                                                    Click="AddQuiltButton_Click"
-                                                    Text="Quilt" />
+                                                <MenuFlyoutItem Click="AddForgeButton_Click" Text="Forge" />
+                                                <MenuFlyoutItem Click="AddNeoForgeButton_Click" Text="NeoForge" />
+                                                <MenuFlyoutItem Click="AddFabricButton_Click" Text="Fabric" />
+                                                <MenuFlyoutItem Click="AddQuiltButton_Click" Text="Quilt" />
                                             </MenuFlyout>
                                         </DropDownButton.Flyout>
-                                        <toolkit:SwitchPresenter TargetType="models:DataLoadingState"
-                                                                 Value="{x:Bind VersionLoadingState, Mode=OneWay}">
+                                        <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind VersionLoadingState, Mode=OneWay}">
                                             <toolkit:Case IsDefault="True">
                                                 <controls:Label Icon="AddCircle" Text="Add" />
                                             </toolkit:Case>
@@ -358,8 +330,7 @@
                                                             VerticalAlignment="Center"
                                                             CornerRadius="{StaticResource TinyCornerRadius}">
                                                             <Border.Background>
-                                                                <ImageBrush ImageSource="{x:Bind Thumbnail}"
-                                                                            Stretch="Fill" />
+                                                                <ImageBrush ImageSource="{x:Bind Thumbnail}" Stretch="Fill" />
                                                             </Border.Background>
                                                         </Border>
                                                     </Border>
@@ -368,11 +339,8 @@
                                                             <RowDefinition Height="*" />
                                                             <RowDefinition Height="Auto" />
                                                         </Grid.RowDefinitions>
-                                                        <StackPanel Grid.Row="0"
-                                                                    Margin="{StaticResource CardContentUpperMargin}">
-                                                            <TextBlock
-                                                                Style="{StaticResource BodyStrongTextBlockStyle}"
-                                                                Text="{x:Bind Name}" />
+                                                        <StackPanel Grid.Row="0" Margin="{StaticResource CardContentUpperMargin}">
+                                                            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Name}" />
                                                             <TextBlock
                                                                 MaxLines="2"
                                                                 Text="{x:Bind Inner.Version}"
@@ -441,8 +409,7 @@
                                         CommandParameter="{x:Bind ViewModel.SelectedLayer.IsLocked.Value, Mode=OneWay}">
                                         <SplitButton.Flyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Command="{x:Bind ViewModel.OpenBulkUpdateModalCommand}"
-                                                                Text="Bulk Update" />
+                                                <MenuFlyoutItem Command="{x:Bind ViewModel.OpenBulkUpdateModalCommand}" Text="Bulk Update" />
                                                 <MenuFlyoutItem Text="View Changelog" />
                                                 <MenuFlyoutItem
                                                     Command="{x:Bind ViewModel.ExportAttachmentListCommand}"
@@ -453,8 +420,7 @@
                                         <controls:Label Icon="GiftOpen" Text="Get" />
                                     </SplitButton>
                                 </Grid>
-                                <toolkit:SwitchPresenter TargetType="models:DataLoadingState"
-                                                         Value="{x:Bind ViewModel.AttachmentLoadingState, Mode=OneWay}">
+                                <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind ViewModel.AttachmentLoadingState, Mode=OneWay}">
                                     <toolkit:Case Value="Loading">
                                         <ProgressRing
                                             Width="32"
@@ -468,13 +434,10 @@
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="models:AttachmentModel">
                                                         <controls:Card Margin="0,4,0,0">
-                                                            <toolkit:SwitchPresenter
-                                                                TargetType="models:DataLoadingState"
-                                                                Value="{x:Bind State.Value, Mode=OneWay}">
+                                                            <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind State.Value, Mode=OneWay}">
                                                                 <toolkit:Case Value="Loading">
                                                                     <StackPanel Spacing="{StaticResource TinyGap}">
-                                                                        <TextBlock HorizontalAlignment="Center"
-                                                                            Text="{x:Bind Inner}" />
+                                                                        <TextBlock HorizontalAlignment="Center" Text="{x:Bind Inner}" />
                                                                         <ProgressBar
                                                                             Width="256"
                                                                             HorizontalAlignment="Center"
@@ -494,8 +457,7 @@
                                                                             CornerRadius="3"
                                                                             IsCacheEnabled="True"
                                                                             Source="{x:Bind Thumbnail.Value, Mode=OneWay}" />
-                                                                        <StackPanel Grid.Column="1"
-                                                                            VerticalAlignment="Center">
+                                                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                                                             <Grid>
                                                                                 <Grid.ColumnDefinitions>
                                                                                     <ColumnDefinition Width="*" />
@@ -533,15 +495,13 @@
                                                                                     toolkit:DockPanel.Dock="Right"
                                                                                     Style="{StaticResource IconButtonStyle}">
                                                                                     <Button.Flyout>
-                                                                                        <MenuFlyout
-                                                                                            Placement="LeftEdgeAlignedTop">
+                                                                                        <MenuFlyout Placement="LeftEdgeAlignedTop">
                                                                                             <MenuFlyoutItem
                                                                                                 Command="{x:Bind OpenCommand}"
                                                                                                 CommandParameter="{x:Bind}"
                                                                                                 Text="Open in browser">
                                                                                                 <MenuFlyoutItem.Icon>
-                                                                                                    <ic:SymbolIcon
-                                                                                                        Symbol="Link" />
+                                                                                                    <ic:SymbolIcon Symbol="Link" />
                                                                                                 </MenuFlyoutItem.Icon>
                                                                                             </MenuFlyoutItem>
                                                                                             <MenuFlyoutSeparator />
@@ -550,8 +510,7 @@
                                                                                                 CommandParameter="{x:Bind}"
                                                                                                 Text="Modify">
                                                                                                 <MenuFlyoutItem.Icon>
-                                                                                                    <ic:SymbolIcon
-                                                                                                        Symbol="Edit" />
+                                                                                                    <ic:SymbolIcon Symbol="Edit" />
                                                                                                 </MenuFlyoutItem.Icon>
                                                                                             </MenuFlyoutItem>
                                                                                             <MenuFlyoutItem
@@ -559,15 +518,12 @@
                                                                                                 CommandParameter="{x:Bind}"
                                                                                                 Text="Delete">
                                                                                                 <MenuFlyoutItem.Icon>
-                                                                                                    <ic:SymbolIcon
-                                                                                                        Symbol="Delete" />
+                                                                                                    <ic:SymbolIcon Symbol="Delete" />
                                                                                                 </MenuFlyoutItem.Icon>
                                                                                             </MenuFlyoutItem>
                                                                                         </MenuFlyout>
                                                                                     </Button.Flyout>
-                                                                                    <ic:SymbolIcon
-                                                                                        FontSize="{StaticResource CaptionFontIconFontSize}"
-                                                                                        Symbol="MoreHorizontal" />
+                                                                                    <ic:SymbolIcon FontSize="{StaticResource CaptionFontIconFontSize}" Symbol="MoreHorizontal" />
                                                                                 </Button>
                                                                                 <TextBlock
                                                                                     VerticalAlignment="Bottom"
@@ -581,33 +537,25 @@
                                                                     </Grid>
                                                                 </toolkit:Case>
                                                                 <toolkit:Case Value="Failed">
-                                                                    <StackPanel VerticalAlignment="Center"
-                                                                        Spacing="{StaticResource TinyGap}">
+                                                                    <StackPanel VerticalAlignment="Center" Spacing="{StaticResource TinyGap}">
                                                                         <StackPanel
                                                                             HorizontalAlignment="Center"
                                                                             Orientation="Horizontal"
                                                                             Spacing="{StaticResource TinyGap}">
                                                                             <TextBlock Text="Failed to retrieve data" />
-                                                                            <TextBlock
-                                                                                Style="{StaticResource BodyStrongTextBlockStyle}"
-                                                                                Text="{x:Bind Inner}" />
+                                                                            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Inner}" />
                                                                         </StackPanel>
                                                                         <StackPanel
                                                                             HorizontalAlignment="Center"
                                                                             Orientation="Horizontal"
                                                                             Spacing="{StaticResource TinyGap}">
                                                                             <TextBlock>
-                                                                                <Hyperlink
-                                                                                    ui:HyperlinkExtensions.Command="{x:Bind RetryCommand}"
-                                                                                    ui:HyperlinkExtensions.CommandParameter="{x:Bind}">
+                                                                                <Hyperlink ui:HyperlinkExtensions.Command="{x:Bind RetryCommand}" ui:HyperlinkExtensions.CommandParameter="{x:Bind}">
                                                                                     <Run Text="Retry" />
                                                                                 </Hyperlink>
                                                                             </TextBlock>
-                                                                            <TextBlock
-                                                                                Visibility="{x:Bind Root.IsLocked.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-                                                                                <Hyperlink
-                                                                                    ui:HyperlinkExtensions.Command="{x:Bind DeleteCommand}"
-                                                                                    ui:HyperlinkExtensions.CommandParameter="{x:Bind}">
+                                                                            <TextBlock Visibility="{x:Bind Root.IsLocked.Value, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                                                                                <Hyperlink ui:HyperlinkExtensions.Command="{x:Bind DeleteCommand}" ui:HyperlinkExtensions.CommandParameter="{x:Bind}">
                                                                                     <Run Text="Delete" />
                                                                                 </Hyperlink>
                                                                             </TextBlock>
