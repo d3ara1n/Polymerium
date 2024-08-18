@@ -1,8 +1,7 @@
-﻿namespace Polymerium.App.Models
+﻿namespace Polymerium.App.Models;
+
+public enum TextEditingState
 {
-    public enum TextEditingState
-    {
-        Present,
-        Edit
-    }
+    Present,
+    Edit
 }

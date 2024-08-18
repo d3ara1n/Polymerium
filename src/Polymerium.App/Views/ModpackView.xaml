@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Page
     x:Class="Polymerium.App.Views.ModpackView"
@@ -73,17 +73,20 @@
                                     FontSize="12"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Glyph="&#xE77B;" />
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.Project.Inner.Author, Mode=OneWay}" />
+                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Text="{x:Bind ViewModel.Project.Inner.Author, Mode=OneWay}" />
                                 <FontIcon
                                     FontSize="12"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Glyph="&#xEC92;" />
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.Project.UpdatedAt, Mode=OneWay}" />
+                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Text="{x:Bind ViewModel.Project.UpdatedAt, Mode=OneWay}" />
                                 <FontIcon
                                     FontSize="12"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Glyph="&#xE896;" />
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.Project.DownloadCount, Mode=OneWay}" />
+                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Text="{x:Bind ViewModel.Project.DownloadCount, Mode=OneWay}" />
                             </StackPanel>
                         </StackPanel>
                         <Grid HorizontalAlignment="Right" toolkit:DockPanel.Dock="Right">
@@ -102,7 +105,8 @@
                                 CommandParameter="{x:Bind ViewModel.Project.Inner.Reference, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
                                     <FontIcon FontSize="12" Glyph="&#xE8A7;" />
-                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Label, Mode=OneWay, Converter={StaticResource StringUppercaseConverter}}" />
+                                    <TextBlock
+                                        Text="{x:Bind ViewModel.Project.Inner.Label, Mode=OneWay, Converter={StaticResource StringUppercaseConverter}}" />
                                 </StackPanel>
                             </HyperlinkButton>
                         </Grid>
@@ -178,7 +182,8 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <HyperlinkButton Command="{x:Bind ViewModel.GoBackCommand}">
-                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE72B;" />
+                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}"
+                                                      Glyph="&#xE72B;" />
                                         </HyperlinkButton>
                                         <TextBlock
                                             Grid.Column="1"
@@ -194,7 +199,8 @@
                                         CommandParameter="{x:Bind ViewModel.SelectedVersion, Mode=OneWay}"
                                         Style="{StaticResource AccentButtonStyle}">
                                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE896;" />
+                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}"
+                                                      Glyph="&#xE896;" />
                                             <TextBlock Text="Install" />
                                         </StackPanel>
                                     </Button>
@@ -245,10 +251,13 @@
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="Wrap" />
                                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                                    <toolkit:SwitchPresenter TargetType="resources:ReleaseType" Value="{x:Bind Inner.ReleaseType}">
+                                                    <toolkit:SwitchPresenter TargetType="resources:ReleaseType"
+                                                                             Value="{x:Bind Inner.ReleaseType}">
                                                         <toolkit:Case Value="Release">
                                                             <Grid>
-                                                                <Border Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}" CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
                                                                     <TextBlock
                                                                         Margin="6,2"
                                                                         HorizontalAlignment="Center"
@@ -261,7 +270,9 @@
                                                         </toolkit:Case>
                                                         <toolkit:Case Value="Beta">
                                                             <Grid>
-                                                                <Border Background="{ThemeResource SystemFillColorCautionBackgroundBrush}" CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
                                                                     <TextBlock
                                                                         Margin="6,2"
                                                                         HorizontalAlignment="Center"
@@ -274,7 +285,9 @@
                                                         </toolkit:Case>
                                                         <toolkit:Case Value="Alpha">
                                                             <Grid>
-                                                                <Border Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}" CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                <Border
+                                                                    Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                                                    CornerRadius="{StaticResource MicroCornerRadius}">
                                                                     <TextBlock
                                                                         Margin="6,2"
                                                                         HorizontalAlignment="Center"
@@ -318,7 +331,8 @@
                                     <TextBlock Style="{StaticResource CaptionStyle}" Text="Author" />
                                     <TextBlock Text="{x:Bind ViewModel.Project.Inner.Author, Mode=OneWay}" />
                                     <TextBlock Style="{StaticResource CaptionStyle}" Text="Summary" />
-                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Summary, Mode=OneWay}" TextWrapping="Wrap" />
+                                    <TextBlock Text="{x:Bind ViewModel.Project.Inner.Summary, Mode=OneWay}"
+                                               TextWrapping="Wrap" />
                                 </StackPanel>
                             </toolkit:Case>
                         </toolkit:SwitchPresenter>

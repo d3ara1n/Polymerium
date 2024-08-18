@@ -4,18 +4,17 @@
 using Microsoft.UI.Xaml;
 using Polymerium.App.Models;
 
-namespace Polymerium.App.Dialogs
+namespace Polymerium.App.Dialogs;
+
+public sealed partial class ModpackPreviewDialog
 {
-    public sealed partial class ModpackPreviewDialog
+    public ModpackPreviewDialog(XamlRoot root, ModpackPreviewModel model)
     {
-        public ModpackPreviewDialog(XamlRoot root, ModpackPreviewModel model)
-        {
-            XamlRoot = root;
-            Model = model;
+        XamlRoot = root;
+        Model = model;
 
-            InitializeComponent();
-        }
-
-        public ModpackPreviewModel Model { get; }
+        InitializeComponent();
     }
+
+    public ModpackPreviewModel Model { get; }
 }

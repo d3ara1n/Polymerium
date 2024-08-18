@@ -2,49 +2,39 @@
 using System;
 using Trident.Abstractions.Tasks;
 
-namespace Polymerium.App.Tasks
+namespace Polymerium.App.Tasks;
+
+public class DeployInstanceTask : TaskBase
 {
-    public class DeployInstanceTask : TaskBase
+    private readonly TrackerBase _tracker;
+
+    public DeployInstanceTask(DeployTracker tracker) : base(tracker.Key, $"Deploying {tracker.Key}", "Preparing...")
     {
-        private readonly TrackerBase _tracker;
-
-        public DeployInstanceTask(DeployTracker tracker) : base(tracker.Key, $"Deploying {tracker.Key}", "Preparing...")
-        {
-            _tracker = tracker;
-            tracker.StageUpdated += Tracker_StageUpdated;
-            tracker.StateUpdated += Tracker_StateUpdated;
-            tracker.FileSolidified += Tracker_FileSolidified;
-        }
-
-        private void Tracker_StageUpdated(DeployTracker sender, DeployStage stage)
-        {
-            ReportProgress(status: stage switch
-            {
-                DeployStage.CheckArtifact => "Checking artifact...",
-                DeployStage.InstallVanilla => "Installing vanilla...",
-                DeployStage.ProcessLoaders => "Processing loaders...",
-                DeployStage.ResolveAttachments => "Resolving attachments...",
-                DeployStage.BuildArtifact => "Building artifact...",
-                DeployStage.BuildTransient => "Building transient...",
-                DeployStage.SolidifyTransient => "Solidifying transient...",
-                _ => throw new NotImplementedException()
-            });
-        }
-
-
-        private void Tracker_StateUpdated(TrackerBase sender, TaskState state)
-        {
-            UpdateProgress(state, failure: sender.FailureReason);
-        }
-
-        private void Tracker_FileSolidified(DeployTracker sender, uint finished, uint total)
-        {
-            ReportProgress(finished == total ? 100 : finished * 100 / total);
-        }
-
-        protected override void OnAbort()
-        {
-            _tracker.Abort();
-        }
+        _tracker = tracker;
+        tracker.StageUpdated += Tracker_StageUpdated;
+        tracker.StateUpdated += Tracker_StateUpdated;
+        tracker.FileSolidified += Tracker_FileSolidified;
     }
+
+    private void Tracker_StageUpdated(DeployTracker sender, DeployStage stage) =>
+        ReportProgress(status: stage switch
+        {
+            DeployStage.CheckArtifact => "Checking artifact...",
+            DeployStage.InstallVanilla => "Installing vanilla...",
+            DeployStage.ProcessLoaders => "Processing loaders...",
+            DeployStage.ResolveAttachments => "Resolving attachments...",
+            DeployStage.BuildArtifact => "Building artifact...",
+            DeployStage.BuildTransient => "Building transient...",
+            DeployStage.SolidifyTransient => "Solidifying transient...",
+            _ => throw new NotImplementedException()
+        });
+
+
+    private void Tracker_StateUpdated(TrackerBase sender, TaskState state) =>
+        UpdateProgress(state, failure: sender.FailureReason);
+
+    private void Tracker_FileSolidified(DeployTracker sender, uint finished, uint total) =>
+        ReportProgress(finished == total ? 100 : finished * 100 / total);
+
+    protected override void OnAbort() => _tracker.Abort();
 }

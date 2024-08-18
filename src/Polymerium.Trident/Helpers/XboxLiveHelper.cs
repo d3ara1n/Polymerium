@@ -22,9 +22,7 @@ public static class XboxLiveHelper
         {
             Properties = new
             {
-                AuthMethod = "RPS",
-                SiteName = "user.auth.xboxlive.com",
-                RpsTicket = $"d={accessToken}"
+                AuthMethod = "RPS", SiteName = "user.auth.xboxlive.com", RpsTicket = $"d={accessToken}"
             },
             RelyingParty = "http://auth.xboxlive.com",
             TokenType = "JWT"

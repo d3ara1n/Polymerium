@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Page
     x:Class="Polymerium.App.Views.ConfigurationView"
@@ -28,7 +28,8 @@
                     IsOpen="True"
                     Message="Turn on the switch to override values from the global" />
                 <TextBlock Style="{StaticResource SettingCategoryTextBlockStyle}" Text="Game window" />
-                <labs:SettingsExpander Description="Create game window in the specific size" Header="Window Initial Size">
+                <labs:SettingsExpander Description="Create game window in the specific size"
+                                       Header="Window Initial Size">
                     <labs:SettingsExpander.HeaderIcon>
                         <ic:SymbolIcon Symbol="Resize" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -49,7 +50,8 @@
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsWindowSizeOverridden, Mode=TwoWay}" />
                 </labs:SettingsExpander>
                 <TextBlock Style="{StaticResource SettingCategoryTextBlockStyle}" Text="Java virtual machine" />
-                <labs:SettingsExpander Description="Specify a certain version instead of selecting at launch" Header="Jvm Version">
+                <labs:SettingsExpander Description="Specify a certain version instead of selecting at launch"
+                                       Header="Jvm Version">
                     <labs:SettingsExpander.HeaderIcon>
                         <ic:SymbolIcon Symbol="DrinkCoffee" />
                     </labs:SettingsExpander.HeaderIcon>
@@ -85,13 +87,15 @@
                     </labs:SettingsExpander.Items>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmMaxMemoryOverridden, Mode=TwoWay}" />
                 </labs:SettingsExpander>
-                <labs:SettingsExpander Description="These arguments will be appended after jvm created" Header="Jvm Additional Arguments">
+                <labs:SettingsExpander Description="These arguments will be appended after jvm created"
+                                       Header="Jvm Additional Arguments">
                     <labs:SettingsExpander.HeaderIcon>
                         <ic:SymbolIcon Symbol="Textbox" />
                     </labs:SettingsExpander.HeaderIcon>
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard Header="Argument line">
-                            <TextBox IsEnabled="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden, Mode=OneWay}" Text="{x:Bind ViewModel.JvmAdditionalArguments, Mode=TwoWay}" />
+                            <TextBox IsEnabled="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden, Mode=OneWay}"
+                                     Text="{x:Bind ViewModel.JvmAdditionalArguments, Mode=TwoWay}" />
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsJvmAdditionalArgumentsOverridden, Mode=TwoWay}" />
@@ -122,7 +126,8 @@
                     </labs:SettingsCard.HeaderIcon>
                     <Button Command="{x:Bind ViewModel.OpenExportWizardCommand}" Content="Open wizard" />
                 </labs:SettingsCard>
-                <labs:SettingsExpander Description="These operations will take effects on instance files" Header="Danger Zone">
+                <labs:SettingsExpander Description="These operations will take effects on instance files"
+                                       Header="Danger Zone">
                     <labs:SettingsExpander.HeaderIcon>
                         <ic:SymbolIcon Symbol="Bug" />
                     </labs:SettingsExpander.HeaderIcon>

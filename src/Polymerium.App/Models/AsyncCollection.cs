@@ -6,69 +6,68 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public class AsyncCollection<T>
+    : ObservableCollection<T>
 {
-    public class AsyncCollection<T>
-        : ObservableCollection<T>
+    private readonly DispatcherQueue _dispatcher;
+    private readonly CancellationToken _token;
+
+    private Exception? exception;
+
+    private DataLoadingState state = DataLoadingState.Loading;
+
+    public AsyncCollection(IAsyncEnumerable<T> iter, CancellationToken token = default)
     {
-        private readonly DispatcherQueue _dispatcher;
-        private readonly CancellationToken _token;
+        _token = token;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
 
-        private Exception? exception;
+        Task.Run(async () => await LoadAsync(iter));
+    }
 
-        private DataLoadingState state = DataLoadingState.Loading;
-
-        public AsyncCollection(IAsyncEnumerable<T> iter, CancellationToken token = default)
+    public DataLoadingState State
+    {
+        get => state;
+        set
         {
-            _token = token;
-            _dispatcher = DispatcherQueue.GetForCurrentThread();
-
-            Task.Run(async () => await LoadAsync(iter));
-        }
-
-        public DataLoadingState State
-        {
-            get => state;
-            set
+            if (state != value)
             {
-                if (state != value)
-                {
-                    state = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(State)));
-                }
+                state = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(State)));
             }
         }
+    }
 
-        public Exception? Exception
+    public Exception? Exception
+    {
+        get => exception;
+        set
         {
-            get => exception;
-            set
+            if (exception != null)
             {
-                if (exception != null)
-                {
-                    exception = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(Exception)));
-                }
+                exception = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Exception)));
             }
         }
+    }
 
-        private async Task LoadAsync(IAsyncEnumerable<T> iter)
+    private async Task LoadAsync(IAsyncEnumerable<T> iter)
+    {
+        State = DataLoadingState.Loading;
+        try
         {
-            State = DataLoadingState.Loading;
-            try
+            await foreach (var handle in iter.WithCancellation(_token).ConfigureAwait(false))
             {
-                await foreach (var handle in iter.WithCancellation(_token).ConfigureAwait(false))
-                {
-                    _dispatcher.TryEnqueue(() => { Add(handle); });
-                }
+                _dispatcher.TryEnqueue(() => { Add(handle); });
+            }
 
-                State = DataLoadingState.Done;
-            }
-            catch (Exception e)
-            {
-                Exception = e;
-                State = DataLoadingState.Failed;
-            }
+            State = DataLoadingState.Done;
+        }
+        catch (Exception e)
+        {
+            Exception = e;
+            State = DataLoadingState.Failed;
         }
     }
 }

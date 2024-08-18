@@ -8,137 +8,136 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Trident.Abstractions.Tasks;
 
-namespace Polymerium.App.Services
+namespace Polymerium.App.Services;
+
+// 具有状态的 Instance 被集中作为列表管理，仅用于 UI 层展示，只需要 Profile 就用 ProfileManager
+public class InstanceStatusService
 {
-    // 具有状态的 Instance 被集中作为列表管理，仅用于 UI 层展示，只需要 Profile 就用 ProfileManager
-    public class InstanceStatusService
+    private readonly DispatcherQueue _dispatcher;
+    private readonly ObservableCollection<InstanceStatusModel> instances;
+
+    public InstanceStatusService(ProfileManager profileManger, InstanceManager instanceManager)
     {
-        private readonly DispatcherQueue _dispatcher;
-        private readonly ObservableCollection<InstanceStatusModel> instances;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
+        instances = new ObservableCollection<InstanceStatusModel>(
+            profileManger.Managed.Keys.Select(x => new InstanceStatusModel(x)));
 
-        public InstanceStatusService(ProfileManager profileManger, InstanceManager instanceManager)
+        profileManger.ProfileCollectionChanged += ProfileMangerOnProfileCollectionChanged;
+        instanceManager.InstanceDeploying += InstanceManagerOnInstanceDeploying;
+        instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
+    }
+
+    private void InstanceManagerOnInstanceLaunching(InstanceManager sender, InstanceLaunchingEventArgs args)
+    {
+        if (TryFind(args.Key, out var instance))
         {
-            _dispatcher = DispatcherQueue.GetForCurrentThread();
-            instances = new ObservableCollection<InstanceStatusModel>(
-                profileManger.Managed.Keys.Select(x => new InstanceStatusModel(x)));
-
-            profileManger.ProfileCollectionChanged += ProfileMangerOnProfileCollectionChanged;
-            instanceManager.InstanceDeploying += InstanceManagerOnInstanceDeploying;
-            instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
-        }
-
-        private void InstanceManagerOnInstanceLaunching(InstanceManager sender, InstanceLaunchingEventArgs args)
-        {
-            if (TryFind(args.Key, out var instance))
-            {
-                _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
-                args.Handle.Output += (_, scrap) =>
-                    _dispatcher.TryEnqueue(() =>
-                    {
-                        instance.OnProcessUpdated(scrap);
-                    });
-                args.Handle.StateUpdated += (_, state) =>
-                    _dispatcher.TryEnqueue(() =>
-                    {
-                        if (state == TaskState.Running)
-                        {
-                            instance.OnStateChanged(InstanceState.Running);
-                        }
-                        else if (state == TaskState.Idle)
-                        {
-                            instance.OnStateChanged(InstanceState.Idle);
-                        }
-                        else if (state == TaskState.Finished)
-                        {
-                            instance.OnStateChanged(InstanceState.Idle);
-                        }
-                        else
-                        {
-                            instance.OnStateChanged(InstanceState.Stopped);
-                        }
-                    });
-            }
-        }
-
-        private void InstanceManagerOnInstanceDeploying(InstanceManager sender, InstanceDeployingEventArgs args)
-        {
-            if (TryFind(args.Key, out var instance))
-            {
-                _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
-                args.Handle.FileSolidified += (_, count, total) =>
+            _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
+            args.Handle.Output += (_, scrap) =>
+                _dispatcher.TryEnqueue(() =>
                 {
-                    var original = instance.Count.Value;
-                    var computed = count == total ? 100 : 100 * count / total;
-                    if (original != computed)
+                    instance.OnProcessUpdated(scrap);
+                });
+            args.Handle.StateUpdated += (_, state) =>
+                _dispatcher.TryEnqueue(() =>
+                {
+                    if (state == TaskState.Running)
                     {
-                        _dispatcher.TryEnqueue(() => instance.OnProgressChanged(computed, 100));
+                        instance.OnStateChanged(InstanceState.Running);
                     }
-                };
-                args.Handle.StageUpdated += (_, stage) => _dispatcher.TryEnqueue(() =>
-                    instance.OnStageChanged(stage));
-                args.Handle.StateUpdated += (_, state) =>
-                    _dispatcher.TryEnqueue(() =>
+                    else if (state == TaskState.Idle)
                     {
-                        if (state == TaskState.Running)
-                        {
-                            instance.OnStateChanged(InstanceState.Deploying);
-                        }
-                        else if (state == TaskState.Idle)
-                        {
-                            instance.OnStateChanged(InstanceState.Idle);
-                        }
-                        else if (state == TaskState.Finished)
-                        {
-                            instance.OnStateChanged(InstanceState.Idle);
-                        }
-                        else
-                        {
-                            instance.OnStateChanged(InstanceState.Stopped);
-                        }
-                    });
-            }
-        }
-
-        private void ProfileMangerOnProfileCollectionChanged(ProfileManager sender,
-            ProfileCollectionChangedEventArgs args)
-        {
-            switch (args.Action)
-            {
-                case ProfileCollectionChangedAction.Add:
-                    instances.Add(new InstanceStatusModel(args.Key));
-                    break;
-                case ProfileCollectionChangedAction.Remove:
-                    if (TryFind(args.Key, out var instance))
-                    {
-                        instances.Remove(instance);
+                        instance.OnStateChanged(InstanceState.Idle);
                     }
-
-                    break;
-            }
+                    else if (state == TaskState.Finished)
+                    {
+                        instance.OnStateChanged(InstanceState.Idle);
+                    }
+                    else
+                    {
+                        instance.OnStateChanged(InstanceState.Stopped);
+                    }
+                });
         }
+    }
 
-
-        private bool TryFind(string key, [MaybeNullWhen(false)] out InstanceStatusModel result)
+    private void InstanceManagerOnInstanceDeploying(InstanceManager sender, InstanceDeployingEventArgs args)
+    {
+        if (TryFind(args.Key, out var instance))
         {
-            var instance = instances.FirstOrDefault(x => x.Key == key);
-            if (instance != null)
+            _dispatcher.TryEnqueue(() => instance.OnStateChanged(InstanceState.Running));
+            args.Handle.FileSolidified += (_, count, total) =>
             {
-                result = instance;
-                return true;
-            }
-
-            result = null;
-            return false;
+                var original = instance.Count.Value;
+                var computed = count == total ? 100 : 100 * count / total;
+                if (original != computed)
+                {
+                    _dispatcher.TryEnqueue(() => instance.OnProgressChanged(computed, 100));
+                }
+            };
+            args.Handle.StageUpdated += (_, stage) => _dispatcher.TryEnqueue(() =>
+                instance.OnStageChanged(stage));
+            args.Handle.StateUpdated += (_, state) =>
+                _dispatcher.TryEnqueue(() =>
+                {
+                    if (state == TaskState.Running)
+                    {
+                        instance.OnStateChanged(InstanceState.Deploying);
+                    }
+                    else if (state == TaskState.Idle)
+                    {
+                        instance.OnStateChanged(InstanceState.Idle);
+                    }
+                    else if (state == TaskState.Finished)
+                    {
+                        instance.OnStateChanged(InstanceState.Idle);
+                    }
+                    else
+                    {
+                        instance.OnStateChanged(InstanceState.Stopped);
+                    }
+                });
         }
+    }
 
-        public InstanceStatusModel MustHave(string key)
+    private void ProfileMangerOnProfileCollectionChanged(ProfileManager sender,
+        ProfileCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
         {
-            if (TryFind(key, out var instance))
-            {
-                return instance;
-            }
+            case ProfileCollectionChangedAction.Add:
+                instances.Add(new InstanceStatusModel(args.Key));
+                break;
+            case ProfileCollectionChangedAction.Remove:
+                if (TryFind(args.Key, out var instance))
+                {
+                    instances.Remove(instance);
+                }
 
-            return new InstanceStatusModel(key);
+                break;
         }
+    }
+
+
+    private bool TryFind(string key, [MaybeNullWhen(false)] out InstanceStatusModel result)
+    {
+        var instance = instances.FirstOrDefault(x => x.Key == key);
+        if (instance != null)
+        {
+            result = instance;
+            return true;
+        }
+
+        result = null;
+        return false;
+    }
+
+    public InstanceStatusModel MustHave(string key)
+    {
+        if (TryFind(key, out var instance))
+        {
+            return instance;
+        }
+
+        return new InstanceStatusModel(key);
     }
 }

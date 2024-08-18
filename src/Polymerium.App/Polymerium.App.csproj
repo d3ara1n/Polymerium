@@ -33,20 +33,20 @@
         <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Markdown" Version="7.1.2" />
         <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
         <PackageReference Include="CsvHelper" Version="33.0.1" />
-        <PackageReference Include="DotNext" Version="5.11.0" />
-        <PackageReference Include="FluentIcons.WinUI" Version="1.1.250" />
-        <PackageReference Include="HtmlAgilityPack" Version="1.11.62" />
+        <PackageReference Include="DotNext" Version="5.12.0" />
+        <PackageReference Include="FluentIcons.WinUI" Version="1.1.253" />
+        <PackageReference Include="HtmlAgilityPack" Version="1.11.63" />
         <PackageReference Include="Humanizer" Version="2.14.1" />
         <PackageReference Include="IBuilder" Version="0.2.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.7" />
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.8" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
         <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.2.0" />
-        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240627000" />
-        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240802000" />
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
         <PackageReference Include="Mime-Detective" Version="24.7.1" />
         <PackageReference Include="Nanoid" Version="3.1.0" />
         <PackageReference Include="System.Text.Json" Version="8.0.4" />

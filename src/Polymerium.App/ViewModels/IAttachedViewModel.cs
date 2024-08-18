@@ -1,14 +1,10 @@
-﻿namespace Polymerium.App.ViewModels
-{
-    public interface IAttachedViewModel
-    {
-        public bool OnAttached(object? parameter)
-        {
-            return true;
-        }
+﻿namespace Polymerium.App.ViewModels;
 
-        public void OnDetached()
-        {
-        }
+public interface IAttachedViewModel
+{
+    public bool OnAttached(object? parameter) => true;
+
+    public void OnDetached()
+    {
     }
 }

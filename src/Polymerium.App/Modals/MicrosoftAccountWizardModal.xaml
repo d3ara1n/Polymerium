@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <local:ModalBase
     x:Class="Polymerium.App.Modals.MicrosoftAccountWizardModal"
@@ -35,7 +35,8 @@
                 x:Name="CodeBox"
                 Spacing="{StaticResource SmallGap}"
                 Visibility="Collapsed">
-                <Border Background="{ThemeResource SmokeFillColorDefaultBrush}" CornerRadius="{StaticResource SmallCornerRadius}">
+                <Border Background="{ThemeResource SmokeFillColorDefaultBrush}"
+                        CornerRadius="{StaticResource SmallCornerRadius}">
                     <Grid>
                         <TextBlock
                             Margin="{StaticResource MediumMargin}"

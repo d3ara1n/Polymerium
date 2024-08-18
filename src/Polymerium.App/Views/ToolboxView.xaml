@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Page
     x:Class="Polymerium.App.Views.ToolboxView"
@@ -39,7 +39,8 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg" Stretch="Fill">
+                    <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg"
+                                     Stretch="Fill">
                         <media:UIElementExtensions.VisualFactory>
                             <media:PipelineVisualFactory>
                                 <media:BlurEffect Amount="30" />

@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Trident.Abstractions.Resources;
 
 namespace Polymerium.Trident.Helpers;
+
 public static class AurlHelper
 {
-    private static Regex PATTERN = new Regex("^(?<label>[a-z0-9_]+):(?<project>[a-zA-Z0-9_.]+)(\\/(?<version>[a-zA-Z0-9_.]+))?$");
+    private static readonly Regex PATTERN =
+        new("^(?<label>[a-z0-9_]+):(?<project>[a-zA-Z0-9_.]+)(\\/(?<version>[a-zA-Z0-9_.]+))?$");
 
-    public static string MakeAurl(Attachment attachment) => attachment.VersionId != null ? $"{attachment.Label}:{attachment.ProjectId}/{attachment.VersionId}" : $"{attachment.Label}:{attachment.ProjectId}";
+    public static string MakeAurl(Attachment attachment) => attachment.VersionId != null
+        ? $"{attachment.Label}:{attachment.ProjectId}/{attachment.VersionId}"
+        : $"{attachment.Label}:{attachment.ProjectId}";
 
     public static bool TryParseAurl(string aurl, [MaybeNullWhen(false)] out Attachment result)
     {
@@ -32,10 +31,12 @@ public static class AurlHelper
                     {
                         result = new Attachment(label.Value, project.Value, null);
                     }
+
                     return true;
                 }
             }
         }
+
         return false;
     }
 }

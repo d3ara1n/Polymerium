@@ -10,99 +10,88 @@ using System.Threading.Tasks;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Polymerium.App.Views
+namespace Polymerium.App.Views;
+
+/// <summary>
+///     An empty page that can be used on its own or navigated to within a Frame.
+/// </summary>
+public sealed partial class DesktopView
 {
-    /// <summary>
-    ///     An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class DesktopView
+    public static readonly DependencyProperty VersionLoadingStateProperty = DependencyProperty.Register(
+        nameof(VersionLoadingState), typeof(DataLoadingState), typeof(DesktopView),
+        new PropertyMetadata(DataLoadingState.Idle));
+
+    public DesktopView() => InitializeComponent();
+
+    public DesktopViewModel ViewModel { get; } = App.ViewModel<DesktopViewModel>();
+
+    public DataLoadingState VersionLoadingState
     {
-        public static readonly DependencyProperty VersionLoadingStateProperty = DependencyProperty.Register(
-            nameof(VersionLoadingState), typeof(DataLoadingState), typeof(DesktopView),
-            new PropertyMetadata(DataLoadingState.Idle));
+        get => (DataLoadingState)GetValue(VersionLoadingStateProperty);
+        set => SetValue(VersionLoadingStateProperty, value);
+    }
 
-        public DesktopView()
+    private async void ImportButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        DragDropInputDialog inputDialog = new(XamlRoot)
         {
-            InitializeComponent();
-        }
-
-        public DesktopViewModel ViewModel { get; } = App.ViewModel<DesktopViewModel>();
-
-        public DataLoadingState VersionLoadingState
+            CaptionText = "Drag and drop", BodyText = "Any modpack file here"
+        };
+        if (await inputDialog.ShowAsync() == ContentDialogResult.Primary)
         {
-            get => (DataLoadingState)GetValue(VersionLoadingStateProperty);
-            set => SetValue(VersionLoadingStateProperty, value);
-        }
-
-        private async void ImportButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            DragDropInputDialog inputDialog = new(XamlRoot)
+            var path = inputDialog.ResultPath;
+            var result = ViewModel.ExtractModpack(path);
+            if (result != null)
             {
-                CaptionText = "Drag and drop",
-                BodyText = "Any modpack file here"
-            };
-            if (await inputDialog.ShowAsync() == ContentDialogResult.Primary)
-            {
-                var path = inputDialog.ResultPath;
-                var result = ViewModel.ExtractModpack(path);
-                if (result != null)
+                ModpackPreviewModel model = new(result);
+                ModpackPreviewDialog previewDialog = new(XamlRoot, model);
+                if (await previewDialog.ShowAsync() == ContentDialogResult.Primary)
                 {
-                    ModpackPreviewModel model = new(result);
-                    ModpackPreviewDialog previewDialog = new(XamlRoot, model);
-                    if (await previewDialog.ShowAsync() == ContentDialogResult.Primary)
-                    {
-                        ViewModel.ApplyExtractedModpack(model);
-                    }
+                    ViewModel.ApplyExtractedModpack(model);
                 }
             }
         }
+    }
 
-        private void CreateButton_OnClick(object sender, RoutedEventArgs e)
+    private void CreateButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (VersionLoadingState != DataLoadingState.Loading)
         {
-            if (VersionLoadingState != DataLoadingState.Loading)
+            VersionLoadingState = DataLoadingState.Loading;
+            Task.Run(async () =>
             {
-                VersionLoadingState = DataLoadingState.Loading;
-                Task.Run(async () =>
+                IEnumerable<MinecraftVersionModel> versions;
+                try
                 {
-                    IEnumerable<MinecraftVersionModel> versions;
-                    try
-                    {
-                        versions = await ViewModel.FetchVersionAsync();
-                    }
-                    catch
-                    {
-                        versions = [];
-                    }
+                    versions = await ViewModel.FetchVersionAsync();
+                }
+                catch
+                {
+                    versions = [];
+                }
 
-                    async void Callback()
+                async void Callback()
+                {
+                    VersionLoadingState = DataLoadingState.Done;
+                    CreateProfileDialog dialog = new(XamlRoot, versions);
+                    if (await dialog.ShowAsync() == ContentDialogResult.Primary)
                     {
-                        VersionLoadingState = DataLoadingState.Done;
-                        CreateProfileDialog dialog = new(XamlRoot, versions);
-                        if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-                        {
-                            await ViewModel.CreateProfileAsync(dialog.InstanceName, dialog.SelectedVersion,
-                                dialog.ThumbnailImage);
-                        }
-
-                        if (dialog.ThumbnailImage != null)
-                        {
-                            await dialog.ThumbnailImage.DisposeAsync();
-                        }
+                        await ViewModel.CreateProfileAsync(dialog.InstanceName, dialog.SelectedVersion,
+                            dialog.ThumbnailImage);
                     }
 
-                    DispatcherQueue.TryEnqueue(Callback);
-                });
-            }
-        }
+                    if (dialog.ThumbnailImage != null)
+                    {
+                        await dialog.ThumbnailImage.DisposeAsync();
+                    }
+                }
 
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel.OnDetached();
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel.OnAttached(null);
+                DispatcherQueue.TryEnqueue(Callback);
+            });
         }
     }
+
+    private void Page_Unloaded(object sender, RoutedEventArgs e) => ViewModel.OnDetached();
+
+    private void Page_Loaded(object sender, RoutedEventArgs e) => ViewModel.OnAttached(null);
 }

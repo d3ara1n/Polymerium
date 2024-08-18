@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <local:ModalBase
     x:Class="Polymerium.App.Modals.ProjectPreviewModal"
@@ -75,10 +75,13 @@
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="Wrap" />
                                 <Grid Grid.Column="2">
-                                    <HyperlinkButton Command="{x:Bind OpenReferenceCommand}" CommandParameter="{x:Bind Project.Inner.Reference, FallbackValue={x:Null}, Mode=OneWay}">
+                                    <HyperlinkButton Command="{x:Bind OpenReferenceCommand}"
+                                                     CommandParameter="{x:Bind Project.Inner.Reference, FallbackValue={x:Null}, Mode=OneWay}">
                                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource TinyGap}">
-                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE8A7;" />
-                                            <TextBlock Text="{x:Bind Project.Inner.Label, Mode=OneWay, Converter={StaticResource StringUppercaseConverter}}" />
+                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}"
+                                                      Glyph="&#xE8A7;" />
+                                            <TextBlock
+                                                Text="{x:Bind Project.Inner.Label, Mode=OneWay, Converter={StaticResource StringUppercaseConverter}}" />
                                         </StackPanel>
                                     </HyperlinkButton>
                                 </Grid>
@@ -133,7 +136,8 @@
                                             Orientation="Horizontal"
                                             Spacing="{StaticResource TinyGap}"
                                             Visibility="{x:Bind Project.Gallery.Count, Mode=OneWay, FallbackValue=Collapsed, Converter={StaticResource ZeroToVisibilityConverter}}">
-                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE91B;" />
+                                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}"
+                                                      Glyph="&#xE91B;" />
                                             <TextBlock Text="No images" />
                                         </StackPanel>
                                     </Grid>
@@ -145,7 +149,8 @@
                                         ItemsSource="{x:Bind Project.Versions, Mode=OneWay}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="models:ProjectVersionModel">
-                                                <Grid Margin="{StaticResource SmallMargin}" RowSpacing="{StaticResource TinyGap}">
+                                                <Grid Margin="{StaticResource SmallMargin}"
+                                                      RowSpacing="{StaticResource TinyGap}">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="*" />
@@ -167,7 +172,9 @@
                                                             Value="{x:Bind Inner.ReleaseType}">
                                                             <toolkit:Case Value="Release">
                                                                 <Grid>
-                                                                    <Border Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}" CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <Border
+                                                                        Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
+                                                                        CornerRadius="{StaticResource MicroCornerRadius}">
                                                                         <TextBlock
                                                                             Margin="6,2"
                                                                             HorizontalAlignment="Center"
@@ -180,7 +187,9 @@
                                                             </toolkit:Case>
                                                             <toolkit:Case Value="Beta">
                                                                 <Grid>
-                                                                    <Border Background="{ThemeResource SystemFillColorCautionBackgroundBrush}" CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <Border
+                                                                        Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                                        CornerRadius="{StaticResource MicroCornerRadius}">
                                                                         <TextBlock
                                                                             Margin="6,2"
                                                                             HorizontalAlignment="Center"
@@ -193,7 +202,9 @@
                                                             </toolkit:Case>
                                                             <toolkit:Case Value="Alpha">
                                                                 <Grid>
-                                                                    <Border Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}" CornerRadius="{StaticResource MicroCornerRadius}">
+                                                                    <Border
+                                                                        Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                                                        CornerRadius="{StaticResource MicroCornerRadius}">
                                                                         <TextBlock
                                                                             Margin="6,2"
                                                                             HorizontalAlignment="Center"

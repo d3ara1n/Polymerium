@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Page
     x:Class="Polymerium.App.Views.HomeView"
@@ -140,7 +140,8 @@
                                         Source="{x:Bind Thumbnail}"
                                         Stretch="Fill" />
                                 </toolkit:ConstrainedBox>
-                                <StackPanel Margin="{StaticResource CardContentMargin}" Spacing="{StaticResource TinyGap}">
+                                <StackPanel Margin="{StaticResource CardContentMargin}"
+                                            Spacing="{StaticResource TinyGap}">
                                     <TextBlock
                                         MaxLines="1"
                                         Style="{StaticResource BodyStrongTextBlockStyle}"

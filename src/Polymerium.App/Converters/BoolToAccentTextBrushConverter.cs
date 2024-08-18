@@ -1,29 +1,26 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace Polymerium.App.Converters
+namespace Polymerium.App.Converters;
+
+public class BoolToAccentTextBrushConverter : IValueConverter
 {
-    public class BoolToAccentTextBrushConverter : IValueConverter
+    public object? Convert(object value, Type targetType, object parameter, string language)
     {
-        public object? Convert(object value, Type targetType, object parameter, string language)
+        if (value is true &&
+            App.Current.Resources.TryGetValue("AccentTextFillColorPrimaryBrush", out var result))
         {
-            if (value is true &&
-                App.Current.Resources.TryGetValue("AccentTextFillColorPrimaryBrush", out object? result))
-            {
-                return result;
-            }
-
-            if (App.Current.Resources.TryGetValue("ApplicationForegroundThemeBrush", out object? def))
-            {
-                return def;
-            }
-
-            return null;
+            return result;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        if (App.Current.Resources.TryGetValue("ApplicationForegroundThemeBrush", out var def))
         {
-            throw new NotImplementedException();
+            return def;
         }
+
+        return null;
     }
+
+    public object ConvertBack(object value, Type targetType, object parameter, string language) =>
+        throw new NotImplementedException();
 }

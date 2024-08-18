@@ -1,8 +1,7 @@
 ﻿using Polymerium.Trident.Engines.Launching;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public record ScrapModel(Scrap Inner)
 {
-    public record ScrapModel(Scrap Inner)
-    {
-    }
 }

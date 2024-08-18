@@ -24,6 +24,8 @@ public sealed class ProfileManager : IDisposable
     private readonly ILogger _logger;
     private readonly JsonSerializerOptions _options;
 
+    private readonly Dictionary<string, Handle<Profile>> managed = new();
+
     private readonly IList<ReservedKey> reservedKeys = new List<ReservedKey>();
 
     private bool disposedValue;
@@ -40,7 +42,7 @@ public sealed class ProfileManager : IDisposable
         Scan();
     }
 
-    public IDictionary<string, Handle<Profile>> Managed { get; } = new Dictionary<string, Handle<Profile>>();
+    public IReadOnlyDictionary<string, Handle<Profile>> Managed => managed;
     public IEnumerable<Profile> Profiles => Managed.Values.Select(x => x.Value);
 
     public void Dispose()
@@ -48,7 +50,7 @@ public sealed class ProfileManager : IDisposable
         if (!disposedValue)
         {
             FlushAll();
-            Managed.Clear();
+            managed.Clear();
             disposedValue = true;
         }
     }
@@ -98,7 +100,7 @@ public sealed class ProfileManager : IDisposable
             _accountManager.DefaultUuid);
         var handle = new Handle<Profile>(profile, Path.Combine(_context.InstanceDir, $"{key.Key}.json"), _options);
         handle.Flush();
-        Managed.Add(key.Key, handle);
+        managed.Add(key.Key, handle);
         if (!key.Disposed)
         {
             key.Dispose();
@@ -142,7 +144,7 @@ public sealed class ProfileManager : IDisposable
     private void Scan()
     {
         FlushAll();
-        Managed.Clear();
+        managed.Clear();
         if (!Directory.Exists(_context.InstanceDir))
         {
             Directory.CreateDirectory(_context.InstanceDir);
@@ -155,7 +157,7 @@ public sealed class ProfileManager : IDisposable
                 var handle = Handle<Profile>.Create(file, _options);
                 if (handle != null)
                 {
-                    Managed.Add(Path.GetFileNameWithoutExtension(file), handle);
+                    managed.Add(Path.GetFileNameWithoutExtension(file), handle);
                     _logger.LogInformation("Appended profile {0}", handle.Value.Name);
                 }
                 else
@@ -179,10 +181,10 @@ public sealed class ProfileManager : IDisposable
 
     public void Discard(string key)
     {
-        if (Managed.TryGetValue(key, out var profile))
+        if (managed.TryGetValue(key, out var profile))
         {
             profile.Activated = false;
-            Managed.Remove(key);
+            managed.Remove(key);
         }
     }
 }

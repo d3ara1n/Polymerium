@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <ContentDialog
     x:Class="Polymerium.App.Dialogs.SwitchAccountDialog"
@@ -34,7 +34,8 @@
                                 Width="36"
                                 Source="{x:Bind FaceUrl}" />
                             <StackPanel Grid.Column="1">
-                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Inner.Username}" />
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                                           Text="{x:Bind Inner.Username}" />
                                 <TextBlock Text="{x:Bind TypeName}" />
                             </StackPanel>
                         </Grid>

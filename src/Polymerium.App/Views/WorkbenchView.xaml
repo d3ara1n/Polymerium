@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Page
     x:Class="Polymerium.App.Views.WorkbenchView"
@@ -40,8 +40,10 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Border HorizontalAlignment="Left" Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
-                        <TextBlock Margin="{StaticResource TinyMargin}" Foreground="{ThemeResource SystemFillColorNeutralBrush}">
+                    <Border HorizontalAlignment="Left"
+                            Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}">
+                        <TextBlock Margin="{StaticResource TinyMargin}"
+                                   Foreground="{ThemeResource SystemFillColorNeutralBrush}">
                             <Run Text="{x:Bind ViewModel.Model.Root.Inner.Name}" />
                             <Run Text="·" />
                             <Run Text="{x:Bind ViewModel.Model.Summary.Value}" />
@@ -138,8 +140,10 @@
                                             Margin="6,2,6,2"
                                             Orientation="Horizontal"
                                             Spacing="{StaticResource TinyGap}">
-                                            <FontIcon FontSize="{StaticResource CaptionFontIconFontSize}" Glyph="&#xEC61;" />
-                                            <TextBlock FontSize="{StaticResource CaptionTextBlockFontSize}" Text="Added" />
+                                            <FontIcon FontSize="{StaticResource CaptionFontIconFontSize}"
+                                                      Glyph="&#xEC61;" />
+                                            <TextBlock FontSize="{StaticResource CaptionTextBlockFontSize}"
+                                                       Text="Added" />
                                         </StackPanel>
                                     </Border>
                                 </Grid>

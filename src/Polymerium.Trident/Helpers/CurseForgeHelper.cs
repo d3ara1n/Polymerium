@@ -24,9 +24,7 @@ public static class CurseForgeHelper
 
     private static readonly Converter MARKDOWNER = new(new Config
     {
-        GithubFlavored = true,
-        SmartHrefHandling = true,
-        RemoveComments = true
+        GithubFlavored = true, SmartHrefHandling = true, RemoveComments = true
     });
 
     public static readonly IReadOnlyDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>

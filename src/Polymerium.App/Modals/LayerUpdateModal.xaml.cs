@@ -1,13 +1,9 @@
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Polymerium.App.Modals
+namespace Polymerium.App.Modals;
+
+public sealed partial class LayerUpdateModal
 {
-    public sealed partial class LayerUpdateModal
-    {
-        public LayerUpdateModal()
-        {
-            this.InitializeComponent();
-        }
-    }
+    public LayerUpdateModal() => InitializeComponent();
 }

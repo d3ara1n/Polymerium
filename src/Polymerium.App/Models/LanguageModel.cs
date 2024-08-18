@@ -1,6 +1,5 @@
-﻿namespace Polymerium.App.Models
+﻿namespace Polymerium.App.Models;
+
+public record LanguageModel(string Id, string Display)
 {
-    public record LanguageModel(string Id, string Display)
-    {
-    }
 }

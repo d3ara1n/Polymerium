@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <UserControl
     x:Class="Polymerium.App.Layout"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
-    xmlns:behaviors="using:CommunityToolkit.WinUI.UI.Behaviors"
     xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:interactions="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:tasks="using:Trident.Abstractions.Tasks"
@@ -125,26 +121,35 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                 </Grid.ColumnDefinitions>
                                                                 <StackPanel Grid.Column="0">
-                                                                    <TextBlock Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Style="{StaticResource CaptionTextBlockStyle}">
+                                                                    <TextBlock
+                                                                        Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                                                        Style="{StaticResource CaptionTextBlockStyle}">
                                                                         <Run Text="{x:Bind Key}" />
                                                                         <Run Text="·" />
                                                                         <Run Text="{x:Bind CreatedAt}" />
                                                                     </TextBlock>
-                                                                    <TextBlock Text="{x:Bind Stage.Value, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                                                                    <TextBlock Text="{x:Bind Stage.Value, Mode=OneWay}"
+                                                                               TextTrimming="CharacterEllipsis" />
                                                                     <TextBlock
                                                                         Style="{StaticResource CaptionTextBlockStyle}"
                                                                         Text="{x:Bind Status.Value, Mode=OneWay}"
                                                                         TextTrimming="CharacterEllipsis" />
                                                                 </StackPanel>
                                                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                                    <toolkit:SwitchPresenter TargetType="tasks:TaskState" Value="{x:Bind State.Value, Mode=OneWay}">
+                                                                    <toolkit:SwitchPresenter
+                                                                        TargetType="tasks:TaskState"
+                                                                        Value="{x:Bind State.Value, Mode=OneWay}">
                                                                         <toolkit:Case Value="Idle">
                                                                             <TextBlock Text="Idle" />
                                                                         </toolkit:Case>
                                                                         <toolkit:Case Value="Running">
-                                                                            <HyperlinkButton Command="{x:Bind AbortCommand}" CommandParameter="{x:Bind Inner}">
+                                                                            <HyperlinkButton
+                                                                                Command="{x:Bind AbortCommand}"
+                                                                                CommandParameter="{x:Bind Inner}">
                                                                                 <Grid>
-                                                                                    <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xE73B;" />
+                                                                                    <FontIcon
+                                                                                        FontSize="{StaticResource ButtonFontIconFontSize}"
+                                                                                        Glyph="&#xE73B;" />
                                                                                     <ProgressRing
                                                                                         IsIndeterminate="{x:Bind IsIndeterminate.Value, Mode=OneWay}"
                                                                                         Maximum="100"
@@ -304,7 +309,8 @@
                 <VisualStateGroup.Transitions>
                     <VisualTransition To="Shown">
                         <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder" Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder"
+                                                           Storyboard.TargetProperty="Visibility">
                                 <DiscreteObjectKeyFrame Value="Visible" />
                             </ObjectAnimationUsingKeyFrames>
                             <PopInThemeAnimation
@@ -316,7 +322,8 @@
                     </VisualTransition>
                     <VisualTransition To="Hidden">
                         <Storyboard Completed="HiddenStoryboard_Completed">
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder" Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder"
+                                                           Storyboard.TargetProperty="Visibility">
                                 <DiscreteObjectKeyFrame Value="Visible" />
                             </ObjectAnimationUsingKeyFrames>
                             <FadeOutThemeAnimation Storyboard.TargetName="PART_OverlayBorder" />

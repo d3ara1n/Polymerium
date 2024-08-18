@@ -1,9 +1,8 @@
 ﻿using Trident.Abstractions;
 
-namespace Polymerium.App.Messages
+namespace Polymerium.App.Messages;
+
+public class AccountRemovedMessage(IAccount account)
 {
-    public class AccountRemovedMessage(IAccount account)
-    {
-        public IAccount Account { get; } = account;
-    }
+    public IAccount Account { get; } = account;
 }

@@ -7,52 +7,51 @@ using System.IO;
 using System.Windows.Input;
 using Trident.Abstractions.Resources;
 
-namespace Polymerium.App.ViewModels
+namespace Polymerium.App.ViewModels;
+
+public class DashboardViewModel : ViewModelBase
 {
-    public class DashboardViewModel : ViewModelBase
+    private readonly InstanceStatusService _instanceStatusService;
+    private readonly TridentContext _trident;
+
+    private InstanceStatusModel? status;
+
+    public DashboardViewModel(InstanceStatusService instanceStatusService, TridentContext trident)
     {
-        private readonly InstanceStatusService _instanceStatusService;
-        private readonly TridentContext _trident;
+        _instanceStatusService = instanceStatusService;
+        _trident = trident;
 
-        private InstanceStatusModel? status;
+        OpenLogFolderCommand = new RelayCommand(OpenLogFolder);
+    }
 
-        public DashboardViewModel(InstanceStatusService instanceStatusService, TridentContext trident)
+    public InstanceStatusModel? Status
+    {
+        get => status;
+        set => SetProperty(ref status, value);
+    }
+
+    public ICommand OpenLogFolderCommand { get; }
+
+    public override bool OnAttached(object? maybeKey)
+    {
+        if (maybeKey is string key)
         {
-            _instanceStatusService = instanceStatusService;
-            _trident = trident;
-
-            OpenLogFolderCommand = new RelayCommand(OpenLogFolder);
+            Status = _instanceStatusService.MustHave(key);
+            return true;
         }
 
-        public InstanceStatusModel? Status
-        {
-            get => status;
-            set => SetProperty(ref status, value);
-        }
+        return false;
+    }
 
-        public ICommand OpenLogFolderCommand { get; }
-
-        public override bool OnAttached(object? maybeKey)
+    private void OpenLogFolder()
+    {
+        if (status != null)
         {
-            if (maybeKey is string key)
+            var path = Path.Combine(_trident.InstanceHomePath(status.Key),
+                FileNameHelper.GetAssetFolderName(AssetKind.Log));
+            if (Directory.Exists(path))
             {
-                Status = _instanceStatusService.MustHave(key);
-                return true;
-            }
-
-            return false;
-        }
-
-        private void OpenLogFolder()
-        {
-            if (status != null)
-            {
-                var path = Path.Combine(_trident.InstanceHomePath(status.Key),
-                    FileNameHelper.GetAssetFolderName(AssetKind.Log));
-                if (Directory.Exists(path))
-                {
-                    UriFileHelper.OpenInExternal(path);
-                }
+                UriFileHelper.OpenInExternal(path);
             }
         }
     }

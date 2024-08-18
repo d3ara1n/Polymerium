@@ -3,26 +3,28 @@ using Polymerium.App.Extensions;
 using System.Windows.Input;
 using Trident.Abstractions.Resources;
 
-namespace Polymerium.App.Models
+namespace Polymerium.App.Models;
+
+public record ExhibitModel
 {
-    public record ExhibitModel
+    private bool hasAdded;
+
+    public ExhibitModel(Exhibit inner, ICommand gotoDetailViewCommand)
     {
-        private bool hasAdded;
+        Inner = inner;
+        GotoDetailViewCommand = gotoDetailViewCommand;
 
-        public ExhibitModel(Exhibit inner, ICommand gotoDetailViewCommand)
-        {
-            Inner = inner;
-            GotoDetailViewCommand = gotoDetailViewCommand;
-
-            HasAdded = this.ToBindable(x => x.hasAdded, (x, v) => x.hasAdded = v);
-        }
-
-        public Exhibit Inner { get; }
-        public ICommand GotoDetailViewCommand { get; }
-        public string Thumbnail => (Inner.Thumbnail?.IsAbsoluteUri ?? false ? Inner.Thumbnail?.AbsoluteUri : null) ?? AssetPath.PLACEHOLDER_DEFAULT_DIRT;
-        public string CreatedAt => Inner.CreatedAt.Humanize();
-        public string UpdatedAt => Inner.UpdatedAt.Humanize();
-        public string DownloadCount => ((int)Inner.DownloadCount).ToMetric(decimals: 2);
-        public Bindable<ExhibitModel, bool> HasAdded { get; }
+        HasAdded = this.ToBindable(x => x.hasAdded, (x, v) => x.hasAdded = v);
     }
+
+    public Exhibit Inner { get; }
+    public ICommand GotoDetailViewCommand { get; }
+
+    public string Thumbnail => (Inner.Thumbnail?.IsAbsoluteUri ?? false ? Inner.Thumbnail?.AbsoluteUri : null) ??
+                               AssetPath.PLACEHOLDER_DEFAULT_DIRT;
+
+    public string CreatedAt => Inner.CreatedAt.Humanize();
+    public string UpdatedAt => Inner.UpdatedAt.Humanize();
+    public string DownloadCount => ((int)Inner.DownloadCount).ToMetric(decimals: 2);
+    public Bindable<ExhibitModel, bool> HasAdded { get; }
 }

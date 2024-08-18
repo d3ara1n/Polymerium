@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Page
     x:Class="Polymerium.App.Views.DashboardView"
@@ -29,7 +29,9 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:ScrapModel">
-                    <Grid Background="{x:Bind Inner.Level, Converter={StaticResource ScrapLevelToBrushConverter}, ConverterParameter=background}" ColumnSpacing="{StaticResource TinyGap}">
+                    <Grid
+                        Background="{x:Bind Inner.Level, Converter={StaticResource ScrapLevelToBrushConverter}, ConverterParameter=background}"
+                        ColumnSpacing="{StaticResource TinyGap}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />

@@ -20,165 +20,162 @@ using System.Threading.Tasks;
 using Trident.Abstractions;
 using Trident.Abstractions.Resources;
 
-namespace Polymerium.App.ViewModels
+namespace Polymerium.App.ViewModels;
+
+public class DesktopViewModel : RecipientViewModelBase, IRecipient<ProfileAddedMessage>
 {
-    public class DesktopViewModel : RecipientViewModelBase, IRecipient<ProfileAddedMessage>
+    private readonly DispatcherQueue _dispatcher;
+    private readonly ModpackExtractor _extractor;
+    private readonly IHttpClientFactory _factory;
+    private readonly InstanceService _instanceService;
+    private readonly InstanceStatusService _instanceStatusService;
+    private readonly NavigationService _navigation;
+    private readonly NotificationService _notification;
+    private readonly ProfileManager _profileManager;
+    private readonly ThumbnailSaver _thumbnailSaver;
+
+    public DesktopViewModel(NavigationService navigation, ProfileManager profileManager, ModpackExtractor extractor,
+        NotificationService notification, ThumbnailSaver thumbnailSaver, IHttpClientFactory factory,
+        InstanceStatusService instanceStatusService, InstanceService instanceService)
     {
-        private readonly DispatcherQueue _dispatcher;
-        private readonly ModpackExtractor _extractor;
-        private readonly IHttpClientFactory _factory;
-        private readonly InstanceService _instanceService;
-        private readonly InstanceStatusService _instanceStatusService;
-        private readonly NavigationService _navigation;
-        private readonly NotificationService _notification;
-        private readonly ProfileManager _profileManager;
-        private readonly ThumbnailSaver _thumbnailSaver;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
+        _navigation = navigation;
+        _profileManager = profileManager;
+        _extractor = extractor;
+        _notification = notification;
+        _thumbnailSaver = thumbnailSaver;
+        _factory = factory;
+        _instanceStatusService = instanceStatusService;
+        _instanceService = instanceService;
 
-        public DesktopViewModel(NavigationService navigation, ProfileManager profileManager, ModpackExtractor extractor,
-            NotificationService notification, ThumbnailSaver thumbnailSaver, IHttpClientFactory factory,
-            InstanceStatusService instanceStatusService, InstanceService instanceService)
+        LaunchEntryCommand = new RelayCommand<EntryModel>(LaunchEntry, CanManipulateEntry);
+        DeployEntryCommand = new RelayCommand<EntryModel>(DeployEntry, CanManipulateEntry);
+        GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
+
+        Entries = new ObservableCollection<EntryModel>(profileManager.Managed.Select(x =>
+                new EntryModel(x.Key, x.Value.Value, _thumbnailSaver.Get(x.Key),
+                    _instanceStatusService.MustHave(x.Key),
+                    LaunchEntryCommand,
+                    DeployEntryCommand,
+                    GotoInstanceViewCommand))
+            .OrderByDescending(x => x.LastPlayAtRaw));
+    }
+
+    public ObservableCollection<EntryModel> Entries { get; }
+
+    private RelayCommand<EntryModel> LaunchEntryCommand { get; }
+    private RelayCommand<EntryModel> DeployEntryCommand { get; }
+    private RelayCommand<string> GotoInstanceViewCommand { get; }
+
+    public void Receive(ProfileAddedMessage message)
+    {
+        if (IsActive)
         {
-            _dispatcher = DispatcherQueue.GetForCurrentThread();
-            _navigation = navigation;
-            _profileManager = profileManager;
-            _extractor = extractor;
-            _notification = notification;
-            _thumbnailSaver = thumbnailSaver;
-            _factory = factory;
-            _instanceStatusService = instanceStatusService;
-            _instanceService = instanceService;
-
-            LaunchEntryCommand = new RelayCommand<EntryModel>(LaunchEntry, CanManipulateEntry);
-            DeployEntryCommand = new RelayCommand<EntryModel>(DeployEntry, CanManipulateEntry);
-            GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
-
-            Entries = new ObservableCollection<EntryModel>(profileManager.Managed.Select(x =>
-                    new EntryModel(x.Key, x.Value.Value, _thumbnailSaver.Get(x.Key),
-                        _instanceStatusService.MustHave(x.Key),
-                        LaunchEntryCommand,
-                        DeployEntryCommand,
-                        GotoInstanceViewCommand))
-                .OrderByDescending(x => x.LastPlayAtRaw));
-        }
-
-        public ObservableCollection<EntryModel> Entries { get; }
-
-        private RelayCommand<EntryModel> LaunchEntryCommand { get; }
-        private RelayCommand<EntryModel> DeployEntryCommand { get; }
-        private RelayCommand<string> GotoInstanceViewCommand { get; }
-
-        public void Receive(ProfileAddedMessage message)
-        {
-            if (IsActive)
+            _dispatcher.TryEnqueue(() =>
             {
-                _dispatcher.TryEnqueue(() =>
-                {
-                    var status = _instanceStatusService.MustHave(message.Key);
-                    Entries.Add(new EntryModel(message.Key, message.Item, _thumbnailSaver.Get(message.Key), status,
-                        LaunchEntryCommand,
-                        DeployEntryCommand,
-                        GotoInstanceViewCommand));
-                });
-            }
+                var status = _instanceStatusService.MustHave(message.Key);
+                Entries.Add(new EntryModel(message.Key, message.Item, _thumbnailSaver.Get(message.Key), status,
+                    LaunchEntryCommand,
+                    DeployEntryCommand,
+                    GotoInstanceViewCommand));
+            });
         }
+    }
 
-        public override bool OnAttached(object? parameter)
+    public override bool OnAttached(object? parameter)
+    {
+        IsActive = true;
+        return base.OnAttached(parameter);
+    }
+
+    public override void OnDetached()
+    {
+        IsActive = false;
+        base.OnDetached();
+    }
+
+    private void GotoInstanceView(string? key)
+    {
+        if (key != null)
         {
-            IsActive = true;
-            return base.OnAttached(parameter);
+            _navigation.Navigate(typeof(InstanceView), key, new DrillInNavigationTransitionInfo());
         }
+    }
 
-        public override void OnDetached()
+    private bool CanManipulateEntry(EntryModel? entry)
+    {
+        if (entry != null)
         {
-            IsActive = false;
-            base.OnDetached();
+            return _instanceService.CanManipulate(entry.Key);
         }
 
-        private void GotoInstanceView(string? key)
+        return false;
+    }
+
+    private void LaunchEntry(EntryModel? entry)
+    {
+        if (entry != null)
         {
-            if (key != null)
-            {
-                _navigation.Navigate(typeof(InstanceView), key, new DrillInNavigationTransitionInfo());
-            }
+            _instanceService
+                .DeployAndLaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(
+                    entry.Key);
         }
+    }
 
-        private bool CanManipulateEntry(EntryModel? entry)
+    private void DeployEntry(EntryModel? entry)
+    {
+        if (entry != null)
         {
-            if (entry != null)
-            {
-                return _instanceService.CanManipulate(entry.Key);
-            }
-
-            return false;
+            _instanceService.Deploy(entry.Key);
         }
+    }
 
-        private void LaunchEntry(EntryModel? entry)
+    public FlattenExtractedContainer? ExtractModpack(string path)
+    {
+        using var stream = File.OpenRead(path);
+
+        try
         {
-            if (entry != null)
-            {
-                _instanceService
-                    .DeployAndLaunchSafelyBecauseThisIsUiPackageAndHasTheAblityToSendTheErrorBackToTheUiLayer(
-                        entry.Key);
-            }
+            var result = _extractor.ExtractAsync(stream, null).GetAwaiter().GetResult();
+            return result;
         }
-
-        private void DeployEntry(EntryModel? entry)
+        catch (Exception e)
         {
-            if (entry != null)
-            {
-                _instanceService.Deploy(entry.Key);
-            }
+            _notification.PopInformation($"Invalid input {Path.GetFileName(path)}: {e.Message}");
+            return null;
         }
+    }
 
-        public FlattenExtractedContainer? ExtractModpack(string path)
+    public void ApplyExtractedModpack(ModpackPreviewModel model) =>
+        _extractor.SolidifyAsync(model.Inner, model.InstanceName).RunSynchronously();
+
+    public async Task<IEnumerable<MinecraftVersionModel>> FetchVersionAsync()
+    {
+        var manifest =
+            await PrismLauncherHelper.GetManifestAsync(PrismLauncherHelper.UID_MINECRAFT, _factory,
+                App.Current.Token);
+        return manifest.Versions.Select(x => new MinecraftVersionModel(x.Version, x.Type switch
         {
-            using var stream = File.OpenRead(path);
+            PrismReleaseType.Release => ReleaseType.Release,
+            PrismReleaseType.Snapshot => ReleaseType.Snapshot,
+            PrismReleaseType.Old_Snapshot => ReleaseType.Snapshot,
+            PrismReleaseType.Experiment => ReleaseType.Experiment,
+            PrismReleaseType.Old_Alpha => ReleaseType.Alpha,
+            PrismReleaseType.Old_Beta => ReleaseType.Beta,
+            _ => throw new NotImplementedException()
+        }, x.ReleaseTime));
+    }
 
-            try
-            {
-                var result = _extractor.ExtractAsync(stream, null).GetAwaiter().GetResult();
-                return result;
-            }
-            catch (Exception e)
-            {
-                _notification.PopInformation($"Invalid input {Path.GetFileName(path)}: {e.Message}");
-                return null;
-            }
-        }
-
-        public void ApplyExtractedModpack(ModpackPreviewModel model)
+    public async Task CreateProfileAsync(string instanceName, string version, MemoryStream? thumbnail)
+    {
+        var key = _profileManager.RequestKey(instanceName);
+        if (thumbnail != null)
         {
-            _extractor.SolidifyAsync(model.Inner, model.InstanceName).RunSynchronously();
+            thumbnail.Position = 0;
+            await _thumbnailSaver.SaveAsync(key.Key, thumbnail);
         }
 
-        public async Task<IEnumerable<MinecraftVersionModel>> FetchVersionAsync()
-        {
-            var manifest =
-                await PrismLauncherHelper.GetManifestAsync(PrismLauncherHelper.UID_MINECRAFT, _factory,
-                    App.Current.Token);
-            return manifest.Versions.Select(x => new MinecraftVersionModel(x.Version, x.Type switch
-            {
-                PrismReleaseType.Release => ReleaseType.Release,
-                PrismReleaseType.Snapshot => ReleaseType.Snapshot,
-                PrismReleaseType.Old_Snapshot => ReleaseType.Snapshot,
-                PrismReleaseType.Experiment => ReleaseType.Experiment,
-                PrismReleaseType.Old_Alpha => ReleaseType.Alpha,
-                PrismReleaseType.Old_Beta => ReleaseType.Beta,
-                _ => throw new NotImplementedException()
-            }, x.ReleaseTime));
-        }
-
-        public async Task CreateProfileAsync(string instanceName, string version, MemoryStream? thumbnail)
-        {
-            var key = _profileManager.RequestKey(instanceName);
-            if (thumbnail != null)
-            {
-                thumbnail.Position = 0;
-                await _thumbnailSaver.SaveAsync(key.Key, thumbnail);
-            }
-
-            _profileManager.Append(key, instanceName, null, new Metadata(version, new List<Metadata.Layer>()));
-            _notification.PopInformation($"{instanceName}({version}) has been added");
-        }
+        _profileManager.Append(key, instanceName, null, new Metadata(version, new List<Metadata.Layer>()));
+        _notification.PopInformation($"{instanceName}({version}) has been added");
     }
 }

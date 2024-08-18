@@ -82,11 +82,11 @@ public class InspectCommand(TridentContext trident, JsonSerializerOptions option
         AnsiConsole.Write(new Rule("[yellow]Timeline[/]"));
         var format = "yyyy/MM/dd HH:mm:ss";
         var totalTime = profile.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Play) +
-                            profile.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Deploy);
+                        profile.Records.ExtractTimeSpan(Profile.RecordData.TimelinePoint.TimelimeAction.Deploy);
         var width = AnsiConsole.Console.Profile.Width;
         if (width - 43 >= 0) width -= 43;
         else width = 0;
-        foreach ((var index, var activity) in profile.Records.Timeline.Select((x, i) => (i, x)))
+        foreach (var (index, activity) in profile.Records.Timeline.Select((x, i) => (i, x)))
         {
             switch (activity.Action)
             {
@@ -100,25 +100,25 @@ public class InspectCommand(TridentContext trident, JsonSerializerOptions option
                     break;
                 case Profile.RecordData.TimelinePoint.TimelimeAction.Deploy:
                     if (profile.Records.Timeline.Count - 9 > index) continue;
-                    {
-                        var time = activity.EndTime - activity.BeginTime;
-                        var percent = time / totalTime;
-                        var count = (int)Math.Floor(percent * width);
-                        var remaining = width - count;
-                        AnsiConsole.MarkupLine(
-                            $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [blue]Deploy {new string('\u2588', count)}{new string(' ', remaining)}[/] [gray]{time:g}[/]");
-                    }
+                {
+                    var time = activity.EndTime - activity.BeginTime;
+                    var percent = time / totalTime;
+                    var count = (int)Math.Floor(percent * width);
+                    var remaining = width - count;
+                    AnsiConsole.MarkupLine(
+                        $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [blue]Deploy {new string('\u2588', count)}{new string(' ', remaining)}[/] [gray]{time:g}[/]");
+                }
                     break;
                 case Profile.RecordData.TimelinePoint.TimelimeAction.Play:
                     if (profile.Records.Timeline.Count - 9 > index) continue;
-                    {
-                        var time = activity.EndTime - activity.BeginTime;
-                        var percent = time / totalTime;
-                        var count = (int)Math.Floor(percent * width);
-                        var remaining = width - count;
-                        AnsiConsole.MarkupLine(
-                            $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [red]  Play {new string('\u2588', count)}{new string(' ', remaining)}[/] [gray]{time:g}[/]");
-                    }
+                {
+                    var time = activity.EndTime - activity.BeginTime;
+                    var percent = time / totalTime;
+                    var count = (int)Math.Floor(percent * width);
+                    var remaining = width - count;
+                    AnsiConsole.MarkupLine(
+                        $"[gray]{Markup.Escape(activity.BeginTime.ToString(format))}[/] [red]  Play {new string('\u2588', count)}{new string(' ', remaining)}[/] [gray]{time:g}[/]");
+                }
                     break;
             }
         }
