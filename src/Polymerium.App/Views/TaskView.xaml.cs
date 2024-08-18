@@ -1,5 +1,4 @@
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Polymerium.App.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -10,11 +9,11 @@ namespace Polymerium.App.Views;
 /// <summary>
 ///     An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class AccountView : Page
+public sealed partial class TaskView
 {
-    public AccountView() => InitializeComponent();
+    public TaskView() => InitializeComponent();
 
-    public AccountViewModel ViewModel { get; } = App.ViewModel<AccountViewModel>();
+    public TaskViewModel ViewModel { get; } = App.ViewModel<TaskViewModel>();
 
     private void Page_Loaded(object sender, RoutedEventArgs e) => ViewModel.OnAttached(null);
 

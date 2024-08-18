@@ -15,8 +15,11 @@
         <RepositoryUrl>https://github.com/d3ara1n/Polymerium</RepositoryUrl>
     </PropertyGroup>
     <ItemGroup>
+      <None Remove="Assets\Icons\Desert.svg" />
       <None Remove="Controls\Label.xaml" />
       <None Remove="Modals\AttachmentBulkUpdateModal.xaml" />
+      <None Remove="Views\NotFoundView.xaml" />
+      <None Remove="Views\TaskView.xaml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -54,6 +57,16 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Page Update="Views\NotFoundView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
+    <ItemGroup>
+      <Page Update="Views\TaskView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
     </ItemGroup>
     <ItemGroup>
       <Page Update="Controls\Label.xaml">

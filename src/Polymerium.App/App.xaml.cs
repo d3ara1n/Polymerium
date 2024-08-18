@@ -119,7 +119,9 @@ public partial class App
             .AddViewModel<MetadataViewModel>()
             .AddViewModel<ConfigurationViewModel>()
             .AddViewModel<WorkbenchViewModel>()
-            .AddViewModel<DashboardViewModel>();
+            .AddViewModel<DashboardViewModel>()
+            .AddViewModel<TaskViewModel>()
+            .AddViewModel<NotFoundViewModel>();
 
         // Repositories
         services
@@ -182,17 +184,20 @@ public partial class App
             tokenSource.Cancel();
             ((IDisposable)Provider).Dispose();
         };
-        navigation.SetHandler(layout.OnNavigate);
+        navigation.SetHandler(layout.OnNavigate, layout.GoBack, () => layout.CanGoBack);
         notification.SetHandler(layout.OnEnqueueNotification);
         modal.SetPopHandler(layout.OnPopModal);
         modal.SetDismissHandler(layout.OnDismissModal);
-        task.SetHandler(layout.OnEnqueueTask);
+        // TODO: task.SetHandler(layout.OnEnqueueTask);
         layout.SetHandler((view, parameter, info) => navigation.Navigate(view, parameter, info, true));
         if (settings.Values.TryGetValue(KEY_HEIGHT, out var h) && h is int height
                                                                && settings.Values.TryGetValue(KEY_WIDTH,
                                                                    out var w) &&
                                                                w is int width)
             window.AppWindow.Resize(new SizeInt32(width, height));
+        else
+            window.AppWindow.Resize(new SizeInt32(1070, 738));
+
 
         Window = window;
         window.Activate();

@@ -1,20 +1,15 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
-using Polymerium.App.Extensions;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
-using Polymerium.App.Tasks;
 using Polymerium.App.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using Trident.Abstractions.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,10 +27,6 @@ public sealed partial class Layout
     public Layout()
     {
         InitializeComponent();
-
-        RunningTaskCount = this.ToBindable(x => x.runningTaskCount, (x, v) => x.runningTaskCount = v);
-        AbortTaskCommand = new RelayCommand<TaskBase>(AbortTask);
-        ClearTasksCommand = new RelayCommand(ClearTasks);
         DismissModalCommand = new RelayCommand(OnDismissModal);
     }
 
@@ -46,14 +37,13 @@ public sealed partial class Layout
         set => SetValue(OverlayProperty, value);
     }
 
-    public ObservableCollection<TaskModel> Tasks { get; } = new();
     public ObservableCollection<InfoBar> Notifications { get; } = new();
-    public ICommand AbortTaskCommand { get; }
-    public ICommand ClearTasksCommand { get; }
     public ICommand DismissModalCommand { get; }
-    public Bindable<Layout, int> RunningTaskCount { get; }
 
     public Border Titlebar => AppTitleBar;
+
+    public bool CanGoBack => Root.CanGoBack;
+    public void GoBack() => Root.GoBack();
 
     public void OnActivate(bool activate) =>
         VisualStateManager.GoToState(this, activate ? "Activated" : "Deactivated", true);
@@ -123,14 +113,6 @@ public sealed partial class Layout
 
     public void OnDismissModal() => VisualStateManager.GoToState(this, "Hidden", true);
 
-
-    public void OnEnqueueTask(TaskBase task)
-    {
-        task.Subscribe(OnTaskUpdate);
-        TaskModel models = new(task, DispatcherQueue, AbortTaskCommand);
-        DispatcherQueue.TryEnqueue(() => Tasks.Add(models));
-    }
-
     public void SetHandler(Action<Type, object?, NavigationTransitionInfo> handler) => navigateHandler = handler;
 
 
@@ -155,43 +137,6 @@ public sealed partial class Layout
     private void NavigationViewControl_BackRequested(NavigationView _, NavigationViewBackRequestedEventArgs __) =>
         Root.GoBack();
 
-    private void AbortTask(TaskBase? task) => task?.Abort();
-
-    private void ClearTasks()
-    {
-        var toClears = Tasks
-            .Where(x => x.State.Value != TaskState.Idle && x.State.Value != TaskState.Running)
-            .ToArray();
-        foreach (var clear in toClears)
-        {
-            Tasks.Remove(clear);
-        }
-    }
-
-    private void OnTaskUpdate(TaskBase task, TaskProgressUpdatedEventArgs args)
-    {
-        if (args.State == task.State)
-        {
-            return;
-        }
-
-        var offset = 0;
-        if (args.State == TaskState.Idle)
-        {
-            // do nothing
-        }
-        else if (args.State == TaskState.Running)
-        {
-            offset = +1;
-        }
-        else
-        {
-            offset = -1;
-        }
-
-        DispatcherQueue.TryEnqueue(() => { RunningTaskCount.Value += offset; });
-    }
-
     private void HiddenStoryboard_Completed(object sender, object e) => Overlay = null;
 
     private void InfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args) => Notifications.Remove(sender);
@@ -214,7 +159,8 @@ public sealed partial class Layout
                 "MARKET" => typeof(MarketView),
                 "TOOLBOX" => typeof(ToolboxView),
                 "SETTINGS" => typeof(SettingView),
-                _ => throw new NotImplementedException()
+                "TASKS" => typeof(TaskView),
+                _ => typeof(NotFoundView)
             }, null, args.RecommendedNavigationTransitionInfo);
         }
     }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -29,7 +29,8 @@
                                 <ScalarTransition />
                             </Rectangle.OpacityTransition>
                         </Rectangle>
-                        <ContentPresenter Margin="{TemplateBinding Padding}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="Common">
                                 <VisualState x:Name="Normal" />

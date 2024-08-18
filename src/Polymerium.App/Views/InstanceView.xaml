@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Page
     x:Class="Polymerium.App.Views.InstanceView"
@@ -88,10 +88,12 @@
                         </controls:TagControl>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
-                        <HyperlinkButton Command="{x:Bind ViewModel.GotoMetadataViewCommand}" CommandParameter="{x:Bind ViewModel.Profile.Key, Mode=OneWay}">
+                        <HyperlinkButton Command="{x:Bind ViewModel.GotoMetadataViewCommand}"
+                                         CommandParameter="{x:Bind ViewModel.Profile.Key, Mode=OneWay}">
                             <ic:SymbolIcon Symbol="Edit" />
                         </HyperlinkButton>
-                        <HyperlinkButton Command="{x:Bind ViewModel.GotoConfigurationViewCommand}" CommandParameter="{x:Bind ViewModel.Profile.Key, Mode=OneWay}">
+                        <HyperlinkButton Command="{x:Bind ViewModel.GotoConfigurationViewCommand}"
+                                         CommandParameter="{x:Bind ViewModel.Profile.Key, Mode=OneWay}">
                             <ic:SymbolIcon Symbol="Settings" />
                         </HyperlinkButton>
                     </StackPanel>
@@ -157,11 +159,14 @@
                                         toolkit:DockPanel.Dock="Right"
                                         Orientation="Horizontal"
                                         Spacing="{StaticResource TinyGap}">
-                                        <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}" CommandParameter="{x:Bind TodoList.SelectedValue, Mode=OneWay}">
-                                            <ic:SymbolIcon FontSize="{StaticResource ButtonFontIconFontSize}" Symbol="SubtractCircle" />
+                                        <HyperlinkButton Command="{x:Bind ViewModel.DeleteTodoCommand}"
+                                                         CommandParameter="{x:Bind TodoList.SelectedValue, Mode=OneWay}">
+                                            <ic:SymbolIcon FontSize="{StaticResource ButtonFontIconFontSize}"
+                                                           Symbol="SubtractCircle" />
                                         </HyperlinkButton>
                                         <HyperlinkButton x:Name="AddTodoButton" Click="AddTodoButton_OnClick">
-                                            <ic:SymbolIcon FontSize="{StaticResource ButtonFontIconFontSize}" Symbol="AddCircle" />
+                                            <ic:SymbolIcon FontSize="{StaticResource ButtonFontIconFontSize}"
+                                                           Symbol="AddCircle" />
                                         </HyperlinkButton>
                                     </StackPanel>
                                     <controls:Label
@@ -176,7 +181,8 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:TodoModel">
                                             <StackPanel Orientation="Horizontal">
-                                                <CheckBox MinWidth="0" IsChecked="{x:Bind Completed.Value, Mode=TwoWay}" />
+                                                <CheckBox MinWidth="0"
+                                                          IsChecked="{x:Bind Completed.Value, Mode=TwoWay}" />
                                                 <TextBlock
                                                     VerticalAlignment="Center"
                                                     Text="{x:Bind Text.Value, Mode=TwoWay}"
@@ -255,7 +261,8 @@
                                 Style="{StaticResource SubheaderTextBlockStyle}"
                                 Text="{x:Bind ViewModel.Profile.PlayTime}" />
                             <TextBlock HorizontalAlignment="Right">
-                                <Run Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Text="Last played at:" />
+                                <Run Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}"
+                                     Text="Last played at:" />
                                 <Run Text="{x:Bind ViewModel.Profile.PlayedAt}" />
                             </TextBlock>
                         </StackPanel>
@@ -269,7 +276,8 @@
                 Margin="{StaticResource SmallMargin}"
                 HorizontalAlignment="Left"
                 Click="SwitchAccountButton_OnClick">
-                <toolkit:SwitchPresenter Value="{x:Bind ViewModel.Account, Mode=OneWay, Converter={StaticResource NotNullToBoolConverter}}">
+                <toolkit:SwitchPresenter
+                    Value="{x:Bind ViewModel.Account, Mode=OneWay, Converter={StaticResource NotNullToBoolConverter}}">
                     <toolkit:Case>
                         <toolkit:Case.Value>
                             <x:Boolean>False</x:Boolean>
@@ -303,7 +311,8 @@
                                 Width="36"
                                 Source="{x:Bind ViewModel.Account.FaceUrl, Mode=OneWay, FallbackValue={x:Null}}" />
                             <StackPanel Grid.Column="1">
-                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind ViewModel.Account.Inner.Username, Mode=OneWay, FallbackValue=Unknown}" />
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}"
+                                           Text="{x:Bind ViewModel.Account.Inner.Username, Mode=OneWay, FallbackValue=Unknown}" />
                                 <TextBlock Text="{x:Bind ViewModel.Account.TypeName, Mode=OneWay, FallbackValue=N/A}" />
                             </StackPanel>
                         </Grid>
@@ -333,7 +342,8 @@
                         Orientation="Horizontal"
                         Spacing="{StaticResource SmallGap}">
                         <StackPanel VerticalAlignment="Center" Spacing="{StaticResource TinyGap}">
-                            <TextBlock HorizontalAlignment="Center" Text="{x:Bind ViewModel.Profile.Status.StageText.Value, Mode=OneWay}" />
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="{x:Bind ViewModel.Profile.Status.StageText.Value, Mode=OneWay}" />
                             <ProgressBar
                                 Width="200"
                                 HorizontalAlignment="Center"
@@ -355,7 +365,8 @@
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
                         Spacing="{StaticResource SmallGap}">
-                        <HyperlinkButton VerticalAlignment="Center" Command="{x:Bind ViewModel.GotoDashboardViewCommand}">
+                        <HyperlinkButton VerticalAlignment="Center"
+                                         Command="{x:Bind ViewModel.GotoDashboardViewCommand}">
                             <TextBlock Text="Dashboard" />
                         </HyperlinkButton>
                         <Border
@@ -378,7 +389,8 @@
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
                         Spacing="{StaticResource SmallGap}">
-                        <HyperlinkButton VerticalAlignment="Center" Command="{x:Bind ViewModel.GotoDashboardViewCommand}">
+                        <HyperlinkButton VerticalAlignment="Center"
+                                         Command="{x:Bind ViewModel.GotoDashboardViewCommand}">
                             <TextBlock Text="View Log" />
                         </HyperlinkButton>
                         <Button

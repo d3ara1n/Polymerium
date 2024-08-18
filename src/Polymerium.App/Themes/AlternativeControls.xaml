@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style
         x:Key="GhostButtonStyle"
         BasedOn="{StaticResource DefaultButtonStyle}"
@@ -47,8 +48,11 @@
                                     <VisualState x:Name="PointerOver">
                                         <VisualState.Storyboard>
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity">
-                                                    <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="1.0" />
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background"
+                                                                               Storyboard.TargetProperty="Opacity">
+                                                    <LinearDoubleKeyFrame
+                                                        KeyTime="{StaticResource ControlFasterAnimationDuration}"
+                                                        Value="1.0" />
                                                 </DoubleAnimationUsingKeyFrames>
                                                 <DoubleAnimation
                                                     Storyboard.TargetName="PART_Transform"
@@ -76,19 +80,24 @@
                                     <VisualState x:Name="Pressed">
                                         <VisualState.Setters>
                                             <Setter Target="PART_Background.Opacity" Value="1" />
-                                            <Setter Target="PART_Background.Background" Value="{ThemeResource HyperlinkButtonBackgroundPressed}" />
+                                            <Setter Target="PART_Background.Background"
+                                                    Value="{ThemeResource HyperlinkButtonBackgroundPressed}" />
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <VisualState.Setters>
-                                            <Setter Target="PART_Container.Foreground" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
+                                            <Setter Target="PART_Container.Foreground"
+                                                    Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualStateGroup.Transitions>
                                         <VisualTransition To="Normal">
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background" Storyboard.TargetProperty="Opacity">
-                                                    <LinearDoubleKeyFrame KeyTime="{StaticResource ControlFasterAnimationDuration}" Value="0.0" />
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Background"
+                                                                               Storyboard.TargetProperty="Opacity">
+                                                    <LinearDoubleKeyFrame
+                                                        KeyTime="{StaticResource ControlFasterAnimationDuration}"
+                                                        Value="0.0" />
                                                 </DoubleAnimationUsingKeyFrames>
                                                 <DoubleAnimation
                                                     Storyboard.TargetName="PART_Transform"

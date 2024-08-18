@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Page
     x:Class="Polymerium.App.Views.DesktopView"
@@ -40,7 +40,8 @@
                     Click="CreateButton_OnClick"
                     IsEnabled="{x:Bind VersionLoadingState, Mode=OneWay, Converter={StaticResource FalseWhenLoadingConverter}}"
                     Style="{StaticResource AccentButtonStyle}">
-                    <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind VersionLoadingState, Mode=OneWay}">
+                    <toolkit:SwitchPresenter TargetType="models:DataLoadingState"
+                                             Value="{x:Bind VersionLoadingState, Mode=OneWay}">
                         <toolkit:Case IsDefault="True">
                             <controls:Label Icon="Add" Text="Create" />
                         </toolkit:Case>
@@ -61,7 +62,8 @@
                 SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:EntryModel">
-                        <Border BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}" BorderThickness="0,1,0,0">
+                        <Border BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}"
+                                BorderThickness="0,1,0,0">
                             <StackPanel Margin="{StaticResource MediumMargin}">
                                 <Grid ColumnSpacing="{StaticResource SmallGap}">
                                     <Grid.ColumnDefinitions>
@@ -81,15 +83,19 @@
                                         </Border.Background>
                                     </Border>
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Style="{StaticResource CaptionTextBlockStyle}">
-                                            <Run Text="{x:Bind Category, Converter={StaticResource StringUppercaseConverter}}" />
+                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                   Style="{StaticResource CaptionTextBlockStyle}">
+                                            <Run
+                                                Text="{x:Bind Category, Converter={StaticResource StringUppercaseConverter}}" />
                                             <Run Text=" / " />
                                             <Run Text="{x:Bind Key}" />
                                         </TextBlock>
-                                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{x:Bind Inner.Name}" />
+                                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                                                   Text="{x:Bind Inner.Name}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2">
-                                        <SplitButton Command="{x:Bind GotoInstanceViewCommand}" CommandParameter="{x:Bind Key}">
+                                        <SplitButton Command="{x:Bind GotoInstanceViewCommand}"
+                                                     CommandParameter="{x:Bind Key}">
                                             <SplitButton.Flyout>
                                                 <MenuFlyout>
                                                     <MenuFlyoutItem
@@ -113,7 +119,8 @@
                                         VerticalAlignment="Bottom"
                                         Orientation="Horizontal"
                                         Spacing="{StaticResource TinyGap}">
-                                        <toolkit:SwitchPresenter TargetType="models:InstanceState" Value="{x:Bind Status.State.Value, Mode=OneWay}">
+                                        <toolkit:SwitchPresenter TargetType="models:InstanceState"
+                                                                 Value="{x:Bind Status.State.Value, Mode=OneWay}">
                                             <toolkit:Case Value="Idle">
                                                 <Border
                                                     Padding="{StaticResource TinyMargin}"
@@ -163,13 +170,15 @@
                                             Padding="{StaticResource TinyMargin}"
                                             Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
                                             CornerRadius="{StaticResource MicroCornerRadius}">
-                                            <TextBlock Style="{StaticResource CaptionTextBlockStyle}" Text="{x:Bind Type}" />
+                                            <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                                                       Text="{x:Bind Type}" />
                                         </Border>
                                         <Border
                                             Padding="{StaticResource TinyMargin}"
                                             Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
                                             CornerRadius="{StaticResource MicroCornerRadius}">
-                                            <TextBlock Style="{StaticResource CaptionTextBlockStyle}" Text="{x:Bind Version}" />
+                                            <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                                                       Text="{x:Bind Version}" />
                                         </Border>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">

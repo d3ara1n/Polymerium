@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <UserControl
     x:Class="Polymerium.App.Layout"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Polymerium.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Polymerium.App.Models"
-    xmlns:tasks="using:Trident.Abstractions.Tasks"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
@@ -58,11 +54,10 @@
                 IsTabStop="False"
                 IsTitleBarAutoPaddingEnabled="True"
                 ItemInvoked="NavigationViewControl_OnItemInvoked"
-                OpenPaneLength="198"
+                OpenPaneLength="200"
                 PaneDisplayMode="Auto"
-                PaneTitle="Navigation">
+                PaneTitle="Ciallo～ (∠・ω&lt; )⌒★">
                 <NavigationView.Resources>
-                    <Thickness x:Key="NavigationViewContentMargin">0,36,0,0</Thickness>
                 </NavigationView.Resources>
                 <NavigationView.AutoSuggestBox>
                     <AutoSuggestBox PlaceholderText="Instances..." QueryIcon="Find" />
@@ -94,6 +89,18 @@
                     </NavigationViewItem>
                 </NavigationView.MenuItems>
                 <NavigationView.FooterMenuItems>
+                    <NavigationViewItem Tag="TASKS">
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="/Assets/Icons/Hourglass done.svg" />
+                        </NavigationViewItem.Icon>
+                        <TextBlock HorizontalAlignment="Left" Text="Tasks" />
+                    </NavigationViewItem>
+                    <NavigationViewItem Tag="TOOLBOX_NOT_AVAILABLE">
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="/Assets/Icons/Toolbox.svg" />
+                        </NavigationViewItem.Icon>
+                        <TextBlock HorizontalAlignment="Left" Text="Toolbox" />
+                    </NavigationViewItem>
                     <NavigationViewItem Tag="SETTINGS">
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="/Assets/Icons/Gear.svg" />
@@ -145,7 +152,6 @@
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Compact">
-                    <VisualState.Setters />
                 </VisualState>
                 <VisualState x:Name="Top">
                     <VisualState.Setters>
@@ -171,7 +177,8 @@
                 <VisualStateGroup.Transitions>
                     <VisualTransition To="Shown">
                         <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder" Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder"
+                                                           Storyboard.TargetProperty="Visibility">
                                 <DiscreteObjectKeyFrame Value="Visible" />
                             </ObjectAnimationUsingKeyFrames>
                             <PopInThemeAnimation
@@ -183,7 +190,8 @@
                     </VisualTransition>
                     <VisualTransition To="Hidden">
                         <Storyboard Completed="HiddenStoryboard_Completed">
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder" Storyboard.TargetProperty="Visibility">
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_OverlayBorder"
+                                                           Storyboard.TargetProperty="Visibility">
                                 <DiscreteObjectKeyFrame Value="Visible" />
                             </ObjectAnimationUsingKeyFrames>
                             <FadeOutThemeAnimation Storyboard.TargetName="PART_OverlayBorder" />
