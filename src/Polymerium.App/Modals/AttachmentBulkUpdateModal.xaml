@@ -27,6 +27,8 @@
             Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
             BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
             BorderThickness="{StaticResource CardBorderThickness}"
-            CornerRadius="{StaticResource SmallCornerRadius}" />
+            CornerRadius="{StaticResource SmallCornerRadius}">
+            <Border Width="230" Height="230" />
+        </Grid>
     </Grid>
 </local:ModalBase>

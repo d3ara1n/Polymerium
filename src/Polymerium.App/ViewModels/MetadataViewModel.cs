@@ -70,6 +70,7 @@ namespace Polymerium.App.ViewModels
             ModifyAttachmentCommand = new RelayCommand<AttachmentModel>(ModifyAttachment, CanModifyAttachment);
             DeleteAttachmentCommand = new RelayCommand<AttachmentModel>(DeleteAttachment, CanDeleteAttachment);
             GotoWorkbenchViewCommand = new RelayCommand<bool>(GotoWorkbench, CanGotoWorkbench);
+            OpenBulkUpdateModalCommand = new RelayCommand(OpenBulkUpdateModal, CanOpenBulkUpdateModal);
             ExportAttachmentListCommand = new AsyncRelayCommand<DataLoadingState>(ExportAttachmentListAsync, CanExportAttachmentList);
 
             model = new MetadataModel(ProfileManager.DUMMY_KEY, ProfileManager.DUMMY_PROFILE, RenameLayerCommand,

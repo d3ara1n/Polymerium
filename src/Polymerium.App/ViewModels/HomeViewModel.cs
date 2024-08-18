@@ -61,25 +61,6 @@ namespace Polymerium.App.ViewModels
 
         public void QuerySubmitted(string query)
         {
-            var start = "/update";
-            if (query.StartsWith(start))
-            {
-                var key = query.Substring(start.Length);
-                if (_profileManger.Managed.TryGetValue(key, out var profile))
-                {
-                    var task = new UpdateTask(key, profile.Value.Metadata);
-                    Task.Run(() => UpdateInternal(profile.Value.Metadata));
-                    _taskService.Enqueue(task);
-                }
-            }
-        }
-
-        private async Task UpdateInternal(Metadata metadata)
-        {
-            foreach (var layer in metadata.Layers)
-            {
-                // TODO
-            }
         }
     }
 }
