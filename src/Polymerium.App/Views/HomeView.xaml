@@ -13,6 +13,15 @@
     mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
+            <InfoBar
+                Title=" Windows Feature Required"
+                IsOpen="{x:Bind ViewModel.IsDeveloperModeRequired}"
+                Message="You haven't enabled Windows 10/11 Developer Mode, which will cause instance deploying failure."
+                Severity="Error">
+                <InfoBar.ActionButton>
+                    <HyperlinkButton Command="{x:Bind ViewModel.LearnMoreCommand}" Content="Learn more" />
+                </InfoBar.ActionButton>
+            </InfoBar>
             <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Quick start" />
             <Grid>
                 <Grid.ColumnDefinitions>

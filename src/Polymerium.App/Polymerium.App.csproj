@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
@@ -13,6 +13,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Nullable>enable</Nullable>
         <RepositoryUrl>https://github.com/d3ara1n/Polymerium</RepositoryUrl>
+        <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
     </PropertyGroup>
     <ItemGroup>
       <None Remove="Assets\Icons\Desert.svg" />
@@ -24,21 +25,23 @@
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-        <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
-        <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.0.240109" />
-        <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.0.240109" />
-        <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.0.240109" />
-        <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
-        <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
-        <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
-        <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />
-        <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.HeaderedControls" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.MetadataControl" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.RichSuggestBox" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Animations" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.1.240821" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240821" />
         <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Markdown" Version="7.1.2" />
-        <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
         <PackageReference Include="CsvHelper" Version="33.0.1" />
-        <PackageReference Include="DotNext" Version="5.12.0" />
-        <PackageReference Include="FluentIcons.WinUI" Version="1.1.253" />
-        <PackageReference Include="HtmlAgilityPack" Version="1.11.63" />
+        <PackageReference Include="DotNext" Version="5.12.1" />
+        <PackageReference Include="FluentIcons.WinUI" Version="1.1.255" />
+        <PackageReference Include="HtmlAgilityPack" Version="1.11.64" />
         <PackageReference Include="Humanizer" Version="2.14.1" />
         <PackageReference Include="IBuilder" Version="0.2.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
@@ -49,7 +52,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
         <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.2.0" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240802000" />
-        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
         <PackageReference Include="Mime-Detective" Version="24.7.1" />
         <PackageReference Include="Nanoid" Version="3.1.0" />
         <PackageReference Include="System.Text.Json" Version="8.0.4" />

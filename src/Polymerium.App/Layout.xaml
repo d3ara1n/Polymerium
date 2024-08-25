@@ -58,6 +58,8 @@
                 PaneDisplayMode="Auto"
                 PaneTitle="Ciallo～ (∠・ω&lt; )⌒★">
                 <NavigationView.Resources>
+                    <!-- ReSharper disable once Xaml.RedundantResource -->
+                    <Thickness x:Key="NavigationViewContentMargin">0,36,0,0</Thickness>
                 </NavigationView.Resources>
                 <NavigationView.AutoSuggestBox>
                     <AutoSuggestBox PlaceholderText="Instances..." QueryIcon="Find" />
@@ -151,8 +153,7 @@
                         <Setter Target="AppTitleBar.Margin" Value="96,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="Compact">
-                </VisualState>
+                <VisualState x:Name="Compact" />
                 <VisualState x:Name="Top">
                     <VisualState.Setters>
                         <Setter Target="AppTitleBar.Margin" Value="16,0,0,0" />

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
@@ -29,6 +30,7 @@ public class HomeViewModel : ObservableObject
         _taskService = taskService;
         GotoInstanceViewCommand = new RelayCommand<string>(GotoInstanceView);
         OpenExternalUrlCommand = new RelayCommand<string>(OpenExternalUrl);
+        LearnMoreCommand = new RelayCommand(LearnMore);
 
         Recents = _profileManger.Managed
             .Select(x => (
@@ -38,11 +40,19 @@ public class HomeViewModel : ObservableObject
             .OrderByDescending(x => x.Item1)
             .Select(x => new RecentModel(x.Item3, x.Item2, thumbnailSaver.Get(x.Item3), GotoInstanceViewCommand))
             .ToList();
+
+        IsDeveloperModeRequired =
+            Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock",
+                "AllowDevelopmentWithoutDevLicense", 0) is not 1;
     }
 
     public IList<RecentModel> Recents { get; }
     public ICommand OpenExternalUrlCommand { get; }
     public ICommand GotoInstanceViewCommand { get; }
+
+    public ICommand LearnMoreCommand { get; }
+
+    public bool IsDeveloperModeRequired { get; }
 
     private void GotoInstanceView(string? key)
     {
@@ -56,4 +66,8 @@ public class HomeViewModel : ObservableObject
     {
         if (!string.IsNullOrEmpty(url)) UriFileHelper.OpenInExternal(url);
     }
+
+    private void LearnMore() =>
+        UriFileHelper.OpenInExternal(
+            "https://learn.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development");
 }
