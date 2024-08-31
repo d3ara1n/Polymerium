@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:resources="using:Trident.Abstractions.Resources"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
 
     <toolkit:SwitchPresenter TargetType="models:DataLoadingState" Value="{x:Bind ViewModel.DataState, Mode=OneWay}">
@@ -55,11 +55,10 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
                     <toolkit:DockPanel>
-                        <toolkit:ImageEx
+                        <Image
                             Width="58"
                             Height="58"
                             toolkit:DockPanel.Dock="Left"
-                            CornerRadius="{StaticResource TinyCornerRadius}"
                             Source="{x:Bind ViewModel.Project.Thumbnail, Mode=OneWay}"
                             Stretch="UniformToFill" />
                         <StackPanel Margin="12,0" VerticalAlignment="Center">
@@ -135,7 +134,7 @@
                                                 ItemsSource="{x:Bind ViewModel.Project.Gallery, Mode=OneWay}">
                                                 <FlipView.ItemTemplate>
                                                     <DataTemplate x:DataType="models:GalleryItemModel">
-                                                        <toolkit:ImageEx Source="{x:Bind Url}" Stretch="Uniform" />
+                                                        <Image Source="{x:Bind Url.AbsoluteUri}" Stretch="Uniform" />
                                                     </DataTemplate>
                                                 </FlipView.ItemTemplate>
                                             </FlipView>
@@ -152,11 +151,11 @@
                                             </Border>
                                         </Grid>
                                     </toolkit:ConstrainedBox>
-                                    <toolkit:MarkdownTextBlock
+                                    <!--<toolkit:MarkdownTextBlock
                                         Background="Transparent"
                                         ImageStretch="UniformToFill"
                                         LinkClicked="MarkdownTextBlock_LinkClicked"
-                                        Text="{x:Bind ViewModel.Project.Inner.DescriptionMarkdown, Mode=OneWay}" />
+                                        Text="{x:Bind ViewModel.Project.Inner.DescriptionMarkdown, Mode=OneWay}" />-->
                                 </StackPanel>
                             </ScrollViewer>
                         </controls:Card>
@@ -208,11 +207,11 @@
                             </controls:Card>
                             <controls:Card Grid.Row="1" Padding="0">
                                 <ScrollViewer Padding="{StaticResource CardContentMargin}">
-                                    <toolkit:MarkdownTextBlock
+                                    <!--<toolkit:MarkdownTextBlock
                                         Background="Transparent"
                                         ImageStretch="UniformToFill"
                                         LinkClicked="MarkdownTextBlock_LinkClicked"
-                                        Text="{x:Bind ViewModel.SelectedVersion.Inner.ChangelogMarkdown, Mode=OneWay}" />
+                                        Text="{x:Bind ViewModel.SelectedVersion.Inner.ChangelogMarkdown, Mode=OneWay}" />-->
                                 </ScrollViewer>
                             </controls:Card>
                         </Grid>

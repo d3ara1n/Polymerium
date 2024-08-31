@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Polymerium.App.Models;
 using Polymerium.Trident.Helpers;
@@ -114,8 +113,8 @@ public sealed partial class ProjectPreviewModal
         }
     }
 
-    private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e) =>
-        UriFileHelper.OpenInExternal(e.Link);
+    //private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e) =>
+    //    UriFileHelper.OpenInExternal(e.Link);
 
     private bool CanInstall(ProjectVersionModel? model) => model != null;
 

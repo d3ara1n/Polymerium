@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Polymerium.App.Modals"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     HorizontalAlignment="Center"
     VerticalAlignment="Center"
     Loaded="ModalBase_Loaded"
@@ -79,7 +78,7 @@
                 x:Name="ProfileBox"
                 Spacing="{StaticResource SmallGap}"
                 Visibility="Collapsed">
-                <toolkit:ImageEx
+                <Image
                     Width="64"
                     Height="64"
                     HorizontalAlignment="Center"
@@ -105,7 +104,7 @@
         </StackPanel>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="CodeStates">
-                <VisualState x:Name="Loading" />
+                <VisualState x:Name="Fetching" />
                 <VisualState x:Name="Linking">
                     <VisualState.Setters>
                         <Setter Target="LoadingBox.Visibility" Value="Collapsed" />

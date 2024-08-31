@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:resources="using:Trident.Abstractions.Resources"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
     Loaded="ModalBase_Loaded"
@@ -57,13 +57,12 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <toolkit:ImageEx
+                                <Image
                                     Grid.Column="0"
                                     Width="64"
                                     Height="64"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
-                                    CornerRadius="{StaticResource TinyCornerRadius}"
                                     Source="{x:Bind Project.Thumbnail, Mode=OneWay}"
                                     Stretch="UniformToFill" />
                                 <TextBlock
@@ -96,12 +95,12 @@
                                 </Pivot.ItemContainerStyle>
                                 <PivotItem Header="Description">
                                     <ScrollViewer>
-                                        <toolkit:MarkdownTextBlock
+                                        <!--<toolkit:MarkdownTextBlock
                                             Margin="{StaticResource MediumMargin}"
                                             Background="Transparent"
                                             ImageStretch="UniformToFill"
                                             LinkClicked="MarkdownTextBlock_LinkClicked"
-                                            Text="{x:Bind Project.Inner.DescriptionMarkdown, Mode=OneWay}" />
+                                            Text="{x:Bind Project.Inner.DescriptionMarkdown, Mode=OneWay}" />-->
                                     </ScrollViewer>
                                 </PivotItem>
                                 <PivotItem Header="Gallery">
@@ -114,7 +113,7 @@
                                                 ItemsSource="{x:Bind Project.Gallery, Mode=OneWay}">
                                                 <FlipView.ItemTemplate>
                                                     <DataTemplate x:DataType="models:GalleryItemModel">
-                                                        <toolkit:ImageEx IsCacheEnabled="True" Source="{x:Bind Url}" />
+                                                        <Image Source="{x:Bind Url.AbsoluteUri}" />
                                                     </DataTemplate>
                                                 </FlipView.ItemTemplate>
                                             </FlipView>

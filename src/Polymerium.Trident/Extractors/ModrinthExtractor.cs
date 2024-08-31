@@ -1,5 +1,4 @@
-﻿using DotNext.Collections.Generic;
-using Polymerium.Trident.Models.Modrinth;
+﻿using Polymerium.Trident.Models.Modrinth;
 using Polymerium.Trident.Repositories;
 using System.Text.Json;
 using Trident.Abstractions.Exceptions;
@@ -42,11 +41,15 @@ public class ModrinthExtractor : IExtractor
             required.Loaders.Add(loader);
         }
 
-        required.Attachments.AddAll(manifest.Files
-            .Where(x => !x.Envs.HasValue || x.Envs.Value.Client == ModrinthModpackEnv.Required).Select(ToAttachment));
+        foreach (var item in manifest.Files
+                     .Where(x => !x.Envs.HasValue || x.Envs.Value.Client == ModrinthModpackEnv.Required)
+                     .Select(ToAttachment))
+            required.Attachments.Add(item);
         var optional = new ContainedLayer { Summary = $"{manifest.Name}(Optional)" };
-        optional.Attachments.AddAll(manifest.Files
-            .Where(x => x.Envs.HasValue && x.Envs.Value.Client == ModrinthModpackEnv.Optional).Select(ToAttachment));
+        foreach (var item in manifest.Files
+                     .Where(x => x.Envs.HasValue && x.Envs.Value.Client == ModrinthModpackEnv.Optional)
+                     .Select(ToAttachment))
+            optional.Attachments.Add(item);
         var container = new ExtractedContainer(manifest.Name, version);
         container.Layers.Add(required);
         if (optional.Loaders.Any() && optional.Attachments.Any())

@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
     xmlns:resources="using:Trident.Abstractions.Resources"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -186,7 +186,6 @@
                                                 <TextBlock
                                                     VerticalAlignment="Center"
                                                     Text="{x:Bind Text.Value, Mode=TwoWay}"
-                                                    TextDecorations="{x:Bind Completed.Value, Mode=OneWay, Converter={StaticResource BoolToFontStyleStrikethroughConverter}}"
                                                     TextTrimming="CharacterEllipsis" />
                                             </StackPanel>
                                         </DataTemplate>

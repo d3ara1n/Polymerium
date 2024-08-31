@@ -4,9 +4,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="using:Polymerium.App.Converters"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Converters">
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Converters">
 
-    <toolkit:FormatStringConverter x:Key="FormatStringConverter" />
     <toolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <toolkit:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
     <toolkit:EmptyObjectToObjectConverter x:Key="EmptyObjectToObjectConverter" />
@@ -16,7 +15,6 @@
     <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
     <converters:EmptyCollectionVisibilityConverter x:Key="EmptyCollectionVisibilityConverter" />
     <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
-    <converters:BoolToFontStyleStrikethroughConverter x:Key="BoolToFontStyleStrikethroughConverter" />
     <converters:FalseWhenLoadingConverter x:Key="FalseWhenLoadingConverter" />
     <converters:BoolToTranslucentConverter x:Key="BoolToTranslucentConverter" />
     <converters:BoolToAccentTextBrushConverter x:Key="BoolToAccentTextBrushConverter" />

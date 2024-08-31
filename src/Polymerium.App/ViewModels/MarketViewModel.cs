@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Collections;
 using Microsoft.UI.Xaml.Media.Animation;
 using Polymerium.App.Models;
 using Polymerium.App.Services;

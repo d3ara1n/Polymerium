@@ -10,7 +10,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:models="using:Polymerium.App.Models"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -124,9 +123,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
-                                    <toolkit:ImageEx
-                                        CornerRadius="6,6,0,0"
-                                        IsCacheEnabled="True"
+                                    <Image
                                         Source="{x:Bind Thumbnail}"
                                         Stretch="UniformToFill" />
                                     <Border

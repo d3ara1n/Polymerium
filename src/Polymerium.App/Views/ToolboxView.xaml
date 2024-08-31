@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
@@ -39,18 +38,17 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <toolkit:ImageEx Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg"
-                                     Stretch="Fill">
+                    <Image Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg"
+                           Stretch="Fill">
                         <media:UIElementExtensions.VisualFactory>
                             <media:PipelineVisualFactory>
                                 <media:BlurEffect Amount="30" />
                             </media:PipelineVisualFactory>
                         </media:UIElementExtensions.VisualFactory>
-                    </toolkit:ImageEx>
+                    </Image>
                     <Rectangle Fill="{ThemeResource ControlFillColorDefaultBrush}" />
-                    <toolkit:ImageEx
+                    <Image
                         Margin="{StaticResource LargeMargin}"
-                        CornerRadius="{StaticResource TinyCornerRadius}"
                         Source="https://media.forgecdn.net/avatars/933/559/638409139028481417.jpg" />
                 </Grid>
                 <Grid Grid.Row="1" Margin="{StaticResource SmallMargin}">

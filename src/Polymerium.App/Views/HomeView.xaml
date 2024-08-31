@@ -9,7 +9,7 @@
     xmlns:ic="using:FluentIcons.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="{StaticResource SmallGap}">
@@ -143,8 +143,7 @@
                             CornerRadius="6">
                             <StackPanel>
                                 <toolkit:ConstrainedBox AspectRatio="1:1">
-                                    <toolkit:ImageEx
-                                        CornerRadius="6,6,0,0"
+                                    <Image
                                         Source="{x:Bind Thumbnail}"
                                         Stretch="Fill" />
                                 </toolkit:ConstrainedBox>

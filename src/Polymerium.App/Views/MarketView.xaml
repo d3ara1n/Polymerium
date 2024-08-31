@@ -10,7 +10,6 @@
     xmlns:lab="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
     <Page.Resources>
@@ -72,11 +71,10 @@
                                     <ColumnDefinition Width="1" />
                                     <ColumnDefinition Width="2*" />
                                 </Grid.ColumnDefinitions>
-                                <toolkit:ImageEx
+                                <Image
                                     Grid.Column="0"
                                     Width="64"
                                     CacheMode="BitmapCache"
-                                    CornerRadius="{StaticResource TinyCornerRadius}"
                                     Source="{x:Bind Thumbnail}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
                                     <TextBlock

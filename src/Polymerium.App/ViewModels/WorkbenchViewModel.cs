@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Collections;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;

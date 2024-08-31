@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     Title="Select an account"
     CloseButtonText="Cancel"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
@@ -29,7 +28,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <toolkit:ImageEx
+                            <Image
                                 Grid.Column="0"
                                 Width="36"
                                 Source="{x:Bind FaceUrl}" />

@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Common.Collections;
+﻿using CommunityToolkit.WinUI.Collections;
 using System;
 using System.Collections.Generic;
 using System.Threading;

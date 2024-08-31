@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
     Title="Create profile dialog"
     CloseButtonText="Cancel"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
@@ -25,13 +25,10 @@
                         HorizontalAlignment="Center"
                         Orientation="Horizontal"
                         Spacing="{StaticResource SmallGap}">
-                        <toolkit:ImageEx
+                        <Image
                             Width="78"
                             Height="78"
                             HorizontalAlignment="Center"
-                            CornerRadius="{StaticResource TinyCornerRadius}"
-                            PlaceholderSource="/Assets/Placeholders/default_dirt.png"
-                            PlaceholderStretch="Fill"
                             Source="{x:Bind Image}"
                             Stretch="Fill" />
                         <StackPanel Spacing="{StaticResource TinyGap}">

@@ -1,4 +1,3 @@
-using DotNext.Collections.Generic;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -16,12 +15,12 @@ public sealed partial class SaveFileDialog
 {
     // Using a DependencyProperty as the backing store for Directory.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty DirectoryProperty =
-        DependencyProperty.Register("Directory", typeof(string), typeof(SaveFileDialog),
+        DependencyProperty.Register(nameof(Directory), typeof(string), typeof(SaveFileDialog),
             new PropertyMetadata(GetFolderPath(SpecialFolder.MyDocuments)));
 
     // Using a DependencyProperty as the backing store for FileName.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty FileNameProperty =
-        DependencyProperty.Register("FileName", typeof(string), typeof(SaveFileDialog),
+        DependencyProperty.Register(nameof(FileName), typeof(string), typeof(SaveFileDialog),
             new PropertyMetadata(string.Empty));
 
 
@@ -49,8 +48,8 @@ public sealed partial class SaveFileDialog
     {
         var picker = new FileSavePicker();
         InitializeWithWindow.Initialize(picker, WindowNative.GetWindowHandle(App.Current.Window));
-        new Dictionary<string, IList<string>> { { "Plain Text", new List<string> { ".txt" } } }.ForEach(
-            picker.FileTypeChoices.Add);
+        foreach (var item in new Dictionary<string, IList<string>> { { "Plain Text", new List<string> { ".txt" } } })
+            picker.FileTypeChoices.Add(item);
         picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
         picker.SuggestedFileName = FileName;
         var file = await picker.PickSaveFileAsync();

@@ -9,7 +9,6 @@
     xmlns:ic="using:FluentIcons.WinUI"
     xmlns:labs="using:CommunityToolkit.WinUI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -108,9 +107,8 @@
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard>
                             <labs:SettingsCard.Header>
-                                <toolkit:ImageEx
+                                <Image
                                     Width="64"
-                                    CornerRadius="{StaticResource TinyCornerRadius}"
                                     Source="{x:Bind ViewModel.Model.Thumbnail}" />
                             </labs:SettingsCard.Header>
                             <Button Content="Change" IsEnabled="False" />

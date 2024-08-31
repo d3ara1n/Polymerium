@@ -42,16 +42,16 @@ public class SettingViewModel : ObservableObject
 
     public LanguageModel[] Languages { get; } =
     [
-        new LanguageModel("en_US", "Chinglish"),
-        new LanguageModel("zh_CN", "简体中文")
+        new("en_US", "Chinglish"),
+        new("zh_CN", "简体中文")
     ];
 
     public StyleModel[] Styles { get; } =
     [
-        new StyleModel(0, "None"),
-        new StyleModel(1, "Acrylic"),
-        new StyleModel(2, "Mica"),
-        new StyleModel(3, "MicaAlt")
+        new(0, "None"),
+        new(1, "Acrylic"),
+        new(2, "Mica"),
+        new(3, "MicaAlt")
     ];
 
     public bool IsSuperpowerActivated

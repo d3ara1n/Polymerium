@@ -1,5 +1,4 @@
-﻿using DotNext.Collections.Generic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -39,7 +38,8 @@ public abstract class TaskBase(string key, string stage, string status)
         }
 
         TaskProgressUpdatedEventArgs args = new(Key, state, stage ?? Stage, status ?? Status, progress);
-        subscribers.Where(x => x.Item1.IsAlive).ForEach(x => x.Item2.Invoke(x.Item1.Target, [this, args]));
+        foreach (var item in subscribers.Where(x => x.Item1.IsAlive))
+            item.Item2.Invoke(item.Item1.Target, [this, args]);
         State = state;
         Progress = progress;
         Stage = stage ?? Stage;

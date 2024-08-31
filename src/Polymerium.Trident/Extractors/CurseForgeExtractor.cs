@@ -1,5 +1,4 @@
-﻿using DotNext.Collections.Generic;
-using Polymerium.Trident.Models.CurseForge;
+﻿using Polymerium.Trident.Models.CurseForge;
 using Polymerium.Trident.Repositories;
 using System.Text.Json;
 using Trident.Abstractions.Exceptions;
@@ -43,11 +42,15 @@ public class CurseForgeExtractor : IExtractor
         }
 
         ContainedLayer required = new() { Summary = manifest.Name, OverrideDirectoryName = manifest.Overrides };
-        required.Loaders.AddAll(loaders.Where(x => x.Primary).Select(x => x.Item1!));
-        required.Attachments.AddAll(manifest.Files.Where(x => x.Required).Select(ToAttachment));
+        foreach (var item in loaders.Where(x => x.Primary).Select(x => x.Item1!))
+            required.Loaders.Add(item);
+        foreach (var item in manifest.Files.Where(x => x.Required).Select(ToAttachment))
+            required.Attachments.Add(item);
         ContainedLayer optional = new() { Summary = $"{manifest.Name}(Optional)" };
-        optional.Loaders.AddAll(loaders.Where(x => !x.Primary).Select(x => x.Item1!));
-        optional.Attachments.AddAll(manifest.Files.Where(x => !x.Required).Select(ToAttachment));
+        foreach (var item in loaders.Where(x => !x.Primary).Select(x => x.Item1!))
+            required.Loaders.Add(item);
+        foreach (var item in manifest.Files.Where(x => !x.Required).Select(ToAttachment))
+            required.Attachments.Add(item);
         ExtractedContainer container = new(manifest.Name, manifest.Minecraft.Version);
         if (required.Loaders.Any() && required.Attachments.Any())
         {

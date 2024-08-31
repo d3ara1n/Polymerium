@@ -1,8 +1,6 @@
-using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Polymerium.App.ViewModels;
-using Polymerium.Trident.Helpers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -21,6 +19,6 @@ public sealed partial class ModpackView : Page
         ViewModel.OnAttached(e.Parameter);
     }
 
-    private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e) =>
-        UriFileHelper.OpenInExternal(e.Link);
+    //private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e) =>
+    //    UriFileHelper.OpenInExternal(e.Link);
 }

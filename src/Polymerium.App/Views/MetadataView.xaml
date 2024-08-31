@@ -9,7 +9,7 @@
     xmlns:ic="using:FluentIcons.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Polymerium.App.Models"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
     <Grid Margin="{StaticResource PageContentMargin}" ColumnSpacing="{StaticResource SmallGap}">
@@ -474,13 +474,11 @@
                                                                             <ColumnDefinition Width="Auto" />
                                                                             <ColumnDefinition Width="*" />
                                                                         </Grid.ColumnDefinitions>
-                                                                        <toolkit:ImageEx
+                                                                        <Image
                                                                             Grid.Column="0"
                                                                             Width="40"
                                                                             VerticalAlignment="Center"
-                                                                            CornerRadius="3"
-                                                                            IsCacheEnabled="True"
-                                                                            Source="{x:Bind Thumbnail.Value, Mode=OneWay}" />
+                                                                            Source="{x:Bind Thumbnail.Value.AbsoluteUri, Mode=OneWay}" />
                                                                         <StackPanel Grid.Column="1"
                                                                             VerticalAlignment="Center">
                                                                             <Grid>

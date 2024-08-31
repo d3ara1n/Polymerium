@@ -1,5 +1,4 @@
 ﻿using Humanizer;
-using Humanizer.Localisation;
 using Polymerium.App.Extensions;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
