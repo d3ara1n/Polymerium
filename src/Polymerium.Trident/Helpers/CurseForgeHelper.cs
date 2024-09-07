@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Models.Eternal;
 using Polymerium.Trident.Repositories;
-using ReverseMarkdown;
 using System.Net.Http.Json;
 using Trident.Abstractions.Exceptions;
 using Trident.Abstractions.Resources;
@@ -22,10 +21,10 @@ public static class CurseForgeHelper
     private const uint CLASSID_SHADERPACK = 6552;
     private const uint CLASSID_RESOURCEPACK = 12;
 
-    private static readonly Converter MARKDOWNER = new(new Config
-    {
-        GithubFlavored = true, SmartHrefHandling = true, RemoveComments = true
-    });
+    //private static readonly Converter MARKDOWNER = new(new Config
+    //{
+    //    GithubFlavored = true, SmartHrefHandling = true, RemoveComments = true
+    //});
 
     public static readonly IReadOnlyDictionary<string, string> MODLOADER_MAPPINGS = new Dictionary<string, string>
     {
@@ -222,7 +221,7 @@ public static class CurseForgeHelper
             .OrderByDescending(x => x.FileDate).Select(async x =>
             {
                 var changelog = await GetModFileChangelogAsync(logger, factory, projectId, x.Id, token);
-                return new Project.Version(x.Id.ToString(), x.DisplayName, MARKDOWNER.Convert(changelog),
+                return new Project.Version(x.Id.ToString(), x.DisplayName, changelog,
                     x.ExtractReleaseType(),
                     x.FileDate,
                     x.FileName, x.ExtractSha1(), x.ExtractDownloadUrl(),
@@ -243,7 +242,7 @@ public static class CurseForgeHelper
             kind,
             mod.DateCreated,
             mod.DateModified,
-            mod.DownloadCount, MARKDOWNER.Convert(modDesc),
+            mod.DownloadCount, modDesc,
             mod.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList(),
             versions);
     }

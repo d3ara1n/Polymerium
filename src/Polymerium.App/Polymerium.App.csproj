@@ -13,14 +13,8 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Nullable>enable</Nullable>
 		<RepositoryUrl>https://github.com/d3ara1n/Polymerium</RepositoryUrl>
+		<SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
-	<ItemGroup>
-		<None Remove="Assets\Icons\Desert.svg" />
-		<None Remove="Controls\Label.xaml" />
-		<None Remove="Modals\AttachmentBulkUpdateModal.xaml" />
-		<None Remove="Views\NotFoundView.xaml" />
-		<None Remove="Views\TaskView.xaml" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.0" />
@@ -46,7 +40,6 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240821" />
 		<PackageReference Include="CsvHelper" Version="33.0.1" />
 		<PackageReference Include="FluentIcons.WinUI" Version="1.1.255" />
-		<PackageReference Include="HtmlAgilityPack" Version="1.11.65" />
 		<PackageReference Include="Humanizer" Version="3.0.0-beta.54" />
 		<PackageReference Include="IBuilder" Version="0.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
@@ -65,20 +58,5 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\NotFoundView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\TaskView.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\Label.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
 	</ItemGroup>
 </Project>

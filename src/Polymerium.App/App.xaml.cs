@@ -49,7 +49,7 @@ public partial class App
 
     public static new App Current => (App)Application.Current;
 
-    public IServiceProvider Provider { get; }
+    private IServiceProvider Provider { get; }
 
     public Window Window { get; private set; } = null!;
     public DispatcherQueue Dispatcher => Window.DispatcherQueue;
