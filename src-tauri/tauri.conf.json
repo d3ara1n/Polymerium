@@ -4,7 +4,7 @@
   "identifier": "io.github.polymerium",
   "build": {
     "frontendDist": "../.output/public",
-    "devUrl": "http://localhost:3000",
+    "devUrl": "http://localhost:3060",
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build"
   },
