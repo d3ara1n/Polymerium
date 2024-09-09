@@ -6,9 +6,6 @@ export default defineConfig({
     vite: {
         plugins:[
             tsconfigPaths({ root: './' })
-        ],
-        server: {
-            port: 3060
-        }
+        ]
     }
 });

@@ -11,6 +11,9 @@ importers:
       '@ark-ui/solid':
         specifier: ^3.10.0
         version: 3.10.0(solid-js@1.8.22)
+      '@solidjs/router':
+        specifier: ^0.14.3
+        version: 0.14.3(solid-js@1.8.22)
       '@solidjs/start':
         specifier: ^1.0.6
         version: 1.0.6(rollup@4.21.2)(solid-js@1.8.22)(vinxi@0.4.2(@types/node@22.5.3)(ioredis@5.4.1)(lightningcss@1.25.1)(terser@5.31.6))(vite@5.4.3(@types/node@22.5.3)(lightningcss@1.25.1)(terser@5.31.6))
@@ -834,6 +837,11 @@ packages:
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
     engines: {node: '>=18'}
+
+  '@solidjs/router@0.14.3':
+    resolution: {integrity: sha512-9p4k4zL2baK/1XRQALbFcaQ4IikjkWmxqYQtFqLzjONUejhL1uqJHtzxB4tZjmNqtRANVRnTDbJfzjvaD9k+pQ==}
+    peerDependencies:
+      solid-js: ^1.8.6
 
   '@solidjs/start@1.0.6':
     resolution: {integrity: sha512-O5knaeqDBx+nKLJRm5ZJurnXZtIYBOwOreQ10APaVtVjKIKKRC5HxJ1Kwqg7atOQNNDgsF0pzhW218KseaZ1UA==}
@@ -4166,6 +4174,10 @@ snapshots:
     optional: true
 
   '@sindresorhus/merge-streams@2.3.0': {}
+
+  '@solidjs/router@0.14.3(solid-js@1.8.22)':
+    dependencies:
+      solid-js: 1.8.22
 
   '@solidjs/start@1.0.6(rollup@4.21.2)(solid-js@1.8.22)(vinxi@0.4.2(@types/node@22.5.3)(ioredis@5.4.1)(lightningcss@1.25.1)(terser@5.31.6))(vite@5.4.3(@types/node@22.5.3)(lightningcss@1.25.1)(terser@5.31.6))':
     dependencies:

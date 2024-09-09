@@ -1,15 +1,21 @@
-import { createSignal } from "solid-js";
+import { Router } from "@solidjs/router";
+import { FileRoutes } from "node_modules/@solidjs/start/dist/router";
+import { css } from "styled-system/css";
+import { Box } from "styled-system/jsx";
 import "~/index.css";
-import { Button } from "~/components/ui/button";
 
 export default function App() {
-    const [count, setCount] = createSignal(0);
 
     return (
         <main>
-            <Button variant="ghost" onClick={() =>  setCount(count() + 1)}>
-                {count()}
-            </Button>
+            <Box class={css({
+                background: "black"
+            })}>
+
+            </Box>
+            <Router url="about">
+                <FileRoutes />
+            </Router>
         </main>
     );
 }

@@ -1,1 +1,9 @@
 @layer reset, base, tokens, recipes, utilities;
+
+html {
+    background: transparent;
+}
+
+body {
+    background: transparent;
+}

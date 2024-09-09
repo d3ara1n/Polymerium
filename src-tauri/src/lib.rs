@@ -1,6 +1,8 @@
 use std::error::Error;
 
 use tauri::{App, Manager};
+use window_vibrancy::apply_acrylic;
+#[allow(unused_imports)]
 use window_vibrancy::{apply_mica, apply_vibrancy, NSVisualEffectMaterial};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -24,8 +26,8 @@ fn setup(app: &mut App) -> Result<(), Box<dyn Error>> {
         .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
 
     #[cfg(target_os = "windows")]
-    apply_mica(&window, None)
-        .expect("Unsupported platform! 'apply_mica' is only supported on Windows 11");
+    apply_acrylic(&window, None)
+        .expect("Unsupported platform! 'apply_acrylic' is only supported on Windows 11");
 
     Ok(())
 }
