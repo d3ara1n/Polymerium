@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "prepare": "panda codegen",
-    "dev": "vinxi dev",
+    "dev": "vinxi dev --port 3060",
     "build": "vinxi build",
     "start": "vinxi start"
   },
