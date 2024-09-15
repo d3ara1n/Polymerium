@@ -5,12 +5,12 @@
         }
     ],
     "settings": {
-        "[html]": {
-            "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
+        "editor.defaultFormatter": "biomejs.biome",
         "cSpell.words": [
             "bindgen",
+            "biomejs",
             "chrono",
+            "codegen",
             "curseforge",
             "dependi",
             "fabricmc",
@@ -19,12 +19,14 @@
             "leptos",
             "libpolymerium",
             "libtrident",
+            "lucide",
             "minecraftforge",
             "modpack",
             "modrinth",
             "NEOFORGE",
             "neoforged",
             "packageurl",
+            "pandacss",
             "polylock",
             "Polymerium",
             "preline",
@@ -78,6 +80,12 @@
                     "preLaunchTask": "ui:build"
                 }
             ]
+        },
+        "[jsonc]": {
+            "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[typescriptreact]": {
+            "editor.defaultFormatter": "biomejs.biome"
         }
     },
     "tasks": {

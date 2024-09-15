@@ -12,6 +12,13 @@ fn hello(name: String) -> String {
     format!("Hello {}", name)
 }
 
+enum Backdrop {
+    None,
+    Acrylic,
+    Mica,
+    Vibrancy,
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let specta = Builder::<tauri::Wry>::new().commands(collect_commands![hello]);
@@ -31,23 +38,32 @@ pub fn run() {
             let window = app.get_webview_window("main").unwrap();
             let platform = platform();
 
-            match platform{
-                "windows" => 
-                    if let Version::Semantic(10, _, patch) = version(){
-                        if patch > 22000{
-                            apply_mica(&window, None)
-                            .expect("Unsupported platform! 'apply_mica' is only supported on Windows 11");
-                        }else{
-                            apply_acrylic(&window, None)
-                        .expect("Unsupported platform! 'apply_acrylic' is only supported on Windows 11");
+            let backdrop = match platform {
+                "windows" =>
+                    if let Version::Semantic(10, _, patch) = version() {
+                        if patch > 22000 {
+                            // NOTE: 暂时先 Acrylic
+                            Backdrop::Acrylic
+                        } else {
+                            Backdrop::Acrylic
                         }
+                    }else{
+                        Backdrop::None
                     },
-                "macos" => {
-                    apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
-                        .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
-                }
-                _ => panic!("Unsupported platform")
-            };            
+                "macos" => 
+                    Backdrop::Vibrancy,
+                                _ => Backdrop::None
+            };
+
+            match backdrop {
+                Backdrop::Acrylic => apply_acrylic(&window, None)
+                    .expect("Unsupported platform! 'apply_acrylic' is only supported on Windows 10 above"),
+                Backdrop::Mica => apply_mica(&window, None)
+                    .expect("Unsupported platform! 'apply_mica' is only supported on Windows 11 above"),
+                Backdrop::Vibrancy => apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
+                    .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS"),
+                Backdrop::None => {}
+            }
 
             specta.mount_events(app);
 

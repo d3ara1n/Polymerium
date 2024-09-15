@@ -2,8 +2,17 @@
 
 html {
     background: transparent;
+    height: 100%;
 }
 
 body {
     background: transparent;
+}
+
+main{
+    height: 100%;
+}
+
+#app {
+    height: 100%;
 }
