@@ -17,6 +17,9 @@ importers:
       '@solidjs/start':
         specifier: ^1.0.6
         version: 1.0.6(rollup@4.21.2)(solid-js@1.8.22)(vinxi@0.4.2(@types/node@22.5.3)(ioredis@5.4.1)(lightningcss@1.25.1)(terser@5.31.6))(vite@5.4.3(@types/node@22.5.3)(lightningcss@1.25.1)(terser@5.31.6))
+      '@tauri-apps/plugin-os':
+        specifier: 2.0.0-rc.1
+        version: 2.0.0-rc.1
       solid-js:
         specifier: ^1.8.18
         version: 1.8.22
@@ -849,6 +852,9 @@ packages:
   '@swc/helpers@0.5.13':
     resolution: {integrity: sha512-UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==}
 
+  '@tauri-apps/api@2.0.0-rc.4':
+    resolution: {integrity: sha512-UNiIhhKG08j4ooss2oEEVexffmWkgkYlC2M3GcX3VPtNsqFgVNL8Mcw/4Y7rO9M9S+ffAMnLOF5ypzyuyb8tyg==}
+
   '@tauri-apps/cli-darwin-arm64@2.0.0-rc.10':
     resolution: {integrity: sha512-oAuG3n/dIqK5ZedknF1QOgVDlpEepAaaIFHpUi+eIdG1MFp82jgyHqplveVZ95F16j7RhjIMaEhiTF6cGR/baA==}
     engines: {node: '>= 10'}
@@ -913,6 +919,9 @@ packages:
     resolution: {integrity: sha512-mnoMyeD65DoVWzrLiLRW8Ns5Aktn9Ua7eKTOUEPq+r+1sQtWKxfnYTBEbEWnivduLhJCEDqGP5tyJaPcVXcEzA==}
     engines: {node: '>= 10'}
     hasBin: true
+
+  '@tauri-apps/plugin-os@2.0.0-rc.1':
+    resolution: {integrity: sha512-PV8zlSTmYfiN2xzILUmlDSEycS7UYbH2yXk/ZqF+qQU6/s+OVQvmSth4EhllFjcpvPbtqELvpzfjw+2qEouchA==}
 
   '@ts-morph/common@0.22.0':
     resolution: {integrity: sha512-HqNBuV/oIlMKdkLshXd1zKBqNQCsuPEsgQOkfFQ/eUKjRlwndXW1AjN9LVkBEIukm00gGXSRmfkl0Wv5VXLnlw==}
@@ -4209,6 +4218,8 @@ snapshots:
     dependencies:
       tslib: 2.7.0
 
+  '@tauri-apps/api@2.0.0-rc.4': {}
+
   '@tauri-apps/cli-darwin-arm64@2.0.0-rc.10':
     optional: true
 
@@ -4251,6 +4262,10 @@ snapshots:
       '@tauri-apps/cli-win32-arm64-msvc': 2.0.0-rc.10
       '@tauri-apps/cli-win32-ia32-msvc': 2.0.0-rc.10
       '@tauri-apps/cli-win32-x64-msvc': 2.0.0-rc.10
+
+  '@tauri-apps/plugin-os@2.0.0-rc.1':
+    dependencies:
+      '@tauri-apps/api': 2.0.0-rc.4
 
   '@ts-morph/common@0.22.0':
     dependencies:

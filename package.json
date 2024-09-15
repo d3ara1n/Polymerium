@@ -11,6 +11,7 @@
     "@ark-ui/solid": "^3.10.0",
     "@solidjs/router": "^0.14.3",
     "@solidjs/start": "^1.0.6",
+    "@tauri-apps/plugin-os": "2.0.0-rc.1",
     "solid-js": "^1.8.18",
     "vinxi": "^0.4.1"
   },

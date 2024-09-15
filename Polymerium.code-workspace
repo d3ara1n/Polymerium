@@ -12,6 +12,7 @@
             "bindgen",
             "chrono",
             "curseforge",
+            "dependi",
             "fabricmc",
             "fullscreen",
             "hasher",
@@ -32,10 +33,116 @@
             "resourcepack",
             "shaderpack",
             "solidjs",
+            "specta",
             "tailwindcss",
             "tauri",
-            "thiserror"
+            "thiserror",
+            "vinxi"
         ],
-        "rust-analyzer.showUnlinkedFileNotification": false
+        "rust-analyzer.showUnlinkedFileNotification": false,
+        "dependi.npm.lockFileEnabled": true,
+        "launch": {
+            // Use IntelliSense to learn about possible attributes.
+            // Hover to view descriptions of existing attributes.
+            // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+            "version": "0.2.0",
+            "configurations": [
+                {
+                    "type": "lldb",
+                    "request": "launch",
+                    "cwd": "${workspaceFolder}",
+                    "name": "Tauri Development Debug",
+                    "cargo": {
+                        "args": [
+                            "build",
+                            "--manifest-path=${workspaceFolder}/Cargo.toml",
+                            "--no-default-features"
+                        ],
+                    },
+                    // task for the `beforeDevCommand` if used, must be configured in `.vscode/tasks.json`
+                    "preLaunchTask": "ui:dev"
+                },
+                {
+                    "type": "lldb",
+                    "request": "launch",
+                    "cwd": "${workspaceFolder}",
+                    "name": "Tauri Production Debug",
+                    "cargo": {
+                        "args": [
+                            "build",
+                            "--release",
+                            "--manifest-path=${workspaceFolder}/Cargo.toml"
+                        ]
+                    },
+                    // task for the `beforeBuildCommand` if used, must be configured in `.vscode/tasks.json`
+                    "preLaunchTask": "ui:build"
+                }
+            ]
+        }
+    },
+    "tasks": {
+        // See https://go.microsoft.com/fwlink/?LinkId=733558
+        // for the documentation about the tasks.json format
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "build:debug",
+                "type": "cargo",
+                "command": "build"
+            },
+            {
+                "label": "ui:dev",
+                "type": "shell",
+                // `dev` keeps running in the background
+                // ideally you should also configure a `problemMatcher`
+                // see https://code.visualstudio.com/docs/editor/tasks#_can-a-background-task-be-used-as-a-prelaunchtask-in-launchjson
+                // change this to your `beforeDevCommand`:
+                "command": "pnpm",
+                "isBackground": true,
+                "args": [
+                    "dev"
+                ],
+                "options": {
+                    "shell": {
+                        "executable": "cmd.exe",
+                        "args": [
+                            "/d",
+                            "/c"
+                        ],
+                    },
+                    "cwd": "${workspaceFolder}"
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "ui:build",
+                "type": "shell",
+                // change this to your `beforeBuildCommand`:
+                "command": "pnpm",
+                "args": [
+                    "build"
+                ],
+                "options": {
+                    "shell": {
+                        "executable": "cmd.exe",
+                        "args": [
+                            "/d",
+                            "/c"
+                        ]
+                    },
+                    "cwd": "${workspaceFolder}"
+                }
+            },
+            {
+                "label": "dev",
+                "dependsOn": [
+                    "build:debug",
+                    "ui:dev"
+                ],
+                "group": {
+                    "kind": "build"
+                }
+            }
+        ]
     }
 }

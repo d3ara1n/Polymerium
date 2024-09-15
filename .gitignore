@@ -1,17 +1,6 @@
-
-dist
-.solid
-.output
-.vercel
-.netlify
-.vinxi
-
 # Environment
 .env
 .env*.local
-
-# dependencies
-/node_modules
 
 # IDEs and editors
 /.idea
@@ -27,10 +16,22 @@ gitignore
 .DS_Store
 Thumbs.db
 
+# Cargo workspace
 /target
+
+# Node & Solidjs
+/dist
+/.solid
+/.output
+/.vercel
+/.netlify
+/.vinxi
+/node_modules
+
+# Panda
 **/gen/schemas
-## Panda
 styled-system
 styled-system-studio
 
-Cargo.lock
+# Tauri & Specta
+src/bindings.ts
