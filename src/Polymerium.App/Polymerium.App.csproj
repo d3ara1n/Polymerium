@@ -8,38 +8,39 @@
 		<Description>Yet another instance manager</Description>
 		<Platforms>x86;x64;ARM64</Platforms>
 		<Authors>D3ara1n</Authors>
-		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+		<RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
 		<UseWinUI>true</UseWinUI>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Nullable>enable</Nullable>
 		<RepositoryUrl>https://github.com/d3ara1n/Polymerium</RepositoryUrl>
 		<SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+		<WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.0" />
-		<PackageReference Include="CommunityToolkit.WinUI.Collections" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.HeaderedControls" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.ImageCropper" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.LayoutTransformControl" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.MetadataControl" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.RadialGauge" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.RangeSelector" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.RichSuggestBox" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.TabbedCommandBar" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Animations" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.1.240821" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240821" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.1" />
+		<PackageReference Include="CommunityToolkit.WinUI.Collections" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.HeaderedControls" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.ImageCropper" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.LayoutTransformControl" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.MetadataControl" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.RadialGauge" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.RangeSelector" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.RichSuggestBox" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.TabbedCommandBar" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.TokenizingTextBox" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Animations" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.1.240916" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240916" />
 		<PackageReference Include="CsvHelper" Version="33.0.1" />
-		<PackageReference Include="FluentIcons.WinUI" Version="1.1.255" />
+		<PackageReference Include="FluentIcons.WinUI" Version="1.1.258" />
 		<PackageReference Include="Humanizer" Version="3.0.0-beta.54" />
 		<PackageReference Include="IBuilder" Version="0.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
@@ -49,8 +50,8 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.2.0" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240802000" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
 		<PackageReference Include="Mime-Detective" Version="24.7.1" />
 		<PackageReference Include="Nanoid" Version="3.1.0" />
 		<PackageReference Include="System.Text.Json" Version="8.0.4" />
