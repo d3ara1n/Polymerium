@@ -17,7 +17,7 @@
     "vinxi": "^0.4.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.0",
+    "@biomejs/biome": "^1.9.1",
     "@pandacss/dev": "^0.46.0",
     "@park-ui/panda-preset": "^0.42.0",
     "@tauri-apps/cli": "2.0.0-rc.10",
