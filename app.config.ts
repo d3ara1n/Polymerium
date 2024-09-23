@@ -7,5 +7,6 @@ export default defineConfig({
         plugins:[
             tsconfigPaths({ root: './' })
         ]
-    }
+    },
+    ssr: false
 });

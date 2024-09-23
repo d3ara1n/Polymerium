@@ -1,13 +1,17 @@
-import { Box, Flex, VStack } from "../styled-system/jsx";
-import { A, Router, type RouteSectionProps } from "@solidjs/router";
-import { Card } from "./components/ui/card";
-import { Button } from "./components/ui/button";
-import { Text } from "./components/ui/text";
-import { AppWindow, Minus, Square, X } from "lucide-solid";
-import { IconButton } from "./components/ui/icon-button";
+import {Box, Flex, VStack} from "../styled-system/jsx";
+import {A, Router, type RouteSectionProps} from "@solidjs/router";
+import {Card} from "./components/ui/card";
+import {Button} from "./components/ui/button";
+import {Text} from "./components/ui/text";
+import {AppWindow, Minus, Square, X} from "lucide-solid";
+import {IconButton} from "./components/ui/icon-button";
+import {getCurrentWindow} from "@tauri-apps/api/window";
+import {createSignal} from "solid-js";
 
-export default function Layout(props: RouteSectionProps) {
-    
+export default async function Layout(props: RouteSectionProps) {
+    const appWindow = getCurrentWindow();
+
+    const [maximized, setMaximized] = createSignal(false);
 
     return (
         <main>
@@ -18,12 +22,12 @@ export default function Layout(props: RouteSectionProps) {
                         background={"bg.emphasized"}
                         borderRadius={"md"}
                         height={"full"}
-                        width={52}
+                        width={"64"}
                         shadow={"sm"}
                         data-tauri-drag-region
                     >
                         <Flex direction={"row"} width={"full"}>
-                            <Box padding={2} flex={"1"}>
+                            <Box padding={maximized() ? 0 : 2} flex={"1"}>
                                 <Text size="xs" userSelect={"none"}>
                                     Polymerium
                                 </Text>
@@ -32,14 +36,27 @@ export default function Layout(props: RouteSectionProps) {
                                 <IconButton
                                     variant={"ghost"}
                                     size={"sm"}
-                                    onClick={() => window.minmize}
+                                    onClick={() => appWindow.minimize()}
                                 >
                                     <Minus />
                                 </IconButton>
-                                <IconButton variant={"ghost"} size={"sm"}>
+                                <IconButton
+                                    variant={"ghost"}
+                                    size={"sm"}
+                                    onclick={async () => {
+                                        const maxed = await appWindow.isMaximized();
+                                        console.log(maxed);
+                                        await appWindow.toggleMaximize();
+                                        setMaximized(maxed);
+                                    }}
+                                >
                                     <Square />
                                 </IconButton>
-                                <IconButton variant={"ghost"} size={"sm"}>
+                                <IconButton
+                                    variant={"ghost"}
+                                    size={"sm"}
+                                    onClick={() => appWindow.close()}
+                                >
                                     <X />
                                 </IconButton>
                             </Box>

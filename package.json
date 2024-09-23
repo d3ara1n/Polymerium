@@ -8,20 +8,20 @@
     "start": "vinxi start"
   },
   "dependencies": {
-    "@ark-ui/solid": "^3.12.0",
-    "@solidjs/router": "^0.14.5",
-    "@solidjs/start": "^1.0.6",
-    "@tauri-apps/plugin-os": "2.0.0-rc.1",
-    "lucide-solid": "^0.441.0",
-    "solid-js": "^1.8.22",
-    "vinxi": "^0.4.3"
+    "@ark-ui/solid": "3.12.1",
+    "@solidjs/router": "0.14.5",
+    "@solidjs/start": "1.0.6",
+    "@tauri-apps/api": "2.0.0-rc.5",
+    "lucide-solid": "0.445.0",
+    "solid-js": "1.8.22",
+    "vinxi": "0.4.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.1",
-    "@pandacss/dev": "^0.46.0",
-    "@park-ui/panda-preset": "^0.42.0",
-    "@tauri-apps/cli": "2.0.0-rc.10",
-    "vite-tsconfig-paths": "^5.0.1"
+    "@biomejs/biome": "1.9.2",
+    "@pandacss/dev": "0.46.0",
+    "@park-ui/panda-preset": "0.42.0",
+    "@tauri-apps/cli": "2.0.0-rc.16",
+    "vite-tsconfig-paths": "5.0.1"
   },
   "engines": {
     "node": ">=18"
