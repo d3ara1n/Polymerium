@@ -13,7 +13,8 @@
         "enabled": true,
         "indentStyle": "space",
         "indentWidth": 4,
-        "bracketSpacing": false
+        "bracketSpacing": false,
+        "attributePosition": "auto"
     },
     "organizeImports": {
         "enabled": true

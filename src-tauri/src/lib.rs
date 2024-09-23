@@ -42,7 +42,7 @@ pub fn run() {
                 "windows" =>
                     if let Version::Semantic(10, _, patch) = version() {
                         if patch > 22000 {
-                            Backdrop::Mica
+                            Backdrop::Acrylic
                         } else {
                             Backdrop::Acrylic
                         }
