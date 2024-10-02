@@ -9,21 +9,18 @@
     },
     "dependencies": {
         "@ark-ui/solid": "4.1.0",
-        "@solidjs/router": "0.14.5",
-        "@solidjs/start": "1.0.6",
-        "@tauri-apps/api": "2.0.0-rc.6",
-        "lucide-solid": "0.446.0",
-        "solid-js": "1.8.22",
+        "@solidjs/router": "0.14.7",
+        "@solidjs/start": "1.0.8",
+        "@tauri-apps/api": "2.0.1",
+        "lucide-solid": "0.447.0",
+        "solid-js": "1.9.1",
         "vinxi": "0.4.3"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.3",
-        "@pandacss/dev": "0.46.0",
+        "@pandacss/dev": "0.46.1",
         "@park-ui/panda-preset": "0.42.0",
-        "@tauri-apps/cli": "2.0.0-rc.16",
+        "@tauri-apps/cli": "2.0.0",
         "vite-tsconfig-paths": "5.0.1"
-    },
-    "engines": {
-        "node": ">=18"
     }
 }
