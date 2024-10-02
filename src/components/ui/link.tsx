@@ -1,1 +1,1 @@
-export { Link, type LinkProps } from './styled/link'
+export {Link, type LinkProps} from "./styled/link";

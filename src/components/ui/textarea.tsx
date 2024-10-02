@@ -1,1 +1,1 @@
-export { Textarea, type TextareaProps } from './styled/textarea'
+export {Textarea, type TextareaProps} from "./styled/textarea";

@@ -5,8 +5,8 @@
     "build": {
         "frontendDist": "../.output/public",
         "devUrl": "http://localhost:3060",
-        "beforeDevCommand": "pnpm dev",
-        "beforeBuildCommand": "pnpm build"
+        "beforeDevCommand": "bun run dev",
+        "beforeBuildCommand": "bun run build"
     },
     "app": {
         "windows": [
@@ -15,7 +15,6 @@
                 "width": 800,
                 "height": 600,
                 "resizable": true,
-                "fullscreen": false,
                 "transparent": true,
                 "decorations": false
             }

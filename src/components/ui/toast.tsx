@@ -1,1 +1,1 @@
-export * as Toast from './styled/toast'
+export * as Toast from "./styled/toast";

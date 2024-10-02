@@ -1,1 +1,1 @@
-export * as Popover from './styled/popover'
+export * as Popover from "./styled/popover";

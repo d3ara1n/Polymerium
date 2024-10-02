@@ -59,7 +59,7 @@ export default function Layout(props: RouteSectionProps) {
                                                 <Menu.ItemGroupLabel>
                                                     Application
                                                 </Menu.ItemGroupLabel>
-                                                <Separator/>
+                                                <Separator />
                                                 <Menu.Item value="settings">
                                                     <HStack>
                                                         <Settings />

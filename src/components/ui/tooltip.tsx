@@ -1,1 +1,1 @@
-export * as Tooltip from './styled/tooltip'
+export * as Tooltip from "./styled/tooltip";

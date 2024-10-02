@@ -1,1 +1,1 @@
-export * as QrCode from './styled/qr-code'
+export * as QrCode from "./styled/qr-code";

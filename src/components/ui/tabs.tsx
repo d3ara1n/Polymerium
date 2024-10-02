@@ -1,1 +1,1 @@
-export * as Tabs from './styled/tabs'
+export * as Tabs from "./styled/tabs";

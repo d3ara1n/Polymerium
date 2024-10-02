@@ -1,1 +1,1 @@
-export * as Menu from './styled/menu'
+export * as Menu from "./styled/menu";

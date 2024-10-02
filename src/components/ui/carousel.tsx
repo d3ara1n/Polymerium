@@ -1,1 +1,1 @@
-export * as Carousel from './styled/carousel'
+export * as Carousel from "./styled/carousel";

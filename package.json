@@ -1,30 +1,29 @@
 {
-  "name": "polymerium",
-  "type": "module",
-  "scripts": {
-    "prepare": "panda codegen",
-    "dev": "vinxi dev --port 3060",
-    "build": "vinxi build",
-    "start": "vinxi start"
-  },
-  "dependencies": {
-    "@ark-ui/solid": "3.12.1",
-    "@solidjs/router": "0.14.5",
-    "@solidjs/start": "1.0.6",
-    "@tauri-apps/api": "2.0.0-rc.5",
-    "lucide-solid": "0.445.0",
-    "solid-js": "1.8.22",
-    "vinxi": "0.4.3"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.9.2",
-    "@pandacss/dev": "0.46.0",
-    "@park-ui/panda-preset": "0.42.0",
-    "@tauri-apps/cli": "2.0.0-rc.16",
-    "vite-tsconfig-paths": "5.0.1"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c"
+    "name": "polymerium",
+    "type": "module",
+    "scripts": {
+        "prepare": "panda codegen",
+        "dev": "vinxi dev --port 3060",
+        "build": "vinxi build",
+        "start": "vinxi start"
+    },
+    "dependencies": {
+        "@ark-ui/solid": "4.1.0",
+        "@solidjs/router": "0.14.5",
+        "@solidjs/start": "1.0.6",
+        "@tauri-apps/api": "2.0.0-rc.6",
+        "lucide-solid": "0.446.0",
+        "solid-js": "1.8.22",
+        "vinxi": "0.4.3"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "1.9.3",
+        "@pandacss/dev": "0.46.0",
+        "@park-ui/panda-preset": "0.42.0",
+        "@tauri-apps/cli": "2.0.0-rc.16",
+        "vite-tsconfig-paths": "5.0.1"
+    },
+    "engines": {
+        "node": ">=18"
+    }
 }

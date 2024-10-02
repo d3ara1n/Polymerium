@@ -39,28 +39,32 @@ pub fn run() {
             let platform = platform();
 
             let backdrop = match platform {
-                "windows" =>
+                "windows" => {
                     if let Version::Semantic(10, _, patch) = version() {
                         if patch > 22000 {
-                            Backdrop::Acrylic
+                            Backdrop::Mica
                         } else {
                             Backdrop::Acrylic
                         }
-                    }else{
+                    } else {
                         Backdrop::None
-                    },
-                "macos" => 
-                    Backdrop::Vibrancy,
-                                _ => Backdrop::None
+                    }
+                }
+                "macos" => Backdrop::Vibrancy,
+                _ => Backdrop::None,
             };
 
             match backdrop {
-                Backdrop::Acrylic => apply_acrylic(&window, None)
-                    .expect("Unsupported platform! 'apply_acrylic' is only supported on Windows 10 above"),
-                Backdrop::Mica => apply_mica(&window, None)
-                    .expect("Unsupported platform! 'apply_mica' is only supported on Windows 11 above"),
-                Backdrop::Vibrancy => apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
-                    .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS"),
+                Backdrop::Acrylic => apply_acrylic(&window, None).expect(
+                    "Unsupported platform! 'apply_acrylic' is only supported on Windows 10 above",
+                ),
+                Backdrop::Mica => apply_mica(&window, None).expect(
+                    "Unsupported platform! 'apply_mica' is only supported on Windows 11 above",
+                ),
+                Backdrop::Vibrancy => {
+                    apply_vibrancy(&window, NSVisualEffectMaterial::HudWindow, None, None)
+                        .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS")
+                }
                 Backdrop::None => {}
             }
 

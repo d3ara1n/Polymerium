@@ -1,1 +1,1 @@
-export * as ToggleGroup from './styled/toggle-group'
+export * as ToggleGroup from "./styled/toggle-group";

@@ -1,1 +1,1 @@
-export * as TagsInput from './styled/tags-input'
+export * as TagsInput from "./styled/tags-input";

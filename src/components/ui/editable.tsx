@@ -1,1 +1,1 @@
-export * as Editable from './styled/editable'
+export * as Editable from "./styled/editable";

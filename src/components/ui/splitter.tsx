@@ -1,1 +1,1 @@
-export * as Splitter from './styled/splitter'
+export * as Splitter from "./styled/splitter";

@@ -1,1 +1,1 @@
-export * as Dialog from './styled/dialog'
+export * as Dialog from "./styled/dialog";

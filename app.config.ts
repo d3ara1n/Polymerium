@@ -1,12 +1,9 @@
-import { defineConfig } from "@solidjs/start/config";
-import tsconfigPaths from "vite-tsconfig-paths"
+import {defineConfig} from "@solidjs/start/config";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-    
     vite: {
-        plugins:[
-            tsconfigPaths({ root: './' })
-        ]
+        plugins: [tsconfigPaths({root: "./"})],
     },
-    ssr: false
+    ssr: true,
 });

@@ -1,1 +1,1 @@
-export * as Card from './styled/card'
+export * as Card from "./styled/card";

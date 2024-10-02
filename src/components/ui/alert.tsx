@@ -1,1 +1,1 @@
-export * as Alert from './styled/alert'
+export * as Alert from "./styled/alert";

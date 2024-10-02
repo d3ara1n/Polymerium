@@ -59,7 +59,7 @@
                             "build",
                             "--manifest-path=${workspaceFolder}/Cargo.toml",
                             "--no-default-features"
-                        ],
+                        ]
                     },
                     // task for the `beforeDevCommand` if used, must be configured in `.vscode/tasks.json`
                     "preLaunchTask": "ui:dev"
@@ -78,13 +78,24 @@
                     },
                     // task for the `beforeBuildCommand` if used, must be configured in `.vscode/tasks.json`
                     "preLaunchTask": "ui:build"
+                },
+                {
+                    "type": "lldb",
+                    "request": "launch",
+                    "name": "Debug executable 'trident'",
+                    "cargo": {
+                        "args": ["build", "--bin=trident", "--package=trident"],
+                        "filter": {
+                            "name": "trident",
+                            "kind": "bin"
+                        }
+                    },
+                    "args": [],
+                    "cwd": "${workspaceFolder}"
                 }
             ]
         },
         "[jsonc]": {
-            "editor.defaultFormatter": "biomejs.biome"
-        },
-        "[typescriptreact]": {
             "editor.defaultFormatter": "biomejs.biome"
         },
         "[json]": {
@@ -92,6 +103,9 @@
         },
         "[typescript]": {
             "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[rust]": {
+            "editor.defaultFormatter": "rust-lang.rust-analyzer"
         }
     },
     "tasks": {
@@ -113,16 +127,11 @@
                 // change this to your `beforeDevCommand`:
                 "command": "pnpm",
                 "isBackground": true,
-                "args": [
-                    "dev"
-                ],
+                "args": ["dev"],
                 "options": {
                     "shell": {
                         "executable": "cmd.exe",
-                        "args": [
-                            "/d",
-                            "/c"
-                        ],
+                        "args": ["/d", "/c"]
                     },
                     "cwd": "${workspaceFolder}"
                 },
@@ -133,26 +142,18 @@
                 "type": "shell",
                 // change this to your `beforeBuildCommand`:
                 "command": "pnpm",
-                "args": [
-                    "build"
-                ],
+                "args": ["build"],
                 "options": {
                     "shell": {
                         "executable": "cmd.exe",
-                        "args": [
-                            "/d",
-                            "/c"
-                        ]
+                        "args": ["/d", "/c"]
                     },
                     "cwd": "${workspaceFolder}"
                 }
             },
             {
                 "label": "dev",
-                "dependsOn": [
-                    "build:debug",
-                    "ui:dev"
-                ],
+                "dependsOn": ["build:debug", "ui:dev"],
                 "group": {
                     "kind": "build"
                 }

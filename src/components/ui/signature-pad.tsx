@@ -1,1 +1,1 @@
-export * as SignaturePad from './styled/signature-pad'
+export * as SignaturePad from "./styled/signature-pad";
