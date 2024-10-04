@@ -10,6 +10,7 @@ import {Menu} from "./components/ui/menu";
 import {Separator} from "./components/ui/styled/menu";
 
 export default function Layout(props: RouteSectionProps) {
+
     const appWindow = getCurrentWindow();
 
     const [maximized, setMaximized] = createSignal(false);

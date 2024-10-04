@@ -5,5 +5,5 @@ export default defineConfig({
     vite: {
         plugins: [tsconfigPaths({root: "./"})],
     },
-    ssr: true,
+    ssr: false,
 });

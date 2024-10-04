@@ -8,7 +8,7 @@
         "start": "vinxi start"
     },
     "dependencies": {
-        "@ark-ui/solid": "4.1.0",
+        "@ark-ui/solid": "4.2.0",
         "@solidjs/router": "0.14.7",
         "@solidjs/start": "1.0.8",
         "@tauri-apps/api": "2.0.1",
@@ -20,7 +20,8 @@
         "@biomejs/biome": "1.9.3",
         "@pandacss/dev": "0.46.1",
         "@park-ui/panda-preset": "0.42.0",
-        "@tauri-apps/cli": "2.0.0",
+        "@tauri-apps/cli": "2.0.1",
         "vite-tsconfig-paths": "5.0.1"
-    }
+    },
+    "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }

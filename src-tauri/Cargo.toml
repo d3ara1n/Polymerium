@@ -1,12 +1,9 @@
 [package]
 name = "polymerium"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+description = "An instance manager for modern Minecraft"
+authors = ["Chien Zhang(d3ara1n@outlook.com)"]
 edition = "2021"
-rust-version = "1.71"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -26,4 +23,4 @@ tauri-plugin-devtools = "2.0.0-rc"
 specta = "2.0.0-rc"
 specta-typescript = "0.0.7"
 tauri-specta = { version = "2.0.0-rc", features = ["derive", "typescript"] }
-tauri-plugin-os = "2.0.0-rc"
+tauri-plugin-os = "2.0"
