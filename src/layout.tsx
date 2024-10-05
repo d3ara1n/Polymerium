@@ -1,17 +1,17 @@
-import {Box, Flex, HStack} from "../styled-system/jsx";
-import type {RouteSectionProps} from "@solidjs/router";
-import {Text} from "./components/ui/text";
-import {AlignJustify, LogOut, Minus, Settings, Square, X} from "lucide-solid";
-import {IconButton} from "./components/ui/icon-button";
-import {getCurrentWindow} from "@tauri-apps/api/window";
-import {createSignal} from "solid-js";
-import {Input} from "./components/ui/input";
-import {Menu} from "./components/ui/menu";
-import {Separator} from "./components/ui/styled/menu";
+import { Box, Flex, HStack } from "../styled-system/jsx";
+import type { RouteSectionProps } from "@solidjs/router";
+import { Text } from "./components/ui/text";
+import { AlignJustify, LogOut, Minus, Settings, Square, X } from "lucide-solid";
+import { IconButton } from "./components/ui/icon-button";
+import { getCurrentWindow } from "@tauri-apps/api/window";
+import { createSignal } from "solid-js";
+import { Input } from "./components/ui/input";
+import { Menu } from "./components/ui/menu";
+import { Separator } from "./components/ui/styled/menu";
 
 export default function Layout(props: RouteSectionProps) {
 
-    const appWindow = getCurrentWindow();
+    //const appWindow = getCurrentWindow();
 
     const [maximized, setMaximized] = createSignal(false);
 
@@ -44,7 +44,7 @@ export default function Layout(props: RouteSectionProps) {
                                     Polymerium
                                 </Text>
                             </Box>
-                            <Box>
+                            {/* {<Box>
                                 <Menu.Root {...props}>
                                     <Menu.Trigger>
                                         <IconButton
@@ -104,7 +104,7 @@ export default function Layout(props: RouteSectionProps) {
                                 >
                                     <X />
                                 </IconButton>
-                            </Box>
+                            </Box>} */}
                         </Flex>
                         <Flex
                             flex={"1"}

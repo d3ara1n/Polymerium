@@ -38,6 +38,8 @@ pub fn run() {
             let window = app.get_webview_window("main").unwrap();
             let platform = platform();
 
+            window.open_devtools();
+
             let backdrop = match platform {
                 "windows" => {
                     if let Version::Semantic(10, _, patch) = version() {

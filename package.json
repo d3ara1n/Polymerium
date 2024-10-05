@@ -12,6 +12,7 @@
         "@solidjs/router": "0.14.7",
         "@solidjs/start": "1.0.8",
         "@tauri-apps/api": "2.0.1",
+        "@tauri-apps/plugin-os": "2.0.0",
         "lucide-solid": "0.447.0",
         "solid-js": "1.9.1",
         "vinxi": "0.4.3"
