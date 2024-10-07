@@ -18,7 +18,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="CommunityToolkit.WinUI.Collections" Version="8.1.240916" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.1.240916" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.HeaderedControls" Version="8.1.240916" />
@@ -40,9 +40,9 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.1.240916" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240916" />
 		<PackageReference Include="CsvHelper" Version="33.0.1" />
-		<PackageReference Include="FluentIcons.WinUI" Version="1.1.258" />
+		<PackageReference Include="FluentIcons.WinUI" Version="1.1.259" />
 		<PackageReference Include="Humanizer" Version="3.0.0-beta.54" />
-		<PackageReference Include="IBuilder" Version="0.2.0" />
+		<PackageReference Include="IBuilder" Version="0.3.0" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.8" />
@@ -50,8 +50,8 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.2.0" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
 		<PackageReference Include="Mime-Detective" Version="24.7.1" />
 		<PackageReference Include="Nanoid" Version="3.1.0" />
 		<PackageReference Include="System.Text.Json" Version="8.0.4" />
