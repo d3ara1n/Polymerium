@@ -8,7 +8,6 @@ using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Trident.Abstractions;
@@ -42,8 +41,9 @@ public class HomeViewModel : ObservableObject
             .Select(x => new RecentModel(x.Item3, x.Item2, thumbnailSaver.Get(x.Item3), GotoInstanceViewCommand))
             .ToList();
 
-        IsDeveloperModeRequired = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock",
-                "AllowDevelopmentWithoutDevLicense", 0) is not 1;
+        IsDeveloperModeRequired = Registry.GetValue(
+            @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock",
+            "AllowDevelopmentWithoutDevLicense", 0) is not 1;
         // TODO: 这里无法识别，所以彻底关闭掉了
         IsDeveloperModeRequired = false;
     }

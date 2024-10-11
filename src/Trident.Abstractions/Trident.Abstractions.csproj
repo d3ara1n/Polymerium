@@ -8,6 +8,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="IBuilder" Version="0.3.0" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
 	</ItemGroup>
 </Project>
