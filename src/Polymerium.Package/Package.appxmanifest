@@ -10,7 +10,7 @@
     <Identity
             Name="2413Dearain.Polymerium"
             Publisher="CN=11C5722E-21B2-4CEC-984F-6BC6DC620005"
-            Version="0.6.6.0"/>
+            Version="0.6.7.0"/>
 
     <mp:PhoneIdentity PhoneProductId="962c8853-9511-4780-84af-179bb352d441"
                       PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
