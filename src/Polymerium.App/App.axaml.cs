@@ -10,13 +10,6 @@ namespace Polymerium.App;
 
 public partial class App : Application
 {
-    private readonly IServiceProvider _provider;
-
-    public App()
-    {
-        _provider = BuildServices();
-    }
-
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -32,31 +25,12 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    private static IServiceProvider BuildServices()
-    {
-        var cfgBuilder = new ConfigurationBuilder();
-        var services = new ServiceCollection();
-
-        cfgBuilder.AddJsonFile("appsettings.json", false);
-#if DEBUG
-        cfgBuilder.AddJsonFile("appsettings.Development.json", true);
-#else
-        cfgBuilder.AddJsonFile("appsettings.Production.json", true);
-#endif
-        var configuration = cfgBuilder.Build();
-        services.AddSingleton<IConfiguration>(configuration);
-
-        Startup.ConfigureServices(services, configuration);
-
-        return services.BuildServiceProvider();
-    }
-
     private static Window ConstructWindow()
     {
         var window = new Window();
         var shell = new Shell();
 
-
+        window.Content = shell;
         return window;
     }
 }
