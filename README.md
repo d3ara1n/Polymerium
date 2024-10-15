@@ -1,3 +1,3 @@
 # Polymerium
 
-Built in Avalonia + FluentAvalonia + FluentIcons.FluentAvalonia
+Built in Avalonia

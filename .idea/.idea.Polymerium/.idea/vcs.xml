@@ -2,8 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/submodules/Duffet" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/submodules/FluentPipeline" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/submodules/Wupoo" vcs="Git" />
   </component>
 </project>

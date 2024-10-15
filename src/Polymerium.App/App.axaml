@@ -1,16 +1,10 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Polymerium.App.App"
-             xmlns:local="using:Polymerium.App"
-             xmlns:styles="using:FluentAvalonia.Styling"
-             xmlns:dialog="using:DialogHostAvalonia"
              RequestedThemeVariant="Default">
-    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-    <Application.Resources>
-        <local:ViewModelLocator x:Key="Locator" />
-    </Application.Resources>
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
     <Application.Styles>
-        <styles:FluentAvaloniaTheme />
-        <dialog:DialogHostStyles />
+        <SimpleTheme />
     </Application.Styles>
 </Application>
