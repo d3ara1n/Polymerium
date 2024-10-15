@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src\Huskui.Avalonia\Huskui.Avalonia.csproj" Type="Classic C#" />
+  <Project Path="src\Polymerium.App\Polymerium.App.csproj" Type="Classic C#" />
+</Solution>
