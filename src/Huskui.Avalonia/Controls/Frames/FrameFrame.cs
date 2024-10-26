@@ -2,4 +2,4 @@
 
 
 // 外框的帧
-public record FrameFrame(Type Frame, object? Parameter);
+public record FrameFrame(Type Page, object? Parameter);
