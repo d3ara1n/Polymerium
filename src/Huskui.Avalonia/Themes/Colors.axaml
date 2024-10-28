@@ -1,4 +1,21 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Add Resources Here -->
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="using:System">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <Color x:Key="Accent1Color">#FFD400</Color>
+            <Color x:Key="Accent2Color">#2E294E</Color>
+            <Color x:Key="Accent3Color">#D90368</Color>
+            <Color x:Key="Accent4Color">#820263</Color>
+            <Color x:Key="Accent5Color">#EADEDA</Color>
+
+            <Color x:Key="Foreground1Color">#21201C</Color>
+            <Color x:Key="Background1Color">#FDFDFC</Color>
+
+            <sys:Double x:Key="FullOpacity">1.0</sys:Double>
+            <sys:Double x:Key="TransparentOpacity">0.0</sys:Double>
+            <sys:Double x:Key="Layer1Opacity">0.5</sys:Double>
+            <sys:Double x:Key="Layer2Opacity">0.6</sys:Double>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
