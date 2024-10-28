@@ -17,6 +17,7 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
         <PackageReference Include="CsToml" Version="1.1.4" />
         <PackageReference Include="DynamicData" Version="9.0.4" />
+        <PackageReference Include="FluentAvaloniaUI" Version="2.1.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
@@ -31,7 +32,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controls\" />
       <Folder Include="Themes\" />
       <Folder Include="Utility\" />
     </ItemGroup>

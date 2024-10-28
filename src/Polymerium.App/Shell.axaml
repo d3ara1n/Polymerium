@@ -2,9 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:fa="using:FluentAvalonia.UI.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Shell">
-    <Grid>
-        <TransitioningContentControl x:Name="Frame" />
+    <Grid ColumnDefinitions="7*, 3*">
+        <fa:Frame Grid.Column="0" x:Name="Frame" />
+        <Grid Grid.Column="1" MaxWidth="300" MinWidth="200">
+            
+        </Grid>
     </Grid>
 </UserControl>

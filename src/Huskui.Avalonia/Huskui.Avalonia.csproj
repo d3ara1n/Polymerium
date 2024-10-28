@@ -9,4 +9,9 @@
     <ItemGroup>
       <PackageReference Include="Avalonia" Version="11.1.4" />
     </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Themes\Colors.axaml" />
+      <UpToDateCheckInput Remove="Themes\Controls.axaml" />
+    </ItemGroup>
 </Project>
