@@ -13,5 +13,7 @@
     <ItemGroup>
       <UpToDateCheckInput Remove="Themes\Colors.axaml" />
       <UpToDateCheckInput Remove="Themes\Controls.axaml" />
+      <UpToDateCheckInput Remove="Controls\Cards\Card.axaml" />
+      <UpToDateCheckInput Remove="Controls\Frames\Frame.axaml" />
     </ItemGroup>
 </Project>

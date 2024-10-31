@@ -1,9 +1,8 @@
-﻿using System.Collections.Immutable;
-using Avalonia.Controls.Primitives;
+﻿using Avalonia.Controls;
 
-namespace Huskui.Avalonia.Controls.Frames;
+namespace Huskui.Avalonia.Controls;
 
-public class Frame : TemplatedControl
+public class Frame: ContentControl
 {
     private readonly Stack<FrameFrame> _history = new Stack<FrameFrame>();
     public IEnumerable<FrameFrame> History => _history;
@@ -22,4 +21,6 @@ public class Frame : TemplatedControl
         }
         else throw new InvalidOperationException("No previous page in the stack");
     }
+
+    public record FrameFrame(Type Page, object? Parameter);
 }

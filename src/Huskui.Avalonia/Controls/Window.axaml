@@ -1,0 +1,12 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Styles.Resources>
+        <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource Sand1Color}"/>
+        <SolidColorBrush x:Key="WindowForegroundBrush" Color="{DynamicResource Sand12Color}"/>
+    </Styles.Resources>
+    
+    <Style Selector="Window">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource WindowForegroundBrush}"/>
+    </Style>
+</Styles>

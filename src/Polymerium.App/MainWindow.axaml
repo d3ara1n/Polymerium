@@ -1,0 +1,27 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:husk="using:Huskui.Avalonia.Controls"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Polymerium.App.MainWindow"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid ColumnDefinitions="7*, 320">
+        <husk:Frame Grid.Column="0" />
+        <Grid Grid.Column="1">
+            <husk:Card Margin="6" Padding="0">
+                <husk:Card.Background>
+                    <SolidColorBrush Color="{DynamicResource Sand2Color}" />
+                </husk:Card.Background>
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <StackPanel DockPanel.Dock="Right">
+                            <Button Content="X" />
+                        </StackPanel>
+                        <TextBlock Text="Polymerium" Margin="12" />
+                    </DockPanel>
+                </DockPanel>
+            </husk:Card>
+        </Grid>
+    </Grid>
+</Window>

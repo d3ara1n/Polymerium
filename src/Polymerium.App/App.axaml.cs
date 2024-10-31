@@ -27,10 +27,6 @@ public partial class App : Application
 
     private static Window ConstructWindow()
     {
-        var window = new Window();
-        var shell = new Shell();
-
-        window.Content = shell;
-        return window;
+        return new MainWindow();
     }
 }
