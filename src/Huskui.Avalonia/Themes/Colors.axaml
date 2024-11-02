@@ -1,9 +1,38 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="using:System">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <!-- Black -->
+            <Color x:Key="Black1Color">#0d000000</Color>
+            <Color x:Key="Black2Color">#1a000000</Color>
+            <Color x:Key="Black3Color">#26000000</Color>
+            <Color x:Key="Black4Color">#33000000</Color>
+            <Color x:Key="Black5Color">#4d000000</Color>
+            <Color x:Key="Black6Color">#66000000</Color>
+            <Color x:Key="Black7Color">#80000000</Color>
+            <Color x:Key="Black8Color">#99000000</Color>
+            <Color x:Key="Black9Color">#b3000000</Color>
+            <Color x:Key="Black10Color">#cc000000</Color>
+            <Color x:Key="Black11Color">#e6000000</Color>
+            <Color x:Key="Black12Color">#f2000000</Color>
+            <!-- White -->
+            <Color x:Key="White1Color">#0dffffff</Color>
+            <Color x:Key="White2Color">#1affffff</Color>
+            <Color x:Key="White3Color">#26ffffff</Color>
+            <Color x:Key="White4Color">#33ffffff</Color>
+            <Color x:Key="White5Color">#4dffffff</Color>
+            <Color x:Key="White6Color">#66ffffff</Color>
+            <Color x:Key="White7Color">#80ffffff</Color>
+            <Color x:Key="White8Color">#99ffffff</Color>
+            <Color x:Key="White9Color">#b3ffffff</Color>
+            <Color x:Key="White10Color">#ccffffff</Color>
+            <Color x:Key="White11Color">#e6ffffff</Color>
+            <Color x:Key="White12Color">#f2ffffff</Color>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
-
             <!-- Neutral Colors -->
             <Color x:Key="Sand1Color">#FDFDFC</Color>
             <Color x:Key="Sand2Color">#F9F9F8</Color>
@@ -31,6 +60,14 @@
             <Color x:Key="Amber10Color">#FFBA18</Color>
             <Color x:Key="Amber11Color">#AB6400</Color>
             <Color x:Key="Amber12Color">#4F3422</Color>
+
+            <!-- Tokens -->
+            <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Amber5Color}" />
+            
+            <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{StaticResource Sand1Color}"/>
+            <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{StaticResource Black1Color}"/>
+            
+            <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Sand6Color}"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
