@@ -1,17 +1,11 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+﻿ <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="using:Huskui.Avalonia.Controls">
 
-    <SolidColorBrush x:Key="CardBorderBrush" Color="{DynamicResource Sand6Color}" />
-
     <ControlTheme x:Key="{x:Type local:Card}" TargetType="local:Card">
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}" />
-        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}"/>
         <Setter Property="Padding" Value="12"/>
-        <Setter Property="Effect">
-            <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="15" Opacity="0.7" Color="{StaticResource Sand6Color}"/>
-        </Setter>
         <Setter Property="Template">
             <ControlTemplate>
                 <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"

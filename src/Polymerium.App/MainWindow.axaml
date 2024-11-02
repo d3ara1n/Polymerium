@@ -5,23 +5,33 @@
         xmlns:husk="using:Huskui.Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Polymerium.App.MainWindow"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="960">
     <Grid ColumnDefinitions="7*, 320">
-        <husk:Frame Grid.Column="0" />
+        <Panel Grid.Column="0">
+            <husk:Frame Grid.Column="0" Margin="24" />
+        </Panel>
         <Grid Grid.Column="1">
-            <husk:Card Margin="6" Padding="0">
-                <husk:Card.Background>
-                    <SolidColorBrush Color="{DynamicResource Sand2Color}" />
-                </husk:Card.Background>
+            <Border Margin="0,6,6,6" Padding="0" CornerRadius="6" Background="Transparent"
+                       BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Top">
                         <StackPanel DockPanel.Dock="Right">
                             <Button Content="X" />
                         </StackPanel>
-                        <TextBlock Text="Polymerium" Margin="12" />
+                        <TextBlock Text="Polymerium" Margin="12,12,12,6" />
+                    </DockPanel>
+                    <DockPanel Margin="6">
+                        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,4,*" RowDefinitions="*,4,Auto,4,Auto">
+                            <Button Grid.Row="0" Grid.Column="0" Content="Create" Height="48"/>
+                            <Button Grid.Row="0" Grid.Column="2" Content="Import " Height="48"/>
+                            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="Go to Exposition" Height="32"/>
+                            <AutoCompleteBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"/>
+                        </Grid>
+                        <ListBox/>
                     </DockPanel>
                 </DockPanel>
-            </husk:Card>
+            </Border>
+
         </Grid>
     </Grid>
 </Window>
