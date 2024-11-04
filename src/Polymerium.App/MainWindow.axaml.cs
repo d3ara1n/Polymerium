@@ -1,9 +1,11 @@
-﻿using Avalonia;
+﻿using System.Diagnostics;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using DynamicData.Binding;
 
 namespace Polymerium.App;
 
@@ -13,6 +15,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        WindowStateProperty.Changed.AddClassHandler<MainWindow>(OnWindowStateChanged);
     }
 
     #region Window State Management
@@ -33,7 +36,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnWindowStateChanged()
+    private void OnWindowStateChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
     {
         (oldCornerRadius, Sidebar.CornerRadius) = (Sidebar.CornerRadius, oldCornerRadius);
         (oldMargin, Sidebar.Margin) = (Sidebar.Margin, oldMargin);
