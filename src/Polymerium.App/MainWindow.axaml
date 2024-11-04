@@ -2,36 +2,51 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:Polymerium.App"
         xmlns:husk="using:Huskui.Avalonia.Controls"
+        xmlns:lucide="using:LucideAvalonia"
+        xmlns:ursa="https://irihi.tech/ursa"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Polymerium.App.MainWindow"
-        Title="MainWindow" Height="600" Width="960">
+        x:Class="Polymerium.App.MainWindow" ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        Title="Polymerium" Height="600" Width="960">
     <Grid ColumnDefinitions="7*, 320">
         <Panel Grid.Column="0">
-            <husk:Frame Grid.Column="0" Margin="24" />
+            <husk:Frame Margin="24" />
         </Panel>
         <Grid Grid.Column="1">
-            <Border Margin="0,6,6,6" Padding="0" CornerRadius="6" Background="Transparent"
-                       BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1">
+            <Border x:Name="Sidebar" Margin="0,6,6,6" CornerRadius="6" Background="Transparent"
+                    BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
+                    PointerPressed="Sidebar_OnPointerPressed" DoubleTapped="Sidebar_OnDoubleTapped">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Top">
                         <StackPanel DockPanel.Dock="Right">
-                            <Button Content="X" />
+                            <ursa:ButtonGroup>
+                                <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick">
+                                    <lucide:Lucide Icon="Minus" Width="8" Background="Transparent" />
+                                </Button>
+                                <Button x:Name="ToggleMaximizeButton" Click="ToggleMaximizeButton_OnClick">
+                                    <lucide:Lucide Icon="Square" Width="8" Background="Transparent" />
+                                </Button>
+                                <Button x:Name="CloseButton" Click="CloseButton_OnClick">
+                                    <lucide:Lucide Icon="X" Width="8" Background="Transparent" />
+                                </Button>
+                            </ursa:ButtonGroup>
                         </StackPanel>
-                        <TextBlock Text="Polymerium" Margin="12,12,12,6" />
+                        <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}" Margin="12,12,12,6" />
                     </DockPanel>
                     <DockPanel Margin="6">
                         <Grid DockPanel.Dock="Top" ColumnDefinitions="*,4,*" RowDefinitions="*,4,Auto,4,Auto">
-                            <Button Grid.Row="0" Grid.Column="0" Content="Create" Height="48"/>
-                            <Button Grid.Row="0" Grid.Column="2" Content="Import " Height="48"/>
-                            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="Go to Exposition" Height="32"/>
-                            <AutoCompleteBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"/>
+                            <Button Grid.Row="0" Grid.Column="0" Content="Create" Height="48" />
+                            <Button Grid.Row="0" Grid.Column="2" Content="Import " Height="48" />
+                            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="Go to Exposition"
+                                    Height="32" />
+                            <AutoCompleteBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" />
                         </Grid>
-                        <ListBox/>
+                        <ListBox />
                     </DockPanel>
                 </DockPanel>
             </Border>
-
         </Grid>
     </Grid>
 </Window>
