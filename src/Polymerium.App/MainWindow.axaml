@@ -41,7 +41,8 @@
                             <Button Grid.Row="0" Grid.Column="2" Content="Import " Height="48" />
                             <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="Go to Exposition"
                                     Height="32" />
-                            <AutoCompleteBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" />
+                            <!-- <AutoCompleteBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" /> -->
+                            <TextBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"/>
                         </Grid>
                         <ListBox />
                     </DockPanel>

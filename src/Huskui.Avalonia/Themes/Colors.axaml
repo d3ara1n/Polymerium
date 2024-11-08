@@ -68,6 +68,7 @@
             <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{StaticResource Black1Color}"/>
             
             <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Sand6Color}"/>
+            <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{StaticResource Sand7Color}"/>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
