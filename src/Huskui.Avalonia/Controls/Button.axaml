@@ -1,10 +1,201 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <ControlTheme x:Key="{x:Type Button}" TargetType="Button">
+    <Design.PreviewWith>
+        <Grid ColumnDefinitions="160,160" Background="White">
+            <StackPanel Grid.Column="0" Spacing="20" Margin="20">
+                <TextBlock Text="Buttons" />
+                <Button Content="Normal" />
+                <Button Content="Normal Primary" Classes="Primary" />
+                <Button Content="Outline" Theme="{StaticResource OutlineButtonTheme}" />
+                <Button Content="Outline Danger" Classes="Danger" Theme="{StaticResource OutlineButtonTheme}" />
+                <Button Content="Ghost" Theme="{StaticResource GhostButtonTheme}" />
+                <Button Content="Ghost Success" Classes="Success" Theme="{StaticResource GhostButtonTheme}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Spacing="20" Margin="20">
+                <TextBlock Text="Disabled" />
+                <Button Content="Normal" IsEnabled="False" />
+                <Button Content="Normal Primary" Classes="Primary" IsEnabled="False" />
+                <Button Content="Outline" Theme="{StaticResource OutlineButtonTheme}" IsEnabled="False" />
+                <Button Content="Outline Danger" Classes="Danger" Theme="{StaticResource OutlineButtonTheme}"
+                        IsEnabled="False" />
+                <Button Content="Ghost" Theme="{StaticResource GhostButtonTheme}" IsEnabled="False" />
+                <Button Content="Ghost Success" Classes="Success" Theme="{StaticResource GhostButtonTheme}"
+                        IsEnabled="False" />
+            </StackPanel>
+        </Grid>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="BaseButtonTheme" TargetType="Button">
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
-            <ControlTemplate>
-                
+            <ControlTemplate TargetType="Button">
+                <Panel>
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}"
+                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background"
+                                                 Duration="{StaticResource ControlNormalAnimationDuration}"
+                                                 Easing="SineEaseOut" />
+                                <BrushTransition Property="BorderBrush"
+                                                 Duration="{StaticResource ControlNormalAnimationDuration}"
+                                                 Easing="SineEaseOut" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <Border x:Name="PART_Overlay" Opacity="0"
+                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <ContentPresenter
+                        Name="PART_ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Background="Transparent"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        RecognizesAccessKey="True"
+                        TextElement.FontSize="{TemplateBinding FontSize}"
+                        TextElement.FontWeight="{TemplateBinding FontWeight}"
+                        UseLayoutRounding="False">
+                        <ContentPresenter.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background"
+                                                 Duration="{StaticResource ControlFastestAnimationDuration}"
+                                                 Easing="SineEaseOut" />
+                            </Transitions>
+                        </ContentPresenter.Transitions>
+                    </ContentPresenter>
+                    <Border x:Name="PART_GlowBorder" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+                </Panel>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^:disabled /template/ Border#PART_Border">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+        <Style Selector="^:disabled /template/ Border#PART_GlowBorder">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type Button}" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+
+        <Style Selector="^:pointerover /template/ Border#PART_Overlay">
+            <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#PART_Overlay">
+            <Setter Property="Opacity" Value="{StaticResource Overlay2Opacity}" />
+        </Style>
+
+        <Style Selector="^ /template/ Border#PART_Overlay">
+            <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Primary">
+            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource Overlay1BackgroundBrush}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Success">
+            <Setter Property="Background" Value="{DynamicResource ControlSuccessBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource Overlay1BackgroundBrush}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Warning">
+            <Setter Property="Background" Value="{DynamicResource ControlWarningBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource Overlay1BackgroundBrush}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.Danger">
+            <Setter Property="Background" Value="{DynamicResource ControlDangerBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource Overlay1BackgroundBrush}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="OutlineButtonTheme" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
+
+        <Style Selector="^:pressed">
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+
+        <Style Selector="^.Primary">
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Success">
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlSuccessBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlSuccessForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Warning">
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlWarningBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlWarningForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Danger">
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlDangerForegroundBrush}" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="GhostButtonTheme" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
+
+
+        <Style Selector="^.Primary">
+            <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Success">
+            <Setter Property="Foreground" Value="{DynamicResource ControlSuccessForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Warning">
+            <Setter Property="Foreground" Value="{DynamicResource ControlWarningForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Danger">
+            <Setter Property="Foreground" Value="{DynamicResource ControlDangerForegroundBrush}" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using Huskui.Avalonia.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace Polymerium.App;
@@ -13,13 +14,6 @@ internal static class Program
     [STAThread]
     public static void Main(string[] args) => BuildAvaloniaApp()
         .StartWithClassicDesktopLifetime(args);
-
-    // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace();
 #else
     public static void Main(string[] args)
     {
@@ -29,4 +23,11 @@ internal static class Program
         host.Run();
     }
 #endif
+    
+    // Avalonia configuration, don't remove; also used by visual designer.
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .WithOutfitFont()
+            .LogToTrace();
 }

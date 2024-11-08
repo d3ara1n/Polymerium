@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
+using Huskui.Avalonia.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace Polymerium.App.Services;
@@ -29,11 +30,7 @@ public class AvaloniaLifetime : IHostLifetime
 
     private void Serve()
     {
-        AppBuilder
-            .Configure<App>()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace()
+        Program.BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
         _parent.StopApplication();
     }
