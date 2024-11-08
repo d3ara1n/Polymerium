@@ -12,9 +12,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <UpToDateCheckInput Remove="Themes\Colors.axaml" />
-      <UpToDateCheckInput Remove="Themes\Controls.axaml" />
-      <UpToDateCheckInput Remove="Controls\Cards\Card.axaml" />
-      <UpToDateCheckInput Remove="Controls\Frames\Frame.axaml" />
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Black.ttf" />
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Bold.ttf" />
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-ExtraBold.ttf" />
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-ExtraLight.ttf" />
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Light.ttf" />
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Medium.ttf" />
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Regular.ttf" />
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-SemiBold.ttf" />
+      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Thin.ttf" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Assets\Fonts\" />
     </ItemGroup>
 </Project>
