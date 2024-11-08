@@ -35,19 +35,19 @@
                         </StackPanel>
                         <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}" Margin="12,12,12,6" />
                     </DockPanel>
-                    <DockPanel Margin="6">
-                        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,4,*" RowDefinitions="*,4,Auto,4,Auto">
-                            <Button Grid.Row="0" Grid.Column="0" Content="Create" Height="48" />
-                            <Button Grid.Row="0" Grid.Column="2" Content="Import" Theme="{StaticResource OutlineButtonTheme}" Height="48" />
-                            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Classes="Primary"
-                                    Content="Go to Exposition"
-                                    Height="32" />
-                            <!-- <AutoCompleteBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" /> -->
-                            <TextBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
-                                     Watermark="Search by names or types" />
-                        </Grid>
-                        <ListBox />
-                    </DockPanel>
+                    <Grid Margin="6" DockPanel.Dock="Top" ColumnDefinitions="*,4,*"
+                          RowDefinitions="Auto,4,Auto,4,Auto,4,*">
+                        <Button Grid.Row="0" Grid.Column="0" Content="Create" Height="48" />
+                        <Button Grid.Row="0" Grid.Column="2" Content="Import"
+                                Theme="{StaticResource OutlineButtonTheme}" Height="48" />
+                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Classes="Primary"
+                                Content="Go to Exposition"
+                                Height="32" />
+                        <!-- <AutoCompleteBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" /> -->
+                        <TextBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
+                                 Watermark="Search by names or types" />
+                        <ListBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" />
+                    </Grid>
                 </DockPanel>
             </Border>
         </Grid>

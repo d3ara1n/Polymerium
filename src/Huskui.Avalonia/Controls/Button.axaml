@@ -91,6 +91,14 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^:pointerover /template/ Border#PART_Overlay">
+            <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#PART_Overlay">
+            <Setter Property="Opacity" Value="{StaticResource Overlay2Opacity}" />
+        </Style>
+
         <Style Selector="^:disabled /template/ Border#PART_Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
@@ -101,14 +109,6 @@
 
     <ControlTheme x:Key="{x:Type Button}" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-
-        <Style Selector="^:pointerover /template/ Border#PART_Overlay">
-            <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
-        </Style>
-
-        <Style Selector="^:pressed /template/ Border#PART_Overlay">
-            <Setter Property="Opacity" Value="{StaticResource Overlay2Opacity}" />
-        </Style>
 
         <Style Selector="^ /template/ Border#PART_Overlay">
             <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
@@ -158,44 +158,82 @@
             <Setter Property="BorderThickness" Value="2" />
         </Style>
 
+        <Style Selector="^ /template/ Border#PART_Overlay">
+            <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
+        </Style>
+
         <Style Selector="^.Primary">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource OverlayAccentBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Success">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlSuccessBackgroundBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlSuccessForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource OverlaySuccessBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Warning">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlWarningBackgroundBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlWarningForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource OverlayWarningBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Danger">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBackgroundBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlDangerForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource OverlayDangerBackgroundBrush}" />
+            </Style>
         </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="GhostButtonTheme" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
-
-
+        <Style Selector="^ /template/ Border#PART_Overlay">
+            <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
+        </Style>
+        
         <Style Selector="^.Primary">
             <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource OverlayAccentBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Success">
             <Setter Property="Foreground" Value="{DynamicResource ControlSuccessForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource OverlaySuccessBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Warning">
             <Setter Property="Foreground" Value="{DynamicResource ControlWarningForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource OverlayWarningBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Danger">
             <Setter Property="Foreground" Value="{DynamicResource ControlDangerForegroundBrush}" />
+
+            <Style Selector="^ /template/ Border#PART_Overlay">
+                <Setter Property="Background" Value="{DynamicResource OverlayDangerBackgroundBrush}" />
+            </Style>
         </Style>
     </ControlTheme>
 </ResourceDictionary>

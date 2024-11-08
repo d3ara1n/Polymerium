@@ -121,8 +121,10 @@
 
             <SolidColorBrush x:Key="Overlay1BackgroundBrush" Color="{StaticResource Sand1Color}" />
             <SolidColorBrush x:Key="Overlay12BackgroundBrush" Color="{StaticResource Sand7Color}" />
-            <SolidColorBrush x:Key="Overlay1AccentBackgroundBrush" Color="{StaticResource Sand1Color}" />
-            <SolidColorBrush x:Key="Overlay12AccentBackgroundBrush" Color="{StaticResource Sand7Color}" />
+            <SolidColorBrush x:Key="OverlayAccentBackgroundBrush" Color="{StaticResource Amber7Color}" />
+            <SolidColorBrush x:Key="OverlaySuccessBackgroundBrush" Color="{StaticResource Grass7Color}" />
+            <SolidColorBrush x:Key="OverlayWarningBackgroundBrush" Color="{StaticResource Yellow7Color}" />
+            <SolidColorBrush x:Key="OverlayDangerBackgroundBrush" Color="{StaticResource Tomato7Color}" />
 
             <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource Sand3Color}" />
             <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{StaticResource Amber9Color}" />
