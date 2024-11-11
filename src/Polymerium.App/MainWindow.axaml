@@ -9,8 +9,12 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Polymerium.App.MainWindow" ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
-        Title="Polymerium" Height="600" Width="960">
-    <Grid ColumnDefinitions="7*, 320">
+        Title="Polymerium" MinHeight="459" MinWidth="600" Height="600" Width="960">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="65*" />
+            <ColumnDefinition Width="35*" MaxWidth="400" MinWidth="200" />
+        </Grid.ColumnDefinitions>
         <Panel Grid.Column="0">
             <husk:Frame Margin="24" />
         </Panel>
@@ -21,32 +25,48 @@
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Top">
                         <StackPanel DockPanel.Dock="Right">
-                            <ursa:ButtonGroup>
+                            <ursa:ButtonGroup Background="Transparent">
                                 <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick">
-                                    <lucide:Lucide Icon="Minus" Width="8" Background="Transparent" />
+                                    <lucide:Lucide Icon="Minus" Width="8" />
                                 </Button>
                                 <Button x:Name="ToggleMaximizeButton" Click="ToggleMaximizeButton_OnClick">
-                                    <lucide:Lucide Icon="Square" Width="8" Background="Transparent" />
+                                    <lucide:Lucide Icon="Square" Width="8" />
                                 </Button>
                                 <Button x:Name="CloseButton" Click="CloseButton_OnClick">
-                                    <lucide:Lucide Icon="X" Width="8" Background="Transparent" />
+                                    <lucide:Lucide Icon="X" Width="8" />
                                 </Button>
                             </ursa:ButtonGroup>
                         </StackPanel>
-                        <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}" Margin="12,12,12,6" />
+                        <StackPanel x:Name="Titlebar" Margin="12,12,12,0" Spacing="6" Orientation="Horizontal">
+                            <lucide:Lucide Icon="Squirrel" Width="12" />
+                            <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}" VerticalAlignment="Center" />
+                        </StackPanel>
                     </DockPanel>
-                    <Grid Margin="6" DockPanel.Dock="Top" ColumnDefinitions="*,4,*"
-                          RowDefinitions="Auto,4,Auto,4,Auto,4,*">
-                        <Button Grid.Row="0" Grid.Column="0" Content="Create" Height="48" />
-                        <Button Grid.Row="0" Grid.Column="2" Content="Import"
-                                Theme="{StaticResource OutlineButtonTheme}" Height="48" />
+                    <Grid Margin="16" DockPanel.Dock="Top" ColumnDefinitions="*,8,Auto"
+                          RowDefinitions="Auto,8,Auto,8,Auto,8,Auto,8,*">
+                        <Button Grid.Row="0" Grid.Column="0" Height="48" Theme="{StaticResource OutlineButtonTheme}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <lucide:Lucide Icon="Import" Height="18" VerticalAlignment="Center" />
+                                <TextBlock Text="Import" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Row="0" Grid.Column="2" Height="48" Width="48"
+                                Theme="{StaticResource OutlineButtonTheme}">
+                            <lucide:Lucide Icon="PackagePlus" Height="18" />
+                        </Button>
                         <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Classes="Primary"
-                                Content="Go to Exposition"
-                                Height="32" />
-                        <!-- <AutoCompleteBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" /> -->
-                        <TextBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3"
-                                 Watermark="Search by names or types" />
-                        <ListBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" />
+                                Height="32">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <lucide:Lucide Icon="Store" Height="18" />
+                                <TextBlock Text="Go to Exposition" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Separator Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" />
+                        <StackPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3">
+                            <!-- <AutoCompleteBox/> -->
+                            <TextBox Watermark="Search by names or types" />
+                        </StackPanel>
+                        <ListBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" />
                     </Grid>
                 </DockPanel>
             </Border>

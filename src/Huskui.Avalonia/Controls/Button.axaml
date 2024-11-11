@@ -163,7 +163,7 @@
         </Style>
 
         <Style Selector="^.Primary">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Overlay">
@@ -172,7 +172,7 @@
         </Style>
 
         <Style Selector="^.Success">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlSuccessBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlSuccessBorderBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlSuccessForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Overlay">
@@ -181,7 +181,7 @@
         </Style>
 
         <Style Selector="^.Warning">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlWarningBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlWarningBorderBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlWarningForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Overlay">
@@ -190,7 +190,7 @@
         </Style>
 
         <Style Selector="^.Danger">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBorderBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlDangerForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Overlay">
