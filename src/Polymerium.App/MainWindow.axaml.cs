@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
+using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -20,8 +22,8 @@ public partial class MainWindow : Window
 
     #region Window State Management
 
-    private CornerRadius oldCornerRadius = new(0);
-    private Thickness oldMargin = new(0);
+    private CornerRadius _oldCornerRadius = new(0);
+    private Thickness _oldMargin = new(0);
 
     private void ToggleMaximize()
     {
@@ -38,8 +40,8 @@ public partial class MainWindow : Window
 
     private void OnWindowStateChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
     {
-        (oldCornerRadius, Sidebar.CornerRadius) = (Sidebar.CornerRadius, oldCornerRadius);
-        (oldMargin, Sidebar.Margin) = (Sidebar.Margin, oldMargin);
+        (_oldCornerRadius, Sidebar.CornerRadius) = (Sidebar.CornerRadius, _oldCornerRadius);
+        (_oldMargin, Sidebar.Margin) = (Sidebar.Margin, _oldMargin);
     }
 
     private void Sidebar_OnPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -50,6 +52,7 @@ public partial class MainWindow : Window
 
     private void Sidebar_OnDoubleTapped(object? sender, TappedEventArgs e)
     {
+        if (!Equals(e.Source, Sidebar)) return;
         ToggleMaximize();
         e.Handled = true;
     }
