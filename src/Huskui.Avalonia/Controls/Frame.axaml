@@ -1,4 +1,27 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Add Resources Here -->
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
+
+    <ControlTheme x:Key="{x:Type local:Frame}" TargetType="local:Frame">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <!-- <ContentPresenter x:Name="PART_ContentPresenter" -->
+                    <!--                   Background="{TemplateBinding Background}" -->
+                    <!--                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" -->
+                    <!--                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" -->
+                    <!--                   BackgroundSizing="{TemplateBinding BackgroundSizing}" /> -->
+                    <!-- <ContentPresenter x:Name="PART_OverlayPresenter" IsVisible="False" Background="{TemplateBinding Background}" -->
+                    <!--                   BackgroundSizing="{TemplateBinding BackgroundSizing}" -->
+                    <!--                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" -->
+                    <!--                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" /> -->
+
+                    <TransitioningContentControl Name="{x:Static local:Frame.PART_Container}" Background="{TemplateBinding Background}"
+                                                 BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 </ResourceDictionary>

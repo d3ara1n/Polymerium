@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="using:Polymerium.App"
-        xmlns:husk="using:Huskui.Avalonia.Controls"
+        xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
         xmlns:lucide="using:LucideAvalonia"
         xmlns:ursa="https://irihi.tech/ursa"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -16,7 +16,7 @@
             <ColumnDefinition Width="35*" MaxWidth="400" MinWidth="200" />
         </Grid.ColumnDefinitions>
         <Panel Grid.Column="0">
-            <husk:Frame Margin="24" />
+            <husk:Frame x:Name="Root" Margin="24" />
         </Panel>
         <Grid Grid.Column="1">
             <Border x:Name="Sidebar" Margin="0,6,6,6" CornerRadius="6" Background="Transparent"
@@ -54,11 +54,11 @@
                                 Theme="{StaticResource OutlineButtonTheme}">
                             <lucide:Lucide Icon="PackagePlus" Height="18" />
                         </Button>
-                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Classes="Primary"
+                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Classes="Primary" Click="Button_OnClick"
                                 Height="32">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <lucide:Lucide Icon="Store" Height="18" />
-                                <TextBlock Text="Go to Exposition" VerticalAlignment="Center" />
+                                <TextBlock Text="Go to Exposition" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Separator Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" />

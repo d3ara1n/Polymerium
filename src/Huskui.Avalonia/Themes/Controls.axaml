@@ -4,6 +4,7 @@
         <ResourceInclude Source="/Controls/Button.axaml" />
         <ResourceInclude Source="/Controls/Card.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
+        <ResourceInclude Source="/Controls/Page.axaml" />
         <ResourceInclude Source="/Controls/TextBox.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
