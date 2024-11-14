@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Avalonia;
 using Avalonia.Animation;
@@ -18,7 +19,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        WindowStateProperty.Changed.AddClassHandler<MainWindow>(OnWindowStateChanged);
     }
 
     #region Window State Management
@@ -38,11 +38,15 @@ public partial class MainWindow : Window
                 break;
         }
     }
-
-    private void OnWindowStateChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-        (_oldCornerRadius, Sidebar.CornerRadius) = (Sidebar.CornerRadius, _oldCornerRadius);
-        (_oldMargin, Sidebar.Margin) = (Sidebar.Margin, _oldMargin);
+        base.OnPropertyChanged(change);
+
+        if (change.Property == WindowStateProperty)
+        {
+            (_oldCornerRadius, Sidebar.CornerRadius) = (Sidebar.CornerRadius, _oldCornerRadius);
+            (_oldMargin, Sidebar.Margin) = (Sidebar.Margin, _oldMargin);
+        }
     }
 
     private void Sidebar_OnPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -80,6 +84,6 @@ public partial class MainWindow : Window
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        Root.Navigate(typeof(WelcomeView), null, new CrossFade());
+        Root.Navigate(typeof(WelcomeView));
     }
 }

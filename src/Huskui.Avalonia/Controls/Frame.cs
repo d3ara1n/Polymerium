@@ -21,6 +21,17 @@ public class Frame : ContentControl
     public PageActivatorDelegate PageActivator { get; set; } =
         (t, _) => Activator.CreateInstance(t);
 
+    public static readonly StyledProperty<IPageTransition?> DefaultTransitionProperty =
+        AvaloniaProperty.Register<Frame, IPageTransition?>(nameof(DefaultTransition),
+            defaultValue: TransitioningContentControl.PageTransitionProperty.GetDefaultValue(
+                typeof(TransitioningContentControl)));
+
+    public IPageTransition? DefaultTransition
+    {
+        get => GetValue(DefaultTransitionProperty);
+        set => SetValue(DefaultTransitionProperty, value);
+    }
+
     public void Navigate(Type page, object? parameter = null, IPageTransition? transition = null) =>
         Navigate(page, parameter, transition, false);
 
@@ -30,7 +41,7 @@ public class Frame : ContentControl
         ArgumentNullException.ThrowIfNull(_container);
 
         _history.Push(new FrameFrame(page, parameter, transition));
-        _container.PageTransition = transition;
+        _container.PageTransition = transition ?? DefaultTransition;
         _container.IsTransitionReversed = reverse;
         Content = content;
     }
@@ -47,7 +58,7 @@ public class Frame : ContentControl
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        _container = e.NameScope.Find<TransitioningContentControl>("PART_Container");
+        _container = e.NameScope.Find<TransitioningContentControl>(PART_Container);
     }
 
     public record FrameFrame(Type Page, object? Parameter, IPageTransition? Transition);
