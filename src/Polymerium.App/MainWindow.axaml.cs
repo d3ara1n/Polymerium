@@ -1,15 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using Avalonia;
-using Avalonia.Animation;
+﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Metadata;
-using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
-using DynamicData.Binding;
 using Polymerium.App.Views;
 
 namespace Polymerium.App;
@@ -19,6 +11,11 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+    }
+
+    private void Button_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Root.Navigate(typeof(WelcomeView));
     }
 
     #region Window State Management
@@ -38,6 +35,7 @@ public partial class MainWindow : Window
                 break;
         }
     }
+
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
@@ -81,9 +79,4 @@ public partial class MainWindow : Window
     }
 
     #endregion
-
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
-    {
-        Root.Navigate(typeof(WelcomeView));
-    }
 }

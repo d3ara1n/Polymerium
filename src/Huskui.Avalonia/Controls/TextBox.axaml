@@ -2,16 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <StackPanel Spacing="20">
-            <TextBox Text="Test" Watermark="12" UseFloatingWatermark="True" Width="140"/>
-            <TextBox Watermark="Disabled" IsEnabled="False" UseFloatingWatermark="True" Width="140"/>
-            <TextBox Watermark="Enabled" IsEnabled="True" UseFloatingWatermark="True" Width="140"/>
+            <TextBox Text="Test" Watermark="12" UseFloatingWatermark="True" Width="140" />
+            <TextBox Watermark="Disabled" IsEnabled="False" UseFloatingWatermark="True" Width="140" />
+            <TextBox Watermark="Enabled" IsEnabled="True" UseFloatingWatermark="True" Width="140" />
         </StackPanel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type TextBox}" TargetType="TextBox">
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="Template">
@@ -86,13 +86,13 @@
         <Style Selector="^:focus /template/ Border#PART_GlowBorder">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
         </Style>
-        
+
         <!-- <Style Selector="^:focus /template/ Border#PART_Border"> -->
         <!--     <Setter Property="BorderBrush" Value="Transparent" /> -->
         <!-- </Style> -->
-        
+
         <Style Selector="^:disabled /template/ Border#PART_Border">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}"/>
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

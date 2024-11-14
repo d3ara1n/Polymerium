@@ -366,3 +366,4 @@ FodyWeavers.xsd
 .vscode/
 
 appsettings.*.json
+build/

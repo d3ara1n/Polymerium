@@ -47,7 +47,7 @@
         <Style Selector="^ /template/ Border#PART_Overlay">
             <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
         </Style>
-        
+
         <Style Selector="^:pointerover /template/ Border#PART_Overlay">
             <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
         </Style>
@@ -92,7 +92,7 @@
                         <ItemsPresenter
                             Name="PART_ItemsPresenter"
                             Margin="{TemplateBinding Padding}"
-                            ItemsPanel="{TemplateBinding ItemsPanel}"/>
+                            ItemsPanel="{TemplateBinding ItemsPanel}" />
                     </ScrollViewer>
                 </Border>
             </ControlTemplate>

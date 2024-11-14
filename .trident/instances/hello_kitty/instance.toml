@@ -1,0 +1,40 @@
+name = "Hello Kitty"
+version = "1.20.1"
+
+[overrides]
+# window
+window_title = "Hello Kitty"
+window_width = 1270
+window_height = 720
+# Java
+java_home = ""
+java_additional_arguments = ""
+java_allocated_memory = 4096
+
+[[layer]]
+active = true
+summary = "Builtin"
+loaders = [
+    "net.neoforged:42.0.1"
+]
+# 适用于 Rust/.Net/Java 的正则
+# ^(?<label>[a-zA-Z0-9._-]+):((?<namespace>[a-zA-Z0-9._-]+)/)?(?<identity>[a-zA-Z0-9._-]+)(@(?<version>[a-zA-Z0-9._-]+))?$
+packages = [
+    "curseforge:114@514",
+    "curseforge:928",
+    "modrinth:1919@810",
+    # 实际指向该仓库标记 tag 为 v0.6 的 Release
+    # Release 需要包含以下用于解析的文件
+    # 元数据 trident.package.json
+    # 实际文件 trident.package.jar
+    # 哈希信息 trident.package.sha1
+    "github:d3ara1n/ModularFormula@v0.6"
+]
+
+[[layer]]
+active = false
+summary = "Optional"
+loaders = [
+    "builtin.trident.bucket"
+]
+packages = []
