@@ -4,7 +4,7 @@
     <ControlTheme x:Key="{x:Type local:Page}" TargetType="local:Page">
         <Setter Property="Template">
             <ControlTemplate>
-                <ContentPresenter x:Name="PART_ContentPresenter"/>
+                <ContentPresenter x:Name="PART_ContentPresenter" />
             </ControlTemplate>
         </Setter>
     </ControlTheme>

@@ -8,6 +8,6 @@
            d:DataContext="{d:DesignInstance vm:WelcomeViewModel}"
            x:Class="Polymerium.App.Views.WelcomeView">
     <Panel Background="Aqua">
-        <Button Content="Halo" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Content="Halo" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Panel>
 </husk:Page>

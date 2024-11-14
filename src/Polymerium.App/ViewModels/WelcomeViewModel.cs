@@ -2,7 +2,6 @@
 
 namespace Polymerium.App.ViewModels;
 
-public class WelcomeViewModel: ObservableObject
+public class WelcomeViewModel : ObservableObject
 {
-    
 }

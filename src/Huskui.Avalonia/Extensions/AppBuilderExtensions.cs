@@ -12,7 +12,7 @@ public static class AppBuilderExtensions
         {
             fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:Outfit"),
                 new Uri("avares://Huskui.Avalonia/Assets/Fonts/Outfit")));
-        }).With(new FontManagerOptions()
+        }).With(new FontManagerOptions
         {
             DefaultFamilyName = "fonts:Outfit#Outfit"
         });

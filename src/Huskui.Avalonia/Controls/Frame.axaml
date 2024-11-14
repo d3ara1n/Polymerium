@@ -16,10 +16,12 @@
                     <!--                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" -->
                     <!--                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" /> -->
 
-                    <TransitioningContentControl Name="{x:Static local:Frame.PART_Container}" Background="{TemplateBinding Background}"
+                    <TransitioningContentControl Name="{x:Static local:Frame.PART_Container}"
+                                                 Background="{TemplateBinding Background}"
                                                  BackgroundSizing="{TemplateBinding BackgroundSizing}"
                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}"/>
+                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                 Content="{TemplateBinding Content}" />
                 </Panel>
             </ControlTemplate>
         </Setter>

@@ -203,7 +203,7 @@
         <Style Selector="^ /template/ Border#PART_Overlay">
             <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
         </Style>
-        
+
         <Style Selector="^.Primary">
             <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
 

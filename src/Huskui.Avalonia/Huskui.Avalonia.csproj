@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Avalonia" Version="11.1.4" />
-      <PackageReference Include="Irihi.Ursa" Version="1.5.0" />
+        <PackageReference Include="Avalonia" Version="11.1.4"/>
+        <PackageReference Include="Irihi.Ursa" Version="1.5.0"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -17,18 +17,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Black.ttf" />
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Bold.ttf" />
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-ExtraBold.ttf" />
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-ExtraLight.ttf" />
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Light.ttf" />
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Medium.ttf" />
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Regular.ttf" />
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-SemiBold.ttf" />
-      <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Thin.ttf" />
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Black.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Bold.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-ExtraBold.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-ExtraLight.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Light.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Medium.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Regular.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-SemiBold.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Outfit\Outfit-Thin.ttf"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Assets\Fonts\" />
+        <Folder Include="Assets\Fonts\"/>
     </ItemGroup>
 </Project>
