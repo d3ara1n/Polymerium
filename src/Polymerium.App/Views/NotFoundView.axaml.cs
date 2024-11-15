@@ -2,9 +2,9 @@
 
 namespace Polymerium.App.Views;
 
-public partial class WelcomeView : Page
+public partial class NotFoundView : Page
 {
-    public WelcomeView()
+    public NotFoundView()
     {
         InitializeComponent();
     }

@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+        xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
         xmlns:lucide="using:LucideAvalonia"
         xmlns:ursa="https://irihi.tech/ursa"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -16,13 +17,23 @@
             <ColumnDefinition Width="35*" MaxWidth="400" MinWidth="200" />
         </Grid.ColumnDefinitions>
         <Panel Grid.Column="0">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image Source="/Assets/Images/Desert.png" Width="128" Height="128" HorizontalAlignment="Center"/>
-                <TextBlock Margin="48,12,48,12" Text="How about we explore the area ahead of us later?" FontSize="24"
+            <StackPanel Opacity="{Binding #Root.Content, Converter={x:Static huskc:OpacityConverters.IsNull}}" VerticalAlignment="Center">
+                <StackPanel.Transitions>
+                    <Transitions>
+                        <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                          Duration="{StaticResource ControlNormalAnimationDuration}" />
+                    </Transitions>
+                </StackPanel.Transitions>
+                <StackPanel.Effect>
+                    <DropShadowEffect Opacity="0.1" BlurRadius="6" />
+                </StackPanel.Effect>
+                <Image Source="/Assets/Images/Desert island.png" Width="128" Height="128" HorizontalAlignment="Center" />
+                <TextBlock Margin="48,12,48,12" Text="Coconut?" TextAlignment="Center"
+                           FontSize="24"
                            FontWeight="Bold"
                            TextWrapping="WrapWithOverflow" />
             </StackPanel>
-            <husk:Frame x:Name="Root"/>
+            <husk:Frame x:Name="Root" />
         </Panel>
         <Panel x:Name="Sidebar" Grid.Column="1">
             <DockPanel>
@@ -41,6 +52,9 @@
                         </ursa:ButtonGroup>
                     </StackPanel>
                     <StackPanel x:Name="Titlebar" Margin="16,12,12,0" Spacing="6" Orientation="Horizontal">
+                        <StackPanel.Effect>
+                            <DropShadowEffect Opacity="0.1" BlurRadius="6" />
+                        </StackPanel.Effect>
                         <lucide:Lucide Icon="Squirrel" Width="12" />
                         <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}" VerticalAlignment="Center" />
                     </StackPanel>
