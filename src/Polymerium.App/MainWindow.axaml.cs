@@ -16,7 +16,7 @@ public partial class MainWindow : Window
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        Root.Navigate(typeof(WelcomeView));
+        Root.Navigate(typeof(NotFoundView));
     }
 
     #region Window State Management

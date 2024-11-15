@@ -18,7 +18,7 @@
         <PackageReference Include="CsToml" Version="1.1.6"/>
         <PackageReference Include="DynamicData" Version="9.0.4"/>
         <PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.5.0.1"/>
-        <PackageReference Include="LucideAvalonia" Version="1.6.1"/>
+        <PackageReference Include="LucideAvalonia" Version="1.6.1" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1"/>
@@ -34,7 +34,6 @@
 
     <ItemGroup>
         <Folder Include="Assets\" />
-        <Folder Include="Controls\"/>
         <Folder Include="Utility\"/>
     </ItemGroup>
 

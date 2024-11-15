@@ -18,12 +18,15 @@ public class Frame : ContentControl
             TransitioningContentControl.PageTransitionProperty.GetDefaultValue(
                 typeof(TransitioningContentControl)));
 
+    public static readonly StyledProperty<bool> CanGoBackProperty =
+        AvaloniaProperty.Register<Frame, bool>(nameof(CanGoBack), false);
+
     private readonly Stack<FrameFrame> _history = new();
 
     private TransitioningContentControl? _container;
     public IEnumerable<FrameFrame> History => _history;
 
-    public bool CanGoBack => _history.Count > 0;
+    public bool CanGoBack => GetValue(CanGoBackProperty);
 
     public PageActivatorDelegate PageActivator { get; set; } =
         (t, _) => Activator.CreateInstance(t);
@@ -48,6 +51,7 @@ public class Frame : ContentControl
         _container.PageTransition = transition ?? DefaultTransition;
         _container.IsTransitionReversed = reverse;
         Content = content;
+        SetValue(CanGoBackProperty, _history.Count > 0);
     }
 
     public void GoBack()
@@ -55,6 +59,7 @@ public class Frame : ContentControl
         if (_history.TryPop(out var frame))
             Navigate(frame.Page, frame.Parameter, frame.Transition, true);
         else throw new InvalidOperationException("No previous page in the stack");
+        SetValue(CanGoBackProperty, _history.Count > 0);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
