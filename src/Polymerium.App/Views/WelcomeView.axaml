@@ -6,8 +6,8 @@
            xmlns:vm="using:Polymerium.App.ViewModels"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            d:DataContext="{d:DesignInstance vm:WelcomeViewModel}"
-           x:Class="Polymerium.App.Views.WelcomeView">
-    <Panel Background="Aqua">
+           x:Class="Polymerium.App.Views.WelcomeView" Theme="{StaticResource AppPageTheme}">
+    <Panel>
         <Button Content="Halo" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Panel>
 </husk:Page>
