@@ -13,6 +13,7 @@
         <PackageReference Include="Avalonia.Desktop" Version="11.2.0"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.0"/>
+        <PackageReference Include="Avalonia.Svg" Version="11.2.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2"/>
         <PackageReference Include="CsToml" Version="1.1.6"/>
         <PackageReference Include="DynamicData" Version="9.0.4"/>
@@ -32,8 +33,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Assets\" />
         <Folder Include="Controls\"/>
-        <Folder Include="Themes\"/>
         <Folder Include="Utility\"/>
     </ItemGroup>
 
@@ -45,5 +46,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Huskui.Avalonia\Huskui.Avalonia.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
 </Project>

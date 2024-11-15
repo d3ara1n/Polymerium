@@ -4,6 +4,6 @@
     </Styles.Resources>
 
     <Style Selector="Window">
-        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
     </Style>
 </Styles>

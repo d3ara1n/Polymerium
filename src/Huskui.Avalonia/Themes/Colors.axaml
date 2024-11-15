@@ -115,6 +115,8 @@
     </ResourceDictionary.MergedDictionaries>
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
+            <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource Sand2Color}" />
+            
             <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{StaticResource Sand1Color}" />
             <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{StaticResource Black1Color}" />
 

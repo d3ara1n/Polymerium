@@ -28,7 +28,7 @@
     <ControlTheme x:Key="BaseButtonTheme" TargetType="Button">
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
