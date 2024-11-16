@@ -17,7 +17,8 @@
             <ColumnDefinition Width="35*" MaxWidth="400" MinWidth="200" />
         </Grid.ColumnDefinitions>
         <Panel Grid.Column="0">
-            <StackPanel Opacity="{Binding #Root.Content, Converter={x:Static huskc:OpacityConverters.IsNull}}" VerticalAlignment="Center">
+            <StackPanel Opacity="{Binding #Root.Content, Converter={x:Static huskc:OpacityConverters.IsNull}}"
+                        VerticalAlignment="Center">
                 <StackPanel.Transitions>
                     <Transitions>
                         <DoubleTransition Property="Opacity" Easing="SineEaseOut"

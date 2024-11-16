@@ -1,0 +1,22 @@
+﻿[account]
+uuid = "-"
+
+[snapshot.entries]
+files = [
+    "options.txt"
+]
+folders = [
+    "config",
+    "defaultconfig"
+]
+
+[persist.entries]
+files = [
+    "options.txt"
+]
+folders = [
+    "saves",
+    "screenshots",
+    "logs",
+    "crash-reports"
+]

@@ -105,6 +105,9 @@
         <Style Selector="^:disabled /template/ Border#PART_GlowBorder">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type Button}" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">

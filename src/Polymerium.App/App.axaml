@@ -9,6 +9,6 @@
         <SimpleTheme />
         <semi:SemiTheme />
         <StyleInclude Source="avares://Huskui.Avalonia/Prelude.axaml" />
-        <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml"/>
+        <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml" />
     </Application.Styles>
 </Application>
