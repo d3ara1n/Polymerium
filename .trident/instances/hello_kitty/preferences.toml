@@ -1,6 +1,10 @@
 ﻿[account]
 uuid = "-"
 
+[launch]
+java_home = "_"
+mode = "FireAndForget"
+
 [snapshot.entries]
 files = [
     "options.txt"

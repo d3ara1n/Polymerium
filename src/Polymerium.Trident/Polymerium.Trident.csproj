@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Trident.Abstractions\Trident.Abstractions.csproj" />
+    </ItemGroup>
+
 </Project>

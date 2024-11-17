@@ -16,7 +16,7 @@
 
 ### `preferences.toml` 实例偏好
 
-所有不宜放入 `instance.toml` 的设置项都会放入这里。
+所有不宜放入 `profile.toml` 的设置项都会放入这里。
 
 ### `data.lock.json` 构建锁
 
@@ -40,12 +40,12 @@
 
 快照文件会按日期时间存储在 `snapshots` 目录中，`snapshots/{datetime}/data.shot.json` 会储存关于快照的元数据。
 
-元数据包含快照的附属信息：快照备注，和关于构建的信息：`instance.toml` 中的 `layers`，需要还原的文件和目录。
+元数据包含快照的附属信息：快照备注，和关于构建的信息：`profile.toml` 中的 `layers`，需要还原的文件和目录。
 
 快照通常只会拍摄 `config`、`defaultconfig` 和 `options.txt` 等配置文件信息、构建层和游戏存档 `saves`。
 除此之外的文件和目录不具有拍摄快照的意义。
 
-在还原的时候，构建层会直接替换掉当前实例的元数据中的构建层并应用到 `instance.toml` 中。
+在还原的时候，构建层会直接替换掉当前实例的元数据中的构建层并应用到 `profile.toml` 中。
 文件会替换 `build` 目录中对应文件，目录会删除目录后再复制过去。
 
 拍摄或还原时检测到文件是软链接则是操作软链接的目标文件，例如持久化文件和目录，哪怕是 `objects` 内的模组文件也会执行操作。
