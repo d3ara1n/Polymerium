@@ -1,5 +1,10 @@
 name = "Hello Kitty"
+
+[base]
+source = "curseforge:1919@810"
 version = "1.20.1"
+loader = "net.minecraftforge:42.10.3"
+packages = []
 
 [overrides]
 # Window
@@ -13,10 +18,6 @@ java_allocated_memory = 4096
 [[layer]]
 active = true
 summary = "Builtin"
-source = "curseforge:1919@810"
-loaders = [
-    "net.neoforged:42.0.1"
-]
 # 适用于 Rust/.Net/Java 的正则
 # ^(?<label>[a-zA-Z0-9._-]+):((?<namespace>[a-zA-Z0-9._-]+)/)?(?<identity>[a-zA-Z0-9._-]+)(@(?<version>[a-zA-Z0-9._-]+))?$
 packages = [
@@ -34,7 +35,4 @@ packages = [
 [[layer]]
 active = false
 summary = "Optional"
-loaders = [
-    "builtin.trident.bucket"
-]
 packages = []

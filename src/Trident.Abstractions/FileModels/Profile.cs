@@ -2,14 +2,14 @@
 
 public record struct Profile(
     string Name,
-    string Version,
+    Profile.Setup Base,
     IReadOnlyDictionary<string, object> Overrides,
     IEnumerable<Profile.Layer> Layers)
 {
+    public record struct Setup(string? Source, string? Version, string? Loader, IEnumerable<string> Packages);
+
     public record struct Layer(
         bool Active,
         string Summary,
-        string? Source,
-        IEnumerable<string> Loaders,
         IEnumerable<string> Packages);
 }
