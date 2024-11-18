@@ -42,7 +42,7 @@
 
 元数据包含快照的附属信息：快照备注，和关于构建的信息：`profile.toml` 中的 `layers`，需要还原的文件和目录。
 
-快照通常只会拍摄 `config`、`defaultconfig` 和 `options.txt` 等配置文件信息、构建层和游戏存档 `saves`。
+快照通常只会拍摄 `config`、`defaultconfigs` 和 `options.txt` 等配置文件信息、构建层和游戏存档 `saves`。
 除此之外的文件和目录不具有拍摄快照的意义。
 
 在还原的时候，构建层会直接替换掉当前实例的元数据中的构建层并应用到 `profile.toml` 中。

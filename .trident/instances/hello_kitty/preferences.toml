@@ -11,7 +11,7 @@ files = [
 ]
 folders = [
     "config",
-    "defaultconfig"
+    "defaultconfigs"
 ]
 
 [persist.entries]
