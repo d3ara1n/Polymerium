@@ -3,10 +3,10 @@
 public record Package(
     string Label,
     string Namespace,
-    string Pid,
-    string Vid,
-    string Name,
-    string Version,
+    string ProjectId,
+    string VersionId,
+    string ProjectName,
+    string VersionName,
     Uri? Thumbnail,
     string Author,
     string Summary,
@@ -19,4 +19,4 @@ public record Package(
     string? Hash,
     Requirement Requirements,
     IEnumerable<Dependency> Dependencies
-    );
+);

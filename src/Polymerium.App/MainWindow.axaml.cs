@@ -14,11 +14,6 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
-    {
-        Root.Navigate(typeof(NotFoundView));
-    }
-
     #region Window State Management
 
     private CornerRadius _oldCornerRadius = new(0);
@@ -86,4 +81,9 @@ public partial class MainWindow : Window
     }
 
     #endregion
+
+    private void Button_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Root.Navigate(typeof(ExhibitionView));
+    }
 }

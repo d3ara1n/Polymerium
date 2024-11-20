@@ -34,11 +34,13 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="Button">
+            <ControlTemplate>
                 <Panel>
-                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}"
+                    <Border x:Name="PART_Background" Background="{TemplateBinding Background}"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition Property="Background"
@@ -47,6 +49,8 @@
                                 <BrushTransition Property="BorderBrush"
                                                  Duration="{StaticResource ControlNormalAnimationDuration}"
                                                  Easing="SineEaseOut" />
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -63,8 +67,6 @@
                     <ContentPresenter
                         Name="PART_ContentPresenter"
                         Padding="{TemplateBinding Padding}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
                         Background="Transparent"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -78,9 +80,8 @@
                         UseLayoutRounding="False">
                         <ContentPresenter.Transitions>
                             <Transitions>
-                                <BrushTransition Property="Background"
-                                                 Duration="{StaticResource ControlFastestAnimationDuration}"
-                                                 Easing="SineEaseOut" />
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </ContentPresenter.Transitions>
                     </ContentPresenter>
@@ -99,7 +100,7 @@
             <Setter Property="Opacity" Value="{StaticResource Overlay2Opacity}" />
         </Style>
 
-        <Style Selector="^:disabled /template/ Border#PART_Border">
+        <Style Selector="^:disabled /template/ Border#PART_Background">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
         <Style Selector="^:disabled /template/ Border#PART_GlowBorder">

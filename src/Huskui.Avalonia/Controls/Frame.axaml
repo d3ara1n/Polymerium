@@ -5,7 +5,8 @@
     <ControlTheme x:Key="{x:Type local:Frame}" TargetType="local:Frame">
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel>
+                <Panel HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                       VerticalAlignment="{TemplateBinding VerticalAlignment}">
                     <!-- <ContentPresenter x:Name="PART_ContentPresenter" -->
                     <!--                   Background="{TemplateBinding Background}" -->
                     <!--                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" -->
@@ -21,7 +22,8 @@
                                                  BackgroundSizing="{TemplateBinding BackgroundSizing}"
                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                 Content="{TemplateBinding Content}" />
+                                                 Content="{TemplateBinding Content}"
+                                                 ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </Panel>
             </ControlTemplate>
         </Setter>

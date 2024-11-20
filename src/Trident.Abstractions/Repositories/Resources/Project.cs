@@ -3,7 +3,7 @@
 public record Project(
     string Label,
     string? Namespace,
-    string Pid,
+    string ProjectId,
     Uri? Thumbnail,
     string Author,
     string Summary,
@@ -12,7 +12,7 @@ public record Project(
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
     uint DownloadCount,
-    string DescriptionMarkdown,
+    string Description,
     IEnumerable<Project.Screenshot> Gallery)
 {
     public record Screenshot(string Title, Uri Url);

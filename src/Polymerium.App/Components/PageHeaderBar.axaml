@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PageHeaderBar">
     <DockPanel>
-        <Button DockPanel.Dock="Left" Margin="8" Command="{Binding $parent[husk:Frame].GoBackCommand}">
+        <Button DockPanel.Dock="Left" Margin="8" CornerRadius="4" Command="{Binding $parent[husk:Frame].GoBackCommand}">
             <lucide:Lucide Icon="ArrowLeft" Width="12" Height="12" />
         </Button>
         <TextBlock Text="{Binding $parent[local:PageHeaderBar].Title}" VerticalAlignment="Center" FontWeight="Bold"/>
