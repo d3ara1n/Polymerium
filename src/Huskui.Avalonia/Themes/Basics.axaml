@@ -12,5 +12,6 @@
     <sys:Double x:Key="OverlayFullOpacity">1.0</sys:Double>
     <sys:Double x:Key="ControlDimOpacity">0.4</sys:Double>
 
-    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <!-- <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius> -->
+    <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
 </ResourceDictionary>

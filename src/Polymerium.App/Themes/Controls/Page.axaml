@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:lucide="using:LucideAvalonia">
+                    xmlns:lucide="using:LucideAvalonia"
+                    xmlns:components="using:Polymerium.App.Components">
 
     <Design.PreviewWith>
         <husk:Page Theme="{StaticResource AppPageTheme}" Width="128" Height="128">
@@ -11,7 +12,7 @@
         </husk:Page>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="AppPageTheme" TargetType="husk:Page">
+    <ControlTheme x:Key="AppPageTheme" TargetType="husk:Page" BasedOn="{StaticResource {x:Type husk:Page}}">
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
@@ -25,8 +26,11 @@
                 <Border Background="{TemplateBinding Background}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}">
+
                     <ContentPresenter Name="{x:Static husk:Page.PART_ContentPresenter}"
-                                      Content="{TemplateBinding Content}" />
+                                      Content="{TemplateBinding Content}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Padding="{TemplateBinding Padding}" />
                 </Border>
             </ControlTemplate>
         </Setter>

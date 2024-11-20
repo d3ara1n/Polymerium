@@ -5,6 +5,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/Themes/Basics.axaml" />
                 <ResourceInclude Source="/Themes/Colors.axaml" />
+                <ResourceInclude Source="/Themes/Typography.axaml" />
                 <ResourceInclude Source="/Themes/Controls.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
