@@ -26,6 +26,7 @@
     </Design.PreviewWith>
 
     <ControlTheme x:Key="BaseButtonTheme" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
