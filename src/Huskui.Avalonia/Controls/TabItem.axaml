@@ -46,7 +46,9 @@
     <sys:Double x:Key="TabItemHighlightThickness">4</sys:Double>
 
     <ControlTheme x:Key="BaseTabItemTheme" TargetType="TabItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,6" />
+        <Setter Property="Margin" Value="4" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />

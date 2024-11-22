@@ -8,6 +8,7 @@
         <ResourceInclude Source="/Controls/Page.axaml" />
         <ResourceInclude Source="/Controls/TabControl.axaml" />
         <ResourceInclude Source="/Controls/TabItem.axaml" />
+        <ResourceInclude Source="/Controls/TabStripItem.axaml" />
         <ResourceInclude Source="/Controls/TextBox.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

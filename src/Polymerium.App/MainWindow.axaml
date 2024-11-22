@@ -29,7 +29,8 @@
                     <DropShadowEffect Opacity="0.1" BlurRadius="6" />
                 </StackPanel.Effect>
                 <Image Source="/Assets/Images/Bird.png" Width="128" Height="128" HorizontalAlignment="Center" />
-                <TextBlock Margin="48,12,48,12" Text="B-b-b-bird, bird, bird, b-bird's the word..." TextAlignment="Center"
+                <TextBlock Margin="48,12,48,12" Text="B-b-b-bird, bird, bird, b-bird's the word..."
+                           TextAlignment="Center"
                            FontSize="24"
                            FontWeight="Bold"
                            TextWrapping="WrapWithOverflow" />
@@ -52,7 +53,7 @@
                             </Button>
                         </ursa:ButtonGroup>
                     </StackPanel>
-                    <StackPanel x:Name="Titlebar" Margin="16,12,12,0" Spacing="6" Orientation="Horizontal">
+                    <StackPanel x:Name="Titlebar" Margin="9,12,12,0" Spacing="6" Orientation="Horizontal">
                         <StackPanel.Effect>
                             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
                         </StackPanel.Effect>
@@ -60,7 +61,7 @@
                         <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}" VerticalAlignment="Center" />
                     </StackPanel>
                 </DockPanel>
-                <Grid Margin="16" DockPanel.Dock="Top" ColumnDefinitions="*,8,Auto"
+                <Grid Margin="9,16,16,16" DockPanel.Dock="Top" ColumnDefinitions="*,8,Auto"
                       RowDefinitions="Auto,8,Auto,8,Auto,8,*">
                     <Button Grid.Row="0" Grid.Column="0" Height="48" Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
