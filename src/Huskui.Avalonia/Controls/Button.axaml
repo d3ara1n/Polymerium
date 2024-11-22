@@ -26,8 +26,8 @@
     </Design.PreviewWith>
 
     <ControlTheme x:Key="BaseButtonTheme" TargetType="Button">
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="14,9" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -55,16 +55,7 @@
                             </Transitions>
                         </Border.Transitions>
                     </Border>
-                    <Border x:Name="PART_Overlay" Opacity="0"
-                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <Border.Transitions>
-                            <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            </Transitions>
-                        </Border.Transitions>
-                    </Border>
+
                     <ContentPresenter
                         Name="PART_ContentPresenter"
                         Padding="{TemplateBinding Padding}"
@@ -86,9 +77,26 @@
                             </Transitions>
                         </ContentPresenter.Transitions>
                     </ContentPresenter>
+                    <Border x:Name="PART_Overlay" Opacity="0"
+                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
                     <Border x:Name="PART_GlowBorder" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding CornerRadius}" />
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <ThicknessTransition Property="BorderThickness" Easing="SineEaseOut"
+                                                     Duration="{StaticResource ControlNormalAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
                 </Panel>
             </ControlTemplate>
         </Setter>

@@ -5,12 +5,11 @@
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:components="using:Polymerium.App.Components"
            xmlns:vm="using:Polymerium.App.ViewModels"
-           xmlns:lucide="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            d:DataContext="{d:DesignInstance vm:WelcomeViewModel}" Padding="0"
            x:Class="Polymerium.App.Views.NotFoundView" Theme="{StaticResource AppPageTheme}">
     <DockPanel>
-        <components:PageHeaderBar DockPanel.Dock="Top" Title="Page Not Found"/>
+        <components:PageHeaderBar DockPanel.Dock="Top" Title="Page Not Found" />
         <StackPanel VerticalAlignment="Center">
             <StackPanel.Effect>
                 <DropShadowEffect Opacity="0.1" BlurRadius="6" />

@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:lucide="using:LucideAvalonia"
-                    xmlns:components="using:Polymerium.App.Components">
+                    xmlns:lucide="using:LucideAvalonia">
 
     <Design.PreviewWith>
         <husk:Page Theme="{StaticResource AppPageTheme}" Width="128" Height="128">
@@ -30,7 +29,8 @@
                     <ContentPresenter Name="{x:Static husk:Page.PART_ContentPresenter}"
                                       Content="{TemplateBinding Content}"
                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Padding="{TemplateBinding Padding}" />
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Padding="{TemplateBinding Padding}" />
                 </Border>
             </ControlTemplate>
         </Setter>

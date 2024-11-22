@@ -11,6 +11,6 @@
         <Button DockPanel.Dock="Left" Margin="8" CornerRadius="4" Command="{Binding $parent[husk:Frame].GoBackCommand}">
             <lucide:Lucide Icon="ArrowLeft" Width="12" Height="12" />
         </Button>
-        <TextBlock Text="{Binding $parent[local:PageHeaderBar].Title}" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Text="{Binding $parent[local:PageHeaderBar].Title}" VerticalAlignment="Center" FontWeight="Bold" />
     </DockPanel>
 </UserControl>

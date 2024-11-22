@@ -22,20 +22,21 @@ public class Frame : ContentControl
     public static readonly StyledProperty<bool> CanGoBackProperty =
         AvaloniaProperty.Register<Frame, bool>(nameof(CanGoBack));
 
+    private readonly InternalGoBackCommand _goBackCommand;
+
     private readonly Stack<FrameFrame> _history = new();
 
     private TransitioningContentControl? _container;
 
     private FrameFrame? _current;
-    public IEnumerable<FrameFrame> History => _history;
-
-    private readonly InternalGoBackCommand _goBackCommand;
-    public ICommand GoBackCommand => _goBackCommand;
 
     public Frame()
     {
         _goBackCommand = new InternalGoBackCommand(this);
     }
+
+    public IEnumerable<FrameFrame> History => _history;
+    public ICommand GoBackCommand => _goBackCommand;
 
     public bool CanGoBack => GetValue(CanGoBackProperty);
 
@@ -62,7 +63,7 @@ public class Frame : ContentControl
         if (stack && _current is not null)
             _history.Push(_current);
         _current = new FrameFrame(page, parameter, transition);
-        
+
         _container.PageTransition = transition ?? DefaultTransition;
         _container.IsTransitionReversed = reverse;
         Content = content;
@@ -89,12 +90,21 @@ public class Frame : ContentControl
 
     private class InternalGoBackCommand(Frame host) : ICommand
     {
-        public bool CanExecute(object? parameter) => host.CanGoBack;
+        public bool CanExecute(object? parameter)
+        {
+            return host.CanGoBack;
+        }
 
-        public void Execute(object? parameter) => host.GoBack();
+        public void Execute(object? parameter)
+        {
+            host.GoBack();
+        }
 
         public event EventHandler? CanExecuteChanged;
 
-        internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        internal void OnCanExecutedChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

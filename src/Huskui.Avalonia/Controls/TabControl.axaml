@@ -11,7 +11,6 @@
         </StackPanel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type TabControl}" TargetType="TabControl">
-        <Setter Property="Padding" Value="8"/>
         <Setter Property="Template">
             <ControlTemplate TargetType="TabControl">
                 <Border

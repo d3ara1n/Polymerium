@@ -2,5 +2,4 @@
 
 public record struct DataUser
 {
-    
 }

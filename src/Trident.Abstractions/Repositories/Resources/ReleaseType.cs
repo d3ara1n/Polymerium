@@ -6,6 +6,7 @@ public enum ReleaseType
     Beta,
     Alpha,
     Experimental,
+
     // Or snapshot
     Nightly
 }
