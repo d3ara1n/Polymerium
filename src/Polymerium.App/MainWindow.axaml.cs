@@ -1,4 +1,6 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
+using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -16,7 +18,8 @@ public partial class MainWindow : Window
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        Root.Navigate(typeof(ExhibitionView));
+        Root.Navigate(typeof(ExhibitionView), null,
+            new PageSlide(TimeSpan.FromMilliseconds(150)));
     }
 
     #region Window State Management

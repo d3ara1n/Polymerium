@@ -127,7 +127,7 @@
             <SolidColorBrush x:Key="OverlayWarningBackgroundBrush" Color="{StaticResource Yellow7Color}" />
             <SolidColorBrush x:Key="OverlayDangerBackgroundBrush" Color="{StaticResource Tomato7Color}" />
 
-            <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource Sand3Color}" />
+            <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource Sand4Color}" />
             <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{StaticResource Amber9Color}" />
             <SolidColorBrush x:Key="ControlSuccessBackgroundBrush" Color="{StaticResource Grass9Color}" />
             <SolidColorBrush x:Key="ControlWarningBackgroundBrush" Color="{StaticResource Yellow9Color}" />
@@ -135,7 +135,7 @@
 
             <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{StaticResource Sand6Color}" />
 
-            <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Sand6Color}" />
+            <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Sand4Color}" />
             <SolidColorBrush x:Key="ControlAccentBorderBrush" Color="{StaticResource Amber9Color}" />
             <SolidColorBrush x:Key="ControlSuccessBorderBrush" Color="{StaticResource Grass9Color}" />
             <SolidColorBrush x:Key="ControlWarningBorderBrush" Color="{StaticResource Yellow9Color}" />
