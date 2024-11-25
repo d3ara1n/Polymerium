@@ -41,7 +41,8 @@
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             CornerRadius="{TemplateBinding CornerRadius}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            RenderTransformOrigin="50%,50%">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition Property="Background"
@@ -52,6 +53,8 @@
                                                  Easing="SineEaseOut" />
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"
                                                   Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseInOut"
+                                                               Duration="{StaticResource ControlNormalAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -215,6 +218,11 @@
     <ControlTheme x:Key="GhostButtonTheme" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
         <Style Selector="^ /template/ Border#PART_Overlay">
             <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
+            <Setter Property="RenderTransform" Value="scale(0.98)" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ Border#PART_Overlay">
+            <Setter Property="RenderTransform" Value="scale(1.0)" />
         </Style>
 
         <Style Selector="^.Primary">
