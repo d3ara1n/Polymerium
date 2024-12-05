@@ -1,26 +1,12 @@
 name = "Hello Kitty"
 
-[base]
+[setup]
 source = "curseforge:1919@810"
 version = "1.20.1"
 loader = "net.minecraftforge:42.10.3"
-packages = []
-
-[overrides]
-# Window
-window_title = "Hello Kitty"
-window_width = 1270
-window_height = 720
-# Java
-java_additional_arguments = ""
-java_allocated_memory = 4096
-
-[[layer]]
-active = true
-summary = "Builtin"
 # 适用于 Rust/.Net/Java 的正则
 # ^(?<label>[a-zA-Z0-9._-]+):((?<namespace>[a-zA-Z0-9._-]+)/)?(?<identity>[a-zA-Z0-9._-]+)(@(?<version>[a-zA-Z0-9._-]+))?$
-packages = [
+stage = [
     "curseforge:114@514",
     "curseforge:721",
     "modrinth:2003@928",
@@ -31,8 +17,18 @@ packages = [
     # 哈希信息 trident.package.sha1
     "github:d3ara1n/ModularFormula@v0.6"
 ]
+stash = [
+    
+]
+draft = [
+    
+]
 
-[[layer]]
-active = false
-summary = "Optional"
-packages = []
+[overrides]
+# Window
+window_title = "Hello Kitty"
+window_width = 1270
+window_height = 720
+# Java
+java_additional_arguments = ""
+java_allocated_memory = 4096

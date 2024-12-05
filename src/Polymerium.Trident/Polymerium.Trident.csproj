@@ -10,4 +10,8 @@
         <ProjectReference Include="..\Trident.Abstractions\Trident.Abstractions.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Samboy063.Tomlet" Version="5.4.0" />
+    </ItemGroup>
+
 </Project>
