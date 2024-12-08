@@ -3,10 +3,26 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:vm="using:Polymerium.App.ViewModels"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+           x:DataType="vm:ExhibitionViewModel"
            x:Class="Polymerium.App.Views.ExhibitionView" Theme="{StaticResource AppPageTheme}">
-    <TabStrip>
-        <TabStripItem>Bye</TabStripItem>
-        <TabStripItem>Hello</TabStripItem>
-    </TabStrip>
+
+    <husk:Page.Styles>
+        <Style Selector=":loading ProgressBar#Bar">
+            <Setter Property="IsIndeterminate" Value="True" />
+        </Style>
+        <Style Selector=":finished TextBlock#Block">
+            <Setter Property="Text" Value="Done" />
+        </Style>
+    </husk:Page.Styles>
+    <StackPanel>
+        <TextBlock Text="{Binding Title}" />
+        <TabStrip>
+            <TabStripItem>Bye</TabStripItem>
+            <TabStripItem>Hello</TabStripItem>
+        </TabStrip>
+        <ProgressBar x:Name="Bar" Value="50" />
+        <TextBlock x:Name="Block" />
+    </StackPanel>
 </husk:Page>

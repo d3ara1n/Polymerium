@@ -27,7 +27,7 @@ public class PathService
     #region Cache Folder
 
     public string CacheDirectory => Path.Combine(Home, "cache");
-    
+
     public string CacheAssetDirectory => Path.Combine(CacheDirectory, "assets");
     public string CacheLibraryDirectory => Path.Combine(CacheDirectory, "libraries");
     public string CachePackageDirectory => Path.Combine(CacheDirectory, "packages");
@@ -39,15 +39,50 @@ public class PathService
 
     public string InstanceDirectory => Path.Combine(Home, "instances");
 
-    public string FileOfProfile(string key) => Path.Combine(InstanceDirectory, key, "profile.toml");
-    public string FileOfPreference(string key) => Path.Combine(InstanceDirectory, key, "preference.toml");
-    public string FileOfIcon(string key) => Path.Combine(InstanceDirectory, key, "icon.png");
-    public string FileOfLockData(string key) => Path.Combine(InstanceDirectory, key, "data.lock.json");
-    public string FileOfUserData(string key) => Path.Combine(InstanceDirectory, key, "data.user.json");
-    public string DirectoryOfBuild(string key) => Path.Combine(InstanceDirectory, key, "build");
-    public string DirectoryOfImport(string key) => Path.Combine(InstanceDirectory, key, "import");
-    public string DirectoryOfPersist(string key) => Path.Combine(InstanceDirectory, key, "persist");
-    public string DirectoryOfSnapshots(string key) => Path.Combine(InstanceDirectory, key, "snapshots");
+    public string FileOfProfile(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "profile.toml");
+    }
+
+    public string FileOfPreference(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "preference.toml");
+    }
+
+    public string FileOfIcon(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "icon.png");
+    }
+
+    public string FileOfLockData(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "data.lock.json");
+    }
+
+    public string FileOfUserData(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "data.user.json");
+    }
+
+    public string DirectoryOfBuild(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "build");
+    }
+
+    public string DirectoryOfImport(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "import");
+    }
+
+    public string DirectoryOfPersist(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "persist");
+    }
+
+    public string DirectoryOfSnapshots(string key)
+    {
+        return Path.Combine(InstanceDirectory, key, "snapshots");
+    }
 
     #endregion
 }

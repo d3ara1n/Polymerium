@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Samboy063.Tomlet" Version="5.4.0" />
+        <PackageReference Include="Samboy063.Tomlet" Version="5.4.0"/>
     </ItemGroup>
 
 </Project>
