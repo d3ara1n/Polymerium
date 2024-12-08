@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
@@ -38,12 +37,16 @@ public class Page : ContentControl
     {
         base.OnUnloaded(e);
 
-        cancellationTokenSource.Cancel();
+        if (!cancellationTokenSource.IsCancellationRequested) cancellationTokenSource.Cancel();
+        if (Model is not null)
+            Task.Run(async () => await Model.CleanupAsync(CancellationToken.None)).ContinueWith(t =>
+            {
+                if (t.IsFaulted) throw t.Exception;
+            });
     }
 
     private void SetState(bool loading = false, bool finished = false, bool failed = false)
     {
-        Debug.WriteLine($"(:loading, :finished, :failed)=({loading}, {finished}, {failed})");
         PseudoClasses.Set(":loading", loading);
         PseudoClasses.Set(":finished", finished);
         PseudoClasses.Set(":failed", failed);
