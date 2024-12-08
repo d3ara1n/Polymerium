@@ -6,7 +6,7 @@
            xmlns:components="using:Polymerium.App.Components"
            xmlns:vm="using:Polymerium.App.ViewModels"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-           d:DataContext="{d:DesignInstance vm:WelcomeViewModel}" Padding="0"
+           d:DataContext="{d:DesignInstance vm:ExhibitionViewModel}" Padding="0"
            x:Class="Polymerium.App.Views.NotFoundView" Theme="{StaticResource AppPageTheme}">
     <DockPanel>
         <components:PageHeaderBar DockPanel.Dock="Top" Title="Page Not Found" />

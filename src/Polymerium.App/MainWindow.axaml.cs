@@ -11,6 +11,8 @@ namespace Polymerium.App;
 
 public partial class MainWindow : Window
 {
+    private Action<Type, object?, IPageTransition?>? _navigate;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -18,8 +20,20 @@ public partial class MainWindow : Window
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        Root.Navigate(typeof(ExhibitionView), null,
+        Navigate(typeof(ExhibitionView), Random.Shared.Next(1000, 9999),
             new PageSlide(TimeSpan.FromMilliseconds(150)));
+    }
+
+    internal void Navigate(Type page, object? parameter, IPageTransition transition)
+    {
+        Root.Navigate(page, parameter, transition);
+    }
+
+    internal void BindNavigation(Action<Type, object?, IPageTransition?> navigate,
+        Frame.PageActivatorDelegate activator)
+    {
+        _navigate = navigate;
+        Root.PageActivator = activator;
     }
 
     #region Window State Management

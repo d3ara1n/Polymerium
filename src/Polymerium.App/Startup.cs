@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Extensions;
+using Polymerium.App.Services;
 using Polymerium.Trident.Services;
 
 namespace Polymerium.App;
@@ -13,7 +14,8 @@ public static class Startup
 
         // Trident
         services.AddSingleton<ProfileService>();
-        
+
         // App
+        services.AddSingleton<NavigationService>();
     }
 }
