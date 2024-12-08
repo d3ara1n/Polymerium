@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -16,10 +15,16 @@ public class ViewModelBase : ObservableObject, IPageModel
 
     public Task CleanupAsync(CancellationToken token)
     {
-        throw new NotImplementedException();
+        return OnCleanupAsync(token);
     }
 
     protected virtual Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
+    {
+        // Virtual function does nothing
+        return Task.CompletedTask;
+    }
+
+    protected virtual Task OnCleanupAsync(CancellationToken token)
     {
         // Virtual function does nothing
         return Task.CompletedTask;
