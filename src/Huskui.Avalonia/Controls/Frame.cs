@@ -23,6 +23,19 @@ public class Frame : ContentControl
         AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBack), o => o.CanGoBack,
             defaultBindingMode: BindingMode.OneWay);
 
+    public static readonly DirectProperty<Frame, bool> CanGoBackOutOfStackProperty =
+        AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBackOutOfStack), o => o.CanGoBackOutOfStack,
+            (o, v) => o.CanGoBackOutOfStack = v);
+
+    private bool _canGoBackOutOfStack;
+
+    public bool CanGoBackOutOfStack
+    {
+        get => _canGoBackOutOfStack;
+        set => SetAndRaise(CanGoBackOutOfStackProperty, ref _canGoBackOutOfStack, value);
+    }
+
+
     private readonly InternalGoBackCommand _goBackCommand;
 
     private readonly Stack<FrameFrame> _history = new();
@@ -49,7 +62,7 @@ public class Frame : ContentControl
     public IEnumerable<FrameFrame> History => _history;
     public ICommand GoBackCommand => _goBackCommand;
 
-    public bool CanGoBack => _history.Count > 0;
+    public bool CanGoBack => _history.Count > 0 || CanGoBackOutOfStack;
 
     public PageActivatorDelegate PageActivator { get; set; } =
         (t, _) => Activator.CreateInstance(t);
@@ -78,9 +91,17 @@ public class Frame : ContentControl
 
     public void GoBack()
     {
+        ArgumentNullException.ThrowIfNull(_container);
         if (_history.TryPop(out var frame))
             Navigate(frame.Page, frame.Parameter, frame.Transition, true, false);
+        else if (CanGoBackOutOfStack)
+        {
+            Content = null;
+            _current = null;
+            _container.IsTransitionReversed = true;
+        }
         else throw new InvalidOperationException("No previous page in the stack");
+
         RaisePropertyChanged(CanGoBackProperty, true, CanGoBack);
         _goBackCommand.OnCanExecutedChanged();
     }

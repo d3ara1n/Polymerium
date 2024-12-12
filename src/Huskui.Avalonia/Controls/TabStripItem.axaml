@@ -32,6 +32,7 @@
         <Setter Property="Padding" Value="10,8" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="Margin" Value="4,6" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="Template">

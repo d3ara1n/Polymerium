@@ -9,21 +9,5 @@
                   x:DataType="vm:ExhibitionViewModel" Header="ExhibitionView"
                   x:Class="Polymerium.App.Views.ExhibitionView" Theme="{StaticResource AppPageTheme}">
 
-    <husk:Page.Styles>
-        <Style Selector=":loading ProgressBar#Bar">
-            <Setter Property="IsIndeterminate" Value="True" />
-        </Style>
-        <Style Selector=":finished TextBlock#Block">
-            <Setter Property="Text" Value="Done" />
-        </Style>
-    </husk:Page.Styles>
-    <StackPanel>
-        <TextBlock Text="{Binding Title}" FontWeight="Regular" />
-        <TabStrip>
-            <TabStripItem>Bye</TabStripItem>
-            <TabStripItem>Hello</TabStripItem>
-        </TabStrip>
-        <ProgressBar x:Name="Bar" Value="50" />
-        <TextBlock x:Name="Block" />
-    </StackPanel>
+    
 </controls:AppPage>

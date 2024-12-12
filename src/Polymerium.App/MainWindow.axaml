@@ -34,7 +34,7 @@
                            FontWeight="Bold"
                            TextWrapping="WrapWithOverflow" />
             </StackPanel>
-            <husk:Frame x:Name="Root" />
+            <husk:Frame x:Name="Root" CanGoBackOutOfStack="True" />
         </Panel>
         <Panel x:Name="Sidebar" Grid.Column="1">
             <DockPanel>

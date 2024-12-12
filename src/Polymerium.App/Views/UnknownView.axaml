@@ -3,10 +3,55 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:vm="using:Polymerium.App.ViewModels" Background="{DynamicResource CardBackgroundBrush}"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-           x:Class="Polymerium.App.Views.UnknownView">
+           x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
     <husk:Page.Header>
-        <Button>我能吞下玻璃而不伤身体</Button>
+        <Button Click="Button_OnClick">我能吞下玻璃而不伤身体</Button>
     </husk:Page.Header>
-    Welcome to Avalonia!
+    <husk:Page.Styles>
+        <Style Selector=":loading ProgressBar#Bar">
+            <Setter Property="IsIndeterminate" Value="True" />
+        </Style>
+        <Style Selector=":finished TextBlock#Block">
+            <Setter Property="Text" Value="Done" />
+        </Style>
+    </husk:Page.Styles>
+    <StackPanel>
+        <TextBlock Text="{Binding Title}" FontWeight="Regular" />
+        <TabStrip>
+            <TabStripItem>
+                <TextBlock>
+                    <Run Text="Hub" FontSize="{StaticResource FontSizeLarge}" />
+                    <LineBreak />
+                    <Run Text="Design Center" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                </TextBlock>
+            </TabStripItem>
+            <TabStripItem IsEnabled="False">
+                <TextBlock>
+                    <Run Text="Dock" FontSize="{StaticResource FontSizeLarge}" />
+                    <LineBreak />
+                    <Run Text="Machine Assembler" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                </TextBlock>
+            </TabStripItem>
+            <TabStripItem>
+                <TextBlock>
+                    <Run Text="Socket" FontSize="{StaticResource FontSizeLarge}" />
+                    <LineBreak />
+                    <Run Text="Power Supply" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                </TextBlock>
+            </TabStripItem>
+        </TabStrip>
+        <TabControl>
+            <TabItem Header="Foo">
+                <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello" />
+            </TabItem>
+            <TabItem Header="Bar">
+                <StackPanel>
+                    <ProgressBar x:Name="Bar" Value="50" />
+                    <TextBlock x:Name="Block" />
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </StackPanel>
 </husk:Page>
