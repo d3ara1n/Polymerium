@@ -4,7 +4,7 @@
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <ControlTheme x:Key="{x:Type local:Page}" TargetType="local:Page">
-        <Setter Property="Padding" Value="16,48,16,16" />
+        <Setter Property="Padding" Value="16,52,16,16" />
         <Setter Property="CanGoBack" Value="{Binding $parent[local:Frame].CanGoBack, Mode=OneWay}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HeaderTemplate">
@@ -28,8 +28,8 @@
                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalAlignment}">
                     <Panel>
-                        <DockPanel VerticalAlignment="Top" Margin="8" IsVisible="{TemplateBinding IsHeaderVisible}">
-                            <Button DockPanel.Dock="Left" CornerRadius="4" Margin="0,0,8,0"
+                        <DockPanel VerticalAlignment="Top" Margin="12" IsVisible="{TemplateBinding IsHeaderVisible}">
+                            <Button DockPanel.Dock="Left" CornerRadius="4" Margin="0,0,12,0"
                                     Command="{Binding $parent[local:Frame].GoBackCommand}">
                                 <fi:SymbolIcon Symbol="ArrowLeft" FontSize="14" Height="12" Width="12" />
                             </Button>
