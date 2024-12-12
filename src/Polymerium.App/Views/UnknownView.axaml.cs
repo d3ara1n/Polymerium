@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views;
 
-public class UnknownView : Page
+public partial class UnknownView : Page
 {
     public UnknownView()
     {
