@@ -1,18 +1,21 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:local="using:Polymerium.App.Controls"
                     xmlns:lucide="using:LucideAvalonia">
 
     <Design.PreviewWith>
-        <husk:Page Theme="{StaticResource AppPageTheme}" Width="128" Height="128">
+        <local:AppPage Width="128" Height="128">
             <Button HorizontalAlignment="Center" VerticalAlignment="Center">
                 <lucide:Lucide Icon="ArrowLeft" Width="12" Height="12" />
             </Button>
-        </husk:Page>
+        </local:AppPage>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="AppPageTheme" TargetType="husk:Page" BasedOn="{StaticResource {x:Type husk:Page}}">
-        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
+    <ControlTheme x:Key="{x:Type local:AppPage}" TargetType="local:AppPage"
+                  BasedOn="{StaticResource {x:Type husk:Page}}">
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
+        <Setter Property="IsWindowMaximized" Value="{Binding $parent[husk:AppWindow].IsWindowMaximized, Mode=OneWay}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="CornerRadius" Value="6" />
@@ -34,5 +37,10 @@
                 </Border>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^[IsWindowMaximized=True]">
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

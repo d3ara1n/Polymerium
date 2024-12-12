@@ -120,6 +120,8 @@
             <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{StaticResource Sand1Color}" />
             <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{StaticResource Black1Color}" />
 
+            <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource White11Color}" />
+
             <SolidColorBrush x:Key="Overlay1BackgroundBrush" Color="{StaticResource Sand1Color}" />
             <SolidColorBrush x:Key="Overlay12BackgroundBrush" Color="{StaticResource Sand7Color}" />
             <SolidColorBrush x:Key="OverlayAccentBackgroundBrush" Color="{StaticResource Amber7Color}" />
@@ -133,6 +135,8 @@
             <SolidColorBrush x:Key="ControlWarningBackgroundBrush" Color="{StaticResource Yellow9Color}" />
             <SolidColorBrush x:Key="ControlDangerBackgroundBrush" Color="{StaticResource Tomato9Color}" />
 
+            <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{StaticResource Sand1Color}"
+                             Opacity="0.6" />
             <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{StaticResource Sand6Color}" />
 
             <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Sand4Color}" />

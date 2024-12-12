@@ -13,7 +13,9 @@ public static class Startup
         services.AddAvalonia();
 
         // Trident
+        services.AddSingleton<PathService>();
         services.AddSingleton<ProfileService>();
+        services.AddSingleton<RepositoryAgent>();
 
         // App
         services.AddSingleton<NavigationService>();

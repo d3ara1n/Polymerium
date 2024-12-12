@@ -1,4 +1,6 @@
-﻿namespace Polymerium.Trident.Services;
+﻿using System.Diagnostics;
+
+namespace Polymerium.Trident.Services;
 
 public class PathService
 {
@@ -9,7 +11,7 @@ public class PathService
         while (dir is not null && Directory.Exists(dir))
         {
             var target = Path.Combine(dir, ".trident");
-            if (Directory.Exists(home))
+            if (Directory.Exists(target))
             {
                 home = target;
                 break;
@@ -19,6 +21,7 @@ public class PathService
         }
 
         Home = home ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".trident");
+        Debug.WriteLine($"Chosen home = {Home}");
     }
 
 
@@ -41,12 +44,12 @@ public class PathService
 
     public string FileOfProfile(string key)
     {
-        return Path.Combine(InstanceDirectory, key, "profile.toml");
+        return Path.Combine(InstanceDirectory, key, "profile.json");
     }
 
     public string FileOfPreference(string key)
     {
-        return Path.Combine(InstanceDirectory, key, "preference.toml");
+        return Path.Combine(InstanceDirectory, key, "preference.json");
     }
 
     public string FileOfIcon(string key)

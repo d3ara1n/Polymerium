@@ -1,8 +1,8 @@
-﻿using Huskui.Avalonia.Controls;
+﻿using Polymerium.App.Controls;
 
 namespace Polymerium.App.Views;
 
-public partial class NotFoundView : Page
+public partial class NotFoundView : AppPage
 {
     public NotFoundView()
     {

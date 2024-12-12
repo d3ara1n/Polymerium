@@ -1,7 +1,8 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Tomlet;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Services;
@@ -15,13 +16,34 @@ public class ProfileService : IDisposable
     #endregion
 
     private readonly IList<ProfileHandle> _profiles = new List<ProfileHandle>();
+    private readonly JsonSerializerOptions _serializerOptions;
 
     public ProfileService(PathService pathService)
     {
         _pathService = pathService;
 
-        var dir = pathService.InstanceDirectory;
-        foreach (var ins in Directory.GetDirectories(dir)) Debug.WriteLine(ins);
+
+        _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web)
+        {
+            WriteIndented = true
+        };
+        _serializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
+        var dir = new DirectoryInfo(pathService.InstanceDirectory);
+        foreach (var ins in dir.GetDirectories())
+        {
+            var path = pathService.FileOfProfile(ins.Name);
+            if (File.Exists(path))
+                try
+                {
+                    var handle = ProfileHandle.Create(ins.Name, path, _serializerOptions);
+                    _profiles.Add(handle);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+        }
     }
 
     public IReadOnlyList<Profile> Profiles => _profiles.Select(x => x.Value).ToImmutableList();
@@ -54,30 +76,31 @@ public class ProfileService : IDisposable
 
     #region Handle & Guard sub classes
 
-    internal class ProfileHandle(string key, Profile value, string path) : IAsyncDisposable
+    internal class ProfileHandle(string key, Profile value, string path, JsonSerializerOptions options)
+        : IAsyncDisposable
     {
         public string Key => key;
         public Profile Value => value;
 
         internal Task SaveAsync()
         {
-            var toml = TomletMain.TomlStringFrom(value);
+            var json = JsonSerializer.Serialize(Value, options);
             var dir = Path.GetDirectoryName(path);
             if (dir is not null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
-            return File.WriteAllTextAsync(path, toml);
+            return File.WriteAllTextAsync(path, json);
         }
 
-        public static ProfileHandle Create(string key, Profile value, string path)
+        public static ProfileHandle Create(string key, Profile value, string path, JsonSerializerOptions options)
         {
-            return new ProfileHandle(key, value, path);
+            return new ProfileHandle(key, value, path, options);
         }
 
-        public static ProfileHandle Create(string key, string path)
+        public static ProfileHandle Create(string key, string path, JsonSerializerOptions options)
         {
             if (File.Exists(path))
             {
-                var profile = TomletMain.To<Profile>(File.ReadAllText(path));
-                return new ProfileHandle(key, profile, path);
+                var profile = JsonSerializer.Deserialize<Profile>(File.ReadAllText(path), options)!;
+                return new ProfileHandle(key, profile, path, options);
             }
 
             throw new FileNotFoundException("Profile not found");
@@ -115,25 +138,39 @@ public class ProfileService : IDisposable
         public async ValueTask DisposeAsync()
         {
             await _handle.SaveAsync();
-            _root.OnProfileUpdated(Key);
+            _root.OnProfileUpdated(Key, _handle.Value);
         }
     }
 
     #endregion
 
-    #region Profile Updated Event
+    #region Profile Changed Event
 
-    public class ProfileUpdatedEventArgs(string key, Profile profile) : EventArgs
+    public class ProfileChangedEventArgs(string key, Profile profile) : EventArgs
     {
         public string Key => key;
         public Profile Value => profile;
     }
 
-    public event EventHandler<ProfileUpdatedEventArgs> ProfileUpdated;
+    public event EventHandler<ProfileChangedEventArgs> ProfileUpdated;
 
-    internal void OnProfileUpdated(string key)
+    public event EventHandler<ProfileChangedEventArgs> ProfileRemoved;
+
+    public event EventHandler<ProfileChangedEventArgs> ProfileAdded;
+
+    private void OnProfileUpdated(string key, Profile profile)
     {
-        if (TryGetImmutable(key, out var value)) ProfileUpdated.Invoke(this, new ProfileUpdatedEventArgs(key, value));
+        ProfileUpdated.Invoke(this, new ProfileChangedEventArgs(key, profile));
+    }
+
+    private void OnProfileRemoved(string key, Profile profile)
+    {
+        ProfileRemoved.Invoke(this, new ProfileChangedEventArgs(key, profile));
+    }
+
+    private void OnProfileAdded(string key, Profile profile)
+    {
+        ProfileAdded.Invoke(this, new ProfileChangedEventArgs(key, profile));
     }
 
     #endregion

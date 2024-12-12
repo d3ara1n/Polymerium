@@ -10,6 +10,4 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
-
-    <StyleInclude Source="/Controls/Window.axaml" />
 </Styles>
