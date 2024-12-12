@@ -1,12 +1,13 @@
-﻿<husk:Page xmlns="https://github.com/avaloniaui"
-           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-           xmlns:vm="using:Polymerium.App.ViewModels"
-           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-           x:DataType="vm:ExhibitionViewModel"
-           x:Class="Polymerium.App.Views.ExhibitionView" Theme="{StaticResource AppPageTheme}">
+﻿<controls:AppPage xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                  xmlns:controls="using:Polymerium.App.Controls"
+                  xmlns:vm="using:Polymerium.App.ViewModels"
+                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                  x:DataType="vm:ExhibitionViewModel"
+                  x:Class="Polymerium.App.Views.ExhibitionView" Theme="{StaticResource AppPageTheme}">
 
     <husk:Page.Styles>
         <Style Selector=":loading ProgressBar#Bar">
@@ -17,7 +18,7 @@
         </Style>
     </husk:Page.Styles>
     <StackPanel>
-        <TextBlock Text="{Binding Title}" />
+        <TextBlock Text="{Binding Title}" FontWeight="Regular" />
         <TabStrip>
             <TabStripItem>Bye</TabStripItem>
             <TabStripItem>Hello</TabStripItem>
@@ -25,4 +26,4 @@
         <ProgressBar x:Name="Bar" Value="50" />
         <TextBlock x:Name="Block" />
     </StackPanel>
-</husk:Page>
+</controls:AppPage>

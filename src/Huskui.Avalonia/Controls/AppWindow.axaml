@@ -1,0 +1,58 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
+
+    <ControlTheme x:Key="{x:Type local:AppWindow}" TargetType="local:AppWindow">
+        <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
+        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource WindowBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="ExtendClientAreaChromeHints" Value="NoChrome" />
+        <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
+        <Setter Property="TransparencyLevelHint" Value="Mica, AcrylicBlur, Blur" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
+                    <Border Background="{TemplateBinding Background}" IsHitTestVisible="False">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background"
+                                                 Duration="{StaticResource ControlFastestAnimationDuration}"
+                                                 Easing="SineEaseOut" />
+                                <BrushTransition Property="BorderBrush"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                 Easing="SineEaseOut" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
+                    <VisualLayerManager>
+                        <VisualLayerManager.ChromeOverlayLayer>
+                            <TitleBar />
+                        </VisualLayerManager.ChromeOverlayLayer>
+                        <ContentPresenter
+                            Name="{x:Static local:AppWindow.PART_ContentPresenter}"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </VisualLayerManager>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^local|AppWindow[ActualTransparencyLevel=Mica][IsActive=True]">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="^local|AppWindow[ActualTransparencyLevel=AcrylicBlur]">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="^local|AppWindow[ActualTransparencyLevel=Blur]">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+    </ControlTheme>
+</ResourceDictionary>

@@ -1,0 +1,14 @@
+{
+  "name": "Hello Kitty",
+  "setup": {
+    "source": null,
+    "version": "1.20.1",
+    "loader": null,
+    "stage": [],
+    "stash": [],
+    "draft": []
+  },
+  "overrides": {
+    "window_title": "Hello kitty"
+  }
+}

@@ -6,6 +6,7 @@ using Avalonia.Threading;
 namespace Huskui.Avalonia.Controls;
 
 [PseudoClasses(":loading", ":finished", ":failed")]
+[TemplatePart(Name = PART_ContentPresenter, Type = typeof(ContentControl))]
 public class Page : ContentControl
 {
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
@@ -16,7 +17,6 @@ public class Page : ContentControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-
         if (Model is not null)
         {
             SetState(true);
@@ -39,10 +39,7 @@ public class Page : ContentControl
 
         if (!cancellationTokenSource.IsCancellationRequested) cancellationTokenSource.Cancel();
         if (Model is not null)
-            Task.Run(async () => await Model.CleanupAsync(CancellationToken.None)).ContinueWith(t =>
-            {
-                if (t.IsFaulted) throw t.Exception;
-            });
+            Task.Run(async () => await Model.CleanupAsync(CancellationToken.None));
     }
 
     private void SetState(bool loading = false, bool finished = false, bool failed = false)

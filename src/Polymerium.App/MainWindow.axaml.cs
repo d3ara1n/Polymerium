@@ -1,5 +1,4 @@
 ﻿using System;
-using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -9,7 +8,7 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App;
 
-public partial class MainWindow : Window
+public partial class MainWindow : AppWindow
 {
     private Action<Type, object?, IPageTransition?>? _navigate;
 
@@ -17,6 +16,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
@@ -37,20 +37,6 @@ public partial class MainWindow : Window
     }
 
     #region Window State Management
-
-    private CornerRadius _oldCornerRadius = new(0);
-    private Thickness _oldMargin = new(0);
-
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        if (change.Property == WindowStateProperty && Root.Content is Page page)
-        {
-            (page.CornerRadius, _oldCornerRadius) = (_oldCornerRadius, page.CornerRadius);
-            (page.Margin, _oldMargin) = (_oldMargin, page.Margin);
-        }
-    }
 
     private void ToggleMaximize()
     {

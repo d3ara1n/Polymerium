@@ -168,6 +168,7 @@
 
     <ControlTheme x:Key="OutlineButtonTheme" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
 
         <Style Selector="^:pressed">

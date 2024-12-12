@@ -1,16 +1,15 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-        xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-        xmlns:lucide="using:LucideAvalonia"
-        xmlns:ursa="https://irihi.tech/ursa"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Polymerium.App.MainWindow" ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="NoChrome"
-        PointerPressed="Window_OnPointerPressed" DoubleTapped="Window_OnDoubleTapped"
-        Title="Polymerium" MinHeight="459" MinWidth="600" Height="600" Width="960">
+﻿<husk:AppWindow xmlns="https://github.com/avaloniaui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                xmlns:lucide="using:LucideAvalonia"
+                xmlns:ursa="https://irihi.tech/ursa"
+                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                x:Class="Polymerium.App.MainWindow"
+                PointerPressed="Window_OnPointerPressed" DoubleTapped="Window_OnDoubleTapped"
+                Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="960">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="65*" />
@@ -75,7 +74,7 @@
                     </Button>
                     <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Classes="Primary"
                             Click="Button_OnClick"
-                            Height="32">
+                            Height="36">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <lucide:Lucide Icon="Store" Height="18" />
                             <TextBlock Text="Go to Exhibition" VerticalAlignment="Center" />
@@ -91,4 +90,4 @@
             </DockPanel>
         </Panel>
     </Grid>
-</Window>
+</husk:AppWindow>
