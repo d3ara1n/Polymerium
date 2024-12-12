@@ -47,10 +47,10 @@
         <Style Selector="^local|AppWindow[ActualTransparencyLevel=Mica][IsActive=True]">
             <Setter Property="Background" Value="Transparent" />
         </Style>
-        <Style Selector="^local|AppWindow[ActualTransparencyLevel=AcrylicBlur]">
+        <Style Selector="^local|AppWindow[ActualTransparencyLevel=AcrylicBlur][IsActive=True]">
             <Setter Property="Background" Value="Transparent" />
         </Style>
-        <Style Selector="^local|AppWindow[ActualTransparencyLevel=Blur]">
+        <Style Selector="^local|AppWindow[ActualTransparencyLevel=Blur][IsActive=True]">
             <Setter Property="Background" Value="Transparent" />
         </Style>
 

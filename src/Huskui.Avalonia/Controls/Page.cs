@@ -1,18 +1,48 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
+using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 
 namespace Huskui.Avalonia.Controls;
 
 [PseudoClasses(":loading", ":finished", ":failed")]
-[TemplatePart(Name = PART_ContentPresenter, Type = typeof(ContentControl))]
-public class Page : ContentControl
+[TemplatePart(Name = PART_ContentPresenter, Type = typeof(ContentPresenter))]
+public class Page : HeaderedContentControl
 {
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
 
+    public static readonly DirectProperty<Page, bool> CanGoBackProperty =
+        Frame.CanGoBackProperty.AddOwner<Page>(o => o.CanGoBack, (o, v) => o.CanGoBack = v,
+            defaultBindingMode: BindingMode.OneWay);
+
+    public static readonly DirectProperty<Page, bool> IsHeaderVisibleProperty =
+        AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsHeaderVisible), o => o.IsHeaderVisible,
+            (o, v) => o.IsHeaderVisible = v);
+
     private readonly CancellationTokenSource cancellationTokenSource = new();
+
+    private bool _canGoBack;
+
+    private bool _isHeaderVisible = true;
     public IPageModel? Model { get; set; }
+
+    public bool CanGoBack
+    {
+        get => _canGoBack;
+        set => SetAndRaise(CanGoBackProperty, ref _canGoBack, value);
+    }
+
+    public bool IsHeaderVisible
+    {
+        get => _isHeaderVisible;
+        set => SetAndRaise(IsHeaderVisibleProperty, ref _isHeaderVisible, value);
+    }
+
+    protected override Type StyleKeyOverride => typeof(Page);
 
     protected override void OnLoaded(RoutedEventArgs e)
     {

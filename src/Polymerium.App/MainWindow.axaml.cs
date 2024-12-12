@@ -20,7 +20,12 @@ public partial class MainWindow : AppWindow
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        Navigate(typeof(ExhibitionView), Random.Shared.Next(1000, 9999),
+        Navigate(sender switch
+            {
+                Button { Tag: "ExhibitionView" } => typeof(ExhibitionView),
+                Button { Tag: "UnknownView" } => typeof(UnknownView),
+                _ => typeof(NotFoundView)
+            }, Random.Shared.Next(1000, 9999),
             new PageSlide(TimeSpan.FromMilliseconds(150)));
     }
 

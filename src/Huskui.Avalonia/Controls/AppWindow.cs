@@ -9,24 +9,24 @@ public class AppWindow : Window
 {
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
 
-    public static readonly DirectProperty<AppWindow, bool> IsWindowMaximizedProperty =
-        AvaloniaProperty.RegisterDirect<AppWindow, bool>(nameof(IsWindowMaximized), o => o.IsWindowMaximized,
-            (o, v) => o.IsWindowMaximized = v);
+    public static readonly DirectProperty<AppWindow, bool> IsMaximizedProperty =
+        AvaloniaProperty.RegisterDirect<AppWindow, bool>(nameof(IsMaximized), o => o.IsMaximized,
+            (o, v) => o.IsMaximized = v);
 
-    private bool _isWindowMaximized;
+    private bool isMaximized;
 
     protected override Type StyleKeyOverride => typeof(AppWindow);
 
-    public bool IsWindowMaximized
+    public bool IsMaximized
     {
-        get => _isWindowMaximized;
-        set => SetAndRaise(IsWindowMaximizedProperty, ref _isWindowMaximized, value);
+        get => isMaximized;
+        set => SetAndRaise(IsMaximizedProperty, ref isMaximized, value);
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == WindowStateProperty) IsWindowMaximized = WindowState == WindowState.Maximized;
+        if (change.Property == WindowStateProperty) IsMaximized = WindowState == WindowState.Maximized;
     }
 }

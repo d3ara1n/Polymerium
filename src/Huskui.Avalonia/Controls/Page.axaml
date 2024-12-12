@@ -1,20 +1,48 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="using:Huskui.Avalonia.Controls">
+                    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <ControlTheme x:Key="{x:Type local:Page}" TargetType="local:Page">
-        <Setter Property="Padding" Value="12" />
+        <Setter Property="Padding" Value="16,48,16,16" />
+        <Setter Property="CanGoBack" Value="{Binding $parent[local:Frame].CanGoBack, Mode=OneWay}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HeaderTemplate">
+            <husk:RelayDataTemplate>
+                <DataTemplate DataType="x:String">
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center" FontSize="{StaticResource LargeFontSize}"
+                               FontWeight="Bold" TextTrimming="CharacterEllipsis">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Opacity="0.1" BlurRadius="6" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </DataTemplate>
+            </husk:RelayDataTemplate>
+        </Setter>
         <Setter Property="Template">
             <ControlTemplate>
-                <Border HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                <Border CornerRadius="{TemplateBinding CornerRadius}" Background="{TemplateBinding Background}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                    <ContentPresenter Name="{x:Static local:Page.PART_ContentPresenter}"
-                                      Background="{TemplateBinding Background}"
-                                      BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      Padding="{TemplateBinding Padding}"
-                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    <Panel>
+                        <DockPanel VerticalAlignment="Top" Margin="8" IsVisible="{TemplateBinding IsHeaderVisible}">
+                            <Button DockPanel.Dock="Left" CornerRadius="4" Margin="0,0,8,0"
+                                    Command="{Binding $parent[local:Frame].GoBackCommand}">
+                                <fi:SymbolIcon Symbol="ArrowLeft" FontSize="14" Height="12" Width="12" />
+                            </Button>
+                            <ContentPresenter Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                        </DockPanel>
+                        <ContentPresenter Name="{x:Static local:Page.PART_ContentPresenter}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Panel>
                 </Border>
             </ControlTemplate>
         </Setter>
