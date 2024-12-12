@@ -4,6 +4,7 @@ using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
+using Avalonia.Data;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -14,13 +15,13 @@ public class Frame : ContentControl
 
     public const string PART_Container = nameof(PART_Container);
 
-    public static readonly StyledProperty<IPageTransition?> DefaultTransitionProperty =
-        AvaloniaProperty.Register<Frame, IPageTransition?>(nameof(DefaultTransition),
-            TransitioningContentControl.PageTransitionProperty.GetDefaultValue(
-                typeof(TransitioningContentControl)));
+    public static readonly DirectProperty<Frame, IPageTransition?> DefaultTransitionProperty =
+        AvaloniaProperty.RegisterDirect<Frame, IPageTransition?>(nameof(DefaultTransition), o => o.DefaultTransition,
+            (o, v) => o.DefaultTransition = v);
 
-    public static readonly StyledProperty<bool> CanGoBackProperty =
-        AvaloniaProperty.Register<Frame, bool>(nameof(CanGoBack));
+    public static readonly DirectProperty<Frame, bool> CanGoBackProperty =
+        AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBack), o => o.CanGoBack,
+            defaultBindingMode: BindingMode.OneWay);
 
     private readonly InternalGoBackCommand _goBackCommand;
 
@@ -30,24 +31,28 @@ public class Frame : ContentControl
 
     private FrameFrame? _current;
 
+
+    private IPageTransition? _defaultTransition = TransitioningContentControl.PageTransitionProperty.GetDefaultValue(
+        typeof(TransitioningContentControl));
+
     public Frame()
     {
         _goBackCommand = new InternalGoBackCommand(this);
     }
 
+    public IPageTransition? DefaultTransition
+    {
+        get => _defaultTransition;
+        set => SetAndRaise(DefaultTransitionProperty, ref _defaultTransition, value);
+    }
+
     public IEnumerable<FrameFrame> History => _history;
     public ICommand GoBackCommand => _goBackCommand;
 
-    public bool CanGoBack => GetValue(CanGoBackProperty);
+    public bool CanGoBack => _history.Count > 0;
 
     public PageActivatorDelegate PageActivator { get; set; } =
         (t, _) => Activator.CreateInstance(t);
-
-    public IPageTransition? DefaultTransition
-    {
-        get => GetValue(DefaultTransitionProperty);
-        set => SetValue(DefaultTransitionProperty, value);
-    }
 
     public void Navigate(Type page, object? parameter = null, IPageTransition? transition = null)
     {
@@ -59,7 +64,7 @@ public class Frame : ContentControl
         var content = PageActivator(page, parameter) ?? throw new ArgumentNullException();
         ArgumentNullException.ThrowIfNull(_container);
 
-
+        var old = CanGoBack;
         if (stack && _current is not null)
             _history.Push(_current);
         _current = new FrameFrame(page, parameter, transition);
@@ -67,7 +72,7 @@ public class Frame : ContentControl
         _container.PageTransition = transition ?? DefaultTransition;
         _container.IsTransitionReversed = reverse;
         Content = content;
-        SetValue(CanGoBackProperty, _history.Count > 0);
+        RaisePropertyChanged(CanGoBackProperty, old, CanGoBack);
         _goBackCommand.OnCanExecutedChanged();
     }
 
@@ -76,7 +81,7 @@ public class Frame : ContentControl
         if (_history.TryPop(out var frame))
             Navigate(frame.Page, frame.Parameter, frame.Transition, true, false);
         else throw new InvalidOperationException("No previous page in the stack");
-        SetValue(CanGoBackProperty, _history.Count > 0);
+        RaisePropertyChanged(CanGoBackProperty, true, CanGoBack);
         _goBackCommand.OnCanExecutedChanged();
     }
 

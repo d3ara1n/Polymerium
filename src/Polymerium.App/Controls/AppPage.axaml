@@ -15,7 +15,7 @@
     <ControlTheme x:Key="{x:Type local:AppPage}" TargetType="local:AppPage"
                   BasedOn="{StaticResource {x:Type husk:Page}}">
         <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
-        <Setter Property="IsWindowMaximized" Value="{Binding $parent[husk:AppWindow].IsWindowMaximized, Mode=OneWay}" />
+        <Setter Property="IsMaximized" Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="CornerRadius" Value="6" />
@@ -23,22 +23,8 @@
         <Setter Property="Effect">
             <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="8" Opacity="0.1" />
         </Setter>
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Border Background="{TemplateBinding Background}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}">
 
-                    <ContentPresenter Name="{x:Static husk:Page.PART_ContentPresenter}"
-                                      Content="{TemplateBinding Content}"
-                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      Padding="{TemplateBinding Padding}" />
-                </Border>
-            </ControlTemplate>
-        </Setter>
-
-        <Style Selector="^[IsWindowMaximized=True]">
+        <Style Selector="^[IsMaximized=True]">
             <Setter Property="CornerRadius" Value="0" />
             <Setter Property="Margin" Value="0" />
         </Style>

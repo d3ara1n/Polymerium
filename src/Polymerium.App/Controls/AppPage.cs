@@ -6,16 +6,16 @@ namespace Polymerium.App.Controls;
 
 public class AppPage : Page
 {
-    public static readonly DirectProperty<AppPage, bool> IsWindowMaximizedProperty =
-        AppWindow.IsWindowMaximizedProperty.AddOwner<AppPage>(o => o.IsWindowMaximized,
-            (o, v) => o.IsWindowMaximized = v);
+    public static readonly DirectProperty<AppPage, bool> IsMaximizedProperty =
+        AppWindow.IsMaximizedProperty.AddOwner<AppPage>(o => o.IsMaximized,
+            (o, v) => o.IsMaximized = v);
 
-    private bool isWindowMaximized;
+    private bool isMaximized;
 
-    public bool IsWindowMaximized
+    public bool IsMaximized
     {
-        get => isWindowMaximized;
-        set => SetAndRaise(IsWindowMaximizedProperty, ref isWindowMaximized, value);
+        get => isMaximized;
+        set => SetAndRaise(IsMaximizedProperty, ref isMaximized, value);
     }
 
     protected override Type StyleKeyOverride => typeof(AppPage);

@@ -109,24 +109,27 @@ public class App : Application
 
                 var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
                 var type = Type.GetType(name);
-                ArgumentNullException.ThrowIfNull(type);
-                if (!type.IsAssignableTo(typeof(ObservableObject)))
-                    throw new ArgumentOutOfRangeException(nameof(type), type,
-                        $"{view.Name} was bound to a view model which is not derived from ObservableObject");
-
-                var viewModel =
-                    type.GetConstructors().Any(x => x.GetParameters().Any(y => y.ParameterType == typeof(ViewBag)))
-                        ? ActivatorUtilities.CreateInstance(Program.AppHost.Services, type,
-                            parameter is not null ? new ViewBag(parameter) : ViewBag.Empty)
-                        : ActivatorUtilities.CreateInstance(Program.AppHost.Services, type);
 
                 var page = Activator.CreateInstance(view) as Page;
 
-                if (page is not null)
+                if (type is not null)
                 {
-                    page.DataContext = viewModel;
+                    if (!type.IsAssignableTo(typeof(ObservableObject)))
+                        throw new ArgumentOutOfRangeException(nameof(type), type,
+                            $"{view.Name} was bound to a view model which is not derived from ObservableObject");
 
-                    if (viewModel is IPageModel pageModel) page.Model = pageModel;
+                    var viewModel =
+                        type.GetConstructors().Any(x => x.GetParameters().Any(y => y.ParameterType == typeof(ViewBag)))
+                            ? ActivatorUtilities.CreateInstance(Program.AppHost.Services, type,
+                                parameter is not null ? new ViewBag(parameter) : ViewBag.Empty)
+                            : ActivatorUtilities.CreateInstance(Program.AppHost.Services, type);
+
+                    if (page is not null)
+                    {
+                        page.DataContext = viewModel;
+
+                        if (viewModel is IPageModel pageModel) page.Model = pageModel;
+                    }
                 }
 
                 return page;
