@@ -5,11 +5,11 @@
         <Panel>
             <Grid Margin="24" ColumnDefinitions="*">
                 <StackPanel Grid.Column="0">
-                    <TextBlock FontSize="{StaticResource ExtraSmallFontSize}" Text="Extra Small Font Size" />
-                    <TextBlock FontSize="{StaticResource SmallFontSize}" Text="Small Font Size" />
-                    <TextBlock FontSize="{StaticResource MediumFontSize}" Text="Medium Font Size" />
-                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Large Font Size" />
-                    <TextBlock FontSize="{StaticResource ExtraLargeFontSize}" Text="Extra Large Font Size" />
+                    <TextBlock FontSize="{StaticResource ExtraSmallFontSize}" Text="Extra Small Font Size 超小等大小字体" />
+                    <TextBlock FontSize="{StaticResource SmallFontSize}" Text="Small Font Size 小等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Large Font Size 大等大小字体" />
+                    <TextBlock FontSize="{StaticResource ExtraLargeFontSize}" Text="Extra Large Font Size 超大等大小字体" />
                 </StackPanel>
             </Grid>
         </Panel>

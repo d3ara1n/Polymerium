@@ -3,18 +3,29 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:lucide="using:LucideAvalonia"
            xmlns:vm="using:Polymerium.App.ViewModels" Background="{DynamicResource CardBackgroundBrush}"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
     <husk:Page.Header>
-        <Button Click="Button_OnClick">我能吞下玻璃而不伤身体</Button>
+        <DockPanel>
+            <Button DockPanel.Dock="Right" Margin="8,0,0,0" Click="Button_OnClick">
+                <lucide:Lucide Icon="Lightbulb" Width="12" Height="12" />
+            </Button>
+            <TextBlock Text="我能吞下玻璃而不伤身体" FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center"
+                       TextAlignment="Center" FontWeight="Bold">
+                <TextBlock.Effect>
+                    <DropShadowEffect Opacity="0.1" BlurRadius="6" />
+                </TextBlock.Effect>
+            </TextBlock>
+        </DockPanel>
     </husk:Page.Header>
     <husk:Page.Styles>
         <Style Selector=":loading ProgressBar#Bar">
             <Setter Property="IsIndeterminate" Value="True" />
         </Style>
         <Style Selector=":finished TextBlock#Block">
-            <Setter Property="Text" Value="Done" />
+            <Setter Property="Text" Value="没有阴影的中文是没有阴影的。" />
         </Style>
     </husk:Page.Styles>
     <StackPanel>
@@ -49,7 +60,7 @@
             <TabItem Header="Bar">
                 <StackPanel>
                     <ProgressBar x:Name="Bar" Value="50" />
-                    <TextBlock x:Name="Block" />
+                    <TextBlock x:Name="Block" FontSize="13" />
                 </StackPanel>
             </TabItem>
         </TabControl>
