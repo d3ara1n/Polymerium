@@ -91,7 +91,7 @@ public class Frame : ContentControl
 
     public void GoBack()
     {
-        ArgumentNullException.ThrowIfNull(_container);
+        ArgumentNullException.ThrowIfNull(_container);  
         if (_history.TryPop(out var frame))
             Navigate(frame.Page, frame.Parameter, frame.Transition, true, false);
         else if (CanGoBackOutOfStack)

@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="using:System">
     <!-- Animations -->
-    <sys:TimeSpan x:Key="ControlFastestAnimationDuration">0:0:0.15</sys:TimeSpan>
-    <sys:TimeSpan x:Key="ControlFasterAnimationDuration">0:0:0.2</sys:TimeSpan>
-    <sys:TimeSpan x:Key="ControlNormalAnimationDuration">0:0:0.3</sys:TimeSpan>
+    <sys:TimeSpan x:Key="ControlFastestAnimationDuration">0:0:0.146</sys:TimeSpan>
+    <sys:TimeSpan x:Key="ControlFasterAnimationDuration">0:0:0.197</sys:TimeSpan>
+    <sys:TimeSpan x:Key="ControlNormalAnimationDuration">0:0:0.304</sys:TimeSpan>
 
     <!-- Float Layers Opacity -->
     <sys:Double x:Key="Overlay1Opacity">0.2</sys:Double>
