@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +14,7 @@ using Huskui.Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
+using Polymerium.Trident.Services;
 
 namespace Polymerium.App;
 
@@ -97,9 +97,9 @@ public class App : Application
         {
             var window = new MainWindow();
 
+            #region Navigation
             // Link navigation service
             var navigation = Program.AppHost.Services.GetRequiredService<NavigationService>();
-
             // Closure captures Program.AppHost.Services
             window.BindNavigation(navigation.Navigate, (view, parameter) =>
             {
@@ -118,11 +118,12 @@ public class App : Application
                         throw new ArgumentOutOfRangeException(nameof(type), type,
                             $"{view.Name} was bound to a view model which is not derived from ObservableObject");
 
-                    var viewModel =
-                        type.GetConstructors().Any(x => x.GetParameters().Any(y => y.ParameterType == typeof(ViewBag)))
-                            ? ActivatorUtilities.CreateInstance(Program.AppHost.Services, type,
-                                parameter is not null ? new ViewBag(parameter) : ViewBag.Empty)
-                            : ActivatorUtilities.CreateInstance(Program.AppHost.Services, type);
+                    using var scope = Program.AppHost.Services.CreateScope();
+
+                    var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
+                    factory.Bag = parameter;
+
+                    var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
 
                     if (page is not null)
                     {
@@ -136,6 +137,15 @@ public class App : Application
             });
 
             navigation.SetHandler(window.Navigate);
+
+            #endregion
+
+            #region Profile
+
+            var profile = Program.AppHost.Services.GetRequiredService<ProfileService>();
+            window.SubscribeProfileList(profile);
+
+            #endregion
 
             return window;
         }

@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using Avalonia.Animation;
+using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Huskui.Avalonia.Controls;
+using Polymerium.App.Models;
 using Polymerium.App.Views;
+using Polymerium.Trident.Services;
 
 namespace Polymerium.App;
 
@@ -12,12 +16,14 @@ public partial class MainWindow : AppWindow
 {
     private Action<Type, object?, IPageTransition?>? _navigate;
 
+    public AvaloniaList<DesktopItemModel> Profiles { get; } = new();
+
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = this;
     }
-
-
+    
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
         Navigate(sender switch
@@ -28,6 +34,8 @@ public partial class MainWindow : AppWindow
             }, Random.Shared.Next(1000, 9999),
             new PageSlide(TimeSpan.FromMilliseconds(150)));
     }
+
+    #region Navigation Service
 
     internal void Navigate(Type page, object? parameter, IPageTransition transition)
     {
@@ -40,6 +48,43 @@ public partial class MainWindow : AppWindow
         _navigate = navigate;
         Root.PageActivator = activator;
     }
+
+    #endregion
+
+    #region Profile Service
+
+    internal void SubscribeProfileList(ProfileService profile)
+    {
+        profile.ProfileAdded += OnProfileAdded;
+        profile.ProfileUpdated += OnProfileUpdated;
+        profile.ProfileRemoved += OnProfileRemoved;
+
+        foreach (var (key, item) in profile.Profiles)
+        {
+            var model = DesktopItemModel.From(key, item);
+            Profiles.Add(model);
+        }
+    }
+
+    private void OnProfileAdded(object? sender, ProfileService.ProfileChangedEventArgs e)
+    {
+        var model = DesktopItemModel.From(e.Key, e.Value);
+        Profiles.Add(model);
+    }
+
+    private void OnProfileUpdated(object? sender, ProfileService.ProfileChangedEventArgs e)
+    {
+        var model = Profiles.FirstOrDefault(x => x.Key == e.Key);
+        if (model is not null) model.Update(e.Value);
+    }
+
+    private void OnProfileRemoved(object? sender, ProfileService.ProfileChangedEventArgs e)
+    {
+        var model = Profiles.FirstOrDefault(x => x.Key == e.Key);
+        if (model is not null) Profiles.Remove(model);
+    }
+
+    #endregion
 
     #region Window State Management
 

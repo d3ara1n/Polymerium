@@ -6,6 +6,7 @@
         <ResourceInclude Source="/Controls/Card.axaml" />
         <ResourceInclude Source="/Controls/Frame.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
+        <ResourceInclude Source="/Controls/ListBoxItem.axaml" />
         <ResourceInclude Source="/Controls/Page.axaml" />
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
         <ResourceInclude Source="/Controls/TabControl.axaml" />

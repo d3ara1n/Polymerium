@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -46,7 +45,7 @@ public class ProfileService : IDisposable
         }
     }
 
-    public IReadOnlyList<Profile> Profiles => _profiles.Select(x => x.Value).ToImmutableList();
+    public IEnumerable<(string, Profile)> Profiles => _profiles.Select(x => (x.Key, x.Value));
 
     public bool TryGetMutable(string key, [MaybeNullWhen(false)] out ProfileGuard profile)
     {

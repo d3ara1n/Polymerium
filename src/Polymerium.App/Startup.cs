@@ -10,14 +10,19 @@ public static class Startup
 {
     public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAvalonia();
+        services
+            .AddAvalonia()
+            .AddLogging();
 
         // Trident
-        services.AddSingleton<PathService>();
-        services.AddSingleton<ProfileService>();
-        services.AddSingleton<RepositoryAgent>();
+        services
+            .AddSingleton<PathService>()
+            .AddSingleton<ProfileService>()
+            .AddSingleton<RepositoryAgent>();
 
         // App
-        services.AddSingleton<NavigationService>();
+        services
+            .AddViewFacilities()
+            .AddSingleton<NavigationService>();
     }
 }
