@@ -4,10 +4,10 @@ using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Controls;
 
-public class AppPage : Page
+public class ScopedPage : Page
 {
-    public static readonly DirectProperty<AppPage, bool> IsMaximizedProperty =
-        AppWindow.IsMaximizedProperty.AddOwner<AppPage>(o => o.IsMaximized,
+    public static readonly DirectProperty<ScopedPage, bool> IsMaximizedProperty =
+        AppWindow.IsMaximizedProperty.AddOwner<ScopedPage>(o => o.IsMaximized,
             (o, v) => o.IsMaximized = v);
 
     private bool isMaximized;
@@ -18,5 +18,5 @@ public class AppPage : Page
         set => SetAndRaise(IsMaximizedProperty, ref isMaximized, value);
     }
 
-    protected override Type StyleKeyOverride => typeof(AppPage);
+    protected override Type StyleKeyOverride => typeof(ScopedPage);
 }

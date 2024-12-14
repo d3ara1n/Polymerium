@@ -6,6 +6,8 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Transitions;
+using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
@@ -23,21 +25,24 @@ public partial class MainWindow : AppWindow
         InitializeComponent();
         DataContext = this;
     }
-    
+
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        Navigate(sender switch
-            {
-                Button { Tag: "ExhibitionView" } => typeof(ExhibitionView),
-                Button { Tag: "UnknownView" } => typeof(UnknownView),
-                _ => typeof(NotFoundView)
-            }, Random.Shared.Next(1000, 9999),
-            new PageSlide(TimeSpan.FromMilliseconds(150)));
+        (Type Page, object? Parameter) target = sender switch
+        {
+            Button { Tag: "ExhibitionView" } => (typeof(ExhibitionView), null),
+            Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
+            _ => (typeof(NotFoundView), null)
+        };
+        Navigate(target.Page, target.Parameter,
+            target.Page.IsAssignableTo(typeof(ScopedPage))
+                ? new PageCoverIn(direction: DirectionFrom.Right)
+                : new CrossFade(TimeSpan.FromMilliseconds(197)));
     }
 
     #region Navigation Service
 
-    internal void Navigate(Type page, object? parameter, IPageTransition transition)
+    internal void Navigate(Type page, object? parameter, IPageTransition? transition)
     {
         Root.Navigate(page, parameter, transition);
     }

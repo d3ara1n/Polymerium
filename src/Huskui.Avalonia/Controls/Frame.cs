@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
@@ -84,6 +85,7 @@ public class Frame : ContentControl
 
         _container.PageTransition = transition ?? DefaultTransition;
         _container.IsTransitionReversed = reverse;
+        Debug.WriteLine($"To = {page.Name} , Reverse = {reverse}");
         Content = content;
         RaisePropertyChanged(CanGoBackProperty, old, CanGoBack);
         _goBackCommand.OnCanExecutedChanged();
@@ -91,7 +93,7 @@ public class Frame : ContentControl
 
     public void GoBack()
     {
-        ArgumentNullException.ThrowIfNull(_container);  
+        ArgumentNullException.ThrowIfNull(_container);
         if (_history.TryPop(out var frame))
             Navigate(frame.Page, frame.Parameter, frame.Transition, true, false);
         else if (CanGoBackOutOfStack)

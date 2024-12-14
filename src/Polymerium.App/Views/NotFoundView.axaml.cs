@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views;
 
-public partial class NotFoundView : AppPage
+public partial class NotFoundView : ScopedPage
 {
     public NotFoundView()
     {
