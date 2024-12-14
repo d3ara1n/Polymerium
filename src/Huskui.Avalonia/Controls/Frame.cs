@@ -98,9 +98,11 @@ public class Frame : ContentControl
             Navigate(frame.Page, frame.Parameter, frame.Transition, true, false);
         else if (CanGoBackOutOfStack)
         {
-            Content = null;
+            if (_current is not null) _container.PageTransition = _current.Transition;
+
             _current = null;
             _container.IsTransitionReversed = true;
+            Content = null;
         }
         else throw new InvalidOperationException("No previous page in the stack");
 

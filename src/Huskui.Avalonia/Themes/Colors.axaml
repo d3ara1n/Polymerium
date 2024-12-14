@@ -119,6 +119,7 @@
 
             <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{StaticResource Sand1Color}" />
             <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{StaticResource Black1Color}" />
+            <SolidColorBrush x:Key="Layer7BackgroundBrush" Color="{StaticResource Black7Color}" />
 
             <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource White11Color}" />
 

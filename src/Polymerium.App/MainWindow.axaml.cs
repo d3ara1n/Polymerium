@@ -5,6 +5,7 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Transitions;
 using Polymerium.App.Controls;
@@ -26,18 +27,52 @@ public partial class MainWindow : AppWindow
         DataContext = this;
     }
 
+    private void Pop()
+    {
+        var dismiss = new Button
+        {
+            Content = "DISMISS"
+        };
+        var pop = new Button
+        {
+            Content = "POP"
+        };
+        pop.Click += (_, __) => Pop();
+        PopToast(new Toast
+        {
+            Title = $"A VERY LARGE MESSAGE HAPPENED {Random.Shared.Next(1000, 9999)}",
+            Background = Brushes.White,
+            Content = new StackPanel
+            {
+                Children =
+                {
+                    new TextBlock { Text = "ALIVE OR DEAD" },
+                    pop
+                }
+            }
+        });
+    }
+
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        (Type Page, object? Parameter) target = sender switch
+        if (sender is Button { Tag: "42" })
         {
-            Button { Tag: "ExhibitionView" } => (typeof(ExhibitionView), null),
-            Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
-            _ => (typeof(NotFoundView), null)
-        };
-        Navigate(target.Page, target.Parameter,
-            target.Page.IsAssignableTo(typeof(ScopedPage))
-                ? new PageCoverIn(direction: DirectionFrom.Right)
-                : new CrossFade(TimeSpan.FromMilliseconds(197)));
+            // TEST HERE
+            Pop();
+        }
+        else
+        {
+            (Type Page, object? Parameter) target = sender switch
+            {
+                Button { Tag: "ExhibitionView" } => (typeof(ExhibitionView), null),
+                Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
+                _ => (typeof(NotFoundView), null)
+            };
+            Navigate(target.Page, target.Parameter,
+                target.Page.IsAssignableTo(typeof(ScopedPage))
+                    ? new PageCoverIn(direction: DirectionFrom.Right)
+                    : new PopUp(TimeSpan.FromMilliseconds(197)));
+        }
     }
 
     #region Navigation Service

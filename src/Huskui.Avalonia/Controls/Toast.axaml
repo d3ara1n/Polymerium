@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:fi="using:FluentIcons.Avalonia">
+    <ControlTheme x:Key="{x:Type local:Toast}" TargetType="local:Toast">
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="Padding" Value="24,76,24,24" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border ClipToBounds="True" CornerRadius="36,36,0,0" BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <Panel>
+                        <ContentPresenter Content="{TemplateBinding Content}" Background="{TemplateBinding Background}"
+                                          BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                          Padding="{TemplateBinding Padding}" />
+                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="24,24,24,0">
+                            <Button Padding="8" CornerRadius="26" Theme="{StaticResource OutlineButtonTheme}"
+                                    DockPanel.Dock="Right"
+                                    Command="{Binding $parent[local:OverlayItem].DismissCommand}">
+                                <fi:SymbolIcon Symbol="Dismiss" Height="18" Width="18" />
+                            </Button>
+                            <TextBlock Text="{TemplateBinding Title}" FontSize="{StaticResource ExtraLargeFontSize}"
+                                       VerticalAlignment="Center" FontWeight="Bold" />
+                        </DockPanel>
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
