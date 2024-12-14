@@ -2,12 +2,14 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="using:Polymerium.App"
                 xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                 xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                xmlns:m="using:Polymerium.App.Models"
                 xmlns:lucide="using:LucideAvalonia"
                 xmlns:ursa="https://irihi.tech/ursa"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                x:Class="Polymerium.App.MainWindow"
+                x:Class="Polymerium.App.MainWindow" x:DataType="local:MainWindow"
                 PointerPressed="Window_OnPointerPressed" DoubleTapped="Window_OnDoubleTapped"
                 Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="960">
     <Grid>
@@ -87,7 +89,13 @@
                     <DockPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3">
                         <!-- <AutoCompleteBox/> -->
                         <TextBox DockPanel.Dock="Top" Watermark="Search by names or types" />
-                        <ListBox />
+                        <ItemsControl ItemsSource="{Binding Profiles}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="m:DesktopItemModel">
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </DockPanel>
                 </Grid>
             </DockPanel>

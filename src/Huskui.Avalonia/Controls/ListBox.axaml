@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <ListBox Margin="20" Width="220" Height="220">
+        <ListBox Margin="20" Width="220" Height="220" BorderThickness="1" BorderBrush="Black">
             <ListBoxItem>Item 1</ListBoxItem>
             <ListBoxItem>Item 2</ListBoxItem>
             <ListBoxItem>Item 3</ListBoxItem>
@@ -10,69 +10,19 @@
             <ListBoxItem>Item 4</ListBoxItem>
         </ListBox>
     </Design.PreviewWith>
-    <ControlTheme x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="12,8" />
-        <Setter Property="CornerRadius" Value="4" />
-        <Setter Property="Template">
-            <ControlTemplate TargetType="ListBoxItem">
-                <Panel>
-                    <Border x:Name="PART_Overlay" Opacity="0"
-                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
-                        <Border.Transitions>
-                            <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            </Transitions>
-                        </Border.Transitions>
-                    </Border>
-                    <ContentPresenter
-                        Name="PART_ContentPresenter"
-                        Padding="{TemplateBinding Padding}"
-                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Content="{TemplateBinding Content}"
-                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        FontWeight="Normal"
-                        Foreground="{TemplateBinding Foreground}" />
-                </Panel>
-            </ControlTemplate>
-        </Setter>
-
-        <Style Selector="^ /template/ Border#PART_Overlay">
-            <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
-        </Style>
-
-        <Style Selector="^:pointerover /template/ Border#PART_Overlay">
-            <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
-        </Style>
-
-        <Style Selector="^:pressed /template/ Border#PART_Overlay">
-            <Setter Property="Opacity" Value="{StaticResource Overlay2Opacity}" />
-        </Style>
-
-        <Style Selector="^:selected /template/ Border#PART_Overlay">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-            <Setter Property="Opacity" Value="{StaticResource OverlayFullOpacity}" />
-        </Style>
-
-        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
-        </Style>
-        <Style Selector="^:disabled:selected /template/ Border#PART_Overlay">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
-        </Style>
-    </ControlTheme>
+    
     <ControlTheme x:Key="{x:Type ListBox}" TargetType="ListBox">
         <Setter Property="Padding" Value="8" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <!-- Spacing Property -->
+                <!-- https://github.com/AvaloniaUI/Avalonia/pull/17356 -->
+                <VirtualizingStackPanel />
+            </ItemsPanelTemplate>
+        </Setter>
         <Setter Property="Template">
             <ControlTemplate>
                 <Border

@@ -6,7 +6,7 @@ using Huskui.Avalonia;
 
 namespace Polymerium.App.Facilities;
 
-public class ViewModelBase : ObservableObject, IPageModel
+public abstract class ViewModelBase : ObservableObject, IPageModel
 {
     public Task InitializeAsync(Dispatcher dispatcher, CancellationToken token)
     {
