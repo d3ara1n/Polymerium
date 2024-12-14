@@ -13,5 +13,8 @@
         <ResourceInclude Source="/Controls/TabItem.axaml" />
         <ResourceInclude Source="/Controls/TabStripItem.axaml" />
         <ResourceInclude Source="/Controls/TextBox.axaml" />
+        <ResourceInclude Source="/Controls/Toast.axaml" />
+        <ResourceInclude Source="/Controls/OverlayHost.axaml" />
+        <ResourceInclude Source="/Controls/OverlayItem.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
