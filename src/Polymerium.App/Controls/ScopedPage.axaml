@@ -1,21 +1,30 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:local="using:Polymerium.App.Controls"
                     xmlns:lucide="using:LucideAvalonia">
+
     <Design.PreviewWith>
-        <husk:Page Width="128" Height="128">
+        <local:ScopedPage Width="128" Height="128">
             <Button HorizontalAlignment="Center" VerticalAlignment="Center">
                 <lucide:Lucide Icon="ArrowLeft" Width="12" Height="12" />
             </Button>
-        </husk:Page>
+        </local:ScopedPage>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type husk:Page}" TargetType="husk:Page"
+    <ControlTheme x:Key="{x:Type local:ScopedPage}" TargetType="local:ScopedPage"
                   BasedOn="{StaticResource {x:Type husk:Page}}">
-        <Setter Property="Margin" Value=" 0,0,7,0" />
         <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
+        <Setter Property="IsMaximized" Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Margin" Value=" 7" />
         <Setter Property="Effect">
             <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="8" Opacity="0.1" />
         </Setter>
+
+        <Style Selector="^[IsMaximized=True]">
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Margin" Value="0,0,7,0" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

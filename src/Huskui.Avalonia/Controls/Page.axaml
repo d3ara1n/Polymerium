@@ -26,7 +26,7 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}" ClipToBounds="True">
                     <Panel>
                         <DockPanel VerticalAlignment="Top" Margin="12" IsVisible="{TemplateBinding IsHeaderVisible}">
                             <Button DockPanel.Dock="Left" CornerRadius="4" Margin="0,0,12,0"

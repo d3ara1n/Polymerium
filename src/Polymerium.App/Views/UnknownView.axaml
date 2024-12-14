@@ -4,7 +4,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:lucide="using:LucideAvalonia"
-           xmlns:vm="using:Polymerium.App.ViewModels" Background="{DynamicResource CardBackgroundBrush}"
+           xmlns:vm="using:Polymerium.App.ViewModels"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
     <husk:Page.Header>
