@@ -1,107 +1,40 @@
 ﻿using Avalonia;
-using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Media;
-using Avalonia.Styling;
 
 namespace Huskui.Avalonia.Transitions;
 
-public sealed class PopUp(TimeSpan? duration = null) : PageTransitionBase(duration)
+public sealed class PopUp : PageTransitionBase
 {
-    protected override void Configure(Builder builder)
+    public PopUp()
     {
-        var scaleXProperty = ScaleTransform.ScaleXProperty;
-        var scaleYProperty = ScaleTransform.ScaleYProperty;
-        var opacityProperty = Visual.OpacityProperty;
+    }
 
-        builder.AddFromAnimation([
-            new KeyFrame
-            {
-                Cue = new Cue(0d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = opacityProperty,
-                        Value = 1.0d
-                    }
-                }
-            },
-            new KeyFrame
-            {
-                Cue = new Cue(1d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = opacityProperty, Value = 0d
-                    }
-                }
-            }
-        ]);
+    public PopUp(TimeSpan? duration = null) : base(duration)
+    {
+    }
 
-        builder.AddToAnimation([
-            new KeyFrame
-            {
-                Cue = new Cue(0d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = scaleXProperty,
-                        Value = 0.98d
-                    },
-                    new Setter
-                    {
-                        Property = scaleYProperty,
-                        Value = 0.98d
-                    }
-                }
-            },
-            new KeyFrame
-            {
-                Cue = new Cue(1d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = scaleXProperty,
-                        Value = 1d
-                    },
-                    new Setter
-                    {
-                        Property = scaleYProperty,
-                        Value = 1d
-                    }
-                }
-            }
-        ], new BackEaseOut());
+    protected override void Configure(Builder from, Builder to, Lazy<Visual> parentAccessor)
+    {
+        from
+            .Animation(new SineEaseIn())
+            .WithDelay(Duration)
+            .AddFrame(0d, [(Visual.OpacityProperty, 1d)])
+            .AddFrame(1d, [(Visual.OpacityProperty, 0d)]);
 
-        builder.AddToAnimation([
-            new KeyFrame
-            {
-                Cue = new Cue(0d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = opacityProperty,
-                        Value = 0d
-                    }
-                }
-            },
-            new KeyFrame
-            {
-                Cue = new Cue(1d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = opacityProperty,
-                        Value = 1d
-                    }
-                }
-            }
-        ]);
+        to
+            .Animation(new BackEaseOut())
+            .AddFrame(0d, [
+                (ScaleTransform.ScaleXProperty, 0.98d),
+                (ScaleTransform.ScaleYProperty, 0.98d)
+            ])
+            .AddFrame(1d, [
+                (ScaleTransform.ScaleXProperty, 1d),
+                (ScaleTransform.ScaleYProperty, 1d)
+            ]);
+
+        to.Animation(new SineEaseOut())
+            .AddFrame(0d, [(Visual.OpacityProperty, 0d)])
+            .AddFrame(1d, [(Visual.OpacityProperty, 1d)]);
     }
 }

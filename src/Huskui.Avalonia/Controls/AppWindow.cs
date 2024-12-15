@@ -7,10 +7,12 @@ namespace Huskui.Avalonia.Controls;
 
 [TemplatePart(PART_ContentPresenter, typeof(ContentControl))]
 [TemplatePart(PART_ToastHost, typeof(OverlayHost))]
+[TemplatePart(PART_DialogHost, typeof(OverlayHost))]
 public class AppWindow : Window
 {
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
     public const string PART_ToastHost = nameof(PART_ToastHost);
+    public const string PART_DialogHost = nameof(PART_DialogHost);
 
     public static readonly DirectProperty<AppWindow, bool> IsMaximizedProperty =
         AvaloniaProperty.RegisterDirect<AppWindow, bool>(nameof(IsMaximized), o => o.IsMaximized,
@@ -27,6 +29,7 @@ public class AppWindow : Window
     }
 
     private OverlayHost? _toastHost;
+    private OverlayHost? _dialogHost;
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
@@ -39,10 +42,16 @@ public class AppWindow : Window
     {
         base.OnApplyTemplate(e);
         _toastHost = e.NameScope.Find<OverlayHost>(PART_ToastHost);
+        _dialogHost = e.NameScope.Find<OverlayHost>(PART_DialogHost);
     }
 
     public void PopToast(Toast toast)
     {
         _toastHost?.Pop(toast);
+    }
+
+    public void PopDialog(Dialog dialog)
+    {
+        _dialogHost?.Pop(dialog);
     }
 }

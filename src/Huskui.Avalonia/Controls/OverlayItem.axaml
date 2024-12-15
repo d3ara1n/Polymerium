@@ -3,8 +3,8 @@
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme x:Key="{x:Type local:OverlayItem}" TargetType="local:OverlayItem">
         <Setter Property="RenderTransformOrigin" Value="50%,50%" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="{Binding $parent[local:OverlayHost].VerticalContentAlignment}" />
+        <Setter Property="HorizontalAlignment" Value="{Binding $parent[local:OverlayHost].HorizontalContentAlignment}" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Transitions">
             <Transitions>
@@ -44,6 +44,10 @@
             <Setter Property="Opacity" Value="0.0" />
 
             <Setter Property="RenderTransform" Value="translateY(-36px)" />
+
+            <Setter Property="Effect">
+                <BlurEffect Radius="6" />
+            </Setter>
 
             <Style Selector="^ /template/ Panel#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.90)" />

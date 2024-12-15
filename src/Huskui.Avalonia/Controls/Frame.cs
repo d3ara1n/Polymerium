@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
@@ -68,24 +67,18 @@ public class Frame : ContentControl
     public PageActivatorDelegate PageActivator { get; set; } =
         (t, _) => Activator.CreateInstance(t);
 
-    public void Navigate(Type page, object? parameter = null, IPageTransition? transition = null)
-    {
-        Navigate(page, parameter, transition, false, true);
-    }
-
-    private void Navigate(Type page, object? parameter, IPageTransition? transition, bool reverse, bool stack)
+    public void Navigate(Type page, object? parameter, IPageTransition? transition)
     {
         var content = PageActivator(page, parameter) ?? throw new ArgumentNullException();
         ArgumentNullException.ThrowIfNull(_container);
 
         var old = CanGoBack;
-        if (stack && _current is not null)
+        if (_current is not null)
             _history.Push(_current);
         _current = new FrameFrame(page, parameter, transition);
 
         _container.PageTransition = transition ?? DefaultTransition;
-        _container.IsTransitionReversed = reverse;
-        Debug.WriteLine($"To = {page.Name} , Reverse = {reverse}");
+        _container.IsTransitionReversed = false;
         Content = content;
         RaisePropertyChanged(CanGoBackProperty, old, CanGoBack);
         _goBackCommand.OnCanExecutedChanged();
@@ -95,13 +88,22 @@ public class Frame : ContentControl
     {
         ArgumentNullException.ThrowIfNull(_container);
         if (_history.TryPop(out var frame))
-            Navigate(frame.Page, frame.Parameter, frame.Transition, true, false);
+        {
+            var content = PageActivator(frame.Page, frame.Parameter) ?? throw new ArgumentNullException();
+
+            _container.PageTransition = _current?.Transition ?? DefaultTransition;
+
+            _current = frame;
+            _container.IsTransitionReversed = true;
+            Content = content;
+        }
         else if (CanGoBackOutOfStack)
         {
-            if (_current is not null) _container.PageTransition = _current.Transition;
+            _container.PageTransition = _current?.Transition ?? DefaultTransition;
 
             _current = null;
             _container.IsTransitionReversed = true;
+            // TODO: TransitioningContentControl 不会根据 reverse 来设置 from 和 to 的上下关系，需要重构自己的切换容器
             Content = null;
         }
         else throw new InvalidOperationException("No previous page in the stack");

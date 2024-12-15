@@ -59,10 +59,11 @@
                             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
                         </StackPanel.Effect>
                         <lucide:Lucide Icon="Squirrel" Width="12" />
-                        <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}"
+                                   FontSize="{StaticResource SmallFontSize}" VerticalAlignment="Center" />
                     </StackPanel>
                 </DockPanel>
-                <Grid Margin="9,16,16,16" DockPanel.Dock="Top" ColumnDefinitions="Auto,8,*,8,Auto"
+                <Grid Margin="9,8,16,16" DockPanel.Dock="Top" ColumnDefinitions="Auto,8,*,8,Auto"
                       RowDefinitions="Auto,8,Auto,8,Auto,8,*,8,Auto,8,Auto">
                     <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Height="48"
                             Click="Button_OnClick"
@@ -99,7 +100,7 @@
                     </DockPanel>
                     <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" />
                     <Button Grid.Column="0" Grid.Row="10" DockPanel.Dock="Left"
-                            Theme="{StaticResource GhostButtonTheme}" Click="Button_OnClick" Tag="UnknownView">
+                            Theme="{StaticResource GhostButtonTheme}" Click="Button_OnClick" Tag="0721">
                         <lucide:Lucide Icon="Settings" Height="18" />
                     </Button>
                     <Button Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="3" Click="Button_OnClick" Tag="42"

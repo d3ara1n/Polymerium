@@ -27,26 +27,48 @@ public partial class MainWindow : AppWindow
         DataContext = this;
     }
 
-    private void Pop()
+    private void PopDialog()
     {
-        var dismiss = new Button
-        {
-            Content = "DISMISS"
-        };
         var pop = new Button
         {
             Content = "POP"
         };
-        pop.Click += (_, __) => Pop();
-        PopToast(new Toast
+        pop.Click += (_, __) => PopDialog();
+        PopDialog(new Dialog
         {
-            Title = $"A VERY LARGE MESSAGE HAPPENED {Random.Shared.Next(1000, 9999)}",
+            Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
+            Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
             Background = Brushes.White,
             Content = new StackPanel
             {
+                Spacing = 8d,
                 Children =
                 {
-                    new TextBlock { Text = "ALIVE OR DEAD" },
+                    new TextBox(),
+                    pop
+                }
+            }
+        });
+    }
+
+    private void PopToast()
+    {
+        var pop = new Button
+        {
+            Content = "POP"
+        };
+        pop.Click += (_, __) => PopToast();
+        PopToast(new Toast
+        {
+            Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
+            Background = Brushes.White,
+            Content = new StackPanel
+            {
+                Spacing = 8d,
+                Children =
+                {
+                    new TextBlock { Text = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM" },
+                    new TextBox(),
                     pop
                 }
             }
@@ -57,8 +79,11 @@ public partial class MainWindow : AppWindow
     {
         if (sender is Button { Tag: "42" })
         {
-            // TEST HERE
-            Pop();
+            PopToast();
+        }
+        else if (sender is Button { Tag: "0721" })
+        {
+            PopDialog();
         }
         else
         {
@@ -70,7 +95,7 @@ public partial class MainWindow : AppWindow
             };
             Navigate(target.Page, target.Parameter,
                 target.Page.IsAssignableTo(typeof(ScopedPage))
-                    ? new PageCoverIn(direction: DirectionFrom.Right)
+                    ? new PageCoverOver(null, DirectionFrom.Right)
                     : new PopUp(TimeSpan.FromMilliseconds(197)));
         }
     }

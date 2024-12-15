@@ -4,6 +4,7 @@
         <ResourceInclude Source="/Controls/AppWindow.axaml" />
         <ResourceInclude Source="/Controls/Button.axaml" />
         <ResourceInclude Source="/Controls/Card.axaml" />
+        <ResourceInclude Source="/Controls/Dialog.axaml" />
         <ResourceInclude Source="/Controls/Frame.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
         <ResourceInclude Source="/Controls/ListBoxItem.axaml" />
