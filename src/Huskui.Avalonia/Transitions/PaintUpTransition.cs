@@ -2,7 +2,7 @@
 
 namespace Huskui.Avalonia.Transitions;
 
-public sealed class PaintUp(TimeSpan? duration = null) : PageTransitionBase(duration)
+public sealed class PaintUpTransition(TimeSpan? duration = null) : PageTransitionBase(duration)
 {
     protected override void Configure(Builder from, Builder to, Lazy<Visual> parentAccessor)
     {

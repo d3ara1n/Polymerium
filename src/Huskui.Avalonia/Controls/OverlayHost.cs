@@ -131,7 +131,7 @@ public class OverlayHost : TemplatedControl
         AvaloniaProperty.RegisterDirect<OverlayHost, IPageTransition>(nameof(Transition), o => o.Transition,
             (o, v) => o.Transition = v);
 
-    private IPageTransition _transition = new PageCoverOver(null, DirectionFrom.Bottom);
+    private IPageTransition _transition = new PageCoverOverTransition(null, DirectionFrom.Bottom);
 
     public IPageTransition Transition
     {

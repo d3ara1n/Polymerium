@@ -3,20 +3,23 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 
 namespace Huskui.Avalonia.Controls;
 
-[TemplatePart(PART_Container, typeof(TransitioningContentControl))]
-public class Frame : ContentControl
+[TemplatePart(PART_ContentPresenter, typeof(ContentPresenter))]
+[TemplatePart(PART_ContentPresenter2, typeof(ContentPresenter))]
+public class Frame : TemplatedControl
 {
     public delegate object? PageActivatorDelegate(Type page, object? parameter);
 
-    public const string PART_Container = nameof(PART_Container);
+    public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
+    public const string PART_ContentPresenter2 = nameof(PART_ContentPresenter2);
 
-    public static readonly DirectProperty<Frame, IPageTransition?> DefaultTransitionProperty =
-        AvaloniaProperty.RegisterDirect<Frame, IPageTransition?>(nameof(DefaultTransition), o => o.DefaultTransition,
+    public static readonly DirectProperty<Frame, IPageTransition> DefaultTransitionProperty =
+        AvaloniaProperty.RegisterDirect<Frame, IPageTransition>(nameof(DefaultTransition), o => o.DefaultTransition,
             (o, v) => o.DefaultTransition = v);
 
     public static readonly DirectProperty<Frame, bool> CanGoBackProperty =
@@ -35,25 +38,40 @@ public class Frame : ContentControl
         set => SetAndRaise(CanGoBackOutOfStackProperty, ref _canGoBackOutOfStack, value);
     }
 
+    public static readonly DirectProperty<Frame, object?> ContentProperty =
+        AvaloniaProperty.RegisterDirect<Frame, object?>(nameof(Content), o => o.Content, (o, v) => o.Content = v);
+
+    private object? _content;
+
+    public object? Content
+    {
+        get => _content;
+        set => SetAndRaise(ContentProperty, ref _content, value);
+    }
 
     private readonly InternalGoBackCommand _goBackCommand;
 
     private readonly Stack<FrameFrame> _history = new();
 
     private TransitioningContentControl? _container;
+    private ContentPresenter? _presenter;
+    private ContentPresenter? _presenter2;
 
-    private FrameFrame? _current;
+    private FrameFrame? _currentFrame;
+    private CancellationTokenSource? _currentToken;
+    private (object? Content, IPageTransition Transition, bool Reverse)? _current;
+    private bool _doubleArrangeSafeLock;
 
 
-    private IPageTransition? _defaultTransition = TransitioningContentControl.PageTransitionProperty.GetDefaultValue(
-        typeof(TransitioningContentControl));
+    private IPageTransition _defaultTransition = TransitioningContentControl.PageTransitionProperty.GetDefaultValue(
+        typeof(TransitioningContentControl)) ?? new CrossFade(TimeSpan.FromMilliseconds(197));
 
     public Frame()
     {
         _goBackCommand = new InternalGoBackCommand(this);
     }
 
-    public IPageTransition? DefaultTransition
+    public IPageTransition DefaultTransition
     {
         get => _defaultTransition;
         set => SetAndRaise(DefaultTransitionProperty, ref _defaultTransition, value);
@@ -69,42 +87,34 @@ public class Frame : ContentControl
 
     public void Navigate(Type page, object? parameter, IPageTransition? transition)
     {
+        ArgumentNullException.ThrowIfNull(_presenter);
+        ArgumentNullException.ThrowIfNull(_presenter2);
         var content = PageActivator(page, parameter) ?? throw new ArgumentNullException();
-        ArgumentNullException.ThrowIfNull(_container);
-
         var old = CanGoBack;
-        if (_current is not null)
-            _history.Push(_current);
-        _current = new FrameFrame(page, parameter, transition);
+        if (_currentFrame is not null)
+            _history.Push(_currentFrame);
+        _currentFrame = new FrameFrame(page, parameter, transition);
 
-        _container.PageTransition = transition ?? DefaultTransition;
-        _container.IsTransitionReversed = false;
-        Content = content;
+        UpdateContent(content, transition ?? DefaultTransition, false);
+
         RaisePropertyChanged(CanGoBackProperty, old, CanGoBack);
         _goBackCommand.OnCanExecutedChanged();
     }
 
     public void GoBack()
     {
-        ArgumentNullException.ThrowIfNull(_container);
+        ArgumentNullException.ThrowIfNull(_presenter);
+        ArgumentNullException.ThrowIfNull(_presenter2);
         if (_history.TryPop(out var frame))
         {
             var content = PageActivator(frame.Page, frame.Parameter) ?? throw new ArgumentNullException();
-
-            _container.PageTransition = _current?.Transition ?? DefaultTransition;
-
-            _current = frame;
-            _container.IsTransitionReversed = true;
-            Content = content;
+            UpdateContent(content, _currentFrame?.Transition ?? DefaultTransition, true);
+            _currentFrame = frame;
         }
         else if (CanGoBackOutOfStack)
         {
-            _container.PageTransition = _current?.Transition ?? DefaultTransition;
-
-            _current = null;
-            _container.IsTransitionReversed = true;
-            // TODO: TransitioningContentControl 不会根据 reverse 来设置 from 和 to 的上下关系，需要重构自己的切换容器
-            Content = null;
+            _currentFrame = null;
+            UpdateContent(null, _currentFrame?.Transition ?? DefaultTransition, true);
         }
         else throw new InvalidOperationException("No previous page in the stack");
 
@@ -112,10 +122,54 @@ public class Frame : ContentControl
         _goBackCommand.OnCanExecutedChanged();
     }
 
+    private void UpdateContent(object? content, IPageTransition transition, bool reverse)
+    {
+        Content = content;
+        _current = new ValueTuple<object, IPageTransition, bool>(content, transition, reverse);
+        _doubleArrangeSafeLock = true;
+        InvalidateArrange();
+    }
+
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        var rv = base.ArrangeOverride(finalSize);
+
+        ArgumentNullException.ThrowIfNull(_presenter);
+        ArgumentNullException.ThrowIfNull(_presenter2);
+
+        if (_current.HasValue && _doubleArrangeSafeLock)
+        {
+            _currentToken?.Cancel();
+            _doubleArrangeSafeLock = false;
+            var cancel = new CancellationTokenSource();
+            _currentToken = cancel;
+
+            var (from, to) = _presenter.Content is not null ? (_presenter, _presenter2) : (_presenter2, _presenter);
+
+
+            (from.ZIndex, to.ZIndex) = (0, 1);
+            (from.IsVisible, to.IsVisible) = (true, true);
+            to.Content = _current.Value.Content;
+
+            _current.Value.Transition.Start(from, to, !_current.Value.Reverse, cancel.Token)
+                .ContinueWith(_ =>
+                {
+                    if (!cancel.IsCancellationRequested)
+                    {
+                        from.Content = null;
+                        (from.IsVisible, to.IsVisible) = (false, true);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        return rv;
+    }
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        _container = e.NameScope.Find<TransitioningContentControl>(PART_Container);
+        _presenter = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter);
+        _presenter2 = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter2);
     }
 
     public record FrameFrame(Type Page, object? Parameter, IPageTransition? Transition);

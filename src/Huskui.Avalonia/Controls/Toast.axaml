@@ -10,7 +10,8 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Border ClipToBounds="True" CornerRadius="36,36,0,0" BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}">
                     <Panel>
                         <ContentPresenter Content="{TemplateBinding Content}" Background="{TemplateBinding Background}"
                                           BackgroundSizing="{TemplateBinding BackgroundSizing}"

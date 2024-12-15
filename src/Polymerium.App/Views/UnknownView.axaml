@@ -55,7 +55,10 @@
         </TabStrip>
         <TabControl>
             <TabItem Header="Foo">
-                <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello" />
+                <StackPanel Spacing="8">
+                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello" />
+                    <Button Classes="Primary" Content="World" />
+                </StackPanel>
             </TabItem>
             <TabItem Header="Bar">
                 <StackPanel>

@@ -47,7 +47,7 @@
                             <local:OverlayHost Name="PART_DialogHost" HorizontalContentAlignment="Center"
                                                VerticalContentAlignment="Center">
                                 <local:OverlayHost.Transition>
-                                    <huskt:FocusOn />
+                                    <huskt:FocusOnTransition />
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
                             <ContentPresenter Name="PART_NotificationHost" />

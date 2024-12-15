@@ -10,7 +10,7 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.2.2"/>
         <PackageReference Include="FluentIcons.Avalonia" Version="1.1.266"/>
-        <PackageReference Include="Irihi.Ursa" Version="1.6.1"/>
+        <PackageReference Include="Irihi.Ursa" Version="1.6.2"/>
     </ItemGroup>
 
     <ItemGroup>
