@@ -13,6 +13,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlActiveForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Padding" Value="12,8" />

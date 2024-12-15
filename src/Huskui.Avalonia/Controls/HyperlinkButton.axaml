@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Panel Background="White" Width="256" Height="128">
+            <StackPanel Margin="32" Spacing="8">
+                <HyperlinkButton NavigateUri="https://github.com/d3ara1n/Huskui.Avalonia/">
+                    Husk/ui
+                </HyperlinkButton>
+                <HyperlinkButton NavigateUri="https://github.com/d3ara1n/Huskui.Avalonia/">
+                    哈斯可有爱
+                </HyperlinkButton>
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme TargetType="HyperlinkButton" x:Key="{x:Type HyperlinkButton}">
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="BorderThickness" Value="0,0,0,3" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Name="PART_Container">
+                    <Panel.Transitions>
+                        <Transitions>
+                            <DoubleTransition Property="Opacity"
+                                              Duration="{StaticResource ControlFastestAnimationDuration}" />
+                        </Transitions>
+                    </Panel.Transitions>
+                    <Border Name="PART_Underline" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0"
+                            BorderBrush="{TemplateBinding BorderBrush}" VerticalAlignment="Bottom"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Width="{Binding #PART_ContentPresenter.Bounds.Width}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <ContentPresenter
+                        Name="PART_ContentPresenter"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        RecognizesAccessKey="True" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#PART_Underline">
+            <Setter Property="Opacity" Value="1.0" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Panel#PART_Container">
+            <Setter Property="Opacity" Value="0.7" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>
