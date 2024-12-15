@@ -58,6 +58,7 @@
                 <StackPanel Spacing="8">
                     <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello" />
                     <Button Classes="Primary" Content="World" />
+                    <HyperlinkButton Content="THIS A LINK!" />
                 </StackPanel>
             </TabItem>
             <TabItem Header="Bar">
