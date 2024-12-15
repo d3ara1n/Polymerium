@@ -7,23 +7,20 @@
             <ControlTemplate>
                 <Panel HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                        VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                    <!-- <ContentPresenter x:Name="PART_ContentPresenter" -->
-                    <!--                   Background="{TemplateBinding Background}" -->
-                    <!--                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" -->
-                    <!--                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" -->
-                    <!--                   BackgroundSizing="{TemplateBinding BackgroundSizing}" /> -->
-                    <!-- <ContentPresenter x:Name="PART_OverlayPresenter" IsVisible="False" Background="{TemplateBinding Background}" -->
-                    <!--                   BackgroundSizing="{TemplateBinding BackgroundSizing}" -->
-                    <!--                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" -->
-                    <!--                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" /> -->
-
-                    <TransitioningContentControl Name="{x:Static local:Frame.PART_Container}"
-                                                 Background="{TemplateBinding Background}"
-                                                 BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                 Content="{TemplateBinding Content}"
-                                                 ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    <ContentPresenter Name="{x:Static local:Frame.PART_ContentPresenter}" IsVisible="False"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Padding="{TemplateBinding Padding}"
+                                      CornerRadius="{TemplateBinding CornerRadius}"
+                                      BackgroundSizing="{TemplateBinding BackgroundSizing}" />
+                    <ContentPresenter Name="{x:Static local:Frame.PART_ContentPresenter2}"
+                                      Background="{TemplateBinding Background}"
+                                      BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Padding="{TemplateBinding Padding}"
+                                      CornerRadius="{TemplateBinding CornerRadius}" />
                 </Panel>
             </ControlTemplate>
         </Setter>

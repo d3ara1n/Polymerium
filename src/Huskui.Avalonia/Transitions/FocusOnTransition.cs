@@ -4,15 +4,15 @@ using Avalonia.Media;
 
 namespace Huskui.Avalonia.Transitions;
 
-public class FocusOn : PageTransitionBase
+public class FocusOnTransition : PageTransitionBase
 {
     public DirectionFrom Direction { get; set; }
 
-    public FocusOn() : this(null, null)
+    public FocusOnTransition() : this(null, null)
     {
     }
 
-    public FocusOn(TimeSpan? duration, DirectionFrom? direction) : base(duration)
+    public FocusOnTransition(TimeSpan? duration, DirectionFrom? direction) : base(duration)
     {
         Direction = direction ?? DirectionFrom.Bottom;
     }
@@ -33,24 +33,24 @@ public class FocusOn : PageTransitionBase
             DirectionFrom.Top => -parent.Bounds.Height,
             DirectionFrom.Bottom => parent.Bounds.Height,
             _ => throw new ArgumentOutOfRangeException()
-        } / 3;
+        } / 4;
 
         from
             .Animation()
-            .AddFrame(0d, [(Visual.OpacityProperty, 0d)])
-            .AddFrame(1d, [(Visual.OpacityProperty, 1d)]);
+            .AddFrame(0d, [(Visual.OpacityProperty, 1d)])
+            .AddFrame(1d, [(Visual.OpacityProperty, 0d)]);
 
         to
             .Animation(new SineEaseOut())
             .AddFrame(0d, [
                 (ScaleTransform.ScaleXProperty, 1.1d),
                 (ScaleTransform.ScaleYProperty, 1.1d),
-                (TranslateTransform.YProperty, translateFrom)
+                (translateProperty, translateFrom)
             ])
             .AddFrame(1d, [
                 (ScaleTransform.ScaleXProperty, 1d),
                 (ScaleTransform.ScaleYProperty, 1d),
-                (TranslateTransform.YProperty, 0)
+                (translateProperty, 0)
             ]);
 
         to.Animation()

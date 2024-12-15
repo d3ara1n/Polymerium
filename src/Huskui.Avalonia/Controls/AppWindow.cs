@@ -47,11 +47,13 @@ public class AppWindow : Window
 
     public void PopToast(Toast toast)
     {
-        _toastHost?.Pop(toast);
+        ArgumentNullException.ThrowIfNull(_toastHost);
+        _toastHost.Pop(toast);
     }
 
     public void PopDialog(Dialog dialog)
     {
-        _dialogHost?.Pop(dialog);
+        ArgumentNullException.ThrowIfNull(_dialogHost);
+        _dialogHost.Pop(dialog);
     }
 }

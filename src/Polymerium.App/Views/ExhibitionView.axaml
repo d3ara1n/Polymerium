@@ -8,6 +8,4 @@
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:DataType="vm:ExhibitionViewModel" Header="ExhibitionView"
            x:Class="Polymerium.App.Views.ExhibitionView">
-
-
 </husk:Page>

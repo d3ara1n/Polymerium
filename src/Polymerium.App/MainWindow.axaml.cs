@@ -95,8 +95,8 @@ public partial class MainWindow : AppWindow
             };
             Navigate(target.Page, target.Parameter,
                 target.Page.IsAssignableTo(typeof(ScopedPage))
-                    ? new PageCoverOver(null, DirectionFrom.Right)
-                    : new PopUp(TimeSpan.FromMilliseconds(197)));
+                    ? new PageCoverOverTransition(TimeSpan.FromMilliseconds(197), DirectionFrom.Right)
+                    : new PopUpTransition(TimeSpan.FromMilliseconds(197)));
         }
     }
 

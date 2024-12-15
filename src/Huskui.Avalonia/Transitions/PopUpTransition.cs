@@ -4,21 +4,25 @@ using Avalonia.Media;
 
 namespace Huskui.Avalonia.Transitions;
 
-public sealed class PopUp : PageTransitionBase
+public sealed class PopUpTransition : PageTransitionBase
 {
-    public PopUp()
+    public PopUpTransition()
     {
     }
 
-    public PopUp(TimeSpan? duration = null) : base(duration)
+    public PopUpTransition(TimeSpan? duration = null) : base(duration)
     {
+    }
+
+    protected override void Setup(Visual? from, Visual? to)
+    {
+        base.Setup(from, to);
     }
 
     protected override void Configure(Builder from, Builder to, Lazy<Visual> parentAccessor)
     {
         from
             .Animation(new SineEaseIn())
-            .WithDelay(Duration)
             .AddFrame(0d, [(Visual.OpacityProperty, 1d)])
             .AddFrame(1d, [(Visual.OpacityProperty, 0d)]);
 

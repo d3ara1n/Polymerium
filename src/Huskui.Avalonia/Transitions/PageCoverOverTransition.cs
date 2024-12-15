@@ -4,14 +4,14 @@ using Avalonia.Media;
 
 namespace Huskui.Avalonia.Transitions;
 
-public sealed class PageCoverOver : PageTransitionBase
+public sealed class PageCoverOverTransition : PageTransitionBase
 {
-    public PageCoverOver(TimeSpan? duration, DirectionFrom? direction) : base(duration)
+    public PageCoverOverTransition(TimeSpan? duration, DirectionFrom? direction) : base(duration)
     {
         Direction = direction ?? DirectionFrom.Right;
     }
 
-    public PageCoverOver() : this(null, null)
+    public PageCoverOverTransition() : this(null, null)
     {
     }
 

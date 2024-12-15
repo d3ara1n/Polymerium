@@ -267,7 +267,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
 
         var tasks = new List<Task>();
 
-        // 在反向时动画会反正施加到 from 和 to 上，to 会倒着播放原先消失的动画，这里取巧直接反转 from 和 to，并倒转双方动画实现
+        // 在反向时动画会反着施加到 from 和 to 上，to 会倒着播放原先消失的动画，这里取巧直接反转 from 和 to，并倒转双方动画实现
         if (!forward) (from, to) = (to, from);
 
         Setup(from, to);

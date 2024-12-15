@@ -66,7 +66,7 @@
                 <Grid Margin="9,8,16,16" DockPanel.Dock="Top" ColumnDefinitions="Auto,8,*,8,Auto"
                       RowDefinitions="Auto,8,Auto,8,Auto,8,*,8,Auto,8,Auto">
                     <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Height="48"
-                            Click="Button_OnClick"
+                            Click="Button_OnClick" Tag="UnknownView"
                             Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <lucide:Lucide Icon="Import" Height="18" VerticalAlignment="Center" />
