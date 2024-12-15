@@ -11,7 +11,7 @@ namespace Huskui.Avalonia.Controls;
 
 [PseudoClasses(":loading", ":finished", ":failed")]
 [TemplatePart(Name = PART_ContentPresenter, Type = typeof(ContentPresenter))]
-public abstract class Page : HeaderedContentControl
+public class Page : HeaderedContentControl
 {
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
 

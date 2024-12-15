@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
+    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:huskt="https://github.com/d3ara1n/Huskui.Avalonia/Transitions">
 
     <ControlTheme x:Key="{x:Type local:AppWindow}" TargetType="local:AppWindow">
         <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
@@ -41,9 +42,14 @@
                                 Content="{TemplateBinding Content}"
                                 ContentTemplate="{TemplateBinding ContentTemplate}" />
 
-                            <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" />
+                            <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" Padding="48,64,48,0" />
                             <ContentPresenter Name="PART_ModalHost" />
-                            <ContentPresenter Name="PART_DialogHost" />
+                            <local:OverlayHost Name="PART_DialogHost" HorizontalContentAlignment="Center"
+                                               VerticalContentAlignment="Center">
+                                <local:OverlayHost.Transition>
+                                    <huskt:FocusOn />
+                                </local:OverlayHost.Transition>
+                            </local:OverlayHost>
                             <ContentPresenter Name="PART_NotificationHost" />
                         </Panel>
                     </VisualLayerManager>

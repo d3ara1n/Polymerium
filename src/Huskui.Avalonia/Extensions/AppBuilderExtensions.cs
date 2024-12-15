@@ -20,7 +20,7 @@ public static class AppBuilderExtensions
                 new Uri("avares://Huskui.Avalonia/Assets/Fonts/Raleway")));
         }).With(new FontManagerOptions
         {
-            DefaultFamilyName = "fonts:Outfit#Outfit",
+            DefaultFamilyName = "fonts:Quicksand#Quicksand",
             FontFallbacks =
             [
                 new FontFallback
