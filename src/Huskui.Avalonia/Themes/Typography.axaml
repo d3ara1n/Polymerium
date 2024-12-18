@@ -16,16 +16,16 @@
     </Design.PreviewWith>
 
     <!-- Quicksand & 猫啃忘形圆 的字形要求普通大小为 14 才看得清 -->
-    <sys:Double x:Key="ExtraSmallFontSize">10</sys:Double>
-    <sys:Double x:Key="SmallFontSize">12</sys:Double>
-    <sys:Double x:Key="MediumFontSize">14</sys:Double>
-    <sys:Double x:Key="LargeFontSize">18</sys:Double>
-    <sys:Double x:Key="ExtraLargeFontSize">26</sys:Double>
+    <!-- <sys:Double x:Key="ExtraSmallFontSize">10</sys:Double> -->
+    <!-- <sys:Double x:Key="SmallFontSize">12</sys:Double> -->
+    <!-- <sys:Double x:Key="MediumFontSize">14</sys:Double> -->
+    <!-- <sys:Double x:Key="LargeFontSize">18</sys:Double> -->
+    <!-- <sys:Double x:Key="ExtraLargeFontSize">26</sys:Double> -->
 
-    <!-- Outfit 则只需要 10 就能很好显示 -->
-    <!-- <sys:Double x:Key="ExtraSmallFontSize">8</sys:Double> -->
-    <!-- <sys:Double x:Key="SmallFontSize">10</sys:Double> -->
-    <!-- <sys:Double x:Key="MediumFontSize">12</sys:Double> -->
-    <!-- <sys:Double x:Key="LargeFontSize">16</sys:Double> -->
-    <!-- <sys:Double x:Key="ExtraLargeFontSize">24</sys:Double> -->
+    <!-- Outfit 则只需要 12 就能很好显示 -->
+    <sys:Double x:Key="ExtraSmallFontSize">8</sys:Double>
+    <sys:Double x:Key="SmallFontSize">10</sys:Double>
+    <sys:Double x:Key="MediumFontSize">12</sys:Double>
+    <sys:Double x:Key="LargeFontSize">16</sys:Double>
+    <sys:Double x:Key="ExtraLargeFontSize">24</sys:Double>
 </ResourceDictionary>

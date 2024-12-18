@@ -29,6 +29,9 @@
                                 <BrushTransition Property="BorderBrush"
                                                  Duration="{StaticResource ControlFasterAnimationDuration}"
                                                  Easing="SineEaseOut" />
+                                <BrushTransition Property="Background"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                 Easing="SineEaseOut" />
                             </Transitions>
                         </Border.Transitions>
                         <ScrollViewer AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
@@ -91,9 +94,9 @@
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
         </Style>
 
-        <!-- <Style Selector="^:focus /template/ Border#PART_Border"> -->
-        <!--     <Setter Property="BorderBrush" Value="Transparent" /> -->
-        <!-- </Style> -->
+        <Style Selector="^:focus /template/ Border#PART_Border">
+            <Setter Property="Background" Value="{DynamicResource ControlSolidInteractiveBackgroundBrush}" />
+        </Style>
 
         <Style Selector="^:disabled /template/ Border#PART_Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />

@@ -12,7 +12,7 @@
         <StackPanel.Effect>
             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
         </StackPanel.Effect>
-        <Image Source="/Assets/Images/Desert.png" Width="128" Height="128" HorizontalAlignment="Center" />
+        <Image Source="/Assets/Icons/Desert.png" Width="128" Height="128" HorizontalAlignment="Center" />
         <TextBlock Margin="48,12,48,12" Text="How about we explore the area ahead of us later?"
                    TextAlignment="Center" FontSize="24"
                    FontWeight="Bold"

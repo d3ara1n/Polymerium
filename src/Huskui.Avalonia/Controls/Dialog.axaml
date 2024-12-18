@@ -34,10 +34,17 @@
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
                         <Grid Grid.Row="4" ColumnDefinitions="*,8,*" Margin="18">
-                            <Button Grid.Column="0" Command="{TemplateBinding SecondaryCommand}">
+                            <!-- 因为 Avalonia 没有 ColumnSpacing，这里用了一种很幽默的方式实现可有可无的间距 -->
+                            <Button Grid.Column="0"
+                                    Grid.ColumnSpan="{TemplateBinding PrimaryCommand,Converter={x:Static converters:InternalConverters.NullThenInteger},ConverterParameter=3}"
+                                    Command="{TemplateBinding SecondaryCommand}"
+                                    IsVisible="{TemplateBinding SecondaryCommand,Converter={x:Static ObjectConverters.IsNotNull}}">
                                 <TextBlock Text="{TemplateBinding SecondaryText}" />
                             </Button>
-                            <Button Grid.Column="2" Classes="Primary" Command="{TemplateBinding PrimaryCommand}">
+                            <Button Grid.Column="2"
+                                    Grid.ColumnSpan="{TemplateBinding SecondaryCommand,Converter={x:Static converters:InternalConverters.NullThenInteger},ConverterParameter=3}"
+                                    Classes="Primary" Command="{TemplateBinding PrimaryCommand}"
+                                    IsVisible="{TemplateBinding PrimaryCommand,Converter={x:Static ObjectConverters.IsNotNull}}">
                                 <TextBlock Text="{TemplateBinding PrimaryText}" />
                             </Button>
                         </Grid>

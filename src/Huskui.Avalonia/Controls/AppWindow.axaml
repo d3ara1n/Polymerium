@@ -20,7 +20,7 @@
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition Property="Background"
-                                                 Duration="{StaticResource ControlFastestAnimationDuration}"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
                                                  Easing="SineEaseOut" />
                                 <BrushTransition Property="BorderBrush"
                                                  Duration="{StaticResource ControlFasterAnimationDuration}"

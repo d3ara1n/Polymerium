@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics;
 
-namespace Polymerium.Trident.Services;
+namespace Polymerium.Trident;
 
-public class PathService
+public class PathDef
 {
-    public PathService()
+    public static PathDef Default { get; } = new();
+
+    private PathDef()
     {
         var dir = Directory.GetCurrentDirectory();
         string? home = null;
@@ -65,6 +67,11 @@ public class PathService
     public string FileOfUserData(string key)
     {
         return Path.Combine(InstanceDirectory, key, "data.user.json");
+    }
+
+    public string DirectoryOfHome(string key)
+    {
+        return Path.Combine(InstanceDirectory, key);
     }
 
     public string DirectoryOfBuild(string key)

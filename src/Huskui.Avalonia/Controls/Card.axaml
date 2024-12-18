@@ -3,8 +3,10 @@
                     xmlns:local="using:Huskui.Avalonia.Controls">
 
     <ControlTheme x:Key="{x:Type local:Card}" TargetType="local:Card">
-        <Setter Property="CornerRadius" Value="12" />
-        <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background" Value="{DynamicResource Card1BackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="Template">
             <ControlTemplate>

@@ -14,7 +14,7 @@
     </Design.PreviewWith>
     <ControlTheme TargetType="HyperlinkButton" x:Key="{x:Type HyperlinkButton}">
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
-        <Setter Property="BorderThickness" Value="0,0,0,3" />
+        <Setter Property="BorderThickness" Value="0,0,0,2" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />

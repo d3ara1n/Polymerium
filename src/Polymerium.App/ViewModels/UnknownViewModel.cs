@@ -12,6 +12,6 @@ public class UnknownViewModel(ViewBag bag) : ViewModelBase
 
     protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
     {
-        return Task.Delay(TimeSpan.FromSeconds(5), token);
+        return Task.Delay(TimeSpan.FromSeconds(7), token);
     }
 }
