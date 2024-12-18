@@ -20,4 +20,25 @@
     <ItemGroup>
         <Folder Include="Navigations\"/>
     </ItemGroup>
+
+    <ItemGroup>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-Black.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-BlackItalic.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-Bold.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-BoldItalic.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-ExtraBold.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-ExtraBoldItalic.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-ExtraLight.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-ExtraLightItalic.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-Italic.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-Light.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-LightItalic.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-Medium.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-MediumItalic.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-Regular.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-SemiBold.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-SemiBoldItalic.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-Thin.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-ThinItalic.ttf"/>
+    </ItemGroup>
 </Project>

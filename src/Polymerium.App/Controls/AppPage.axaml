@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:lucide="using:LucideAvalonia">
+                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia">
     <Design.PreviewWith>
         <husk:Page Width="128" Height="128">
             <Button HorizontalAlignment="Center" VerticalAlignment="Center">
-                <lucide:Lucide Icon="ArrowLeft" Width="12" Height="12" />
+                <icons:PackIconLucide Kind="ArrowLeft" Width="12" Height="12" />
             </Button>
         </husk:Page>
     </Design.PreviewWith>
@@ -13,7 +13,7 @@
     <ControlTheme x:Key="{x:Type husk:Page}" TargetType="husk:Page"
                   BasedOn="{StaticResource {x:Type husk:Page}}">
         <Setter Property="Margin" Value=" 0,0,7,0" />
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Layer0BackgroundBrush}" />
         <Setter Property="Effect">
             <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="8" Opacity="0.1" />
         </Setter>

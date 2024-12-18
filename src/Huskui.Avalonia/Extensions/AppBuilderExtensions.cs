@@ -16,8 +16,6 @@ public static class AppBuilderExtensions
                 new Uri("avares://Huskui.Avalonia/Assets/Fonts/Outfit")));
             fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:Quicksand"),
                 new Uri("avares://Huskui.Avalonia/Assets/Fonts/Quicksand")));
-            fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:Raleway"),
-                new Uri("avares://Huskui.Avalonia/Assets/Fonts/Raleway")));
         }).With(new FontManagerOptions
         {
             DefaultFamilyName = "fonts:Quicksand#Quicksand",

@@ -1,0 +1,17 @@
+﻿<controls:ScopedPage xmlns="https://github.com/avaloniaui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                     xmlns:controls="using:Polymerium.App.Controls"
+                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                     x:Class="Polymerium.App.Views.InstanceOverrideView">
+    <husk:Page.Header>
+        <DockPanel>
+            <Button DockPanel.Dock="Right" Margin="8,0,0,0">
+                <TextBlock Text="Go to Global Configuration Page" />
+            </Button>
+            <TextBlock Text="Instance Overrides Configuration" Theme="{StaticResource PageHeaderTextBlockTheme}" />
+        </DockPanel>
+    </husk:Page.Header>
+</controls:ScopedPage>

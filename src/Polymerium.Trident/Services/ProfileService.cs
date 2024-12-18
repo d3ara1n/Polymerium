@@ -10,28 +10,23 @@ public class ProfileService : IDisposable
 {
     #region Injected Services
 
-    private readonly PathService _pathService;
-
     #endregion
 
     private readonly IList<ProfileHandle> _profiles = new List<ProfileHandle>();
     private readonly JsonSerializerOptions _serializerOptions;
 
-    public ProfileService(PathService pathService)
+    public ProfileService()
     {
-        _pathService = pathService;
-
-
         _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web)
         {
             WriteIndented = true
         };
         _serializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 
-        var dir = new DirectoryInfo(pathService.InstanceDirectory);
+        var dir = new DirectoryInfo(PathDef.Default.InstanceDirectory);
         foreach (var ins in dir.GetDirectories())
         {
-            var path = pathService.FileOfProfile(ins.Name);
+            var path = PathDef.Default.FileOfProfile(ins.Name);
             if (File.Exists(path))
                 try
                 {

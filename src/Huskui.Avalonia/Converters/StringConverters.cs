@@ -26,4 +26,9 @@ public static class StringConverters
 
         return false;
     });
+
+    public static IValueConverter ToUpper { get; } = new RelayConverter((v, _) => v?.ToString()?.ToUpper() ?? v);
+
+
+    public static IValueConverter ToLower { get; } = new RelayConverter((v, _) => v?.ToString()?.ToLower() ?? v);
 }

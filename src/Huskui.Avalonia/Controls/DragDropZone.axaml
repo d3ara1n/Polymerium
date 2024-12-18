@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:fi="using:FluentIcons.Avalonia">
+    <Design.PreviewWith>
+        <Panel Background="{StaticResource SystemChromeWhiteColor}">
+            <local:DragDropZone Margin="12">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" />
+                        <TextBlock FontWeight="Bold">
+                            <Run Text="Drag and drop, or" />
+                            <Run Text="Browse files..." Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="Up to 12MB" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                </StackPanel>
+            </local:DragDropZone>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="{x:Type local:DragDropZone}" TargetType="local:DragDropZone">
+        <Setter Property="Padding" Value="16,12" />
+        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="StrokeBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="StrokeDashArray" Value="6,2" />
+        <Setter Property="Radius" Value="6" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border>
+                    <Panel>
+                        <Rectangle Fill="{TemplateBinding Background}"
+                                   RadiusX="{TemplateBinding Radius}" RadiusY="{TemplateBinding Radius}"
+                                   StrokeThickness="{TemplateBinding StrokeThickness}"
+                                   Stroke="{TemplateBinding StrokeBrush}"
+                                   StrokeDashArray="{TemplateBinding StrokeDashArray}"
+                                   StrokeLineCap="Round"
+                                   StrokeJoin="Round" />
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          Padding="{TemplateBinding Padding}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

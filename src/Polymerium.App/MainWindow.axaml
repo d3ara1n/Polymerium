@@ -6,7 +6,7 @@
                 xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                 xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                 xmlns:m="using:Polymerium.App.Models"
-                xmlns:lucide="using:LucideAvalonia"
+                xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                 xmlns:ursa="https://irihi.tech/ursa"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 x:Class="Polymerium.App.MainWindow" x:DataType="local:MainWindow"
@@ -29,7 +29,7 @@
                 <StackPanel.Effect>
                     <DropShadowEffect Opacity="0.1" BlurRadius="6" />
                 </StackPanel.Effect>
-                <Image Source="/Assets/Images/Bird.png" Width="128" Height="128" HorizontalAlignment="Center" />
+                <Image Source="/Assets/Icons/Bird.png" Width="128" Height="128" HorizontalAlignment="Center" />
                 <TextBlock Margin="48,12,48,12" Text="B-b-b-bird, bird, bird, b-bird's the word..."
                            TextAlignment="Center"
                            FontSize="24"
@@ -44,13 +44,13 @@
                     <StackPanel DockPanel.Dock="Right">
                         <ursa:ButtonGroup Background="Transparent">
                             <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick">
-                                <lucide:Lucide Icon="Minus" Width="8" />
+                                <icons:PackIconLucide Kind="Minus" Width="8" />
                             </Button>
                             <Button x:Name="ToggleMaximizeButton" Click="ToggleMaximizeButton_OnClick">
-                                <lucide:Lucide Icon="Square" Width="8" />
+                                <icons:PackIconLucide Kind="Square" Width="8" />
                             </Button>
                             <Button x:Name="CloseButton" Click="CloseButton_OnClick">
-                                <lucide:Lucide Icon="X" Width="8" />
+                                <icons:PackIconLucide Kind="X" Width="8" />
                             </Button>
                         </ursa:ButtonGroup>
                     </StackPanel>
@@ -58,52 +58,148 @@
                         <StackPanel.Effect>
                             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
                         </StackPanel.Effect>
-                        <lucide:Lucide Icon="Squirrel" Width="12" />
+                        <Svg Path="/Assets/Logo.svg" Width="12" />
                         <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}"
                                    FontSize="{StaticResource SmallFontSize}" VerticalAlignment="Center" />
                     </StackPanel>
                 </DockPanel>
                 <Grid Margin="9,8,16,16" DockPanel.Dock="Top" ColumnDefinitions="Auto,8,*,8,Auto"
-                      RowDefinitions="Auto,8,Auto,8,Auto,8,*,8,Auto,8,Auto">
+                      RowDefinitions="Auto,8,Auto,8,Auto,8,Auto,8,*,8,Auto,8,Auto">
                     <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Height="48"
-                            Click="Button_OnClick" Tag="UnknownView"
+                            Click="NavigationButton_OnClick" Tag="UnknownView"
                             Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <lucide:Lucide Icon="Import" Height="18" VerticalAlignment="Center" />
+                            <icons:PackIconLucide Kind="Import" Width="18" VerticalAlignment="Center" />
                             <TextBlock Text="Import" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button Grid.Row="0" Grid.Column="4" Height="48" Width="48"
-                            Click="Button_OnClick"
+                            Click="NavigationButton_OnClick"
                             Theme="{StaticResource OutlineButtonTheme}">
-                        <lucide:Lucide Icon="PackagePlus" Height="18" />
+                        <icons:PackIconLucide Kind="PackagePlus" Width="18" />
                     </Button>
                     <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Classes="Primary"
-                            Click="Button_OnClick" Tag="ExhibitionView"
+                            Click="NavigationButton_OnClick" Tag="ExhibitionView"
                             Height="36">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <lucide:Lucide Icon="Store" Height="18" />
+                            <icons:PackIconLucide Kind="Store" Width="18" />
                             <TextBlock Text="Go to Exhibition" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Separator Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" />
-                    <DockPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="5">
-                        <!-- <AutoCompleteBox/> -->
-                        <TextBox DockPanel.Dock="Top" Watermark="Search by names or types" />
-                        <ItemsControl ItemsSource="{Binding Profiles}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="m:DesktopItemModel">
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </DockPanel>
-                    <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" />
-                    <Button Grid.Column="0" Grid.Row="10" DockPanel.Dock="Left"
-                            Theme="{StaticResource GhostButtonTheme}" Click="Button_OnClick" Tag="0721">
-                        <lucide:Lucide Icon="Settings" Height="18" />
+                    <!-- <AutoCompleteBox/> -->
+                    <TextBox DockPanel.Dock="Top" Watermark="Search by names or types" Grid.Column="0" Grid.Row="6"
+                             Grid.ColumnSpan="5" />
+                    <ItemsControl Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" ItemsSource="{Binding Profiles}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="m:DesktopItemModel">
+                                <Button Height="128" Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
+                                        CommandParameter="{Binding}">
+                                    <Button.Theme>
+                                        <ControlTheme TargetType="Button">
+                                            <Setter Property="CornerRadius"
+                                                    Value="{StaticResource ControlCornerRadius}" />
+                                            <Setter Property="Background"
+                                                    Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
+                                            <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+                                            <Setter Property="BorderThickness" Value="1" />
+                                            <Setter Property="Template">
+                                                <ControlTemplate>
+                                                    <Border Name="PART_Container"
+                                                            CornerRadius="{TemplateBinding CornerRadius}"
+                                                            ClipToBounds="True"
+                                                            Background="{TemplateBinding Background}">
+                                                        <Border.Transitions>
+                                                            <Transitions>
+                                                                <BrushTransition Property="Background"
+                                                                    Duration="{StaticResource ControlInstantAnimationDuration}" />
+                                                            </Transitions>
+                                                        </Border.Transitions>
+                                                        <Panel>
+                                                            <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                                    CornerRadius="{TemplateBinding CornerRadius}" />
+                                                            <Image HorizontalAlignment="Right" Opacity="0.5"
+                                                                   Source="{Binding Icon}">
+                                                                <Image.OpacityMask>
+                                                                    <LinearGradientBrush StartPoint="0%,50%"
+                                                                        EndPoint="100%,50%">
+                                                                        <GradientStop Offset="0"
+                                                                            Color="Transparent" />
+                                                                        <GradientStop Offset="1" Color="Black" />
+                                                                    </LinearGradientBrush>
+                                                                </Image.OpacityMask>
+                                                            </Image>
+                                                            <ProgressBar CornerRadius="0" Height="2"
+                                                                         VerticalAlignment="Bottom"
+                                                                         IsIndeterminate="True" />
+                                                            <DockPanel Margin="16">
+                                                                <WrapPanel DockPanel.Dock="Bottom">
+                                                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                                                        <husk:Tag Classes="Warning">
+                                                                            <StackPanel Orientation="Horizontal"
+                                                                                Spacing="4">
+                                                                                <Ellipse Width="6" Height="6"
+                                                                                    Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                                                                <TextBlock Text="PREPARING" />
+                                                                            </StackPanel>
+                                                                        </husk:Tag>
+                                                                        <husk:Tag Content="原版" />
+                                                                        <husk:Tag Content="1.20.1" />
+                                                                    </StackPanel>
+                                                                </WrapPanel>
+                                                                <StackPanel Spacing="8">
+                                                                    <TextBlock
+                                                                        FontSize="{StaticResource SmallFontSize}"
+                                                                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                                                                        <Run
+                                                                            Text="{Binding Source,Mode=OneWay,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                                                        <Run Text="/" />
+                                                                        <Run
+                                                                            Text="{Binding Key,Mode=OneWay}" />
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="{Binding Name}"
+                                                                               FontSize="{StaticResource LargeFontSize}"
+                                                                               MaxLines="2" TextWrapping="Wrap"
+                                                                               TextTrimming="CharacterEllipsis" />
+                                                                </StackPanel>
+                                                            </DockPanel>
+                                                            <Border Name="PART_Border" Opacity="0"
+                                                                    BorderBrush="{DynamicResource ControlAccentBorderBrush}"
+                                                                    BorderThickness="2"
+                                                                    CornerRadius="{TemplateBinding CornerRadius}">
+                                                                <Border.Transitions>
+                                                                    <Transitions>
+                                                                        <DoubleTransition Property="Opacity"
+                                                                            Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                                    </Transitions>
+                                                                </Border.Transitions>
+                                                            </Border>
+                                                        </Panel>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter>
+
+                                            <Style Selector="^:pointerover /template/ Border#PART_Border">
+                                                <Setter Property="Opacity"
+                                                        Value="1.0" />
+                                            </Style>
+                                            <Style Selector="^:pressed /template/ Border#PART_Container">
+                                                <Setter Property="Background"
+                                                        Value="{DynamicResource ControlBackgroundBrush}" />
+                                            </Style>
+                                        </ControlTheme>
+                                    </Button.Theme>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Separator Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="5" />
+                    <Button Grid.Column="0" Grid.Row="12" DockPanel.Dock="Left"
+                            Theme="{StaticResource GhostButtonTheme}" Click="NavigationButton_OnClick" Tag="0721">
+                        <icons:PackIconLucide Kind="Settings" Height="18" />
                     </Button>
-                    <Button Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="3" Click="Button_OnClick" Tag="42"
+                    <Button Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="3" Click="NavigationButton_OnClick" Tag="42"
                             Theme="{StaticResource OutlineButtonTheme}">
                         Accounts
                     </Button>

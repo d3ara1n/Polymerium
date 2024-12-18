@@ -16,7 +16,6 @@ public static class Startup
 
         // Trident
         services
-            .AddSingleton<PathService>()
             .AddSingleton<ProfileService>()
             .AddSingleton<RepositoryAgent>();
 
