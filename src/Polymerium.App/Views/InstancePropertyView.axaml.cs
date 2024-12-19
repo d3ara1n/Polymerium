@@ -2,9 +2,9 @@
 
 namespace Polymerium.App.Views;
 
-public class InstanceOverrideView : ScopedPage
+public class InstancePropertyView : ScopedPage
 {
-    public InstanceOverrideView()
+    public InstancePropertyView()
     {
         InitializeComponent();
     }

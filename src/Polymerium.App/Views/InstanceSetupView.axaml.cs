@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views;
 
-public class InstanceSetupView : UserControl
+public partial class InstanceSetupView : UserControl
 {
     public InstanceSetupView()
     {

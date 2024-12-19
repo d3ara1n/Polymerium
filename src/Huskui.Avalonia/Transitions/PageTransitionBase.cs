@@ -84,6 +84,12 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
                     _cue = cue;
                     return this;
                 }
+
+                public FrameBuilder WithKeySpline(KeySpline keySpline)
+                {
+                    _keySpline = keySpline;
+                    return this;
+                }
             }
 
             public AnimationBuilder AddFrame(double cue, Action<FrameBuilder> builder)
