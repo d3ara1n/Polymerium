@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views;
 
-public class InstanceView : ScopedPage
+public partial class InstanceView : ScopedPage
 {
     public InstanceView()
     {

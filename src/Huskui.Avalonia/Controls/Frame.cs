@@ -52,8 +52,6 @@ public class Frame : TemplatedControl
     private readonly InternalGoBackCommand _goBackCommand;
 
     private readonly Stack<FrameFrame> _history = new();
-
-    private TransitioningContentControl? _container;
     private ContentPresenter? _presenter;
     private ContentPresenter? _presenter2;
 
@@ -125,7 +123,7 @@ public class Frame : TemplatedControl
     private void UpdateContent(object? content, IPageTransition transition, bool reverse)
     {
         Content = content;
-        _current = new ValueTuple<object, IPageTransition, bool>(content, transition, reverse);
+        _current = new ValueTuple<object?, IPageTransition, bool>(content, transition, reverse);
         _doubleArrangeSafeLock = true;
         InvalidateArrange();
     }
