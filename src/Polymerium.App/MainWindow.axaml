@@ -14,8 +14,8 @@
                 Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="1024">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="65*" />
-            <ColumnDefinition Width="35*" MaxWidth="400" MinWidth="200" />
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="3*" MaxWidth="400" MinWidth="200" />
         </Grid.ColumnDefinitions>
         <Panel Grid.Column="0">
             <StackPanel Opacity="{Binding #Root.Content, Converter={x:Static huskc:OpacityConverters.IsNull}}"
@@ -86,7 +86,8 @@
                             <TextBlock Text="Go to Exhibition" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
-                    <Separator Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" />
+                    <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5"
+                            BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0" />
                     <!-- <AutoCompleteBox/> -->
                     <TextBox DockPanel.Dock="Top" Watermark="Search by names or types" Grid.Column="0" Grid.Row="6"
                              Grid.ColumnSpan="5" />
@@ -194,7 +195,8 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <Separator Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="5" />
+                    <Border Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="5"
+                            BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0" />
                     <Button Grid.Column="0" Grid.Row="12" DockPanel.Dock="Left"
                             Theme="{StaticResource GhostButtonTheme}" Click="NavigationButton_OnClick" Tag="0721">
                         <icons:PackIconLucide Kind="Settings" Height="18" />
