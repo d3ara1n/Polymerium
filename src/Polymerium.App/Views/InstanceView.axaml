@@ -18,12 +18,11 @@
                 <StackPanel Grid.Column="1">
                     <Panel>
                         <Panel.Background>
-                            <VisualBrush TileMode="Tile" DestinationRect="0,0,250,250" SourceRect="0,0,250,250"
-                                         Stretch="None">
+                            <VisualBrush Stretch="UniformToFill">
                                 <VisualBrush.Visual>
                                     <Image Opacity="0.75" Height="250" Width="250"
-                                           Source="/Assets/Images/Patterns/Blue_Icons.png"
-                                           Stretch="Fill" />
+                                           Source="/Assets/Images/Wallpaper.png"
+                                           Stretch="UniformToFill" RenderTransform="scale(1.1)" />
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </Panel.Background>
@@ -35,17 +34,27 @@
                                     <Image Source="/Assets/Images/Placeholders/Dirt.png" Stretch="Fill" />
                                 </Border>
                                 <StackPanel Spacing="8" Margin="0,24,0,0">
-                                    <TextBlock Text="Overview" />
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <husk:Tag FontSize="{StaticResource MediumFontSize}"
+                                                  CornerRadius="{StaticResource ControlCornerRadius}">
+                                            <TextBlock Text="1.20.1" />
+                                        </husk:Tag>
+                                        <husk:Tag FontSize="{StaticResource MediumFontSize}"
+                                                  CornerRadius="{StaticResource ControlCornerRadius}">
+                                            <TextBlock Text="Vanilla" />
+                                        </husk:Tag>
+                                    </StackPanel>
                                     <TextBlock Text="Hello Kitty" FontSize="36" />
                                 </StackPanel>
                             </DockPanel>
                             <DockPanel>
                                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                                    <Button Classes="Primary">
+                                    <Button>
                                         <StackPanel Orientation="Horizontal" Spacing="6">
-                                            <icons:PackIconLucide Kind="Play" Height="{StaticResource MediumFontSize}"
+                                            <icons:PackIconLucide Kind="Settings2"
+                                                                  Height="{StaticResource MediumFontSize}"
                                                                   VerticalAlignment="Center" />
-                                            <TextBlock Text="PLAY" />
+                                            <TextBlock Text="Properties" />
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>
@@ -57,28 +66,8 @@
                                             <TextBlock Text="CURSEFORGE" />
                                         </StackPanel>
                                     </Button>
-                                    <Button>
-                                        <StackPanel Orientation="Horizontal" Spacing="6">
-                                            <icons:PackIconLucide Kind="Settings2"
-                                                                  Height="{StaticResource MediumFontSize}"
-                                                                  VerticalAlignment="Center" />
-                                            <TextBlock Text="Properties" />
-                                        </StackPanel>
-                                    </Button>
                                 </StackPanel>
                             </DockPanel>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
-                                <TextBlock>
-                                    <Run Text="Totoal Played:"
-                                         Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                    <Run Text="12.2 days" FontWeight="Bold" />
-                                </TextBlock>
-                                <TextBlock>
-                                    <Run Text="Last Played:"
-                                         Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                    <Run Text="10 hrs ago" FontWeight="Bold" />
-                                </TextBlock>
-                            </StackPanel>
                         </StackPanel>
                     </Panel>
                     <StackPanel Spacing="24" Margin="{StaticResource PageHeaderlessContentMargin}">
@@ -96,7 +85,7 @@
                                 </Panel>
                                 <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12">
                                     <husk:Card MinWidth="108" Background="{DynamicResource ControlBackgroundBrush}"
-                                               BorderBrush="Transparent">
+                                               BorderThickness="0">
                                         <Panel>
                                             <Grid ColumnDefinitions="*,8,Auto">
                                                 <icons:PackIconLucide Grid.Column="0" Kind="Package2" />
@@ -108,7 +97,7 @@
                                         </Panel>
                                     </husk:Card>
                                     <husk:Card MinWidth="108" Background="{DynamicResource ControlBackgroundBrush}"
-                                               BorderBrush="Transparent">
+                                               BorderThickness="0">
                                         <Panel>
                                             <Grid ColumnDefinitions="*,8,Auto">
                                                 <icons:PackIconLucide Grid.Column="0" Kind="Palette" />
@@ -119,7 +108,7 @@
                                         </Panel>
                                     </husk:Card>
                                     <husk:Card MinWidth="108" Background="{DynamicResource ControlBackgroundBrush}"
-                                               BorderBrush="Transparent">
+                                               BorderThickness="0">
                                         <Panel>
                                             <Grid ColumnDefinitions="*,8,Auto">
                                                 <icons:PackIconLucide Grid.Column="0" Kind="SunMoon" />
@@ -132,8 +121,93 @@
                                 </StackPanel>
                             </Grid>
                         </husk:Card>
+                        <Grid Height="188">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" MinWidth="256" MaxWidth="360" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" RowDefinitions="Auto,12,*">
+                                <DockPanel Grid.Row="0">
+                                    <TextBlock DockPanel.Dock="Left" Text="Statistics" FontWeight="Bold" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+                                        <TextBlock>
+                                            <Run Text="Total Played:"
+                                                 Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                            <Run Text="12.2 days" FontWeight="Bold" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run Text="Last Played:"
+                                                 Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                            <Run Text="10 hours ago" FontWeight="Bold" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DockPanel>
+                                <husk:Card Grid.Row="2" BorderThickness="0"
+                                           Background="{DynamicResource ControlBackgroundBrush}">
+                                    <TextBlock Text="(Daily Play Time Chart)" VerticalAlignment="Center"
+                                               HorizontalAlignment="Center" />
+                                </husk:Card>
+                            </Grid>
+                            <Border Grid.Column="2" BorderBrush="{DynamicResource ControlBorderBrush}"
+                                    BorderThickness="1,0,0,0" />
+                            <Grid Grid.Column="4" RowDefinitions="*,12,*">
+                                <husk:Card Grid.Row="0">
+                                    <Grid ColumnDefinitions="Auto,12,*,12,Auto" RowDefinitions="*,12,Auto">
+                                        <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Stretch="Fill"
+                                               Source="/Assets/Images/Placeholders/Steve_Face.png"
+                                               Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=Self}}" />
+                                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Play as" FontWeight="Bold"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3"
+                                                   TextTrimming="CharacterEllipsis">
+                                            <Run Text="Steve"
+                                                 FontSize="{StaticResource LargeFontSize}" />
+                                            <LineBreak />
+                                            <Run Text="Microsoft"
+                                                 Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        </TextBlock>
+                                        <Button Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" VerticalAlignment="Top"
+                                                Theme="{StaticResource GhostButtonTheme}" Padding="8,6">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <icons:PackIconLucide Kind="ArrowLeftRight"
+                                                                      Height="{StaticResource MediumFontSize}"
+                                                                      VerticalAlignment="Center" />
+                                                <TextBlock Text="Switch" />
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                </husk:Card>
+                                <husk:Card Grid.Row="2" BorderThickness="0">
+                                    <husk:Card.Background>
+                                        <ImageBrush Source="/Assets/Images/Patterns/Blue_Icons.png" Opacity="1"
+                                                    Stretch="UniformToFill" />
+                                    </husk:Card.Background>
+                                    <Panel>
+                                        <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Classes="Primary">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <icons:PackIconLucide Kind="Play"
+                                                                      Height="{StaticResource MediumFontSize}"
+                                                                      VerticalAlignment="Center" />
+                                                <TextBlock Text="PLAY" />
+                                            </StackPanel>
+                                        </Button>
+                                        <icons:PackIconLucide Kind="Rocket" HorizontalAlignment="Right"
+                                                              VerticalAlignment="Top"
+                                                              RenderTransform="translate(24px,-16px)" Width="64"
+                                                              Height="64" Opacity="0.5" />
+                                    </Panel>
+                                </husk:Card>
+                            </Grid>
+                        </Grid>
                         <StackPanel Spacing="12">
-                            <TextBlock Text="Widgets" FontWeight="Bold" />
+                            <DockPanel>
+                                <Button DockPanel.Dock="Right" Theme="{StaticResource GhostButtonTheme}"
+                                        Content="Explore →" />
+                                <TextBlock Text="Widgets" FontWeight="Bold" VerticalAlignment="Center" />
+                            </DockPanel>
                             <StackPanel Orientation="Horizontal" Height="200" Spacing="24">
                                 <husk:Card Width="196">
                                     <Panel>
