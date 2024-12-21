@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using Avalonia.Animation;
@@ -10,12 +9,10 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
-using Huskui.Avalonia.Transitions;
-using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
-using Polymerium.Trident;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Utilities;
 
 namespace Polymerium.App;
 
@@ -23,7 +20,7 @@ public partial class MainWindow : AppWindow
 {
     private Action<Type, object?, IPageTransition?>? _navigate;
 
-    public AvaloniaList<DesktopItemModel> Profiles { get; } = new();
+    public AvaloniaList<InstanceEntryModel> Profiles { get; } = new();
 
     public ICommand ViewInstanceCommand { get; }
 
@@ -32,7 +29,7 @@ public partial class MainWindow : AppWindow
         InitializeComponent();
         DataContext = this;
 
-        ViewInstanceCommand = new RelayCommand<DesktopItemModel>(ViewInstance);
+        ViewInstanceCommand = new RelayCommand<InstanceEntryModel>(ViewInstance);
     }
 
     private void PopDialog()
@@ -99,25 +96,23 @@ public partial class MainWindow : AppWindow
             {
                 Button { Tag: "ExhibitionView" } => (typeof(ExhibitionView), null),
                 Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
-                _ => (typeof(NotFoundView), null)
+                _ => (typeof(PageNotReachedView), null)
             };
-            Navigate(target.Page, target.Parameter, null);
+            _navigate?.Invoke(target.Page, target.Parameter, null);
         }
     }
 
-    private void ViewInstance(DesktopItemModel? model)
+    private void ViewInstance(InstanceEntryModel? model)
     {
         if (model is not null)
-            Navigate(typeof(InstanceView), model.Key, null);
+            _navigate?.Invoke(typeof(InstanceView), model.Key, null);
     }
 
     #region Navigation Service
 
-    internal void Navigate(Type page, object? parameter, IPageTransition? transition)
+    internal void Navigate(Type page, object? parameter, IPageTransition transition)
     {
-        Root.Navigate(page, parameter, transition ?? (page.IsAssignableTo(typeof(ScopedPage))
-            ? new PageCoverOverTransition(TimeSpan.FromMilliseconds(197), DirectionFrom.Right)
-            : new PopUpTransition(TimeSpan.FromMilliseconds(197))));
+        Root.Navigate(page, parameter, transition);
     }
 
     internal void BindNavigation(Action<Type, object?, IPageTransition?> navigate,
@@ -131,19 +126,6 @@ public partial class MainWindow : AppWindow
 
     #region Profile Service
 
-    private string? SearchIcon(string key)
-    {
-        var home = PathDef.Default.DirectoryOfHome(key);
-        string[] candidates = ["icon.png", "icon.jpeg", "icon.jpg", "icon.webp", "icon.bmp"];
-        foreach (var candidate in candidates)
-        {
-            var path = Path.Combine(home, candidate);
-            if (File.Exists(path)) return path;
-        }
-
-        return null;
-    }
-
     internal void SubscribeProfileList(ProfileService profile)
     {
         profile.ProfileAdded += OnProfileAdded;
@@ -152,14 +134,14 @@ public partial class MainWindow : AppWindow
 
         foreach (var (key, item) in profile.Profiles)
         {
-            var model = DesktopItemModel.From(key, item, SearchIcon(key));
+            var model = InstanceEntryModel.From(key, item, ProfileHelper.PickIcon(key));
             Profiles.Add(model);
         }
     }
 
     private void OnProfileAdded(object? sender, ProfileService.ProfileChangedEventArgs e)
     {
-        var model = DesktopItemModel.From(e.Key, e.Value, SearchIcon(e.Key));
+        var model = InstanceEntryModel.From(e.Key, e.Value, ProfileHelper.PickIcon(e.Key));
         Profiles.Add(model);
     }
 

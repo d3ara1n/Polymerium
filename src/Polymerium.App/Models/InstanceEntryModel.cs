@@ -8,7 +8,7 @@ using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.Models;
 
-public partial class DesktopItemModel(
+public partial class InstanceEntryModel(
     string key,
     string name,
     string version,
@@ -23,21 +23,21 @@ public partial class DesktopItemModel(
 
     #endregion
 
-    #region Exposure Properties
+    #region Direct Properties
 
     public string Key => key;
 
     public string Source => source ?? "local";
 
-    public Bitmap Icon { get; } = File.Exists(iconPath)
+    public Bitmap Thumbnail { get; } = File.Exists(iconPath)
         ? new Bitmap(iconPath)
-        : new Bitmap(AssetLoader.Open(new Uri("avares://Assets/Images/Placeholders/dirt.png")));
+        : new Bitmap(AssetLoader.Open(new Uri("avares://Assets/Images/Placeholders/Dirt.png")));
 
     #endregion
 
-    public static DesktopItemModel From(string key, Profile profile, string? iconPath)
+    public static InstanceEntryModel From(string key, Profile profile, string? iconPath)
     {
-        return new DesktopItemModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader,
+        return new InstanceEntryModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader,
             profile.Setup.Source, iconPath);
     }
 

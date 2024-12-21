@@ -3,9 +3,10 @@
                     xmlns:local="using:Huskui.Avalonia.Controls">
 
     <Thickness x:Key="CardContentMargin">12</Thickness>
-    
+    <CornerRadius x:Key="CardCornerRadius">8</CornerRadius>
+
     <ControlTheme x:Key="{x:Type local:Card}" TargetType="local:Card">
-        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource Card1BackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />

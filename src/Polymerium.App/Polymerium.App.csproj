@@ -35,10 +35,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Utility\"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <None Update="appsettings.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

@@ -1,6 +1,10 @@
 ﻿using System;
 using Avalonia.Animation;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Transitions;
+using Polymerium.App.Controls;
+using Polymerium.App.Exceptions;
+using Polymerium.App.Views;
 
 namespace Polymerium.App.Services;
 
@@ -15,7 +19,17 @@ public class NavigationService(IServiceProvider provider)
 
     public void Navigate(Type page, object? parameter = null, IPageTransition? transition = null)
     {
-        _handler?.Invoke(page, parameter, transition ?? new CrossFade(TimeSpan.FromMilliseconds(150)));
+        try
+        {
+            _handler?.Invoke(page, parameter, transition ?? (page.IsAssignableTo(typeof(ScopedPage))
+                ? new PageCoverOverTransition(TimeSpan.FromMilliseconds(197), DirectionFrom.Right)
+                : new PopUpTransition(TimeSpan.FromMilliseconds(197))));
+        }
+        catch (NavigationFailedException ex)
+        {
+            _handler?.Invoke(typeof(PageNotReachedView), ex.Message,
+                new PageCoverOverTransition(null, DirectionFrom.Right));
+        }
     }
 
     public void Navigate<T>(object? parameter = null, IPageTransition? transition = null)
