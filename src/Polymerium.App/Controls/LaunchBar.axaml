@@ -1,0 +1,311 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                    xmlns:local="using:Polymerium.App.Controls">
+    <Design.PreviewWith>
+        <Panel>
+            <StackPanel Margin="24" Spacing="12">
+                <local:LaunchBar Width="256" Height="96" State="Idle" />
+                <local:LaunchBar Width="256" Height="96" State="Building" />
+                <local:LaunchBar Width="256" Height="96" State="Running" />
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="{x:Type local:LaunchBar}" TargetType="local:LaunchBar">
+        <Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <husk:Card CornerRadius="{TemplateBinding CornerRadius}" BorderThickness="0" Padding="0"
+                           ClipToBounds="{TemplateBinding ClipToBounds}">
+                    <Panel>
+                        <Border CornerRadius="{TemplateBinding CornerRadius}"
+                                ClipToBounds="{TemplateBinding ClipToBounds}">
+                            <Rectangle Name="PART_Background" Margin="-250" Fill="Transparent" />
+                        </Border>
+                        <Panel Margin="{StaticResource CardContentMargin}">
+                            <Panel>
+                                <!-- Idle State -->
+                                <Button Name="PART_PlayButton" VerticalAlignment="Bottom"
+                                        Command="{TemplateBinding PlayCommand}" HorizontalAlignment="Left"
+                                        Classes="Primary">
+                                    <Button.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Easing="BackEaseOut"
+                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </Button.Transitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <icons:PackIconLucide Kind="Play"
+                                                              Height="{StaticResource MediumFontSize}"
+                                                              VerticalAlignment="Center" />
+                                        <TextBlock Text="PLAY" />
+                                    </StackPanel>
+                                </Button>
+                                <icons:PackIconLucide Name="PART_IdleIcon" Kind="Rocket" HorizontalAlignment="Right"
+                                                      Margin="0,-16,-24,0"
+                                                      VerticalAlignment="Top" Width="64"
+                                                      Height="64" Opacity="0.5">
+                                    <icons:PackIconLucide.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Easing="BackEaseOut"
+                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </icons:PackIconLucide.Transitions>
+                                </icons:PackIconLucide>
+                            </Panel>
+                            <Panel>
+                                <!-- Building State -->
+                                <Button Name="PART_AbortButton" VerticalAlignment="Bottom"
+                                        Command="{TemplateBinding AbortCommand}"
+                                        HorizontalAlignment="Left" Classes="Danger">
+                                    <Button.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Easing="BackEaseOut"
+                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </Button.Transitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <icons:PackIconLucide Kind="Square"
+                                                              Height="{StaticResource MediumFontSize}"
+                                                              VerticalAlignment="Center" />
+                                        <TextBlock Text="Abort" />
+                                    </StackPanel>
+                                </Button>
+                                <TextBlock Name="PART_BuildingText" Text="Building..." FontWeight="Bold"
+                                           FontSize="{StaticResource ExtraLargeFontSize}">
+                                    <TextBlock.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Easing="BackEaseOut"
+                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </TextBlock.Transitions>
+                                </TextBlock>
+                                <icons:PackIconLucide Name="PART_BuildingIcon" Kind="Construction"
+                                                      HorizontalAlignment="Right"
+                                                      Margin="0,-16,-24,0"
+                                                      VerticalAlignment="Top" Width="64"
+                                                      Height="64" Opacity="0.5">
+                                    <icons:PackIconLucide.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Easing="BackEaseOut"
+                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </icons:PackIconLucide.Transitions>
+                                </icons:PackIconLucide>
+                            </Panel>
+                            <Panel>
+                                <!-- Running State -->
+                                <Button Name="PART_DashboardButton" VerticalAlignment="Bottom"
+                                        Command="{TemplateBinding DashboardCommand}"
+                                        HorizontalAlignment="Left">
+                                    <Button.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Easing="BackEaseOut"
+                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </Button.Transitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <icons:PackIconLucide Kind="Logs"
+                                                              Height="{StaticResource MediumFontSize}"
+                                                              VerticalAlignment="Center" />
+                                        <TextBlock Text="Dashboard" />
+                                    </StackPanel>
+                                </Button>
+                                <TextBlock Name="PART_RunningText" Text="Running..." FontWeight="Bold"
+                                           FontSize="{StaticResource ExtraLargeFontSize}">
+                                    <TextBlock.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Easing="BackEaseOut"
+                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </TextBlock.Transitions>
+                                </TextBlock>
+                                <icons:PackIconLucide Name="PART_RunningIcon" Kind="Car" HorizontalAlignment="Right"
+                                                      Margin="0,-16,-24,0"
+                                                      VerticalAlignment="Top" Width="64"
+                                                      Height="64" Opacity="0.5">
+                                    <icons:PackIconLucide.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Easing="BackEaseOut"
+                                                                           Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        </Transitions>
+                                    </icons:PackIconLucide.Transitions>
+                                </icons:PackIconLucide>
+                            </Panel>
+                        </Panel>
+                    </Panel>
+                </husk:Card>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^[State=Idle]">
+            <Style Selector="^ /template/ Rectangle#PART_Background">
+                <Setter Property="Fill">
+                    <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" Stretch="Fill">
+                        <VisualBrush.Visual>
+                            <Image Source="/Assets/Images/Patterns/Blue_Icons.png" Stretch="Fill" Height="250"
+                                   Width="250" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Setter>
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_IdleIcon">
+                <Setter Property="RenderTransform" Value="translateY(0px)" />
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_BuildingIcon">
+                <Setter Property="RenderTransform" Value="translateY(-64px)" />
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_RunningIcon">
+                <Setter Property="RenderTransform" Value="translateX(64px)" />
+            </Style>
+
+            <Style Selector="^ /template/ TextBlock#PART_BuildingText">
+                <Setter Property="RenderTransform" Value="translateY(-48px)" />
+            </Style>
+
+            <Style Selector="^ /template/ TextBlock#PART_RunningText">
+                <Setter Property="RenderTransform" Value="translateY(-48px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_PlayButton">
+                <Setter Property="RenderTransform" Value="translateY(0px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_AbortButton">
+                <Setter Property="RenderTransform" Value="translateY(48px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_DashboardButton">
+                <Setter Property="RenderTransform" Value="translateY(48px)" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[State=Building]">
+            <Style Selector="^ /template/ Rectangle#PART_Background">
+                <Setter Property="Fill">
+                    <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" Stretch="Fill">
+                        <VisualBrush.Visual>
+                            <Image Source="/Assets/Images/Patterns/Yellow_Icons.png" Stretch="Fill" Height="250"
+                                   Width="250" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Setter>
+
+                <Style.Animations>
+                    <Animation Duration="0:0:5" IterationCount="Infinite">
+                        <KeyFrame Cue="0%">
+                            <Setter Property="TranslateTransform.X" Value="0" />
+                            <Setter Property="TranslateTransform.Y" Value="0" />
+                        </KeyFrame>
+                        <KeyFrame Cue="100%">
+                            <Setter Property="TranslateTransform.X" Value="250" />
+                            <Setter Property="TranslateTransform.Y" Value="-250" />
+                        </KeyFrame>
+                    </Animation>
+                </Style.Animations>
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_IdleIcon">
+                <Setter Property="RenderTransform" Value="translateY(-64px)" />
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_BuildingIcon">
+                <Setter Property="RenderTransform" Value="translateY(0px)" />
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_RunningIcon">
+                <Setter Property="RenderTransform" Value="translateX(64px)" />
+            </Style>
+
+            <Style Selector="^ /template/ TextBlock#PART_BuildingText">
+                <Setter Property="RenderTransform" Value="translateY(0px)" />
+            </Style>
+
+            <Style Selector="^ /template/ TextBlock#PART_RunningText">
+                <Setter Property="RenderTransform" Value="translateY(-48px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_PlayButton">
+                <Setter Property="RenderTransform" Value="translateY(48px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_AbortButton">
+                <Setter Property="RenderTransform" Value="translateY(0px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_DashboardButton">
+                <Setter Property="RenderTransform" Value="translateY(48px)" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[State=Running]">
+            <Style Selector="^ /template/ Rectangle#PART_Background">
+                <Setter Property="Fill">
+                    <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" Stretch="Fill">
+                        <VisualBrush.Visual>
+                            <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill" Height="250"
+                                   Width="250" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Setter>
+
+                <Style.Animations>
+                    <Animation Duration="0:0:10" IterationCount="Infinite">
+                        <KeyFrame Cue="0%">
+                            <Setter Property="TranslateTransform.X" Value="0" />
+                            <Setter Property="TranslateTransform.Y" Value="0" />
+                        </KeyFrame>
+                        <KeyFrame Cue="100%">
+                            <Setter Property="TranslateTransform.X" Value="-250" />
+                        </KeyFrame>
+                    </Animation>
+                </Style.Animations>
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_IdleIcon">
+                <Setter Property="RenderTransform" Value="translateY(-64px)" />
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_BuildingIcon">
+                <Setter Property="RenderTransform" Value="translateY(-64px)" />
+            </Style>
+
+            <Style Selector="^ /template/ icons|PackIconLucide#PART_RunningIcon">
+                <Setter Property="RenderTransform" Value="translateX(0px)" />
+            </Style>
+
+            <Style Selector="^ /template/ TextBlock#PART_BuildingText">
+                <Setter Property="RenderTransform" Value="translateY(-48px)" />
+            </Style>
+
+            <Style Selector="^ /template/ TextBlock#PART_RunningText">
+                <Setter Property="RenderTransform" Value="translateY(0px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_PlayButton">
+                <Setter Property="RenderTransform" Value="translateY(48px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_AbortButton">
+                <Setter Property="RenderTransform" Value="translateY(48px)" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_DashboardButton">
+                <Setter Property="RenderTransform" Value="translateY(0px)" />
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

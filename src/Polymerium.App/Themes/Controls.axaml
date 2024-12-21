@@ -3,5 +3,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="/Controls/AppPage.axaml" />
         <ResourceInclude Source="/Controls/ScopedPage.axaml" />
+        <ResourceInclude Source="/Controls/LaunchBar.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

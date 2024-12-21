@@ -2,10 +2,12 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:vm="using:Polymerium.App.ViewModels"
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                      xmlns:controls="using:Polymerium.App.Controls" Header="Instance"
-                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
+                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" x:DataType="vm:InstanceViewModel"
+                     Padding="0"
                      x:Class="Polymerium.App.Views.InstanceView">
     <Panel>
         <ScrollViewer>
@@ -18,38 +20,32 @@
                 <StackPanel Grid.Column="1">
                     <Panel>
                         <Panel.Background>
-                            <VisualBrush Stretch="UniformToFill">
-                                <VisualBrush.Visual>
-                                    <Image Opacity="0.75" Height="250" Width="250"
-                                           Source="/Assets/Images/Wallpaper.png"
-                                           Stretch="UniformToFill" RenderTransform="scale(1.1)" />
-                                </VisualBrush.Visual>
-                            </VisualBrush>
+                            <ImageBrush Opacity="0.75"
+                                        Source="{Binding Screenshot}"
+                                        Stretch="UniformToFill" />
                         </Panel.Background>
                         <StackPanel Spacing="8" Margin="{StaticResource PageContentMargin}">
                             <DockPanel Margin="0,12">
                                 <Border DockPanel.Dock="Right" Height="72" Width="72"
                                         BorderBrush="{DynamicResource ControlBorderBrush}"
                                         BorderThickness="4" CornerRadius="{StaticResource ControlCornerRadius}">
-                                    <Image Source="/Assets/Images/Placeholders/Dirt.png" Stretch="Fill" />
+                                    <Image Source="{Binding Thumbnail}" Stretch="Fill" />
                                 </Border>
                                 <StackPanel Spacing="8" Margin="0,24,0,0">
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <husk:Tag FontSize="{StaticResource MediumFontSize}"
-                                                  CornerRadius="{StaticResource ControlCornerRadius}">
-                                            <TextBlock Text="1.20.1" />
-                                        </husk:Tag>
-                                        <husk:Tag FontSize="{StaticResource MediumFontSize}"
-                                                  CornerRadius="{StaticResource ControlCornerRadius}">
-                                            <TextBlock Text="Vanilla" />
-                                        </husk:Tag>
-                                    </StackPanel>
-                                    <TextBlock Text="Hello Kitty" FontSize="36" />
+                                    <Border Background="{DynamicResource ControlTranslucentBackgroundBrush}"
+                                            CornerRadius="{StaticResource ControlCornerRadius}"
+                                            HorizontalAlignment="Left" Padding="6,2">
+                                        <TextBlock Text="Overview"
+                                                   Foreground="{DynamicResource ControlTranslucentForegroundBrush}"
+                                                   FontSize="{StaticResource SmallFontSize}"
+                                                   FontWeight="Bold" />
+                                    </Border>
+                                    <TextBlock Text="{Binding Name}" FontSize="36" />
                                 </StackPanel>
                             </DockPanel>
                             <DockPanel>
                                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                                    <Button>
+                                    <Button Command="{Binding GotoPropertyViewCommand}">
                                         <StackPanel Orientation="Horizontal" Spacing="6">
                                             <icons:PackIconLucide Kind="Settings2"
                                                                   Height="{StaticResource MediumFontSize}"
@@ -59,11 +55,13 @@
                                     </Button>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <Button>
+                                    <Button Command="{Binding OpenSourceUrlCommand}"
+                                            CommandParameter="{Binding Source.Url,FallbackValue={x:Null}}"
+                                            IsVisible="{Binding Source,Converter={x:Static ObjectConverters.IsNotNull}}">
                                         <StackPanel Orientation="Horizontal" Spacing="6">
                                             <icons:PackIconLucide Kind="Link" Height="{StaticResource MediumFontSize}"
                                                                   VerticalAlignment="Center" />
-                                            <TextBlock Text="CURSEFORGE" />
+                                            <TextBlock Text="{Binding Source.Label,FallbackValue=Unknown}" />
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>
@@ -79,7 +77,8 @@
                                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                         <TextBlock Text="1336" FontSize="24" />
                                     </StackPanel>
-                                    <Button VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                    <Button VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                            Command="{Binding GotoSetupViewCommand}">
                                         <TextBlock Text="Manage →" />
                                     </Button>
                                 </Panel>
@@ -88,11 +87,11 @@
                                                BorderThickness="0">
                                         <Panel>
                                             <Grid ColumnDefinitions="*,8,Auto">
-                                                <icons:PackIconLucide Grid.Column="0" Kind="Package2" />
-                                                <TextBlock Grid.Column="2" Text="Mods" FontWeight="Bold" />
+                                                <icons:PackIconLucide Grid.Column="0" Kind="FlameKindling" />
+                                                <TextBlock Grid.Column="2" Text="Type" FontWeight="Bold" />
                                             </Grid>
-                                            <TextBlock Text="1287" HorizontalAlignment="Right"
-                                                       VerticalAlignment="Bottom"
+                                            <TextBlock Text="Vanilla" HorizontalAlignment="Right"
+                                                       VerticalAlignment="Bottom" Margin="16,0,0,0"
                                                        FontSize="20" />
                                         </Panel>
                                     </husk:Card>
@@ -100,10 +99,11 @@
                                                BorderThickness="0">
                                         <Panel>
                                             <Grid ColumnDefinitions="*,8,Auto">
-                                                <icons:PackIconLucide Grid.Column="0" Kind="Palette" />
-                                                <TextBlock Grid.Column="2" Text="Resource Packs" FontWeight="Bold" />
+                                                <icons:PackIconLucide Grid.Column="0" Kind="Compass" />
+                                                <TextBlock Grid.Column="2" Text="Version" FontWeight="Bold" />
                                             </Grid>
-                                            <TextBlock Text="42" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                            <TextBlock Text="24w13a" HorizontalAlignment="Right"
+                                                       VerticalAlignment="Bottom" Margin="16,0,0,0"
                                                        FontSize="20" />
                                         </Panel>
                                     </husk:Card>
@@ -111,17 +111,18 @@
                                                BorderThickness="0">
                                         <Panel>
                                             <Grid ColumnDefinitions="*,8,Auto">
-                                                <icons:PackIconLucide Grid.Column="0" Kind="SunMoon" />
-                                                <TextBlock Grid.Column="2" Text="Shader Packs" FontWeight="Bold" />
+                                                <icons:PackIconLucide Grid.Column="0" Kind="DraftingCompass" />
+                                                <TextBlock Grid.Column="2" Text="Last Time Updated" FontWeight="Bold" />
                                             </Grid>
-                                            <TextBlock Text="7" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                            <TextBlock Text="24-12-24 18:30" HorizontalAlignment="Right"
+                                                       VerticalAlignment="Bottom" Margin="16,0,0,0"
                                                        FontSize="20" />
                                         </Panel>
                                     </husk:Card>
                                 </StackPanel>
                             </Grid>
                         </husk:Card>
-                        <Grid Height="188">
+                        <Grid Height="204">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*" />
                                 <ColumnDefinition Width="12" />
@@ -180,26 +181,11 @@
                                         </Button>
                                     </Grid>
                                 </husk:Card>
-                                <husk:Card Grid.Row="2" BorderThickness="0">
-                                    <husk:Card.Background>
-                                        <ImageBrush Source="/Assets/Images/Patterns/Blue_Icons.png" Opacity="1"
-                                                    Stretch="UniformToFill" />
-                                    </husk:Card.Background>
-                                    <Panel>
-                                        <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Classes="Primary">
-                                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                                <icons:PackIconLucide Kind="Play"
-                                                                      Height="{StaticResource MediumFontSize}"
-                                                                      VerticalAlignment="Center" />
-                                                <TextBlock Text="PLAY" />
-                                            </StackPanel>
-                                        </Button>
-                                        <icons:PackIconLucide Kind="Rocket" HorizontalAlignment="Right"
-                                                              VerticalAlignment="Top"
-                                                              RenderTransform="translate(24px,-16px)" Width="64"
-                                                              Height="64" Opacity="0.5" />
-                                    </Panel>
-                                </husk:Card>
+                                <controls:LaunchBar x:Name="LaunchBar" Grid.Row="2"
+                                                    State="{Binding LaunchBarModel.State,Mode=OneWay}"
+                                                    PlayCommand="{Binding PlayCommand}"
+                                                    AbortCommand="{Binding AbortCommand}"
+                                                    DashboardCommand="{Binding OpenDashboardCommand}" />
                             </Grid>
                         </Grid>
                         <StackPanel Spacing="12">
