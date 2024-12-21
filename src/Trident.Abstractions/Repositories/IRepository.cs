@@ -6,7 +6,7 @@ namespace Trident.Abstractions.Repositories;
 public interface IRepository
 {
     Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter);
-    Task<Project> QueryAsync(string? ns, string name);
-    Task<Package> ResolveAsync(string? ns, string name, string? version, Filter filter);
-    Task<IPaginationHandle<Version>> InspectAsync(string? ns, string name, Filter filter);
+    Task<Project> QueryAsync(string? @namespace, string name);
+    Task<Package> ResolveAsync(string? @namespace, string name, string? version, Filter filter);
+    Task<IPaginationHandle<Version>> InspectAsync(string? @namespace, string name, Filter filter);
 }
