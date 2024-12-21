@@ -4,5 +4,6 @@
         <ResourceInclude Source="/Controls/AppPage.axaml" />
         <ResourceInclude Source="/Controls/ScopedPage.axaml" />
         <ResourceInclude Source="/Controls/LaunchBar.axaml" />
+        <ResourceInclude Source="/Controls/InstanceEntryButton.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,0 +1,196 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:Polymerium.App.Controls"
+                    xmlns:dm="using:Polymerium.App.DesignModels"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
+    <Design.PreviewWith>
+        <Panel>
+            <StackPanel Margin="24" Spacing="12">
+                <local:InstanceEntryButton Height="128" Width="280">
+                    <dm:DesignInstanceBasicModel />
+                </local:InstanceEntryButton>
+                <local:InstanceEntryButton Height="128" Width="280" State="Installing">
+                    <dm:DesignInstanceBasicModel />
+                </local:InstanceEntryButton>
+                <local:InstanceEntryButton Height="128" Width="280" State="Preparing">
+                    <dm:DesignInstanceBasicModel />
+                </local:InstanceEntryButton>
+                <local:InstanceEntryButton Height="128" Width="280" State="Running">
+                    <dm:DesignInstanceBasicModel />
+                </local:InstanceEntryButton>
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type local:InstanceEntryButton}" TargetType="local:InstanceEntryButton">
+        <Setter Property="CornerRadius"
+                Value="{StaticResource ControlCornerRadius}" />
+        <Setter Property="Background"
+                Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_Container"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        ClipToBounds="True"
+                        Background="{TemplateBinding Background}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition Property="Background"
+                                             Duration="{StaticResource ControlInstantAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <Panel>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+                        <Image HorizontalAlignment="Right" Opacity="0.5"
+                               Source="{Binding Basic.Thumbnail,FallbackValue={x:Null}, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <Image.OpacityMask>
+                                <LinearGradientBrush StartPoint="0%,50%"
+                                                     EndPoint="100%,50%">
+                                    <GradientStop Offset="0"
+                                                  Color="Transparent" />
+                                    <GradientStop Offset="1" Color="Black" />
+                                </LinearGradientBrush>
+                            </Image.OpacityMask>
+                        </Image>
+                        <ProgressBar CornerRadius="0" Height="2"
+                                     VerticalAlignment="Bottom"
+                                     IsIndeterminate="True">
+                            <ProgressBar.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Value"
+                                                      Duration="{StaticResource ControlFastestAnimationDuration}" />
+                                </Transitions>
+                            </ProgressBar.Transitions>
+                        </ProgressBar>
+                        <DockPanel Margin="16">
+                            <WrapPanel DockPanel.Dock="Bottom">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <husk:Tag Name="PART_InstallingTag">
+                                        <StackPanel Orientation="Horizontal"
+                                                    Spacing="4">
+                                            <Ellipse Width="6" Height="6"
+                                                     Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                            <TextBlock Text="INSTALLING" />
+                                        </StackPanel>
+                                    </husk:Tag>
+                                    <husk:Tag Name="PART_PreparingTag" Classes="Warning">
+                                        <StackPanel Orientation="Horizontal"
+                                                    Spacing="4">
+                                            <Ellipse Width="6" Height="6"
+                                                     Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                            <TextBlock Text="PREPARING" />
+                                        </StackPanel>
+                                    </husk:Tag>
+                                    <husk:Tag Name="PART_RunningTag" Classes="Success">
+                                        <StackPanel Orientation="Horizontal"
+                                                    Spacing="4">
+                                            <Ellipse Width="6" Height="6"
+                                                     Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                            <TextBlock Text="RUNNING" />
+                                        </StackPanel>
+                                    </husk:Tag>
+                                    <StackPanel Name="PART_InfoTags" Orientation="Horizontal" Spacing="8">
+                                        <husk:Tag Content="原版" />
+                                        <husk:Tag Content="1.20.1" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </WrapPanel>
+                            <StackPanel Spacing="8">
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                                    <Run
+                                        Text="{Binding Basic.SourceLabel,FallbackValue=LABEL,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                    <Run Text="/" />
+                                    <Run
+                                        Text="{Binding Basic.Key,FallbackValue=KEY,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                </TextBlock>
+                                <TextBlock
+                                    Text="{Binding Basic.Name,FallbackValue=NAME,RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    MaxLines="2" TextWrapping="Wrap"
+                                    TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                        </DockPanel>
+                        <Border Name="PART_Border" Opacity="0"
+                                BorderBrush="{DynamicResource ControlAccentBorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity"
+                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                </Transitions>
+                            </Border.Transitions>
+                        </Border>
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#PART_Border">
+            <Setter Property="Opacity"
+                    Value="1.0" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#PART_Container">
+            <Setter Property="Background"
+                    Value="{DynamicResource ControlBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^[State=Idle]">
+            <Style Selector="^ /template/ husk|Tag#PART_InstallingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PART_PreparingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PART_RunningTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[State=Installing]">
+            <Style Selector="^ /template/ husk|Tag#PART_InstallingTag">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PART_PreparingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PART_RunningTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ StackPanel#PART_InfoTags">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[State=Preparing]">
+            <Style Selector="^ /template/ husk|Tag#PART_InstallingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PART_PreparingTag">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PART_RunningTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[State=Running]">
+            <Style Selector="^ /template/ husk|Tag#PART_InstallingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PART_PreparingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PART_RunningTag">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

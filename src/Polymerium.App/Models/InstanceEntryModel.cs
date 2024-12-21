@@ -8,41 +8,12 @@ using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.Models;
 
-public partial class InstanceEntryModel(
-    string key,
-    string name,
-    string version,
-    string? loader,
-    string? source,
-    string? iconPath)
-    : ModelBase
+public partial class InstanceEntryModel : ModelBase
 {
-    #region Reactive Properties
+    public InstanceBasicModel Basic { get; }
 
-    [ObservableProperty] private string _name = name;
-
-    #endregion
-
-    #region Direct Properties
-
-    public string Key => key;
-
-    public string Source => source ?? "local";
-
-    public Bitmap Thumbnail { get; } = File.Exists(iconPath)
-        ? new Bitmap(iconPath)
-        : new Bitmap(AssetLoader.Open(new Uri("avares://Assets/Images/Placeholders/Dirt.png")));
-
-    #endregion
-
-    public static InstanceEntryModel From(string key, Profile profile, string? iconPath)
+    public InstanceEntryModel(string key, string name, string version, string? loader, string? source)
     {
-        return new InstanceEntryModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader,
-            profile.Setup.Source, iconPath);
-    }
-
-    public void Update(Profile profile)
-    {
-        Name = profile.Name;
+        Basic = new InstanceBasicModel(key, name, version, loader, source);
     }
 }

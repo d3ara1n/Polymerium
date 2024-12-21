@@ -29,7 +29,7 @@ public partial class MainWindow : AppWindow
         InitializeComponent();
         DataContext = this;
 
-        ViewInstanceCommand = new RelayCommand<InstanceEntryModel>(ViewInstance);
+        ViewInstanceCommand = new RelayCommand<string>(ViewInstance);
     }
 
     private void PopDialog()
@@ -102,10 +102,10 @@ public partial class MainWindow : AppWindow
         }
     }
 
-    private void ViewInstance(InstanceEntryModel? model)
+    private void ViewInstance(string? key)
     {
-        if (model is not null)
-            _navigate?.Invoke(typeof(InstanceView), model.Key, null);
+        if (key is not null)
+            _navigate?.Invoke(typeof(InstanceView), key, null);
     }
 
     #region Navigation Service
@@ -134,26 +134,31 @@ public partial class MainWindow : AppWindow
 
         foreach (var (key, item) in profile.Profiles)
         {
-            var model = InstanceEntryModel.From(key, item, ProfileHelper.PickIcon(key));
+            var model = new InstanceEntryModel(key, item.Name, item.Setup.Version, item.Setup.Loader,
+                item.Setup.Source);
             Profiles.Add(model);
         }
     }
 
     private void OnProfileAdded(object? sender, ProfileService.ProfileChangedEventArgs e)
     {
-        var model = InstanceEntryModel.From(e.Key, e.Value, ProfileHelper.PickIcon(e.Key));
+        var model = new InstanceEntryModel(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader,
+            e.Value.Setup.Source);
         Profiles.Add(model);
     }
 
     private void OnProfileUpdated(object? sender, ProfileService.ProfileChangedEventArgs e)
     {
-        var model = Profiles.FirstOrDefault(x => x.Key == e.Key);
-        if (model is not null) model.Update(e.Value);
+        var model = Profiles.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is not null)
+        {
+            // TODO
+        }
     }
 
     private void OnProfileRemoved(object? sender, ProfileService.ProfileChangedEventArgs e)
     {
-        var model = Profiles.FirstOrDefault(x => x.Key == e.Key);
+        var model = Profiles.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is not null) Profiles.Remove(model);
     }
 
