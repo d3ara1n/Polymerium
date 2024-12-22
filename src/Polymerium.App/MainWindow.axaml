@@ -87,8 +87,7 @@
                             <TextBlock Text="Go to Exhibition" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
-                    <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5"
-                            BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0" />
+                    <husk:Divider Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" />
                     <!-- <AutoCompleteBox/> -->
                     <TextBox DockPanel.Dock="Top" Watermark="Search by names or types" Grid.Column="0" Grid.Row="6"
                              Grid.ColumnSpan="5" />
@@ -101,8 +100,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <Border Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="5"
-                            BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0" />
+                    <husk:Divider Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="5" />
                     <Button Grid.Column="0" Grid.Row="12" DockPanel.Dock="Left"
                             Theme="{StaticResource GhostButtonTheme}" Click="NavigationButton_OnClick" Tag="0721">
                         <icons:PackIconLucide Kind="Settings" Height="18" />

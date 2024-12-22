@@ -14,10 +14,9 @@ public partial class InstanceBasicModel : ModelBase
 
     [ObservableProperty] private string _name;
     [ObservableProperty] private string _version;
-    [ObservableProperty] private string? _loader;
+    [ObservableProperty] private string _loaderLabel;
     [ObservableProperty] private string _sourceLabel;
     [ObservableProperty] private Bitmap _thumbnail;
-    [ObservableProperty] private InstanceEntryState _state = InstanceEntryState.Idle;
 
     private string? _source;
 
@@ -26,7 +25,8 @@ public partial class InstanceBasicModel : ModelBase
         get => _source;
         set
         {
-            if (SetProperty(ref _source, value) && !string.IsNullOrEmpty(value) &&
+            SetProperty(ref _source, value);
+            if (!string.IsNullOrEmpty(value) &&
                 PurlHelper.TryParse(value, out var result))
             {
                 SourceLabel = result.Label;
@@ -35,6 +35,18 @@ public partial class InstanceBasicModel : ModelBase
             {
                 SourceLabel = "local";
             }
+        }
+    }
+
+    private string? _loader;
+
+    public string? Loader
+    {
+        get => _loader;
+        set
+        {
+            SetProperty(ref _loader, value);
+            LoaderLabel = "Vanilla";
         }
     }
 

@@ -15,12 +15,7 @@
             <ControlTemplate TargetType="TabControl">
                 <Border
                     HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                    VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                    Background="{TemplateBinding Background}"
-                    BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="{TemplateBinding CornerRadius}">
+                    VerticalAlignment="{TemplateBinding VerticalAlignment}">
                     <DockPanel>
                         <Panel DockPanel.Dock="{TemplateBinding TabStripPlacement}">
                             <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
@@ -28,6 +23,11 @@
                         <ContentPresenter
                             Name="PART_ContentPresenter"
                             Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             Content="{TemplateBinding SelectedContent}"

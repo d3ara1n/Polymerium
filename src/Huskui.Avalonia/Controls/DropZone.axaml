@@ -4,7 +4,7 @@
                     xmlns:fi="using:FluentIcons.Avalonia">
     <Design.PreviewWith>
         <Panel Background="{StaticResource SystemChromeWhiteColor}">
-            <local:DragDropZone Margin="12">
+            <local:DropZone Margin="12">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Spacing="4">
                         <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" />
@@ -16,10 +16,10 @@
                     <TextBlock Text="Up to 12MB" HorizontalAlignment="Center"
                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                 </StackPanel>
-            </local:DragDropZone>
+            </local:DropZone>
         </Panel>
     </Design.PreviewWith>
-    <ControlTheme x:Key="{x:Type local:DragDropZone}" TargetType="local:DragDropZone">
+    <ControlTheme x:Key="{x:Type local:DropZone}" TargetType="local:DropZone">
         <Setter Property="Padding" Value="16,12" />
         <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="StrokeBrush" Value="{DynamicResource ControlBorderBrush}" />
