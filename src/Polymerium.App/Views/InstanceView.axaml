@@ -29,7 +29,7 @@
                                 <Border DockPanel.Dock="Right" Height="72" Width="72"
                                         BorderBrush="{DynamicResource ControlBorderBrush}"
                                         BorderThickness="4" CornerRadius="{StaticResource ControlCornerRadius}">
-                                    <Image Source="{Binding Thumbnail}" Stretch="Fill" />
+                                    <Image Source="{Binding Basic.Thumbnail}" Stretch="Fill" />
                                 </Border>
                                 <StackPanel Spacing="8" Margin="0,24,0,0">
                                     <Border Background="{DynamicResource ControlTranslucentBackgroundBrush}"
@@ -40,7 +40,7 @@
                                                    FontSize="{StaticResource SmallFontSize}"
                                                    FontWeight="Bold" />
                                     </Border>
-                                    <TextBlock Text="{Binding Name}" FontSize="36" />
+                                    <TextBlock Text="{Binding Basic.Name}" FontSize="36" />
                                 </StackPanel>
                             </DockPanel>
                             <DockPanel>
@@ -56,12 +56,12 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
                                     <Button Command="{Binding OpenSourceUrlCommand}"
-                                            CommandParameter="{Binding Source.Url,FallbackValue={x:Null}}"
-                                            IsVisible="{Binding Source,Converter={x:Static ObjectConverters.IsNotNull}}">
+                                            CommandParameter="{Binding SourceUrl,FallbackValue={x:Null}}"
+                                            IsVisible="{Binding SourceUrl,Converter={x:Static ObjectConverters.IsNotNull}}">
                                         <StackPanel Orientation="Horizontal" Spacing="6">
                                             <icons:PackIconLucide Kind="Link" Height="{StaticResource MediumFontSize}"
                                                                   VerticalAlignment="Center" />
-                                            <TextBlock Text="{Binding Source.Label,FallbackValue=Unknown}" />
+                                            <TextBlock Text="{Binding Basic.SourceLabel,FallbackValue=Unknown}" />
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>
@@ -90,7 +90,7 @@
                                                 <icons:PackIconLucide Grid.Column="0" Kind="FlameKindling" />
                                                 <TextBlock Grid.Column="2" Text="Type" FontWeight="Bold" />
                                             </Grid>
-                                            <TextBlock Text="Vanilla" HorizontalAlignment="Right"
+                                            <TextBlock Text="{Binding Basic.LoaderLabel}" HorizontalAlignment="Right"
                                                        VerticalAlignment="Bottom" Margin="16,0,0,0"
                                                        FontSize="20" />
                                         </Panel>
@@ -102,7 +102,7 @@
                                                 <icons:PackIconLucide Grid.Column="0" Kind="Compass" />
                                                 <TextBlock Grid.Column="2" Text="Version" FontWeight="Bold" />
                                             </Grid>
-                                            <TextBlock Text="24w13a" HorizontalAlignment="Right"
+                                            <TextBlock Text="{Binding Basic.Version}" HorizontalAlignment="Right"
                                                        VerticalAlignment="Bottom" Margin="16,0,0,0"
                                                        FontSize="20" />
                                         </Panel>

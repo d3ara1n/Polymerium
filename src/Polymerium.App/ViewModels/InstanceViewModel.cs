@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,11 +28,9 @@ public partial class InstanceViewModel : ViewModelBase
 
     #region Models
 
-    [ObservableProperty] private string _key;
-    [ObservableProperty] private string _name;
-    [ObservableProperty] private Bitmap _thumbnail;
-    [ObservableProperty] private InstanceSourceModel? _source;
+    [ObservableProperty] private InstanceBasicModel _basic;
     [ObservableProperty] private Bitmap _screenshot;
+    [ObservableProperty] private Uri? _sourceUrl;
     [ObservableProperty] private InstanceLaunchBarModel _launchBarModel;
 
     #endregion
@@ -41,15 +38,15 @@ public partial class InstanceViewModel : ViewModelBase
     #region Command Handlers
 
     [RelayCommand]
-    private void OpenSourceUrl(string? url)
+    private void OpenSourceUrl(Uri? url)
     {
-        if (url is not null) Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        if (url is not null) Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
     }
 
     [RelayCommand]
     private void GotoPropertyView()
     {
-        _navigationService.Navigate<InstancePropertyView>(Key);
+        _navigationService.Navigate<InstancePropertyView>(Basic.Key);
     }
 
     [RelayCommand]
@@ -88,12 +85,8 @@ public partial class InstanceViewModel : ViewModelBase
         {
             if (profileService.TryGetImmutable(key, out var profile))
             {
-                Key = key;
-                Name = profile.Name;
-                var iconPath = ProfileHelper.PickIcon(key);
-                Thumbnail = iconPath is not null
-                    ? new Bitmap(iconPath)
-                    : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+                Basic = new InstanceBasicModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader,
+                    profile.Setup.Source);
                 var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
                 Screenshot = screenshotPath is not null
                     ? new Bitmap(screenshotPath)

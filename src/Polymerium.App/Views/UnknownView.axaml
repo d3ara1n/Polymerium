@@ -63,12 +63,13 @@
                         <NotificationCard NotificationType="Warning">
                             <TextBlock Text="Warning" />
                         </NotificationCard>
+                        <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF" />
                     </StackPanel>
                 </husk:Card>
             </TabItem>
             <TabItem Header="Bar">
                 <StackPanel>
-                    <ProgressBar x:Name="Bar" Value="50" />
+                    <ProgressBar x:Name="Bar" Value="50" ShowProgressText="True" />
                     <TextBlock x:Name="Block" FontSize="13" />
                 </StackPanel>
             </TabItem>

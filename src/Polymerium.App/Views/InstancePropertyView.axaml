@@ -11,7 +11,26 @@
             <Button DockPanel.Dock="Right" Margin="8,0,0,0">
                 <TextBlock Text="Go to Global Configuration Page" />
             </Button>
-            <TextBlock Text="Instance Overrides Configuration" Theme="{StaticResource PageHeaderTextBlockTheme}" />
+            <TextBlock Text="Instance Properties" Theme="{StaticResource PageHeaderTextBlockTheme}" />
         </DockPanel>
     </husk:Page.Header>
+    <TabControl TabStripPlacement="Left" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1,0,0,0">
+        <TabItem Header="Information">设置实例名和图标</TabItem>
+        <TabItem Header="Overrides" />
+        <TabItem Header="Building">
+            <TabControl>
+                <TabItem Header="Persistence" Theme="{StaticResource SolidTabItemTheme}">
+                    使用持久化池的目录和文件列表
+                </TabItem>
+                <TabItem Header="Snapshot" Theme="{StaticResource SolidTabItemTheme}">
+                    启动前是否自动拍摄，多久或多少快照之后进行清理，哪些目录和文件需要进入拍摄范围等等设置项
+                </TabItem>
+            </TabControl>
+        </TabItem>
+        <TabItem Header="Storage">
+            环状饼图表示 Build 目录和几个典型游戏（config/saves/mods/screenshots）目录所占大小及其图例，
+            并表示有百分之几是池化储存。
+            环状饼图表示
+        </TabItem>
+    </TabControl>
 </controls:ScopedPage>

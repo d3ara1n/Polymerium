@@ -8,9 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.2.2"/>
-        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.266"/>
-        <PackageReference Include="Irihi.Ursa" Version="1.6.2"/>
+        <PackageReference Include="Avalonia" Version="11.2.3"/>
+        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.271"/>
     </ItemGroup>
 
     <ItemGroup>
