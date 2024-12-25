@@ -20,8 +20,8 @@
 
         <Style Selector="^[Orientation=Vertical]">
             <Setter Property="BorderThickness" Value="1,0,0,0" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

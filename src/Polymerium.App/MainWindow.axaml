@@ -12,7 +12,7 @@
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 x:Class="Polymerium.App.MainWindow" x:DataType="local:MainWindow"
                 PointerPressed="Window_OnPointerPressed" DoubleTapped="Window_OnDoubleTapped"
-                Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="1024">
+                Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="960">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*" />
