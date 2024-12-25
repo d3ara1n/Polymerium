@@ -3,13 +3,29 @@
                     xmlns:sys="using:System">
     <Design.PreviewWith>
         <Panel>
-            <Grid Margin="24" ColumnDefinitions="*">
-                <StackPanel Grid.Column="0">
+            <Grid Margin="24" RowDefinitions="*,12,*">
+                <StackPanel Grid.Row="0">
                     <TextBlock FontSize="{StaticResource ExtraSmallFontSize}" Text="Extra Small Font Size 超小等大小字体" />
                     <TextBlock FontSize="{StaticResource SmallFontSize}" Text="Small Font Size 小等大小字体" />
                     <TextBlock FontSize="{StaticResource MediumFontSize}" Text="Medium Font Size 中等大小字体" />
                     <TextBlock FontSize="{StaticResource LargeFontSize}" Text="Large Font Size 大等大小字体" />
                     <TextBlock FontSize="{StaticResource ExtraLargeFontSize}" Text="Extra Large Font Size 超大等大小字体" />
+                </StackPanel>
+                <StackPanel Grid.Row="2">
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Thin"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="ExtraLight"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Light"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Regular"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Medium"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="SemiBold"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Bold"
+                               Text="Medium Font Size 中等大小字体" />
                 </StackPanel>
             </Grid>
         </Panel>
