@@ -14,7 +14,7 @@
         </Setter>
     </ControlTheme>
 
-    <Thickness x:Key="PageContentMargin">16,52,16,16</Thickness>
+    <Thickness x:Key="PageContentMargin">16,56,16,16</Thickness>
     <Thickness x:Key="PageHeaderlessContentMargin">16</Thickness>
 
     <ControlTheme x:Key="{x:Type local:Page}" TargetType="local:Page">
@@ -22,13 +22,6 @@
         <Setter Property="CanGoBack" Value="{Binding $parent[local:Frame].CanGoBack, Mode=OneWay}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ClipToBounds" Value="True" />
-        <Setter Property="HeaderTemplate">
-            <husk:RelayDataTemplate>
-                <DataTemplate DataType="x:String">
-                    <TextBlock Text="{Binding}" Theme="{StaticResource PageHeaderTextBlockTheme}" />
-                </DataTemplate>
-            </husk:RelayDataTemplate>
-        </Setter>
         <Setter Property="Template">
             <ControlTemplate>
                 <Border CornerRadius="{TemplateBinding CornerRadius}" Background="{TemplateBinding Background}"
@@ -38,19 +31,32 @@
                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalAlignment}" ClipToBounds="True">
                     <Panel>
-                        <ContentPresenter Name="{x:Static local:Page.PART_ContentPresenter}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Padding="{TemplateBinding Padding}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <ContentPresenter
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                         <DockPanel VerticalAlignment="Top" Margin="12" IsVisible="{TemplateBinding IsHeaderVisible}">
                             <Button DockPanel.Dock="Left" CornerRadius="4" Margin="0,0,12,0"
                                     Command="{Binding $parent[local:Frame].GoBackCommand}">
                                 <fi:SymbolIcon Symbol="ArrowLeft" FontSize="14" Height="12" Width="12" />
                             </Button>
-                            <ContentPresenter Content="{TemplateBinding Header}"
-                                              ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                            <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}">
+                                <ContentPresenter.Styles>
+                                    <Style Selector="TextBlock">
+
+                                        <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                        <Setter Property="Effect">
+                                            <DropShadowEffect Opacity="0.1" BlurRadius="6" />
+                                        </Setter>
+                                    </Style>
+                                </ContentPresenter.Styles>
+                            </ContentPresenter>
                         </DockPanel>
                     </Panel>
                 </Border>
