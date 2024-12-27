@@ -14,6 +14,10 @@
         <ResourceInclude Source="/Controls/HyperlinkButton.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
         <ResourceInclude Source="/Controls/ListBoxItem.axaml" />
+        <ResourceInclude Source="/Controls/NotificationHost.axaml" />
+        <ResourceInclude Source="/Controls/NotificationItem.axaml" />
+        <ResourceInclude Source="/Controls/OverlayHost.axaml" />
+        <ResourceInclude Source="/Controls/OverlayItem.axaml" />
         <ResourceInclude Source="/Controls/Page.axaml" />
         <ResourceInclude Source="/Controls/PopupRoot.axaml" />
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
@@ -26,7 +30,5 @@
         <ResourceInclude Source="/Controls/TextBox.axaml" />
         <ResourceInclude Source="/Controls/Toast.axaml" />
         <ResourceInclude Source="/Controls/ToggleSwitch.axaml" />
-        <ResourceInclude Source="/Controls/OverlayHost.axaml" />
-        <ResourceInclude Source="/Controls/OverlayItem.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
