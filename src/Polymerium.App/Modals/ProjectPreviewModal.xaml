@@ -271,7 +271,7 @@
                     </StackPanel>
                     <!--  Loading indicator  -->
                     <ProgressRing
-                        x:Name="PART_LodingIndicator"
+                        x:Name="PART_LoadingIndicator"
                         Grid.Row="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
@@ -280,7 +280,7 @@
                         Grid.Row="1"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="0,1,0,0" />
-                    <Grid Grid.Row="3" Margin="{StaticResource MediumMargin}">
+                    <Grid Grid.Row="2" Margin="{StaticResource MediumMargin}">
                         <StackPanel
                             HorizontalAlignment="Right"
                             Orientation="Horizontal"
@@ -320,7 +320,7 @@
                 <VisualState x:Name="Idle" />
                 <VisualState x:Name="Fetching">
                     <VisualState.Setters>
-                        <Setter Target="PART_LodingIndicator.IsActive" Value="True" />
+                        <Setter Target="PART_LoadingIndicator.IsActive" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Failed">

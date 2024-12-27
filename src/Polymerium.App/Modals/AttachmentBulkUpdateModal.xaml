@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <local:ModalBase
     x:Class="Polymerium.App.Modals.AttachmentBulkUpdateModal"
@@ -29,7 +29,27 @@
             BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
             BorderThickness="{StaticResource CardBorderThickness}"
             CornerRadius="{StaticResource SmallCornerRadius}">
-            <Border Width="230" Height="230" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Spacing="{StaticResource SmallGap}">
+                    <Button Style="{StaticResource AccentButtonStyle}">
+                        <StackPane
+                            x:Name="PART_UninstalledState"
+                            Orientation="Horizontal"
+                            Spacing="{StaticResource TinyGap}">
+                            <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xEBD3;" />
+                            <TextBlock Text="Apply" />
+                        </StackPane>
+                    </Button>
+                    <Button Command="{x:Bind DismissCommand}" Content="Close" />
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </local:ModalBase>
