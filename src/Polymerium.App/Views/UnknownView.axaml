@@ -28,8 +28,8 @@
             <Setter Property="Text" Value="没有阴影的中文是没有阴影的。" />
         </Style>
     </husk:Page.Styles>
-    <StackPanel>
-        <TextBlock Text="{Binding Title}" FontWeight="Regular" />
+    <StackPanel Spacing="8">
+        <TextBlock Text="{Binding Title}" />
         <TabStrip>
             <TabStripItem>
                 <TextBlock>
@@ -60,12 +60,13 @@
                         <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello" />
                         <Button Classes="Primary" Content="World" />
                         <HyperlinkButton Content="THIS A LINK!" />
-                        <NotificationCard NotificationType="Error">
-                            <TextBlock Text="Critical" />
-                        </NotificationCard>
+
+                        <husk:NotificationItem Parameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                               Actions="{Binding Actions}"
+                                               Message="Click buttons below to change notification level" />
                         <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
                                       IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
-                        <ComboBox Name="ComboBox">
+                        <ComboBox Name="ComboBox" PlaceholderText="这是一个一个">
                             <ComboBoxItem Content="这是一个 1" />
                             <ComboBoxItem Content="这是一个 2" />
                             <ComboBoxItem Content="这是一个 3" />

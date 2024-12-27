@@ -59,5 +59,9 @@
             <Setter Property="Opacity" Value="0.7" />
             <Setter Property="RenderTransform" Value="translateY(2px)" />
         </Style>
+
+        <Style Selector="^:disabled /template/ Panel#PART_Container">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

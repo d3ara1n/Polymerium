@@ -107,7 +107,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
             }
 
             public AnimationBuilder AddFrame(double cue,
-                IEnumerable<(AvaloniaProperty Property, object? Value)> setters)
+                Span<(AvaloniaProperty Property, object? Value)> setters)
             {
                 var frame = new FrameBuilder(cue, null);
                 foreach (var setter in setters) frame.WithSetter(setter.Property, setter.Value);
@@ -117,7 +117,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
             }
 
             public AnimationBuilder AddFrame(TimeSpan keyTime,
-                IEnumerable<(AvaloniaProperty Property, object? Value)> setters)
+                Span<(AvaloniaProperty Property, object? Value)> setters)
             {
                 var frame = new FrameBuilder(null, keyTime);
                 foreach (var setter in setters) frame.WithSetter(setter.Property, setter.Value);
