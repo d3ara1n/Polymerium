@@ -15,7 +15,7 @@
         <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
         <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlActiveForegroundBrush}" />
-        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="Template">
@@ -95,7 +95,11 @@
         </Style>
 
         <Style Selector="^:focus /template/ Border#PART_Border">
-            <Setter Property="Background" Value="{DynamicResource ControlSolidInteractiveBackgroundBrush}" />
+            <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:pointerover:not(:focus) /template/ Border#PART_Border">
+            <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Border#PART_Border">

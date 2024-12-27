@@ -30,10 +30,10 @@
 
     <ControlTheme x:Key="BaseTabStripItemTheme" TargetType="TabStripItem">
         <Setter Property="Padding" Value="10,8" />
-        <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
-        <Setter Property="Margin" Value="6,4" />
+        <Setter Property="Margin" Value="2" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="Template">
             <ControlTemplate>

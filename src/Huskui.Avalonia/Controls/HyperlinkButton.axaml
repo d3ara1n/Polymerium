@@ -24,8 +24,10 @@
                 <Panel Name="PART_Container">
                     <Panel.Transitions>
                         <Transitions>
-                            <DoubleTransition Property="Opacity"
+                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
                                               Duration="{StaticResource ControlFastestAnimationDuration}" />
+                            <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                           Duration="{StaticResource ControlFastestAnimationDuration}" />
                         </Transitions>
                     </Panel.Transitions>
                     <Border Name="PART_Underline" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0"
@@ -34,8 +36,8 @@
                             Width="{Binding #PART_ContentPresenter.Bounds.Width}">
                         <Border.Transitions>
                             <Transitions>
-                                <DoubleTransition Property="Opacity"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlFastestAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -49,12 +51,13 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover /template/ Border#PART_Underline">
+        <Style Selector="^:pointerover:not(:pressed) /template/ Border#PART_Underline">
             <Setter Property="Opacity" Value="1.0" />
         </Style>
 
         <Style Selector="^:pressed /template/ Panel#PART_Container">
             <Setter Property="Opacity" Value="0.7" />
+            <Setter Property="RenderTransform" Value="translateY(2px)" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

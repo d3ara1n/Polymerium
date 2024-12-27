@@ -1,0 +1,114 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+    <Design.PreviewWith>
+        <Panel Background="White">
+            <StackPanel Margin="24" Spacing="12">
+                <ComboBox SelectedIndex="0">
+                    <ComboBoxItem>
+                        <TextBlock Text="Hello World" />
+                    </ComboBoxItem>
+                </ComboBox>
+                <ComboBox PlaceholderText="Placeholder">
+                    <ComboBoxItem>
+                        <TextBlock Text="Hello World" />
+                    </ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="{x:Type ComboBox}" TargetType="ComboBox">
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="MaxDropDownHeight" Value="504" />
+        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+                    <Panel>
+                        <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <BrushTransition Property="BorderBrush"
+                                                     Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                     Easing="SineEaseOut" />
+                                    <BrushTransition Property="Background"
+                                                     Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                     Easing="SineEaseOut" />
+                                </Transitions>
+                            </Border.Transitions>
+
+                            <Grid Margin="{TemplateBinding Padding}" ColumnDefinitions="*,6,Auto">
+                                <Panel Grid.Column="0">
+                                    <TextBlock Name="PlaceholderTextBlock"
+                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               Foreground="{TemplateBinding PlaceholderForeground}"
+                                               TextTrimming="CharacterEllipsis"
+                                               IsVisible="{TemplateBinding SelectionBoxItem,
+                                                   Converter={x:Static ObjectConverters.IsNull}}"
+                                               Text="{TemplateBinding PlaceholderText}" />
+                                    <ContentPresenter Name="PART_ContentPresenter"
+                                                      Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" />
+                                </Panel>
+                                <fi:SymbolIcon Grid.Column="2" Symbol="ChevronUpDown"
+                                               FontSize="{TemplateBinding FontSize}" IsHitTestVisible="False" />
+                            </Grid>
+                        </Border>
+                        <Border x:Name="GlowBorder" CornerRadius="{TemplateBinding CornerRadius}"
+                                BorderBrush="Transparent" BorderThickness="2">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <BrushTransition Property="BorderBrush"
+                                                     Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                     Easing="SineEaseOut" />
+                                </Transitions>
+                            </Border.Transitions>
+                        </Border>
+                        <Popup Name="PART_Popup"
+                               MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                               MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                               IsLightDismissEnabled="True"
+                               IsOpen="{TemplateBinding IsDropDownOpen,Mode=TwoWay}"
+                               PlacementTarget="{TemplateBinding}"
+                               InheritsTransform="True">
+                            <Border Margin="2,4" Background="{DynamicResource WindowBackgroundBrush}"
+                                    CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
+                                <Border.Effect>
+                                    <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.1" />
+                                </Border.Effect>
+                                <ScrollViewer
+                                    HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                    VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                    IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}">
+                                    <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Panel>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+
+
+        <Style Selector="^:focus:not(:dropdownopen) /template/ Border#GlowBorder">
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ Border#Border">
+            <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Border#Border">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

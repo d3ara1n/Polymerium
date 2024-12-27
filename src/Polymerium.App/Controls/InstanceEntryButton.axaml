@@ -25,7 +25,7 @@
 
     <ControlTheme x:Key="{x:Type local:InstanceEntryButton}" TargetType="local:InstanceEntryButton">
         <Setter Property="CornerRadius"
-                Value="{StaticResource ControlCornerRadius}" />
+                Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background"
                 Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />

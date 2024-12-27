@@ -151,7 +151,7 @@
                              Opacity="0.4" />
 
             <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{StaticResource White8Color}" />
-            <SolidColorBrush x:Key="ControlSolidInteractiveBackgroundBrush" Color="{StaticResource Sand1Color}" />
+            <SolidColorBrush x:Key="ControlInteractiveSolidBackgroundBrush" Color="{StaticResource Sand1Color}" />
             <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{StaticResource Sand6Color}" />
 
             <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Sand4Color}" />

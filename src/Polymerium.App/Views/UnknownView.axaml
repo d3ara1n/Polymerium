@@ -60,10 +60,26 @@
                         <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello" />
                         <Button Classes="Primary" Content="World" />
                         <HyperlinkButton Content="THIS A LINK!" />
-                        <NotificationCard NotificationType="Warning">
-                            <TextBlock Text="Warning" />
+                        <NotificationCard NotificationType="Error">
+                            <TextBlock Text="Critical" />
                         </NotificationCard>
-                        <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF" />
+                        <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
+                                      IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
+                        <ComboBox Name="ComboBox">
+                            <ComboBoxItem Content="这是一个 1" />
+                            <ComboBoxItem Content="这是一个 2" />
+                            <ComboBoxItem Content="这是一个 3" />
+                            <ComboBoxItem Content="这是一个 4" />
+                            <ComboBoxItem Content="这是一个 5" />
+                            <ComboBoxItem Content="这是一个 6" />
+                            <ComboBoxItem Content="这是一个 7" />
+                            <ComboBoxItem Content="这是一个 8" />
+                            <ComboBoxItem Content="这是一个 9" />
+                            <ComboBoxItem Content="这是一个 0" />
+                        </ComboBox>
+                        <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                            <TextBlock Text="Make it REAL" />
+                        </CheckBox>
                     </StackPanel>
                 </husk:Card>
             </TabItem>
