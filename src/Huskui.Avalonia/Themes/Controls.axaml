@@ -4,6 +4,9 @@
         <ResourceInclude Source="/Controls/AppWindow.axaml" />
         <ResourceInclude Source="/Controls/Button.axaml" />
         <ResourceInclude Source="/Controls/Card.axaml" />
+        <ResourceInclude Source="/Controls/CheckBox.axaml" />
+        <ResourceInclude Source="/Controls/ComboBox.axaml" />
+        <ResourceInclude Source="/Controls/ComboBoxItem.axaml" />
         <ResourceInclude Source="/Controls/Dialog.axaml" />
         <ResourceInclude Source="/Controls/Divider.axaml" />
         <ResourceInclude Source="/Controls/DropZone.axaml" />
@@ -12,6 +15,7 @@
         <ResourceInclude Source="/Controls/ListBox.axaml" />
         <ResourceInclude Source="/Controls/ListBoxItem.axaml" />
         <ResourceInclude Source="/Controls/Page.axaml" />
+        <ResourceInclude Source="/Controls/PopupRoot.axaml" />
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
         <ResourceInclude Source="/Controls/StepControl.axaml" />
         <ResourceInclude Source="/Controls/StepItem.axaml" />

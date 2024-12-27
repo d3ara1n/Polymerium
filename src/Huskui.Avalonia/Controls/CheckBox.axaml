@@ -1,0 +1,127 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+    <Design.PreviewWith>
+        <Panel Background="White">
+            <StackPanel Margin="24" Spacing="12">
+                <CheckBox>
+                    <TextBlock Text="Check or Not" />
+                </CheckBox>
+                <CheckBox IsEnabled="False">
+                    <TextBlock Text="Not" />
+                </CheckBox>
+                <CheckBox IsChecked="True">
+                    <TextBlock Text="Checked" />
+                </CheckBox>
+                <CheckBox IsThreeState="True" IsChecked="{x:Null}">
+                    <TextBlock Text="Or Maybe?" />
+                </CheckBox>
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="{x:Type CheckBox}" TargetType="CheckBox">
+        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="Auto,6,*" Background="Transparent">
+                    <Border Grid.Column="0" Name="Box"
+                            Width="20"
+                            Height="20"
+                            VerticalAlignment="Center"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background" Easing="SineEaseOut"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                        <Panel>
+                            <fi:SymbolIcon Name="Indeterminate" Symbol="LineHorizontal1"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           Foreground="{TemplateBinding Foreground}" Opacity="0">
+                                <fi:SymbolIcon.Transitions>
+                                    <Transitions>
+                                        <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                                       Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    </Transitions>
+                                </fi:SymbolIcon.Transitions>
+                            </fi:SymbolIcon>
+                            <fi:SymbolIcon Name="Determinate" Symbol="Checkmark" FontSize="{TemplateBinding FontSize}"
+                                           Foreground="{TemplateBinding Foreground}" Opacity="0">
+                                <fi:SymbolIcon.Transitions>
+                                    <Transitions>
+                                        <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                                       Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    </Transitions>
+                                </fi:SymbolIcon.Transitions>
+                            </fi:SymbolIcon>
+                        </Panel>
+                    </Border>
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                      Grid.Column="2"
+                                      Margin="{TemplateBinding Padding}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      IsVisible="{TemplateBinding Content,
+                                                        Converter={x:Static ObjectConverters.IsNotNull}}"
+                                      RecognizesAccessKey="True"
+                                      TextElement.Foreground="{TemplateBinding Foreground}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:checked">
+            <Style Selector="^ /template/ Border#Box">
+                <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            </Style>
+
+            <Style Selector="^ /template/ fi|SymbolIcon#Determinate">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:unchecked">
+            <Style Selector="^:pointerover">
+                <Style Selector="^ /template/ Border#Box">
+                    <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
+                </Style>
+            </Style>
+        </Style>
+
+        <Style Selector="^:indeterminate">
+            <Style Selector="^ /template/ Border#Box">
+                <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            </Style>
+
+            <Style Selector="^ /template/ fi|SymbolIcon#Indeterminate">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:disabled /template/ Border#Box">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+    </ControlTheme>
+</ResourceDictionary>

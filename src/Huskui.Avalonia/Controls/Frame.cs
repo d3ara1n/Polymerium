@@ -4,14 +4,13 @@ using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
-using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 
 namespace Huskui.Avalonia.Controls;
 
 [TemplatePart(PART_ContentPresenter, typeof(ContentPresenter))]
 [TemplatePart(PART_ContentPresenter2, typeof(ContentPresenter))]
-public class Frame : TemplatedControl
+public class Frame : ContentControl
 {
     public delegate object? PageActivatorDelegate(Type page, object? parameter);
 
@@ -38,16 +37,18 @@ public class Frame : TemplatedControl
         set => SetAndRaise(CanGoBackOutOfStackProperty, ref _canGoBackOutOfStack, value);
     }
 
-    public static readonly DirectProperty<Frame, object?> ContentProperty =
-        AvaloniaProperty.RegisterDirect<Frame, object?>(nameof(Content), o => o.Content, (o, v) => o.Content = v);
+    // public static readonly StyledProperty<object?> ContentProperty =
+    //     ContentControl.ContentProperty.AddOwner<Frame>();
+    //
+    // [Content]
+    // public object? Content
+    // {
+    //     get => GetValue(ContentProperty);
+    //     set => SetValue(ContentProperty, value);
+    // }
 
-    private object? _content;
+    protected override Type StyleKeyOverride => typeof(Frame);
 
-    public object? Content
-    {
-        get => _content;
-        set => SetAndRaise(ContentProperty, ref _content, value);
-    }
 
     private readonly InternalGoBackCommand _goBackCommand;
 
@@ -122,7 +123,6 @@ public class Frame : TemplatedControl
 
     private void UpdateContent(object? content, IPageTransition transition, bool reverse)
     {
-        Content = content;
         _current = new ValueTuple<object?, IPageTransition, bool>(content, transition, reverse);
         _doubleArrangeSafeLock = true;
         InvalidateArrange();
@@ -144,7 +144,6 @@ public class Frame : TemplatedControl
 
             var (from, to) = _presenter.Content is not null ? (_presenter, _presenter2) : (_presenter2, _presenter);
 
-
             (from.ZIndex, to.ZIndex) = (0, 1);
             (from.IsVisible, to.IsVisible) = (true, true);
             to.Content = _current.Value.Content;
@@ -156,6 +155,9 @@ public class Frame : TemplatedControl
                     {
                         from.Content = null;
                         (from.IsVisible, to.IsVisible) = (false, true);
+                        // NOTE: ContentControl.Content 改变会移除 from.Content 自 LogicalChildren，这会导致 from.Content 的 DynamicResource 全部失效
+                        // 因此要放在动画结束 from 退出时对 Content 进行设置
+                        Content = to.Content;
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -163,12 +165,29 @@ public class Frame : TemplatedControl
         return rv;
     }
 
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    protected override bool RegisterContentPresenter(ContentPresenter presenter)
     {
-        base.OnApplyTemplate(e);
-        _presenter = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter);
-        _presenter2 = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter2);
+        if (presenter.Name == PART_ContentPresenter)
+        {
+            _presenter = presenter;
+            return true;
+        }
+
+        if (presenter.Name == PART_ContentPresenter2)
+        {
+            _presenter2 = presenter;
+            return true;
+        }
+
+        return false;
     }
+
+    // protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    // {
+    //     base.OnApplyTemplate(e);
+    //     _presenter = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter);
+    //     _presenter2 = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter2);
+    // }
 
     public record FrameFrame(Type Page, object? Parameter, IPageTransition? Transition);
 

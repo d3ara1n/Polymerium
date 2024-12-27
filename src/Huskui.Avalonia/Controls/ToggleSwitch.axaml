@@ -19,7 +19,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CornerRadius" Value="99" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="KnobTransitions">
             <Transitions>
                 <DoubleTransition
@@ -31,18 +31,13 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid RowDefinitions="Auto,*">
-
                     <ContentPresenter Grid.Row="0" Name="PART_ContentPresenter"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       RecognizesAccessKey="True" />
-
-                    <Grid Grid.Row="1"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Top" ColumnDefinitions="Auto,6,Auto">
-
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto,6,Auto">
                         <ContentPresenter Name="PART_OffContentPresenter"
                                           Grid.Column="2"
                                           Content="{TemplateBinding OffContent}"

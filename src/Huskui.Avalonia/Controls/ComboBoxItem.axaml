@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme x:Key="{x:Type ComboBoxItem}" TargetType="ComboBoxItem">
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="Border" CornerRadius="{TemplateBinding CornerRadius}"
+                        ClipToBounds="{TemplateBinding ClipToBounds}" Margin="2"
+                        Background="{TemplateBinding Background}" BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition Property="Background" Easing="SineEaseOut"
+                                             Duration="{StaticResource ControlFastestAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                      Padding="{TemplateBinding Padding}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" RenderTransform="{x:Null}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <ContentPresenter.Transitions>
+                            <Transitions>
+                                <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                               Duration="{StaticResource ControlFastestAnimationDuration}" />
+                            </Transitions>
+                        </ContentPresenter.Transitions>
+                    </ContentPresenter>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover:not(:selected)">
+            <Style Selector="^ /template/ Border#Border">
+                <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:not(:selected) /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="RenderTransform" Value="translateX(8px)" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:selected /template/ Border#Border">
+            <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+
+
+        <Style Selector="^:disabled /template/ Border#Border">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

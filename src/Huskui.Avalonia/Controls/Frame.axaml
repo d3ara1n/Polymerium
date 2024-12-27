@@ -5,23 +5,24 @@
     <ControlTheme x:Key="{x:Type local:Frame}" TargetType="local:Frame">
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                       VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                    <ContentPresenter Name="{x:Static local:Frame.PART_ContentPresenter}" IsVisible="False"
-                                      Background="{TemplateBinding Background}"
-                                      BorderBrush="{TemplateBinding BorderBrush}"
-                                      BorderThickness="{TemplateBinding BorderThickness}"
-                                      Padding="{TemplateBinding Padding}"
-                                      CornerRadius="{TemplateBinding CornerRadius}"
-                                      BackgroundSizing="{TemplateBinding BackgroundSizing}" />
-                    <ContentPresenter Name="{x:Static local:Frame.PART_ContentPresenter2}"
-                                      Background="{TemplateBinding Background}"
-                                      BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                                      BorderBrush="{TemplateBinding BorderBrush}"
-                                      BorderThickness="{TemplateBinding BorderThickness}"
-                                      Padding="{TemplateBinding Padding}"
-                                      CornerRadius="{TemplateBinding CornerRadius}" />
-                </Panel>
+                <Border HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                        Background="{TemplateBinding Background}" BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="{TemplateBinding ClipToBounds}">
+                    <Panel>
+                        <ContentPresenter Name="{x:Static local:Frame.PART_ContentPresenter}" IsVisible="False"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Padding="{TemplateBinding Padding}" />
+                        <ContentPresenter Name="{x:Static local:Frame.PART_ContentPresenter2}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Padding="{TemplateBinding Padding}" />
+                    </Panel>
+                </Border>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

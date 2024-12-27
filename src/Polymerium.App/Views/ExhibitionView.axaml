@@ -4,8 +4,55 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:controls="using:Polymerium.App.Controls"
+           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-           x:DataType="vm:ExhibitionViewModel" Header="ExhibitionView"
+           x:DataType="vm:ExhibitionViewModel" Header="ExhibitionView" Padding="0"
            x:Class="Polymerium.App.Views.ExhibitionView">
+    <ScrollViewer>
+        <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="12">
+            <husk:Card BorderBrush="Transparent" Background="{DynamicResource ControlBackgroundBrush}">
+                <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
+                      Margin="64,64">
+                    <TextBox Grid.Column="0" Watermark="Search modpacks with the keywords in..." />
+                    <ComboBox Grid.Column="2" SelectedIndex="0">
+                        <ComboBoxItem Content="CurseForge" />
+                    </ComboBox>
+                    <Button Grid.Column="4" Classes="Primary" Content="Search" />
+                </Grid>
+            </husk:Card>
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
+                    <ComboBox SelectedIndex="0">
+                        <ComboBoxItem>
+                            <StackPanel Orientation="Horizontal">
+                                <icons:PackIconLucide Kind="Tag" />
+                                <TextBlock Text="1.20.1" />
+                            </StackPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox SelectedIndex="0">
+                        <ComboBoxItem>
+                            <StackPanel Orientation="Horizontal">
+                                <icons:PackIconLucide Kind="Tractor" />
+                                <TextBlock Text="NeoForge" />
+                            </StackPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
+
+                    <ComboBox SelectedIndex="0">
+                        <ComboBoxItem>
+                            <StackPanel Orientation="Horizontal">
+                                <icons:PackIconLucide Kind="Shuffle" />
+                                <TextBlock Text="Popular" />
+                            </StackPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+            <ListBox />
+        </StackPanel>
+    </ScrollViewer>
 </husk:Page>

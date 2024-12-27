@@ -6,14 +6,19 @@
     <sys:TimeSpan x:Key="ControlFastestAnimationDuration">0:0:0.106</sys:TimeSpan>
     <sys:TimeSpan x:Key="ControlFasterAnimationDuration">0:0:0.197</sys:TimeSpan>
     <sys:TimeSpan x:Key="ControlNormalAnimationDuration">0:0:0.304</sys:TimeSpan>
-    
+
     <!-- Float Layers Opacity -->
     <sys:Double x:Key="Overlay1Opacity">0.2</sys:Double>
     <sys:Double x:Key="Overlay2Opacity">0.4</sys:Double>
     <sys:Double x:Key="Overlay3Opacity">0.6</sys:Double>
     <sys:Double x:Key="OverlayFullOpacity">1.0</sys:Double>
     <sys:Double x:Key="ControlDimOpacity">0.5</sys:Double>
-    
-    <CornerRadius x:Key="ControlCornerRadius">3</CornerRadius>
+
+    <CornerRadius x:Key="ExtraSmallCornerRadius">1</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
+    <CornerRadius x:Key="MediumCornerRadius">6</CornerRadius>
+    <CornerRadius x:Key="LargeCornerRadius">8</CornerRadius>
+    <CornerRadius x:Key="ExtraLargeCornerRadius">12</CornerRadius>
+
     <!-- <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius> -->
 </ResourceDictionary>

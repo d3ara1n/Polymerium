@@ -1,0 +1,43 @@
+﻿<controls:ScopedPage xmlns="https://github.com/avaloniaui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                     xmlns:controls="using:Polymerium.App.Controls"
+                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     x:Class="Polymerium.App.Views.CreateInstanceView">
+    <controls:ScopedPage.Header>
+        <DockPanel>
+            <Button DockPanel.Dock="Right" Classes="Primary" Content="Next" />
+            <TextBlock Text="Create Empty Instance" Theme="{StaticResource PageHeaderTextBlockTheme}" />
+        </DockPanel>
+    </controls:ScopedPage.Header>
+    <Grid ColumnDefinitions="Auto,32,*" Margin="32">
+        <Grid Grid.Column="0" Margin="24">
+            <husk:Card Width="108" Height="108" BorderBrush="Transparent" Padding="8"
+                       Background="{DynamicResource Layer0BackgroundBrush}">
+                <husk:Card.Effect>
+                    <DropShadowEffect Opacity="0.1" />
+                </husk:Card.Effect>
+                <Panel>
+                    <Rectangle Stroke="{DynamicResource ControlBorderBrush}" StrokeThickness="3"
+                               StrokeDashArray="4,2" />
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" RowDefinitions="Auto,4,*">
+                        <icons:PackIconLucide Kind="Image" Grid.Row="0"
+                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock Text="Thumbnail" Grid.Row="2"
+                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    </Grid>
+                </Panel>
+            </husk:Card>
+        </Grid>
+        <StackPanel Grid.Column="2" VerticalAlignment="Center" MinWidth="164">
+            <TextBlock Text="Name" />
+            <TextBox Watermark="1.20.1" />
+            <TextBlock Text="Version" />
+            <TextBox Watermark="1.20.1" />
+        </StackPanel>
+    </Grid>
+</controls:ScopedPage>

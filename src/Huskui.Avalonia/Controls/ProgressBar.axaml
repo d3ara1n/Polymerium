@@ -53,7 +53,7 @@
     <ControlTheme x:Key="{x:Type ProgressBar}" TargetType="ProgressBar">
         <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource SmallCornerRadius}" />
         <Setter Property="TextBlock.FontSize" Value="{StaticResource SmallFontSize}" />
         <Setter Property="ProgressTextFormat" Value="{}{0:0}%" />
         <Setter Property="Template">
@@ -68,7 +68,7 @@
                         <Popup Name="PART_Popup" IsOpen="{TemplateBinding ShowProgressText}">
                             <Border Background="{DynamicResource Card1BackgroundBrush}"
                                     BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
-                                    CornerRadius="{StaticResource ControlCornerRadius}" Padding="4,0" Margin="6">
+                                    CornerRadius="{StaticResource SmallCornerRadius}" Padding="4,0" Margin="6">
                                 <TextBlock
                                     FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Center">
                                     <TextBlock.Text>

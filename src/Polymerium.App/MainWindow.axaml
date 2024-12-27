@@ -10,8 +10,8 @@
                 xmlns:controls="using:Polymerium.App.Controls"
                 xmlns:ursa="https://irihi.tech/ursa"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                ExtendClientAreaTitleBarHeightHint="44"
                 x:Class="Polymerium.App.MainWindow" x:DataType="local:MainWindow"
-                PointerPressed="Window_OnPointerPressed" DoubleTapped="Window_OnDoubleTapped"
                 Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="960">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -55,7 +55,8 @@
                             </Button>
                         </ursa:ButtonGroup>
                     </StackPanel>
-                    <StackPanel x:Name="Titlebar" Margin="9,12,12,0" Spacing="6" Orientation="Horizontal">
+                    <StackPanel x:Name="Titlebar" Margin="9,12,12,0" Spacing="6" Orientation="Horizontal"
+                                IsHitTestVisible="False">
                         <StackPanel.Effect>
                             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
                         </StackPanel.Effect>
@@ -75,7 +76,7 @@
                         </StackPanel>
                     </Button>
                     <Button Grid.Row="0" Grid.Column="4" Height="48" Width="48"
-                            Click="NavigationButton_OnClick"
+                            Click="NavigationButton_OnClick" Tag="CreateInstanceView"
                             Theme="{StaticResource OutlineButtonTheme}">
                         <icons:PackIconLucide Kind="PackagePlus" Width="18" />
                     </Button>

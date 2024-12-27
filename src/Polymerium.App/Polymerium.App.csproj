@@ -31,7 +31,6 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0"/>
-        <PackageReference Include="Samboy063.Tomlet" Version="5.4.0"/>
     </ItemGroup>
 
     <ItemGroup>

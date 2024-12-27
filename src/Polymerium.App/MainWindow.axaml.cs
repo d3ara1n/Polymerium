@@ -4,7 +4,6 @@ using System.Windows.Input;
 using Avalonia.Animation;
 using Avalonia.Collections;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Input;
@@ -12,7 +11,6 @@ using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using Polymerium.Trident.Utilities;
 
 namespace Polymerium.App;
 
@@ -96,6 +94,7 @@ public partial class MainWindow : AppWindow
             {
                 Button { Tag: "ExhibitionView" } => (typeof(ExhibitionView), null),
                 Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
+                Button { Tag: "CreateInstanceView" } => (typeof(CreateInstanceView), null),
                 _ => (typeof(PageNotReachedView), null)
             };
             _navigate?.Invoke(target.Page, target.Parameter, null);
@@ -196,25 +195,5 @@ public partial class MainWindow : AppWindow
         Close();
         e.Handled = true;
     }
-
-    private void Window_OnPointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        BeginMoveDrag(e);
-    }
-
-    private void Window_OnDoubleTapped(object? sender, TappedEventArgs e)
-    {
-        if (e.Pointer.Captured is null)
-            switch (WindowState)
-            {
-                case WindowState.Maximized:
-                    WindowState = WindowState.Normal;
-                    break;
-                case WindowState.Normal:
-                    WindowState = WindowState.Maximized;
-                    break;
-            }
-    }
-
     #endregion
 }
