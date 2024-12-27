@@ -2,6 +2,8 @@
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Polymerium.Trident.Accounts;
 using Polymerium.Trident.Helpers;
 using Polymerium.Trident.Services;
@@ -32,8 +34,8 @@ public sealed partial class MicrosoftAccountWizardModal
 
     // Using a DependencyProperty as the backing store for FaceUrl.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty FaceUrlProperty =
-        DependencyProperty.Register(nameof(FaceUrl), typeof(string), typeof(MicrosoftAccountWizardModal),
-            new PropertyMetadata(string.Empty));
+        DependencyProperty.Register(nameof(FaceUrl), typeof(ImageSource), typeof(MicrosoftAccountWizardModal),
+            new PropertyMetadata(null));
 
 
     private readonly AccountManager _accountManager;
@@ -60,9 +62,9 @@ public sealed partial class MicrosoftAccountWizardModal
         set => SetValue(UsernameProperty, value);
     }
 
-    public string FaceUrl
+    public ImageSource? FaceUrl
     {
-        get => (string)GetValue(FaceUrlProperty);
+        get => (ImageSource?)GetValue(FaceUrlProperty);
         set => SetValue(FaceUrlProperty, value);
     }
 
@@ -94,7 +96,7 @@ public sealed partial class MicrosoftAccountWizardModal
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     // TODO: set AccountModel, ask for finish, then _accountManager.Append(account);
-                    FaceUrl = $"https://starlightskins.lunareclipse.studio/render/pixel/{result.Uuid}/face";
+                    FaceUrl = new BitmapImage(new Uri($"https://starlightskins.lunareclipse.studio/render/pixel/{result.Uuid}/face", UriKind.Absolute));
                     Username = result.Username;
                     VisualStateManager.GoToState(this, "Shown", true);
                 });

@@ -91,7 +91,7 @@
                     </NavigationViewItem>
                 </NavigationView.MenuItems>
                 <NavigationView.FooterMenuItems>
-                    <NavigationViewItem Tag="TASKS">
+                    <NavigationViewItem Tag="TASKS_NOT_AVAILABLE">
                         <NavigationViewItem.Icon>
                             <ImageIcon Source="/Assets/Icons/Hourglass done.svg" />
                         </NavigationViewItem.Icon>
