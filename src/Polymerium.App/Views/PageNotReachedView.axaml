@@ -1,12 +1,12 @@
-﻿<controls:ScopedPage xmlns="https://github.com/avaloniaui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:controls="using:Polymerium.App.Controls"
-                     xmlns:vm="using:Polymerium.App.ViewModels"
-                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Header="Page Cannot Be Reached"
-                     Padding="0" x:DataType="vm:PageNotReachedViewModel"
-                     x:Class="Polymerium.App.Views.PageNotReachedView">
+﻿<husk:Page xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:vm="using:Polymerium.App.ViewModels"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Header="Page Cannot Be Reached"
+           x:DataType="vm:PageNotReachedViewModel"
+           x:Class="Polymerium.App.Views.PageNotReachedView">
     <StackPanel VerticalAlignment="Center">
         <StackPanel.Effect>
             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
@@ -17,4 +17,4 @@
                    FontWeight="Bold"
                    TextWrapping="WrapWithOverflow" />
     </StackPanel>
-</controls:ScopedPage>
+</husk:Page>

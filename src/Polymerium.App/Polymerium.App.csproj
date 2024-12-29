@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -31,6 +31,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0"/>
+        <PackageReference Include="Semver" Version="3.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -40,6 +41,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Huskui.Avalonia.Markdown\Huskui.Avalonia.Markdown.csproj"/>
         <ProjectReference Include="..\Huskui.Avalonia\Huskui.Avalonia.csproj"/>
         <ProjectReference Include="..\Polymerium.Trident\Polymerium.Trident.csproj"/>
     </ItemGroup>

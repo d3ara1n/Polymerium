@@ -5,6 +5,8 @@ namespace Trident.Abstractions.Repositories;
 
 public interface IRepository
 {
+    string Label { get; }
+    Task<RepositoryStatus> CheckStatusAsync();
     Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter);
     Task<Project> QueryAsync(string? @namespace, string name);
     Task<Package> ResolveAsync(string? @namespace, string name, string? version, Filter filter);

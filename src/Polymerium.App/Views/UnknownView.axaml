@@ -90,6 +90,7 @@
                     <TextBlock x:Name="Block" FontSize="13" />
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Baz" />
         </TabControl>
     </StackPanel>
 </husk:Page>

@@ -7,4 +7,8 @@
         <LangVersion>default</LangVersion>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Huskui.Avalonia\Huskui.Avalonia.csproj"/>
+    </ItemGroup>
+
 </Project>

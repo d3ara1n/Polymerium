@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.Trident.Utilities;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
 
@@ -14,8 +15,8 @@ public partial class InstanceBasicModel : ModelBase
 
     [ObservableProperty] private string _name;
     [ObservableProperty] private string _version;
-    [ObservableProperty] private string _loaderLabel;
-    [ObservableProperty] private string _sourceLabel;
+    [ObservableProperty] private string _loaderLabel = "Vanilla";
+    [ObservableProperty] private string _sourceLabel = "local";
     [ObservableProperty] private Bitmap _thumbnail;
 
     private string? _source;
@@ -27,13 +28,9 @@ public partial class InstanceBasicModel : ModelBase
         {
             SetProperty(ref _source, value);
             if (!string.IsNullOrEmpty(value) &&
-                PurlHelper.TryParse(value, out var result))
+                PackageHelper.TryParse(value, out var result))
             {
                 SourceLabel = result.Label;
-            }
-            else
-            {
-                SourceLabel = "local";
             }
         }
     }

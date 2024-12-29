@@ -1,4 +1,6 @@
-﻿namespace Trident.Abstractions.Repositories.Resources;
+﻿using Trident.Abstractions.Utilities;
+
+namespace Trident.Abstractions.Repositories.Resources;
 
 public record Package(
     string Label,
@@ -19,4 +21,10 @@ public record Package(
     string? Hash,
     Requirement Requirements,
     IEnumerable<Dependency> Dependencies
-);
+)
+{
+    public override string ToString()
+    {
+        return PackageHelper.ToPurl(this);
+    }
+}
