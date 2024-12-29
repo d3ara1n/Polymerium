@@ -1,7 +1,7 @@
-﻿using Avalonia;
+﻿using System.Diagnostics;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
-using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Interactivity;
@@ -12,7 +12,6 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":loading", ":finished", ":failed")]
 public class Page : HeaderedContentControl
 {
-
     public static readonly DirectProperty<Page, bool> CanGoBackProperty =
         Frame.CanGoBackProperty.AddOwner<Page>(o => o.CanGoBack, (o, v) => o.CanGoBack = v,
             defaultBindingMode: BindingMode.OneWay);
@@ -52,6 +51,8 @@ public class Page : HeaderedContentControl
                 async () => { await Model.InitializeAsync(Dispatcher.UIThread, cancellationTokenSource.Token); },
                 cancellationTokenSource.Token).ContinueWith(t =>
             {
+                Debug.WriteLine("Navigate to page {0} with [Faulted, Cancelled] = [{1}, {2}]", GetType(), t.IsFaulted,
+                    t.IsCanceled);
                 if (t.IsCompletedSuccessfully)
                     Dispatcher.UIThread.Post(() => SetState(false, true));
                 else if (t.IsCanceled)

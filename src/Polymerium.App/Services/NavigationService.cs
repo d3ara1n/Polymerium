@@ -22,13 +22,17 @@ public class NavigationService(IServiceProvider provider)
         try
         {
             _handler?.Invoke(page, parameter, transition ?? (page.IsAssignableTo(typeof(ScopedPage))
-                ? new PageCoverOverTransition(TimeSpan.FromMilliseconds(197), DirectionFrom.Right)
-                : new PopUpTransition(TimeSpan.FromMilliseconds(197))));
+                ? new PageCoverOverTransition(null, DirectionFrom.Right)
+                : new PopUpTransition()));
         }
         catch (NavigationFailedException ex)
         {
             _handler?.Invoke(typeof(PageNotReachedView), ex.Message,
                 new PageCoverOverTransition(null, DirectionFrom.Right));
+        }
+        catch (Exception ex)
+        {
+            _handler?.Invoke(typeof(ExceptionView), ex, new PopUpTransition());
         }
     }
 

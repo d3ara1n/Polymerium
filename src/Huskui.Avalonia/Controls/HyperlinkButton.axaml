@@ -15,7 +15,7 @@
     <ControlTheme TargetType="HyperlinkButton" x:Key="{x:Type HyperlinkButton}">
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="BorderThickness" Value="0,0,0,2" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Cursor" Value="Hand" />
@@ -30,14 +30,16 @@
                                                            Duration="{StaticResource ControlFastestAnimationDuration}" />
                         </Transitions>
                     </Panel.Transitions>
-                    <Border Name="PART_Underline" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0"
+                    <Border Name="PART_Underline" BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}" VerticalAlignment="Bottom"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             Width="{Binding #PART_ContentPresenter.Bounds.Width}">
                         <Border.Transitions>
                             <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFastestAnimationDuration}" />
+                                <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
+                                                 Duration="{StaticResource ControlFastestAnimationDuration}" />
+                                <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                               Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -51,8 +53,13 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover:not(:pressed) /template/ Border#PART_Underline">
-            <Setter Property="Opacity" Value="1.0" />
+        <Style Selector="^:pointerover/template/ Border#PART_Underline">
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            <Setter Property="RenderTransform" Value="scaleY(2)" />
+        </Style>
+
+        <Style Selector="^:pressed/template/ Border#PART_Underline">
+            <Setter Property="RenderTransform" Value="scaleY(0.0)" />
         </Style>
 
         <Style Selector="^:pressed /template/ Panel#PART_Container">

@@ -56,7 +56,7 @@
                                                FontSize="{StaticResource SmallFontSize}"
                                                FontWeight="Bold" />
                                 </Border>
-                                <TextBlock Text="{Binding Basic.Name}" FontSize="36" />
+                                <TextBlock Text="{Binding Basic.Name,FallbackValue=Name}" FontSize="36" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                         Spacing="8">
@@ -83,7 +83,9 @@
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Packages"
                                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
                                            FontWeight="Bold" />
-                                <TextBlock Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Text="1336" FontSize="24" />
+                                <TextBlock Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"
+                                           Text="{Binding PackageCount,FallbackValue=114514}"
+                                           FontSize="24" />
                                 <Button Grid.Row="2" Grid.Column="2" Command="{Binding GotoSetupViewCommand}">
                                     <TextBlock Text="Manage →" />
                                 </Button>
@@ -95,7 +97,8 @@
                                     <icons:PackIconLucide Kind="FlameKindling" />
                                     <TextBlock Text="Type" FontWeight="Bold" />
                                 </StackPanel>
-                                <TextBlock Grid.Row="1" Text="{Binding Basic.LoaderLabel}" HorizontalAlignment="Right"
+                                <TextBlock Grid.Row="1" Text="{Binding Basic.LoaderLabel,FallbackValue=Vanilla}"
+                                           HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom" Margin="16,0,0,0"
                                            FontSize="20" />
                             </Grid>
@@ -106,7 +109,8 @@
                                     <icons:PackIconLucide Kind="Compass" />
                                     <TextBlock Text="Version" FontWeight="Bold" />
                                 </StackPanel>
-                                <TextBlock Grid.Row="1" Text="{Binding Basic.Version}" HorizontalAlignment="Right"
+                                <TextBlock Grid.Row="1" Text="{Binding Basic.Version,FallbackValue=24w13a}"
+                                           HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom" Margin="16,0,0,0"
                                            FontSize="20" />
                             </Grid>

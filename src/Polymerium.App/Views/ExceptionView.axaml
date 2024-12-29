@@ -1,0 +1,20 @@
+﻿<husk:Page xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:vm="using:Polymerium.App.ViewModels" Padding="0"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Header="Died, but not dead..."
+           x:Class="Polymerium.App.Views.ExceptionView" x:DataType="vm:ExceptionViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="8" Margin="{StaticResource PageContentMargin}">
+            <TextBlock Text="It seems something went wrong..." FontSize="{StaticResource ExtraLargeFontSize}"
+                       TextWrapping="Wrap" />
+            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+            <Border Background="{DynamicResource ControlBackgroundBrush}"
+                    CornerRadius="{StaticResource SmallCornerRadius}">
+                <TextBlock Text="{Binding StackTrace}" Margin="12" TextWrapping="Wrap" />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</husk:Page>

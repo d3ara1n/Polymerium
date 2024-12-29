@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Extensions;
 using Polymerium.App.Services;
+using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
 
 namespace Polymerium.App;
@@ -16,8 +17,10 @@ public static class Startup
 
         // Trident
         services
+            .AddCurseForge()
             .AddSingleton<ProfileService>()
             .AddSingleton<RepositoryAgent>();
+        
 
         // App
         services

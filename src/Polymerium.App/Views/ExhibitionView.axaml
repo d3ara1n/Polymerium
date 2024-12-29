@@ -6,53 +6,75 @@
            xmlns:controls="using:Polymerium.App.Controls"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
+           xmlns:m="using:Polymerium.App.Models"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:DataType="vm:ExhibitionViewModel" Header="ExhibitionView" Padding="0"
            x:Class="Polymerium.App.Views.ExhibitionView">
-    <ScrollViewer>
-        <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="12">
-            <husk:Card BorderBrush="Transparent" Background="{DynamicResource ControlBackgroundBrush}">
-                <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
-                      Margin="64,64">
-                    <TextBox Grid.Column="0" Watermark="Search modpacks with the keywords in..." />
-                    <ComboBox Grid.Column="2" SelectedIndex="0">
-                        <ComboBoxItem Content="CurseForge" />
-                    </ComboBox>
-                    <Button Grid.Column="4" Classes="Primary" Content="Search" />
-                </Grid>
-            </husk:Card>
-            <Grid ColumnDefinitions="*,Auto">
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
-                    <ComboBox SelectedIndex="0">
-                        <ComboBoxItem>
-                            <StackPanel Orientation="Horizontal">
-                                <icons:PackIconLucide Kind="Tag" />
-                                <TextBlock Text="1.20.1" />
-                            </StackPanel>
-                        </ComboBoxItem>
-                    </ComboBox>
-                    <ComboBox SelectedIndex="0">
-                        <ComboBoxItem>
-                            <StackPanel Orientation="Horizontal">
-                                <icons:PackIconLucide Kind="Tractor" />
-                                <TextBlock Text="NeoForge" />
-                            </StackPanel>
-                        </ComboBoxItem>
-                    </ComboBox>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
-
-                    <ComboBox SelectedIndex="0">
-                        <ComboBoxItem>
-                            <StackPanel Orientation="Horizontal">
-                                <icons:PackIconLucide Kind="Shuffle" />
+    <Panel>
+        <ScrollViewer>
+            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="12">
+                <husk:Card BorderBrush="Transparent" Background="{DynamicResource ControlBackgroundBrush}">
+                    <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
+                          Margin="64,64">
+                        <TextBox Grid.Column="0" Watermark="Search modpacks with the keywords in..." />
+                        <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
+                                  SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="m:RepositoryBaiscModel">
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="4" Classes="Primary" Content="Search" />
+                    </Grid>
+                </husk:Card>
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
+                        <ComboBox ItemsSource="{Binding SelectedRepository.Versions}"
+                                  SelectedItem="{Binding FilteredVersion,Mode=TwoWay}" PlaceholderText="Version">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="x:String">
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox ItemsSource="{Binding SelectedRepository.Loaders}"
+                                  SelectedItem="{Binding FilteredLoader,Mode=TwoWay}" PlaceholderText="Loader">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="m:LoaderDisplayModel">
+                                    <TextBlock Text="{Binding DisplayName}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                        <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
+                            <TextBlock Text="Clear Filters" />
+                        </HyperlinkButton>
+                        <ComboBox SelectedIndex="0">
+                            <ComboBoxItem>
                                 <TextBlock Text="Popular" />
-                            </StackPanel>
-                        </ComboBoxItem>
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-            <ListBox />
-        </StackPanel>
-    </ScrollViewer>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Latest" />
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+                <ListBox />
+            </StackPanel>
+        </ScrollViewer>
+        <Border Name="LoadingStage" Background="{DynamicResource Layer7BackgroundBrush}">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" Text="Downloading basic information..." />
+                <ProgressBar IsIndeterminate="True" Margin="128,8" />
+            </StackPanel>
+        </Border>
+    </Panel>
+
+    <husk:Page.Styles>
+        <Style Selector=":finished Border#LoadingStage">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </husk:Page.Styles>
 </husk:Page>

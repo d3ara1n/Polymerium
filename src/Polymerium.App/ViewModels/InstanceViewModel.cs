@@ -32,6 +32,7 @@ public partial class InstanceViewModel : ViewModelBase
     [ObservableProperty] private Bitmap _screenshot;
     [ObservableProperty] private Uri? _sourceUrl;
     [ObservableProperty] private InstanceLaunchBarModel _launchBarModel;
+    [ObservableProperty] private int _packageCount;
 
     #endregion
 
@@ -92,6 +93,7 @@ public partial class InstanceViewModel : ViewModelBase
                     ? new Bitmap(screenshotPath)
                     : new Bitmap(AssetUriIndex.WALLPAPER_IMAGE);
                 LaunchBarModel = new InstanceLaunchBarModel();
+                PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
             }
             else
             {

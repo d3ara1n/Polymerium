@@ -3,6 +3,7 @@
         <File Path="README.md"/>
         <File Path=".gitignore"/>
     </Folder>
+    <Project Path="src\Huskui.Avalonia.Markdown\Huskui.Avalonia.Markdown.csproj" Type="Classic C#"/>
     <Project Path="src\Huskui.Avalonia\Huskui.Avalonia.csproj" Type="Classic C#"/>
     <Project Path="src\Polymerium.App\Polymerium.App.csproj" Type="Classic C#"/>
     <Project Path="src\Polymerium.Trident\Polymerium.Trident.csproj" Type="Classic C#"/>

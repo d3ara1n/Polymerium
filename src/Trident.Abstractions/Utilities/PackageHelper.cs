@@ -1,11 +1,12 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Text;
 using System.Text.RegularExpressions;
+using Trident.Abstractions.Repositories.Resources;
 
-namespace Polymerium.Trident.Utilities;
+namespace Trident.Abstractions.Utilities;
 
-public static class PurlHelper
+public static class PackageHelper
 {
-    private static Regex PATTERN =
+    private static readonly Regex PATTERN =
         new(
             "^(?<label>[a-zA-Z0-9._-]+):((?<namespace>[a-zA-Z0-9._-]+)/)?(?<identity>[a-zA-Z0-9._-]+)(@(?<version>[a-zA-Z0-9._-]+))?$");
 
@@ -25,5 +26,31 @@ public static class PurlHelper
 
         result = default;
         return false;
+    }
+
+    public static string ToPurl(string label, string? @namespace, string identity, string? version)
+    {
+        var sb = new StringBuilder();
+        sb.Append(label);
+        sb.Append(':');
+        if (@namespace != null)
+        {
+            sb.Append(@namespace);
+            sb.Append('/');
+        }
+
+        sb.Append(identity);
+        if (version != null)
+        {
+            sb.Append('@');
+            sb.Append(version);
+        }
+
+        return sb.ToString();
+    }
+
+    public static string ToPurl(Package package)
+    {
+        return ToPurl(package.Label, package.Namespace, package.ProjectId, package.VersionId);
     }
 }
