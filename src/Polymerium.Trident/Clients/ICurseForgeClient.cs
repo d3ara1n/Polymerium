@@ -14,5 +14,6 @@ public interface ICurseForgeClient
 
     [Get("/v1/mods/search")]
     Task<SearchResponse<ModModel>> SearchMods(string searchFilter, uint? classId, string? gameVersion,
-        ModLoaderTypeModel? modLoaderType, uint index = 0, uint pageSize = 50, uint gameId = CurseForgeService.GAME_ID);
+        ModLoaderTypeModel? modLoaderType, string sortOrder = "desc", uint index = 0, uint pageSize = 50,
+        uint gameId = CurseForgeService.GAME_ID);
 }

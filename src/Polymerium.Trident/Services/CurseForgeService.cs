@@ -45,12 +45,41 @@ public class CurseForgeService(ICurseForgeClient client)
         };
     }
 
+    public ResourceKind? ClassIdToResourceKind(uint? classId)
+    {
+        return classId switch
+        {
+            CLASSID_MODPACK => ResourceKind.Modpack,
+            CLASSID_MOD => ResourceKind.Mod,
+            CLASSID_RESOURCEPACK => ResourceKind.ResourcePack,
+            CLASSID_SHADERPACK => ResourceKind.ShaderPack,
+            _ => null
+        };
+    }
+
+    public static string ResourceKindToUrlKind(ResourceKind? kind)
+    {
+        return kind switch
+        {
+            ResourceKind.Modpack => "modpacks",
+            ResourceKind.Mod => "mc-mods",
+            ResourceKind.World => "worlds",
+            ResourceKind.ResourcePack => "texture-packs",
+            ResourceKind.ShaderPack => "shaders",
+            ResourceKind.DataPack => "data-packs",
+            _ => "unknown"
+        };
+    }
 
     public Exhibit ModModelToExhibit(ModModel model)
     {
         return new Exhibit(LABEL, null, model.Id.ToString(), model.Name, model.Logo.ThumbnailUrl,
-            string.Join(',', model.Authors.Select(x => x.Name)), model.Summary, model.DownloadCount, model.DateCreated,
-            model.DateModified);
+            model.Authors.Select(x => x.Name).FirstOrDefault() ?? "Somebody", model.Summary,
+            model.DownloadCount,
+            model.Categories.Select(x => x.Name).ToList(),
+            model.Links.WebsiteUrl ??
+            new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(model.ClassId)))),
+            model.DateCreated, model.DateModified);
     }
 
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
@@ -66,6 +95,6 @@ public class CurseForgeService(ICurseForgeClient client)
     public async Task<SearchResponse<ModModel>> SearchAsync(string searchFilter, uint? classId,
         string? gameVersion, ModLoaderTypeModel? modLoader, uint index = 0, uint pageSize = 50)
     {
-        return await client.SearchMods(searchFilter, classId, gameVersion, modLoader, index, pageSize);
+        return await client.SearchMods(searchFilter, classId, gameVersion, modLoader, index: index, pageSize: pageSize);
     }
 }

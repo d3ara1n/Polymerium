@@ -9,5 +9,7 @@ public record Exhibit(
     string Author,
     string Summary,
     ulong DownloadCount,
+    IReadOnlyList<string> Tags,
+    Uri Reference,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt);

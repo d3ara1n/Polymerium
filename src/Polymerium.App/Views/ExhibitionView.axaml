@@ -13,7 +13,7 @@
            x:Class="Polymerium.App.Views.ExhibitionView">
     <Panel>
         <Grid RowDefinitions="Auto,0,*">
-            <StackPanel Grid.Row="0" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="12">
+            <StackPanel Grid.Row="0" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="6">
                 <husk:Card BorderBrush="Transparent" Background="{DynamicResource ControlBackgroundBrush}">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="12">
@@ -65,14 +65,14 @@
                         <husk:ProgressRing IsVisible="{Binding Exhibits.IsFetching,FallbackValue=False}" Height="18"
                                            Width="18" StrokeWidth="3" IsIndeterminate="True" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
                         <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
                             <TextBlock Text="Clear Filters" />
                         </HyperlinkButton>
                     </StackPanel>
                 </Grid>
             </StackPanel>
-            <husk:InfiniteScrollView Grid.Row="2" ItemsSource="{Binding Exhibits}">
+            <husk:InfiniteScrollView Grid.Row="2" Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}">
                 <husk:InfiniteScrollView.PendingContent>
                     <StackPanel Margin="36" Spacing="6">
                         <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
@@ -80,6 +80,92 @@
                         <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
+                <husk:InfiniteScrollView.ItemTemplate>
+                    <DataTemplate x:DataType="m:ExhibitModel">
+                        <husk:Card Margin="8,4" Height="118">
+                            <Grid RowDefinitions="*,6,Auto,6,Auto" ColumnDefinitions="Auto,8,*,8,Auto">
+                                <Border Grid.Row="0" Grid.Column="0"
+                                        CornerRadius="{StaticResource MediumCornerRadius}"
+                                        Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=Self}}">
+                                    <Border.Background>
+                                        <ImageBrush Stretch="UniformToFill" Source="{Binding Thumbnail}" />
+                                    </Border.Background>
+                                </Border>
+                                <StackPanel Grid.Row="0" Grid.Column="2">
+                                    <TextBlock Text="{Binding Name}" FontSize="{StaticResource LargeFontSize}"
+                                               FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Summary}" MaxLines="2" TextWrapping="Wrap"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="4" Spacing="4">
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
+                                        <icons:PackIconLucide Kind="CircleUser" Height="12" VerticalAlignment="Center"
+                                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock Text="{Binding Author}"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <icons:PackIconLucide Kind="CircleArrowDown" Height="12"
+                                                              VerticalAlignment="Center"
+                                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock Text="{Binding Downloads}"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <icons:PackIconLucide Kind="Clock"
+                                                              Height="12" VerticalAlignment="Center"
+                                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock Text="{Binding UpdatedAt}"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <husk:Divider Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" />
+                                <DockPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5">
+                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4">
+                                        <Button Classes="Primary Small">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <icons:PackIconLucide Kind="Download"
+                                                                      Height="10" Width="10" VerticalAlignment="Center" />
+                                                <TextBlock Text="Install" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="Small">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <icons:PackIconLucide Kind="ExternalLink"
+                                                                      Height="10" Width="10" VerticalAlignment="Center" />
+                                                <TextBlock Text="Details" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="Small">
+                                            <Button.Flyout>
+                                                <MenuFlyout>
+                                                    <MenuItem Header="Open" />
+                                                </MenuFlyout>
+                                            </Button.Flyout>
+                                            <icons:PackIconLucide Kind="Ellipsis" Height="8" Width="10"
+                                                                  VerticalAlignment="Center" />
+                                        </Button>
+                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Tags}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <husk:Tag Margin="4">
+                                                    <TextBlock Text="{Binding}"
+                                                               FontSize="{StaticResource SmallFontSize}" />
+                                                </husk:Tag>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DockPanel>
+                            </Grid>
+                        </husk:Card>
+                    </DataTemplate>
+                </husk:InfiniteScrollView.ItemTemplate>
             </husk:InfiniteScrollView>
         </Grid>
         <Border Name="LoadingStage" Background="{DynamicResource Layer7BackgroundBrush}">

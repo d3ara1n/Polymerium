@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -28,6 +29,7 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        CultureInfo.CurrentUICulture = new CultureInfo("en-US");
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             desktop.MainWindow = ConstructWindow();
 
