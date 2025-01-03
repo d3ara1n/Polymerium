@@ -1,10 +1,12 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fi="using:FluentIcons.Avalonia">
     <ControlTheme x:Key="{x:Type ComboBoxItem}" TargetType="ComboBoxItem">
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="Padding" Value="12,8" />
         <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="Border" CornerRadius="{TemplateBinding CornerRadius}"
@@ -17,18 +19,25 @@
                                              Duration="{StaticResource ControlFastestAnimationDuration}" />
                         </Transitions>
                     </Border.Transitions>
-                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
-                                      Padding="{TemplateBinding Padding}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}" RenderTransform="{x:Null}"
-                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                        <ContentPresenter.Transitions>
-                            <Transitions>
-                                <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
-                                                               Duration="{StaticResource ControlFastestAnimationDuration}" />
-                            </Transitions>
-                        </ContentPresenter.Transitions>
-                    </ContentPresenter>
+                    <Panel>
+                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                          Padding="{TemplateBinding Padding}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          RenderTransform="{x:Null}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter.Transitions>
+                                <Transitions>
+                                    <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                                   Duration="{StaticResource ControlFastestAnimationDuration}" />
+                                </Transitions>
+                            </ContentPresenter.Transitions>
+                        </ContentPresenter>
+                        <fi:SymbolIcon Name="Mark" Symbol="Checkmark" FontSize="{TemplateBinding FontSize}"
+                                       Margin="12,0"
+                                       HorizontalAlignment="Right" VerticalAlignment="Center" IsVisible="False"
+                                       Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                    </Panel>
                 </Border>
             </ControlTemplate>
         </Setter>
@@ -47,6 +56,10 @@
             <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="CornerRadius" Value="0" />
+        </Style>
+
+        <Style Selector="^:selected /template/ fi|SymbolIcon#Mark">
+            <Setter Property="IsVisible" Value="True" />
         </Style>
 
 

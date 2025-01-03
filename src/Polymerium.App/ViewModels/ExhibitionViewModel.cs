@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.Trident.Services;
+using Refit;
 using Semver;
+using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.ViewModels;
@@ -23,6 +29,7 @@ public partial class ExhibitionViewModel : ViewModelBase
     [ObservableProperty] private RepositoryBaiscModel _selectedRepository;
     [ObservableProperty] private string? _filteredVersion;
     [ObservableProperty] private LoaderDisplayModel? _filteredLoader;
+    [ObservableProperty] private InfiniteCollection<Exhibit>? _exhibits;
 
     #endregion
 
@@ -33,6 +40,42 @@ public partial class ExhibitionViewModel : ViewModelBase
     {
         FilteredLoader = null;
         FilteredVersion = null;
+    }
+
+    [RelayCommand]
+    private async Task Search(string query)
+    {
+        try
+        {
+            var handle = await _agent.SearchAsync(SelectedRepository.Label, query,
+                new Filter(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
+            var source = new InfiniteCollection<Exhibit>(i =>
+            {
+                handle.PageIndex = (uint)(i < 0 ? 0 : i);
+                try
+                {
+                    var rv = handle.FetchAsync();
+                    return rv;
+                }
+                catch (ApiException ex)
+                {
+                    // TODO: pop notification
+                    Debug.WriteLine(ex);
+                }
+
+                return Task.FromResult(Enumerable.Empty<Exhibit>());
+            });
+            Exhibits = source;
+        }
+        catch (ApiException ex)
+        {
+            // TODO: pop notification
+            Debug.WriteLine(ex);
+        }
+        catch (NotImplementedException ex)
+        {
+            Debug.WriteLine(ex);
+        }
     }
 
     #endregion

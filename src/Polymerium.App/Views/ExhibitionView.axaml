@@ -25,7 +25,7 @@
                         </StackPanel>
                         <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
                               Margin="64,0,64,12">
-                            <TextBox Grid.Column="0" Watermark="With the keywords in..." />
+                            <TextBox x:Name="QueryBox" Grid.Column="0" Watermark="With the keywords in..." />
                             <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
                                       SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
                                 <ComboBox.ItemTemplate>
@@ -34,7 +34,8 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button Grid.Column="4" Classes="Primary" Content="Search" />
+                            <Button Grid.Column="4" Classes="Primary" Content="Search"
+                                    Command="{Binding SearchCommand}" CommandParameter="{Binding #QueryBox.Text}" />
                         </Grid>
                     </StackPanel>
                 </husk:Card>
@@ -56,6 +57,13 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                        <TextBlock VerticalAlignment="Center">
+                            <Run Text="(Results:" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
+                            <Run Text=")" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                        </TextBlock>
+                        <husk:ProgressRing IsVisible="{Binding Exhibits.IsFetching,FallbackValue=False}" Height="18"
+                                           Width="18" StrokeWidth="3" IsIndeterminate="True" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
                         <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
@@ -64,64 +72,23 @@
                     </StackPanel>
                 </Grid>
             </StackPanel>
-            <husk:InfiniteScrollView Grid.Row="2" Height="256">
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
-                <ListBoxItem />
+            <husk:InfiniteScrollView Grid.Row="2" ItemsSource="{Binding Exhibits}">
+                <husk:InfiniteScrollView.PendingContent>
+                    <StackPanel Margin="36" Spacing="6">
+                        <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
+                                           HorizontalAlignment="Center" />
+                        <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
+                    </StackPanel>
+                </husk:InfiniteScrollView.PendingContent>
             </husk:InfiniteScrollView>
         </Grid>
         <Border Name="LoadingStage" Background="{DynamicResource Layer7BackgroundBrush}">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock HorizontalAlignment="Center" Text="Downloading basic information..." />
-                <ProgressBar IsIndeterminate="True" Margin="128,8" />
-            </StackPanel>
+            <Panel Background="{DynamicResource LayerSolidBackgroundBrush}" VerticalAlignment="Center">
+                <StackPanel Margin="48">
+                    <TextBlock HorizontalAlignment="Center" Text="Downloading basic information..." />
+                    <ProgressBar IsIndeterminate="True" Margin="128,8" />
+                </StackPanel>
+            </Panel>
         </Border>
     </Panel>
 

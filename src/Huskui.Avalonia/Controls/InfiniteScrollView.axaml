@@ -21,15 +21,25 @@
                                   VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}"
                                   VerticalSnapPointsType="{TemplateBinding (ScrollViewer.VerticalSnapPointsType)}"
                                   HorizontalSnapPointsType="{TemplateBinding (ScrollViewer.HorizontalSnapPointsType)}">
-                        <ItemsPresenter
-                            Margin="{TemplateBinding Padding}"
-                            ItemsPanel="{TemplateBinding ItemsPanel}" />
+                        <StackPanel Margin="{TemplateBinding Padding}">
+                            <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                            <Border Name="Container">
+                                <ContentPresenter Name="{x:Static local:InfiniteScrollView.PART_PendingPresenter}"
+                                                  Content="{TemplateBinding PendingContent}" IsVisible="False"
+                                                  ContentTemplate="{TemplateBinding PendingContentTemplate}" />
+                            </Border>
+                        </StackPanel>
                     </ScrollViewer>
                 </Border>
             </ControlTemplate>
         </Setter>
+
         <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+        <Style Selector="^:finished /template/ Border#Container">
+            <Setter Property="IsVisible" Value="False" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

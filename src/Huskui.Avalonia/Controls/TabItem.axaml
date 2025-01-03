@@ -44,11 +44,12 @@
     <ControlTheme x:Key="{x:Type TabItem}" TargetType="TabItem">
         <Setter Property="Padding" Value="10,6" />
         <Setter Property="Margin" Value="2" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel Background="Transparent">
+                <Panel Background="{TemplateBinding Background}">
                     <Border Name="PART_Overlay" Background="{DynamicResource ControlAccentBackgroundBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}" Opacity="0.5">
                         <Border.OpacityMask>
