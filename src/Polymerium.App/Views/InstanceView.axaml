@@ -5,6 +5,7 @@
                      xmlns:vm="using:Polymerium.App.ViewModels"
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                     xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
                      xmlns:controls="using:Polymerium.App.Controls"
                      mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600" x:DataType="vm:InstanceViewModel"
                      Padding="0"
@@ -127,7 +128,7 @@
                             </Grid>
                         </husk:Card>
                     </Grid>
-                    <husk:Card Height="204">
+                    <husk:Card Height="224">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*" />
@@ -137,12 +138,12 @@
                                 <ColumnDefinition Width="*" MinWidth="220" MaxWidth="320" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0" RowDefinitions="Auto,12,*">
-                                <TextBlock Grid.Row="0" DockPanel.Dock="Left" Text="Statistics" FontWeight="Bold"
+                                <TextBlock Grid.Row="0" DockPanel.Dock="Left" Text="Stats" FontWeight="Bold"
                                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                 <husk:Card Grid.Row="2" BorderThickness="0"
                                            Background="{DynamicResource ControlBackgroundBrush}">
-                                    <TextBlock Text="(Daily Play Time Chart)" VerticalAlignment="Center"
-                                               HorizontalAlignment="Center" />
+                                    <lvc:CartesianChart Series="{Binding StatsChartSeries}"
+                                                        XAxes="{Binding StatsChartXAxes}" />
                                 </husk:Card>
                             </Grid>
                             <husk:Divider Grid.Column="2" Orientation="Vertical" />

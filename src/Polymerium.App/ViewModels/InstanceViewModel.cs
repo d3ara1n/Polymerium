@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 using Polymerium.App.Assets;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
@@ -26,13 +29,15 @@ public partial class InstanceViewModel : ViewModelBase
 
     #endregion
 
-    #region Models
+    #region Rectives Models
 
     [ObservableProperty] private InstanceBasicModel _basic;
     [ObservableProperty] private Bitmap _screenshot;
     [ObservableProperty] private Uri? _sourceUrl;
     [ObservableProperty] private InstanceLaunchBarModel _launchBarModel;
     [ObservableProperty] private int _packageCount;
+    [ObservableProperty] private IEnumerable<ISeries<double>> _statsChartSeries;
+    [ObservableProperty] private IEnumerable<Axis> _statsChartXAxes;
 
     #endregion
 
@@ -94,6 +99,21 @@ public partial class InstanceViewModel : ViewModelBase
                     : new Bitmap(AssetUriIndex.WALLPAPER_IMAGE);
                 LaunchBarModel = new InstanceLaunchBarModel();
                 PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
+                StatsChartSeries =
+                [
+                    new ColumnSeries<double>
+                    {
+                        Name = "Daily Playing Hours",
+                        Values = [11, 4, 5, 14, 19, 1, 9]
+                    }
+                ];
+                StatsChartXAxes =
+                [
+                    new Axis
+                    {
+                        Labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Yesterday", "Today"]
+                    }
+                ];
             }
             else
             {

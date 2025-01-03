@@ -8,7 +8,7 @@ namespace Polymerium.Trident.Repositories;
 
 public class CurseForgeRepository(CurseForgeService service) : IRepository
 {
-    public string Label { get; } = CurseForgeService.NAME.ToLower();
+    public string Label { get; } = CurseForgeService.LABEL;
 
     public async Task<RepositoryStatus> CheckStatusAsync()
     {
@@ -19,9 +19,18 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         ], versions);
     }
 
-    public Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
+    public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
     {
-        throw new NotImplementedException();
+        var first = await service.SearchAsync(query, service.ResourceKindToClassId(filter.Kind), filter.Version,
+            service.LoaderIdToType(filter.Loader));
+        var initial = first.Data.Select(service.ModModelToExhibit);
+        return new PaginationHandle<Exhibit>(initial, 50, first.Pagination.TotalCount, async index =>
+        {
+            var rv = await service.SearchAsync(query, service.ResourceKindToClassId(filter.Kind), filter.Version,
+                service.LoaderIdToType(filter.Loader), index);
+            var exhibits = rv.Data.Select(service.ModModelToExhibit).ToList();
+            return exhibits;
+        });
     }
 
     public Task<Project> QueryAsync(string? @namespace, string name)

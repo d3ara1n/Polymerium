@@ -4,29 +4,39 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:controls="using:Polymerium.App.Controls"
+           xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:m="using:Polymerium.App.Models"
-           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-           x:DataType="vm:ExhibitionViewModel" Header="ExhibitionView" Padding="0"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
+           x:DataType="vm:ExhibitionViewModel" Padding="0"
            x:Class="Polymerium.App.Views.ExhibitionView">
     <Panel>
-        <ScrollViewer>
-            <StackPanel Margin="{StaticResource PageContentMargin}" Spacing="12">
+        <Grid RowDefinitions="Auto,0,*">
+            <StackPanel Grid.Row="0" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="12">
                 <husk:Card BorderBrush="Transparent" Background="{DynamicResource ControlBackgroundBrush}">
-                    <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
-                          Margin="64,64">
-                        <TextBox Grid.Column="0" Watermark="Search modpacks with the keywords in..." />
-                        <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
-                                  SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="m:RepositoryBaiscModel">
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Button Grid.Column="4" Classes="Primary" Content="Search" />
-                    </Grid>
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Button Theme="{StaticResource OutlineButtonTheme}">
+                                <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
+                            </Button>
+                            <TextBlock Text="Search modpacks" FontSize="{StaticResource LargeFontSize}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
+                              Margin="64,0,64,12">
+                            <TextBox Grid.Column="0" Watermark="With the keywords in..." />
+                            <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
+                                      SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate DataType="m:RepositoryBaiscModel">
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Grid.Column="4" Classes="Primary" Content="Search" />
+                        </Grid>
+                    </StackPanel>
                 </husk:Card>
                 <Grid ColumnDefinitions="*,Auto">
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
@@ -51,19 +61,62 @@
                         <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
                             <TextBlock Text="Clear Filters" />
                         </HyperlinkButton>
-                        <ComboBox SelectedIndex="0">
-                            <ComboBoxItem>
-                                <TextBlock Text="Popular" />
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="Latest" />
-                            </ComboBoxItem>
-                        </ComboBox>
                     </StackPanel>
                 </Grid>
-                <ListBox />
             </StackPanel>
-        </ScrollViewer>
+            <husk:InfiniteScrollView Grid.Row="2" Height="256">
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+                <ListBoxItem />
+            </husk:InfiniteScrollView>
+        </Grid>
         <Border Name="LoadingStage" Background="{DynamicResource Layer7BackgroundBrush}">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center" Text="Downloading basic information..." />

@@ -43,7 +43,7 @@ public partial class ExhibitionViewModel : ViewModelBase
         // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBaiscModel(x, x switch
         {
-            "curseforge" => "CurseForge",
+            CurseForgeService.LABEL => "CurseForge",
             _ => x
         })).ToList();
         Repositories = r;
