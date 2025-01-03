@@ -35,6 +35,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel
@@ -121,6 +122,11 @@
         </Style>
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+        <Style Selector="^.Small">
+            <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+            <Setter Property="Padding" Value="10,6" />
         </Style>
     </ControlTheme>
 

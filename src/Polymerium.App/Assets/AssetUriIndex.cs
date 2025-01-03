@@ -2,7 +2,7 @@
 
 public static class AssetUriIndex
 {
-    public const string DIRT_IMAGE = "avares://Assets/Images/Placeholders/Dirt.png";
+    public const string DIRT_IMAGE = "avares://Polymerium.App/Assets/Images/Placeholders/Dirt.png";
 
-    public const string WALLPAPER_IMAGE = "avares://Assets/Images/Wallpaper.png";
+    public const string WALLPAPER_IMAGE = "avares://Polymerium.App/Assets/Images/Wallpaper.png";
 }

@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -22,6 +24,7 @@ namespace Polymerium.App.ViewModels;
 public partial class ExhibitionViewModel : ViewModelBase
 {
     private readonly RepositoryAgent _agent;
+    private readonly IHttpClientFactory _factory;
     public IEnumerable<RepositoryBaiscModel> Repositories { get; }
 
     #region Reactive Properties
@@ -29,7 +32,7 @@ public partial class ExhibitionViewModel : ViewModelBase
     [ObservableProperty] private RepositoryBaiscModel _selectedRepository;
     [ObservableProperty] private string? _filteredVersion;
     [ObservableProperty] private LoaderDisplayModel? _filteredLoader;
-    [ObservableProperty] private InfiniteCollection<Exhibit>? _exhibits;
+    [ObservableProperty] private InfiniteCollection<ExhibitModel>? _exhibits;
 
     #endregion
 
@@ -49,13 +52,31 @@ public partial class ExhibitionViewModel : ViewModelBase
         {
             var handle = await _agent.SearchAsync(SelectedRepository.Label, query,
                 new Filter(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
-            var source = new InfiniteCollection<Exhibit>(i =>
+            var source = new InfiniteCollection<ExhibitModel>(async i =>
             {
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
                 try
                 {
-                    var rv = handle.FetchAsync();
-                    return rv;
+                    var rv = await handle.FetchAsync();
+                    var tasks = rv.Select(async x =>
+                    {
+                        Bitmap? thumbnail = null;
+                        if (x.Thumbnail is { IsAbsoluteUri: true })
+                        {
+                            using var client = _factory.CreateClient();
+                            var data = await client.GetByteArrayAsync(x.Thumbnail.AbsoluteUri);
+                            thumbnail = new Bitmap(new MemoryStream(data));
+                        }
+                        else
+                        {
+                            Debug.WriteLine(x.Thumbnail);
+                        }
+
+                        return new ExhibitModel(x.Label, x.Namespace, x.Pid, x.Name, x.Summary,
+                            thumbnail, x.Author, x.Tags, x.UpdatedAt, x.DownloadCount, x.Reference);
+                    }).ToArray();
+                    await Task.WhenAll(tasks);
+                    return tasks.Select(x => x.Result);
                 }
                 catch (ApiException ex)
                 {
@@ -63,7 +84,7 @@ public partial class ExhibitionViewModel : ViewModelBase
                     Debug.WriteLine(ex);
                 }
 
-                return Task.FromResult(Enumerable.Empty<Exhibit>());
+                return Enumerable.Empty<ExhibitModel>();
             });
             Exhibits = source;
         }
@@ -72,17 +93,14 @@ public partial class ExhibitionViewModel : ViewModelBase
             // TODO: pop notification
             Debug.WriteLine(ex);
         }
-        catch (NotImplementedException ex)
-        {
-            Debug.WriteLine(ex);
-        }
     }
 
     #endregion
 
-    public ExhibitionViewModel(RepositoryAgent agent)
+    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory)
     {
         _agent = agent;
+        _factory = factory;
         // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBaiscModel(x, x switch
         {
