@@ -14,6 +14,7 @@ using Huskui.Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
+using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 
 namespace Polymerium.App;
@@ -30,13 +31,21 @@ public class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             desktop.MainWindow = ConstructWindow();
 
-        AppDomain.CurrentDomain.UnhandledException += (_, e) => Dump(e.ExceptionObject);
-        TaskScheduler.UnobservedTaskException += (_, e) => Dump(e.Exception);
-        Dispatcher.UIThread.UnhandledException += (_, e) => Dump(e.Exception);
+        AppDomain.CurrentDomain.UnhandledException += (_, e) => ShowOrDump(e.ExceptionObject, e.IsTerminating);
+        TaskScheduler.UnobservedTaskException += (_, e) => ShowOrDump(e.Exception, !e.Observed);
+        Dispatcher.UIThread.UnhandledException += (_, e) => ShowOrDump(e.Exception, !e.Handled);
 
         base.OnFrameworkInitializationCompleted();
     }
 
+
+    private static void ShowOrDump(object core, bool critical = false)
+    {
+        if (core is Exception ex && !critical && Program.AppHost?.Services.GetService<NavigationService>() is
+                { } navigation)
+            navigation.Navigate<ExceptionView>(ex);
+        else Dump(core);
+    }
 
     private static void Dump(object core)
     {
@@ -98,6 +107,7 @@ public class App : Application
             var window = new MainWindow();
 
             #region Navigation
+
             // Link navigation service
             var navigation = Program.AppHost.Services.GetRequiredService<NavigationService>();
             // Closure captures Program.AppHost.Services

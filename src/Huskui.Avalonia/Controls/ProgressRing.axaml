@@ -1,0 +1,171 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
+    <Design.PreviewWith>
+        <Grid ColumnDefinitions="*,12,*" Background="White">
+            <StackPanel Grid.Column="0" Width="128" Margin="32" VerticalAlignment="Center">
+                <local:ProgressRing Value="50"
+                                    ShowProgressText="True">
+                    <local:ProgressRing.Styles>
+                        <Style Selector="local|ProgressRing">
+                            <Style.Animations>
+                                <Animation Duration="0:0:3" IterationCount="Infinite" Easing="QuadraticEaseOut">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="Value" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="50%">
+                                        <Setter Property="Value" Value="100" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="Value" Value="0" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                    </local:ProgressRing.Styles>
+                </local:ProgressRing>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Height="128" Margin="32" Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <local:ProgressRing Value="50" IsIndeterminate="True"
+                                    ShowProgressText="True" />
+            </StackPanel>
+        </Grid>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="{x:Type local:ProgressRing}" TargetType="local:ProgressRing">
+        <Setter Property="Height" Value="64" />
+        <Setter Property="Width" Value="64" />
+        <Setter Property="StrokeWidth" Value="6" />
+        <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="ProgressTextFormat" Value="{}{1:0}%" />
+        <Setter Property="ShowProgressText" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Name="Container">
+                    <Arc Name="Track" Width="{TemplateBinding Width}"
+                         Height="{TemplateBinding Height}"
+                         StartAngle="0"
+                         Stretch="None"
+                         Stroke="{TemplateBinding Background}"
+                         StrokeThickness="{TemplateBinding StrokeWidth}"
+                         SweepAngle="360" />
+                    <Panel Name="Indeterminate">
+                        <Arc Name="Runner"
+                             Opacity="0.5"
+                             Width="{TemplateBinding Width}"
+                             Height="{TemplateBinding Height}"
+                             Stretch="None"
+                             StartAngle="-90"
+                             Stroke="{DynamicResource ControlAccentBackgroundBrush}"
+                             StrokeThickness="{TemplateBinding StrokeWidth}" />
+                        <Arc Name="Chaser"
+                             Opacity="1.0"
+                             Width="{TemplateBinding Width}"
+                             Height="{TemplateBinding Height}"
+                             Stretch="None"
+                             StartAngle="-90"
+                             Stroke="{DynamicResource ControlAccentBackgroundBrush}"
+                             StrokeThickness="{TemplateBinding StrokeWidth}" />
+                    </Panel>
+                    <Panel Name="Determinate">
+                        <Arc Name="{x:Static local:ProgressRing.PART_Indicator}"
+                             Width="{TemplateBinding Width}"
+                             Height="{TemplateBinding Height}"
+                             Stretch="None"
+                             StartAngle="-90"
+                             Stroke="{DynamicResource ControlAccentBackgroundBrush}"
+                             StrokeThickness="{TemplateBinding StrokeWidth}" />
+                    </Panel>
+                    <TextBlock Name="PercentageText" FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Center"
+                               VerticalAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{x:Static huskc:InternalConverters.StringFormat}">
+                                <TemplateBinding Property="ProgressTextFormat" />
+                                <Binding Path="Value"
+                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                <TemplateBinding Property="Percentage" />
+                                <TemplateBinding Property="Minimum" />
+                                <TemplateBinding Property="Maximum" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:disabled /template/ Panel#Container">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+        <Style Selector="^:indeterminate">
+            <Style Selector="^ /template/ Panel#Determinate">
+                <Setter Property="Opacity" Value="0.0" />
+            </Style>
+            <Style Selector="^ /template/ Panel#Indeterminate">
+                <Setter Property="Opacity" Value="1.0" />
+            </Style>
+            <Style Selector="^ /template/ TextBlock#PercentageText">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+
+            <Style Selector="^ /template/ Arc#Runner">
+                <Style.Animations>
+                    <Animation Duration="0:0:3" IterationCount="Infinite">
+                        <KeyFrame Cue="0%">
+                            <Setter Property="StartAngle"
+                                    Value="-60" />
+                        </KeyFrame>
+                        <KeyFrame Cue="100%">
+                            <Setter Property="StartAngle"
+                                    Value="300" />
+                        </KeyFrame>
+                    </Animation>
+                    <Animation Duration="0:0:3.5" IterationCount="Infinite">
+                        <KeyFrame Cue="0%">
+                            <Setter Property="SweepAngle"
+                                    Value="45" />
+                        </KeyFrame>
+                        <KeyFrame Cue="50%">
+                            <Setter Property="SweepAngle"
+                                    Value="180" />
+                        </KeyFrame>
+                        <KeyFrame Cue="100%">
+                            <Setter Property="SweepAngle"
+                                    Value="45" />
+                        </KeyFrame>
+                    </Animation>
+                </Style.Animations>
+            </Style>
+            <Style Selector="^ /template/ Arc#Chaser">
+                <Style.Animations>
+                    <Animation Duration="0:0:1.5" IterationCount="Infinite">
+                        <KeyFrame Cue="0%">
+                            <Setter Property="StartAngle"
+                                    Value="-60" />
+                        </KeyFrame>
+                        <KeyFrame Cue="100%">
+                            <Setter Property="StartAngle"
+                                    Value="300" />
+                        </KeyFrame>
+                    </Animation>
+                    <Animation Duration="0:0:2" IterationCount="Infinite">
+                        <KeyFrame Cue="0%">
+                            <Setter Property="SweepAngle"
+                                    Value="180" />
+                        </KeyFrame>
+                        <KeyFrame Cue="50%">
+                            <Setter Property="SweepAngle"
+                                    Value="45" />
+                        </KeyFrame>
+                        <KeyFrame Cue="100%">
+                            <Setter Property="SweepAngle"
+                                    Value="180" />
+                        </KeyFrame>
+                    </Animation>
+                </Style.Animations>
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

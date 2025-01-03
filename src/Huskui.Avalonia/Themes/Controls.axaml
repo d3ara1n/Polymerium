@@ -22,6 +22,7 @@
         <ResourceInclude Source="/Controls/Page.axaml" />
         <ResourceInclude Source="/Controls/PopupRoot.axaml" />
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
+        <ResourceInclude Source="/Controls/ProgressRing.axaml" />
         <ResourceInclude Source="/Controls/StepControl.axaml" />
         <ResourceInclude Source="/Controls/StepItem.axaml" />
         <ResourceInclude Source="/Controls/TabControl.axaml" />

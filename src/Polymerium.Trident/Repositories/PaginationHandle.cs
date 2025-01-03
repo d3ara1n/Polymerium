@@ -9,7 +9,7 @@ public class PaginationHandle<T>(
     Func<uint, Task<IEnumerable<T>>> next) : IPaginationHandle<T>
 {
     private IEnumerable<T> _currentItems = initial;
-    private readonly uint _currentPage = 0;
+    private uint _currentPage;
 
     public async Task<IEnumerable<T>> FetchAsync()
     {
@@ -18,6 +18,7 @@ public class PaginationHandle<T>(
         var rv = await next(PageIndex);
         var currentItems = rv as T[] ?? rv.ToArray();
         _currentItems = currentItems;
+        _currentPage = PageIndex;
         return currentItems;
     }
 

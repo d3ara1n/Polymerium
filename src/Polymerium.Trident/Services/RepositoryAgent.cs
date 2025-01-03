@@ -1,4 +1,5 @@
 ﻿using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.Trident.Services;
 
@@ -14,11 +15,21 @@ public class RepositoryAgent
         _repositories = repositories.ToDictionary(repository => repository.Label);
     }
 
-    public async Task<RepositoryStatus> CheckStatusAsync(string label)
+    private IRepository Redirect(string label)
     {
         if (_repositories.TryGetValue(label, out var repository))
-            return await repository.CheckStatusAsync();
+            return repository;
 
         throw new KeyNotFoundException($"{label} is not a listed repository label or not found");
+    }
+
+    public Task<RepositoryStatus> CheckStatusAsync(string label)
+    {
+        return Redirect(label).CheckStatusAsync();
+    }
+
+    public Task<IPaginationHandle<Exhibit>> SearchAsync(string label, string query, Filter filter)
+    {
+        return Redirect(label).SearchAsync(query, filter);
     }
 }

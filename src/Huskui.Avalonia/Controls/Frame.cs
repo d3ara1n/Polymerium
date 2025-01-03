@@ -37,16 +37,6 @@ public class Frame : ContentControl
         set => SetAndRaise(CanGoBackOutOfStackProperty, ref _canGoBackOutOfStack, value);
     }
 
-    // public static readonly StyledProperty<object?> ContentProperty =
-    //     ContentControl.ContentProperty.AddOwner<Frame>();
-    //
-    // [Content]
-    // public object? Content
-    // {
-    //     get => GetValue(ContentProperty);
-    //     set => SetValue(ContentProperty, value);
-    // }
-
 
     private readonly InternalGoBackCommand _goBackCommand;
 
