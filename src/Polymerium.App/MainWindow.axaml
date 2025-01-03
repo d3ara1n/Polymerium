@@ -12,11 +12,11 @@
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 ExtendClientAreaTitleBarHeightHint="44"
                 x:Class="Polymerium.App.MainWindow" x:DataType="local:MainWindow"
-                Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="960">
+                Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="1024">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*" />
-            <ColumnDefinition Width="3*" MaxWidth="400" MinWidth="200" />
+            <ColumnDefinition Width="83*" />
+            <ColumnDefinition Width="27*" MaxWidth="400" MinWidth="200" />
         </Grid.ColumnDefinitions>
         <Panel Grid.Column="0">
             <StackPanel Opacity="{Binding #Root.Content, Converter={x:Static huskc:OpacityConverters.IsNull}}"

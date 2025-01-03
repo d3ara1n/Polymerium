@@ -47,8 +47,6 @@ public class Frame : ContentControl
     //     set => SetValue(ContentProperty, value);
     // }
 
-    protected override Type StyleKeyOverride => typeof(Frame);
-
 
     private readonly InternalGoBackCommand _goBackCommand;
 

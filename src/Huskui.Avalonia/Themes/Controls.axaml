@@ -12,6 +12,7 @@
         <ResourceInclude Source="/Controls/DropZone.axaml" />
         <ResourceInclude Source="/Controls/Frame.axaml" />
         <ResourceInclude Source="/Controls/HyperlinkButton.axaml" />
+        <ResourceInclude Source="/Controls/InfiniteScrollView.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
         <ResourceInclude Source="/Controls/ListBoxItem.axaml" />
         <ResourceInclude Source="/Controls/NotificationHost.axaml" />

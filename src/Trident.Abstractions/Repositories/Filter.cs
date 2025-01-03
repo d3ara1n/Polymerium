@@ -2,4 +2,4 @@
 
 namespace Trident.Abstractions.Repositories;
 
-public record Filter(string? Version, string? ModLoader, ResourceKind? Kind);
+public record Filter(string? Version, string? Loader, ResourceKind? Kind);

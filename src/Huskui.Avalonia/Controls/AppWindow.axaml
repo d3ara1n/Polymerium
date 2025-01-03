@@ -34,7 +34,7 @@
                         <VisualLayerManager.ChromeOverlayLayer>
                             <TitleBar />
                         </VisualLayerManager.ChromeOverlayLayer>
-                        <Panel>
+                        <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
                             <ContentPresenter
                                 Name="{x:Static local:AppWindow.PART_ContentPresenter}"
                                 Margin="{TemplateBinding Padding}"
