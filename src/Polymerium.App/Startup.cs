@@ -13,14 +13,15 @@ public static class Startup
     {
         services
             .AddAvalonia()
-            .AddLogging();
+            .AddLogging()
+            .AddMemoryCache();
 
         // Trident
         services
             .AddCurseForge()
             .AddSingleton<ProfileService>()
             .AddSingleton<RepositoryAgent>();
-        
+
 
         // App
         services

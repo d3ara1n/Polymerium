@@ -22,6 +22,7 @@
         <PackageReference Include="IconPacks.Avalonia.Lucide" Version="1.0.0"/>
         <PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.7.0"/>
         <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc4.5"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0"/>

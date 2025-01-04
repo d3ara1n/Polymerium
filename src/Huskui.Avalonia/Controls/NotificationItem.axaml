@@ -12,9 +12,9 @@
                 </local:NotificationItem>
                 <local:NotificationItem Level="Success"
                                         Message="Very looooooooooooooooooooooooooooooooooooooooooong message.">
-                    <models:NotificationAction />
-                    <models:NotificationAction />
-                    <models:NotificationAction />
+                    <models:NotificationAction Text="And" />
+                    <models:NotificationAction Text="Some" />
+                    <models:NotificationAction Text="Buttons" />
                 </local:NotificationItem>
                 <local:NotificationItem Level="Warning" Message="Very short message.">
                     <models:NotificationAction Text="Go" />
@@ -30,7 +30,7 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:NotificationItem}" TargetType="local:NotificationItem">
-        <Setter Property="Height" Value="108" />
+        <Setter Property="Height" Value="104" />
         <Setter Property="Width" Value="330" />
         <Setter Property="Level" Value="Information" />
         <Setter Property="Title" Value="Information" />
@@ -55,8 +55,7 @@
                           Margin="{TemplateBinding Padding}">
                         <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal"
                                     Spacing="8">
-                            <TextBlock Text="{TemplateBinding Title}"
-                                       FontSize="{StaticResource LargeFontSize}" />
+                            <TextBlock Text="{TemplateBinding Title}" FontWeight="Bold" />
                         </StackPanel>
                         <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
                                    Text="{TemplateBinding Message}" TextWrapping="Wrap"
