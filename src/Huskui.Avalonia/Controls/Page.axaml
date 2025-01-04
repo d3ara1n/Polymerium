@@ -22,6 +22,8 @@
         <Setter Property="CanGoBack" Value="{Binding $parent[local:Frame].CanGoBack, Mode=OneWay}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border CornerRadius="{TemplateBinding CornerRadius}" Background="{TemplateBinding Background}"
@@ -30,35 +32,43 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalAlignment}" ClipToBounds="True">
-                    <Panel>
-                        <ContentPresenter
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Padding="{TemplateBinding Padding}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        <DockPanel VerticalAlignment="Top" Margin="12" IsVisible="{TemplateBinding IsHeaderVisible}">
-                            <Button DockPanel.Dock="Left" CornerRadius="4" Margin="0,0,12,0"
-                                    Command="{Binding $parent[local:Frame].GoBackCommand}">
-                                <fi:SymbolIcon Symbol="ArrowLeft" FontSize="14" Height="12" Width="12" />
-                            </Button>
-                            <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}"
-                                              ContentTemplate="{TemplateBinding HeaderTemplate}">
-                                <ContentPresenter.Styles>
-                                    <Style Selector="TextBlock">
+                    <ScrollViewer
+                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                        IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                        IsScrollChainingEnabled="{TemplateBinding ScrollViewer.IsScrollChainingEnabled}"
+                        IsScrollInertiaEnabled="{TemplateBinding ScrollViewer.IsScrollInertiaEnabled}">
+                        <Panel>
+                            <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <DockPanel VerticalAlignment="Top" Margin="12"
+                                       IsVisible="{TemplateBinding IsHeaderVisible}">
+                                <Button DockPanel.Dock="Left" CornerRadius="4" Margin="0,0,12,0"
+                                        Command="{Binding $parent[local:Frame].GoBackCommand}">
+                                    <fi:SymbolIcon Symbol="ArrowLeft" FontSize="14" Height="12" Width="12" />
+                                </Button>
+                                <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}"
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}">
+                                    <ContentPresenter.Styles>
+                                        <Style Selector="TextBlock">
 
-                                        <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
-                                        <Setter Property="FontWeight" Value="Bold" />
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-                                        <Setter Property="Effect">
-                                            <DropShadowEffect Opacity="0.1" BlurRadius="6" />
-                                        </Setter>
-                                    </Style>
-                                </ContentPresenter.Styles>
-                            </ContentPresenter>
-                        </DockPanel>
-                    </Panel>
+                                            <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                            <Setter Property="Effect">
+                                                <DropShadowEffect Opacity="0.1" BlurRadius="6" />
+                                            </Setter>
+                                        </Style>
+                                    </ContentPresenter.Styles>
+                                </ContentPresenter>
+                            </DockPanel>
+                        </Panel>
+                    </ScrollViewer>
                 </Border>
             </ControlTemplate>
         </Setter>

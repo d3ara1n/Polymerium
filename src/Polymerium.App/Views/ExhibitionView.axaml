@@ -7,7 +7,7 @@
            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
-           xmlns:m="using:Polymerium.App.Models"
+           xmlns:m="using:Polymerium.App.Models" ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:ExhibitionViewModel" Padding="0"
            x:Class="Polymerium.App.Views.ExhibitionView">
@@ -17,7 +17,8 @@
                 <husk:Card BorderBrush="Transparent" Background="{DynamicResource ControlBackgroundBrush}">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Button Theme="{StaticResource OutlineButtonTheme}">
+                            <Button Theme="{StaticResource OutlineButtonTheme}"
+                                    Command="{Binding $parent[husk:Frame].GoBackCommand}">
                                 <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
                             </Button>
                             <TextBlock Text="Search modpacks" FontSize="{StaticResource LargeFontSize}"
@@ -82,7 +83,7 @@
                 </husk:InfiniteScrollView.PendingContent>
                 <husk:InfiniteScrollView.ItemTemplate>
                     <DataTemplate x:DataType="m:ExhibitModel">
-                        <husk:Card Margin="8,4" Height="118">
+                        <husk:Card Margin="16,4" Height="118">
                             <Grid RowDefinitions="*,6,Auto,6,Auto" ColumnDefinitions="Auto,8,*,8,Auto">
                                 <Border Grid.Row="0" Grid.Column="0"
                                         CornerRadius="{StaticResource MediumCornerRadius}"
