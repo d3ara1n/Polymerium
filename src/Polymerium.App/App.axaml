@@ -6,8 +6,6 @@
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
-        <SimpleTheme />
-        <semi:SemiTheme />
         <StyleInclude Source="avares://IconPacks.Avalonia.Lucide/Lucide.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Prelude.axaml" />
         <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml" />

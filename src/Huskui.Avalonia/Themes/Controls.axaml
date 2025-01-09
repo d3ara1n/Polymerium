@@ -3,19 +3,20 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="/Controls/AppWindow.axaml" />
         <ResourceInclude Source="/Controls/Button.axaml" />
+        <ResourceInclude Source="/Controls/ButtonGroup.axaml" />
         <ResourceInclude Source="/Controls/Card.axaml" />
         <ResourceInclude Source="/Controls/CheckBox.axaml" />
         <ResourceInclude Source="/Controls/ComboBox.axaml" />
-        <ResourceInclude Source="/Controls/ComboBoxItem.axaml" />
         <ResourceInclude Source="/Controls/Dialog.axaml" />
         <ResourceInclude Source="/Controls/Divider.axaml" />
         <ResourceInclude Source="/Controls/DropZone.axaml" />
+        <ResourceInclude Source="/Controls/Expander.axaml" />
         <ResourceInclude Source="/Controls/Frame.axaml" />
         <ResourceInclude Source="/Controls/HyperlinkButton.axaml" />
         <ResourceInclude Source="/Controls/InfiniteScrollView.axaml" />
         <ResourceInclude Source="/Controls/InfoBar.axaml" />
+        <ResourceInclude Source="/Controls/ItemsControl.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
-        <ResourceInclude Source="/Controls/ListBoxItem.axaml" />
         <ResourceInclude Source="/Controls/NotificationHost.axaml" />
         <ResourceInclude Source="/Controls/NotificationItem.axaml" />
         <ResourceInclude Source="/Controls/OverlayHost.axaml" />
@@ -24,11 +25,13 @@
         <ResourceInclude Source="/Controls/PopupRoot.axaml" />
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
         <ResourceInclude Source="/Controls/ProgressRing.axaml" />
+        <ResourceInclude Source="/Controls/ScrollBar.axaml" />
+        <ResourceInclude Source="/Controls/ScrollViewer.axaml" />
         <ResourceInclude Source="/Controls/StepControl.axaml" />
         <ResourceInclude Source="/Controls/StepItem.axaml" />
         <ResourceInclude Source="/Controls/TabControl.axaml" />
+        <ResourceInclude Source="/Controls/TabStrip.axaml" />
         <ResourceInclude Source="/Controls/TabItem.axaml" />
-        <ResourceInclude Source="/Controls/TabStripItem.axaml" />
         <ResourceInclude Source="/Controls/Tag.axaml" />
         <ResourceInclude Source="/Controls/TextBox.axaml" />
         <ResourceInclude Source="/Controls/Toast.axaml" />

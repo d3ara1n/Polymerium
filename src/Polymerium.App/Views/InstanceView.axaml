@@ -92,7 +92,8 @@
                                 </Button>
                             </Grid>
                         </husk:Card>
-                        <husk:Card Grid.Column="2" MinWidth="108" Background="{DynamicResource ControlBackgroundBrush}">
+                        <husk:Card Grid.Column="2" MinWidth="108" Background="{DynamicResource Card3BackgroundBrush}"
+                                   BorderThickness="0">
                             <Grid RowDefinitions="*,Auto">
                                 <StackPanel Grid.Row="0" Spacing="8" Orientation="Horizontal">
                                     <icons:PackIconLucide Kind="FlameKindling" />
@@ -104,7 +105,8 @@
                                            FontSize="20" />
                             </Grid>
                         </husk:Card>
-                        <husk:Card Grid.Column="4" MinWidth="108" Background="{DynamicResource ControlBackgroundBrush}">
+                        <husk:Card Grid.Column="4" MinWidth="108" Background="{DynamicResource Card3BackgroundBrush}"
+                                   BorderThickness="0">
                             <Grid RowDefinitions="*,Auto">
                                 <StackPanel Grid.Row="0" Spacing="8" Orientation="Horizontal">
                                     <icons:PackIconLucide Kind="Compass" />
@@ -116,7 +118,8 @@
                                            FontSize="20" />
                             </Grid>
                         </husk:Card>
-                        <husk:Card Grid.Column="6" MinWidth="108" Background="{DynamicResource ControlBackgroundBrush}">
+                        <husk:Card Grid.Column="6" MinWidth="108" Background="{DynamicResource Card3BackgroundBrush}"
+                                   BorderThickness="0">
                             <Grid RowDefinitions="*,Auto">
                                 <StackPanel Grid.Row="0" Spacing="8" Orientation="Horizontal">
                                     <icons:PackIconLucide Kind="DraftingCompass" />
@@ -141,7 +144,7 @@
                                 <TextBlock Grid.Row="0" DockPanel.Dock="Left" Text="Stats" FontWeight="Bold"
                                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                 <husk:Card Grid.Row="2" BorderThickness="0"
-                                           Background="{DynamicResource ControlBackgroundBrush}">
+                                           Background="{DynamicResource Card3BackgroundBrush}">
                                     <lvc:CartesianChart Series="{Binding StatsChartSeries}"
                                                         XAxes="{Binding StatsChartXAxes}" />
                                 </husk:Card>

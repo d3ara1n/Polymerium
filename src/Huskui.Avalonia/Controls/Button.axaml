@@ -38,9 +38,7 @@
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel
-                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                    VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                <Panel>
                     <Border x:Name="PART_Background" Background="{TemplateBinding Background}"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             CornerRadius="{TemplateBinding CornerRadius}"
