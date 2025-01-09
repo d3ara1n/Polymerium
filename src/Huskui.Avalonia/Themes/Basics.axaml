@@ -17,8 +17,8 @@
     <CornerRadius x:Key="ExtraSmallCornerRadius">1</CornerRadius>
     <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
     <CornerRadius x:Key="MediumCornerRadius">6</CornerRadius>
-    <CornerRadius x:Key="LargeCornerRadius">8</CornerRadius>
-    <CornerRadius x:Key="ExtraLargeCornerRadius">12</CornerRadius>
+    <CornerRadius x:Key="LargeCornerRadius">9</CornerRadius>
+    <CornerRadius x:Key="ExtraLargeCornerRadius">14</CornerRadius>
 
     <!-- <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius> -->
 </ResourceDictionary>

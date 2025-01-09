@@ -1,60 +1,51 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ControlTheme x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Background" Value="{DynamicResource Card1BackgroundBrush}" />
+        <Setter Property="Padding" Value="12,10" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Template">
             <ControlTemplate TargetType="ListBoxItem">
                 <Panel>
-                    <Border x:Name="PART_Overlay" Opacity="0"
+                    <Border x:Name="Border" Margin="4,1,4,5"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BoxShadow="0 1 3 1 #08080808">
                         <Border.Transitions>
                             <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition Property="Background" Easing="SineEaseOut"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BoxShadowsTransition Property="BoxShadow"
+                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
+                        <ContentPresenter
+                            Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}" />
                     </Border>
-                    <ContentPresenter
-                        Name="PART_ContentPresenter"
-                        Padding="{TemplateBinding Padding}"
-                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Content="{TemplateBinding Content}"
-                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        FontWeight="Normal"
-                        Foreground="{TemplateBinding Foreground}" />
+
                 </Panel>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^ /template/ Border#PART_Overlay">
-            <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
+        <Style Selector="^:pointerover /template/ Border#Border">
+            <Setter Property="Background" Value="{DynamicResource Card2BackgroundBrush}" />
         </Style>
 
-        <Style Selector="^:pointerover /template/ Border#PART_Overlay">
-            <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
-        </Style>
-
-        <Style Selector="^:pressed /template/ Border#PART_Overlay">
-            <Setter Property="Opacity" Value="{StaticResource Overlay2Opacity}" />
-        </Style>
-
-        <Style Selector="^:selected /template/ Border#PART_Overlay">
+        <Style Selector="^:selected /template/ Border#Border">
             <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-            <Setter Property="Opacity" Value="{StaticResource OverlayFullOpacity}" />
+            <Setter Property="BoxShadow" Value="0 0 0 0 DarkGray"/>
         </Style>
 
-        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
-        </Style>
-        <Style Selector="^:disabled:selected /template/ Border#PART_Overlay">
+        <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
     </ControlTheme>

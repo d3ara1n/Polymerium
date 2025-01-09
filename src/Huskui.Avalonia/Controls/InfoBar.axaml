@@ -30,21 +30,10 @@
                     <StackPanel Margin="{TemplateBinding Padding}" Spacing="6">
                         <ContentPresenter DockPanel.Dock="Top" Content="{TemplateBinding Header}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                          IsVisible="{TemplateBinding Header, Converter={x:Static ObjectConverters.IsNotNull}}">
-                            <ContentPresenter.Styles>
-                                <Style Selector="TextBlock">
-                                    <Setter Property="FontWeight" Value="Bold" />
-                                </Style>
-                            </ContentPresenter.Styles>
-                        </ContentPresenter>
+                                          IsVisible="{TemplateBinding Header, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                          FontWeight="Bold" />
                         <ContentPresenter Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}">
-                            <ContentPresenter.Styles>
-                                <Style Selector="TextBlock">
-                                    <Setter Property="TextWrapping" Value="Wrap" />
-                                </Style>
-                            </ContentPresenter.Styles>
-                        </ContentPresenter>
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" TextWrapping="Wrap"/>
                     </StackPanel>
                 </Border>
             </ControlTemplate>
