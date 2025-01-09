@@ -78,7 +78,7 @@
                 </TextBlock>
             </TabStripItem>
         </TabStrip>
-        <TabStrip Theme="{StaticResource BarTabStripTheme}">
+        <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
             <TabStripItem Content="Monday" />
             <TabStripItem Content="Tuesday" />
             <TabStripItem Content="Wednesday" />
