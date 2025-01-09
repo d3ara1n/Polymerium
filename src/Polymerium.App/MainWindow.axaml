@@ -43,19 +43,19 @@
             <DockPanel>
                 <DockPanel DockPanel.Dock="Top">
                     <StackPanel DockPanel.Dock="Right">
-                        <ursa:ButtonGroup Background="Transparent">
-                            <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick">
-                                <icons:PackIconLucide Kind="Minus" Width="8" />
+                        <husk:ButtonGroup BorderThickness="0">
+                            <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick" Padding="10">
+                                <icons:PackIconLucide Kind="Minus" Height="10" Width="10" />
                             </Button>
-                            <Button x:Name="ToggleMaximizeButton" Click="ToggleMaximizeButton_OnClick">
-                                <icons:PackIconLucide Kind="Square" Width="8" />
+                            <Button x:Name="ToggleMaximizeButton" Click="ToggleMaximizeButton_OnClick" Padding="10">
+                                <icons:PackIconLucide Kind="Square" Height="10" Width="10" />
                             </Button>
-                            <Button x:Name="CloseButton" Click="CloseButton_OnClick">
-                                <icons:PackIconLucide Kind="X" Width="8" />
+                            <Button x:Name="CloseButton" Click="CloseButton_OnClick" Padding="10">
+                                <icons:PackIconLucide Kind="X" Height="10" Width="10" />
                             </Button>
-                        </ursa:ButtonGroup>
+                        </husk:ButtonGroup>
                     </StackPanel>
-                    <StackPanel x:Name="Titlebar" Margin="9,12,12,0" Spacing="6" Orientation="Horizontal"
+                    <StackPanel Margin="9,12,12,12" Spacing="6" Orientation="Horizontal"
                                 IsHitTestVisible="False">
                         <StackPanel.Effect>
                             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
@@ -65,7 +65,7 @@
                                    FontSize="{StaticResource SmallFontSize}" VerticalAlignment="Center" />
                     </StackPanel>
                 </DockPanel>
-                <Grid Margin="9,8,16,16" DockPanel.Dock="Top" ColumnDefinitions="Auto,8,*,8,Auto"
+                <Grid Margin="9,0,16,16" DockPanel.Dock="Top" ColumnDefinitions="Auto,8,*,8,Auto"
                       RowDefinitions="Auto,8,Auto,8,Auto,8,Auto,8,*,8,Auto,8,Auto">
                     <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Height="48"
                             Click="NavigationButton_OnClick" Tag="UnknownView"
@@ -96,8 +96,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="m:InstanceEntryModel">
                                 <controls:InstanceEntryButton Height="128" Basic="{Binding Basic}"
-                                    Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
-                                    CommandParameter="{Binding Basic.Key}" />
+                                                              Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
+                                                              CommandParameter="{Binding Basic.Key}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

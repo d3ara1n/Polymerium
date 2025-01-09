@@ -34,6 +34,7 @@ public class ProfileService : IDisposable
                 {
                     var handle = ProfileHandle.Create(ins.Name, path, _serializerOptions);
                     _profiles.Add(handle);
+                    Debug.WriteLine($"{handle.Key} added");
                 }
                 catch (Exception ex)
                 {

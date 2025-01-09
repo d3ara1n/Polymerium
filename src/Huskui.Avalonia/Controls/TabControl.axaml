@@ -44,4 +44,8 @@
             <Setter Property="Orientation" Value="Vertical" />
         </Style>
     </ControlTheme>
+
+    <ControlTheme x:Key="SolidTabControlTheme" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
+        <Setter Property="ItemContainerTheme" Value="{StaticResource SolidTabItemTheme}" />
+    </ControlTheme>
 </ResourceDictionary>
