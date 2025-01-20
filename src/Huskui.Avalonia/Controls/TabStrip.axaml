@@ -193,6 +193,10 @@
             <Setter Property="RenderTransform" Value="scale(1.0)" />
         </Style>
 
+        <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
         <Style Selector="^:disabled /template/ Border#Indicator">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>

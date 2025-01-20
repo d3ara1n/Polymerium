@@ -80,10 +80,10 @@
                                IsOpen="{TemplateBinding IsDropDownOpen,Mode=TwoWay}"
                                PlacementTarget="{TemplateBinding}"
                                InheritsTransform="True">
-                            <Border Margin="2,4" Background="{DynamicResource WindowBackgroundBrush}"
+                            <Border Margin="2,4" Background="{DynamicResource Overlay1BackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
                                 <Border.Effect>
-                                    <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.1" />
+                                    <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
                                 </Border.Effect>
                                 <ScrollViewer
                                     HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"

@@ -1,4 +1,5 @@
-﻿using Polymerium.Trident.Services;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Polymerium.Trident.Services;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -6,7 +7,7 @@ using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Repositories;
 
-public class CurseForgeRepository(CurseForgeService service) : IRepository
+public class CurseForgeRepository(CurseForgeService service, IMemoryCache cache) : IRepository
 {
     public string Label { get; } = CurseForgeService.LABEL;
 
