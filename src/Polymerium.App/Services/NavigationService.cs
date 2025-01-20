@@ -8,7 +8,7 @@ using Polymerium.App.Views;
 
 namespace Polymerium.App.Services;
 
-public class NavigationService(IServiceProvider provider)
+public class NavigationService
 {
     private Action<Type, object?, IPageTransition>? _handler;
 

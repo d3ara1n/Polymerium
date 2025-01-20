@@ -1,0 +1,61 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+             xmlns:m="using:Polymerium.App.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Polymerium.App.Modals.AccountPickerModal">
+    <ItemsControl>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <husk:Card Margin="4">
+            <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="*,8,Auto">
+                <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Images/Placeholders/Steve_Face.png"
+                       Height="48"
+                       Width="48" />
+                <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
+                    <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
+                    <LineBreak />
+                    <Run Text="Microsoft" />
+                </TextBlock>
+                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
+                    <TextBlock Text="Select" />
+                </Button>
+            </Grid>
+        </husk:Card>
+        <husk:Card Margin="4" BorderBrush="{DynamicResource ControlAccentBorderBrush}" BorderThickness="2" Background="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}">
+            <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="*,8,Auto">
+                <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Images/Placeholders/Steve_Face.png"
+                       Height="48"
+                       Width="48" />
+                <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
+                    <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
+                    <LineBreak />
+                    <Run Text="Microsoft" />
+                </TextBlock>
+                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" IsEnabled="False">
+                    <TextBlock Text="Selected" />
+                </Button>
+            </Grid>
+        </husk:Card>
+        <husk:Card Margin="4">
+            <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="*,8,Auto">
+                <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Images/Placeholders/Steve_Face.png"
+                       Height="48"
+                       Width="48" />
+                <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
+                    <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
+                    <LineBreak />
+                    <Run Text="Microsoft" />
+                </TextBlock>
+                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
+                    <TextBlock Text="Select" />
+                </Button>
+            </Grid>
+        </husk:Card>
+    </ItemsControl>
+</UserControl>

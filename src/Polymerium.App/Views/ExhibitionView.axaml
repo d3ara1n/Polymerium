@@ -157,7 +157,7 @@
                                             <DataTemplate x:DataType="x:String">
                                                 <husk:Tag Margin="4">
                                                     <TextBlock Text="{Binding}"
-                                                               FontSize="{StaticResource SmallFontSize}" />
+                                                               FontSize="{StaticResource MediumFontSize}" />
                                                 </husk:Tag>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

@@ -17,6 +17,7 @@
         <ResourceInclude Source="/Controls/InfoBar.axaml" />
         <ResourceInclude Source="/Controls/ItemsControl.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
+        <ResourceInclude Source="/Controls/Flyout.axaml" />
         <ResourceInclude Source="/Controls/NotificationHost.axaml" />
         <ResourceInclude Source="/Controls/NotificationItem.axaml" />
         <ResourceInclude Source="/Controls/OverlayHost.axaml" />
