@@ -22,14 +22,14 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel : ViewModelBase
 {
-    public InstanceViewModel(ViewBag bag, ProfileService profileService, NavigationService navigationService)
+    public InstanceViewModel(ViewBag bag, ProfileManager profileManager, NavigationService navigationService)
     {
-        _profileService = profileService;
+        _profileManager = profileManager;
         _navigationService = navigationService;
 
         if (bag.Parameter is string key)
         {
-            if (profileService.TryGetImmutable(key, out var profile))
+            if (profileManager.TryGetImmutable(key, out var profile))
             {
                 Basic = new InstanceBasicModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader,
                     profile.Setup.Source);
@@ -75,7 +75,7 @@ public partial class InstanceViewModel : ViewModelBase
 
     #region Injected Services
 
-    private readonly ProfileService _profileService;
+    private readonly ProfileManager _profileManager;
     private readonly NavigationService _navigationService;
 
     #endregion

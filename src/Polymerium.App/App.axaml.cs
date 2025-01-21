@@ -154,7 +154,7 @@ public class App : Application
 
             #region Profile
 
-            var profile = Program.AppHost.Services.GetRequiredService<ProfileService>();
+            var profile = Program.AppHost.Services.GetRequiredService<ProfileManager>();
             window.SubscribeProfileList(profile);
 
             #endregion

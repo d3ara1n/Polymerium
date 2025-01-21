@@ -19,7 +19,7 @@ public static class Startup
         // Trident
         services
             .AddCurseForge()
-            .AddSingleton<ProfileService>()
+            .AddSingleton<ProfileManager>()
             .AddSingleton<RepositoryAgent>();
 
 

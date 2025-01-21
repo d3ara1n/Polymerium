@@ -4,7 +4,7 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public partial class RepositoryBaiscModel(
+public partial class RepositoryBasicModel(
     string label,
     string name)
     : ModelBase

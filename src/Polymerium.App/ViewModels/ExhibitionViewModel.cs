@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -6,10 +8,12 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
+using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.Trident.Services;
@@ -31,17 +35,17 @@ public partial class ExhibitionViewModel : ViewModelBase
         _agent = agent;
         _factory = factory;
         // TODO: 名字应该在本地化键值对中获取
-        var r = agent.Labels.Select(x => new RepositoryBaiscModel(x, x switch
+        var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x switch
         {
             CurseForgeService.LABEL => "CurseForge",
             _ => x
         })).ToList();
         Repositories = r;
 
-        _selectedRepository = r.First();
+        SelectedRepository = r.First();
     }
 
-    public IEnumerable<RepositoryBaiscModel> Repositories { get; }
+    public IEnumerable<RepositoryBasicModel> Repositories { get; }
 
     protected override async Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
     {
@@ -49,31 +53,50 @@ public partial class ExhibitionViewModel : ViewModelBase
 
         foreach (var repository in Repositories)
         {
-            var status = await _agent.CheckStatusAsync(repository.Label);
-            repository.Loaders = status.SupportedLoaders.Select(x => new LoaderDisplayModel(x, x switch
+            if (repository.Loaders.Count == 0 || repository.Versions.Count == 0)
             {
-                LoaderHelper.LOADERID_FORGE => "Forge",
-                LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                LoaderHelper.LOADERID_FABRIC => "Fabric",
-                LoaderHelper.LOADERID_QUILT => "QUILT",
-                LoaderHelper.LOADERID_FLINT => "Flint Loader",
-                _ => x
-            })).ToList();
-            repository.Versions = status.SupportedVersions
-                .OrderByDescending(
-                    x => SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem)
-                        ? sem
-                        : new SemVersion(0, 0, 0),
-                    SemVersion.SortOrderComparer).ToList();
+                var status = await _agent.CheckStatusAsync(repository.Label);
+                repository.Loaders = status.SupportedLoaders.Select(x => new LoaderDisplayModel(x, x switch
+                {
+                    LoaderHelper.LOADERID_FORGE => "Forge",
+                    LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
+                    LoaderHelper.LOADERID_FABRIC => "Fabric",
+                    LoaderHelper.LOADERID_QUILT => "QUILT",
+                    LoaderHelper.LOADERID_FLINT => "Flint Loader",
+                    _ => x
+                })).ToList();
+                repository.Versions = status.SupportedVersions
+                    .OrderByDescending(
+                        x => SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem)
+                            ? sem
+                            : new SemVersion(0, 0, 0),
+                        SemVersion.SortOrderComparer).ToList();
+            }
+        }
+    }
+
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+        if (e.PropertyName == nameof(SelectedRepository))
+        {
+            var cur = SelectedRepository;
+            HeaderImage = cur.Label switch
+            {
+                "curseforge" => new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.REPOSITORY_HEADER_CURSEFORGE))),
+                "modrinth" => new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.REPOSITORY_HEADER_MODRINTH))),
+                _ => HeaderImage
+            };
         }
     }
 
     #region Reactive Properties
 
-    [ObservableProperty] private RepositoryBaiscModel _selectedRepository;
+    [ObservableProperty] private RepositoryBasicModel _selectedRepository;
     [ObservableProperty] private string? _filteredVersion;
     [ObservableProperty] private LoaderDisplayModel? _filteredLoader;
     [ObservableProperty] private InfiniteCollection<ExhibitModel>? _exhibits;
+    [ObservableProperty] private Bitmap? _headerImage;
 
     #endregion
 

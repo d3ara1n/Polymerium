@@ -17,7 +17,7 @@
     <TabControl TabStripPlacement="Left" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1,0,0,0">
         <TabItem Header="Information">设置实例名和图标</TabItem>
         <TabItem Header="Overrides" />
-        <TabItem Header="Building">
+        <TabItem Header="Deployment">
             <TabControl>
                 <TabItem Header="Persistence" Theme="{StaticResource SolidTabItemTheme}">
                     使用持久化池的目录和文件列表

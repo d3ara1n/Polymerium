@@ -94,7 +94,7 @@
                     <ItemsControl Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" ItemsSource="{Binding Profiles}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="m:InstanceEntryModel">
-                                <controls:InstanceEntryButton Height="128" Basic="{Binding Basic}"
+                                <controls:InstanceEntryButton Basic="{Binding Basic}" State="{Binding State}"
                                                               Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
                                                               CommandParameter="{Binding Basic.Key}" />
                             </DataTemplate>
