@@ -29,33 +29,34 @@ public class Frame : ContentControl
         AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBackOutOfStack), o => o.CanGoBackOutOfStack,
             (o, v) => o.CanGoBackOutOfStack = v);
 
-    private bool _canGoBackOutOfStack;
-
-    public bool CanGoBackOutOfStack
-    {
-        get => _canGoBackOutOfStack;
-        set => SetAndRaise(CanGoBackOutOfStackProperty, ref _canGoBackOutOfStack, value);
-    }
-
 
     private readonly InternalGoBackCommand _goBackCommand;
 
     private readonly Stack<FrameFrame> _history = new();
-    private ContentPresenter? _presenter;
-    private ContentPresenter? _presenter2;
+
+    private bool _canGoBackOutOfStack;
+    private (object? Content, IPageTransition Transition, bool Reverse)? _current;
 
     private FrameFrame? _currentFrame;
     private CancellationTokenSource? _currentToken;
-    private (object? Content, IPageTransition Transition, bool Reverse)? _current;
-    private bool _doubleArrangeSafeLock;
 
 
     private IPageTransition _defaultTransition = TransitioningContentControl.PageTransitionProperty.GetDefaultValue(
         typeof(TransitioningContentControl)) ?? new CrossFade(TimeSpan.FromMilliseconds(197));
 
+    private bool _doubleArrangeSafeLock;
+    private ContentPresenter? _presenter;
+    private ContentPresenter? _presenter2;
+
     public Frame()
     {
         _goBackCommand = new InternalGoBackCommand(this);
+    }
+
+    public bool CanGoBackOutOfStack
+    {
+        get => _canGoBackOutOfStack;
+        set => SetAndRaise(CanGoBackOutOfStackProperty, ref _canGoBackOutOfStack, value);
     }
 
     public IPageTransition DefaultTransition
@@ -103,7 +104,10 @@ public class Frame : ContentControl
             _currentFrame = null;
             UpdateContent(null, _currentFrame?.Transition ?? DefaultTransition, true);
         }
-        else throw new InvalidOperationException("No previous page in the stack");
+        else
+        {
+            throw new InvalidOperationException("No previous page in the stack");
+        }
 
         RaisePropertyChanged(CanGoBackProperty, true, CanGoBack);
         _goBackCommand.OnCanExecutedChanged();

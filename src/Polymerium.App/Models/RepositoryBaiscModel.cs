@@ -9,9 +9,9 @@ public partial class RepositoryBaiscModel(
     string name)
     : ModelBase
 {
+    [ObservableProperty] private IReadOnlyList<LoaderDisplayModel> _loaders = [];
+    [ObservableProperty] private IReadOnlyList<string> _versions = [];
     public string Label { get; } = label;
 
     public string Name { get; } = name;
-    [ObservableProperty] private IReadOnlyList<LoaderDisplayModel> _loaders = [];
-    [ObservableProperty] private IReadOnlyList<string> _versions = [];
 }

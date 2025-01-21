@@ -5,5 +5,5 @@ public enum InstanceEntryState
     Idle,
     Installing,
     Preparing,
-    Running,
+    Running
 }

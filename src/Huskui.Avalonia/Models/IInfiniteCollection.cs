@@ -2,7 +2,7 @@
 
 public interface IInfiniteCollection
 {
-    Task FetchAsync();
     bool HasNext { get; }
     bool IsFetching { get; }
+    Task FetchAsync();
 }

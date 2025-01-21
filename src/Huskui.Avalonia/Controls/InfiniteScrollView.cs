@@ -18,8 +18,15 @@ public class InfiniteScrollView : ItemsControl
     public const string PART_ScrollViewer = nameof(PART_ScrollViewer);
     public const string PART_PendingPresenter = nameof(PART_PendingPresenter);
 
-    private ScrollViewer? _scrollViewer;
+    public static readonly StyledProperty<object?> PendingContentProperty =
+        AvaloniaProperty.Register<InfiniteScrollView, object?>(nameof(PendingContent));
+
+    public static readonly StyledProperty<IDataTemplate?> PendingContentTemplateProperty =
+        AvaloniaProperty.Register<InfiniteScrollView, IDataTemplate?>(nameof(PendingContentTemplate));
+
     private ContentPresenter? _pendingPresenter;
+
+    private ScrollViewer? _scrollViewer;
     private IInfiniteCollection? _source;
 
     public InfiniteScrollView()
@@ -27,17 +34,11 @@ public class InfiniteScrollView : ItemsControl
         PseudoClasses.Set(":idle", true);
     }
 
-    public static readonly StyledProperty<object?> PendingContentProperty =
-        AvaloniaProperty.Register<InfiniteScrollView, object?>(nameof(PendingContent));
-
     public object? PendingContent
     {
         get => GetValue(PendingContentProperty);
         set => SetValue(PendingContentProperty, value);
     }
-
-    public static readonly StyledProperty<IDataTemplate?> PendingContentTemplateProperty =
-        AvaloniaProperty.Register<InfiniteScrollView, IDataTemplate?>(nameof(PendingContentTemplate));
 
     public IDataTemplate? PendingContentTemplate
     {

@@ -155,7 +155,7 @@
 
         <Style Selector="^:pointerover:not(:selected)">
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
             </Style>
 
             <Style Selector="^:not(:selected) /template/ ContentPresenter#PART_ContentPresenter">

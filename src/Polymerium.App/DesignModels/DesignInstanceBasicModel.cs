@@ -1,5 +1,4 @@
-﻿using Polymerium.App.Facilities;
-using Polymerium.App.Models;
+﻿using Polymerium.App.Models;
 
 namespace Polymerium.App.DesignModels;
 

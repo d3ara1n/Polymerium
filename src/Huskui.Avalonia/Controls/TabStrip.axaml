@@ -54,9 +54,9 @@
     </ControlTheme>
 
     <ControlTheme x:Key="SegmentedTabStripTheme" TargetType="TabStrip">
-        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource SegmentedTabStripItemTheme}" />
         <Setter Property="Padding" Value="3" />
@@ -160,7 +160,7 @@
                     <Border Name="Indicator" Background="{TemplateBinding Background}" Opacity="0"
                             RenderTransform="scale(0.95)"
                             BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}"
-                            BorderThickness="{TemplateBinding BorderThickness}" BoxShadow="0 1 3 0 #7F7F7F7F">
+                            BorderThickness="{TemplateBinding BorderThickness}" BoxShadow="0 1 6 0 #7F7F7F7F">
                         <Border.Transitions>
                             <Transitions>
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"

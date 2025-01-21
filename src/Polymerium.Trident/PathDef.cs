@@ -4,8 +4,6 @@ namespace Polymerium.Trident;
 
 public class PathDef
 {
-    public static PathDef Default { get; } = new();
-
     private PathDef()
     {
         var dir = Directory.GetCurrentDirectory();
@@ -25,6 +23,8 @@ public class PathDef
         Home = home ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".trident");
         Debug.WriteLine($"Chosen home = {Home}");
     }
+
+    public static PathDef Default { get; } = new();
 
 
     public string Home { get; }

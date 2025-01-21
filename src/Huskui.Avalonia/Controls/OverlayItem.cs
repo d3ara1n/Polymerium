@@ -13,16 +13,22 @@ public class OverlayItem : ContentControl
 {
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
 
+    public static readonly DirectProperty<OverlayItem, int> DistanceProperty =
+        AvaloniaProperty.RegisterDirect<OverlayItem, int>(nameof(Distance), o => o.Distance, (o, v) => o.Distance = v);
+
+    public static readonly DirectProperty<OverlayItem, ICommand?> DismissCommandProperty =
+        AvaloniaProperty.RegisterDirect<OverlayItem, ICommand?>(nameof(DismissCommand), o => o.DismissCommand,
+            (o, v) => o.DismissCommand = v);
+
     private ContentPresenter? _contentPresenter;
+
+    private ICommand? _dismissCommand;
+
+    private int _distance;
 
     public ContentPresenter ContentPresenter => _contentPresenter ??
                                                 throw new InvalidOperationException(
                                                     $"{nameof(ContentPresenter)} is not found from the template");
-
-    public static readonly DirectProperty<OverlayItem, int> DistanceProperty =
-        AvaloniaProperty.RegisterDirect<OverlayItem, int>(nameof(Distance), o => o.Distance, (o, v) => o.Distance = v);
-
-    private int _distance;
 
     public int Distance
     {
@@ -35,12 +41,6 @@ public class OverlayItem : ContentControl
         }
     }
 
-    public static readonly DirectProperty<OverlayItem, ICommand?> DismissCommandProperty =
-        AvaloniaProperty.RegisterDirect<OverlayItem, ICommand?>(nameof(DismissCommand), o => o.DismissCommand,
-            (o, v) => o.DismissCommand = v);
-    
-    private ICommand? _dismissCommand;
-    
     public ICommand? DismissCommand
     {
         get => _dismissCommand;

@@ -8,13 +8,18 @@ namespace Polymerium.App.Controls;
 
 public class InstanceEntryButton : Button
 {
-    protected override Type StyleKeyOverride => typeof(InstanceEntryButton);
-
     public static readonly DirectProperty<InstanceEntryButton, InstanceBasicModel?> BasicProperty =
         AvaloniaProperty.RegisterDirect<InstanceEntryButton, InstanceBasicModel?>(nameof(Basic), o => o.Basic,
             (o, v) => o.Basic = v);
 
+    public static readonly DirectProperty<InstanceEntryButton, InstanceEntryState> StateProperty =
+        AvaloniaProperty.RegisterDirect<InstanceEntryButton, InstanceEntryState>(nameof(State), o => o.State,
+            (o, v) => o.State = v);
+
     private InstanceBasicModel? _basic;
+
+    private InstanceEntryState _state = InstanceEntryState.Idle;
+    protected override Type StyleKeyOverride => typeof(InstanceEntryButton);
 
     [Content]
     public InstanceBasicModel? Basic
@@ -22,12 +27,6 @@ public class InstanceEntryButton : Button
         get => _basic;
         set => SetAndRaise(BasicProperty, ref _basic, value);
     }
-
-    public static readonly DirectProperty<InstanceEntryButton, InstanceEntryState> StateProperty =
-        AvaloniaProperty.RegisterDirect<InstanceEntryButton, InstanceEntryState>(nameof(State), o => o.State,
-            (o, v) => o.State = v);
-
-    private InstanceEntryState _state = InstanceEntryState.Idle;
 
     public InstanceEntryState State
     {

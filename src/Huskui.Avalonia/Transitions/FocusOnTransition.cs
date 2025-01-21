@@ -6,8 +6,6 @@ namespace Huskui.Avalonia.Transitions;
 
 public class FocusOnTransition : PageTransitionBase
 {
-    public DirectionFrom Direction { get; set; }
-
     public FocusOnTransition() : this(null, null)
     {
     }
@@ -16,6 +14,8 @@ public class FocusOnTransition : PageTransitionBase
     {
         Direction = direction ?? DirectionFrom.Bottom;
     }
+
+    public DirectionFrom Direction { get; set; }
 
     protected override void Configure(Builder from, Builder to, Lazy<Visual> parentAccessor)
     {

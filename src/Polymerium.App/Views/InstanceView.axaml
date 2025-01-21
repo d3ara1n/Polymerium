@@ -92,7 +92,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                             Spacing="8">
                     <Button Classes="Primary">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:PackIconLucide Kind="Play" Height="{StaticResource MediumFontSize}"
                                                   VerticalAlignment="Center" />
                             <TextBlock Text="PLAY" />

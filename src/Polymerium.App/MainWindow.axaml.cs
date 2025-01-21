@@ -18,10 +18,6 @@ public partial class MainWindow : AppWindow
 {
     private Action<Type, object?, IPageTransition?>? _navigate;
 
-    public AvaloniaList<InstanceEntryModel> Profiles { get; } = new();
-
-    public ICommand ViewInstanceCommand { get; }
-
     public MainWindow()
     {
         InitializeComponent();
@@ -29,6 +25,10 @@ public partial class MainWindow : AppWindow
 
         ViewInstanceCommand = new RelayCommand<string>(ViewInstance);
     }
+
+    public AvaloniaList<InstanceEntryModel> Profiles { get; } = new();
+
+    public ICommand ViewInstanceCommand { get; }
 
     private void PopDialog()
     {
@@ -195,5 +195,6 @@ public partial class MainWindow : AppWindow
         Close();
         e.Handled = true;
     }
+
     #endregion
 }
