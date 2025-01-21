@@ -25,7 +25,48 @@ public partial class ExhibitionViewModel : ViewModelBase
 {
     private readonly RepositoryAgent _agent;
     private readonly IHttpClientFactory _factory;
+
+    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory)
+    {
+        _agent = agent;
+        _factory = factory;
+        // TODO: 名字应该在本地化键值对中获取
+        var r = agent.Labels.Select(x => new RepositoryBaiscModel(x, x switch
+        {
+            CurseForgeService.LABEL => "CurseForge",
+            _ => x
+        })).ToList();
+        Repositories = r;
+
+        _selectedRepository = r.First();
+    }
+
     public IEnumerable<RepositoryBaiscModel> Repositories { get; }
+
+    protected override async Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
+    {
+        if (token.IsCancellationRequested) return;
+
+        foreach (var repository in Repositories)
+        {
+            var status = await _agent.CheckStatusAsync(repository.Label);
+            repository.Loaders = status.SupportedLoaders.Select(x => new LoaderDisplayModel(x, x switch
+            {
+                LoaderHelper.LOADERID_FORGE => "Forge",
+                LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
+                LoaderHelper.LOADERID_FABRIC => "Fabric",
+                LoaderHelper.LOADERID_QUILT => "QUILT",
+                LoaderHelper.LOADERID_FLINT => "Flint Loader",
+                _ => x
+            })).ToList();
+            repository.Versions = status.SupportedVersions
+                .OrderByDescending(
+                    x => SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem)
+                        ? sem
+                        : new SemVersion(0, 0, 0),
+                    SemVersion.SortOrderComparer).ToList();
+        }
+    }
 
     #region Reactive Properties
 
@@ -96,44 +137,4 @@ public partial class ExhibitionViewModel : ViewModelBase
     }
 
     #endregion
-
-    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory)
-    {
-        _agent = agent;
-        _factory = factory;
-        // TODO: 名字应该在本地化键值对中获取
-        var r = agent.Labels.Select(x => new RepositoryBaiscModel(x, x switch
-        {
-            CurseForgeService.LABEL => "CurseForge",
-            _ => x
-        })).ToList();
-        Repositories = r;
-
-        _selectedRepository = r.First();
-    }
-
-    protected override async Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
-    {
-        if (token.IsCancellationRequested) return;
-
-        foreach (var repository in Repositories)
-        {
-            var status = await _agent.CheckStatusAsync(repository.Label);
-            repository.Loaders = status.SupportedLoaders.Select(x => new LoaderDisplayModel(x, x switch
-            {
-                LoaderHelper.LOADERID_FORGE => "Forge",
-                LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                LoaderHelper.LOADERID_FABRIC => "Fabric",
-                LoaderHelper.LOADERID_QUILT => "QUILT",
-                LoaderHelper.LOADERID_FLINT => "Flint Loader",
-                _ => x
-            })).ToList();
-            repository.Versions = status.SupportedVersions
-                .OrderByDescending(
-                    x => SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem)
-                        ? sem
-                        : new SemVersion(0, 0, 0),
-                    SemVersion.SortOrderComparer).ToList();
-        }
-    }
 }

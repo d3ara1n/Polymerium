@@ -9,13 +9,9 @@ namespace Polymerium.Trident.Services;
 // 只有 profile.json 是共享文件，其他都是独占文件，因此不对其他文件做 Guard 保护。
 public class ProfileService : IDisposable
 {
-    #region Injected Services
-
-    #endregion
-
     private readonly IList<ProfileHandle> _profiles = new List<ProfileHandle>();
-    private readonly JsonSerializerOptions _serializerOptions;
     private readonly IList<ReservedKey> _reservedKeys = new List<ReservedKey>();
+    private readonly JsonSerializerOptions _serializerOptions;
 
     public ProfileService()
     {

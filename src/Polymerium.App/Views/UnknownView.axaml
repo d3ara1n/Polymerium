@@ -78,6 +78,15 @@
                 </TextBlock>
             </TabStripItem>
         </TabStrip>
+        <TabStrip Theme="{StaticResource SegmentedTabStripTheme}" HorizontalAlignment="Right"
+                  Background="{DynamicResource Layer1BackgroundBrush}">
+            <TabStripItem>
+                <icons:PackIconLucide Kind="Menu" Height="12" Width="12" />
+            </TabStripItem>
+            <TabStripItem>
+                <icons:PackIconLucide Kind="Folder" Height="12" Width="12" />
+            </TabStripItem>
+        </TabStrip>
         <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
             <TabStripItem Content="Monday" />
             <TabStripItem Content="Tuesday" />
@@ -96,28 +105,31 @@
                         <husk:NotificationItem Parameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
                                                Actions="{Binding Actions}"
                                                Message="Click buttons below to change notification level" />
-                        <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
-                                      IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
-                        <ComboBox Name="ComboBox" PlaceholderText="这是一个一个">
-                            <ComboBoxItem Content="这是一个 1" />
-                            <ComboBoxItem Content="这是一个 2" />
-                            <ComboBoxItem Content="这是一个 3" />
-                            <ComboBoxItem Content="这是一个 4" />
-                            <ComboBoxItem Content="这是一个 5" />
-                            <ComboBoxItem Content="这是一个 6" />
-                            <ComboBoxItem Content="这是一个 7" />
-                            <ComboBoxItem Content="这是一个 8" />
-                            <ComboBoxItem Content="这是一个 9" />
-                            <ComboBoxItem Content="这是一个 0" />
-                        </ComboBox>
-                        <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
-                            <TextBlock Text="Make it REAL" />
-                        </CheckBox>
+                        <DockPanel>
+                            <ComboBox DockPanel.Dock="Right" Name="ComboBox" PlaceholderText="这是一个一个">
+                                <ComboBoxItem Content="这是一个 1" />
+                                <ComboBoxItem Content="这是一个 2" />
+                                <ComboBoxItem Content="这是一个 3" />
+                                <ComboBoxItem Content="这是一个 4" />
+                                <ComboBoxItem Content="这是一个 5" />
+                                <ComboBoxItem Content="这是一个 6" />
+                                <ComboBoxItem Content="这是一个 7" />
+                                <ComboBoxItem Content="这是一个 8" />
+                                <ComboBoxItem Content="这是一个 9" />
+                                <ComboBoxItem Content="这是一个 0" />
+                            </ComboBox>
+                            <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
+                                          IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
+
+                            <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                                <TextBlock Text="Make it REAL" />
+                            </CheckBox>
+                        </DockPanel>
                         <husk:InfoBar Header="You known what?">
                             <DockPanel>
-                                <HyperlinkButton DockPanel.Dock="Right" Content="Undo" />
+                                <HyperlinkButton DockPanel.Dock="Bottom" Content="Undo" />
                                 <TextBlock TextWrapping="Wrap"
-                                           Text="正在将文件从“C:\Users\d3ara1n\Projects\Polymerium\src\Huskui.Avalonia\bin\Debug\net9.0\Huskui.Avalonia.dll”复制到“C:\Users\d3ara\Projects\Polymerium\src\Huskui.Avalonia.Markdown\bin\Debug\net9.0\Huskui.Avalonia.dll”。" />
+                                           Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata" />
                             </DockPanel>
                         </husk:InfoBar>
                     </StackPanel>

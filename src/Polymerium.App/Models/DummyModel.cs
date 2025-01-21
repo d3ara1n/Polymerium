@@ -2,7 +2,6 @@
 
 namespace Polymerium.App.Models;
 
-public class DummyModel: ModelBase
+public class DummyModel : ModelBase
 {
-    
 }

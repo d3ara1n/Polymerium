@@ -22,6 +22,57 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel : ViewModelBase
 {
+    public InstanceViewModel(ViewBag bag, ProfileService profileService, NavigationService navigationService)
+    {
+        _profileService = profileService;
+        _navigationService = navigationService;
+
+        if (bag.Parameter is string key)
+        {
+            if (profileService.TryGetImmutable(key, out var profile))
+            {
+                Basic = new InstanceBasicModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader,
+                    profile.Setup.Source);
+                var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
+                Screenshot = screenshotPath is not null
+                    ? new Bitmap(screenshotPath)
+                    : new Bitmap(AssetUriIndex.WALLPAPER_IMAGE);
+                LaunchBarModel = new InstanceLaunchBarModel();
+                PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
+                StatsChartSeries =
+                [
+                    new ColumnSeries<double>
+                    {
+                        Name = "Daily Playing Hours",
+                        Values = [11, 4, 5, 14, 19, 1, 9]
+                    }
+                ];
+                StatsChartXAxes =
+                [
+                    new Axis
+                    {
+                        Labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Yesterday", "Today"]
+                    }
+                ];
+            }
+            else
+            {
+                throw new PageNotReachedException(typeof(InstanceView),
+                    $"Key '{key}' is not valid instance or not found");
+            }
+        }
+        else
+        {
+            throw new PageNotReachedException(typeof(InstanceView), "Key to the instance is not provided");
+        }
+    }
+
+    protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
+    {
+        // TODO: Load SourceUrl
+        return base.OnInitializedAsync(dispatcher, token);
+    }
+
     #region Injected Services
 
     private readonly ProfileService _profileService;
@@ -81,52 +132,4 @@ public partial class InstanceViewModel : ViewModelBase
     }
 
     #endregion
-
-    public InstanceViewModel(ViewBag bag, ProfileService profileService, NavigationService navigationService)
-    {
-        _profileService = profileService;
-        _navigationService = navigationService;
-
-        if (bag.Parameter is string key)
-        {
-            if (profileService.TryGetImmutable(key, out var profile))
-            {
-                Basic = new InstanceBasicModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader,
-                    profile.Setup.Source);
-                var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
-                Screenshot = screenshotPath is not null
-                    ? new Bitmap(screenshotPath)
-                    : new Bitmap(AssetUriIndex.WALLPAPER_IMAGE);
-                LaunchBarModel = new InstanceLaunchBarModel();
-                PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
-                StatsChartSeries =
-                [
-                    new ColumnSeries<double>
-                    {
-                        Name = "Daily Playing Hours",
-                        Values = [11, 4, 5, 14, 19, 1, 9]
-                    }
-                ];
-                StatsChartXAxes =
-                [
-                    new Axis
-                    {
-                        Labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Yesterday", "Today"]
-                    }
-                ];
-            }
-            else
-            {
-                throw new PageNotReachedException(typeof(InstanceView),
-                    $"Key '{key}' is not valid instance or not found");
-            }
-        }
-        else throw new PageNotReachedException(typeof(InstanceView), "Key to the instance is not provided");
-    }
-
-    protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
-    {
-        // TODO: Load SourceUrl
-        return base.OnInitializedAsync(dispatcher, token);
-    }
 }

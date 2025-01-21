@@ -21,12 +21,6 @@ public record ModModel(
     DateTimeOffset DateCreated
 )
 {
-    public record ModLinks(Uri? WebsiteUrl, Uri? WikiUrl, Uri? IssuesUrl, Uri? SourceUrl);
-
-    public record ModAuthor(uint Id, string Name, Uri Url);
-
-    public record ModAsset(uint Id, uint ModId, string Title, string Description, Uri ThumbnailUrl, Uri Url);
-
     public enum ModStatus
     {
         New = 1,
@@ -40,4 +34,10 @@ public record ModModel(
         Deleted,
         UnderReview
     }
+
+    public record ModLinks(Uri? WebsiteUrl, Uri? WikiUrl, Uri? IssuesUrl, Uri? SourceUrl);
+
+    public record ModAuthor(uint Id, string Name, Uri Url);
+
+    public record ModAsset(uint Id, uint ModId, string Title, string Description, Uri ThumbnailUrl, Uri Url);
 }

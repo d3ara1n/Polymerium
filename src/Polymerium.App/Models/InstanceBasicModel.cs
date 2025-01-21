@@ -11,6 +11,27 @@ namespace Polymerium.App.Models;
 
 public partial class InstanceBasicModel : ModelBase
 {
+    public InstanceBasicModel(string key, string name, string version, string? loader, string? source)
+    {
+        Key = key;
+        Name = name;
+        Version = version;
+        Loader = loader;
+        Source = source;
+
+
+        var iconPath = ProfileHelper.PickIcon(key);
+        Thumbnail = iconPath is not null
+            ? new Bitmap(iconPath)
+            : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+    }
+
+    #region Direct Properties
+
+    public string Key { get; }
+
+    #endregion
+
     #region Reactive Properties
 
     [ObservableProperty] private string _name;
@@ -29,9 +50,7 @@ public partial class InstanceBasicModel : ModelBase
             SetProperty(ref _source, value);
             if (!string.IsNullOrEmpty(value) &&
                 PackageHelper.TryParse(value, out var result))
-            {
                 SourceLabel = result.Label;
-            }
         }
     }
 
@@ -48,25 +67,4 @@ public partial class InstanceBasicModel : ModelBase
     }
 
     #endregion
-
-    #region Direct Properties
-
-    public string Key { get; }
-
-    #endregion
-
-    public InstanceBasicModel(string key, string name, string version, string? loader, string? source)
-    {
-        Key = key;
-        Name = name;
-        Version = version;
-        Loader = loader;
-        Source = source;
-
-
-        var iconPath = ProfileHelper.PickIcon(key);
-        Thumbnail = iconPath is not null
-            ? new Bitmap(iconPath)
-            : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
-    }
 }

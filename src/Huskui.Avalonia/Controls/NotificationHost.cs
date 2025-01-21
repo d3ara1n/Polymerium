@@ -4,5 +4,4 @@ namespace Huskui.Avalonia.Controls;
 
 public class NotificationHost : TemplatedControl
 {
-    
 }

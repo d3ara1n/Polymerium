@@ -13,13 +13,19 @@ public class DropZone : ContentControl
     public static readonly StyledProperty<double> StrokeThicknessProperty =
         Shape.StrokeThicknessProperty.AddOwner<DropZone>();
 
+    public static readonly StyledProperty<IBrush?> StrokeBrushProperty = Shape.StrokeProperty.AddOwner<DropZone>();
+
+    public static readonly StyledProperty<AvaloniaList<double>?> StrokeDashArrayProperty =
+        Shape.StrokeDashArrayProperty.AddOwner<DropZone>();
+
+    public static readonly StyledProperty<double> RadiusProperty =
+        AvaloniaProperty.Register<DropZone, double>(nameof(Radius));
+
     public double StrokeThickness
     {
         get => GetValue(StrokeThicknessProperty);
         set => SetValue(StrokeThicknessProperty, value);
     }
-
-    public static readonly StyledProperty<IBrush?> StrokeBrushProperty = Shape.StrokeProperty.AddOwner<DropZone>();
 
     public IBrush? StrokeBrush
     {
@@ -27,17 +33,11 @@ public class DropZone : ContentControl
         set => SetValue(StrokeBrushProperty, value);
     }
 
-    public static readonly StyledProperty<AvaloniaList<double>?> StrokeDashArrayProperty =
-        Shape.StrokeDashArrayProperty.AddOwner<DropZone>();
-
     public AvaloniaList<double>? StrokeDashArray
     {
         get => GetValue(StrokeDashArrayProperty);
         set => SetValue(StrokeDashArrayProperty, value);
     }
-
-    public static readonly StyledProperty<double> RadiusProperty =
-        AvaloniaProperty.Register<DropZone, double>(nameof(Radius));
 
     public double Radius
     {

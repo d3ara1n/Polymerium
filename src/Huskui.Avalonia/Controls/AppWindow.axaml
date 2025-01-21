@@ -35,17 +35,28 @@
                             <TitleBar />
                         </VisualLayerManager.ChromeOverlayLayer>
                         <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
+
                             <ContentPresenter
-                                Name="{x:Static local:AppWindow.PART_ContentPresenter}"
+                                Name="ContentPresenter"
                                 Margin="{TemplateBinding Padding}"
                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Content="{TemplateBinding Content}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                ContentTemplate="{TemplateBinding ContentTemplate}">
+                                <ContentPresenter.Transitions>
+                                    <Transitions>
+                                        <EffectTransition Property="Effect"
+                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    </Transitions>
+                                </ContentPresenter.Transitions>
+                            </ContentPresenter>
 
                             <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" Padding="48,64,48,0" />
-                            <ContentPresenter Name="PART_ModalHost" />
-                            <local:OverlayHost Name="PART_DialogHost" HorizontalContentAlignment="Center"
+                            <local:OverlayHost Name="{x:Static local:AppWindow.PART_ModalHost}"
+                                               HorizontalContentAlignment="Center"
+                                               VerticalContentAlignment="Center" />
+                            <local:OverlayHost Name="{x:Static local:AppWindow.PART_DialogHost}"
+                                               HorizontalContentAlignment="Center"
                                                VerticalContentAlignment="Center">
                                 <local:OverlayHost.Transition>
                                     <huskt:FocusOnTransition />
@@ -57,6 +68,12 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^:obstructed /template/ ContentPresenter#ContentPresenter">
+            <Setter Property="Effect">
+                <BlurEffect />
+            </Setter>
+        </Style>
 
         <Style Selector="^local|AppWindow[ActualTransparencyLevel=Mica][IsActive=True]">
             <Setter Property="Background" Value="Transparent" />

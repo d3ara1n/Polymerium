@@ -13,17 +13,30 @@ public class NotificationItem : ContentControl
     public static readonly StyledProperty<NotificationLevel> LevelProperty =
         AvaloniaProperty.Register<NotificationItem, NotificationLevel>(nameof(Level));
 
+    public static readonly DirectProperty<NotificationItem, AvaloniaList<NotificationAction>> ActionsProperty =
+        AvaloniaProperty.RegisterDirect<NotificationItem, AvaloniaList<NotificationAction>>(nameof(Actions),
+            o => o.Actions, (o, v) => o.Actions = v);
+
+    public static readonly StyledProperty<string> TitleProperty =
+        AvaloniaProperty.Register<NotificationItem, string>(nameof(Title), string.Empty);
+
+
+    public static readonly StyledProperty<string> MessageProperty =
+        AvaloniaProperty.Register<NotificationItem, string>(nameof(Message), string.Empty);
+
+    public static readonly DirectProperty<NotificationItem, object?> ParameterProperty =
+        AvaloniaProperty.RegisterDirect<NotificationItem, object?>(nameof(Parameter), o => o.Parameter,
+            (o, v) => o.Parameter = v);
+
+    private AvaloniaList<NotificationAction> _actions = [];
+
+    private object? _parameter;
+
     public NotificationLevel Level
     {
         get => GetValue(LevelProperty);
         set => SetValue(LevelProperty, value);
     }
-
-    public static readonly DirectProperty<NotificationItem, AvaloniaList<NotificationAction>> ActionsProperty =
-        AvaloniaProperty.RegisterDirect<NotificationItem, AvaloniaList<NotificationAction>>(nameof(Actions),
-            o => o.Actions, (o, v) => o.Actions = v);
-
-    private AvaloniaList<NotificationAction> _actions = [];
 
     [Content]
     public AvaloniaList<NotificationAction> Actions
@@ -32,30 +45,17 @@ public class NotificationItem : ContentControl
         set => SetAndRaise(ActionsProperty, ref _actions, value);
     }
 
-    public static readonly StyledProperty<string> TitleProperty =
-        AvaloniaProperty.Register<NotificationItem, string>(nameof(Title), string.Empty);
-
     public string Title
     {
         get => GetValue(TitleProperty);
         set => SetValue(TitleProperty, value);
     }
 
-
-    public static readonly StyledProperty<string> MessageProperty =
-        AvaloniaProperty.Register<NotificationItem, string>(nameof(Message), string.Empty);
-
     public string Message
     {
         get => GetValue(MessageProperty);
         set => SetValue(MessageProperty, value);
     }
-
-    public static readonly DirectProperty<NotificationItem, object?> ParameterProperty =
-        AvaloniaProperty.RegisterDirect<NotificationItem, object?>(nameof(Parameter), o => o.Parameter,
-            (o, v) => o.Parameter = v);
-
-    private object? _parameter;
 
     public object? Parameter
     {

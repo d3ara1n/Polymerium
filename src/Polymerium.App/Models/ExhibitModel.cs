@@ -11,22 +11,6 @@ namespace Polymerium.App.Models;
 
 public partial class ExhibitModel : ModelBase
 {
-    #region Reactive Properties
-
-    [ObservableProperty] private string _label;
-    [ObservableProperty] private string? _ns;
-    [ObservableProperty] private string _pid;
-    [ObservableProperty] private string _name;
-    [ObservableProperty] private string _summary;
-    [ObservableProperty] private Bitmap _thumbnail;
-    [ObservableProperty] private string _author;
-    [ObservableProperty] private IReadOnlyList<string> _tags;
-    [ObservableProperty] private string _updatedAt;
-    [ObservableProperty] private string _downloads;
-    [ObservableProperty] private Uri _reference;
-
-    #endregion
-
     public ExhibitModel(string label, string? ns, string pid, string name, string summary, Bitmap? thumbnail,
         string author,
         IReadOnlyList<string> tags,
@@ -44,4 +28,20 @@ public partial class ExhibitModel : ModelBase
         _downloads = ((double)downloads).ToMetric(decimals: 2);
         _reference = reference;
     }
+
+    #region Reactive Properties
+
+    [ObservableProperty] private string _label;
+    [ObservableProperty] private string? _ns;
+    [ObservableProperty] private string _pid;
+    [ObservableProperty] private string _name;
+    [ObservableProperty] private string _summary;
+    [ObservableProperty] private Bitmap _thumbnail;
+    [ObservableProperty] private string _author;
+    [ObservableProperty] private IReadOnlyList<string> _tags;
+    [ObservableProperty] private string _updatedAt;
+    [ObservableProperty] private string _downloads;
+    [ObservableProperty] private Uri _reference;
+
+    #endregion
 }

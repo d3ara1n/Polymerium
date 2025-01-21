@@ -5,15 +5,15 @@ namespace Polymerium.Trident.Services;
 
 public class RepositoryAgent
 {
-    public int Count => _repositories.Count;
-    public IEnumerable<string> Labels => _repositories.Keys;
-
     private readonly IReadOnlyDictionary<string, IRepository> _repositories;
 
     public RepositoryAgent(IEnumerable<IRepository> repositories)
     {
         _repositories = repositories.ToDictionary(repository => repository.Label);
     }
+
+    public int Count => _repositories.Count;
+    public IEnumerable<string> Labels => _repositories.Keys;
 
     private IRepository Redirect(string label)
     {

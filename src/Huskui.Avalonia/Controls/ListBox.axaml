@@ -50,7 +50,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
-        <Setter Property="Background" Value="{DynamicResource Card1BackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Card2BackgroundBrush}" />
         <Setter Property="Padding" Value="12,10" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -63,7 +63,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            BoxShadow="0 1 3 1 #0F0F0F0F">
+                            BoxShadow="1 2 6 1 #1F0F0F0F">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition Property="Background" Easing="SineEaseOut"
@@ -87,7 +87,8 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ Border#Border">
-            <Setter Property="Background" Value="{DynamicResource Card2BackgroundBrush}" />
+            <Setter Property="Background" Value="{DynamicResource Card1BackgroundBrush}" />
+            <Setter Property="BoxShadow" Value="0 0 0 0 #000F0F0F" />
         </Style>
 
         <Style Selector="^:selected /template/ Border#Border">

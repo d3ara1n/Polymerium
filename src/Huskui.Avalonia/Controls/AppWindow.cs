@@ -5,20 +5,26 @@ using Avalonia.Controls.Primitives;
 
 namespace Huskui.Avalonia.Controls;
 
-[TemplatePart(PART_ContentPresenter, typeof(ContentControl))]
 [TemplatePart(PART_ToastHost, typeof(OverlayHost))]
+[TemplatePart(PART_ModalHost, typeof(OverlayHost))]
 [TemplatePart(PART_DialogHost, typeof(OverlayHost))]
+[PseudoClasses(":obstructed")]
 public class AppWindow : Window
 {
-    public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
     public const string PART_ToastHost = nameof(PART_ToastHost);
+    public const string PART_ModalHost = nameof(PART_ModalHost);
     public const string PART_DialogHost = nameof(PART_DialogHost);
 
     public static readonly DirectProperty<AppWindow, bool> IsMaximizedProperty =
         AvaloniaProperty.RegisterDirect<AppWindow, bool>(nameof(IsMaximized), o => o.IsMaximized,
             (o, v) => o.IsMaximized = v);
 
+    private OverlayHost? _dialogHost;
+
     private bool _isMaximized;
+    private OverlayHost? _modalHost;
+
+    private OverlayHost? _toastHost;
 
     protected override Type StyleKeyOverride => typeof(AppWindow);
 
@@ -27,9 +33,6 @@ public class AppWindow : Window
         get => _isMaximized;
         set => SetAndRaise(IsMaximizedProperty, ref _isMaximized, value);
     }
-
-    private OverlayHost? _toastHost;
-    private OverlayHost? _dialogHost;
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
@@ -42,7 +45,19 @@ public class AppWindow : Window
     {
         base.OnApplyTemplate(e);
         _toastHost = e.NameScope.Find<OverlayHost>(PART_ToastHost);
+        _modalHost = e.NameScope.Find<OverlayHost>(PART_ModalHost);
         _dialogHost = e.NameScope.Find<OverlayHost>(PART_DialogHost);
+        _toastHost?.GetObservable(OverlayHost.IsPresentProperty).Subscribe(UpdateObstructed);
+        _modalHost?.GetObservable(OverlayHost.IsPresentProperty).Subscribe(UpdateObstructed);
+        _dialogHost?.GetObservable(OverlayHost.IsPresentProperty).Subscribe(UpdateObstructed);
+    }
+
+    private void UpdateObstructed(bool _)
+    {
+        ArgumentNullException.ThrowIfNull(_toastHost);
+        ArgumentNullException.ThrowIfNull(_modalHost);
+        ArgumentNullException.ThrowIfNull(_dialogHost);
+        PseudoClasses.Set(":obstructed", _toastHost.IsPresent || _modalHost.IsPresent || _dialogHost.IsPresent);
     }
 
     public void PopToast(Toast toast)

@@ -4,9 +4,6 @@ namespace Huskui.Avalonia.Models;
 
 public class NotificationAction
 {
-    public string Text { get; set; }
-    public ICommand Command { get; set; }
-
     public NotificationAction()
     {
         Text = string.Empty;
@@ -19,4 +16,7 @@ public class NotificationAction
         Text = text;
         Command = command;
     }
+
+    public string Text { get; set; }
+    public ICommand Command { get; set; }
 }

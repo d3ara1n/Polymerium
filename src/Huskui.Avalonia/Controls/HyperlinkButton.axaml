@@ -15,7 +15,7 @@
     <ControlTheme TargetType="HyperlinkButton" x:Key="{x:Type HyperlinkButton}">
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="BorderThickness" Value="0,0,0,2" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -28,7 +28,7 @@
                         <Transitions>
                             <DoubleTransition Property="Opacity" Easing="SineEaseOut"
                                               Duration="{StaticResource ControlFastestAnimationDuration}" />
-                            <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                            <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseIn"
                                                            Duration="{StaticResource ControlFastestAnimationDuration}" />
                         </Transitions>
                     </Panel.Transitions>
@@ -56,7 +56,6 @@
         </Setter>
 
         <Style Selector="^:pointerover/template/ Border#PART_Underline">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
             <Setter Property="RenderTransform" Value="scaleY(2)" />
         </Style>
 

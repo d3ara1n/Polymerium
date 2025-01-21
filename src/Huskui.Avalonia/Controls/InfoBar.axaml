@@ -33,7 +33,7 @@
                                           IsVisible="{TemplateBinding Header, Converter={x:Static ObjectConverters.IsNotNull}}"
                                           FontWeight="Bold" />
                         <ContentPresenter Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" TextWrapping="Wrap"/>
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" TextWrapping="Wrap" />
                     </StackPanel>
                 </Border>
             </ControlTemplate>

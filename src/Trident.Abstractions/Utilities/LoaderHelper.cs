@@ -4,13 +4,12 @@ namespace Trident.Abstractions.Utilities;
 
 public static class LoaderHelper
 {
-    private static readonly Regex PATTERN = new("^(?<identity>[a-z0-9.]+):(?<version>[a-zA-Z0-9_.-]+)$");
-
     public const string LOADERID_FORGE = "net.minecraftforge";
     public const string LOADERID_NEOFORGE = "net.neoforged";
     public const string LOADERID_FABRIC = "net.fabricmc";
     public const string LOADERID_QUILT = "org.quiltmc";
     public const string LOADERID_FLINT = "net.flintloader";
+    private static readonly Regex PATTERN = new("^(?<identity>[a-z0-9.]+):(?<version>[a-zA-Z0-9_.-]+)$");
 
     public static bool TryParse(string lurl,
         out (string Identity, string Version) result)

@@ -14,12 +14,136 @@ using Huskui.Avalonia.Transitions;
 
 namespace Huskui.Avalonia.Controls;
 
+[PseudoClasses(":present")]
 [TemplatePart(PART_Stage, typeof(Border))]
 [TemplatePart(PART_ItemsPresenter, typeof(ItemsPresenter))]
 public class OverlayHost : TemplatedControl
 {
     public const string PART_ItemsPresenter = nameof(PART_ItemsPresenter);
     public const string PART_Stage = nameof(PART_Stage);
+
+    public static readonly DirectProperty<OverlayHost, OverlayItems> ItemsProperty =
+        AvaloniaProperty.RegisterDirect<OverlayHost, OverlayItems>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
+
+    public static readonly DirectProperty<OverlayHost, bool> IsPresentProperty =
+        AvaloniaProperty.RegisterDirect<OverlayHost, bool>(nameof(IsPresent), o => o.IsPresent,
+            (o, v) => o.IsPresent = v);
+
+
+    public static readonly DirectProperty<OverlayHost, IPageTransition> TransitionProperty =
+        AvaloniaProperty.RegisterDirect<OverlayHost, IPageTransition>(nameof(Transition), o => o.Transition,
+            (o, v) => o.Transition = v);
+
+    private bool _isPresent;
+
+    private OverlayItems _items = new();
+
+    private Border? _stage;
+
+    private IPageTransition _transition = new PageCoverOverTransition(null, DirectionFrom.Bottom);
+
+    [Content]
+    public OverlayItems Items
+    {
+        get => _items;
+        set => SetAndRaise(ItemsProperty, ref _items, value);
+    }
+
+    public bool IsPresent
+    {
+        get => _isPresent;
+        set => SetAndRaise(IsPresentProperty, ref _isPresent, value);
+    }
+
+    public IPageTransition Transition
+    {
+        get => _transition;
+        set => SetAndRaise(TransitionProperty, ref _transition, value);
+    }
+
+    protected override Type StyleKeyOverride => typeof(OverlayHost);
+
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+
+        _stage = e.NameScope.Find<Border>(PART_Stage);
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == IsPresentProperty) PseudoClasses.Set(":present", change.GetNewValue<bool>());
+    }
+
+    public void Pop(object control)
+    {
+        IsVisible = true;
+        var item = new OverlayItem
+        {
+            Content = control
+        };
+        Items.Add(item);
+        item.DismissCommand = new InternalDismissCommand(this, item);
+
+
+        // Make control attached to visual tree ensuring its parent is valid
+        // Make OnApplyTemplate called and _stage bound
+        UpdateLayout();
+        // if (control is Visual visual) Transition.Start(null, visual, true, CancellationToken.None);
+        Transition.Start(null, item.ContentPresenter, true, CancellationToken.None);
+
+        if (Items.Count == 1)
+        {
+            IsPresent = true;
+            ArgumentNullException.ThrowIfNull(_stage);
+            _stageInAnimation.RunAsync(_stage);
+        }
+    }
+
+    public void Dismiss(OverlayItem item)
+    {
+        void Clean()
+        {
+            Items.Remove(item);
+            if (Items.Count == 0)
+            {
+                IsPresent = false;
+                ArgumentNullException.ThrowIfNull(_stage);
+                _stageOutAnimation.RunAsync(_stage)
+                    .ContinueWith(_ => Dispatcher.UIThread.Post(() => IsVisible = false));
+            }
+        }
+
+        Transition.Start(item.ContentPresenter, null, false, CancellationToken.None)
+            .ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
+    }
+
+    public void Dismiss()
+    {
+        Dismiss(Items.Last());
+    }
+
+    private class InternalDismissCommand(OverlayHost host, OverlayItem item) : ICommand
+    {
+        public bool CanExecute(object? parameter)
+        {
+            return host.Items.Contains(item);
+        }
+
+        public void Execute(object? parameter)
+        {
+            host.Dismiss(item);
+        }
+
+        public event EventHandler? CanExecuteChanged;
+
+        internal void OnCanExecutedChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
 
     #region _stageInAnimation & _stageOutAnimation
 
@@ -114,110 +238,4 @@ public class OverlayHost : TemplatedControl
     }
 
     #endregion
-
-    public static readonly DirectProperty<OverlayHost, OverlayItems> ItemsProperty =
-        AvaloniaProperty.RegisterDirect<OverlayHost, OverlayItems>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
-
-    private OverlayItems _items = new();
-
-    [Content]
-    public OverlayItems Items
-    {
-        get => _items;
-        set => SetAndRaise(ItemsProperty, ref _items, value);
-    }
-
-    public static readonly DirectProperty<OverlayHost, IPageTransition> TransitionProperty =
-        AvaloniaProperty.RegisterDirect<OverlayHost, IPageTransition>(nameof(Transition), o => o.Transition,
-            (o, v) => o.Transition = v);
-
-    private IPageTransition _transition = new PageCoverOverTransition(null, DirectionFrom.Bottom);
-
-    public IPageTransition Transition
-    {
-        get => _transition;
-        set => SetAndRaise(TransitionProperty, ref _transition, value);
-    }
-
-    protected override Type StyleKeyOverride => typeof(OverlayHost);
-
-    private Border? _stage;
-
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
-    {
-        base.OnApplyTemplate(e);
-
-        _stage = e.NameScope.Find<Border>(PART_Stage);
-    }
-
-    public void Pop(object control)
-    {
-        IsVisible = true;
-        var item = new OverlayItem
-        {
-            Content = control
-        };
-        Items.Add(item);
-
-        item.DismissCommand = new InternalDismissCommand(this, item);
-
-
-        // Make control attached to visual tree ensuring its parent is valid
-        // Make OnApplyTemplate called and _stage bound
-        UpdateLayout();
-        // if (control is Visual visual) Transition.Start(null, visual, true, CancellationToken.None);
-        Transition.Start(null, item.ContentPresenter, true, CancellationToken.None);
-
-        #region Smoke Background Animation
-
-        if (Items.Count == 1)
-        {
-            ArgumentNullException.ThrowIfNull(_stage);
-            _stageInAnimation.RunAsync(_stage);
-        }
-
-        #endregion
-    }
-
-    public void Dismiss(OverlayItem item)
-    {
-        void Clean()
-        {
-            Items.Remove(item);
-            if (Items.Count == 0)
-            {
-                ArgumentNullException.ThrowIfNull(_stage);
-                _stageOutAnimation.RunAsync(_stage)
-                    .ContinueWith(_ => Dispatcher.UIThread.Post(() => IsVisible = false));
-            }
-        }
-
-        Transition.Start(item.ContentPresenter, null, false, CancellationToken.None)
-            .ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
-    }
-
-    public void Dismiss()
-    {
-        Dismiss(Items.Last());
-    }
-
-    private class InternalDismissCommand(OverlayHost host, OverlayItem item) : ICommand
-    {
-        public bool CanExecute(object? parameter)
-        {
-            return host.Items.Contains(item);
-        }
-
-        public void Execute(object? parameter)
-        {
-            host.Dismiss(item);
-        }
-
-        public event EventHandler? CanExecuteChanged;
-
-        internal void OnCanExecutedChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
 }

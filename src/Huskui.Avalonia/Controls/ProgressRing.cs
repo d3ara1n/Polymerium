@@ -15,38 +15,14 @@ public class ProgressRing : RangeBase
     public static readonly StyledProperty<bool> IsIndeterminateProperty =
         AvaloniaProperty.Register<ProgressRing, bool>(nameof(IsIndeterminate));
 
-    public bool IsIndeterminate
-    {
-        get => GetValue(IsIndeterminateProperty);
-        set => SetValue(IsIndeterminateProperty, value);
-    }
-
     public static readonly StyledProperty<bool> ShowProgressTextProperty =
         AvaloniaProperty.Register<ProgressRing, bool>(nameof(ShowProgressText));
-
-    public bool ShowProgressText
-    {
-        get => GetValue(ShowProgressTextProperty);
-        set => SetValue(ShowProgressTextProperty, value);
-    }
 
     public static readonly StyledProperty<string> ProgressTextFormatProperty =
         AvaloniaProperty.Register<ProgressRing, string>(nameof(ProgressTextFormat), "{1:0}%");
 
-    public string ProgressTextFormat
-    {
-        get => GetValue(ProgressTextFormatProperty);
-        set => SetValue(ProgressTextFormatProperty, value);
-    }
-
     public static readonly StyledProperty<double> StrokeWidthProperty =
         AvaloniaProperty.Register<ProgressRing, double>(nameof(StrokeWidth), 4);
-
-    public double StrokeWidth
-    {
-        get => GetValue(StrokeWidthProperty);
-        set => SetValue(StrokeWidthProperty, value);
-    }
 
 
     public static readonly DirectProperty<ProgressRing, double> PercentageProperty =
@@ -54,7 +30,33 @@ public class ProgressRing : RangeBase
             nameof(Percentage),
             o => o.Percentage);
 
+    private Arc? _indicator;
+
     private double _percentage;
+
+    public bool IsIndeterminate
+    {
+        get => GetValue(IsIndeterminateProperty);
+        set => SetValue(IsIndeterminateProperty, value);
+    }
+
+    public bool ShowProgressText
+    {
+        get => GetValue(ShowProgressTextProperty);
+        set => SetValue(ShowProgressTextProperty, value);
+    }
+
+    public string ProgressTextFormat
+    {
+        get => GetValue(ProgressTextFormatProperty);
+        set => SetValue(ProgressTextFormatProperty, value);
+    }
+
+    public double StrokeWidth
+    {
+        get => GetValue(StrokeWidthProperty);
+        set => SetValue(StrokeWidthProperty, value);
+    }
 
     public double Percentage
     {
@@ -74,8 +76,6 @@ public class ProgressRing : RangeBase
             change.Property == IsIndeterminateProperty)
             UpdateIndicator();
     }
-
-    private Arc? _indicator;
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {

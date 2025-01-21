@@ -23,7 +23,7 @@
         <ResourceInclude Source="/Controls/OverlayHost.axaml" />
         <ResourceInclude Source="/Controls/OverlayItem.axaml" />
         <ResourceInclude Source="/Controls/Page.axaml" />
-        <ResourceInclude Source="/Controls/PopupRoot.axaml" />
+        <ResourceInclude Source="/Controls/Popup.axaml" />
         <ResourceInclude Source="/Controls/ProgressBar.axaml" />
         <ResourceInclude Source="/Controls/ProgressRing.axaml" />
         <ResourceInclude Source="/Controls/ScrollBar.axaml" />
