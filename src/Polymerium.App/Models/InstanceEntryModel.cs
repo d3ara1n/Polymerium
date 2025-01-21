@@ -1,8 +1,9 @@
-﻿using Polymerium.App.Facilities;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public class InstanceEntryModel : ModelBase
+public partial class InstanceEntryModel : ModelBase
 {
     public InstanceEntryModel(string key, string name, string version, string? loader, string? source)
     {
@@ -10,4 +11,10 @@ public class InstanceEntryModel : ModelBase
     }
 
     public InstanceBasicModel Basic { get; }
+
+    #region Reactive Properties
+
+    [ObservableProperty] private InstanceEntryState _state;
+
+    #endregion
 }

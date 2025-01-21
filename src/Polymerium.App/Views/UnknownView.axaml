@@ -125,7 +125,7 @@
                                 <TextBlock Text="Make it REAL" />
                             </CheckBox>
                         </DockPanel>
-                        <husk:InfoBar Header="You known what?">
+                        <husk:InfoBar Header="You know what?">
                             <DockPanel>
                                 <HyperlinkButton DockPanel.Dock="Bottom" Content="Undo" />
                                 <TextBlock TextWrapping="Wrap"

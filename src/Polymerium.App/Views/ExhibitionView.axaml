@@ -13,7 +13,10 @@
     <Panel>
         <Grid RowDefinitions="Auto,0,*">
             <StackPanel Grid.Row="0" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="6">
-                <husk:Card BorderBrush="Transparent" Background="{DynamicResource ControlBackgroundBrush}">
+                <husk:Card BorderBrush="Transparent">
+                    <husk:Card.Background>
+                        <ImageBrush Source="{Binding HeaderImage}" Stretch="Fill" />
+                    </husk:Card.Background>
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <Button Theme="{StaticResource OutlineButtonTheme}"
@@ -29,7 +32,7 @@
                             <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
                                       SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
                                 <ComboBox.ItemTemplate>
-                                    <DataTemplate DataType="m:RepositoryBaiscModel">
+                                    <DataTemplate DataType="m:RepositoryBasicModel">
                                         <TextBlock Text="{Binding Name}" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
@@ -57,10 +60,9 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBlock VerticalAlignment="Center">
-                            <Run Text="(Results:" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                        <TextBlock VerticalAlignment="Center" Margin="8,0">
+                            <Run Text="Results:" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                             <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
-                            <Run Text=")" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                         </TextBlock>
                         <husk:ProgressRing IsVisible="{Binding Exhibits.IsFetching,FallbackValue=False}" Height="18"
                                            Width="18" StrokeWidth="3" IsIndeterminate="True" />
@@ -104,14 +106,14 @@
                                         <TextBlock Text="{Binding Author}"
                                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
                                         <icons:PackIconLucide Kind="CircleArrowDown" Height="12"
                                                               VerticalAlignment="Center"
                                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                         <TextBlock Text="{Binding Downloads}"
                                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
                                         <icons:PackIconLucide Kind="Clock"
                                                               Height="12" VerticalAlignment="Center"
                                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
@@ -154,9 +156,9 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate x:DataType="x:String">
-                                                <husk:Tag Margin="4">
+                                                <husk:Tag Margin="4,0">
                                                     <TextBlock Text="{Binding}"
-                                                               FontSize="{StaticResource MediumFontSize}" />
+                                                               FontSize="{StaticResource SmallFontSize}" />
                                                 </husk:Tag>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

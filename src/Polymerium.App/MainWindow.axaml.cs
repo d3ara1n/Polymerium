@@ -125,7 +125,7 @@ public partial class MainWindow : AppWindow
 
     #region Profile Service
 
-    internal void SubscribeProfileList(ProfileService profile)
+    internal void SubscribeProfileList(ProfileManager profile)
     {
         profile.ProfileAdded += OnProfileAdded;
         profile.ProfileUpdated += OnProfileUpdated;
@@ -139,14 +139,14 @@ public partial class MainWindow : AppWindow
         }
     }
 
-    private void OnProfileAdded(object? sender, ProfileService.ProfileChangedEventArgs e)
+    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
         var model = new InstanceEntryModel(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader,
             e.Value.Setup.Source);
         Profiles.Add(model);
     }
 
-    private void OnProfileUpdated(object? sender, ProfileService.ProfileChangedEventArgs e)
+    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
         var model = Profiles.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is not null)
@@ -155,7 +155,7 @@ public partial class MainWindow : AppWindow
         }
     }
 
-    private void OnProfileRemoved(object? sender, ProfileService.ProfileChangedEventArgs e)
+    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
         var model = Profiles.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is not null) Profiles.Remove(model);

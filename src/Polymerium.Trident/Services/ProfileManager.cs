@@ -7,13 +7,13 @@ using Trident.Abstractions.FileModels;
 namespace Polymerium.Trident.Services;
 
 // 只有 profile.json 是共享文件，其他都是独占文件，因此不对其他文件做 Guard 保护。
-public class ProfileService : IDisposable
+public class ProfileManager : IDisposable
 {
     private readonly IList<ProfileHandle> _profiles = new List<ProfileHandle>();
     private readonly IList<ReservedKey> _reservedKeys = new List<ReservedKey>();
     private readonly JsonSerializerOptions _serializerOptions;
 
-    public ProfileService()
+    public ProfileManager()
     {
         _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web)
         {
@@ -80,9 +80,9 @@ public class ProfileService : IDisposable
 
     public class ReservedKey : IDisposable
     {
-        private readonly ProfileService _root;
+        private readonly ProfileManager _root;
 
-        internal ReservedKey(string key, ProfileService root)
+        internal ReservedKey(string key, ProfileManager root)
         {
             _root = root;
             Key = key;
@@ -149,9 +149,9 @@ public class ProfileService : IDisposable
     public class ProfileGuard : IAsyncDisposable
     {
         private readonly ProfileHandle _handle;
-        private readonly ProfileService _root;
+        private readonly ProfileManager _root;
 
-        internal ProfileGuard(ProfileService root, ProfileHandle handle)
+        internal ProfileGuard(ProfileManager root, ProfileHandle handle)
         {
             _root = root;
             _handle = handle;
