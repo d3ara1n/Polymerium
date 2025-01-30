@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Services;
@@ -10,8 +11,8 @@ namespace Polymerium.Trident.Services;
 public class ProfileManager : IDisposable
 {
     private readonly IList<ProfileHandle> _profiles = new List<ProfileHandle>();
-    private readonly IList<ReservedKey> _reservedKeys = new List<ReservedKey>();
     private readonly JsonSerializerOptions _serializerOptions;
+    internal readonly IList<ReservedKey> ReservedKeys = new List<ReservedKey>();
 
     public ProfileManager()
     {
@@ -70,104 +71,11 @@ public class ProfileManager : IDisposable
     public ReservedKey RequestKey(string key)
     {
         var sanitized = string.Join(string.Empty, key.Where(x => !Path.GetInvalidFileNameChars().Contains(x)));
-        while (_profiles.Any(x => x.Key == sanitized) || _reservedKeys.Any(x => x.Key == sanitized)) sanitized += '_';
+        while (_profiles.Any(x => x.Key == sanitized) || ReservedKeys.Any(x => x.Key == sanitized)) sanitized += '_';
         var rv = new ReservedKey(sanitized, this);
-        _reservedKeys.Add(rv);
+        ReservedKeys.Add(rv);
         return rv;
     }
-
-    #region Key requseted sub classes
-
-    public class ReservedKey : IDisposable
-    {
-        private readonly ProfileManager _root;
-
-        internal ReservedKey(string key, ProfileManager root)
-        {
-            _root = root;
-            Key = key;
-        }
-
-        public string Key { get; }
-
-        public void Dispose()
-        {
-            // 可能会遇到临界问题，但概率很低
-            _root._reservedKeys.Remove(this);
-        }
-    }
-
-    #endregion
-
-    #region Handle & Guard sub classes
-
-    internal class ProfileHandle(string key, Profile value, string path, JsonSerializerOptions options)
-        : IAsyncDisposable
-    {
-        public string Key => key;
-        public Profile Value => value;
-
-        internal Task SaveAsync()
-        {
-            var json = JsonSerializer.Serialize(Value, options);
-            var dir = Path.GetDirectoryName(path);
-            if (dir is not null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
-            return File.WriteAllTextAsync(path, json);
-        }
-
-        public static ProfileHandle Create(string key, Profile value, string path, JsonSerializerOptions options)
-        {
-            return new ProfileHandle(key, value, path, options);
-        }
-
-        public static ProfileHandle Create(string key, string path, JsonSerializerOptions options)
-        {
-            if (File.Exists(path))
-            {
-                var profile = JsonSerializer.Deserialize<Profile>(File.ReadAllText(path), options)!;
-                return new ProfileHandle(key, profile, path, options);
-            }
-
-            throw new FileNotFoundException("Profile not found");
-        }
-
-        #region Dispose
-
-        private bool _isDisposing;
-
-        public async ValueTask DisposeAsync()
-        {
-            if (_isDisposing) return;
-            _isDisposing = true;
-
-            await SaveAsync();
-        }
-
-        #endregion
-    }
-
-    public class ProfileGuard : IAsyncDisposable
-    {
-        private readonly ProfileHandle _handle;
-        private readonly ProfileManager _root;
-
-        internal ProfileGuard(ProfileManager root, ProfileHandle handle)
-        {
-            _root = root;
-            _handle = handle;
-        }
-
-        public string Key => _handle.Key;
-        public Profile Value => _handle.Value;
-
-        public async ValueTask DisposeAsync()
-        {
-            await _handle.SaveAsync();
-            _root.OnProfileUpdated(Key, _handle.Value);
-        }
-    }
-
-    #endregion
 
     #region Profile Changed Event
 
@@ -183,17 +91,17 @@ public class ProfileManager : IDisposable
 
     public event EventHandler<ProfileChangedEventArgs>? ProfileAdded;
 
-    private void OnProfileUpdated(string key, Profile profile)
+    internal void OnProfileUpdated(string key, Profile profile)
     {
         ProfileUpdated?.Invoke(this, new ProfileChangedEventArgs(key, profile));
     }
 
-    private void OnProfileRemoved(string key, Profile profile)
+    internal void OnProfileRemoved(string key, Profile profile)
     {
         ProfileRemoved?.Invoke(this, new ProfileChangedEventArgs(key, profile));
     }
 
-    private void OnProfileAdded(string key, Profile profile)
+    internal void OnProfileAdded(string key, Profile profile)
     {
         ProfileAdded?.Invoke(this, new ProfileChangedEventArgs(key, profile));
     }

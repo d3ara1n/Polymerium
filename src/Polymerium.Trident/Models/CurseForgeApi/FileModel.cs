@@ -14,7 +14,7 @@ public record FileModel(
     ulong FileLength,
     ulong DownloadCount,
     ulong? FileSizeOnDisk,
-    Uri DownloadUrl,
+    Uri? DownloadUrl,
     IReadOnlyList<string> GameVersions,
     IReadOnlyList<SortableGameVersionModel> SortableGameVersions,
     IReadOnlyList<FileModel.FileDependency> Dependencies,

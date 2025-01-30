@@ -2,6 +2,7 @@
 
 public enum ResourceKind
 {
+    Unknown,
     Modpack,
     Mod,
     World,

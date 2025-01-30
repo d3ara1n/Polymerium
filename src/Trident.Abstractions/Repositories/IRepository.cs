@@ -8,7 +8,7 @@ public interface IRepository
     string Label { get; }
     Task<RepositoryStatus> CheckStatusAsync();
     Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter);
-    Task<Project> QueryAsync(string? @namespace, string name);
-    Task<Package> ResolveAsync(string? @namespace, string name, string? version, Filter filter);
-    Task<IPaginationHandle<Version>> InspectAsync(string? @namespace, string name, Filter filter);
+    Task<Project> QueryAsync(string? ns, string pid);
+    Task<Package> ResolveAsync(string? ns, string pid, string? vid, Filter filter);
+    Task<IPaginationHandle<Version>> InspectAsync(string? ns, string pid, Filter filter);
 }

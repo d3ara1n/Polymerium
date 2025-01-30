@@ -4,8 +4,14 @@ namespace Polymerium.Trident.Services.Instances;
 
 public class InstallTracker(
     string key,
-    TrackerHandler handler,
+    Func<TrackerBase, Task> handler,
     Action<TrackerBase>? onCompleted = null,
-    CancellationToken token = default) : TrackerBase(key, handler, onCompleted, token)
+    CancellationToken token = default) : TrackerBase(key, handler, onCompleted, token), IProgress<double?>
 {
+    public double? Progress { get; private set; }
+
+    public void Report(double? value)
+    {
+        Progress = value;
+    }
 }

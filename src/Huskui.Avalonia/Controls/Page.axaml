@@ -5,6 +5,8 @@
 
     <Thickness x:Key="PageContentMargin">16,56,16,16</Thickness>
     <Thickness x:Key="PageHeaderlessContentMargin">16</Thickness>
+    <Thickness x:Key="PageToplessContentMargin">16,0,16,16</Thickness>
+    <Thickness x:Key="PageBottomlessContentMargin">16,56,16,0</Thickness>
 
     <ControlTheme x:Key="PageHeaderTextBlockTheme" TargetType="TextBlock">
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />

@@ -2,8 +2,71 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                      xmlns:controls="using:Polymerium.App.Controls" Header="Instance Setup"
-                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                      x:Class="Polymerium.App.Views.InstanceSetupView">
-    Welcome to Avalonia!
+    <Grid ColumnDefinitions="*,12,Auto" RowDefinitions="Auto,0,*">
+        <!-- 基本信息查看与更新、 Loader 切换 -->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto"
+              Margin="{StaticResource PageContentMargin}">
+            <StackPanel Grid.Column="0" Spacing="4">
+                <TextBlock Text="Hello Kitty" FontSize="{StaticResource ExtraLargeFontSize}" />
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="Minecraft:" />
+                    <TextBlock Text="1.21.1" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="Mod Loader:" />
+                    <TextBlock>
+                        <Run Text="NeoForge" />
+                        <Run Text="21.1.48" />
+                    </TextBlock>
+                    <HyperlinkButton Content="Switch" />
+                </StackPanel>
+                <husk:InfoBar>
+                    <TextBlock Text="[Stage] and [Stash] apply items to deployment while [Draft] does not." />
+                </husk:InfoBar>
+            </StackPanel>
+            <husk:Card Grid.Column="2" MaxWidth="360">
+                <Grid RowDefinitions="*,8,Auto">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8">
+                        <Image Source="/Assets/Images/Placeholders/Dirt.png" Height="38" Width="38"
+                               Stretch="UniformToFill" />
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="All The Dirt 10 - ATD10" FontSize="{StaticResource LargeFontSize}" />
+                            <HyperlinkButton>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock Text="CURSEFORGE" />
+                                    <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </StackPanel>
+                    </StackPanel>
+                    <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto">
+                        <ComboBox Grid.Column="0">
+                            <ComboBoxItem>
+                                <TextBlock Text="0.9.2" />
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <Button Grid.Column="2" Content="Update" />
+                    </Grid>
+                </Grid>
+            </husk:Card>
+        </Grid>
+        <Panel Grid.Row="2" Grid.Column="0">
+            <TabControl Padding="{StaticResource PageToplessContentMargin}">
+                <TabItem Header="Stage">
+                    <ScrollViewer />
+                </TabItem>
+                <TabItem Header="Stash" />
+            </TabControl>
+        </Panel>
+        <Panel Grid.Row="2" Grid.Column="2" Background="{DynamicResource Layer1BackgroundBrush}">
+            <TabControl Padding="{StaticResource PageHeaderlessContentMargin}">
+                <TabItem Header="Draft" />
+            </TabControl>
+        </Panel>
+    </Grid>
 </controls:ScopedPage>

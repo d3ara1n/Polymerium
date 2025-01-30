@@ -20,7 +20,8 @@ public static class Startup
         services
             .AddCurseForge()
             .AddSingleton<ProfileManager>()
-            .AddSingleton<RepositoryAgent>();
+            .AddSingleton<RepositoryAgent>()
+            .AddSingleton<InstanceManager>();
 
 
         // App

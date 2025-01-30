@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using FluentIcons.Avalonia;
 using Huskui.Avalonia.Extensions;
 using Microsoft.Extensions.Hosting;
 
@@ -32,6 +33,7 @@ internal static class Program
         return AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithOutfitFont()
+            .UseSegoeMetrics()
             .LogToTrace();
     }
 }
