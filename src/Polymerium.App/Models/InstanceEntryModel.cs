@@ -15,6 +15,7 @@ public partial class InstanceEntryModel : ModelBase
     #region Reactive Properties
 
     [ObservableProperty] private InstanceEntryState _state;
+    [ObservableProperty] private double? _progress;
 
     #endregion
 }

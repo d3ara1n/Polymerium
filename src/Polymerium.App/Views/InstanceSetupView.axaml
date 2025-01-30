@@ -25,7 +25,7 @@
                     </TextBlock>
                     <HyperlinkButton Content="Switch" />
                 </StackPanel>
-                <husk:InfoBar>
+                <husk:InfoBar Background="{DynamicResource Card3BackgroundBrush}">
                     <TextBlock Text="[Stage] and [Stash] apply items to deployment while [Draft] does not." />
                 </husk:InfoBar>
             </StackPanel>

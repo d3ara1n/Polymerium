@@ -29,11 +29,13 @@ public partial class ExhibitionViewModel : ViewModelBase
 {
     private readonly RepositoryAgent _agent;
     private readonly IHttpClientFactory _factory;
+    private readonly InstanceManager _instanceManager;
 
-    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory)
+    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager)
     {
         _agent = agent;
         _factory = factory;
+        _instanceManager = instanceManager;
         // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x switch
         {
@@ -110,7 +112,7 @@ public partial class ExhibitionViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task Search(string query)
+    private async Task SearchAsync(string query)
     {
         try
         {
@@ -148,7 +150,7 @@ public partial class ExhibitionViewModel : ViewModelBase
                     Debug.WriteLine(ex);
                 }
 
-                return Enumerable.Empty<ExhibitModel>();
+                return [];
             });
             Exhibits = source;
         }
@@ -157,6 +159,12 @@ public partial class ExhibitionViewModel : ViewModelBase
             // TODO: pop notification
             Debug.WriteLine(ex);
         }
+    }
+
+    [RelayCommand]
+    private void Install(ExhibitModel exhibit)
+    {
+        _instanceManager.Install(exhibit.Name, exhibit.Label, exhibit.Ns, exhibit.Pid, null);
     }
 
     #endregion

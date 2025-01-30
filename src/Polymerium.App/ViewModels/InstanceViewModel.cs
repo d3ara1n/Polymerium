@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -36,7 +37,7 @@ public partial class InstanceViewModel : ViewModelBase
                 var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
                 Screenshot = screenshotPath is not null
                     ? new Bitmap(screenshotPath)
-                    : new Bitmap(AssetUriIndex.WALLPAPER_IMAGE);
+                    : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.WALLPAPER_IMAGE)));
                 LaunchBarModel = new InstanceLaunchBarModel();
                 PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
                 StatsChartSeries =

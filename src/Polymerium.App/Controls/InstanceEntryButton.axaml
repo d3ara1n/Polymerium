@@ -10,7 +10,7 @@
                 <local:InstanceEntryButton>
                     <dm:DesignInstanceBasicModel />
                 </local:InstanceEntryButton>
-                <local:InstanceEntryButton State="Installing">
+                <local:InstanceEntryButton State="Installing" Progress="50">
                     <dm:DesignInstanceBasicModel />
                 </local:InstanceEntryButton>
                 <local:InstanceEntryButton State="Updating">
@@ -49,25 +49,29 @@
                         <Border BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}" />
-                        <Image HorizontalAlignment="Right" Opacity="0.5" VerticalAlignment="Center"
-                               Height="{Binding Bounds.Height,RelativeSource={RelativeSource TemplatedParent}}"
-                               Source="{Binding Basic.Thumbnail,FallbackValue={x:Null}, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                            <Image.OpacityMask>
+                        <Rectangle HorizontalAlignment="Right" Opacity="0.5"
+                                   Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <Rectangle.Fill>
+                                <ImageBrush
+                                    Source="{Binding Basic.Thumbnail,FallbackValue={x:Null}, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            </Rectangle.Fill>
+                            <Rectangle.OpacityMask>
                                 <LinearGradientBrush StartPoint="0%,50%"
                                                      EndPoint="100%,50%">
                                     <GradientStop Offset="0"
                                                   Color="Transparent" />
                                     <GradientStop Offset="1" Color="Black" />
                                 </LinearGradientBrush>
-                            </Image.OpacityMask>
-                        </Image>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
                         <ProgressBar Name="Progress" CornerRadius="0" Height="2"
                                      VerticalAlignment="Bottom" IsVisible="False"
-                                     IsIndeterminate="True">
+                                     IsIndeterminate="{TemplateBinding Progress,Converter={x:Static ObjectConverters.IsNull}}"
+                                     Value="{TemplateBinding Progress}">
                             <ProgressBar.Transitions>
                                 <Transitions>
-                                    <DoubleTransition Property="Value"
-                                                      Duration="{StaticResource ControlFastestAnimationDuration}" />
+                                    <DoubleTransition Property="Value" Easing="SineEaseOut"
+                                                      Duration="{StaticResource ControlNormalAnimationDuration}" />
                                 </Transitions>
                             </ProgressBar.Transitions>
                         </ProgressBar>

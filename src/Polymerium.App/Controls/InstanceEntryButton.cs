@@ -33,4 +33,18 @@ public class InstanceEntryButton : Button
         get => _state;
         set => SetAndRaise(StateProperty, ref _state, value);
     }
+
+    public static readonly DirectProperty<InstanceEntryButton, double?> ProgressProperty =
+        AvaloniaProperty.RegisterDirect<InstanceEntryButton, double?>(nameof(Progress), o => o.Progress,
+            (o, v) => o.Progress = v);
+
+    private double? _progress;
+
+    public double? Progress
+    {
+        get => _progress;
+        set => SetAndRaise(ProgressProperty, ref _progress, value);
+    }
+
+    
 }
