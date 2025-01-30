@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Polymerium.Trident.Models.CurseForgePack;
+using Polymerium.Trident.Services;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Utilities;
@@ -27,7 +28,11 @@ public class CurseForgeImporter : IProfileImporter
         return new ImportedProfileContainer(new Profile(manifest.Name, new Profile.Rice(pack.Reference is not null
                     ? PackageHelper.ToPurl(pack.Reference)
                     : null, manifest.Minecraft.Version, LoaderHelper.ToLurl(loader.Identity, loader.Version),
-                new List<string>(), new List<string>(), new List<string>()), new Dictionary<string, object>()),
+                manifest.Files.Select(x =>
+                        PackageHelper.ToPurl(CurseForgeService.LABEL, null, x.ProjectId.ToString(),
+                            x.FileId.ToString()))
+                    .ToList(),
+                new List<string>(), new List<string>()), new Dictionary<string, object>()),
             pack.FileNames.Where(x =>
                     x.StartsWith(manifest.Overrides) && x != manifest.Overrides &&
                     x.Length > manifest.Overrides.Length + 1)
