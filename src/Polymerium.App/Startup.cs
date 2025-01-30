@@ -21,6 +21,7 @@ public static class Startup
             .AddCurseForge()
             .AddSingleton<ProfileManager>()
             .AddSingleton<RepositoryAgent>()
+            .AddSingleton<ImporterAgent>()
             .AddSingleton<InstanceManager>();
 
 

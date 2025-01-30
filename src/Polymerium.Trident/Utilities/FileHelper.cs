@@ -15,6 +15,7 @@ public static class FileHelper
 
     public static string? PickRandomly(string home, string pattern)
     {
+        if (!Directory.Exists(home)) return null;
         var files = Directory.GetFiles(home, pattern);
         if (files.Length == 0) return null;
 

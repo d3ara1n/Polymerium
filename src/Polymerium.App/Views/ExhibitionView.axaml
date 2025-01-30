@@ -9,7 +9,7 @@
            xmlns:m="using:Polymerium.App.Models" ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:ExhibitionViewModel" Padding="0"
-           x:Class="Polymerium.App.Views.ExhibitionView">
+           x:Class="Polymerium.App.Views.ExhibitionView" x:Name="Exhibition">
     <Panel>
         <Grid RowDefinitions="Auto,0,*">
             <StackPanel Grid.Row="0" Margin="{StaticResource PageHeaderlessContentMargin}" Spacing="6">
@@ -124,7 +124,9 @@
                                 <husk:Divider Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" />
                                 <DockPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5">
                                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4">
-                                        <Button Classes="Primary Small">
+                                        <Button Classes="Primary Small"
+                                                Command="{Binding #Exhibition.((vm:ExhibitionViewModel)DataContext).InstallCommand}"
+                                                CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal" Spacing="6">
                                                 <icons:PackIconLucide Kind="Download"
                                                                       Height="10" Width="10" VerticalAlignment="Center" />

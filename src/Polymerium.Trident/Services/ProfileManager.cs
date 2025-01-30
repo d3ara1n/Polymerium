@@ -70,11 +70,21 @@ public class ProfileManager : IDisposable
 
     public ReservedKey RequestKey(string key)
     {
-        var sanitized = string.Join(string.Empty, key.Where(x => !Path.GetInvalidFileNameChars().Contains(x)));
+        var sanitized = string.Join(string.Empty,
+            key.Trim().ToLower().Where(x => !Path.GetInvalidFileNameChars().Contains(x))).Replace(' ', '_');
         while (_profiles.Any(x => x.Key == sanitized) || ReservedKeys.Any(x => x.Key == sanitized)) sanitized += '_';
         var rv = new ReservedKey(sanitized, this);
         ReservedKeys.Add(rv);
         return rv;
+    }
+
+    public void Add(ReservedKey key, Profile profile)
+    {
+        var handle = new ProfileHandle(key.Key, profile, PathDef.Default.FileOfProfile(key.Key), _serializerOptions);
+        handle.SaveAsync().Wait();
+        _profiles.Add(handle);
+        key.Dispose();
+        OnProfileAdded(key.Key, profile);
     }
 
     #region Profile Changed Event

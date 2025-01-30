@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using Avalonia.Animation;
 using Avalonia.Collections;
@@ -12,6 +14,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App;
 
@@ -142,10 +145,21 @@ public partial class MainWindow : AppWindow
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
-        if (Entries.Any(x => x.Basic.Key == e.Key)) return;
-        var model = new InstanceEntryModel(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader,
-            e.Value.Setup.Source);
-        Entries.Add(model);
+        var exist = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (exist != null)
+        {
+            exist.Basic.Name = e.Value.Name;
+            exist.Basic.Source = e.Value.Setup.Source;
+            exist.Basic.Version = e.Value.Setup.Version;
+            exist.Basic.Loader = e.Value.Setup.Loader;
+            exist.Basic.UpdateIcon();
+        }
+        else
+        {
+            var model = new InstanceEntryModel(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader,
+                e.Value.Setup.Source);
+            Entries.Add(model);
+        }
     }
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
@@ -174,10 +188,37 @@ public partial class MainWindow : AppWindow
 
     private void OnInstanceInstalling(object? sender, InstallTracker e)
     {
-        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null);
-        model.State = InstanceEntryState.Installing;
+        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
+        {
+            State = InstanceEntryState.Installing
+        };
+        var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000))
+            .Select(_ => model.Progress = e.Progress).Subscribe();
+        e.StateUpdated += (_, state) =>
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.Progress = null;
+                    break;
+                case TrackerState.Faulted:
+                    // TODO: Show notification and remove the entry
+                    Debug.WriteLine(e.FailureReason);
+                    Entries.Remove(model);
+                    progressUpdater.Dispose();
+                    break;
+                case TrackerState.Finished:
+                    // 通过 OnProfileAdded 触发去更新 version loader source 以及 thumbnail，这里不去更新
+                    model.State = InstanceEntryState.Idle;
+                    progressUpdater.Dispose();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        };
         Entries.Add(model);
-        // TODO: 通过 OnProfileUpdated 触发去更新 version loader source 以及 thumbnail
     }
 
     #endregion

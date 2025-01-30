@@ -10,7 +10,7 @@ public class InstallTracker(
 {
     public double? Progress { get; private set; }
 
-    public void Report(double? value)
+    void IProgress<double?>.Report(double? value)
     {
         Progress = value;
     }

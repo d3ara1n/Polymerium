@@ -91,15 +91,23 @@
                     <!-- <AutoCompleteBox/> -->
                     <TextBox DockPanel.Dock="Top" Watermark="Search by names or types" Grid.Column="0" Grid.Row="6"
                              Grid.ColumnSpan="5" />
-                    <ItemsControl Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" ItemsSource="{Binding Entries}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="m:InstanceEntryModel">
-                                <controls:InstanceEntryButton Basic="{Binding Basic}" State="{Binding State}"
-                                                              Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
-                                                              CommandParameter="{Binding Basic.Key}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <ScrollViewer Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5">
+                        <ItemsControl ItemsSource="{Binding Entries}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="m:InstanceEntryModel">
+                                    <controls:InstanceEntryButton Basic="{Binding Basic}" State="{Binding State}"
+                                                                  Progress="{Binding Progress}"
+                                                                  Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
+                                                                  CommandParameter="{Binding Basic.Key}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="4" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
                     <husk:Divider Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="5" />
                     <Button Grid.Column="0" Grid.Row="12" DockPanel.Dock="Left"
                             Theme="{StaticResource GhostButtonTheme}" Click="NavigationButton_OnClick" Tag="0721">

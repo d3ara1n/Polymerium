@@ -3,9 +3,11 @@ using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polymerium.Trident.Clients;
+using Polymerium.Trident.Importers;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
 using Refit;
+using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
 
 namespace Polymerium.Trident.Extensions;
@@ -30,8 +32,9 @@ public static class ServiceCollectionExtensions
             .AddTransientHttpErrorPolicy(builder => builder.RetryAsync());
 
         services
+            .AddSingleton<CurseForgeService>()
             .AddTransient<IRepository, CurseForgeRepository>()
-            .AddSingleton<CurseForgeService>();
+            .AddTransient<IProfileImporter, CurseForgeImporter>();
 
         return services;
     }

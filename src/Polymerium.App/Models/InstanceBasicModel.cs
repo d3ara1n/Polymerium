@@ -19,11 +19,9 @@ public partial class InstanceBasicModel : ModelBase
         Loader = loader;
         Source = source;
 
+        _thumbnail = null!;
 
-        var iconPath = ProfileHelper.PickIcon(key);
-        Thumbnail = iconPath is not null
-            ? new Bitmap(iconPath)
-            : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+        UpdateIcon();
     }
 
     #region Direct Properties
@@ -62,9 +60,31 @@ public partial class InstanceBasicModel : ModelBase
         set
         {
             SetProperty(ref _loader, value);
-            LoaderLabel = "Vanilla";
+
+
+            if (value != null && LoaderHelper.TryParse(value, out var result))
+                // TODO: 从语言文件中选取
+                LoaderLabel = result.Identity switch
+                {
+                    LoaderHelper.LOADERID_FORGE => "Forge",
+                    LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
+                    LoaderHelper.LOADERID_FABRIC => "Fabric",
+                    LoaderHelper.LOADERID_QUILT => "QUILT",
+                    LoaderHelper.LOADERID_FLINT => "Flint",
+                    _ => result.Identity
+                };
+            else
+                LoaderLabel = "Vanilla";
         }
     }
 
     #endregion
+
+    public void UpdateIcon()
+    {
+        var iconPath = ProfileHelper.PickIcon(Key);
+        Thumbnail = iconPath is not null
+            ? new Bitmap(iconPath)
+            : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+    }
 }
