@@ -4,7 +4,7 @@ namespace Trident.Abstractions.Repositories.Resources;
 
 public record Package(
     string Label,
-    string Namespace,
+    string? Namespace,
     string ProjectId,
     string VersionId,
     string ProjectName,
@@ -17,8 +17,9 @@ public record Package(
     ReleaseType ReleaseType,
     DateTimeOffset PublishedAt,
     Uri Download,
+    ulong Size,
     string FileName,
-    string? Hash,
+    string? Sha1,
     Requirement Requirements,
     IEnumerable<Dependency> Dependencies
 )

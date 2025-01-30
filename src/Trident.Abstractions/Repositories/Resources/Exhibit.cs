@@ -8,6 +8,7 @@ public record Exhibit(
     Uri? Thumbnail,
     string Author,
     string Summary,
+    ResourceKind Kind,
     ulong DownloadCount,
     IReadOnlyList<string> Tags,
     Uri Reference,

@@ -18,11 +18,12 @@
                     VerticalAlignment="{TemplateBinding VerticalAlignment}">
                     <DockPanel>
                         <Panel DockPanel.Dock="{TemplateBinding TabStripPlacement}">
-                            <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                            <ItemsPresenter Name="PART_ItemsPresenter"
+                                            Margin="{TemplateBinding Padding}"
+                                            ItemsPanel="{TemplateBinding ItemsPanel}" />
                         </Panel>
                         <ContentPresenter
                             Name="PART_ContentPresenter"
-                            Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             BorderBrush="{TemplateBinding BorderBrush}"

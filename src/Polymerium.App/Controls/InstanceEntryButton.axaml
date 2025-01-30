@@ -13,6 +13,9 @@
                 <local:InstanceEntryButton State="Installing">
                     <dm:DesignInstanceBasicModel />
                 </local:InstanceEntryButton>
+                <local:InstanceEntryButton State="Updating">
+                    <dm:DesignInstanceBasicModel />
+                </local:InstanceEntryButton>
                 <local:InstanceEntryButton State="Preparing">
                     <dm:DesignInstanceBasicModel />
                 </local:InstanceEntryButton>
@@ -94,6 +97,14 @@
                                             <TextBlock Text="INSTALLING" />
                                         </StackPanel>
                                     </husk:Tag>
+                                    <husk:Tag Name="UpdatingTag">
+                                        <StackPanel Orientation="Horizontal"
+                                                    Spacing="4">
+                                            <Ellipse Width="6" Height="6"
+                                                     Fill="{Binding $parent[husk:Tag].Foreground}" />
+                                            <TextBlock Text="UPDATING" />
+                                        </StackPanel>
+                                    </husk:Tag>
                                     <husk:Tag Name="PreparingTag" Classes="Warning">
                                         <StackPanel Orientation="Horizontal"
                                                     Spacing="4">
@@ -148,6 +159,9 @@
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
+            <Style Selector="^ /template/ husk|Tag#UpdatingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
             <Style Selector="^ /template/ husk|Tag#PreparingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
@@ -158,6 +172,35 @@
 
         <Style Selector="^[State=Installing]">
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#UpdatingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#PreparingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#RunningTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ StackPanel#InfoTags">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ ProgressBar#Progress">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#Border">
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource ControlBorderBrush}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^[State=Updating]">
+            <Style Selector="^ /template/ husk|Tag#InstallingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#UpdatingTag">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
             <Style Selector="^ /template/ husk|Tag#PreparingTag">
@@ -183,6 +226,9 @@
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
+            <Style Selector="^ /template/ husk|Tag#UpdatingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
             <Style Selector="^ /template/ husk|Tag#PreparingTag">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
@@ -196,6 +242,9 @@
 
         <Style Selector="^[State=Running]">
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            <Style Selector="^ /template/ husk|Tag#UpdatingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
             <Style Selector="^ /template/ husk|Tag#PreparingTag">

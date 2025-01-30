@@ -156,6 +156,8 @@ public class App : Application
 
             var profile = Program.AppHost.Services.GetRequiredService<ProfileManager>();
             window.SubscribeProfileList(profile);
+            var instance = Program.AppHost.Services.GetRequiredService<InstanceManager>();
+            window.SubscribeState(instance);
 
             #endregion
 

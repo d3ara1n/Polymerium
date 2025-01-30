@@ -2,7 +2,7 @@
 
 public abstract class TrackerBase(
     string key,
-    TrackerHandler handler,
+    Func<TrackerBase, Task> handler,
     Action<TrackerBase>? onCompleted,
     CancellationToken token = default)
 {

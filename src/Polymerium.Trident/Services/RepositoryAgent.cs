@@ -32,4 +32,9 @@ public class RepositoryAgent
     {
         return Redirect(label).SearchAsync(query, filter);
     }
+
+    public Task<Package> ResolveAsync(string label, string? ns, string pid, string? vid, Filter filter)
+    {
+        return Redirect(label).ResolveAsync(ns, pid, vid, filter);
+    }
 }

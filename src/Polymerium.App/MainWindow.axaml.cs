@@ -11,6 +11,7 @@ using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
+using Polymerium.Trident.Services.Instances;
 
 namespace Polymerium.App;
 
@@ -26,7 +27,7 @@ public partial class MainWindow : AppWindow
         ViewInstanceCommand = new RelayCommand<string>(ViewInstance);
     }
 
-    public AvaloniaList<InstanceEntryModel> Profiles { get; } = new();
+    public AvaloniaList<InstanceEntryModel> Entries { get; } = [];
 
     public ICommand ViewInstanceCommand { get; }
 
@@ -125,30 +126,31 @@ public partial class MainWindow : AppWindow
 
     #region Profile Service
 
-    internal void SubscribeProfileList(ProfileManager profile)
+    internal void SubscribeProfileList(ProfileManager manager)
     {
-        profile.ProfileAdded += OnProfileAdded;
-        profile.ProfileUpdated += OnProfileUpdated;
-        profile.ProfileRemoved += OnProfileRemoved;
+        manager.ProfileAdded += OnProfileAdded;
+        manager.ProfileUpdated += OnProfileUpdated;
+        manager.ProfileRemoved += OnProfileRemoved;
 
-        foreach (var (key, item) in profile.Profiles)
+        foreach (var (key, item) in manager.Profiles)
         {
             var model = new InstanceEntryModel(key, item.Name, item.Setup.Version, item.Setup.Loader,
                 item.Setup.Source);
-            Profiles.Add(model);
+            Entries.Add(model);
         }
     }
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
+        if (Entries.Any(x => x.Basic.Key == e.Key)) return;
         var model = new InstanceEntryModel(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader,
             e.Value.Setup.Source);
-        Profiles.Add(model);
+        Entries.Add(model);
     }
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
-        var model = Profiles.FirstOrDefault(x => x.Basic.Key == e.Key);
+        var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is not null)
         {
             // TODO
@@ -157,8 +159,25 @@ public partial class MainWindow : AppWindow
 
     private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
-        var model = Profiles.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is not null) Profiles.Remove(model);
+        var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is not null) Entries.Remove(model);
+    }
+
+    #endregion
+
+    #region State Service
+
+    internal void SubscribeState(InstanceManager manager)
+    {
+        manager.InstanceInstalling += OnInstanceInstalling;
+    }
+
+    private void OnInstanceInstalling(object? sender, InstallTracker e)
+    {
+        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null);
+        model.State = InstanceEntryState.Installing;
+        Entries.Add(model);
+        // TODO: 通过 OnProfileUpdated 触发去更新 version loader source 以及 thumbnail
     }
 
     #endregion
