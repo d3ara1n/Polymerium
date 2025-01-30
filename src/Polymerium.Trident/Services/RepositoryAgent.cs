@@ -1,4 +1,6 @@
-﻿using Trident.Abstractions.Repositories;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.Trident.Services;
@@ -6,9 +8,12 @@ namespace Polymerium.Trident.Services;
 public class RepositoryAgent
 {
     private readonly IReadOnlyDictionary<string, IRepository> _repositories;
+    private readonly ILogger<RepositoryAgent> _logger;
+    private static readonly TimeSpan EXPRIED_IN = TimeSpan.FromDays(1);
 
-    public RepositoryAgent(IEnumerable<IRepository> repositories)
+    public RepositoryAgent(IEnumerable<IRepository> repositories, ILogger<RepositoryAgent> logger)
     {
+        _logger = logger;
         _repositories = repositories.ToDictionary(repository => repository.Label);
     }
 
@@ -35,6 +40,63 @@ public class RepositoryAgent
 
     public Task<Package> ResolveAsync(string label, string? ns, string pid, string? vid, Filter filter)
     {
-        return Redirect(label).ResolveAsync(ns, pid, vid, filter);
+        return RetrieveCachedAsync(
+            vid is not null ? Path.Combine(PathDef.Default.CachePackageDirectory, label, pid, $"{vid}.json") : null,
+            r => Path.Combine(PathDef.Default.CachePackageDirectory, r.Label, r.ProjectId, $"{r.VersionId}.json"),
+            () => Redirect(label).ResolveAsync(ns, pid, vid, filter));
+    }
+
+    private async Task<T> RetrieveCachedAsync<T>(string? cachedPath, Func<T, string>? saveTo, Func<Task<T>> factory)
+    {
+        if (cachedPath != null && File.Exists(cachedPath))
+            try
+            {
+                if (DateTime.UtcNow - File.GetLastWriteTimeUtc(cachedPath) < EXPRIED_IN)
+                {
+                    var content = await File.ReadAllTextAsync(cachedPath);
+                    var cached = JsonSerializer.Deserialize<T>(content);
+                    if (cached != null)
+                    {
+                        _logger.LogDebug("Cache hit: {path}", cachedPath);
+                        return cached;
+                    }
+
+                    _logger.LogDebug("Bad cache hit: {path}", cachedPath);
+                }
+                else
+                {
+                    _logger.LogDebug("Expired cache hit: {path}", cachedPath);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Broken cache hit: {path}", cachedPath);
+            }
+
+        try
+        {
+            var result = await factory();
+            var save = cachedPath ?? saveTo?.Invoke(result);
+            if (save != null)
+            {
+                var content = JsonSerializer.Serialize(result);
+                var dir = Path.GetDirectoryName(save);
+                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir!);
+
+                await File.WriteAllTextAsync(save, content);
+                _logger.LogDebug("Cache missed but recorded: {path}", save);
+            }
+            else
+            {
+                _logger.LogDebug("Cache missed: {obj}", result!.GetType().Name);
+            }
+
+            return result;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Exception occurred: {message}", e.Message);
+            throw;
+        }
     }
 }

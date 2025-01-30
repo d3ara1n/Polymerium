@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
@@ -68,12 +65,6 @@ public partial class InstanceViewModel : ViewModelBase
         }
     }
 
-    protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
-    {
-        // TODO: Load SourceUrl
-        return base.OnInitializedAsync(dispatcher, token);
-    }
-
     #region Injected Services
 
     private readonly ProfileManager _profileManager;
@@ -110,7 +101,7 @@ public partial class InstanceViewModel : ViewModelBase
     [RelayCommand]
     private void GotoSetupView()
     {
-        _navigationService.Navigate<InstanceSetupView>();
+        _navigationService.Navigate<InstanceSetupView>(Basic.Key);
     }
 
 

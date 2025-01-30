@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using System.Net;
 using Polymerium.Trident.Services;
+using Refit;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -7,7 +8,7 @@ using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Repositories;
 
-public class CurseForgeRepository(CurseForgeService service, IMemoryCache cache) : IRepository
+public class CurseForgeRepository(CurseForgeService service) : IRepository
 {
     public string Label => CurseForgeService.LABEL;
 
@@ -43,33 +44,39 @@ public class CurseForgeRepository(CurseForgeService service, IMemoryCache cache)
     {
         if (uint.TryParse(pid, out var modId))
         {
-            var mod = await service.GetModAsync(modId);
-            if (vid is not null)
+            try
             {
-                if (uint.TryParse(vid, out var fileId))
+                var mod = await service.GetModAsync(modId);
+                if (vid is not null)
                 {
-                    var file = await service.GetModFileAsync(modId, fileId);
-                    return service.ToPackage(mod, file);
+                    if (uint.TryParse(vid, out var fileId))
+                    {
+                        var file = await service.GetModFileAsync(modId, fileId);
+                        return service.ToPackage(mod, file);
+                    }
+
+                    throw new FormatException("Vid is not well formatted into fileId");
                 }
                 else
                 {
-                    throw new FormatException("Vid is not well formatted into fileId");
+                    var files = await service.GetModFilesAsync(modId, filter.Version,
+                        service.LoaderIdToType(filter.Loader),
+                        3);
+                    var file = files.FirstOrDefault();
+                    if (file is not null)
+                        return service.ToPackage(mod, file);
+                    throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} has not matched version");
                 }
             }
-            else
+            catch (ApiException ex)
             {
-                var files = await service.GetModFilesAsync(modId, filter.Version, service.LoaderIdToType(filter.Loader),
-                    3);
-                var file = files.FirstOrDefault();
-                if (file is not null)
-                    return service.ToPackage(mod, file);
-                else throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} has not matched version");
+                if (ex.StatusCode == HttpStatusCode.NotFound)
+                    throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} not found in the repository");
+                else throw;
             }
         }
-        else
-        {
-            throw new FormatException("Pid is not well formatted into modId");
-        }
+
+        throw new FormatException("Pid is not well formatted into modId");
     }
 
     public Task<IPaginationHandle<Version>> InspectAsync(string? _, string pid, Filter filter)

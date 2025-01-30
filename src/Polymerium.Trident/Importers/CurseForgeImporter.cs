@@ -9,8 +9,6 @@ namespace Polymerium.Trident.Importers;
 
 public class CurseForgeImporter : IProfileImporter
 {
-    public string IndexFileName { get; } = "manifest.json";
-
     private static readonly Dictionary<string, string> LOADER_MAPPINGS = new()
     {
         ["forge"] = LoaderHelper.LOADERID_FORGE,
@@ -18,6 +16,8 @@ public class CurseForgeImporter : IProfileImporter
         ["fabric"] = LoaderHelper.LOADERID_FABRIC,
         ["quilt"] = LoaderHelper.LOADERID_QUILT
     };
+
+    public string IndexFileName { get; } = "manifest.json";
 
     public async Task<ImportedProfileContainer> ExtractAsync(CompressedProfilePack pack)
     {
