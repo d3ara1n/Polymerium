@@ -54,7 +54,6 @@ public partial class ExhibitionViewModel : ViewModelBase
         if (token.IsCancellationRequested) return;
 
         foreach (var repository in Repositories)
-        {
             if (repository.Loaders.Count == 0 || repository.Versions.Count == 0)
             {
                 var status = await _agent.CheckStatusAsync(repository.Label);
@@ -74,7 +73,6 @@ public partial class ExhibitionViewModel : ViewModelBase
                             : new SemVersion(0, 0, 0),
                         SemVersion.SortOrderComparer).ToList();
             }
-        }
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -132,10 +130,6 @@ public partial class ExhibitionViewModel : ViewModelBase
                             using var client = _factory.CreateClient();
                             var data = await client.GetByteArrayAsync(x.Thumbnail.AbsoluteUri);
                             thumbnail = new Bitmap(new MemoryStream(data));
-                        }
-                        else
-                        {
-                            Debug.WriteLine(x.Thumbnail);
                         }
 
                         return new ExhibitModel(x.Label, x.Namespace, x.Pid, x.Name, x.Summary,

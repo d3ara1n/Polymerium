@@ -30,6 +30,14 @@ public partial class InstanceBasicModel : ModelBase
 
     #endregion
 
+    public void UpdateIcon()
+    {
+        var iconPath = ProfileHelper.PickIcon(Key);
+        Thumbnail = iconPath is not null
+            ? new Bitmap(iconPath)
+            : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+    }
+
     #region Reactive Properties
 
     [ObservableProperty] private string _name;
@@ -79,12 +87,4 @@ public partial class InstanceBasicModel : ModelBase
     }
 
     #endregion
-
-    public void UpdateIcon()
-    {
-        var iconPath = ProfileHelper.PickIcon(Key);
-        Thumbnail = iconPath is not null
-            ? new Bitmap(iconPath)
-            : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
-    }
 }

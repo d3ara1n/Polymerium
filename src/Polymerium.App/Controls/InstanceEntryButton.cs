@@ -16,7 +16,13 @@ public class InstanceEntryButton : Button
         AvaloniaProperty.RegisterDirect<InstanceEntryButton, InstanceEntryState>(nameof(State), o => o.State,
             (o, v) => o.State = v);
 
+    public static readonly DirectProperty<InstanceEntryButton, double?> ProgressProperty =
+        AvaloniaProperty.RegisterDirect<InstanceEntryButton, double?>(nameof(Progress), o => o.Progress,
+            (o, v) => o.Progress = v);
+
     private InstanceBasicModel? _basic;
+
+    private double? _progress;
 
     private InstanceEntryState _state = InstanceEntryState.Idle;
     protected override Type StyleKeyOverride => typeof(InstanceEntryButton);
@@ -34,17 +40,9 @@ public class InstanceEntryButton : Button
         set => SetAndRaise(StateProperty, ref _state, value);
     }
 
-    public static readonly DirectProperty<InstanceEntryButton, double?> ProgressProperty =
-        AvaloniaProperty.RegisterDirect<InstanceEntryButton, double?>(nameof(Progress), o => o.Progress,
-            (o, v) => o.Progress = v);
-
-    private double? _progress;
-
     public double? Progress
     {
         get => _progress;
         set => SetAndRaise(ProgressProperty, ref _progress, value);
     }
-
-    
 }

@@ -3,42 +3,46 @@
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                     xmlns:vm="using:Polymerium.App.ViewModels"
                      xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                      xmlns:controls="using:Polymerium.App.Controls" Header="Instance Setup"
                      mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
-                     x:Class="Polymerium.App.Views.InstanceSetupView">
+                     x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel">
     <Grid ColumnDefinitions="*,12,Auto" RowDefinitions="Auto,0,*">
         <!-- 基本信息查看与更新、 Loader 切换 -->
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto"
               Margin="{StaticResource PageContentMargin}">
             <StackPanel Grid.Column="0" Spacing="4">
-                <TextBlock Text="Hello Kitty" FontSize="{StaticResource ExtraLargeFontSize}" />
+                <TextBlock Text="{Binding Basic.Name,FallbackValue=Name}"
+                           FontSize="{StaticResource ExtraLargeFontSize}" />
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <TextBlock Text="Minecraft:" />
-                    <TextBlock Text="1.21.1" />
+                    <TextBlock Text="{Binding Basic.Version,FallbackValue=Version}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <TextBlock Text="Mod Loader:" />
-                    <TextBlock>
-                        <Run Text="NeoForge" />
-                        <Run Text="21.1.48" />
-                    </TextBlock>
+                    <TextBlock Text="{Binding LoaderLabel,FallbackValue=None}" />
                     <HyperlinkButton Content="Switch" />
                 </StackPanel>
                 <husk:InfoBar Background="{DynamicResource Card3BackgroundBrush}">
                     <TextBlock Text="[Stage] and [Stash] apply items to deployment while [Draft] does not." />
                 </husk:InfoBar>
             </StackPanel>
-            <husk:Card Grid.Column="2" MaxWidth="360">
+            <husk:Card Grid.Column="2" MaxWidth="360"
+                       IsVisible="{Binding Reference,Converter={x:Static ObjectConverters.IsNotNull}}">
                 <Grid RowDefinitions="*,8,Auto">
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8">
                         <Image Source="/Assets/Images/Placeholders/Dirt.png" Height="38" Width="38"
                                Stretch="UniformToFill" />
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="All The Dirt 10 - ATD10" FontSize="{StaticResource LargeFontSize}" />
-                            <HyperlinkButton>
+                            <TextBlock Text="{Binding Reference.Name,FallbackValue=Package Name}"
+                                       FontSize="{StaticResource LargeFontSize}" />
+                            <HyperlinkButton Command="{Binding OpenSourceUrlCommand}"
+                                             CommandParameter="{Binding Reference.SourceUrl,FallbackValue={x:Null}}">
                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <TextBlock Text="CURSEFORGE" />
+                                    <TextBlock
+                                        Text="{Binding Reference.SourceLabel,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
                                     <fi:SymbolIcon Symbol="Open" FontSize="12" />
                                 </StackPanel>
                             </HyperlinkButton>

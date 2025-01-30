@@ -42,7 +42,7 @@
                         </Grid>
                     </StackPanel>
                 </husk:Card>
-                <Grid ColumnDefinitions="*,Auto">
+                <Grid ColumnDefinitions="*,Auto" Name="FilterBar">
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
                         <ComboBox ItemsSource="{Binding SelectedRepository.Versions}"
                                   SelectedItem="{Binding FilteredVersion,Mode=TwoWay}" PlaceholderText="Version">
@@ -172,18 +172,18 @@
                 </husk:InfiniteScrollView.ItemTemplate>
             </husk:InfiniteScrollView>
         </Grid>
-        <Border Name="LoadingStage" Background="{DynamicResource Layer7BackgroundBrush}">
-            <Panel Background="{DynamicResource LayerSolidBackgroundBrush}" VerticalAlignment="Center">
-                <StackPanel Margin="48">
-                    <TextBlock HorizontalAlignment="Center" Text="Downloading basic information..." />
-                    <ProgressBar IsIndeterminate="True" Margin="128,8" />
-                </StackPanel>
-            </Panel>
-        </Border>
+        <!-- <Border Name="LoadingStage" Background="{DynamicResource Layer7BackgroundBrush}"> -->
+        <!--     <Panel Background="{DynamicResource LayerSolidBackgroundBrush}" VerticalAlignment="Center"> -->
+        <!--         <StackPanel Margin="48"> -->
+        <!--             <TextBlock HorizontalAlignment="Center" Text="Downloading basic information..." /> -->
+        <!--             <ProgressBar IsIndeterminate="True" Margin="128,8" /> -->
+        <!--         </StackPanel> -->
+        <!--     </Panel> -->
+        <!-- </Border> -->
     </Panel>
 
     <husk:Page.Styles>
-        <Style Selector=":finished Border#LoadingStage">
+        <Style Selector=":loading Grid#FilterBar">
             <Setter Property="IsVisible" Value="False" />
         </Style>
     </husk:Page.Styles>
