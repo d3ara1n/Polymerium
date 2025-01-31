@@ -11,15 +11,15 @@ public static class PackageHelper
             "^(?<label>[a-zA-Z0-9._-]+):((?<namespace>[a-zA-Z0-9._-]+)/)?(?<identity>[a-zA-Z0-9._-]+)(@(?<version>[a-zA-Z0-9._-]+))?$");
 
     public static bool TryParse(string purl,
-        out (string Label, string Namespace, string Name, string Version) result)
+        out (string Label, string Namespace, string Pid, string Vid) result)
     {
         var match = PATTERN.Match(purl);
         if (match.Success && match.Groups["label"].Success && match.Groups["identity"].Success)
         {
             result.Label = match.Groups["label"].Value;
             result.Namespace = match.Groups["namespace"].Success ? match.Groups["namespace"].Value : null;
-            result.Name = match.Groups["identity"].Value;
-            result.Version = match.Groups["version"].Success ? match.Groups["version"].Value : null;
+            result.Pid = match.Groups["identity"].Value;
+            result.Vid = match.Groups["version"].Success ? match.Groups["version"].Value : null;
 
             return true;
         }

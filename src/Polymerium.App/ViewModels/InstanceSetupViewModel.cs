@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Collections;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using Polymerium.App.Assets;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
@@ -31,7 +34,9 @@ public partial class InstanceSetupViewModel : ViewModelBase
 
     #endregion
 
-    private ProfileGuard _owned;
+    private readonly ProfileGuard _owned;
+    private CancellationTokenSource _cancellationTokenSource;
+    internal const string DATAFORMATS = "never-gonna-give-you-up";
 
     public InstanceSetupViewModel(ViewBag bag, ProfileManager profileManager, RepositoryAgent repositories,
         IHttpClientFactory clientFactory)
@@ -79,34 +84,69 @@ public partial class InstanceSetupViewModel : ViewModelBase
 
     protected override async Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
     {
+        _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var result))
             try
             {
-                using var client = _clientFactory.CreateClient();
-                var package = await _repositories.ResolveAsync(result.Label, result.Namespace, result.Name,
-                    result.Version,
+                var package = await _repositories.ResolveAsync(result.Label, result.Namespace, result.Pid,
+                    result.Vid,
                     Filter.Empty with
                     {
                         Kind = ResourceKind.Modpack
                     });
-                Bitmap thumbnail;
-                if (package.Thumbnail != null)
-                {
-                    var bytes = await client.GetByteArrayAsync(package.Thumbnail, token);
-                    thumbnail = new Bitmap(new MemoryStream(bytes));
-                }
-                else
-                {
-                    thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
-                }
 
                 Reference = new InstanceReferenceModel
                 {
                     Name = package.ProjectName,
-                    Thumbnail = thumbnail,
+                    Thumbnail = package.Thumbnail,
                     SourceUrl = package.Reference,
                     SourceLabel = package.Label
                 };
+
+                InstancePackageModel Load(string purl)
+                {
+                    var model = new InstancePackageModel(purl);
+                    model.Task = Task.Run(async () =>
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1), _cancellationTokenSource.Token);
+                        if (PackageHelper.TryParse(model.Purl, out var v))
+                            try
+                            {
+                                var p = await _repositories.ResolveAsync(v.Label, v.Namespace, v.Pid,
+                                    v.Vid, Filter.Empty);
+                                if (p.Thumbnail is not null)
+                                {
+                                    var c = _clientFactory.CreateClient();
+                                    var b = await c.GetByteArrayAsync(p.Thumbnail, _cancellationTokenSource.Token);
+                                    model.Thumbnail = new Bitmap(new MemoryStream(b));
+                                }
+                                else
+                                {
+                                    model.Thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+                                }
+
+                                model.Name = p.ProjectName;
+                                model.Version = p.VersionName;
+                                model.Summary = p.Summary;
+                                model.Kind = p.Kind;
+                                model.IsLoaded = true;
+                            }
+                            catch
+                            {
+                                // TODO
+                            }
+                    }, _cancellationTokenSource.Token);
+                    return model;
+                }
+
+                var stages = _owned.Value.Setup.Stage.Select(Load).ToList();
+                var stashes = _owned.Value.Setup.Stash.Select(Load).ToList();
+                var drafts = _owned.Value.Setup.Draft.Select(Load).ToList();
+                StageCount = stages.Count;
+                StashCount = stashes.Count;
+                Stage.AddOrUpdate(stages);
+                Stash.AddOrUpdate(stashes);
+                Draft.AddRange(drafts);
             }
             catch (ResourceNotFoundException ex)
             {
@@ -120,6 +160,11 @@ public partial class InstanceSetupViewModel : ViewModelBase
     [ObservableProperty] private InstanceBasicModel _basic;
     [ObservableProperty] private InstanceReferenceModel? _reference;
     [ObservableProperty] private string _loaderLabel;
+    [ObservableProperty] private SourceCache<InstancePackageModel, string> _stage = new(x => x.Purl);
+    [ObservableProperty] private SourceCache<InstancePackageModel, string> _stash = new(x => x.Purl);
+    [ObservableProperty] private AvaloniaList<InstancePackageModel> _draft = [];
+    [ObservableProperty] private int _stageCount;
+    [ObservableProperty] private int _stashCount;
 
     #endregion
 

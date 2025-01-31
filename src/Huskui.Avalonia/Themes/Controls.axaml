@@ -28,6 +28,7 @@
         <ResourceInclude Source="/Controls/ProgressRing.axaml" />
         <ResourceInclude Source="/Controls/ScrollBar.axaml" />
         <ResourceInclude Source="/Controls/ScrollViewer.axaml" />
+        <ResourceInclude Source="/Controls/SkeletonControl.axaml" />
         <ResourceInclude Source="/Controls/StepControl.axaml" />
         <ResourceInclude Source="/Controls/StepItem.axaml" />
         <ResourceInclude Source="/Controls/SwitchPresenter.axaml" />

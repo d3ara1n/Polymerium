@@ -4,6 +4,7 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:vm="using:Polymerium.App.ViewModels"
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                     xmlns:labs="using:Avalonia.Labs.Controls"
                      xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                      xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
                      xmlns:controls="using:Polymerium.App.Controls"
@@ -64,8 +65,8 @@
         </DockPanel>
     </husk:Page.Header>
     <Grid MaxWidth="1024" ColumnDefinitions="Auto,*,Auto" RowDefinitions="108,48,48,*">
-        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Stretch="UniformToFill"
-               Source="{Binding Screenshot}" />
+        <labs:AsyncImage Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Stretch="UniformToFill"
+                         Source="{Binding Screenshot}" />
         <husk:Card Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="64,0">
             <husk:Card.Background>
                 <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"

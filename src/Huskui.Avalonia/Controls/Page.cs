@@ -20,7 +20,7 @@ public class Page : HeaderedContentControl
         AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsHeaderVisible), o => o.IsHeaderVisible,
             (o, v) => o.IsHeaderVisible = v);
 
-    private readonly CancellationTokenSource cancellationTokenSource = new();
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     private bool _canGoBack;
 
@@ -48,8 +48,8 @@ public class Page : HeaderedContentControl
         {
             SetState(true);
             Task.Run(
-                async () => { await Model.InitializeAsync(Dispatcher.UIThread, cancellationTokenSource.Token); },
-                cancellationTokenSource.Token).ContinueWith(t =>
+                async () => { await Model.InitializeAsync(Dispatcher.UIThread, _cancellationTokenSource.Token); },
+                _cancellationTokenSource.Token).ContinueWith(t =>
             {
                 Debug.WriteLine("Navigate to page {0} with [Faulted, Cancelled] = [{1}, {2}]", GetType(), t.IsFaulted,
                     t.IsCanceled);
@@ -66,7 +66,7 @@ public class Page : HeaderedContentControl
     {
         base.OnUnloaded(e);
 
-        if (!cancellationTokenSource.IsCancellationRequested) cancellationTokenSource.Cancel();
+        if (!_cancellationTokenSource.IsCancellationRequested) _cancellationTokenSource.Cancel();
         if (Model is not null)
             Task.Run(async () => await Model.CleanupAsync(CancellationToken.None));
     }

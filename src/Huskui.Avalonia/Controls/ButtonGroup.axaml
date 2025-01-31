@@ -48,7 +48,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
-        <Setter Property="Background" Value="{DynamicResource Overlay12BackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Overlay7BackgroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Template">
             <ControlTemplate>
