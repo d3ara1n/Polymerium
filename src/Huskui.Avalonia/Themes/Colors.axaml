@@ -133,6 +133,14 @@
 
             <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource Sand4Color}" />
 
+            <!-- 颜色固定，用作按钮遮罩 -->
+            <SolidColorBrush x:Key="OverlayLighter1BackgroundBrush" Color="{StaticResource White1Color}" />
+            <SolidColorBrush x:Key="OverlayLighter2BackgroundBrush" Color="{StaticResource White2Color}" />
+            <SolidColorBrush x:Key="OverlayLighter6BackgroundBrush" Color="{StaticResource White6Color}" />
+            <SolidColorBrush x:Key="OverlayDarker1BackgroundBrush" Color="{StaticResource Black1Color}" />
+            <SolidColorBrush x:Key="OverlayDarker2BackgroundBrush" Color="{StaticResource Black2Color}" />
+
+            <!-- 颜色会相对亮暗主题改变，用作层叠项目背景 -->
             <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{StaticResource Sand1Color}" />
             <SolidColorBrush x:Key="Layer0BackgroundBrush" Color="{StaticResource White9Color}" />
             <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{StaticResource Black1Color}" />
@@ -142,8 +150,9 @@
             <SolidColorBrush x:Key="Card2BackgroundBrush" Color="{StaticResource Sand1Color}" />
             <SolidColorBrush x:Key="Card3BackgroundBrush" Color="{StaticResource Sand3Color}" />
 
+            <!-- 仅用于按钮 -->
             <SolidColorBrush x:Key="Overlay1BackgroundBrush" Color="{StaticResource Sand1Color}" />
-            <SolidColorBrush x:Key="Overlay12BackgroundBrush" Color="{StaticResource Sand7Color}" />
+            <SolidColorBrush x:Key="Overlay7BackgroundBrush" Color="{StaticResource Sand7Color}" />
             <SolidColorBrush x:Key="OverlayAccentBackgroundBrush" Color="{StaticResource Amber7Color}" />
             <SolidColorBrush x:Key="OverlaySuccessBackgroundBrush" Color="{StaticResource Grass7Color}" />
             <SolidColorBrush x:Key="OverlayWarningBackgroundBrush" Color="{StaticResource Orange7Color}" />
