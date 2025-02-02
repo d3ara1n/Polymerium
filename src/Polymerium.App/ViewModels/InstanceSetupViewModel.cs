@@ -27,16 +27,10 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceSetupViewModel : ViewModelBase
 {
-    #region Injected
-
-    private readonly RepositoryAgent _repositories;
-    private readonly IHttpClientFactory _clientFactory;
-
-    #endregion
+    internal const string DATAFORMATS = "never-gonna-give-you-up";
 
     private readonly ProfileGuard _owned;
     private CancellationTokenSource _cancellationTokenSource;
-    internal const string DATAFORMATS = "never-gonna-give-you-up";
 
     public InstanceSetupViewModel(ViewBag bag, ProfileManager profileManager, RepositoryAgent repositories,
         IHttpClientFactory clientFactory)
@@ -95,12 +89,25 @@ public partial class InstanceSetupViewModel : ViewModelBase
                         Kind = ResourceKind.Modpack
                     });
 
+                var page = await (await _repositories.InspectAsync(result.Label, result.Namespace, result.Pid,
+                    Filter.Empty with
+                    {
+                        Kind = ResourceKind.Modpack
+                    })).FetchAsync();
+                var versions = page.Select(x => new InstanceVersionModel(x.Label, x.Namespace, x.ProjectId,
+                    x.VersionId, x.VersionName, x.ReleaseType, x.PublishedAt)
+                {
+                    IsCurrent = x.VersionId == package.VersionId
+                }).ToList();
+
                 Reference = new InstanceReferenceModel
                 {
                     Name = package.ProjectName,
                     Thumbnail = package.Thumbnail,
                     SourceUrl = package.Reference,
-                    SourceLabel = package.Label
+                    SourceLabel = package.Label,
+                    Versions = versions,
+                    CurrentVersion = versions.FirstOrDefault()
                 };
 
                 InstancePackageModel Load(string purl)
@@ -114,7 +121,8 @@ public partial class InstanceSetupViewModel : ViewModelBase
                             {
                                 var p = await _repositories.ResolveAsync(v.Label, v.Namespace, v.Pid,
                                     v.Vid, Filter.Empty);
-                                if (p.Thumbnail is not null)
+
+                                if (!Debugger.IsAttached && p.Thumbnail is not null)
                                 {
                                     var c = _clientFactory.CreateClient();
                                     var b = await c.GetByteArrayAsync(p.Thumbnail, _cancellationTokenSource.Token);
@@ -122,7 +130,8 @@ public partial class InstanceSetupViewModel : ViewModelBase
                                 }
                                 else
                                 {
-                                    model.Thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+                                    model.Thumbnail =
+                                        new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
                                 }
 
                                 model.Name = p.ProjectName;
@@ -155,6 +164,23 @@ public partial class InstanceSetupViewModel : ViewModelBase
             }
     }
 
+    #region Command Handlers
+
+    [RelayCommand]
+    private void OpenSourceUrl(Uri? url)
+    {
+        if (url is not null) Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
+    }
+
+    #endregion
+
+    #region Injected
+
+    private readonly RepositoryAgent _repositories;
+    private readonly IHttpClientFactory _clientFactory;
+
+    #endregion
+
     #region Rectives Models
 
     [ObservableProperty] private InstanceBasicModel _basic;
@@ -165,16 +191,6 @@ public partial class InstanceSetupViewModel : ViewModelBase
     [ObservableProperty] private AvaloniaList<InstancePackageModel> _draft = [];
     [ObservableProperty] private int _stageCount;
     [ObservableProperty] private int _stashCount;
-
-    #endregion
-
-    #region Command Handlers
-
-    [RelayCommand]
-    private void OpenSourceUrl(Uri? url)
-    {
-        if (url is not null) Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
-    }
 
     #endregion
 }

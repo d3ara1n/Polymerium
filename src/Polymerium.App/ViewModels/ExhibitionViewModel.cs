@@ -125,11 +125,15 @@ public partial class ExhibitionViewModel : ViewModelBase
                     var tasks = rv.Select(async x =>
                     {
                         Bitmap? thumbnail = null;
-                        if (x.Thumbnail is { IsAbsoluteUri: true })
+                        if (!Debugger.IsAttached && x.Thumbnail is { IsAbsoluteUri: true })
                         {
                             using var client = _factory.CreateClient();
                             var data = await client.GetByteArrayAsync(x.Thumbnail.AbsoluteUri);
                             thumbnail = new Bitmap(new MemoryStream(data));
+                        }
+                        else
+                        {
+                            thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
                         }
 
                         return new ExhibitModel(x.Label, x.Namespace, x.Pid, x.Name, x.Summary,

@@ -2,12 +2,12 @@
 
 public record Version(
     string Label,
-    string Namespace,
+    string? Namespace,
     string ProjectId,
     string VersionId,
     string VersionName,
     ReleaseType ReleaseType,
     DateTimeOffset PublishedAt,
-    uint DownloadCount,
+    ulong DownloadCount,
     string Changelog
 );

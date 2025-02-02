@@ -43,7 +43,6 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
     public async Task<Package> ResolveAsync(string? _, string pid, string? vid, Filter filter)
     {
         if (uint.TryParse(pid, out var modId))
-        {
             try
             {
                 var mod = await service.GetModAsync(modId);
@@ -57,12 +56,12 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
 
                     throw new FormatException("Vid is not well formatted into fileId");
                 }
-                else
+
                 {
                     var files = await service.GetModFilesAsync(modId, filter.Version,
                         service.LoaderIdToType(filter.Loader),
-                        3);
-                    var file = files.FirstOrDefault();
+                        count: 1);
+                    var file = files.Data.FirstOrDefault();
                     if (file is not null)
                         return service.ToPackage(mod, file);
                     throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} has not matched version");
@@ -72,15 +71,26 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
             {
                 if (ex.StatusCode == HttpStatusCode.NotFound)
                     throw new ResourceNotFoundException($"{pid}/{vid ?? "*"} not found in the repository");
-                else throw;
+                throw;
             }
-        }
 
         throw new FormatException("Pid is not well formatted into modId");
     }
 
-    public Task<IPaginationHandle<Version>> InspectAsync(string? _, string pid, Filter filter)
+    public async Task<IPaginationHandle<Version>> InspectAsync(string? _, string pid, Filter filter)
     {
-        throw new NotImplementedException();
+        if (uint.TryParse(pid, out var modId))
+        {
+            var first = await service.GetModFilesAsync(modId, filter.Version, service.LoaderIdToType(filter.Loader));
+            var initial = first.Data.Select(service.ToVersion);
+            return new PaginationHandle<Version>(initial, 50, first.Pagination.TotalCount, async index =>
+            {
+                var rv = await service.GetModFilesAsync(modId, filter.Version, service.LoaderIdToType(filter.Loader),
+                    (int)index);
+                return first.Data.Select(service.ToVersion);
+            });
+        }
+
+        throw new FormatException("Pid is not well formatted into modId");
     }
 }

@@ -2,6 +2,7 @@
 using Polymerium.Trident.Models.CurseForgeApi;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Services;
 
@@ -154,6 +155,12 @@ public class CurseForgeService(ICurseForgeClient client)
             ToDependencies(file));
     }
 
+    public Version ToVersion(FileModel file)
+    {
+        return new Version(LABEL, null, file.ModId.ToString(), file.Id.ToString(), file.DisplayName,
+            ToReleaseType(file.ReleaseType), file.FileDate, file.DownloadCount, string.Empty);
+    }
+
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
     {
         var types = (await client.GetVersionTypesAsync()).Data
@@ -184,11 +191,11 @@ public class CurseForgeService(ICurseForgeClient client)
         return rv.Data;
     }
 
-    public async Task<IReadOnlyList<FileModel>> GetModFilesAsync(uint modId, string? gameVersion,
-        ModLoaderTypeModel? modLoader, int count = 50)
+    public async Task<ArrayResponse<FileModel>> GetModFilesAsync(uint modId, string? gameVersion,
+        ModLoaderTypeModel? modLoader, int index = 0, int count = 50)
     {
         // TODO: 改造成能分页拉取直到满足 count 或无剩余
-        var rv = await client.GetModFilesAsync(modId, gameVersion, modLoader, 0, (uint)count);
-        return rv.Data;
+        var rv = await client.GetModFilesAsync(modId, gameVersion, modLoader, (uint)index, (uint)count);
+        return rv;
     }
 }
