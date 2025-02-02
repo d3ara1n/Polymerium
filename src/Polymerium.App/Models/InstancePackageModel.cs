@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -24,6 +25,7 @@ public partial class InstancePackageModel(string purl) : ModelBase
     [ObservableProperty] private string? _name;
     [ObservableProperty] private string? _version;
     [ObservableProperty] private string? _summary;
+    [ObservableProperty] private Uri? _reference;
     [ObservableProperty] private Bitmap? _thumbnail;
     [ObservableProperty] private ResourceKind? _kind;
     [ObservableProperty] private Control? _container;

@@ -2,6 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:m="using:Polymerium.App.Models"
              xmlns:cp="using:Polymerium.App.Components"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
@@ -10,7 +13,7 @@
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
                 <Button Content="Bulk Update" />
                 <Button Content="Export List" />
-                <Button Content="Get" Classes="Primary" />
+                <Button Content="Get" Classes="Primary" IsEnabled="{Binding !$parent[cp:PackageContainer].IsLocked}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <TextBox Watermark="Enter filter string..."
@@ -28,8 +31,72 @@
         </DockPanel>
         <ScrollViewer Grid.Row="2">
             <ItemsControl Margin="{StaticResource PageToplessContentMargin}"
-                          ItemsSource="{Binding $parent[cp:PackageContainer].View,Mode=OneWay}"
-                          ItemTemplate="{Binding $parent[cp:PackageContainer].ItemTemplate,Mode=OneWay}">
+                          ItemsSource="{Binding $parent[cp:PackageContainer].View,Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="m:InstancePackageModel">
+                        <husk:SkeletonControl Margin="0,2,0,2"
+                                              CornerRadius="{StaticResource MediumCornerRadius}"
+                                              IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
+                            <husk:Card Height="78" Background="{DynamicResource Layer0BackgroundBrush}">
+                                <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*">
+                                    <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+                                            CornerRadius="{StaticResource MediumCornerRadius}" ClipToBounds="True">
+                                        <Image Source="{Binding Thumbnail}" />
+                                    </Border>
+                                    <DockPanel Grid.Row="0" Grid.Column="2">
+                                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                                                    Spacing="4">
+                                            <TextBlock Text="{Binding Version}"
+                                                       VerticalAlignment="Center" FontWeight="Bold" />
+                                        </StackPanel>
+                                        <Grid ColumnDefinitions="Auto,6,*">
+                                            <husk:Tag Grid.Column="0"
+                                                      CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <TextBlock Text="{Binding Kind}" />
+                                            </husk:Tag>
+                                            <TextBlock Grid.Column="2" Text="{Binding Name}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       FontSize="{StaticResource LargeFontSize}"
+                                                       FontWeight="Bold" />
+                                        </Grid>
+                                    </DockPanel>
+                                    <DockPanel Grid.Row="1" Grid.Column="2">
+                                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                                                    VerticalAlignment="Bottom" Spacing="4">
+                                            <Button Classes="Small"
+                                                    IsEnabled="{Binding !$parent[cp:PackageContainer].IsLocked}"
+                                                    Theme="{StaticResource OutlineButtonTheme}">
+                                                <icons:PackIconLucide Kind="Pen" Width="12" />
+                                            </Button>
+                                            <Button Classes="Small"
+                                                    Theme="{StaticResource OutlineButtonTheme}">
+                                                <icons:PackIconLucide Kind="Ellipsis" Width="12" />
+                                                <Button.Flyout>
+                                                    <MenuFlyout>
+                                                        <MenuItem Header="Open Website"
+                                                                  Command="{Binding $parent[cp:PackageContainer].OpenUrlCommand}"
+                                                                  CommandParameter="{Binding Reference}" />
+                                                        <MenuItem Header="-" />
+                                                        <MenuItem Header="Move">
+                                                            <MenuItem Header="Stage" />
+                                                            <MenuItem Header="Stash" />
+                                                            <MenuItem Header="Draft" />
+                                                        </MenuItem>
+                                                        <MenuItem Header="-" />
+                                                        <MenuItem Header="Remove" />
+                                                    </MenuFlyout>
+                                                </Button.Flyout>
+                                            </Button>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Summary}"
+                                                   MaxLines="2"
+                                                   TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
+                                    </DockPanel>
+                                </Grid>
+                            </husk:Card>
+                        </husk:SkeletonControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel />

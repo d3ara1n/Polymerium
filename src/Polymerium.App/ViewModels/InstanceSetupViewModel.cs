@@ -89,6 +89,18 @@ public partial class InstanceSetupViewModel : ViewModelBase
                         Kind = ResourceKind.Modpack
                     });
 
+                Bitmap thumbnail;
+                if (!Debugger.IsAttached && package.Thumbnail is not null)
+                {
+                    using var client = _clientFactory.CreateClient();
+                    var bytes = await client.GetByteArrayAsync(package.Thumbnail, token);
+                    thumbnail = new Bitmap(new MemoryStream(bytes));
+                }
+                else
+                {
+                    thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+                }
+
                 var page = await (await _repositories.InspectAsync(result.Label, result.Namespace, result.Pid,
                     Filter.Empty with
                     {
@@ -103,7 +115,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
                 Reference = new InstanceReferenceModel
                 {
                     Name = package.ProjectName,
-                    Thumbnail = package.Thumbnail,
+                    Thumbnail = thumbnail,
                     SourceUrl = package.Reference,
                     SourceLabel = package.Label,
                     Versions = versions,
@@ -138,6 +150,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
                                 model.Version = p.VersionName;
                                 model.Summary = p.Summary;
                                 model.Kind = p.Kind;
+                                model.Reference = p.Reference;
                                 model.IsLoaded = true;
                             }
                             catch
