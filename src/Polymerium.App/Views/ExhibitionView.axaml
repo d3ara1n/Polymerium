@@ -82,6 +82,11 @@
                         <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
+                <husk:InfiniteScrollView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </husk:InfiniteScrollView.ItemsPanel>
                 <husk:InfiniteScrollView.ItemTemplate>
                     <DataTemplate x:DataType="m:ExhibitModel">
                         <husk:Card Margin="16,4" Height="118">
@@ -153,7 +158,7 @@
                                     <ItemsControl ItemsSource="{Binding Tags}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <VirtualizingStackPanel Orientation="Horizontal" />
+                                                <StackPanel Orientation="Horizontal" />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
@@ -172,14 +177,6 @@
                 </husk:InfiniteScrollView.ItemTemplate>
             </husk:InfiniteScrollView>
         </Grid>
-        <!-- <Border Name="LoadingStage" Background="{DynamicResource Layer7BackgroundBrush}"> -->
-        <!--     <Panel Background="{DynamicResource LayerSolidBackgroundBrush}" VerticalAlignment="Center"> -->
-        <!--         <StackPanel Margin="48"> -->
-        <!--             <TextBlock HorizontalAlignment="Center" Text="Downloading basic information..." /> -->
-        <!--             <ProgressBar IsIndeterminate="True" Margin="128,8" /> -->
-        <!--         </StackPanel> -->
-        <!--     </Panel> -->
-        <!-- </Border> -->
     </Panel>
 
     <husk:Page.Styles>

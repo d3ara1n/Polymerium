@@ -42,4 +42,8 @@
         <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-Thin.ttf"/>
         <UpToDateCheckInput Remove="Assets\Fonts\Raleway\Raleway-ThinItalic.ttf"/>
     </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="Converters\ResourceConverters.cs"/>
+    </ItemGroup>
 </Project>

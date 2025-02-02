@@ -4,7 +4,7 @@ namespace Huskui.Avalonia.Converters;
 
 internal static class InternalConverters
 {
-    public static IValueConverter NullThenInteger { get; } = new RelayConverter((v, p) =>
+    public static IValueConverter IntegerIfNull { get; } = new RelayConverter((v, p) =>
     {
         if (p is int) return v is null ? p : 0;
 

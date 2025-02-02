@@ -9,6 +9,9 @@ namespace Polymerium.App.Models;
 
 public partial class InstancePackageModel(string purl) : ModelBase
 {
+    // 移动所有权到内部
+    internal Task? Task;
+
     #region Direct Properties
 
     public string Purl => purl;
@@ -26,7 +29,4 @@ public partial class InstancePackageModel(string purl) : ModelBase
     [ObservableProperty] private Control? _container;
 
     #endregion
-
-    // 移动所有权到内部
-    internal Task? Task;
 }

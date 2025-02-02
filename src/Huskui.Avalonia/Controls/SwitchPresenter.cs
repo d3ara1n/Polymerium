@@ -11,7 +11,24 @@ public class SwitchPresenter : ContentControl
         AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCases>(nameof(Cases), o => o.Cases,
             (o, v) => o.Cases = v);
 
+    public static readonly DirectProperty<SwitchPresenter, SwitchCase?> CurrentCaseProperty =
+        AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCase?>(nameof(CurrentCase), o => o.CurrentCase,
+            (o, v) => o.CurrentCase = v);
+
+    public static readonly DirectProperty<SwitchPresenter, object?> ValueProperty =
+        AvaloniaProperty.RegisterDirect<SwitchPresenter, object?>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
+
+    public static readonly DirectProperty<SwitchPresenter, Type> TargetTypeProperty =
+        AvaloniaProperty.RegisterDirect<SwitchPresenter, Type>(nameof(TargetType), o => o.TargetType,
+            (o, v) => o.TargetType = v);
+
     private SwitchCases _cases = [];
+
+    private SwitchCase? _currentCase;
+
+    private Type _targetType = typeof(object);
+
+    private object? _value;
 
     [Content]
     public SwitchCases Cases
@@ -20,22 +37,11 @@ public class SwitchPresenter : ContentControl
         set => SetAndRaise(CasesProperty, ref _cases, value);
     }
 
-    public static readonly DirectProperty<SwitchPresenter, SwitchCase?> CurrentCaseProperty =
-        AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCase?>(nameof(CurrentCase), o => o.CurrentCase,
-            (o, v) => o.CurrentCase = v);
-
-    private SwitchCase? _currentCase;
-
     public SwitchCase? CurrentCase
     {
         get => _currentCase;
         set => SetAndRaise(CurrentCaseProperty, ref _currentCase, value);
     }
-
-    public static readonly DirectProperty<SwitchPresenter, object?> ValueProperty =
-        AvaloniaProperty.RegisterDirect<SwitchPresenter, object?>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
-
-    private object? _value;
 
     public object? Value
     {
@@ -45,12 +51,6 @@ public class SwitchPresenter : ContentControl
             if (SetAndRaise(ValueProperty, ref _value, value)) EvaluateCases();
         }
     }
-
-    public static readonly DirectProperty<SwitchPresenter, Type> TargetTypeProperty =
-        AvaloniaProperty.RegisterDirect<SwitchPresenter, Type>(nameof(TargetType), o => o.TargetType,
-            (o, v) => o.TargetType = v);
-
-    private Type _targetType = typeof(object);
 
     public Type TargetType
     {

@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Media;
 using FluentIcons.Avalonia;
 using Huskui.Avalonia.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +35,11 @@ internal static class Program
             .UsePlatformDetect()
             .WithOutfitFont()
             .UseSegoeMetrics()
+            .With(new RenderOptions
+            {
+                EdgeMode = EdgeMode.Antialias,
+                TextRenderingMode = TextRenderingMode.SubpixelAntialias
+            })
             .LogToTrace();
     }
 }

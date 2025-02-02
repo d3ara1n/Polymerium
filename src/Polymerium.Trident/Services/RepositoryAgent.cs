@@ -2,14 +2,15 @@
 using Microsoft.Extensions.Logging;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
+using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Trident.Services;
 
 public class RepositoryAgent
 {
-    private readonly IReadOnlyDictionary<string, IRepository> _repositories;
-    private readonly ILogger<RepositoryAgent> _logger;
     private static readonly TimeSpan EXPRIED_IN = TimeSpan.FromDays(1);
+    private readonly ILogger<RepositoryAgent> _logger;
+    private readonly IReadOnlyDictionary<string, IRepository> _repositories;
 
     public RepositoryAgent(IEnumerable<IRepository> repositories, ILogger<RepositoryAgent> logger)
     {
@@ -44,6 +45,11 @@ public class RepositoryAgent
             vid is not null ? Path.Combine(PathDef.Default.CachePackageDirectory, label, pid, $"{vid}.json") : null,
             r => Path.Combine(PathDef.Default.CachePackageDirectory, r.Label, r.ProjectId, $"{r.VersionId}.json"),
             () => Redirect(label).ResolveAsync(ns, pid, vid, filter));
+    }
+
+    public Task<IPaginationHandle<Version>> InspectAsync(string label, string? ns, string pid, Filter filter)
+    {
+        return Redirect(label).InspectAsync(ns, pid, filter);
     }
 
     private async Task<T> RetrieveCachedAsync<T>(string? cachedPath, Func<T, string>? saveTo, Func<Task<T>> factory)

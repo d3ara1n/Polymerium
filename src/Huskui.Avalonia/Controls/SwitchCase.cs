@@ -8,7 +8,12 @@ public class SwitchCase : AvaloniaObject
     public static readonly DirectProperty<SwitchCase, object> ContentProperty =
         AvaloniaProperty.RegisterDirect<SwitchCase, object>(nameof(Content), o => o.Content, (o, v) => o.Content = v);
 
+    public static readonly DirectProperty<SwitchCase, object> ValueProperty =
+        AvaloniaProperty.RegisterDirect<SwitchCase, object>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
+
     private object _content = null!;
+
+    private object _value = null!;
 
     [Content]
     public object Content
@@ -16,11 +21,6 @@ public class SwitchCase : AvaloniaObject
         get => _content;
         set => SetAndRaise(ContentProperty, ref _content, value);
     }
-
-    public static readonly DirectProperty<SwitchCase, object> ValueProperty =
-        AvaloniaProperty.RegisterDirect<SwitchCase, object>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
-
-    private object _value = null!;
 
     public object Value
     {

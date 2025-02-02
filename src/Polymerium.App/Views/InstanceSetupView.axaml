@@ -9,6 +9,7 @@
                      xmlns:m="using:Polymerium.App.Models"
                      xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                      xmlns:labs="using:Avalonia.Labs.Controls"
+                     xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      xmlns:controls="using:Polymerium.App.Controls" Header="Instance Setup"
                      mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
@@ -118,12 +119,65 @@
                         </StackPanel>
                     </StackPanel>
                     <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto">
-                        <ComboBox Grid.Column="0">
-                            <ComboBoxItem>
-                                <TextBlock Text="0.9.2" />
-                            </ComboBoxItem>
+                        <ComboBox Grid.Column="0" ItemsSource="{Binding Reference.Versions,FallbackValue={x:Null}}"
+                                  SelectedItem="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}">
+                            <ComboBox.SelectionBoxItemTemplate>
+                                <DataTemplate DataType="m:InstanceVersionModel">
+                                    <husk:SwitchPresenter Value="{Binding IsCurrent}" TargetType="x:Boolean">
+                                        <husk:SwitchCase Value="True">
+                                            <TextBlock Text="{Binding Display}"
+                                                       Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="False">
+                                            <TextBlock Text="{Binding Display}" />
+                                        </husk:SwitchCase>
+                                    </husk:SwitchPresenter>
+                                </DataTemplate>
+                            </ComboBox.SelectionBoxItemTemplate>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="m:InstanceVersionModel">
+                                    <StackPanel>
+                                        <husk:SwitchPresenter Value="{Binding IsCurrent}" TargetType="x:Boolean">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock Text="{Binding Display}"
+                                                           Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock Text="{Binding Display}" />
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                        <DockPanel>
+                                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                                <TextBlock Text="{Binding UpdatedAt}" />
+                                            </StackPanel>
+                                            <husk:SwitchPresenter TargetType="trident:ReleaseType"
+                                                                  Value="{Binding ReleaseTypeRaw}">
+                                                <husk:SwitchCase Value="Release">
+                                                    <husk:Tag Classes="Success"
+                                                              CornerRadius="{StaticResource SmallCornerRadius}">
+                                                        <TextBlock Text="{Binding ReleaseType}" />
+                                                    </husk:Tag>
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="Beta">
+                                                    <husk:Tag Classes="Warning"
+                                                              CornerRadius="{StaticResource SmallCornerRadius}">
+                                                        <TextBlock Text="{Binding ReleaseType}" />
+                                                    </husk:Tag>
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="Alpha">
+                                                    <husk:Tag Classes="Danger"
+                                                              CornerRadius="{StaticResource SmallCornerRadius}">
+                                                        <TextBlock Text="{Binding ReleaseType}" />
+                                                    </husk:Tag>
+                                                </husk:SwitchCase>
+                                            </husk:SwitchPresenter>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="2" Content="Update" />
+                        <Button Grid.Column="2" Content="Update"
+                                IsEnabled="{Binding !Reference.CurrentVersion.IsCurrent,FallbackValue=False}" />
                     </Grid>
                 </Grid>
             </husk:Card>
