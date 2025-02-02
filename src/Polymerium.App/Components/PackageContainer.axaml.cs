@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Templates;
 using DynamicData;
 using Polymerium.App.Models;
 
@@ -15,34 +15,41 @@ public partial class PackageContainer : UserControl
         AvaloniaProperty.RegisterDirect<PackageContainer, string>(nameof(FilterText), o => o.FilterText,
             (o, v) => o.FilterText = v);
 
-    public static readonly DirectProperty<PackageContainer, IDataTemplate?> ItemTemplateProperty =
-        AvaloniaProperty.RegisterDirect<PackageContainer, IDataTemplate?>(nameof(ItemTemplate), o => o.ItemTemplate,
-            (o, v) => o.ItemTemplate = v);
 
-
-    public static readonly DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageModel>>
+    public static readonly DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageModel>?>
         ViewProperty =
-            AvaloniaProperty.RegisterDirect<PackageContainer, ReadOnlyObservableCollection<InstancePackageModel>>(
+            AvaloniaProperty.RegisterDirect<PackageContainer, ReadOnlyObservableCollection<InstancePackageModel>?>(
                 nameof(View), o => o.View, (o, v) => o.View = v);
 
-    public static readonly DirectProperty<PackageContainer, SourceCache<InstancePackageModel, string>> ItemsProperty =
-        AvaloniaProperty.RegisterDirect<PackageContainer, SourceCache<InstancePackageModel, string>>(nameof(Items),
+    public static readonly DirectProperty<PackageContainer, SourceCache<InstancePackageModel, string>?> ItemsProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, SourceCache<InstancePackageModel, string>?>(nameof(Items),
             o => o.Items, (o, v) => o.Items = v);
 
     public static readonly DirectProperty<PackageContainer, int> TotalCountProperty =
         AvaloniaProperty.RegisterDirect<PackageContainer, int>(nameof(TotalCount), o => o.TotalCount,
             (o, v) => o.TotalCount = v);
 
-    private string _filterText;
+    public static readonly DirectProperty<PackageContainer, ICommand?> OpenUrlCommandProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(OpenUrlCommand), o => o.OpenUrlCommand,
+            (o, v) => o.OpenUrlCommand = v);
 
-    private SourceCache<InstancePackageModel, string> _items;
+    private ICommand? _openUrlCommand;
 
-    private IDataTemplate? _itemTemplate;
+    public ICommand? OpenUrlCommand
+    {
+        get => _openUrlCommand;
+        set => SetAndRaise(OpenUrlCommandProperty, ref _openUrlCommand, value);
+    }
+
+
+    private string _filterText = string.Empty;
+
+    private SourceCache<InstancePackageModel, string>? _items;
     private IDisposable? _subscription;
 
     private int _totalCount;
 
-    private ReadOnlyObservableCollection<InstancePackageModel> _view;
+    private ReadOnlyObservableCollection<InstancePackageModel>? _view;
 
     public PackageContainer()
     {
@@ -55,19 +62,13 @@ public partial class PackageContainer : UserControl
         set => SetAndRaise(FilterTextProperty, ref _filterText, value);
     }
 
-    public IDataTemplate? ItemTemplate
-    {
-        get => _itemTemplate;
-        set => SetAndRaise(ItemTemplateProperty, ref _itemTemplate, value);
-    }
-
-    public ReadOnlyObservableCollection<InstancePackageModel> View
+    public ReadOnlyObservableCollection<InstancePackageModel>? View
     {
         get => _view;
         set => SetAndRaise(ViewProperty, ref _view, value);
     }
 
-    public SourceCache<InstancePackageModel, string> Items
+    public SourceCache<InstancePackageModel, string>? Items
     {
         get => _items;
         set
@@ -80,6 +81,18 @@ public partial class PackageContainer : UserControl
                 View = view;
             }
         }
+    }
+
+    public static readonly DirectProperty<PackageContainer, bool> IsLockedProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, bool>(nameof(IsLocked), o => o.IsLocked,
+            (o, v) => o.IsLocked = v);
+
+    private bool _isLocked;
+
+    public bool IsLocked
+    {
+        get => _isLocked;
+        set => SetAndRaise(IsLockedProperty, ref _isLocked, value);
     }
 
     public int TotalCount

@@ -130,9 +130,9 @@
                                              Duration="{StaticResource ControlFastestAnimationDuration}" />
                         </Transitions>
                     </Border.Transitions>
-                    <Panel>
-                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
-                                          Padding="{TemplateBinding Padding}"
+                    <Grid ColumnDefinitions="*,6,Auto" Margin="{TemplateBinding Padding}">
+                        <ContentPresenter Grid.Column="0" Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           RenderTransform="{x:Null}"
                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -144,11 +144,11 @@
                                 </Transitions>
                             </ContentPresenter.Transitions>
                         </ContentPresenter>
-                        <fi:SymbolIcon Name="Mark" Symbol="Checkmark" FontSize="{TemplateBinding FontSize}"
-                                       Margin="12,0"
+                        <fi:SymbolIcon Grid.Column="2" Name="Mark" Symbol="Checkmark"
+                                       FontSize="{TemplateBinding FontSize}"
                                        HorizontalAlignment="Right" VerticalAlignment="Center" IsVisible="False"
                                        Foreground="{DynamicResource ControlAccentForegroundBrush}" />
-                    </Panel>
+                    </Grid>
                 </Border>
             </ControlTemplate>
         </Setter>
@@ -158,7 +158,7 @@
                 <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
             </Style>
 
-            <Style Selector="^:not(:selected) /template/ ContentPresenter#PART_ContentPresenter">
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="RenderTransform" Value="translateX(8px)" />
             </Style>
         </Style>

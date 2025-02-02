@@ -104,66 +104,63 @@ public class App : Application
 
     private static Window ConstructWindow()
     {
-        if (Program.AppHost is not null)
+        if (Program.AppHost is null) return new MainWindow();
+
+        var window = new MainWindow();
+
+        #region Navigation
+
+        // Link navigation service
+        var navigation = Program.AppHost.Services.GetRequiredService<NavigationService>();
+        // Closure captures Program.AppHost.Services
+        window.BindNavigation(navigation.Navigate, (view, parameter) =>
         {
-            var window = new MainWindow();
+            if (!view.IsAssignableTo(typeof(Page)))
+                throw new ArgumentOutOfRangeException(nameof(view), view,
+                    "Parameter view must be derived from Page");
 
-            #region Navigation
+            var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
+            var type = Type.GetType(name);
 
-            // Link navigation service
-            var navigation = Program.AppHost.Services.GetRequiredService<NavigationService>();
-            // Closure captures Program.AppHost.Services
-            window.BindNavigation(navigation.Navigate, (view, parameter) =>
+            var page = Activator.CreateInstance(view) as Page;
+
+            if (type is not null)
             {
-                if (!view.IsAssignableTo(typeof(Page)))
-                    throw new ArgumentOutOfRangeException(nameof(view), view,
-                        "Parameter view must be derived from Page");
+                if (!type.IsAssignableTo(typeof(ObservableObject)))
+                    throw new ArgumentOutOfRangeException(nameof(type), type,
+                        $"{view.Name} was bound to a view model which is not derived from ObservableObject");
 
-                var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
-                var type = Type.GetType(name);
+                using var scope = Program.AppHost.Services.CreateScope();
 
-                var page = Activator.CreateInstance(view) as Page;
+                var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
+                factory.Bag = parameter;
 
-                if (type is not null)
+                var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
+
+                if (page is not null)
                 {
-                    if (!type.IsAssignableTo(typeof(ObservableObject)))
-                        throw new ArgumentOutOfRangeException(nameof(type), type,
-                            $"{view.Name} was bound to a view model which is not derived from ObservableObject");
+                    page.DataContext = viewModel;
 
-                    using var scope = Program.AppHost.Services.CreateScope();
-
-                    var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
-                    factory.Bag = parameter;
-
-                    var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
-
-                    if (page is not null)
-                    {
-                        page.DataContext = viewModel;
-
-                        if (viewModel is IPageModel pageModel) page.Model = pageModel;
-                    }
+                    if (viewModel is IPageModel pageModel) page.Model = pageModel;
                 }
+            }
 
-                return page;
-            });
+            return page;
+        });
 
-            navigation.SetHandler(window.Navigate);
+        navigation.SetHandler(window.Navigate);
 
-            #endregion
+        #endregion
 
-            #region Profile
+        #region Profile
 
-            var profile = Program.AppHost.Services.GetRequiredService<ProfileManager>();
-            window.SubscribeProfileList(profile);
-            var instance = Program.AppHost.Services.GetRequiredService<InstanceManager>();
-            window.SubscribeState(instance);
+        var profile = Program.AppHost.Services.GetRequiredService<ProfileManager>();
+        window.SubscribeProfileList(profile);
+        var instance = Program.AppHost.Services.GetRequiredService<InstanceManager>();
+        window.SubscribeState(instance);
 
-            #endregion
+        #endregion
 
-            return window;
-        }
-
-        return new MainWindow();
+        return window;
     }
 }

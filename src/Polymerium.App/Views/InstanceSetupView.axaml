@@ -15,66 +15,6 @@
                      mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                      x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
-    <controls:ScopedPage.Resources>
-        <DataTemplate x:Key="ActivePackageDataTemplate" DataType="m:InstancePackageModel">
-            <husk:SkeletonControl Margin="0,2,0,2"
-                                  CornerRadius="{StaticResource MediumCornerRadius}"
-                                  IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
-                <husk:Card Height="78" Background="{DynamicResource Layer0BackgroundBrush}">
-                    <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*">
-                        <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-                                CornerRadius="{StaticResource MediumCornerRadius}" ClipToBounds="True">
-                            <Image Source="{Binding Thumbnail}" />
-                        </Border>
-                        <DockPanel Grid.Row="0" Grid.Column="2">
-                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
-                                        Spacing="4">
-                                <TextBlock Text="{Binding Version}"
-                                           VerticalAlignment="Center" FontWeight="Bold" />
-                            </StackPanel>
-                            <Grid ColumnDefinitions="Auto,6,*">
-                                <husk:Tag Grid.Column="0"
-                                          CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <TextBlock Text="{Binding Kind}" />
-                                </husk:Tag>
-                                <TextBlock Grid.Column="2" Text="{Binding Name}"
-                                           TextTrimming="CharacterEllipsis"
-                                           FontSize="{StaticResource LargeFontSize}"
-                                           FontWeight="Bold" />
-                            </Grid>
-                        </DockPanel>
-                        <DockPanel Grid.Row="1" Grid.Column="2">
-                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
-                                        VerticalAlignment="Bottom" Spacing="4">
-                                <Button Classes="Small"
-                                        Theme="{StaticResource OutlineButtonTheme}">
-                                    <icons:PackIconLucide Kind="Pen" Width="12" />
-                                </Button>
-                                <Button Classes="Small"
-                                        Theme="{StaticResource OutlineButtonTheme}">
-                                    <icons:PackIconLucide Kind="Ellipsis" Width="12" />
-                                </Button>
-                            </StackPanel>
-                            <TextBlock Text="{Binding Summary}"
-                                       MaxLines="2"
-                                       TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
-                        </DockPanel>
-                    </Grid>
-                </husk:Card>
-            </husk:SkeletonControl>
-        </DataTemplate>
-        <DataTemplate x:Key="DraftPackageDataTemplate" DataType="m:InstancePackageModel">
-            <husk:SkeletonControl Margin="0,2,0,2"
-                                  CornerRadius="{StaticResource MediumCornerRadius}"
-                                  IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
-                <husk:Card Background="{DynamicResource Layer0BackgroundBrush}" Height="64" Width="64">
-                    <Border CornerRadius="{StaticResource MediumCornerRadius}" ClipToBounds="True">
-                        <Image Source="{Binding Thumbnail}" />
-                    </Border>
-                </husk:Card>
-            </husk:SkeletonControl>
-        </DataTemplate>
-    </controls:ScopedPage.Resources>
     <Grid ColumnDefinitions="*,12,Auto" RowDefinitions="Auto,0,*">
         <!-- 基本信息查看与更新、 Loader 切换 -->
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto"
@@ -92,7 +32,9 @@
                     <HyperlinkButton Content="Switch" />
                 </StackPanel>
                 <husk:InfoBar Background="{DynamicResource Card3BackgroundBrush}">
-                    <TextBlock Text="[Stage] and [Stash] apply items to deployment while [Draft] does not." />
+                    <TextBlock
+                        Text="[Stage] and [Stash] apply items to deployment while [Draft] does not. Instance imported online will lock the [Stage] up."
+                        TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" />
                 </husk:InfoBar>
             </StackPanel>
             <husk:Card Grid.Column="2" MaxWidth="360" BorderThickness="2"
@@ -101,9 +43,9 @@
                 <Grid RowDefinitions="*,8,Auto">
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8">
                         <Border ClipToBounds="True" CornerRadius="{StaticResource SmallCornerRadius}">
-                            <labs:AsyncImage Source="{Binding Reference.Thumbnail,FallbackValue={x:Null}}" Height="38"
-                                             Width="38"
-                                             Stretch="UniformToFill" />
+                            <Image Source="{Binding Reference.Thumbnail,FallbackValue={x:Null}}" Height="38"
+                                   Width="38"
+                                   Stretch="UniformToFill" />
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="{Binding Reference.Name,FallbackValue=Package Name}"
@@ -187,12 +129,13 @@
                 <TabItem Header="Stage">
                     <cp:PackageContainer x:Name="StageContainer" DragDrop.AllowDrop="True" Items="{Binding Stage}"
                                          TotalCount="{Binding StageCount}"
-                                         ItemTemplate="{StaticResource ActivePackageDataTemplate}" />
+                                         OpenUrlCommand="{Binding OpenSourceUrlCommand}"
+                                         IsLocked="{Binding Reference,Converter={x:Static ObjectConverters.IsNotNull}}" />
                 </TabItem>
                 <TabItem Header="Stash">
                     <cp:PackageContainer x:Name="StashContainer" DragDrop.AllowDrop="True" Items="{Binding Stash}"
-                                         TotalCount="{Binding StashCount}"
-                                         ItemTemplate="{StaticResource ActivePackageDataTemplate}" />
+                                         OpenUrlCommand="{Binding OpenSourceUrlCommand}"
+                                         TotalCount="{Binding StashCount}" />
                 </TabItem>
             </TabControl>
         </Panel>
@@ -201,8 +144,22 @@
                 <TabItem Header="Draft">
                     <ScrollViewer DragDrop.AllowDrop="True">
                         <ItemsControl x:Name="DraftContainer" Margin="{StaticResource PageToplessContentMargin}"
-                                      ItemsSource="{Binding Draft}"
-                                      ItemTemplate="{StaticResource DraftPackageDataTemplate}">
+                                      ItemsSource="{Binding Draft}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="m:InstancePackageModel">
+                                    <husk:SkeletonControl Margin="0,2,0,2"
+                                                          CornerRadius="{StaticResource MediumCornerRadius}"
+                                                          IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
+                                        <husk:Card Background="{DynamicResource Layer0BackgroundBrush}" Height="64"
+                                                   Width="64">
+                                            <Border CornerRadius="{StaticResource MediumCornerRadius}"
+                                                    ClipToBounds="True">
+                                                <Image Source="{Binding Thumbnail}" />
+                                            </Border>
+                                        </husk:Card>
+                                    </husk:SkeletonControl>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />

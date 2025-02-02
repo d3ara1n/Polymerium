@@ -67,7 +67,7 @@
     <Grid MaxWidth="1024" ColumnDefinitions="Auto,*,Auto" RowDefinitions="108,48,48,*">
         <labs:AsyncImage Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Stretch="UniformToFill"
                          Source="{Binding Screenshot}" />
-        <husk:Card Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="64,0">
+        <husk:Card Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="64,0" BorderThickness="0">
             <husk:Card.Background>
                 <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
                              Stretch="Fill">
