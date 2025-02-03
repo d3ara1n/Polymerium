@@ -54,7 +54,11 @@
                             <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" Padding="48,64,48,0" />
                             <local:OverlayHost Name="{x:Static local:AppWindow.PART_ModalHost}"
                                                HorizontalContentAlignment="Center"
-                                               VerticalContentAlignment="Center" />
+                                               VerticalContentAlignment="Center">
+                                <local:OverlayHost.Transition>
+                                    <huskt:FocusOnTransition />
+                                </local:OverlayHost.Transition>
+                            </local:OverlayHost>
                             <local:OverlayHost Name="{x:Static local:AppWindow.PART_DialogHost}"
                                                HorizontalContentAlignment="Center"
                                                VerticalContentAlignment="Center">

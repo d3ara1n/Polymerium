@@ -71,4 +71,10 @@ public class AppWindow : Window
         ArgumentNullException.ThrowIfNull(_dialogHost);
         _dialogHost.Pop(dialog);
     }
+
+    public void PopModal(Modal modal)
+    {
+        ArgumentNullException.ThrowIfNull(_modalHost);
+        _modalHost.Pop(modal);
+    }
 }

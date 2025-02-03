@@ -10,6 +10,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
@@ -90,7 +91,7 @@ public partial class MainWindow : AppWindow
         }
         else if (sender is Button { Tag: "0721" })
         {
-            PopDialog();
+            PopModal(new AccountPickerModal());
         }
         else
         {

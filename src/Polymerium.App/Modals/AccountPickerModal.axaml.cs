@@ -1,8 +1,8 @@
-﻿using Avalonia.Controls;
+﻿using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Modals;
 
-public partial class AccountPickerModal : UserControl
+public partial class AccountPickerModal : Modal
 {
     public AccountPickerModal()
     {
