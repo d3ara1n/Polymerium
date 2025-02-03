@@ -9,6 +9,7 @@
         <ResourceInclude Source="/Controls/ComboBox.axaml" />
         <ResourceInclude Source="/Controls/Dialog.axaml" />
         <ResourceInclude Source="/Controls/Divider.axaml" />
+        <ResourceInclude Source="/Controls/DropDownButton.axaml" />
         <ResourceInclude Source="/Controls/DropZone.axaml" />
         <ResourceInclude Source="/Controls/Expander.axaml" />
         <ResourceInclude Source="/Controls/Flyout.axaml" />
@@ -19,6 +20,7 @@
         <ResourceInclude Source="/Controls/ItemsControl.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
         <ResourceInclude Source="/Controls/Menu.axaml" />
+        <ResourceInclude Source="/Controls/Modal.axaml" />
         <ResourceInclude Source="/Controls/NotificationHost.axaml" />
         <ResourceInclude Source="/Controls/NotificationItem.axaml" />
         <ResourceInclude Source="/Controls/OverlayHost.axaml" />
@@ -31,6 +33,7 @@
         <ResourceInclude Source="/Controls/ScrollBar.axaml" />
         <ResourceInclude Source="/Controls/ScrollViewer.axaml" />
         <ResourceInclude Source="/Controls/SkeletonControl.axaml" />
+        <ResourceInclude Source="/Controls/SplitButton.axaml" />
         <ResourceInclude Source="/Controls/StepControl.axaml" />
         <ResourceInclude Source="/Controls/StepItem.axaml" />
         <ResourceInclude Source="/Controls/SwitchPresenter.axaml" />

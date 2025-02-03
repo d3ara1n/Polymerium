@@ -1,0 +1,25 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
+    <ControlTheme x:Key="{x:Type local:Modal}" TargetType="local:Modal">
+        <Setter Property="MinHeight" Value="128" />
+        <Setter Property="MinWidth" Value="256" />
+        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border ClipToBounds="True" Background="{TemplateBinding Background}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                      Padding="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
