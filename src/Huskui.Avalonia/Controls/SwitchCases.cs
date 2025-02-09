@@ -1,4 +1,6 @@
-﻿using Avalonia.Collections;
+﻿using System.Globalization;
+using Avalonia.Collections;
+using Avalonia.Data.Converters;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -53,6 +55,6 @@ public class SwitchCases : AvaloniaList<SwitchCase>
             throw new InvalidOperationException("The requested enum value was not present in the provided type.");
         }
 
-        return Convert.ChangeType(value, targetType);
+        return DefaultValueConverter.Instance.Convert(value, targetType, null, CultureInfo.CurrentCulture) ?? value;
     }
 }

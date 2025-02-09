@@ -118,7 +118,8 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="2" Content="Update"
+                        <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCommand}"
+                                CommandParameter="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}"
                                 IsEnabled="{Binding !Reference.CurrentVersion.IsCurrent,FallbackValue=False}" />
                     </Grid>
                 </Grid>

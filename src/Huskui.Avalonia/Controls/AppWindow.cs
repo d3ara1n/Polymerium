@@ -8,12 +8,14 @@ namespace Huskui.Avalonia.Controls;
 [TemplatePart(PART_ToastHost, typeof(OverlayHost))]
 [TemplatePart(PART_ModalHost, typeof(OverlayHost))]
 [TemplatePart(PART_DialogHost, typeof(OverlayHost))]
+[TemplatePart(PART_NotificationHost, typeof(NotificationHost))]
 [PseudoClasses(":obstructed")]
 public class AppWindow : Window
 {
     public const string PART_ToastHost = nameof(PART_ToastHost);
     public const string PART_ModalHost = nameof(PART_ModalHost);
     public const string PART_DialogHost = nameof(PART_DialogHost);
+    public const string PART_NotificationHost = nameof(PART_NotificationHost);
 
     public static readonly DirectProperty<AppWindow, bool> IsMaximizedProperty =
         AvaloniaProperty.RegisterDirect<AppWindow, bool>(nameof(IsMaximized), o => o.IsMaximized,
@@ -25,6 +27,7 @@ public class AppWindow : Window
     private OverlayHost? _modalHost;
 
     private OverlayHost? _toastHost;
+    private NotificationHost? _notificationHost;
 
     protected override Type StyleKeyOverride => typeof(AppWindow);
 
@@ -44,6 +47,7 @@ public class AppWindow : Window
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
+        _notificationHost = e.NameScope.Find<NotificationHost>(PART_NotificationHost);
         _toastHost = e.NameScope.Find<OverlayHost>(PART_ToastHost);
         _modalHost = e.NameScope.Find<OverlayHost>(PART_ModalHost);
         _dialogHost = e.NameScope.Find<OverlayHost>(PART_DialogHost);
@@ -76,5 +80,11 @@ public class AppWindow : Window
     {
         ArgumentNullException.ThrowIfNull(_modalHost);
         _modalHost.Pop(modal);
+    }
+
+    public void PopNotification(NotificationItem notification)
+    {
+        ArgumentNullException.ThrowIfNull(_notificationHost);
+        _notificationHost.Pop(notification);
     }
 }

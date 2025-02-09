@@ -61,7 +61,7 @@
                     </StackPanel>
                 </Button>
             </StackPanel>
-            <TextBlock Text="Instance" Theme="{StaticResource PageHeaderTextBlockTheme}" />
+            <Panel />
         </DockPanel>
     </husk:Page.Header>
     <Grid MaxWidth="1024" ColumnDefinitions="Auto,*,Auto" RowDefinitions="108,48,48,*">

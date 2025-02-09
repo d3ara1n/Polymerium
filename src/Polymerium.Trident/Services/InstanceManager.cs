@@ -1,14 +1,17 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Tasks;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Services;
 
 public class InstanceManager(
+    ILogger<InstanceManager> logger,
     ProfileManager profileManager,
     RepositoryAgent repositories,
     ImporterAgent importers,
@@ -19,47 +22,53 @@ public class InstanceManager(
 
     public event EventHandler<InstallTracker>? InstanceInstalling;
 
+    #region Install
+
     public InstallTracker Install(string key, string label, string? ns, string pid, string? vid)
     {
         // 只有在线安装会有 Tracker，离线导入因为不需要等待，全在前端进行
 
         var reserved = profileManager.RequestKey(key);
         var tracker = new InstallTracker(reserved.Key,
-            async t => await InstallInternalAsync(t, reserved, label, ns, pid, vid), t => _trackers.Remove(t.Key));
+            async t => await InstallInternalAsync((InstallTracker)t, reserved, label, ns, pid, vid),
+            t => _trackers.Remove(t.Key));
         _trackers.Add(reserved.Key, tracker);
         InstanceInstalling?.Invoke(this, tracker);
         tracker.Start();
         return tracker;
     }
 
-    private async Task InstallInternalAsync(TrackerBase tracker, ReservedKey key, string label, string? ns,
+    private async Task InstallInternalAsync(InstallTracker tracker, ReservedKey key, string label, string? ns,
         string pid, string? vid)
     {
-        if (tracker is not InstallTracker install) throw new InvalidOperationException();
+        logger.LogInformation("Begin install package {} as {}", PackageHelper.ToPurl(label, ns, pid, vid), key.Key);
         var package = await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with
         {
             Kind = ResourceKind.Modpack
         });
+        var size = (long)package.Size;
+        logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
         var stream = await client.GetStreamAsync(package.Download);
-        var size = (long)package.Size;
         var memory = new MemoryStream();
         var buffer = new byte[8192];
         var read = 0;
         var totalRead = 0L;
         do
         {
-            read = await stream.ReadAsync(buffer, install.Token);
+            read = await stream.ReadAsync(buffer, tracker.Token);
             await memory.WriteAsync(buffer.AsMemory(0, read));
             totalRead += read;
             var progress = (double)(totalRead * 100) / size;
-            ((IProgress<double?>)install).Report(progress);
-        } while (!install.Token.IsCancellationRequested && read > 0);
+            ((IProgress<double?>)tracker).Report(progress);
+        } while (!tracker.Token.IsCancellationRequested && read > 0);
 
         await stream.DisposeAsync();
         memory.Position = 0;
 
-        ((IProgress<double?>)install).Report(null);
+        logger.LogDebug("Downloaded {} bytes", memory.Length);
+
+        ((IProgress<double?>)tracker).Report(null);
         var pack = new CompressedProfilePack(memory)
         {
             Reference = package
@@ -78,6 +87,8 @@ public class InstanceManager(
             iconWriter.Close();
         }
 
+        logger.LogDebug("{} files collected to extract", container.ImportFileNames.Count);
+
         foreach (var (source, target) in container.ImportFileNames)
         {
             var to = Path.Combine(PathDef.Default.DirectoryOfImport(key.Key), target);
@@ -94,9 +105,26 @@ public class InstanceManager(
 
         profileManager.Add(key, container.Profile);
 
+        logger.LogInformation("{} added", key.Key);
+
         client.Dispose();
         await Task.Delay(2000);
     }
+
+    #endregion
+
+    #region Update
+
+    public void Update(string key)
+    {
+        if (IsInUse(key)) throw new InvalidOperationException($"Instance {key} is operated in progress");
+    }
+
+    private void UpdateInternalAsync(UpdateTracker tracker, string key)
+    {
+    }
+
+    #endregion
 
     public bool IsTracking(string key, [MaybeNullWhen(false)] out TrackerBase tracker)
     {

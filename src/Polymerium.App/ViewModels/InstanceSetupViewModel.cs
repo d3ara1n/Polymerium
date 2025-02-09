@@ -185,6 +185,19 @@ public partial class InstanceSetupViewModel : ViewModelBase
         if (url is not null) Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
     }
 
+    private bool CanUpdate(InstanceVersionModel? model)
+    {
+        return model is { IsCurrent: false };
+    }
+
+    [RelayCommand(CanExecute = nameof(CanUpdate))]
+    private void Update(InstanceVersionModel? model)
+    {
+        if (model is not null)
+        {
+        }
+    }
+
     #endregion
 
     #region Injected

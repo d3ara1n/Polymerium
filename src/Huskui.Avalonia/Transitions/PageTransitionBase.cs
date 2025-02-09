@@ -41,7 +41,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
 
         await Task.WhenAll(tasks);
 
-        // TransitioningContentControl 的动画直接作用在两个 ContentPresenter 上，Avalonia 的 Animation 也不会自动复原属性，需要手动重置以免留下副作用
+        // TransitioningContentControl 的动画直接作用在两个 ContentPresenter 上
         if (!cancellationToken.IsCancellationRequested) Cleanup(forward ? from : to, forward ? to : from);
     }
 
@@ -110,7 +110,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
         internal IEnumerable<Animation> Build(bool forward)
         {
             return _builder.Select(x =>
-                x.Build(forward, _duration, TimeSpan.Zero, TimeSpan.Zero, FillMode.Forward, 1.0d, new LinearEasing()));
+                x.Build(forward, _duration, TimeSpan.Zero, TimeSpan.Zero, FillMode.None, 1.0d, new LinearEasing()));
         }
 
         public AnimationBuilder Animation(TimeSpan? duration = null, Easing? easing = null)

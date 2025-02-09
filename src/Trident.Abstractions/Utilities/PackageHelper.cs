@@ -11,7 +11,7 @@ public static class PackageHelper
             "^(?<label>[a-zA-Z0-9._-]+):((?<namespace>[a-zA-Z0-9._-]+)/)?(?<identity>[a-zA-Z0-9._-]+)(@(?<version>[a-zA-Z0-9._-]+))?$");
 
     public static bool TryParse(string purl,
-        out (string Label, string Namespace, string Pid, string Vid) result)
+        out (string Label, string? Namespace, string Pid, string? Vid) result)
     {
         var match = PATTERN.Match(purl);
         if (match.Success && match.Groups["label"].Success && match.Groups["identity"].Success)
@@ -28,22 +28,22 @@ public static class PackageHelper
         return false;
     }
 
-    public static string ToPurl(string label, string? @namespace, string identity, string? version)
+    public static string ToPurl(string label, string? ns, string pid, string? vid)
     {
         var sb = new StringBuilder();
         sb.Append(label);
         sb.Append(':');
-        if (@namespace != null)
+        if (ns != null)
         {
-            sb.Append(@namespace);
+            sb.Append(ns);
             sb.Append('/');
         }
 
-        sb.Append(identity);
-        if (version != null)
+        sb.Append(pid);
+        if (vid != null)
         {
             sb.Append('@');
-            sb.Append(version);
+            sb.Append(vid);
         }
 
         return sb.ToString();
