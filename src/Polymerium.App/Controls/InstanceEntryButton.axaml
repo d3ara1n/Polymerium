@@ -42,7 +42,7 @@
                     <Border.Transitions>
                         <Transitions>
                             <BrushTransition Property="Background"
-                                             Duration="{StaticResource ControlInstantAnimationDuration}" />
+                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </Border.Transitions>
                     <Panel>

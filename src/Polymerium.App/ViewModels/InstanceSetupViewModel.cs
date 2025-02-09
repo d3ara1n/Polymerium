@@ -12,10 +12,12 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Profiles;
@@ -33,10 +35,11 @@ public partial class InstanceSetupViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
 
     public InstanceSetupViewModel(ViewBag bag, ProfileManager profileManager, RepositoryAgent repositories,
-        IHttpClientFactory clientFactory)
+        IHttpClientFactory clientFactory, NotificationService notificationService)
     {
         _repositories = repositories;
         _clientFactory = clientFactory;
+        _notificationService = notificationService;
         if (bag.Parameter is string key)
         {
             if (profileManager.TryGetMutable(key, out var mutable))
@@ -155,7 +158,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
                             }
                             catch
                             {
-                                // TODO
+                                // ignore
                             }
                     }, _cancellationTokenSource.Token);
                     return model;
@@ -173,6 +176,8 @@ public partial class InstanceSetupViewModel : ViewModelBase
             catch (ResourceNotFoundException ex)
             {
                 // TODO: show a message about network unreachable or package url invalid
+                _notificationService.PopMessage("Fetching modpack information failed",
+                    level: NotificationLevel.Warning);
                 Debug.WriteLine($"Resource not found: {ex.Message}");
             }
     }
@@ -195,7 +200,6 @@ public partial class InstanceSetupViewModel : ViewModelBase
     {
         if (model is not null)
         {
-            
         }
     }
 
@@ -205,6 +209,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
 
     private readonly RepositoryAgent _repositories;
     private readonly IHttpClientFactory _clientFactory;
+    private readonly NotificationService _notificationService;
 
     #endregion
 

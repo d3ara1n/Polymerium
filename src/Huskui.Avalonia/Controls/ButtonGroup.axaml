@@ -48,8 +48,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
-        <Setter Property="Background" Value="{DynamicResource Overlay7BackgroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="Container">
@@ -58,7 +58,7 @@
                         Padding="{TemplateBinding Padding}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="Transparent"
+                        Background="{TemplateBinding Background}"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
@@ -68,22 +68,15 @@
                         RecognizesAccessKey="True"
                         TextElement.FontSize="{TemplateBinding FontSize}"
                         TextElement.FontWeight="{TemplateBinding FontWeight}"
-                        UseLayoutRounding="False">
-                        <ContentPresenter.Transitions>
-                            <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            </Transitions>
-                        </ContentPresenter.Transitions>
-                    </ContentPresenter>
-                    <Border x:Name="Overlay" Opacity="0"
-                            Background="{TemplateBinding Background}"
+                        UseLayoutRounding="False" />
+                    <Border x:Name="Indicator"
+                            Background="Transparent"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition Property="Background" Easing="SineEaseOut"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -91,12 +84,12 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover /template/ Border#Overlay">
-            <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
+        <Style Selector="^:pointerover /template/ Border#Indicator">
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
         </Style>
 
-        <Style Selector="^:pressed /template/ Border#Overlay">
-            <Setter Property="Opacity" Value="{StaticResource Overlay2Opacity}" />
+        <Style Selector="^:pressed /template/ Border#Indicator">
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Panel#Container">

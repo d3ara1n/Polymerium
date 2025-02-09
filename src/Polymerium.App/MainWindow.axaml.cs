@@ -46,7 +46,6 @@ public partial class MainWindow : AppWindow
         {
             Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
             Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
-            Background = Brushes.White,
             Content = new StackPanel
             {
                 Spacing = 8d,
@@ -69,7 +68,6 @@ public partial class MainWindow : AppWindow
         PopToast(new Toast
         {
             Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
-            Background = Brushes.White,
             Content = new StackPanel
             {
                 Spacing = 8d,
