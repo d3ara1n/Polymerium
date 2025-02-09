@@ -96,7 +96,7 @@ public partial class MainWindow : AppWindow
     {
         if (sender is Button { Tag: "42" })
         {
-            PopNotification();
+            PopToast();
         }
         else if (sender is Button { Tag: "0721" })
         {

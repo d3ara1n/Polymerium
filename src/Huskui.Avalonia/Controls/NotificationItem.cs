@@ -57,14 +57,25 @@ public class NotificationItem : ContentControl
         remove => RemoveHandler(ClosedEvent, value);
     }
 
-    public static readonly StyledProperty<double?> ProgressProperty =
-        AvaloniaProperty.Register<NotificationItem, double?>(nameof(Progress));
+    public static readonly StyledProperty<double> ProgressProperty =
+        AvaloniaProperty.Register<NotificationItem, double>(nameof(Progress));
 
-    public double? Progress
+    public double Progress
     {
         get => GetValue(ProgressProperty);
         set => SetValue(ProgressProperty, value);
     }
+
+    public static readonly StyledProperty<bool> IsProgressIndeterminateProperty =
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsProgressIndeterminate));
+
+    public bool IsProgressIndeterminate
+    {
+        get => GetValue(IsProgressIndeterminateProperty);
+        set => SetValue(IsProgressIndeterminateProperty, value);
+    }
+
+    
 
     public static readonly StyledProperty<double> ProgressMaximumProperty =
         AvaloniaProperty.Register<NotificationItem, double>(nameof(ProgressMaximum), 100d);

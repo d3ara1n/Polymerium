@@ -61,7 +61,7 @@ Available in Windows 10&11 only.
 
 ## II.特色 | Features
 
-- 🎨 Fluent Design & WinUI3
+- 🎨 Custom UI Styles
 - 💾 增量部署，使用软链接节省硬盘空间 | Pooled file objects & Symlink deployment.
 - 🎭 支持多账号且账号与实例绑定 | Instance linked multi account support.
 - 🎟️ 多种在线仓库，与 Curseforge 和 Modrinth 集成 | Integrated with Curseforge & Modrinth.

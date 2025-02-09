@@ -22,8 +22,6 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
         // 在反向时动画会反着施加到 from 和 to 上，to 会倒着播放原先消失的动画，这里取巧直接反转 from 和 to，并倒转双方动画实现
         if (!forward) (from, to) = (to, from);
 
-        Setup(from, to);
-
         // 捕获交换过的 from, to，不过顺序不影响
         var fromBuilder = new Builder(Duration);
         var toBuilder = new Builder(Duration);
@@ -32,48 +30,24 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
         var (fromAnimations, toAnimations) = (fromBuilder.Build(forward), toBuilder.Build(forward));
 
         if (from != null)
-            foreach (var animation in fromAnimations)
-                tasks.Add(animation.RunAsync(from, cancellationToken));
+            tasks.AddRange(fromAnimations.Select(animation => animation.RunAsync(from, cancellationToken)));
 
-        if (to != null)
-            foreach (var animation in toAnimations)
-                tasks.Add(animation.RunAsync(to, cancellationToken));
+        if (to != null) tasks.AddRange(toAnimations.Select(animation => animation.RunAsync(to, cancellationToken)));
 
         await Task.WhenAll(tasks);
 
-        // TransitioningContentControl 的动画直接作用在两个 ContentPresenter 上
-        if (!cancellationToken.IsCancellationRequested) Cleanup(forward ? from : to, forward ? to : from);
-    }
-
-    protected virtual void Setup(Visual? from, Visual? to)
-    {
-        // from 看不看得见无所谓
-
-        if (to != null) to.IsVisible = true;
+        Cleanup(from, to);
     }
 
     protected virtual void Cleanup(Visual? from, Visual? to)
     {
-        if (from != null)
-        {
-            from.IsVisible = false;
-            from.Opacity = 1.0d;
-            from.RenderTransform = null;
-        }
-
-        if (to != null)
-        {
-            to.IsVisible = true;
-            to.Opacity = 1.0d;
-            to.RenderTransform = null;
-        }
     }
 
     /// <summary>
     ///     Gets the common visual parent of the two control.
     /// </summary>
-    /// <param name="from">The from control.</param>
-    /// <param name="to">The to control.</param>
+    /// <param name="from">The last control.</param>
+    /// <param name="to">The next control.</param>
     /// <returns>The common parent.</returns>
     /// <exception cref="ArgumentException">
     ///     The two controls do not share a common parent.
@@ -110,7 +84,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
         internal IEnumerable<Animation> Build(bool forward)
         {
             return _builder.Select(x =>
-                x.Build(forward, _duration, TimeSpan.Zero, TimeSpan.Zero, FillMode.None, 1.0d, new LinearEasing()));
+                x.Build(forward, _duration, TimeSpan.Zero, TimeSpan.Zero, FillMode.Forward, 1.0d, new LinearEasing()));
         }
 
         public AnimationBuilder Animation(TimeSpan? duration = null, Easing? easing = null)
@@ -128,11 +102,6 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
         public AnimationBuilder Animation(Easing easing)
         {
             return Animation(null, easing);
-        }
-
-        public AnimationBuilder Animation()
-        {
-            return Animation(null, null);
         }
 
         public class AnimationBuilder

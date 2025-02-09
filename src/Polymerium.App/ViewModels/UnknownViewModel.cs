@@ -7,10 +7,11 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
+using Polymerium.App.Services;
 
 namespace Polymerium.App.ViewModels;
 
-public class UnknownViewModel(ViewBag bag) : ViewModelBase
+public partial class UnknownViewModel(ViewBag bag, NotificationService notificationService) : ViewModelBase
 {
     public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
@@ -42,4 +43,14 @@ public class UnknownViewModel(ViewBag bag) : ViewModelBase
     {
         return Task.Delay(TimeSpan.FromSeconds(7), token);
     }
+
+    #region Commands
+
+    [RelayCommand]
+    private void Hello()
+    {
+        notificationService.PopMessage("Hello", "Hi there!");
+    }
+
+    #endregion
 }

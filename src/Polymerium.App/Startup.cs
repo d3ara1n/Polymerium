@@ -28,6 +28,7 @@ public static class Startup
         // App
         services
             .AddViewFacilities()
+            .AddSingleton<NotificationService>()
             .AddSingleton<NavigationService>();
     }
 }
