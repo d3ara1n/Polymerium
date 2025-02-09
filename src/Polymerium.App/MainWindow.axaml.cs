@@ -83,11 +83,20 @@ public partial class MainWindow : AppWindow
         });
     }
 
+    private void PopNotification()
+    {
+        var item = new NotificationItem
+        {
+            Content = "Larry The Lazy"
+        };
+        PopNotification(item);
+    }
+
     private void NavigationButton_OnClick(object? sender, RoutedEventArgs e)
     {
         if (sender is Button { Tag: "42" })
         {
-            PopToast();
+            PopNotification();
         }
         else if (sender is Button { Tag: "0721" })
         {

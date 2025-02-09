@@ -1,40 +1,56 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:fi="using:FluentIcons.Avalonia"
                     xmlns:models="https://github.com/d3ara1n/Huskui.Avalonia/Models">
     <Design.PreviewWith>
-        <Panel Background="White">
-            <StackPanel Margin="24" Spacing="12">
-                <local:NotificationItem Message="Very loooooooooooooooooooooooooooooooong message.">
-                    <models:NotificationAction />
-                    <models:NotificationAction />
-                    <models:NotificationAction />
-                </local:NotificationItem>
-                <local:NotificationItem Level="Success"
-                                        Message="Very looooooooooooooooooooooooooooooooooooooooooong message.">
-                    <models:NotificationAction Text="And" />
-                    <models:NotificationAction Text="Some" />
-                    <models:NotificationAction Text="Buttons" />
-                </local:NotificationItem>
-                <local:NotificationItem Level="Warning" Message="Very short message.">
-                    <models:NotificationAction Text="Go" />
-                    <models:NotificationAction Text="To" />
-                    <models:NotificationAction Text="Hell" />
-                </local:NotificationItem>
-                <local:NotificationItem Level="Danger" Message="Short, too.">
-                    <models:NotificationAction Text="Then" />
-                    <models:NotificationAction Text="Go" />
-                    <models:NotificationAction Text="Back" />
-                </local:NotificationItem>
-            </StackPanel>
+        <Panel Background="White" Width="360">
+            <ScrollViewer>
+                <StackPanel Margin="24" Spacing="6">
+                    <local:NotificationItem Title="{x:Null}" IsCloseButtonVisible="False">
+                        <Button Content="Do NOT Press" />
+                    </local:NotificationItem>
+                    <local:NotificationItem Level="Success" Title="Downloading file"
+                                            IsProgressBarVisible="True" Progress="54">
+                        <local:NotificationItem.Actions>
+                            <models:NotificationAction Text="Cancel" />
+                        </local:NotificationItem.Actions>
+                        <StackPanel Spacing="4">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <fi:SymbolIcon Symbol="FolderZip" FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Text="四大名著.zip" />
+                            </StackPanel>
+                            <TextBlock Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                                <Run Text="D: 128 B/s" />
+                                <Run Text="E: 46 s" />
+                                <Run Text="S: 5.4 MiB" />
+                            </TextBlock>
+                        </StackPanel>
+                    </local:NotificationItem>
+                    <local:NotificationItem Level="Warning" Title="Checking updates" Content="It takes very long."
+                                            IsProgressBarVisible="True">
+                        <local:NotificationItem.Actions>
+                            <models:NotificationAction Text="Go" />
+                            <models:NotificationAction Text="To" />
+                            <models:NotificationAction Text="Hell" />
+                        </local:NotificationItem.Actions>
+                    </local:NotificationItem>
+                    <local:NotificationItem Level="Danger" Content="It takes...shot.">
+                        <local:NotificationItem.Actions>
+                            <models:NotificationAction Text="Then" />
+                            <models:NotificationAction Text="Go" />
+                            <models:NotificationAction Text="Back" />
+                        </local:NotificationItem.Actions>
+                    </local:NotificationItem>
+                </StackPanel>
+            </ScrollViewer>
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:NotificationItem}" TargetType="local:NotificationItem">
-        <Setter Property="Height" Value="104" />
-        <Setter Property="Width" Value="330" />
         <Setter Property="Level" Value="Information" />
         <Setter Property="Title" Value="Information" />
-        <Setter Property="Message" Value="Message" />
+        <Setter Property="IsOpen" Value="True" />
+        <Setter Property="IsCloseButtonVisible" Value="True" />
         <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}" />
@@ -43,65 +59,93 @@
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="Border" ClipToBounds="{TemplateBinding ClipToBounds}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        Background="{TemplateBinding Background}" BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                        Margin="3">
-                    <Border.Effect>
-                        <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.1" />
-                    </Border.Effect>
-                    <Grid RowDefinitions="Auto,6,*,8,Auto" ColumnDefinitions="*,Auto"
-                          Margin="{TemplateBinding Padding}">
-                        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal"
-                                    Spacing="8">
-                            <TextBlock Text="{TemplateBinding Title}" FontWeight="Bold" />
-                        </StackPanel>
-                        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
-                                   Text="{TemplateBinding Message}" TextWrapping="Wrap"
-                                   TextTrimming="CharacterEllipsis"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                        <StackPanel Grid.Row="4" Grid.Column="1">
-                            <ItemsControl ItemsSource="{TemplateBinding Actions}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" Spacing="12" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="models:NotificationAction">
-                                        <HyperlinkButton Content="{Binding Text}" Command="{Binding Command}"
-                                                         CommandParameter="{Binding $parent[local:NotificationItem].Parameter}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
-
-                    </Grid>
-                </Border>
+                <LayoutTransformControl Name="PART_LayoutTransform">
+                    <Panel>
+                        <Border Name="Border" ClipToBounds="{TemplateBinding ClipToBounds}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Background="{TemplateBinding Background}"
+                                BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Margin="3">
+                            <Border.Effect>
+                                <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.1" />
+                            </Border.Effect>
+                            <Border CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
+                                <DockPanel>
+                                    <ProgressBar DockPanel.Dock="Bottom" CornerRadius="0"
+                                                 Value="{TemplateBinding Progress}"
+                                                 IsIndeterminate="{TemplateBinding Progress,Converter={x:Static ObjectConverters.IsNull}}"
+                                                 Maximum="{TemplateBinding ProgressMaximum}"
+                                                 IsVisible="{TemplateBinding IsProgressBarVisible}" />
+                                    <Grid RowDefinitions="Auto,4,*,4,Auto" ColumnDefinitions="*,Auto"
+                                          Margin="{TemplateBinding Padding}">
+                                        <DockPanel Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0">
+                                            <DockPanel.IsVisible>
+                                                <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                                    <Binding Path="Title"
+                                                             RelativeSource="{RelativeSource Mode=TemplatedParent}"
+                                                             Converter="{x:Static ObjectConverters.IsNotNull}" />
+                                                    <Binding Path="IsCloseButtonVisible"
+                                                             RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                </MultiBinding>
+                                            </DockPanel.IsVisible>
+                                            <ToggleButton Padding="6" CornerRadius="10"
+                                                          Theme="{StaticResource OutlineButtonTheme}"
+                                                          DockPanel.Dock="Right" IsEnabled="{TemplateBinding IsOpen}"
+                                                          IsChecked="{TemplateBinding IsOpen,Mode=TwoWay}"
+                                                          IsVisible="{TemplateBinding IsCloseButtonVisible}">
+                                                <fi:SymbolIcon Symbol="Dismiss" Height="6" Width="6" />
+                                            </ToggleButton>
+                                            <TextBlock Text="{TemplateBinding Title}" FontWeight="Bold" />
+                                        </DockPanel>
+                                        <ContentPresenter Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+                                                          Content="{TemplateBinding Content}"
+                                                          ContentTemplate="{TemplateBinding ContentTemplate}">
+                                            <ContentPresenter.Styles>
+                                                <Style Selector="ContentPresenter > TextBlock">
+                                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                                    <Setter Property="Foreground"
+                                                            Value="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                                </Style>
+                                            </ContentPresenter.Styles>
+                                        </ContentPresenter>
+                                        <ItemsControl Grid.Row="4" Grid.Column="1"
+                                                      ItemsSource="{TemplateBinding Actions}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="12" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="models:NotificationAction">
+                                                    <HyperlinkButton Content="{Binding Text}"
+                                                                     Command="{Binding Command}"
+                                                                     CommandParameter="{Binding $parent[local:NotificationItem]}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </DockPanel>
+                            </Border>
+                        </Border>
+                    </Panel>
+                </LayoutTransformControl>
             </ControlTemplate>
         </Setter>
 
         <Style Selector="^:success">
             <Setter Property="Title" Value="Success" />
-
-            <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource NotificationSuccessBackgroundBrush}" />
-            </Style>
+            <Setter Property="Background" Value="{DynamicResource NotificationSuccessBackgroundBrush}" />
         </Style>
         <Style Selector="^:warning">
             <Setter Property="Title" Value="Warning" />
-
-            <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource NotificationWarningBackgroundBrush}" />
-            </Style>
+            <Setter Property="Background" Value="{DynamicResource NotificationWarningBackgroundBrush}" />
         </Style>
         <Style Selector="^:danger">
             <Setter Property="Title" Value="Danger" />
-
-            <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource NotificationDangerBackgroundBrush}" />
-            </Style>
+            <Setter Property="Background" Value="{DynamicResource NotificationDangerBackgroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

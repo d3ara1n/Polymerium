@@ -4,7 +4,6 @@
              xmlns:labs="using:Avalonia.Labs.Controls"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-
     <Application.Styles>
         <labs:ControlThemes />
         <StyleInclude Source="avares://IconPacks.Avalonia.Lucide/Lucide.axaml" />

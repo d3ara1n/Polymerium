@@ -4,6 +4,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+           xmlns:fi="using:FluentIcons.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
@@ -102,9 +103,20 @@
                         <Button Classes="Primary" Content="World" />
                         <HyperlinkButton Content="THIS A LINK!" />
 
-                        <husk:NotificationItem Parameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                                               Actions="{Binding Actions}"
-                                               Message="Click buttons below to change notification level" />
+                        <husk:NotificationItem Actions="{Binding Actions}" Title="Downloading file..." Progress="54"
+                                               IsProgressBarVisible="True">
+                            <StackPanel Spacing="4">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <fi:SymbolIcon Symbol="FolderZip" FontSize="{StaticResource MediumFontSize}" />
+                                    <TextBlock Text="四大名著.zip" />
+                                </StackPanel>
+                                <TextBlock Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                                    <Run Text="D: 128 B/s" />
+                                    <Run Text="E: 46 s" />
+                                    <Run Text="S: 5.4 MiB" />
+                                </TextBlock>
+                            </StackPanel>
+                        </husk:NotificationItem>
                         <DockPanel>
                             <ComboBox DockPanel.Dock="Right" Name="ComboBox" PlaceholderText="这是一个一个">
                                 <ComboBoxItem Content="这是一个 1" />

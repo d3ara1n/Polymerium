@@ -13,15 +13,18 @@
                         <Border Name="PART_TransparencyFallback"
                                 IsHitTestVisible="False" />
                         <VisualLayerManager IsPopup="True">
-                            <ContentPresenter Name="PART_ContentPresenter"
-                                              Padding="{TemplateBinding Padding}"
-                                              Background="{TemplateBinding Background}"
-                                              BorderBrush="{TemplateBinding BorderBrush}"
-                                              BorderThickness="{TemplateBinding BorderThickness}"
-                                              CornerRadius="{TemplateBinding CornerRadius}"
-                                              ClipToBounds="{TemplateBinding ClipToBounds}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <LayoutTransformControl Name="PART_LayoutTransform"
+                                                    LayoutTransform="{TemplateBinding Transform}">
+                                <ContentPresenter Name="PART_ContentPresenter"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  Background="{TemplateBinding Background}"
+                                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                                  CornerRadius="{TemplateBinding CornerRadius}"
+                                                  ClipToBounds="{TemplateBinding ClipToBounds}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            </LayoutTransformControl>
                         </VisualLayerManager>
                     </Panel>
                 </LayoutTransformControl>

@@ -8,7 +8,7 @@ namespace Polymerium.Trident.Services;
 
 public class RepositoryAgent
 {
-    private static readonly TimeSpan EXPRIED_IN = TimeSpan.FromDays(1);
+    private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromDays(7);
     private readonly ILogger<RepositoryAgent> _logger;
     private readonly IReadOnlyDictionary<string, IRepository> _repositories;
 
@@ -57,7 +57,7 @@ public class RepositoryAgent
         if (cachedPath != null && File.Exists(cachedPath))
             try
             {
-                if (DateTime.UtcNow - File.GetLastWriteTimeUtc(cachedPath) < EXPRIED_IN)
+                if (DateTime.UtcNow - File.GetLastWriteTimeUtc(cachedPath) < EXPIRED_IN)
                 {
                     var content = await File.ReadAllTextAsync(cachedPath);
                     var cached = JsonSerializer.Deserialize<T>(content);

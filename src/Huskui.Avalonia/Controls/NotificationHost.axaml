@@ -3,7 +3,11 @@
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme x:Key="{x:Type local:NotificationHost}" TargetType="local:NotificationHost">
         <Setter Property="Template">
-            <ControlTemplate />
+            <ControlTemplate>
+                <Panel>
+                    <ItemsControl ItemsSource="{TemplateBinding Items}" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                </Panel>
+            </ControlTemplate>
         </Setter>
     </ControlTheme>
 </ResourceDictionary>

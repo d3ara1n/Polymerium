@@ -1,13 +1,14 @@
-﻿using Avalonia;
+﻿using System.Windows.Input;
+using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
-using Avalonia.Metadata;
+using Avalonia.Interactivity;
 using Huskui.Avalonia.Models;
 
 namespace Huskui.Avalonia.Controls;
 
-[PseudoClasses(":information", ":success", ":warning", ":danger")]
+[PseudoClasses(":open", ":information", ":success", ":warning", ":danger")]
 public class NotificationItem : ContentControl
 {
     public static readonly StyledProperty<NotificationLevel> LevelProperty =
@@ -20,13 +21,69 @@ public class NotificationItem : ContentControl
     public static readonly StyledProperty<string> TitleProperty =
         AvaloniaProperty.Register<NotificationItem, string>(nameof(Title), string.Empty);
 
+    public static readonly StyledProperty<bool> IsOpenProperty =
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsOpen));
 
-    public static readonly StyledProperty<string> MessageProperty =
-        AvaloniaProperty.Register<NotificationItem, string>(nameof(Message), string.Empty);
+    public bool IsOpen
+    {
+        get => GetValue(IsOpenProperty);
+        set => SetValue(IsOpenProperty, value);
+    }
 
-    public static readonly DirectProperty<NotificationItem, object?> ParameterProperty =
-        AvaloniaProperty.RegisterDirect<NotificationItem, object?>(nameof(Parameter), o => o.Parameter,
-            (o, v) => o.Parameter = v);
+    public static readonly StyledProperty<bool> IsCloseButtonVisibleProperty =
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsCloseButtonVisible));
+
+    public bool IsCloseButtonVisible
+    {
+        get => GetValue(IsCloseButtonVisibleProperty);
+        set => SetValue(IsCloseButtonVisibleProperty, value);
+    }
+
+    public static readonly RoutedEvent<RoutedEventArgs> OpenedEvent =
+        RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Opened), RoutingStrategies.Direct);
+
+    public event EventHandler<RoutedEventArgs>? Opened
+    {
+        add => AddHandler(OpenedEvent, value);
+        remove => RemoveHandler(OpenedEvent, value);
+    }
+
+    public static readonly RoutedEvent<RoutedEventArgs> ClosedEvent =
+        RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Closed), RoutingStrategies.Direct);
+
+    public event EventHandler<RoutedEventArgs>? Closed
+    {
+        add => AddHandler(ClosedEvent, value);
+        remove => RemoveHandler(ClosedEvent, value);
+    }
+
+    public static readonly StyledProperty<double?> ProgressProperty =
+        AvaloniaProperty.Register<NotificationItem, double?>(nameof(Progress));
+
+    public double? Progress
+    {
+        get => GetValue(ProgressProperty);
+        set => SetValue(ProgressProperty, value);
+    }
+
+    public static readonly StyledProperty<double> ProgressMaximumProperty =
+        AvaloniaProperty.Register<NotificationItem, double>(nameof(ProgressMaximum), 100d);
+
+    public double ProgressMaximum
+    {
+        get => GetValue(ProgressMaximumProperty);
+        set => SetValue(ProgressMaximumProperty, value);
+    }
+
+    public static readonly StyledProperty<bool> IsProgressBarVisibleProperty =
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsProgressBarVisible));
+
+    public bool IsProgressBarVisible
+    {
+        get => GetValue(IsProgressBarVisibleProperty);
+        set => SetValue(IsProgressBarVisibleProperty, value);
+    }
+
 
     private AvaloniaList<NotificationAction> _actions = [];
 
@@ -38,7 +95,6 @@ public class NotificationItem : ContentControl
         set => SetValue(LevelProperty, value);
     }
 
-    [Content]
     public AvaloniaList<NotificationAction> Actions
     {
         get => _actions;
@@ -50,20 +106,6 @@ public class NotificationItem : ContentControl
         get => GetValue(TitleProperty);
         set => SetValue(TitleProperty, value);
     }
-
-    public string Message
-    {
-        get => GetValue(MessageProperty);
-        set => SetValue(MessageProperty, value);
-    }
-
-    public object? Parameter
-    {
-        get => _parameter;
-        set => SetAndRaise(ParameterProperty, ref _parameter, value);
-    }
-
-    protected override Type StyleKeyOverride { get; } = typeof(NotificationItem);
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
@@ -78,11 +120,39 @@ public class NotificationItem : ContentControl
                 NotificationLevel.Danger => ":danger",
                 _ => ":information"
             });
+        if (change.Property == IsOpenProperty)
+        {
+            var opened = change.GetNewValue<bool>();
+            RaiseEvent(opened
+                ? new RoutedEventArgs(OpenedEvent, this)
+                : new RoutedEventArgs(ClosedEvent, this));
+            PseudoClasses.Set(":open", opened);
+        }
+    }
+
+    public void Close()
+    {
+        IsOpen = false;
     }
 
     private void SetPseudoClass(string name)
     {
         foreach (var i in (string[]) [":information", ":success", ":warning", ":danger"])
             PseudoClasses.Set(i, name == i);
+    }
+
+    private class InternalDismissCommand : ICommand
+    {
+        public bool CanExecute(object? parameter)
+        {
+            return parameter is NotificationItem { IsOpen: true };
+        }
+
+        public void Execute(object? parameter)
+        {
+            if (parameter is NotificationItem { IsOpen: true } item) item.IsOpen = false;
+        }
+
+        public event EventHandler? CanExecuteChanged;
     }
 }
