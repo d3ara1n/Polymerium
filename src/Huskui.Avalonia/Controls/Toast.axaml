@@ -3,7 +3,7 @@
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:fi="using:FluentIcons.Avalonia">
     <ControlTheme x:Key="{x:Type local:Toast}" TargetType="local:Toast">
-        <Setter Property="Background" Value="{DynamicResource Layer0BackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="Padding" Value="24,76,24,24" />

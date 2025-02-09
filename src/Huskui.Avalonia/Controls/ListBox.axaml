@@ -50,7 +50,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
-        <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource OverlayHalfBackgroundBrush}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="ClipToBounds" Value="False" />

@@ -85,15 +85,12 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
-                    <Border x:Name="Indicator" Background="{TemplateBinding Background}"
+                    <Border x:Name="Border" Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
-                                <BrushTransition Property="Background"
-                                                 Duration="{StaticResource ControlNormalAnimationDuration}"
-                                                 Easing="SineEaseOut" />
                                 <BrushTransition Property="BorderBrush"
                                                  Duration="{StaticResource ControlNormalAnimationDuration}"
                                                  Easing="SineEaseOut" />
@@ -102,6 +99,15 @@
                                                      Easing="SineEaseOut" />
                             </Transitions>
                         </Border.Transitions>
+                        <Border Name="Indicator" Background="{DynamicResource OverlayFullBackgroundBrush}" Opacity="0">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity"
+                                                      Duration="{StaticResource ControlNormalAnimationDuration}"
+                                                      Easing="SineEaseOut" />
+                                </Transitions>
+                            </Border.Transitions>
+                        </Border>
                     </Border>
                     <ContentPresenter
                         Name="PART_ContentPresenter"
@@ -120,28 +126,21 @@
                         RecognizesAccessKey="True"
                         TextElement.FontSize="{TemplateBinding FontSize}"
                         TextElement.FontWeight="{TemplateBinding FontWeight}"
-                        UseLayoutRounding="False">
-                        <ContentPresenter.Transitions>
-                            <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlNormalAnimationDuration}" />
-                            </Transitions>
-                        </ContentPresenter.Transitions>
-                    </ContentPresenter>
+                        UseLayoutRounding="False" />
                 </Panel>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover:not(:selected)/template/ Border#Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Style Selector="^:pointerover:not(:selected) /template/ Border#Indicator">
+            <Setter Property="Opacity" Value="1" />
         </Style>
 
-        <Style Selector="^:selected /template/ Border#Indicator">
+        <Style Selector="^:selected /template/ Border#Border">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
             <Setter Property="BorderThickness" Value="2" />
         </Style>
 
-        <Style Selector="^:disabled /template/ Border#Indicator">
+        <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
@@ -152,7 +151,7 @@
     <ControlTheme x:Key="SegmentedTabStripItemTheme" TargetType="TabStripItem">
         <Setter Property="Padding" Value="8,6" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="Background" Value="{DynamicResource Overlay1BackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>

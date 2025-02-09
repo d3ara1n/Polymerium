@@ -26,9 +26,6 @@
                             Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
-                                <BrushTransition Property="BorderBrush"
-                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
-                                                 Easing="SineEaseOut" />
                                 <BrushTransition Property="Background"
                                                  Duration="{StaticResource ControlFasterAnimationDuration}"
                                                  Easing="SineEaseOut" />

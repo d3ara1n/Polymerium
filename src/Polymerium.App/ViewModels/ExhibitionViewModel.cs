@@ -16,6 +16,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Polymerium.Trident.Services;
 using Refit;
 using Semver;
@@ -27,15 +28,22 @@ namespace Polymerium.App.ViewModels;
 
 public partial class ExhibitionViewModel : ViewModelBase
 {
+    #region Injected
+
     private readonly RepositoryAgent _agent;
     private readonly IHttpClientFactory _factory;
     private readonly InstanceManager _instanceManager;
+    private readonly NotificationService _notificationService;
 
-    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager)
+    #endregion
+
+    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager,
+        NotificationService notificationService)
     {
         _agent = agent;
         _factory = factory;
         _instanceManager = instanceManager;
+        _notificationService = notificationService;
         // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x switch
         {
@@ -144,7 +152,7 @@ public partial class ExhibitionViewModel : ViewModelBase
                 }
                 catch (ApiException ex)
                 {
-                    // TODO: pop notification
+                    _notificationService.PopMessage("Network unreachable", level: NotificationLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 
@@ -154,7 +162,7 @@ public partial class ExhibitionViewModel : ViewModelBase
         }
         catch (ApiException ex)
         {
-            // TODO: pop notification
+            _notificationService.PopMessage("Network unreachable", level: NotificationLevel.Warning);
             Debug.WriteLine(ex);
         }
     }

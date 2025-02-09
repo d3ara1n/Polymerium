@@ -15,4 +15,6 @@ public class Toast : ContentControl
         get => _title;
         set => SetAndRaise(TitleProperty, ref _title, value);
     }
+
+    protected override Type StyleKeyOverride { get; } = typeof(Toast);
 }

@@ -12,7 +12,7 @@
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type ToggleSwitch}"
                   TargetType="ToggleSwitch">
-        <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -72,7 +72,7 @@
                                       Width="20" Height="20">
 
                                     <Ellipse Name="SwitchKnob"
-                                             Fill="{DynamicResource Overlay1BackgroundBrush}"
+                                             Fill="{DynamicResource LayerSolidBackgroundBrush}"
                                              Width="16" Height="16">
                                         <Ellipse.Effect>
                                             <DropShadowEffect BlurRadius="6" Opacity="0.1" OffsetX="2" OffsetY="2" />
