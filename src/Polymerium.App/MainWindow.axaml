@@ -8,6 +8,7 @@
                 xmlns:m="using:Polymerium.App.Models"
                 xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                 xmlns:controls="using:Polymerium.App.Controls"
+                TransparencyLevelHint="None"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 ExtendClientAreaTitleBarHeightHint="44"
                 x:Class="Polymerium.App.MainWindow" x:DataType="local:MainWindow"
@@ -91,8 +92,8 @@
                     <!-- <AutoCompleteBox/> -->
                     <TextBox DockPanel.Dock="Top" Watermark="Search by names or types" Grid.Column="0" Grid.Row="6"
                              Grid.ColumnSpan="5" />
-                    <ScrollViewer Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5">
-                        <ItemsControl ItemsSource="{Binding Entries}">
+                    <ScrollViewer Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" Margin="0,0,-8,0">
+                        <ItemsControl ItemsSource="{Binding Entries}" Margin="0,0,8,0">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="m:InstanceEntryModel">
                                     <controls:InstanceEntryButton Basic="{Binding Basic}" State="{Binding State}"
