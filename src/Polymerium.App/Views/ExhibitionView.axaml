@@ -82,11 +82,6 @@
                         <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
-                <husk:InfiniteScrollView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </husk:InfiniteScrollView.ItemsPanel>
                 <husk:InfiniteScrollView.ItemTemplate>
                     <DataTemplate x:DataType="m:ExhibitModel">
                         <husk:Card Margin="16,4" Height="118">
