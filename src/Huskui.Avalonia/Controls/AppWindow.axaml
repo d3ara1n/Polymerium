@@ -10,7 +10,6 @@
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="ExtendClientAreaChromeHints" Value="NoChrome" />
         <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
-        <Setter Property="TransparencyLevelHint" Value="Mica, AcrylicBlur, Blur" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Template">
@@ -56,14 +55,14 @@
                                                HorizontalContentAlignment="Center"
                                                VerticalContentAlignment="Center">
                                 <local:OverlayHost.Transition>
-                                    <huskt:FocusOnTransition />
+                                    <huskt:HookUpTransition />
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
                             <local:OverlayHost Name="{x:Static local:AppWindow.PART_DialogHost}"
                                                HorizontalContentAlignment="Center"
                                                VerticalContentAlignment="Center">
                                 <local:OverlayHost.Transition>
-                                    <huskt:FocusOnTransition />
+                                    <huskt:HookUpTransition />
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
                             <local:NotificationHost Name="PART_NotificationHost" HorizontalAlignment="Stretch"
@@ -85,16 +84,5 @@
                 <BlurEffect />
             </Setter>
         </Style>
-
-        <Style Selector="^local|AppWindow[ActualTransparencyLevel=Mica][IsActive=True]">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style Selector="^local|AppWindow[ActualTransparencyLevel=AcrylicBlur][IsActive=True]">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style Selector="^local|AppWindow[ActualTransparencyLevel=Blur][IsActive=True]">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-
     </ControlTheme>
 </ResourceDictionary>

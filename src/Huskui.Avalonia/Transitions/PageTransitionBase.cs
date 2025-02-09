@@ -84,7 +84,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
         internal IEnumerable<Animation> Build(bool forward)
         {
             return _builder.Select(x =>
-                x.Build(forward, _duration, TimeSpan.Zero, TimeSpan.Zero, FillMode.Forward, 1.0d, new LinearEasing()));
+                x.Build(forward, _duration, TimeSpan.Zero, TimeSpan.Zero, FillMode.Forward, 1.0d, _defaultEasing));
         }
 
         public AnimationBuilder Animation(TimeSpan? duration = null, Easing? easing = null)

@@ -11,6 +11,7 @@
     <SolidColorBrush x:Key="OverlayLighter6BackgroundBrush" Color="{StaticResource White6Color}" />
     <SolidColorBrush x:Key="OverlayDarker1BackgroundBrush" Color="{StaticResource Black1Color}" />
     <SolidColorBrush x:Key="OverlayDarker2BackgroundBrush" Color="{StaticResource Black2Color}" />
+    <SolidColorBrush x:Key="OverlayDarker7BackgroundBrush" Color="{StaticResource Black7Color}" />
     <!-- 颜色动态，用作按钮遮罩 -->
     <SolidColorBrush x:Key="OverlayHalfBackgroundBrush" Color="{StaticResource White1Color}" />
     <SolidColorBrush x:Key="OverlayFullBackgroundBrush" Color="{StaticResource White2Color}" />
