@@ -17,6 +17,23 @@ public sealed class PageCoverOverTransition : PageTransitionBase
 
     public DirectionFrom Direction { get; set; }
 
+    protected override void Cleanup(Visual? from, Visual? to)
+    {
+        base.Cleanup(from, to);
+
+        if (from != null)
+        {
+            from.Opacity = 1;
+            from.RenderTransform = null;
+        }
+
+        if (to != null)
+        {
+            to.Opacity = 1;
+            to.RenderTransform = null;
+        }
+    }
+
     protected override void Configure(Builder from, Builder to, Lazy<Visual> parentAccessor)
     {
         var parent = parentAccessor.Value;
@@ -40,12 +57,14 @@ public sealed class PageCoverOverTransition : PageTransitionBase
                 (ScaleTransform.ScaleXProperty, 1d),
                 (ScaleTransform.ScaleYProperty, 1d),
                 (Visual.OpacityProperty, 1d),
-                (translateProperty, 0d)
             ]).AddFrame(0.5d, [
                 (ScaleTransform.ScaleXProperty, 0.98d),
                 (ScaleTransform.ScaleYProperty, 0.98d),
                 (Visual.OpacityProperty, 0d),
-                (translateProperty, 0d)
+            ]).AddFrame(1d, [
+                (ScaleTransform.ScaleXProperty, 0.98d),
+                (ScaleTransform.ScaleYProperty, 0.98d),
+                (Visual.OpacityProperty, 0d)
             ]);
 
         to.Animation(new BackEaseOut())

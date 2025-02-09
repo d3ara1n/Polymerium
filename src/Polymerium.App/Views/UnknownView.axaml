@@ -99,7 +99,8 @@
             <TabItem Header="Foo">
                 <husk:Card>
                     <StackPanel Spacing="8">
-                        <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello" />
+                        <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello"
+                                Command="{Binding HelloCommand}" />
                         <Button Classes="Primary" Content="World" />
                         <HyperlinkButton Content="THIS A LINK!" />
 

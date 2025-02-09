@@ -28,7 +28,7 @@
                         </StackPanel>
                     </local:NotificationItem>
                     <local:NotificationItem Level="Warning" Title="Checking updates" Content="It takes very long."
-                                            IsProgressBarVisible="True">
+                                            IsProgressBarVisible="True" IsProgressIndeterminate="True">
                         <local:NotificationItem.Actions>
                             <models:NotificationAction Text="Go" />
                             <models:NotificationAction Text="To" />
@@ -75,7 +75,7 @@
                                 <DockPanel>
                                     <ProgressBar DockPanel.Dock="Bottom" CornerRadius="0"
                                                  Value="{TemplateBinding Progress}"
-                                                 IsIndeterminate="{TemplateBinding Progress,Converter={x:Static ObjectConverters.IsNull}}"
+                                                 IsIndeterminate="{TemplateBinding IsProgressIndeterminate}"
                                                  Maximum="{TemplateBinding ProgressMaximum}"
                                                  IsVisible="{TemplateBinding IsProgressBarVisible}" />
                                     <Grid RowDefinitions="Auto,4,*,4,Auto" ColumnDefinitions="*,Auto"

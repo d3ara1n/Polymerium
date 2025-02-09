@@ -161,6 +161,13 @@ public class App : Application
 
         #endregion
 
+        #region Overlay & Notificiation
+
+        var notification = Program.AppHost.Services.GetRequiredService<NotificationService>();
+        notification.SetHandler(window.PopNotification);
+
+        #endregion
+
         return window;
     }
 }
