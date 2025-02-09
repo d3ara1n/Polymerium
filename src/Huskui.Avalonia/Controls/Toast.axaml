@@ -9,12 +9,12 @@
         <Setter Property="Padding" Value="24,76,24,24" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border ClipToBounds="True" CornerRadius="36,36,0,0" BorderBrush="{TemplateBinding BorderBrush}"
+                <Border CornerRadius="36,36,0,0" BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        BackgroundSizing="{TemplateBinding BackgroundSizing}">
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}" Background="{TemplateBinding Background}">
                     <Panel>
-                        <ContentPresenter Content="{TemplateBinding Content}" Background="{TemplateBinding Background}"
-                                          BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Padding="{TemplateBinding Padding}" />
                         <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="24,24,24,0">
                             <Button Padding="8" CornerRadius="26" Theme="{StaticResource OutlineButtonTheme}"
