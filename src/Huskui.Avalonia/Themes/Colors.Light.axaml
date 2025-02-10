@@ -3,6 +3,9 @@
 
     <!-- Naming: OwnerLevelSubtle(Accent)PropertyType -->
 
+    <Color x:Key="TransparentColor">#00ffffff</Color>
+    <SolidColorBrush x:Key="TransparentBrush" Color="{StaticResource TransparentColor}" />
+
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource Sand4Color}" />
 
     <!-- 颜色固定，用作按钮遮罩 -->

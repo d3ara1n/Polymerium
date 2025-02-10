@@ -3,6 +3,9 @@
 
     <!-- Naming: OwnerLevelSubtle(Accent)PropertyType -->
 
+    <Color x:Key="TransparentColor">#00000000</Color>
+    <SolidColorBrush x:Key="TransparentBrush" Color="{StaticResource TransparentColor}" />
+
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource Sand12Color}" />
 
     <!-- 颜色固定，用作按钮遮罩 -->
@@ -55,7 +58,7 @@
     <SolidColorBrush x:Key="ControlTranslucentDangerBackgroundBrush" Color="{StaticResource Tomato9Color}"
                      Opacity="0.1" />
 
-    <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{StaticResource TransparentColor}" />
     <SolidColorBrush x:Key="ControlInteractiveSolidBackgroundBrush" Color="{StaticResource Sand12Color}" />
     <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{StaticResource Sand11Color}" />
     <SolidColorBrush x:Key="ControlInteractiveSolidBorderBrush" Color="{StaticResource Sand12Color}" />

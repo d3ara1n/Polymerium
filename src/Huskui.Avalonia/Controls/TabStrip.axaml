@@ -155,7 +155,7 @@
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel Background="Transparent">
+                <Panel Background="{DynamicResource TransparentBrush}">
                     <Border Name="Indicator" Background="{TemplateBinding Background}" Opacity="0"
                             RenderTransform="scale(0.95)"
                             BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}"

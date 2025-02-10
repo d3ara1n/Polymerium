@@ -64,7 +64,7 @@
                             </Grid>
                         </Border>
                         <Border x:Name="GlowBorder" CornerRadius="{TemplateBinding CornerRadius}"
-                                BorderBrush="Transparent" BorderThickness="2">
+                                BorderBrush="{DynamicResource TransparentBrush}" BorderThickness="2">
                             <Border.Transitions>
                                 <Transitions>
                                     <BrushTransition Property="BorderBrush"
@@ -114,7 +114,7 @@
 
     <ControlTheme x:Key="{x:Type ComboBoxItem}" TargetType="ComboBoxItem">
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />

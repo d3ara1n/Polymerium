@@ -25,7 +25,7 @@
             <Setter Property="Margin" Value="0,0,0,1" />
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Border Background="Transparent"
+                    <Border Background="{DynamicResource TransparentBrush}"
                             UseLayoutRounding="False">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <RepeatButton Name="PART_LineUpButton"
@@ -102,11 +102,11 @@
                                    Value="{TemplateBinding Value,Mode=TwoWay}">
                                 <Track.DecreaseButton>
                                     <RepeatButton Name="PART_PageUpButton"
-                                                  Focusable="False" Background="Transparent" />
+                                                  Focusable="False" Background="{DynamicResource TransparentBrush}" />
                                 </Track.DecreaseButton>
                                 <Track.IncreaseButton>
                                     <RepeatButton Name="PART_PageDownButton"
-                                                  Focusable="False" Background="Transparent" />
+                                                  Focusable="False" Background="{DynamicResource TransparentBrush}" />
                                 </Track.IncreaseButton>
                                 <Thumb />
                             </Track>

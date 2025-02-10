@@ -28,7 +28,7 @@
         <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="Auto,6,*" Background="Transparent">
+                <Grid ColumnDefinitions="Auto,6,*" Background="{DynamicResource TransparentBrush}">
                     <Border Grid.Column="0" Name="Box"
                             Width="20"
                             Height="20"

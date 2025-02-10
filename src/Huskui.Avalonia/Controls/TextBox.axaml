@@ -74,7 +74,7 @@
                         </ScrollViewer>
                     </Border>
                     <Border x:Name="PART_GlowBorder" CornerRadius="{TemplateBinding CornerRadius}"
-                            BorderBrush="Transparent" BorderThickness="2">
+                            BorderBrush="{DynamicResource TransparentBrush}" BorderThickness="2">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition Property="BorderBrush"
