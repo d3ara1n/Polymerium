@@ -28,7 +28,7 @@
                 </TabItem>
                 <TabItem Header="Disabled" IsSelected="True" Content="The Whole World" IsEnabled="False" />
                 <TabItem Header="Hello" Theme="{StaticResource SolidTabItemTheme}">
-                    <Button Content="Peanut" Background="Transparent" />
+                    <Button Content="Peanut" Background="{DynamicResource TransparentBrush}" />
                 </TabItem>
                 <TabItem Header="Primary" Classes="Primary" Theme="{StaticResource SolidTabItemTheme}">
                     <Button Content="Butter" Classes="Primary" />
@@ -44,7 +44,7 @@
     <ControlTheme x:Key="{x:Type TabItem}" TargetType="TabItem">
         <Setter Property="Padding" Value="10,6" />
         <Setter Property="Margin" Value="2" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="Template">
@@ -53,7 +53,7 @@
                     <Border Name="PART_Overlay" Background="{DynamicResource ControlAccentBackgroundBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}" Opacity="0.65">
                         <Border.OpacityMask>
-                            <SolidColorBrush Color="Transparent" />
+                            <SolidColorBrush Color="{DynamicResource TransparentColor}" />
                         </Border.OpacityMask>
                         <Border.Transitions>
                             <Transitions>
@@ -134,7 +134,8 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
                     <GradientStops>
-                        <GradientStop Color="Transparent" Offset="{StaticResource TabItemHighlightMidPoint}" />
+                        <GradientStop Color="{DynamicResource TransparentColor}"
+                                      Offset="{StaticResource TabItemHighlightMidPoint}" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -144,7 +145,8 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="50%,100%" EndPoint="50%,0%">
                     <GradientStops>
-                        <GradientStop Color="Transparent" Offset="{StaticResource TabItemHighlightMidPoint}" />
+                        <GradientStop Color="{DynamicResource TransparentColor}"
+                                      Offset="{StaticResource TabItemHighlightMidPoint}" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -154,7 +156,8 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="100%,50%" EndPoint="0%,50%">
                     <GradientStops>
-                        <GradientStop Color="Transparent" Offset="{StaticResource TabItemHighlightMidPoint}" />
+                        <GradientStop Color="{DynamicResource TransparentColor}"
+                                      Offset="{StaticResource TabItemHighlightMidPoint}" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -164,7 +167,8 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
                     <GradientStops>
-                        <GradientStop Color="Transparent" Offset="{StaticResource TabItemHighlightMidPoint}" />
+                        <GradientStop Color="{DynamicResource TransparentColor}"
+                                      Offset="{StaticResource TabItemHighlightMidPoint}" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -175,7 +179,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
                     <GradientStops>
-                        <GradientStop Color="Transparent" Offset="0" />
+                        <GradientStop Color="{DynamicResource TransparentColor}" Offset="0" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -185,7 +189,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="50%,100%" EndPoint="50%,0%">
                     <GradientStops>
-                        <GradientStop Color="Transparent" Offset="0" />
+                        <GradientStop Color="{DynamicResource TransparentColor}" Offset="0" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -195,7 +199,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="100%,50%" EndPoint="0%,50%">
                     <GradientStops>
-                        <GradientStop Color="Transparent" Offset="0" />
+                        <GradientStop Color="{DynamicResource TransparentColor}" Offset="0" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -205,7 +209,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
                     <GradientStops>
-                        <GradientStop Color="Transparent" Offset="0" />
+                        <GradientStop Color="{DynamicResource TransparentColor}" Offset="0" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -222,11 +226,11 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Background="{TemplateBinding Background}">
-                    <Border x:Name="PART_Indicator" Background="Transparent"
+                    <Border x:Name="PART_Indicator" Background="{DynamicResource TransparentBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>

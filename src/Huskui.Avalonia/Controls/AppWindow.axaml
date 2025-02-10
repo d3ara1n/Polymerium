@@ -28,7 +28,8 @@
                             </Transitions>
                         </Border.Transitions>
                     </Border>
-                    <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
+                    <Panel Margin="{TemplateBinding WindowDecorationMargin}"
+                           Background="{DynamicResource TransparentBrush}" />
                     <VisualLayerManager>
                         <VisualLayerManager.ChromeOverlayLayer>
                             <TitleBar />

@@ -49,7 +49,7 @@
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="Container">
@@ -70,7 +70,7 @@
                         TextElement.FontWeight="{TemplateBinding FontWeight}"
                         UseLayoutRounding="False" />
                     <Border x:Name="Indicator"
-                            Background="Transparent"
+                            Background="{DynamicResource TransparentBrush}"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>

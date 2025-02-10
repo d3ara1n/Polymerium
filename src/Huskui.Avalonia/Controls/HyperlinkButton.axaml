@@ -16,7 +16,7 @@
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="BorderThickness" Value="0,0,0,2" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
