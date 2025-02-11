@@ -98,8 +98,6 @@ public class NotificationItem : ContentControl
 
     private AvaloniaList<NotificationAction> _actions = [];
 
-    private object? _parameter;
-
     public NotificationLevel Level
     {
         get => GetValue(LevelProperty);
