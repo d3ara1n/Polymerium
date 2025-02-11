@@ -44,5 +44,6 @@
         <ResourceInclude Source="/Controls/TextBox.axaml" />
         <ResourceInclude Source="/Controls/Toast.axaml" />
         <ResourceInclude Source="/Controls/ToggleSwitch.axaml" />
+        <ResourceInclude Source="/Controls/ToolTip.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

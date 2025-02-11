@@ -39,7 +39,7 @@ public class Dialog : HeaderedContentControl
     private string _secondaryText = string.Empty;
 
     private string _title = string.Empty;
-    protected override Type StyleKeyOverride => typeof(Dialog);
+    protected override Type StyleKeyOverride { get; } = typeof(Dialog);
 
     public ICommand? PrimaryCommand
     {
