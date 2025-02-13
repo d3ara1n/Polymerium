@@ -8,7 +8,7 @@
                      x:Class="Polymerium.App.Views.InstancePropertyView">
     <husk:Page.Header>
         <DockPanel>
-            <Button DockPanel.Dock="Right" Margin="8,0,0,0">
+            <Button DockPanel.Dock="Right">
                 <TextBlock Text="Go to Global Configuration Page" />
             </Button>
             <TextBlock Text="Instance Properties" Theme="{StaticResource PageHeaderTextBlockTheme}" />

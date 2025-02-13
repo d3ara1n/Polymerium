@@ -10,6 +10,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using HotAvalonia;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,9 @@ public class App : Application
 {
     public override void Initialize()
     {
+#if DEBUG
+        this.EnableHotReload();
+#endif
         AvaloniaXamlLoader.Load(this);
     }
 
