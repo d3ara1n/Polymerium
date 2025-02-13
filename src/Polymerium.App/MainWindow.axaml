@@ -8,7 +8,7 @@
                 xmlns:m="using:Polymerium.App.Models"
                 xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                 xmlns:controls="using:Polymerium.App.Controls"
-                TransparencyLevelHint="None"
+                TransparencyLevelHint="Mica, AcrylicBlur, Blur"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 ExtendClientAreaTitleBarHeightHint="44"
                 x:Class="Polymerium.App.MainWindow" x:DataType="local:MainWindow"

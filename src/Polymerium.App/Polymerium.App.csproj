@@ -10,6 +10,16 @@
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <DefineConstants>$(DefineConstants);ENABLE_XAML_HOT_RELOAD</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="Avalonia.Markup.Xaml.Loader" Version="11.2.3"/>
+        <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="HotAvalonia" Version="2.1.0"/>
+        <PackageReference Include="HotAvalonia.Extensions" Version="2.1.0" PrivateAssets="All"/>
+    </ItemGroup>
+
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.2.3"/>
         <PackageReference Include="Avalonia.Desktop" Version="11.2.3"/>
@@ -23,18 +33,18 @@
         <PackageReference Include="Humanizer" Version="3.0.0-beta.54"/>
         <PackageReference Include="IconPacks.Avalonia.Lucide" Version="1.0.0"/>
         <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc4.5"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.2"/>
         <PackageReference Include="Semver" Version="3.0.0"/>
     </ItemGroup>
 
