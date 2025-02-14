@@ -14,6 +14,8 @@ public static class Startup
         services
             .AddAvalonia()
             .AddLogging()
+            .AddHttpClient()
+            .ConfigureHttpClientDefaults(builder => builder.RemoveAllLoggers())
             .AddMemoryCache();
 
         // Trident
@@ -29,6 +31,7 @@ public static class Startup
         services
             .AddViewFacilities()
             .AddSingleton<NotificationService>()
-            .AddSingleton<NavigationService>();
+            .AddSingleton<NavigationService>()
+            .AddSingleton<OverlayService>();
     }
 }

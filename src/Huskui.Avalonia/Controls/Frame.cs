@@ -65,7 +65,7 @@ public class Frame : ContentControl
         set => SetAndRaise(DefaultTransitionProperty, ref _defaultTransition, value);
     }
 
-    public IEnumerable<FrameFrame> History => _history;
+    public IReadOnlyList<FrameFrame> History => _history.ToList();
     public ICommand GoBackCommand => _goBackCommand;
 
     public bool CanGoBack => _history.Count > 0 || CanGoBackOutOfStack;
@@ -77,7 +77,8 @@ public class Frame : ContentControl
     {
         ArgumentNullException.ThrowIfNull(_presenter);
         ArgumentNullException.ThrowIfNull(_presenter2);
-        var content = PageActivator(page, parameter) ?? throw new ArgumentNullException();
+        var content = PageActivator(page, parameter) ??
+                      throw new InvalidOperationException($"Activating {page.Name} gets null page model");
         var old = CanGoBack;
         if (_currentFrame is not null)
             _history.Push(_currentFrame);

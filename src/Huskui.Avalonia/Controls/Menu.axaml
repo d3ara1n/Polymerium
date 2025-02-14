@@ -64,8 +64,10 @@
                         </Transitions>
                     </Border.Transitions>
                     <Panel>
-                        <Grid ColumnDefinitions="*,4,Auto,4,Auto" Margin="{TemplateBinding Padding}">
-                            <ContentPresenter Grid.Column="0" Name="PART_ContentPresenter"
+                        <Grid ColumnDefinitions="Auto,8,*,4,Auto,4,Auto" Margin="{TemplateBinding Padding}">
+                            <ContentControl Grid.Column="0"
+                                            Content="{TemplateBinding Icon}" />
+                            <ContentPresenter Grid.Column="2" Name="PART_ContentPresenter"
                                               Content="{TemplateBinding Header}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                                               RenderTransform="{x:Null}">
@@ -77,13 +79,13 @@
                                 </ContentPresenter.Transitions>
                             </ContentPresenter>
 
-                            <Panel Grid.Column="2">
-                                <TextBlock x:Name="PART_InputGestureText" VerticalAlignment="Center"
+                            <Panel Grid.Column="4">
+                                <TextBlock VerticalAlignment="Center"
                                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
                                            Text="{TemplateBinding InputGesture,Converter={x:Static huskc:InternalConverters.KeyGestureToString}}" />
                             </Panel>
 
-                            <Panel Grid.Column="4">
+                            <Panel Grid.Column="6">
                                 <fi:SymbolIcon Name="ExpandMark" Symbol="ArrowRight"
                                                IsVisible="False"
                                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"

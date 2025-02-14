@@ -167,6 +167,8 @@ public class App : Application
 
         #region Overlay & Notificiation
 
+        var overlay = Program.AppHost.Services.GetRequiredService<OverlayService>();
+        overlay.SetHandler(window.PopToast, window.PopModal, window.PopDialog);
         var notification = Program.AppHost.Services.GetRequiredService<NotificationService>();
         notification.SetHandler(window.PopNotification);
 

@@ -125,7 +125,7 @@
                                 <DockPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5">
                                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4">
                                         <Button Classes="Primary Small"
-                                                Command="{Binding #Exhibition.((vm:ExhibitionViewModel)DataContext).InstallCommand}"
+                                                Command="{Binding #Exhibition.((vm:ExhibitionViewModel)DataContext).InstallCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal" Spacing="6">
                                                 <icons:PackIconLucide Kind="Download"
@@ -133,9 +133,11 @@
                                                 <TextBlock Text="Install" />
                                             </StackPanel>
                                         </Button>
-                                        <Button Classes="Small">
+                                        <Button Classes="Small"
+                                                Command="{Binding #Exhibition.((vm:ExhibitionViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}"
+                                                CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal" Spacing="6">
-                                                <icons:PackIconLucide Kind="ExternalLink"
+                                                <icons:PackIconLucide Kind="AppWindow"
                                                                       Height="10" Width="10" VerticalAlignment="Center" />
                                                 <TextBlock Text="Details" />
                                             </StackPanel>
@@ -143,7 +145,20 @@
                                         <Button Classes="Small">
                                             <Button.Flyout>
                                                 <MenuFlyout>
-                                                    <MenuItem Header="Open" />
+                                                    <MenuItem Header="Open Website">
+                                                        <MenuItem.Icon>
+                                                            <icons:PackIconLucide Kind="ExternalLink"
+                                                                Height="10" Width="10"
+                                                                VerticalAlignment="Center" />
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <!-- <MenuItem Header="Save to Favorites"> -->
+                                                    <!--     <MenuItem.Icon> -->
+                                                    <!--         <icons:PackIconLucide Kind="Bookmark" -->
+                                                    <!--             Height="10" Width="10" -->
+                                                    <!--             VerticalAlignment="Center" /> -->
+                                                    <!--     </MenuItem.Icon> -->
+                                                    <!-- </MenuItem> -->
                                                 </MenuFlyout>
                                             </Button.Flyout>
                                             <icons:PackIconLucide Kind="Ellipsis" Height="8" Width="10"
