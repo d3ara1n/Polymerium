@@ -97,19 +97,19 @@
                                                 <husk:SwitchCase Value="Release">
                                                     <husk:Tag Classes="Success"
                                                               CornerRadius="{StaticResource SmallCornerRadius}">
-                                                        <TextBlock Text="{Binding ReleaseType}" />
+                                                        <TextBlock Text="Release" />
                                                     </husk:Tag>
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="Beta">
                                                     <husk:Tag Classes="Warning"
                                                               CornerRadius="{StaticResource SmallCornerRadius}">
-                                                        <TextBlock Text="{Binding ReleaseType}" />
+                                                        <TextBlock Text="Beta" />
                                                     </husk:Tag>
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="Alpha">
                                                     <husk:Tag Classes="Danger"
                                                               CornerRadius="{StaticResource SmallCornerRadius}">
-                                                        <TextBlock Text="{Binding ReleaseType}" />
+                                                        <TextBlock Text="Alpha" />
                                                     </husk:Tag>
                                                 </husk:SwitchCase>
                                             </husk:SwitchPresenter>

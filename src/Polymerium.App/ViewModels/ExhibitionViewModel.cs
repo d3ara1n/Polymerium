@@ -17,6 +17,7 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Refit;
 using Semver;
@@ -34,16 +35,20 @@ public partial class ExhibitionViewModel : ViewModelBase
     private readonly IHttpClientFactory _factory;
     private readonly InstanceManager _instanceManager;
     private readonly NotificationService _notificationService;
+    private readonly NavigationService _navigationService;
+    private readonly OverlayService _overlayService;
 
     #endregion
 
     public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager,
-        NotificationService notificationService)
+        NotificationService notificationService, NavigationService navigationService, OverlayService overlayService)
     {
         _agent = agent;
         _factory = factory;
         _instanceManager = instanceManager;
         _notificationService = notificationService;
+        _navigationService = navigationService;
+        _overlayService = overlayService;
         // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x switch
         {
@@ -168,9 +173,15 @@ public partial class ExhibitionViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void Install(ExhibitModel exhibit)
+    private void Install(ExhibitModel? exhibit)
     {
-        _instanceManager.Install(exhibit.Name, exhibit.Label, exhibit.Ns, exhibit.Pid, null);
+        if (exhibit is not null) _instanceManager.Install(exhibit.Name, exhibit.Label, exhibit.Ns, exhibit.Pid, null);
+    }
+
+    [RelayCommand]
+    private void ViewDetails(ExhibitModel? exhibit)
+    {
+        if (exhibit is not null) _overlayService.PopToast(new ExhibitionModpackToast());
     }
 
     #endregion
