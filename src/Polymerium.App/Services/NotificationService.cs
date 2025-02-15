@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Avalonia.Animation;
 using Avalonia.Styling;
+using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 
@@ -51,7 +52,8 @@ public class NotificationService
 
     public void Pop(NotificationItem item)
     {
-        _handler?.Invoke(item);
+        Dispatcher.UIThread.Post(() =>
+            _handler?.Invoke(item));
     }
 
     public void PopMessage(string message, string title = "Notification",
@@ -62,11 +64,14 @@ public class NotificationService
             Content = message,
             Title = title,
             Level = level,
-            IsProgressBarVisible = true
         };
         Pop(item);
-        COUNTDOWN.RunAsync(item)
-            .ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());
+        if (level == NotificationLevel.Information)
+        {
+            item.IsProgressBarVisible = true;
+            COUNTDOWN.RunAsync(item)
+                .ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());
+        }
     }
 
     public void PopProgress(string message, string title = "Progress",

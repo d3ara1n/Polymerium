@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Input;
@@ -7,9 +6,10 @@ using Avalonia.Animation;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Media;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
@@ -153,6 +153,7 @@ public partial class MainWindow : AppWindow
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
         var exist = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (exist != null)
         {
@@ -172,15 +173,21 @@ public partial class MainWindow : AppWindow
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
         var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is not null)
         {
-            // TODO
+            model.Basic.Name = e.Value.Name;
+            model.Basic.Source = e.Value.Setup.Source;
+            model.Basic.Version = e.Value.Setup.Version;
+            model.Basic.Loader = e.Value.Setup.Loader;
+            model.Basic.UpdateIcon();
         }
     }
 
     private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
         var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is not null) Entries.Remove(model);
     }
@@ -192,17 +199,21 @@ public partial class MainWindow : AppWindow
     internal void SubscribeState(InstanceManager manager)
     {
         manager.InstanceInstalling += OnInstanceInstalling;
+        manager.InstanceUpdating += OnInstanceUpdating;
     }
 
-    private void OnInstanceInstalling(object? sender, InstallTracker e)
+    private void OnInstanceUpdating(object? sender, UpdateTracker e)
     {
-        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
-        {
-            State = InstanceEntryState.Installing
-        };
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is null) return;
+
+        model.State = InstanceEntryState.Updating;
+
         var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000))
-            .Select(_ => model.Progress = e.Progress).Subscribe();
-        e.StateUpdated += (_, state) =>
+            .Select(x => model.Progress = e.Progress).Subscribe();
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
         {
             switch (state)
             {
@@ -212,20 +223,69 @@ public partial class MainWindow : AppWindow
                     model.Progress = null;
                     break;
                 case TrackerState.Faulted:
-                    // TODO: Show notification and remove the entry
-                    Debug.WriteLine(e.FailureReason);
-                    Entries.Remove(model);
+                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
+                    {
+                        Content = e.FailureReason,
+                        Title = $"Failed to update {e.Key}",
+                        Level = NotificationLevel.Danger
+                    }));
                     progressUpdater.Dispose();
+                    e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
-                    // 通过 OnProfileAdded 触发去更新 version loader source 以及 thumbnail，这里不去更新
                     model.State = InstanceEntryState.Idle;
                     progressUpdater.Dispose();
+                    e.StateUpdated -= OnStateChanged;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
+        }
+
+        e.StateUpdated += OnStateChanged;
+    }
+
+    private void OnInstanceInstalling(object? sender, InstallTracker e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
+        {
+            State = InstanceEntryState.Installing
         };
+        var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000))
+            .Select(_ => model.Progress = e.Progress).Subscribe();
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.Progress = null;
+                    break;
+                case TrackerState.Faulted:
+                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
+                    {
+                        Content = e.FailureReason,
+                        Title = $"Failed to install {e.Key}",
+                        Level = NotificationLevel.Danger
+                    }));
+                    Entries.Remove(model);
+                    progressUpdater.Dispose();
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Finished:
+                    model.State = InstanceEntryState.Idle;
+                    progressUpdater.Dispose();
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+
+        e.StateUpdated += OnStateChanged;
         Entries.Add(model);
     }
 

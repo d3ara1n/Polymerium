@@ -77,8 +77,11 @@ public partial class PackageContainer : UserControl
             {
                 _subscription?.Dispose();
                 var filter = this.GetObservable(FilterTextProperty).Select(BuildFilter);
-                _subscription = value.Connect().Filter(filter).Bind(out var view).Subscribe();
-                View = view;
+                if (value is not null)
+                {
+                    _subscription = value.Connect().Filter(filter).Bind(out var view).Subscribe();
+                    View = view;
+                }
             }
         }
     }
