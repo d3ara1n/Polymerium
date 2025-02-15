@@ -1,5 +1,6 @@
 ﻿using System;
 using Avalonia.Animation;
+using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Transitions;
 using Polymerium.App.Controls;
@@ -21,18 +22,20 @@ public class NavigationService
     {
         try
         {
-            _handler?.Invoke(page, parameter, transition ?? (page.IsAssignableTo(typeof(ScopedPage))
-                ? new PageCoverOverTransition(null, DirectionFrom.Right)
-                : new PopUpTransition()));
+            Dispatcher.UIThread.Post(() => _handler?.Invoke(page, parameter, transition ??
+                                                                             (page.IsAssignableTo(typeof(ScopedPage))
+                                                                                 ? new PageCoverOverTransition(null,
+                                                                                     DirectionFrom.Right)
+                                                                                 : new PopUpTransition())));
         }
         catch (NavigationFailedException ex)
         {
-            _handler?.Invoke(typeof(PageNotReachedView), ex.Message,
-                new PageCoverOverTransition(null, DirectionFrom.Right));
+            Dispatcher.UIThread.Post(() => _handler?.Invoke(typeof(PageNotReachedView), ex.Message,
+                new PageCoverOverTransition(null, DirectionFrom.Right)));
         }
         catch (Exception ex)
         {
-            _handler?.Invoke(typeof(ExceptionView), ex, new PopUpTransition());
+            Dispatcher.UIThread.Post(() => _handler?.Invoke(typeof(ExceptionView), ex, new PopUpTransition()));
         }
     }
 

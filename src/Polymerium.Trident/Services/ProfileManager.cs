@@ -87,6 +87,21 @@ public class ProfileManager : IDisposable
         OnProfileAdded(key.Key, profile);
     }
 
+    public void Update(string key, string? source, string name, string version, string? loader,
+        IReadOnlyList<string> packages, IDictionary<string, object> overrides)
+    {
+        var handle = _profiles.FirstOrDefault(x => x.Key == key);
+        if (handle is null) throw new InvalidOperationException($"{key} is not in profiles");
+        handle.Value.Name = name;
+        handle.Value.Setup.Source = source;
+        handle.Value.Setup.Version = version;
+        handle.Value.Setup.Loader = loader;
+        handle.Value.Setup.Stage.Clear();
+        foreach (var package in packages) handle.Value.Setup.Stage.Add(package);
+        foreach (var (k, v) in overrides) handle.Value.Overrides[k] = v;
+        OnProfileUpdated(key, handle.Value);
+    }
+
     #region Profile Changed Event
 
     public class ProfileChangedEventArgs(string key, Profile profile) : EventArgs

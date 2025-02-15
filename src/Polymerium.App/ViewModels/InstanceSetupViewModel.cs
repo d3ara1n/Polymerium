@@ -35,11 +35,12 @@ public partial class InstanceSetupViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
 
     public InstanceSetupViewModel(ViewBag bag, ProfileManager profileManager, RepositoryAgent repositories,
-        IHttpClientFactory clientFactory, NotificationService notificationService)
+        IHttpClientFactory clientFactory, NotificationService notificationService, InstanceManager instanceManager)
     {
         _repositories = repositories;
         _clientFactory = clientFactory;
         _notificationService = notificationService;
+        _instanceManager = instanceManager;
         if (bag.Parameter is string key)
         {
             if (profileManager.TryGetMutable(key, out var mutable))
@@ -198,8 +199,15 @@ public partial class InstanceSetupViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanUpdate))]
     private void Update(InstanceVersionModel? model)
     {
-        if (model is not null)
+        if (model is null) return;
+
+        try
         {
+            _instanceManager.Update(_owned.Key, model.Label, model.Namespace, model.Pid, model.Vid);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex.Message, "Update failed", NotificationLevel.Danger);
         }
     }
 
@@ -210,6 +218,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
     private readonly RepositoryAgent _repositories;
     private readonly IHttpClientFactory _clientFactory;
     private readonly NotificationService _notificationService;
+    private readonly InstanceManager _instanceManager;
 
     #endregion
 

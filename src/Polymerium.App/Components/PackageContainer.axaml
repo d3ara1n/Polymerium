@@ -38,7 +38,7 @@
                           ItemsSource="{Binding $parent[cp:PackageContainer].View,Mode=OneWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="m:InstancePackageModel">
-                        <husk:SkeletonControl Margin="0,2,0,2"
+                        <husk:SkeletonControl Margin="0,3"
                                               CornerRadius="{StaticResource MediumCornerRadius}"
                                               IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
                             <husk:Card Height="78" Background="{DynamicResource Layer0BackgroundBrush}">

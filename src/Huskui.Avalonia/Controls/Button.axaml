@@ -147,10 +147,6 @@
         <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
 
-        <Style Selector="^:pressed /template/ Border#Indicator">
-            <Setter Property="BorderThickness" Value="2" />
-        </Style>
-
         <Style Selector="^.Primary">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
