@@ -55,8 +55,8 @@
                                             ItemsPanel="{TemplateBinding ItemsPanel}" />
                         </Panel>
                         <ContentPresenter
-                            Margin="{TemplateBinding Padding}"
                             Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -80,7 +80,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="NeoTabControlTheme" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
-        <Setter Property="ItemContainerTheme" Value="{StaticResource NeoTabControlTheme}" />
+        <Setter Property="ItemContainerTheme" Value="{StaticResource NeoTabItemTheme}" />
     </ControlTheme>
 
     <ControlTheme x:Key="SolidTabControlTheme" TargetType="TabControl" BasedOn="{StaticResource {x:Type TabControl}}">
@@ -88,11 +88,10 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type TabItem}" TargetType="TabItem">
-        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,6" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -142,8 +141,12 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover /template/ Panel#Container">
+        <Style Selector="^:pointerover:not(:selected) /template/ Panel#Container">
             <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
+        </Style>
+        
+        <Style Selector="^:not(:selected) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}"/>
         </Style>
 
         <Style Selector="^:disabled /template/ Panel#Container">
@@ -373,7 +376,6 @@
     </ControlTheme>
 
     <ControlTheme x:Key="SolidTabItemTheme" TargetType="TabItem">
-        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,6" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
