@@ -95,58 +95,58 @@
             <TabStripItem Content="Thursday" />
             <TabStripItem Content="Friday" />
         </TabStrip>
-        <TabControl>
+        <TabControl BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
+                    Background="{DynamicResource Card1BackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
             <TabItem Header="Foo">
-                <husk:Card>
-                    <StackPanel Spacing="8">
-                        <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello"
-                                Command="{Binding HelloCommand}" />
-                        <Button Classes="Primary" Content="World" />
-                        <HyperlinkButton Content="THIS A LINK!" />
+                <StackPanel Spacing="8">
+                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello"
+                            Command="{Binding HelloCommand}" />
+                    <Button Classes="Primary" Content="World" />
+                    <HyperlinkButton Content="THIS A LINK!" />
 
-                        <husk:NotificationItem Actions="{Binding Actions}" Title="Downloading file..." Progress="54"
-                                               IsProgressBarVisible="True">
-                            <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <fi:SymbolIcon Symbol="FolderZip" FontSize="{StaticResource MediumFontSize}" />
-                                    <TextBlock Text="四大名著.zip" />
-                                </StackPanel>
-                                <TextBlock Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
-                                    <Run Text="D: 128 B/s" />
-                                    <Run Text="E: 46 s" />
-                                    <Run Text="S: 5.4 MiB" />
-                                </TextBlock>
+                    <husk:NotificationItem Actions="{Binding Actions}" Title="Downloading file..." Progress="54"
+                                           IsProgressBarVisible="True">
+                        <StackPanel Spacing="4">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <fi:SymbolIcon Symbol="FolderZip" FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Text="四大名著.zip" />
                             </StackPanel>
-                        </husk:NotificationItem>
-                        <DockPanel>
-                            <ComboBox DockPanel.Dock="Right" Name="ComboBox" PlaceholderText="这是一个一个">
-                                <ComboBoxItem Content="这是一个 1" />
-                                <ComboBoxItem Content="这是一个 2" />
-                                <ComboBoxItem Content="这是一个 3" />
-                                <ComboBoxItem Content="这是一个 4" />
-                                <ComboBoxItem Content="这是一个 5" />
-                                <ComboBoxItem Content="这是一个 6" />
-                                <ComboBoxItem Content="这是一个 7" />
-                                <ComboBoxItem Content="这是一个 8" />
-                                <ComboBoxItem Content="这是一个 9" />
-                                <ComboBoxItem Content="这是一个 0" />
-                            </ComboBox>
-                            <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
-                                          IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
+                            <TextBlock Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                                <Run Text="D: 128 B/s" />
+                                <Run Text="E: 46 s" />
+                                <Run Text="S: 5.4 MiB" />
+                            </TextBlock>
+                        </StackPanel>
+                    </husk:NotificationItem>
+                    <DockPanel>
+                        <ComboBox DockPanel.Dock="Right" Name="ComboBox" PlaceholderText="这是一个一个">
+                            <ComboBoxItem Content="这是一个 1" />
+                            <ComboBoxItem Content="这是一个 2" />
+                            <ComboBoxItem Content="这是一个 3" />
+                            <ComboBoxItem Content="这是一个 4" />
+                            <ComboBoxItem Content="这是一个 5" />
+                            <ComboBoxItem Content="这是一个 6" />
+                            <ComboBoxItem Content="这是一个 7" />
+                            <ComboBoxItem Content="这是一个 8" />
+                            <ComboBoxItem Content="这是一个 9" />
+                            <ComboBoxItem Content="这是一个 0" />
+                        </ComboBox>
+                        <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
+                                      IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
 
-                            <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
-                                <TextBlock Text="Make it REAL" />
-                            </CheckBox>
+                        <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                            <TextBlock Text="Make it REAL" />
+                        </CheckBox>
+                    </DockPanel>
+                    <husk:InfoBar Header="You know what?">
+                        <DockPanel>
+                            <HyperlinkButton DockPanel.Dock="Bottom" Content="Undo" />
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata" />
                         </DockPanel>
-                        <husk:InfoBar Header="You know what?">
-                            <DockPanel>
-                                <HyperlinkButton DockPanel.Dock="Bottom" Content="Undo" />
-                                <TextBlock TextWrapping="Wrap"
-                                           Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata" />
-                            </DockPanel>
-                        </husk:InfoBar>
-                    </StackPanel>
-                </husk:Card>
+                    </husk:InfoBar>
+                </StackPanel>
             </TabItem>
             <TabItem Header="Bar">
                 <StackPanel Spacing="12">
@@ -194,10 +194,6 @@
                         </husk:ProgressRing>
                         <husk:ProgressRing x:Name="Zing" Value="50" />
                     </StackPanel>
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Baz">
-                <StackPanel Spacing="12">
                     <ListBox>
                         <ListBoxItem Content="这是一个 1" />
                         <ListBoxItem Content="这是一个 2" />
@@ -210,6 +206,21 @@
                         <ListBoxItem Content="这是一个 9" />
                         <ListBoxItem Content="这是一个 0" />
                     </ListBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Baz">
+                <StackPanel Spacing="12">
+                    <husk:Card Padding="0">
+                        <TabControl BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0">
+                            <TabControl.Styles>
+                                <Style Selector="TabItem">
+                                    <Setter Property="Margin" Value="0" />
+                                </Style>
+                            </TabControl.Styles>
+                            <TabItem Header="Description"></TabItem>
+                            <TabItem Header="Versions"></TabItem>
+                        </TabControl>
+                    </husk:Card>
                 </StackPanel>
             </TabItem>
         </TabControl>
