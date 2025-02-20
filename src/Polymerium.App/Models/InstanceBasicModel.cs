@@ -1,10 +1,10 @@
-﻿using System;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.Trident.Utilities;
+using System;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;

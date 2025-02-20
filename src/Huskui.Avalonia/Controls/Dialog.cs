@@ -1,6 +1,6 @@
-﻿using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls.Primitives;
+using System.Windows.Input;
 
 namespace Huskui.Avalonia.Controls;
 

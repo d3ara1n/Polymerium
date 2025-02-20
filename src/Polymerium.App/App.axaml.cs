@@ -1,9 +1,3 @@
-using System;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -18,6 +12,12 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Polymerium.App;
 

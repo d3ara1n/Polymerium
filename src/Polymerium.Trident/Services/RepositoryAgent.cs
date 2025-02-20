@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using System.Text.Json;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
@@ -29,28 +29,19 @@ public class RepositoryAgent
         throw new KeyNotFoundException($"{label} is not a listed repository label or not found");
     }
 
-    public Task<RepositoryStatus> CheckStatusAsync(string label)
-    {
-        return Redirect(label).CheckStatusAsync();
-    }
+    public Task<RepositoryStatus> CheckStatusAsync(string label) => Redirect(label).CheckStatusAsync();
 
-    public Task<IPaginationHandle<Exhibit>> SearchAsync(string label, string query, Filter filter)
-    {
-        return Redirect(label).SearchAsync(query, filter);
-    }
+    public Task<IPaginationHandle<Exhibit>> SearchAsync(string label, string query, Filter filter) =>
+        Redirect(label).SearchAsync(query, filter);
 
-    public Task<Package> ResolveAsync(string label, string? ns, string pid, string? vid, Filter filter)
-    {
-        return RetrieveCachedAsync(
+    public Task<Package> ResolveAsync(string label, string? ns, string pid, string? vid, Filter filter) =>
+        RetrieveCachedAsync(
             vid is not null ? Path.Combine(PathDef.Default.CachePackageDirectory, label, pid, $"{vid}.json") : null,
             r => Path.Combine(PathDef.Default.CachePackageDirectory, r.Label, r.ProjectId, $"{r.VersionId}.json"),
             () => Redirect(label).ResolveAsync(ns, pid, vid, filter));
-    }
 
-    public Task<IPaginationHandle<Version>> InspectAsync(string label, string? ns, string pid, Filter filter)
-    {
-        return Redirect(label).InspectAsync(ns, pid, filter);
-    }
+    public Task<IPaginationHandle<Version>> InspectAsync(string label, string? ns, string pid, Filter filter) =>
+        Redirect(label).InspectAsync(ns, pid, filter);
 
     private async Task<T> RetrieveCachedAsync<T>(string? cachedPath, Func<T, string>? saveTo, Func<Task<T>> factory)
     {

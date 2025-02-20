@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Reactive.Linq;
-using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using DynamicData;
 using Polymerium.App.Models;
+using System;
+using System.Collections.ObjectModel;
+using System.Reactive.Linq;
+using System.Windows.Input;
 
 namespace Polymerium.App.Components;
 
@@ -33,27 +33,30 @@ public partial class PackageContainer : UserControl
         AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(OpenUrlCommand), o => o.OpenUrlCommand,
             (o, v) => o.OpenUrlCommand = v);
 
-    private ICommand? _openUrlCommand;
-
-    public ICommand? OpenUrlCommand
-    {
-        get => _openUrlCommand;
-        set => SetAndRaise(OpenUrlCommandProperty, ref _openUrlCommand, value);
-    }
+    public static readonly DirectProperty<PackageContainer, bool> IsLockedProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, bool>(nameof(IsLocked), o => o.IsLocked,
+            (o, v) => o.IsLocked = v);
 
 
     private string _filterText = string.Empty;
 
+    private bool _isLocked;
+
     private SourceCache<InstancePackageModel, string>? _items;
+
+    private ICommand? _openUrlCommand;
     private IDisposable? _subscription;
 
     private int _totalCount;
 
     private ReadOnlyObservableCollection<InstancePackageModel>? _view;
 
-    public PackageContainer()
+    public PackageContainer() => InitializeComponent();
+
+    public ICommand? OpenUrlCommand
     {
-        InitializeComponent();
+        get => _openUrlCommand;
+        set => SetAndRaise(OpenUrlCommandProperty, ref _openUrlCommand, value);
     }
 
     public string FilterText
@@ -86,12 +89,6 @@ public partial class PackageContainer : UserControl
         }
     }
 
-    public static readonly DirectProperty<PackageContainer, bool> IsLockedProperty =
-        AvaloniaProperty.RegisterDirect<PackageContainer, bool>(nameof(IsLocked), o => o.IsLocked,
-            (o, v) => o.IsLocked = v);
-
-    private bool _isLocked;
-
     public bool IsLocked
     {
         get => _isLocked;
@@ -104,12 +101,10 @@ public partial class PackageContainer : UserControl
         set => SetAndRaise(TotalCountProperty, ref _totalCount, value);
     }
 
-    private Func<InstancePackageModel, bool> BuildFilter(string filter)
-    {
-        return x => string.IsNullOrEmpty(filter) || (x is { Name : { } name, Summary: { } summary } &&
-                                                     (name.Contains(filter,
-                                                          StringComparison.InvariantCultureIgnoreCase) ||
-                                                      summary.Contains(filter,
-                                                          StringComparison.InvariantCultureIgnoreCase)));
-    }
+    private Func<InstancePackageModel, bool> BuildFilter(string filter) =>
+        x => string.IsNullOrEmpty(filter) || (x is { Name : { } name, Summary: { } summary } &&
+                                              (name.Contains(filter,
+                                                   StringComparison.InvariantCultureIgnoreCase) ||
+                                               summary.Contains(filter,
+                                                   StringComparison.InvariantCultureIgnoreCase)));
 }

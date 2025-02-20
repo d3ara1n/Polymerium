@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
+using System;
+using System.Threading.Tasks;
 using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;

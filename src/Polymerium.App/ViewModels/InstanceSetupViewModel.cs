@@ -1,11 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
@@ -21,6 +14,13 @@ using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Profiles;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -88,10 +88,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
             {
                 var package = await _repositories.ResolveAsync(result.Label, result.Namespace, result.Pid,
                     result.Vid,
-                    Filter.Empty with
-                    {
-                        Kind = ResourceKind.Modpack
-                    });
+                    Filter.Empty with { Kind = ResourceKind.Modpack });
 
                 Bitmap thumbnail;
                 if (!Debugger.IsAttached && package.Thumbnail is not null)
@@ -106,10 +103,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
                 }
 
                 var page = await (await _repositories.InspectAsync(result.Label, result.Namespace, result.Pid,
-                    Filter.Empty with
-                    {
-                        Kind = ResourceKind.Modpack
-                    })).FetchAsync();
+                    Filter.Empty with { Kind = ResourceKind.Modpack })).FetchAsync();
                 var versions = page.Select(x => new InstanceVersionModel(x.Label, x.Namespace, x.ProjectId,
                     x.VersionId, x.VersionName, x.ReleaseType, x.PublishedAt)
                 {
@@ -176,7 +170,6 @@ public partial class InstanceSetupViewModel : ViewModelBase
             }
             catch (ResourceNotFoundException ex)
             {
-                // TODO: show a message about network unreachable or package url invalid
                 _notificationService.PopMessage("Fetching modpack information failed",
                     level: NotificationLevel.Warning);
                 Debug.WriteLine($"Resource not found: {ex.Message}");
@@ -191,10 +184,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
         if (url is not null) Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
     }
 
-    private bool CanUpdate(InstanceVersionModel? model)
-    {
-        return model is { IsCurrent: false };
-    }
+    private bool CanUpdate(InstanceVersionModel? model) => model is { IsCurrent: false };
 
     [RelayCommand(CanExecute = nameof(CanUpdate))]
     private void Update(InstanceVersionModel? model)

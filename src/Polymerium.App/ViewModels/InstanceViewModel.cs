@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,6 +12,9 @@ using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Polymerium.App.ViewModels;
 
@@ -39,18 +39,11 @@ public partial class InstanceViewModel : ViewModelBase
                 PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
                 StatsChartSeries =
                 [
-                    new ColumnSeries<double>
-                    {
-                        Name = "Daily Playing Hours",
-                        Values = [11, 4, 5, 14, 19, 1, 9]
-                    }
+                    new ColumnSeries<double> { Name = "Daily Playing Hours", Values = [11, 4, 5, 14, 19, 1, 9] }
                 ];
                 StatsChartXAxes =
                 [
-                    new Axis
-                    {
-                        Labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Yesterday", "Today"]
-                    }
+                    new Axis { Labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Yesterday", "Today"] }
                 ];
             }
             else
@@ -93,35 +86,20 @@ public partial class InstanceViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void GotoPropertyView()
-    {
-        _navigationService.Navigate<InstancePropertyView>(Basic.Key);
-    }
+    private void GotoPropertyView() => _navigationService.Navigate<InstancePropertyView>(Basic.Key);
 
     [RelayCommand]
-    private void GotoSetupView()
-    {
-        _navigationService.Navigate<InstanceSetupView>(Basic.Key);
-    }
+    private void GotoSetupView() => _navigationService.Navigate<InstanceSetupView>(Basic.Key);
 
 
     [RelayCommand]
-    private void Play()
-    {
-        LaunchBarModel.State = LaunchBarState.Building;
-    }
+    private void Play() => LaunchBarModel.State = LaunchBarState.Building;
 
     [RelayCommand]
-    private void Abort()
-    {
-        LaunchBarModel.State = LaunchBarState.Running;
-    }
+    private void Abort() => LaunchBarModel.State = LaunchBarState.Running;
 
     [RelayCommand]
-    private void OpenDashboard()
-    {
-        LaunchBarModel.State = LaunchBarState.Idle;
-    }
+    private void OpenDashboard() => LaunchBarModel.State = LaunchBarState.Idle;
 
     #endregion
 }

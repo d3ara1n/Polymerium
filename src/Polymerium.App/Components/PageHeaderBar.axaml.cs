@@ -8,10 +8,7 @@ public partial class PageHeaderBar : UserControl
     public static readonly StyledProperty<string> TitleProperty =
         AvaloniaProperty.Register<PageHeaderBar, string>(nameof(Title), string.Empty);
 
-    public PageHeaderBar()
-    {
-        InitializeComponent();
-    }
+    public PageHeaderBar() => InitializeComponent();
 
     public string Title
     {

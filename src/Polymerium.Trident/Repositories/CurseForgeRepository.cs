@@ -1,6 +1,6 @@
-﻿using System.Net;
-using Polymerium.Trident.Services;
+﻿using Polymerium.Trident.Services;
 using Refit;
+using System.Net;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -35,10 +35,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         });
     }
 
-    public Task<Project> QueryAsync(string? _, string pid)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<Project> QueryAsync(string? _, string pid) => throw new NotImplementedException();
 
     public async Task<Package> ResolveAsync(string? _, string pid, string? vid, Filter filter)
     {

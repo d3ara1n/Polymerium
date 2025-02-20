@@ -39,7 +39,6 @@
         <ResourceInclude Source="/Controls/SwitchPresenter.axaml" />
         <ResourceInclude Source="/Controls/TabControl.axaml" />
         <ResourceInclude Source="/Controls/TabStrip.axaml" />
-        <ResourceInclude Source="/Controls/TabItem.axaml" />
         <ResourceInclude Source="/Controls/Tag.axaml" />
         <ResourceInclude Source="/Controls/TextBox.axaml" />
         <ResourceInclude Source="/Controls/Toast.axaml" />

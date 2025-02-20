@@ -7,10 +7,7 @@ namespace Polymerium.App.Views;
 
 public partial class UnknownView : Page
 {
-    public UnknownView()
-    {
-        InitializeComponent();
-    }
+    public UnknownView() => InitializeComponent();
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {

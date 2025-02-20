@@ -11,19 +11,19 @@ public class NotificationHost : TemplatedControl
         AvaloniaProperty.RegisterDirect<NotificationHost, NotificationItems>(nameof(Items), o => o.Items,
             (o, v) => o.Items = v);
 
+    public static readonly DirectProperty<NotificationHost, ITemplate<Panel?>> ItemsPanelProperty =
+        AvaloniaProperty.RegisterDirect<NotificationHost, ITemplate<Panel?>>(nameof(ItemsPanel), o => o.ItemsPanel,
+            (o, v) => o.ItemsPanel = v);
+
     private NotificationItems _items = [];
+
+    private ITemplate<Panel?> _itemsPanel = new FuncTemplate<Panel?>(() => new StackPanel());
 
     public NotificationItems Items
     {
         get => _items;
         set => SetAndRaise(ItemsProperty, ref _items, value);
     }
-
-    public static readonly DirectProperty<NotificationHost, ITemplate<Panel?>> ItemsPanelProperty =
-        AvaloniaProperty.RegisterDirect<NotificationHost, ITemplate<Panel?>>(nameof(ItemsPanel), o => o.ItemsPanel,
-            (o, v) => o.ItemsPanel = v);
-
-    private ITemplate<Panel?> _itemsPanel = new FuncTemplate<Panel?>(() => new StackPanel());
 
     public ITemplate<Panel?> ItemsPanel
     {

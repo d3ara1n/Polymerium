@@ -8,9 +8,7 @@
                      xmlns:cp="using:Polymerium.App.Components"
                      xmlns:m="using:Polymerium.App.Models"
                      xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-                     xmlns:labs="using:Avalonia.Labs.Controls"
                      xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
-                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      xmlns:controls="using:Polymerium.App.Controls" Header="Instance Setup"
                      mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                      x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
@@ -126,7 +124,7 @@
             </husk:Card>
         </Grid>
         <Panel Grid.Row="2" Grid.Column="0">
-            <TabControl Padding="{StaticResource PageToplessBottomlessContentMargin}">
+            <TabControl Margin="{StaticResource PageToplessBottomlessContentMargin}" Padding="-16,0">
                 <TabItem Header="Stage">
                     <cp:PackageContainer x:Name="StageContainer" DragDrop.AllowDrop="True" Items="{Binding Stage}"
                                          TotalCount="{Binding StageCount}"
@@ -141,7 +139,7 @@
             </TabControl>
         </Panel>
         <Panel Grid.Row="2" Grid.Column="2" Background="{DynamicResource Layer1BackgroundBrush}">
-            <TabControl Padding="{StaticResource PageHeaderlessContentMargin}">
+            <TabControl Margin="{StaticResource PageHeaderlessContentMargin}" Padding="-16,0">
                 <TabItem Header="Draft">
                     <ScrollViewer DragDrop.AllowDrop="True">
                         <ItemsControl x:Name="DraftContainer" Margin="{StaticResource PageToplessContentMargin}"

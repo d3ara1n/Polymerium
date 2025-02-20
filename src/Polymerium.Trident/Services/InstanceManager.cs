@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
+using System.Diagnostics.CodeAnalysis;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
@@ -23,10 +23,21 @@ public class InstanceManager(
     public event EventHandler<InstallTracker>? InstanceInstalling;
     public event EventHandler<UpdateTracker>? InstanceUpdating;
 
-    private void TrackerOnCompleted(TrackerBase tracker)
+    private void TrackerOnCompleted(TrackerBase tracker) => _trackers.Remove(tracker.Key);
+
+    public bool IsTracking(string key, [MaybeNullWhen(false)] out TrackerBase tracker)
     {
-        _trackers.Remove(tracker.Key);
+        if (_trackers.TryGetValue(key, out var value))
+        {
+            tracker = value;
+            return true;
+        }
+
+        tracker = null;
+        return false;
     }
+
+    public bool IsInUse(string key) => _trackers.ContainsKey(key);
 
     #region Install
 
@@ -48,10 +59,8 @@ public class InstanceManager(
         string pid, string? vid)
     {
         logger.LogInformation("Begin install package {} as {}", PackageHelper.ToPurl(label, ns, pid, vid), key.Key);
-        var package = await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with
-        {
-            Kind = ResourceKind.Modpack
-        });
+        var package =
+            await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack });
         var size = (long)package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
@@ -75,10 +84,7 @@ public class InstanceManager(
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 
         ((IProgress<double?>)tracker).Report(null);
-        var pack = new CompressedProfilePack(memory)
-        {
-            Reference = package
-        };
+        var pack = new CompressedProfilePack(memory) { Reference = package };
         var container = await importers.ImportAsync(pack);
         if (container.IconUrl is not null)
         {
@@ -116,7 +122,6 @@ public class InstanceManager(
         logger.LogInformation("{} added", key.Key);
 
         client.Dispose();
-        await Task.Delay(1500);
     }
 
     #endregion
@@ -138,10 +143,8 @@ public class InstanceManager(
         string vid)
     {
         logger.LogInformation("Begin update package {} as {}", PackageHelper.ToPurl(label, ns, pid, vid), key);
-        var package = await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with
-        {
-            Kind = ResourceKind.Modpack
-        });
+        var package =
+            await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack });
         var size = (long)package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
@@ -165,10 +168,7 @@ public class InstanceManager(
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 
         ((IProgress<double?>)tracker).Report(null);
-        var pack = new CompressedProfilePack(memory)
-        {
-            Reference = package
-        };
+        var pack = new CompressedProfilePack(memory) { Reference = package };
         var container = await importers.ImportAsync(pack);
         if (container.IconUrl is not null)
         {
@@ -210,25 +210,7 @@ public class InstanceManager(
         logger.LogInformation("{} updated", key);
 
         client.Dispose();
-        await Task.Delay(1500);
     }
 
     #endregion
-
-    public bool IsTracking(string key, [MaybeNullWhen(false)] out TrackerBase tracker)
-    {
-        if (_trackers.TryGetValue(key, out var value))
-        {
-            tracker = value;
-            return true;
-        }
-
-        tracker = null;
-        return false;
-    }
-
-    public bool IsInUse(string key)
-    {
-        return _trackers.ContainsKey(key);
-    }
 }

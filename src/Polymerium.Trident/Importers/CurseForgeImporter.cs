@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
-using Polymerium.Trident.Models.CurseForgePack;
+﻿using Polymerium.Trident.Models.CurseForgePack;
 using Polymerium.Trident.Services;
+using System.Text.Json;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Utilities;

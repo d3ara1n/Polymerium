@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿using Polymerium.Trident.Services.Profiles;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Services;
@@ -16,27 +16,25 @@ public class ProfileManager : IDisposable
 
     public ProfileManager()
     {
-        _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web)
-        {
-            WriteIndented = true
-        };
+        _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web) { WriteIndented = true };
         _serializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 
         var dir = new DirectoryInfo(PathDef.Default.InstanceDirectory);
+        if (!dir.Exists) return;
         foreach (var ins in dir.GetDirectories())
         {
             var path = PathDef.Default.FileOfProfile(ins.Name);
-            if (File.Exists(path))
-                try
-                {
-                    var handle = ProfileHandle.Create(ins.Name, path, _serializerOptions);
-                    _profiles.Add(handle);
-                    Debug.WriteLine($"{handle.Key} added");
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
+            if (!File.Exists(path)) continue;
+            try
+            {
+                var handle = ProfileHandle.Create(ins.Name, path, _serializerOptions);
+                _profiles.Add(handle);
+                Debug.WriteLine($"{handle.Key} added");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
     }
 
@@ -116,20 +114,14 @@ public class ProfileManager : IDisposable
 
     public event EventHandler<ProfileChangedEventArgs>? ProfileAdded;
 
-    internal void OnProfileUpdated(string key, Profile profile)
-    {
+    internal void OnProfileUpdated(string key, Profile profile) =>
         ProfileUpdated?.Invoke(this, new ProfileChangedEventArgs(key, profile));
-    }
 
-    internal void OnProfileRemoved(string key, Profile profile)
-    {
+    internal void OnProfileRemoved(string key, Profile profile) =>
         ProfileRemoved?.Invoke(this, new ProfileChangedEventArgs(key, profile));
-    }
 
-    internal void OnProfileAdded(string key, Profile profile)
-    {
+    internal void OnProfileAdded(string key, Profile profile) =>
         ProfileAdded?.Invoke(this, new ProfileChangedEventArgs(key, profile));
-    }
 
     #endregion
 

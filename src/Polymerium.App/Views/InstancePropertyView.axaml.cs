@@ -4,8 +4,5 @@ namespace Polymerium.App.Views;
 
 public partial class InstancePropertyView : ScopedPage
 {
-    public InstancePropertyView()
-    {
-        InitializeComponent();
-    }
+    public InstancePropertyView() => InitializeComponent();
 }

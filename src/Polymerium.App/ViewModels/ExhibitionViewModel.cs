@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -21,6 +12,15 @@ using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Refit;
 using Semver;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -29,17 +29,6 @@ namespace Polymerium.App.ViewModels;
 
 public partial class ExhibitionViewModel : ViewModelBase
 {
-    #region Injected
-
-    private readonly RepositoryAgent _agent;
-    private readonly IHttpClientFactory _factory;
-    private readonly InstanceManager _instanceManager;
-    private readonly NotificationService _notificationService;
-    private readonly NavigationService _navigationService;
-    private readonly OverlayService _overlayService;
-
-    #endregion
-
     public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager,
         NotificationService notificationService, NavigationService navigationService, OverlayService overlayService)
     {
@@ -102,6 +91,17 @@ public partial class ExhibitionViewModel : ViewModelBase
             };
         }
     }
+
+    #region Injected
+
+    private readonly RepositoryAgent _agent;
+    private readonly IHttpClientFactory _factory;
+    private readonly InstanceManager _instanceManager;
+    private readonly NotificationService _notificationService;
+    private readonly NavigationService _navigationService;
+    private readonly OverlayService _overlayService;
+
+    #endregion
 
     #region Reactive Properties
 

@@ -27,8 +27,5 @@ public static class LoaderHelper
         return false;
     }
 
-    public static string ToLurl(string identity, string version)
-    {
-        return $"{identity}:{version}";
-    }
+    public static string ToLurl(string identity, string version) => $"{identity}:{version}";
 }

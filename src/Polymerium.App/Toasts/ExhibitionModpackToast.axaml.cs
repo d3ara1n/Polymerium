@@ -4,8 +4,5 @@ namespace Polymerium.App.Toasts;
 
 public partial class ExhibitionModpackToast : Toast
 {
-    public ExhibitionModpackToast()
-    {
-        InitializeComponent();
-    }
+    public ExhibitionModpackToast() => InitializeComponent();
 }

@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
@@ -11,6 +10,7 @@ using Avalonia.Metadata;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Huskui.Avalonia.Transitions;
+using System.Windows.Input;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -80,10 +80,7 @@ public class OverlayHost : TemplatedControl
     public void Pop(object control)
     {
         IsVisible = true;
-        var item = new OverlayItem
-        {
-            Content = control
-        };
+        var item = new OverlayItem { Content = control };
         Items.Add(item);
         item.DismissCommand = new InternalDismissCommand(this, item);
 
@@ -120,29 +117,17 @@ public class OverlayHost : TemplatedControl
             .ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
     }
 
-    public void Dismiss()
-    {
-        Dismiss(Items.Last());
-    }
+    public void Dismiss() => Dismiss(Items.Last());
 
     private class InternalDismissCommand(OverlayHost host, OverlayItem item) : ICommand
     {
-        public bool CanExecute(object? parameter)
-        {
-            return host.Items.Contains(item);
-        }
+        public bool CanExecute(object? parameter) => host.Items.Contains(item);
 
-        public void Execute(object? parameter)
-        {
-            host.Dismiss(item);
-        }
+        public void Execute(object? parameter) => host.Dismiss(item);
 
         public event EventHandler? CanExecuteChanged;
 
-        internal void OnCanExecutedChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
+        internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 
     #region _stageInAnimation & _stageOutAnimation
@@ -156,27 +141,11 @@ public class OverlayHost : TemplatedControl
         {
             new KeyFrame
             {
-                Cue = new Cue(0d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = OpacityProperty,
-                        Value = 0d
-                    }
-                }
+                Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } }
             },
             new KeyFrame
             {
-                Cue = new Cue(1d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = OpacityProperty,
-                        Value = 1d
-                    }
-                }
+                Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } }
             }
         }
     };
@@ -190,27 +159,11 @@ public class OverlayHost : TemplatedControl
         {
             new KeyFrame
             {
-                Cue = new Cue(0d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = OpacityProperty,
-                        Value = 1d
-                    }
-                }
+                Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } }
             },
             new KeyFrame
             {
-                Cue = new Cue(1d),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = OpacityProperty,
-                        Value = 0d
-                    }
-                }
+                Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } }
             }
         }
     };

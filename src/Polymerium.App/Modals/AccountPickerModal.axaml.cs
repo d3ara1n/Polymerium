@@ -4,8 +4,5 @@ namespace Polymerium.App.Modals;
 
 public partial class AccountPickerModal : Modal
 {
-    public AccountPickerModal()
-    {
-        InitializeComponent();
-    }
+    public AccountPickerModal() => InitializeComponent();
 }
