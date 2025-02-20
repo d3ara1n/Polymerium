@@ -10,6 +10,10 @@ namespace Polymerium.App.Services;
 
 public class NotificationService
 {
+    private Action<NotificationItem>? _handler;
+
+    internal void SetHandler(Action<NotificationItem> handler) => _handler = handler;
+
     private static readonly Animation COUNTDOWN = new()
     {
         Duration = TimeSpan.FromSeconds(7),
@@ -29,35 +33,35 @@ public class NotificationService
         }
     };
 
-    private Action<NotificationItem>? _handler;
-
-    internal void SetHandler(Action<NotificationItem> handler) => _handler = handler;
-
-    public void Pop(NotificationItem item) =>
+    public void Pop(NotificationItem item)
+    {
         Dispatcher.UIThread.Post(() =>
             _handler?.Invoke(item));
+    }
 
     public void PopMessage(string message, string title = "Notification",
-        NotificationLevel level = NotificationLevel.Information)
-    {
-        var item = new NotificationItem { Content = message, Title = title, Level = level };
-        Pop(item);
-        if (level == NotificationLevel.Information)
+        NotificationLevel level = NotificationLevel.Information) =>
+        Dispatcher.UIThread.Post(() =>
         {
-            item.IsProgressBarVisible = true;
-            COUNTDOWN.RunAsync(item)
-                .ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());
-        }
-    }
+            var item = new NotificationItem { Content = message, Title = title, Level = level };
+            Pop(item);
+            if (level == NotificationLevel.Information)
+            {
+                item.IsProgressBarVisible = true;
+                COUNTDOWN.RunAsync(item)
+                    .ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());
+            }
+        });
 
     public void PopProgress(string message, string title = "Progress",
-        NotificationLevel level = NotificationLevel.Information)
-    {
-        var item = new NotificationItem
+        NotificationLevel level = NotificationLevel.Information) =>
+        Dispatcher.UIThread.Post(() =>
         {
-            Content = message, Title = title, Level = level, IsProgressBarVisible = true
-        };
-        // TODO: return IProgressReporter
-        Pop(item);
-    }
+            var item = new NotificationItem
+            {
+                Content = message, Title = title, Level = level, IsProgressBarVisible = true
+            };
+            // TODO: return IProgressReporter
+            Pop(item);
+        });
 }
