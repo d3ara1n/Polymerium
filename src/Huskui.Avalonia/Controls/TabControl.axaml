@@ -109,9 +109,6 @@
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
-                                <BrushTransition Property="Background"
-                                                 Duration="{StaticResource ControlNormalAnimationDuration}"
-                                                 Easing="SineEaseOut" />
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"
                                                   Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 <TransformOperationsTransition Property="RenderTransform" Easing="QuarticEaseInOut"
@@ -121,7 +118,7 @@
                     </Border>
                     <ContentPresenter
                         Name="PART_ContentPresenter"
-                        Padding="{TemplateBinding Padding}"
+                        Margin="{TemplateBinding Padding}"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                         Content="{TemplateBinding Header}"
@@ -144,9 +141,9 @@
         <Style Selector="^:pointerover:not(:selected) /template/ Panel#Container">
             <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
         </Style>
-        
+
         <Style Selector="^:not(:selected) /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}"/>
+            <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Panel#Container">
@@ -159,11 +156,23 @@
                     Value="{StaticResource TabItemHighlightThickness}" />
             <Setter Property="RenderTransform" Value="scaleX(0.0)" />
         </Style>
+        <Style Selector="^[TabStripPlacement=Top]:selected /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleX(0.7)" />
+        </Style>
+        <Style Selector="^[TabStripPlacement=Top]:pointerover /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleX(1.0)" />
+        </Style>
         <Style Selector="^[TabStripPlacement=Bottom] /template/ Border#PART_Indicator">
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="Height"
                     Value="{StaticResource TabItemHighlightThickness}" />
             <Setter Property="RenderTransform" Value="scaleX(0.0)" />
+        </Style>
+        <Style Selector="^[TabStripPlacement=Bottom]:selected /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleX(0.7)" />
+        </Style>
+        <Style Selector="^[TabStripPlacement=Bottom]:pointerover /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleX(1.0)" />
         </Style>
         <Style Selector="^[TabStripPlacement=Left] /template/ Border#PART_Indicator">
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -171,30 +180,26 @@
                     Value="{StaticResource TabItemHighlightThickness}" />
             <Setter Property="RenderTransform" Value="scaleY(0.0)" />
         </Style>
+        <Style Selector="^[TabStripPlacement=Left]:selected /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleY(0.7)" />
+        </Style>
+        <Style Selector="^[TabStripPlacement=Left]:pointerover /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleX(1.0)" />
+        </Style>
         <Style Selector="^[TabStripPlacement=Right] /template/ Border#PART_Indicator">
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="Width"
                     Value="{StaticResource TabItemHighlightThickness}" />
             <Setter Property="RenderTransform" Value="scaleY(0.0)" />
         </Style>
-
-        <Style Selector="^[TabStripPlacement=Top]:selected /template/ Border#PART_Indicator">
-            <Setter Property="RenderTransform" Value="scaleX(1.0)" />
-        </Style>
-        <Style Selector="^[TabStripPlacement=Bottom]:selected /template/ Border#PART_Indicator">
-            <Setter Property="RenderTransform" Value="scaleX(1.0)" />
-        </Style>
-        <Style Selector="^[TabStripPlacement=Left]:selected /template/ Border#PART_Indicator">
-            <Setter Property="RenderTransform" Value="scaleY(1.0)" />
-        </Style>
         <Style Selector="^[TabStripPlacement=Right]:selected /template/ Border#PART_Indicator">
-            <Setter Property="RenderTransform" Value="scaleY(1.0)" />
+            <Setter Property="RenderTransform" Value="scaleY(0.7)" />
+        </Style>
+        <Style Selector="^[TabStripPlacement=Right]:pointerover /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleX(1.0)" />
         </Style>
 
-        <Style Selector="^.Primary:pointerover /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-        </Style>
-        <Style Selector="^.Primary:selected /template/ Border#PART_Indicator">
+        <Style Selector="^.Primary /template/ Border#PART_Indicator">
             <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
         </Style>
     </ControlTheme>
