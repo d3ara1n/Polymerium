@@ -1,8 +1,8 @@
-﻿using System;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Polymerium.App.Assets;
 using Polymerium.App.Models;
+using System;
 
 namespace Polymerium.App.DesignModels;
 

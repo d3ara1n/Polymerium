@@ -1,22 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-using Avalonia.Animation;
+﻿using Avalonia.Animation;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.Services;
 
 public class NotificationService
 {
-    private Action<NotificationItem>? _handler;
-
-    internal void SetHandler(Action<NotificationItem> handler)
-    {
-        _handler = handler;
-    }
-
     private static readonly Animation COUNTDOWN = new()
     {
         Duration = TimeSpan.FromSeconds(7),
@@ -26,45 +19,28 @@ public class NotificationService
             new KeyFrame
             {
                 Cue = new Cue(0),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = NotificationItem.ProgressProperty,
-                        Value = 100d
-                    }
-                }
+                Setters = { new Setter { Property = NotificationItem.ProgressProperty, Value = 100d } }
             },
             new KeyFrame
             {
                 Cue = new Cue(1),
-                Setters =
-                {
-                    new Setter
-                    {
-                        Property = NotificationItem.ProgressProperty,
-                        Value = 0d
-                    }
-                }
+                Setters = { new Setter { Property = NotificationItem.ProgressProperty, Value = 0d } }
             }
         }
     };
 
-    public void Pop(NotificationItem item)
-    {
+    private Action<NotificationItem>? _handler;
+
+    internal void SetHandler(Action<NotificationItem> handler) => _handler = handler;
+
+    public void Pop(NotificationItem item) =>
         Dispatcher.UIThread.Post(() =>
             _handler?.Invoke(item));
-    }
 
     public void PopMessage(string message, string title = "Notification",
         NotificationLevel level = NotificationLevel.Information)
     {
-        var item = new NotificationItem
-        {
-            Content = message,
-            Title = title,
-            Level = level,
-        };
+        var item = new NotificationItem { Content = message, Title = title, Level = level };
         Pop(item);
         if (level == NotificationLevel.Information)
         {
@@ -79,10 +55,7 @@ public class NotificationService
     {
         var item = new NotificationItem
         {
-            Content = message,
-            Title = title,
-            Level = level,
-            IsProgressBarVisible = true
+            Content = message, Title = title, Level = level, IsProgressBarVisible = true
         };
         // TODO: return IProgressReporter
         Pop(item);

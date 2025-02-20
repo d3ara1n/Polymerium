@@ -44,55 +44,25 @@ public class PathDef
 
     public string InstanceDirectory => Path.Combine(Home, "instances");
 
-    public string FileOfProfile(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "profile.json");
-    }
+    public string FileOfProfile(string key) => Path.Combine(InstanceDirectory, key, "profile.json");
 
-    public string FileOfPreference(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "preference.json");
-    }
+    public string FileOfPreference(string key) => Path.Combine(InstanceDirectory, key, "preference.json");
 
-    public string FileOfIcon(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "icon.png");
-    }
+    public string FileOfIcon(string key) => Path.Combine(InstanceDirectory, key, "icon.png");
 
-    public string FileOfLockData(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "data.lock.json");
-    }
+    public string FileOfLockData(string key) => Path.Combine(InstanceDirectory, key, "data.lock.json");
 
-    public string FileOfUserData(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "data.user.json");
-    }
+    public string FileOfUserData(string key) => Path.Combine(InstanceDirectory, key, "data.user.json");
 
-    public string DirectoryOfHome(string key)
-    {
-        return Path.Combine(InstanceDirectory, key);
-    }
+    public string DirectoryOfHome(string key) => Path.Combine(InstanceDirectory, key);
 
-    public string DirectoryOfBuild(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "build");
-    }
+    public string DirectoryOfBuild(string key) => Path.Combine(InstanceDirectory, key, "build");
 
-    public string DirectoryOfImport(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "import");
-    }
+    public string DirectoryOfImport(string key) => Path.Combine(InstanceDirectory, key, "import");
 
-    public string DirectoryOfPersist(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "persist");
-    }
+    public string DirectoryOfPersist(string key) => Path.Combine(InstanceDirectory, key, "persist");
 
-    public string DirectoryOfSnapshots(string key)
-    {
-        return Path.Combine(InstanceDirectory, key, "snapshots");
-    }
+    public string DirectoryOfSnapshots(string key) => Path.Combine(InstanceDirectory, key, "snapshots");
 
     #endregion
 }

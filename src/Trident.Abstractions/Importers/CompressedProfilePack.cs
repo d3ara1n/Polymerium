@@ -16,8 +16,5 @@ public class CompressedProfilePack
     public IReadOnlyList<string> FileNames { get; }
     public Package? Reference { get; set; }
 
-    public Stream Open(string fileName)
-    {
-        return _archive.GetEntry(fileName)!.Open();
-    }
+    public Stream Open(string fileName) => _archive.GetEntry(fileName)!.Open();
 }

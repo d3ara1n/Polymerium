@@ -10,8 +10,5 @@ public class UpdateTracker(
 {
     public double? Progress { get; private set; }
 
-    void IProgress<double?>.Report(double? value)
-    {
-        Progress = value;
-    }
+    void IProgress<double?>.Report(double? value) => Progress = value;
 }

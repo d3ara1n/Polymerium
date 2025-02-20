@@ -20,7 +20,7 @@
                         </Button>
                     </TextBox.InnerRightContent>
                 </TextBox>
-                <TextBox Watermark="Disabled" IsEnabled="False" UseFloatingWatermark="True" />
+                <TextBox Watermark="Disabled" IsEnabled="False" />
                 <TextBox Watermark="Enabled" IsEnabled="True" UseFloatingWatermark="True" />
             </StackPanel>
         </Panel>
@@ -63,7 +63,8 @@
                                           AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                           HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
                                           IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
-                                          VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                                          VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}"
+                                          BringIntoViewOnFocusChange="{TemplateBinding (ScrollViewer.BringIntoViewOnFocusChange)}">
                                 <Panel Margin="{TemplateBinding Padding}">
                                     <TextBlock
                                         Name="PART_Watermark"
@@ -132,6 +133,10 @@
 
         <Style Selector="^:disabled /template/ Border#PART_Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+        <Style Selector="^[UseFloatingWatermark=true]:not(:empty) /template/ TextBlock#PART_FloatingWatermark">
+            <Setter Property="IsVisible" Value="True" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

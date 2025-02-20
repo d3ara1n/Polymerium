@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using Avalonia.Data.Converters;
+using System.Globalization;
 
 namespace Huskui.Avalonia.Controls;
 

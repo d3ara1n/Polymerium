@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
+using System;
+using System.Collections.Generic;
 
 namespace Polymerium.App.Models;
 

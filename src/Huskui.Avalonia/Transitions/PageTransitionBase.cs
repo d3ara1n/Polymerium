@@ -76,16 +76,11 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
         private readonly IList<AnimationBuilder> _builder = new List<AnimationBuilder>();
         private readonly TimeSpan _duration;
 
-        public Builder(TimeSpan duration)
-        {
-            _duration = duration;
-        }
+        public Builder(TimeSpan duration) => _duration = duration;
 
-        internal IEnumerable<Animation> Build(bool forward)
-        {
-            return _builder.Select(x =>
+        internal IEnumerable<Animation> Build(bool forward) =>
+            _builder.Select(x =>
                 x.Build(forward, _duration, TimeSpan.Zero, TimeSpan.Zero, FillMode.Forward, 1.0d, _defaultEasing));
-        }
 
         public AnimationBuilder Animation(TimeSpan? duration = null, Easing? easing = null)
         {
@@ -94,15 +89,9 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
             return animation;
         }
 
-        public AnimationBuilder Animation(TimeSpan duration)
-        {
-            return Animation(duration, null);
-        }
+        public AnimationBuilder Animation(TimeSpan duration) => Animation(duration, null);
 
-        public AnimationBuilder Animation(Easing easing)
-        {
-            return Animation(null, easing);
-        }
+        public AnimationBuilder Animation(Easing easing) => Animation(null, easing);
 
         public class AnimationBuilder
         {

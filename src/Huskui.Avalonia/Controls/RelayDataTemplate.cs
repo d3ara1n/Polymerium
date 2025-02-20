@@ -15,8 +15,5 @@ public class RelayDataTemplate : AvaloniaList<IDataTemplate>, IDataTemplate
         return param as Control;
     }
 
-    public bool Match(object? data)
-    {
-        return this.Any(x => x.Match(data)) || data is Control;
-    }
+    public bool Match(object? data) => this.Any(x => x.Match(data)) || data is Control;
 }

@@ -24,8 +24,5 @@ public record Package(
     IEnumerable<Dependency> Dependencies
 )
 {
-    public override string ToString()
-    {
-        return PackageHelper.ToPurl(this);
-    }
+    public override string ToString() => PackageHelper.ToPurl(this);
 }

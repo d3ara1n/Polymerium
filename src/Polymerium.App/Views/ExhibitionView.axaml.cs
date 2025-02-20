@@ -4,8 +4,5 @@ namespace Polymerium.App.Views;
 
 public partial class ExhibitionView : Page
 {
-    public ExhibitionView()
-    {
-        InitializeComponent();
-    }
+    public ExhibitionView() => InitializeComponent();
 }

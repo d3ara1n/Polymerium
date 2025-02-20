@@ -10,10 +10,8 @@ public class FocusOnTransition : PageTransitionBase
     {
     }
 
-    public FocusOnTransition(TimeSpan? duration, DirectionFrom? direction) : base(duration)
-    {
+    public FocusOnTransition(TimeSpan? duration, DirectionFrom? direction) : base(duration) =>
         Direction = direction ?? DirectionFrom.Bottom;
-    }
 
     public DirectionFrom Direction { get; set; }
 

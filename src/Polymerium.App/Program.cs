@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Media;
 using FluentIcons.Avalonia;
 using Huskui.Avalonia.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -29,12 +28,10 @@ internal static class Program
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp()
-    {
-        return AppBuilder.Configure<App>()
+    public static AppBuilder BuildAvaloniaApp() =>
+        AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithOutfitFont()
             .UseSegoeMetrics()
             .LogToTrace();
-    }
 }

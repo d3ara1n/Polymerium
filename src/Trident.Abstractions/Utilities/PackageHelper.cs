@@ -49,8 +49,6 @@ public static class PackageHelper
         return sb.ToString();
     }
 
-    public static string ToPurl(Package package)
-    {
-        return ToPurl(package.Label, package.Namespace, package.ProjectId, package.VersionId);
-    }
+    public static string ToPurl(Package package) =>
+        ToPurl(package.Label, package.Namespace, package.ProjectId, package.VersionId);
 }

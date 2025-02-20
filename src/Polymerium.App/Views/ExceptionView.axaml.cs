@@ -4,8 +4,5 @@ namespace Polymerium.App.Views;
 
 public partial class ExceptionView : Page
 {
-    public ExceptionView()
-    {
-        InitializeComponent();
-    }
+    public ExceptionView() => InitializeComponent();
 }

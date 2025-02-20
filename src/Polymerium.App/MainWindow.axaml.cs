@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Windows.Input;
-using Avalonia.Animation;
+﻿using Avalonia.Animation;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -15,6 +11,10 @@ using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using System;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Windows.Input;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App;
@@ -37,33 +37,19 @@ public partial class MainWindow : AppWindow
 
     private void PopDialog()
     {
-        var pop = new Button
-        {
-            Content = "POP"
-        };
+        var pop = new Button { Content = "POP" };
         pop.Click += (_, __) => PopDialog();
         PopDialog(new Dialog
         {
             Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
             Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
-            Content = new StackPanel
-            {
-                Spacing = 8d,
-                Children =
-                {
-                    new TextBox(),
-                    pop
-                }
-            }
+            Content = new StackPanel { Spacing = 8d, Children = { new TextBox(), pop } }
         });
     }
 
     private void PopToast()
     {
-        var pop = new Button
-        {
-            Content = "POP"
-        };
+        var pop = new Button { Content = "POP" };
         pop.Click += (_, __) => PopToast();
         PopToast(new Toast
         {
@@ -83,10 +69,7 @@ public partial class MainWindow : AppWindow
 
     private void PopNotification()
     {
-        var item = new NotificationItem
-        {
-            Content = "Larry The Lazy"
-        };
+        var item = new NotificationItem { Content = "Larry The Lazy" };
         PopNotification(item);
     }
 
@@ -121,10 +104,9 @@ public partial class MainWindow : AppWindow
 
     #region Navigation Service
 
-    internal void Navigate(Type page, object? parameter, IPageTransition transition)
-    {
+    internal void Navigate(Type page, object? parameter, IPageTransition transition) =>
+        // NavigationService 会处理错误情况
         Root.Navigate(page, parameter, transition);
-    }
 
     internal void BindNavigation(Action<Type, object?, IPageTransition?> navigate,
         Frame.PageActivatorDelegate activator)

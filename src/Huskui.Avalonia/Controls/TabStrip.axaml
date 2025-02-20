@@ -184,7 +184,7 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Opacity" Value="0.7" />
+            <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
         </Style>
 
         <Style Selector="^:selected /template/ Border#Indicator">

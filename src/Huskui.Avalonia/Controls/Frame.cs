@@ -1,10 +1,10 @@
-﻿using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
 using Avalonia.Data;
+using System.Windows.Input;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -48,10 +48,7 @@ public class Frame : ContentControl
     private ContentPresenter? _presenter;
     private ContentPresenter? _presenter2;
 
-    public Frame()
-    {
-        _goBackCommand = new InternalGoBackCommand(this);
-    }
+    public Frame() => _goBackCommand = new InternalGoBackCommand(this);
 
     public bool CanGoBackOutOfStack
     {
@@ -184,21 +181,12 @@ public class Frame : ContentControl
 
     private class InternalGoBackCommand(Frame host) : ICommand
     {
-        public bool CanExecute(object? parameter)
-        {
-            return host.CanGoBack;
-        }
+        public bool CanExecute(object? parameter) => host.CanGoBack;
 
-        public void Execute(object? parameter)
-        {
-            host.GoBack();
-        }
+        public void Execute(object? parameter) => host.GoBack();
 
         public event EventHandler? CanExecuteChanged;
 
-        internal void OnCanExecutedChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
+        internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

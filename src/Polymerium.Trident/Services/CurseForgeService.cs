@@ -33,9 +33,8 @@ public class CurseForgeService(ICurseForgeClient client)
         ["Any"] = "Any"
     };
 
-    public ModLoaderTypeModel? LoaderIdToType(string? loader)
-    {
-        return loader switch
+    public ModLoaderTypeModel? LoaderIdToType(string? loader) =>
+        loader switch
         {
             LoaderHelper.LOADERID_NEOFORGE => ModLoaderTypeModel.NeoForge,
             LoaderHelper.LOADERID_FORGE => ModLoaderTypeModel.Forge,
@@ -43,11 +42,9 @@ public class CurseForgeService(ICurseForgeClient client)
             LoaderHelper.LOADERID_QUILT => ModLoaderTypeModel.Quilt,
             _ => null
         };
-    }
 
-    public uint? ResourceKindToClassId(ResourceKind? kind)
-    {
-        return kind switch
+    public uint? ResourceKindToClassId(ResourceKind? kind) =>
+        kind switch
         {
             ResourceKind.Modpack => CLASSID_MODPACK,
             ResourceKind.Mod => CLASSID_MOD,
@@ -55,11 +52,9 @@ public class CurseForgeService(ICurseForgeClient client)
             ResourceKind.ShaderPack => CLASSID_SHADERPACK,
             _ => null
         };
-    }
 
-    public ResourceKind? ClassIdToResourceKind(uint? classId)
-    {
-        return classId switch
+    public ResourceKind? ClassIdToResourceKind(uint? classId) =>
+        classId switch
         {
             CLASSID_MODPACK => ResourceKind.Modpack,
             CLASSID_MOD => ResourceKind.Mod,
@@ -67,11 +62,9 @@ public class CurseForgeService(ICurseForgeClient client)
             CLASSID_SHADERPACK => ResourceKind.ShaderPack,
             _ => null
         };
-    }
 
-    public static string ResourceKindToUrlKind(ResourceKind? kind)
-    {
-        return kind switch
+    public static string ResourceKindToUrlKind(ResourceKind? kind) =>
+        kind switch
         {
             ResourceKind.Modpack => "modpacks",
             ResourceKind.Mod => "mc-mods",
@@ -81,32 +74,25 @@ public class CurseForgeService(ICurseForgeClient client)
             ResourceKind.DataPack => "data-packs",
             _ => "unknown"
         };
-    }
 
-    public ReleaseType ToReleaseType(FileModel.FileReleaseType type)
-    {
-        return type switch
+    public ReleaseType ToReleaseType(FileModel.FileReleaseType type) =>
+        type switch
         {
             FileModel.FileReleaseType.Alpha => ReleaseType.Alpha,
             FileModel.FileReleaseType.Beta => ReleaseType.Beta,
             FileModel.FileReleaseType.Release => ReleaseType.Release,
             _ => ReleaseType.Release
         };
-    }
 
-    public Uri ToDownloadUrl(FileModel file)
-    {
-        return file.DownloadUrl ??
-               new Uri(
-                   $"https://mediafilez.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{file.FileName}");
-    }
+    public Uri ToDownloadUrl(FileModel file) =>
+        file.DownloadUrl ??
+        new Uri(
+            $"https://mediafilez.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{file.FileName}");
 
-    public string? ToSha1(FileModel file)
-    {
-        return file.Hashes.Any(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1)
+    public string? ToSha1(FileModel file) =>
+        file.Hashes.Any(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1)
             ? file.Hashes.First(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1).Value
             : null;
-    }
 
     public Requirement ToRequirement(FileModel file)
     {
@@ -121,19 +107,16 @@ public class CurseForgeService(ICurseForgeClient client)
         return new Requirement(gameReq, loaderReq);
     }
 
-    public IEnumerable<Dependency> ToDependencies(FileModel file)
-    {
-        return file.Dependencies.Where(x =>
+    public IEnumerable<Dependency> ToDependencies(FileModel file) =>
+        file.Dependencies.Where(x =>
             x.RelationType is FileModel.FileDependency.FileRelationType.RequiredDependency
                 or FileModel.FileDependency.FileRelationType.OptionalDependency).Select(x =>
             new Dependency(LABEL, null, x.ModId.ToString(), null,
                 x.RelationType == FileModel.FileDependency.FileRelationType.RequiredDependency));
-    }
 
 
-    public Exhibit ToExhibit(ModModel model)
-    {
-        return new Exhibit(LABEL, null, model.Id.ToString(), model.Name, model.Logo.ThumbnailUrl,
+    public Exhibit ToExhibit(ModModel model) =>
+        new(LABEL, null, model.Id.ToString(), model.Name, model.Logo.ThumbnailUrl,
             model.Authors.Select(x => x.Name).FirstOrDefault() ?? "??", model.Summary,
             ClassIdToResourceKind(model.ClassId) ?? ResourceKind.Unknown,
             model.DownloadCount,
@@ -141,25 +124,20 @@ public class CurseForgeService(ICurseForgeClient client)
             model.Links.WebsiteUrl ??
             new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(model.ClassId)))),
             model.DateCreated, model.DateModified);
-    }
 
 
-    public Package ToPackage(ModModel mod, FileModel file)
-    {
-        return new Package(LABEL, null, mod.Id.ToString(), file.Id.ToString(), mod.Name, file.DisplayName,
+    public Package ToPackage(ModModel mod, FileModel file) =>
+        new(LABEL, null, mod.Id.ToString(), file.Id.ToString(), mod.Name, file.DisplayName,
             mod.Logo.ThumbnailUrl, mod.Authors.Select(x => x.Name).FirstOrDefault() ?? "??", mod.Summary,
             mod.Links.WebsiteUrl ??
             new Uri(PROJECT_URL.Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(mod.ClassId)))),
             ClassIdToResourceKind(mod.ClassId) ?? ResourceKind.Unknown, ToReleaseType(file.ReleaseType), file.FileDate,
             ToDownloadUrl(file), file.FileLength, file.FileName, ToSha1(file), ToRequirement(file),
             ToDependencies(file));
-    }
 
-    public Version ToVersion(FileModel file)
-    {
-        return new Version(LABEL, null, file.ModId.ToString(), file.Id.ToString(), file.DisplayName,
+    public Version ToVersion(FileModel file) =>
+        new(LABEL, null, file.ModId.ToString(), file.Id.ToString(), file.DisplayName,
             ToReleaseType(file.ReleaseType), file.FileDate, file.DownloadCount, string.Empty);
-    }
 
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
     {
@@ -172,11 +150,9 @@ public class CurseForgeService(ICurseForgeClient client)
     }
 
     public async Task<SearchResponse<ModModel>> SearchAsync(string searchFilter, uint? classId,
-        string? gameVersion, ModLoaderTypeModel? modLoader, uint index = 0, uint pageSize = 50)
-    {
-        return await client.SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index,
+        string? gameVersion, ModLoaderTypeModel? modLoader, uint index = 0, uint pageSize = 50) =>
+        await client.SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index,
             pageSize: pageSize);
-    }
 
     public async Task<ModModel> GetModAsync(uint modId)
     {

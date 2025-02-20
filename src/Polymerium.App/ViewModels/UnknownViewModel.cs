@@ -1,13 +1,13 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.ViewModels;
 
@@ -39,18 +39,13 @@ public partial class UnknownViewModel(ViewBag bag, NotificationService notificat
             }))
     ];
 
-    protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
-    {
-        return Task.Delay(TimeSpan.FromSeconds(7), token);
-    }
+    protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token) =>
+        Task.Delay(TimeSpan.FromSeconds(7), token);
 
     #region Commands
 
     [RelayCommand]
-    private void Hello()
-    {
-        notificationService.PopMessage("Hello", "Hi there!");
-    }
+    private void Hello() => notificationService.PopMessage("Hello", "Hi there!");
 
     #endregion
 }

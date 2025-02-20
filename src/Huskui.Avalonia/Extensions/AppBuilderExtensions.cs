@@ -6,9 +6,8 @@ namespace Huskui.Avalonia.Extensions;
 
 public static class AppBuilderExtensions
 {
-    public static AppBuilder WithOutfitFont(this AppBuilder appBuilder)
-    {
-        return appBuilder.ConfigureFonts(fontManager =>
+    public static AppBuilder WithOutfitFont(this AppBuilder appBuilder) =>
+        appBuilder.ConfigureFonts(fontManager =>
         {
             fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:Quicksand"),
                 new Uri("avares://Huskui.Avalonia/Assets/Fonts/Quicksand")));
@@ -19,11 +18,7 @@ public static class AppBuilderExtensions
             DefaultFamilyName = "fonts:Quicksand#Quicksand",
             FontFallbacks =
             [
-                new FontFallback
-                {
-                    FontFamily = "fonts:MaoKenWangXingYuan#猫啃忘形圆"
-                }
+                new FontFallback { FontFamily = "fonts:MaoKenWangXingYuan#猫啃忘形圆" }
             ]
         });
-    }
 }

@@ -25,9 +25,9 @@ public class AppWindow : Window
 
     private bool _isMaximized;
     private OverlayHost? _modalHost;
+    private NotificationHost? _notificationHost;
 
     private OverlayHost? _toastHost;
-    private NotificationHost? _notificationHost;
 
     protected override Type StyleKeyOverride => typeof(AppWindow);
 

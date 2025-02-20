@@ -14,15 +14,9 @@ public abstract class TrackerBase(
 
     public event TrackerStateUpdatedHandler? StateUpdated;
 
-    public void Abort()
-    {
-        _tokenSource.Cancel();
-    }
+    public void Abort() => _tokenSource.Cancel();
 
-    public void Start()
-    {
-        OnStart();
-    }
+    public void Start() => OnStart();
 
     protected virtual void OnStart()
     {
