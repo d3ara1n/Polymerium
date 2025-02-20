@@ -82,6 +82,7 @@ public class ProfileManager : IDisposable
         handle.SaveAsync().Wait();
         _profiles.Add(handle);
         key.Dispose();
+        handle.SaveAsync().Wait();
         OnProfileAdded(key.Key, profile);
     }
 
@@ -97,6 +98,7 @@ public class ProfileManager : IDisposable
         handle.Value.Setup.Stage.Clear();
         foreach (var package in packages) handle.Value.Setup.Stage.Add(package);
         foreach (var (k, v) in overrides) handle.Value.Overrides[k] = v;
+        handle.SaveAsync().Wait();
         OnProfileUpdated(key, handle.Value);
     }
 
