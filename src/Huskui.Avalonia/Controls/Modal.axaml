@@ -9,6 +9,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="24" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border ClipToBounds="True" Background="{TemplateBinding Background}"

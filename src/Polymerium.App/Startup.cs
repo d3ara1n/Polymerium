@@ -21,6 +21,7 @@ public static class Startup
         // Trident
         services
             .AddCurseForge()
+            .AddPrismLauncher()
             .AddSingleton<ProfileManager>()
             .AddSingleton<RepositoryAgent>()
             .AddSingleton<ImporterAgent>()

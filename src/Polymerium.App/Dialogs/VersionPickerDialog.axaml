@@ -4,11 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:local="using:Polymerium.App.Dialogs"
              xmlns:m="using:Polymerium.App.Models"
              mc:Ignorable="d" Title="Pick a game version"
-             x:Class="Polymerium.App.Dialogs.VersionPickerDialog" Loaded="Control_OnLoaded" Unloaded="Control_OnUnloaded">
-    <StackPanel Spacing="12">
-        <TextBox>
+             x:Class="Polymerium.App.Dialogs.VersionPickerDialog" Loaded="Control_OnLoaded"
+             Unloaded="Control_OnUnloaded">
+    <Grid RowDefinitions="Auto,12,Auto,12,*">
+        <TextBox Grid.Row="0" Watermark="Filter by version name..."
+                 Text="{Binding $parent[local:VersionPickerDialog].FilterText,Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
                     <icons:PackIconLucide Margin="10,0"
@@ -19,25 +22,32 @@
                 </StackPanel>
             </TextBox.InnerLeftContent>
         </TextBox>
-        <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
-            <TabStripItem Content="Release" />
-            <TabStripItem Content="Snapshot" />
-            <TabStripItem Content="Beta" />
-            <TabStripItem Content="Alpha" />
-            <TabStripItem Content="Legacy" />
-        </TabStrip>
-        <husk:SkeletonControl>
-            <ListBox MinHeight="64">
+        <husk:SkeletonControl Grid.Row="2"
+                              IsLoading="{Binding $parent[local:VersionPickerDialog].IsLoaded,Converter={x:Static BoolConverters.Not}}">
+            <TabStrip Theme="{StaticResource SegmentedTabStripTheme}" HorizontalAlignment="Center"
+                      SelectedValue="{Binding $parent[local:VersionPickerDialog].SelectedType}"
+                      ItemsSource="{Binding $parent[local:VersionPickerDialog].Types}">
+                <TabStrip.ItemTemplate>
+                    <DataTemplate DataType="x:String">
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </TabStrip.ItemTemplate>
+            </TabStrip>
+        </husk:SkeletonControl>
+        <husk:SkeletonControl Grid.Row="4"
+                              IsLoading="{Binding $parent[local:VersionPickerDialog].IsLoaded,Converter={x:Static BoolConverters.Not}}">
+            <ListBox MinHeight="64"
+                     ItemsSource="{Binding $parent[local:VersionPickerDialog].View}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="m:GameVersionModel">
                         <Grid ColumnDefinitions="*,4,Auto">
                             <TextBlock Grid.Column="0" Text="{Binding Name}" />
                             <husk:Tag Grid.Column="2" CornerRadius="{StaticResource SmallCornerRadius}"
-                                      Content="{Binding ReleaseTimeRaw}" />
+                                      Content="{Binding ReleaseTime}" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </husk:SkeletonControl>
-    </StackPanel>
+    </Grid>
 </husk:Dialog>

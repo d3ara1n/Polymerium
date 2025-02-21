@@ -1,6 +1,6 @@
-﻿using Polymerium.App.Facilities;
+﻿using Humanizer;
+using Polymerium.App.Facilities;
 using System;
-using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 
@@ -9,4 +9,6 @@ public class GameVersionModel(string name, string Type, DateTimeOffset releaseTi
     public string Name => name;
     public string TypeRaw => Type;
     public DateTimeOffset ReleaseTimeRaw => releaseTime;
+
+    public string ReleaseTime { get; } = releaseTime.Humanize();
 }

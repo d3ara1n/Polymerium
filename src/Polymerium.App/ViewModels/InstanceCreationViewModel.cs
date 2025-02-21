@@ -4,7 +4,6 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Services;
-using System;
 using System.Linq;
 
 namespace Polymerium.App.ViewModels;
@@ -34,7 +33,8 @@ public partial class InstanceCreationViewModel : ViewModelBase
             if (token.IsCancellationRequested) return Enumerable.Empty<GameVersionModel>().ToList();
 
             var index = await _prismLauncherService.GetGameVersionsAsync();
-            throw new NotImplementedException();
+            var versions = index.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
+            return versions;
         }));
     }
 
