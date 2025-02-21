@@ -19,6 +19,7 @@
         <ResourceInclude Source="/Controls/InfiniteScrollView.axaml" />
         <ResourceInclude Source="/Controls/InfoBar.axaml" />
         <ResourceInclude Source="/Controls/ItemsControl.axaml" />
+        <ResourceInclude Source="/Controls/LazyContainer.axaml" />
         <ResourceInclude Source="/Controls/ListBox.axaml" />
         <ResourceInclude Source="/Controls/Menu.axaml" />
         <ResourceInclude Source="/Controls/Modal.axaml" />

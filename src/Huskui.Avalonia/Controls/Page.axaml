@@ -50,7 +50,8 @@
                             <DockPanel VerticalAlignment="Top" Margin="12"
                                        IsVisible="{TemplateBinding IsHeaderVisible}">
                                 <Button DockPanel.Dock="Left" CornerRadius="4" Margin="0,0,12,0"
-                                        Command="{Binding $parent[local:Frame].GoBackCommand}">
+                                        Command="{Binding $parent[local:Frame].GoBackCommand}"
+                                        IsVisible="{TemplateBinding IsBackButtonVisible}">
                                     <fi:SymbolIcon Symbol="ArrowLeft" FontSize="12" Width="12" Height="12" />
                                 </Button>
                                 <ContentPresenter Content="{TemplateBinding Header}"

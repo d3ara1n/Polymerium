@@ -25,6 +25,19 @@ public class Page : HeaderedContentControl
     private bool _canGoBack;
 
     private bool _isHeaderVisible = true;
+
+    public static readonly DirectProperty<Page, bool> IsBackButtonVisibleProperty =
+        AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsBackButtonVisible), o => o.IsBackButtonVisible,
+            (o, v) => o.IsBackButtonVisible = v);
+
+    private bool _isBackButtonVisible = true;
+
+    public bool IsBackButtonVisible
+    {
+        get => _isBackButtonVisible;
+        set => SetAndRaise(IsBackButtonVisibleProperty, ref _isBackButtonVisible, value);
+    }
+
     public IPageModel? Model { get; set; }
 
     public bool CanGoBack

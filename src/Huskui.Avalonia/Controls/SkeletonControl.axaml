@@ -32,19 +32,19 @@
             <Style Selector="^ /template/ Border#Mask">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
-            <Style Selector="^ /template/ Border#Overlay">
-                <Style.Animations>
-                    <Animation Duration="0:0:0.8" PlaybackDirection="Alternate" IterationCount="Infinite"
-                               Easing="SineEaseOut">
-                        <KeyFrame Cue="0%">
-                            <Setter Property="Opacity" Value="0" />
-                        </KeyFrame>
-                        <KeyFrame Cue="100%">
-                            <Setter Property="Opacity" Value="1" />
-                        </KeyFrame>
-                    </Animation>
-                </Style.Animations>
-            </Style>
+        </Style>
+        <Style Selector="^:loading:animated /template/ Border#Overlay">
+            <Style.Animations>
+                <Animation Duration="0:0:0.8" PlaybackDirection="Alternate" IterationCount="Infinite"
+                           Easing="SineEaseOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
         </Style>
     </ControlTheme>
 </ResourceDictionary>
