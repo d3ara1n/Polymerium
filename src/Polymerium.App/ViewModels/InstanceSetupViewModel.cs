@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -32,7 +33,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
     internal const string DATAFORMATS = "never-gonna-give-you-up";
 
     private readonly ProfileGuard _owned;
-    private CancellationTokenSource _cancellationTokenSource;
+    private CancellationTokenSource? _cancellationTokenSource;
 
     public InstanceSetupViewModel(ViewBag bag, ProfileManager profileManager, RepositoryAgent repositories,
         IHttpClientFactory clientFactory, NotificationService notificationService, InstanceManager instanceManager)
@@ -176,7 +177,13 @@ public partial class InstanceSetupViewModel : ViewModelBase
             }
     }
 
-    #region Command Handlers
+    protected override Task OnCleanupAsync(CancellationToken token)
+    {
+        _cancellationTokenSource?.Cancel();
+        return base.OnCleanupAsync(token);
+    }
+
+    #region Commands
 
     [RelayCommand]
     private void OpenSourceUrl(Uri? url)

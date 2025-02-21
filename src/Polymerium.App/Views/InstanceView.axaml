@@ -18,7 +18,7 @@
                         <Flyout>
                             <DockPanel Height="128" Width="256">
                                 <Grid DockPanel.Dock="Bottom">
-                                    <Button CornerRadius="0">
+                                    <Button CornerRadius="0" Command="{Binding SwitchAccountCommand}">
                                         <StackPanel Orientation="Horizontal" Spacing="6">
                                             <icons:PackIconLucide Kind="ArrowLeftRight"
                                                                   Height="{StaticResource MediumFontSize}"

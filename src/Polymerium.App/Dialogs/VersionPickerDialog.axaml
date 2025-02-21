@@ -3,7 +3,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Polymerium.App.Dialogs.VersionPickerDialog">
-    Welcome to Avalonia!
+             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:m="using:Polymerium.App.Models"
+             mc:Ignorable="d" Title="Pick a game version"
+             x:Class="Polymerium.App.Dialogs.VersionPickerDialog" Loaded="Control_OnLoaded" Unloaded="Control_OnUnloaded">
+    <StackPanel Spacing="12">
+        <TextBox>
+            <TextBox.InnerLeftContent>
+                <StackPanel Orientation="Horizontal">
+                    <icons:PackIconLucide Margin="10,0"
+                                          Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                          Kind="Filter" Height="{StaticResource MediumFontSize}"
+                                          VerticalAlignment="Center" />
+                    <husk:Divider Orientation="Vertical" />
+                </StackPanel>
+            </TextBox.InnerLeftContent>
+        </TextBox>
+        <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
+            <TabStripItem Content="Release" />
+            <TabStripItem Content="Snapshot" />
+            <TabStripItem Content="Beta" />
+            <TabStripItem Content="Alpha" />
+            <TabStripItem Content="Legacy" />
+        </TabStrip>
+        <husk:SkeletonControl>
+            <ListBox MinHeight="64">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="m:GameVersionModel">
+                        <Grid ColumnDefinitions="*,4,Auto">
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                            <husk:Tag Grid.Column="2" CornerRadius="{StaticResource SmallCornerRadius}"
+                                      Content="{Binding ReleaseTimeRaw}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </husk:SkeletonControl>
+    </StackPanel>
 </husk:Dialog>

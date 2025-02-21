@@ -6,7 +6,6 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
-using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
@@ -81,7 +80,7 @@ public partial class MainWindow : AppWindow
         }
         else if (sender is Button { Tag: "0721" })
         {
-            PopModal(new AccountPickerModal());
+            PopDialog();
         }
         else
         {
@@ -89,7 +88,7 @@ public partial class MainWindow : AppWindow
             {
                 Button { Tag: "ExhibitionView" } => (typeof(ExhibitionView), null),
                 Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
-                Button { Tag: "CreateInstanceView" } => (typeof(CreateInstanceView), null),
+                Button { Tag: "CreateInstanceView" } => (typeof(InstanceCreationView), null),
                 _ => (typeof(PageNotReachedView), null)
             };
             _navigate?.Invoke(target.Page, target.Parameter, null);
