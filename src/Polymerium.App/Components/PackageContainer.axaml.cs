@@ -79,9 +79,9 @@ public partial class PackageContainer : UserControl
             if (SetAndRaise(ItemsProperty, ref _items, value))
             {
                 _subscription?.Dispose();
-                var filter = this.GetObservable(FilterTextProperty).Select(BuildFilter);
                 if (value is not null)
                 {
+                    var filter = this.GetObservable(FilterTextProperty).Select(BuildFilter);
                     _subscription = value.Connect().Filter(filter).Bind(out var view).Subscribe();
                     View = view;
                 }

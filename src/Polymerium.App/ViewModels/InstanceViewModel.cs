@@ -95,16 +95,6 @@ public partial class InstanceViewModel : ViewModelBase
     [RelayCommand]
     private void GotoSetupView() => _navigationService.Navigate<InstanceSetupView>(Basic.Key);
 
-
-    [RelayCommand]
-    private void Play() => LaunchBarModel.State = LaunchBarState.Building;
-
-    [RelayCommand]
-    private void Abort() => LaunchBarModel.State = LaunchBarState.Running;
-
-    [RelayCommand]
-    private void OpenDashboard() => LaunchBarModel.State = LaunchBarState.Idle;
-
     [RelayCommand]
     private void SwitchAccount() => _overlayService.PopDialog(new AccountPickerDialog());
 
