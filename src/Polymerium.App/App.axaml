@@ -1,11 +1,9 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Polymerium.App.App"
-             xmlns:labs="using:Avalonia.Labs.Controls"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
     <Application.Styles>
-        <labs:ControlThemes />
         <StyleInclude Source="avares://IconPacks.Avalonia.Lucide/Lucide.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Prelude.axaml" />
         <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml" />

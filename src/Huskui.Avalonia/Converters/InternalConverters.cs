@@ -30,4 +30,15 @@ internal static class InternalConverters
             _ => throw new NotSupportedException()
         };
     });
+
+    public static IValueConverter TrueIfMatch { get; } = new RelayConverter((v, p) => v == p);
+
+    public static IValueConverter TrueIfNotMatch { get; } = new RelayConverter((v, p) => v != p);
+
+    public static IValueConverter CountToArray { get; } = new RelayConverter((v, _) =>
+    {
+        if (v is int count) return Enumerable.Range(0, count).ToArray();
+
+        return v;
+    });
 }

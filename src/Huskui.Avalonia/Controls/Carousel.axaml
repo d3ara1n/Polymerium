@@ -1,0 +1,108 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                    xmlns:fi="using:FluentIcons.Avalonia">
+    <Design.PreviewWith>
+        <Panel Background="White">
+            <StackPanel Spacing="12" Margin="24">
+                <Carousel Height="160" Width="260">
+                    <Carousel.Items>
+                        <Border Background="Aqua" />
+                        <Border Background="Magenta" />
+                        <Border Background="Yellow" />
+                    </Carousel.Items>
+                </Carousel>
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="{x:Type Carousel}" TargetType="Carousel">
+        <Setter Property="PageTransition">
+            <PageSlide Duration="{StaticResource ControlFasterAnimationDuration}" />
+        </Setter>
+        <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="{TemplateBinding ClipToBounds}">
+                    <Panel>
+                        <ScrollViewer Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"
+                                      Name="PART_ScrollViewer"
+                                      BringIntoViewOnFocusChange="False"
+                                      HorizontalScrollBarVisibility="Hidden"
+                                      VerticalScrollBarVisibility="Hidden">
+                            <ItemsPresenter Name="PART_ItemsPresenter"
+                                            ItemsPanel="{TemplateBinding ItemsPanel}"
+                                            Margin="{TemplateBinding Padding}" />
+                        </ScrollViewer>
+                        <Grid Name="ControlPanel" ColumnDefinitions="Auto,*,Auto" RowDefinitions="*,Auto,*" Margin="8"
+                              Opacity="0">
+                            <Grid.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity"
+                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                </Transitions>
+                            </Grid.Transitions>
+                            <Button Grid.Row="1" Grid.Column="0" Padding="8" CornerRadius="99"
+                                    Command="{Binding $parent[Carousel].Previous}">
+                                <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource SmallFontSize}" IconVariant="Filled" />
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="2" Padding="8" CornerRadius="99"
+                                    Command="{Binding $parent[Carousel].Next}">
+                                <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" IconVariant="Filled" />
+                            </Button>
+                            <Panel Grid.Row="2" Grid.Column="1">
+                                <!-- <ListBox HorizontalAlignment="Center" SelectedIndex="{TemplateBinding SelectedIndex,Mode=TwoWay}" -->
+                                <!--          ItemsSource="{TemplateBinding ItemCount,Converter={x:Static huskc:InternalConverters.CountToArray}}"> -->
+                                <!--     <ListBox.ItemsPanel> -->
+                                <!--         <ItemsPanelTemplate> -->
+                                <!--             <StackPanel Orientation="Horizontal" Spacing="4" /> -->
+                                <!--         </ItemsPanelTemplate> -->
+                                <!--     </ListBox.ItemsPanel> -->
+                                <!--     <ListBox.ItemContainerTheme> -->
+                                <!--         <ControlTheme TargetType="ListBoxItem"> -->
+                                <!--             <Setter Property="Template"> -->
+                                <!--                 <ControlTemplate> -->
+                                <!--                     <fi:SymbolIcon Name="Icon" Symbol="RadioButton" -->
+                                <!--                                    FontSize="{StaticResource ExtraSmallFontSize}" /> -->
+                                <!--                 </ControlTemplate> -->
+                                <!--             </Setter> -->
+                                <!-- -->
+                                <!--             <Style Selector="^:selected /template/ fi|SymbolIcon#Icon"> -->
+                                <!--                 <Setter Property="IconVariant" Value="Filled" /> -->
+                                <!--             </Style> -->
+                                <!--         </ControlTheme> -->
+                                <!--     </ListBox.ItemContainerTheme> -->
+                                <!-- </ListBox> -->
+                            </Panel>
+                        </Grid>
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover">
+            <Style Selector="^ /template/ Grid#ControlPanel">
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+        </Style>
+    </ControlTheme>
+    <ControlTheme x:Key="SimpleCarouselTheme" TargetType="Carousel">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ScrollViewer Name="PART_ScrollViewer"
+                              Background="{TemplateBinding Background}"
+                              BorderBrush="{TemplateBinding BorderBrush}"
+                              BorderThickness="{TemplateBinding BorderThickness}"
+                              BringIntoViewOnFocusChange="False"
+                              HorizontalScrollBarVisibility="Hidden"
+                              VerticalScrollBarVisibility="Hidden">
+                    <ItemsPresenter Name="PART_ItemsPresenter"
+                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                    Margin="{TemplateBinding Padding}" />
+                </ScrollViewer>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
