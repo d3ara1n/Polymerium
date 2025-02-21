@@ -10,7 +10,7 @@
                      x:Class="Polymerium.App.Views.CreateInstanceView">
     <controls:ScopedPage.Header>
         <DockPanel>
-            <Button DockPanel.Dock="Right" Classes="Primary" Content="Next" />
+            <Button DockPanel.Dock="Right" Classes="Primary" Content="Create" />
             <TextBlock Text="Create Empty Instance" Theme="{StaticResource PageHeaderTextBlockTheme}" />
         </DockPanel>
     </controls:ScopedPage.Header>
