@@ -5,9 +5,10 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      xmlns:controls="using:Polymerium.App.Controls"
+                     xmlns:vm="using:Polymerium.App.ViewModels"
                      mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                     x:Class="Polymerium.App.Views.CreateInstanceView">
+                     x:Class="Polymerium.App.Views.InstanceCreationView" x:DataType="vm:InstanceCreationViewModel">
     <controls:ScopedPage.Header>
         <DockPanel>
             <Button DockPanel.Dock="Right" Classes="Primary" Content="Create" />
@@ -56,7 +57,7 @@
                     </StackPanel>
                 </TextBox.InnerLeftContent>
                 <TextBox.InnerRightContent>
-                    <Button Margin="4">
+                    <Button Margin="4" Command="{Binding PickVersionCommand}">
                         <icons:PackIconLucide Kind="Pickaxe" Height="{StaticResource MediumFontSize}" />
                     </Button>
                 </TextBox.InnerRightContent>

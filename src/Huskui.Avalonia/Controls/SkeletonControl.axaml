@@ -2,12 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
     <Design.PreviewWith>
-        <Panel Background="White" Height="256" Width="256">
-            <Grid Margin="24" RowDefinitions="*,8,*">
+        <Panel Background="White" Height="328" Width="256">
+            <Grid Margin="24" RowDefinitions="*,8,*,8,*">
                 <local:SkeletonControl Grid.Row="0">
                     <Button>Hello World</Button>
                 </local:SkeletonControl>
                 <local:SkeletonControl Grid.Row="2" IsLoading="True">
+                    <Button>Hello World</Button>
+                </local:SkeletonControl>
+                <local:SkeletonControl Grid.Row="4" IsLoading="True" IsAnimated="False">
                     <Button>Hello World</Button>
                 </local:SkeletonControl>
             </Grid>
@@ -22,16 +25,15 @@
                                       ContentTemplate="{TemplateBinding ContentTemplate}" />
                     <Border Name="Mask" Background="{TemplateBinding Background}" IsVisible="False"
                             CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
-                        <Border Name="Overlay" Background="{DynamicResource OverlayLighter6BackgroundBrush}" />
+                        <Border Name="Overlay" Background="{DynamicResource OverlayLighter6BackgroundBrush}"
+                                Opacity="0" />
                     </Border>
                 </Panel>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:loading">
-            <Style Selector="^ /template/ Border#Mask">
-                <Setter Property="IsVisible" Value="True" />
-            </Style>
+        <Style Selector="^:loading /template/ Border#Mask">
+            <Setter Property="IsVisible" Value="True" />
         </Style>
         <Style Selector="^:loading:animated /template/ Border#Overlay">
             <Style.Animations>

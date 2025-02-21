@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using Polymerium.App.Assets;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
@@ -20,10 +21,12 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel : ViewModelBase
 {
-    public InstanceViewModel(ViewBag bag, ProfileManager profileManager, NavigationService navigationService)
+    public InstanceViewModel(ViewBag bag, ProfileManager profileManager, NavigationService navigationService,
+        OverlayService overlayService)
     {
         _profileManager = profileManager;
         _navigationService = navigationService;
+        _overlayService = overlayService;
 
         if (bag.Parameter is string key)
         {
@@ -58,10 +61,11 @@ public partial class InstanceViewModel : ViewModelBase
         }
     }
 
-    #region Injected Services
+    #region Injected
 
     private readonly ProfileManager _profileManager;
     private readonly NavigationService _navigationService;
+    private readonly OverlayService _overlayService;
 
     #endregion
 
@@ -77,7 +81,7 @@ public partial class InstanceViewModel : ViewModelBase
 
     #endregion
 
-    #region Command Handlers
+    #region Commands
 
     [RelayCommand]
     private void OpenSourceUrl(Uri? url)
@@ -100,6 +104,9 @@ public partial class InstanceViewModel : ViewModelBase
 
     [RelayCommand]
     private void OpenDashboard() => LaunchBarModel.State = LaunchBarState.Idle;
+
+    [RelayCommand]
+    private void SwitchAccount() => _overlayService.PopDialog(new AccountPickerDialog());
 
     #endregion
 }
