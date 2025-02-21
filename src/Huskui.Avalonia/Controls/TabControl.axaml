@@ -111,6 +111,8 @@
                             <Transitions>
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"
                                                   Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition Property="Background" Easing="SineEaseIn"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 <TransformOperationsTransition Property="RenderTransform" Easing="QuarticEaseInOut"
                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
@@ -141,9 +143,8 @@
         <Style Selector="^:pointerover:not(:selected) /template/ Panel#Container">
             <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
         </Style>
-
-        <Style Selector="^:not(:selected) /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
+        <Style Selector="^:selected /template/ Border#PART_Indicator">
+            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Panel#Container">
@@ -197,10 +198,6 @@
         </Style>
         <Style Selector="^[TabStripPlacement=Right]:pointerover /template/ Border#PART_Indicator">
             <Setter Property="RenderTransform" Value="scaleX(1.0)" />
-        </Style>
-
-        <Style Selector="^.Primary /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
         </Style>
     </ControlTheme>
 

@@ -5,6 +5,7 @@
         <ResourceInclude Source="/Controls/Button.axaml" />
         <ResourceInclude Source="/Controls/ButtonGroup.axaml" />
         <ResourceInclude Source="/Controls/Card.axaml" />
+        <ResourceInclude Source="/Controls/Carousel.axaml" />
         <ResourceInclude Source="/Controls/CheckBox.axaml" />
         <ResourceInclude Source="/Controls/ComboBox.axaml" />
         <ResourceInclude Source="/Controls/Dialog.axaml" />

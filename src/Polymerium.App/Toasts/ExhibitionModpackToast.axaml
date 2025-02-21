@@ -56,8 +56,15 @@
                         <husk:Tag Content="Adventure" CornerRadius="{StaticResource SmallCornerRadius}" />
                     </StackPanel>
                 </StackPanel>
-                <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" Source="/Assets/Images/Wallpaper.png"
-                       Stretch="UniformToFill" />
+                <Carousel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
+                          CornerRadius="{StaticResource SmallCornerRadius}">
+                    <Image Source="/Assets/Images/Wallpaper.png"
+                           Stretch="UniformToFill" />
+                    <Image Source="/Assets/Images/Wallpaper.png"
+                           Stretch="UniformToFill" />
+                    <Image Source="/Assets/Images/Wallpaper.png"
+                           Stretch="UniformToFill" />
+                </Carousel>
                 <Grid Grid.Row="2" Grid.Column="0">
                     <Button Classes="Primary">
                         <TextBlock Text="Install" />
