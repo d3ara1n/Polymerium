@@ -5,7 +5,8 @@ namespace Polymerium.App.ViewModels;
 
 public partial class PageNotReachedViewModel : ViewModelBase
 {
-    [ObservableProperty] private string _message;
+    [ObservableProperty]
+    private string _message;
 
     public PageNotReachedViewModel(ViewBag bag)
     {

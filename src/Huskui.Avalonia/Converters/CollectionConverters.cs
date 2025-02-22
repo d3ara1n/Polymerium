@@ -1,5 +1,5 @@
-﻿using Avalonia.Data.Converters;
-using System.Collections;
+﻿using System.Collections;
+using Avalonia.Data.Converters;
 
 namespace Huskui.Avalonia.Converters;
 
@@ -10,7 +10,8 @@ public static class CollectionConverters
 
     private static bool IsObjectEmpty(object? value)
     {
-        if (value is IEnumerable i) return i.Cast<object>().Any();
+        if (value is IEnumerable i)
+            return i.Cast<object>().Any();
 
         return false;
     }

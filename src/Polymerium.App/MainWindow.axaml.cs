@@ -1,4 +1,8 @@
-﻿using Avalonia.Animation;
+﻿using System;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Windows.Input;
+using Avalonia.Animation;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -10,10 +14,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
-using System;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Windows.Input;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App;
@@ -36,39 +36,21 @@ public partial class MainWindow : AppWindow
 
     private void PopDialog()
     {
-        var pop = new Button { Content = "POP" };
+        Button pop = new() { Content = "POP" };
         pop.Click += (_, __) => PopDialog();
-        PopDialog(new Dialog
-        {
-            Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
-            Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
-            Content = new StackPanel { Spacing = 8d, Children = { new TextBox(), pop } }
-        });
+        PopDialog(new Dialog { Title = $"DIALOG {Random.Shared.Next(1000, 9999)}", Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM", Content = new StackPanel { Spacing = 8d, Children = { new TextBox(), pop } } });
     }
 
     private void PopToast()
     {
-        var pop = new Button { Content = "POP" };
+        Button pop = new() { Content = "POP" };
         pop.Click += (_, __) => PopToast();
-        PopToast(new Toast
-        {
-            Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
-            Content = new StackPanel
-            {
-                Spacing = 8d,
-                Children =
-                {
-                    new TextBlock { Text = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM" },
-                    new TextBox(),
-                    pop
-                }
-            }
-        });
+        PopToast(new Toast { Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}", Content = new StackPanel { Spacing = 8d, Children = { new TextBlock { Text = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM" }, new TextBox(), pop } } });
     }
 
     private void PopNotification()
     {
-        var item = new NotificationItem { Content = "Larry The Lazy" };
+        NotificationItem item = new() { Content = "Larry The Lazy" };
         PopNotification(item);
     }
 
@@ -107,8 +89,7 @@ public partial class MainWindow : AppWindow
         // NavigationService 会处理错误情况
         Root.Navigate(page, parameter, transition);
 
-    internal void BindNavigation(Action<Type, object?, IPageTransition?> navigate,
-        Frame.PageActivatorDelegate activator)
+    internal void BindNavigation(Action<Type, object?, IPageTransition?> navigate, Frame.PageActivatorDelegate activator)
     {
         _navigate = navigate;
         Root.PageActivator = activator;
@@ -126,8 +107,7 @@ public partial class MainWindow : AppWindow
 
         foreach (var (key, item) in manager.Profiles)
         {
-            var model = new InstanceEntryModel(key, item.Name, item.Setup.Version, item.Setup.Loader,
-                item.Setup.Source);
+            InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source);
             Entries.Add(model);
         }
     }
@@ -146,8 +126,7 @@ public partial class MainWindow : AppWindow
         }
         else
         {
-            var model = new InstanceEntryModel(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader,
-                e.Value.Setup.Source);
+            InstanceEntryModel model = new(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader, e.Value.Setup.Source);
             Entries.Add(model);
         }
     }
@@ -170,7 +149,8 @@ public partial class MainWindow : AppWindow
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
         var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is not null) Entries.Remove(model);
+        if (model is not null)
+            Entries.Remove(model);
     }
 
     #endregion
@@ -187,12 +167,12 @@ public partial class MainWindow : AppWindow
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
         var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is null) return;
+        if (model is null)
+            return;
 
         model.State = InstanceEntryState.Updating;
 
-        var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000))
-            .Select(x => model.Progress = e.Progress).Subscribe();
+        var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Select(x => model.Progress = e.Progress).Subscribe();
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -204,12 +184,7 @@ public partial class MainWindow : AppWindow
                     model.Progress = null;
                     break;
                 case TrackerState.Faulted:
-                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
-                    {
-                        Content = e.FailureReason,
-                        Title = $"Failed to update {e.Key}",
-                        Level = NotificationLevel.Danger
-                    }));
+                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem { Content = e.FailureReason, Title = $"Failed to update {e.Key}", Level = NotificationLevel.Danger }));
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -229,12 +204,8 @@ public partial class MainWindow : AppWindow
     private void OnInstanceInstalling(object? sender, InstallTracker e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
-        {
-            State = InstanceEntryState.Installing
-        };
-        var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000))
-            .Select(_ => model.Progress = e.Progress).Subscribe();
+        InstanceEntryModel model = new(e.Key, e.Key, "Unknown", null, null) { State = InstanceEntryState.Installing };
+        var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Select(_ => model.Progress = e.Progress).Subscribe();
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -246,12 +217,7 @@ public partial class MainWindow : AppWindow
                     model.Progress = null;
                     break;
                 case TrackerState.Faulted:
-                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
-                    {
-                        Content = e.FailureReason,
-                        Title = $"Failed to install {e.Key}",
-                        Level = NotificationLevel.Danger
-                    }));
+                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem { Content = e.FailureReason, Title = $"Failed to install {e.Key}", Level = NotificationLevel.Danger }));
                     Entries.Remove(model);
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;

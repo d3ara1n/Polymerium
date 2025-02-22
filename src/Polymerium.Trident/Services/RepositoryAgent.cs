@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Text.Json;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Version = Trident.Abstractions.Repositories.Resources.Version;
@@ -31,17 +31,11 @@ public class RepositoryAgent
 
     public Task<RepositoryStatus> CheckStatusAsync(string label) => Redirect(label).CheckStatusAsync();
 
-    public Task<IPaginationHandle<Exhibit>> SearchAsync(string label, string query, Filter filter) =>
-        Redirect(label).SearchAsync(query, filter);
+    public Task<IPaginationHandle<Exhibit>> SearchAsync(string label, string query, Filter filter) => Redirect(label).SearchAsync(query, filter);
 
-    public Task<Package> ResolveAsync(string label, string? ns, string pid, string? vid, Filter filter) =>
-        RetrieveCachedAsync(
-            vid is not null ? Path.Combine(PathDef.Default.CachePackageDirectory, label, pid, $"{vid}.json") : null,
-            r => Path.Combine(PathDef.Default.CachePackageDirectory, r.Label, r.ProjectId, $"{r.VersionId}.json"),
-            () => Redirect(label).ResolveAsync(ns, pid, vid, filter));
+    public Task<Package> ResolveAsync(string label, string? ns, string pid, string? vid, Filter filter) => RetrieveCachedAsync(vid is not null ? Path.Combine(PathDef.Default.CachePackageDirectory, label, pid, $"{vid}.json") : null, r => Path.Combine(PathDef.Default.CachePackageDirectory, r.Label, r.ProjectId, $"{r.VersionId}.json"), () => Redirect(label).ResolveAsync(ns, pid, vid, filter));
 
-    public Task<IPaginationHandle<Version>> InspectAsync(string label, string? ns, string pid, Filter filter) =>
-        Redirect(label).InspectAsync(ns, pid, filter);
+    public Task<IPaginationHandle<Version>> InspectAsync(string label, string? ns, string pid, Filter filter) => Redirect(label).InspectAsync(ns, pid, filter);
 
     private async Task<T> RetrieveCachedAsync<T>(string? cachedPath, Func<T, string>? saveTo, Func<Task<T>> factory)
     {
@@ -78,7 +72,8 @@ public class RepositoryAgent
             {
                 var content = JsonSerializer.Serialize(result);
                 var dir = Path.GetDirectoryName(save);
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir!);
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir!);
 
                 await File.WriteAllTextAsync(save, content);
                 _logger.LogDebug("Cache missed but recorded: {path}", save);

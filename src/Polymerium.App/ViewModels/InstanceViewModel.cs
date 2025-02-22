@@ -1,4 +1,7 @@
-﻿using Avalonia.Media.Imaging;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,16 +16,12 @@ using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel : ViewModelBase
 {
-    public InstanceViewModel(ViewBag bag, ProfileManager profileManager, NavigationService navigationService,
-        OverlayService overlayService)
+    public InstanceViewModel(ViewBag bag, ProfileManager profileManager, NavigationService navigationService, OverlayService overlayService)
     {
         _profileManager = profileManager;
         _navigationService = navigationService;
@@ -32,27 +31,17 @@ public partial class InstanceViewModel : ViewModelBase
         {
             if (profileManager.TryGetImmutable(key, out var profile))
             {
-                Basic = new InstanceBasicModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader,
-                    profile.Setup.Source);
+                Basic = new InstanceBasicModel(key, profile.Name, profile.Setup.Version, profile.Setup.Loader, profile.Setup.Source);
                 var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
-                Screenshot = screenshotPath is not null
-                    ? new Bitmap(screenshotPath)
-                    : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.WALLPAPER_IMAGE)));
+                Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.WALLPAPER_IMAGE)));
                 LaunchBarModel = new InstanceLaunchBarModel();
                 PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
-                StatsChartSeries =
-                [
-                    new ColumnSeries<double> { Name = "Daily Playing Hours", Values = [11, 4, 5, 14, 19, 1, 9] }
-                ];
-                StatsChartXAxes =
-                [
-                    new Axis { Labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Yesterday", "Today"] }
-                ];
+                StatsChartSeries = [new ColumnSeries<double> { Name = "Daily Playing Hours", Values = [11, 4, 5, 14, 19, 1, 9] }];
+                StatsChartXAxes = [new Axis { Labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Yesterday", "Today"] }];
             }
             else
             {
-                throw new PageNotReachedException(typeof(InstanceView),
-                    $"Key '{key}' is not valid instance or not found");
+                throw new PageNotReachedException(typeof(InstanceView), $"Key '{key}' is not valid instance or not found");
             }
         }
         else
@@ -71,13 +60,26 @@ public partial class InstanceViewModel : ViewModelBase
 
     #region Rectives Models
 
-    [ObservableProperty] private InstanceBasicModel _basic;
-    [ObservableProperty] private Bitmap _screenshot;
-    [ObservableProperty] private Uri? _sourceUrl;
-    [ObservableProperty] private InstanceLaunchBarModel _launchBarModel;
-    [ObservableProperty] private int _packageCount;
-    [ObservableProperty] private IEnumerable<ISeries<double>> _statsChartSeries;
-    [ObservableProperty] private IEnumerable<Axis> _statsChartXAxes;
+    [ObservableProperty]
+    private InstanceBasicModel _basic;
+
+    [ObservableProperty]
+    private Bitmap _screenshot;
+
+    [ObservableProperty]
+    private Uri? _sourceUrl;
+
+    [ObservableProperty]
+    private InstanceLaunchBarModel _launchBarModel;
+
+    [ObservableProperty]
+    private int _packageCount;
+
+    [ObservableProperty]
+    private IEnumerable<ISeries<double>> _statsChartSeries;
+
+    [ObservableProperty]
+    private IEnumerable<Axis> _statsChartXAxes;
 
     #endregion
 
@@ -86,7 +88,8 @@ public partial class InstanceViewModel : ViewModelBase
     [RelayCommand]
     private void OpenSourceUrl(Uri? url)
     {
-        if (url is not null) Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
+        if (url is not null)
+            Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
     }
 
     [RelayCommand]

@@ -1,9 +1,9 @@
-﻿using Avalonia;
+﻿using System.Windows.Input;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
-using System.Windows.Input;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -13,12 +13,9 @@ public class OverlayItem : ContentControl
 {
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
 
-    public static readonly DirectProperty<OverlayItem, int> DistanceProperty =
-        AvaloniaProperty.RegisterDirect<OverlayItem, int>(nameof(Distance), o => o.Distance, (o, v) => o.Distance = v);
+    public static readonly DirectProperty<OverlayItem, int> DistanceProperty = AvaloniaProperty.RegisterDirect<OverlayItem, int>(nameof(Distance), o => o.Distance, (o, v) => o.Distance = v);
 
-    public static readonly DirectProperty<OverlayItem, ICommand?> DismissCommandProperty =
-        AvaloniaProperty.RegisterDirect<OverlayItem, ICommand?>(nameof(DismissCommand), o => o.DismissCommand,
-            (o, v) => o.DismissCommand = v);
+    public static readonly DirectProperty<OverlayItem, ICommand?> DismissCommandProperty = AvaloniaProperty.RegisterDirect<OverlayItem, ICommand?>(nameof(DismissCommand), o => o.DismissCommand, (o, v) => o.DismissCommand = v);
 
     private ContentPresenter? _contentPresenter;
 
@@ -26,16 +23,15 @@ public class OverlayItem : ContentControl
 
     private int _distance;
 
-    public ContentPresenter ContentPresenter => _contentPresenter ??
-                                                throw new InvalidOperationException(
-                                                    $"{nameof(ContentPresenter)} is not found from the template");
+    public ContentPresenter ContentPresenter => _contentPresenter ?? throw new InvalidOperationException($"{nameof(ContentPresenter)} is not found from the template");
 
     public int Distance
     {
         get => _distance;
         set
         {
-            if (SetAndRaise(DistanceProperty, ref _distance, value)) ZIndex = -value;
+            if (SetAndRaise(DistanceProperty, ref _distance, value))
+                ZIndex = -value;
 
             PseudoClasses.Set(":active", value == 0);
         }

@@ -1,5 +1,3 @@
 ﻿namespace Huskui.Avalonia.Converters;
 
-public static class DoubleConverters
-{
-}
+public static class DoubleConverters { }

@@ -7,17 +7,17 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":loading", ":animated")]
 public class SkeletonControl : ContentControl
 {
-    public SkeletonControl()
-    {
-        // Default Property Value
-        IsAnimated = true;
-    }
+    public static readonly DirectProperty<SkeletonControl, bool> IsLoadingProperty = AvaloniaProperty.RegisterDirect<SkeletonControl, bool>(nameof(IsLoading), o => o.IsLoading, (o, v) => o.IsLoading = v);
 
-    public static readonly DirectProperty<SkeletonControl, bool> IsLoadingProperty =
-        AvaloniaProperty.RegisterDirect<SkeletonControl, bool>(nameof(IsLoading), o => o.IsLoading,
-            (o, v) => o.IsLoading = v);
+    public static readonly DirectProperty<SkeletonControl, bool> IsAnimatedProperty = AvaloniaProperty.RegisterDirect<SkeletonControl, bool>(nameof(IsAnimated), o => o.IsAnimated, (o, v) => o.IsAnimated = v);
+
+    private bool _isAnimated;
 
     private bool _isLoading;
+
+    public SkeletonControl() =>
+        // Default Property Value
+        IsAnimated = true;
 
     public bool IsLoading
     {
@@ -28,12 +28,6 @@ public class SkeletonControl : ContentControl
                 PseudoClasses.Set(":loading", value);
         }
     }
-
-    public static readonly DirectProperty<SkeletonControl, bool> IsAnimatedProperty =
-        AvaloniaProperty.RegisterDirect<SkeletonControl, bool>(nameof(IsAnimated), o => o.IsAnimated,
-            (o, v) => o.IsAnimated = v);
-
-    private bool _isAnimated;
 
     public bool IsAnimated
     {

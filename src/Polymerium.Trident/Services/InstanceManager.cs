@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
-using System.Diagnostics.CodeAnalysis;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
@@ -10,12 +10,7 @@ using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Services;
 
-public class InstanceManager(
-    ILogger<InstanceManager> logger,
-    ProfileManager profileManager,
-    RepositoryAgent repositories,
-    ImporterAgent importers,
-    IHttpClientFactory clientFactory)
+public class InstanceManager(ILogger<InstanceManager> logger, ProfileManager profileManager, RepositoryAgent repositories, ImporterAgent importers, IHttpClientFactory clientFactory)
 {
     // 主要是在 UI 线程中增删改查，实际不需要保证线程同步
     private readonly Dictionary<string, TrackerBase> _trackers = new();
@@ -46,26 +41,22 @@ public class InstanceManager(
         // 只有在线安装会有 Tracker，离线导入因为不需要等待，全在前端进行
 
         var reserved = profileManager.RequestKey(key);
-        var tracker = new InstallTracker(reserved.Key,
-            async t => await InstallInternalAsync((InstallTracker)t, reserved, label, ns, pid, vid),
-            TrackerOnCompleted);
+        InstallTracker? tracker = new(reserved.Key, async t => await InstallInternalAsync((InstallTracker)t, reserved, label, ns, pid, vid), TrackerOnCompleted);
         _trackers.Add(reserved.Key, tracker);
         InstanceInstalling?.Invoke(this, tracker);
         tracker.Start();
         return tracker;
     }
 
-    private async Task InstallInternalAsync(InstallTracker tracker, ReservedKey key, string label, string? ns,
-        string pid, string? vid)
+    private async Task InstallInternalAsync(InstallTracker tracker, ReservedKey key, string label, string? ns, string pid, string? vid)
     {
         logger.LogInformation("Begin install package {} as {}", PackageHelper.ToPurl(label, ns, pid, vid), key.Key);
-        var package =
-            await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack });
+        var package = await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack });
         var size = (long)package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
         var stream = await client.GetStreamAsync(package.Download);
-        var memory = new MemoryStream();
+        MemoryStream? memory = new();
         var buffer = new byte[8192];
         var read = 0;
         var totalRead = 0L;
@@ -84,15 +75,17 @@ public class InstanceManager(
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 
         ((IProgress<double?>)tracker).Report(null);
-        var pack = new CompressedProfilePack(memory) { Reference = package };
+        CompressedProfilePack pack = new(memory) { Reference = package };
         var container = await importers.ImportAsync(pack);
         if (container.IconUrl is not null)
         {
             var iconPath = PathDef.Default.FileOfIcon(key.Key);
             var dir = Path.GetDirectoryName(iconPath);
-            if (dir is not null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (dir is not null && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
             var iconReader = await client.GetStreamAsync(container.IconUrl);
-            var iconWriter = new FileStream(iconPath, FileMode.Create);
+            FileStream iconWriter = new(iconPath, FileMode.Create);
             await iconReader.CopyToAsync(iconWriter);
             await iconReader.DisposeAsync();
             await iconWriter.FlushAsync();
@@ -107,9 +100,11 @@ public class InstanceManager(
         {
             var to = Path.Combine(importDir, target);
             var dir = Path.GetDirectoryName(to);
-            if (dir != null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (dir != null && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
             var fromStream = pack.Open(source);
-            var file = new FileStream(to, FileMode.Create);
+            FileStream file = new(to, FileMode.Create);
             await fromStream.CopyToAsync(file);
             await fromStream.DisposeAsync();
             await file.FlushAsync();
@@ -130,26 +125,24 @@ public class InstanceManager(
 
     public void Update(string key, string label, string? ns, string pid, string vid)
     {
-        if (IsInUse(key)) throw new InvalidOperationException($"Instance {key} is operated in progress");
-        var tracker = new UpdateTracker(key,
-            async t => await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid),
-            TrackerOnCompleted);
+        if (IsInUse(key))
+            throw new InvalidOperationException($"Instance {key} is operated in progress");
+
+        UpdateTracker tracker = new(key, async t => await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid), TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceUpdating?.Invoke(this, tracker);
         tracker.Start();
     }
 
-    private async Task UpdateInternalAsync(UpdateTracker tracker, string key, string label, string? ns, string pid,
-        string vid)
+    private async Task UpdateInternalAsync(UpdateTracker tracker, string key, string label, string? ns, string pid, string vid)
     {
         logger.LogInformation("Begin update package {} as {}", PackageHelper.ToPurl(label, ns, pid, vid), key);
-        var package =
-            await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack });
+        var package = await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack });
         var size = (long)package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
         var stream = await client.GetStreamAsync(package.Download);
-        var memory = new MemoryStream();
+        MemoryStream? memory = new();
         var buffer = new byte[8192];
         var read = 0;
         var totalRead = 0L;
@@ -168,15 +161,17 @@ public class InstanceManager(
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 
         ((IProgress<double?>)tracker).Report(null);
-        var pack = new CompressedProfilePack(memory) { Reference = package };
+        CompressedProfilePack pack = new(memory) { Reference = package };
         var container = await importers.ImportAsync(pack);
         if (container.IconUrl is not null)
         {
             var iconPath = PathDef.Default.FileOfIcon(key);
             var dir = Path.GetDirectoryName(iconPath);
-            if (dir is not null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (dir is not null && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
             var iconReader = await client.GetStreamAsync(container.IconUrl);
-            var iconWriter = new FileStream(iconPath, FileMode.Create);
+            FileStream iconWriter = new(iconPath, FileMode.Create);
             await iconReader.CopyToAsync(iconWriter);
             await iconReader.DisposeAsync();
             await iconWriter.FlushAsync();
@@ -187,15 +182,18 @@ public class InstanceManager(
 
         var importDir = PathDef.Default.DirectoryOfImport(key);
         // TODO: rename import to import.bak rather than delete and restore if failed
-        if (Directory.Exists(importDir)) Directory.Delete(importDir, true);
+        if (Directory.Exists(importDir))
+            Directory.Delete(importDir, true);
 
         foreach (var (source, target) in container.ImportFileNames)
         {
             var to = Path.Combine(importDir, target);
             var dir = Path.GetDirectoryName(to);
-            if (dir != null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (dir != null && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
             var fromStream = pack.Open(source);
-            var file = new FileStream(to, FileMode.Create);
+            FileStream file = new(to, FileMode.Create);
             await fromStream.CopyToAsync(file);
             await fromStream.DisposeAsync();
             await file.FlushAsync();
@@ -203,9 +201,7 @@ public class InstanceManager(
             file.Close();
         }
 
-        profileManager.Update(key, container.Profile.Setup.Source, container.Profile.Name,
-            container.Profile.Setup.Version,
-            container.Profile.Setup.Loader, container.Profile.Setup.Stage.AsReadOnly(), container.Profile.Overrides);
+        profileManager.Update(key, container.Profile.Setup.Source, container.Profile.Name, container.Profile.Setup.Version, container.Profile.Setup.Loader, container.Profile.Setup.Stage.AsReadOnly(), container.Profile.Overrides);
 
         logger.LogInformation("{} updated", key);
 

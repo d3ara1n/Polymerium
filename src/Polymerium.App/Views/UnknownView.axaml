@@ -217,8 +217,8 @@
                                     <Setter Property="Margin" Value="0" />
                                 </Style>
                             </TabControl.Styles>
-                            <TabItem Header="Description"></TabItem>
-                            <TabItem Header="Versions"></TabItem>
+                            <TabItem Header="Description" />
+                            <TabItem Header="Versions" />
                         </TabControl>
                     </husk:Card>
                 </StackPanel>

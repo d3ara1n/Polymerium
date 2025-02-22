@@ -7,7 +7,8 @@ public static class FileHelper
         foreach (var candidate in candidates)
         {
             var path = Path.Combine(home, candidate);
-            if (File.Exists(path)) return path;
+            if (File.Exists(path))
+                return path;
         }
 
         return null;
@@ -15,9 +16,12 @@ public static class FileHelper
 
     public static string? PickRandomly(string home, string pattern)
     {
-        if (!Directory.Exists(home)) return null;
+        if (!Directory.Exists(home))
+            return null;
+
         var files = Directory.GetFiles(home, pattern);
-        if (files.Length == 0) return null;
+        if (files.Length == 0)
+            return null;
 
         var index = Random.Shared.Next(files.Length);
         return files[index];

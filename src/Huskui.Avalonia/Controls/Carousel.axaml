@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                     xmlns:fi="using:FluentIcons.Avalonia">
     <Design.PreviewWith>
         <Panel Background="White">
@@ -19,7 +18,7 @@
         <Setter Property="PageTransition">
             <PageSlide Duration="{StaticResource ControlFasterAnimationDuration}" />
         </Setter>
-        <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="{TemplateBinding Background}"
@@ -27,11 +26,11 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="{TemplateBinding ClipToBounds}">
                     <Panel>
-                        <ScrollViewer Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"
-                                      Name="PART_ScrollViewer"
-                                      BringIntoViewOnFocusChange="False"
-                                      HorizontalScrollBarVisibility="Hidden"
-                                      VerticalScrollBarVisibility="Hidden">
+                        <ScrollViewer
+                            Name="PART_ScrollViewer"
+                            BringIntoViewOnFocusChange="False"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden">
                             <ItemsPresenter Name="PART_ItemsPresenter"
                                             ItemsPanel="{TemplateBinding ItemsPanel}"
                                             Margin="{TemplateBinding Padding}" />
@@ -46,11 +45,13 @@
                             </Grid.Transitions>
                             <Button Grid.Row="1" Grid.Column="0" Padding="8" CornerRadius="99"
                                     Command="{Binding $parent[Carousel].Previous}">
-                                <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource SmallFontSize}" IconVariant="Filled" />
+                                <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource SmallFontSize}"
+                                               IconVariant="Filled" />
                             </Button>
                             <Button Grid.Row="1" Grid.Column="2" Padding="8" CornerRadius="99"
                                     Command="{Binding $parent[Carousel].Next}">
-                                <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" IconVariant="Filled" />
+                                <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}"
+                                               IconVariant="Filled" />
                             </Button>
                             <Panel Grid.Row="2" Grid.Column="1">
                                 <!-- <ListBox HorizontalAlignment="Center" SelectedIndex="{TemplateBinding SelectedIndex,Mode=TwoWay}" -->

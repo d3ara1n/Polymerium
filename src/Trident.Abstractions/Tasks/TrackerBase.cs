@@ -1,10 +1,6 @@
 ﻿namespace Trident.Abstractions.Tasks;
 
-public abstract class TrackerBase(
-    string key,
-    Func<TrackerBase, Task> handler,
-    Action<TrackerBase>? onCompleted,
-    CancellationToken token = default)
+public abstract class TrackerBase(string key, Func<TrackerBase, Task> handler, Action<TrackerBase>? onCompleted, CancellationToken token = default)
 {
     private readonly CancellationTokenSource _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
     public string Key => key;
@@ -22,18 +18,20 @@ public abstract class TrackerBase(
     {
         State = TrackerState.Running;
         StateUpdated?.Invoke(this, State);
-        Task.Run(async () => await handler(this), Token)
-            .ContinueWith(t =>
-            {
-                if (t.IsCompletedSuccessfully)
-                    OnFinish();
-                else if (t.IsCanceled)
-                    OnFault(new OperationCanceledException());
-                else if (t.IsFaulted)
-                    OnFault(t.Exception);
-                else
-                    throw new NotImplementedException();
-            }, CancellationToken.None);
+        Task
+           .Run(async () => await handler(this), Token)
+           .ContinueWith(t =>
+                         {
+                             if (t.IsCompletedSuccessfully)
+                                 OnFinish();
+                             else if (t.IsCanceled)
+                                 OnFault(new OperationCanceledException());
+                             else if (t.IsFaulted)
+                                 OnFault(t.Exception);
+                             else
+                                 throw new NotImplementedException();
+                         },
+                         CancellationToken.None);
     }
 
     protected virtual void OnFinish()

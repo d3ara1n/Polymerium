@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Diagnostics;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
@@ -6,7 +7,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Threading;
 using Huskui.Avalonia.Models;
-using System.Diagnostics;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -18,11 +18,9 @@ public class InfiniteScrollView : ItemsControl
     public const string PART_ScrollViewer = nameof(PART_ScrollViewer);
     public const string PART_PendingPresenter = nameof(PART_PendingPresenter);
 
-    public static readonly StyledProperty<object?> PendingContentProperty =
-        AvaloniaProperty.Register<InfiniteScrollView, object?>(nameof(PendingContent));
+    public static readonly StyledProperty<object?> PendingContentProperty = AvaloniaProperty.Register<InfiniteScrollView, object?>(nameof(PendingContent));
 
-    public static readonly StyledProperty<IDataTemplate?> PendingContentTemplateProperty =
-        AvaloniaProperty.Register<InfiniteScrollView, IDataTemplate?>(nameof(PendingContentTemplate));
+    public static readonly StyledProperty<IDataTemplate?> PendingContentTemplateProperty = AvaloniaProperty.Register<InfiniteScrollView, IDataTemplate?>(nameof(PendingContentTemplate));
 
     private ContentPresenter? _pendingPresenter;
 
@@ -66,36 +64,46 @@ public class InfiniteScrollView : ItemsControl
 
     private void OnScroll(Vector offset)
     {
-        if (_scrollViewer == null || _pendingPresenter == null) return;
+        if (_scrollViewer == null || _pendingPresenter == null)
+            return;
 
-        if (offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height) Update();
+        if (offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height)
+            Update();
     }
 
     private void Update()
     {
         if (_source == null)
         {
-            if (_pendingPresenter != null) _pendingPresenter.IsVisible = false;
+            if (_pendingPresenter != null)
+                _pendingPresenter.IsVisible = false;
+
             return;
         }
 
-        if (_source.IsFetching) return;
+        if (_source.IsFetching)
+            return;
 
-        if (_pendingPresenter != null) _pendingPresenter.IsVisible = true;
+        if (_pendingPresenter != null)
+            _pendingPresenter.IsVisible = true;
+
         PseudoClasses.Set(":loading", false);
 
-        Task.Run(_source.FetchAsync).ContinueWith(t =>
-        {
-            Dispatcher.UIThread.Post(() =>
+        Task
+           .Run(_source.FetchAsync)
+           .ContinueWith(t =>
             {
-                PseudoClasses.Set(":loading", false);
+                Dispatcher.UIThread.Post(() =>
+                {
+                    PseudoClasses.Set(":loading", false);
 
-                if (!_source.HasNext)
-                    PseudoClasses.Set(":finished", true);
-                else
-                    PseudoClasses.Set(":idle", true);
+                    if (!_source.HasNext)
+                        PseudoClasses.Set(":finished", true);
+                    else
+                        PseudoClasses.Set(":idle", true);
+                });
+                if (t.Exception != null)
+                    Debug.WriteLine(t.Exception);
             });
-            if (t.Exception != null) Debug.WriteLine(t.Exception);
-        });
     }
 }

@@ -2,6 +2,4 @@
 
 namespace Polymerium.App.Facilities;
 
-public abstract class ModelBase : ObservableObject
-{
-}
+public abstract class ModelBase : ObservableObject { }

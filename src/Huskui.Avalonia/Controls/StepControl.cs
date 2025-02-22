@@ -2,6 +2,4 @@
 
 namespace Huskui.Avalonia.Controls;
 
-public class StepControl : SelectingItemsControl
-{
-}
+public class StepControl : SelectingItemsControl { }

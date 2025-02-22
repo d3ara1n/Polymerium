@@ -22,7 +22,7 @@
                 <TabItem Header="Persistence">
                     使用持久化池的目录和文件列表
                 </TabItem>
-                <TabItem Header="Snapshot" >
+                <TabItem Header="Snapshot">
                     启动前是否自动拍摄，多久或多少快照之后进行清理，哪些目录和文件需要进入拍摄范围等等设置项
                 </TabItem>
             </TabControl>

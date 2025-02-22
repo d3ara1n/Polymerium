@@ -23,7 +23,7 @@
             </TextBox.InnerLeftContent>
         </TextBox>
         <husk:SkeletonControl Grid.Row="2"
-                              IsLoading="{Binding $parent[local:VersionPickerDialog].IsLoaded,Converter={x:Static BoolConverters.Not}}">
+                              IsLoading="{Binding $parent[local:VersionPickerDialog].IsVersionLoaded,Converter={x:Static BoolConverters.Not}}">
             <TabStrip Theme="{StaticResource SegmentedTabStripTheme}" HorizontalAlignment="Center"
                       SelectedValue="{Binding $parent[local:VersionPickerDialog].SelectedType}"
                       ItemsSource="{Binding $parent[local:VersionPickerDialog].Types}">
@@ -35,7 +35,7 @@
             </TabStrip>
         </husk:SkeletonControl>
         <husk:SkeletonControl Grid.Row="4"
-                              IsLoading="{Binding $parent[local:VersionPickerDialog].IsLoaded,Converter={x:Static BoolConverters.Not}}">
+                              IsLoading="{Binding $parent[local:VersionPickerDialog].IsVersionLoaded,Converter={x:Static BoolConverters.Not}}">
             <ListBox MinHeight="64"
                      ItemsSource="{Binding $parent[local:VersionPickerDialog].View}">
                 <ListBox.ItemTemplate>

@@ -1,8 +1,8 @@
-﻿using Polymerium.Trident.Services.Profiles;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Services;
@@ -19,12 +19,16 @@ public class ProfileManager : IDisposable
         _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web) { WriteIndented = true };
         _serializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 
-        var dir = new DirectoryInfo(PathDef.Default.InstanceDirectory);
-        if (!dir.Exists) return;
+        DirectoryInfo? dir = new(PathDef.Default.InstanceDirectory);
+        if (!dir.Exists)
+            return;
+
         foreach (var ins in dir.GetDirectories())
         {
             var path = PathDef.Default.FileOfProfile(ins.Name);
-            if (!File.Exists(path)) continue;
+            if (!File.Exists(path))
+                continue;
+
             try
             {
                 var handle = ProfileHandle.Create(ins.Name, path, _serializerOptions);
@@ -68,17 +72,18 @@ public class ProfileManager : IDisposable
 
     public ReservedKey RequestKey(string key)
     {
-        var sanitized = string.Join(string.Empty,
-            key.Trim().ToLower().Where(x => !Path.GetInvalidFileNameChars().Contains(x))).Replace(' ', '_');
-        while (_profiles.Any(x => x.Key == sanitized) || ReservedKeys.Any(x => x.Key == sanitized)) sanitized += '_';
-        var rv = new ReservedKey(sanitized, this);
+        var sanitized = string.Join(string.Empty, key.Trim().ToLower().Where(x => !Path.GetInvalidFileNameChars().Contains(x))).Replace(' ', '_');
+        while (_profiles.Any(x => x.Key == sanitized) || ReservedKeys.Any(x => x.Key == sanitized))
+            sanitized += '_';
+
+        ReservedKey? rv = new(sanitized, this);
         ReservedKeys.Add(rv);
         return rv;
     }
 
     public void Add(ReservedKey key, Profile profile)
     {
-        var handle = new ProfileHandle(key.Key, profile, PathDef.Default.FileOfProfile(key.Key), _serializerOptions);
+        ProfileHandle? handle = new(key.Key, profile, PathDef.Default.FileOfProfile(key.Key), _serializerOptions);
         handle.SaveAsync().Wait();
         _profiles.Add(handle);
         key.Dispose();
@@ -86,18 +91,23 @@ public class ProfileManager : IDisposable
         OnProfileAdded(key.Key, profile);
     }
 
-    public void Update(string key, string? source, string name, string version, string? loader,
-        IReadOnlyList<string> packages, IDictionary<string, object> overrides)
+    public void Update(string key, string? source, string name, string version, string? loader, IReadOnlyList<string> packages, IDictionary<string, object> overrides)
     {
         var handle = _profiles.FirstOrDefault(x => x.Key == key);
-        if (handle is null) throw new InvalidOperationException($"{key} is not in profiles");
+        if (handle is null)
+            throw new InvalidOperationException($"{key} is not in profiles");
+
         handle.Value.Name = name;
         handle.Value.Setup.Source = source;
         handle.Value.Setup.Version = version;
         handle.Value.Setup.Loader = loader;
         handle.Value.Setup.Stage.Clear();
-        foreach (var package in packages) handle.Value.Setup.Stage.Add(package);
-        foreach (var (k, v) in overrides) handle.Value.Overrides[k] = v;
+        foreach (var package in packages)
+            handle.Value.Setup.Stage.Add(package);
+
+        foreach (var (k, v) in overrides)
+            handle.Value.Overrides[k] = v;
+
         handle.SaveAsync().Wait();
         OnProfileUpdated(key, handle.Value);
     }
@@ -116,14 +126,11 @@ public class ProfileManager : IDisposable
 
     public event EventHandler<ProfileChangedEventArgs>? ProfileAdded;
 
-    internal void OnProfileUpdated(string key, Profile profile) =>
-        ProfileUpdated?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+    internal void OnProfileUpdated(string key, Profile profile) => ProfileUpdated?.Invoke(this, new ProfileChangedEventArgs(key, profile));
 
-    internal void OnProfileRemoved(string key, Profile profile) =>
-        ProfileRemoved?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+    internal void OnProfileRemoved(string key, Profile profile) => ProfileRemoved?.Invoke(this, new ProfileChangedEventArgs(key, profile));
 
-    internal void OnProfileAdded(string key, Profile profile) =>
-        ProfileAdded?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+    internal void OnProfileAdded(string key, Profile profile) => ProfileAdded?.Invoke(this, new ProfileChangedEventArgs(key, profile));
 
     #endregion
 
@@ -133,7 +140,9 @@ public class ProfileManager : IDisposable
 
     public void Dispose()
     {
-        if (_isDisposing) return;
+        if (_isDisposing)
+            return;
+
         _isDisposing = true;
 
         var tasks = _profiles.Select(x => x.DisposeAsync().AsTask()).ToArray();

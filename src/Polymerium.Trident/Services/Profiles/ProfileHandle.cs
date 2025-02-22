@@ -3,8 +3,7 @@ using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Services.Profiles;
 
-internal class ProfileHandle(string key, Profile value, string path, JsonSerializerOptions options)
-    : IAsyncDisposable
+internal class ProfileHandle(string key, Profile value, string path, JsonSerializerOptions options) : IAsyncDisposable
 {
     public string Key => key;
     public Profile Value => value;
@@ -13,12 +12,13 @@ internal class ProfileHandle(string key, Profile value, string path, JsonSeriali
     {
         var json = JsonSerializer.Serialize(Value, options);
         var dir = Path.GetDirectoryName(path);
-        if (dir is not null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+        if (dir is not null && !Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
         return File.WriteAllTextAsync(path, json);
     }
 
-    public static ProfileHandle Create(string key, Profile value, string path, JsonSerializerOptions options) =>
-        new(key, value, path, options);
+    public static ProfileHandle Create(string key, Profile value, string path, JsonSerializerOptions options) => new(key, value, path, options);
 
     public static ProfileHandle Create(string key, string path, JsonSerializerOptions options)
     {
@@ -37,7 +37,9 @@ internal class ProfileHandle(string key, Profile value, string path, JsonSeriali
 
     public async ValueTask DisposeAsync()
     {
-        if (_isDisposing) return;
+        if (_isDisposing)
+            return;
+
         _isDisposing = true;
 
         await SaveAsync();

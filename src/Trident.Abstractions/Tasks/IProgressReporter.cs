@@ -1,5 +1,3 @@
 ﻿namespace Trident.Abstractions.Tasks;
 
-public interface IProgressReporter : IProgress<double?>, IProgress<string>, IDisposable
-{
-}
+public interface IProgressReporter : IProgress<double?>, IProgress<string>, IDisposable { }

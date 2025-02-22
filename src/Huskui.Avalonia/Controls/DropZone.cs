@@ -10,16 +10,13 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":dragover")]
 public class DropZone : ContentControl
 {
-    public static readonly StyledProperty<double> StrokeThicknessProperty =
-        Shape.StrokeThicknessProperty.AddOwner<DropZone>();
+    public static readonly StyledProperty<double> StrokeThicknessProperty = Shape.StrokeThicknessProperty.AddOwner<DropZone>();
 
     public static readonly StyledProperty<IBrush?> StrokeBrushProperty = Shape.StrokeProperty.AddOwner<DropZone>();
 
-    public static readonly StyledProperty<AvaloniaList<double>?> StrokeDashArrayProperty =
-        Shape.StrokeDashArrayProperty.AddOwner<DropZone>();
+    public static readonly StyledProperty<AvaloniaList<double>?> StrokeDashArrayProperty = Shape.StrokeDashArrayProperty.AddOwner<DropZone>();
 
-    public static readonly StyledProperty<double> RadiusProperty =
-        AvaloniaProperty.Register<DropZone, double>(nameof(Radius));
+    public static readonly StyledProperty<double> RadiusProperty = AvaloniaProperty.Register<DropZone, double>(nameof(Radius));
 
     public double StrokeThickness
     {

@@ -1,6 +1,6 @@
-﻿using Avalonia.Threading;
+﻿using System;
+using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
-using System;
 
 namespace Polymerium.App.Services;
 

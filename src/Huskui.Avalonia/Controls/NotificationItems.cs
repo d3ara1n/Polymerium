@@ -2,6 +2,4 @@
 
 namespace Huskui.Avalonia.Controls;
 
-public class NotificationItems : AvaloniaList<NotificationItem>
-{
-}
+public class NotificationItems : AvaloniaList<NotificationItem> { }

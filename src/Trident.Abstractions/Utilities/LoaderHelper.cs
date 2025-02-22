@@ -11,8 +11,7 @@ public static class LoaderHelper
     public const string LOADERID_FLINT = "net.flintloader";
     private static readonly Regex PATTERN = new("^(?<identity>[a-z0-9.]+):(?<version>[a-zA-Z0-9_.-]+)$");
 
-    public static bool TryParse(string lurl,
-        out (string Identity, string Version) result)
+    public static bool TryParse(string lurl, out (string Identity, string Version) result)
     {
         var match = PATTERN.Match(lurl);
         if (match.Success && match.Groups["identity"].Success && match.Groups["version"].Success)
@@ -23,7 +22,7 @@ public static class LoaderHelper
             return true;
         }
 
-        result = default;
+        result = default((string Identity, string Version));
         return false;
     }
 
