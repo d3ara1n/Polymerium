@@ -1,44 +1,102 @@
 ﻿using Avalonia;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
-using Avalonia.Controls.Shapes;
-using Avalonia.Media;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 
 namespace Huskui.Avalonia.Controls;
 
-[PseudoClasses(":dragover")]
+[PseudoClasses(":dragover", ":drop")]
 public class DropZone : ContentControl
 {
-    public static readonly StyledProperty<double> StrokeThicknessProperty = Shape.StrokeThicknessProperty.AddOwner<DropZone>();
+    public static readonly RoutedEvent<DragOverEventArgs> DragOverEvent = RoutedEvent.Register<DropZone, DragOverEventArgs>(nameof(DragOver), RoutingStrategies.Direct);
+    public static readonly RoutedEvent<DropEventArgs> DropEvent = RoutedEvent.Register<DropZone, DropEventArgs>(nameof(Drop), RoutingStrategies.Direct);
+    public static readonly DirectProperty<DropZone, object?> ModelProperty = AvaloniaProperty.RegisterDirect<DropZone, object?>(nameof(Model), o => o.Model, (o, v) => o.Model = v);
 
-    public static readonly StyledProperty<IBrush?> StrokeBrushProperty = Shape.StrokeProperty.AddOwner<DropZone>();
+    private object? _model;
 
-    public static readonly StyledProperty<AvaloniaList<double>?> StrokeDashArrayProperty = Shape.StrokeDashArrayProperty.AddOwner<DropZone>();
-
-    public static readonly StyledProperty<double> RadiusProperty = AvaloniaProperty.Register<DropZone, double>(nameof(Radius));
-
-    public double StrokeThickness
+    public object? Model
     {
-        get => GetValue(StrokeThicknessProperty);
-        set => SetValue(StrokeThicknessProperty, value);
+        get => _model;
+        set => SetAndRaise(ModelProperty, ref _model, value);
     }
 
-    public IBrush? StrokeBrush
+
+    public event EventHandler<DragOverEventArgs> DragOver
     {
-        get => GetValue(StrokeBrushProperty);
-        set => SetValue(StrokeBrushProperty, value);
+        add => AddHandler(DragOverEvent, value);
+        remove => RemoveHandler(DragOverEvent, value);
     }
 
-    public AvaloniaList<double>? StrokeDashArray
+    public event EventHandler<DropEventArgs> Drop
     {
-        get => GetValue(StrokeDashArrayProperty);
-        set => SetValue(StrokeDashArrayProperty, value);
+        add => AddHandler(DragOverEvent, value);
+        remove => RemoveHandler(DragOverEvent, value);
     }
 
-    public double Radius
+    public DropZone()
     {
-        get => GetValue(RadiusProperty);
-        set => SetValue(RadiusProperty, value);
+        DragDrop.SetAllowDrop(this, true);
+        AddHandler(DragDrop.DragEnterEvent, OnDragEnter, handledEventsToo: true);
+        AddHandler(DragDrop.DragLeaveEvent, OnDragLeave, handledEventsToo: true);
+        AddHandler(DragDrop.DropEvent, OnDrop, handledEventsToo: true);
+    }
+
+    private void OnDragEnter(object? sender, DragEventArgs e)
+    {
+        var args = new DragOverEventArgs(e.Data) { RoutedEvent = DragOverEvent };
+        RaiseEvent(args);
+        PseudoClasses.Set(":drop", false);
+        if (args.Accepted)
+        {
+            e.DragEffects = DragDropEffects.Copy;
+            PseudoClasses.Set(":dragover", true);
+        }
+        else
+        {
+            e.DragEffects = DragDropEffects.None;
+            PseudoClasses.Set(":dragover", false);
+        }
+    }
+
+    private void OnDragLeave(object? sender, DragEventArgs e)
+    {
+        e.DragEffects = DragDropEffects.None;
+        PseudoClasses.Set(":dragover", false);
+        PseudoClasses.Set(":drop", false);
+    }
+
+    private void OnDrop(object? sender, DragEventArgs e)
+    {
+        e.DragEffects = DragDropEffects.None;
+        PseudoClasses.Set(":dragover", false);
+        var validation = new DragOverEventArgs(e.Data) { RoutedEvent = DragOverEvent };
+        RaiseEvent(validation);
+        if (validation.Accepted)
+        {
+            var args = new DropEventArgs(e.Data) { RoutedEvent = DropEvent };
+            RaiseEvent(args);
+            if (args.Model != null)
+            {
+                Model = args.Model;
+                PseudoClasses.Set(":drop", true);
+                return;
+            }
+        }
+
+        Model = null;
+        PseudoClasses.Set(":drop", false);
+    }
+
+    public class DragOverEventArgs(IDataObject data) : RoutedEventArgs
+    {
+        public IDataObject Data => data;
+        public bool Accepted { get; set; }
+    }
+
+    public class DropEventArgs(IDataObject data) : RoutedEventArgs
+    {
+        public IDataObject Data => data;
+        public object? Model { get; set; }
     }
 }

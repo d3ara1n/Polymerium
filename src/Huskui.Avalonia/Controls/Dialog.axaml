@@ -3,7 +3,8 @@
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:converters="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
     <ControlTheme x:Key="{x:Type local:Dialog}" TargetType="local:Dialog">
-        <Setter Property="SecondaryCommand" Value="{Binding $parent[local:OverlayItem].DismissCommand, Mode=OneWay} " />
+        <Setter Property="Host" Value="{Binding $parent[local:OverlayHost], Mode=OneWay}" />
+        <Setter Property="Container" Value="{Binding $parent[local:OverlayItem], Mode=OneWay} " />
         <Setter Property="MinHeight" Value="128" />
         <Setter Property="MinWidth" Value="256" />
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
@@ -35,18 +36,16 @@
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
                         <Grid Grid.Row="4" ColumnDefinitions="*,8,*" Margin="18">
-                            <!-- 因为 Avalonia 没有 ColumnSpacing，这里用了一种很幽默的方式实现可有可无的间距 -->
-                            <Button Grid.Column="0"
-                                    Grid.ColumnSpan="{TemplateBinding PrimaryCommand,Converter={x:Static converters:InternalConverters.IntegerIfNull},ConverterParameter=3}"
-                                    Command="{TemplateBinding SecondaryCommand}"
-                                    IsVisible="{TemplateBinding SecondaryCommand,Converter={x:Static ObjectConverters.IsNotNull}}">
-                                <TextBlock Text="{TemplateBinding SecondaryText}" />
-                            </Button>
-                            <Button Grid.Column="2"
-                                    Grid.ColumnSpan="{TemplateBinding SecondaryCommand,Converter={x:Static converters:InternalConverters.IntegerIfNull},ConverterParameter=3}"
-                                    Classes="Primary" Command="{TemplateBinding PrimaryCommand}"
-                                    IsVisible="{TemplateBinding PrimaryCommand,Converter={x:Static ObjectConverters.IsNotNull}}">
+                            <Button Grid.Column="0" Classes="Primary"
+                                    Command="{Binding PrimaryCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    IsVisible="{TemplateBinding IsPrimaryButtonVisible}">
                                 <TextBlock Text="{TemplateBinding PrimaryText}" />
+                            </Button>
+                            <Button
+                                Grid.Column="{TemplateBinding IsPrimaryButtonVisible, Converter={x:Static converters:InternalConverters.ButtonColumn},ConverterParameter=2}"
+                                Grid.ColumnSpan="{TemplateBinding IsPrimaryButtonVisible, Converter={x:Static converters:InternalConverters.ButtonColumnSpan},ConverterParameter=3}"
+                                Command="{Binding SecondaryCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                <TextBlock Text="{TemplateBinding SecondaryText}" />
                             </Button>
                         </Grid>
                     </Grid>

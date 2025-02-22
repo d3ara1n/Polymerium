@@ -7,8 +7,8 @@
              xmlns:local="using:Polymerium.App.Dialogs"
              xmlns:m="using:Polymerium.App.Models"
              mc:Ignorable="d" Title="Pick a game version"
-             x:Class="Polymerium.App.Dialogs.VersionPickerDialog" Loaded="Control_OnLoaded"
-             Unloaded="Control_OnUnloaded">
+             x:Class="Polymerium.App.Dialogs.VersionPickerDialog"
+             Unloaded="Control_OnUnloaded" IsPrimaryButtonVisible="True">
     <Grid RowDefinitions="Auto,12,Auto,12,*">
         <TextBox Grid.Row="0" Watermark="Filter by version name..."
                  Text="{Binding $parent[local:VersionPickerDialog].FilterText,Mode=TwoWay}">
@@ -22,32 +22,27 @@
                 </StackPanel>
             </TextBox.InnerLeftContent>
         </TextBox>
-        <husk:SkeletonControl Grid.Row="2"
-                              IsLoading="{Binding $parent[local:VersionPickerDialog].IsVersionLoaded,Converter={x:Static BoolConverters.Not}}">
-            <TabStrip Theme="{StaticResource SegmentedTabStripTheme}" HorizontalAlignment="Center"
-                      SelectedValue="{Binding $parent[local:VersionPickerDialog].SelectedType}"
-                      ItemsSource="{Binding $parent[local:VersionPickerDialog].Types}">
-                <TabStrip.ItemTemplate>
-                    <DataTemplate DataType="x:String">
-                        <TextBlock Text="{Binding}" />
-                    </DataTemplate>
-                </TabStrip.ItemTemplate>
-            </TabStrip>
-        </husk:SkeletonControl>
-        <husk:SkeletonControl Grid.Row="4"
-                              IsLoading="{Binding $parent[local:VersionPickerDialog].IsVersionLoaded,Converter={x:Static BoolConverters.Not}}">
-            <ListBox MinHeight="64"
-                     ItemsSource="{Binding $parent[local:VersionPickerDialog].View}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="m:GameVersionModel">
-                        <Grid ColumnDefinitions="*,4,Auto">
-                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                            <husk:Tag Grid.Column="2" CornerRadius="{StaticResource SmallCornerRadius}"
-                                      Content="{Binding ReleaseTime}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </husk:SkeletonControl>
+        <TabStrip Grid.Row="2" Theme="{StaticResource SegmentedTabStripTheme}" HorizontalAlignment="Center"
+                  SelectedValue="{Binding $parent[local:VersionPickerDialog].SelectedType}"
+                  ItemsSource="{Binding $parent[local:VersionPickerDialog].Types}">
+            <TabStrip.ItemTemplate>
+                <DataTemplate DataType="x:String">
+                    <TextBlock Text="{Binding}" />
+                </DataTemplate>
+            </TabStrip.ItemTemplate>
+        </TabStrip>
+        <ListBox Grid.Row="4" MinHeight="64"
+                 SelectedValue="{Binding $parent[local:VersionPickerDialog].Result,Mode=OneWayToSource}"
+                 ItemsSource="{Binding $parent[local:VersionPickerDialog].View}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="m:GameVersionModel">
+                    <Grid ColumnDefinitions="*,4,Auto">
+                        <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                        <husk:Tag Grid.Column="2" CornerRadius="{StaticResource SmallCornerRadius}"
+                                  Content="{Binding ReleaseTime}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </husk:Dialog>

@@ -67,7 +67,7 @@
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
                             <local:NotificationHost Name="PART_NotificationHost" HorizontalAlignment="Stretch"
-                                                    MaxWidth="330" VerticalAlignment="Top" Margin="12">
+                                                    VerticalAlignment="Top" Margin="36,12">
                                 <local:NotificationHost.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <ReversibleStackPanel ReverseOrder="True" Spacing="2" />

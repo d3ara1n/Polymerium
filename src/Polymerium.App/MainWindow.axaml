@@ -11,7 +11,7 @@
                 TransparencyLevelHint="Mica, None"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 ExtendClientAreaTitleBarHeightHint="44"
-                x:Class="Polymerium.App.MainWindow" x:DataType="local:MainWindow"
+                x:Class="Polymerium.App.MainWindow"
                 Title="Polymerium" MinHeight="460" MinWidth="600" Height="600" Width="1024">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -90,10 +90,10 @@
                     </Button>
                     <husk:Divider Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" />
                     <!-- <AutoCompleteBox/> -->
-                    <TextBox DockPanel.Dock="Top" Watermark="Search by names or types" Grid.Column="0" Grid.Row="6"
-                             Grid.ColumnSpan="5" />
+                    <TextBox Watermark="Filter entries by names..." Grid.Column="0" Grid.Row="6"
+                             Grid.ColumnSpan="5" Text="{Binding $parent[local:MainWindow].FilterText,Mode=TwoWay}" />
                     <ScrollViewer Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="5" Margin="0,0,-8,0">
-                        <ItemsControl ItemsSource="{Binding Entries}" Margin="0,0,8,0">
+                        <ItemsControl ItemsSource="{Binding $parent[local:MainWindow].View}" Margin="0,0,8,0">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="m:InstanceEntryModel">
                                     <controls:InstanceEntryButton Basic="{Binding Basic}" State="{Binding State}"

@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using Avalonia;
 using Avalonia.Animation;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
@@ -22,17 +25,48 @@ public partial class MainWindow : AppWindow
 {
     private Action<Type, object?, IPageTransition?>? _navigate;
 
+    public static readonly DirectProperty<MainWindow, string> FilterTextProperty = AvaloniaProperty.RegisterDirect<MainWindow, string>(nameof(FilterText), o => o.FilterText, (o, v) => o.FilterText = v);
+
+    private string _filterText = string.Empty;
+
+    public string FilterText
+    {
+        get => _filterText;
+        set => SetAndRaise(FilterTextProperty, ref _filterText, value);
+    }
+
+
     public MainWindow()
     {
         InitializeComponent();
-        DataContext = this;
 
         ViewInstanceCommand = new RelayCommand<string>(ViewInstance);
+
+        #region Setup Entries View
+
+        var filter = this.GetObservable(FilterTextProperty).Select(BuildFilter);
+        _subscription = _entries.Connect().Filter(filter).Bind(out var view).Subscribe();
+        View = view;
+
+        #endregion
     }
 
-    public AvaloniaList<InstanceEntryModel> Entries { get; } = [];
+    private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
+    private readonly IDisposable _subscription;
+
+    public static readonly DirectProperty<MainWindow, ReadOnlyObservableCollection<InstanceEntryModel>> ViewProperty = AvaloniaProperty.RegisterDirect<MainWindow, ReadOnlyObservableCollection<InstanceEntryModel>>(nameof(View), o => o.View, (o, v) => o.View = v);
+
+    private ReadOnlyObservableCollection<InstanceEntryModel> _view;
+
+    public ReadOnlyObservableCollection<InstanceEntryModel> View
+    {
+        get => _view;
+        set => SetAndRaise(ViewProperty, ref _view, value);
+    }
 
     public ICommand ViewInstanceCommand { get; }
+
+    private static Func<InstanceEntryModel, bool> BuildFilter(string filter) => x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
     private void PopDialog()
     {
@@ -105,17 +139,20 @@ public partial class MainWindow : AppWindow
         manager.ProfileUpdated += OnProfileUpdated;
         manager.ProfileRemoved += OnProfileRemoved;
 
+        var list = new List<InstanceEntryModel>();
         foreach (var (key, item) in manager.Profiles)
         {
             InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source);
-            Entries.Add(model);
+            list.Add(model);
         }
+
+        _entries.AddOrUpdate(list);
     }
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var exist = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
+        var exist = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (exist != null)
         {
             exist.Basic.Name = e.Value.Name;
@@ -127,14 +164,14 @@ public partial class MainWindow : AppWindow
         else
         {
             InstanceEntryModel model = new(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader, e.Value.Setup.Source);
-            Entries.Add(model);
+            _entries.AddOrUpdate(model);
         }
     }
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is not null)
         {
             model.Basic.Name = e.Value.Name;
@@ -148,9 +185,9 @@ public partial class MainWindow : AppWindow
     private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is not null)
-            Entries.Remove(model);
+            _entries.Remove(model);
     }
 
     #endregion
@@ -166,7 +203,7 @@ public partial class MainWindow : AppWindow
     private void OnInstanceUpdating(object? sender, UpdateTracker e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = Entries.FirstOrDefault(x => x.Basic.Key == e.Key);
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (model is null)
             return;
 
@@ -184,7 +221,7 @@ public partial class MainWindow : AppWindow
                     model.Progress = null;
                     break;
                 case TrackerState.Faulted:
-                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem { Content = e.FailureReason, Title = $"Failed to update {e.Key}", Level = NotificationLevel.Danger }));
+                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem { Content = e.FailureReason, Title = $"Failed to update {e.Key}", Level = NotificationLevel.Warning }));
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -218,7 +255,7 @@ public partial class MainWindow : AppWindow
                     break;
                 case TrackerState.Faulted:
                     Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem { Content = e.FailureReason, Title = $"Failed to install {e.Key}", Level = NotificationLevel.Danger }));
-                    Entries.Remove(model);
+                    _entries.Remove(model);
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -233,7 +270,7 @@ public partial class MainWindow : AppWindow
         }
 
         e.StateUpdated += OnStateChanged;
-        Entries.Add(model);
+        _entries.AddOrUpdate(model);
     }
 
     #endregion

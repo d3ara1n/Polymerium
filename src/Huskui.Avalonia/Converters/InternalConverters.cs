@@ -5,13 +5,24 @@ namespace Huskui.Avalonia.Converters;
 
 internal static class InternalConverters
 {
-    public static IValueConverter IntegerIfNull { get; } = new RelayConverter((v, p) =>
+    public static IValueConverter ButtonColumnSpan { get; } = new RelayConverter((v, p) =>
     {
         if (p is int)
-            return v is null ? p : 0;
+            return v is false ? p : 1;
 
         if (p is string str && int.TryParse(str, out var i))
-            return v is null ? i : 0;
+            return v is false ? i : 1;
+
+        return 1;
+    });
+
+    public static IValueConverter ButtonColumn { get; } = new RelayConverter((v, p) =>
+    {
+        if (p is int)
+            return v is true ? p : 0;
+
+        if (p is string str && int.TryParse(str, out var i))
+            return v is true ? i : 0;
 
         return 0;
     });

@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
@@ -53,7 +52,7 @@ public partial class ExhibitionViewModel : ViewModelBase
 
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
 
-    protected override async Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
+    protected override async Task OnInitializedAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
             return;
@@ -156,7 +155,7 @@ public partial class ExhibitionViewModel : ViewModelBase
                                     }
                                     else
                                     {
-                                        thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+                                        thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
                                     }
 
                                     return new ExhibitModel(x.Label, x.Namespace, x.Pid, x.Name, x.Summary, thumbnail, x.Author, x.Tags, x.UpdatedAt, x.DownloadCount, x.Reference);

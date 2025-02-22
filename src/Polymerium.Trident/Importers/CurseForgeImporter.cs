@@ -11,6 +11,7 @@ public class CurseForgeImporter : IProfileImporter
 {
     private static readonly Dictionary<string, string> LOADER_MAPPINGS = new() { ["forge"] = LoaderHelper.LOADERID_FORGE, ["neoforge"] = LoaderHelper.LOADERID_NEOFORGE, ["fabric"] = LoaderHelper.LOADERID_FABRIC, ["quilt"] = LoaderHelper.LOADERID_QUILT };
 
+
     #region IProfileImporter Members
 
     public string IndexFileName { get; } = "manifest.json";

@@ -18,12 +18,12 @@ public class NotificationService
 
     public void Pop(NotificationItem item) => Dispatcher.UIThread.Post(() => _handler?.Invoke(item));
 
-    public void PopMessage(string message, string title = "Notification", NotificationLevel level = NotificationLevel.Information) =>
+    public void PopMessage(string message, string title = "Notification", NotificationLevel level = NotificationLevel.Information, bool forceExpire = false) =>
         Dispatcher.UIThread.Post(() =>
         {
             NotificationItem? item = new() { Content = message, Title = title, Level = level };
             Pop(item);
-            if (level == NotificationLevel.Information)
+            if (level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success || forceExpire)
             {
                 item.IsProgressBarVisible = true;
                 COUNTDOWN.RunAsync(item).ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());

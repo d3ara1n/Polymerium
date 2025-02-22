@@ -57,6 +57,7 @@
         <Setter Property="BorderThickness" Value="3" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Padding" Value="12,8" />
+        <Setter Property="MinWidth" Value="330" />
         <Setter Property="Template">
             <ControlTemplate>
                 <LayoutTransformControl Name="PART_LayoutTransform">

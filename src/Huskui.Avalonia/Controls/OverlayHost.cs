@@ -85,18 +85,23 @@ public class OverlayHost : TemplatedControl
         // Make OnApplyTemplate called and _stage bound
         UpdateLayout();
         // if (control is Visual visual) Transition.Start(null, visual, true, CancellationToken.None);
-        Transition.Start(null, item.ContentPresenter, true, CancellationToken.None);
+        var transition = item.Transition ?? Transition;
+        transition.Start(null, item.ContentPresenter, true, CancellationToken.None);
 
         if (Items.Count == 1)
         {
             IsPresent = true;
             ArgumentNullException.ThrowIfNull(_stage);
-            _stageInAnimation.RunAsync(_stage);
+            StageInAnimation.RunAsync(_stage);
         }
     }
 
     public void Dismiss(OverlayItem item)
     {
+        var transition = item.Transition ?? Transition;
+        transition.Start(item.ContentPresenter, null, false, CancellationToken.None).ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
+        return;
+
         void Clean()
         {
             Items.Remove(item);
@@ -104,11 +109,9 @@ public class OverlayHost : TemplatedControl
             {
                 IsPresent = false;
                 ArgumentNullException.ThrowIfNull(_stage);
-                _stageOutAnimation.RunAsync(_stage).ContinueWith(_ => Dispatcher.UIThread.Post(() => IsVisible = false));
+                StageOutAnimation.RunAsync(_stage).ContinueWith(_ => Dispatcher.UIThread.Post(() => IsVisible = false));
             }
         }
-
-        Transition.Start(item.ContentPresenter, null, false, CancellationToken.None).ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
     }
 
     public void Dismiss() => Dismiss(Items.Last());
@@ -132,11 +135,11 @@ public class OverlayHost : TemplatedControl
 
     #endregion
 
-    #region _stageInAnimation & _stageOutAnimation
+    #region StageInAnimation & StageOutAnimation
 
-    private static readonly Animation _stageInAnimation = new() { FillMode = FillMode.Forward, Duration = TimeSpan.FromMilliseconds(146), Easing = new SineEaseOut(), Children = { new KeyFrame { Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } } }, new KeyFrame { Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } } } } };
+    private static readonly Animation StageInAnimation = new() { FillMode = FillMode.Forward, Duration = TimeSpan.FromMilliseconds(146), Easing = new SineEaseOut(), Children = { new KeyFrame { Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } } }, new KeyFrame { Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } } } } };
 
-    private static readonly Animation _stageOutAnimation = new() { FillMode = FillMode.Forward, Duration = TimeSpan.FromMilliseconds(146), Easing = new SineEaseOut(), Children = { new KeyFrame { Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } } }, new KeyFrame { Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } } } } };
+    private static readonly Animation StageOutAnimation = new() { FillMode = FillMode.Forward, Duration = TimeSpan.FromMilliseconds(146), Easing = new SineEaseOut(), Children = { new KeyFrame { Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } } }, new KeyFrame { Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } } } } };
 
     #endregion
 

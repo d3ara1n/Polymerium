@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 
@@ -34,6 +35,13 @@ public class OverlayService
     #region Dialogs
 
     public void PopDialog(Dialog dialog) => Dispatcher.UIThread.Post(() => _dialogHandler?.Invoke(dialog));
+
+    public async Task<bool> PopDialogAsync(Dialog dialog)
+    {
+        var source = dialog.CompletionSource;
+        Dispatcher.UIThread.Post(() => _dialogHandler?.Invoke(dialog));
+        return await source.Task;
+    }
 
     #endregion
 }
