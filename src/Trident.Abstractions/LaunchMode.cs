@@ -1,7 +1,3 @@
 ﻿namespace Trident.Abstractions;
 
-public enum LaunchMode
-{
-    Managed,
-    FireAndForget
-}
+public enum LaunchMode { Managed, FireAndForget }

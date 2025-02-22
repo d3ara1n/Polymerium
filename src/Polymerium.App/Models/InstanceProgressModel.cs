@@ -8,7 +8,8 @@ public partial class InstanceProgressModel : ModelBase
 {
     #region Reactive Properties
 
-    [ObservableProperty] private double? _progress;
+    [ObservableProperty]
+    private double? _progress;
 
     #endregion
 
@@ -16,16 +17,14 @@ public partial class InstanceProgressModel : ModelBase
 
     public void UpdateSource(TrackerBase tracker)
     {
-        if (_tracker is not null) Unsubscribe(_tracker);
+        if (_tracker is not null)
+            Unsubscribe(_tracker);
+
         _tracker = tracker;
         Subscribe(tracker);
     }
 
-    private void Unsubscribe(TrackerBase tracker)
-    {
-    }
+    private void Unsubscribe(TrackerBase tracker) { }
 
-    private void Subscribe(TrackerBase tracker)
-    {
-    }
+    private void Subscribe(TrackerBase tracker) { }
 }

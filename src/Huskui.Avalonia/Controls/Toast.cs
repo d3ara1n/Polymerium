@@ -5,8 +5,7 @@ namespace Huskui.Avalonia.Controls;
 
 public class Toast : ContentControl
 {
-    public static readonly DirectProperty<Toast, string> TitleProperty =
-        AvaloniaProperty.RegisterDirect<Toast, string>(nameof(Title), o => o.Title, (o, v) => o.Title = v);
+    public static readonly DirectProperty<Toast, string> TitleProperty = AvaloniaProperty.RegisterDirect<Toast, string>(nameof(Title), o => o.Title, (o, v) => o.Title = v);
 
     private string _title = string.Empty;
 

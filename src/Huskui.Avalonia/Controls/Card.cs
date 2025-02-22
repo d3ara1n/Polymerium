@@ -2,6 +2,4 @@
 
 namespace Huskui.Avalonia.Controls;
 
-public class Card : ContentControl
-{
-}
+public class Card : ContentControl { }

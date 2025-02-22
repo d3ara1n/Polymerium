@@ -6,12 +6,9 @@ namespace Trident.Abstractions.Utilities;
 
 public static class PackageHelper
 {
-    private static readonly Regex PATTERN =
-        new(
-            "^(?<label>[a-zA-Z0-9._-]+):((?<namespace>[a-zA-Z0-9._-]+)/)?(?<identity>[a-zA-Z0-9._-]+)(@(?<version>[a-zA-Z0-9._-]+))?$");
+    private static readonly Regex PATTERN = new("^(?<label>[a-zA-Z0-9._-]+):((?<namespace>[a-zA-Z0-9._-]+)/)?(?<identity>[a-zA-Z0-9._-]+)(@(?<version>[a-zA-Z0-9._-]+))?$");
 
-    public static bool TryParse(string purl,
-        out (string Label, string? Namespace, string Pid, string? Vid) result)
+    public static bool TryParse(string purl, out (string Label, string? Namespace, string Pid, string? Vid) result)
     {
         var match = PATTERN.Match(purl);
         if (match.Success && match.Groups["label"].Success && match.Groups["identity"].Success)
@@ -24,13 +21,13 @@ public static class PackageHelper
             return true;
         }
 
-        result = default;
+        result = default((string Label, string? Namespace, string Pid, string? Vid));
         return false;
     }
 
     public static string ToPurl(string label, string? ns, string pid, string? vid)
     {
-        var sb = new StringBuilder();
+        StringBuilder? sb = new();
         sb.Append(label);
         sb.Append(':');
         if (ns != null)
@@ -49,6 +46,5 @@ public static class PackageHelper
         return sb.ToString();
     }
 
-    public static string ToPurl(Package package) =>
-        ToPurl(package.Label, package.Namespace, package.ProjectId, package.VersionId);
+    public static string ToPurl(Package package) => ToPurl(package.Label, package.Namespace, package.ProjectId, package.VersionId);
 }

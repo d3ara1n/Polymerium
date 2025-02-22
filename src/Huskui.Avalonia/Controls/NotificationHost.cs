@@ -7,13 +7,9 @@ namespace Huskui.Avalonia.Controls;
 
 public class NotificationHost : TemplatedControl
 {
-    public static readonly DirectProperty<NotificationHost, NotificationItems> ItemsProperty =
-        AvaloniaProperty.RegisterDirect<NotificationHost, NotificationItems>(nameof(Items), o => o.Items,
-            (o, v) => o.Items = v);
+    public static readonly DirectProperty<NotificationHost, NotificationItems> ItemsProperty = AvaloniaProperty.RegisterDirect<NotificationHost, NotificationItems>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
 
-    public static readonly DirectProperty<NotificationHost, ITemplate<Panel?>> ItemsPanelProperty =
-        AvaloniaProperty.RegisterDirect<NotificationHost, ITemplate<Panel?>>(nameof(ItemsPanel), o => o.ItemsPanel,
-            (o, v) => o.ItemsPanel = v);
+    public static readonly DirectProperty<NotificationHost, ITemplate<Panel?>> ItemsPanelProperty = AvaloniaProperty.RegisterDirect<NotificationHost, ITemplate<Panel?>>(nameof(ItemsPanel), o => o.ItemsPanel, (o, v) => o.ItemsPanel = v);
 
     private NotificationItems _items = [];
 
@@ -37,7 +33,9 @@ public class NotificationHost : TemplatedControl
         lock (this)
         {
             var toClean = Items.Where(x => !x.IsVisible);
-            foreach (var clean in toClean) Items.Remove(clean);
+            foreach (var clean in toClean)
+                Items.Remove(clean);
+
             Items.Add(item);
         }
     }

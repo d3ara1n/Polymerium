@@ -2,6 +2,4 @@
 
 namespace Huskui.Avalonia.Markdown.Controls;
 
-public class MarkdownControl : TemplatedControl
-{
-}
+public class MarkdownControl : TemplatedControl { }

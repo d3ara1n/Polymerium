@@ -1,23 +1,17 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;
-using System;
 using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 
-public partial class InstanceVersionModel(
-    string label,
-    string? @namespace,
-    string pid,
-    string vid,
-    string display,
-    ReleaseType releaseType,
-    DateTimeOffset updatedAt) : ModelBase
+public partial class InstanceVersionModel(string label, string? @namespace, string pid, string vid, string display, ReleaseType releaseType, DateTimeOffset updatedAt) : ModelBase
 {
     #region Reactive Properties
 
-    [ObservableProperty] private bool _isCurrent;
+    [ObservableProperty]
+    private bool _isCurrent;
 
     #endregion
 

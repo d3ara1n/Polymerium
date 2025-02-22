@@ -7,20 +7,13 @@ namespace Huskui.Avalonia.Controls;
 
 public class SwitchPresenter : ContentControl
 {
-    public static readonly DirectProperty<SwitchPresenter, SwitchCases> CasesProperty =
-        AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCases>(nameof(Cases), o => o.Cases,
-            (o, v) => o.Cases = v);
+    public static readonly DirectProperty<SwitchPresenter, SwitchCases> CasesProperty = AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCases>(nameof(Cases), o => o.Cases, (o, v) => o.Cases = v);
 
-    public static readonly DirectProperty<SwitchPresenter, SwitchCase?> CurrentCaseProperty =
-        AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCase?>(nameof(CurrentCase), o => o.CurrentCase,
-            (o, v) => o.CurrentCase = v);
+    public static readonly DirectProperty<SwitchPresenter, SwitchCase?> CurrentCaseProperty = AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCase?>(nameof(CurrentCase), o => o.CurrentCase, (o, v) => o.CurrentCase = v);
 
-    public static readonly DirectProperty<SwitchPresenter, object?> ValueProperty =
-        AvaloniaProperty.RegisterDirect<SwitchPresenter, object?>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
+    public static readonly DirectProperty<SwitchPresenter, object?> ValueProperty = AvaloniaProperty.RegisterDirect<SwitchPresenter, object?>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
 
-    public static readonly DirectProperty<SwitchPresenter, Type> TargetTypeProperty =
-        AvaloniaProperty.RegisterDirect<SwitchPresenter, Type>(nameof(TargetType), o => o.TargetType,
-            (o, v) => o.TargetType = v);
+    public static readonly DirectProperty<SwitchPresenter, Type> TargetTypeProperty = AvaloniaProperty.RegisterDirect<SwitchPresenter, Type>(nameof(TargetType), o => o.TargetType, (o, v) => o.TargetType = v);
 
     private SwitchCases _cases = [];
 
@@ -48,7 +41,8 @@ public class SwitchPresenter : ContentControl
         get => _value;
         set
         {
-            if (SetAndRaise(ValueProperty, ref _value, value)) EvaluateCases();
+            if (SetAndRaise(ValueProperty, ref _value, value))
+                EvaluateCases();
         }
     }
 
@@ -67,8 +61,7 @@ public class SwitchPresenter : ContentControl
 
     private void EvaluateCases()
     {
-        if (CurrentCase?.Value != null &&
-            CurrentCase.Value.Equals(Value))
+        if (CurrentCase?.Value != null && CurrentCase.Value.Equals(Value))
             // If the current case we're on already matches our current value,
             // then we don't have any work to do.
             return;

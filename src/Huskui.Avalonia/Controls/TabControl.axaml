@@ -112,7 +112,7 @@
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"
                                                   Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 <BrushTransition Property="Background" Easing="SineEaseIn"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 <TransformOperationsTransition Property="RenderTransform" Easing="QuarticEaseInOut"
                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>

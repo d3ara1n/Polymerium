@@ -17,9 +17,7 @@ public class AppWindow : Window
     public const string PART_DialogHost = nameof(PART_DialogHost);
     public const string PART_NotificationHost = nameof(PART_NotificationHost);
 
-    public static readonly DirectProperty<AppWindow, bool> IsMaximizedProperty =
-        AvaloniaProperty.RegisterDirect<AppWindow, bool>(nameof(IsMaximized), o => o.IsMaximized,
-            (o, v) => o.IsMaximized = v);
+    public static readonly DirectProperty<AppWindow, bool> IsMaximizedProperty = AvaloniaProperty.RegisterDirect<AppWindow, bool>(nameof(IsMaximized), o => o.IsMaximized, (o, v) => o.IsMaximized = v);
 
     private OverlayHost? _dialogHost;
 
@@ -41,7 +39,8 @@ public class AppWindow : Window
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == WindowStateProperty) IsMaximized = WindowState == WindowState.Maximized;
+        if (change.Property == WindowStateProperty)
+            IsMaximized = WindowState == WindowState.Maximized;
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)

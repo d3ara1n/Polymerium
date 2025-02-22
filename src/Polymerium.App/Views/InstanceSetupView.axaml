@@ -124,7 +124,8 @@
             </husk:Card>
         </Grid>
         <Panel Grid.Row="2" Grid.Column="0">
-            <TabControl Margin="{StaticResource PageToplessBottomlessContentMargin}" Padding="-16,0" ClipToBounds="False">
+            <TabControl Margin="{StaticResource PageToplessBottomlessContentMargin}" Padding="-16,0"
+                        ClipToBounds="False">
                 <TabItem Header="Stage">
                     <cp:PackageContainer x:Name="StageContainer" DragDrop.AllowDrop="True" Items="{Binding Stage}"
                                          TotalCount="{Binding StageCount}"

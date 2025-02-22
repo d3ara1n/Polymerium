@@ -1,13 +1,13 @@
-﻿using Avalonia.Collections;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Avalonia.Collections;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Polymerium.App.ViewModels;
 
@@ -20,27 +20,30 @@ public partial class UnknownViewModel(ViewBag bag, NotificationService notificat
         new("Information",
             new RelayCommand<NotificationItem>(x =>
             {
-                if (x is not null) x.Level = NotificationLevel.Information;
+                if (x is not null)
+                    x.Level = NotificationLevel.Information;
             })),
         new("Success",
             new RelayCommand<NotificationItem>(x =>
             {
-                if (x is not null) x.Level = NotificationLevel.Success;
+                if (x is not null)
+                    x.Level = NotificationLevel.Success;
             })),
         new("Warning",
             new RelayCommand<NotificationItem>(x =>
             {
-                if (x is not null) x.Level = NotificationLevel.Warning;
+                if (x is not null)
+                    x.Level = NotificationLevel.Warning;
             })),
         new("Danger",
             new RelayCommand<NotificationItem>(x =>
             {
-                if (x is not null) x.Level = NotificationLevel.Danger;
+                if (x is not null)
+                    x.Level = NotificationLevel.Danger;
             }))
     ];
 
-    protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token) =>
-        Task.Delay(TimeSpan.FromSeconds(7), token);
+    protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token) => Task.Delay(TimeSpan.FromSeconds(7), token);
 
     #region Commands
 

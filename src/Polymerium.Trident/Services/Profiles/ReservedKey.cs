@@ -12,7 +12,11 @@ public class ReservedKey : IDisposable
 
     public string Key { get; }
 
+    #region IDisposable Members
+
     public void Dispose() =>
         // 可能会遇到临界问题，但概率很低
         _root.ReservedKeys.Remove(this);
+
+    #endregion
 }

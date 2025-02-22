@@ -2,6 +2,4 @@
 
 namespace Polymerium.App.Models;
 
-public class ProgressReporter : Progress<double>
-{
-}
+public class ProgressReporter : Progress<double> { }

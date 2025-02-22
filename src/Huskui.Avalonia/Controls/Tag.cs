@@ -2,6 +2,4 @@
 
 namespace Huskui.Avalonia.Controls;
 
-public class Tag : ContentControl
-{
-}
+public class Tag : ContentControl { }

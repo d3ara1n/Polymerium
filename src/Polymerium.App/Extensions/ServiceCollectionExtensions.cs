@@ -15,9 +15,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddViewFacilities(this IServiceCollection services)
     {
-        services
-            .AddScoped<ViewBagFactory>()
-            .AddScoped<ViewBag>();
+        services.AddScoped<ViewBagFactory>().AddScoped<ViewBag>();
         return services;
     }
 }

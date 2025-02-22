@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Windows.Input;
+using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
@@ -10,7 +11,6 @@ using Avalonia.Metadata;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Huskui.Avalonia.Transitions;
-using System.Windows.Input;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -22,17 +22,12 @@ public class OverlayHost : TemplatedControl
     public const string PART_ItemsPresenter = nameof(PART_ItemsPresenter);
     public const string PART_Stage = nameof(PART_Stage);
 
-    public static readonly DirectProperty<OverlayHost, OverlayItems> ItemsProperty =
-        AvaloniaProperty.RegisterDirect<OverlayHost, OverlayItems>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
+    public static readonly DirectProperty<OverlayHost, OverlayItems> ItemsProperty = AvaloniaProperty.RegisterDirect<OverlayHost, OverlayItems>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
 
-    public static readonly DirectProperty<OverlayHost, bool> IsPresentProperty =
-        AvaloniaProperty.RegisterDirect<OverlayHost, bool>(nameof(IsPresent), o => o.IsPresent,
-            (o, v) => o.IsPresent = v);
+    public static readonly DirectProperty<OverlayHost, bool> IsPresentProperty = AvaloniaProperty.RegisterDirect<OverlayHost, bool>(nameof(IsPresent), o => o.IsPresent, (o, v) => o.IsPresent = v);
 
 
-    public static readonly DirectProperty<OverlayHost, IPageTransition> TransitionProperty =
-        AvaloniaProperty.RegisterDirect<OverlayHost, IPageTransition>(nameof(Transition), o => o.Transition,
-            (o, v) => o.Transition = v);
+    public static readonly DirectProperty<OverlayHost, IPageTransition> TransitionProperty = AvaloniaProperty.RegisterDirect<OverlayHost, IPageTransition>(nameof(Transition), o => o.Transition, (o, v) => o.Transition = v);
 
     private bool _isPresent;
 
@@ -74,13 +69,14 @@ public class OverlayHost : TemplatedControl
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == IsPresentProperty) PseudoClasses.Set(":present", change.GetNewValue<bool>());
+        if (change.Property == IsPresentProperty)
+            PseudoClasses.Set(":present", change.GetNewValue<bool>());
     }
 
     public void Pop(object control)
     {
         IsVisible = true;
-        var item = new OverlayItem { Content = control };
+        OverlayItem? item = new() { Content = control };
         Items.Add(item);
         item.DismissCommand = new InternalDismissCommand(this, item);
 
@@ -108,75 +104,47 @@ public class OverlayHost : TemplatedControl
             {
                 IsPresent = false;
                 ArgumentNullException.ThrowIfNull(_stage);
-                _stageOutAnimation.RunAsync(_stage)
-                    .ContinueWith(_ => Dispatcher.UIThread.Post(() => IsVisible = false));
+                _stageOutAnimation.RunAsync(_stage).ContinueWith(_ => Dispatcher.UIThread.Post(() => IsVisible = false));
             }
         }
 
-        Transition.Start(item.ContentPresenter, null, false, CancellationToken.None)
-            .ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
+        Transition.Start(item.ContentPresenter, null, false, CancellationToken.None).ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
     }
 
     public void Dismiss() => Dismiss(Items.Last());
 
+    #region Nested type: InternalDismissCommand
+
     private class InternalDismissCommand(OverlayHost host, OverlayItem item) : ICommand
     {
+        #region ICommand Members
+
         public bool CanExecute(object? parameter) => host.Items.Contains(item);
 
         public void Execute(object? parameter) => host.Dismiss(item);
 
         public event EventHandler? CanExecuteChanged;
 
+        #endregion
+
         internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 
+    #endregion
+
     #region _stageInAnimation & _stageOutAnimation
 
-    private static readonly Animation _stageInAnimation = new()
-    {
-        FillMode = FillMode.Forward,
-        Duration = TimeSpan.FromMilliseconds(146),
-        Easing = new SineEaseOut(),
-        Children =
-        {
-            new KeyFrame
-            {
-                Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } }
-            },
-            new KeyFrame
-            {
-                Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } }
-            }
-        }
-    };
+    private static readonly Animation _stageInAnimation = new() { FillMode = FillMode.Forward, Duration = TimeSpan.FromMilliseconds(146), Easing = new SineEaseOut(), Children = { new KeyFrame { Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } } }, new KeyFrame { Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } } } } };
 
-    private static readonly Animation _stageOutAnimation = new()
-    {
-        FillMode = FillMode.Forward,
-        Duration = TimeSpan.FromMilliseconds(146),
-        Easing = new SineEaseOut(),
-        Children =
-        {
-            new KeyFrame
-            {
-                Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } }
-            },
-            new KeyFrame
-            {
-                Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } }
-            }
-        }
-    };
+    private static readonly Animation _stageOutAnimation = new() { FillMode = FillMode.Forward, Duration = TimeSpan.FromMilliseconds(146), Easing = new SineEaseOut(), Children = { new KeyFrame { Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } } }, new KeyFrame { Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } } } } };
 
     #endregion
 
     #region ContentAlignment
 
-    public static readonly StyledProperty<HorizontalAlignment> HorizontalContentAlignmentProperty =
-        ContentControl.HorizontalContentAlignmentProperty.AddOwner<OverlayHost>();
+    public static readonly StyledProperty<HorizontalAlignment> HorizontalContentAlignmentProperty = ContentControl.HorizontalContentAlignmentProperty.AddOwner<OverlayHost>();
 
-    public static readonly StyledProperty<VerticalAlignment> VerticalContentAlignmentProperty =
-        ContentControl.VerticalContentAlignmentProperty.AddOwner<OverlayHost>();
+    public static readonly StyledProperty<VerticalAlignment> VerticalContentAlignmentProperty = ContentControl.VerticalContentAlignmentProperty.AddOwner<OverlayHost>();
 
     public HorizontalAlignment HorizontalContentAlignment
     {

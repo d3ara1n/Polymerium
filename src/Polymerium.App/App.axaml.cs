@@ -1,3 +1,9 @@
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -12,12 +18,6 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using System;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Polymerium.App;
 
@@ -25,9 +25,9 @@ public class App : Application
 {
     public override void Initialize()
     {
-#if DEBUG
+        #if DEBUG
         this.EnableHotReload();
-#endif
+        #endif
         AvaloniaXamlLoader.Load(this);
     }
 
@@ -47,26 +47,26 @@ public class App : Application
 
     private static void ShowOrDump(object core, bool critical = false)
     {
-        if (core is Exception ex && !critical && Program.AppHost?.Services.GetService<NavigationService>() is
-                { } navigation)
+        if (core is Exception ex && !critical && Program.AppHost?.Services.GetService<NavigationService>() is { } navigation)
             navigation.Navigate<ExceptionView>(ex);
-        else Dump(core);
+        else
+            Dump(core);
     }
 
     private static void Dump(object core)
     {
         var path = Path.Combine(AppContext.BaseDirectory, "dumps", $"Exception-{DateTimeOffset.Now.ToFileTime()}.log");
-        var sb = new StringBuilder(
-            $"""
-             // {DateTimeOffset.Now.ToString()}
-             // {Assembly.GetEntryAssembly()?.GetName().Version}
+        StringBuilder sb = new($"""
+                                // {DateTimeOffset.Now.ToString()}
+                                // {Assembly.GetEntryAssembly()?.GetName().Version}
 
-             """
-        );
+                                """);
         sb.AppendLine();
         DumpInternal(sb, core, 0);
         var dir = Path.GetDirectoryName(path);
-        if (dir is not null && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+        if (dir is not null && !Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
         File.WriteAllText(path, sb.ToString());
     }
 
@@ -82,9 +82,12 @@ public class App : Application
                                     StackTrace: {ae.StackTrace}
 
                                     """);
-                foreach (var inner in ae.InnerExceptions) DumpInternal(builder, inner, level + 1);
+                foreach (var inner in ae.InnerExceptions)
+                    DumpInternal(builder, inner, level + 1);
 
-                if (ae.InnerException is not null) DumpInternal(builder, ae.InnerException, level + 1);
+                if (ae.InnerException is not null)
+                    DumpInternal(builder, ae.InnerException, level + 1);
+
                 break;
             case Exception e:
                 builder.AppendLine($"""
@@ -94,7 +97,9 @@ public class App : Application
                                     StackTrace: {e.StackTrace}
 
                                     """);
-                if (e.InnerException is not null) DumpInternal(builder, e.InnerException, level + 1);
+                if (e.InnerException is not null)
+                    DumpInternal(builder, e.InnerException, level + 1);
+
                 break;
             default:
                 builder.AppendLine($"""
@@ -108,49 +113,50 @@ public class App : Application
 
     private static Window ConstructWindow()
     {
-        if (Program.AppHost is null) return new MainWindow();
+        if (Program.AppHost is null)
+            return new MainWindow();
 
-        var window = new MainWindow();
+        MainWindow window = new();
 
         #region Navigation
 
         // Link navigation service
         var navigation = Program.AppHost.Services.GetRequiredService<NavigationService>();
         // Closure captures Program.AppHost.Services
-        window.BindNavigation(navigation.Navigate, (view, parameter) =>
-        {
-            if (!view.IsAssignableTo(typeof(Page)))
-                throw new ArgumentOutOfRangeException(nameof(view), view,
-                    "Parameter view must be derived from Page");
+        window.BindNavigation(navigation.Navigate,
+                              (view, parameter) =>
+                              {
+                                  if (!view.IsAssignableTo(typeof(Page)))
+                                      throw new ArgumentOutOfRangeException(nameof(view), view, "Parameter view must be derived from Page");
 
-            var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
-            var type = Type.GetType(name);
+                                  var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
+                                  var type = Type.GetType(name);
 
-            var page = Activator.CreateInstance(view) as Page;
+                                  var page = Activator.CreateInstance(view) as Page;
 
-            if (type is not null)
-            {
-                if (!type.IsAssignableTo(typeof(ObservableObject)))
-                    throw new ArgumentOutOfRangeException(nameof(type), type,
-                        $"{view.Name} was bound to a view model which is not derived from ObservableObject");
+                                  if (type is not null)
+                                  {
+                                      if (!type.IsAssignableTo(typeof(ObservableObject)))
+                                          throw new ArgumentOutOfRangeException(nameof(type), type, $"{view.Name} was bound to a view model which is not derived from ObservableObject");
 
-                using var scope = Program.AppHost.Services.CreateScope();
+                                      using var scope = Program.AppHost.Services.CreateScope();
 
-                var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
-                factory.Bag = parameter;
+                                      var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
+                                      factory.Bag = parameter;
 
-                var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
+                                      var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
 
-                if (page is not null)
-                {
-                    page.DataContext = viewModel;
+                                      if (page is not null)
+                                      {
+                                          page.DataContext = viewModel;
 
-                    if (viewModel is IPageModel pageModel) page.Model = pageModel;
-                }
-            }
+                                          if (viewModel is IPageModel pageModel)
+                                              page.Model = pageModel;
+                                      }
+                                  }
 
-            return page;
-        });
+                                  return page;
+                              });
 
         navigation.SetHandler(window.Navigate);
 

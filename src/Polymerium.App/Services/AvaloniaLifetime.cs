@@ -1,8 +1,8 @@
-﻿using Avalonia;
-using Microsoft.Extensions.Hosting;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
+using Microsoft.Extensions.Hosting;
 
 namespace Polymerium.App.Services;
 
@@ -27,6 +27,8 @@ public class AvaloniaLifetime : IHostLifetime
         }
     }
 
+    #region IHostLifetime Members
+
     public Task WaitForStartAsync(CancellationToken cancellationToken)
     {
         _thread.Start();
@@ -37,14 +39,13 @@ public class AvaloniaLifetime : IHostLifetime
         // 因为停止 Host 的唯一方法就是 Avalonia 自己退出，所以这里不需要再返去请求 Avalonia 退出（主要是 Avalonia 没给方法来判断其是否已经 Shutdown）
         Task.CompletedTask;
 
+    #endregion
+
     private void Serve()
     {
-        Program.BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
+        Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
         _parent.StopApplication();
     }
 
-    private void Deserve()
-    {
-    }
+    private void Deserve() { }
 }

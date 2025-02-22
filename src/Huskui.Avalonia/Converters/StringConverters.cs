@@ -15,14 +15,16 @@ public static class StringConverters
 
     public static IValueConverter IsEmpty { get; } = new RelayConverter((v, _) =>
     {
-        if (v is string str) return string.IsNullOrEmpty(str);
+        if (v is string str)
+            return string.IsNullOrEmpty(str);
 
         return false;
     });
 
     public static IValueConverter IsNonEmpty { get; } = new RelayConverter((v, _) =>
     {
-        if (v is string str) return !string.IsNullOrEmpty(str);
+        if (v is string str)
+            return !string.IsNullOrEmpty(str);
 
         return false;
     });

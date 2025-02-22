@@ -1,6 +1,6 @@
-﻿using Humanizer;
+﻿using System;
+using Humanizer;
 using Polymerium.App.Facilities;
-using System;
 
 namespace Polymerium.App.Models;
 

@@ -1,36 +1,30 @@
-﻿using Avalonia;
+﻿using System.Diagnostics;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
-using System.Diagnostics;
 
 namespace Huskui.Avalonia.Controls;
 
 [PseudoClasses(":loading", ":finished", ":failed")]
 public class Page : HeaderedContentControl
 {
-    public static readonly DirectProperty<Page, bool> CanGoBackProperty =
-        Frame.CanGoBackProperty.AddOwner<Page>(o => o.CanGoBack, (o, v) => o.CanGoBack = v,
-            defaultBindingMode: BindingMode.OneWay);
+    public static readonly DirectProperty<Page, bool> CanGoBackProperty = Frame.CanGoBackProperty.AddOwner<Page>(o => o.CanGoBack, (o, v) => o.CanGoBack = v, defaultBindingMode: BindingMode.OneWay);
 
-    public static readonly DirectProperty<Page, bool> IsHeaderVisibleProperty =
-        AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsHeaderVisible), o => o.IsHeaderVisible,
-            (o, v) => o.IsHeaderVisible = v);
+    public static readonly DirectProperty<Page, bool> IsHeaderVisibleProperty = AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsHeaderVisible), o => o.IsHeaderVisible, (o, v) => o.IsHeaderVisible = v);
+
+    public static readonly DirectProperty<Page, bool> IsBackButtonVisibleProperty = AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsBackButtonVisible), o => o.IsBackButtonVisible, (o, v) => o.IsBackButtonVisible = v);
 
     private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     private bool _canGoBack;
 
-    private bool _isHeaderVisible = true;
-
-    public static readonly DirectProperty<Page, bool> IsBackButtonVisibleProperty =
-        AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsBackButtonVisible), o => o.IsBackButtonVisible,
-            (o, v) => o.IsBackButtonVisible = v);
-
     private bool _isBackButtonVisible = true;
+
+    private bool _isHeaderVisible = true;
 
     public bool IsBackButtonVisible
     {
@@ -60,18 +54,22 @@ public class Page : HeaderedContentControl
         if (Model is not null)
         {
             SetState(true);
-            Task.Run(
-                async () => { await Model.InitializeAsync(Dispatcher.UIThread, _cancellationTokenSource.Token); },
-                _cancellationTokenSource.Token).ContinueWith(t =>
-            {
-                Debug.WriteLine("Navigate to page {0} with [Faulted, Cancelled] = [{1}, {2}]", GetType(), t.IsFaulted,
-                    t.IsCanceled);
-                if (t.IsCompletedSuccessfully)
-                    Dispatcher.UIThread.Post(() => SetState(false, true));
-                else if (t.IsCanceled)
-                    Dispatcher.UIThread.Post(() => SetState(false, true));
-                else if (t.IsFaulted) Dispatcher.UIThread.Post(() => SetState(false, false, true));
-            });
+            Task
+               .Run(async () =>
+                    {
+                        await Model.InitializeAsync(Dispatcher.UIThread, _cancellationTokenSource.Token);
+                    },
+                    _cancellationTokenSource.Token)
+               .ContinueWith(t =>
+                {
+                    Debug.WriteLine("Navigate to page {0} with [Faulted, Cancelled] = [{1}, {2}]", GetType(), t.IsFaulted, t.IsCanceled);
+                    if (t.IsCompletedSuccessfully)
+                        Dispatcher.UIThread.Post(() => SetState(false, true));
+                    else if (t.IsCanceled)
+                        Dispatcher.UIThread.Post(() => SetState(false, true));
+                    else if (t.IsFaulted)
+                        Dispatcher.UIThread.Post(() => SetState(false, false, true));
+                });
         }
     }
 
@@ -79,7 +77,9 @@ public class Page : HeaderedContentControl
     {
         base.OnUnloaded(e);
 
-        if (!_cancellationTokenSource.IsCancellationRequested) _cancellationTokenSource.Cancel();
+        if (!_cancellationTokenSource.IsCancellationRequested)
+            _cancellationTokenSource.Cancel();
+
         if (Model is not null)
             Task.Run(async () => await Model.CleanupAsync(CancellationToken.None));
     }

@@ -1,4 +1,13 @@
-﻿using Avalonia.Media.Imaging;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,15 +21,6 @@ using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Refit;
 using Semver;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -29,8 +29,7 @@ namespace Polymerium.App.ViewModels;
 
 public partial class ExhibitionViewModel : ViewModelBase
 {
-    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager,
-        NotificationService notificationService, NavigationService navigationService, OverlayService overlayService)
+    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager, NotificationService notificationService, NavigationService navigationService, OverlayService overlayService)
     {
         _agent = agent;
         _factory = factory;
@@ -39,11 +38,14 @@ public partial class ExhibitionViewModel : ViewModelBase
         _navigationService = navigationService;
         _overlayService = overlayService;
         // TODO: 名字应该在本地化键值对中获取
-        var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x switch
-        {
-            CurseForgeService.LABEL => "CurseForge",
-            _ => x
-        })).ToList();
+        var r = agent
+               .Labels.Select(x => new RepositoryBasicModel(x,
+                                                            x switch
+                                                            {
+                                                                CurseForgeService.LABEL => "CurseForge",
+                                                                _ => x
+                                                            }))
+               .ToList();
         Repositories = r;
 
         SelectedRepository = r.First();
@@ -53,27 +55,26 @@ public partial class ExhibitionViewModel : ViewModelBase
 
     protected override async Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
     {
-        if (token.IsCancellationRequested) return;
+        if (token.IsCancellationRequested)
+            return;
 
         foreach (var repository in Repositories)
             if (repository.Loaders.Count == 0 || repository.Versions.Count == 0)
             {
                 var status = await _agent.CheckStatusAsync(repository.Label);
-                repository.Loaders = status.SupportedLoaders.Select(x => new LoaderDisplayModel(x, x switch
-                {
-                    LoaderHelper.LOADERID_FORGE => "Forge",
-                    LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                    LoaderHelper.LOADERID_FABRIC => "Fabric",
-                    LoaderHelper.LOADERID_QUILT => "QUILT",
-                    LoaderHelper.LOADERID_FLINT => "Flint Loader",
-                    _ => x
-                })).ToList();
-                repository.Versions = status.SupportedVersions
-                    .OrderByDescending(
-                        x => SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem)
-                            ? sem
-                            : new SemVersion(0, 0, 0),
-                        SemVersion.SortOrderComparer).ToList();
+                repository.Loaders = status
+                                    .SupportedLoaders.Select(x => new LoaderDisplayModel(x,
+                                                                                         x switch
+                                                                                         {
+                                                                                             LoaderHelper.LOADERID_FORGE => "Forge",
+                                                                                             LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
+                                                                                             LoaderHelper.LOADERID_FABRIC => "Fabric",
+                                                                                             LoaderHelper.LOADERID_QUILT => "QUILT",
+                                                                                             LoaderHelper.LOADERID_FLINT => "Flint Loader",
+                                                                                             _ => x
+                                                                                         }))
+                                    .ToList();
+                repository.Versions = status.SupportedVersions.OrderByDescending(x => SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem) ? sem : new SemVersion(0, 0, 0), SemVersion.SortOrderComparer).ToList();
             }
     }
 
@@ -105,11 +106,20 @@ public partial class ExhibitionViewModel : ViewModelBase
 
     #region Reactive Properties
 
-    [ObservableProperty] private RepositoryBasicModel _selectedRepository;
-    [ObservableProperty] private string? _filteredVersion;
-    [ObservableProperty] private LoaderDisplayModel? _filteredLoader;
-    [ObservableProperty] private InfiniteCollection<ExhibitModel>? _exhibits;
-    [ObservableProperty] private Bitmap? _headerImage;
+    [ObservableProperty]
+    private RepositoryBasicModel _selectedRepository;
+
+    [ObservableProperty]
+    private string? _filteredVersion;
+
+    [ObservableProperty]
+    private LoaderDisplayModel? _filteredLoader;
+
+    [ObservableProperty]
+    private InfiniteCollection<ExhibitModel>? _exhibits;
+
+    [ObservableProperty]
+    private Bitmap? _headerImage;
 
     #endregion
 
@@ -127,31 +137,31 @@ public partial class ExhibitionViewModel : ViewModelBase
     {
         try
         {
-            var handle = await _agent.SearchAsync(SelectedRepository.Label, query,
-                new Filter(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
-            var source = new InfiniteCollection<ExhibitModel>(async i =>
+            var handle = await _agent.SearchAsync(SelectedRepository.Label, query, new Filter(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
+            InfiniteCollection<ExhibitModel> source = new(async i =>
             {
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
                 try
                 {
                     var rv = await handle.FetchAsync();
-                    var tasks = rv.Select(async x =>
-                    {
-                        Bitmap? thumbnail = null;
-                        if (!Debugger.IsAttached && x.Thumbnail is { IsAbsoluteUri: true })
-                        {
-                            using var client = _factory.CreateClient();
-                            var data = await client.GetByteArrayAsync(x.Thumbnail.AbsoluteUri);
-                            thumbnail = new Bitmap(new MemoryStream(data));
-                        }
-                        else
-                        {
-                            thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
-                        }
+                    var tasks = rv
+                               .Select(async x =>
+                                {
+                                    Bitmap? thumbnail = null;
+                                    if (!Debugger.IsAttached && x.Thumbnail is { IsAbsoluteUri: true })
+                                    {
+                                        using var client = _factory.CreateClient();
+                                        var data = await client.GetByteArrayAsync(x.Thumbnail.AbsoluteUri);
+                                        thumbnail = new Bitmap(new MemoryStream(data));
+                                    }
+                                    else
+                                    {
+                                        thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+                                    }
 
-                        return new ExhibitModel(x.Label, x.Namespace, x.Pid, x.Name, x.Summary,
-                            thumbnail, x.Author, x.Tags, x.UpdatedAt, x.DownloadCount, x.Reference);
-                    }).ToArray();
+                                    return new ExhibitModel(x.Label, x.Namespace, x.Pid, x.Name, x.Summary, thumbnail, x.Author, x.Tags, x.UpdatedAt, x.DownloadCount, x.Reference);
+                                })
+                               .ToArray();
                     await Task.WhenAll(tasks);
                     return tasks.Select(x => x.Result);
                 }
@@ -175,13 +185,15 @@ public partial class ExhibitionViewModel : ViewModelBase
     [RelayCommand]
     private void Install(ExhibitModel? exhibit)
     {
-        if (exhibit is not null) _instanceManager.Install(exhibit.Name, exhibit.Label, exhibit.Ns, exhibit.Pid, null);
+        if (exhibit is not null)
+            _instanceManager.Install(exhibit.Name, exhibit.Label, exhibit.Ns, exhibit.Pid, null);
     }
 
     [RelayCommand]
     private void ViewDetails(ExhibitModel? exhibit)
     {
-        if (exhibit is not null) _overlayService.PopToast(new ExhibitionModpackToast());
+        if (exhibit is not null)
+            _overlayService.PopToast(new ExhibitionModpackToast());
     }
 
     #endregion

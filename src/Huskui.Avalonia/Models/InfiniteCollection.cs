@@ -3,16 +3,19 @@ using System.ComponentModel;
 
 namespace Huskui.Avalonia.Models;
 
-public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int startIndex = 0)
-    : ObservableCollection<T>, IInfiniteCollection
+public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int startIndex = 0) : ObservableCollection<T>, IInfiniteCollection
 {
     private bool _hasNext = true;
     private int _index = startIndex;
     private bool _isFetching;
 
+    #region IInfiniteCollection Members
+
     public async Task FetchAsync()
     {
-        if (IsFetching) return;
+        if (IsFetching)
+            return;
+
         IsFetching = true;
         var rv = await factory.Invoke(_index++);
         var dirty = false;
@@ -31,7 +34,9 @@ public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int 
         get => _hasNext;
         set
         {
-            if (_hasNext == value) return;
+            if (_hasNext == value)
+                return;
+
             _hasNext = value;
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(HasNext)));
         }
@@ -42,9 +47,13 @@ public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int 
         get => _isFetching;
         set
         {
-            if (_isFetching == value) return;
+            if (_isFetching == value)
+                return;
+
             _isFetching = value;
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsFetching)));
         }
     }
+
+    #endregion
 }

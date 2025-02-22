@@ -1,10 +1,10 @@
-﻿using Avalonia;
+﻿using System.Windows.Input;
+using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
 using Avalonia.Data;
-using System.Windows.Input;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -12,22 +12,20 @@ namespace Huskui.Avalonia.Controls;
 [TemplatePart(PART_ContentPresenter2, typeof(ContentPresenter))]
 public class Frame : ContentControl
 {
+    #region Delegates
+
     public delegate object? PageActivatorDelegate(Type page, object? parameter);
+
+    #endregion
 
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
     public const string PART_ContentPresenter2 = nameof(PART_ContentPresenter2);
 
-    public static readonly DirectProperty<Frame, IPageTransition> DefaultTransitionProperty =
-        AvaloniaProperty.RegisterDirect<Frame, IPageTransition>(nameof(DefaultTransition), o => o.DefaultTransition,
-            (o, v) => o.DefaultTransition = v);
+    public static readonly DirectProperty<Frame, IPageTransition> DefaultTransitionProperty = AvaloniaProperty.RegisterDirect<Frame, IPageTransition>(nameof(DefaultTransition), o => o.DefaultTransition, (o, v) => o.DefaultTransition = v);
 
-    public static readonly DirectProperty<Frame, bool> CanGoBackProperty =
-        AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBack), o => o.CanGoBack,
-            defaultBindingMode: BindingMode.OneWay);
+    public static readonly DirectProperty<Frame, bool> CanGoBackProperty = AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBack), o => o.CanGoBack, defaultBindingMode: BindingMode.OneWay);
 
-    public static readonly DirectProperty<Frame, bool> CanGoBackOutOfStackProperty =
-        AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBackOutOfStack), o => o.CanGoBackOutOfStack,
-            (o, v) => o.CanGoBackOutOfStack = v);
+    public static readonly DirectProperty<Frame, bool> CanGoBackOutOfStackProperty = AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBackOutOfStack), o => o.CanGoBackOutOfStack, (o, v) => o.CanGoBackOutOfStack = v);
 
 
     private readonly InternalGoBackCommand _goBackCommand;
@@ -41,8 +39,7 @@ public class Frame : ContentControl
     private CancellationTokenSource? _currentToken;
 
 
-    private IPageTransition _defaultTransition = TransitioningContentControl.PageTransitionProperty.GetDefaultValue(
-        typeof(TransitioningContentControl)) ?? new CrossFade(TimeSpan.FromMilliseconds(197));
+    private IPageTransition _defaultTransition = TransitioningContentControl.PageTransitionProperty.GetDefaultValue(typeof(TransitioningContentControl)) ?? new CrossFade(TimeSpan.FromMilliseconds(197));
 
     private bool _doubleArrangeSafeLock;
     private ContentPresenter? _presenter;
@@ -67,18 +64,17 @@ public class Frame : ContentControl
 
     public bool CanGoBack => _history.Count > 0 || CanGoBackOutOfStack;
 
-    public PageActivatorDelegate PageActivator { get; set; } =
-        (t, _) => Activator.CreateInstance(t);
+    public PageActivatorDelegate PageActivator { get; set; } = (t, _) => Activator.CreateInstance(t);
 
     public void Navigate(Type page, object? parameter, IPageTransition? transition)
     {
         ArgumentNullException.ThrowIfNull(_presenter);
         ArgumentNullException.ThrowIfNull(_presenter2);
-        var content = PageActivator(page, parameter) ??
-                      throw new InvalidOperationException($"Activating {page.Name} gets null page model");
+        var content = PageActivator(page, parameter) ?? throw new InvalidOperationException($"Activating {page.Name} gets null page model");
         var old = CanGoBack;
         if (_currentFrame is not null)
             _history.Push(_currentFrame);
+
         _currentFrame = new FrameFrame(page, parameter, transition);
 
         UpdateContent(content, transition ?? DefaultTransition, false);
@@ -129,7 +125,7 @@ public class Frame : ContentControl
         {
             _currentToken?.Cancel();
             _doubleArrangeSafeLock = false;
-            var cancel = new CancellationTokenSource();
+            CancellationTokenSource? cancel = new();
             _currentToken = cancel;
 
             var (from, to) = _presenter.Content is not null ? (_presenter, _presenter2) : (_presenter2, _presenter);
@@ -138,16 +134,20 @@ public class Frame : ContentControl
             (from.IsVisible, to.IsVisible) = (true, true);
             to.Content = _current.Value.Content;
 
-            _current.Value.Transition.Start(from, to, !_current.Value.Reverse, cancel.Token)
-                .ContinueWith(_ =>
-                {
-                    if (cancel.IsCancellationRequested) return;
-                    (from.IsVisible, to.IsVisible) = (false, true);
-                    from.Content = null;
-                    // NOTE: ContentControl.Content 改变会移除 from.Content 自 LogicalChildren，这会导致 from.Content 的 DynamicResource 全部失效
-                    // 因此要放在动画结束 from 退出时对 Content 进行设置
-                    Content = to.Content;
-                }, TaskScheduler.FromCurrentSynchronizationContext());
+            _current
+               .Value.Transition.Start(from, to, !_current.Value.Reverse, cancel.Token)
+               .ContinueWith(_ =>
+                             {
+                                 if (cancel.IsCancellationRequested)
+                                     return;
+
+                                 (from.IsVisible, to.IsVisible) = (false, true);
+                                 from.Content = null;
+                                 // NOTE: ContentControl.Content 改变会移除 from.Content 自 LogicalChildren，这会导致 from.Content 的 DynamicResource 全部失效
+                                 // 因此要放在动画结束 from 退出时对 Content 进行设置
+                                 Content = to.Content;
+                             },
+                             TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         return rv;
@@ -170,6 +170,8 @@ public class Frame : ContentControl
         return false;
     }
 
+    #region Nested type: FrameFrame
+
     // protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     // {
     //     base.OnApplyTemplate(e);
@@ -179,14 +181,24 @@ public class Frame : ContentControl
 
     public record FrameFrame(Type Page, object? Parameter, IPageTransition? Transition);
 
+    #endregion
+
+    #region Nested type: InternalGoBackCommand
+
     private class InternalGoBackCommand(Frame host) : ICommand
     {
+        #region ICommand Members
+
         public bool CanExecute(object? parameter) => host.CanGoBack;
 
         public void Execute(object? parameter) => host.GoBack();
 
         public event EventHandler? CanExecuteChanged;
 
+        #endregion
+
         internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
+
+    #endregion
 }

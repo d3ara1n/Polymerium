@@ -1,10 +1,10 @@
-﻿using Avalonia.Media.Imaging;
+﻿using System;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.Trident.Utilities;
-using System;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
@@ -33,18 +33,25 @@ public partial class InstanceBasicModel : ModelBase
     public void UpdateIcon()
     {
         var iconPath = ProfileHelper.PickIcon(Key);
-        Thumbnail = iconPath is not null
-            ? new Bitmap(iconPath)
-            : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+        Thumbnail = iconPath is not null ? new Bitmap(iconPath) : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
     }
 
     #region Reactive Properties
 
-    [ObservableProperty] private string _name;
-    [ObservableProperty] private string _version;
-    [ObservableProperty] private string _loaderLabel = "Vanilla";
-    [ObservableProperty] private string _sourceLabel = "local";
-    [ObservableProperty] private Bitmap _thumbnail;
+    [ObservableProperty]
+    private string _name;
+
+    [ObservableProperty]
+    private string _version;
+
+    [ObservableProperty]
+    private string _loaderLabel = "Vanilla";
+
+    [ObservableProperty]
+    private string _sourceLabel = "local";
+
+    [ObservableProperty]
+    private Bitmap _thumbnail;
 
     private string? _source;
 
@@ -54,8 +61,7 @@ public partial class InstanceBasicModel : ModelBase
         set
         {
             SetProperty(ref _source, value);
-            if (!string.IsNullOrEmpty(value) &&
-                PackageHelper.TryParse(value, out var result))
+            if (!string.IsNullOrEmpty(value) && PackageHelper.TryParse(value, out var result))
                 SourceLabel = result.Label;
         }
     }

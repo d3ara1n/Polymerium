@@ -1,14 +1,12 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Huskui.Avalonia.Controls;
-using System;
 
 namespace Polymerium.App.Controls;
 
 public class ScopedPage : Page
 {
-    public static readonly DirectProperty<ScopedPage, bool> IsMaximizedProperty =
-        AppWindow.IsMaximizedProperty.AddOwner<ScopedPage>(o => o.IsMaximized,
-            (o, v) => o.IsMaximized = v);
+    public static readonly DirectProperty<ScopedPage, bool> IsMaximizedProperty = AppWindow.IsMaximizedProperty.AddOwner<ScopedPage>(o => o.IsMaximized, (o, v) => o.IsMaximized = v);
 
     private bool isMaximized;
 
