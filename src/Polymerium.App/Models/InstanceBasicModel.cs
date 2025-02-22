@@ -1,6 +1,4 @@
-﻿using System;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
+﻿using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
@@ -33,7 +31,7 @@ public partial class InstanceBasicModel : ModelBase
     public void UpdateIcon()
     {
         var iconPath = ProfileHelper.PickIcon(Key);
-        Thumbnail = iconPath is not null ? new Bitmap(iconPath) : new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+        Thumbnail = iconPath is not null ? new Bitmap(iconPath) : AssetUriIndex.DIRT_IMAGE_BITMAP;
     }
 
     #region Reactive Properties

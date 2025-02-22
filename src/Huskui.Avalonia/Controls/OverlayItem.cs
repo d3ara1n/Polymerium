@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Avalonia;
+using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
@@ -18,6 +19,18 @@ public class OverlayItem : ContentControl
     public static readonly DirectProperty<OverlayItem, ICommand?> DismissCommandProperty = AvaloniaProperty.RegisterDirect<OverlayItem, ICommand?>(nameof(DismissCommand), o => o.DismissCommand, (o, v) => o.DismissCommand = v);
 
     private ContentPresenter? _contentPresenter;
+
+    public static readonly DirectProperty<OverlayItem, IPageTransition?> TransitionProperty = AvaloniaProperty.RegisterDirect<OverlayItem, IPageTransition?>(nameof(Transition), o => o.Transition, (o, v) => o.Transition = v);
+
+    private IPageTransition? _transition;
+
+    public IPageTransition? Transition
+    {
+        get => _transition;
+        set => SetAndRaise(TransitionProperty, ref _transition, value);
+    }
+
+    
 
     private ICommand? _dismissCommand;
 

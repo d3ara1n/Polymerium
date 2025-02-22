@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Assets;
@@ -18,7 +17,7 @@ public partial class ExhibitModel : ModelBase
         _pid = pid;
         _name = name;
         _summary = summary;
-        _thumbnail = thumbnail ?? new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+        _thumbnail = thumbnail ?? AssetUriIndex.DIRT_IMAGE_BITMAP;
         _author = author;
         _tags = tags;
         _updatedAt = updatedAt.Humanize();

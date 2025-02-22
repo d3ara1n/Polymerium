@@ -57,7 +57,7 @@ public class Page : HeaderedContentControl
             Task
                .Run(async () =>
                     {
-                        await Model.InitializeAsync(Dispatcher.UIThread, _cancellationTokenSource.Token);
+                        await Model.InitializeAsync(_cancellationTokenSource.Token);
                     },
                     _cancellationTokenSource.Token)
                .ContinueWith(t =>

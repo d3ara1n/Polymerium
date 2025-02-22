@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Collections;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
@@ -43,7 +42,7 @@ public partial class UnknownViewModel(ViewBag bag, NotificationService notificat
             }))
     ];
 
-    protected override Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token) => Task.Delay(TimeSpan.FromSeconds(7), token);
+    protected override Task OnInitializedAsync(CancellationToken token) => Task.Delay(TimeSpan.FromSeconds(7), token);
 
     #region Commands
 

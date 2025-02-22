@@ -1,7 +1,14 @@
-﻿namespace Polymerium.Trident.Utilities;
+﻿using MimeDetective;
+using MimeDetective.Definitions;
+using FileStream = System.IO.FileStream;
+
+namespace Polymerium.Trident.Utilities;
 
 public static class FileHelper
 {
+    private static readonly string[] SUPPORTED_BITMAP_MIMES = ["image/jpeg", "image/png", "image/bmp", "image/gif", "image/tiff"];
+    private static readonly IContentInspector inspector = new ContentInspectorBuilder { Definitions = DefaultDefinitions.All() }.Build();
+
     public static string? PickExists(string home, Span<string> candidates)
     {
         foreach (var candidate in candidates)
@@ -25,5 +32,38 @@ public static class FileHelper
 
         var index = Random.Shared.Next(files.Length);
         return files[index];
+    }
+
+    public static bool IsBitmapFile(string path)
+    {
+        if (File.Exists(path))
+        {
+            var results = inspector.Inspect(path).ByMimeType();
+            if (results.Any(x => SUPPORTED_BITMAP_MIMES.Contains(x.MimeType)))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static string GuessBitmapExtension(Stream stream, string fallback = "png") => inspector.Inspect(stream).ByFileExtension().OrderBy(x => -x.Points).Select(x => x.Extension).FirstOrDefault() ?? fallback;
+
+    public static async Task<bool> TryWriteToFileAsync(string path, Stream stream)
+    {
+        try
+        {
+            var parent = Path.GetDirectoryName(path);
+            if (parent != null && !Directory.Exists(parent))
+                Directory.CreateDirectory(parent);
+            var writer = new FileStream(path, FileMode.Create, FileAccess.Write);
+            await stream.CopyToAsync(writer);
+            await writer.FlushAsync();
+            writer.Close();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

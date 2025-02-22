@@ -7,8 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Collections;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -75,7 +73,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
         }
     }
 
-    protected override async Task OnInitializedAsync(Dispatcher dispatcher, CancellationToken token)
+    protected override async Task OnInitializedAsync(CancellationToken token)
     {
         _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var result))
@@ -93,7 +91,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
                 }
                 else
                 {
-                    thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+                    thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
                 }
 
                 var page = await (await _repositories.InspectAsync(result.Label, result.Namespace, result.Pid, Filter.Empty with { Kind = ResourceKind.Modpack })).FetchAsync();
@@ -121,7 +119,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
                                                       }
                                                       else
                                                       {
-                                                          model.Thumbnail = new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.DIRT_IMAGE)));
+                                                          model.Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
                                                       }
 
                                                       model.Name = p.ProjectName;
@@ -131,9 +129,9 @@ public partial class InstanceSetupViewModel : ViewModelBase
                                                       model.Reference = p.Reference;
                                                       model.IsLoaded = true;
                                                   }
-                                                  catch
+                                                  catch (Exception ex)
                                                   {
-                                                      // ignore
+                                                      _notificationService.PopMessage($"{purl}: {ex.Message}", "Failed to parse purl", NotificationLevel.Warning);
                                                   }
                                               }
                                           },
@@ -202,7 +200,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
 
     #endregion
 
-    #region Rectives Models
+    #region Reactive
 
     [ObservableProperty]
     private InstanceBasicModel _basic;

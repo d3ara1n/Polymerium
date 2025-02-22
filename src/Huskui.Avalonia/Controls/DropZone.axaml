@@ -5,44 +5,41 @@
     <Design.PreviewWith>
         <Panel Background="{StaticResource SystemChromeWhiteColor}">
             <local:DropZone Margin="12">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" Spacing="4">
-                        <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" />
-                        <TextBlock FontWeight="Bold">
-                            <Run Text="Drag and drop, or" />
-                            <Run Text="Browse files..." Foreground="{DynamicResource ControlAccentForegroundBrush}" />
-                        </TextBlock>
+                <Panel>
+                    <Rectangle RadiusX="6" RadiusY="6"
+                               StrokeThickness="2"
+                               Stroke="{DynamicResource ControlBorderBrush}"
+                               StrokeDashArray="6,2"
+                               StrokeLineCap="Round"
+                               StrokeJoin="Round" />
+                    <StackPanel Margin="16,12">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" />
+                            <TextBlock FontWeight="Bold">
+                                <Run Text="Drag and drop, or" />
+                                <Run Text="Browse files..." Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBlock Text="Up to 12MB" HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
-                    <TextBlock Text="Up to 12MB" HorizontalAlignment="Center"
-                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                </StackPanel>
+                </Panel>
             </local:DropZone>
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:DropZone}" TargetType="local:DropZone">
-        <Setter Property="Padding" Value="16,12" />
-        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
-        <Setter Property="StrokeBrush" Value="{DynamicResource ControlBorderBrush}" />
-        <Setter Property="StrokeThickness" Value="2" />
-        <Setter Property="StrokeDashArray" Value="6,2" />
-        <Setter Property="Radius" Value="6" />
+        <Setter Property="Padding" Value="12" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border>
-                    <Panel>
-                        <Rectangle Fill="{TemplateBinding Background}"
-                                   RadiusX="{TemplateBinding Radius}" RadiusY="{TemplateBinding Radius}"
-                                   StrokeThickness="{TemplateBinding StrokeThickness}"
-                                   Stroke="{TemplateBinding StrokeBrush}"
-                                   StrokeDashArray="{TemplateBinding StrokeDashArray}"
-                                   StrokeLineCap="Round"
-                                   StrokeJoin="Round" />
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                                          Padding="{TemplateBinding Padding}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Panel>
+                <Border Background="{TemplateBinding Background}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      Padding="{TemplateBinding Padding}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                 </Border>
             </ControlTemplate>
         </Setter>
