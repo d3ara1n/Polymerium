@@ -32,7 +32,13 @@ public partial class InstanceSetupViewModel : ViewModelBase
     private readonly ProfileGuard _owned;
     private CancellationTokenSource? _cancellationTokenSource;
 
-    public InstanceSetupViewModel(ViewBag bag, ProfileManager profileManager, RepositoryAgent repositories, IHttpClientFactory clientFactory, NotificationService notificationService, InstanceManager instanceManager)
+    public InstanceSetupViewModel(
+        ViewBag bag,
+        ProfileManager profileManager,
+        RepositoryAgent repositories,
+        IHttpClientFactory clientFactory,
+        NotificationService notificationService,
+        InstanceManager instanceManager)
     {
         _repositories = repositories;
         _clientFactory = clientFactory;
@@ -43,8 +49,13 @@ public partial class InstanceSetupViewModel : ViewModelBase
             if (profileManager.TryGetMutable(key, out var mutable))
             {
                 _owned = mutable;
-                Basic = new InstanceBasicModel(key, mutable.Value.Name, mutable.Value.Setup.Version, mutable.Value.Setup.Loader, mutable.Value.Setup.Source);
-                if (mutable.Value.Setup.Loader is not null && LoaderHelper.TryParse(mutable.Value.Setup.Loader, out var result))
+                Basic = new InstanceBasicModel(key,
+                                               mutable.Value.Name,
+                                               mutable.Value.Setup.Version,
+                                               mutable.Value.Setup.Loader,
+                                               mutable.Value.Setup.Source);
+                if (mutable.Value.Setup.Loader is not null
+                 && LoaderHelper.TryParse(mutable.Value.Setup.Loader, out var result))
                 {
                     var loader = result.Identity switch
                     {
@@ -64,7 +75,8 @@ public partial class InstanceSetupViewModel : ViewModelBase
             }
             else
             {
-                throw new PageNotReachedException(typeof(InstanceView), $"Key '{key}' is not valid instance or not found");
+                throw new PageNotReachedException(typeof(InstanceView),
+                                                  $"Key '{key}' is not valid instance or not found");
             }
         }
         else
@@ -80,7 +92,11 @@ public partial class InstanceSetupViewModel : ViewModelBase
         {
             try
             {
-                var package = await _repositories.ResolveAsync(result.Label, result.Namespace, result.Pid, result.Vid, Filter.Empty with { Kind = ResourceKind.Modpack });
+                var package = await _repositories.ResolveAsync(result.Label,
+                                                               result.Namespace,
+                                                               result.Pid,
+                                                               result.Vid,
+                                                               Filter.Empty with { Kind = ResourceKind.Modpack });
 
                 Bitmap thumbnail;
                 if (!Debugger.IsAttached && package.Thumbnail is not null)
@@ -94,65 +110,101 @@ public partial class InstanceSetupViewModel : ViewModelBase
                     thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
                 }
 
-                var page = await (await _repositories.InspectAsync(result.Label, result.Namespace, result.Pid, Filter.Empty with { Kind = ResourceKind.Modpack })).FetchAsync();
-                var versions = page.Select(x => new InstanceVersionModel(x.Label, x.Namespace, x.ProjectId, x.VersionId, x.VersionName, x.ReleaseType, x.PublishedAt) { IsCurrent = x.VersionId == package.VersionId }).ToList();
+                var page = await (await _repositories.InspectAsync(result.Label,
+                                                                   result.Namespace,
+                                                                   result.Pid,
+                                                                   Filter.Empty with { Kind = ResourceKind.Modpack }))
+                              .FetchAsync();
+                var versions = page
+                              .Select(x => new InstanceVersionModel(x.Label,
+                                                                    x.Namespace,
+                                                                    x.ProjectId,
+                                                                    x.VersionId,
+                                                                    x.VersionName,
+                                                                    x.ReleaseType,
+                                                                    x.PublishedAt)
+                               {
+                                   IsCurrent = x.VersionId == package.VersionId
+                               })
+                              .ToList();
 
-                Reference = new InstanceReferenceModel { Name = package.ProjectName, Thumbnail = thumbnail, SourceUrl = package.Reference, SourceLabel = package.Label, Versions = versions, CurrentVersion = versions.FirstOrDefault() };
-
-                InstancePackageModel Load(string purl)
+                Reference = new InstanceReferenceModel
                 {
-                    InstancePackageModel model = new(purl);
-                    model.Task = Task.Run(async () =>
-                                          {
-                                              await Task.Delay(TimeSpan.FromSeconds(1), _cancellationTokenSource.Token);
-                                              if (PackageHelper.TryParse(model.Purl, out var v))
-                                              {
-                                                  try
-                                                  {
-                                                      var p = await _repositories.ResolveAsync(v.Label, v.Namespace, v.Pid, v.Vid, Filter.Empty);
-
-                                                      if (!Debugger.IsAttached && p.Thumbnail is not null)
-                                                      {
-                                                          var c = _clientFactory.CreateClient();
-                                                          var b = await c.GetByteArrayAsync(p.Thumbnail, _cancellationTokenSource.Token);
-                                                          model.Thumbnail = new Bitmap(new MemoryStream(b));
-                                                      }
-                                                      else
-                                                      {
-                                                          model.Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
-                                                      }
-
-                                                      model.Name = p.ProjectName;
-                                                      model.Version = p.VersionName;
-                                                      model.Summary = p.Summary;
-                                                      model.Kind = p.Kind;
-                                                      model.Reference = p.Reference;
-                                                      model.IsLoaded = true;
-                                                  }
-                                                  catch (Exception ex)
-                                                  {
-                                                      _notificationService.PopMessage($"{purl}: {ex.Message}", "Failed to parse purl", NotificationLevel.Warning);
-                                                  }
-                                              }
-                                          },
-                                          _cancellationTokenSource.Token);
-                    return model;
-                }
-
-                var stages = _owned.Value.Setup.Stage.Select(Load).ToList();
-                var stashes = _owned.Value.Setup.Stash.Select(Load).ToList();
-                var drafts = _owned.Value.Setup.Draft.Select(Load).ToList();
-                StageCount = stages.Count;
-                StashCount = stashes.Count;
-                Stage.AddOrUpdate(stages);
-                Stash.AddOrUpdate(stashes);
-                Draft.AddRange(drafts);
+                    Name = package.ProjectName,
+                    Thumbnail = thumbnail,
+                    SourceUrl = package.Reference,
+                    SourceLabel = package.Label,
+                    Versions = versions,
+                    CurrentVersion = versions.FirstOrDefault()
+                };
             }
-            catch (ResourceNotFoundException ex)
+            catch (Exception ex)
             {
-                _notificationService.PopMessage("Fetching modpack information failed", level: NotificationLevel.Warning);
-                Debug.WriteLine($"Resource not found: {ex.Message}");
+                _notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
+                                                "Fetching modpack information failed",
+                                                NotificationLevel.Warning);
             }
+        }
+
+        try
+        {
+            var stages = _owned.Value.Setup.Stage.Select(Load).ToList();
+            var stashes = _owned.Value.Setup.Stash.Select(Load).ToList();
+            var drafts = _owned.Value.Setup.Draft.Select(Load).ToList();
+            StageCount = stages.Count;
+            StashCount = stashes.Count;
+            Stage.AddOrUpdate(stages);
+            Stash.AddOrUpdate(stashes);
+            Draft.AddRange(drafts);
+
+            InstancePackageModel Load(string purl)
+            {
+                InstancePackageModel model = new(purl);
+                model.Task = Task.Run(async () =>
+                                      {
+                                          await Task.Delay(TimeSpan.FromSeconds(1), _cancellationTokenSource.Token);
+                                          if (PackageHelper.TryParse(model.Purl, out var v))
+                                              try
+                                              {
+                                                  var p = await _repositories.ResolveAsync(v.Label,
+                                                              v.Namespace,
+                                                              v.Pid,
+                                                              v.Vid,
+                                                              Filter.Empty);
+
+                                                  if (!Debugger.IsAttached && p.Thumbnail is not null)
+                                                  {
+                                                      var c = _clientFactory.CreateClient();
+                                                      var b = await c.GetByteArrayAsync(p.Thumbnail,
+                                                                  _cancellationTokenSource.Token);
+                                                      model.Thumbnail = new Bitmap(new MemoryStream(b));
+                                                  }
+                                                  else
+                                                  {
+                                                      model.Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
+                                                  }
+
+                                                  model.Name = p.ProjectName;
+                                                  model.Version = p.VersionName;
+                                                  model.Summary = p.Summary;
+                                                  model.Kind = p.Kind;
+                                                  model.Reference = p.Reference;
+                                                  model.IsLoaded = true;
+                                              }
+                                              catch (Exception ex)
+                                              {
+                                                  _notificationService.PopMessage($"{purl}: {ex.Message}",
+                                                      "Failed to parse purl",
+                                                      NotificationLevel.Warning);
+                                              }
+                                      },
+                                      _cancellationTokenSource.Token);
+                return model;
+            }
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex.Message, "Loading package list failed", NotificationLevel.Warning);
         }
     }
 
