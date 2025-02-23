@@ -8,6 +8,7 @@
                 <Panel>
                     <ScrollContentPresenter Name="PART_ContentPresenter"
                                             Padding="{TemplateBinding Padding}"
+                                            ClipToBounds="{TemplateBinding ClipToBounds}"
                                             HorizontalSnapPointsType="{TemplateBinding HorizontalSnapPointsType}"
                                             VerticalSnapPointsType="{TemplateBinding VerticalSnapPointsType}"
                                             HorizontalSnapPointsAlignment="{TemplateBinding HorizontalSnapPointsAlignment}"

@@ -8,7 +8,7 @@
                      xmlns:vm="using:Polymerium.App.ViewModels"
                      mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                     x:Class="Polymerium.App.Views.InstanceCreationView" x:DataType="vm:InstanceCreationViewModel">
+                     x:Class="Polymerium.App.Views.NewInstanceView" x:DataType="vm:NewInstanceViewModel">
     <controls:ScopedPage.Header>
         <DockPanel>
             <Button DockPanel.Dock="Right" Classes="Primary" Content="Create" Command="{Binding CreateCommand}" />

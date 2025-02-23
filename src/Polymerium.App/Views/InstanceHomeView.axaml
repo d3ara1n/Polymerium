@@ -1,0 +1,169 @@
+﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                  xmlns:fi="using:FluentIcons.Avalonia"
+                  xmlns:controls="using:Polymerium.App.Controls"
+                  xmlns:v="using:Polymerium.App.Views"
+                  xmlns:vm="using:Polymerium.App.ViewModels"
+                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="880"
+                  x:Class="Polymerium.App.Views.InstanceHomeView" x:DataType="vm:InstanceHomeViewModel">
+    <controls:Subpage.Resources>
+        <ControlTheme x:Key="SectionHeaderButtonTheme" TargetType="Button" BasedOn="{StaticResource GhostButtonTheme}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="12,4" />
+        </ControlTheme>
+        <ControlTheme x:Key="LaunchButtonTheme" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
+            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="BorderThickness" Value="0,0,0,6" />
+            <Setter Property="RenderTransformOrigin" Value="50%,100%" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform"
+                                                   Duration="{StaticResource ControlFastestAnimationDuration}" />
+                    <ThicknessTransition Property="BorderThickness"
+                                         Duration="{StaticResource ControlFastestAnimationDuration}" />
+                </Transitions>
+            </Setter>
+
+            <Style Selector="^:pressed">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="RenderTransform" Value="scaleY(0.98)" />
+            </Style>
+        </ControlTheme>
+    </controls:Subpage.Resources>
+    <Grid MaxWidth="1024" MaxHeight="648">
+        <!-- RowDefinitions="182,24,230,24,100" -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="230" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230" />
+            <ColumnDefinition Width="24" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="24" />
+            <ColumnDefinition Width="*" MinWidth="230" />
+        </Grid.ColumnDefinitions>
+        <husk:Card Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="0" Padding="0">
+            <Panel>
+                <Border Opacity="0.75" CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Border.Background>
+                        <ImageBrush Stretch="UniformToFill"
+                                    Source="{Binding Screenshot}" />
+                    </Border.Background>
+                    <Border.OpacityMask>
+                        <LinearGradientBrush StartPoint="0%,10%"
+                                             EndPoint="100%,100%">
+                            <GradientStop Offset="0"
+                                          Color="#7F000000" />
+                            <GradientStop Offset="1" Color="#FF000000" />
+                        </LinearGradientBrush>
+                    </Border.OpacityMask>
+                </Border>
+                <Grid RowDefinitions="Auto,8,Auto" Margin="24">
+                    <husk:Tag Grid.Row="0" Content="Overview" />
+                    <TextBlock Grid.Row="2" Text="{Binding Basic.Name}" TextTrimming="CharacterEllipsis" FontSize="36" />
+                </Grid>
+            </Panel>
+        </husk:Card>
+        <husk:Card Grid.Row="0" Grid.Column="4" />
+        <Grid Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" RowDefinitions="Auto,12,*">
+            <Button Grid.Row="0" Theme="{StaticResource SectionHeaderButtonTheme}"
+                    Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                    CommandParameter="{x:Type v:InstancePropertyView}">
+                <Grid ColumnDefinitions="*,12,Auto">
+                    <TextBlock Grid.Column="0" Text="Activities" FontSize="{StaticResource LargeFontSize}"
+                               FontWeight="Bold" />
+                    <fi:SymbolIcon Grid.Column="2" Symbol="ArrowRight" FontSize="{StaticResource MediumFontSize}" />
+                </Grid>
+            </Button>
+            <husk:Card Grid.Row="2">
+                <Grid RowDefinitions="*,12,Auto">
+                    <Panel Grid.Row="0">
+                        <Panel Width="122" Height="122">
+                            <Arc Stroke="{DynamicResource ControlBackgroundBrush}" SweepAngle="360"
+                                 StrokeThickness="2" Margin="1" />
+                            <Arc Stroke="{DynamicResource ControlAccentBackgroundBrush}" StartAngle="-90"
+                                 SweepAngle="122"
+                                 StrokeThickness="4" />
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock TextAlignment="Center">
+                                    <Run Text="Total Hours" />
+                                    <LineBreak />
+                                    <Run Text="12.4" FontSize="{StaticResource ExtraLargeFontSize}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Panel>
+                    </Panel>
+                    <StackPanel Grid.Row="2" Spacing="8">
+                        <husk:Card Background="Transparent">
+                            <Grid ColumnDefinitions="Auto,4,*,4,Auto">
+                                <fi:SymbolIcon Grid.Column="0" Symbol="HourglassHalf"
+                                               FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Grid.Column="4" Text="54.1 mins" />
+                            </Grid>
+                        </husk:Card>
+                        <husk:Card Background="Transparent">
+                            <Grid ColumnDefinitions="Auto,4,*,4,Auto">
+                                <fi:SymbolIcon Grid.Column="0" Symbol="Clock"
+                                               FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Grid.Column="4" Text="one day ago" />
+                            </Grid>
+                        </husk:Card>
+                    </StackPanel>
+                </Grid>
+            </husk:Card>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" RowDefinitions="Auto,12,*">
+            <Button Grid.Row="0" Theme="{StaticResource SectionHeaderButtonTheme}"
+                    Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                    CommandParameter="{x:Type v:InstanceSetupView}">
+                <Grid ColumnDefinitions="*,12,Auto">
+                    <TextBlock Grid.Column="0" Text="Widget" FontSize="{StaticResource LargeFontSize}"
+                               FontWeight="Bold" />
+                    <fi:SymbolIcon Grid.Column="2" Symbol="ArrowRight" FontSize="{StaticResource MediumFontSize}" />
+                </Grid>
+            </Button>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12">
+                <husk:Card Width="198" />
+                <husk:Card Width="198" />
+                <husk:Card Width="198" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" RowDefinitions="Auto,12,*">
+            <TextBlock Grid.Row="0" Text="Launch Pad" FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
+            <husk:Card Grid.Row="2" Padding="0">
+                <Grid ColumnDefinitions="Auto,8,*,8,Auto">
+                    <Button Grid.Column="0" Theme="{StaticResource GhostButtonTheme}" Margin="4" Padding="12"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                        <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
+                            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="36" Width="36">
+                                <Border.Background>
+                                    <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" Stretch="Fill" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Steve" FontWeight="Bold"
+                                       FontSize="{StaticResource LargeFontSize}" />
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="Microsoft"
+                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                        </Grid>
+                    </Button>
+                    <Button Grid.Column="4" Margin="4" Theme="{StaticResource LaunchButtonTheme}">
+                        <StackPanel VerticalAlignment="Center">
+                            <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" />
+                            <TextBlock Text="LAUNCH" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </husk:Card>
+        </Grid>
+
+    </Grid>
+</controls:Subpage>

@@ -52,8 +52,8 @@
                         <Rectangle HorizontalAlignment="Right" Opacity="0.5"
                                    Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=TemplatedParent}}">
                             <Rectangle.Fill>
-                                <ImageBrush
-                                    Source="{Binding Basic.Thumbnail,FallbackValue={x:Null}, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                <ImageBrush Stretch="Fill"
+                                            Source="{Binding Basic.Thumbnail,FallbackValue={x:Null}, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             </Rectangle.Fill>
                             <Rectangle.OpacityMask>
                                 <LinearGradientBrush StartPoint="0%,50%"
@@ -93,7 +93,7 @@
                             <Border Name="SpacingPlaceholder" />
                             <WrapPanel DockPanel.Dock="Bottom">
                                 <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <husk:Tag Name="InstallingTag">
+                                    <husk:Tag Name="InstallingTag" Classes="Warning">
                                         <StackPanel Orientation="Horizontal"
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
@@ -101,7 +101,7 @@
                                             <TextBlock Text="INSTALLING" />
                                         </StackPanel>
                                     </husk:Tag>
-                                    <husk:Tag Name="UpdatingTag">
+                                    <husk:Tag Name="UpdatingTag" Classes="Warning">
                                         <StackPanel Orientation="Horizontal"
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"

@@ -54,6 +54,8 @@ public partial class MainWindow : AppWindow
     private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
     private readonly IDisposable _subscription;
 
+    public Frame.PageActivatorDelegate PageActivator { get; private set; }
+
     public static readonly DirectProperty<MainWindow, ReadOnlyObservableCollection<InstanceEntryModel>> ViewProperty = AvaloniaProperty.RegisterDirect<MainWindow, ReadOnlyObservableCollection<InstanceEntryModel>>(nameof(View), o => o.View, (o, v) => o.View = v);
 
     private ReadOnlyObservableCollection<InstanceEntryModel> _view;
@@ -104,7 +106,7 @@ public partial class MainWindow : AppWindow
             {
                 Button { Tag: "ExhibitionView" } => (typeof(ExhibitionView), null),
                 Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
-                Button { Tag: "CreateInstanceView" } => (typeof(InstanceCreationView), null),
+                Button { Tag: "CreateInstanceView" } => (typeof(NewInstanceView), null),
                 _ => (typeof(PageNotReachedView), null)
             };
             _navigate?.Invoke(target.Page, target.Parameter, null);
@@ -126,6 +128,7 @@ public partial class MainWindow : AppWindow
     internal void BindNavigation(Action<Type, object?, IPageTransition?> navigate, Frame.PageActivatorDelegate activator)
     {
         _navigate = navigate;
+        PageActivator = activator;
         Root.PageActivator = activator;
     }
 

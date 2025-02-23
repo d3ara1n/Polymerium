@@ -32,7 +32,7 @@
                     ClipToBounds="{TemplateBinding ClipToBounds}"
                     CornerRadius="{TemplateBinding CornerRadius}">
                     <ScrollViewer
-                        Name="PART_ScrollViewer"
+                        Name="PART_ScrollViewer" ClipToBounds="{TemplateBinding ClipToBounds}"
                         AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                         HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
                         IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
@@ -53,7 +53,6 @@
         <Setter Property="Background" Value="{DynamicResource OverlayHalfBackgroundBrush}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate TargetType="ListBoxItem">
                 <Panel ClipToBounds="{TemplateBinding ClipToBounds}">

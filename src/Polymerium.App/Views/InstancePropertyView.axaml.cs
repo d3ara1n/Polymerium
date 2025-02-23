@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views;
 
-public partial class InstancePropertyView : ScopedPage
+public partial class InstancePropertyView : Subpage
 {
     public InstancePropertyView() => InitializeComponent();
 }
