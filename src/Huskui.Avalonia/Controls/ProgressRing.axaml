@@ -38,7 +38,7 @@
         <Setter Property="Width" Value="64" />
         <Setter Property="StrokeWidth" Value="6" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
         <Setter Property="ProgressTextFormat" Value="{}{1:0}%" />
         <Setter Property="ShowProgressText" Value="True" />
         <Setter Property="Template">
@@ -48,7 +48,7 @@
                          Height="{TemplateBinding Height}"
                          StartAngle="0"
                          Stretch="None"
-                         Stroke="{TemplateBinding Background}"
+                         Stroke="{DynamicResource ControlBackgroundBrush}"
                          StrokeThickness="{TemplateBinding StrokeWidth}"
                          SweepAngle="360" />
                     <Panel Name="Indeterminate">
@@ -58,7 +58,7 @@
                              Height="{TemplateBinding Height}"
                              Stretch="None"
                              StartAngle="-90"
-                             Stroke="{DynamicResource ControlAccentBackgroundBrush}"
+                             Stroke="{TemplateBinding Background}"
                              StrokeThickness="{TemplateBinding StrokeWidth}" />
                         <Arc Name="Chaser"
                              Opacity="1.0"
@@ -66,7 +66,7 @@
                              Height="{TemplateBinding Height}"
                              Stretch="None"
                              StartAngle="-90"
-                             Stroke="{DynamicResource ControlAccentBackgroundBrush}"
+                             Stroke="{TemplateBinding Background}"
                              StrokeThickness="{TemplateBinding StrokeWidth}" />
                     </Panel>
                     <Panel Name="Determinate">

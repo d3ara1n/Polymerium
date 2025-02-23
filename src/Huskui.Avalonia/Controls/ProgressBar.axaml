@@ -51,8 +51,7 @@
     </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type ProgressBar}" TargetType="ProgressBar">
-        <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{DynamicResource SmallCornerRadius}" />
         <Setter Property="TextBlock.FontSize" Value="{StaticResource SmallFontSize}" />
         <Setter Property="ProgressTextFormat" Value="{}{1:0}%" />
@@ -61,7 +60,7 @@
                 <Border Name="Border" ClipToBounds="True"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="{TemplateBinding Background}"
+                        Background="{DynamicResource ControlBackgroundBrush}"
                         Padding="{TemplateBinding Padding}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Panel>
@@ -86,13 +85,13 @@
                         </Popup>
                         <Panel Name="Determinate">
                             <Border Name="PART_Indicator"
-                                    Background="{TemplateBinding Foreground}" />
+                                    Background="{TemplateBinding Background}" />
                         </Panel>
                         <Panel Name="Indeterminate" Opacity="0.0">
                             <Border Name="Runner"
-                                    Background="{TemplateBinding Foreground}" Opacity="0.5" />
+                                    Background="{TemplateBinding Background}" Opacity="0.5" />
                             <Border Name="Chaser"
-                                    Background="{TemplateBinding Foreground}" Opacity="1" />
+                                    Background="{TemplateBinding Background}" Opacity="1" />
                         </Panel>
                     </Panel>
                 </Border>

@@ -9,9 +9,9 @@ using Polymerium.Trident.Utilities;
 
 namespace Polymerium.App.Views;
 
-public partial class InstanceCreationView : ScopedPage
+public partial class NewInstanceView : ScopedPage
 {
-    public InstanceCreationView() => InitializeComponent();
+    public NewInstanceView() => InitializeComponent();
 
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
     {

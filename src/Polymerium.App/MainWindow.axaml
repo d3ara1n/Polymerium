@@ -60,7 +60,8 @@
                         <StackPanel.Effect>
                             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
                         </StackPanel.Effect>
-                        <Svg Path="/Assets/Logo.svg" Width="12" />
+                        <!-- <Svg Path="/Assets/Logo.svg" Width="12" /> -->
+                        <icons:PackIconLucide Kind="Squirrel" Width="12" />
                         <TextBlock Text="{Binding $parent[Window].Title, Mode=OneWay}"
                                    FontSize="{StaticResource SmallFontSize}" VerticalAlignment="Center" />
                     </StackPanel>

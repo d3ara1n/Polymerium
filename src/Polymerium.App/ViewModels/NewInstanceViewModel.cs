@@ -20,11 +20,16 @@ using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceCreationViewModel : ViewModelBase
+public partial class NewInstanceViewModel : ViewModelBase
 {
     private IReadOnlyList<GameVersionModel>? _versions;
 
-    public InstanceCreationViewModel(OverlayService overlayService, PrismLauncherService prismLauncherService, ProfileManager profileManager, NavigationService navigationService, NotificationService notificationService)
+    public NewInstanceViewModel(
+        OverlayService overlayService,
+        PrismLauncherService prismLauncherService,
+        ProfileManager profileManager,
+        NavigationService navigationService,
+        NotificationService notificationService)
     {
         _overlayService = overlayService;
         _prismLauncherService = prismLauncherService;
