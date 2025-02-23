@@ -60,11 +60,11 @@ public partial class InstanceViewModel : ViewModelBase
     private ObservableCollection<InstanceSubpageEntryModel> _pageEntries =
     [
         // Home
-        new(typeof(InstanceHomeView), PackIconLucideKind.House),
+        new(typeof(InstanceHomeView), PackIconLucideKind.LayoutDashboard),
         // Setup or Metadata
-        new(typeof(InstanceSetupView), PackIconLucideKind.Blocks),
+        new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
         // Widgets
-        new(typeof(UnknownView), PackIconLucideKind.Backpack),
+        new(typeof(UnknownView), PackIconLucideKind.Blocks),
         // Stats
         new(typeof(UnknownView), PackIconLucideKind.ChartNoAxesCombined),
         // Storage

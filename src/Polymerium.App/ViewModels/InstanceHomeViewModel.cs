@@ -1,9 +1,12 @@
 ﻿using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Assets;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
@@ -12,9 +15,10 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceHomeViewModel : ViewModelBase
 {
-    public InstanceHomeViewModel(ViewBag bag, ProfileManager profileManager)
+    public InstanceHomeViewModel(ViewBag bag, ProfileManager profileManager, OverlayService overlayService)
     {
         _profileManager = profileManager;
+        _overlayService = overlayService;
 
         if (bag.Parameter is string key)
         {
@@ -29,6 +33,7 @@ public partial class InstanceHomeViewModel : ViewModelBase
                 Screenshot = screenshotPath is not null
                                  ? new Bitmap(screenshotPath)
                                  : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
+                PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
             }
             else
             {
@@ -45,6 +50,7 @@ public partial class InstanceHomeViewModel : ViewModelBase
     #region Injected
 
     private readonly ProfileManager _profileManager;
+    private readonly OverlayService _overlayService;
 
     #endregion
 
@@ -55,6 +61,16 @@ public partial class InstanceHomeViewModel : ViewModelBase
 
     [ObservableProperty]
     private Bitmap _screenshot;
+
+    [ObservableProperty]
+    private int _packageCount;
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void SwitchAccount() => _overlayService.PopDialog(new AccountPickerDialog());
 
     #endregion
 }
