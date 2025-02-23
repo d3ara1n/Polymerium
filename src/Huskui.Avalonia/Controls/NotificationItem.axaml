@@ -51,13 +51,14 @@
         <Setter Property="Title" Value="Information" />
         <Setter Property="IsOpen" Value="True" />
         <Setter Property="IsCloseButtonVisible" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="3" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Padding" Value="12,8" />
-        <Setter Property="MinWidth" Value="330" />
+        <Setter Property="MinWidth" Value="220" />
         <Setter Property="Template">
             <ControlTemplate>
                 <LayoutTransformControl Name="PART_LayoutTransform">
@@ -81,8 +82,9 @@
                                                  IsVisible="{TemplateBinding IsProgressBarVisible}" />
                                     <Grid RowDefinitions="Auto,4,*,4,Auto" ColumnDefinitions="*,Auto"
                                           Margin="{TemplateBinding Padding}">
-                                        <DockPanel Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0">
-                                            <DockPanel.IsVisible>
+                                        <Grid Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0"
+                                              ColumnDefinitions="*,8,Auto">
+                                            <Grid.IsVisible>
                                                 <MultiBinding Converter="{x:Static BoolConverters.Or}">
                                                     <Binding Path="Title"
                                                              RelativeSource="{RelativeSource Mode=TemplatedParent}"
@@ -90,16 +92,17 @@
                                                     <Binding Path="IsCloseButtonVisible"
                                                              RelativeSource="{RelativeSource Mode=TemplatedParent}" />
                                                 </MultiBinding>
-                                            </DockPanel.IsVisible>
-                                            <ToggleButton Padding="6" CornerRadius="10"
+                                            </Grid.IsVisible>
+                                            <TextBlock Grid.Column="0" Text="{TemplateBinding Title}" FontWeight="Bold"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <ToggleButton Grid.Column="2" Padding="6" CornerRadius="10"
                                                           Theme="{StaticResource OutlineButtonTheme}"
                                                           DockPanel.Dock="Right" IsEnabled="{TemplateBinding IsOpen}"
                                                           IsChecked="{TemplateBinding IsOpen,Mode=TwoWay}"
                                                           IsVisible="{TemplateBinding IsCloseButtonVisible}">
                                                 <fi:SymbolIcon Symbol="Dismiss" Height="6" Width="6" />
                                             </ToggleButton>
-                                            <TextBlock Text="{TemplateBinding Title}" FontWeight="Bold" />
-                                        </DockPanel>
+                                        </Grid>
                                         <ContentPresenter Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
                                                           Content="{TemplateBinding Content}"
                                                           ContentTemplate="{TemplateBinding ContentTemplate}">

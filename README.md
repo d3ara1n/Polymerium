@@ -1,18 +1,17 @@
 # Polymerium
 
-![Polymerium](https://socialify.git.ci/d3ara1n/Polymerium/image?description=1&font=Jost&forks=1&issues=1&language=1&name=1&owner=1&pattern=Overlapping%20Hexagons&pulls=1&stargazers=1&theme=Light)
-
+![Polymerium](https://socialify.git.ci/d3ara1n/Polymerium/image?description=1&font=Jost&forks=1&issues=1&language=1&name=1&owner=1&pattern=Overlapping%20Hexagons&pulls=1&stargazers=1&theme=Auto)
 <!-- ABOUT THE PROJECT -->
 
 ## I.关于
 
-[![Screenshot][product-screenshot]](#关于)
+[![Screenshot][product-screenshot]](#i关于)
 
-**这是个 WIP 早期项目，大部分功能还没写完或仅存在于设计，开发进度请参考 [Roadmap](#roadmap)。**
+**这是个 WIP 早期项目，大部分功能还没写完或仅存在于设计，开发进度请参考 [Roadmap](#ivroadmap)。**
 
 ## I.About
 
-**It's in very early stage and most features are under development. Refer to [Roadmap](#roadmap) for progress.**
+**It's in very early stage and most features are under development. Refer to [Roadmap](#ivroadmap) for progress.**
 
 ### 1.理念
 
