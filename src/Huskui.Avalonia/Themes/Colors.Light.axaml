@@ -84,7 +84,7 @@
 
     <SolidColorBrush x:Key="NotificationBorderBrush" Color="{StaticResource Sand1Color}" />
     <SolidColorBrush x:Key="NotificationBackgroundBrush" Color="{StaticResource Sand1Color}" />
-    <LinearGradientBrush x:Key="NotificationSuccessBackgroundBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+    <LinearGradientBrush x:Key="NotificationSuccessBorderBrush" StartPoint="0%,50%" EndPoint="100%,50%">
         <GradientStops>
             <GradientStop Offset="0" Color="{StaticResource Grass4Color}" />
             <GradientStop Offset="0.3" Color="{StaticResource Grass2Color}" />
@@ -92,7 +92,7 @@
             <GradientStop Offset="1" Color="{StaticResource Sand2Color}" />
         </GradientStops>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="NotificationWarningBackgroundBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+    <LinearGradientBrush x:Key="NotificationWarningBorderBrush" StartPoint="0%,50%" EndPoint="100%,50%">
         <GradientStops>
             <GradientStop Offset="0" Color="{StaticResource Orange4Color}" />
             <GradientStop Offset="0.3" Color="{StaticResource Orange2Color}" />
@@ -100,7 +100,7 @@
             <GradientStop Offset="1" Color="{StaticResource Sand2Color}" />
         </GradientStops>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="NotificationDangerBackgroundBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+    <LinearGradientBrush x:Key="NotificationDangerBorderBrush" StartPoint="0%,50%" EndPoint="100%,50%">
         <GradientStops>
             <GradientStop Offset="0" Color="{StaticResource Tomato4Color}" />
             <GradientStop Offset="0.3" Color="{StaticResource Tomato2Color}" />

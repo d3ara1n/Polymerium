@@ -75,61 +75,56 @@
                 </Grid>
             </Panel>
         </husk:Card>
-        <Grid Grid.Row="0" Grid.Column="4" RowDefinitions="Auto,8,Auto,8,*">
-            <husk:Card Grid.Row="0" Padding="0" BorderThickness="1">
-                <Panel>
-                    <icons:PackIconLucide Kind="DraftingCompass"
-                                          Height="36" Opacity="0.3" RenderTransform="translate(-8px,-8px)" />
-                    <Grid ColumnDefinitions="Auto,8,*,8,Auto" Margin="6">
-                        <Border Grid.Column="0" CornerRadius="6"
-                                Background="{DynamicResource Layer0BackgroundBrush}">
-                            <TextBlock Text="Type" FontSize="{StaticResource SmallFontSize}"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6" />
-                        </Border>
-                        <TextBlock Grid.Column="4" Text="{Binding Basic.LoaderLabel,FallbackValue=Type}"
-                                   Margin="6" />
-                    </Grid>
-                </Panel>
-            </husk:Card>
-            <husk:Card Grid.Row="2" Padding="0" BorderThickness="1">
-                <Panel>
-                    <icons:PackIconLucide Kind="Compass"
-                                          Height="36" Opacity="0.3" RenderTransform="translate(-8px,-8px)" />
-                    <Grid ColumnDefinitions="Auto,8,*,8,Auto" Margin="6">
-                        <Border Grid.Column="0" CornerRadius="6"
-                                Background="{DynamicResource Layer0BackgroundBrush}">
-                            <TextBlock Text="Version" FontSize="{StaticResource SmallFontSize}"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6" />
-                        </Border>
-                        <TextBlock Grid.Column="4" Text="{Binding Basic.Version,FallbackValue=Version}"
-                                   Margin="6" />
-                    </Grid>
-                </Panel>
-            </husk:Card>
-            <husk:Card Grid.Row="4">
-                <Grid RowDefinitions="Auto,4,*">
-                    <TextBlock Grid.Row="0" Text="Packages"
-                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" FontWeight="Bold" />
-                    <TextBlock Grid.Row="2" Text="{Binding PackageCount,FallbackValue=114514}"
-                               FontSize="{StaticResource ExtraLargeFontSize}" VerticalAlignment="Center"
-                               HorizontalAlignment="Center" />
+        <husk:Card Grid.Row="0" Grid.Column="4">
+            <Grid RowDefinitions="Auto,8,*,8,Auto,8,Auto,8,Auto">
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*,8,Auto">
+                    <icons:PackIconLucide Grid.Column="0" Foreground="{DynamicResource ControlAccentForegroundBrush}"
+                                          Kind="Boxes" Height="{StaticResource LargeFontSize}" />
+                    <TextBlock Grid.Column="2" Text="Setup" FontWeight="Bold"/>
+                    <Button Grid.Column="4" Theme="{StaticResource SectionHeaderButtonTheme}"
+                            Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                            CommandParameter="{x:Type v:InstanceSetupView}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Details" FontSize="{StaticResource SmallFontSize}" />
+                            <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
-            </husk:Card>
-        </Grid>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding PackageCount,FallbackValue=114514}" FontSize="{StaticResource ExtraLargeFontSize}" />
+                    <TextBlock Text="packages" VerticalAlignment="Bottom"
+                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" Margin="4" />
+                </StackPanel>
+                <husk:Divider Grid.Row="4" />
+                <Grid Grid.Row="6" ColumnDefinitions="Auto,8,*,8,Auto">
+                    <TextBlock Grid.Column="0" Text="Type"
+                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    <TextBlock Grid.Column="4" Text="{Binding Basic.LoaderLabel,FallbackValue=Type}" />
+                </Grid>
+                <Grid Grid.Row="8" ColumnDefinitions="Auto,8,*,8,Auto">
+                    <TextBlock Grid.Column="0" Text="Version"
+                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    <TextBlock Grid.Column="4" Text="{Binding Basic.Version,FallbackValue=Version}" />
+                </Grid>
+            </Grid>
+        </husk:Card>
         <Grid Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" RowDefinitions="Auto,12,*">
-            <Button Grid.Row="0" Theme="{StaticResource SectionHeaderButtonTheme}"
-                    Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstancePropertyView}">
-                <Grid ColumnDefinitions="*,12,Auto">
-                    <TextBlock Grid.Column="0" Text="Activities" FontSize="{StaticResource LargeFontSize}"
-                               FontWeight="Bold" />
-                    <fi:SymbolIcon Grid.Column="2" Symbol="ArrowRight" FontSize="{StaticResource MediumFontSize}" />
-                </Grid>
-            </Button>
+            <Grid Grid.Row="0" ColumnDefinitions="*,12,Auto">
+                <TextBlock Grid.Column="0" Text="Activities" FontSize="{StaticResource LargeFontSize}"
+                           FontWeight="Bold" />
+                <Button Grid.Column="2" Grid.Row="0" Theme="{StaticResource SectionHeaderButtonTheme}"
+                        Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                        CommandParameter="{x:Type v:InstancePropertyView}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="See More" FontSize="{StaticResource SmallFontSize}" />
+                        <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" />
+                    </StackPanel>
+                </Button>
+            </Grid>
             <husk:Card Grid.Row="2">
                 <Grid RowDefinitions="*,12,Auto">
                     <Panel Grid.Row="0" Width="122" Height="122">
-                        <husk:ProgressRing ShowProgressText="False" Value="37"/>
+                        <husk:ProgressRing ShowProgressText="False" Value="37" />
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock TextAlignment="Center">
                                 <Run Text="Total Hours" />
@@ -158,15 +153,18 @@
             </husk:Card>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" RowDefinitions="Auto,12,*">
-            <Button Grid.Row="0" Theme="{StaticResource SectionHeaderButtonTheme}"
-                    Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstanceSetupView}">
-                <Grid ColumnDefinitions="*,12,Auto">
-                    <TextBlock Grid.Column="0" Text="Widget" FontSize="{StaticResource LargeFontSize}"
-                               FontWeight="Bold" />
-                    <fi:SymbolIcon Grid.Column="2" Symbol="ArrowRight" FontSize="{StaticResource MediumFontSize}" />
-                </Grid>
-            </Button>
+            <Grid Grid.Row="0" ColumnDefinitions="*,12,Auto">
+                <TextBlock Grid.Column="0" Text="Widgets" FontSize="{StaticResource LargeFontSize}"
+                           FontWeight="Bold" />
+                <Button Grid.Column="2" Grid.Row="0" Theme="{StaticResource SectionHeaderButtonTheme}"
+                        Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                        CommandParameter="{x:Type v:InstancePropertyView}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="See More" FontSize="{StaticResource SmallFontSize}" />
+                        <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" />
+                    </StackPanel>
+                </Button>
+            </Grid>
             <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12">
                 <husk:Card Width="198" />
                 <husk:Card Width="198" />

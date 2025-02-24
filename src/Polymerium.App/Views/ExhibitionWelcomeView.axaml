@@ -1,0 +1,49 @@
+﻿<husk:Page xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+           x:Class="Polymerium.App.Views.ExhibitionWelcomeView">
+    <StackPanel>
+        <TextBlock FontSize="48" Text="Exhibition">
+            <TextBlock.Foreground>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                    <GradientStop Offset="0" Color="#f6d365" />
+                    <GradientStop Offset="1" Color="#fda085" />
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+        <Grid RowDefinitions="4*,Auto,*" Height="256" Width="360">
+            <Border Grid.Row="0" Grid.RowSpan="3" Margin="12" BorderThickness="1"
+                    BorderBrush="{DynamicResource ControlBorderBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                <Border.Background>
+                    <ImageBrush Source="/Assets/Images/Wallpaper.png" Stretch="Fill" />
+                </Border.Background>
+            </Border>
+            <Border Grid.Row="1" CornerRadius="{StaticResource MediumCornerRadius}" Margin="4"
+                    Background="{DynamicResource LayerSolidBackgroundBrush}">
+                <Grid ColumnDefinitions="Auto,8,*,8,Auto" Margin="12">
+                    <Border Grid.Column="0" Background="Black" CornerRadius="99">
+                        <icons:PackIconLucide Kind="Newspaper" Height="14" Width="14" Foreground="White" Margin="8" />
+                    </Border>
+                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                        <TextBlock Text="LET’S PLAY: CRAFTEE’S CUSTOM HEARTS DX" TextTrimming="CharacterEllipsis"
+                                   TextWrapping="Wrap" MaxLines="2" />
+                        <!-- <TextBlock -->
+                        <!--     Text="Today, we’re taking a deep dive into Craftee’s Custom Hearts DX by LogDotZip on the Minecraft Marketplace! This Minecraft World will change the way you think about the row of hearts that show your health forever. There are 30 special hearts to find in this one, all with unique powers. Including the power of… love? " -->
+                        <!--     FontSize="{StaticResource SmallFontSize}" TextTrimming="CharacterEllipsis" /> -->
+                    </StackPanel>
+                    <Button Grid.Column="4" Classes="Small" Theme="{StaticResource GhostButtonTheme}">
+                        <TextBlock Text="Learn More" />
+                    </Button>
+                </Grid>
+                <Border.Effect>
+                    <DropShadowEffect OffsetY="0" OffsetX="0" Opacity="0.1" />
+                </Border.Effect>
+            </Border>
+        </Grid>
+    </StackPanel>
+</husk:Page>
