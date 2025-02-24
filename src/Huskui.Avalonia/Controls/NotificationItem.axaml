@@ -51,7 +51,10 @@
         <Setter Property="Title" Value="Information" />
         <Setter Property="IsOpen" Value="True" />
         <Setter Property="IsCloseButtonVisible" Value="True" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="{Binding $parent[local:NotificationHost].HorizontalContentAlignment}" />
+        <Setter Property="VerticalAlignment"
+                Value="{Binding $parent[local:NotificationHost].VerticalContentAlignment}" />
         <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}" />
@@ -71,7 +74,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Margin="3">
                             <Border.Effect>
-                                <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.1" />
+                                <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.15" />
                             </Border.Effect>
                             <Border CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
                                 <DockPanel>
@@ -141,15 +144,15 @@
 
         <Style Selector="^:success">
             <Setter Property="Title" Value="Success" />
-            <Setter Property="Background" Value="{DynamicResource NotificationSuccessBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource NotificationSuccessBorderBrush}" />
         </Style>
         <Style Selector="^:warning">
             <Setter Property="Title" Value="Warning" />
-            <Setter Property="Background" Value="{DynamicResource NotificationWarningBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource NotificationWarningBorderBrush}" />
         </Style>
         <Style Selector="^:danger">
             <Setter Property="Title" Value="Danger" />
-            <Setter Property="Background" Value="{DynamicResource NotificationDangerBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource NotificationDangerBorderBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

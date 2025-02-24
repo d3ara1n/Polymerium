@@ -2,14 +2,21 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
+using Avalonia.Layout;
 
 namespace Huskui.Avalonia.Controls;
 
 public class NotificationHost : TemplatedControl
 {
-    public static readonly DirectProperty<NotificationHost, NotificationItems> ItemsProperty = AvaloniaProperty.RegisterDirect<NotificationHost, NotificationItems>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
+    public static readonly DirectProperty<NotificationHost, NotificationItems> ItemsProperty =
+        AvaloniaProperty.RegisterDirect<NotificationHost, NotificationItems>(nameof(Items),
+                                                                             o => o.Items,
+                                                                             (o, v) => o.Items = v);
 
-    public static readonly DirectProperty<NotificationHost, ITemplate<Panel?>> ItemsPanelProperty = AvaloniaProperty.RegisterDirect<NotificationHost, ITemplate<Panel?>>(nameof(ItemsPanel), o => o.ItemsPanel, (o, v) => o.ItemsPanel = v);
+    public static readonly DirectProperty<NotificationHost, ITemplate<Panel?>> ItemsPanelProperty =
+        AvaloniaProperty.RegisterDirect<NotificationHost, ITemplate<Panel?>>(nameof(ItemsPanel),
+                                                                             o => o.ItemsPanel,
+                                                                             (o, v) => o.ItemsPanel = v);
 
     private NotificationItems _items = [];
 
@@ -26,6 +33,25 @@ public class NotificationHost : TemplatedControl
         get => _itemsPanel;
         set => SetAndRaise(ItemsPanelProperty, ref _itemsPanel, value);
     }
+
+    public static readonly StyledProperty<HorizontalAlignment> HorizontalContentAlignmentProperty =
+        AvaloniaProperty.Register<NotificationHost, HorizontalAlignment>(nameof(HorizontalContentAlignment));
+
+    public HorizontalAlignment HorizontalContentAlignment
+    {
+        get => GetValue(HorizontalContentAlignmentProperty);
+        set => SetValue(HorizontalContentAlignmentProperty, value);
+    }
+
+    public static readonly StyledProperty<VerticalAlignment> VerticalContentAlignmentProperty =
+        AvaloniaProperty.Register<NotificationHost, VerticalAlignment>(nameof(VerticalContentAlignment));
+
+    public VerticalAlignment VerticalContentAlignment
+    {
+        get => GetValue(VerticalContentAlignmentProperty);
+        set => SetValue(VerticalContentAlignmentProperty, value);
+    }
+
 
     public void Pop(NotificationItem item)
     {

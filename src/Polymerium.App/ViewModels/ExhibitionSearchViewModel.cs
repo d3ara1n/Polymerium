@@ -26,9 +26,9 @@ using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class ExhibitionViewModel : ViewModelBase
+public partial class ExhibitionSearchViewModel : ViewModelBase
 {
-    public ExhibitionViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager, NotificationService notificationService, NavigationService navigationService, OverlayService overlayService)
+    public ExhibitionSearchViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager, NotificationService notificationService, NavigationService navigationService, OverlayService overlayService)
     {
         _agent = agent;
         _factory = factory;

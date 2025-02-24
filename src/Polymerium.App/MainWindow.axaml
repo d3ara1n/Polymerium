@@ -82,7 +82,7 @@
                         <icons:PackIconLucide Kind="PackagePlus" Width="18" />
                     </Button>
                     <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Classes="Primary"
-                            Click="NavigationButton_OnClick" Tag="ExhibitionView"
+                            Click="NavigationButton_OnClick" Tag="ExhibitionWelcomeView"
                             Height="36">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:PackIconLucide Kind="Store" Width="18" />
