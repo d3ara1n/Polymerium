@@ -12,11 +12,20 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":loading", ":finished", ":failed")]
 public class Page : HeaderedContentControl
 {
-    public static readonly DirectProperty<Page, bool> CanGoBackProperty = Frame.CanGoBackProperty.AddOwner<Page>(o => o.CanGoBack, (o, v) => o.CanGoBack = v, defaultBindingMode: BindingMode.OneWay);
+    public static readonly DirectProperty<Page, bool> CanGoBackProperty =
+        Frame.CanGoBackProperty.AddOwner<Page>(o => o.CanGoBack,
+                                               (o, v) => o.CanGoBack = v,
+                                               defaultBindingMode: BindingMode.OneWay);
 
-    public static readonly DirectProperty<Page, bool> IsHeaderVisibleProperty = AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsHeaderVisible), o => o.IsHeaderVisible, (o, v) => o.IsHeaderVisible = v);
+    public static readonly DirectProperty<Page, bool> IsHeaderVisibleProperty =
+        AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsHeaderVisible),
+                                                    o => o.IsHeaderVisible,
+                                                    (o, v) => o.IsHeaderVisible = v);
 
-    public static readonly DirectProperty<Page, bool> IsBackButtonVisibleProperty = AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsBackButtonVisible), o => o.IsBackButtonVisible, (o, v) => o.IsBackButtonVisible = v);
+    public static readonly DirectProperty<Page, bool> IsBackButtonVisibleProperty =
+        AvaloniaProperty.RegisterDirect<Page, bool>(nameof(IsBackButtonVisible),
+                                                    o => o.IsBackButtonVisible,
+                                                    (o, v) => o.IsBackButtonVisible = v);
 
     private readonly CancellationTokenSource _cancellationTokenSource = new();
 
@@ -51,25 +60,31 @@ public class Page : HeaderedContentControl
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-        if (Model is not null)
+        if (!Design.IsDesignMode)
         {
-            SetState(true);
-            Task
-               .Run(async () =>
+            if (Model is not null)
+            {
+                SetState(true);
+                Task
+                   .Run(async () =>
+                        {
+                            await Model.InitializeAsync(_cancellationTokenSource.Token);
+                        },
+                        _cancellationTokenSource.Token)
+                   .ContinueWith(t =>
                     {
-                        await Model.InitializeAsync(_cancellationTokenSource.Token);
-                    },
-                    _cancellationTokenSource.Token)
-               .ContinueWith(t =>
-                {
-                    Debug.WriteLine("Navigate to page {0} with [Faulted, Cancelled] = [{1}, {2}]", GetType(), t.IsFaulted, t.IsCanceled);
-                    if (t.IsCompletedSuccessfully)
-                        Dispatcher.UIThread.Post(() => SetState(false, true));
-                    else if (t.IsCanceled)
-                        Dispatcher.UIThread.Post(() => SetState(false, true));
-                    else if (t.IsFaulted)
-                        Dispatcher.UIThread.Post(() => SetState(false, false, true));
-                });
+                        Debug.WriteLine("Navigate to page {0} with [Faulted, Cancelled] = [{1}, {2}]",
+                                        GetType(),
+                                        t.IsFaulted,
+                                        t.IsCanceled);
+                        if (t.IsCompletedSuccessfully)
+                            Dispatcher.UIThread.Post(() => SetState(false, true));
+                        else if (t.IsCanceled)
+                            Dispatcher.UIThread.Post(() => SetState(false, true));
+                        else if (t.IsFaulted)
+                            Dispatcher.UIThread.Post(() => SetState(false, false, true));
+                    });
+            }
         }
     }
 
@@ -77,11 +92,14 @@ public class Page : HeaderedContentControl
     {
         base.OnUnloaded(e);
 
-        if (!_cancellationTokenSource.IsCancellationRequested)
-            _cancellationTokenSource.Cancel();
+        if (!Design.IsDesignMode)
+        {
+            if (!_cancellationTokenSource.IsCancellationRequested)
+                _cancellationTokenSource.Cancel();
 
-        if (Model is not null)
-            Task.Run(async () => await Model.CleanupAsync(CancellationToken.None));
+            if (Model is not null)
+                Task.Run(async () => await Model.CleanupAsync(CancellationToken.None));
+        }
     }
 
     private void SetState(bool loading = false, bool finished = false, bool failed = false)

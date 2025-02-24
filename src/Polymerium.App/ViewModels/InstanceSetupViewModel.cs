@@ -88,64 +88,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-        if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var result))
-        {
-            try
-            {
-                var package = await _repositories.ResolveAsync(result.Label,
-                                                               result.Namespace,
-                                                               result.Pid,
-                                                               result.Vid,
-                                                               Filter.Empty with { Kind = ResourceKind.Modpack });
-
-                Bitmap thumbnail;
-                if (!Debugger.IsAttached && package.Thumbnail is not null)
-                {
-                    using var client = _clientFactory.CreateClient();
-                    var bytes = await client.GetByteArrayAsync(package.Thumbnail, token);
-                    thumbnail = new Bitmap(new MemoryStream(bytes));
-                }
-                else
-                {
-                    thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
-                }
-
-                var page = await (await _repositories.InspectAsync(result.Label,
-                                                                   result.Namespace,
-                                                                   result.Pid,
-                                                                   Filter.Empty with { Kind = ResourceKind.Modpack }))
-                              .FetchAsync();
-                var versions = page
-                              .Select(x => new InstanceVersionModel(x.Label,
-                                                                    x.Namespace,
-                                                                    x.ProjectId,
-                                                                    x.VersionId,
-                                                                    x.VersionName,
-                                                                    x.ReleaseType,
-                                                                    x.PublishedAt)
-                               {
-                                   IsCurrent = x.VersionId == package.VersionId
-                               })
-                              .ToList();
-
-                Reference = new InstanceReferenceModel
-                {
-                    Name = package.ProjectName,
-                    Thumbnail = thumbnail,
-                    SourceUrl = package.Reference,
-                    SourceLabel = package.Label,
-                    Versions = versions,
-                    CurrentVersion = versions.FirstOrDefault()
-                };
-            }
-            catch (Exception ex)
-            {
-                _notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
-                                                "Fetching modpack information failed",
-                                                NotificationLevel.Warning);
-            }
-        }
-
+        
         try
         {
             var stages = _owned.Value.Setup.Stage.Select(Load).ToList();
@@ -205,6 +148,64 @@ public partial class InstanceSetupViewModel : ViewModelBase
         catch (Exception ex)
         {
             _notificationService.PopMessage(ex.Message, "Loading package list failed", NotificationLevel.Warning);
+        }
+        
+        if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var result))
+        {
+            try
+            {
+                var package = await _repositories.ResolveAsync(result.Label,
+                                                               result.Namespace,
+                                                               result.Pid,
+                                                               result.Vid,
+                                                               Filter.Empty with { Kind = ResourceKind.Modpack });
+
+                Bitmap thumbnail;
+                if (!Debugger.IsAttached && package.Thumbnail is not null)
+                {
+                    using var client = _clientFactory.CreateClient();
+                    var bytes = await client.GetByteArrayAsync(package.Thumbnail, token);
+                    thumbnail = new Bitmap(new MemoryStream(bytes));
+                }
+                else
+                {
+                    thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
+                }
+
+                var page = await (await _repositories.InspectAsync(result.Label,
+                                                                   result.Namespace,
+                                                                   result.Pid,
+                                                                   Filter.Empty with { Kind = ResourceKind.Modpack }))
+                              .FetchAsync();
+                var versions = page
+                              .Select(x => new InstanceVersionModel(x.Label,
+                                                                    x.Namespace,
+                                                                    x.ProjectId,
+                                                                    x.VersionId,
+                                                                    x.VersionName,
+                                                                    x.ReleaseType,
+                                                                    x.PublishedAt)
+                               {
+                                   IsCurrent = x.VersionId == package.VersionId
+                               })
+                              .ToList();
+
+                Reference = new InstanceReferenceModel
+                {
+                    Name = package.ProjectName,
+                    Thumbnail = thumbnail,
+                    SourceUrl = package.Reference,
+                    SourceLabel = package.Label,
+                    Versions = versions,
+                    CurrentVersion = versions.FirstOrDefault()
+                };
+            }
+            catch (Exception ex)
+            {
+                _notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
+                                                "Fetching modpack information failed",
+                                                NotificationLevel.Warning);
+            }
         }
     }
 

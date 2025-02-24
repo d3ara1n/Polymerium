@@ -43,4 +43,24 @@ public static class ThicknessConverters
 
         return v;
     });
+
+    public static IValueConverter DividedBy { get; } = new RelayConverter((v, p) =>
+    {
+        if (v is double o)
+        {
+            if (p is double d)
+                return new Thickness(o / d);
+
+            if (p is int i)
+                return new Thickness(o / i);
+
+            if (p is string s && double.TryParse(s, out var r))
+            {
+                var l = o / r;
+                return new Thickness(l > 1 ? l : 1);
+            }
+        }
+
+        return v;
+    });
 }
