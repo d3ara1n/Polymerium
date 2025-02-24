@@ -20,7 +20,7 @@
 
     <Style Selector="local|NotificationItem[IsOpen=True]">
         <Style.Animations>
-            <Animation Duration="0:0:0.2" Easing="CubicEaseOut" FillMode="Forward">
+            <Animation Duration="0:0:0.4" Easing="CubicEaseOut" FillMode="Forward">
                 <KeyFrame Cue="0%">
                     <Setter Property="Opacity" Value="0" />
                 </KeyFrame>
@@ -38,7 +38,7 @@
         </Style.Animations>
         <Style Selector="^ LayoutTransformControl#PART_LayoutTransform">
             <Style.Animations>
-                <Animation Duration="0:0:0.1" Easing="CubicEaseOut" FillMode="Forward">
+                <Animation Duration="0:0:0.2" Easing="CubicEaseOut" FillMode="Forward">
                     <KeyFrame Cue="0%">
                         <Setter Property="ScaleTransform.ScaleY" Value="0" />
                     </KeyFrame>
@@ -52,7 +52,7 @@
     <Style
         Selector="local|NotificationItem[IsOpen=False] LayoutTransformControl#PART_LayoutTransform">
         <Style.Animations>
-            <Animation Duration="0:0:0.2" Easing="SineEaseOut"
+            <Animation Duration="0:0:0.3" Easing="SineEaseOut"
                        FillMode="Forward">
                 <KeyFrame Cue="0%">
                     <Setter Property="Opacity" Value="1" />
