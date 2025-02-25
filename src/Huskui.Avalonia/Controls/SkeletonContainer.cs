@@ -5,17 +5,17 @@ using Avalonia.Controls.Metadata;
 namespace Huskui.Avalonia.Controls;
 
 [PseudoClasses(":loading", ":animated")]
-public class SkeletonControl : ContentControl
+public class SkeletonContainer : ContentControl
 {
-    public static readonly DirectProperty<SkeletonControl, bool> IsLoadingProperty = AvaloniaProperty.RegisterDirect<SkeletonControl, bool>(nameof(IsLoading), o => o.IsLoading, (o, v) => o.IsLoading = v);
+    public static readonly DirectProperty<SkeletonContainer, bool> IsLoadingProperty = AvaloniaProperty.RegisterDirect<SkeletonContainer, bool>(nameof(IsLoading), o => o.IsLoading, (o, v) => o.IsLoading = v);
 
-    public static readonly DirectProperty<SkeletonControl, bool> IsAnimatedProperty = AvaloniaProperty.RegisterDirect<SkeletonControl, bool>(nameof(IsAnimated), o => o.IsAnimated, (o, v) => o.IsAnimated = v);
+    public static readonly DirectProperty<SkeletonContainer, bool> IsAnimatedProperty = AvaloniaProperty.RegisterDirect<SkeletonContainer, bool>(nameof(IsAnimated), o => o.IsAnimated, (o, v) => o.IsAnimated = v);
 
     private bool _isAnimated;
 
     private bool _isLoading;
 
-    public SkeletonControl() =>
+    public SkeletonContainer() =>
         // Default Property Value
         IsAnimated = true;
 
