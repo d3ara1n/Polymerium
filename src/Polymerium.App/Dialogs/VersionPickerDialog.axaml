@@ -10,7 +10,7 @@
              x:Class="Polymerium.App.Dialogs.VersionPickerDialog"
              Unloaded="Control_OnUnloaded" IsPrimaryButtonVisible="True">
     <Grid RowDefinitions="Auto,12,Auto,12,*">
-        <TextBox Grid.Row="0" Watermark="Filter by version name..."
+        <TextBox Grid.Row="0" Watermark="Filter by version names..."
                  Text="{Binding $parent[local:VersionPickerDialog].FilterText,Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">

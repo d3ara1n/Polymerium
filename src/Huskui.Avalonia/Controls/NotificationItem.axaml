@@ -144,15 +144,15 @@
 
         <Style Selector="^:success">
             <Setter Property="Title" Value="Success" />
-            <Setter Property="BorderBrush" Value="{DynamicResource NotificationSuccessBorderBrush}" />
+            <Setter Property="Background" Value="{DynamicResource NotificationSuccessBackgroundBrush}" />
         </Style>
         <Style Selector="^:warning">
             <Setter Property="Title" Value="Warning" />
-            <Setter Property="BorderBrush" Value="{DynamicResource NotificationWarningBorderBrush}" />
+            <Setter Property="Background" Value="{DynamicResource NotificationWarningBackgroundBrush}" />
         </Style>
         <Style Selector="^:danger">
             <Setter Property="Title" Value="Danger" />
-            <Setter Property="BorderBrush" Value="{DynamicResource NotificationDangerBorderBrush}" />
+            <Setter Property="Background" Value="{DynamicResource NotificationDangerBackgroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>
