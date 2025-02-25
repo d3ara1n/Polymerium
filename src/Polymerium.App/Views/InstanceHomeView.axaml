@@ -5,6 +5,7 @@
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:fi="using:FluentIcons.Avalonia"
                   xmlns:controls="using:Polymerium.App.Controls"
+                  xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:v="using:Polymerium.App.Views"
                   xmlns:vm="using:Polymerium.App.ViewModels"
@@ -75,10 +76,12 @@
                 </Grid>
             </Panel>
         </husk:Card>
-        <husk:BusyContainer Grid.Row="0" Grid.Column="4" IsBusy="False"
+        <husk:BusyContainer Grid.Row="0" Grid.Column="4"
+                            IsBusy="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Updating}"
+                            Background="{DynamicResource Card1BackgroundBrush}"
                             BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
                             CornerRadius="{StaticResource MediumCornerRadius}">
-            <husk:Card BorderThickness="0">
+            <husk:Card BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}">
                 <Grid RowDefinitions="Auto,8,*,8,Auto,8,Auto,8,Auto">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*,8,Auto">
                         <icons:PackIconLucide Grid.Column="0"
@@ -203,7 +206,8 @@
                                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                         </Grid>
                     </Button>
-                    <Button Grid.Column="4" Margin="4" Theme="{StaticResource LaunchButtonTheme}">
+                    <Button Grid.Column="4" Margin="4" Theme="{StaticResource LaunchButtonTheme}"
+                            IsEnabled="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Idle}">
                         <StackPanel VerticalAlignment="Center">
                             <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" />
                             <TextBlock Text="LAUNCH" HorizontalAlignment="Center" />

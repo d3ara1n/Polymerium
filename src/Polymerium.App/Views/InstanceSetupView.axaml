@@ -9,74 +9,61 @@
                   xmlns:m="using:Polymerium.App.Models"
                   xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
-                  xmlns:controls="using:Polymerium.App.Controls" 
+                  xmlns:controls="using:Polymerium.App.Controls"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                   x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
-    <Grid ColumnDefinitions="*,12,Auto" RowDefinitions="Auto,0,*">
-        <!-- 基本信息查看与更新、 Loader 切换 -->
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto"
-              Margin="{StaticResource PageHeaderlessContentMargin}">
-            <StackPanel Grid.Column="0" Spacing="4">
-                <TextBlock Text="{Binding Basic.Name,FallbackValue=Name}"
-                           FontSize="{StaticResource ExtraLargeFontSize}" />
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <TextBlock Text="Minecraft:" />
-                    <TextBlock Text="{Binding Basic.Version,FallbackValue=Version}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <TextBlock Text="Mod Loader:" />
-                    <TextBlock Text="{Binding LoaderLabel,FallbackValue=None}" />
-                    <HyperlinkButton Content="Switch" />
-                </StackPanel>
-                <husk:InfoBar Background="{DynamicResource Card3BackgroundBrush}">
-                    <TextBlock
-                        Text="[Stage] and [Stash] apply items to deployment while [Draft] does not. Instance imported online will lock the [Stage] up."
-                        TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" />
-                </husk:InfoBar>
-            </StackPanel>
-            <husk:Card Grid.Column="2" MaxWidth="360" BorderThickness="2"
-                       BorderBrush="{DynamicResource ControlAccentBorderBrush}"
-                       IsVisible="{Binding Reference,Converter={x:Static ObjectConverters.IsNotNull}}">
-                <Grid RowDefinitions="*,8,Auto">
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8">
-                        <Border ClipToBounds="True" CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Image Source="{Binding Reference.Thumbnail,FallbackValue={x:Null}}" Height="38"
-                                   Width="38"
-                                   Stretch="UniformToFill" />
-                        </Border>
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Reference.Name,FallbackValue=Package Name}"
-                                       FontSize="{StaticResource LargeFontSize}" />
-                            <HyperlinkButton Command="{Binding OpenSourceUrlCommand}"
-                                             CommandParameter="{Binding Reference.SourceUrl,FallbackValue={x:Null}}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <TextBlock
-                                        Text="{Binding Reference.SourceLabel,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
-                                    <fi:SymbolIcon Symbol="Open" FontSize="12" />
-                                </StackPanel>
-                            </HyperlinkButton>
-                        </StackPanel>
+    <husk:BusyContainer IsBusy="True">
+        <Grid ColumnDefinitions="*,12,Auto" RowDefinitions="Auto,0,*">
+            <!-- 基本信息查看与更新、 Loader 切换 -->
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto"
+                  Margin="{StaticResource PageHeaderlessContentMargin}">
+                <StackPanel Grid.Column="0" Spacing="4">
+                    <TextBlock Text="{Binding Basic.Name,FallbackValue=Name}"
+                               FontSize="{StaticResource ExtraLargeFontSize}" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Minecraft:" />
+                        <TextBlock Text="{Binding Basic.Version,FallbackValue=Version}" />
                     </StackPanel>
-                    <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto">
-                        <ComboBox Grid.Column="0" ItemsSource="{Binding Reference.Versions,FallbackValue={x:Null}}"
-                                  SelectedItem="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}">
-                            <ComboBox.SelectionBoxItemTemplate>
-                                <DataTemplate DataType="m:InstanceVersionModel">
-                                    <husk:SwitchPresenter Value="{Binding IsCurrent}" TargetType="x:Boolean">
-                                        <husk:SwitchCase Value="True">
-                                            <TextBlock Text="{Binding Display}"
-                                                       Foreground="{DynamicResource ControlAccentForegroundBrush}" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="False">
-                                            <TextBlock Text="{Binding Display}" />
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
-                                </DataTemplate>
-                            </ComboBox.SelectionBoxItemTemplate>
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="m:InstanceVersionModel">
-                                    <StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Mod Loader:" />
+                        <TextBlock Text="{Binding LoaderLabel,FallbackValue=None}" />
+                        <HyperlinkButton Content="Switch" />
+                    </StackPanel>
+                    <husk:InfoBar Background="{DynamicResource Card3BackgroundBrush}">
+                        <TextBlock
+                            Text="[Stage] and [Stash] apply items to deployment while [Draft] does not. Instance imported online will lock the [Stage] up."
+                            TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" />
+                    </husk:InfoBar>
+                </StackPanel>
+                <husk:Card Grid.Column="2" MaxWidth="360" BorderThickness="2"
+                           BorderBrush="{DynamicResource ControlAccentBorderBrush}"
+                           IsVisible="{Binding Reference,Converter={x:Static ObjectConverters.IsNotNull}}">
+                    <Grid RowDefinitions="*,8,Auto">
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8">
+                            <Border ClipToBounds="True" CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Image Source="{Binding Reference.Thumbnail,FallbackValue={x:Null}}" Height="38"
+                                       Width="38"
+                                       Stretch="UniformToFill" />
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Reference.Name,FallbackValue=Package Name}"
+                                           FontSize="{StaticResource LargeFontSize}" />
+                                <HyperlinkButton Command="{Binding OpenSourceUrlCommand}"
+                                                 CommandParameter="{Binding Reference.SourceUrl,FallbackValue={x:Null}}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <TextBlock
+                                            Text="{Binding Reference.SourceLabel,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                        <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                    </StackPanel>
+                                </HyperlinkButton>
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto">
+                            <ComboBox Grid.Column="0" ItemsSource="{Binding Reference.Versions,FallbackValue={x:Null}}"
+                                      SelectedItem="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}">
+                                <ComboBox.SelectionBoxItemTemplate>
+                                    <DataTemplate DataType="m:InstanceVersionModel">
                                         <husk:SwitchPresenter Value="{Binding IsCurrent}" TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock Text="{Binding Display}"
@@ -86,89 +73,113 @@
                                                 <TextBlock Text="{Binding Display}" />
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
-                                        <DockPanel>
-                                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                                                <TextBlock Text="{Binding UpdatedAt}" />
-                                            </StackPanel>
-                                            <husk:SwitchPresenter TargetType="trident:ReleaseType"
-                                                                  Value="{Binding ReleaseTypeRaw}">
-                                                <husk:SwitchCase Value="Release">
-                                                    <husk:Tag Classes="Success"
-                                                              CornerRadius="{StaticResource SmallCornerRadius}">
-                                                        <TextBlock Text="Release" />
-                                                    </husk:Tag>
+                                    </DataTemplate>
+                                </ComboBox.SelectionBoxItemTemplate>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate DataType="m:InstanceVersionModel">
+                                        <StackPanel>
+                                            <husk:SwitchPresenter Value="{Binding IsCurrent}" TargetType="x:Boolean">
+                                                <husk:SwitchCase Value="True">
+                                                    <TextBlock Text="{Binding Display}"
+                                                               Foreground="{DynamicResource ControlAccentForegroundBrush}" />
                                                 </husk:SwitchCase>
-                                                <husk:SwitchCase Value="Beta">
-                                                    <husk:Tag Classes="Warning"
-                                                              CornerRadius="{StaticResource SmallCornerRadius}">
-                                                        <TextBlock Text="Beta" />
-                                                    </husk:Tag>
-                                                </husk:SwitchCase>
-                                                <husk:SwitchCase Value="Alpha">
-                                                    <husk:Tag Classes="Danger"
-                                                              CornerRadius="{StaticResource SmallCornerRadius}">
-                                                        <TextBlock Text="Alpha" />
-                                                    </husk:Tag>
+                                                <husk:SwitchCase Value="False">
+                                                    <TextBlock Text="{Binding Display}" />
                                                 </husk:SwitchCase>
                                             </husk:SwitchPresenter>
-                                        </DockPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCommand}"
-                                CommandParameter="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}"
-                                IsEnabled="{Binding !Reference.CurrentVersion.IsCurrent,FallbackValue=False}" />
+                                            <DockPanel>
+                                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                                    <TextBlock Text="{Binding UpdatedAt}" />
+                                                </StackPanel>
+                                                <husk:SwitchPresenter TargetType="trident:ReleaseType"
+                                                                      Value="{Binding ReleaseTypeRaw}">
+                                                    <husk:SwitchCase Value="Release">
+                                                        <husk:Tag Classes="Success"
+                                                                  CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <TextBlock Text="Release" />
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Beta">
+                                                        <husk:Tag Classes="Warning"
+                                                                  CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <TextBlock Text="Beta" />
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Alpha">
+                                                        <husk:Tag Classes="Danger"
+                                                                  CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <TextBlock Text="Alpha" />
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                </husk:SwitchPresenter>
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCommand}"
+                                    CommandParameter="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}"
+                                    IsEnabled="{Binding !Reference.CurrentVersion.IsCurrent,FallbackValue=False}" />
+                        </Grid>
                     </Grid>
-                </Grid>
-            </husk:Card>
+                </husk:Card>
+            </Grid>
+            <Panel Grid.Row="2" Grid.Column="0">
+                <TabControl Margin="{StaticResource PageToplessBottomlessContentMargin}" Padding="-16,0"
+                            ClipToBounds="False">
+                    <TabItem Header="Stage">
+                        <cp:PackageContainer x:Name="StageContainer" DragDrop.AllowDrop="True" Items="{Binding Stage}"
+                                             TotalCount="{Binding StageCount}"
+                                             OpenUrlCommand="{Binding OpenSourceUrlCommand}"
+                                             IsLocked="{Binding Reference,Converter={x:Static ObjectConverters.IsNotNull}}" />
+                    </TabItem>
+                    <TabItem Header="Stash">
+                        <cp:PackageContainer x:Name="StashContainer" DragDrop.AllowDrop="True" Items="{Binding Stash}"
+                                             OpenUrlCommand="{Binding OpenSourceUrlCommand}"
+                                             TotalCount="{Binding StashCount}" />
+                    </TabItem>
+                </TabControl>
+            </Panel>
+            <Panel Grid.Row="2" Grid.Column="2" Background="{DynamicResource Layer1BackgroundBrush}">
+                <TabControl Margin="{StaticResource PageHeaderlessContentMargin}" Padding="-16,0">
+                    <TabItem Header="Draft">
+                        <ScrollViewer DragDrop.AllowDrop="True">
+                            <ItemsControl x:Name="DraftContainer" Margin="{StaticResource PageToplessContentMargin}"
+                                          ItemsSource="{Binding Draft}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="m:InstancePackageModel">
+                                        <husk:SkeletonContainer Margin="0,2"
+                                                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                                                IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
+                                            <husk:Card Background="{DynamicResource Layer0BackgroundBrush}" Height="64"
+                                                       Width="64">
+                                                <Border CornerRadius="{StaticResource MediumCornerRadius}"
+                                                        ClipToBounds="True">
+                                                    <Image Source="{Binding Thumbnail}" />
+                                                </Border>
+                                            </husk:Card>
+                                        </husk:SkeletonContainer>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </Panel>
         </Grid>
-        <Panel Grid.Row="2" Grid.Column="0">
-            <TabControl Margin="{StaticResource PageToplessBottomlessContentMargin}" Padding="-16,0"
-                        ClipToBounds="False">
-                <TabItem Header="Stage">
-                    <cp:PackageContainer x:Name="StageContainer" DragDrop.AllowDrop="True" Items="{Binding Stage}"
-                                         TotalCount="{Binding StageCount}"
-                                         OpenUrlCommand="{Binding OpenSourceUrlCommand}"
-                                         IsLocked="{Binding Reference,Converter={x:Static ObjectConverters.IsNotNull}}" />
-                </TabItem>
-                <TabItem Header="Stash">
-                    <cp:PackageContainer x:Name="StashContainer" DragDrop.AllowDrop="True" Items="{Binding Stash}"
-                                         OpenUrlCommand="{Binding OpenSourceUrlCommand}"
-                                         TotalCount="{Binding StashCount}" />
-                </TabItem>
-            </TabControl>
-        </Panel>
-        <Panel Grid.Row="2" Grid.Column="2" Background="{DynamicResource Layer1BackgroundBrush}">
-            <TabControl Margin="{StaticResource PageHeaderlessContentMargin}" Padding="-16,0">
-                <TabItem Header="Draft">
-                    <ScrollViewer DragDrop.AllowDrop="True">
-                        <ItemsControl x:Name="DraftContainer" Margin="{StaticResource PageToplessContentMargin}"
-                                      ItemsSource="{Binding Draft}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="m:InstancePackageModel">
-                                    <husk:SkeletonContainer Margin="0,2"
-                                                          CornerRadius="{StaticResource MediumCornerRadius}"
-                                                          IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
-                                        <husk:Card Background="{DynamicResource Layer0BackgroundBrush}" Height="64"
-                                                   Width="64">
-                                            <Border CornerRadius="{StaticResource MediumCornerRadius}"
-                                                    ClipToBounds="True">
-                                                <Image Source="{Binding Thumbnail}" />
-                                            </Border>
-                                        </husk:Card>
-                                    </husk:SkeletonContainer>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </TabItem>
-            </TabControl>
-        </Panel>
-    </Grid>
+        <husk:BusyContainer.PendingContent>
+            <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Background="{DynamicResource LayerSolidBackgroundBrush}">
+                <StackPanel Spacing="8" Margin="24">
+                    <husk:ProgressRing IsIndeterminate="True" HorizontalAlignment="Center" Height="56" Width="56" />
+                    <TextBlock Text="Updating In Progress" FontWeight="Bold" HorizontalAlignment="Center" />
+                </StackPanel>
+            </husk:Card>
+        </husk:BusyContainer.PendingContent>
+    </husk:BusyContainer>
 </controls:Subpage>

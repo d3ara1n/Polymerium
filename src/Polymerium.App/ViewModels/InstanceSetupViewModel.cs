@@ -209,10 +209,10 @@ public partial class InstanceSetupViewModel : ViewModelBase
         }
     }
 
-    protected override Task OnCleanupAsync(CancellationToken token)
+    protected override Task OnDeinitializeAsync(CancellationToken token)
     {
         _cancellationTokenSource?.Cancel();
-        return base.OnCleanupAsync(token);
+        return base.OnDeinitializeAsync(token);
     }
 
     #region Commands

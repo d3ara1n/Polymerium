@@ -11,7 +11,7 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
 
     public Task InitializeAsync(CancellationToken token) => OnInitializedAsync(token);
 
-    public Task CleanupAsync(CancellationToken token) => OnCleanupAsync(token);
+    public Task CleanupAsync(CancellationToken token) => OnDeinitializeAsync(token);
 
     #endregion
 
@@ -19,7 +19,7 @@ public abstract class ViewModelBase : ObservableObject, IPageModel
         // Virtual function does nothing
         Task.CompletedTask;
 
-    protected virtual Task OnCleanupAsync(CancellationToken token) =>
+    protected virtual Task OnDeinitializeAsync(CancellationToken token) =>
         // Virtual function does nothing
         Task.CompletedTask;
 }
