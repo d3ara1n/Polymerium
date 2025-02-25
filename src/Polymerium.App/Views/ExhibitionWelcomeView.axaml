@@ -6,8 +6,8 @@
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.ExhibitionWelcomeView">
-    <StackPanel>
-        <TextBlock FontSize="48" Text="Exhibition">
+    <husk:Page.Header>
+        <TextBlock Text="Exhibition" Theme="{StaticResource PageHeaderTextBlockTheme}">
             <TextBlock.Foreground>
                 <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
                     <GradientStop Offset="0" Color="#f6d365" />
@@ -15,6 +15,9 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
+    </husk:Page.Header>
+    <StackPanel>
+
         <Grid RowDefinitions="4*,Auto,*" Height="256" Width="360">
             <Border Grid.Row="0" Grid.RowSpan="3" Margin="12" BorderThickness="1"
                     BorderBrush="{DynamicResource ControlBorderBrush}"

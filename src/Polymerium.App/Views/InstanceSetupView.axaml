@@ -147,7 +147,7 @@
                                       ItemsSource="{Binding Draft}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="m:InstancePackageModel">
-                                    <husk:SkeletonControl Margin="0,2"
+                                    <husk:SkeletonContainer Margin="0,2"
                                                           CornerRadius="{StaticResource MediumCornerRadius}"
                                                           IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
                                         <husk:Card Background="{DynamicResource Layer0BackgroundBrush}" Height="64"
@@ -157,7 +157,7 @@
                                                 <Image Source="{Binding Thumbnail}" />
                                             </Border>
                                         </husk:Card>
-                                    </husk:SkeletonControl>
+                                    </husk:SkeletonContainer>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>

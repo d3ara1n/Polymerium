@@ -16,12 +16,12 @@
                 <Border Background="{TemplateBinding Background}" BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
-                    <local:SkeletonControl
+                    <local:SkeletonContainer
                         IsLoading="{Binding Lazy.IsInitialized,FallbackValue=True,Converter={x:Static BoolConverters.Not},RelativeSource={RelativeSource Mode=TemplatedParent}}"
                         IsAnimated="{Binding Lazy.IsSuccessful,FallbackValue=False,RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                        <ContentPresenter Content="{TemplateBinding Content}"
+                        <ContentPresenter Content="{TemplateBinding Content}" Padding="{TemplateBinding Padding}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
-                    </local:SkeletonControl>
+                    </local:SkeletonContainer>
                 </Border>
             </ControlTemplate>
         </Setter>

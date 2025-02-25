@@ -4,6 +4,7 @@
         <ResourceInclude Source="/Controls/AppWindow.axaml" />
         <ResourceInclude Source="/Controls/Button.axaml" />
         <ResourceInclude Source="/Controls/ButtonGroup.axaml" />
+        <ResourceInclude Source="/Controls/BusyContainer.axaml" />
         <ResourceInclude Source="/Controls/Card.axaml" />
         <ResourceInclude Source="/Controls/Carousel.axaml" />
         <ResourceInclude Source="/Controls/CheckBox.axaml" />
@@ -34,7 +35,7 @@
         <ResourceInclude Source="/Controls/Separator.axaml" />
         <ResourceInclude Source="/Controls/ScrollBar.axaml" />
         <ResourceInclude Source="/Controls/ScrollViewer.axaml" />
-        <ResourceInclude Source="/Controls/SkeletonControl.axaml" />
+        <ResourceInclude Source="/Controls/SkeletonContainer.axaml" />
         <ResourceInclude Source="/Controls/SplitButton.axaml" />
         <ResourceInclude Source="/Controls/StepControl.axaml" />
         <ResourceInclude Source="/Controls/StepItem.axaml" />

@@ -4,19 +4,19 @@
     <Design.PreviewWith>
         <Panel Background="White" Height="328" Width="256">
             <Grid Margin="24" RowDefinitions="*,8,*,8,*">
-                <local:SkeletonControl Grid.Row="0">
+                <local:SkeletonContainer Grid.Row="0">
                     <Button>Hello World</Button>
-                </local:SkeletonControl>
-                <local:SkeletonControl Grid.Row="2" IsLoading="True">
+                </local:SkeletonContainer>
+                <local:SkeletonContainer Grid.Row="2" IsLoading="True">
                     <Button>Hello World</Button>
-                </local:SkeletonControl>
-                <local:SkeletonControl Grid.Row="4" IsLoading="True" IsAnimated="False">
+                </local:SkeletonContainer>
+                <local:SkeletonContainer Grid.Row="4" IsLoading="True" IsAnimated="False">
                     <Button>Hello World</Button>
-                </local:SkeletonControl>
+                </local:SkeletonContainer>
             </Grid>
         </Panel>
     </Design.PreviewWith>
-    <ControlTheme x:Key="{x:Type local:SkeletonControl}" TargetType="local:SkeletonControl">
+    <ControlTheme x:Key="{x:Type local:SkeletonContainer}" TargetType="local:SkeletonContainer">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>

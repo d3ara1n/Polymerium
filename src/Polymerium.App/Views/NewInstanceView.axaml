@@ -73,7 +73,7 @@
                 </TextBox.InnerLeftContent>
             </TextBox>
             <TextBlock Text="Version" />
-            <husk:SkeletonControl IsLoading="{Binding IsVersionLoaded,Converter={x:Static BoolConverters.Not}}"
+            <husk:SkeletonContainer IsLoading="{Binding IsVersionLoaded,Converter={x:Static BoolConverters.Not}}"
                                   CornerRadius="{StaticResource SmallCornerRadius}">
                 <TextBox Text="{Binding VersionName,Mode=TwoWay}">
                     <TextBox.InnerLeftContent>
@@ -91,7 +91,7 @@
                         </Button>
                     </TextBox.InnerRightContent>
                 </TextBox>
-            </husk:SkeletonControl>
+            </husk:SkeletonContainer>
         </StackPanel>
     </Grid>
 </controls:ScopedPage>

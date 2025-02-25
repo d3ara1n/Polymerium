@@ -26,6 +26,9 @@
     <SolidColorBrush x:Key="Layer2BackgroundBrush" Color="{StaticResource White2Color}" />
     <SolidColorBrush x:Key="Layer7BackgroundBrush" Color="{StaticResource White7Color}" />
 
+    <SolidColorBrush x:Key="LayerSmokeBackgroundBrush" Color="{StaticResource White7Color}" />
+    <SolidColorBrush x:Key="LayerSmokeReversedBackgroundBrush" Color="{StaticResource Black7Color}" />
+
     <SolidColorBrush x:Key="Card1BackgroundBrush" Color="{StaticResource White2Color}" />
     <SolidColorBrush x:Key="Card2BackgroundBrush" Color="{StaticResource White1Color}" />
     <SolidColorBrush x:Key="Card3BackgroundBrush" Color="{StaticResource White3Color}" />
@@ -84,7 +87,7 @@
 
     <SolidColorBrush x:Key="NotificationBorderBrush" Color="{StaticResource Sand12Color}" />
     <SolidColorBrush x:Key="NotificationBackgroundBrush" Color="{StaticResource Sand12Color}" />
-    <LinearGradientBrush x:Key="NotificationSuccessBorderBrush"  StartPoint="0%,50%" EndPoint="100%,50%">
+    <LinearGradientBrush x:Key="NotificationSuccessBorderBrush" StartPoint="0%,50%" EndPoint="100%,50%">
         <GradientStops>
             <GradientStop Offset="0" Color="{StaticResource Grass11Color}" />
             <GradientStop Offset="1" Color="{StaticResource Sand12Color}" />
