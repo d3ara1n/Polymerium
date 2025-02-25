@@ -6,7 +6,8 @@ namespace Huskui.Avalonia.Transitions;
 
 public sealed class PageCoverOverTransition : PageTransitionBase
 {
-    public PageCoverOverTransition(TimeSpan? duration, DirectionFrom? direction) : base(duration) => Direction = direction ?? DirectionFrom.Right;
+    public PageCoverOverTransition(TimeSpan? duration, DirectionFrom? direction) : base(duration) =>
+        Direction = direction ?? DirectionFrom.Right;
 
     public PageCoverOverTransition() : this(null, null) { }
 
@@ -47,10 +48,33 @@ public sealed class PageCoverOverTransition : PageTransitionBase
             _ => throw new ArgumentOutOfRangeException()
         };
 
-        from.Animation().AddFrame(0d, [(ScaleTransform.ScaleXProperty, 1d), (ScaleTransform.ScaleYProperty, 1d), (Visual.OpacityProperty, 1d)]).AddFrame(0.5d, [(ScaleTransform.ScaleXProperty, 0.98d), (ScaleTransform.ScaleYProperty, 0.98d), (Visual.OpacityProperty, 0d)]).AddFrame(1d, [(ScaleTransform.ScaleXProperty, 0.98d), (ScaleTransform.ScaleYProperty, 0.98d), (Visual.OpacityProperty, 0d)]);
+        from
+           .Animation()
+           .AddFrame(0d,
+            [
+                (ScaleTransform.ScaleXProperty, 1d), (ScaleTransform.ScaleYProperty, 1d), (Visual.OpacityProperty, 1d)
+            ])
+           .AddFrame(0.5d,
+            [
+                (ScaleTransform.ScaleXProperty, 0.98d),
+                (ScaleTransform.ScaleYProperty, 0.98d),
+                (Visual.OpacityProperty, 0d)
+            ])
+           .AddFrame(1d,
+            [
+                (ScaleTransform.ScaleXProperty, 0.98d),
+                (ScaleTransform.ScaleYProperty, 0.98d),
+                (Visual.OpacityProperty, 0d)
+            ]);
 
-        to.Animation(new BackEaseOut()).AddFrame(0.5d, [(ScaleTransform.ScaleXProperty, 0.98d), (ScaleTransform.ScaleYProperty, 0.98d)]).AddFrame(1d, [(ScaleTransform.ScaleXProperty, 1d), (ScaleTransform.ScaleYProperty, 1d)]);
+        to
+           .Animation(new BackEaseOut())
+           .AddFrame(0.5d, [(ScaleTransform.ScaleXProperty, 0.98d), (ScaleTransform.ScaleYProperty, 0.98d)])
+           .AddFrame(1d, [(ScaleTransform.ScaleXProperty, 1d), (ScaleTransform.ScaleYProperty, 1d)]);
 
-        to.Animation(new CubicEaseOut()).AddFrame(0d, [(Visual.OpacityProperty, 0d), (translateProperty, translateFrom)]).AddFrame(1d, [(Visual.OpacityProperty, 1d), (translateProperty, 0d)]);
+        to
+           .Animation(new CubicEaseOut())
+           .AddFrame(0d, [(Visual.OpacityProperty, 0d), (translateProperty, translateFrom)])
+           .AddFrame(1d, [(Visual.OpacityProperty, 1d), (translateProperty, 0d)]);
     }
 }

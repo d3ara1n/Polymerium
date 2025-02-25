@@ -39,8 +39,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="m:InstancePackageModel">
                         <husk:SkeletonContainer Margin="0,3"
-                                              CornerRadius="{StaticResource MediumCornerRadius}"
-                                              IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
+                                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                                IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
                             <husk:Card Height="78" Background="{DynamicResource Layer0BackgroundBrush}">
                                 <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*">
                                     <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"

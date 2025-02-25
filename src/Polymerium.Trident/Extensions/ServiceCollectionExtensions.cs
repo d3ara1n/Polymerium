@@ -17,16 +17,26 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddCurseForge(this IServiceCollection services)
     {
         services
-           .AddRefitClient<ICurseForgeClient>(_ => new RefitSettings(new SystemTextJsonContentSerializer(new JsonSerializerOptions(JsonSerializerDefaults.Web))))
+           .AddRefitClient<
+                ICurseForgeClient>(_ =>
+                                       new
+                                           RefitSettings(new
+                                                             SystemTextJsonContentSerializer(new
+                                                                 JsonSerializerOptions(JsonSerializerDefaults
+                                                                    .Web))))
            .ConfigureHttpClient(client =>
             {
                 client.BaseAddress = new Uri(CurseForgeService.ENDPOINT);
                 client.DefaultRequestHeaders.Add("x-api-key", CurseForgeService.API_KEY);
-                client.DefaultRequestHeaders.Add("User-Agent", $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+                client.DefaultRequestHeaders.Add("User-Agent",
+                                                 $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
             })
            .AddTransientHttpErrorPolicy(builder => builder.RetryAsync());
 
-        services.AddSingleton<CurseForgeService>().AddTransient<IRepository, CurseForgeRepository>().AddTransient<IProfileImporter, CurseForgeImporter>();
+        services
+           .AddSingleton<CurseForgeService>()
+           .AddTransient<IRepository, CurseForgeRepository>()
+           .AddTransient<IProfileImporter, CurseForgeImporter>();
 
         return services;
     }
@@ -34,11 +44,18 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddPrismLauncher(this IServiceCollection services)
     {
         services
-           .AddRefitClient<IPrismLauncherClient>(_ => new RefitSettings(new SystemTextJsonContentSerializer(new JsonSerializerOptions(JsonSerializerDefaults.Web))))
+           .AddRefitClient<
+                IPrismLauncherClient>(_ =>
+                                          new
+                                              RefitSettings(new
+                                                                SystemTextJsonContentSerializer(new
+                                                                    JsonSerializerOptions(JsonSerializerDefaults
+                                                                       .Web))))
            .ConfigureHttpClient(client =>
             {
                 client.BaseAddress = new Uri(PrismLauncherService.ENDPOINT);
-                client.DefaultRequestHeaders.Add("User-Agent", $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+                client.DefaultRequestHeaders.Add("User-Agent",
+                                                 $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
             })
            .AddTransientHttpErrorPolicy(builder => builder.RetryAsync());
 

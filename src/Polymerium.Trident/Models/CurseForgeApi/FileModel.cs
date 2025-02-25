@@ -1,6 +1,32 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgeApi;
 
-public record FileModel(uint Id, uint GameId, uint ModId, bool IsAvailable, string DisplayName, string FileName, FileModel.FileReleaseType ReleaseType, FileModel.FileStatusStatus FileStatus, IReadOnlyList<FileModel.FileHash> Hashes, DateTimeOffset FileDate, ulong FileLength, ulong DownloadCount, ulong? FileSizeOnDisk, Uri? DownloadUrl, IReadOnlyList<string> GameVersions, IReadOnlyList<SortableGameVersionModel> SortableGameVersions, IReadOnlyList<FileModel.FileDependency> Dependencies, bool? ExposeAsAlternative, uint? ParentProjectFileId, uint? AlternativeFileId, bool? IsServerPack, uint? ServerPackFileId, bool? IsEarlyAccessContent, DateTimeOffset? EarlyAccessEndDate, ulong FileFingerprint, IReadOnlyList<FileModel.FileModule> Modules)
+public record FileModel(
+    uint Id,
+    uint GameId,
+    uint ModId,
+    bool IsAvailable,
+    string DisplayName,
+    string FileName,
+    FileModel.FileReleaseType ReleaseType,
+    FileModel.FileStatusStatus FileStatus,
+    IReadOnlyList<FileModel.FileHash> Hashes,
+    DateTimeOffset FileDate,
+    ulong FileLength,
+    ulong DownloadCount,
+    ulong? FileSizeOnDisk,
+    Uri? DownloadUrl,
+    IReadOnlyList<string> GameVersions,
+    IReadOnlyList<SortableGameVersionModel> SortableGameVersions,
+    IReadOnlyList<FileModel.FileDependency> Dependencies,
+    bool? ExposeAsAlternative,
+    uint? ParentProjectFileId,
+    uint? AlternativeFileId,
+    bool? IsServerPack,
+    uint? ServerPackFileId,
+    bool? IsEarlyAccessContent,
+    DateTimeOffset? EarlyAccessEndDate,
+    ulong FileFingerprint,
+    IReadOnlyList<FileModel.FileModule> Modules)
 {
     #region FileReleaseType enum
 
@@ -10,7 +36,24 @@ public record FileModel(uint Id, uint GameId, uint ModId, bool IsAvailable, stri
 
     #region FileStatusStatus enum
 
-    public enum FileStatusStatus { Processing = 1, ChangesRequired, UnderReview, Approved, Rejected, MalwareDetected, Deleted, Archived, Testing, Released, ReadyForReview, Deprecated, Baking, AwaitingPublishing, FailedPublishing }
+    public enum FileStatusStatus
+    {
+        Processing = 1,
+        ChangesRequired,
+        UnderReview,
+        Approved,
+        Rejected,
+        MalwareDetected,
+        Deleted,
+        Archived,
+        Testing,
+        Released,
+        ReadyForReview,
+        Deprecated,
+        Baking,
+        AwaitingPublishing,
+        FailedPublishing
+    }
 
     #endregion
 
@@ -20,7 +63,10 @@ public record FileModel(uint Id, uint GameId, uint ModId, bool IsAvailable, stri
     {
         #region FileRelationType enum
 
-        public enum FileRelationType { EmbeddedLibrary = 1, OptionalDependency, RequiredDependency, Tool, Incompatible, Include }
+        public enum FileRelationType
+        {
+            EmbeddedLibrary = 1, OptionalDependency, RequiredDependency, Tool, Incompatible, Include
+        }
 
         #endregion
     }

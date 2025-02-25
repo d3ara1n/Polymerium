@@ -3,7 +3,8 @@ using System.ComponentModel;
 
 namespace Huskui.Avalonia.Models;
 
-public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int startIndex = 0) : ObservableCollection<T>, IInfiniteCollection
+public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int startIndex = 0)
+    : ObservableCollection<T>, IInfiniteCollection
 {
     private bool _hasNext = true;
     private int _index = startIndex;

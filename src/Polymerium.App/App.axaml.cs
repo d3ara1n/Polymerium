@@ -47,7 +47,9 @@ public class App : Application
 
     private static void ShowOrDump(object core, bool critical = false)
     {
-        if (core is Exception ex && !critical && Program.AppHost?.Services.GetService<NavigationService>() is { } navigation)
+        if (core is Exception ex
+         && !critical
+         && Program.AppHost?.Services.GetService<NavigationService>() is { } navigation)
             navigation.Navigate<ExceptionView>(ex);
         else
             Dump(core);
@@ -127,7 +129,9 @@ public class App : Application
                               (view, parameter) =>
                               {
                                   if (!view.IsAssignableTo(typeof(Page)))
-                                      throw new ArgumentOutOfRangeException(nameof(view), view, "Parameter view must be derived from Page");
+                                      throw new ArgumentOutOfRangeException(nameof(view),
+                                                                            view,
+                                                                            "Parameter view must be derived from Page");
 
                                   var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
                                   var type = Type.GetType(name);
@@ -137,7 +141,9 @@ public class App : Application
                                   if (type is not null)
                                   {
                                       if (!type.IsAssignableTo(typeof(ObservableObject)))
-                                          throw new ArgumentOutOfRangeException(nameof(type), type, $"{view.Name} was bound to a view model which is not derived from ObservableObject");
+                                          throw new ArgumentOutOfRangeException(nameof(type),
+                                                                                    type,
+                                                                                    $"{view.Name} was bound to a view model which is not derived from ObservableObject");
 
                                       using var scope = Program.AppHost.Services.CreateScope();
 

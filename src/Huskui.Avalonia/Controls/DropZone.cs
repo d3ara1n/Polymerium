@@ -9,11 +9,24 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":dragover", ":drop")]
 public class DropZone : ContentControl
 {
-    public static readonly RoutedEvent<DragOverEventArgs> DragOverEvent = RoutedEvent.Register<DropZone, DragOverEventArgs>(nameof(DragOver), RoutingStrategies.Direct);
-    public static readonly RoutedEvent<DropEventArgs> DropEvent = RoutedEvent.Register<DropZone, DropEventArgs>(nameof(Drop), RoutingStrategies.Direct);
-    public static readonly DirectProperty<DropZone, object?> ModelProperty = AvaloniaProperty.RegisterDirect<DropZone, object?>(nameof(Model), o => o.Model, (o, v) => o.Model = v);
+    public static readonly RoutedEvent<DragOverEventArgs> DragOverEvent =
+        RoutedEvent.Register<DropZone, DragOverEventArgs>(nameof(DragOver), RoutingStrategies.Direct);
+
+    public static readonly RoutedEvent<DropEventArgs> DropEvent =
+        RoutedEvent.Register<DropZone, DropEventArgs>(nameof(Drop), RoutingStrategies.Direct);
+
+    public static readonly DirectProperty<DropZone, object?> ModelProperty =
+        AvaloniaProperty.RegisterDirect<DropZone, object?>(nameof(Model), o => o.Model, (o, v) => o.Model = v);
 
     private object? _model;
+
+    public DropZone()
+    {
+        DragDrop.SetAllowDrop(this, true);
+        AddHandler(DragDrop.DragEnterEvent, OnDragEnter, handledEventsToo: true);
+        AddHandler(DragDrop.DragLeaveEvent, OnDragLeave, handledEventsToo: true);
+        AddHandler(DragDrop.DropEvent, OnDrop, handledEventsToo: true);
+    }
 
     public object? Model
     {
@@ -32,14 +45,6 @@ public class DropZone : ContentControl
     {
         add => AddHandler(DragOverEvent, value);
         remove => RemoveHandler(DragOverEvent, value);
-    }
-
-    public DropZone()
-    {
-        DragDrop.SetAllowDrop(this, true);
-        AddHandler(DragDrop.DragEnterEvent, OnDragEnter, handledEventsToo: true);
-        AddHandler(DragDrop.DragLeaveEvent, OnDragLeave, handledEventsToo: true);
-        AddHandler(DragDrop.DropEvent, OnDrop, handledEventsToo: true);
     }
 
     private void OnDragEnter(object? sender, DragEventArgs e)

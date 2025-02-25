@@ -74,7 +74,7 @@
             </TextBox>
             <TextBlock Text="Version" />
             <husk:SkeletonContainer IsLoading="{Binding IsVersionLoaded,Converter={x:Static BoolConverters.Not}}"
-                                  CornerRadius="{StaticResource SmallCornerRadius}">
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
                 <TextBox Text="{Binding VersionName,Mode=TwoWay}">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">

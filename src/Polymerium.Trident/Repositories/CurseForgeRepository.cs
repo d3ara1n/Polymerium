@@ -17,19 +17,32 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
     public async Task<RepositoryStatus> CheckStatusAsync()
     {
         var versions = await service.GetGameVersionsAsync();
-        return new RepositoryStatus([LoaderHelper.LOADERID_NEOFORGE, LoaderHelper.LOADERID_FORGE, LoaderHelper.LOADERID_FABRIC, LoaderHelper.LOADERID_QUILT], versions);
+        return new RepositoryStatus([
+                                        LoaderHelper.LOADERID_NEOFORGE,
+                                        LoaderHelper.LOADERID_FORGE,
+                                        LoaderHelper.LOADERID_FABRIC,
+                                        LoaderHelper.LOADERID_QUILT
+                                    ],
+                                    versions);
     }
 
     public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
     {
-        var first = await service.SearchAsync(query, service.ResourceKindToClassId(filter.Kind), filter.Version, service.LoaderIdToType(filter.Loader));
+        var first = await service.SearchAsync(query,
+                                              service.ResourceKindToClassId(filter.Kind),
+                                              filter.Version,
+                                              service.LoaderIdToType(filter.Loader));
         var initial = first.Data.Select(service.ToExhibit);
         return new PaginationHandle<Exhibit>(initial,
                                              50,
                                              first.Pagination.TotalCount,
                                              async index =>
                                              {
-                                                 var rv = await service.SearchAsync(query, service.ResourceKindToClassId(filter.Kind), filter.Version, service.LoaderIdToType(filter.Loader), index);
+                                                 var rv = await service.SearchAsync(query,
+                                                              service.ResourceKindToClassId(filter.Kind),
+                                                              filter.Version,
+                                                              service.LoaderIdToType(filter.Loader),
+                                                              index);
                                                  var exhibits = rv.Data.Select(service.ToExhibit).ToList();
                                                  return exhibits;
                                              });
@@ -55,7 +68,10 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                 }
 
                 {
-                    var files = await service.GetModFilesAsync(modId, filter.Version, service.LoaderIdToType(filter.Loader), count: 1);
+                    var files = await service.GetModFilesAsync(modId,
+                                                               filter.Version,
+                                                               service.LoaderIdToType(filter.Loader),
+                                                               count: 1);
                     var file = files.Data.FirstOrDefault();
                     if (file is not null)
                         return service.ToPackage(mod, file);
@@ -85,7 +101,10 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                                  first.Pagination.TotalCount,
                                                  async index =>
                                                  {
-                                                     var rv = await service.GetModFilesAsync(modId, filter.Version, service.LoaderIdToType(filter.Loader), (int)index);
+                                                     var rv = await service.GetModFilesAsync(modId,
+                                                                  filter.Version,
+                                                                  service.LoaderIdToType(filter.Loader),
+                                                                  (int)index);
                                                      return first.Data.Select(service.ToVersion);
                                                  });
         }

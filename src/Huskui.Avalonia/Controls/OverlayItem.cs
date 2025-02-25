@@ -14,13 +14,25 @@ public class OverlayItem : ContentControl
 {
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
 
-    public static readonly DirectProperty<OverlayItem, int> DistanceProperty = AvaloniaProperty.RegisterDirect<OverlayItem, int>(nameof(Distance), o => o.Distance, (o, v) => o.Distance = v);
+    public static readonly DirectProperty<OverlayItem, int> DistanceProperty =
+        AvaloniaProperty.RegisterDirect<OverlayItem, int>(nameof(Distance), o => o.Distance, (o, v) => o.Distance = v);
 
-    public static readonly DirectProperty<OverlayItem, ICommand?> DismissCommandProperty = AvaloniaProperty.RegisterDirect<OverlayItem, ICommand?>(nameof(DismissCommand), o => o.DismissCommand, (o, v) => o.DismissCommand = v);
+    public static readonly DirectProperty<OverlayItem, ICommand?> DismissCommandProperty =
+        AvaloniaProperty.RegisterDirect<OverlayItem, ICommand?>(nameof(DismissCommand),
+                                                                o => o.DismissCommand,
+                                                                (o, v) => o.DismissCommand = v);
+
+    public static readonly DirectProperty<OverlayItem, IPageTransition?> TransitionProperty =
+        AvaloniaProperty.RegisterDirect<OverlayItem, IPageTransition?>(nameof(Transition),
+                                                                       o => o.Transition,
+                                                                       (o, v) => o.Transition = v);
 
     private ContentPresenter? _contentPresenter;
 
-    public static readonly DirectProperty<OverlayItem, IPageTransition?> TransitionProperty = AvaloniaProperty.RegisterDirect<OverlayItem, IPageTransition?>(nameof(Transition), o => o.Transition, (o, v) => o.Transition = v);
+
+    private ICommand? _dismissCommand;
+
+    private int _distance;
 
     private IPageTransition? _transition;
 
@@ -30,13 +42,9 @@ public class OverlayItem : ContentControl
         set => SetAndRaise(TransitionProperty, ref _transition, value);
     }
 
-    
-
-    private ICommand? _dismissCommand;
-
-    private int _distance;
-
-    public ContentPresenter ContentPresenter => _contentPresenter ?? throw new InvalidOperationException($"{nameof(ContentPresenter)} is not found from the template");
+    public ContentPresenter ContentPresenter =>
+        _contentPresenter
+     ?? throw new InvalidOperationException($"{nameof(ContentPresenter)} is not found from the template");
 
     public int Distance
     {

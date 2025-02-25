@@ -13,7 +13,8 @@
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                   x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
-    <husk:BusyContainer IsBusy="True">
+    <husk:BusyContainer
+        IsBusy="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Updating}">
         <Grid ColumnDefinitions="*,12,Auto" RowDefinitions="Auto,0,*">
             <!-- 基本信息查看与更新、 Loader 切换 -->
             <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto"
@@ -176,7 +177,15 @@
             <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
                        Background="{DynamicResource LayerSolidBackgroundBrush}">
                 <StackPanel Spacing="8" Margin="24">
-                    <husk:ProgressRing IsIndeterminate="True" HorizontalAlignment="Center" Height="56" Width="56" />
+                    <husk:ProgressRing IsIndeterminate="{Binding UpdatingPending}" HorizontalAlignment="Center"
+                                       Height="56" Width="56" Value="{Binding UpdatingProgress,Mode=OneWay}">
+                        <husk:ProgressRing.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Value" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlNormalAnimationDuration}" />
+                            </Transitions>
+                        </husk:ProgressRing.Transitions>
+                    </husk:ProgressRing>
                     <TextBlock Text="Updating In Progress" FontWeight="Bold" HorizontalAlignment="Center" />
                 </StackPanel>
             </husk:Card>

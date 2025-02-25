@@ -28,7 +28,13 @@ namespace Polymerium.App.ViewModels;
 
 public partial class ExhibitionSearchViewModel : ViewModelBase
 {
-    public ExhibitionSearchViewModel(RepositoryAgent agent, IHttpClientFactory factory, InstanceManager instanceManager, NotificationService notificationService, NavigationService navigationService, OverlayService overlayService)
+    public ExhibitionSearchViewModel(
+        RepositoryAgent agent,
+        IHttpClientFactory factory,
+        InstanceManager instanceManager,
+        NotificationService notificationService,
+        NavigationService navigationService,
+        OverlayService overlayService)
     {
         _agent = agent;
         _factory = factory;
@@ -63,17 +69,25 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
                 var status = await _agent.CheckStatusAsync(repository.Label);
                 repository.Loaders = status
                                     .SupportedLoaders.Select(x => new LoaderDisplayModel(x,
-                                                                                         x switch
-                                                                                         {
-                                                                                             LoaderHelper.LOADERID_FORGE => "Forge",
-                                                                                             LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                                                                                             LoaderHelper.LOADERID_FABRIC => "Fabric",
-                                                                                             LoaderHelper.LOADERID_QUILT => "QUILT",
-                                                                                             LoaderHelper.LOADERID_FLINT => "Flint Loader",
-                                                                                             _ => x
-                                                                                         }))
+                                                                 x switch
+                                                                 {
+                                                                     LoaderHelper.LOADERID_FORGE => "Forge",
+                                                                     LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
+                                                                     LoaderHelper.LOADERID_FABRIC => "Fabric",
+                                                                     LoaderHelper.LOADERID_QUILT => "QUILT",
+                                                                     LoaderHelper.LOADERID_FLINT => "Flint Loader",
+                                                                     _ => x
+                                                                 }))
                                     .ToList();
-                repository.Versions = status.SupportedVersions.OrderByDescending(x => SemVersion.TryParse(x, SemVersionStyles.OptionalPatch, out var sem) ? sem : new SemVersion(0, 0, 0), SemVersion.SortOrderComparer).ToList();
+                repository.Versions = status
+                                     .SupportedVersions
+                                     .OrderByDescending(x => SemVersion.TryParse(x,
+                                                                 SemVersionStyles.OptionalPatch,
+                                                                 out var sem)
+                                                                 ? sem
+                                                                 : new SemVersion(0, 0, 0),
+                                                        SemVersion.SortOrderComparer)
+                                     .ToList();
             }
     }
 
@@ -136,7 +150,11 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
     {
         try
         {
-            var handle = await _agent.SearchAsync(SelectedRepository.Label, query, new Filter(FilteredVersion, FilteredLoader?.LoaderId, ResourceKind.Modpack));
+            var handle = await _agent.SearchAsync(SelectedRepository.Label,
+                                                  query,
+                                                  new Filter(FilteredVersion,
+                                                             FilteredLoader?.LoaderId,
+                                                             ResourceKind.Modpack));
             InfiniteCollection<ExhibitModel> source = new(async i =>
             {
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
@@ -158,7 +176,17 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
                                         thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
                                     }
 
-                                    return new ExhibitModel(x.Label, x.Namespace, x.Pid, x.Name, x.Summary, thumbnail, x.Author, x.Tags, x.UpdatedAt, x.DownloadCount, x.Reference);
+                                    return new ExhibitModel(x.Label,
+                                                            x.Namespace,
+                                                            x.Pid,
+                                                            x.Name,
+                                                            x.Summary,
+                                                            thumbnail,
+                                                            x.Author,
+                                                            x.Tags,
+                                                            x.UpdatedAt,
+                                                            x.DownloadCount,
+                                                            x.Reference);
                                 })
                                .ToArray();
                     await Task.WhenAll(tasks);

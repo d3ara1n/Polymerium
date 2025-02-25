@@ -20,11 +20,18 @@ public class NavigationService
         {
             try
             {
-                _handler?.Invoke(page, parameter, transition ?? (page.IsAssignableTo(typeof(ScopedPage)) ? new PageCoverOverTransition(null, DirectionFrom.Right) : new PopUpTransition()));
+                _handler?.Invoke(page,
+                                 parameter,
+                                 transition
+                              ?? (page.IsAssignableTo(typeof(ScopedPage))
+                                      ? new PageCoverOverTransition(null, DirectionFrom.Right)
+                                      : new PopUpTransition()));
             }
             catch (NavigationFailedException ex)
             {
-                _handler?.Invoke(typeof(PageNotReachedView), ex.Message, new PageCoverOverTransition(null, DirectionFrom.Right));
+                _handler?.Invoke(typeof(PageNotReachedView),
+                                 ex.Message,
+                                 new PageCoverOverTransition(null, DirectionFrom.Right));
             }
             catch (Exception ex)
             {
@@ -32,5 +39,6 @@ public class NavigationService
             }
         });
 
-    public void Navigate<T>(object? parameter = null, IPageTransition? transition = null) where T : Page => Navigate(typeof(T), parameter, transition);
+    public void Navigate<T>(object? parameter = null, IPageTransition? transition = null) where T : Page =>
+        Navigate(typeof(T), parameter, transition);
 }

@@ -11,28 +11,41 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":open", ":information", ":success", ":warning", ":danger")]
 public class NotificationItem : ContentControl
 {
-    public static readonly StyledProperty<NotificationLevel> LevelProperty = AvaloniaProperty.Register<NotificationItem, NotificationLevel>(nameof(Level));
+    public static readonly StyledProperty<NotificationLevel> LevelProperty =
+        AvaloniaProperty.Register<NotificationItem, NotificationLevel>(nameof(Level));
 
-    public static readonly DirectProperty<NotificationItem, AvaloniaList<NotificationAction>> ActionsProperty = AvaloniaProperty.RegisterDirect<NotificationItem, AvaloniaList<NotificationAction>>(nameof(Actions), o => o.Actions, (o, v) => o.Actions = v);
+    public static readonly DirectProperty<NotificationItem, AvaloniaList<NotificationAction>> ActionsProperty =
+        AvaloniaProperty.RegisterDirect<NotificationItem, AvaloniaList<NotificationAction>>(nameof(Actions),
+            o => o.Actions,
+            (o, v) => o.Actions = v);
 
-    public static readonly StyledProperty<string> TitleProperty = AvaloniaProperty.Register<NotificationItem, string>(nameof(Title), string.Empty);
+    public static readonly StyledProperty<string> TitleProperty =
+        AvaloniaProperty.Register<NotificationItem, string>(nameof(Title), string.Empty);
 
-    public static readonly StyledProperty<bool> IsOpenProperty = AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsOpen));
+    public static readonly StyledProperty<bool> IsOpenProperty =
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsOpen));
 
-    public static readonly StyledProperty<bool> IsCloseButtonVisibleProperty = AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsCloseButtonVisible));
+    public static readonly StyledProperty<bool> IsCloseButtonVisibleProperty =
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsCloseButtonVisible));
 
-    public static readonly RoutedEvent<RoutedEventArgs> OpenedEvent = RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Opened), RoutingStrategies.Direct);
+    public static readonly RoutedEvent<RoutedEventArgs> OpenedEvent =
+        RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Opened), RoutingStrategies.Direct);
 
-    public static readonly RoutedEvent<RoutedEventArgs> ClosedEvent = RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Closed), RoutingStrategies.Direct);
+    public static readonly RoutedEvent<RoutedEventArgs> ClosedEvent =
+        RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Closed), RoutingStrategies.Direct);
 
-    public static readonly StyledProperty<double> ProgressProperty = AvaloniaProperty.Register<NotificationItem, double>(nameof(Progress));
+    public static readonly StyledProperty<double> ProgressProperty =
+        AvaloniaProperty.Register<NotificationItem, double>(nameof(Progress));
 
-    public static readonly StyledProperty<bool> IsProgressIndeterminateProperty = AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsProgressIndeterminate));
+    public static readonly StyledProperty<bool> IsProgressIndeterminateProperty =
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsProgressIndeterminate));
 
 
-    public static readonly StyledProperty<double> ProgressMaximumProperty = AvaloniaProperty.Register<NotificationItem, double>(nameof(ProgressMaximum), 100d);
+    public static readonly StyledProperty<double> ProgressMaximumProperty =
+        AvaloniaProperty.Register<NotificationItem, double>(nameof(ProgressMaximum), 100d);
 
-    public static readonly StyledProperty<bool> IsProgressBarVisibleProperty = AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsProgressBarVisible));
+    public static readonly StyledProperty<bool> IsProgressBarVisibleProperty =
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsProgressBarVisible));
 
 
     private AvaloniaList<NotificationAction> _actions = [];

@@ -1,6 +1,10 @@
 ﻿namespace Trident.Abstractions.FileModels;
 
-public record struct Preference(Preference.AccountSection Account, Preference.LaunchSection Launch, Preference.SnapshotSection Snapshot, Preference.PersistSection Persist)
+public record struct Preference(
+    Preference.AccountSection Account,
+    Preference.LaunchSection Launch,
+    Preference.SnapshotSection Snapshot,
+    Preference.PersistSection Persist)
 {
     #region Nested type: AccountSection
 

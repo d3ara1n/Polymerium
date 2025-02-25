@@ -18,7 +18,8 @@ internal class ProfileHandle(string key, Profile value, string path, JsonSeriali
         return File.WriteAllTextAsync(path, json);
     }
 
-    public static ProfileHandle Create(string key, Profile value, string path, JsonSerializerOptions options) => new(key, value, path, options);
+    public static ProfileHandle Create(string key, Profile value, string path, JsonSerializerOptions options) =>
+        new(key, value, path, options);
 
     public static ProfileHandle Create(string key, string path, JsonSerializerOptions options)
     {

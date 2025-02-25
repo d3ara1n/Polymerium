@@ -6,8 +6,13 @@ namespace Polymerium.Trident.Utilities;
 
 public static class FileHelper
 {
-    private static readonly string[] SUPPORTED_BITMAP_MIMES = ["image/jpeg", "image/png", "image/bmp", "image/gif", "image/tiff"];
-    private static readonly IContentInspector inspector = new ContentInspectorBuilder { Definitions = DefaultDefinitions.All() }.Build();
+    private static readonly string[] SUPPORTED_BITMAP_MIMES =
+    [
+        "image/jpeg", "image/png", "image/bmp", "image/gif", "image/tiff"
+    ];
+
+    private static readonly IContentInspector inspector =
+        new ContentInspectorBuilder { Definitions = DefaultDefinitions.All() }.Build();
 
     public static string? PickExists(string home, Span<string> candidates)
     {
@@ -46,7 +51,9 @@ public static class FileHelper
         return false;
     }
 
-    public static string GuessBitmapExtension(Stream stream, string fallback = "png") => inspector.Inspect(stream).ByFileExtension().OrderBy(x => -x.Points).Select(x => x.Extension).FirstOrDefault() ?? fallback;
+    public static string GuessBitmapExtension(Stream stream, string fallback = "png") =>
+        inspector.Inspect(stream).ByFileExtension().OrderBy(x => -x.Points).Select(x => x.Extension).FirstOrDefault()
+     ?? fallback;
 
     public static async Task<bool> TryWriteToFileAsync(string path, Stream stream)
     {

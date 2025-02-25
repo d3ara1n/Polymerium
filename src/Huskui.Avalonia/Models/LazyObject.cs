@@ -4,7 +4,8 @@ using Avalonia.Threading;
 
 namespace Huskui.Avalonia.Models;
 
-public class LazyObject(Func<CancellationToken, Task<object?>> factory, CancellationToken token = default) : INotifyPropertyChanged
+public class LazyObject(Func<CancellationToken, Task<object?>> factory, CancellationToken token = default)
+    : INotifyPropertyChanged
 {
     private Exception? _error;
     private bool _isInitialized;
@@ -12,7 +13,8 @@ public class LazyObject(Func<CancellationToken, Task<object?>> factory, Cancella
     private bool _isSuccessful;
     private object? _value;
 
-    public CancellationTokenSource CancellationTokenSource { get; } = CancellationTokenSource.CreateLinkedTokenSource(token);
+    public CancellationTokenSource CancellationTokenSource { get; } =
+        CancellationTokenSource.CreateLinkedTokenSource(token);
 
     public object? Value
     {
@@ -79,7 +81,8 @@ public class LazyObject(Func<CancellationToken, Task<object?>> factory, Cancella
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
     private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {

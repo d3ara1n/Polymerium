@@ -22,12 +22,19 @@ public class OverlayHost : TemplatedControl
     public const string PART_ItemsPresenter = nameof(PART_ItemsPresenter);
     public const string PART_Stage = nameof(PART_Stage);
 
-    public static readonly DirectProperty<OverlayHost, OverlayItems> ItemsProperty = AvaloniaProperty.RegisterDirect<OverlayHost, OverlayItems>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
+    public static readonly DirectProperty<OverlayHost, OverlayItems> ItemsProperty =
+        AvaloniaProperty.RegisterDirect<OverlayHost, OverlayItems>(nameof(Items), o => o.Items, (o, v) => o.Items = v);
 
-    public static readonly DirectProperty<OverlayHost, bool> IsPresentProperty = AvaloniaProperty.RegisterDirect<OverlayHost, bool>(nameof(IsPresent), o => o.IsPresent, (o, v) => o.IsPresent = v);
+    public static readonly DirectProperty<OverlayHost, bool> IsPresentProperty =
+        AvaloniaProperty.RegisterDirect<OverlayHost, bool>(nameof(IsPresent),
+                                                           o => o.IsPresent,
+                                                           (o, v) => o.IsPresent = v);
 
 
-    public static readonly DirectProperty<OverlayHost, IPageTransition> TransitionProperty = AvaloniaProperty.RegisterDirect<OverlayHost, IPageTransition>(nameof(Transition), o => o.Transition, (o, v) => o.Transition = v);
+    public static readonly DirectProperty<OverlayHost, IPageTransition> TransitionProperty =
+        AvaloniaProperty.RegisterDirect<OverlayHost, IPageTransition>(nameof(Transition),
+                                                                      o => o.Transition,
+                                                                      (o, v) => o.Transition = v);
 
     private bool _isPresent;
 
@@ -99,7 +106,9 @@ public class OverlayHost : TemplatedControl
     public void Dismiss(OverlayItem item)
     {
         var transition = item.Transition ?? Transition;
-        transition.Start(item.ContentPresenter, null, false, CancellationToken.None).ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
+        transition
+           .Start(item.ContentPresenter, null, false, CancellationToken.None)
+           .ContinueWith(_ => Dispatcher.UIThread.Post(Clean));
         return;
 
         void Clean()
@@ -120,6 +129,8 @@ public class OverlayHost : TemplatedControl
 
     private class InternalDismissCommand(OverlayHost host, OverlayItem item) : ICommand
     {
+        internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+
         #region ICommand Members
 
         public bool CanExecute(object? parameter) => host.Items.Contains(item);
@@ -129,25 +140,57 @@ public class OverlayHost : TemplatedControl
         public event EventHandler? CanExecuteChanged;
 
         #endregion
-
-        internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion
 
     #region StageInAnimation & StageOutAnimation
 
-    private static readonly Animation StageInAnimation = new() { FillMode = FillMode.Forward, Duration = TimeSpan.FromMilliseconds(146), Easing = new SineEaseOut(), Children = { new KeyFrame { Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } } }, new KeyFrame { Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } } } } };
+    private static readonly Animation StageInAnimation = new()
+    {
+        FillMode = FillMode.Forward,
+        Duration = TimeSpan.FromMilliseconds(146),
+        Easing = new SineEaseOut(),
+        Children =
+        {
+            new KeyFrame
+            {
+                Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } }
+            },
+            new KeyFrame
+            {
+                Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } }
+            }
+        }
+    };
 
-    private static readonly Animation StageOutAnimation = new() { FillMode = FillMode.Forward, Duration = TimeSpan.FromMilliseconds(146), Easing = new SineEaseOut(), Children = { new KeyFrame { Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } } }, new KeyFrame { Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } } } } };
+    private static readonly Animation StageOutAnimation = new()
+    {
+        FillMode = FillMode.Forward,
+        Duration = TimeSpan.FromMilliseconds(146),
+        Easing = new SineEaseOut(),
+        Children =
+        {
+            new KeyFrame
+            {
+                Cue = new Cue(0d), Setters = { new Setter { Property = OpacityProperty, Value = 1d } }
+            },
+            new KeyFrame
+            {
+                Cue = new Cue(1d), Setters = { new Setter { Property = OpacityProperty, Value = 0d } }
+            }
+        }
+    };
 
     #endregion
 
     #region ContentAlignment
 
-    public static readonly StyledProperty<HorizontalAlignment> HorizontalContentAlignmentProperty = ContentControl.HorizontalContentAlignmentProperty.AddOwner<OverlayHost>();
+    public static readonly StyledProperty<HorizontalAlignment> HorizontalContentAlignmentProperty =
+        ContentControl.HorizontalContentAlignmentProperty.AddOwner<OverlayHost>();
 
-    public static readonly StyledProperty<VerticalAlignment> VerticalContentAlignmentProperty = ContentControl.VerticalContentAlignmentProperty.AddOwner<OverlayHost>();
+    public static readonly StyledProperty<VerticalAlignment> VerticalContentAlignmentProperty =
+        ContentControl.VerticalContentAlignmentProperty.AddOwner<OverlayHost>();
 
     public HorizontalAlignment HorizontalContentAlignment
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
@@ -64,19 +63,26 @@ public partial class InstanceHomeViewModel : ViewModelBase
         PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
     }
 
+    #region Commands
+
+    [RelayCommand]
+    private void SwitchAccount() => _overlayService.PopDialog(new AccountPickerDialog());
+
+    #endregion
+
+    #region Tracking
+
     protected override Task OnInitializedAsync(CancellationToken token)
     {
         _instanceManager.InstanceUpdating += OnProfileUpdating;
         _profileManager.ProfileUpdated += OnProfileUpdated;
         if (_instanceManager.IsTracking(Basic.Key, out var tracker))
-        {
             if (tracker is UpdateTracker update)
             {
                 // 已经处于更新状态而未收到事件
                 State = InstanceState.Updating;
                 update.StateUpdated += OnProfileUpdateStateChanged;
             }
-        }
 
         return Task.CompletedTask;
     }
@@ -92,14 +98,12 @@ public partial class InstanceHomeViewModel : ViewModelBase
     private void OnProfileUpdateStateChanged(TrackerBase sender, TrackerState state)
     {
         if (sender is UpdateTracker update)
-        {
             if (state is TrackerState.Faulted or TrackerState.Finished)
             {
                 update.StateUpdated -= OnProfileUpdateStateChanged;
                 Dispatcher.UIThread.Post(() => State = InstanceState.Idle);
                 // 更新的事情交给 ProfileManager.ProfileUpdated
             }
-        }
     }
 
     private void OnProfileUpdating(object? sender, UpdateTracker tracker)
@@ -111,8 +115,10 @@ public partial class InstanceHomeViewModel : ViewModelBase
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
-        UpdateModels(Basic.Key, e.Value);
+        UpdateModels(e.Key, e.Value);
     }
+
+    #endregion
 
     #region Injected
 
@@ -135,13 +141,6 @@ public partial class InstanceHomeViewModel : ViewModelBase
 
     [ObservableProperty]
     private InstanceState _state = InstanceState.Idle;
-
-    #endregion
-
-    #region Commands
-
-    [RelayCommand]
-    private void SwitchAccount() => _overlayService.PopDialog(new AccountPickerDialog());
 
     #endregion
 }

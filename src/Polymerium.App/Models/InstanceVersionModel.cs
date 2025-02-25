@@ -6,7 +6,14 @@ using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 
-public partial class InstanceVersionModel(string label, string? @namespace, string pid, string vid, string display, ReleaseType releaseType, DateTimeOffset updatedAt) : ModelBase
+public partial class InstanceVersionModel(
+    string label,
+    string? @namespace,
+    string pid,
+    string vid,
+    string display,
+    ReleaseType releaseType,
+    DateTimeOffset updatedAt) : ModelBase
 {
     #region Reactive Properties
 

@@ -72,7 +72,9 @@ public class ProfileManager : IDisposable
 
     public ReservedKey RequestKey(string key)
     {
-        var sanitized = string.Join(string.Empty, key.Trim().ToLower().Where(x => !Path.GetInvalidFileNameChars().Contains(x))).Replace(' ', '_');
+        var sanitized = string
+                       .Join(string.Empty, key.Trim().ToLower().Where(x => !Path.GetInvalidFileNameChars().Contains(x)))
+                       .Replace(' ', '_');
         while (_profiles.Any(x => x.Key == sanitized) || ReservedKeys.Any(x => x.Key == sanitized))
             sanitized += '_';
 
@@ -91,7 +93,14 @@ public class ProfileManager : IDisposable
         OnProfileAdded(key.Key, profile);
     }
 
-    public void Update(string key, string? source, string name, string version, string? loader, IReadOnlyList<string> packages, IDictionary<string, object> overrides)
+    public void Update(
+        string key,
+        string? source,
+        string name,
+        string version,
+        string? loader,
+        IReadOnlyList<string> packages,
+        IDictionary<string, object> overrides)
     {
         var handle = _profiles.FirstOrDefault(x => x.Key == key);
         if (handle is null)
@@ -126,11 +135,14 @@ public class ProfileManager : IDisposable
 
     public event EventHandler<ProfileChangedEventArgs>? ProfileAdded;
 
-    internal void OnProfileUpdated(string key, Profile profile) => ProfileUpdated?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+    internal void OnProfileUpdated(string key, Profile profile) =>
+        ProfileUpdated?.Invoke(this, new ProfileChangedEventArgs(key, profile));
 
-    internal void OnProfileRemoved(string key, Profile profile) => ProfileRemoved?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+    internal void OnProfileRemoved(string key, Profile profile) =>
+        ProfileRemoved?.Invoke(this, new ProfileChangedEventArgs(key, profile));
 
-    internal void OnProfileAdded(string key, Profile profile) => ProfileAdded?.Invoke(this, new ProfileChangedEventArgs(key, profile));
+    internal void OnProfileAdded(string key, Profile profile) =>
+        ProfileAdded?.Invoke(this, new ProfileChangedEventArgs(key, profile));
 
     #endregion
 

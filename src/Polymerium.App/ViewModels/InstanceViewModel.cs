@@ -20,18 +20,14 @@ public partial class InstanceViewModel : ViewModelBase
         if (bag.Parameter is string key)
         {
             if (profileManager.TryGetImmutable(key, out var profile))
-            {
                 Basic = new InstanceBasicModel(key,
                                                profile.Name,
                                                profile.Setup.Version,
                                                profile.Setup.Loader,
                                                profile.Setup.Source);
-            }
             else
-            {
                 throw new PageNotReachedException(typeof(InstanceView),
                                                   $"Key '{key}' is not valid instance or not found");
-            }
         }
         else
         {
@@ -45,14 +41,6 @@ public partial class InstanceViewModel : ViewModelBase
         return base.OnInitializedAsync(token);
     }
 
-
-    #region Commands
-
-    #endregion
-
-    #region Direct
-
-    #endregion
 
     #region Reactive
 

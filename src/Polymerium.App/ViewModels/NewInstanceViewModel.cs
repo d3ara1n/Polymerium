@@ -84,10 +84,19 @@ public partial class NewInstanceViewModel : ViewModelBase
             var iconPath = PathDef.Default.FileOfIcon(key.Key, extension);
             stream.Position = 0;
             if (!await FileHelper.TryWriteToFileAsync(iconPath, stream))
-                _notificationService.PopMessage("Write icon file to the instance dir failed", level: NotificationLevel.Danger);
+                _notificationService.PopMessage("Write icon file to the instance dir failed",
+                                                level: NotificationLevel.Danger);
         }
 
-        _profileManager.Add(key, new Profile(display, new Profile.Rice(null, version, null, new List<string>(), new List<string>(), new List<string>()), new Dictionary<string, object>()));
+        _profileManager.Add(key,
+                            new Profile(display,
+                                        new Profile.Rice(null,
+                                                         version,
+                                                         null,
+                                                         new List<string>(),
+                                                         new List<string>(),
+                                                         new List<string>()),
+                                        new Dictionary<string, object>()));
 
 
         _navigationService.Navigate<InstanceView>(key.Key);
