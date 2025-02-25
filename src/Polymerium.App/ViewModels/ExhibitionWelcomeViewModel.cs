@@ -2,7 +2,4 @@
 
 namespace Polymerium.App.ViewModels;
 
-public class ExhibitionWelcomeViewModel: ViewModelBase
-{
-    
-}
+public class ExhibitionWelcomeViewModel : ViewModelBase { }

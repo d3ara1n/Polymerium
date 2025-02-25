@@ -61,7 +61,6 @@ public class Page : HeaderedContentControl
     {
         base.OnLoaded(e);
         if (!Design.IsDesignMode)
-        {
             if (Model is not null)
             {
                 SetState(true);
@@ -77,15 +76,17 @@ public class Page : HeaderedContentControl
                                         GetType(),
                                         t.IsFaulted,
                                         t.IsCanceled);
-                        if (t.IsCompletedSuccessfully)
-                            Dispatcher.UIThread.Post(() => SetState(false, true));
-                        else if (t.IsCanceled)
-                            Dispatcher.UIThread.Post(() => SetState(false, true));
-                        else if (t.IsFaulted)
-                            Dispatcher.UIThread.Post(() => SetState(false, false, true));
+                        if (!_cancellationTokenSource.IsCancellationRequested)
+                        {
+                            if (t.IsCompletedSuccessfully)
+                                Dispatcher.UIThread.Post(() => SetState(false, true));
+                            else if (t.IsCanceled)
+                                Dispatcher.UIThread.Post(() => SetState(false, true));
+                            else if (t.IsFaulted)
+                                Dispatcher.UIThread.Post(() => SetState(false, false, true));
+                        }
                     });
             }
-        }
     }
 
     protected override void OnUnloaded(RoutedEventArgs e)

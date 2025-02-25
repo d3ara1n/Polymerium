@@ -6,7 +6,8 @@ namespace Huskui.Avalonia.Controls;
 
 public class LazyContainer : ContentControl
 {
-    public static readonly DirectProperty<LazyContainer, LazyObject?> LazyProperty = AvaloniaProperty.RegisterDirect<LazyContainer, LazyObject?>(nameof(Lazy), o => o.Lazy, (o, v) => o.Lazy = v);
+    public static readonly DirectProperty<LazyContainer, LazyObject?> LazyProperty =
+        AvaloniaProperty.RegisterDirect<LazyContainer, LazyObject?>(nameof(Lazy), o => o.Lazy, (o, v) => o.Lazy = v);
 
     private LazyObject? _lazy;
 
@@ -20,7 +21,12 @@ public class LazyContainer : ContentControl
     {
         base.OnPropertyChanged(change);
         if (change.Property == LazyProperty)
-            if (change.NewValue is LazyObject { IsInProgress: false, IsInitialized: false, CancellationTokenSource.IsCancellationRequested: false } lazy)
+            if (change.NewValue is LazyObject
+                {
+                    IsInProgress: false,
+                    IsInitialized: false,
+                    CancellationTokenSource.IsCancellationRequested: false
+                } lazy)
                 lazy.StartInitialize();
     }
 }

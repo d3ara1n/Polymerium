@@ -10,14 +10,14 @@ public class BusyContainer : ContentControl
     public static readonly StyledProperty<object?> PendingContentProperty =
         AvaloniaProperty.Register<BusyContainer, object?>(nameof(PendingContent));
 
+    public static readonly StyledProperty<bool> IsBusyProperty =
+        AvaloniaProperty.Register<BusyContainer, bool>(nameof(IsBusy));
+
     public object? PendingContent
     {
         get => GetValue(PendingContentProperty);
         set => SetValue(PendingContentProperty, value);
     }
-
-    public static readonly StyledProperty<bool> IsBusyProperty =
-        AvaloniaProperty.Register<BusyContainer, bool>(nameof(IsBusy));
 
     public bool IsBusy
     {
@@ -30,8 +30,6 @@ public class BusyContainer : ContentControl
         base.OnPropertyChanged(change);
 
         if (change.Property == IsBusyProperty)
-        {
             PseudoClasses.Set(":busy", change.GetNewValue<bool>());
-        }
     }
 }

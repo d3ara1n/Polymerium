@@ -1,6 +1,14 @@
 ﻿namespace Polymerium.Trident.Models.CurseForgePack;
 
-public record ManifestModel(ManifestModel.MinecraftModel Minecraft, string ManifestType, int ManifestVersion, string Name, string Version, string Author, IReadOnlyList<ManifestModel.FileModel> Files, string Overrides)
+public record ManifestModel(
+    ManifestModel.MinecraftModel Minecraft,
+    string ManifestType,
+    int ManifestVersion,
+    string Name,
+    string Version,
+    string Author,
+    IReadOnlyList<ManifestModel.FileModel> Files,
+    string Overrides)
 {
     #region Nested type: FileModel
 

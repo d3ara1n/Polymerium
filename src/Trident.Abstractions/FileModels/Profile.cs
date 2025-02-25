@@ -9,7 +9,13 @@ public class Profile(string name, Profile.Rice setup, IDictionary<string, object
 
     #region Nested type: Rice
 
-    public class Rice(string? source, string version, string? loader, IList<string>? stage, IList<string>? stash, IList<string>? draft)
+    public class Rice(
+        string? source,
+        string version,
+        string? loader,
+        IList<string>? stage,
+        IList<string>? stash,
+        IList<string>? draft)
     {
         public string? Source { get; set; } = source;
         public string Version { get; set; } = version ?? throw new ArgumentNullException(nameof(version));

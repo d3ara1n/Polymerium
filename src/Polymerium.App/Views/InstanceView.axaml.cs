@@ -14,11 +14,35 @@ namespace Polymerium.App.Views;
 
 public partial class InstanceView : ScopedPage
 {
+    public static readonly DirectProperty<InstanceView, string> KeyProperty =
+        AvaloniaProperty.RegisterDirect<InstanceView, string>(nameof(Key), o => o.Key, (o, v) => o.Key = v);
+
+    public static readonly DirectProperty<InstanceView, ICommand?> NavigateCommandProperty =
+        AvaloniaProperty.RegisterDirect<InstanceView, ICommand?>(nameof(NavigateCommand),
+                                                                 o => o.NavigateCommand,
+                                                                 (o, v) => o.NavigateCommand = v);
+
+    private string _key = string.Empty;
+
+    private ICommand? _navigateCommand;
+
     public InstanceView()
     {
         InitializeComponent();
 
         NavigateCommand = new RelayCommand<Type>(Navigate);
+    }
+
+    public string Key
+    {
+        get => _key;
+        set => SetAndRaise(KeyProperty, ref _key, value);
+    }
+
+    public ICommand? NavigateCommand
+    {
+        get => _navigateCommand;
+        set => SetAndRaise(NavigateCommandProperty, ref _navigateCommand, value);
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
@@ -28,30 +52,6 @@ public partial class InstanceView : ScopedPage
         var activator = this.FindAncestorOfType<MainWindow>()?.PageActivator;
         if (activator != null)
             Frame.PageActivator = activator;
-    }
-
-    public static readonly DirectProperty<InstanceView, string> KeyProperty =
-        AvaloniaProperty.RegisterDirect<InstanceView, string>(nameof(Key), o => o.Key, (o, v) => o.Key = v);
-
-    private string _key = string.Empty;
-
-    public string Key
-    {
-        get => _key;
-        set => SetAndRaise(KeyProperty, ref _key, value);
-    }
-
-    public static readonly DirectProperty<InstanceView, ICommand?> NavigateCommandProperty =
-        AvaloniaProperty.RegisterDirect<InstanceView, ICommand?>(nameof(NavigateCommand),
-                                                                 o => o.NavigateCommand,
-                                                                 (o, v) => o.NavigateCommand = v);
-
-    private ICommand? _navigateCommand;
-
-    public ICommand? NavigateCommand
-    {
-        get => _navigateCommand;
-        set => SetAndRaise(NavigateCommandProperty, ref _navigateCommand, value);
     }
 
 

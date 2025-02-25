@@ -11,13 +11,28 @@ public static class Startup
 {
     public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAvalonia().AddLogging().AddHttpClient().ConfigureHttpClientDefaults(builder => builder.RemoveAllLoggers()).AddMemoryCache();
+        services
+           .AddAvalonia()
+           .AddLogging()
+           .AddHttpClient()
+           .ConfigureHttpClientDefaults(builder => builder.RemoveAllLoggers())
+           .AddMemoryCache();
 
         // Trident
-        services.AddCurseForge().AddPrismLauncher().AddSingleton<ProfileManager>().AddSingleton<RepositoryAgent>().AddSingleton<ImporterAgent>().AddSingleton<InstanceManager>();
+        services
+           .AddCurseForge()
+           .AddPrismLauncher()
+           .AddSingleton<ProfileManager>()
+           .AddSingleton<RepositoryAgent>()
+           .AddSingleton<ImporterAgent>()
+           .AddSingleton<InstanceManager>();
 
 
         // App
-        services.AddViewFacilities().AddSingleton<NotificationService>().AddSingleton<NavigationService>().AddSingleton<OverlayService>();
+        services
+           .AddViewFacilities()
+           .AddSingleton<NotificationService>()
+           .AddSingleton<NavigationService>()
+           .AddSingleton<OverlayService>();
     }
 }

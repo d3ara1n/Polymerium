@@ -6,16 +6,16 @@ namespace Huskui.Avalonia.Behaviors;
 
 public class ScrollViewerEdgeFadeBehavior : AvaloniaObject
 {
-    static ScrollViewerEdgeFadeBehavior()
-    {
-        FadedEdgeThicknessProperty.Changed.AddClassHandler<ScrollViewer>(OnFadeThicknessChanged);
-    }
-
     public static readonly AttachedProperty<double> FadedEdgeThicknessProperty =
         AvaloniaProperty.RegisterAttached<ScrollViewerEdgeFadeBehavior, ScrollViewer, double>("FadedEdgeThickness",
             20d,
             false,
             BindingMode.OneTime);
+
+    static ScrollViewerEdgeFadeBehavior()
+    {
+        FadedEdgeThicknessProperty.Changed.AddClassHandler<ScrollViewer>(OnFadeThicknessChanged);
+    }
 
     private static void OnFadeThicknessChanged(ScrollViewer sender, AvaloniaPropertyChangedEventArgs e)
     {

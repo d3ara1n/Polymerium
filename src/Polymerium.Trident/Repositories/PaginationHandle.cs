@@ -2,7 +2,11 @@
 
 namespace Polymerium.Trident.Repositories;
 
-public class PaginationHandle<T>(IEnumerable<T> initial, uint pageSize, uint totalCount, Func<uint, Task<IEnumerable<T>>> next) : IPaginationHandle<T>
+public class PaginationHandle<T>(
+    IEnumerable<T> initial,
+    uint pageSize,
+    uint totalCount,
+    Func<uint, Task<IEnumerable<T>>> next) : IPaginationHandle<T>
 {
     private IEnumerable<T> _currentItems = initial;
     private uint _currentPage;

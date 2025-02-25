@@ -48,7 +48,8 @@ public class PathDef
 
     public string FileOfPreference(string key) => Path.Combine(InstanceDirectory, key, "preference.json");
 
-    public string FileOfIcon(string key, string extensionGuess) => Path.Combine(InstanceDirectory, key, $"icon.{extensionGuess}");
+    public string FileOfIcon(string key, string extensionGuess) =>
+        Path.Combine(InstanceDirectory, key, $"icon.{extensionGuess}");
 
     public string FileOfLockData(string key) => Path.Combine(InstanceDirectory, key, "data.lock.json");
 

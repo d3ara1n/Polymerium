@@ -23,17 +23,23 @@ namespace Polymerium.App;
 
 public partial class MainWindow : AppWindow
 {
-    private Action<Type, object?, IPageTransition?>? _navigate;
+    public static readonly DirectProperty<MainWindow, string> FilterTextProperty =
+        AvaloniaProperty.RegisterDirect<MainWindow, string>(nameof(FilterText),
+                                                            o => o.FilterText,
+                                                            (o, v) => o.FilterText = v);
 
-    public static readonly DirectProperty<MainWindow, string> FilterTextProperty = AvaloniaProperty.RegisterDirect<MainWindow, string>(nameof(FilterText), o => o.FilterText, (o, v) => o.FilterText = v);
+    public static readonly DirectProperty<MainWindow, ReadOnlyObservableCollection<InstanceEntryModel>> ViewProperty =
+        AvaloniaProperty.RegisterDirect<MainWindow, ReadOnlyObservableCollection<InstanceEntryModel>>(nameof(View),
+            o => o.View,
+            (o, v) => o.View = v);
+
+    private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
+    private readonly IDisposable _subscription;
 
     private string _filterText = string.Empty;
+    private Action<Type, object?, IPageTransition?>? _navigate;
 
-    public string FilterText
-    {
-        get => _filterText;
-        set => SetAndRaise(FilterTextProperty, ref _filterText, value);
-    }
+    private ReadOnlyObservableCollection<InstanceEntryModel> _view;
 
 
     public MainWindow()
@@ -51,14 +57,13 @@ public partial class MainWindow : AppWindow
         #endregion
     }
 
-    private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
-    private readonly IDisposable _subscription;
+    public string FilterText
+    {
+        get => _filterText;
+        set => SetAndRaise(FilterTextProperty, ref _filterText, value);
+    }
 
     public Frame.PageActivatorDelegate PageActivator { get; private set; }
-
-    public static readonly DirectProperty<MainWindow, ReadOnlyObservableCollection<InstanceEntryModel>> ViewProperty = AvaloniaProperty.RegisterDirect<MainWindow, ReadOnlyObservableCollection<InstanceEntryModel>>(nameof(View), o => o.View, (o, v) => o.View = v);
-
-    private ReadOnlyObservableCollection<InstanceEntryModel> _view;
 
     public ReadOnlyObservableCollection<InstanceEntryModel> View
     {
@@ -68,20 +73,39 @@ public partial class MainWindow : AppWindow
 
     public ICommand ViewInstanceCommand { get; }
 
-    private static Func<InstanceEntryModel, bool> BuildFilter(string filter) => x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
+    private static Func<InstanceEntryModel, bool> BuildFilter(string filter) =>
+        x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
     private void PopDialog()
     {
         Button pop = new() { Content = "POP" };
         pop.Click += (_, __) => PopDialog();
-        PopDialog(new Dialog { Title = $"DIALOG {Random.Shared.Next(1000, 9999)}", Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM", Content = new StackPanel { Spacing = 8d, Children = { new TextBox(), pop } } });
+        PopDialog(new Dialog
+        {
+            Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
+            Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
+            Content = new StackPanel { Spacing = 8d, Children = { new TextBox(), pop } }
+        });
     }
 
     private void PopToast()
     {
         Button pop = new() { Content = "POP" };
         pop.Click += (_, __) => PopToast();
-        PopToast(new Toast { Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}", Content = new StackPanel { Spacing = 8d, Children = { new TextBlock { Text = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM" }, new TextBox(), pop } } });
+        PopToast(new Toast
+        {
+            Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
+            Content = new StackPanel
+            {
+                Spacing = 8d,
+                Children =
+                {
+                    new TextBlock { Text = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM" },
+                    new TextBox(),
+                    pop
+                }
+            }
+        });
     }
 
     private void PopNotification()
@@ -125,7 +149,9 @@ public partial class MainWindow : AppWindow
         // NavigationService 会处理错误情况
         Root.Navigate(page, parameter, transition);
 
-    internal void BindNavigation(Action<Type, object?, IPageTransition?> navigate, Frame.PageActivatorDelegate activator)
+    internal void BindNavigation(
+        Action<Type, object?, IPageTransition?> navigate,
+        Frame.PageActivatorDelegate activator)
     {
         _navigate = navigate;
         PageActivator = activator;
@@ -166,7 +192,11 @@ public partial class MainWindow : AppWindow
         }
         else
         {
-            InstanceEntryModel model = new(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader, e.Value.Setup.Source);
+            InstanceEntryModel model = new(e.Key,
+                                           e.Value.Name,
+                                           e.Value.Setup.Version,
+                                           e.Value.Setup.Loader,
+                                           e.Value.Setup.Source);
             _entries.AddOrUpdate(model);
         }
     }
@@ -212,7 +242,7 @@ public partial class MainWindow : AppWindow
 
         model.State = InstanceEntryState.Updating;
 
-        var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Select(x => model.Progress = e.Progress).Subscribe();
+        var progressUpdater = Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(_ => model.Progress = e.Progress);
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -224,7 +254,12 @@ public partial class MainWindow : AppWindow
                     model.Progress = null;
                     break;
                 case TrackerState.Faulted:
-                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem { Content = e.FailureReason, Title = $"Failed to update {e.Key}", Level = NotificationLevel.Warning }));
+                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
+                    {
+                        Content = e.FailureReason,
+                        Title = $"Failed to update {e.Key}",
+                        Level = NotificationLevel.Warning
+                    }));
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -245,7 +280,10 @@ public partial class MainWindow : AppWindow
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
         InstanceEntryModel model = new(e.Key, e.Key, "Unknown", null, null) { State = InstanceEntryState.Installing };
-        var progressUpdater = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Select(_ => model.Progress = e.Progress).Subscribe();
+        var progressUpdater = Observable
+                             .Interval(TimeSpan.FromMilliseconds(1000))
+                             .Select(_ => model.Progress = e.Progress)
+                             .Subscribe();
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -257,7 +295,12 @@ public partial class MainWindow : AppWindow
                     model.Progress = null;
                     break;
                 case TrackerState.Faulted:
-                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem { Content = e.FailureReason, Title = $"Failed to install {e.Key}", Level = NotificationLevel.Danger }));
+                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
+                    {
+                        Content = e.FailureReason,
+                        Title = $"Failed to install {e.Key}",
+                        Level = NotificationLevel.Danger
+                    }));
                     _entries.Remove(model);
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;

@@ -67,7 +67,7 @@
                         <ProgressBar Name="Progress" CornerRadius="0" Height="2"
                                      VerticalAlignment="Bottom" IsVisible="False"
                                      IsIndeterminate="{TemplateBinding Progress,Converter={x:Static ObjectConverters.IsNull}}"
-                                     Value="{TemplateBinding Progress}">
+                                     Value="{TemplateBinding Progress,Mode=OneWay}">
                             <ProgressBar.Transitions>
                                 <Transitions>
                                     <DoubleTransition Property="Value" Easing="SineEaseOut"

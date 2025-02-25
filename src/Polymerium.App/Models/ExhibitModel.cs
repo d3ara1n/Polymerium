@@ -10,7 +10,18 @@ namespace Polymerium.App.Models;
 
 public partial class ExhibitModel : ModelBase
 {
-    public ExhibitModel(string label, string? ns, string pid, string name, string summary, Bitmap? thumbnail, string author, IReadOnlyList<string> tags, DateTimeOffset updatedAt, ulong downloads, Uri reference)
+    public ExhibitModel(
+        string label,
+        string? ns,
+        string pid,
+        string name,
+        string summary,
+        Bitmap? thumbnail,
+        string author,
+        IReadOnlyList<string> tags,
+        DateTimeOffset updatedAt,
+        ulong downloads,
+        Uri reference)
     {
         _label = label;
         _ns = ns;

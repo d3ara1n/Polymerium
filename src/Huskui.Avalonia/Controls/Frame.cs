@@ -21,11 +21,20 @@ public class Frame : ContentControl
     public const string PART_ContentPresenter = nameof(PART_ContentPresenter);
     public const string PART_ContentPresenter2 = nameof(PART_ContentPresenter2);
 
-    public static readonly DirectProperty<Frame, IPageTransition> DefaultTransitionProperty = AvaloniaProperty.RegisterDirect<Frame, IPageTransition>(nameof(DefaultTransition), o => o.DefaultTransition, (o, v) => o.DefaultTransition = v);
+    public static readonly DirectProperty<Frame, IPageTransition> DefaultTransitionProperty =
+        AvaloniaProperty.RegisterDirect<Frame, IPageTransition>(nameof(DefaultTransition),
+                                                                o => o.DefaultTransition,
+                                                                (o, v) => o.DefaultTransition = v);
 
-    public static readonly DirectProperty<Frame, bool> CanGoBackProperty = AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBack), o => o.CanGoBack, defaultBindingMode: BindingMode.OneWay);
+    public static readonly DirectProperty<Frame, bool> CanGoBackProperty =
+        AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBack),
+                                                     o => o.CanGoBack,
+                                                     defaultBindingMode: BindingMode.OneWay);
 
-    public static readonly DirectProperty<Frame, bool> CanGoBackOutOfStackProperty = AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBackOutOfStack), o => o.CanGoBackOutOfStack, (o, v) => o.CanGoBackOutOfStack = v);
+    public static readonly DirectProperty<Frame, bool> CanGoBackOutOfStackProperty =
+        AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBackOutOfStack),
+                                                     o => o.CanGoBackOutOfStack,
+                                                     (o, v) => o.CanGoBackOutOfStack = v);
 
 
     private readonly InternalGoBackCommand _goBackCommand;
@@ -39,7 +48,9 @@ public class Frame : ContentControl
     private CancellationTokenSource? _currentToken;
 
 
-    private IPageTransition _defaultTransition = TransitioningContentControl.PageTransitionProperty.GetDefaultValue(typeof(TransitioningContentControl)) ?? new CrossFade(TimeSpan.FromMilliseconds(197));
+    private IPageTransition _defaultTransition =
+        TransitioningContentControl.PageTransitionProperty.GetDefaultValue(typeof(TransitioningContentControl))
+     ?? new CrossFade(TimeSpan.FromMilliseconds(197));
 
     private bool _doubleArrangeSafeLock;
     private ContentPresenter? _presenter;
@@ -70,7 +81,8 @@ public class Frame : ContentControl
     {
         ArgumentNullException.ThrowIfNull(_presenter);
         ArgumentNullException.ThrowIfNull(_presenter2);
-        var content = PageActivator(page, parameter) ?? throw new InvalidOperationException($"Activating {page.Name} gets null page model");
+        var content = PageActivator(page, parameter)
+                   ?? throw new InvalidOperationException($"Activating {page.Name} gets null page model");
         var old = CanGoBack;
         if (_currentFrame is not null)
             _history.Push(_currentFrame);
@@ -187,6 +199,8 @@ public class Frame : ContentControl
 
     private class InternalGoBackCommand(Frame host) : ICommand
     {
+        internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+
         #region ICommand Members
 
         public bool CanExecute(object? parameter) => host.CanGoBack;
@@ -196,8 +210,6 @@ public class Frame : ContentControl
         public event EventHandler? CanExecuteChanged;
 
         #endregion
-
-        internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion

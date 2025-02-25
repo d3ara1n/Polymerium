@@ -9,7 +9,8 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":vertical", ":horizontal")]
 public class Divider : TemplatedControl
 {
-    public static readonly StyledProperty<Orientation> OrientationProperty = AvaloniaProperty.Register<Divider, Orientation>(nameof(Orientation));
+    public static readonly StyledProperty<Orientation> OrientationProperty =
+        AvaloniaProperty.Register<Divider, Orientation>(nameof(Orientation));
 
     public Orientation Orientation
     {

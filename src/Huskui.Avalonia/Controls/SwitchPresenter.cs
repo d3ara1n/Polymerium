@@ -7,13 +7,23 @@ namespace Huskui.Avalonia.Controls;
 
 public class SwitchPresenter : ContentControl
 {
-    public static readonly DirectProperty<SwitchPresenter, SwitchCases> CasesProperty = AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCases>(nameof(Cases), o => o.Cases, (o, v) => o.Cases = v);
+    public static readonly DirectProperty<SwitchPresenter, SwitchCases> CasesProperty =
+        AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCases>(nameof(Cases),
+                                                                      o => o.Cases,
+                                                                      (o, v) => o.Cases = v);
 
-    public static readonly DirectProperty<SwitchPresenter, SwitchCase?> CurrentCaseProperty = AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCase?>(nameof(CurrentCase), o => o.CurrentCase, (o, v) => o.CurrentCase = v);
+    public static readonly DirectProperty<SwitchPresenter, SwitchCase?> CurrentCaseProperty =
+        AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCase?>(nameof(CurrentCase),
+                                                                      o => o.CurrentCase,
+                                                                      (o, v) => o.CurrentCase = v);
 
-    public static readonly DirectProperty<SwitchPresenter, object?> ValueProperty = AvaloniaProperty.RegisterDirect<SwitchPresenter, object?>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
+    public static readonly DirectProperty<SwitchPresenter, object?> ValueProperty =
+        AvaloniaProperty.RegisterDirect<SwitchPresenter, object?>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
 
-    public static readonly DirectProperty<SwitchPresenter, Type> TargetTypeProperty = AvaloniaProperty.RegisterDirect<SwitchPresenter, Type>(nameof(TargetType), o => o.TargetType, (o, v) => o.TargetType = v);
+    public static readonly DirectProperty<SwitchPresenter, Type> TargetTypeProperty =
+        AvaloniaProperty.RegisterDirect<SwitchPresenter, Type>(nameof(TargetType),
+                                                               o => o.TargetType,
+                                                               (o, v) => o.TargetType = v);
 
     private SwitchCases _cases = [];
 

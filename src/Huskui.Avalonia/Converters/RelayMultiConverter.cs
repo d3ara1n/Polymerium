@@ -7,7 +7,8 @@ public class RelayMultiConverter(Func<IList<object?>, object?, CultureInfo, obje
 {
     #region IMultiValueConverter Members
 
-    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture) => convert(values, parameter, culture);
+    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture) =>
+        convert(values, parameter, culture);
 
     #endregion
 }

@@ -11,11 +11,17 @@ using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Services;
 
-public class InstanceManager(ILogger<InstanceManager> logger, ProfileManager profileManager, RepositoryAgent repositories, ImporterAgent importers, IHttpClientFactory clientFactory)
+public class InstanceManager(
+    ILogger<InstanceManager> logger,
+    ProfileManager profileManager,
+    RepositoryAgent repositories,
+    ImporterAgent importers,
+    IHttpClientFactory clientFactory)
 {
+    private static readonly string[] INVALID_NAMES = ["", ".", ".."];
+
     // 主要是在 UI 线程中增删改查，实际不需要保证线程同步
     private readonly Dictionary<string, TrackerBase> _trackers = new();
-    private static readonly string[] INVALID_NAMES = ["", ".", ".."];
     public event EventHandler<InstallTracker>? InstanceInstalling;
     public event EventHandler<UpdateTracker>? InstanceUpdating;
 
@@ -37,7 +43,12 @@ public class InstanceManager(ILogger<InstanceManager> logger, ProfileManager pro
 
     #region Common
 
-    private static async Task<MemoryStream> DownloadFileAsync(Uri download, ulong size, IProgress<double?>? reporter, HttpClient client, CancellationToken token)
+    private static async Task<MemoryStream> DownloadFileAsync(
+        Uri download,
+        ulong size,
+        IProgress<double?>? reporter,
+        HttpClient client,
+        CancellationToken token)
     {
         var stream = await client.GetStreamAsync(download, token);
         var memory = new MemoryStream();
@@ -59,11 +70,15 @@ public class InstanceManager(ILogger<InstanceManager> logger, ProfileManager pro
         return memory;
     }
 
-    private static async Task ExtractImportFilesAsync(string key, ImportedProfileContainer container, CompressedProfilePack pack)
+    private static async Task ExtractImportFilesAsync(
+        string key,
+        ImportedProfileContainer container,
+        CompressedProfilePack pack)
     {
         var importDir = PathDef.Default.DirectoryOfImport(key);
 
-        foreach (var (source, target) in container.ImportFileNames.Where(x => !x.Item2.EndsWith('/') && !INVALID_NAMES.Contains(x.Item2)))
+        foreach (var (source, target) in container.ImportFileNames.Where(x => !x.Item2.EndsWith('/')
+                                                                           && !INVALID_NAMES.Contains(x.Item2)))
         {
             var to = Path.Combine(importDir, target);
             var dir = Path.GetDirectoryName(to);
@@ -108,17 +123,34 @@ public class InstanceManager(ILogger<InstanceManager> logger, ProfileManager pro
         // 只有在线安装会有 Tracker，离线导入因为不需要等待，全在前端进行
 
         var reserved = profileManager.RequestKey(key);
-        InstallTracker? tracker = new(reserved.Key, async t => await InstallInternalAsync((InstallTracker)t, reserved, label, ns, pid, vid), TrackerOnCompleted);
+        InstallTracker? tracker = new(reserved.Key,
+                                      async t => await InstallInternalAsync((InstallTracker)t,
+                                                                            reserved,
+                                                                            label,
+                                                                            ns,
+                                                                            pid,
+                                                                            vid),
+                                      TrackerOnCompleted);
         _trackers.Add(reserved.Key, tracker);
         InstanceInstalling?.Invoke(this, tracker);
         tracker.Start();
         return tracker;
     }
 
-    private async Task InstallInternalAsync(InstallTracker tracker, ReservedKey key, string label, string? ns, string pid, string? vid)
+    private async Task InstallInternalAsync(
+        InstallTracker tracker,
+        ReservedKey key,
+        string label,
+        string? ns,
+        string pid,
+        string? vid)
     {
         logger.LogInformation("Begin install package {} as {}", PackageHelper.ToPurl(label, ns, pid, vid), key.Key);
-        var package = await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack });
+        var package = await repositories.ResolveAsync(label,
+                                                      ns,
+                                                      pid,
+                                                      vid,
+                                                      Filter.Empty with { Kind = ResourceKind.Modpack });
         var size = package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
@@ -155,16 +187,28 @@ public class InstanceManager(ILogger<InstanceManager> logger, ProfileManager pro
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
-        UpdateTracker tracker = new(key, async t => await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid), TrackerOnCompleted);
+        UpdateTracker tracker = new(key,
+                                    async t => await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid),
+                                    TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceUpdating?.Invoke(this, tracker);
         tracker.Start();
     }
 
-    private async Task UpdateInternalAsync(UpdateTracker tracker, string key, string label, string? ns, string pid, string vid)
+    private async Task UpdateInternalAsync(
+        UpdateTracker tracker,
+        string key,
+        string label,
+        string? ns,
+        string pid,
+        string vid)
     {
         logger.LogInformation("Begin update {} from package {}", key, PackageHelper.ToPurl(label, ns, pid, vid));
-        var package = await repositories.ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack });
+        var package = await repositories.ResolveAsync(label,
+                                                      ns,
+                                                      pid,
+                                                      vid,
+                                                      Filter.Empty with { Kind = ResourceKind.Modpack });
         var size = package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
@@ -189,7 +233,13 @@ public class InstanceManager(ILogger<InstanceManager> logger, ProfileManager pro
 
         await ExtractImportFilesAsync(key, container, pack);
 
-        profileManager.Update(key, container.Profile.Setup.Source, container.Profile.Name, container.Profile.Setup.Version, container.Profile.Setup.Loader, container.Profile.Setup.Stage.AsReadOnly(), container.Profile.Overrides);
+        profileManager.Update(key,
+                              container.Profile.Setup.Source,
+                              container.Profile.Name,
+                              container.Profile.Setup.Version,
+                              container.Profile.Setup.Loader,
+                              container.Profile.Setup.Stage.AsReadOnly(),
+                              container.Profile.Overrides);
 
         logger.LogInformation("{} updated", key);
 

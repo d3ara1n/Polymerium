@@ -1,6 +1,10 @@
 ﻿namespace Trident.Abstractions.Tasks;
 
-public abstract class TrackerBase(string key, Func<TrackerBase, Task> handler, Action<TrackerBase>? onCompleted, CancellationToken token = default)
+public abstract class TrackerBase(
+    string key,
+    Func<TrackerBase, Task> handler,
+    Action<TrackerBase>? onCompleted,
+    CancellationToken token = default)
 {
     private readonly CancellationTokenSource _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
     public string Key => key;

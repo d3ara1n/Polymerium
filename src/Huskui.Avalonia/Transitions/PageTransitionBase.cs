@@ -83,7 +83,14 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
 
         public Builder(TimeSpan duration) => _duration = duration;
 
-        internal IEnumerable<Animation> Build(bool forward) => _builder.Select(x => x.Build(forward, _duration, TimeSpan.Zero, TimeSpan.Zero, FillMode.Forward, 1.0d, _defaultEasing));
+        internal IEnumerable<Animation> Build(bool forward) =>
+            _builder.Select(x => x.Build(forward,
+                                         _duration,
+                                         TimeSpan.Zero,
+                                         TimeSpan.Zero,
+                                         FillMode.Forward,
+                                         1.0d,
+                                         _defaultEasing));
 
         public AnimationBuilder Animation(TimeSpan? duration = null, Easing? easing = null)
         {
@@ -184,9 +191,25 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
                 return this;
             }
 
-            internal Animation Build(bool forward, TimeSpan duration, TimeSpan delay, TimeSpan gap, FillMode fillMode, double speedRatio, Easing easing)
+            internal Animation Build(
+                bool forward,
+                TimeSpan duration,
+                TimeSpan delay,
+                TimeSpan gap,
+                FillMode fillMode,
+                double speedRatio,
+                Easing easing)
             {
-                Animation? animation = new() { Duration = _duration ?? duration, FillMode = _fillMode ?? fillMode, SpeedRatio = _speedRatio ?? speedRatio, Easing = _easing ?? easing, Delay = _delay ?? delay, DelayBetweenIterations = _gap ?? gap, PlaybackDirection = forward ? PlaybackDirection.Normal : PlaybackDirection.Reverse };
+                Animation? animation = new()
+                {
+                    Duration = _duration ?? duration,
+                    FillMode = _fillMode ?? fillMode,
+                    SpeedRatio = _speedRatio ?? speedRatio,
+                    Easing = _easing ?? easing,
+                    Delay = _delay ?? delay,
+                    DelayBetweenIterations = _gap ?? gap,
+                    PlaybackDirection = forward ? PlaybackDirection.Normal : PlaybackDirection.Reverse
+                };
                 foreach (var sub in _frames)
                 {
                     var frame = sub.Build();
@@ -200,7 +223,8 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
 
             public class FrameBuilder
             {
-                private readonly IList<(AvaloniaProperty Property, object? Value)> _setters = new List<(AvaloniaProperty, object?)>();
+                private readonly IList<(AvaloniaProperty Property, object? Value)> _setters =
+                    new List<(AvaloniaProperty, object?)>();
 
                 private double? _cue;
                 private KeySpline? _keySpline;

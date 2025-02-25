@@ -10,7 +10,24 @@ namespace Polymerium.App.Services;
 
 public class NotificationService
 {
-    private static readonly Animation COUNTDOWN = new() { Duration = TimeSpan.FromSeconds(7), FillMode = FillMode.Forward, Children = { new KeyFrame { Cue = new Cue(0), Setters = { new Setter { Property = NotificationItem.ProgressProperty, Value = 100d } } }, new KeyFrame { Cue = new Cue(1), Setters = { new Setter { Property = NotificationItem.ProgressProperty, Value = 0d } } } } };
+    private static readonly Animation COUNTDOWN = new()
+    {
+        Duration = TimeSpan.FromSeconds(7),
+        FillMode = FillMode.Forward,
+        Children =
+        {
+            new KeyFrame
+            {
+                Cue = new Cue(0),
+                Setters = { new Setter { Property = NotificationItem.ProgressProperty, Value = 100d } }
+            },
+            new KeyFrame
+            {
+                Cue = new Cue(1),
+                Setters = { new Setter { Property = NotificationItem.ProgressProperty, Value = 0d } }
+            }
+        }
+    };
 
     private Action<NotificationItem>? _handler;
 
@@ -18,22 +35,35 @@ public class NotificationService
 
     public void Pop(NotificationItem item) => Dispatcher.UIThread.Post(() => _handler?.Invoke(item));
 
-    public void PopMessage(string message, string title = "Notification", NotificationLevel level = NotificationLevel.Information, bool forceExpire = false) =>
+    public void PopMessage(
+        string message,
+        string title = "Notification",
+        NotificationLevel level = NotificationLevel.Information,
+        bool forceExpire = false) =>
         Dispatcher.UIThread.Post(() =>
         {
             NotificationItem? item = new() { Content = message, Title = title, Level = level };
             Pop(item);
-            if (level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success || forceExpire)
+            if (level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success
+             || forceExpire)
             {
                 item.IsProgressBarVisible = true;
-                COUNTDOWN.RunAsync(item).ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());
+                COUNTDOWN
+                   .RunAsync(item)
+                   .ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());
             }
         });
 
-    public void PopProgress(string message, string title = "Progress", NotificationLevel level = NotificationLevel.Information) =>
+    public void PopProgress(
+        string message,
+        string title = "Progress",
+        NotificationLevel level = NotificationLevel.Information) =>
         Dispatcher.UIThread.Post(() =>
         {
-            NotificationItem? item = new() { Content = message, Title = title, Level = level, IsProgressBarVisible = true };
+            NotificationItem? item = new()
+            {
+                Content = message, Title = title, Level = level, IsProgressBarVisible = true
+            };
             // TODO: return IProgressReporter
             Pop(item);
         });
