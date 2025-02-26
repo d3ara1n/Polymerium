@@ -55,7 +55,7 @@
         </Grid.ColumnDefinitions>
         <husk:Card Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="0" Padding="0">
             <Panel>
-                <Border Opacity="0.75" CornerRadius="{StaticResource MediumCornerRadius}">
+                <Border CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
                         <ImageBrush Stretch="UniformToFill"
                                     Source="{Binding Screenshot}" />
@@ -64,8 +64,10 @@
                         <LinearGradientBrush StartPoint="0%,10%"
                                              EndPoint="100%,100%">
                             <GradientStop Offset="0"
-                                          Color="#7F000000" />
-                            <GradientStop Offset="1" Color="#FF000000" />
+                                          Color="#3F000000" />
+                            <GradientStop Offset="0.5"
+                                          Color="#6F000000" />
+                            <GradientStop Offset="1" Color="#DF000000" />
                         </LinearGradientBrush>
                     </Border.OpacityMask>
                 </Border>
@@ -181,11 +183,37 @@
                     </StackPanel>
                 </Button>
             </Grid>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12">
-                <husk:Card Width="198" />
-                <husk:Card Width="198" />
-                <husk:Card Width="198" />
-            </StackPanel>
+            <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,-12">
+                <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+                    <husk:Card Width="198">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Working" FontSize="{StaticResource ExtraLargeFontSize}"
+                                       HorizontalAlignment="Center"
+                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <TextBlock Text="Never" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </husk:Card>
+                    <husk:Card Width="198">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="In" FontSize="{StaticResource ExtraLargeFontSize}"
+                                       HorizontalAlignment="Center"
+                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <TextBlock Text="Be" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </husk:Card>
+                    <husk:Card Width="198">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Progress" FontSize="{StaticResource ExtraLargeFontSize}"
+                                       HorizontalAlignment="Center"
+                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <TextBlock Text="Finished" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </husk:Card>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
         <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" RowDefinitions="Auto,12,*">
             <TextBlock Grid.Row="0" Text="Launch Pad" FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
