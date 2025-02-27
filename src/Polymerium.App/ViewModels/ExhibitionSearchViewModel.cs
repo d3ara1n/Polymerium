@@ -117,7 +117,7 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
 
     #endregion
 
-    #region Reactive Properties
+    #region Reactive
 
     [ObservableProperty]
     private RepositoryBasicModel _selectedRepository;

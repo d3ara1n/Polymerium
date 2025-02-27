@@ -28,7 +28,7 @@ public class DeployEngine : IEnumerable<StageBase>
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            // TODO 在此释放托管资源
         }
     }
 }

@@ -63,4 +63,27 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddMojangLauncher(this IServiceCollection services)
+    {
+        services
+           .AddRefitClient<
+                IMojangLauncherClient>(_ =>
+                                           new
+                                               RefitSettings(new
+                                                                 SystemTextJsonContentSerializer(new
+                                                                     JsonSerializerOptions(JsonSerializerDefaults
+                                                                        .Web))))
+           .ConfigureHttpClient(client =>
+            {
+                client.BaseAddress = new Uri(MojangLauncherService.ENDPOINT);
+                client.DefaultRequestHeaders.Add("User-Agent",
+                                                 $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+            })
+           .AddTransientHttpErrorPolicy(builder => builder.RetryAsync());
+
+        services.AddSingleton<MojangLauncherService>();
+
+        return services;
+    }
 }
