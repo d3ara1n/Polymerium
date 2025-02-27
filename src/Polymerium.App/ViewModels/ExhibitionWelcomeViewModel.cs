@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
@@ -63,6 +64,19 @@ public partial class ExhibitionWelcomeViewModel : ViewModelBase
 
     [ObservableProperty]
     private IReadOnlyList<MinecraftNewsModel>? _news;
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void OpenReadMoreLink(MinecraftNewsModel? news)
+    {
+        if (news != null)
+        {
+            Process.Start(new ProcessStartInfo(news.ReadMoreLink.AbsoluteUri) { UseShellExecute = true });
+        }
+    }
 
     #endregion
 }
