@@ -22,6 +22,7 @@ public static class Startup
         services
            .AddCurseForge()
            .AddPrismLauncher()
+           .AddMojangLauncher()
            .AddSingleton<ProfileManager>()
            .AddSingleton<RepositoryAgent>()
            .AddSingleton<ImporterAgent>()

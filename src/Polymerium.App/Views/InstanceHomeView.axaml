@@ -38,7 +38,6 @@
         </ControlTheme>
     </controls:Subpage.Resources>
     <Grid MaxWidth="1024" MaxHeight="648">
-        <!-- RowDefinitions="182,24,230,24,100" -->
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
             <RowDefinition Height="24" />

@@ -7,41 +7,43 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":loading", ":animated")]
 public class SkeletonContainer : ContentControl
 {
-    public static readonly DirectProperty<SkeletonContainer, bool> IsLoadingProperty =
-        AvaloniaProperty.RegisterDirect<SkeletonContainer, bool>(nameof(IsLoading),
-                                                                 o => o.IsLoading,
-                                                                 (o, v) => o.IsLoading = v);
-
-    public static readonly DirectProperty<SkeletonContainer, bool> IsAnimatedProperty =
-        AvaloniaProperty.RegisterDirect<SkeletonContainer, bool>(nameof(IsAnimated),
-                                                                 o => o.IsAnimated,
-                                                                 (o, v) => o.IsAnimated = v);
-
-    private bool _isAnimated;
-
-    private bool _isLoading;
-
-    public SkeletonContainer() =>
-        // Default Property Value
-        IsAnimated = true;
+    public static readonly StyledProperty<bool> IsLoadingProperty =
+        AvaloniaProperty.Register<SkeletonContainer, bool>(nameof(IsLoading));
 
     public bool IsLoading
     {
-        get => _isLoading;
-        set
-        {
-            if (SetAndRaise(IsLoadingProperty, ref _isLoading, value))
-                PseudoClasses.Set(":loading", value);
-        }
+        get => GetValue(IsLoadingProperty);
+        set => SetValue(IsLoadingProperty, value);
     }
+
+
+    public static readonly StyledProperty<bool> IsAnimatedProperty =
+        AvaloniaProperty.Register<SkeletonContainer, bool>(nameof(IsAnimated));
 
     public bool IsAnimated
     {
-        get => _isAnimated;
-        set
+        get => GetValue(IsAnimatedProperty);
+        set => SetValue(IsAnimatedProperty, value);
+    }
+
+    public SkeletonContainer()
+    {
+        // Default Property Value
+        IsAnimated = true;
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == IsLoadingProperty)
         {
-            if (SetAndRaise(IsAnimatedProperty, ref _isAnimated, value))
-                PseudoClasses.Set(":animated", value);
+            PseudoClasses.Set(":loading", change.GetNewValue<bool>());
+        }
+
+        else if (change.Property == IsAnimatedProperty)
+        {
+            PseudoClasses.Set(":animated", change.GetNewValue<bool>());
         }
     }
 }
