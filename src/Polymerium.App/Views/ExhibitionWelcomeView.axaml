@@ -6,6 +6,7 @@
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:m="using:Polymerium.App.Models"
+           xmlns:v="using:Polymerium.App.Views"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.ExhibitionWelcomeView" x:DataType="vm:ExhibitionWelcomeViewModel">
     <husk:Page.Header>
@@ -40,9 +41,12 @@
                                 <Border Grid.Row="1" CornerRadius="{StaticResource MediumCornerRadius}" Margin="4"
                                         Background="{DynamicResource LayerSolidBackgroundBrush}">
                                     <Grid ColumnDefinitions="Auto,8,*,8,Auto" Margin="12">
-                                        <Border Grid.Column="0" Background="Black" CornerRadius="99">
+                                        <Border Grid.Column="0"
+                                                Background="{DynamicResource LayerSmokeBackgroundBrush}"
+                                                CornerRadius="99">
                                             <icons:PackIconLucide Kind="Newspaper" Height="14" Width="14"
-                                                                  Foreground="White" Margin="8" />
+                                                                  Foreground="{DynamicResource ControlActiveForegroundBrush}"
+                                                                  Margin="8" />
                                         </Border>
                                         <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                             <TextBlock Text="{Binding Title}"
@@ -52,7 +56,9 @@
                                                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                         </StackPanel>
                                         <Button Grid.Column="4" Classes="Small"
-                                                Theme="{StaticResource GhostButtonTheme}">
+                                                Theme="{StaticResource GhostButtonTheme}"
+                                                Command="{Binding $parent[v:ExhibitionWelcomeView].((vm:ExhibitionWelcomeViewModel)DataContext).OpenReadMoreLinkCommand,FallbackValue={x:Null}}"
+                                                CommandParameter="{Binding}">
                                             <TextBlock Text="Learn More" />
                                         </Button>
                                     </Grid>
