@@ -1,16 +1,17 @@
 ﻿namespace Trident.Abstractions.FileModels;
 
 // 相对于 TridentV1 的 Artifact，DataLock 可以迁移
-public record struct DataLock(
+public record DataLock(
     DataLock.ViabilityData Viability,
     string MainClass,
     uint JavaMajorVersion,
     IReadOnlyList<string> GameArguments,
-    IReadOnlyList<string> JvmArguments,
+    IReadOnlyList<string> JavaArguments,
     IReadOnlyList<DataLock.Library> Libraries,
     IReadOnlyList<DataLock.Parcel> Parcels,
     DataLock.AssetData AssetIndex)
 {
+    // 对于 github:user/package 这种没有标记 version 也就是特定 commit/release 的，会视为有效，本着构建完尽可能不修改原则
     public record ViabilityData(string Version, string Loader, IReadOnlyList<string> Packages);
 
 
@@ -23,7 +24,7 @@ public record struct DataLock(
     // 解析之后的包，会被软链接到目标目录。
     // 同样软链接的还有 Persistence 清单
     // Import 导入位于 Persistence 固化之前，意味着可以把 Import 导入的文件也持久化
-    public record Parcel(string Purl, string SourcePath, string TargetPath, Uri Download, string Sha1);
+    public record Parcel(string SourcePath, string TargetPath, Uri Download, string Sha1);
 
     public record AssetData(string Id, Uri Url, string Sha1);
 }

@@ -38,6 +38,23 @@ public class PathDef
     public string CachePackageDirectory => Path.Combine(CacheDirectory, "packages");
     public string CacheObjectDirectory => Path.Combine(CacheDirectory, "objects");
 
+    public string FileOfLibrary(string ns, string name, string version, string? platform, string extension)
+    {
+        var nsDir = string.Join(Path.DirectorySeparatorChar, ns.Split('.'));
+        return Path.Combine(CacheLibraryDirectory,
+                            nsDir,
+                            name,
+                            version,
+                            platform != null
+                                ? $"{name}-{version}-{platform}.{extension}"
+                                : $"{name}-{version}.{extension}");
+    }
+
+    public string FileOfObject(string hash)
+    {
+        return Path.Combine(CacheObjectDirectory, hash[..2], hash);
+    }
+
     #endregion
 
     #region Instance Folder
