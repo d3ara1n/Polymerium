@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 
-namespace Polymerium.App.Extensions;
+namespace Polymerium.App;
 
 public static class ServiceCollectionExtensions
 {

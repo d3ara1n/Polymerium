@@ -1,7 +1,7 @@
 ﻿namespace Polymerium.Trident.Models.PrismLauncherApi;
 
 public record ComponentIndex(
-    uint FormatVersion,
+    int FormatVersion,
     string Name,
     string Uid,
     IReadOnlyList<ComponentIndex.ComponentVersion> Versions)

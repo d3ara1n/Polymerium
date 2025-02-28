@@ -10,7 +10,7 @@ using Refit;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
 
-namespace Polymerium.Trident.Extensions;
+namespace Polymerium.Trident;
 
 public static class ServiceCollectionExtensions
 {

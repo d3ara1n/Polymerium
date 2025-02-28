@@ -1,6 +1,6 @@
 ﻿namespace Trident.Abstractions.FileModels;
 
-public record struct Preference(
+public record Preference(
     Preference.AccountSection Account,
     Preference.LaunchSection Launch,
     Preference.SnapshotSection Snapshot,

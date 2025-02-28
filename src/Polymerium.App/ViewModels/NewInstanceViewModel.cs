@@ -43,7 +43,7 @@ public partial class NewInstanceViewModel : ViewModelBase
         if (token.IsCancellationRequested)
             return;
 
-        var index = await _prismLauncherService.GetGameVersionsAsync();
+        var index = await _prismLauncherService.GetGameVersionsAsync(token);
         var versions = index.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
         _versions = versions;
         Dispatcher.UIThread.Post(() =>
