@@ -159,6 +159,7 @@ Polymerium 没有遥测。
   rules[].os 的定义，是不同的
 - Modrinth 整合包中的资源清单不一定包含元数据，有些有，有些没有，导致无法提取
 - Modrinth Api V2 的 Version.Loaders 字段中存在污染数据需要手动过滤
+- CurseForge Api 拉取到的 ModFile 包含的 Dependencies 可能有不兼容的项目，或者单纯就是所有的 ModFile 含有相同的依赖哪怕加载器和游戏版本不支持
 
 <!-- LICENSE -->
 

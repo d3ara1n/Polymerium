@@ -1,5 +1,6 @@
 ﻿using MimeDetective;
 using MimeDetective.Definitions;
+using Trident.Abstractions.Repositories.Resources;
 using FileStream = System.IO.FileStream;
 
 namespace Polymerium.Trident.Utilities;
@@ -73,4 +74,15 @@ public static class FileHelper
             return false;
         }
     }
+
+    public static string GetAssetFolderName(ResourceKind kind) =>
+        kind switch
+        {
+            ResourceKind.Mod => "mods",
+            ResourceKind.World => "saves",
+            ResourceKind.ShaderPack => "shaderpacks",
+            ResourceKind.ResourcePack => "resourcepacks",
+            ResourceKind.DataPack => "datapacks",
+            _ => throw new NotImplementedException()
+        };
 }

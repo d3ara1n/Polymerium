@@ -7,19 +7,13 @@ public static class PlatformHelper
     public static string GetOsName()
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
             return "windows";
-        }
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
             return "linux";
-        }
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
             return "osx";
-        }
 
         throw new NotSupportedException("Unsupported operating system.");
     }

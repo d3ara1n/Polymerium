@@ -28,17 +28,11 @@ public static class DataLockBuilderExtensions
 
         var split = fullname.Split(':');
         if (split.Length == 4)
-        {
             id = new DataLock.Library.Identity(split[0], split[1], split[2], split[3], extension);
-        }
         else if (split.Length == 3)
-        {
             id = new DataLock.Library.Identity(split[0], split[1], split[2], null, extension);
-        }
         else
-        {
             throw new NotSupportedException($"Not recognized package name format: {fullname}");
-        }
 
         var fullUrl = new Uri(exactUrl,
                               $"{id.Namespace.Replace('.', '/')}/{id.Name}/{id.Version}/{id.Name}-{id.Version}.{extension}");
@@ -65,17 +59,11 @@ public static class DataLockBuilderExtensions
 
         var split = fullname.Split(':');
         if (split.Length == 4)
-        {
             id = new DataLock.Library.Identity(split[0], split[1], split[2], split[3], extension);
-        }
         else if (split.Length == 3)
-        {
             id = new DataLock.Library.Identity(split[0], split[1], split[2], null, extension);
-        }
         else
-        {
             throw new NotSupportedException($"Not recognized package name format: {fullname}");
-        }
 
         return self.AddLibrary(new DataLock.Library(id, url, sha1, native, present));
     }

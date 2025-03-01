@@ -5,24 +5,24 @@ namespace Polymerium.Trident.Models.PrismLauncherApi;
 public record Component(
     [property: JsonPropertyName("+traits")]
     IReadOnlyList<string>? Traits,
-    Component.AssetIndexEntry AssetIndex,
-    IReadOnlyList<uint>[]? CompatibleJavaMajors,
+    Component.AssetIndexEntry? AssetIndex,
+    IReadOnlyList<uint>? CompatibleJavaMajors,
     int FormatVersion,
     IReadOnlyList<Component.Library>? Libraries,
     IReadOnlyList<Component.Library>? MavenFiles,
     string? MainClass,
-    Component.Library MainJar,
+    Component.Library? MainJar,
     string? MinecraftArguments,
     string Name,
     int Order,
     DateTimeOffset ReleaseTime,
     IReadOnlyList<Component.Requirement> Requires,
-    Component.ReleaseType Type,
+    string Type,
     string Uid,
     string Version)
 
 {
-    public record AssetIndexEntry(string Id, string Sha1, ulong Size, ulong TotalSize);
+    public record AssetIndexEntry(string Id, string Sha1, ulong Size, ulong TotalSize, Uri Url);
 
     public record Library(
         Library.DownloadsEntry Downloads,
@@ -51,20 +51,4 @@ public record Component(
         string? Suggest,
         [property: JsonPropertyName("equals")] string? Equal,
         string Uid);
-
-    public enum ReleaseType
-    {
-        Release,
-        Snapshot,
-        Experiment,
-
-        // ReSharper disable once InconsistentNaming
-        Old_Snapshot,
-
-        // ReSharper disable once InconsistentNaming
-        Old_Alpha,
-
-        // ReSharper disable once InconsistentNaming
-        Old_Beta
-    }
 }

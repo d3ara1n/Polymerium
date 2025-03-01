@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace Polymerium.Trident.Engines.Deploying.Stages;
+﻿namespace Polymerium.Trident.Engines.Deploying.Stages;
 
 public abstract class StageBase
 {
@@ -8,8 +6,5 @@ public abstract class StageBase
 
     protected abstract Task OnProcessAsync(CancellationToken token);
 
-    public Task ProcessAsync(CancellationToken token)
-    {
-        return OnProcessAsync(token);
-    }
+    public Task ProcessAsync(CancellationToken token) => OnProcessAsync(token);
 }

@@ -19,6 +19,13 @@ namespace Polymerium.App.ViewModels;
 
 public partial class ExhibitionWelcomeViewModel : ViewModelBase
 {
+    #region Reactive
+
+    [ObservableProperty]
+    private IReadOnlyList<MinecraftNewsModel>? _news;
+
+    #endregion
+
     public ExhibitionWelcomeViewModel(
         MojangLauncherService mojangLauncherService,
         IHttpClientFactory httpClientFactory,
@@ -70,22 +77,13 @@ public partial class ExhibitionWelcomeViewModel : ViewModelBase
 
     #endregion
 
-    #region Reactive
-
-    [ObservableProperty]
-    private IReadOnlyList<MinecraftNewsModel>? _news;
-
-    #endregion
-
     #region Commands
 
     [RelayCommand]
     private void OpenReadMoreLink(MinecraftNewsModel? news)
     {
         if (news != null)
-        {
             Process.Start(new ProcessStartInfo(news.ReadMoreLink.AbsoluteUri) { UseShellExecute = true });
-        }
     }
 
     [RelayCommand]

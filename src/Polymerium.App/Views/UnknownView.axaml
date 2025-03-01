@@ -172,7 +172,7 @@
                     <ProgressBar x:Name="Baz" Theme="{StaticResource BorderedProgressBarTheme}" Value="50" />
                     <TextBlock x:Name="Block" FontSize="13" />
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <husk:ProgressRing x:Name="Ring" Value="50">
+                        <husk:ProgressRing x:Name="Ring" Value="50" Height="64" Width="64">
                             <husk:ProgressRing.Styles>
                                 <Style Selector="husk|ProgressRing">
                                     <Style.Animations>
@@ -192,7 +192,7 @@
                                 </Style>
                             </husk:ProgressRing.Styles>
                         </husk:ProgressRing>
-                        <husk:ProgressRing x:Name="Zing" Value="50" />
+                        <husk:ProgressRing x:Name="Zing" Value="50" Height="64" Width="64" />
                     </StackPanel>
                     <ListBox>
                         <ListBoxItem Content="这是一个 1" />

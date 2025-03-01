@@ -1,13 +1,14 @@
-﻿using Trident.Abstractions.FileModels;
+﻿using IBuilder;
+using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Engines.Deploying;
 
-public class DataLockBuilder : IBuilder.IBuilder<DataLock>
+public class DataLockBuilder : IBuilder<DataLock>
 {
-    private readonly List<DataLock.Parcel> _parcels = [];
-    private readonly List<DataLock.Library> _libraries = [];
     private readonly List<string> _gameArguments = [];
     private readonly List<string> _javaArguments = [];
+    private readonly List<DataLock.Library> _libraries = [];
+    private readonly List<DataLock.Parcel> _parcels = [];
     private DataLock.AssetData? _assetIndex;
     private uint? _javaMajorVersion;
     private string? _mainClass;
@@ -71,9 +72,7 @@ public class DataLockBuilder : IBuilder.IBuilder<DataLock>
     {
         var found = _libraries.Any(x => x == library);
         if (!found)
-        {
             _libraries.Add(library);
-        }
 
         return this;
     }

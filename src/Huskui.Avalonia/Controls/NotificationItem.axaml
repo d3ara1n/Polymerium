@@ -52,9 +52,9 @@
         <Setter Property="IsOpen" Value="True" />
         <Setter Property="IsCloseButtonVisible" Value="True" />
         <Setter Property="HorizontalAlignment"
-                Value="{Binding $parent[local:NotificationHost].HorizontalContentAlignment}" />
+                Value="{Binding HorizontalContentAlignment,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NotificationHost}}" />
         <Setter Property="VerticalAlignment"
-                Value="{Binding $parent[local:NotificationHost].VerticalContentAlignment}" />
+                Value="{Binding VerticalContentAlignment,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NotificationHost}}" />
         <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}" />

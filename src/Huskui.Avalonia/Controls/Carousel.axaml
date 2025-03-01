@@ -16,7 +16,8 @@
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type Carousel}" TargetType="Carousel">
         <Setter Property="PageTransition">
-            <PageSlide Duration="{StaticResource ControlFasterAnimationDuration}" />
+            <PageSlide SlideInEasing="CubicEaseOut" SlideOutEasing="CubicEaseIn"
+                       Duration="{StaticResource ControlFasterAnimationDuration}" />
         </Setter>
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">

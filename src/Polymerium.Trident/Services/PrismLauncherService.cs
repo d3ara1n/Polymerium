@@ -33,24 +33,38 @@ public class PrismLauncherService(IPrismLauncherClient client)
         return component;
     }
 
+
+    public async Task<IEnumerable<Component.Library>> GetPatchedLibraries(Component version, CancellationToken token)
+    {
+        var libraries = new List<Component.Library>(version.Libraries ?? Enumerable.Empty<Component.Library>());
+        foreach (var requirement in version.Requires)
+        {
+            var sub = await GetVersionAsync(requirement.Uid,
+                                            requirement.Suggest
+                                         ?? requirement.Equal
+                                         ?? throw new
+                                                FormatException($"{version.Uid}.json/requires[{requirement.Uid}].equals|suggests"),
+                                            token);
+            libraries.AddRange(sub.Libraries ?? Enumerable.Empty<Component.Library>());
+        }
+
+        return libraries;
+    }
+
     public static bool ValidateLibraryRule(Component.Library lib)
     {
         if (lib.Rules != null && lib.Rules.Any())
-        {
             return lib.Rules.Any(y =>
             {
                 var pass = true;
                 // name
                 if (y.Os != null && y.Os.TryGetValue("name", out var os))
-                {
                     pass = OsFullString == os || OsNameString == os;
-                }
+
                 // arch
                 // ignore
-
                 return y.Action == "allow" ? pass : !pass;
             });
-        }
 
         return true;
     }
@@ -62,24 +76,18 @@ public class PrismLauncherService(IPrismLauncherClient client)
         foreach (var lib in libraries.Where(ValidateLibraryRule))
         {
             if (lib.Url != null)
-            {
                 // old fashion
                 builder.AddLibraryPrismFlavor(lib.Name, lib.Url);
-            }
             else if (lib.Downloads.Artifact != null)
-            {
                 builder.AddLibrary(lib.Name, lib.Downloads.Artifact.Url, lib.Downloads.Artifact.Sha1);
-            }
 
             if (lib.Natives is { Windows: not null })
             {
-                var classifier =
-                    lib.Natives.Windows.Replace("${arch}", Environment.Is64BitOperatingSystem ? "64" : "32");
+                var classifier = lib.Natives.Windows.Replace("${arch}",
+                                                             Environment.Is64BitOperatingSystem ? "64" : "32");
                 if (lib.Downloads.Classifiers.TryGetValue(classifier, out var download))
-                {
                     // NOTE: 假设 native 库本身没有 platform 字段，这是个大胆的假设！
                     builder.AddLibrary($"{lib.Name}:{classifier}", download.Url, download.Sha1, true, false);
-                }
             }
         }
     }

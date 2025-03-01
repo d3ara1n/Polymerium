@@ -8,6 +8,10 @@ public class DeployContext(string key, Profile.Rice setup, IServiceProvider prov
 
     internal DataLock? Artifact;
     internal DataLockBuilder? ArtifactBuilder;
+    internal bool IsLoaderProcess = false;
+    internal bool IsPackageResolved = false;
+
+    internal bool IsVanillaInstalled = false;
 
     public string Key => key;
 

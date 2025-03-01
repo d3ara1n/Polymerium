@@ -16,34 +16,19 @@ namespace Polymerium.Trident.Engines;
 // ...
 // 版本锁中需要保存验证信息，例如当时的所有包列表
 
-public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider) : IAsyncEnumerable<StageBase>
+public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider) : IEnumerable<StageBase>
 {
-    public IAsyncEnumerator<StageBase> GetAsyncEnumerator(CancellationToken token) =>
-        new DeployEngineEnumerator(key, setup, provider, token);
+    public IEnumerator<StageBase> GetEnumerator() => new DeployEngineEnumerator(key, setup, provider);
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private class DeployEngineEnumerator(
-        string key,
-        Profile.Rice setup,
-        IServiceProvider provider,
-        CancellationToken token) : IAsyncEnumerator<StageBase>
+    private class DeployEngineEnumerator(string key, Profile.Rice setup, IServiceProvider provider)
+        : IEnumerator<StageBase>
     {
         private readonly DeployContext _context = new(key, setup, provider);
 
-        private StageBase? DecideNext()
-        {
-            return null;
-        }
-
-        private T CreateStage<T>() where T : StageBase
-        {
-            var stage = ActivatorUtilities.CreateInstance<T>(_context.Provider);
-            stage.Context = _context;
-            return stage;
-        }
-
         public void Reset() => throw new NotImplementedException();
 
-        public async ValueTask<bool> MoveNextAsync()
+        public bool MoveNext()
         {
             var next = DecideNext();
             if (next != null)
@@ -58,9 +43,41 @@ public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provi
 
         public StageBase Current { get; private set; } = null!;
 
-        public async ValueTask DisposeAsync()
+        object IEnumerator.Current => Current;
+
+        public void Dispose()
         {
             // TODO 在此释放托管资源
+        }
+
+        private StageBase? DecideNext()
+        {
+            if (_context.Artifact != null)
+                // TODO: Build Transients
+                return null;
+
+            if (_context.ArtifactBuilder != null)
+            {
+                if (!_context.IsVanillaInstalled)
+                    return CreateStage<InstallVanillaStage>();
+
+                if (!_context.IsLoaderProcess)
+                    return CreateStage<ProcessLoaderStage>();
+
+                if (!_context.IsPackageResolved)
+                    return CreateStage<ResolvePackageStage>();
+
+                return CreateStage<BuildArtifactStage>();
+            }
+
+            return CreateStage<CheckArtifactStage>();
+        }
+
+        private T CreateStage<T>() where T : StageBase
+        {
+            var stage = ActivatorUtilities.CreateInstance<T>(_context.Provider);
+            stage.Context = _context;
+            return stage;
         }
     }
 }

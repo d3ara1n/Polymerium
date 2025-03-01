@@ -19,7 +19,7 @@ public record Package(
     Uri Download,
     ulong Size,
     string FileName,
-    string? Sha1,
+    string Sha1,
     Requirement Requirements,
     IEnumerable<Dependency> Dependencies)
 {
