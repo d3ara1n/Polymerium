@@ -14,22 +14,19 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
-using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
-using Trident.Abstractions.Tasks;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceSetupViewModel : ViewModelBase
+public partial class InstanceSetupViewModel : InstanceViewModelBase
 {
     internal const string DATAFORMATS = "never-gonna-give-you-up";
 
@@ -42,25 +39,11 @@ public partial class InstanceSetupViewModel : ViewModelBase
         RepositoryAgent repositories,
         IHttpClientFactory clientFactory,
         NotificationService notificationService,
-        InstanceManager instanceManager)
+        InstanceManager instanceManager) : base(bag, instanceManager, profileManager)
     {
-        _profileManager = profileManager;
         _repositories = repositories;
         _clientFactory = clientFactory;
         _notificationService = notificationService;
-        _instanceManager = instanceManager;
-        if (bag.Parameter is string key)
-        {
-            if (profileManager.TryGetImmutable(key, out var profile))
-                UpdateModels(key, profile);
-            else
-                throw new PageNotReachedException(typeof(InstanceView),
-                                                  $"Key '{key}' is not valid instance or not found");
-        }
-        else
-        {
-            throw new PageNotReachedException(typeof(InstanceSetupView), "Key to the instance is not provided");
-        }
     }
 
     private async Task RefreshAsync(CancellationToken token)
@@ -68,7 +51,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
         var inner = _cancellationTokenSource?.Token ?? token;
         try
         {
-            if (_profileManager.TryGetImmutable(Basic.Key, out var profile))
+            if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
             {
                 Stage.Clear();
                 Stash.Clear();
@@ -190,13 +173,8 @@ public partial class InstanceSetupViewModel : ViewModelBase
             }
     }
 
-    private void UpdateModels(string key, Profile profile)
+    protected override void OnUpdateModel(string key, Profile profile)
     {
-        Basic = new InstanceBasicModel(key,
-                                       profile.Name,
-                                       profile.Setup.Version,
-                                       profile.Setup.Loader,
-                                       profile.Setup.Source);
         if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var result))
         {
             var loader = result.Identity switch
@@ -214,51 +192,43 @@ public partial class InstanceSetupViewModel : ViewModelBase
         {
             LoaderLabel = "None";
         }
-    }
 
-    #region Tracking
+        _updatingSubscription?.Dispose();
+        UpdatingPending = true;
+        UpdatingProgress = 0;
+
+        base.OnUpdateModel(key, profile);
+    }
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-        _instanceManager.InstanceUpdating += OnProfileUpdating;
-        _profileManager.ProfileUpdated += OnProfileUpdated;
+        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is UpdateTracker update)
+            TrackUpdateProgress(update);
+        else
+            _ = Task.Run(() => RefreshAsync(_cancellationTokenSource?.Token ?? token), token);
 
-        var updating = false;
-        if (_instanceManager.IsTracking(Basic.Key, out var tracker))
-            if (tracker is UpdateTracker update)
-            {
-                // 已经处于更新状态而未收到事件
-                update.StateUpdated += OnProfileUpdateStateChanged;
-                State = InstanceState.Updating;
-                TrackUpdateProgress(update);
-                updating = true;
-            }
-
-        if (!updating)
-            await RefreshAsync(token);
+        await base.OnInitializedAsync(token);
     }
 
     protected override Task OnDeinitializeAsync(CancellationToken token)
     {
         _cancellationTokenSource?.Cancel();
-        _instanceManager.InstanceUpdating -= OnProfileUpdating;
-        _profileManager.ProfileUpdated -= OnProfileUpdated;
-
         _updatingSubscription?.Dispose();
 
-        return Task.CompletedTask;
+        return base.OnDeinitializeAsync(token);
     }
 
-    private void OnProfileUpdateStateChanged(TrackerBase sender, TrackerState state)
+    protected override void OnInstanceUpdating(UpdateTracker tracker)
     {
-        if (sender is UpdateTracker update)
-            if (state is TrackerState.Faulted or TrackerState.Finished)
-            {
-                update.StateUpdated -= OnProfileUpdateStateChanged;
-                Dispatcher.UIThread.Post(() => State = InstanceState.Idle);
-                // 更新的事情交给 ProfileManager.ProfileUpdated
-            }
+        TrackUpdateProgress(tracker);
+        base.OnInstanceUpdating(tracker);
+    }
+
+    protected override void OnInstanceUpdated(UpdateTracker tracker)
+    {
+        _ = Task.Run(() => RefreshAsync(_cancellationTokenSource?.Token ?? CancellationToken.None));
+        base.OnInstanceUpdated(tracker);
     }
 
     private void TrackUpdateProgress(UpdateTracker update)
@@ -284,22 +254,6 @@ public partial class InstanceSetupViewModel : ViewModelBase
                                 });
     }
 
-    private void OnProfileUpdating(object? sender, UpdateTracker tracker)
-    {
-        Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
-
-        tracker.StateUpdated += OnProfileUpdateStateChanged;
-        TrackUpdateProgress(tracker);
-    }
-
-    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
-    {
-        UpdateModels(e.Key, e.Value);
-        Task.Run(() => RefreshAsync(CancellationToken.None));
-    }
-
-    #endregion
-
     #region Commands
 
     [RelayCommand]
@@ -319,7 +273,7 @@ public partial class InstanceSetupViewModel : ViewModelBase
 
         try
         {
-            _instanceManager.Update(Basic.Key, model.Label, model.Namespace, model.Pid, model.Vid);
+            InstanceManager.Update(Basic.Key, model.Label, model.Namespace, model.Pid, model.Vid);
         }
         catch (Exception ex)
         {
@@ -334,18 +288,10 @@ public partial class InstanceSetupViewModel : ViewModelBase
     private readonly RepositoryAgent _repositories;
     private readonly IHttpClientFactory _clientFactory;
     private readonly NotificationService _notificationService;
-    private readonly InstanceManager _instanceManager;
-    private readonly ProfileManager _profileManager;
 
     #endregion
 
     #region Reactive
-
-    [ObservableProperty]
-    private InstanceBasicModel _basic;
-
-    [ObservableProperty]
-    private InstanceState _state = InstanceState.Idle;
 
     [ObservableProperty]
     private InstanceReferenceModel? _reference;

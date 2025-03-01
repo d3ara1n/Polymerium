@@ -28,6 +28,9 @@ namespace Polymerium.App.ViewModels;
 
 public partial class ExhibitionSearchViewModel : ViewModelBase
 {
+    [ObservableProperty]
+    private string _queryText = string.Empty;
+
     public ExhibitionSearchViewModel(
         ViewBag bag,
         RepositoryAgent agent,
@@ -116,6 +119,12 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
         }
     }
 
+    #region Nested type: SearchArguments
+
+    public record SearchArguments(string? Query, string? Label);
+
+    #endregion
+
     #region Injected
 
     private readonly RepositoryAgent _agent;
@@ -145,9 +154,6 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
     private Bitmap? _headerImage;
 
     #endregion
-
-    [ObservableProperty]
-    private string _queryText = string.Empty;
 
     #region Commands
 
@@ -236,11 +242,12 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
             _overlayService.PopToast(new ExhibitionModpackToast());
     }
 
-    #endregion
-
-    #region Nested type: SearchArguments
-
-    public record SearchArguments(string? Query, string? Label);
+    [RelayCommand]
+    private void OpenWebsite(ExhibitModel? exhibit)
+    {
+        if (exhibit is not null)
+            Process.Start(new ProcessStartInfo(exhibit.Reference.AbsoluteUri) { UseShellExecute = true });
+    }
 
     #endregion
 }

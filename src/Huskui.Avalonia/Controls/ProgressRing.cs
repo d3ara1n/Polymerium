@@ -91,10 +91,9 @@ public class ProgressRing : RangeBase
 
         var percent = Math.Abs(Maximum - Minimum) < double.Epsilon ? 1.0 : (Value - Minimum) / (Maximum - Minimum);
 
-        Percentage = double.Min(double.Max(percent * 100, 0d), 100d);
+        Percentage = percent * 100;
 
-        var angle = percent * 360;
-        angle %= 360;
+        var angle = Math.Abs(100 - Percentage) < double.Epsilon ? 360 : percent * 360 % 360;
 
         _indicator.SweepAngle = angle;
     }

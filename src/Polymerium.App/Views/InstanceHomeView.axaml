@@ -20,6 +20,8 @@
         <ControlTheme x:Key="LaunchButtonTheme" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
             <Setter Property="BorderThickness" Value="0,0,0,6" />
+            <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
             <Setter Property="RenderTransformOrigin" Value="50%,100%" />
             <Setter Property="Transitions">
                 <Transitions>
@@ -231,52 +233,114 @@
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="Deploying">
                         <Panel Margin="8">
-                            <ProgressBar CornerRadius="{StaticResource MediumCornerRadius}" Value="37"
-                                         IsIndeterminate="True" />
-                            <TextBlock Text="Downloading files..." HorizontalAlignment="Center"
+                            <ProgressBar CornerRadius="{StaticResource MediumCornerRadius}"
+                                         Value="{Binding DeployingProgress,Mode=OneWay}"
+                                         IsIndeterminate="{Binding DeployingPending,Mode=OneWay}">
+                                <ProgressBar.Transitions>
+                                    <Transitions>
+                                        <DoubleTransition Property="Value" Easing="SineEaseOut"
+                                                          Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                    </Transitions>
+                                </ProgressBar.Transitions>
+                            </ProgressBar>
+                            <TextBlock Text="{Binding DeployingMessage,Mode=OneWay}" HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />
                         </Panel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase>
+                        <TextBlock Text="0:0:24" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   FontSize="{StaticResource ExtraLargeFontSize}" />
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>
             </husk:Card>
             <husk:Card Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Padding="0"
                        Background="{DynamicResource Layer0BackgroundBrush}">
-                <Grid ColumnDefinitions="Auto,0,Auto">
-                    <Button Grid.Column="0" Margin="8"
-                            Theme="{StaticResource LaunchButtonTheme}"
-                            Command="{Binding PlayCommand}"
-                            Background="{DynamicResource ControlAccentBackgroundBrush}"
-                            BorderBrush="{DynamicResource ControlTranslucentAccentBackgroundBrush}">
-                        <StackPanel VerticalAlignment="Center">
-                            <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" />
-                            <TextBlock Text="LAUNCH" HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </Button>
-                    <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
-                        <Border Grid.Row="0" Background="{DynamicResource ControlBackgroundBrush}"
-                                CornerRadius="0,0,6,6" Margin="0,0,8,0" HorizontalAlignment="Center">
-                            <TextBlock Text="Managed" Margin="12,6" />
-                        </Border>
-                        <Button Grid.Row="2" Theme="{StaticResource GhostButtonTheme}"
-                                Command="{Binding SwitchAccountCommand}"
-                                Padding="12,6" Margin="0,8,8,8" BorderBrush="{DynamicResource ControlBorderBrush}"
-                                BorderThickness="1"
-                                CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
-                                <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="36" Width="36">
-                                    <Border.Background>
-                                        <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png"
-                                                    Stretch="Fill" />
-                                    </Border.Background>
+                <husk:SwitchPresenter Value="{Binding State}" TargetType="m:InstanceState">
+                    <husk:SwitchCase Value="Idle">
+                        <Grid ColumnDefinitions="Auto,0,Auto">
+                            <Button Grid.Column="0" Margin="8"
+                                    Theme="{StaticResource LaunchButtonTheme}"
+                                    Command="{Binding PlayCommand}"
+                                    Background="{DynamicResource ControlAccentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource ControlTranslucentAccentBackgroundBrush}"
+                                    IsEnabled="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Idle}">
+                                <StackPanel VerticalAlignment="Center" Spacing="6">
+                                    <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" />
+                                    <TextBlock Text="LAUNCH" HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                            <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
+                                <Border Grid.Row="0" Background="{DynamicResource ControlBackgroundBrush}"
+                                        CornerRadius="0,0,6,6" Margin="0,0,8,0" HorizontalAlignment="Center">
+                                    <TextBlock Text="Managed" Margin="12,6" />
                                 </Border>
-                                <TextBlock Grid.Row="0" Grid.Column="2" Text="Steve" FontWeight="Bold"
-                                           FontSize="{StaticResource LargeFontSize}" />
-                                <TextBlock Grid.Row="2" Grid.Column="2" Text="Microsoft"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                <Button Grid.Row="2" Theme="{StaticResource GhostButtonTheme}"
+                                        Command="{Binding SwitchAccountCommand}"
+                                        Padding="12,6" Margin="0,8,8,8"
+                                        BorderBrush="{DynamicResource ControlBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
+                                        <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="36" Width="36">
+                                            <Border.Background>
+                                                <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png"
+                                                            Stretch="Fill" />
+                                            </Border.Background>
+                                        </Border>
+                                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Steve" FontWeight="Bold"
+                                                   FontSize="{StaticResource LargeFontSize}" />
+                                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Microsoft"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                    </Grid>
+                                </Button>
                             </Grid>
+                        </Grid>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="Deploying">
+                        <Button Margin="8"
+                                Theme="{StaticResource LaunchButtonTheme}"
+                                Command="{Binding AbortCommand}">
+                            <StackPanel VerticalAlignment="Center" Spacing="6">
+                                <fi:SymbolIcon Symbol="Stop" HorizontalAlignment="Center" FontSize="20" />
+                                <TextBlock Text="ABORT" HorizontalAlignment="Center" />
+                            </StackPanel>
                         </Button>
-                    </Grid>
-                </Grid>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="Running">
+                        <Grid ColumnDefinitions="Auto,0,Auto">
+                            <Button Grid.Column="0" Margin="8"
+                                    Theme="{StaticResource LaunchButtonTheme}"
+                                    Command="{Binding StopCommand}"
+                                    Background="{DynamicResource ControlDangerBackgroundBrush}"
+                                    BorderBrush="{DynamicResource ControlTranslucentDangerBackgroundBrush}">
+                                <StackPanel VerticalAlignment="Center" Spacing="6">
+                                    <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" />
+                                    <TextBlock Text="STOP" HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                            <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
+                                <Button Grid.Row="0" Margin="0,8,8,0" Classes="Small">
+                                    <TextBlock Text="Eject" />
+                                </Button>
+                                <Button Grid.Row="2" Theme="{StaticResource GhostButtonTheme}"
+                                        Command="{Binding OpenDashboardCommand}"
+                                        Padding="12,6" Margin="0,8,8,8"
+                                        BorderBrush="{DynamicResource ControlBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
+                                        <icons:PackIconLucide Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Kind="Logs"
+                                                              Height="26"
+                                                              Width="26" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Logs" FontWeight="Bold" />
+                                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Dashboard"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                    </Grid>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
             </husk:Card>
         </Grid>
     </Grid>

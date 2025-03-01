@@ -6,6 +6,7 @@
            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
+           xmlns:v="using:Polymerium.App.Views"
            xmlns:m="using:Polymerium.App.Models" ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:ExhibitionSearchViewModel" Padding="0"
@@ -153,7 +154,9 @@
                                         <Button Classes="Small">
                                             <Button.Flyout>
                                                 <MenuFlyout>
-                                                    <MenuItem Header="Open Website">
+                                                    <MenuItem Header="Open Website"
+                                                              Command="{Binding $parent[v:ExhibitionSearchView].((vm:ExhibitionSearchViewModel)DataContext).OpenWebsiteCommand,FallbackValue={x:Null}}"
+                                                              CommandParameter="{Binding}">
                                                         <MenuItem.Icon>
                                                             <icons:PackIconLucide Kind="ExternalLink"
                                                                 Height="10" Width="10"

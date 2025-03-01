@@ -37,28 +37,28 @@
     <SolidColorBrush x:Key="ControlTranslucentBackgroundBrush" Color="{StaticResource Sand6Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{StaticResource Amber11Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentAccentBackgroundBrush" Color="{StaticResource Amber10Color}"
+    <SolidColorBrush x:Key="ControlTranslucentAccentBackgroundBrush" Color="{StaticResource Amber11Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlTranslucentOverlayAccentBackgroundBrush"
-                     Color="{StaticResource Amber10Color}"
+                     Color="{StaticResource Amber11Color}"
                      Opacity="0.1" />
     <SolidColorBrush x:Key="ControlSuccessBackgroundBrush" Color="{StaticResource Grass11Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentSuccessBackgroundBrush" Color="{StaticResource Grass10Color}"
+    <SolidColorBrush x:Key="ControlTranslucentSuccessBackgroundBrush" Color="{StaticResource Grass11Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlTranslucentOverlaySuccessBackgroundBrush"
-                     Color="{StaticResource Grass10Color}"
+                     Color="{StaticResource Grass11Color}"
                      Opacity="0.1" />
     <SolidColorBrush x:Key="ControlWarningBackgroundBrush" Color="{StaticResource Yellow11Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentWarningBackgroundBrush" Color="{StaticResource Yellow10Color}"
+    <SolidColorBrush x:Key="ControlTranslucentWarningBackgroundBrush" Color="{StaticResource Yellow11Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlTranslucentOverlayWarningBackgroundBrush"
-                     Color="{StaticResource Yellow10Color}"
+                     Color="{StaticResource Yellow11Color}"
                      Opacity="0.1" />
     <SolidColorBrush x:Key="ControlDangerBackgroundBrush" Color="{StaticResource Tomato11Color}" />
     <SolidColorBrush x:Key="ControlTranslucentOverlayDangerBackgroundBrush"
-                     Color="{StaticResource Tomato10Color}"
+                     Color="{StaticResource Tomato11Color}"
                      Opacity="0.4" />
-    <SolidColorBrush x:Key="ControlTranslucentDangerBackgroundBrush" Color="{StaticResource Tomato10Color}"
+    <SolidColorBrush x:Key="ControlTranslucentDangerBackgroundBrush" Color="{StaticResource Tomato11Color}"
                      Opacity="0.1" />
 
     <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{StaticResource TransparentColor}" />

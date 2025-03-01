@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.Logging.Debug;
 using Polymerium.App.Services;
 using Polymerium.Trident;
 using Polymerium.Trident.Services;
@@ -12,9 +15,13 @@ public static class Startup
     {
         services
            .AddAvalonia()
-           .AddLogging()
            .AddHttpClient()
            .ConfigureHttpClientDefaults(builder => builder.RemoveAllLoggers())
+           .AddLogging(logging => logging
+                                 .AddConsole()
+                                 .AddDebug()
+                                 .AddFilter<ConsoleLoggerProvider>(null, LogLevel.Information)
+                                 .AddFilter<DebugLoggerProvider>(null, LogLevel.Debug))
            .AddMemoryCache();
 
         // Trident

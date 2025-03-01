@@ -1,5 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
+using Polymerium.Trident.Engines;
+using Polymerium.Trident.Engines.Deploying.Stages;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
 using Polymerium.Trident.Utilities;
@@ -16,6 +19,7 @@ public class InstanceManager(
     ProfileManager profileManager,
     RepositoryAgent repositories,
     ImporterAgent importers,
+    IServiceProvider provider,
     IHttpClientFactory clientFactory)
 {
     private static readonly string[] INVALID_NAMES = ["", ".", ".."];
@@ -24,6 +28,7 @@ public class InstanceManager(
     private readonly Dictionary<string, TrackerBase> _trackers = new();
     public event EventHandler<InstallTracker>? InstanceInstalling;
     public event EventHandler<UpdateTracker>? InstanceUpdating;
+    public event EventHandler<DeployTracker>? InstanceDeploying;
 
     private void TrackerOnCompleted(TrackerBase tracker) => _trackers.Remove(tracker.Key);
 
@@ -116,6 +121,68 @@ public class InstanceManager(
 
     #endregion
 
+    #region Deploy
+
+    public DeployTracker Deploy(string key)
+    {
+        if (IsInUse(key))
+            throw new InvalidOperationException($"Instance {key} is operated in progress");
+
+        var tracker = new DeployTracker(key,
+                                        async t => await DeployInternalAsync((DeployTracker)t, key),
+                                        TrackerOnCompleted);
+        _trackers.Add(key, tracker);
+        InstanceDeploying?.Invoke(this, tracker);
+        tracker.Start();
+        return tracker;
+    }
+
+    private async Task DeployInternalAsync(DeployTracker tracker, string key)
+    {
+        logger.LogInformation("Begin deploy {}", key);
+
+        if (!profileManager.TryGetImmutable(key, out var profile))
+            throw new KeyNotFoundException($"{key} is not a key to the managed profile");
+
+        var watch = new Stopwatch();
+        var engine = new DeployEngine(key, profile.Setup, provider);
+
+        watch.Start();
+        foreach (var stage in engine)
+        {
+            IProgress<DeployTracker.DeployProgress> reporter = tracker;
+            switch (stage)
+            {
+                case CheckArtifactStage:
+                    reporter.Report(new DeployTracker.DeployProgress("Checking artifacts..."));
+                    break;
+                case ProcessLoaderStage:
+                    reporter.Report(new DeployTracker.DeployProgress("Installing loader..."));
+                    break;
+                case ResolvePackageStage resolvePackageStage:
+                    reporter.Report(new DeployTracker.DeployProgress("Resolving packages..."));
+                    resolvePackageStage.ProgressReporter =
+                        new Progress<(int, int)>(x =>
+                                                     reporter
+                                                        .Report(new
+                                                                    DeployTracker.DeployProgress($"Resolving packages...({x.Item1}/{x.Item2})",
+                                                                        (double)x.Item1 * 100 / x.Item2)));
+                    break;
+                case BuildArtifactStage:
+                    reporter.Report(new DeployTracker.DeployProgress("Building artifacts..."));
+                    break;
+            }
+
+            logger.LogInformation("Enter stage {}", stage.GetType().Name);
+            await stage.ProcessAsync(tracker.Token);
+        }
+
+        watch.Stop();
+        logger.LogInformation("{} deployed in {}ms", key, watch.ElapsedMilliseconds);
+    }
+
+    #endregion
+
     #region Install
 
     public InstallTracker Install(string key, string label, string? ns, string pid, string? vid)
@@ -123,14 +190,14 @@ public class InstanceManager(
         // 只有在线安装会有 Tracker，离线导入因为不需要等待，全在前端进行
 
         var reserved = profileManager.RequestKey(key);
-        InstallTracker? tracker = new(reserved.Key,
-                                      async t => await InstallInternalAsync((InstallTracker)t,
-                                                                            reserved,
-                                                                            label,
-                                                                            ns,
-                                                                            pid,
-                                                                            vid),
-                                      TrackerOnCompleted);
+        var tracker = new InstallTracker(reserved.Key,
+                                         async t => await InstallInternalAsync((InstallTracker)t,
+                                                                               reserved,
+                                                                               label,
+                                                                               ns,
+                                                                               pid,
+                                                                               vid),
+                                         TrackerOnCompleted);
         _trackers.Add(reserved.Key, tracker);
         InstanceInstalling?.Invoke(this, tracker);
         tracker.Start();
@@ -185,17 +252,19 @@ public class InstanceManager(
 
     #region Update
 
-    public void Update(string key, string label, string? ns, string pid, string vid)
+    public UpdateTracker Update(string key, string label, string? ns, string pid, string vid)
     {
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
-        UpdateTracker tracker = new(key,
-                                    async t => await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid),
-                                    TrackerOnCompleted);
+        var tracker = new UpdateTracker(key,
+                                        async t =>
+                                            await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid),
+                                        TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceUpdating?.Invoke(this, tracker);
         tracker.Start();
+        return tracker;
     }
 
     private async Task UpdateInternalAsync(

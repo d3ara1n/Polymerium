@@ -12,7 +12,7 @@ public record DataLock(
     DataLock.AssetData AssetIndex)
 {
     // 对于 github:user/package 这种没有标记 version 也就是特定 commit/release 的，会视为有效，本着构建完尽可能不修改原则
-    public record ViabilityData(string Version, string Loader, IReadOnlyList<string> Packages);
+    public record ViabilityData(string Version, string? Loader, IReadOnlyList<string> Packages);
 
 
     // IsNative 决定是否解压到 Natives 目录，IsPresent 决定是否添加到 ClassPath，两者互不干扰

@@ -50,10 +50,7 @@ public class PathDef
                                 : $"{name}-{version}.{extension}");
     }
 
-    public string FileOfObject(string hash)
-    {
-        return Path.Combine(CacheObjectDirectory, hash[..2], hash);
-    }
+    public string NameOfObject(string hash) => Path.Combine(hash[..2], hash);
 
     #endregion
 

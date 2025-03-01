@@ -1,16 +1,15 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
+using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
-using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.App.Views;
+using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Utilities;
@@ -19,49 +18,72 @@ using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceHomeViewModel : ViewModelBase
+public partial class InstanceHomeViewModel : InstanceViewModelBase
 {
+    private IDisposable? _subscription;
+
     public InstanceHomeViewModel(
         ViewBag bag,
         ProfileManager profileManager,
         OverlayService overlayService,
-        InstanceManager instanceManager)
+        InstanceManager instanceManager,
+        NotificationService notificationService) : base(bag, instanceManager, profileManager)
     {
-        _profileManager = profileManager;
         _overlayService = overlayService;
-        _instanceManager = instanceManager;
-
-        if (bag.Parameter is string key)
-        {
-            if (profileManager.TryGetImmutable(key, out var profile))
-            {
-                UpdateModels(key, profile);
-                var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
-                Screenshot = screenshotPath is not null
-                                 ? new Bitmap(screenshotPath)
-                                 : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
-            }
-            else
-            {
-                throw new PageNotReachedException(typeof(InstanceView),
-                                                  $"Key '{key}' is not valid instance or not found");
-            }
-        }
-        else
-        {
-            throw new PageNotReachedException(typeof(InstanceView), "Key to the instance is not provided");
-        }
+        _notificationService = notificationService;
     }
 
-    private void UpdateModels(string key, Profile profile)
+    protected override void OnUpdateModel(string key, Profile profile)
     {
-        Basic = new InstanceBasicModel(key,
-                                       profile.Name,
-                                       profile.Setup.Version,
-                                       profile.Setup.Loader,
-                                       profile.Setup.Source);
+        var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
+        Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
         PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
+        base.OnUpdateModel(key, profile);
     }
+
+    #region Tracking
+
+    protected override void OnInstanceDeploying(DeployTracker tracker)
+    {
+        _subscription?.Dispose();
+        _subscription = Observable
+                       .Interval(TimeSpan.FromSeconds(1))
+                       .Subscribe(_ =>
+                        {
+                            var progress = tracker.Progress;
+                            if (progress.Percentage.HasValue)
+                            {
+                                DeployingProgress = progress.Percentage.Value;
+                                DeployingPending = false;
+                            }
+                            else
+                            {
+                                DeployingPending = true;
+                            }
+
+                            DeployingMessage = progress.Message;
+                        });
+        base.OnInstanceDeploying(tracker);
+    }
+
+    protected override void OnInstanceUpdated(UpdateTracker tracker)
+    {
+        if (tracker.State == TrackerState.Faulted)
+            _notificationService.PopMessage(tracker.FailureReason?.ToString() ?? "Unknown error",
+                                            "Update failed",
+                                            NotificationLevel.Danger);
+    }
+
+    protected override void OnInstanceDeployed(DeployTracker tracker)
+    {
+        _subscription?.Dispose();
+        if (tracker.State == TrackerState.Faulted)
+            _notificationService.PopMessage(tracker.FailureReason?.ToString() ?? "Unknown error",
+                                            "Deploy failed",
+                                            NotificationLevel.Danger);
+    }
+
+    #endregion
 
     #region Commands
 
@@ -71,13 +93,21 @@ public partial class InstanceHomeViewModel : ViewModelBase
     [RelayCommand]
     private void Play()
     {
-        State = InstanceState.Deploying;
+        try
+        {
+            InstanceManager.Deploy(Basic.Key);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex.Message, "Update failed", NotificationLevel.Danger);
+        }
     }
 
     [RelayCommand]
     private void Abort()
     {
-        State = InstanceState.Running;
+        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is DeployTracker)
+            tracker.Abort();
     }
 
     [RelayCommand]
@@ -89,73 +119,19 @@ public partial class InstanceHomeViewModel : ViewModelBase
     [RelayCommand]
     private void OpenDashboard()
     {
-        State = InstanceState.Idle;
-    }
-
-    #endregion
-
-    #region Tracking
-
-    protected override Task OnInitializedAsync(CancellationToken token)
-    {
-        _instanceManager.InstanceUpdating += OnProfileUpdating;
-        _profileManager.ProfileUpdated += OnProfileUpdated;
-        if (_instanceManager.IsTracking(Basic.Key, out var tracker))
-            if (tracker is UpdateTracker update)
-            {
-                // 已经处于更新状态而未收到事件
-                State = InstanceState.Updating;
-                update.StateUpdated += OnProfileUpdateStateChanged;
-            }
-
-        return Task.CompletedTask;
-    }
-
-    protected override Task OnDeinitializeAsync(CancellationToken token)
-    {
-        _instanceManager.InstanceUpdating -= OnProfileUpdating;
-        _profileManager.ProfileUpdated -= OnProfileUpdated;
-
-        return Task.CompletedTask;
-    }
-
-    private void OnProfileUpdateStateChanged(TrackerBase sender, TrackerState state)
-    {
-        if (sender is UpdateTracker update)
-            if (state is TrackerState.Faulted or TrackerState.Finished)
-            {
-                update.StateUpdated -= OnProfileUpdateStateChanged;
-                Dispatcher.UIThread.Post(() => State = InstanceState.Idle);
-                // 更新的事情交给 ProfileManager.ProfileUpdated
-            }
-    }
-
-    private void OnProfileUpdating(object? sender, UpdateTracker tracker)
-    {
-        Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
-
-        tracker.StateUpdated += OnProfileUpdateStateChanged;
-    }
-
-    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
-    {
-        UpdateModels(e.Key, e.Value);
+        _overlayService.PopToast(new ExhibitionModpackToast());
     }
 
     #endregion
 
     #region Injected
 
-    private readonly ProfileManager _profileManager;
     private readonly OverlayService _overlayService;
-    private readonly InstanceManager _instanceManager;
+    private readonly NotificationService _notificationService;
 
     #endregion
 
     #region Reactive
-
-    [ObservableProperty]
-    private InstanceBasicModel _basic;
 
     [ObservableProperty]
     private Bitmap _screenshot;
@@ -164,7 +140,13 @@ public partial class InstanceHomeViewModel : ViewModelBase
     private int _packageCount;
 
     [ObservableProperty]
-    private InstanceState _state = InstanceState.Idle;
+    private double _deployingProgress;
+
+    [ObservableProperty]
+    private string _deployingMessage;
+
+    [ObservableProperty]
+    private bool _deployingPending;
 
     #endregion
 }
