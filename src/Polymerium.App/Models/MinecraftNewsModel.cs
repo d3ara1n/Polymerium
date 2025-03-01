@@ -13,6 +13,8 @@ public class MinecraftNewsModel(
     Uri readMoreLink,
     IReadOnlyList<string> tags) : ModelBase
 {
+    public bool IsVeryBig { get; set; }
+
     #region Direct
 
     public string Title => title;

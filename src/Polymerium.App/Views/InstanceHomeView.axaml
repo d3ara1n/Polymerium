@@ -9,6 +9,7 @@
                   xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:v="using:Polymerium.App.Views"
                   xmlns:vm="using:Polymerium.App.ViewModels"
+                  xmlns:m="using:Polymerium.App.Models"
                   mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="566"
                   x:Class="Polymerium.App.Views.InstanceHomeView" x:DataType="vm:InstanceHomeViewModel">
     <controls:Subpage.Resources>
@@ -50,7 +51,8 @@
             <ColumnDefinition Width="24" />
             <ColumnDefinition Width="*" MinWidth="230" />
         </Grid.ColumnDefinitions>
-        <husk:Card Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="0" Padding="0">
+        <husk:Card Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="0" Padding="0"
+                   Background="{DynamicResource LayerSolidBackgroundBrush}">
             <Panel>
                 <Border CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
@@ -216,19 +218,31 @@
             <TextBlock Grid.Row="0" Text="Launch Pad" FontSize="{StaticResource LargeFontSize}"
                        FontWeight="Bold" />
             <husk:Card Grid.Column="0" Grid.Row="2" Padding="0" Background="{DynamicResource Layer0BackgroundBrush}">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Spacing="8">
-                    <fi:SymbolIcon Symbol="CheckmarkCircle" IconVariant="Filled"
-                                   FontSize="{StaticResource MediumFontSize}" VerticalAlignment="Center"
-                                   Foreground="{DynamicResource ControlSuccessForegroundBrush}" />
-                    <TextBlock Text="Everything is ready"
-                               Foreground="{DynamicResource ControlSuccessForegroundBrush}" />
-                </StackPanel>
+                <husk:SwitchPresenter Value="{Binding State}" TargetType="m:InstanceState">
+                    <husk:SwitchCase Value="Idle">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Spacing="8">
+                            <fi:SymbolIcon Symbol="CheckmarkCircle" IconVariant="Filled"
+                                           FontSize="{StaticResource MediumFontSize}" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource ControlSuccessForegroundBrush}" />
+                            <TextBlock Text="Everything is ready"
+                                       Foreground="{DynamicResource ControlSuccessForegroundBrush}" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="Deploying">
+                        <Panel Margin="8">
+                            <ProgressBar CornerRadius="{StaticResource MediumCornerRadius}" Value="37"
+                                         IsIndeterminate="True" />
+                            <TextBlock Text="Downloading files..." HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                        </Panel>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
             </husk:Card>
             <husk:Card Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Padding="0"
                        Background="{DynamicResource Layer0BackgroundBrush}">
                 <Grid ColumnDefinitions="Auto,0,Auto">
-                    <Button Grid.Column="0" Margin="4"
+                    <Button Grid.Column="0" Margin="8"
                             Theme="{StaticResource LaunchButtonTheme}"
                             Command="{Binding PlayCommand}"
                             Background="{DynamicResource ControlAccentBackgroundBrush}"
@@ -240,12 +254,12 @@
                     </Button>
                     <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
                         <Border Grid.Row="0" Background="{DynamicResource ControlBackgroundBrush}"
-                                CornerRadius="0,0,6,6" Margin="0,0,4,0" HorizontalAlignment="Center">
+                                CornerRadius="0,0,6,6" Margin="0,0,8,0" HorizontalAlignment="Center">
                             <TextBlock Text="Managed" Margin="12,6" />
                         </Border>
                         <Button Grid.Row="2" Theme="{StaticResource GhostButtonTheme}"
                                 Command="{Binding SwitchAccountCommand}"
-                                Padding="12,6" Margin="0,4,4,4" BorderBrush="{DynamicResource ControlBorderBrush}"
+                                Padding="12,6" Margin="0,8,8,8" BorderBrush="{DynamicResource ControlBorderBrush}"
                                 BorderThickness="1"
                                 CornerRadius="{StaticResource MediumCornerRadius}">
                             <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">

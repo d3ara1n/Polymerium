@@ -17,4 +17,8 @@
     <ItemGroup>
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="Models\ConditionalDataTemplate.cs"/>
+    </ItemGroup>
 </Project>

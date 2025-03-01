@@ -13,14 +13,26 @@
                      x:Class="Polymerium.App.Views.InstanceView">
     <Panel>
         <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="m:InstanceState">
-            <husk:SwitchCase Value="Idle" />
-            <husk:SwitchCase Value="Updating">
-                <Rectangle Margin="-250" Opacity="0.5">
+            <husk:SwitchCase Value="Idle">
+                <Rectangle Margin="-250" Opacity="0.2">
                     <Rectangle.Fill>
                         <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
                                      Stretch="Fill">
                             <VisualBrush.Visual>
                                 <Image Source="/Assets/Images/Patterns/Blue_Icons.png" Stretch="Fill" Height="250"
+                                       Width="250" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </husk:SwitchCase>
+            <husk:SwitchCase Value="Updating">
+                <Rectangle Margin="-250" Opacity="0.2">
+                    <Rectangle.Fill>
+                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
+                                     Stretch="Fill">
+                            <VisualBrush.Visual>
+                                <Image Source="/Assets/Images/Patterns/Yellow_Icons.png" Stretch="Fill" Height="250"
                                        Width="250" />
                             </VisualBrush.Visual>
                         </VisualBrush>
@@ -44,7 +56,7 @@
                 </Rectangle>
             </husk:SwitchCase>
             <husk:SwitchCase Value="Deploying">
-                <Rectangle Margin="-250" Opacity="0.5">
+                <Rectangle Margin="-250" Opacity="0.2">
                     <Rectangle.Fill>
                         <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
                                      Stretch="Fill">
@@ -73,7 +85,7 @@
                 </Rectangle>
             </husk:SwitchCase>
             <husk:SwitchCase Value="Running">
-                <Rectangle Margin="-250" Opacity="0.5">
+                <Rectangle Margin="-250" Opacity="0.8">
                     <Rectangle.Fill>
                         <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
                                      Stretch="Fill">

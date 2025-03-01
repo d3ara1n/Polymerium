@@ -28,7 +28,8 @@
                         </StackPanel>
                         <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
                               Margin="64,0,64,12">
-                            <TextBox x:Name="QueryBox" Grid.Column="0" Watermark="With the keywords in..." />
+                            <TextBox Grid.Column="0" Watermark="With the keywords in..."
+                                     Text="{Binding QueryText,Mode=TwoWay}" />
                             <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
                                       SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
                                 <ComboBox.ItemTemplate>
@@ -37,8 +38,15 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Button Grid.Column="4" Classes="Primary" Content="Search"
-                                    Command="{Binding SearchCommand}" CommandParameter="{Binding #QueryBox.Text}" />
+                            <Button Grid.Column="4" Classes="Primary"
+                                    Command="{Binding SearchCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <icons:PackIconLucide Kind="Text" Height="{StaticResource MediumFontSize}"
+                                                          Width="{StaticResource MediumFontSize}"
+                                                          VerticalAlignment="Center" />
+                                    <TextBlock Text="Query" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </husk:Card>
