@@ -68,6 +68,30 @@ public partial class InstanceHomeViewModel : ViewModelBase
     [RelayCommand]
     private void SwitchAccount() => _overlayService.PopDialog(new AccountPickerDialog());
 
+    [RelayCommand]
+    private void Play()
+    {
+        State = InstanceState.Deploying;
+    }
+
+    [RelayCommand]
+    private void Abort()
+    {
+        State = InstanceState.Running;
+    }
+
+    [RelayCommand]
+    private void Stop()
+    {
+        State = InstanceState.Idle;
+    }
+
+    [RelayCommand]
+    private void OpenDashboard()
+    {
+        State = InstanceState.Idle;
+    }
+
     #endregion
 
     #region Tracking

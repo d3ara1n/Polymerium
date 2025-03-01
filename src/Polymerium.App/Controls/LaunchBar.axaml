@@ -7,13 +7,13 @@
         <Panel>
             <StackPanel Margin="24" Spacing="12">
                 <local:LaunchBar Width="256" Height="96" State="Idle" />
-                <local:LaunchBar Width="256" Height="96" State="Building" />
+                <local:LaunchBar Width="256" Height="96" State="Deploying" />
                 <local:LaunchBar Width="256" Height="96" State="Running" />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:LaunchBar}" TargetType="local:LaunchBar">
-        <Setter Property="CornerRadius" Value="{StaticResource CardCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -193,7 +193,7 @@
             </Style>
         </Style>
 
-        <Style Selector="^[State=Building]">
+        <Style Selector="^[State=Deploying]">
             <Style Selector="^ /template/ Rectangle#PART_Background">
                 <Setter Property="Fill">
                     <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile" Stretch="Fill">
