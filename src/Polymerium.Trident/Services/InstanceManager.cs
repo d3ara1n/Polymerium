@@ -159,6 +159,9 @@ public class InstanceManager(
 
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 
+        ((IProgress<double?>)tracker).Report(100d);
+        await Task.Delay(TimeSpan.FromSeconds(1));
+
         ((IProgress<double?>)tracker).Report(null);
         CompressedProfilePack pack = new(memory) { Reference = package };
         var container = await importers.ImportAsync(pack);
@@ -216,6 +219,9 @@ public class InstanceManager(
         var memory = await DownloadFileAsync(package.Download, size, tracker, client, tracker.Token);
 
         logger.LogDebug("Downloaded {} bytes", memory.Length);
+
+        ((IProgress<double?>)tracker).Report(100d);
+        await Task.Delay(TimeSpan.FromSeconds(1));
 
         ((IProgress<double?>)tracker).Report(null);
         CompressedProfilePack pack = new(memory) { Reference = package };

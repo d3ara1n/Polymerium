@@ -63,7 +63,7 @@
                                                HorizontalContentAlignment="Center"
                                                VerticalContentAlignment="Center">
                                 <local:OverlayHost.Transition>
-                                    <huskt:HookUpTransition />
+                                    <huskt:HookUpTransition /> 
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
                             <local:NotificationHost Name="PART_NotificationHost" HorizontalContentAlignment="Right"

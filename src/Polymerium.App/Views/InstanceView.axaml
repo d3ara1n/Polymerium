@@ -11,97 +11,187 @@
                      Padding="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" IsHeaderVisible="False"
                      Key="{Binding Basic.Key,Mode=OneWay}"
                      x:Class="Polymerium.App.Views.InstanceView">
-
-    <Grid ColumnDefinitions="Auto,0,*">
-        <Border Grid.Column="0" Background="{DynamicResource Layer1BackgroundBrush}"
-                CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
-            <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto">
-                <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
-                    <icons:PackIconLucide Kind="ArrowLeft" />
-                </Button>
-                <ListBox x:Name="EntryBox" Grid.Row="2" SelectionMode="Single" ItemsSource="{Binding PageEntries}"
-                         SelectedValue="{Binding SelectedPage}"
-                         Padding="0" SelectionChanged="EntryBox_OnSelectionChanged"
-                         ClipToBounds="False">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="m:InstanceSubpageEntryModel">
-                            <icons:PackIconLucide Kind="{Binding Icon}" Height="18" HorizontalAlignment="Center" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.ItemContainerTheme>
-                        <ControlTheme TargetType="ListBoxItem">
-                            <Setter Property="ClipToBounds" Value="False" />
-                            <Setter Property="Template">
-                                <ControlTemplate>
-                                    <Panel Background="{DynamicResource TransparentBrush}">
-                                        <Border Name="Indicator" Opacity="0"
-                                                Background="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}">
-                                            <Border.Transitions>
-                                                <Transitions>
-                                                    <DoubleTransition Property="Opacity" Easing="CubicEaseOut"
-                                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                </Transitions>
-                                            </Border.Transitions>
-                                        </Border>
-                                        <Border Name="Lock" Opacity="0" BorderThickness="3,0"
-                                                BorderBrush="{DynamicResource ControlAccentBorderBrush}"
-                                                RenderTransform="scaleX(1.1)">
-                                            <Border.Transitions>
-                                                <Transitions>
-                                                    <DoubleTransition Property="Opacity"
-                                                                      Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                    <TransformOperationsTransition Property="RenderTransform"
-                                                        Easing="CubicEaseOut"
-                                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                </Transitions>
-                                            </Border.Transitions>
-                                        </Border>
-                                        <ContentPresenter Name="PART_ContentPresenter" Margin="8"
-                                                          Content="{TemplateBinding Content}"
-                                                          ContentTemplate="{TemplateBinding ContentTemplate}">
-                                            <ContentPresenter.Transitions>
-                                                <Transitions>
-                                                    <BrushTransition Property="Foreground"
-                                                                     Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                </Transitions>
-                                            </ContentPresenter.Transitions>
-                                        </ContentPresenter>
-                                    </Panel>
-                                </ControlTemplate>
-                            </Setter>
-                            <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
-                                <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
-                            </Style>
-                            <Style Selector="^:pointerover /template/ Border#Indicator">
-                                <Setter Property="Opacity" Value="1" />
-                            </Style>
-                            <Style Selector="^:selected /template/ Border#Indicator">
-                                <Setter Property="Opacity" Value="1" />
-                            </Style>
-                            <Style Selector="^:selected /template/ Border#Lock">
-                                <Setter Property="Opacity" Value="1" />
-                                <Setter Property="RenderTransform" Value="scaleX(1.0)" />
-                            </Style>
-                        </ControlTheme>
-                    </ListBox.ItemContainerTheme>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Spacing="4" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                </ListBox>
-                <Border Grid.Row="6" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
-                        BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="2"
-                        BackgroundSizing="InnerBorderEdge"
-                        Height="{Binding Bounds.Width,RelativeSource={RelativeSource Mode=Self}}">
-                    <Border.Background>
-                        <ImageBrush Source="{Binding Basic.Thumbnail}" />
-                    </Border.Background>
-                </Border>
-            </Grid>
-        </Border>
-        <Panel Grid.Column="2">
-            <husk:Frame x:Name="Frame" />
-        </Panel>
-    </Grid>
+    <Panel>
+        <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="m:InstanceState">
+            <husk:SwitchCase Value="Idle" />
+            <husk:SwitchCase Value="Updating">
+                <Rectangle Margin="-250" Opacity="0.5">
+                    <Rectangle.Fill>
+                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
+                                     Stretch="Fill">
+                            <VisualBrush.Visual>
+                                <Image Source="/Assets/Images/Patterns/Blue_Icons.png" Stretch="Fill" Height="250"
+                                       Width="250" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Rectangle.Fill>
+                    <Rectangle.Styles>
+                        <Style Selector="Rectangle">
+                            <Style.Animations>
+                                <Animation Duration="0:0:5" IterationCount="Infinite">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="TranslateTransform.X" Value="250" />
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="TranslateTransform.X" Value="0" />
+                                        <Setter Property="TranslateTransform.Y" Value="250" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                    </Rectangle.Styles>
+                </Rectangle>
+            </husk:SwitchCase>
+            <husk:SwitchCase Value="Deploying">
+                <Rectangle Margin="-250" Opacity="0.5">
+                    <Rectangle.Fill>
+                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
+                                     Stretch="Fill">
+                            <VisualBrush.Visual>
+                                <Image Source="/Assets/Images/Patterns/Yellow_Icons.png" Stretch="Fill" Height="250"
+                                       Width="250" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Rectangle.Fill>
+                    <Rectangle.Styles>
+                        <Style Selector="Rectangle">
+                            <Style.Animations>
+                                <Animation Duration="0:0:5" IterationCount="Infinite">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="TranslateTransform.X" Value="0" />
+                                        <Setter Property="TranslateTransform.Y" Value="250" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="TranslateTransform.X" Value="250" />
+                                        <Setter Property="TranslateTransform.Y" Value="0" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                    </Rectangle.Styles>
+                </Rectangle>
+            </husk:SwitchCase>
+            <husk:SwitchCase Value="Running">
+                <Rectangle Margin="-250" Opacity="0.5">
+                    <Rectangle.Fill>
+                        <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
+                                     Stretch="Fill">
+                            <VisualBrush.Visual>
+                                <Image Source="/Assets/Images/Patterns/Green_Icons.png" Stretch="Fill" Height="250"
+                                       Width="250" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Rectangle.Fill>
+                    <Rectangle.Styles>
+                        <Style Selector="Rectangle">
+                            <Style.Animations>
+                                <Animation Duration="0:0:5" IterationCount="Infinite">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="TranslateTransform.X" Value="250" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="TranslateTransform.X" Value="0" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                    </Rectangle.Styles>
+                </Rectangle>
+            </husk:SwitchCase>
+        </husk:SwitchPresenter>
+        <Grid ColumnDefinitions="Auto,0,*">
+            <Border Grid.Column="0" Background="{DynamicResource Layer1BackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
+                <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto">
+                    <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
+                        <icons:PackIconLucide Kind="ArrowLeft" />
+                    </Button>
+                    <ListBox x:Name="EntryBox" Grid.Row="2" SelectionMode="Single" ItemsSource="{Binding PageEntries}"
+                             SelectedValue="{Binding SelectedPage}"
+                             Padding="0" SelectionChanged="EntryBox_OnSelectionChanged"
+                             ClipToBounds="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="m:InstanceSubpageEntryModel">
+                                <icons:PackIconLucide Kind="{Binding Icon}" Height="18" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerTheme>
+                            <ControlTheme TargetType="ListBoxItem">
+                                <Setter Property="ClipToBounds" Value="False" />
+                                <Setter Property="Template">
+                                    <ControlTemplate>
+                                        <Panel Background="{DynamicResource TransparentBrush}">
+                                            <Border Name="Indicator" Opacity="0"
+                                                    Background="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}">
+                                                <Border.Transitions>
+                                                    <Transitions>
+                                                        <DoubleTransition Property="Opacity" Easing="CubicEaseOut"
+                                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                    </Transitions>
+                                                </Border.Transitions>
+                                            </Border>
+                                            <Border Name="Lock" Opacity="0" BorderThickness="3,0"
+                                                    BorderBrush="{DynamicResource ControlAccentBorderBrush}"
+                                                    RenderTransform="scaleX(1.1)">
+                                                <Border.Transitions>
+                                                    <Transitions>
+                                                        <DoubleTransition Property="Opacity"
+                                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                        <TransformOperationsTransition Property="RenderTransform"
+                                                            Easing="CubicEaseOut"
+                                                            Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                    </Transitions>
+                                                </Border.Transitions>
+                                            </Border>
+                                            <ContentPresenter Name="PART_ContentPresenter" Margin="8"
+                                                              Content="{TemplateBinding Content}"
+                                                              ContentTemplate="{TemplateBinding ContentTemplate}">
+                                                <ContentPresenter.Transitions>
+                                                    <Transitions>
+                                                        <BrushTransition Property="Foreground"
+                                                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                    </Transitions>
+                                                </ContentPresenter.Transitions>
+                                            </ContentPresenter>
+                                        </Panel>
+                                    </ControlTemplate>
+                                </Setter>
+                                <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
+                                    <Setter Property="Foreground"
+                                            Value="{DynamicResource ControlAccentForegroundBrush}" />
+                                </Style>
+                                <Style Selector="^:pointerover /template/ Border#Indicator">
+                                    <Setter Property="Opacity" Value="1" />
+                                </Style>
+                                <Style Selector="^:selected /template/ Border#Indicator">
+                                    <Setter Property="Opacity" Value="1" />
+                                </Style>
+                                <Style Selector="^:selected /template/ Border#Lock">
+                                    <Setter Property="Opacity" Value="1" />
+                                    <Setter Property="RenderTransform" Value="scaleX(1.0)" />
+                                </Style>
+                            </ControlTheme>
+                        </ListBox.ItemContainerTheme>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="4" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                    <Border Grid.Row="6" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
+                            BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="2"
+                            BackgroundSizing="InnerBorderEdge"
+                            Height="{Binding Bounds.Width,RelativeSource={RelativeSource Mode=Self}}">
+                        <Border.Background>
+                            <ImageBrush Source="{Binding Basic.Thumbnail}" />
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Border>
+            <Panel Grid.Column="2">
+                <husk:Frame x:Name="Frame" />
+            </Panel>
+        </Grid>
+    </Panel>
 </controls:ScopedPage>

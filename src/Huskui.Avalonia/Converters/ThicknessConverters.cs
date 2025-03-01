@@ -57,7 +57,7 @@ public static class ThicknessConverters
             if (p is string s && double.TryParse(s, out var r))
             {
                 var l = o / r;
-                return new Thickness(l > 1 ? l : 1);
+                return new Thickness(l < 1 ? 0 : l);
             }
         }
 

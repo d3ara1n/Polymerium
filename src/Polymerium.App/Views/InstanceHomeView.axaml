@@ -18,10 +18,8 @@
         </ControlTheme>
         <ControlTheme x:Key="LaunchButtonTheme" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
             <Setter Property="BorderThickness" Value="0,0,0,6" />
             <Setter Property="RenderTransformOrigin" Value="50%,100%" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
             <Setter Property="Transitions">
                 <Transitions>
                     <TransformOperationsTransition Property="RenderTransform"
@@ -79,7 +77,7 @@
         </husk:Card>
         <husk:BusyContainer Grid.Row="0" Grid.Column="4"
                             IsBusy="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Updating}"
-                            Background="{DynamicResource Card1BackgroundBrush}"
+                            Background="{DynamicResource Layer0BackgroundBrush}"
                             BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
                             CornerRadius="{StaticResource MediumCornerRadius}">
             <husk:Card BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}">
@@ -138,7 +136,7 @@
                     </StackPanel>
                 </Button>
             </Grid>
-            <husk:Card Grid.Row="2">
+            <husk:Card Grid.Row="2" Background="{DynamicResource Layer0BackgroundBrush}">
                 <Grid RowDefinitions="*,12,Auto">
                     <Panel Grid.Row="0" Width="122" Height="122">
                         <husk:ProgressRing ShowProgressText="False" Value="37" />
@@ -184,7 +182,7 @@
             </Grid>
             <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,-12">
                 <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
-                    <husk:Card Width="198">
+                    <husk:Card Width="198" Background="{DynamicResource Layer0BackgroundBrush}">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Working" FontSize="{StaticResource ExtraLargeFontSize}"
                                        HorizontalAlignment="Center"
@@ -193,7 +191,7 @@
                                        HorizontalAlignment="Center" />
                         </StackPanel>
                     </husk:Card>
-                    <husk:Card Width="198">
+                    <husk:Card Width="198" Background="{DynamicResource Layer0BackgroundBrush}">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="In" FontSize="{StaticResource ExtraLargeFontSize}"
                                        HorizontalAlignment="Center"
@@ -202,7 +200,7 @@
                                        HorizontalAlignment="Center" />
                         </StackPanel>
                     </husk:Card>
-                    <husk:Card Width="198">
+                    <husk:Card Width="198" Background="{DynamicResource Layer0BackgroundBrush}">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Progress" FontSize="{StaticResource ExtraLargeFontSize}"
                                        HorizontalAlignment="Center"
@@ -215,33 +213,9 @@
             </ScrollViewer>
         </Grid>
         <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,12,*">
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="Launch Pad" FontSize="{StaticResource LargeFontSize}"
+            <TextBlock Grid.Row="0" Text="Launch Pad" FontSize="{StaticResource LargeFontSize}"
                        FontWeight="Bold" />
-            <husk:Card Grid.Column="0" Grid.Row="2" Padding="0">
-                <!-- <Grid ColumnDefinitions="Auto,8,*,8,Auto"> -->
-                <!--     <Button Grid.Column="0" Theme="{StaticResource GhostButtonTheme}" Margin="4" Padding="12" -->
-                <!--             Command="{Binding SwitchAccountCommand}" -->
-                <!--             CornerRadius="{StaticResource MediumCornerRadius}"> -->
-                <!--         <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto"> -->
-                <!--             <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="36" Width="36"> -->
-                <!--                 <Border.Background> -->
-                <!--                     <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" Stretch="Fill" /> -->
-                <!--                 </Border.Background> -->
-                <!--             </Border> -->
-                <!--             <TextBlock Grid.Row="0" Grid.Column="2" Text="Steve" FontWeight="Bold" -->
-                <!--                        FontSize="{StaticResource LargeFontSize}" /> -->
-                <!--             <TextBlock Grid.Row="2" Grid.Column="2" Text="Microsoft" -->
-                <!--                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}" /> -->
-                <!--         </Grid> -->
-                <!--     </Button> -->
-                <!--     <Button Grid.Column="4" Margin="4" Theme="{StaticResource LaunchButtonTheme}" -->
-                <!--             IsEnabled="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Idle}"> -->
-                <!--         <StackPanel VerticalAlignment="Center"> -->
-                <!--             <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" /> -->
-                <!--             <TextBlock Text="LAUNCH" HorizontalAlignment="Center" /> -->
-                <!--         </StackPanel> -->
-                <!--     </Button> -->
-                <!-- </Grid> -->
+            <husk:Card Grid.Column="0" Grid.Row="2" Padding="0" Background="{DynamicResource Layer0BackgroundBrush}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
                             Spacing="8">
                     <fi:SymbolIcon Symbol="CheckmarkCircle" IconVariant="Filled"
@@ -251,11 +225,14 @@
                                Foreground="{DynamicResource ControlSuccessForegroundBrush}" />
                 </StackPanel>
             </husk:Card>
-            <husk:Card Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Padding="0">
+            <husk:Card Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Padding="0"
+                       Background="{DynamicResource Layer0BackgroundBrush}">
                 <Grid ColumnDefinitions="Auto,0,Auto">
                     <Button Grid.Column="0" Margin="4"
                             Theme="{StaticResource LaunchButtonTheme}"
-                            IsEnabled="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Idle}">
+                            Command="{Binding PlayCommand}"
+                            Background="{DynamicResource ControlAccentBackgroundBrush}"
+                            BorderBrush="{DynamicResource ControlTranslucentAccentBackgroundBrush}">
                         <StackPanel VerticalAlignment="Center">
                             <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" />
                             <TextBlock Text="LAUNCH" HorizontalAlignment="Center" />
@@ -274,7 +251,8 @@
                             <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
                                 <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="36" Width="36">
                                     <Border.Background>
-                                        <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" Stretch="Fill" />
+                                        <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png"
+                                                    Stretch="Fill" />
                                     </Border.Background>
                                 </Border>
                                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Steve" FontWeight="Bold"

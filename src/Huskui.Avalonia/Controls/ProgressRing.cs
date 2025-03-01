@@ -91,7 +91,7 @@ public class ProgressRing : RangeBase
 
         var percent = Math.Abs(Maximum - Minimum) < double.Epsilon ? 1.0 : (Value - Minimum) / (Maximum - Minimum);
 
-        Percentage = percent * 100;
+        Percentage = double.Min(double.Max(percent * 100, 0d), 100d);
 
         var angle = percent * 360;
         angle %= 360;
