@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Services;
+using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 
 namespace Polymerium.App.ViewModels;
 
 public partial class ExhibitionWelcomeViewModel : ViewModelBase
 {
-    #region Injected
-
-    private readonly MojangLauncherService _mojangLauncherService;
-    private readonly IHttpClientFactory _httpClientFactory;
-
-    public ExhibitionWelcomeViewModel(MojangLauncherService mojangLauncherService, IHttpClientFactory httpClientFactory)
+    public ExhibitionWelcomeViewModel(
+        MojangLauncherService mojangLauncherService,
+        IHttpClientFactory httpClientFactory,
+        NavigationService navigationService)
     {
         _mojangLauncherService = mojangLauncherService;
         _httpClientFactory = httpClientFactory;
+        _navigationService = navigationService;
     }
 
     protected override async Task OnInitializedAsync(CancellationToken token)
@@ -36,7 +36,7 @@ public partial class ExhibitionWelcomeViewModel : ViewModelBase
         var news = await _mojangLauncherService.GetMinecraftNewsAsync();
         var models = news
                     .Entries.Take(16)
-                    .Select(async x =>
+                    .Select(async (x, i) =>
                      {
                          var url = _mojangLauncherService.GetAbsoluteImageUrl(x.PlayPageImage.Url);
                          Bitmap? cover = null;
@@ -51,12 +51,22 @@ public partial class ExhibitionWelcomeViewModel : ViewModelBase
                              cover = AssetUriIndex.DIRT_IMAGE_BITMAP;
                          }
 
-                         return new MinecraftNewsModel(cover, x.Category, x.Title, x.Text, x.ReadMoreLink, x.NewsType);
+                         return new MinecraftNewsModel(cover, x.Category, x.Title, x.Text, x.ReadMoreLink, x.NewsType)
+                         {
+                             IsVeryBig = i == 0
+                         };
+                         ;
                      })
                     .ToArray();
         await Task.WhenAll(models);
         News = models.Select(x => x.Result).ToList();
     }
+
+    #region Injected
+
+    private readonly MojangLauncherService _mojangLauncherService;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly NavigationService _navigationService;
 
     #endregion
 
@@ -76,6 +86,12 @@ public partial class ExhibitionWelcomeViewModel : ViewModelBase
         {
             Process.Start(new ProcessStartInfo(news.ReadMoreLink.AbsoluteUri) { UseShellExecute = true });
         }
+    }
+
+    [RelayCommand]
+    private void GotoSearchView(string? query)
+    {
+        _navigationService.Navigate<ExhibitionSearchView>(new ExhibitionSearchViewModel.SearchArguments(query, null));
     }
 
     #endregion

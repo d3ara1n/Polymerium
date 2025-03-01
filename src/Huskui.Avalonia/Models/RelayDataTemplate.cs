@@ -2,12 +2,11 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 
-namespace Huskui.Avalonia.Controls;
+namespace Huskui.Avalonia.Models;
 
 // Connect DataTemplates to IDataTemplate
 public class RelayDataTemplate : AvaloniaList<IDataTemplate>, IDataTemplate
 {
-    #region IDataTemplate Members
 
     public Control? Build(object? param)
     {
@@ -19,6 +18,5 @@ public class RelayDataTemplate : AvaloniaList<IDataTemplate>, IDataTemplate
     }
 
     public bool Match(object? data) => this.Any(x => x.Match(data)) || data is Control;
-
-    #endregion
+    
 }

@@ -7,70 +7,103 @@
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:m="using:Polymerium.App.Models"
            xmlns:v="using:Polymerium.App.Views"
-           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Header="Exhibition"
            x:Class="Polymerium.App.Views.ExhibitionWelcomeView" x:DataType="vm:ExhibitionWelcomeViewModel">
-    <husk:Page.Header>
-        <TextBlock Text="Exhibition" Theme="{StaticResource PageHeaderTextBlockTheme}">
-            <TextBlock.Foreground>
-                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                    <GradientStop Offset="0" Color="#f6d365" />
-                    <GradientStop Offset="1" Color="#fda085" />
-                </LinearGradientBrush>
-            </TextBlock.Foreground>
-        </TextBlock>
-    </husk:Page.Header>
-    <StackPanel>
+    <husk:Page.Resources>
+        <DataTemplate x:Key="BigNewsDataTemplate" DataType="m:MinecraftNewsModel">
+            <Grid RowDefinitions="4*,Auto,*" Height="256" Width="360">
+                <Border Grid.Row="0" Grid.RowSpan="3" Margin="12"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Border.Background>
+                        <ImageBrush Source="{Binding Cover}" Stretch="Fill" />
+                    </Border.Background>
+                </Border>
+                <Border Grid.Row="1" CornerRadius="{StaticResource MediumCornerRadius}" Margin="4"
+                        Background="{DynamicResource LayerSolidBackgroundBrush}">
+                    <Grid ColumnDefinitions="Auto,8,*,8,Auto" Margin="12">
+                        <Border Grid.Column="0"
+                                Background="{DynamicResource LayerSmokeBackgroundBrush}"
+                                CornerRadius="99">
+                            <icons:PackIconLucide Kind="Newspaper" Height="14" Width="14"
+                                                  Foreground="{DynamicResource ControlActiveForegroundBrush}"
+                                                  Margin="8" />
+                        </Border>
+                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Title}"
+                                       TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis"
+                                       FontSize="{StaticResource SmallFontSize}"
+                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                        </StackPanel>
+                        <Button Grid.Column="4" Classes="Small"
+                                Theme="{StaticResource GhostButtonTheme}"
+                                Command="{Binding $parent[v:ExhibitionWelcomeView].((vm:ExhibitionWelcomeViewModel)DataContext).OpenReadMoreLinkCommand,FallbackValue={x:Null}}"
+                                CommandParameter="{Binding}">
+                            <TextBlock Text="Learn More" />
+                        </Button>
+                    </Grid>
+                    <Border.Effect>
+                        <DropShadowEffect OffsetY="0" OffsetX="0" Opacity="0.1" />
+                    </Border.Effect>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="SmallNewsDataTemplate" DataType="m:MinecraftNewsModel">
+            <Grid RowDefinitions="*,0,Auto" Height="156" Width="198" Margin="12" VerticalAlignment="Bottom">
+                <Border Grid.Row="0" Grid.RowSpan="3"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Border.Background>
+                        <ImageBrush Source="{Binding Cover}" Stretch="Fill" />
+                    </Border.Background>
+                </Border>
+                <Border Grid.Row="2" CornerRadius="{StaticResource MediumCornerRadius}" Margin="8"
+                        Background="{DynamicResource LayerSolidBackgroundBrush}">
+                    <Grid Margin="6">
+                        <Button Classes="Small"
+                                Theme="{StaticResource GhostButtonTheme}"
+                                Command="{Binding $parent[v:ExhibitionWelcomeView].((vm:ExhibitionWelcomeViewModel)DataContext).OpenReadMoreLinkCommand,FallbackValue={x:Null}}"
+                                CommandParameter="{Binding}">
+                            <TextBlock Text="{Binding Title}"
+                                       TextTrimming="CharacterEllipsis" FontWeight="Bold" TextWrapping="Wrap"
+                                       MaxLines="2" TextAlignment="Center" />
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </husk:Page.Resources>
+    <StackPanel Spacing="36" MaxWidth="1440">
         <husk:SkeletonContainer IsLoading="{Binding News,Converter={x:Static ObjectConverters.IsNull}}">
             <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding News}" MinHeight="256">
+                <ItemsControl x:Name="NewsContainer" ItemsSource="{Binding News}" MinHeight="256">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="m:MinecraftNewsModel">
-                            <Grid RowDefinitions="4*,Auto,*" Height="256" Width="360">
-                                <Border Grid.Row="0" Grid.RowSpan="3" Margin="12" BorderThickness="1"
-                                        BorderBrush="{DynamicResource ControlBorderBrush}"
-                                        CornerRadius="{StaticResource MediumCornerRadius}">
-                                    <Border.Background>
-                                        <ImageBrush Source="{Binding Cover}" Stretch="Fill" />
-                                    </Border.Background>
-                                </Border>
-                                <Border Grid.Row="1" CornerRadius="{StaticResource MediumCornerRadius}" Margin="4"
-                                        Background="{DynamicResource LayerSolidBackgroundBrush}">
-                                    <Grid ColumnDefinitions="Auto,8,*,8,Auto" Margin="12">
-                                        <Border Grid.Column="0"
-                                                Background="{DynamicResource LayerSmokeBackgroundBrush}"
-                                                CornerRadius="99">
-                                            <icons:PackIconLucide Kind="Newspaper" Height="14" Width="14"
-                                                                  Foreground="{DynamicResource ControlActiveForegroundBrush}"
-                                                                  Margin="8" />
-                                        </Border>
-                                        <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding Title}"
-                                                       TextTrimming="CharacterEllipsis" FontWeight="Bold" />
-                                            <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis"
-                                                       FontSize="{StaticResource SmallFontSize}"
-                                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                        </StackPanel>
-                                        <Button Grid.Column="4" Classes="Small"
-                                                Theme="{StaticResource GhostButtonTheme}"
-                                                Command="{Binding $parent[v:ExhibitionWelcomeView].((vm:ExhibitionWelcomeViewModel)DataContext).OpenReadMoreLinkCommand,FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding}">
-                                            <TextBlock Text="Learn More" />
-                                        </Button>
-                                    </Grid>
-                                    <Border.Effect>
-                                        <DropShadowEffect OffsetY="0" OffsetX="0" Opacity="0.1" />
-                                    </Border.Effect>
-                                </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
         </husk:SkeletonContainer>
+
+        <StackPanel Spacing="24">
+            <TextBlock Text="Search Center" Theme="{StaticResource PageHeaderTextBlockTheme}">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                        <GradientStop Offset="0" Color="#f6d365" />
+                        <GradientStop Offset="1" Color="#fda085" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <TextBox Name="QueryBox" Watermark="Everything(mostly) begins here" HorizontalContentAlignment="Center"
+                     Margin="36,0" />
+            <Button HorizontalAlignment="Center" Command="{Binding GotoSearchViewCommand}"
+                    CommandParameter="{Binding #QueryBox.Text}" Classes="Primary">
+                <StackPanel Orientation="Horizontal" Margin="12,6" Spacing="8">
+                    <icons:PackIconLucide Kind="Search" Height="{StaticResource MediumFontSize}"
+                                          Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
+                    <TextBlock Text="Search" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </StackPanel>
 </husk:Page>

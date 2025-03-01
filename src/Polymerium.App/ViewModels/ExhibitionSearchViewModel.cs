@@ -29,6 +29,7 @@ namespace Polymerium.App.ViewModels;
 public partial class ExhibitionSearchViewModel : ViewModelBase
 {
     public ExhibitionSearchViewModel(
+        ViewBag bag,
         RepositoryAgent agent,
         IHttpClientFactory factory,
         InstanceManager instanceManager,
@@ -52,8 +53,15 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
                                                             }))
                .ToList();
         Repositories = r;
-
-        SelectedRepository = r.First();
+        if (bag.Parameter is SearchArguments arguments)
+        {
+            SelectedRepository = r.FirstOrDefault(x => x.Label == arguments.Label) ?? r.First();
+            QueryText = arguments.Query ?? string.Empty;
+        }
+        else
+        {
+            SelectedRepository = r.First();
+        }
     }
 
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
@@ -62,6 +70,8 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
     {
         if (token.IsCancellationRequested)
             return;
+
+        _ = SearchAsync();
 
         foreach (var repository in Repositories)
             if (repository.Loaders.Count == 0 || repository.Versions.Count == 0)
@@ -136,6 +146,9 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
 
     #endregion
 
+    [ObservableProperty]
+    private string _queryText = string.Empty;
+
     #region Commands
 
     [RelayCommand]
@@ -146,12 +159,12 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task SearchAsync(string query)
+    private async Task SearchAsync()
     {
         try
         {
             var handle = await _agent.SearchAsync(SelectedRepository.Label,
-                                                  query,
+                                                  QueryText,
                                                   new Filter(FilteredVersion,
                                                              FilteredLoader?.LoaderId,
                                                              ResourceKind.Modpack));
@@ -222,6 +235,12 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
         if (exhibit is not null)
             _overlayService.PopToast(new ExhibitionModpackToast());
     }
+
+    #endregion
+
+    #region Nested type: SearchArguments
+
+    public record SearchArguments(string? Query, string? Label);
 
     #endregion
 }
