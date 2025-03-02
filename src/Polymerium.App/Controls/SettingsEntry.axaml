@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:Polymerium.App.Controls"
+                    xmlns:fi="using:FluentIcons.Avalonia">
+    <ControlTheme x:Key="{x:Type local:SettingsEntry}" TargetType="local:SettingsEntry">
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <StackPanel Spacing="8" />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="6*,8,4*">
+                    <Grid Grid.Column="0" ColumnDefinitions="Auto,8,*">
+                        <fi:SymbolIcon Grid.Column="0" Symbol="{TemplateBinding Icon}"
+                                       FontSize="26" VerticalAlignment="Top" Margin="3" IconVariant="Regular" />
+                        <StackPanel Grid.Column="2" Spacing="4">
+                            <TextBlock Text="{TemplateBinding Title}"
+                                       FontWeight="Bold" />
+                            <TextBlock Text="{TemplateBinding Summary}"
+                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                    <ItemsPresenter Grid.Column="2" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

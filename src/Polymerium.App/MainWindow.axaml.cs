@@ -131,7 +131,8 @@ public partial class MainWindow : AppWindow
                 Button { Tag: "ExhibitionWelcomeView" } => (typeof(ExhibitionWelcomeView), null),
                 Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
                 Button { Tag: "CreateInstanceView" } => (typeof(NewInstanceView), null),
-                Button { Tag: "ApplicationSettingsView" } => (typeof(ApplicationSettingsView), null),
+                Button { Tag: "SettingsView" } => (typeof(SettingsView), null),
+                Button { Tag: "AccountsView" } => (typeof(AccountsView), null),
                 _ => (typeof(PageNotReachedView), null)
             };
             _navigate?.Invoke(target.Page, target.Parameter, null);

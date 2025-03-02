@@ -73,9 +73,9 @@
     <SolidColorBrush x:Key="ControlDangerBorderBrush" Color="{StaticResource Tomato11Color}" />
 
     <SolidColorBrush x:Key="ControlActiveForegroundBrush" Color="{StaticResource Sand12Color}" />
-    <SolidColorBrush x:Key="ControlForegroundBrush" Color="{StaticResource Sand1Color}" />
+    <SolidColorBrush x:Key="ControlForegroundBrush" Color="{StaticResource Sand3Color}" />
     <SolidColorBrush x:Key="ControlTranslucentForegroundBrush" Color="{StaticResource Sand2Color}" />
-    <SolidColorBrush x:Key="ControlSecondaryForegroundBrush" Color="{StaticResource Sand9Color}" />
+    <SolidColorBrush x:Key="ControlSecondaryForegroundBrush" Color="{StaticResource Sand8Color}" />
     <SolidColorBrush x:Key="ControlAccentForegroundBrush" Color="{StaticResource Amber10Color}" />
     <SolidColorBrush x:Key="ControlTranslucentAccentForegroundBrush" Color="{StaticResource Amber11Color}" />
     <SolidColorBrush x:Key="ControlSuccessForegroundBrush" Color="{StaticResource Grass10Color}" />

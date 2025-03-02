@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:Polymerium.App.Controls">
+    <ControlTheme x:Key="{x:Type local:SettingsEntryItem}" TargetType="local:SettingsEntryItem">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid RowDefinitions="Auto,4,Auto">
+                    <ContentPresenter Grid.Row="0" Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}">
+                        <ContentPresenter.Styles>
+                            <Style Selector="ContentPresenter > TextBlock">
+                                <Setter Property="Foreground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            </Style>
+                        </ContentPresenter.Styles>
+                    </ContentPresenter>
+                    <ContentPresenter Grid.Row="2" Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
