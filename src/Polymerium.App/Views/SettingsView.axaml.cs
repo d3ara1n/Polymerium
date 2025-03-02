@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views;
 
-public class SettingsView : Page
+public partial class SettingsView : Page
 {
     public SettingsView()
     {

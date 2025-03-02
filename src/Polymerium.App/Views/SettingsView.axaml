@@ -3,6 +3,7 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:controls="using:Polymerium.App.Controls"
            xmlns:vm="using:Polymerium.App.ViewModels"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -30,16 +31,40 @@
         <controls:SettingsEntry Icon="DrinkCoffee" Title="Java Presets"
                                 Summary="Instance will select the best match while launching">
             <controls:SettingsEntryItem Header="Java 8">
-                <TextBox Watermark="Fallback to the bundled if unset" />
+                <TextBox Watermark="Fallback to the bundled if unset">
+                    <TextBox.InnerRightContent>
+                        <Button Margin="4">
+                            <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                        </Button>
+                    </TextBox.InnerRightContent>
+                </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java 11">
-                <TextBox Watermark="Fallback to the bundled if unset" />
+                <TextBox Watermark="Fallback to the bundled if unset">
+                    <TextBox.InnerRightContent>
+                        <Button Margin="4">
+                            <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                        </Button>
+                    </TextBox.InnerRightContent>
+                </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java 17">
-                <TextBox Watermark="Fallback to the bundled if unset" />
+                <TextBox Watermark="Fallback to the bundled if unset">
+                    <TextBox.InnerRightContent>
+                        <Button Margin="4">
+                            <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                        </Button>
+                    </TextBox.InnerRightContent>
+                </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java 21">
-                <TextBox Watermark="Fallback to the bundled if unset" />
+                <TextBox Watermark="Fallback to the bundled if unset">
+                    <TextBox.InnerRightContent>
+                        <Button Margin="4">
+                            <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                        </Button>
+                    </TextBox.InnerRightContent>
+                </TextBox>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />

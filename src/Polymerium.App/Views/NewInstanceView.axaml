@@ -87,7 +87,7 @@
                     </TextBox.InnerLeftContent>
                     <TextBox.InnerRightContent>
                         <Button Margin="4" Command="{Binding PickVersionCommand}">
-                            <icons:PackIconLucide Kind="Pickaxe" Height="{StaticResource MediumFontSize}" />
+                            <icons:PackIconLucide Kind="List" Height="{StaticResource MediumFontSize}" />
                         </Button>
                     </TextBox.InnerRightContent>
                 </TextBox>

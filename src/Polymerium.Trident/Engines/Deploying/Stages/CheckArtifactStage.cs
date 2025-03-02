@@ -26,7 +26,7 @@ public class CheckArtifactStage(ILogger<CheckArtifactStage> logger) : StageBase
                     logger.LogInformation("Bad artifact");
                 }
             }
-            catch (JsonException e)
+            catch (Exception e)
             {
                 Context.ArtifactBuilder = new DataLockBuilder();
                 logger.LogWarning("Load artifact in disk failed: {message}", e.Message);
