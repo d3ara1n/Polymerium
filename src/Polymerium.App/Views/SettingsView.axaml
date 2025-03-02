@@ -1,0 +1,86 @@
+﻿<husk:Page xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:controls="using:Polymerium.App.Controls"
+           xmlns:vm="using:Polymerium.App.ViewModels"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+           x:Class="Polymerium.App.Views.SettingsView" Header="Application Settings" x:DataType="vm:SettingsViewModel">
+    <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
+        <controls:SettingsEntry Title="Super Power" Icon="Wand" Summary="味大，我为自己带盐">
+            <controls:SettingsEntryItem Header="Activate">
+                <ToggleSwitch />
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+        <husk:Divider />
+        <controls:SettingsEntry Icon="LocalLanguage" Title="Display and Languages"
+                                Summary="The language the application displays in">
+            <controls:SettingsEntryItem Header="Language">
+                <ComboBox SelectedIndex="0">
+                    <ComboBoxItem Content="Chinglish" />
+                    <ComboBoxItem Content="简体中文" />
+                </ComboBox>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Font">
+                <TextBox Watermark="(Builtin)" IsEnabled="False" />
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+        <husk:Divider />
+        <controls:SettingsEntry Icon="DrinkCoffee" Title="Java Presets"
+                                Summary="Instance will select the best match while launching">
+            <controls:SettingsEntryItem Header="Java 8">
+                <TextBox Watermark="Fallback to the bundled if unset" />
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Java 11">
+                <TextBox Watermark="Fallback to the bundled if unset" />
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Java 17">
+                <TextBox Watermark="Fallback to the bundled if unset" />
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Java 21">
+                <TextBox Watermark="Fallback to the bundled if unset" />
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+        <husk:Divider />
+        <controls:SettingsEntry Icon="Joystick" Title="Game Defaults"
+                                Summary="The listing configuration can be override by the instance individually">
+            <controls:SettingsEntryItem Header="Java Max Memory">
+                <TextBox Watermark="Bigger is better" Text="4096">
+                    <TextBox.InnerRightContent>
+                        <StackPanel Orientation="Horizontal">
+                            <husk:Divider Orientation="Vertical" />
+                            <TextBlock Text="MiB" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                       Margin="8,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Java Additional Arguments">
+                <TextBox Watermark="Less is more" />
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Window Initial Size">
+                <Grid ColumnDefinitions="*,7,*">
+                    <TextBox Grid.Column="0" Watermark="1270">
+                        <TextBox.InnerLeftContent>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Width" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                           Margin="8,0" VerticalAlignment="Center" />
+                                <husk:Divider Orientation="Vertical" />
+                            </StackPanel>
+                        </TextBox.InnerLeftContent>
+                    </TextBox>
+                    <TextBox Grid.Column="2" Watermark="720">
+                        <TextBox.InnerLeftContent>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Height" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                           Margin="8,0" VerticalAlignment="Center" />
+                                <husk:Divider Orientation="Vertical" />
+                            </StackPanel>
+                        </TextBox.InnerLeftContent>
+                    </TextBox>
+                </Grid>
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+    </StackPanel>
+</husk:Page>

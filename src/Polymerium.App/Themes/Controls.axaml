@@ -6,5 +6,7 @@
         <ResourceInclude Source="/Controls/Subpage.axaml" />
         <ResourceInclude Source="/Controls/LaunchBar.axaml" />
         <ResourceInclude Source="/Controls/InstanceEntryButton.axaml" />
+        <ResourceInclude Source="/Controls/SettingsEntry.axaml" />
+        <ResourceInclude Source="/Controls/SettingsEntryItem.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

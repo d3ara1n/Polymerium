@@ -1,13 +1,12 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
-using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 
 namespace Huskui.Avalonia.Controls;
 
 [PseudoClasses(":vertical", ":horizontal")]
-public class Divider : TemplatedControl
+public class Divider : ContentControl
 {
     public static readonly StyledProperty<Orientation> OrientationProperty =
         AvaloniaProperty.Register<Divider, Orientation>(nameof(Orientation));

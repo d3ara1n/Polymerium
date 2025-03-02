@@ -3,25 +3,54 @@
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme x:Key="{x:Type local:Divider}" TargetType="local:Divider">
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
         <Setter Property="Orientation" Value="Horizontal" />
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalAlignment  }" />
-            </ControlTemplate>
-        </Setter>
 
         <Style Selector="^[Orientation=Horizontal]">
             <Setter Property="BorderThickness" Value="0,1,0,0" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Grid ColumnDefinitions="*,Auto,*">
+                        <Border Grid.Column="0" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment  }" />
+                        <ContentPresenter Grid.Column="1" Margin="8,0" Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsVisible="{TemplateBinding Content,Converter={x:Static ObjectConverters.IsNotNull}}" />
+                        <Border Grid.Column="2" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment  }" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
         </Style>
 
         <Style Selector="^[Orientation=Vertical]">
             <Setter Property="BorderThickness" Value="1,0,0,0" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Grid RowDefinitions="*,Auto,*">
+                        <Border Grid.Row="0" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment  }" />
+                        <ContentPresenter Grid.Row="1" Margin="0,8" Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          IsVisible="{TemplateBinding Content,Converter={x:Static ObjectConverters.IsNotNull}}" />
+                        <Border Grid.Row="2" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment  }" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
         </Style>
     </ControlTheme>
 </ResourceDictionary>

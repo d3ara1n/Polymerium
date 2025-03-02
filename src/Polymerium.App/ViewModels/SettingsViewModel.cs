@@ -2,4 +2,4 @@
 
 namespace Polymerium.App.ViewModels;
 
-public class ApplicationSettingsViewModel : ViewModelBase { }
+public class SettingsViewModel : ViewModelBase { }

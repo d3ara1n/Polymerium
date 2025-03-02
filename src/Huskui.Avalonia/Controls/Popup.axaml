@@ -6,6 +6,7 @@
         <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Template">
             <ControlTemplate>
                 <LayoutTransformControl LayoutTransform="{TemplateBinding Transform}">
