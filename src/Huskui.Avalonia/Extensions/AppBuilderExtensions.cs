@@ -6,7 +6,8 @@ namespace Huskui.Avalonia.Extensions;
 
 public static class AppBuilderExtensions
 {
-    public static AppBuilder WithOutfitFont(this AppBuilder appBuilder) =>
+    public static AppBuilder WithOutfitFont(this AppBuilder appBuilder)
+    {
         appBuilder
            .ConfigureFonts(fontManager =>
             {
@@ -22,4 +23,7 @@ public static class AppBuilderExtensions
                 DefaultFamilyName = "fonts:Quicksand#Quicksand",
                 FontFallbacks = [new FontFallback { FontFamily = "fonts:MaoKenWangXingYuan#猫啃忘形圆" }]
             });
+
+        return appBuilder;
+    }
 }

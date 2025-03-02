@@ -14,16 +14,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="Avalonia.Markup.Xaml.Loader" Version="11.2.4"/>
+        <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="Avalonia.Markup.Xaml.Loader" Version="11.2.5"/>
         <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="HotAvalonia" Version="2.1.0"/>
         <PackageReference Include="HotAvalonia.Extensions" Version="2.1.0" PrivateAssets="All"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.2.4"/>
-        <PackageReference Include="Avalonia.Desktop" Version="11.2.4"/>
+        <PackageReference Include="Avalonia" Version="11.2.5"/>
+        <PackageReference Include="Avalonia.Desktop" Version="11.2.5"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.4"/>
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.5"/>
         <PackageReference Include="Avalonia.Svg" Version="11.2.0.2"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
         <PackageReference Include="DynamicData" Version="9.1.2"/>
