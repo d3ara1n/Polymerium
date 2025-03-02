@@ -40,7 +40,8 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                             <Button Grid.Column="4" Classes="Primary"
-                                    Command="{Binding SearchCommand}">
+                                    Command="{Binding SearchCommand}"
+                                    IsEnabled="{Binding Exhibits.IsFetching,Converter={x:Static BoolConverters.Not},FallbackValue=True}">
                                 <StackPanel Orientation="Horizontal" Spacing="8">
                                     <icons:PackIconLucide Kind="Text" Height="{StaticResource MediumFontSize}"
                                                           Width="{StaticResource MediumFontSize}"

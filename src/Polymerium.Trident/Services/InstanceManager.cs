@@ -175,6 +175,7 @@ public class InstanceManager(
 
             logger.LogInformation("Enter stage {}", stage.GetType().Name);
             await stage.ProcessAsync(tracker.Token);
+            await Task.Delay(TimeSpan.FromSeconds(2));
         }
 
         watch.Stop();

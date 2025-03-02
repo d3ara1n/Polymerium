@@ -233,6 +233,7 @@ public partial class MainWindow : AppWindow
     {
         manager.InstanceInstalling += OnInstanceInstalling;
         manager.InstanceUpdating += OnInstanceUpdating;
+        manager.InstanceDeploying += OnInstanceDeploying;
     }
 
     private void OnInstanceUpdating(object? sender, UpdateTracker e)
@@ -260,7 +261,7 @@ public partial class MainWindow : AppWindow
                     {
                         Content = e.FailureReason,
                         Title = $"Failed to update {e.Key}",
-                        Level = NotificationLevel.Warning
+                        Level = NotificationLevel.Danger
                     }));
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
@@ -319,6 +320,50 @@ public partial class MainWindow : AppWindow
 
         e.StateUpdated += OnStateChanged;
         _entries.AddOrUpdate(model);
+    }
+
+    private void OnInstanceDeploying(object? sender, DeployTracker e)
+    {
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is null)
+            return;
+
+        model.State = InstanceEntryState.Preparing;
+
+        var progressUpdater = Observable
+                             .Interval(TimeSpan.FromSeconds(1))
+                             .Subscribe(_ => model.Progress = e.Progress.Percentage);
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.Progress = null;
+                    break;
+                case TrackerState.Faulted:
+                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
+                    {
+                        Content = e.FailureReason,
+                        Title = $"Failed to deploy {e.Key}",
+                        Level = NotificationLevel.Danger
+                    }));
+                    progressUpdater.Dispose();
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Finished:
+                    model.State = InstanceEntryState.Idle;
+                    progressUpdater.Dispose();
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+
+        e.StateUpdated += OnStateChanged;
     }
 
     #endregion

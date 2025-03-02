@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views;
 
-public class AccountsView : Page
+public partial class AccountsView : Page
 {
     public AccountsView()
     {

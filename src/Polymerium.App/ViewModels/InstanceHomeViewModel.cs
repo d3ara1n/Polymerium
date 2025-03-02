@@ -14,7 +14,6 @@ using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App.ViewModels;
 
@@ -68,19 +67,12 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
 
     protected override void OnInstanceUpdated(UpdateTracker tracker)
     {
-        if (tracker.State == TrackerState.Faulted)
-            _notificationService.PopMessage(tracker.FailureReason?.ToString() ?? "Unknown error",
-                                            "Update failed",
-                                            NotificationLevel.Danger);
+        _subscription?.Dispose();
     }
 
     protected override void OnInstanceDeployed(DeployTracker tracker)
     {
         _subscription?.Dispose();
-        if (tracker.State == TrackerState.Faulted)
-            _notificationService.PopMessage(tracker.FailureReason?.ToString() ?? "Unknown error",
-                                            "Deploy failed",
-                                            NotificationLevel.Danger);
     }
 
     #endregion

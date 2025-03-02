@@ -46,7 +46,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         _notificationService = notificationService;
     }
 
-    private async Task RefreshAsync(CancellationToken token)
+    private void TriggerRefresh(CancellationToken token)
     {
         var inner = _cancellationTokenSource?.Token ?? token;
         try
@@ -64,51 +64,6 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                 Stage.AddOrUpdate(stages);
                 Stash.AddOrUpdate(stashes);
                 Draft.AddRange(drafts);
-
-                InstancePackageModel Load(string purl)
-                {
-                    InstancePackageModel model = new(purl);
-                    model.Task = Task.Run(async () =>
-                                          {
-                                              await Task.Delay(TimeSpan.FromSeconds(1), inner);
-                                              if (PackageHelper.TryParse(model.Purl, out var v))
-                                                  try
-                                                  {
-                                                      var p = await _repositories.ResolveAsync(v.Label,
-                                                                  v.Namespace,
-                                                                  v.Pid,
-                                                                  v.Vid,
-                                                                  Filter.Empty);
-
-                                                      if (!Debugger.IsAttached && p.Thumbnail is not null)
-                                                      {
-                                                          var c = _clientFactory.CreateClient();
-                                                          var b = await c.GetByteArrayAsync(p.Thumbnail,
-                                                                      _cancellationTokenSource.Token);
-                                                          model.Thumbnail = new Bitmap(new MemoryStream(b));
-                                                      }
-                                                      else
-                                                      {
-                                                          model.Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
-                                                      }
-
-                                                      model.Name = p.ProjectName;
-                                                      model.Version = p.VersionName;
-                                                      model.Summary = p.Summary;
-                                                      model.Kind = p.Kind;
-                                                      model.Reference = p.Reference;
-                                                      model.IsLoaded = true;
-                                                  }
-                                                  catch (Exception ex)
-                                                  {
-                                                      _notificationService.PopMessage($"{purl}: {ex.Message}",
-                                                          "Failed to parse purl",
-                                                          NotificationLevel.Warning);
-                                                  }
-                                          },
-                                          inner);
-                    return model;
-                }
             }
         }
         catch (Exception ex)
@@ -116,13 +71,17 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
             _notificationService.PopMessage(ex.Message, "Loading package list failed", NotificationLevel.Warning);
         }
 
-        if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var result))
+        if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
+            Task.Run(() => LoadReference(r.Label, r.Namespace, r.Pid, r.Vid), inner);
+
+        async Task LoadReference(string label, string? @namespace, string pid, string? vid)
+        {
             try
             {
-                var package = await _repositories.ResolveAsync(result.Label,
-                                                               result.Namespace,
-                                                               result.Pid,
-                                                               result.Vid,
+                var package = await _repositories.ResolveAsync(label,
+                                                               @namespace,
+                                                               pid,
+                                                               vid,
                                                                Filter.Empty with { Kind = ResourceKind.Modpack });
 
                 Bitmap thumbnail;
@@ -137,9 +96,9 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                     thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
                 }
 
-                var page = await (await _repositories.InspectAsync(result.Label,
-                                                                   result.Namespace,
-                                                                   result.Pid,
+                var page = await (await _repositories.InspectAsync(label,
+                                                                   @namespace,
+                                                                   pid,
                                                                    Filter.Empty with { Kind = ResourceKind.Modpack }))
                               .FetchAsync();
                 var versions = page
@@ -155,15 +114,18 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                })
                               .ToList();
 
-                Reference = new InstanceReferenceModel
+                Dispatcher.UIThread.Post(() =>
                 {
-                    Name = package.ProjectName,
-                    Thumbnail = thumbnail,
-                    SourceUrl = package.Reference,
-                    SourceLabel = package.Label,
-                    Versions = versions,
-                    CurrentVersion = versions.FirstOrDefault()
-                };
+                    Reference = new InstanceReferenceModel
+                    {
+                        Name = package.ProjectName,
+                        Thumbnail = thumbnail,
+                        SourceUrl = package.Reference,
+                        SourceLabel = package.Label,
+                        Versions = versions,
+                        CurrentVersion = versions.FirstOrDefault()
+                    };
+                });
             }
             catch (Exception ex)
             {
@@ -171,6 +133,52 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                 "Fetching modpack information failed",
                                                 NotificationLevel.Warning);
             }
+        }
+
+        InstancePackageModel Load(string purl)
+        {
+            InstancePackageModel model = new(purl);
+            model.Task = Task.Run(async () =>
+                                  {
+                                      if (PackageHelper.TryParse(model.Purl, out var v))
+                                          try
+                                          {
+                                              var p = await _repositories.ResolveAsync(v.Label,
+                                                          v.Namespace,
+                                                          v.Pid,
+                                                          v.Vid,
+                                                          Filter.Empty);
+
+                                              if (!Debugger.IsAttached && p.Thumbnail is not null)
+                                              {
+                                                  var c = _clientFactory.CreateClient();
+                                                  var b = await c.GetByteArrayAsync(p.Thumbnail,
+                                                              _cancellationTokenSource?.Token
+                                                           ?? CancellationToken.None);
+                                                  model.Thumbnail = new Bitmap(new MemoryStream(b));
+                                              }
+                                              else
+                                              {
+                                                  model.Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
+                                              }
+
+                                              model.Name = p.ProjectName;
+                                              model.Version = p.VersionName;
+                                              model.Summary = p.Summary;
+                                              model.Kind = p.Kind;
+                                              model.Reference = p.Reference;
+                                              model.IsLoaded = true;
+                                          }
+                                          catch (Exception ex)
+                                          {
+                                              _notificationService.PopMessage($"{purl}: {ex.Message}",
+                                                                              "Failed to parse purl",
+                                                                              NotificationLevel.Warning);
+                                          }
+                                  },
+                                  inner);
+            return model;
+        }
     }
 
     protected override void OnUpdateModel(string key, Profile profile)
@@ -206,7 +214,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is UpdateTracker update)
             TrackUpdateProgress(update);
         else
-            _ = Task.Run(() => RefreshAsync(_cancellationTokenSource?.Token ?? token), token);
+            TriggerRefresh(_cancellationTokenSource?.Token ?? token);
 
         await base.OnInitializedAsync(token);
     }
@@ -227,7 +235,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
 
     protected override void OnInstanceUpdated(UpdateTracker tracker)
     {
-        _ = Task.Run(() => RefreshAsync(_cancellationTokenSource?.Token ?? CancellationToken.None));
+        TriggerRefresh(_cancellationTokenSource?.Token ?? CancellationToken.None);
         base.OnInstanceUpdated(tracker);
     }
 
