@@ -1,8 +1,8 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Metadata;
 using Polymerium.App.Models;
-using System;
 
 namespace Polymerium.App.Controls;
 

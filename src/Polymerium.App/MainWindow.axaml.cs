@@ -1,4 +1,10 @@
-﻿using Avalonia;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Windows.Input;
+using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -11,12 +17,6 @@ using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Windows.Input;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App;
@@ -39,7 +39,7 @@ public partial class MainWindow : AppWindow
     private string _filterText = string.Empty;
     private Action<Type, object?, IPageTransition?>? _navigate;
 
-    private ReadOnlyObservableCollection<InstanceEntryModel> _view;
+    private ReadOnlyObservableCollection<InstanceEntryModel> _view = null!;
 
 
     public MainWindow()
@@ -63,7 +63,7 @@ public partial class MainWindow : AppWindow
         set => SetAndRaise(FilterTextProperty, ref _filterText, value);
     }
 
-    public Frame.PageActivatorDelegate PageActivator { get; private set; }
+    public Frame.PageActivatorDelegate PageActivator { get; private set; } = null!;
 
     public ReadOnlyObservableCollection<InstanceEntryModel> View
     {
@@ -128,7 +128,7 @@ public partial class MainWindow : AppWindow
         {
             (Type Page, object? Parameter) target = sender switch
             {
-                Button { Tag: "ExhibitionWelcomeView" } => (typeof(ExhibitionWelcomeView), null),
+                Button { Tag: "MarketplacePortalView" } => (typeof(MarketplacePortalView), null),
                 Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
                 Button { Tag: "CreateInstanceView" } => (typeof(NewInstanceView), null),
                 Button { Tag: "SettingsView" } => (typeof(SettingsView), null),

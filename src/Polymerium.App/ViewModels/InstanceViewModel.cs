@@ -1,22 +1,21 @@
-﻿using Avalonia.Threading;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Polymerium.App.ViewModels;
 
 public partial class InstanceViewModel : InstanceViewModelBase
 {
     public InstanceViewModel(ViewBag bag, ProfileManager profileManager, InstanceManager instanceManager) :
-        base(bag, instanceManager, profileManager)
-    { }
+        base(bag, instanceManager, profileManager) { }
 
 
     protected override Task OnInitializedAsync(CancellationToken token)

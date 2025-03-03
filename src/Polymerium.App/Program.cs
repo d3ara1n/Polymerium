@@ -1,6 +1,4 @@
-﻿using System;
-using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia;
 using FluentIcons.Avalonia;
 using Huskui.Avalonia.Extensions;
 using Microsoft.Extensions.Hosting;

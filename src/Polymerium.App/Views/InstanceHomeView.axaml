@@ -1,23 +1,33 @@
-﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                  xmlns:fi="using:FluentIcons.Avalonia"
-                  xmlns:controls="using:Polymerium.App.Controls"
-                  xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                  xmlns:v="using:Polymerium.App.Views"
-                  xmlns:vm="using:Polymerium.App.ViewModels"
-                  xmlns:m="using:Polymerium.App.Models"
-                  mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="566"
-                  x:Class="Polymerium.App.Views.InstanceHomeView" x:DataType="vm:InstanceHomeViewModel">
+﻿<controls:Subpage
+    x:Class="Polymerium.App.Views.InstanceHomeView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:m="using:Polymerium.App.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:v="using:Polymerium.App.Views"
+    xmlns:vm="using:Polymerium.App.ViewModels"
+    d:DesignHeight="566"
+    d:DesignWidth="780"
+    x:DataType="vm:InstanceHomeViewModel"
+    mc:Ignorable="d">
     <controls:Subpage.Resources>
-        <ControlTheme x:Key="SectionHeaderButtonTheme" TargetType="Button" BasedOn="{StaticResource GhostButtonTheme}">
+        <ControlTheme
+            x:Key="SectionHeaderButtonTheme"
+            BasedOn="{StaticResource GhostButtonTheme}"
+            TargetType="Button">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="Padding" Value="12,4" />
         </ControlTheme>
-        <ControlTheme x:Key="LaunchButtonTheme" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <ControlTheme
+            x:Key="LaunchButtonTheme"
+            BasedOn="{StaticResource {x:Type Button}}"
+            TargetType="Button">
             <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
             <Setter Property="BorderThickness" Value="0,0,0,6" />
             <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
@@ -53,117 +63,169 @@
             <ColumnDefinition Width="24" />
             <ColumnDefinition Width="*" MinWidth="230" />
         </Grid.ColumnDefinitions>
-        <husk:Card Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="0" Padding="0"
-                   Background="{DynamicResource LayerSolidBackgroundBrush}">
+        <husk:Card
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Padding="0"
+            Background="{DynamicResource LayerSolidBackgroundBrush}"
+            BorderThickness="0">
             <Panel>
                 <Border CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
-                        <ImageBrush Stretch="UniformToFill"
-                                    Source="{Binding Screenshot}" />
+                        <ImageBrush Source="{Binding Screenshot}" Stretch="UniformToFill" />
                     </Border.Background>
                     <Border.OpacityMask>
-                        <LinearGradientBrush StartPoint="0%,10%"
-                                             EndPoint="100%,100%">
-                            <GradientStop Offset="0"
-                                          Color="#3F000000" />
-                            <GradientStop Offset="0.5"
-                                          Color="#6F000000" />
+                        <LinearGradientBrush StartPoint="0%,10%" EndPoint="100%,100%">
+                            <GradientStop Offset="0" Color="#3F000000" />
+                            <GradientStop Offset="0.5" Color="#6F000000" />
                             <GradientStop Offset="1" Color="#DF000000" />
                         </LinearGradientBrush>
                     </Border.OpacityMask>
                 </Border>
-                <Grid RowDefinitions="Auto,8,Auto" Margin="24">
+                <Grid Margin="24" RowDefinitions="Auto,8,Auto">
                     <husk:Tag Grid.Row="0" Content="Overview" />
-                    <TextBlock Grid.Row="2" Text="{Binding Basic.Name}" MaxLines="2" TextWrapping="Wrap"
-                               TextTrimming="CharacterEllipsis" FontSize="36" />
+                    <TextBlock
+                        Grid.Row="2"
+                        FontSize="36"
+                        MaxLines="2"
+                        Text="{Binding Basic.Name}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="Wrap" />
                 </Grid>
             </Panel>
         </husk:Card>
-        <husk:BusyContainer Grid.Row="0" Grid.Column="4"
-                            IsBusy="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Updating}"
-                            Background="{DynamicResource Layer0BackgroundBrush}"
-                            BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-            <husk:Card BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}">
+        <husk:BusyContainer
+            Grid.Row="0"
+            Grid.Column="4"
+            Background="{DynamicResource Layer0BackgroundBrush}"
+            BorderBrush="{DynamicResource ControlBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource MediumCornerRadius}"
+            IsBusy="{Binding State, Converter={x:Static huskc:ObjectConverters.Match}, ConverterParameter=Updating}">
+            <husk:Card
+                Background="{x:Null}"
+                BorderBrush="{x:Null}"
+                BorderThickness="0">
                 <Grid RowDefinitions="Auto,8,*,8,Auto,8,Auto,8,Auto">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*,8,Auto">
-                        <icons:PackIconLucide Grid.Column="0"
-                                              Foreground="{DynamicResource ControlAccentForegroundBrush}"
-                                              Kind="Boxes" Height="{StaticResource LargeFontSize}" />
-                        <TextBlock Grid.Column="2" Text="Setup" FontWeight="Bold" />
-                        <Button Grid.Column="4" Theme="{StaticResource SectionHeaderButtonTheme}"
-                                Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                                CommandParameter="{x:Type v:InstanceSetupView}">
+                        <icons:PackIconLucide
+                            Grid.Column="0"
+                            Height="{StaticResource LargeFontSize}"
+                            Foreground="{DynamicResource ControlAccentForegroundBrush}"
+                            Kind="Boxes" />
+                        <TextBlock
+                            Grid.Column="2"
+                            FontWeight="Bold"
+                            Text="Setup" />
+                        <Button
+                            Grid.Column="4"
+                            Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                            CommandParameter="{x:Type v:InstanceSetupView}"
+                            Theme="{StaticResource SectionHeaderButtonTheme}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock Text="Details" FontSize="{StaticResource SmallFontSize}" />
-                                <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" />
+                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="Details" />
+                                <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
                             </StackPanel>
                         </Button>
                     </Grid>
-                    <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding PackageCount,FallbackValue=114514}"
-                                   FontSize="{StaticResource ExtraLargeFontSize}" />
-                        <TextBlock Text="packages" VerticalAlignment="Bottom"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" Margin="4" />
+                    <StackPanel
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock FontSize="{StaticResource ExtraLargeFontSize}"
+                                   Text="{Binding PackageCount, FallbackValue=114514}" />
+                        <TextBlock
+                            Margin="4"
+                            VerticalAlignment="Bottom"
+                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                            Text="packages" />
                     </StackPanel>
                     <husk:Divider Grid.Row="4" />
                     <Grid Grid.Row="6" ColumnDefinitions="Auto,8,*,8,Auto">
-                        <TextBlock Grid.Column="0" Text="Type"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                        <TextBlock Grid.Column="4" Text="{Binding Basic.LoaderLabel,FallbackValue=Type}" />
+                        <TextBlock
+                            Grid.Column="0"
+                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                            Text="Type" />
+                        <TextBlock Grid.Column="4" Text="{Binding Basic.LoaderLabel, FallbackValue=Type}" />
                     </Grid>
                     <Grid Grid.Row="8" ColumnDefinitions="Auto,8,*,8,Auto">
-                        <TextBlock Grid.Column="0" Text="Version"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                        <TextBlock Grid.Column="4" Text="{Binding Basic.Version,FallbackValue=Version}" />
+                        <TextBlock
+                            Grid.Column="0"
+                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                            Text="Version" />
+                        <TextBlock Grid.Column="4" Text="{Binding Basic.Version, FallbackValue=Version}" />
                     </Grid>
                 </Grid>
             </husk:Card>
             <husk:BusyContainer.PendingContent>
                 <StackPanel VerticalAlignment="Center" Spacing="8">
-                    <husk:ProgressRing Width="56" Height="56" IsIndeterminate="True" />
-                    <TextBlock Text="Updating In Progress" HorizontalAlignment="Center" FontWeight="Bold" />
+                    <husk:ProgressRing
+                        Width="56"
+                        Height="56"
+                        IsIndeterminate="True" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        Text="Updating In Progress" />
                 </StackPanel>
             </husk:BusyContainer.PendingContent>
         </husk:BusyContainer>
-        <Grid Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" RowDefinitions="Auto,12,*">
+        <Grid
+            Grid.Row="2"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            RowDefinitions="Auto,12,*">
             <Grid Grid.Row="0" ColumnDefinitions="*,12,Auto">
-                <TextBlock Grid.Column="0" Text="Activities" FontSize="{StaticResource LargeFontSize}"
-                           FontWeight="Bold" />
-                <Button Grid.Column="2" Grid.Row="0" Theme="{StaticResource SectionHeaderButtonTheme}"
-                        Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                        CommandParameter="{x:Type v:InstancePropertyView}">
+                <TextBlock
+                    Grid.Column="0"
+                    FontSize="{StaticResource LargeFontSize}"
+                    FontWeight="Bold"
+                    Text="Activities" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                    CommandParameter="{x:Type v:InstancePropertyView}"
+                    Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text="See More" FontSize="{StaticResource SmallFontSize}" />
-                        <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" />
+                        <TextBlock FontSize="{StaticResource SmallFontSize}" Text="See More" />
+                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
                     </StackPanel>
                 </Button>
             </Grid>
             <husk:Card Grid.Row="2" Background="{DynamicResource Layer0BackgroundBrush}">
                 <Grid RowDefinitions="*,12,Auto">
-                    <Panel Grid.Row="0" Width="122" Height="122">
+                    <Panel
+                        Grid.Row="0"
+                        Width="122"
+                        Height="122">
                         <husk:ProgressRing ShowProgressText="False" Value="37" />
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock TextAlignment="Center">
                                 <Run Text="Total Hours" />
                                 <LineBreak />
-                                <Run Text="12.4" FontSize="{StaticResource ExtraLargeFontSize}" />
+                                <Run FontSize="{StaticResource ExtraLargeFontSize}" Text="12.4" />
                             </TextBlock>
                         </StackPanel>
                     </Panel>
                     <StackPanel Grid.Row="2" Spacing="8">
                         <husk:Card Background="Transparent">
                             <Grid ColumnDefinitions="Auto,4,*,4,Auto">
-                                <fi:SymbolIcon Grid.Column="0" Symbol="HourglassHalf"
-                                               FontSize="{StaticResource MediumFontSize}" />
+                                <fi:SymbolIcon
+                                    Grid.Column="0"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="HourglassHalf" />
                                 <TextBlock Grid.Column="4" Text="54.1 mins" />
                             </Grid>
                         </husk:Card>
                         <husk:Card Background="Transparent">
                             <Grid ColumnDefinitions="Auto,4,*,4,Auto">
-                                <fi:SymbolIcon Grid.Column="0" Symbol="Clock"
-                                               FontSize="{StaticResource MediumFontSize}" />
+                                <fi:SymbolIcon
+                                    Grid.Column="0"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Clock" />
                                 <TextBlock Grid.Column="4" Text="one day ago" />
                             </Grid>
                         </husk:Card>
@@ -171,170 +233,279 @@
                 </Grid>
             </husk:Card>
         </Grid>
-        <Grid Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" RowDefinitions="Auto,12,*">
+        <Grid
+            Grid.Row="2"
+            Grid.Column="2"
+            Grid.ColumnSpan="3"
+            RowDefinitions="Auto,12,*">
             <Grid Grid.Row="0" ColumnDefinitions="*,12,Auto">
-                <TextBlock Grid.Column="0" Text="Widgets" FontSize="{StaticResource LargeFontSize}"
-                           FontWeight="Bold" />
-                <Button Grid.Column="2" Grid.Row="0" Theme="{StaticResource SectionHeaderButtonTheme}"
-                        Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                        CommandParameter="{x:Type v:InstancePropertyView}">
+                <TextBlock
+                    Grid.Column="0"
+                    FontSize="{StaticResource LargeFontSize}"
+                    FontWeight="Bold"
+                    Text="Widgets" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Command="{Binding $parent[v:InstanceView].NavigateCommand}"
+                    CommandParameter="{x:Type v:InstancePropertyView}"
+                    Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text="See More" FontSize="{StaticResource SmallFontSize}" />
-                        <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" />
+                        <TextBlock FontSize="{StaticResource SmallFontSize}" Text="See More" />
+                        <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
                     </StackPanel>
                 </Button>
             </Grid>
-            <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,-12">
-                <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+            <ScrollViewer
+                Grid.Row="2"
+                Margin="0,0,0,-12"
+                HorizontalScrollBarVisibility="Auto">
+                <StackPanel
+                    Margin="0,0,0,12"
+                    Orientation="Horizontal"
+                    Spacing="12">
                     <husk:Card Width="198" Background="{DynamicResource Layer0BackgroundBrush}">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="Working" FontSize="{StaticResource ExtraLargeFontSize}"
-                                       HorizontalAlignment="Center"
-                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                            <TextBlock Text="Never" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                Text="Working" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                Text="Never" />
                         </StackPanel>
                     </husk:Card>
                     <husk:Card Width="198" Background="{DynamicResource Layer0BackgroundBrush}">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="In" FontSize="{StaticResource ExtraLargeFontSize}"
-                                       HorizontalAlignment="Center"
-                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                            <TextBlock Text="Be" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                Text="In" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                Text="Be" />
                         </StackPanel>
                     </husk:Card>
                     <husk:Card Width="198" Background="{DynamicResource Layer0BackgroundBrush}">
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="Progress" FontSize="{StaticResource ExtraLargeFontSize}"
-                                       HorizontalAlignment="Center"
-                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                            <TextBlock Text="Finished" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                Text="Progress" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                Text="Finished" />
                         </StackPanel>
                     </husk:Card>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-        <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,12,*">
-            <TextBlock Grid.Row="0" Text="Launch Pad" FontSize="{StaticResource LargeFontSize}"
-                       FontWeight="Bold" />
-            <husk:Card Grid.Column="0" Grid.Row="2" Padding="0" Background="{DynamicResource Layer0BackgroundBrush}">
-                <husk:SwitchPresenter Value="{Binding State}" TargetType="m:InstanceState">
+        <Grid
+            Grid.Row="4"
+            Grid.Column="2"
+            Grid.ColumnSpan="3"
+            ColumnDefinitions="*,8,Auto"
+            RowDefinitions="Auto,12,*">
+            <TextBlock
+                Grid.Row="0"
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="Bold"
+                Text="Launch Pad" />
+            <husk:Card
+                Grid.Row="2"
+                Grid.Column="0"
+                Padding="0"
+                Background="{DynamicResource Layer0BackgroundBrush}">
+                <husk:SwitchPresenter TargetType="m:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    Spacing="8">
-                            <fi:SymbolIcon Symbol="CheckmarkCircle" IconVariant="Filled"
-                                           FontSize="{StaticResource MediumFontSize}" VerticalAlignment="Center"
-                                           Foreground="{DynamicResource ControlSuccessForegroundBrush}" />
-                            <TextBlock Text="Everything is ready"
-                                       Foreground="{DynamicResource ControlSuccessForegroundBrush}" />
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource MediumFontSize}"
+                                Foreground="{DynamicResource ControlSuccessForegroundBrush}"
+                                IconVariant="Filled"
+                                Symbol="CheckmarkCircle" />
+                            <TextBlock Foreground="{DynamicResource ControlSuccessForegroundBrush}"
+                                       Text="Everything is ready" />
                         </StackPanel>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="Deploying">
                         <Panel Margin="8">
-                            <ProgressBar CornerRadius="{StaticResource MediumCornerRadius}"
-                                         Value="{Binding DeployingProgress,Mode=OneWay}"
-                                         IsIndeterminate="{Binding DeployingPending,Mode=OneWay}">
+                            <ProgressBar
+                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                IsIndeterminate="{Binding DeployingPending, Mode=OneWay}"
+                                Value="{Binding DeployingProgress, Mode=OneWay}">
                                 <ProgressBar.Transitions>
                                     <Transitions>
-                                        <DoubleTransition Property="Value" Easing="SineEaseOut"
-                                                          Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                        <DoubleTransition
+                                            Easing="SineEaseOut"
+                                            Property="Value"
+                                            Duration="{StaticResource ControlNormalAnimationDuration}" />
                                     </Transitions>
                                 </ProgressBar.Transitions>
                             </ProgressBar>
-                            <TextBlock Text="{Binding DeployingMessage,Mode=OneWay}" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding DeployingMessage, Mode=OneWay}" />
                         </Panel>
                     </husk:SwitchCase>
                     <husk:SwitchCase>
-                        <TextBlock Text="0:0:24" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                   FontSize="{StaticResource ExtraLargeFontSize}" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource ExtraLargeFontSize}"
+                            Text="0:0:24" />
                     </husk:SwitchCase>
                 </husk:SwitchPresenter>
             </husk:Card>
-            <husk:Card Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Padding="0"
-                       Background="{DynamicResource Layer0BackgroundBrush}">
-                <husk:SwitchPresenter Value="{Binding State}" TargetType="m:InstanceState">
+            <husk:Card
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Padding="0"
+                Background="{DynamicResource Layer0BackgroundBrush}">
+                <husk:SwitchPresenter TargetType="m:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
                         <Grid ColumnDefinitions="Auto,0,Auto">
-                            <Button Grid.Column="0" Margin="8"
-                                    Theme="{StaticResource LaunchButtonTheme}"
-                                    Command="{Binding PlayCommand}"
-                                    Background="{DynamicResource ControlAccentBackgroundBrush}"
-                                    BorderBrush="{DynamicResource ControlTranslucentAccentBackgroundBrush}"
-                                    IsEnabled="{Binding State,Converter={x:Static huskc:ObjectConverters.Match},ConverterParameter=Idle}">
+                            <Button
+                                Grid.Column="0"
+                                Margin="8"
+                                Background="{DynamicResource ControlAccentBackgroundBrush}"
+                                BorderBrush="{DynamicResource ControlTranslucentAccentBackgroundBrush}"
+                                Command="{Binding PlayCommand}"
+                                IsEnabled="{Binding State, Converter={x:Static huskc:ObjectConverters.Match}, ConverterParameter=Idle}"
+                                Theme="{StaticResource LaunchButtonTheme}">
                                 <StackPanel VerticalAlignment="Center" Spacing="6">
-                                    <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" />
-                                    <TextBlock Text="LAUNCH" HorizontalAlignment="Center" />
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        FontSize="20"
+                                        Symbol="Rocket" />
+                                    <TextBlock HorizontalAlignment="Center" Text="LAUNCH" />
                                 </StackPanel>
                             </Button>
                             <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
-                                <Border Grid.Row="0" Background="{DynamicResource ControlBackgroundBrush}"
-                                        CornerRadius="0,0,6,6" Margin="0,0,8,0" HorizontalAlignment="Center">
-                                    <TextBlock Text="Managed" Margin="12,6" />
+                                <Border
+                                    Grid.Row="0"
+                                    Margin="0,0,8,0"
+                                    HorizontalAlignment="Center"
+                                    Background="{DynamicResource ControlBackgroundBrush}"
+                                    CornerRadius="0,0,6,6">
+                                    <TextBlock Margin="12,6" Text="Managed" />
                                 </Border>
-                                <Button Grid.Row="2" Theme="{StaticResource GhostButtonTheme}"
-                                        Command="{Binding SwitchAccountCommand}"
-                                        Padding="12,6" Margin="0,8,8,8"
-                                        BorderBrush="{DynamicResource ControlBorderBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Button
+                                    Grid.Row="2"
+                                    Margin="0,8,8,8"
+                                    Padding="12,6"
+                                    BorderBrush="{DynamicResource ControlBorderBrush}"
+                                    BorderThickness="1"
+                                    Command="{Binding SwitchAccountCommand}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}"
+                                    Theme="{StaticResource GhostButtonTheme}">
                                     <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
-                                        <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="36" Width="36">
+                                        <Border
+                                            Grid.Row="0"
+                                            Grid.RowSpan="3"
+                                            Grid.Column="0"
+                                            Width="36"
+                                            Height="36">
                                             <Border.Background>
                                                 <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png"
                                                             Stretch="Fill" />
                                             </Border.Background>
                                         </Border>
-                                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Steve" FontWeight="Bold"
-                                                   FontSize="{StaticResource LargeFontSize}" />
-                                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Microsoft"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="2"
+                                            FontSize="{StaticResource LargeFontSize}"
+                                            FontWeight="Bold"
+                                            Text="Steve" />
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="2"
+                                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                            Text="Microsoft" />
                                     </Grid>
                                 </Button>
                             </Grid>
                         </Grid>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="Deploying">
-                        <Button Margin="8"
-                                Theme="{StaticResource LaunchButtonTheme}"
-                                Command="{Binding AbortCommand}">
+                        <Button
+                            Margin="8"
+                            Command="{Binding AbortCommand}"
+                            Theme="{StaticResource LaunchButtonTheme}">
                             <StackPanel VerticalAlignment="Center" Spacing="6">
-                                <fi:SymbolIcon Symbol="Stop" HorizontalAlignment="Center" FontSize="20" />
-                                <TextBlock Text="ABORT" HorizontalAlignment="Center" />
+                                <fi:SymbolIcon
+                                    HorizontalAlignment="Center"
+                                    FontSize="20"
+                                    Symbol="Stop" />
+                                <TextBlock HorizontalAlignment="Center" Text="ABORT" />
                             </StackPanel>
                         </Button>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="Running">
                         <Grid ColumnDefinitions="Auto,0,Auto">
-                            <Button Grid.Column="0" Margin="8"
-                                    Theme="{StaticResource LaunchButtonTheme}"
-                                    Command="{Binding StopCommand}"
-                                    Background="{DynamicResource ControlDangerBackgroundBrush}"
-                                    BorderBrush="{DynamicResource ControlTranslucentDangerBackgroundBrush}">
+                            <Button
+                                Grid.Column="0"
+                                Margin="8"
+                                Background="{DynamicResource ControlDangerBackgroundBrush}"
+                                BorderBrush="{DynamicResource ControlTranslucentDangerBackgroundBrush}"
+                                Command="{Binding StopCommand}"
+                                Theme="{StaticResource LaunchButtonTheme}">
                                 <StackPanel VerticalAlignment="Center" Spacing="6">
-                                    <fi:SymbolIcon Symbol="Rocket" HorizontalAlignment="Center" FontSize="20" />
-                                    <TextBlock Text="STOP" HorizontalAlignment="Center" />
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        FontSize="20"
+                                        Symbol="Rocket" />
+                                    <TextBlock HorizontalAlignment="Center" Text="STOP" />
                                 </StackPanel>
                             </Button>
                             <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
-                                <Button Grid.Row="0" Margin="0,8,8,0" Classes="Small">
+                                <Button
+                                    Grid.Row="0"
+                                    Margin="0,8,8,0"
+                                    Classes="Small">
                                     <TextBlock Text="Eject" />
                                 </Button>
-                                <Button Grid.Row="2" Theme="{StaticResource GhostButtonTheme}"
-                                        Command="{Binding OpenDashboardCommand}"
-                                        Padding="12,6" Margin="0,8,8,8"
-                                        BorderBrush="{DynamicResource ControlBorderBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Button
+                                    Grid.Row="2"
+                                    Margin="0,8,8,8"
+                                    Padding="12,6"
+                                    BorderBrush="{DynamicResource ControlBorderBrush}"
+                                    BorderThickness="1"
+                                    Command="{Binding OpenDashboardCommand}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}"
+                                    Theme="{StaticResource GhostButtonTheme}">
                                     <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
-                                        <icons:PackIconLucide Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Kind="Logs"
-                                                              Height="26"
-                                                              Width="26" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Logs" FontWeight="Bold" />
-                                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Dashboard"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        <icons:PackIconLucide
+                                            Grid.Row="0"
+                                            Grid.RowSpan="3"
+                                            Grid.Column="0"
+                                            Width="26"
+                                            Height="26"
+                                            VerticalAlignment="Center"
+                                            Kind="Logs" />
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="2"
+                                            FontWeight="Bold"
+                                            Text="Logs" />
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="2"
+                                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                            Text="Dashboard" />
                                     </Grid>
                                 </Button>
                             </Grid>

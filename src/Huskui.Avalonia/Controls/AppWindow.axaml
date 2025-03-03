@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:huskt="https://github.com/d3ara1n/Huskui.Avalonia/Transitions">
+    xmlns:huskt="https://github.com/d3ara1n/Huskui.Avalonia/Transitions"
+    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
 
     <ControlTheme x:Key="{x:Type local:AppWindow}" TargetType="local:AppWindow">
         <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
@@ -19,12 +19,14 @@
                     <Border Background="{TemplateBinding Background}" IsHitTestVisible="False">
                         <Border.Transitions>
                             <Transitions>
-                                <BrushTransition Property="Background"
-                                                 Duration="{StaticResource ControlNormalAnimationDuration}"
-                                                 Easing="CubicEaseOut" />
-                                <BrushTransition Property="BorderBrush"
-                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
-                                                 Easing="SineEaseOut" />
+                                <BrushTransition
+                                    Easing="CubicEaseOut"
+                                    Property="Background"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="BorderBrush"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -51,23 +53,28 @@
                             </ContentPresenter>
 
                             <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" Padding="48,64,48,0" />
-                            <local:OverlayHost Name="{x:Static local:AppWindow.PART_ModalHost}"
-                                               HorizontalContentAlignment="Center"
-                                               VerticalContentAlignment="Center">
+                            <local:OverlayHost
+                                Name="{x:Static local:AppWindow.PART_ModalHost}"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
                                 <local:OverlayHost.Transition>
                                     <huskt:HookUpTransition />
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
-                            <local:OverlayHost Name="{x:Static local:AppWindow.PART_DialogHost}"
-                                               HorizontalContentAlignment="Center"
-                                               VerticalContentAlignment="Center">
+                            <local:OverlayHost
+                                Name="{x:Static local:AppWindow.PART_DialogHost}"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
                                 <local:OverlayHost.Transition>
                                     <huskt:HookUpTransition />
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
-                            <local:NotificationHost Name="PART_NotificationHost" HorizontalContentAlignment="Right"
-                                                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                                                    Margin="18,12">
+                            <local:NotificationHost
+                                Name="PART_NotificationHost"
+                                Margin="18,12"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                HorizontalContentAlignment="Right">
                                 <local:NotificationHost.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Spacing="2" />

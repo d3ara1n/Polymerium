@@ -1,26 +1,52 @@
-﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Grid ColumnDefinitions="160,160" Background="White">
-            <StackPanel Grid.Column="0" Spacing="20" Margin="20">
+        <Grid Background="White" ColumnDefinitions="160,160">
+            <StackPanel
+                Grid.Column="0"
+                Margin="20"
+                Spacing="20">
                 <TextBlock Text="Buttons" />
                 <Button Content="Normal" />
-                <Button Content="Normal Primary" Classes="Primary" />
+                <Button Classes="Primary" Content="Normal Primary" />
                 <Button Content="Outline" Theme="{StaticResource OutlineButtonTheme}" />
-                <Button Content="Outline Danger" Classes="Danger" Theme="{StaticResource OutlineButtonTheme}" />
+                <Button
+                    Classes="Danger"
+                    Content="Outline Danger"
+                    Theme="{StaticResource OutlineButtonTheme}" />
                 <Button Content="Ghost" Theme="{StaticResource GhostButtonTheme}" />
-                <Button Content="Ghost Success" Classes="Success" Theme="{StaticResource GhostButtonTheme}" />
+                <Button
+                    Classes="Success"
+                    Content="Ghost Success"
+                    Theme="{StaticResource GhostButtonTheme}" />
             </StackPanel>
-            <StackPanel Grid.Column="1" Spacing="20" Margin="20">
+            <StackPanel
+                Grid.Column="1"
+                Margin="20"
+                Spacing="20">
                 <TextBlock Text="Disabled" />
                 <Button Content="Normal" IsEnabled="False" />
-                <Button Content="Normal Primary" Classes="Primary" IsEnabled="False" />
-                <Button Content="Outline" Theme="{StaticResource OutlineButtonTheme}" IsEnabled="False" />
-                <Button Content="Outline Danger" Classes="Danger" Theme="{StaticResource OutlineButtonTheme}"
-                        IsEnabled="False" />
-                <Button Content="Ghost" Theme="{StaticResource GhostButtonTheme}" IsEnabled="False" />
-                <Button Content="Ghost Success" Classes="Success" Theme="{StaticResource GhostButtonTheme}"
-                        IsEnabled="False" />
+                <Button
+                    Classes="Primary"
+                    Content="Normal Primary"
+                    IsEnabled="False" />
+                <Button
+                    Content="Outline"
+                    IsEnabled="False"
+                    Theme="{StaticResource OutlineButtonTheme}" />
+                <Button
+                    Classes="Danger"
+                    Content="Outline Danger"
+                    IsEnabled="False"
+                    Theme="{StaticResource OutlineButtonTheme}" />
+                <Button
+                    Content="Ghost"
+                    IsEnabled="False"
+                    Theme="{StaticResource GhostButtonTheme}" />
+                <Button
+                    Classes="Success"
+                    Content="Ghost Success"
+                    IsEnabled="False"
+                    Theme="{StaticResource GhostButtonTheme}" />
             </StackPanel>
         </Grid>
     </Design.PreviewWith>
@@ -40,21 +66,27 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
-                    <Border x:Name="Border" Background="{TemplateBinding Background}"
-                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                            CornerRadius="{TemplateBinding CornerRadius}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border
+                        x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
-                                <BrushTransition Property="Background"
-                                                 Duration="{StaticResource ControlNormalAnimationDuration}"
-                                                 Easing="SineEaseOut" />
-                                <BrushTransition Property="BorderBrush"
-                                                 Duration="{StaticResource ControlNormalAnimationDuration}"
-                                                 Easing="SineEaseOut" />
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="Background"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="BorderBrush"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                <DoubleTransition
+                                    Easing="SineEaseOut"
+                                    Property="Opacity"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -62,9 +94,9 @@
                     <ContentPresenter
                         Name="PART_ContentPresenter"
                         Padding="{TemplateBinding Padding}"
-                        Background="{DynamicResource TransparentBrush}"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Background="{DynamicResource TransparentBrush}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         Content="{TemplateBinding Content}"
                         ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -75,22 +107,32 @@
                         UseLayoutRounding="False">
                         <ContentPresenter.Transitions>
                             <Transitions>
-                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <DoubleTransition
+                                    Easing="SineEaseOut"
+                                    Property="Opacity"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </ContentPresenter.Transitions>
                     </ContentPresenter>
-                    <Border x:Name="Indicator" Background="{DynamicResource TransparentBrush}"
-                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                            CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border
+                        x:Name="Indicator"
+                        Background="{DynamicResource TransparentBrush}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
-                                <BrushTransition Property="Background" Easing="SineEaseOut"
-                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                <ThicknessTransition Property="BorderThickness" Easing="SineEaseOut"
-                                                     Duration="{StaticResource ControlNormalAnimationDuration}" />
-                                <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseInOut"
-                                                               Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="Background"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <ThicknessTransition
+                                    Easing="SineEaseOut"
+                                    Property="BorderThickness"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                <TransformOperationsTransition
+                                    Easing="SineEaseInOut"
+                                    Property="RenderTransform"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
@@ -119,7 +161,10 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type Button}" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
+    <ControlTheme
+        x:Key="{x:Type Button}"
+        BasedOn="{StaticResource BaseButtonTheme}"
+        TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
 
         <Style Selector="^.Primary">
@@ -142,7 +187,10 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="OutlineButtonTheme" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
+    <ControlTheme
+        x:Key="OutlineButtonTheme"
+        BasedOn="{StaticResource BaseButtonTheme}"
+        TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
@@ -168,7 +216,10 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="GhostButtonTheme" TargetType="Button" BasedOn="{StaticResource BaseButtonTheme}">
+    <ControlTheme
+        x:Key="GhostButtonTheme"
+        BasedOn="{StaticResource BaseButtonTheme}"
+        TargetType="Button">
         <Style Selector="^ /template/ Border#Indicator">
             <Setter Property="RenderTransform" Value="scale(0.98)" />
         </Style>

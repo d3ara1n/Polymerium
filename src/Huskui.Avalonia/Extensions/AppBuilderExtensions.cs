@@ -19,10 +19,10 @@ public static class AppBuilderExtensions
                                                                              Uri("avares://Huskui.Avalonia/Assets/Fonts/MaoKenWangXingYuan")));
             })
            .With(new FontManagerOptions
-           {
-               DefaultFamilyName = "fonts:Quicksand#Quicksand",
-               FontFallbacks = [new FontFallback { FontFamily = "fonts:MaoKenWangXingYuan#猫啃忘形圆" }]
-           });
+            {
+                DefaultFamilyName = "fonts:Quicksand#Quicksand",
+                FontFallbacks = [new FontFallback { FontFamily = "fonts:MaoKenWangXingYuan#猫啃忘形圆" }]
+            });
 
         return appBuilder;
     }

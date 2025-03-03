@@ -22,7 +22,7 @@ public partial class InstanceBasicModel : ModelBase
         UpdateIcon();
     }
 
-    #region Direct Properties
+    #region Direct
 
     public string Key { get; }
 
@@ -34,7 +34,7 @@ public partial class InstanceBasicModel : ModelBase
         Thumbnail = iconPath is not null ? new Bitmap(iconPath) : AssetUriIndex.DIRT_IMAGE_BITMAP;
     }
 
-    #region Reactive Properties
+    #region Reactive
 
     [ObservableProperty]
     private string _name;

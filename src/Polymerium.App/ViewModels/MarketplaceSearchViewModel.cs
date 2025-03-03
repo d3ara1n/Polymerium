@@ -1,4 +1,12 @@
-﻿using Avalonia.Media.Imaging;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,27 +19,18 @@ using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Refit;
 using Semver;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class ExhibitionSearchViewModel : ViewModelBase
+public partial class MarketplaceSearchViewModel : ViewModelBase
 {
     [ObservableProperty]
     private string _queryText = string.Empty;
 
-    public ExhibitionSearchViewModel(
+    public MarketplaceSearchViewModel(
         ViewBag bag,
         RepositoryAgent agent,
         IHttpClientFactory factory,
@@ -182,22 +181,22 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
                     var rv = await handle.FetchAsync();
                     var tasks = rv
                                .Select(x => new ExhibitModel(x.Label,
-                                                                   x.Namespace,
-                                                                   x.Pid,
-                                                                   x.Name,
-                                                                   x.Summary,
-                                                                   x.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
-                                                                   x.Author,
-                                                                   x.Tags,
-                                                                   x.UpdatedAt,
-                                                                   x.DownloadCount,
-                                                                   x.Reference))
+                                                             x.Namespace,
+                                                             x.Pid,
+                                                             x.Name,
+                                                             x.Summary,
+                                                             x.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                             x.Author,
+                                                             x.Tags,
+                                                             x.UpdatedAt,
+                                                             x.DownloadCount,
+                                                             x.Reference))
                                .ToArray();
                     return tasks;
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage(ex.Message, "Network unreachable", level: NotificationLevel.Warning);
+                    _notificationService.PopMessage(ex.Message, "Network unreachable", NotificationLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 

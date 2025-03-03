@@ -1,10 +1,10 @@
-﻿using Avalonia.Animation;
+﻿using System;
+using System.Threading.Tasks;
+using Avalonia.Animation;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
-using System;
-using System.Threading.Tasks;
 
 namespace Polymerium.App.Services;
 
@@ -62,10 +62,7 @@ public class NotificationService
         {
             NotificationItem? item = new()
             {
-                Content = message,
-                Title = title,
-                Level = level,
-                IsProgressBarVisible = true
+                Content = message, Title = title, Level = level, IsProgressBarVisible = true
             };
             // TODO: return IProgressReporter
             Pop(item);

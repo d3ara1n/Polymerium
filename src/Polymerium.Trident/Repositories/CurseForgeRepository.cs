@@ -1,6 +1,6 @@
-﻿using Polymerium.Trident.Services;
+﻿using System.Net;
+using Polymerium.Trident.Services;
 using Refit;
-using System.Net;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;

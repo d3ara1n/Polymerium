@@ -1,4 +1,9 @@
-﻿using Avalonia.Media.Imaging;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,11 +16,6 @@ using Polymerium.App.Views;
 using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;

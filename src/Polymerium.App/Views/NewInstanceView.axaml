@@ -1,97 +1,210 @@
-﻿<controls:ScopedPage xmlns="https://github.com/avaloniaui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                     xmlns:controls="using:Polymerium.App.Controls"
-                     xmlns:vm="using:Polymerium.App.ViewModels"
-                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                     x:Class="Polymerium.App.Views.NewInstanceView" x:DataType="vm:NewInstanceViewModel">
-    <controls:ScopedPage.Header>
-        <DockPanel>
-            <Button DockPanel.Dock="Right" Classes="Primary" Content="Create" Command="{Binding CreateCommand}" />
-            <TextBlock Text="Create Empty Instance" Theme="{StaticResource PageHeaderTextBlockTheme}" />
-        </DockPanel>
-    </controls:ScopedPage.Header>
-    <Grid ColumnDefinitions="Auto,32,*" Margin="32">
-        <Grid Grid.Column="0" Margin="24">
-            <husk:DropZone Width="108" Height="108" BorderBrush="{x:Null}" Padding="8"
-                           Background="{DynamicResource Layer0BackgroundBrush}"
-                           Model="{Binding Thumbnail,Mode=OneWayToSource}"
-                           CornerRadius="{StaticResource MediumCornerRadius}" DragOver="DropZone_OnDragOver"
-                           Drop="DropZone_OnDrop">
-                <husk:DropZone.Effect>
-                    <DropShadowEffect Opacity="0.1" />
-                </husk:DropZone.Effect>
-                <Panel>
-                    <Border Name="ThumbnailBox" />
-                    <Panel Name="DropPanel" IsHitTestVisible="False">
-                        <Panel.Transitions>
-                            <Transitions>
-                                <DoubleTransition Property="Opacity"
-                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            </Transitions>
-                        </Panel.Transitions>
-                        <Rectangle Stroke="{DynamicResource ControlSecondaryForegroundBrush}" StrokeThickness="3"
-                                   StrokeDashArray="4,2" RadiusX="3" RadiusY="3" />
+﻿<controls:ScopedPage
+    x:Class="Polymerium.App.Views.NewInstanceView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Polymerium.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Polymerium.App.ViewModels"
+    Padding="0"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    x:DataType="vm:NewInstanceViewModel"
+    IsHeaderVisible="False"
+    mc:Ignorable="d">
+    <Grid ColumnDefinitions="Auto,*">
+        <Border
+            Grid.Column="0"
+            Width="320"
+            Margin="8"
+            CornerRadius="{StaticResource MediumCornerRadius}">
+            <Border.Background>
+                <ImageBrush Source="/Assets/Images/Wallpaper.png" Stretch="UniformToFill" Opacity="0.9" />
+            </Border.Background>
+        </Border>
+        <Grid Grid.Column="1" RowDefinitions="Auto,0,*" MinWidth="328">
+            <Grid Grid.Row="0" Margin="12" ColumnDefinitions="Auto,12,*,12,Auto">
+                <Button Grid.Column="0" Command="{Binding $parent[husk:Frame].GoBackCommand}">
+                    <fi:SymbolIcon
+                        Width="12"
+                        Height="12"
+                        FontSize="12"
+                        Symbol="ArrowLeft" />
+                </Button>
+                <TextBlock
+                    Grid.Column="2"
+                    Text="Create an instance"
+                    Theme="{StaticResource PageHeaderTextBlockTheme}" />
+            </Grid>
+            <StackPanel
+                Grid.Row="2"
+                Margin="24"
+                VerticalAlignment="Center"
+                Spacing="12">
+                <Grid ColumnDefinitions="Auto,12,*">
+                    <husk:DropZone
+                        Width="108"
+                        Height="108"
+                        Padding="8"
+                        Background="{DynamicResource Layer0BackgroundBrush}"
+                        BorderBrush="{x:Null}"
+                        CornerRadius="{StaticResource MediumCornerRadius}"
+                        DragOver="DropZone_OnDragOver"
+                        Drop="DropZone_OnDrop"
+                        Model="{Binding Thumbnail, Mode=OneWayToSource}">
+                        <husk:DropZone.Effect>
+                            <DropShadowEffect Opacity="0.1" />
+                        </husk:DropZone.Effect>
+                        <Panel>
+                            <Border Name="ThumbnailBox" />
+                            <Panel Name="DropPanel" IsHitTestVisible="False">
+                                <Panel.Transitions>
+                                    <Transitions>
+                                        <DoubleTransition Property="Opacity"
+                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    </Transitions>
+                                </Panel.Transitions>
+                                <Rectangle
+                                    RadiusX="3"
+                                    RadiusY="3"
+                                    Stroke="{DynamicResource ControlSecondaryForegroundBrush}"
+                                    StrokeDashArray="4,2"
+                                    StrokeThickness="3" />
 
-                        <icons:PackIconLucide Name="Icon" Kind="Image" Margin="24"
-                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                    </Panel>
-                </Panel>
-                <husk:DropZone.Styles>
-                    <Style Selector=":not(:dragover) Panel#DropPanel">
-                        <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
-                    </Style>
-                    <Style Selector=":dragover Panel#DropPanel">
-                        <Setter Property="Opacity" Value="1" />
-                    </Style>
-                    <Style Selector=":drop Border#ThumbnailBox">
-                        <Setter Property="Background">
-                            <ImageBrush Source="{Binding Thumbnail}" />
-                        </Setter>
-                    </Style>
-                    <Style Selector=":drop icons|PackIconLucide#Icon">
-                        <Setter Property="IsVisible" Value="False" />
-                    </Style>
-                </husk:DropZone.Styles>
-            </husk:DropZone>
-        </Grid>
-        <StackPanel Grid.Column="2" VerticalAlignment="Center" MinWidth="164">
-            <TextBlock Text="Name" />
-            <TextBox Watermark="{Binding VersionName}" Text="{Binding DisplayName,Mode=TwoWay}">
-                <TextBox.InnerLeftContent>
-                    <StackPanel Orientation="Horizontal">
-                        <icons:PackIconLucide Margin="10,0"
-                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                              Kind="Tag" Height="{StaticResource MediumFontSize}"
-                                              VerticalAlignment="Center" />
-                        <husk:Divider Orientation="Vertical" />
-                    </StackPanel>
-                </TextBox.InnerLeftContent>
-            </TextBox>
-            <TextBlock Text="Version" />
-            <husk:SkeletonContainer IsLoading="{Binding IsVersionLoaded,Converter={x:Static BoolConverters.Not}}"
-                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                <TextBox Text="{Binding VersionName,Mode=TwoWay}">
-                    <TextBox.InnerLeftContent>
-                        <StackPanel Orientation="Horizontal">
-                            <icons:PackIconLucide Margin="10,0"
-                                                  Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                                  Kind="Compass" Height="{StaticResource MediumFontSize}"
-                                                  VerticalAlignment="Center" />
-                            <husk:Divider Orientation="Vertical" />
+                                <icons:PackIconLucide
+                                    Name="Icon"
+                                    Margin="24"
+                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                    Kind="Image" />
+                            </Panel>
+                        </Panel>
+                        <husk:DropZone.Styles>
+                            <Style Selector=":not(:dragover) Panel#DropPanel">
+                                <Setter Property="Opacity" Value="{StaticResource Overlay1Opacity}" />
+                            </Style>
+                            <Style Selector=":dragover Panel#DropPanel">
+                                <Setter Property="Opacity" Value="1" />
+                            </Style>
+                            <Style Selector=":drop Border#ThumbnailBox">
+                                <Setter Property="Background">
+                                    <ImageBrush Source="{Binding Thumbnail}" />
+                                </Setter>
+                            </Style>
+                            <Style Selector=":drop icons|PackIconLucide#Icon">
+                                <Setter Property="IsVisible" Value="False" />
+                            </Style>
+                        </husk:DropZone.Styles>
+                    </husk:DropZone>
+                    <StackPanel
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Spacing="12">
+                        <StackPanel>
+                            <TextBlock Text="Name" />
+                            <TextBox Text="{Binding DisplayName, Mode=TwoWay}" Watermark="{Binding VersionName}">
+                                <TextBox.InnerLeftContent>
+                                    <StackPanel Orientation="Horizontal">
+                                        <icons:PackIconLucide
+                                            Height="{StaticResource MediumFontSize}"
+                                            Margin="10,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                            Kind="Tag" />
+                                        <husk:Divider Orientation="Vertical" />
+                                    </StackPanel>
+                                </TextBox.InnerLeftContent>
+                            </TextBox>
                         </StackPanel>
-                    </TextBox.InnerLeftContent>
-                    <TextBox.InnerRightContent>
-                        <Button Margin="4" Command="{Binding PickVersionCommand}">
-                            <icons:PackIconLucide Kind="List" Height="{StaticResource MediumFontSize}" />
-                        </Button>
-                    </TextBox.InnerRightContent>
-                </TextBox>
-            </husk:SkeletonContainer>
-        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Version" />
+                            <husk:SkeletonContainer CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
+                                <TextBox Text="{Binding VersionName, Mode=TwoWay}">
+                                    <TextBox.InnerLeftContent>
+                                        <StackPanel Orientation="Horizontal">
+                                            <icons:PackIconLucide
+                                                Height="{StaticResource MediumFontSize}"
+                                                Margin="10,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                Kind="Compass" />
+                                            <husk:Divider Orientation="Vertical" />
+                                        </StackPanel>
+                                    </TextBox.InnerLeftContent>
+                                    <TextBox.InnerRightContent>
+                                        <Button Margin="4" Command="{Binding PickVersionCommand}">
+                                            <icons:PackIconLucide Height="{StaticResource MediumFontSize}" Kind="List" />
+                                        </Button>
+                                    </TextBox.InnerRightContent>
+                                </TextBox>
+                            </husk:SkeletonContainer>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <Grid ColumnDefinitions="*,12,*" RowDefinitions="Auto,0,Auto">
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Text="Mod Loader" />
+                    <ComboBox Grid.Row="2" Grid.Column="0" SelectedIndex="0">
+                        <ComboBoxItem Content="None" />
+                    </ComboBox>
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Watermark="Version">
+                        <TextBox.InnerRightContent>
+                            <Button Margin="4" Command="{Binding PickVersionCommand}">
+                                <icons:PackIconLucide Height="{StaticResource MediumFontSize}" Kind="List" />
+                            </Button>
+                        </TextBox.InnerRightContent>
+                    </TextBox>
+                </Grid>
+                <Button
+                    Height="42" Command="{Binding CreateCommand}"
+                    Classes="Primary">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <icons:PackIconLucide
+                            Width="18"
+                            Height="18"
+                            Kind="PackagePlus" />
+                        <TextBlock Text="Create instance" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <husk:Divider Content="Or create from" />
+                <Grid ColumnDefinitions="*,12,*">
+                    <Button
+                        Grid.Column="0"
+                        Height="42"
+                        Theme="{StaticResource OutlineButtonTheme}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <icons:PackIconLucide
+                                Width="18"
+                                Height="18"
+                                Kind="Import" />
+                            <TextBlock Text="Import" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Grid.Column="2"
+                        Height="42"
+                        Theme="{StaticResource OutlineButtonTheme}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <icons:PackIconLucide
+                                Width="18"
+                                Height="18"
+                                Kind="Store" />
+                            <TextBlock Text="Marketplace" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </controls:ScopedPage>

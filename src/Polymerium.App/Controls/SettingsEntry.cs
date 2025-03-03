@@ -9,23 +9,23 @@ public class SettingsEntry : ItemsControl
     public static readonly StyledProperty<Symbol> IconProperty =
         AvaloniaProperty.Register<SettingsEntry, Symbol>(nameof(Icon));
 
+    public static readonly StyledProperty<string> TitleProperty =
+        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Title));
+
+    public static readonly StyledProperty<string> SummaryProperty =
+        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Summary));
+
     public Symbol Icon
     {
         get => GetValue(IconProperty);
         set => SetValue(IconProperty, value);
     }
 
-    public static readonly StyledProperty<string> TitleProperty =
-        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Title));
-
     public string Title
     {
         get => GetValue(TitleProperty);
         set => SetValue(TitleProperty, value);
     }
-
-    public static readonly StyledProperty<string> SummaryProperty =
-        AvaloniaProperty.Register<SettingsEntry, string>(nameof(Summary));
 
     public string Summary
     {

@@ -23,13 +23,13 @@ public class FocusOnTransition : PageTransitionBase
             _ => throw new ArgumentOutOfRangeException()
         };
         var translateFrom = Direction switch
-        {
-            DirectionFrom.Left => -parent.Bounds.Width,
-            DirectionFrom.Right => parent.Bounds.Width,
-            DirectionFrom.Top => -parent.Bounds.Height,
-            DirectionFrom.Bottom => parent.Bounds.Height,
-            _ => throw new ArgumentOutOfRangeException()
-        }
+                            {
+                                DirectionFrom.Left => -parent.Bounds.Width,
+                                DirectionFrom.Right => parent.Bounds.Width,
+                                DirectionFrom.Top => -parent.Bounds.Height,
+                                DirectionFrom.Bottom => parent.Bounds.Height,
+                                _ => throw new ArgumentOutOfRangeException()
+                            }
                           / 4;
 
         from.Animation().AddFrame(0d, [(Visual.OpacityProperty, 1d)]).AddFrame(1d, [(Visual.OpacityProperty, 0d)]);
