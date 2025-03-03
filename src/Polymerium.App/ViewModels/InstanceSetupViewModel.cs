@@ -96,7 +96,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                             var b = await c.GetByteArrayAsync(p.Thumbnail,
                                                               _cancellationTokenSource?.Token
                                                            ?? CancellationToken.None);
-                            model.Thumbnail = new Bitmap(new MemoryStream(b));
+                            model.Thumbnail = Bitmap.DecodeToWidth(new MemoryStream(b), 64);
                         }
                         else
                         {
@@ -142,7 +142,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                 {
                     using var client = _clientFactory.CreateClient();
                     var bytes = await client.GetByteArrayAsync(package.Thumbnail, token);
-                    thumbnail = new Bitmap(new MemoryStream(bytes));
+                    thumbnail = Bitmap.DecodeToWidth(new MemoryStream(bytes), 64);
                 }
                 else
                 {
