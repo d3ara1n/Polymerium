@@ -18,7 +18,10 @@ public class AvaloniaLifetime : IHostLifetime
 
         if (OperatingSystem.IsWindows())
         {
-            _thread = new Thread(Serve);
+            _thread = new Thread(Serve)
+            {
+                Name = "Avalonia Lifetime",
+            };
             _thread.SetApartmentState(ApartmentState.STA);
         }
         else

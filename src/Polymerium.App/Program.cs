@@ -1,4 +1,6 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
+using Avalonia.Controls;
 using FluentIcons.Avalonia;
 using Huskui.Avalonia.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -10,12 +12,12 @@ internal static class Program
     // // Initialization code. Don't use any Avalonia, third-party APIs or any
     // // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
     // // yet and stuff might break.
-    // [STAThread]
-    // public static void Main(string[] args)
-    // {
-    //     BuildAvaloniaApp()
-    //         .StartWithClassicDesktopLifetime(args);
-    // }
+    //[STAThread]
+    //public static void Main(string[] args)
+    //{
+    //    BuildAvaloniaApp()
+    //        .StartWithClassicDesktopLifetime(args);
+    //}
 
     internal static IHost? AppHost { get; private set; }
 
