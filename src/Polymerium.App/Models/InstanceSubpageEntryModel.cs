@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Facilities;
-using System;
 
 namespace Polymerium.App.Models;
 

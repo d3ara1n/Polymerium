@@ -65,8 +65,7 @@ public class Page : HeaderedContentControl
                 SetState(true);
                 try
                 {
-                    await Task
-                    .Run(async () =>
+                    await Task.Run(async () =>
                     {
                         await Model.InitializeAsync(_cancellationTokenSource.Token);
                     });

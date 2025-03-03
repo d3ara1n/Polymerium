@@ -1,8 +1,8 @@
-﻿using Avalonia.Media.Imaging;
+﻿using System;
+using System.Collections.Generic;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using System;
-using System.Collections.Generic;
 
 namespace Polymerium.App.Models;
 

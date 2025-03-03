@@ -75,6 +75,7 @@
                         </Border>
                         <Popup Name="PART_Popup"
                                MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                               MinHeight="12"
                                MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                IsLightDismissEnabled="True"
                                IsOpen="{TemplateBinding IsDropDownOpen,Mode=TwoWay}"

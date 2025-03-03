@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using System.Collections.Generic;
 
 namespace Polymerium.App.Models;
 

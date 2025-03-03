@@ -1,4 +1,6 @@
-﻿using Avalonia;
+﻿using System;
+using System.Windows.Input;
+using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -7,8 +9,6 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Transitions;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
-using System;
-using System.Windows.Input;
 
 namespace Polymerium.App.Views;
 

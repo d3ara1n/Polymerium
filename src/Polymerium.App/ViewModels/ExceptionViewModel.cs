@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
-using System;
 
 namespace Polymerium.App.ViewModels;
 

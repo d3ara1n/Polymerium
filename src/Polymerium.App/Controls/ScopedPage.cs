@@ -1,6 +1,6 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Huskui.Avalonia.Controls;
-using System;
 
 namespace Polymerium.App.Controls;
 
