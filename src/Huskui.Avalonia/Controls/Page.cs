@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Interactivity;
-using Avalonia.Threading;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -57,35 +55,27 @@ public class Page : HeaderedContentControl
 
     protected override Type StyleKeyOverride => typeof(Page);
 
-    protected override void OnLoaded(RoutedEventArgs e)
+    // ReSharper disable once AsyncVoidMethod
+    protected override async void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
         if (!Design.IsDesignMode)
             if (Model is not null)
             {
                 SetState(true);
-                Task
-                   .Run(async () =>
-                        {
-                            await Model.InitializeAsync(_cancellationTokenSource.Token);
-                        },
-                        _cancellationTokenSource.Token)
-                   .ContinueWith(t =>
+                try
+                {
+                    await Task
+                    .Run(async () =>
                     {
-                        Debug.WriteLine("Navigate to page {0} with [Faulted, Cancelled] = [{1}, {2}]",
-                                        GetType(),
-                                        t.IsFaulted,
-                                        t.IsCanceled);
-                        if (!_cancellationTokenSource.IsCancellationRequested)
-                        {
-                            if (t.IsCompletedSuccessfully)
-                                Dispatcher.UIThread.Post(() => SetState(false, true));
-                            else if (t.IsCanceled)
-                                Dispatcher.UIThread.Post(() => SetState(false, true));
-                            else if (t.IsFaulted)
-                                Dispatcher.UIThread.Post(() => SetState(false, false, true));
-                        }
+                        await Model.InitializeAsync(_cancellationTokenSource.Token);
                     });
+                    SetState(false, true);
+                }
+                catch
+                {
+                    SetState(false, false, true);
+                }
             }
     }
 

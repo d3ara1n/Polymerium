@@ -1,12 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Collections;
+﻿using Avalonia.Collections;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -19,6 +11,14 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
@@ -49,6 +49,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     private void TriggerRefresh(CancellationToken token)
     {
         var inner = _cancellationTokenSource?.Token ?? token;
+        var semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
         try
         {
             if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
@@ -73,7 +74,59 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
 
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
             Task.Run(() => LoadReference(r.Label, r.Namespace, r.Pid, r.Vid), inner);
+        return;
 
+
+        InstancePackageModel Load(string purl)
+        {
+            InstancePackageModel model = new(purl);
+            model.Task = Task.Run(async () =>
+            {
+                if (PackageHelper.TryParse(model.Purl, out var v))
+                    try
+                    {
+                        if (inner.IsCancellationRequested)
+                            return;
+                        await semaphore.WaitAsync(inner);
+                        var p = await _repositories.ResolveAsync(v.Label, v.Namespace, v.Pid, v.Vid, Filter.Empty);
+
+                        if (p.Thumbnail is not null)
+                        {
+                            var c = _clientFactory.CreateClient();
+                            var b = await c.GetByteArrayAsync(p.Thumbnail,
+                                                              _cancellationTokenSource?.Token
+                                                           ?? CancellationToken.None);
+                            model.Thumbnail = new Bitmap(new MemoryStream(b));
+                        }
+                        else
+                        {
+                            model.Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
+                        }
+
+                        model.Name = p.ProjectName;
+                        model.Version = p.VersionName;
+                        model.Summary = p.Summary;
+                        model.Kind = p.Kind;
+                        model.Reference = p.Reference;
+                        model.IsLoaded = true;
+                    }
+                    catch (OperationCanceledException)
+                    {
+
+                    }
+                    catch (Exception ex)
+                    {
+                        _notificationService.PopMessage($"{purl}: {ex.Message}",
+                                                        "Failed to parse purl",
+                                                        NotificationLevel.Warning);
+                    }
+                    finally
+                    {
+                        semaphore.Release();
+                    }
+            }, inner);
+            return model;
+        }
         async Task LoadReference(string label, string? @namespace, string pid, string? vid)
         {
             try
@@ -85,7 +138,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                                Filter.Empty with { Kind = ResourceKind.Modpack });
 
                 Bitmap thumbnail;
-                if (!Debugger.IsAttached && package.Thumbnail is not null)
+                if (package.Thumbnail is not null)
                 {
                     using var client = _clientFactory.CreateClient();
                     var bytes = await client.GetByteArrayAsync(package.Thumbnail, token);
@@ -109,9 +162,9 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                                     x.VersionName,
                                                                     x.ReleaseType,
                                                                     x.PublishedAt)
-                               {
-                                   IsCurrent = x.VersionId == package.VersionId
-                               })
+                              {
+                                  IsCurrent = x.VersionId == package.VersionId
+                              })
                               .ToList();
 
                 Dispatcher.UIThread.Post(() =>
@@ -133,52 +186,6 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                 "Fetching modpack information failed",
                                                 NotificationLevel.Warning);
             }
-        }
-
-        InstancePackageModel Load(string purl)
-        {
-            InstancePackageModel model = new(purl);
-            model.Task = Task.Run(async () =>
-                                  {
-                                      if (PackageHelper.TryParse(model.Purl, out var v))
-                                          try
-                                          {
-                                              var p = await _repositories.ResolveAsync(v.Label,
-                                                          v.Namespace,
-                                                          v.Pid,
-                                                          v.Vid,
-                                                          Filter.Empty);
-
-                                              if (p.Thumbnail is not null)
-                                              {
-                                                  var c = _clientFactory.CreateClient();
-                                                  var b = await c.GetByteArrayAsync(p.Thumbnail,
-                                                              _cancellationTokenSource?.Token
-                                                           ?? CancellationToken.None);
-                                                  model.Thumbnail = new Bitmap(new MemoryStream(b));
-                                              }
-                                              else
-                                              {
-                                                  model.Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
-                                              }
-
-                                              model.Name = p.ProjectName;
-                                              model.Version = p.VersionName;
-                                              model.Summary = p.Summary;
-                                              model.Kind = p.Kind;
-                                              model.Reference = p.Reference;
-                                              model.IsLoaded = true;
-                                          }
-                                          catch (Exception ex)
-                                          {
-                                              _notificationService.PopMessage($"{purl}: {ex.Message}",
-                                                                              "Failed to parse purl",
-                                                                              NotificationLevel.Warning);
-                                              Debug.WriteLine(ex.ToString());
-                                          }
-                                  },
-                                  inner);
-            return model;
         }
     }
 

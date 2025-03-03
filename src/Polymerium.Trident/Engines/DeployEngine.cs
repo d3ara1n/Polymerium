@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Engines.Deploying.Stages;
+using System.Collections;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Engines;

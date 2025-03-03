@@ -1,10 +1,10 @@
-﻿using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Interactivity;
 using Huskui.Avalonia.Models;
+using System.Windows.Input;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -142,7 +142,7 @@ public class NotificationItem : ContentControl
 
     private void SetPseudoClass(string name)
     {
-        foreach (var i in (string[]) [":information", ":success", ":warning", ":danger"])
+        foreach (var i in (string[])[":information", ":success", ":warning", ":danger"])
             PseudoClasses.Set(i, name == i);
     }
 

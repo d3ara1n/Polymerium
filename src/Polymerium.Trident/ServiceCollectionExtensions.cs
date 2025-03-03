@@ -1,12 +1,12 @@
-﻿using System.Reflection;
-using System.Text.Json;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polymerium.Trident.Clients;
 using Polymerium.Trident.Importers;
 using Polymerium.Trident.Repositories;
 using Polymerium.Trident.Services;
 using Refit;
+using System.Reflection;
+using System.Text.Json;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
 

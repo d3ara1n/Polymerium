@@ -1,7 +1,7 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.Facilities;
 

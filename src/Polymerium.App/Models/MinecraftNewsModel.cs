@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Polymerium.App.Facilities;
+using System;
+using System.Collections.Generic;
 
 namespace Polymerium.App.Models;
 
 public class MinecraftNewsModel(
-    Bitmap cover,
+    Uri cover,
     string category,
     string title,
     string description,
@@ -19,7 +19,7 @@ public class MinecraftNewsModel(
 
     public string Title => title;
     public string Description => description;
-    public Bitmap Cover => cover;
+    public Uri Cover => cover;
     public string Category => category;
     public Uri ReadMoreLink => readMoreLink;
     public IReadOnlyList<string> Tags => tags;

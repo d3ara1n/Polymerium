@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Threading;
+﻿using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
@@ -8,6 +6,8 @@ using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using System.Threading;
+using System.Threading.Tasks;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Tasks;
 

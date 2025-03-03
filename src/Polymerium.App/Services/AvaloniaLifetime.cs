@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Avalonia;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia;
-using Microsoft.Extensions.Hosting;
 
 namespace Polymerium.App.Services;
 

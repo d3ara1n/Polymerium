@@ -1,10 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -18,6 +12,12 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Polymerium.App;
 
@@ -25,9 +25,9 @@ public class App : Application
 {
     public override void Initialize()
     {
-        #if DEBUG
+#if DEBUG
         this.EnableHotReload();
-        #endif
+#endif
         AvaloniaXamlLoader.Load(this);
     }
 

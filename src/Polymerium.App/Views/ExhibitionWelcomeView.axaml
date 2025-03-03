@@ -4,6 +4,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+           xmlns:async="using:AsyncImageLoader"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:m="using:Polymerium.App.Models"
            xmlns:v="using:Polymerium.App.Views"
@@ -15,7 +16,7 @@
                 <Border Grid.Row="0" Grid.RowSpan="3" Margin="12"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
-                        <ImageBrush Source="{Binding Cover}" Stretch="Fill" />
+                        <ImageBrush async:ImageBrushLoader.Source="{Binding Cover}" Stretch="Fill" />
                     </Border.Background>
                 </Border>
                 <Border Grid.Row="1" CornerRadius="{StaticResource MediumCornerRadius}" Margin="4"
@@ -53,7 +54,7 @@
                 <Border Grid.Row="0" Grid.RowSpan="3"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
-                        <ImageBrush Source="{Binding Cover}" Stretch="Fill" />
+                        <ImageBrush async:ImageBrushLoader.Source="{Binding Cover}" Stretch="Fill" />
                     </Border.Background>
                 </Border>
                 <Border Grid.Row="2" CornerRadius="{StaticResource MediumCornerRadius}" Margin="8"

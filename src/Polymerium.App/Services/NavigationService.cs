@@ -1,11 +1,11 @@
-﻿using System;
-using Avalonia.Animation;
+﻿using Avalonia.Animation;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Transitions;
 using Polymerium.App.Controls;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Views;
+using System;
 
 namespace Polymerium.App.Services;
 

@@ -8,6 +8,7 @@
                   xmlns:cp="using:Polymerium.App.Components"
                   xmlns:m="using:Polymerium.App.Models"
                   xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                  xmlns:async="using:AsyncImageLoader"
                   xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
                   xmlns:controls="using:Polymerium.App.Controls"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"

@@ -1,30 +1,8 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="using:Polymerium.App.Controls"
-                    xmlns:dm="using:Polymerium.App.DesignModels"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
-    <Design.PreviewWith>
-        <Panel>
-            <StackPanel Margin="24" Spacing="12" Width="288">
-                <local:InstanceEntryButton>
-                    <dm:DesignInstanceBasicModel />
-                </local:InstanceEntryButton>
-                <local:InstanceEntryButton State="Installing" Progress="50">
-                    <dm:DesignInstanceBasicModel />
-                </local:InstanceEntryButton>
-                <local:InstanceEntryButton State="Updating">
-                    <dm:DesignInstanceBasicModel />
-                </local:InstanceEntryButton>
-                <local:InstanceEntryButton State="Preparing">
-                    <dm:DesignInstanceBasicModel />
-                </local:InstanceEntryButton>
-                <local:InstanceEntryButton State="Running">
-                    <dm:DesignInstanceBasicModel />
-                </local:InstanceEntryButton>
-            </StackPanel>
-        </Panel>
-    </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type local:InstanceEntryButton}" TargetType="local:InstanceEntryButton">
         <Setter Property="CornerRadius"

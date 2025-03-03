@@ -1,14 +1,14 @@
-﻿using System;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using System;
 
 namespace Polymerium.App.Assets;
 
 public static class AssetUriIndex
 {
-    private const string DIRT_IMAGE = "avares://Polymerium.App/Assets/Images/Placeholders/Dirt.png";
+    public static readonly Uri DIRT_IMAGE = new("avares://Polymerium.App/Assets/Images/Placeholders/Dirt.png", UriKind.Absolute);
 
-    private const string WALLPAPER_IMAGE = "avares://Polymerium.App/Assets/Images/Wallpaper.png";
+    private static readonly Uri WALLPAPER_IMAGE = new Uri("avares://Polymerium.App/Assets/Images/Wallpaper.png", UriKind.Absolute);
 
     public const string REPOSITORY_HEADER_CURSEFORGE =
         "avares://Polymerium.App/Assets/Images/Repositories/Header_CurseForge.png";
@@ -16,7 +16,7 @@ public static class AssetUriIndex
     public const string REPOSITORY_HEADER_MODRINTH =
         "avares://Polymerium.App/Assets/Images/Repositories/Header_MODRINTH.png";
 
-    public static readonly Bitmap DIRT_IMAGE_BITMAP = new(AssetLoader.Open(new Uri(DIRT_IMAGE)));
+    public static readonly Bitmap DIRT_IMAGE_BITMAP = new(AssetLoader.Open(DIRT_IMAGE));
 
-    public static readonly Bitmap WALLPAPER_IMAGE_BITMAP = new(AssetLoader.Open(new Uri(WALLPAPER_IMAGE)));
+    public static readonly Bitmap WALLPAPER_IMAGE_BITMAP = new(AssetLoader.Open(WALLPAPER_IMAGE));
 }
