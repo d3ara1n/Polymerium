@@ -149,7 +149,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                           v.Vid,
                                                           Filter.Empty);
 
-                                              if (!Debugger.IsAttached && p.Thumbnail is not null)
+                                              if (p.Thumbnail is not null)
                                               {
                                                   var c = _clientFactory.CreateClient();
                                                   var b = await c.GetByteArrayAsync(p.Thumbnail,
@@ -174,6 +174,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                               _notificationService.PopMessage($"{purl}: {ex.Message}",
                                                                               "Failed to parse purl",
                                                                               NotificationLevel.Warning);
+                                              Debug.WriteLine(ex.ToString());
                                           }
                                   },
                                   inner);
