@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Reactive.Linq;
-using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using DynamicData;
 using Polymerium.App.Models;
+using System;
+using System.Collections.ObjectModel;
+using System.Reactive.Linq;
+using System.Windows.Input;
 
 namespace Polymerium.App.Components;
 

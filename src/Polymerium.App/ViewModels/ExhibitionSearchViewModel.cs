@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -20,6 +11,15 @@ using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Refit;
 using Semver;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -181,39 +181,23 @@ public partial class ExhibitionSearchViewModel : ViewModelBase
                 {
                     var rv = await handle.FetchAsync();
                     var tasks = rv
-                               .Select(async x =>
-                                {
-                                    Bitmap? thumbnail = null;
-                                    if (!Debugger.IsAttached && x.Thumbnail is { IsAbsoluteUri: true })
-                                    {
-                                        using var client = _factory.CreateClient();
-                                        var data = await client.GetByteArrayAsync(x.Thumbnail.AbsoluteUri);
-                                        thumbnail = new Bitmap(new MemoryStream(data));
-                                    }
-                                    else
-                                    {
-                                        thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
-                                    }
-
-                                    return new ExhibitModel(x.Label,
-                                                            x.Namespace,
-                                                            x.Pid,
-                                                            x.Name,
-                                                            x.Summary,
-                                                            thumbnail,
-                                                            x.Author,
-                                                            x.Tags,
-                                                            x.UpdatedAt,
-                                                            x.DownloadCount,
-                                                            x.Reference);
-                                })
+                               .Select(x => new ExhibitModel(x.Label,
+                                                                   x.Namespace,
+                                                                   x.Pid,
+                                                                   x.Name,
+                                                                   x.Summary,
+                                                                   x.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                                   x.Author,
+                                                                   x.Tags,
+                                                                   x.UpdatedAt,
+                                                                   x.DownloadCount,
+                                                                   x.Reference))
                                .ToArray();
-                    await Task.WhenAll(tasks);
-                    return tasks.Select(x => x.Result);
+                    return tasks;
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage("Network unreachable", level: NotificationLevel.Warning);
+                    _notificationService.PopMessage(ex.Message, "Network unreachable", level: NotificationLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 

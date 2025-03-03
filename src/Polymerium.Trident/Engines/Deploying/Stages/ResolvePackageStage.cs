@@ -49,7 +49,8 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                                                         parsed.Vid,
                                                         Filter.Empty with
                                                         {
-                                                            Loader = loader, Version = Context.Setup.Version
+                                                            Loader = loader,
+                                                            Version = Context.Setup.Version
                                                         });
                 logger.LogDebug("Resolved {} package {}({}/{}) with {}",
                                 parsed.IsPhantom ? "phantom" : "non-phantom",

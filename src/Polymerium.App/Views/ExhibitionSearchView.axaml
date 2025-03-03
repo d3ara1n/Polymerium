@@ -5,6 +5,7 @@
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+           xmlns:async="using:AsyncImageLoader"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:v="using:Polymerium.App.Views"
            xmlns:m="using:Polymerium.App.Models" ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -100,7 +101,7 @@
                                         CornerRadius="{StaticResource MediumCornerRadius}"
                                         Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=Self}}">
                                     <Border.Background>
-                                        <ImageBrush Stretch="UniformToFill" Source="{Binding Thumbnail}" />
+                                        <ImageBrush Stretch="UniformToFill" async:ImageBrushLoader.Source="{Binding Thumbnail}" />
                                     </Border.Background>
                                 </Border>
                                 <StackPanel Grid.Row="0" Grid.Column="2">

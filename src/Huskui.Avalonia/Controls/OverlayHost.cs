@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
@@ -11,6 +10,7 @@ using Avalonia.Metadata;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Huskui.Avalonia.Transitions;
+using System.Windows.Input;
 
 namespace Huskui.Avalonia.Controls;
 

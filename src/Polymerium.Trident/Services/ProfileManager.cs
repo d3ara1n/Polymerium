@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿using Polymerium.Trident.Services.Profiles;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Services;

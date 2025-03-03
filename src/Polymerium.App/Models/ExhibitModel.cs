@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
+using System;
+using System.Collections.Generic;
 
 namespace Polymerium.App.Models;
 
@@ -16,7 +16,7 @@ public partial class ExhibitModel : ModelBase
         string pid,
         string name,
         string summary,
-        Bitmap? thumbnail,
+        Uri thumbnail,
         string author,
         IReadOnlyList<string> tags,
         DateTimeOffset updatedAt,
@@ -28,7 +28,7 @@ public partial class ExhibitModel : ModelBase
         _pid = pid;
         _name = name;
         _summary = summary;
-        _thumbnail = thumbnail ?? AssetUriIndex.DIRT_IMAGE_BITMAP;
+        _thumbnail = thumbnail;
         _author = author;
         _tags = tags;
         _updatedAt = updatedAt.Humanize();
@@ -36,7 +36,7 @@ public partial class ExhibitModel : ModelBase
         _reference = reference;
     }
 
-    #region Reactive Properties
+    #region Reactive
 
     [ObservableProperty]
     private string _label;
@@ -54,7 +54,7 @@ public partial class ExhibitModel : ModelBase
     private string _summary;
 
     [ObservableProperty]
-    private Bitmap _thumbnail;
+    private Uri _thumbnail;
 
     [ObservableProperty]
     private string _author;

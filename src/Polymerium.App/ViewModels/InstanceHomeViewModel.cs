@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reactive.Linq;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
@@ -13,6 +11,8 @@ using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Utilities;
+using System;
+using System.Reactive.Linq;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;

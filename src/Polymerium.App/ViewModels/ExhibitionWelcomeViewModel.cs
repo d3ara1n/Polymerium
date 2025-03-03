@@ -1,10 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,6 +8,13 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Polymerium.App.ViewModels;
 
@@ -43,30 +44,22 @@ public partial class ExhibitionWelcomeViewModel : ViewModelBase
         var news = await _mojangLauncherService.GetMinecraftNewsAsync();
         var models = news
                     .Entries.Take(16)
-                    .Select(async (x, i) =>
+                    .Select((x, i) =>
                      {
                          var url = _mojangLauncherService.GetAbsoluteImageUrl(x.PlayPageImage.Url);
-                         Bitmap? cover = null;
-                         if (!Debugger.IsAttached || true)
-                         {
-                             using var client = _httpClientFactory.CreateClient();
-                             var data = await client.GetByteArrayAsync(url, token);
-                             cover = new Bitmap(new MemoryStream(data));
-                         }
-                         else
-                         {
-                             cover = AssetUriIndex.DIRT_IMAGE_BITMAP;
-                         }
 
-                         return new MinecraftNewsModel(cover, x.Category, x.Title, x.Text, x.ReadMoreLink, x.NewsType)
+                         return new MinecraftNewsModel(url,
+                                                       x.Category,
+                                                       x.Title,
+                                                       x.Text,
+                                                       x.ReadMoreLink,
+                                                       x.NewsType)
                          {
                              IsVeryBig = i == 0
                          };
-                         ;
-                     })
-                    .ToArray();
-        await Task.WhenAll(models);
-        News = models.Select(x => x.Result).ToList();
+                     });
+        News = models.ToList();
+
     }
 
     #region Injected
