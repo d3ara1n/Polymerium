@@ -7,6 +7,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
+        <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

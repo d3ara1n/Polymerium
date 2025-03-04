@@ -4,7 +4,7 @@ using Polymerium.App.Models;
 
 namespace Polymerium.App.Views;
 
-public class MarketplacePortalView : Page
+public partial class MarketplacePortalView : Page
 {
     public MarketplacePortalView()
     {

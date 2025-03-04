@@ -11,7 +11,7 @@
     <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
         <controls:SettingsEntry Title="Super Power" Icon="Wand" Summary="味大，我为自己带盐">
             <controls:SettingsEntryItem Header="Activate">
-                <ToggleSwitch />
+                <ToggleSwitch IsChecked="{Binding IsSuperPowerActivated,Mode=TwoWay}" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
