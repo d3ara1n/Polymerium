@@ -2,7 +2,7 @@
 
 namespace Polymerium.App.Views;
 
-public class MarketplaceSearchView : Page
+public partial class MarketplaceSearchView : Page
 {
     public MarketplaceSearchView() => InitializeComponent();
 }

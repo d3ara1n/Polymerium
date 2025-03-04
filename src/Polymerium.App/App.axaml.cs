@@ -120,6 +120,14 @@ public class App : Application
 
         MainWindow window = new();
 
+        #region Window Configuration
+
+        var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();
+
+        // 并不还原窗体大小，没必要
+
+        #endregion
+
         #region Navigation
 
         // Link navigation service
