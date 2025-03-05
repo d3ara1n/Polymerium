@@ -149,7 +149,7 @@
                         Height="36"
                         Classes="Primary"
                         Click="NavigationButton_OnClick"
-                        Tag="MarketplaceWelcomeView">
+                        Tag="MarketplacePortalView">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:PackIconLucide
                                 Width="18"

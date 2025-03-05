@@ -38,17 +38,7 @@ public partial class VersionPickerDialog : Dialog
 
     private readonly IDisposable _subscription;
 
-
     private readonly SourceCache<GameVersionModel, string> _versions = new(x => x.Name);
-
-    private string _filterText = string.Empty;
-
-    private string _selectedType = string.Empty;
-
-    private string[] _types = [];
-
-    private ReadOnlyObservableCollection<GameVersionModel>? _view;
-
 
     public VersionPickerDialog()
     {
@@ -69,27 +59,27 @@ public partial class VersionPickerDialog : Dialog
 
     public ReadOnlyObservableCollection<GameVersionModel>? View
     {
-        get => _view;
-        set => SetAndRaise(ViewProperty, ref _view, value);
+        get;
+        set => SetAndRaise(ViewProperty, ref field, value);
     }
 
     public string FilterText
     {
-        get => _filterText;
-        set => SetAndRaise(FilterTextProperty, ref _filterText, value);
-    }
+        get;
+        set => SetAndRaise(FilterTextProperty, ref field, value);
+    } = string.Empty;
 
     public string SelectedType
     {
-        get => _selectedType;
-        set => SetAndRaise(SelectedTypeProperty, ref _selectedType, value);
-    }
+        get;
+        set => SetAndRaise(SelectedTypeProperty, ref field, value);
+    } = string.Empty;
 
     public string[] Types
     {
-        get => _types;
-        set => SetAndRaise(TypesProperty, ref _types, value);
-    }
+        get;
+        set => SetAndRaise(TypesProperty, ref field, value);
+    } = [];
 
     public void SetItems(IReadOnlyList<GameVersionModel> versions)
     {
@@ -100,9 +90,10 @@ public partial class VersionPickerDialog : Dialog
 
     protected override bool ValidateResult(object? result) => result is GameVersionModel;
 
-    private void Control_OnUnloaded(object? sender, RoutedEventArgs e)
+    protected override void OnUnloaded(RoutedEventArgs e)
     {
         _subscription.Dispose();
+        base.OnUnloaded(e);
     }
 
     private Func<GameVersionModel, bool> BuildFilterText(string filter) =>
