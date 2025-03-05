@@ -7,21 +7,19 @@ namespace Huskui.Avalonia.Controls;
 
 public class Dialog : HeaderedContentControl
 {
-    public static readonly DirectProperty<Dialog, string> PrimaryTextProperty =
-        AvaloniaProperty.RegisterDirect<Dialog, string>(nameof(PrimaryText),
-                                                        o => o.PrimaryText,
-                                                        (o, v) => o.PrimaryText = v);
+    public static readonly StyledProperty<string> PrimaryTextProperty =
+        AvaloniaProperty.Register<Dialog, string>(nameof(PrimaryText));
 
-    public static readonly DirectProperty<Dialog, string> SecondaryTextProperty =
-        AvaloniaProperty.RegisterDirect<Dialog, string>(nameof(SecondaryText),
-                                                        o => o.SecondaryText,
-                                                        (o, v) => o.SecondaryText = v);
+    public static readonly StyledProperty<string> SecondaryTextProperty =
+        AvaloniaProperty.Register<Dialog, string>(nameof(SecondaryText));
 
-    public static readonly DirectProperty<Dialog, string> TitleProperty =
-        AvaloniaProperty.RegisterDirect<Dialog, string>(nameof(Title), o => o.Title, (o, v) => o.Title = v);
 
-    public static readonly DirectProperty<Dialog, string> MessageProperty =
-        AvaloniaProperty.RegisterDirect<Dialog, string>(nameof(Message), o => o.Message, (o, v) => o.Message = v);
+    public static readonly StyledProperty<string> MessageProperty =
+        AvaloniaProperty.Register<Dialog, string>(nameof(Message));
+
+    public static readonly StyledProperty<string> TitleProperty =
+        AvaloniaProperty.Register<Dialog, string>(nameof(Title));
+
 
     public static readonly DirectProperty<Dialog, OverlayHost?> HostProperty =
         AvaloniaProperty.RegisterDirect<Dialog, OverlayHost?>(nameof(Host), o => o.Host, (o, v) => o.Host = v);
@@ -34,23 +32,15 @@ public class Dialog : HeaderedContentControl
     public static readonly DirectProperty<Dialog, object?> ResultProperty =
         AvaloniaProperty.RegisterDirect<Dialog, object?>(nameof(Result), o => o.Result, (o, v) => o.Result = v);
 
-    public static readonly DirectProperty<Dialog, bool> IsPrimaryButtonVisibleProperty =
-        AvaloniaProperty.RegisterDirect<Dialog, bool>(nameof(IsPrimaryButtonVisible),
-                                                      o => o.IsPrimaryButtonVisible,
-                                                      (o, v) => o.IsPrimaryButtonVisible = v);
+    public static readonly StyledProperty<bool> IsPrimaryButtonVisibleProperty =
+        AvaloniaProperty.Register<Dialog, bool>(nameof(IsPrimaryButtonVisible));
+
 
     public readonly TaskCompletionSource<bool> CompletionSource = new();
 
     private OverlayItem? _container;
     private OverlayHost? _host;
-
-    private bool _isPrimaryButtonVisible;
-
-    private string _message = string.Empty;
-    private string _primaryText = string.Empty;
     private object? _result;
-    private string _secondaryText = string.Empty;
-    private string _title = string.Empty;
 
     public Dialog()
     {
@@ -58,14 +48,37 @@ public class Dialog : HeaderedContentControl
         SecondaryCommand = new InternalCommand(Cancel);
     }
 
-    protected override Type StyleKeyOverride { get; } = typeof(Dialog);
+    public string PrimaryText
+    {
+        get => GetValue(PrimaryTextProperty);
+        set => SetValue(PrimaryTextProperty, value);
+    }
+
+    public string SecondaryText
+    {
+        get => GetValue(SecondaryTextProperty);
+        set => SetValue(SecondaryTextProperty, value);
+    }
+
+    public string Message
+    {
+        get => GetValue(MessageProperty);
+        set => SetValue(MessageProperty, value);
+    }
+
+    public string Title
+    {
+        get => GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
 
     public bool IsPrimaryButtonVisible
     {
-        get => _isPrimaryButtonVisible;
-        set => SetAndRaise(IsPrimaryButtonVisibleProperty, ref _isPrimaryButtonVisible, value);
+        get => GetValue(IsPrimaryButtonVisibleProperty);
+        set => SetValue(IsPrimaryButtonVisibleProperty, value);
     }
 
+    protected override Type StyleKeyOverride { get; } = typeof(Dialog);
 
     public object? Result
     {
@@ -90,31 +103,6 @@ public class Dialog : HeaderedContentControl
         get => _host;
         set => SetAndRaise(HostProperty, ref _host, value);
     }
-
-    public string PrimaryText
-    {
-        get => _primaryText;
-        set => SetAndRaise(PrimaryTextProperty, ref _primaryText, value);
-    }
-
-    public string SecondaryText
-    {
-        get => _secondaryText;
-        set => SetAndRaise(SecondaryTextProperty, ref _secondaryText, value);
-    }
-
-    public string Title
-    {
-        get => _title;
-        set => SetAndRaise(TitleProperty, ref _title, value);
-    }
-
-    public string Message
-    {
-        get => _message;
-        set => SetAndRaise(MessageProperty, ref _message, value);
-    }
-
 
     public ICommand PrimaryCommand { get; }
     public ICommand SecondaryCommand { get; }

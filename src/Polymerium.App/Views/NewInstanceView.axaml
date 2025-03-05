@@ -47,16 +47,16 @@
                 VerticalAlignment="Center"
                 Spacing="12">
                 <Grid ColumnDefinitions="Auto,12,*">
-                    <husk:DropZone
-                        Width="108"
-                        Height="108"
-                        Padding="8"
-                        Background="{DynamicResource Layer0BackgroundBrush}"
-                        BorderBrush="{x:Null}"
-                        CornerRadius="{StaticResource MediumCornerRadius}"
-                        DragOver="DropZone_OnDragOver"
-                        Drop="DropZone_OnDrop"
-                        Model="{Binding Thumbnail, Mode=OneWayToSource}">
+                    <husk:DropZone Grid.Column="0"
+                                   Width="108"
+                                   Height="108"
+                                   Padding="8"
+                                   Background="{DynamicResource Layer0BackgroundBrush}"
+                                   BorderBrush="{x:Null}"
+                                   CornerRadius="{StaticResource MediumCornerRadius}"
+                                   DragOver="DropZone_OnDragOver"
+                                   Drop="DropZone_OnDrop"
+                                   Model="{Binding Thumbnail, Mode=OneWayToSource}">
                         <husk:DropZone.Effect>
                             <DropShadowEffect Opacity="0.1" />
                         </husk:DropZone.Effect>
@@ -124,7 +124,8 @@
                             <TextBlock Text="Version" />
                             <husk:SkeletonContainer CornerRadius="{StaticResource SmallCornerRadius}"
                                                     IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
-                                <TextBox Text="{Binding VersionName, Mode=TwoWay}">
+                                <TextBox Text="{Binding VersionName, Mode=TwoWay}"
+                                         IsEnabled="{Binding ImportedPack,Converter={x:Static ObjectConverters.IsNull}}">
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <icons:PackIconLucide
@@ -146,11 +147,37 @@
                         </StackPanel>
                     </StackPanel>
                 </Grid>
-                <husk:Card IsVisible="False">
-                    <Grid>
-                        
+                <Border
+                    IsVisible="{Binding ImportedPack,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}"
+                    Background="{DynamicResource ControlBackgroundBrush}" Padding="3"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Grid ColumnDefinitions="*,4,Auto">
+                        <Button Grid.Column="2" Classes="Small" Command="{Binding ClearImportedPackCommand}">
+                            <icons:PackIconLucide Kind="X" Height="{StaticResource SmallFontSize}" />
+                        </Button>
+                        <Border Grid.Column="0" Background="{DynamicResource LayerSolidBackgroundBrush}" Padding="8"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                            <Grid ColumnDefinitions="Auto,8,*">
+                                <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
+                                <Grid Grid.Column="2" ColumnDefinitions="*,8,Auto,8,*">
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Packages"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock Text="{Binding ImportedPack.PackageCount,FallbackValue=114514}"
+                                                   FontSize="{StaticResource LargeFontSize}" />
+                                    </StackPanel>
+                                    <husk:Divider Grid.Column="2" Orientation="Vertical" />
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="Mod Loader"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock Text="{Binding ImportedPack.LoaderLabel,FallbackValue=None}"
+                                                   FontSize="{StaticResource LargeFontSize}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </Grid>
-                </husk:Card>
+                </Border>
                 <Button
                     Height="42" Command="{Binding CreateCommand}"
                     Classes="Primary">
@@ -166,7 +193,7 @@
                 <Grid ColumnDefinitions="*,12,*">
                     <Button
                         Grid.Column="0"
-                        Height="42"
+                        Height="42" Command="{Binding OpenImportDialogCommand}"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:PackIconLucide
@@ -178,6 +205,7 @@
                     </Button>
                     <Button
                         Grid.Column="2"
+                        Command="{Binding GotoMarketplaceCommand}"
                         Height="42"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel Orientation="Horizontal" Spacing="8">

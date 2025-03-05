@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia.Animation;
 using Avalonia.Styling;
@@ -53,6 +54,9 @@ public class NotificationService
                    .ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());
             }
         });
+
+    public void PopMessage(Exception ex, string title, NotificationLevel level = NotificationLevel.Danger) =>
+        PopMessage(Debugger.IsAttached ? ex.ToString() : ex.Message, title = "Operation failed", level);
 
     public void PopProgress(
         string message,

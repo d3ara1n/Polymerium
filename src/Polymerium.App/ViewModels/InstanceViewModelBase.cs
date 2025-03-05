@@ -15,7 +15,9 @@ namespace Polymerium.App.ViewModels;
 
 public abstract partial class InstanceViewModelBase : ViewModelBase
 {
+    #pragma warning disable CS8618, CS9264
     public InstanceViewModelBase(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
+        #pragma warning restore CS8618, CS9264
     {
         InstanceManager = instanceManager;
         ProfileManager = profileManager;
@@ -149,10 +151,10 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    private InstanceBasicModel _basic;
+    public partial InstanceBasicModel Basic { get; set; }
 
     [ObservableProperty]
-    private InstanceState _state = InstanceState.Idle;
+    public partial InstanceState State { get; set; } = InstanceState.Idle;
 
     #endregion
 }

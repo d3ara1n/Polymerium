@@ -76,15 +76,7 @@ public partial class InstanceBasicModel : ModelBase
 
             if (value != null && LoaderHelper.TryParse(value, out var result))
                 // TODO: 从语言文件中选取
-                LoaderLabel = result.Identity switch
-                {
-                    LoaderHelper.LOADERID_FORGE => "Forge",
-                    LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                    LoaderHelper.LOADERID_FABRIC => "Fabric",
-                    LoaderHelper.LOADERID_QUILT => "QUILT",
-                    LoaderHelper.LOADERID_FLINT => "Flint",
-                    _ => result.Identity
-                };
+                LoaderLabel = LoaderHelper.ToDisplayName(result.Identity);
             else
                 LoaderLabel = "Vanilla";
         }
