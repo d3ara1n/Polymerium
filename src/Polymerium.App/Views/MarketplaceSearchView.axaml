@@ -66,7 +66,7 @@
                         <ComboBox ItemsSource="{Binding SelectedRepository.Loaders}"
                                   SelectedItem="{Binding FilteredLoader,Mode=TwoWay}" PlaceholderText="Loader">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="m:LoaderDisplayModel">
+                                <DataTemplate DataType="m:LoaderBasicModel">
                                     <TextBlock Text="{Binding DisplayName}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>

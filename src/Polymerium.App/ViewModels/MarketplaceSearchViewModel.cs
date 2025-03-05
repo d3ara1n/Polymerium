@@ -46,14 +46,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         _navigationService = navigationService;
         _overlayService = overlayService;
         // TODO: 名字应该在本地化键值对中获取
-        var r = agent
-               .Labels.Select(x => new RepositoryBasicModel(x,
-                                                            x switch
-                                                            {
-                                                                CurseForgeService.LABEL => "CurseForge",
-                                                                _ => x
-                                                            }))
-               .ToList();
+        var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
         Repositories = r;
         if (bag.Parameter is SearchArguments arguments)
         {
@@ -80,7 +73,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             {
                 var status = await _agent.CheckStatusAsync(repository.Label);
                 repository.Loaders = status
-                                    .SupportedLoaders.Select(x => new LoaderDisplayModel(x,
+                                    .SupportedLoaders.Select(x => new LoaderBasicModel(x,
                                                                  x switch
                                                                  {
                                                                      LoaderHelper.LOADERID_FORGE => "Forge",
@@ -144,7 +137,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     private string? _filteredVersion;
 
     [ObservableProperty]
-    private LoaderDisplayModel? _filteredLoader;
+    private LoaderBasicModel? _filteredLoader;
 
     [ObservableProperty]
     private InfiniteCollection<ExhibitModel>? _exhibits;

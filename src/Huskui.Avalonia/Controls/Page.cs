@@ -65,10 +65,7 @@ public class Page : HeaderedContentControl
                 SetState(true);
                 try
                 {
-                    await Task.Run(async () =>
-                    {
-                        await Model.InitializeAsync(_cancellationTokenSource.Token);
-                    });
+                    await Model.InitializeAsync(_cancellationTokenSource.Token);
                     SetState(false, true);
                 }
                 catch
@@ -78,7 +75,7 @@ public class Page : HeaderedContentControl
             }
     }
 
-    protected override void OnUnloaded(RoutedEventArgs e)
+    protected override async void OnUnloaded(RoutedEventArgs e)
     {
         base.OnUnloaded(e);
 
@@ -88,7 +85,7 @@ public class Page : HeaderedContentControl
                 _cancellationTokenSource.Cancel();
 
             if (Model is not null)
-                Task.Run(async () => await Model.CleanupAsync(CancellationToken.None));
+                await Model.CleanupAsync(CancellationToken.None);
         }
     }
 
