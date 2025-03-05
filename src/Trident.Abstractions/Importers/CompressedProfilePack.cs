@@ -7,6 +7,7 @@ public class CompressedProfilePack
 {
     private readonly ZipArchive _archive;
 
+    // input should be MemoryStream in practice
     public CompressedProfilePack(Stream input)
     {
         _archive = new ZipArchive(input, ZipArchiveMode.Read, true);

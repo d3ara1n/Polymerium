@@ -11,8 +11,6 @@ public sealed class ConfigurationService : IDisposable
 
     private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
 
-    public Configuration Value => _configuration;
-
     public ConfigurationService()
     {
         Configuration? read = null;
@@ -30,6 +28,8 @@ public sealed class ConfigurationService : IDisposable
 
         _configuration = read ?? new Configuration();
     }
+
+    public Configuration Value => _configuration;
 
     public void Dispose()
     {

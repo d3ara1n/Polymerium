@@ -126,19 +126,19 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    private Bitmap _screenshot;
+    public partial Bitmap? Screenshot { get; set; }
 
     [ObservableProperty]
-    private int _packageCount;
+    public partial int PackageCount { get; set; }
 
     [ObservableProperty]
-    private double _deployingProgress;
+    public partial double DeployingProgress { get; set; }
 
     [ObservableProperty]
-    private string _deployingMessage;
+    public partial string DeployingMessage { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private bool _deployingPending;
+    public partial bool DeployingPending { get; set; }
 
     #endregion
 }

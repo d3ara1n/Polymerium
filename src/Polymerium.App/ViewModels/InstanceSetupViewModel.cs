@@ -196,22 +196,9 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     protected override void OnUpdateModel(string key, Profile profile)
     {
         if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var result))
-        {
-            var loader = result.Identity switch
-            {
-                LoaderHelper.LOADERID_FORGE => "Forge",
-                LoaderHelper.LOADERID_NEOFORGE => "NeoForge",
-                LoaderHelper.LOADERID_FABRIC => "Fabric",
-                LoaderHelper.LOADERID_QUILT => "Quilt",
-                LoaderHelper.LOADERID_FLINT => "Flint",
-                _ => result.Identity
-            };
-            LoaderLabel = $"{loader}/{result.Version}";
-        }
+            LoaderLabel = LoaderHelper.ToDisplayLabel(result.Identity, result.Version);
         else
-        {
             LoaderLabel = "None";
-        }
 
         _updatingSubscription?.Dispose();
         UpdatingPending = true;
@@ -316,31 +303,31 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    private InstanceReferenceModel? _reference;
+    public partial InstanceReferenceModel? Reference { get; set; }
 
     [ObservableProperty]
-    private string _loaderLabel;
+    public partial string LoaderLabel { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private SourceCache<InstancePackageModel, string> _stage = new(x => x.Purl);
+    public partial SourceCache<InstancePackageModel, string> Stage { get; set; } = new(x => x.Purl);
 
     [ObservableProperty]
-    private SourceCache<InstancePackageModel, string> _stash = new(x => x.Purl);
+    public partial SourceCache<InstancePackageModel, string> Stash { get; set; } = new(x => x.Purl);
 
     [ObservableProperty]
-    private AvaloniaList<InstancePackageModel> _draft = [];
+    public partial AvaloniaList<InstancePackageModel> Draft { get; set; } = [];
 
     [ObservableProperty]
-    private int _stageCount;
+    public partial int StageCount { get; set; }
 
     [ObservableProperty]
-    private int _stashCount;
+    public partial int StashCount { get; set; }
 
     [ObservableProperty]
-    private double _updatingProgress;
+    public partial double UpdatingProgress { get; set; }
 
     [ObservableProperty]
-    private bool _updatingPending = true;
+    public partial bool UpdatingPending { get; set; } = true;
 
     #endregion
 }

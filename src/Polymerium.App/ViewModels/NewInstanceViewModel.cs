@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -17,7 +18,7 @@ using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Utilities;
+using Trident.Abstractions.Importers;
 
 namespace Polymerium.App.ViewModels;
 
@@ -30,13 +31,15 @@ public partial class NewInstanceViewModel : ViewModelBase
         PrismLauncherService prismLauncherService,
         ProfileManager profileManager,
         NavigationService navigationService,
-        NotificationService notificationService)
+        NotificationService notificationService,
+        ImporterAgent importerAgent)
     {
         _overlayService = overlayService;
         _prismLauncherService = prismLauncherService;
         _profileManager = profileManager;
         _navigationService = navigationService;
         _notificationService = notificationService;
+        _importerAgent = importerAgent;
     }
 
     protected override async Task OnInitializedAsync(CancellationToken token)
@@ -49,36 +52,8 @@ public partial class NewInstanceViewModel : ViewModelBase
         var versions = game.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
 
         Versions = versions;
-        VersionName = versions.MaxBy(x => x.ReleaseTimeRaw)?.Name ?? string.Empty;
+        VersionName = game.Versions.FirstOrDefault(x => x.Recommended)?.Version ?? string.Empty;
         IsVersionLoaded = true;
-    }
-
-    private async Task LoadLoadersAsync(CancellationToken token)
-    {
-        // x.Requires.Any(y =>
-        //                    y.Uid == PrismLauncherHelper.UID_INTERMEDIARY || (y.Uid == PrismLauncherHelper.UID_MINECRAFT &&
-        //                                                                      (y.Equal == model.Inner.Metadata.Version ||
-        //                                                                       y.Suggest == model.Inner.Metadata.Version)))
-        // TODO: 从本地化资源中加载名字
-        var loaders = ((string Identity, string Uid, string Display)[])
-        [
-            (LoaderHelper.LOADERID_FORGE, PrismLauncherService.UID_FORGE, "Forge"),
-            (LoaderHelper.LOADERID_NEOFORGE, PrismLauncherService.UID_NEOFORGE, "NeoForge"),
-            (LoaderHelper.LOADERID_FABRIC, PrismLauncherService.UID_FABRIC, "Fabric"),
-            (LoaderHelper.LOADERID_QUILT, PrismLauncherService.UID_QUILT, "Quilt")
-        ];
-        var compounds = new List<LoaderCompoundModel>();
-        foreach (var loader in loaders)
-        {
-            var component = await _prismLauncherService.GetVersionsAsync(loader.Uid, token);
-            compounds.Add(new LoaderCompoundModel(loader.Identity,
-                                                  loader.Display,
-                                                  component
-                                                     .Versions.OrderByDescending(x => x.ReleaseTime)
-                                                     .Select(x => x.Version)
-                                                     .ToList(),
-                                                  component.Versions.FirstOrDefault(x => x.Recommended)?.Version));
-        }
     }
 
     #region Commands
@@ -96,12 +71,65 @@ public partial class NewInstanceViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private async Task OpenImportDialog()
+    {
+        var dialog = new FilePickerDialog { Message = "Select a file to import" };
+        if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is string path && File.Exists(path))
+            try
+            {
+                var fs = new FileStream(path, FileMode.Open);
+                var ms = new MemoryStream();
+                await fs.CopyToAsync(ms);
+                fs.Close();
+                ms.Position = 0;
+                var pack = new CompressedProfilePack(ms);
+                var container = await _importerAgent.ImportAsync(pack);
+                ImportedPack = new FloatingImportedPackModel(pack, container);
+                VersionName = container.Profile.Setup.Version;
+                DisplayName = container.Profile.Name;
+            }
+            catch (Exception e)
+            {
+                _notificationService.PopMessage(e, "Import failed");
+            }
+    }
+
+    [RelayCommand]
+    private void GotoMarketplace()
+    {
+        _navigationService.Navigate<MarketplacePortalView>();
+    }
+
+    [RelayCommand]
+    private void ClearImportedPack()
+    {
+        ImportedPack = null;
+    }
+
+    [RelayCommand]
     private async Task Create()
     {
-        var version = VersionName;
         var display = string.IsNullOrEmpty(DisplayName) ? VersionName : DisplayName;
 
         var key = _profileManager.RequestKey(display);
+
+        Profile profile;
+        if (ImportedPack != null)
+        {
+            profile = ImportedPack.Container.Profile;
+            await _importerAgent.ExtractImportFilesAsync(key.Key, ImportedPack.Container, ImportedPack.Pack);
+        }
+        else
+        {
+            profile = new Profile(display,
+                                  new Profile.Rice(null,
+                                                   VersionName,
+                                                   null,
+                                                   new List<string>(),
+                                                   new List<string>(),
+                                                   new List<string>()),
+                                  new Dictionary<string, object>());
+        }
 
         if (Thumbnail != null)
         {
@@ -116,32 +144,7 @@ public partial class NewInstanceViewModel : ViewModelBase
                                                 level: NotificationLevel.Danger);
         }
 
-        string? loader = null;
-        // if (SelectedLoader != null)
-        // {
-        //     if (SelectedLoaderVersion != null)
-        //     {
-        //         loader = LoaderHelper.ToLurl(SelectedLoader.LoaderId, SelectedLoaderVersion);
-        //     }
-        //     else
-        //     {
-        //         // TODO: 使用 validation 解决
-        //         _notificationService.PopMessage("Loader fallbacks to none due to no loader version selected",
-        //                                         "Created with warnings",
-        //                                         level: NotificationLevel.Warning);
-        //     }
-        // }
-
-        _profileManager.Add(key,
-                            new Profile(display,
-                                        new Profile.Rice(null,
-                                                         version,
-                                                         loader,
-                                                         new List<string>(),
-                                                         new List<string>(),
-                                                         new List<string>()),
-                                        new Dictionary<string, object>()));
-
+        _profileManager.Add(key, profile);
 
         _navigationService.Navigate<InstanceView>(key.Key);
     }
@@ -155,6 +158,7 @@ public partial class NewInstanceViewModel : ViewModelBase
     private readonly ProfileManager _profileManager;
     private readonly NavigationService _navigationService;
     private readonly NotificationService _notificationService;
+    private readonly ImporterAgent _importerAgent;
 
     #endregion
 
@@ -174,6 +178,9 @@ public partial class NewInstanceViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial Bitmap? Thumbnail { get; set; }
+
+    [ObservableProperty]
+    public partial FloatingImportedPackModel? ImportedPack { get; set; }
 
     #endregion
 }

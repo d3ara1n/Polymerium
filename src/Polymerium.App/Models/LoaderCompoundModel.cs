@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public partial class LoaderCompoundModel(
+public class LoaderCompoundModel(
     string loaderId,
     string displayName,
     IReadOnlyList<string> versions,
@@ -15,7 +14,7 @@ public partial class LoaderCompoundModel(
     public string LoaderId => loaderId;
     public string DisplayName => displayName;
     public IReadOnlyList<string> Versions => versions;
-    
+
     public string? RecommendedVersion => recommendedVersion;
 
     #endregion

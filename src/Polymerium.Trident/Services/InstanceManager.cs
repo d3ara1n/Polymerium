@@ -22,8 +22,6 @@ public class InstanceManager(
     IServiceProvider provider,
     IHttpClientFactory clientFactory)
 {
-    private static readonly string[] INVALID_NAMES = ["", ".", ".."];
-
     // 主要是在 UI 线程中增删改查，实际不需要保证线程同步
     private readonly Dictionary<string, TrackerBase> _trackers = new();
     public event EventHandler<InstallTracker>? InstanceInstalling;
@@ -73,30 +71,6 @@ public class InstanceManager(
 
         memory.Position = 0;
         return memory;
-    }
-
-    private static async Task ExtractImportFilesAsync(
-        string key,
-        ImportedProfileContainer container,
-        CompressedProfilePack pack)
-    {
-        var importDir = PathDef.Default.DirectoryOfImport(key);
-
-        foreach (var (source, target) in container.ImportFileNames.Where(x => !x.Item2.EndsWith('/')
-                                                                           && !INVALID_NAMES.Contains(x.Item2)))
-        {
-            var to = Path.Combine(importDir, target);
-            var dir = Path.GetDirectoryName(to);
-            if (dir != null && !Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-
-            var fromStream = pack.Open(source);
-            var file = new FileStream(to, FileMode.Create);
-            await fromStream.CopyToAsync(file);
-            await file.FlushAsync();
-            file.Close();
-            fromStream.Close();
-        }
     }
 
     private static async Task ExtractIconFileAsync(string key, ImportedProfileContainer container, HttpClient client)
@@ -165,7 +139,8 @@ public class InstanceManager(
                         new Progress<(int, int)>(x =>
                                                      reporter
                                                         .Report(new
-                                                                    DeployTracker.DeployProgress($"Resolving packages...({x.Item1}/{x.Item2})",
+                                                                    DeployTracker.
+                                                                    DeployProgress($"Resolving packages...({x.Item1}/{x.Item2})",
                                                                         (double)x.Item1 * 100 / x.Item2)));
                     break;
                 case BuildArtifactStage:
@@ -240,7 +215,7 @@ public class InstanceManager(
 
         logger.LogDebug("{} files collected to extract", container.ImportFileNames.Count);
 
-        await ExtractImportFilesAsync(key.Key, container, pack);
+        await importers.ExtractImportFilesAsync(key.Key, container, pack);
 
         profileManager.Add(key, container.Profile);
 
@@ -307,7 +282,7 @@ public class InstanceManager(
         if (Directory.Exists(importDir))
             Directory.Delete(importDir, true);
 
-        await ExtractImportFilesAsync(key, container, pack);
+        await importers.ExtractImportFilesAsync(key, container, pack);
 
         profileManager.Update(key,
                               container.Profile.Setup.Source,

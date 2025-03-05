@@ -11,6 +11,20 @@ public static class LoaderHelper
     public const string LOADERID_FLINT = "net.flintloader";
     private static readonly Regex PATTERN = new("^(?<identity>[a-z0-9.]+):(?<version>[a-zA-Z0-9_.-]+)$");
 
+
+    public static string ToDisplayName(string identity) =>
+        identity switch
+        {
+            LOADERID_FORGE => "Forge",
+            LOADERID_NEOFORGE => "NeoForge",
+            LOADERID_FABRIC => "Fabric",
+            LOADERID_QUILT => "Quilt",
+            LOADERID_FLINT => "Flint",
+            _ => identity
+        };
+
+    public static string ToDisplayLabel(string identity, string version) => $"{ToDisplayName(identity)} {version}";
+
     public static bool TryParse(string lurl, out (string Identity, string Version) result)
     {
         var match = PATTERN.Match(lurl);
