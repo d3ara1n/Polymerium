@@ -24,7 +24,7 @@
                         </Transitions>
                     </Rectangle.Transitions>
                 </Rectangle>
-                <StackPanel Margin="16,12">
+                <StackPanel Margin="16,12" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="4">
                         <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" IsHitTestVisible="False" />
                         <TextBlock FontWeight="Bold" Text="Drag and drop, or" IsHitTestVisible="False" />
@@ -45,7 +45,6 @@
                 </Style>
             </husk:DropZone.Styles>
         </husk:DropZone>
-        <TextBox Text="{Binding $parent[local:FilePickerDialog].Result,Mode=TwoWay}" Watermark="Chooooosen file path"
-                 Width="{Binding Bounds.Width,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Panel}}" />
+        <TextBox Text="{Binding $parent[local:FilePickerDialog].Result,Mode=TwoWay}" Watermark="Chooooosen file path" />
     </StackPanel>
 </husk:Dialog>

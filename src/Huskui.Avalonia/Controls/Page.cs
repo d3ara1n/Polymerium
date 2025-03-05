@@ -54,8 +54,8 @@ public class Page : HeaderedContentControl
     }
 
     protected override Type StyleKeyOverride => typeof(Page);
-
-    // ReSharper disable once AsyncVoidMethod
+    
+    
     protected override async void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
