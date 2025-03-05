@@ -146,26 +146,11 @@
                         </StackPanel>
                     </StackPanel>
                 </Grid>
-                <Grid ColumnDefinitions="*,12,*" RowDefinitions="Auto,0,Auto">
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Text="Mod Loader" />
-                    <ComboBox Grid.Row="2" Grid.Column="0" SelectedIndex="0">
-                        <ComboBoxItem Content="None" />
-                    </ComboBox>
-                    <TextBox
-                        Grid.Row="2"
-                        Grid.Column="2"
-                        Watermark="Version">
-                        <TextBox.InnerRightContent>
-                            <Button Margin="4" Command="{Binding PickVersionCommand}">
-                                <icons:PackIconLucide Height="{StaticResource MediumFontSize}" Kind="List" />
-                            </Button>
-                        </TextBox.InnerRightContent>
-                    </TextBox>
-                </Grid>
+                <husk:Card IsVisible="False">
+                    <Grid>
+                        
+                    </Grid>
+                </husk:Card>
                 <Button
                     Height="42" Command="{Binding CreateCommand}"
                     Classes="Primary">

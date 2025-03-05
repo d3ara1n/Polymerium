@@ -7,7 +7,7 @@ namespace Polymerium.App.Models;
 public partial class RepositoryBasicModel(string label, string name) : ModelBase
 {
     [ObservableProperty]
-    private IReadOnlyList<LoaderDisplayModel> _loaders = [];
+    private IReadOnlyList<LoaderBasicModel> _loaders = [];
 
     [ObservableProperty]
     private IReadOnlyList<string> _versions = [];

@@ -17,12 +17,13 @@ using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions.FileModels;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
 public partial class NewInstanceViewModel : ViewModelBase
 {
-    private IReadOnlyList<GameVersionModel>? _versions;
+    private CancellationToken? _token;
 
     public NewInstanceViewModel(
         OverlayService overlayService,
@@ -40,17 +41,44 @@ public partial class NewInstanceViewModel : ViewModelBase
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
+        _token = token;
         if (token.IsCancellationRequested)
             return;
 
-        var index = await _prismLauncherService.GetGameVersionsAsync(token);
-        var versions = index.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
-        _versions = versions;
-        Dispatcher.UIThread.Post(() =>
+        var game = await _prismLauncherService.GetGameVersionsAsync(token);
+        var versions = game.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
+
+        Versions = versions;
+        VersionName = versions.MaxBy(x => x.ReleaseTimeRaw)?.Name ?? string.Empty;
+        IsVersionLoaded = true;
+    }
+
+    private async Task LoadLoadersAsync(CancellationToken token)
+    {
+        // x.Requires.Any(y =>
+        //                    y.Uid == PrismLauncherHelper.UID_INTERMEDIARY || (y.Uid == PrismLauncherHelper.UID_MINECRAFT &&
+        //                                                                      (y.Equal == model.Inner.Metadata.Version ||
+        //                                                                       y.Suggest == model.Inner.Metadata.Version)))
+        // TODO: 从本地化资源中加载名字
+        var loaders = ((string Identity, string Uid, string Display)[])
+        [
+            (LoaderHelper.LOADERID_FORGE, PrismLauncherService.UID_FORGE, "Forge"),
+            (LoaderHelper.LOADERID_NEOFORGE, PrismLauncherService.UID_NEOFORGE, "NeoForge"),
+            (LoaderHelper.LOADERID_FABRIC, PrismLauncherService.UID_FABRIC, "Fabric"),
+            (LoaderHelper.LOADERID_QUILT, PrismLauncherService.UID_QUILT, "Quilt")
+        ];
+        var compounds = new List<LoaderCompoundModel>();
+        foreach (var loader in loaders)
         {
-            VersionName = versions.MaxBy(x => x.ReleaseTimeRaw)?.Name ?? string.Empty;
-            IsVersionLoaded = true;
-        });
+            var component = await _prismLauncherService.GetVersionsAsync(loader.Uid, token);
+            compounds.Add(new LoaderCompoundModel(loader.Identity,
+                                                  loader.Display,
+                                                  component
+                                                     .Versions.OrderByDescending(x => x.ReleaseTime)
+                                                     .Select(x => x.Version)
+                                                     .ToList(),
+                                                  component.Versions.FirstOrDefault(x => x.Recommended)?.Version));
+        }
     }
 
     #region Commands
@@ -58,10 +86,10 @@ public partial class NewInstanceViewModel : ViewModelBase
     [RelayCommand]
     private async Task PickVersion()
     {
-        if (_versions != null)
+        if (Versions != null)
         {
             var dialog = new VersionPickerDialog();
-            dialog.SetItems(_versions);
+            dialog.SetItems(Versions);
             if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is GameVersionModel version)
                 Dispatcher.UIThread.Post(() => VersionName = version.Name);
         }
@@ -88,11 +116,27 @@ public partial class NewInstanceViewModel : ViewModelBase
                                                 level: NotificationLevel.Danger);
         }
 
+        string? loader = null;
+        // if (SelectedLoader != null)
+        // {
+        //     if (SelectedLoaderVersion != null)
+        //     {
+        //         loader = LoaderHelper.ToLurl(SelectedLoader.LoaderId, SelectedLoaderVersion);
+        //     }
+        //     else
+        //     {
+        //         // TODO: 使用 validation 解决
+        //         _notificationService.PopMessage("Loader fallbacks to none due to no loader version selected",
+        //                                         "Created with warnings",
+        //                                         level: NotificationLevel.Warning);
+        //     }
+        // }
+
         _profileManager.Add(key,
                             new Profile(display,
                                         new Profile.Rice(null,
                                                          version,
-                                                         null,
+                                                         loader,
                                                          new List<string>(),
                                                          new List<string>(),
                                                          new List<string>()),
@@ -117,16 +161,19 @@ public partial class NewInstanceViewModel : ViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    private string _versionName = string.Empty;
+    public partial IReadOnlyList<GameVersionModel>? Versions { get; set; }
 
     [ObservableProperty]
-    private string _displayName = string.Empty;
+    public partial string VersionName { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private bool _isVersionLoaded;
+    public partial string DisplayName { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private Bitmap? _thumbnail;
+    public partial bool IsVersionLoaded { get; set; }
+
+    [ObservableProperty]
+    public partial Bitmap? Thumbnail { get; set; }
 
     #endregion
 }
