@@ -4,8 +4,14 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:controls="using:Polymerium.App.Controls"
+                  xmlns:vm="using:Polymerium.App.ViewModels"
+                  xmlns:components="using:Polymerium.App.Components"
+                  xmlns:fi="using:FluentIcons.Avalonia"
+                  xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Views.InstancePropertyView">
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                  x:Class="Polymerium.App.Views.InstancePropertyView" x:DataType="vm:InstancePropertyViewModel">
     <husk:Page.Header>
         <DockPanel>
             <Button DockPanel.Dock="Right">
@@ -15,22 +21,112 @@
         </DockPanel>
     </husk:Page.Header>
     <TabControl TabStripPlacement="Left" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1,0,0,0">
-        <TabItem Header="Information">设置实例名和图标</TabItem>
-        <TabItem Header="Overrides" />
-        <TabItem Header="Deployment">
-            <TabControl Theme="{StaticResource NeoTabControlTheme}">
-                <TabItem Header="Persistence">
-                    使用持久化池的目录和文件列表
-                </TabItem>
-                <TabItem Header="Snapshot">
-                    启动前是否自动拍摄，多久或多少快照之后进行清理，哪些目录和文件需要进入拍摄范围等等设置项
-                </TabItem>
-            </TabControl>
+        <TabItem Header="Instance">
+            <ScrollViewer>
+                <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
+                    <controls:SettingsEntry Icon="AppTitle" Title="Title" Summary="How this instance identify itself">
+                        <controls:SettingsEntryItem Header="Display Name">
+                            <Border Background="{DynamicResource ControlBackgroundBrush}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                <StackPanel Margin="4" Spacing="4">
+                                    <Border Background="{DynamicResource LayerSolidBackgroundBrush}"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <TextBlock Text="{Binding NameOverwrite,FallbackValue=Name}" Margin="8"
+                                                   FontSize="{StaticResource LargeFontSize}" TextAlignment="Center"
+                                                   TextWrapping="Wrap" />
+                                    </Border>
+                                    <Button Classes="Small" Theme="{StaticResource OutlineButtonTheme}"
+                                            Command="{Binding RenameInstanceCommand}"
+                                            Content="Rename" />
+                                </StackPanel>
+                            </Border>
+                        </controls:SettingsEntryItem>
+                        <controls:SettingsEntryItem Header="Thumbnail">
+                            <Grid ColumnDefinitions="Auto,12,*">
+                                <Border Grid.Column="0" Padding="8"
+                                        Width="72"
+                                        Height="72"
+                                        HorizontalAlignment="Center"
+                                        Background="{DynamicResource Layer0BackgroundBrush}"
+                                        BorderBrush="{x:Null}"
+                                        CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <Border.Effect>
+                                        <DropShadowEffect Opacity="0.1" />
+                                    </Border.Effect>
+                                    <Border Name="ThumbnailBox" CornerRadius="{StaticResource MediumCornerRadius}">
+                                        <Border.Background>
+                                            <ImageBrush Source="{Binding ThumbnailOverwrite}" />
+                                        </Border.Background>
+                                    </Border>
+
+                                </Border>
+                                <StackPanel Grid.Column="2" Spacing="12" VerticalAlignment="Center">
+                                    <Button Classes="Small" Command="{Binding SelectThumbnailCommand}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <icons:PackIconLucide Kind="File"
+                                                                  Height="{StaticResource SmallFontSize}"
+                                                                  Width="{StaticResource SmallFontSize}"
+                                                                  VerticalAlignment="Center" />
+                                            <TextBlock Text="Select" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Classes="Small" Command="{Binding RemoveThumbnailCommand}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <icons:PackIconLucide Kind="Trash2"
+                                                                  Height="{StaticResource SmallFontSize}"
+                                                                  Width="{StaticResource SmallFontSize}"
+                                                                  VerticalAlignment="Center" />
+                                            <TextBlock Text="Remove" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </controls:SettingsEntryItem>
+                    </controls:SettingsEntry>
+                    <husk:Divider>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource MediumFontSize}" />
+                            <TextBlock Text="猫脑过载" />
+                            <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource MediumFontSize}" />
+                        </StackPanel>
+                    </husk:Divider>
+                    <husk:BusyContainer
+                        IsBusy="{Binding State, Converter={x:Static huskc:ObjectConverters.NotMatch}, ConverterParameter=Idle}">
+                        <controls:SettingsEntry Icon="Bug" Title="Danger Zone"
+                                                Summary="These settings are applied instantly and can't be recovered">
+                            <components:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
+                            <controls:SettingsEntryItem Header="Reset &amp; Delete"
+                                                        IsEnabled="{Binding #Lock.IsUnlocked }">
+                                <Grid ColumnDefinitions="*,8,*">
+                                    <Button Grid.Column="0">
+                                        <fi:SymbolIcon Symbol="ArrowReset" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                    <Button Grid.Column="2" Classes="Danger">
+                                        <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                </Grid>
+                            </controls:SettingsEntryItem>
+                        </controls:SettingsEntry>
+                        <husk:BusyContainer.PendingContent>
+                            <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Spacing="12">
+                                    <icons:PackIconLucide Kind="Info" Height="{StaticResource ExtraLargeFontSize}"
+                                                          Width="{StaticResource ExtraLargeFontSize}"
+                                                          HorizontalAlignment="Center" />
+                                    <TextBlock Text="The instance is busy now" />
+                                </StackPanel>
+                            </husk:Card>
+                        </husk:BusyContainer.PendingContent>
+                    </husk:BusyContainer>
+                </StackPanel>
+            </ScrollViewer>
         </TabItem>
-        <TabItem Header="Storage">
-            环状饼图表示 Build 目录和几个典型游戏（config/saves/mods/screenshots）目录所占大小及其图例，
-            并表示有百分之几是池化储存。
-            环状饼图表示
+        <TabItem Header="Overrides" />
+        <TabItem Header="Persistence">
+            使用持久化池的目录和文件列表
+        </TabItem>
+        <TabItem Header="Snapshot">
+            启动前是否自动拍摄，多久或多少快照之后进行清理，哪些目录和文件需要进入拍摄范围等等设置项
         </TabItem>
     </TabControl>
 </controls:Subpage>

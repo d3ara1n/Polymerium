@@ -210,9 +210,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is UpdateTracker update)
-            TrackUpdateProgress(update);
-        else
+        if (!InstanceManager.IsInUse(Basic.Key))
             TriggerRefresh(_pageCancellationTokenSource.Token);
 
         await base.OnInitializedAsync(token);

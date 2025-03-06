@@ -74,6 +74,14 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
                 // 已经处于更新状态而未收到事件
                 State = InstanceState.Updating;
                 update.StateUpdated += OnProfileUpdateStateChanged;
+                OnInstanceUpdating(update);
+            }
+            else if (tracker is DeployTracker deploy)
+            {
+                // 已经处于部署状态而未收到事件
+                State = InstanceState.Deploying;
+                deploy.StateUpdated += OnProfileDeployStateChanged;
+                OnInstanceDeploying(deploy);
             }
 
         return Task.CompletedTask;
