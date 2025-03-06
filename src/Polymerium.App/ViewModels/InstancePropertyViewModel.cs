@@ -27,9 +27,11 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
         ViewBag bag,
         ProfileManager profileManager,
         InstanceManager instanceManager,
-        OverlayService overlayService) : base(bag, instanceManager, profileManager)
+        OverlayService overlayService,
+        NotificationService notificationService) : base(bag, instanceManager, profileManager)
     {
         _overlayService = overlayService;
+        _notificationService = notificationService;
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
     }
@@ -69,13 +71,21 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
     #region Injected
 
     private readonly OverlayService _overlayService;
+    private readonly NotificationService _notificationService;
 
     #endregion
 
     #region Commands
 
     [RelayCommand]
-    private void DeleteInstance() { }
+    private void ResetInstance() { }
+
+    [RelayCommand]
+    private void DeleteInstance()
+    {
+        // TODO: 创建 @/_bomb_has_been_planted_ 文件，ProfileManager 在开局扫实例时检测到该文件就顺便删除
+        ProfileManager.Remove(Basic.Key);
+    }
 
     [RelayCommand]
     private void RemoveThumbnail()
@@ -92,6 +102,10 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
         {
             ThumbnailOverwrite = new Bitmap(path);
             WriteIcon();
+        }
+        else
+        {
+            _notificationService.PopMessage("Selected file is not a valid image or no file selected.");
         }
     }
 

@@ -98,10 +98,10 @@
                             <controls:SettingsEntryItem Header="Reset &amp; Delete"
                                                         IsEnabled="{Binding #Lock.IsUnlocked }">
                                 <Grid ColumnDefinitions="*,8,*">
-                                    <Button Grid.Column="0">
+                                    <Button Grid.Column="0" Command="{Binding ResetInstanceCommand}">
                                         <fi:SymbolIcon Symbol="ArrowReset" FontSize="{StaticResource MediumFontSize}" />
                                     </Button>
-                                    <Button Grid.Column="2" Classes="Danger">
+                                    <Button Grid.Column="2" Classes="Danger" Command="{Binding DeleteInstanceCommand}">
                                         <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource MediumFontSize}" />
                                     </Button>
                                 </Grid>
