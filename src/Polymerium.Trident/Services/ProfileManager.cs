@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.FileModels;
 
@@ -10,16 +10,23 @@ namespace Polymerium.Trident.Services;
 // 只有 profile.json 是共享文件，其他都是独占文件，因此不对其他文件做 Guard 保护。
 public class ProfileManager : IDisposable
 {
+    #region Injected
+
+    private readonly ILogger<ProfileManager> _logger;
+
+    #endregion
+
     private readonly IList<ProfileHandle> _profiles = new List<ProfileHandle>();
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly IList<ReservedKey> ReservedKeys = new List<ReservedKey>();
 
-    public ProfileManager()
+    public ProfileManager(ILogger<ProfileManager> logger)
     {
+        _logger = logger;
         _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web) { WriteIndented = true };
         _serializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 
-        DirectoryInfo? dir = new(PathDef.Default.InstanceDirectory);
+        var dir = new DirectoryInfo(PathDef.Default.InstanceDirectory);
         if (!dir.Exists)
             return;
 
@@ -31,13 +38,20 @@ public class ProfileManager : IDisposable
 
             try
             {
+                var bomb = PathDef.Default.FileOfBomb(ins.Name);
+                if (File.Exists(bomb))
+                {
+                    ins.Delete(true);
+                    continue;
+                }
+
                 var handle = ProfileHandle.Create(ins.Name, path, _serializerOptions);
                 _profiles.Add(handle);
-                Debug.WriteLine($"{handle.Key} added");
+                logger.LogInformation("{} added", handle.Key);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                logger.LogError(ex, "Failed to add profile {}", ins.Name);
             }
         }
     }
@@ -99,12 +113,11 @@ public class ProfileManager : IDisposable
     public void Remove(string key)
     {
         var handle = _profiles.FirstOrDefault(x => x.Key == key);
-        if (handle is not null)
-        {
-            _profiles.Remove(handle);
+        if (handle is null)
+            throw new InvalidOperationException($"{key} is not in profiles");
+        _profiles.Remove(handle);
 
-            OnProfileRemoved(key, handle.Value);
-        }
+        OnProfileRemoved(key, handle.Value);
     }
 
     public void Update(

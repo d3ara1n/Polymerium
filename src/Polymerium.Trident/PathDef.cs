@@ -69,6 +69,8 @@ public class PathDef
 
     public string FileOfUserData(string key) => Path.Combine(InstanceDirectory, key, "data.user.json");
 
+    public string FileOfBomb(string key) => Path.Combine(InstanceDirectory, key, "_bomb_has_been_planted_");
+
     public string DirectoryOfHome(string key) => Path.Combine(InstanceDirectory, key);
 
     public string DirectoryOfBuild(string key) => Path.Combine(InstanceDirectory, key, "build");
