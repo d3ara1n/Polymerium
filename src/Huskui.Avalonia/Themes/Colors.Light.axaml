@@ -23,7 +23,11 @@
     <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{StaticResource Sand1Color}" />
     <SolidColorBrush x:Key="Layer0BackgroundBrush" Color="{StaticResource White10Color}" />
     <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{StaticResource Black1Color}" />
+    <SolidColorBrush x:Key="Layer1ReversedBackgroundBrush" Color="{StaticResource White1Color}" />
     <SolidColorBrush x:Key="Layer2BackgroundBrush" Color="{StaticResource Black2Color}" />
+    <SolidColorBrush x:Key="Layer2ReversedBackgroundBrush" Color="{StaticResource White2Color}" />
+    <SolidColorBrush x:Key="Layer3BackgroundBrush" Color="{StaticResource Black3Color}" />
+    <SolidColorBrush x:Key="Layer3ReversedBackgroundBrush" Color="{StaticResource White3Color}" />
     <SolidColorBrush x:Key="Layer7BackgroundBrush" Color="{StaticResource Black7Color}" />
 
     <SolidColorBrush x:Key="LayerSmokeBackgroundBrush" Color="{StaticResource Black7Color}" />

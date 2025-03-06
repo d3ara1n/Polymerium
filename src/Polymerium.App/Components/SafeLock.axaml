@@ -13,7 +13,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBorderBrush}" />
         </Style>
         <Style Selector=":locked Border#Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
+            <Setter Property="Background" Value="{DynamicResource Layer3ReversedBackgroundBrush}" />
             <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         </Style>
     </UserControl.Styles>

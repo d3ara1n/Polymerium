@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Assets;
-using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
@@ -28,10 +26,12 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
         ProfileManager profileManager,
         InstanceManager instanceManager,
         OverlayService overlayService,
-        NotificationService notificationService) : base(bag, instanceManager, profileManager)
+        NotificationService notificationService,
+        NavigationService navigationService) : base(bag, instanceManager, profileManager)
     {
         _overlayService = overlayService;
         _notificationService = notificationService;
+        _navigationService = navigationService;
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
     }
@@ -72,6 +72,7 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
 
     private readonly OverlayService _overlayService;
     private readonly NotificationService _notificationService;
+    private readonly NavigationService _navigationService;
 
     #endregion
 
@@ -83,8 +84,15 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
     [RelayCommand]
     private void DeleteInstance()
     {
-        // TODO: 创建 @/_bomb_has_been_planted_ 文件，ProfileManager 在开局扫实例时检测到该文件就顺便删除
+        var path = PathDef.Default.FileOfBomb(Basic.Key);
+        var dir = Path.GetDirectoryName(path);
+        if (dir != null && !Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+        File.WriteAllText(path, Basic.Key);
         ProfileManager.Remove(Basic.Key);
+
+        // TODO: 日后替换成 DesktopView 主页
+        _navigationService.Navigate<NewInstanceView>();
     }
 
     [RelayCommand]
