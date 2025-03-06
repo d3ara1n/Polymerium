@@ -96,6 +96,17 @@ public class ProfileManager : IDisposable
         OnProfileAdded(key.Key, profile);
     }
 
+    public void Remove(string key)
+    {
+        var handle = _profiles.FirstOrDefault(x => x.Key == key);
+        if (handle is not null)
+        {
+            _profiles.Remove(handle);
+
+            OnProfileRemoved(key, handle.Value);
+        }
+    }
+
     public void Update(
         string key,
         string? source,
