@@ -4,13 +4,15 @@ using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Data;
+using Avalonia.LogicalTree;
 
 namespace Huskui.Avalonia.Controls;
 
 [TemplatePart(PART_ContentPresenter, typeof(ContentPresenter))]
 [TemplatePart(PART_ContentPresenter2, typeof(ContentPresenter))]
-public class Frame : ContentControl
+public class Frame : TemplatedControl
 {
     #region Delegates
 
@@ -35,6 +37,15 @@ public class Frame : ContentControl
         AvaloniaProperty.RegisterDirect<Frame, bool>(nameof(CanGoBackOutOfStack),
                                                      o => o.CanGoBackOutOfStack,
                                                      (o, v) => o.CanGoBackOutOfStack = v);
+
+    public static readonly StyledProperty<object?> ContentProperty =
+        AvaloniaProperty.Register<Frame, object?>(nameof(Content));
+
+    public object? Content
+    {
+        get => GetValue(ContentProperty);
+        set => SetValue(ContentProperty, value);
+    }
 
 
     private readonly InternalGoBackCommand _goBackCommand;
@@ -137,9 +148,8 @@ public class Frame : ContentControl
         {
             _currentToken?.Cancel();
             _doubleArrangeSafeLock = false;
-            CancellationTokenSource? cancel = new();
+            var cancel = new CancellationTokenSource();
             _currentToken = cancel;
-
             var (from, to) = _presenter.Content is not null ? (_presenter, _presenter2) : (_presenter2, _presenter);
 
             (from.ZIndex, to.ZIndex) = (0, 1);
@@ -165,21 +175,47 @@ public class Frame : ContentControl
         return rv;
     }
 
-    protected override bool RegisterContentPresenter(ContentPresenter presenter)
+    // protected override bool RegisterContentPresenter(ContentPresenter presenter)
+    // {
+    //     if (presenter.Name == PART_ContentPresenter)
+    //     {
+    //         _presenter = presenter;
+    //         return true;
+    //     }
+    //
+    //     if (presenter.Name == PART_ContentPresenter2)
+    //     {
+    //         _presenter2 = presenter;
+    //         return true;
+    //     }
+    //
+    //     return false;
+    // }
+
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
-        if (presenter.Name == PART_ContentPresenter)
-        {
-            _presenter = presenter;
-            return true;
-        }
+        base.OnApplyTemplate(e);
 
-        if (presenter.Name == PART_ContentPresenter2)
-        {
-            _presenter2 = presenter;
-            return true;
-        }
+        _presenter = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter);
+        _presenter2 = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter2);
+    }
 
-        return false;
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == ContentProperty)
+        {
+            if (change.OldValue is ILogical oldChild)
+            {
+                LogicalChildren.Remove(oldChild);
+            }
+
+            if (change.NewValue is ILogical newChild)
+            {
+                LogicalChildren.Add(newChild);
+            }
+        }
     }
 
     #region Nested type: FrameFrame

@@ -115,7 +115,7 @@
         <Grid ColumnDefinitions="Auto,0,*">
             <Border Grid.Column="0" Background="{DynamicResource Layer1BackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
-                <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto">
+                <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto,0,Auto">
                     <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
                         <icons:PackIconLucide Kind="ArrowLeft" />
                     </Button>
@@ -191,7 +191,10 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <Border Grid.Row="6" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
+                    <Button Grid.Row="6" Command="{Binding OpenFolderCommand}" Margin="12,0">
+                        <icons:PackIconLucide Kind="Folder" />
+                    </Button>
+                    <Border Grid.Row="8" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
                             BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="2"
                             BackgroundSizing="InnerBorderEdge"
                             Height="{Binding Bounds.Width,RelativeSource={RelativeSource Mode=Self}}">

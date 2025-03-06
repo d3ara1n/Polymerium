@@ -15,10 +15,15 @@ public class DropZone : ContentControl
     public static readonly RoutedEvent<DropEventArgs> DropEvent =
         RoutedEvent.Register<DropZone, DropEventArgs>(nameof(Drop), RoutingStrategies.Direct);
 
-    public static readonly DirectProperty<DropZone, object?> ModelProperty =
-        AvaloniaProperty.RegisterDirect<DropZone, object?>(nameof(Model), o => o.Model, (o, v) => o.Model = v);
+    public static readonly StyledProperty<object?> ModelProperty = AvaloniaProperty.Register<DropZone, object?>(nameof(Model));
 
-    private object? _model;
+    public object? Model
+    {
+        get => GetValue(ModelProperty);
+        set => SetValue(ModelProperty, value);
+    }
+
+    
 
     public DropZone()
     {
@@ -26,12 +31,6 @@ public class DropZone : ContentControl
         AddHandler(DragDrop.DragEnterEvent, OnDragEnter, handledEventsToo: true);
         AddHandler(DragDrop.DragLeaveEvent, OnDragLeave, handledEventsToo: true);
         AddHandler(DragDrop.DropEvent, OnDrop, handledEventsToo: true);
-    }
-
-    public object? Model
-    {
-        get => _model;
-        set => SetAndRaise(ModelProperty, ref _model, value);
     }
 
 
@@ -49,6 +48,7 @@ public class DropZone : ContentControl
 
     private void OnDragEnter(object? sender, DragEventArgs e)
     {
+        e.Handled = true;
         var args = new DragOverEventArgs(e.Data) { RoutedEvent = DragOverEvent };
         RaiseEvent(args);
         PseudoClasses.Set(":drop", false);
@@ -66,13 +66,15 @@ public class DropZone : ContentControl
 
     private void OnDragLeave(object? sender, DragEventArgs e)
     {
+        e.Handled = true;
         e.DragEffects = DragDropEffects.None;
         PseudoClasses.Set(":dragover", false);
-        PseudoClasses.Set(":drop", false);
+        PseudoClasses.Set(":drop", Model != null);
     }
 
     private void OnDrop(object? sender, DragEventArgs e)
     {
+        e.Handled = true;
         e.DragEffects = DragDropEffects.None;
         PseudoClasses.Set(":dragover", false);
         var validation = new DragOverEventArgs(e.Data) { RoutedEvent = DragOverEvent };
@@ -84,13 +86,21 @@ public class DropZone : ContentControl
             if (args.Model != null)
             {
                 Model = args.Model;
-                PseudoClasses.Set(":drop", true);
                 return;
             }
         }
 
         Model = null;
-        PseudoClasses.Set(":drop", false);
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == ModelProperty)
+        {
+            PseudoClasses.Set(":drop", change.NewValue != null);
+        }
     }
 
     public class DragOverEventArgs(IDataObject data) : RoutedEventArgs

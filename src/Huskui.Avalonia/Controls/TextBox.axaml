@@ -58,7 +58,8 @@
                             </Transitions>
                         </Border.Transitions>
                         <Grid ColumnDefinitions="Auto,0,*,0,Auto">
-                            <ContentPresenter Grid.Column="0" Content="{TemplateBinding InnerLeftContent}" />
+                            <ContentPresenter Grid.Column="0" Content="{TemplateBinding InnerLeftContent}"
+                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                             <ScrollViewer Grid.Column="2"
                                           AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                           HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
@@ -102,7 +103,8 @@
                                         TextWrapping="{TemplateBinding TextWrapping}" />
                                 </Panel>
                             </ScrollViewer>
-                            <ContentPresenter Grid.Column="4" Content="{TemplateBinding InnerRightContent}" />
+                            <ContentPresenter Grid.Column="4" Content="{TemplateBinding InnerRightContent}"
+                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                         </Grid>
                     </Border>
                     <Border x:Name="PART_GlowBorder" CornerRadius="{TemplateBinding CornerRadius}"

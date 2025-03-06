@@ -9,7 +9,8 @@
              IsPrimaryButtonVisible="True"
              x:Class="Polymerium.App.Dialogs.FilePickerDialog">
     <StackPanel Spacing="12">
-        <husk:DropZone Padding="0" DragOver="DropZone_OnDragOver" Drop="DropZone_OnDrop">
+        <husk:DropZone Padding="0" Model="{Binding $parent[local:FilePickerDialog].Result,Mode=OneWayToSource}"
+                       DragOver="DropZone_OnDragOver" Drop="DropZone_OnDrop">
             <Panel>
                 <Rectangle Name="DashLine" RadiusX="6" RadiusY="6"
                            StrokeThickness="2"

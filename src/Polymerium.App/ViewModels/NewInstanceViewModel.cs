@@ -74,7 +74,8 @@ public partial class NewInstanceViewModel : ViewModelBase
     private async Task OpenImportDialog()
     {
         var dialog = new FilePickerDialog { Message = "Select a file to import" };
-        if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is string path && File.Exists(path))
+        var path = await _overlayService.RequestFileAsync("Select a file to import");
+        if (path != null)
             try
             {
                 var fs = new FileStream(path, FileMode.Open);

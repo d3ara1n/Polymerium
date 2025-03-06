@@ -29,7 +29,7 @@ public partial class FilePickerDialog : Dialog
         {
             var file = e.Data.GetFiles()?.FirstOrDefault();
             if (file != null)
-                Result = file.TryGetLocalPath();
+                e.Model = file.TryGetLocalPath();
         }
     }
 

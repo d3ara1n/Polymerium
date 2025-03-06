@@ -1,13 +1,16 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
+using Polymerium.Trident;
 using Polymerium.Trident.Services;
 
 namespace Polymerium.App.ViewModels;
@@ -23,6 +26,17 @@ public partial class InstanceViewModel : InstanceViewModelBase
         Dispatcher.UIThread.Post(() => SelectedPage = PageEntries.FirstOrDefault());
         return base.OnInitializedAsync(token);
     }
+
+    #region Commands
+
+    [RelayCommand]
+    private void OpenFolder()
+    {
+        var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
+        Process.Start(new ProcessStartInfo(dir) { UseShellExecute = true });
+    }
+
+    #endregion
 
     #region Reactive
 

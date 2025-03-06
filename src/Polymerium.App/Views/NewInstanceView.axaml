@@ -61,7 +61,7 @@
                             <DropShadowEffect Opacity="0.1" />
                         </husk:DropZone.Effect>
                         <Panel>
-                            <Border Name="ThumbnailBox" />
+                            <Border Name="ThumbnailBox" CornerRadius="{StaticResource MediumCornerRadius}" />
                             <Panel Name="DropPanel" IsHitTestVisible="False">
                                 <Panel.Transitions>
                                     <Transitions>

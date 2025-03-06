@@ -8,6 +8,7 @@
                 <StackPanel Spacing="8" />
             </ItemsPanelTemplate>
         </Setter>
+        <Setter Property="ClipToBounds" Value="False"/>
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="6*,8,4*">

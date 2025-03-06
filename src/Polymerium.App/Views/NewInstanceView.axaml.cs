@@ -15,12 +15,12 @@ public partial class NewInstanceView : ScopedPage
 
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
     {
-        e.Accepted = true;
+        if (e.Data.Contains(DataFormats.Files) && e.Data.Contains("FileContents"))
+            e.Accepted = true;
     }
 
     private void DropZone_OnDrop(object? sender, DropZone.DropEventArgs e)
     {
-        Debug.WriteLine(string.Join(",", e.Data.GetDataFormats()));
         if (e.Data.Contains(DataFormats.Files) && e.Data.Contains("FileContents"))
         {
             var first = e.Data.GetFiles()?.FirstOrDefault();

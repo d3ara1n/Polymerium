@@ -15,7 +15,7 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Icon="LocalLanguage" Title="Display and Languages"
+        <controls:SettingsEntry Icon="LocalLanguage" Title="Display and Apperance"
                                 Summary="The language the application displays in">
             <controls:SettingsEntryItem Header="Language">
                 <ComboBox SelectedIndex="0">
