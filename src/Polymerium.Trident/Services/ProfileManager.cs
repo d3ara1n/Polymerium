@@ -47,7 +47,7 @@ public class ProfileManager : IDisposable
 
                 var handle = ProfileHandle.Create(ins.Name, path, _serializerOptions);
                 _profiles.Add(handle);
-                logger.LogInformation("{} added", handle.Key);
+                logger.LogInformation("{} scanned", handle.Key);
             }
             catch (Exception ex)
             {
@@ -107,6 +107,8 @@ public class ProfileManager : IDisposable
         _profiles.Add(handle);
         key.Dispose();
         handle.SaveAsync().Wait();
+
+        _logger.LogInformation("{} added", handle.Key);
         OnProfileAdded(key.Key, profile);
     }
 
@@ -117,6 +119,7 @@ public class ProfileManager : IDisposable
             throw new InvalidOperationException($"{key} is not in profiles");
         _profiles.Remove(handle);
 
+        _logger.LogInformation("{} removed", key);
         OnProfileRemoved(key, handle.Value);
     }
 
@@ -145,6 +148,7 @@ public class ProfileManager : IDisposable
             handle.Value.Overrides[k] = v;
 
         handle.SaveAsync().Wait();
+        _logger.LogInformation("{} updated", key);
         OnProfileUpdated(key, handle.Value);
     }
 

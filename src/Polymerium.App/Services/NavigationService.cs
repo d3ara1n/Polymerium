@@ -16,28 +16,12 @@ public class NavigationService
     public void SetHandler(Action<Type, object?, IPageTransition> handler) => _handler = handler;
 
     public void Navigate(Type page, object? parameter = null, IPageTransition? transition = null) =>
-        Dispatcher.UIThread.Post(() =>
-        {
-            try
-            {
-                _handler?.Invoke(page,
-                                 parameter,
-                                 transition
-                              ?? (page.IsAssignableTo(typeof(ScopedPage))
-                                      ? new PageCoverOverTransition(null, DirectionFrom.Right)
-                                      : new PopUpTransition()));
-            }
-            catch (NavigationFailedException ex)
-            {
-                _handler?.Invoke(typeof(PageNotReachedView),
-                                 ex.Message,
-                                 new PageCoverOverTransition(null, DirectionFrom.Right));
-            }
-            catch (Exception ex)
-            {
-                _handler?.Invoke(typeof(ExceptionView), ex, new PopUpTransition());
-            }
-        });
+        Dispatcher.UIThread.Post(() => _handler?.Invoke(page,
+                                                        parameter,
+                                                        transition
+                                                     ?? (page.IsAssignableTo(typeof(ScopedPage))
+                                                             ? new PageCoverOverTransition(null, DirectionFrom.Right)
+                                                             : new PopUpTransition())));
 
     public void Navigate<T>(object? parameter = null, IPageTransition? transition = null) where T : Page =>
         Navigate(typeof(T), parameter, transition);
