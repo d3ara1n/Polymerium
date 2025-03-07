@@ -13,7 +13,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using HotAvalonia;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Transitions;
 using Microsoft.Extensions.DependencyInjection;
+using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
@@ -113,6 +115,68 @@ public class App : Application
         }
     }
 
+    private static int activatorErrorCount;
+
+    private static object? ActivatePage(Type view, object? parameter)
+    {
+        try
+        {
+            if (!view.IsAssignableTo(typeof(Page)))
+                throw new ArgumentOutOfRangeException(nameof(view), view, "Parameter view must be derived from Page");
+
+            var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
+            var type = Type.GetType(name);
+
+            var page = Activator.CreateInstance(view) as Page;
+
+            if (type is not null)
+            {
+                if (!type.IsAssignableTo(typeof(ObservableObject)))
+                    throw new ArgumentOutOfRangeException(nameof(type),
+                                                          type,
+                                                          $"{view.Name} was bound to a view model which is not derived from ObservableObject");
+
+                using var scope = Program.AppHost!.Services.CreateScope();
+
+                var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
+                factory.Bag = parameter;
+
+                var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
+
+                if (page is not null)
+                {
+                    page.DataContext = viewModel;
+
+                    if (viewModel is IPageModel pageModel)
+                        page.Model = pageModel;
+                }
+            }
+
+            activatorErrorCount = 0;
+            return page;
+        }
+        catch (NavigationFailedException ex)
+        {
+            // 避免又产生异常而导致无限循环
+            if (activatorErrorCount++ < 3)
+            {
+                return ActivatePage(typeof(PageNotReachedView), ex.Message);
+            }
+
+            throw;
+        }
+        catch (Exception ex)
+        {
+            // 避免又产生异常而导致无限循环
+            if (activatorErrorCount++ < 3)
+            {
+                return ActivatePage(typeof(ExceptionView), ex);
+            }
+
+            throw;
+        }
+    }
+
     private static Window ConstructWindow()
     {
         if (Program.AppHost is null)
@@ -133,44 +197,7 @@ public class App : Application
         // Link navigation service
         var navigation = Program.AppHost.Services.GetRequiredService<NavigationService>();
         // Closure captures Program.AppHost.Services
-        window.BindNavigation(navigation.Navigate,
-                              (view, parameter) =>
-                              {
-                                  if (!view.IsAssignableTo(typeof(Page)))
-                                      throw new ArgumentOutOfRangeException(nameof(view),
-                                                                            view,
-                                                                            "Parameter view must be derived from Page");
-
-                                  var name = view.FullName!.Replace("View", "ViewModel", StringComparison.Ordinal);
-                                  var type = Type.GetType(name);
-
-                                  var page = Activator.CreateInstance(view) as Page;
-
-                                  if (type is not null)
-                                  {
-                                      if (!type.IsAssignableTo(typeof(ObservableObject)))
-                                          throw new ArgumentOutOfRangeException(nameof(type),
-                                                                                    type,
-                                                                                    $"{view.Name} was bound to a view model which is not derived from ObservableObject");
-
-                                      using var scope = Program.AppHost.Services.CreateScope();
-
-                                      var factory = scope.ServiceProvider.GetRequiredService<ViewBagFactory>();
-                                      factory.Bag = parameter;
-
-                                      var viewModel = ActivatorUtilities.CreateInstance(scope.ServiceProvider, type);
-
-                                      if (page is not null)
-                                      {
-                                          page.DataContext = viewModel;
-
-                                          if (viewModel is IPageModel pageModel)
-                                              page.Model = pageModel;
-                                      }
-                                  }
-
-                                  return page;
-                              });
+        window.BindNavigation(navigation.Navigate, ActivatePage);
 
         navigation.SetHandler(window.Navigate);
 
