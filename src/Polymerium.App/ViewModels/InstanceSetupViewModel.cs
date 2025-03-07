@@ -17,6 +17,7 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions.FileModels;
@@ -91,6 +92,9 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                               if (inner.IsCancellationRequested)
                                                   return;
                                               await semaphore.WaitAsync(inner);
+                                              // NOTE: 如果可以的话，对于 Purl.Vid 为空的，需要去 LockData 里找 Packages[i].Vid，获取锁定的版本
+                                              //  当然也可以不这么干，对于版本锁，给一个单独的页面来查看锁定的版本就行
+                                              //  因为版本锁是为构建服务的，不应该暴露给用户看当前锁定的版本是哪个
                                               var p = await _repositories.ResolveAsync(v.Label,
                                                           v.Namespace,
                                                           v.Pid,

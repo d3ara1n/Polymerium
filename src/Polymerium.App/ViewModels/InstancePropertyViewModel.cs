@@ -90,9 +90,8 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
             Directory.CreateDirectory(dir);
         File.WriteAllText(path, Basic.Key);
         ProfileManager.Remove(Basic.Key);
-
-        // TODO: 日后替换成 DesktopView 主页
-        _navigationService.Navigate<NewInstanceView>();
+        
+        _navigationService.Navigate<LandingView>();
     }
 
     [RelayCommand]

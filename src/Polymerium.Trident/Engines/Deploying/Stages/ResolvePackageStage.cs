@@ -59,7 +59,8 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                                 resolved.Dependencies.Any()
                                     ? $"[{string.Join(",", resolved.Dependencies)}]"
                                     : "no dependencies");
-                var version = new Version(resolved.Kind,
+                var version = new Version(resolved.VersionId,
+                                          resolved.Kind,
                                           resolved.PublishedAt,
                                           resolved.FileName,
                                           resolved.Sha1,
@@ -92,8 +93,12 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                 ProgressReporter?.Report((flatten.Count, purls.Count + flatten.Count));
             }
 
-        foreach (var (_, value) in flatten)
-            builder.AddParcel(PathDef.Default.NameOfObject(value.Sha1),
+        foreach (var (key, value) in flatten)
+            builder.AddParcel(key.Label,
+                              key.Namespace,
+                              key.Pid,
+                              value.Vid,
+                              PathDef.Default.NameOfObject(value.Sha1),
                               Path.Combine(FileHelper.GetAssetFolderName(value.Kind), value.FileName),
                               value.Download,
                               value.Sha1);
@@ -106,6 +111,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
     private record Identity(string Label, string? Namespace, string Pid);
 
     private record Version(
+        string Vid,
         ResourceKind Kind,
         DateTimeOffset ReleasedAt,
         string FileName,

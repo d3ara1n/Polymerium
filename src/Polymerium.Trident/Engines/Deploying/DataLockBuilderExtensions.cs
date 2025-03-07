@@ -6,11 +6,15 @@ public static class DataLockBuilderExtensions
 {
     public static DataLockBuilder AddParcel(
         this DataLockBuilder self,
+        string label,
+        string? @namespace,
+        string pid,
+        string vid,
         string source,
         string target,
         Uri url,
         string sha1) =>
-        self.AddParcel(new DataLock.Parcel(source, target, url, sha1));
+        self.AddParcel(new DataLock.Parcel(label, @namespace, pid, vid, source, target, url, sha1));
 
     // PATCH: 为了适配奇葩 PrismLauncher Meta 的多态数据
     public static DataLockBuilder AddLibraryPrismFlavor(this DataLockBuilder self, string fullname, Uri url)

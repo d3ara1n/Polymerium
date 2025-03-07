@@ -6,21 +6,30 @@
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:controls="using:Polymerium.App.Controls"
            xmlns:vm="using:Polymerium.App.ViewModels"
+           xmlns:m="using:Polymerium.App.Models"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.SettingsView" Header="Application Settings" x:DataType="vm:SettingsViewModel">
     <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
         <controls:SettingsEntry Title="Super Power" Icon="Wand" Summary="味大，我为自己带盐">
             <controls:SettingsEntryItem Header="Activate">
-                <ToggleSwitch IsChecked="{Binding IsSuperPowerActivated,Mode=TwoWay}" />
+                <ToggleSwitch IsChecked="{Binding SuperPowerActivated,Mode=TwoWay}" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Icon="LocalLanguage" Title="Display and Apperance"
+        <controls:SettingsEntry Icon="LocalLanguage" Title="Display and Appearance"
                                 Summary="The language the application displays in">
             <controls:SettingsEntryItem Header="Language">
-                <ComboBox SelectedIndex="0">
-                    <ComboBoxItem Content="Chinglish" />
-                    <ComboBoxItem Content="简体中文" />
+                <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language,Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="m:LanguageModel">
+                            <Grid ColumnDefinitions="*,4,Auto">
+                                <TextBlock Grid.Column="0" Text="{Binding Display}" VerticalAlignment="Center" />
+                                <husk:Tag Grid.Column="2" CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <TextBlock Text="{Binding Id}" />
+                                </husk:Tag>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Font">
@@ -31,38 +40,66 @@
         <controls:SettingsEntry Icon="DrinkCoffee" Title="Java Presets"
                                 Summary="Instance will select the best match while launching">
             <controls:SettingsEntryItem Header="Java 8">
-                <TextBox Watermark="Fallback to the bundled if unset">
+                <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome8,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
-                        <Button Margin="4">
-                            <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
-                        </Button>
+                        <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
+                            <Button Command="{Binding ClearTextCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <Button Command="{Binding PickFileCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </StackPanel>
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java 11">
-                <TextBox Watermark="Fallback to the bundled if unset">
+                <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome11,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
-                        <Button Margin="4">
-                            <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
-                        </Button>
+                        <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
+                            <Button Command="{Binding ClearTextCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <Button Command="{Binding PickFileCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </StackPanel>
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java 17">
-                <TextBox Watermark="Fallback to the bundled if unset">
+                <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome17,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
-                        <Button Margin="4">
-                            <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
-                        </Button>
+                        <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
+                            <Button Command="{Binding ClearTextCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <Button Command="{Binding PickFileCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </StackPanel>
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java 21">
-                <TextBox Watermark="Fallback to the bundled if unset">
+                <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome21,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
-                        <Button Margin="4">
-                            <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
-                        </Button>
+                        <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
+                            <Button Command="{Binding ClearTextCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <Button Command="{Binding PickFileCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </StackPanel>
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
@@ -71,7 +108,7 @@
         <controls:SettingsEntry Icon="Joystick" Title="Game Defaults"
                                 Summary="The listing configuration can be override by the instance individually">
             <controls:SettingsEntryItem Header="Java Max Memory">
-                <TextBox Watermark="Bigger is better" Text="4096">
+                <TextBox Watermark="Bigger is better" Text="{Binding JavaMaxMemory,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
@@ -82,11 +119,11 @@
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java Additional Arguments">
-                <TextBox Watermark="Less is more" />
+                <TextBox Watermark="Less is more" Text="{Binding JavaAdditionalArguments,Mode=TwoWay}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Window Initial Size">
                 <Grid ColumnDefinitions="*,7,*">
-                    <TextBox Grid.Column="0" Watermark="1270">
+                    <TextBox Grid.Column="0" Watermark="1270" Text="{Binding WindowInitialHeight,Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Width" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
@@ -95,7 +132,7 @@
                             </StackPanel>
                         </TextBox.InnerLeftContent>
                     </TextBox>
-                    <TextBox Grid.Column="2" Watermark="720">
+                    <TextBox Grid.Column="2" Watermark="720" Text="{Binding WindowInitialWidth,Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Height" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"

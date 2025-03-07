@@ -128,6 +128,7 @@ public partial class MainWindow : AppWindow
         {
             (Type Page, object? Parameter) target = sender switch
             {
+                Button { Tag: "LandingView" } => (typeof(LandingView), null),
                 Button { Tag: "MarketplacePortalView" } => (typeof(MarketplacePortalView), null),
                 Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
                 Button { Tag: "CreateInstanceView" } => (typeof(NewInstanceView), null),
