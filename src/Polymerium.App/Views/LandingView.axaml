@@ -1,0 +1,13 @@
+﻿<husk:Page xmlns="https://github.com/avaloniaui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+           Background="{x:Null}"
+           x:Class="Polymerium.App.Views.LandingView">
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Image Source="/Assets/Icons/Ghost.png" Height="128" Width="128" />
+        <TextBlock Text="Boo!" FontSize="64" TextAlignment="Center" />
+    </StackPanel>
+</husk:Page>

@@ -24,7 +24,15 @@ public record DataLock(
     // 解析之后的包，会被软链接到目标目录。
     // 同样软链接的还有 Persistence 清单
     // Import 导入位于 Persistence 固化之前，意味着可以把 Import 导入的文件也持久化
-    public record Parcel(string SourcePath, string TargetPath, Uri Download, string Sha1);
+    public record Parcel(
+        string Label,
+        string? Namespace,
+        string Pid,
+        string Vid,
+        string SourcePath,
+        string TargetPath,
+        Uri Download,
+        string Sha1);
 
     public record AssetData(string Id, Uri Url, string Sha1);
 }

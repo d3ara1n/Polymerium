@@ -118,7 +118,7 @@
                         Grid.ColumnSpan="3"
                         Height="48"
                         Click="NavigationButton_OnClick"
-                        Tag="UnknownView"
+                        Tag="LandingView"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <icons:PackIconLucide
