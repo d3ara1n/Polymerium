@@ -7,5 +7,6 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              IsPrimaryButtonVisible="True" Title="Get something entered" Message="Just write something down below..."
              x:Class="Polymerium.App.Dialogs.UserInputDialog">
-    <TextBox Text="{Binding $parent[local:UserInputDialog].Result,Mode=TwoWay}" Watermark="{Binding $parent[local:UserInputDialog].Watermark}"/>
+    <TextBox Text="{Binding $parent[local:UserInputDialog].Result,Mode=TwoWay}"
+             Watermark="{Binding $parent[local:UserInputDialog].Watermark}" />
 </husk:Dialog>

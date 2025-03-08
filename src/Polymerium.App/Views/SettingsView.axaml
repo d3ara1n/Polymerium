@@ -39,7 +39,7 @@
         <husk:Divider />
         <controls:SettingsEntry Icon="DrinkCoffee" Title="Java Presets"
                                 Summary="Instance will select the best match while launching">
-            <controls:SettingsEntryItem Header="Java 8">
+            <controls:SettingsEntryItem Header="Java Home 8">
                 <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome8,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
@@ -55,7 +55,7 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Java 11">
+            <controls:SettingsEntryItem Header="Java Home 11">
                 <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome11,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
@@ -71,7 +71,7 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Java 17">
+            <controls:SettingsEntryItem Header="Java Home 17">
                 <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome17,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
@@ -87,7 +87,7 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Java 21">
+            <controls:SettingsEntryItem Header="Java Home 21">
                 <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome21,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">

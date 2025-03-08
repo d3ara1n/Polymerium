@@ -13,7 +13,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using HotAvalonia;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
-using Huskui.Avalonia.Transitions;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
@@ -25,6 +24,8 @@ namespace Polymerium.App;
 
 public class App : Application
 {
+    private static int activatorErrorCount;
+
     public override void Initialize()
     {
         #if DEBUG
@@ -115,8 +116,6 @@ public class App : Application
         }
     }
 
-    private static int activatorErrorCount;
-
     private static object? ActivatePage(Type view, object? parameter)
     {
         try
@@ -159,9 +158,7 @@ public class App : Application
         {
             // 避免又产生异常而导致无限循环
             if (activatorErrorCount++ < 3)
-            {
                 return ActivatePage(typeof(PageNotReachedView), ex.Message);
-            }
 
             throw;
         }
@@ -169,9 +166,7 @@ public class App : Application
         {
             // 避免又产生异常而导致无限循环
             if (activatorErrorCount++ < 3)
-            {
                 return ActivatePage(typeof(ExceptionView), ex);
-            }
 
             throw;
         }

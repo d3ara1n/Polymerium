@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -17,11 +18,11 @@ using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstancePropertyViewModel : InstanceViewModelBase
+public partial class InstancePropertiesViewModel : InstanceViewModelBase
 {
     private ProfileGuard? _owned;
 
-    public InstancePropertyViewModel(
+    public InstancePropertiesViewModel(
         ViewBag bag,
         ProfileManager profileManager,
         InstanceManager instanceManager,
@@ -63,9 +64,7 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
         // NOTE: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
         var path = ProfileHelper.PickIcon(Basic.Key);
         if (path != null)
-        {
             ThumbnailOverwrite.Save(path);
-        }
     }
 
     #region Injected
@@ -79,6 +78,28 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
     #region Commands
 
     [RelayCommand]
+    private void ClearText(TextBox? box)
+    {
+        box?.Clear();
+    }
+
+    [RelayCommand]
+    private async Task PickFile(TextBox? box)
+    {
+        if (box != null)
+        {
+            var path = await _overlayService.RequestFileAsync("Pick a file like /bin/java.exe or /bin/javaw.exe",
+                                                              "Select a Java executable");
+            if (path != null && File.Exists(path))
+            {
+                var dir = Path.GetDirectoryName(path);
+                if (dir != null)
+                    box.Text = dir;
+            }
+        }
+    }
+
+    [RelayCommand]
     private void ResetInstance() { }
 
     [RelayCommand]
@@ -90,7 +111,7 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
             Directory.CreateDirectory(dir);
         File.WriteAllText(path, Basic.Key);
         ProfileManager.Remove(Basic.Key);
-        
+
         _navigationService.Navigate<LandingView>();
     }
 
@@ -105,14 +126,17 @@ public partial class InstancePropertyViewModel : InstanceViewModelBase
     private async Task SelectThumbnail()
     {
         var path = await _overlayService.RequestFileAsync("Select a image file", "Select thumbnail");
-        if (path != null && FileHelper.IsBitmapFile(path))
+        if (path != null)
         {
-            ThumbnailOverwrite = new Bitmap(path);
-            WriteIcon();
-        }
-        else
-        {
-            _notificationService.PopMessage("Selected file is not a valid image or no file selected.");
+            if (FileHelper.IsBitmapFile(path))
+            {
+                ThumbnailOverwrite = new Bitmap(path);
+                WriteIcon();
+            }
+            else
+            {
+                _notificationService.PopMessage("Selected file is not a valid image or no file selected.");
+            }
         }
     }
 

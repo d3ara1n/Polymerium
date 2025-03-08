@@ -4,8 +4,6 @@ using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Transitions;
 using Polymerium.App.Controls;
-using Polymerium.App.Exceptions;
-using Polymerium.App.Views;
 
 namespace Polymerium.App.Services;
 

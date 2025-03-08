@@ -5,9 +5,6 @@ namespace Polymerium.App.ViewModels;
 
 public partial class PageNotReachedViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private string _message;
-
     public PageNotReachedViewModel(ViewBag bag)
     {
         if (bag.Parameter is string message)
@@ -15,4 +12,7 @@ public partial class PageNotReachedViewModel : ViewModelBase
         else
             Message = "How about we explore the area ahead of us later?";
     }
+
+    [ObservableProperty]
+    public partial string Message { get; set; }
 }

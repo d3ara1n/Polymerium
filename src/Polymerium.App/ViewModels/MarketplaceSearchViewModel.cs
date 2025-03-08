@@ -189,7 +189,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage(ex.Message, "Network unreachable", NotificationLevel.Warning);
+                    _notificationService.PopMessage(ex, "Network unreachable", NotificationLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 

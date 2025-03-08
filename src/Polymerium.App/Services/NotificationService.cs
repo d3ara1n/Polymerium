@@ -55,8 +55,11 @@ public class NotificationService
             }
         });
 
-    public void PopMessage(Exception ex, string title, NotificationLevel level = NotificationLevel.Danger) =>
-        PopMessage(Debugger.IsAttached ? ex.ToString() : ex.Message, title = "Operation failed", level);
+    public void PopMessage(
+        Exception ex,
+        string title = "Operation failed",
+        NotificationLevel level = NotificationLevel.Danger) =>
+        PopMessage(Debugger.IsAttached ? ex.ToString() : ex.Message, title, level);
 
     public void PopProgress(
         string message,
