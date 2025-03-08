@@ -69,7 +69,7 @@ public partial class InstanceView : ScopedPage
                                                  ? new PageSlideTransition(newIndex - oldIndex > 0
                                                                                ? DirectionFrom.Bottom
                                                                                : DirectionFrom.Top)
-                                                 : new HookUpTransition();
+                                                 : new PopUpTransition();
 
                 Frame.Navigate(selected.Page, Key, transition);
             }
