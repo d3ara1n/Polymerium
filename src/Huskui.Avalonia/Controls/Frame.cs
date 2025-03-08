@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
@@ -146,8 +147,8 @@ public class Frame : TemplatedControl
 
         if (_current.HasValue && _doubleArrangeSafeLock)
         {
-            _currentToken?.Cancel();
             _doubleArrangeSafeLock = false;
+            _currentToken?.Cancel();
             var cancel = new CancellationTokenSource();
             _currentToken = cancel;
             var (from, to) = _presenter.Content is not null ? (_presenter, _presenter2) : (_presenter2, _presenter);
@@ -155,18 +156,18 @@ public class Frame : TemplatedControl
             (from.ZIndex, to.ZIndex) = (0, 1);
             (from.IsVisible, to.IsVisible) = (true, true);
             to.Content = _current.Value.Content;
-
+            Debug.WriteLine($"{Name}:{_current.Value.Content?.GetType().Name}");
             _current
                .Value.Transition.Start(from, to, !_current.Value.Reverse, cancel.Token)
                .ContinueWith(_ =>
                              {
+                                 Debug.WriteLine($"{Name}:{cancel.IsCancellationRequested}");
                                  if (cancel.IsCancellationRequested)
                                      return;
-
                                  (from.IsVisible, to.IsVisible) = (false, true);
                                  from.Content = null;
                                  // NOTE: ContentControl.Content 改变会移除 from.Content 自 LogicalChildren，这会导致 from.Content 的 DynamicResource 全部失效
-                                 // 因此要放在动画结束 from 退出时对 Content 进行设置
+                                 //  因此要放在动画结束 from 退出时对 Content 进行设置
                                  Content = to.Content;
                              },
                              TaskScheduler.FromCurrentSynchronizationContext());

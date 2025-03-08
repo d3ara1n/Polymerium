@@ -8,10 +8,10 @@ namespace Huskui.Avalonia.Transitions;
 
 public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTransition
 {
-    private static readonly TimeSpan _defaultDuration = TimeSpan.FromMilliseconds(197);
-    private static readonly Easing _defaultEasing = new LinearEasing();
+    private static readonly TimeSpan DefaultDuration = TimeSpan.FromMilliseconds(197);
+    private static readonly Easing DefaultEasing = new LinearEasing();
 
-    public TimeSpan Duration { get; set; } = duration ?? _defaultDuration;
+    public TimeSpan Duration { get; set; } = duration ?? DefaultDuration;
 
     #region IPageTransition Members
 
@@ -20,15 +20,15 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
         if (cancellationToken.IsCancellationRequested)
             return;
 
-        List<Task>? tasks = new();
+        var tasks = new List<Task>();
 
         // 在反向时动画会反着施加到 from 和 to 上，to 会倒着播放原先消失的动画，这里取巧直接反转 from 和 to，并倒转双方动画实现
         if (!forward)
             (from, to) = (to, from);
 
         // 捕获交换过的 from, to，不过顺序不影响
-        Builder fromBuilder = new(Duration);
-        Builder toBuilder = new(Duration);
+        var fromBuilder = new Builder(Duration);
+        var toBuilder = new Builder(Duration);
         Configure(fromBuilder, toBuilder, new Lazy<Visual>(() => GetVisualParent(from, to)));
 
         var (fromAnimations, toAnimations) = (fromBuilder.Build(forward), toBuilder.Build(forward));
@@ -38,7 +38,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
 
         if (to != null)
             tasks.AddRange(toAnimations.Select(animation => animation.RunAsync(to, cancellationToken)));
-
+        
         await Task.WhenAll(tasks);
 
         Cleanup(from, to);
@@ -90,7 +90,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
                                          TimeSpan.Zero,
                                          FillMode.Forward,
                                          1.0d,
-                                         _defaultEasing));
+                                         DefaultEasing));
 
         public AnimationBuilder Animation(TimeSpan? duration = null, Easing? easing = null)
         {
@@ -130,14 +130,14 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
 
             public AnimationBuilder AddFrame(TimeSpan keyTime, Action<FrameBuilder> builder)
             {
-                FrameBuilder? frame = new(null, keyTime);
+                var frame = new FrameBuilder(null, keyTime);
                 _frames.Add(frame);
                 return this;
             }
 
             public AnimationBuilder AddFrame(double cue, Span<(AvaloniaProperty Property, object? Value)> setters)
             {
-                FrameBuilder? frame = new(cue, null);
+                var frame = new FrameBuilder(cue, null);
                 foreach (var setter in setters)
                     frame.WithSetter(setter.Property, setter.Value);
 
@@ -147,7 +147,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
 
             public AnimationBuilder AddFrame(TimeSpan keyTime, Span<(AvaloniaProperty Property, object? Value)> setters)
             {
-                FrameBuilder? frame = new(null, keyTime);
+                var frame = new FrameBuilder(null, keyTime);
                 foreach (var setter in setters)
                     frame.WithSetter(setter.Property, setter.Value);
 
