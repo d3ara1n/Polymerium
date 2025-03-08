@@ -3,7 +3,6 @@ using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
@@ -91,7 +90,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex.Message, "Update failed", NotificationLevel.Danger);
+            _notificationService.PopMessage(ex, "Update failed");
         }
     }
 

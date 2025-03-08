@@ -15,7 +15,7 @@ public class CheckArtifactStage(ILogger<CheckArtifactStage> logger) : StageBase
             {
                 var content = await File.ReadAllTextAsync(artifactPath, token);
                 var artifact = JsonSerializer.Deserialize<DataLock>(content, JsonSerializerOptions.Web);
-                if (artifact != null && Verify(artifact.Viability, Context.Setup))
+                if (artifact != null && Verify(artifact.Viability))
                 {
                     Context.Artifact = artifact;
                     logger.LogInformation("Using artifact: {path}", Path.GetFileName(artifactPath));
@@ -39,17 +39,20 @@ public class CheckArtifactStage(ILogger<CheckArtifactStage> logger) : StageBase
         }
     }
 
-    private bool Verify(DataLock.ViabilityData data, Profile.Rice setup)
+    private bool Verify(DataLock.ViabilityData data)
     {
-        if (data.Version != setup.Version || data.Loader != setup.Loader)
+        if (data.Home != PathDef.Default.Home
+         || data.Key != Context.Key
+         || data.Version != Context.Setup.Version
+         || data.Loader != Context.Setup.Loader)
             return false;
 
-        if (data.Packages.Count != setup.Stage.Count + setup.Stash.Count)
+        if (data.Packages.Count != Context.Setup.Stage.Count + Context.Setup.Stash.Count)
             return false;
 
         var map = data.Packages.Distinct().ToDictionary(x => x, _ => 0);
 
-        foreach (var check in setup.Stage.Concat(setup.Stash))
+        foreach (var check in Context.Setup.Stage.Concat(Context.Setup.Stash))
         {
             if (!map.TryGetValue(check, out var value))
                 return false;

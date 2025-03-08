@@ -6,12 +6,6 @@ namespace Polymerium.App.ViewModels;
 
 public partial class ExceptionViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private string _message = string.Empty;
-
-    [ObservableProperty]
-    private string _stackTrace = string.Empty;
-
     public ExceptionViewModel(ViewBag bag)
     {
         if (bag.Parameter is Exception exception)
@@ -20,4 +14,10 @@ public partial class ExceptionViewModel : ViewModelBase
             StackTrace = exception.StackTrace ?? "No details provided.";
         }
     }
+
+    [ObservableProperty]
+    public partial string Message { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string StackTrace { get; set; } = string.Empty;
 }

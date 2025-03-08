@@ -16,13 +16,6 @@ namespace Polymerium.App.ViewModels;
 
 public partial class MarketplacePortalViewModel : ViewModelBase
 {
-    #region Reactive
-
-    [ObservableProperty]
-    private IReadOnlyList<MinecraftNewsModel>? _news;
-
-    #endregion
-
     public MarketplacePortalViewModel(
         MojangLauncherService mojangLauncherService,
         IHttpClientFactory httpClientFactory,
@@ -32,6 +25,13 @@ public partial class MarketplacePortalViewModel : ViewModelBase
         _httpClientFactory = httpClientFactory;
         _navigationService = navigationService;
     }
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial IReadOnlyList<MinecraftNewsModel>? News { get; set; }
+
+    #endregion
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {

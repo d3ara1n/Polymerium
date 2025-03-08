@@ -9,7 +9,9 @@ public class BuildArtifactStage : StageBase
     {
         var builder = Context.ArtifactBuilder!;
 
-        builder.SetViability(new DataLock.ViabilityData(Context.Setup.Version,
+        builder.SetViability(new DataLock.ViabilityData(PathDef.Default.Home,
+                                                        Context.Key,
+                                                        Context.Setup.Version,
                                                         Context.Setup.Loader,
                                                         Context.Setup.Stage.Concat(Context.Setup.Stash).ToList()));
         var artifact = builder.Build();

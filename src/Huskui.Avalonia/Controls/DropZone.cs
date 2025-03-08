@@ -15,15 +15,9 @@ public class DropZone : ContentControl
     public static readonly RoutedEvent<DropEventArgs> DropEvent =
         RoutedEvent.Register<DropZone, DropEventArgs>(nameof(Drop), RoutingStrategies.Direct);
 
-    public static readonly StyledProperty<object?> ModelProperty = AvaloniaProperty.Register<DropZone, object?>(nameof(Model));
+    public static readonly StyledProperty<object?> ModelProperty =
+        AvaloniaProperty.Register<DropZone, object?>(nameof(Model));
 
-    public object? Model
-    {
-        get => GetValue(ModelProperty);
-        set => SetValue(ModelProperty, value);
-    }
-
-    
 
     public DropZone()
     {
@@ -31,6 +25,12 @@ public class DropZone : ContentControl
         AddHandler(DragDrop.DragEnterEvent, OnDragEnter, handledEventsToo: true);
         AddHandler(DragDrop.DragLeaveEvent, OnDragLeave, handledEventsToo: true);
         AddHandler(DragDrop.DropEvent, OnDrop, handledEventsToo: true);
+    }
+
+    public object? Model
+    {
+        get => GetValue(ModelProperty);
+        set => SetValue(ModelProperty, value);
     }
 
 
@@ -98,9 +98,7 @@ public class DropZone : ContentControl
         base.OnPropertyChanged(change);
 
         if (change.Property == ModelProperty)
-        {
             PseudoClasses.Set(":drop", change.NewValue != null);
-        }
     }
 
     public class DragOverEventArgs(IDataObject data) : RoutedEventArgs

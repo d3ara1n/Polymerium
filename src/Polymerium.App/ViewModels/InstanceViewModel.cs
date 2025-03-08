@@ -41,24 +41,24 @@ public partial class InstanceViewModel : InstanceViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    private ObservableCollection<InstanceSubpageEntryModel> _pageEntries =
+    private partial ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; set; } =
     [
         // Home
         new(typeof(InstanceHomeView), PackIconLucideKind.LayoutDashboard),
         // Setup or Metadata
         new(typeof(InstanceSetupView), PackIconLucideKind.Boxes),
         // Widgets
-        new(typeof(UnknownView), PackIconLucideKind.Blocks),
-        // Stats
-        new(typeof(UnknownView), PackIconLucideKind.ChartNoAxesCombined),
+        new(typeof(InstanceWidgetsView), PackIconLucideKind.Blocks),
+        // Statistics
+        new(typeof(InstanceStatisticsView), PackIconLucideKind.ChartNoAxesCombined),
         // Storage
-        new(typeof(UnknownView), PackIconLucideKind.ChartPie),
+        new(typeof(InstanceStorageView), PackIconLucideKind.ChartPie),
         // Properties
-        new(typeof(InstancePropertyView), PackIconLucideKind.Wrench)
+        new(typeof(InstancePropertiesView), PackIconLucideKind.Wrench)
     ];
 
     [ObservableProperty]
-    private InstanceSubpageEntryModel? _selectedPage;
+    private partial InstanceSubpageEntryModel? SelectedPage { get; set; }
 
     #endregion
 }

@@ -210,7 +210,7 @@
                         Grid.Column="2"
                         Grid.ColumnSpan="3"
                         Click="NavigationButton_OnClick"
-                        Tag="42"
+                        Tag="AccountsView"
                         Theme="{StaticResource OutlineButtonTheme}">
                         Accounts
                     </Button>

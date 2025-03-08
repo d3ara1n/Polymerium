@@ -31,8 +31,6 @@ public class Configuration
         { GAME_WINDOW_HEIGHT, 720u }
     };
 
-    public static T AccessDefault<T>(string key) => (T)Defaults[key]!;
-
     public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
     public string ApplicationLanguage { get; set; } = AccessDefault<string>(APPLICATION_STYLE);
     public string RuntimeJavaHome8 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_8);
@@ -43,4 +41,6 @@ public class Configuration
     public string GameJavaAdditionalArguments { get; set; } = AccessDefault<string>(GAME_JAVA_ADDITIONAL_ARGUMENTS);
     public uint GameWindowInitialWidth { get; set; } = AccessDefault<uint>(GAME_WINDOW_WIDTH);
     public uint GameWindowInitialHeight { get; set; } = AccessDefault<uint>(GAME_WINDOW_HEIGHT);
+
+    public static T AccessDefault<T>(string key) => (T)Defaults[key]!;
 }

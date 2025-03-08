@@ -187,7 +187,7 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstancePropertyView}"
+                    CommandParameter="{x:Type v:InstancePropertiesView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <TextBlock FontSize="{StaticResource SmallFontSize}" Text="See More" />
@@ -248,7 +248,7 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     Command="{Binding $parent[v:InstanceView].NavigateCommand}"
-                    CommandParameter="{x:Type v:InstancePropertyView}"
+                    CommandParameter="{x:Type v:InstancePropertiesView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <TextBlock FontSize="{StaticResource SmallFontSize}" Text="See More" />

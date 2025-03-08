@@ -38,7 +38,6 @@ public partial class SettingsViewModel : ViewModelBase
 
     #endregion
 
-
     #region Commands
 
     [RelayCommand]
@@ -52,22 +51,18 @@ public partial class SettingsViewModel : ViewModelBase
     {
         if (box != null)
         {
-            var path =
-                await _overlayService.RequestFileAsync(message: "Pick a file like /bin/java.exe or /bin/javaw.exe",
-                                                       title: "Select a Java executable");
+            var path = await _overlayService.RequestFileAsync("Pick a file like /bin/java.exe or /bin/javaw.exe",
+                                                              "Select a Java executable");
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(path);
                 if (dir != null)
-                {
                     box.Text = dir;
-                }
             }
         }
     }
 
     #endregion
-
 
     #region SuperPowerActivated
 

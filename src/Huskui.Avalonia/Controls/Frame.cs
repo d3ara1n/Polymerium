@@ -41,12 +41,6 @@ public class Frame : TemplatedControl
     public static readonly StyledProperty<object?> ContentProperty =
         AvaloniaProperty.Register<Frame, object?>(nameof(Content));
 
-    public object? Content
-    {
-        get => GetValue(ContentProperty);
-        set => SetValue(ContentProperty, value);
-    }
-
 
     private readonly InternalGoBackCommand _goBackCommand;
 
@@ -68,6 +62,12 @@ public class Frame : TemplatedControl
     private ContentPresenter? _presenter2;
 
     public Frame() => _goBackCommand = new InternalGoBackCommand(this);
+
+    public object? Content
+    {
+        get => GetValue(ContentProperty);
+        set => SetValue(ContentProperty, value);
+    }
 
     public bool CanGoBackOutOfStack
     {
@@ -207,14 +207,10 @@ public class Frame : TemplatedControl
         if (change.Property == ContentProperty)
         {
             if (change.OldValue is ILogical oldChild)
-            {
                 LogicalChildren.Remove(oldChild);
-            }
 
             if (change.NewValue is ILogical newChild)
-            {
                 LogicalChildren.Add(newChild);
-            }
         }
     }
 

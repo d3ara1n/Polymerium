@@ -1,0 +1,190 @@
+﻿<controls:Subpage xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                  xmlns:controls="using:Polymerium.App.Controls"
+                  xmlns:vm="using:Polymerium.App.ViewModels"
+                  xmlns:components="using:Polymerium.App.Components"
+                  xmlns:fi="using:FluentIcons.Avalonia"
+                  xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                  x:Class="Polymerium.App.Views.InstancePropertiesView" x:DataType="vm:InstancePropertiesViewModel">
+    <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
+        <controls:SettingsEntry Icon="AppTitle" Title="Title" Summary="How this instance identify itself">
+            <controls:SettingsEntryItem Header="Display Name">
+                <Border Background="{DynamicResource ControlBackgroundBrush}"
+                        CornerRadius="{StaticResource MediumCornerRadius}">
+                    <StackPanel Margin="4" Spacing="4">
+                        <Border Background="{DynamicResource LayerSolidBackgroundBrush}"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                            <TextBlock Text="{Binding NameOverwrite,FallbackValue=Name}" Margin="8"
+                                       FontSize="{StaticResource LargeFontSize}" TextAlignment="Center"
+                                       TextWrapping="Wrap" />
+                        </Border>
+                        <Button Classes="Small" Theme="{StaticResource OutlineButtonTheme}"
+                                Command="{Binding RenameInstanceCommand}"
+                                Content="Rename" />
+                    </StackPanel>
+                </Border>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Thumbnail">
+                <Grid ColumnDefinitions="Auto,12,*">
+                    <Border Grid.Column="0" Padding="8"
+                            Width="72"
+                            Height="72"
+                            HorizontalAlignment="Center"
+                            Background="{DynamicResource Layer0BackgroundBrush}"
+                            BorderBrush="{x:Null}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.1" />
+                        </Border.Effect>
+                        <Border Name="ThumbnailBox" CornerRadius="{StaticResource MediumCornerRadius}">
+                            <Border.Background>
+                                <ImageBrush Source="{Binding ThumbnailOverwrite}" />
+                            </Border.Background>
+                        </Border>
+
+                    </Border>
+                    <StackPanel Grid.Column="2" Spacing="12" VerticalAlignment="Center">
+                        <Button Classes="Small" Command="{Binding SelectThumbnailCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <icons:PackIconLucide Kind="File"
+                                                      Height="{StaticResource SmallFontSize}"
+                                                      Width="{StaticResource SmallFontSize}"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock Text="Select" />
+                            </StackPanel>
+                        </Button>
+                        <Button Classes="Small" Command="{Binding RemoveThumbnailCommand}">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <icons:PackIconLucide Kind="Trash2"
+                                                      Height="{StaticResource SmallFontSize}"
+                                                      Width="{StaticResource SmallFontSize}"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock Text="Remove" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+        <husk:Divider />
+        <controls:SettingsEntry Title="Game Overrides" Summary="Configuration specified to the instance" Icon="Games">
+            <controls:SettingsEntryItem Header="Java Home">
+                <TextBox Watermark="Fallbacks to the global settings if unset">
+                    <TextBox.InnerRightContent>
+                        <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
+                            <Button Command="{Binding ClearTextCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <Button Command="{Binding PickFileCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </StackPanel>
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Java Max Memory">
+                <TextBox Watermark="Bigger is better">
+                    <TextBox.InnerRightContent>
+                        <StackPanel Orientation="Horizontal">
+                            <husk:Divider Orientation="Vertical" />
+                            <TextBlock Text="MiB" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                       Margin="8,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Java Additional Arguments">
+                <TextBox Watermark="Less is more" />
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Window Initial Size">
+                <Grid ColumnDefinitions="*,7,*">
+                    <TextBox Grid.Column="0" Watermark="1270">
+                        <TextBox.InnerLeftContent>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Width" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                           Margin="8,0" VerticalAlignment="Center" />
+                                <husk:Divider Orientation="Vertical" />
+                            </StackPanel>
+                        </TextBox.InnerLeftContent>
+                    </TextBox>
+                    <TextBox Grid.Column="2" Watermark="720">
+                        <TextBox.InnerLeftContent>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Height" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                           Margin="8,0" VerticalAlignment="Center" />
+                                <husk:Divider Orientation="Vertical" />
+                            </StackPanel>
+                        </TextBox.InnerLeftContent>
+                    </TextBox>
+                </Grid>
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+        <husk:Divider />
+        <controls:SettingsEntry Title="Persistence Storage" Summary="Files or folders that are shared between builds"
+                                Icon="HardDrive">
+            <controls:SettingsEntryItem Header="Folders">
+                <TextBox Watermark="Replace this with a TokenTextBox!!!" />
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Files">
+                <TextBox Watermark="Replace this with a TokenTextBox!!!" />
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+        <husk:Divider />
+        <controls:SettingsEntry Title="Snapshots" Icon="Camera" Summary="Backup, yes, it's called backup">
+            <controls:SettingsEntryItem Header="Taken Automatically When (Shooting Trigger)">
+                <ComboBox SelectedIndex="0">
+                    <ComboBoxItem Content="Never" />
+                    <ComboBoxItem Content="Built" />
+                </ComboBox>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Folders">
+                <TextBox Watermark="Replace this with a TokenTextBox!!!" />
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Files">
+                <TextBox Watermark="Replace this with a TokenTextBox!!!" />
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
+        <husk:Divider>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource MediumFontSize}" />
+                <TextBlock Text="猫脑过载" />
+                <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource MediumFontSize}" />
+            </StackPanel>
+        </husk:Divider>
+        <husk:BusyContainer
+            IsBusy="{Binding State, Converter={x:Static huskc:ObjectConverters.NotMatch}, ConverterParameter=Idle}">
+            <controls:SettingsEntry Icon="Bug" Title="Danger Zone"
+                                    Summary="These settings are applied instantly and can't be recovered">
+                <components:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
+                <controls:SettingsEntryItem Header="Reset &amp; Delete"
+                                            IsEnabled="{Binding #Lock.IsUnlocked }">
+                    <Grid ColumnDefinitions="*,8,*">
+                        <Button Grid.Column="0" Command="{Binding ResetInstanceCommand}">
+                            <fi:SymbolIcon Symbol="ArrowReset" FontSize="{StaticResource MediumFontSize}" />
+                        </Button>
+                        <Button Grid.Column="2" Classes="Danger" Command="{Binding DeleteInstanceCommand}">
+                            <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource MediumFontSize}" />
+                        </Button>
+                    </Grid>
+                </controls:SettingsEntryItem>
+            </controls:SettingsEntry>
+            <husk:BusyContainer.PendingContent>
+                <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Spacing="12">
+                        <icons:PackIconLucide Kind="Info" Height="{StaticResource ExtraLargeFontSize}"
+                                              Width="{StaticResource ExtraLargeFontSize}"
+                                              HorizontalAlignment="Center" />
+                        <TextBlock Text="The instance is busy now" />
+                    </StackPanel>
+                </husk:Card>
+            </husk:BusyContainer.PendingContent>
+        </husk:BusyContainer>
+    </StackPanel>
+</controls:Subpage>

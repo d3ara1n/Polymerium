@@ -17,7 +17,6 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions.FileModels;
@@ -73,7 +72,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex.Message, "Loading package list failed", NotificationLevel.Warning);
+            _notificationService.PopMessage(ex, "Loading package list failed", NotificationLevel.Warning);
         }
 
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
@@ -288,7 +287,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex.Message, "Update failed", NotificationLevel.Danger);
+            _notificationService.PopMessage(ex, "Update failed");
         }
     }
 

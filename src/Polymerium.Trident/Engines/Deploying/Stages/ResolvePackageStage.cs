@@ -98,8 +98,10 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                               key.Namespace,
                               key.Pid,
                               value.Vid,
-                              PathDef.Default.NameOfObject(value.Sha1),
-                              Path.Combine(FileHelper.GetAssetFolderName(value.Kind), value.FileName),
+                              PathDef.Default.FileOfObject(value.Sha1),
+                              Path.Combine(PathDef.Default.DirectoryOfBuild(Context.Key),
+                                           FileHelper.GetAssetFolderName(value.Kind),
+                                           value.FileName),
                               value.Download,
                               value.Sha1);
 
