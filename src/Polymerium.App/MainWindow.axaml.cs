@@ -250,7 +250,21 @@ public partial class MainWindow : AppWindow
 
         model.State = InstanceEntryState.Updating;
 
-        var progressUpdater = Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(_ => model.Progress = e.Progress);
+        var progressUpdater = Observable
+                             .Interval(TimeSpan.FromSeconds(1))
+                             .Subscribe(_ =>
+                              {
+                                  if (e.Progress.HasValue)
+                                  {
+                                      model.IsPending = false;
+                                      model.Progress = e.Progress.Value;
+                                  }
+                                  else
+                                  {
+                                      model.IsPending = true;
+                                      model.Progress = 0d;
+                                  }
+                              });
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -259,7 +273,8 @@ public partial class MainWindow : AppWindow
                 case TrackerState.Idle:
                     break;
                 case TrackerState.Running:
-                    model.Progress = null;
+                    model.IsPending = true;
+                    model.Progress = 0d;
                     break;
                 case TrackerState.Faulted:
                     Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
@@ -289,9 +304,20 @@ public partial class MainWindow : AppWindow
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
         InstanceEntryModel model = new(e.Key, e.Key, "Unknown", null, null) { State = InstanceEntryState.Installing };
         var progressUpdater = Observable
-                             .Interval(TimeSpan.FromMilliseconds(1000))
-                             .Select(_ => model.Progress = e.Progress)
-                             .Subscribe();
+                             .Interval(TimeSpan.FromSeconds(1))
+                             .Subscribe(_ =>
+                              {
+                                  if (e.Progress.HasValue)
+                                  {
+                                      model.IsPending = false;
+                                      model.Progress = e.Progress.Value;
+                                  }
+                                  else
+                                  {
+                                      model.IsPending = true;
+                                      model.Progress = 0d;
+                                  }
+                              });
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -300,7 +326,8 @@ public partial class MainWindow : AppWindow
                 case TrackerState.Idle:
                     break;
                 case TrackerState.Running:
-                    model.Progress = null;
+                    model.IsPending = true;
+                    model.Progress = 0d;
                     break;
                 case TrackerState.Faulted:
                     Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
@@ -337,7 +364,19 @@ public partial class MainWindow : AppWindow
 
         var progressUpdater = Observable
                              .Interval(TimeSpan.FromSeconds(1))
-                             .Subscribe(_ => model.Progress = e.Progress.Percentage);
+                             .Subscribe(_ =>
+                              {
+                                  if (e.Progress.Percentage.HasValue)
+                                  {
+                                      model.IsPending = false;
+                                      model.Progress = e.Progress.Percentage.Value;
+                                  }
+                                  else
+                                  {
+                                      model.IsPending = true;
+                                      model.Progress = 0d;
+                                  }
+                              });
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -346,7 +385,8 @@ public partial class MainWindow : AppWindow
                 case TrackerState.Idle:
                     break;
                 case TrackerState.Running:
-                    model.Progress = null;
+                    model.IsPending = true;
+                    model.Progress = 0d;
                     break;
                 case TrackerState.Faulted:
                     Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem

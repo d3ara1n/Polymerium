@@ -6,6 +6,7 @@
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:m="using:Polymerium.App.Models"
              xmlns:cp="using:Polymerium.App.Components"
+             xmlns:fi="using:FluentIcons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
     <Grid RowDefinitions="Auto,0,*">
@@ -79,9 +80,23 @@
                                                     <MenuFlyout>
                                                         <MenuItem Header="Open Website"
                                                                   Command="{Binding $parent[cp:PackageContainer].OpenUrlCommand}"
-                                                                  CommandParameter="{Binding Reference}" />
+                                                                  CommandParameter="{Binding Reference}">
+                                                            <MenuItem.Icon>
+                                                                <icons:PackIconLucide Kind="ExternalLink"
+                                                                    Height="{StaticResource MediumFontSize}"
+                                                                    Width="{StaticResource MediumFontSize}"
+                                                                    VerticalAlignment="Center" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
                                                         <MenuItem Header="-" />
-                                                        <MenuItem Header="Move">
+                                                        <MenuItem Header="Move"
+                                                                  InputGesture="Ctrl+C" IsChecked="True"
+                                                                  ToggleType="CheckBox">
+                                                            <MenuItem.Icon>
+                                                                <fi:SymbolIcon
+                                                                    FontSize="{StaticResource MediumFontSize}"
+                                                                    Symbol="ArrowMove" />
+                                                            </MenuItem.Icon>
                                                             <MenuItem Header="Stage" />
                                                             <MenuItem Header="Stash" />
                                                             <MenuItem Header="Draft" />

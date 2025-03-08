@@ -97,9 +97,10 @@
             </TextBlock>
             <TextBox Name="QueryBox" Watermark="Everything(mostly) begins here" HorizontalContentAlignment="Center"
                      Margin="36,0" />
-            <Button HorizontalAlignment="Center" Command="{Binding GotoSearchViewCommand}"
-                    CommandParameter="{Binding #QueryBox.Text}" Classes="Primary">
-                <StackPanel Orientation="Horizontal" Margin="12,6" Spacing="8">
+            <Button Command="{Binding GotoSearchViewCommand}"
+                    CommandParameter="{Binding #QueryBox.Text}" Classes="Primary"
+                    Theme="{StaticResource OutlineButtonTheme}" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Margin="8,4" Spacing="8">
                     <icons:PackIconLucide Kind="Search" Height="{StaticResource MediumFontSize}"
                                           Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
                     <TextBlock Text="Search" VerticalAlignment="Center" />

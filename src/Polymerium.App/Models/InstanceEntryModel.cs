@@ -13,10 +13,13 @@ public partial class InstanceEntryModel : ModelBase
     #region Reactive Properties
 
     [ObservableProperty]
-    private InstanceEntryState _state;
+    public partial InstanceEntryState State { get; set; }
 
     [ObservableProperty]
-    private double? _progress;
+    public partial double Progress { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsPending { get; set; }
 
     #endregion
 }

@@ -8,7 +8,7 @@
                 <Menu>
                     <MenuItem Header="Open" ToggleType="Radio" IsChecked="True" />
                     <Separator />
-                    <MenuItem Header="Close" ToggleType="CheckBox" IsChecked="True" />
+                    <MenuItem Header="Close" ToggleType="CheckBox" IsChecked="True" InputGesture="Ctrl+C" />
                 </Menu>
                 <Button Content="Hello">
                     <Button.Flyout>
@@ -64,7 +64,7 @@
                         </Transitions>
                     </Border.Transitions>
                     <Panel>
-                        <Grid ColumnDefinitions="Auto,8,*,4,Auto,4,Auto" Margin="{TemplateBinding Padding}">
+                        <Grid ColumnDefinitions="Auto,10,*,10,Auto" Margin="{TemplateBinding Padding}">
                             <ContentControl Grid.Column="0"
                                             Content="{TemplateBinding Icon}" />
                             <ContentPresenter Grid.Column="2" Name="PART_ContentPresenter"
@@ -79,30 +79,32 @@
                                 </ContentPresenter.Transitions>
                             </ContentPresenter>
 
-                            <Panel Grid.Column="4">
-                                <TextBlock VerticalAlignment="Center"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                           Text="{TemplateBinding InputGesture,Converter={x:Static huskc:InternalConverters.KeyGestureToString}}" />
-                            </Panel>
 
-                            <Panel Grid.Column="6">
-                                <fi:SymbolIcon Name="ExpandMark" Symbol="ArrowRight"
-                                               IsVisible="False"
+                            <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="6">
+                                <Panel>
+                                    <TextBlock VerticalAlignment="Center"
                                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                               FontSize="{TemplateBinding FontSize}"
-                                               HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                <fi:SymbolIcon Name="Checkbox" Symbol="CheckboxUnchecked"
-                                               IsVisible="False"
-                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                               FontSize="{TemplateBinding FontSize}"
-                                               HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            </Panel>
+                                               Text="{TemplateBinding InputGesture,Converter={x:Static huskc:InternalConverters.KeyGestureToString}}" />
+                                </Panel>
+
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <fi:SymbolIcon Name="Checkbox" Symbol="CheckboxUnchecked"
+                                                   IsVisible="False"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{TemplateBinding FontSize}"
+                                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                    <fi:SymbolIcon Name="ExpandMark" Symbol="ArrowRight"
+                                                   IsVisible="False"
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{TemplateBinding FontSize}"
+                                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </StackPanel>
                         </Grid>
                         <Popup Name="PART_Popup"
                                IsLightDismissEnabled="False"
                                IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}"
-                               Placement="RightEdgeAlignedTop"
-                               OverlayInputPassThroughElement="{Binding $parent[Menu]}">
+                               Placement="RightEdgeAlignedTop">
                             <Border Margin="2,4" Background="{DynamicResource LayerSolidBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
                                 <Border.Effect>

@@ -162,7 +162,8 @@
                                                               CommandParameter="{Binding}">
                                                         <MenuItem.Icon>
                                                             <icons:PackIconLucide Kind="ExternalLink"
-                                                                Height="10" Width="10"
+                                                                Height="{StaticResource MediumFontSize}"
+                                                                Width="{StaticResource MediumFontSize}"
                                                                 VerticalAlignment="Center" />
                                                         </MenuItem.Icon>
                                                     </MenuItem>
