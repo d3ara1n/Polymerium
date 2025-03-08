@@ -91,8 +91,6 @@ public class Frame : TemplatedControl
 
     public void Navigate(Type page, object? parameter, IPageTransition? transition)
     {
-        ArgumentNullException.ThrowIfNull(_presenter);
-        ArgumentNullException.ThrowIfNull(_presenter2);
         var content = PageActivator(page, parameter)
                    ?? throw new InvalidOperationException($"Activating {page.Name} gets null page model");
         var old = CanGoBack;
@@ -109,8 +107,6 @@ public class Frame : TemplatedControl
 
     public void GoBack()
     {
-        ArgumentNullException.ThrowIfNull(_presenter);
-        ArgumentNullException.ThrowIfNull(_presenter2);
         if (_history.TryPop(out var frame))
         {
             var content = PageActivator(frame.Page, frame.Parameter) ?? throw new ArgumentNullException();
@@ -141,10 +137,10 @@ public class Frame : TemplatedControl
     protected override Size ArrangeOverride(Size finalSize)
     {
         var rv = base.ArrangeOverride(finalSize);
-
+    
         ArgumentNullException.ThrowIfNull(_presenter);
         ArgumentNullException.ThrowIfNull(_presenter2);
-
+    
         if (_current.HasValue && _doubleArrangeSafeLock)
         {
             _doubleArrangeSafeLock = false;
@@ -152,16 +148,14 @@ public class Frame : TemplatedControl
             var cancel = new CancellationTokenSource();
             _currentToken = cancel;
             var (from, to) = _presenter.Content is not null ? (_presenter, _presenter2) : (_presenter2, _presenter);
-
+    
             (from.ZIndex, to.ZIndex) = (0, 1);
             (from.IsVisible, to.IsVisible) = (true, true);
             to.Content = _current.Value.Content;
-            Debug.WriteLine($"{Name}:{_current.Value.Content?.GetType().Name}");
             _current
                .Value.Transition.Start(from, to, !_current.Value.Reverse, cancel.Token)
                .ContinueWith(_ =>
                              {
-                                 Debug.WriteLine($"{Name}:{cancel.IsCancellationRequested}");
                                  if (cancel.IsCancellationRequested)
                                      return;
                                  (from.IsVisible, to.IsVisible) = (false, true);
@@ -172,26 +166,9 @@ public class Frame : TemplatedControl
                              },
                              TaskScheduler.FromCurrentSynchronizationContext());
         }
-
+    
         return rv;
     }
-
-    // protected override bool RegisterContentPresenter(ContentPresenter presenter)
-    // {
-    //     if (presenter.Name == PART_ContentPresenter)
-    //     {
-    //         _presenter = presenter;
-    //         return true;
-    //     }
-    //
-    //     if (presenter.Name == PART_ContentPresenter2)
-    //     {
-    //         _presenter2 = presenter;
-    //         return true;
-    //     }
-    //
-    //     return false;
-    // }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
