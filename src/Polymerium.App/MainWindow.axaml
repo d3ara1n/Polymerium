@@ -182,6 +182,7 @@
                                         Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
                                         CommandParameter="{Binding Basic.Key}"
                                         Progress="{Binding Progress}"
+                                        IsPending="{Binding IsPending}"
                                         State="{Binding State}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
