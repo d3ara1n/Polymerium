@@ -152,6 +152,10 @@ public partial class MainWindow : AppWindow
         // NavigationService 会处理错误情况
         Root.Navigate(page, parameter, transition);
 
+    internal bool CanGoBack() => Root.CanGoBack;
+
+    internal void GoBack() => Root.GoBack();
+
     internal void BindNavigation(
         Action<Type, object?, IPageTransition?> navigate,
         Frame.PageActivatorDelegate activator)

@@ -76,7 +76,7 @@
             <controls:SettingsEntryItem Header="Java Home">
                 <TextBox Watermark="Fallbacks to the global settings if unset">
                     <TextBox.InnerRightContent>
-                        <StackPanel Orientation="Horizontal" Margin="4" Spacing="4">
+                        <StackPanel Orientation="Horizontal" Margin="4">
                             <Button Command="{Binding ClearTextCommand}"
                                     CommandParameter="{Binding $parent[TextBox]}">
                                 <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />

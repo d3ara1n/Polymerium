@@ -3,9 +3,9 @@
                     xmlns:fi="using:FluentIcons.Avalonia"
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
     <Design.PreviewWith>
-        <Panel Background="White">
+        <Panel Background="White" Width="256">
             <StackPanel Spacing="20" Margin="24">
-                <TextBox Text="Test 测试" Watermark="12" UseFloatingWatermark="True">
+                <TextBox Text="Test 测试 Test 0123456789" Watermark="12" UseFloatingWatermark="True">
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <fi:SymbolIcon Margin="8" IconVariant="Filled"
@@ -15,9 +15,14 @@
                         </StackPanel>
                     </TextBox.InnerLeftContent>
                     <TextBox.InnerRightContent>
-                        <Button Margin="4">
-                            <fi:SymbolIcon Symbol="Pen" FontSize="{StaticResource SmallFontSize}" />
-                        </Button>
+                        <StackPanel Orientation="Horizontal" Margin="4">
+                            <Button>
+                                <fi:SymbolIcon Symbol="Pen" FontSize="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <Button>
+                                <fi:SymbolIcon Symbol="Pen" FontSize="{StaticResource SmallFontSize}" />
+                            </Button>
+                        </StackPanel>
                     </TextBox.InnerRightContent>
                 </TextBox>
                 <TextBox Watermark="Disabled" IsEnabled="False" />

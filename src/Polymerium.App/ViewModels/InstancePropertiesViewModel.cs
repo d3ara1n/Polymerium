@@ -112,7 +112,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         File.WriteAllText(path, Basic.Key);
         ProfileManager.Remove(Basic.Key);
 
-        _navigationService.Navigate<LandingView>();
+        if (_navigationService.CanGoBack)
+            _navigationService.GoBack();
+        else
+            _navigationService.Navigate<LandingView>();
     }
 
     [RelayCommand]
