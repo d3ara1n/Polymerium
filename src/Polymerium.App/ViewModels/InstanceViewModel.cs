@@ -41,7 +41,7 @@ public partial class InstanceViewModel : InstanceViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    private partial ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; set; } =
+    public partial ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; set; } =
     [
         // Home
         new(typeof(InstanceHomeView), PackIconLucideKind.LayoutDashboard),
@@ -58,7 +58,7 @@ public partial class InstanceViewModel : InstanceViewModelBase
     ];
 
     [ObservableProperty]
-    private partial InstanceSubpageEntryModel? SelectedPage { get; set; }
+    public partial InstanceSubpageEntryModel? SelectedPage { get; set; }
 
     #endregion
 }
