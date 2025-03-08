@@ -43,6 +43,7 @@
         <ResourceInclude Source="/Controls/TabStrip.axaml" />
         <ResourceInclude Source="/Controls/Tag.axaml" />
         <ResourceInclude Source="/Controls/TextBox.axaml" />
+        <ResourceInclude Source="/Controls/TransitioningContentControl.axaml" />
         <ResourceInclude Source="/Controls/Toast.axaml" />
         <ResourceInclude Source="/Controls/ToggleSwitch.axaml" />
         <ResourceInclude Source="/Controls/ToolTip.axaml" />
