@@ -54,14 +54,23 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
         }
 
         var importDir = PathDef.Default.DirectoryOfImport(Context.Key);
-        var buildDir = PathDef.Default.DirectoryOfBuild(Context.Key);
+
         if (Directory.Exists(importDir))
-            foreach (var file in Directory.GetFiles(importDir))
-                manifest.PersistentFiles.Add(new EntityManifest.PersistentFile(file,
-                                                                               Path.Combine(buildDir,
-                                                                                   Path.GetRelativePath(importDir,
-                                                                                       file)),
-                                                                               false));
+        {
+            var buildDir = PathDef.Default.DirectoryOfBuild(Context.Key);
+            var dirs = new Stack<string>();
+            dirs.Push(importDir);
+
+            while (dirs.TryPop(out var sub))
+            {
+                foreach (var file in Directory.GetFiles(sub))
+                    manifest.PersistentFiles.Add(new EntityManifest.PersistentFile(file,
+                                                                    Path.Combine(buildDir, Path.GetRelativePath(importDir, file)),
+                                                                    false));
+                foreach (var dir in Directory.GetDirectories(sub))
+                    dirs.Push(dir);
+            }
+        }
 
 
         Context.Manifest = manifest;
