@@ -70,7 +70,7 @@ public class DataLockBuilder : IBuilder<DataLock>
 
     public DataLockBuilder AddLibrary(DataLock.Library library)
     {
-        var found = _libraries.Any(x => x == library);
+        var found = _libraries.Any(x => x.Id == library.Id);
         if (!found)
             _libraries.Add(library);
 

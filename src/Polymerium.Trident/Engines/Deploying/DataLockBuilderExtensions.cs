@@ -20,7 +20,6 @@ public static class DataLockBuilderExtensions
     {
         var exactUrl = url.AbsoluteUri.EndsWith('/') ? url : new Uri(url.AbsoluteUri + '/');
         // 当迁移到 TridentCore/launcher-meta 的之后移除该函数
-        DataLock.Library.Identity id;
         var extension = "jar";
         var index = fullname.IndexOf('@');
         if (index > 0)
@@ -30,12 +29,12 @@ public static class DataLockBuilderExtensions
         }
 
         var split = fullname.Split(':');
-        if (split.Length == 4)
-            id = new DataLock.Library.Identity(split[0], split[1], split[2], split[3], extension);
-        else if (split.Length == 3)
-            id = new DataLock.Library.Identity(split[0], split[1], split[2], null, extension);
-        else
-            throw new NotSupportedException($"Not recognized package name format: {fullname}");
+        var id = split.Length switch
+        {
+            4 => new DataLock.Library.Identity(split[0], split[1], split[2], split[3], extension),
+            3 => new DataLock.Library.Identity(split[0], split[1], split[2], null, extension),
+            _ => throw new NotSupportedException($"Not recognized package name format: {fullname}")
+        };
 
         var fullUrl = new Uri(exactUrl,
                               $"{id.Namespace.Replace('.', '/')}/{id.Name}/{id.Version}/{id.Name}-{id.Version}.{extension}");
