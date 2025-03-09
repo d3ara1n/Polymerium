@@ -77,68 +77,19 @@ public partial class MainWindow : AppWindow
     private static Func<InstanceEntryModel, bool> BuildFilter(string filter) =>
         x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
-    private void PopDialog()
-    {
-        Button pop = new() { Content = "POP" };
-        pop.Click += (_, __) => PopDialog();
-        PopDialog(new Dialog
-        {
-            Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
-            Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
-            Content = new StackPanel { Spacing = 8d, Children = { new TextBox(), pop } }
-        });
-    }
-
-    private void PopToast()
-    {
-        Button pop = new() { Content = "POP" };
-        pop.Click += (_, __) => PopToast();
-        PopToast(new Toast
-        {
-            Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
-            Content = new StackPanel
-            {
-                Spacing = 8d,
-                Children =
-                {
-                    new TextBlock { Text = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM" },
-                    new TextBox(),
-                    pop
-                }
-            }
-        });
-    }
-
-    private void PopNotification()
-    {
-        NotificationItem item = new() { Content = "Larry The Lazy" };
-        PopNotification(item);
-    }
-
     private void NavigationButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (sender is Button { Tag: "42" })
+        (Type Page, object? Parameter) target = sender switch
         {
-            PopToast();
-        }
-        else if (sender is Button { Tag: "0721" })
-        {
-            PopDialog();
-        }
-        else
-        {
-            (Type Page, object? Parameter) target = sender switch
-            {
-                Button { Tag: "LandingView" } => (typeof(LandingView), null),
-                Button { Tag: "MarketplacePortalView" } => (typeof(MarketplacePortalView), null),
-                Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
-                Button { Tag: "CreateInstanceView" } => (typeof(NewInstanceView), null),
-                Button { Tag: "SettingsView" } => (typeof(SettingsView), null),
-                Button { Tag: "AccountsView" } => (typeof(AccountsView), null),
-                _ => (typeof(PageNotReachedView), null)
-            };
-            _navigate?.Invoke(target.Page, target.Parameter, null);
-        }
+            Button { Tag: "LandingView" } => (typeof(LandingView), null),
+            Button { Tag: "MarketplacePortalView" } => (typeof(MarketplacePortalView), null),
+            Button { Tag: "UnknownView" } => (typeof(UnknownView), Random.Shared.Next(1000, 9999)),
+            Button { Tag: "CreateInstanceView" } => (typeof(NewInstanceView), null),
+            Button { Tag: "SettingsView" } => (typeof(SettingsView), null),
+            Button { Tag: "AccountsView" } => (typeof(AccountsView), null),
+            _ => (typeof(PageNotReachedView), null)
+        };
+        _navigate?.Invoke(target.Page, target.Parameter, null);
     }
 
     private void ViewInstance(string? key)

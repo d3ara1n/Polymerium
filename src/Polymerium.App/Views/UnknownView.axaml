@@ -102,7 +102,9 @@
                 <StackPanel Spacing="8">
                     <Button Theme="{StaticResource OutlineButtonTheme}" Content="Hello"
                             Command="{Binding HelloCommand}" />
-                    <Button Classes="Primary" Content="World" />
+                    <Button Classes="Primary" Content="World" Command="{Binding WorldCommand}" />
+                    <Button Theme="{StaticResource OutlineButtonTheme}" Content="Butcher"
+                            Command="{Binding ButcherCommand}" />
                     <HyperlinkButton Content="THIS A LINK!" />
 
                     <husk:NotificationItem Actions="{Binding Actions}" Title="Downloading file..." Progress="54"

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Collections;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
@@ -10,7 +11,10 @@ using Polymerium.App.Services;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class UnknownViewModel(ViewBag bag, NotificationService notificationService) : ViewModelBase
+public partial class UnknownViewModel(
+    ViewBag bag,
+    NotificationService notificationService,
+    OverlayService overlayService) : ViewModelBase
 {
     public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
@@ -48,6 +52,57 @@ public partial class UnknownViewModel(ViewBag bag, NotificationService notificat
 
     [RelayCommand]
     private void Hello() => notificationService.PopMessage("Hello", "Hi there!");
+
+    [RelayCommand]
+    private void World()
+    {
+        void PopToast()
+        {
+            Button pop = new() { Content = "POP" };
+            pop.Click += (_, __) => PopToast();
+            overlayService.PopToast(new Toast
+            {
+                Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
+                Content = new StackPanel
+                {
+                    Spacing = 8d,
+                    Children =
+                    {
+                        new TextBlock
+                        {
+                            Text =
+                                "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM"
+                        },
+                        new TextBox(),
+                        pop
+                    }
+                }
+            });
+        }
+
+        PopToast();
+    }
+
+    [RelayCommand]
+    private void Butcher()
+    {
+        void PopDialog()
+        {
+            Button pop = new() { Content = "POP" };
+            pop.Click += (_, __) => PopDialog();
+            overlayService.PopDialog(new Dialog
+            {
+                Title = $"DIALOG {Random.Shared.Next(1000, 9999)}",
+                Message = "ALIVE OR DEAD VERY LONG MESSAGE THAT DONT TRIM",
+                Content = new StackPanel
+                {
+                    Spacing = 8d, Children = { new TextBox(), pop }
+                }
+            });
+        }
+
+        PopDialog();
+    }
 
     #endregion
 }

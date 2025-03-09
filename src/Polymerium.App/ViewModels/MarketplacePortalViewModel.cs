@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,20 +17,13 @@ public partial class MarketplacePortalViewModel : ViewModelBase
 {
     public MarketplacePortalViewModel(
         MojangLauncherService mojangLauncherService,
-        IHttpClientFactory httpClientFactory,
+        ConfigurationService configurationService,
         NavigationService navigationService)
     {
         _mojangLauncherService = mojangLauncherService;
-        _httpClientFactory = httpClientFactory;
+        _configurationService = configurationService;
         _navigationService = navigationService;
     }
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial IReadOnlyList<MinecraftNewsModel>? News { get; set; }
-
-    #endregion
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
@@ -52,10 +44,17 @@ public partial class MarketplacePortalViewModel : ViewModelBase
         News = models.ToList();
     }
 
+    #region Reactive
+
+    [ObservableProperty]
+    public partial IReadOnlyList<MinecraftNewsModel>? News { get; set; }
+
+    #endregion
+
     #region Injected
 
     private readonly MojangLauncherService _mojangLauncherService;
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ConfigurationService _configurationService;
     private readonly NavigationService _navigationService;
 
     #endregion
@@ -72,6 +71,13 @@ public partial class MarketplacePortalViewModel : ViewModelBase
     [RelayCommand]
     private void GotoSearchView(string? query)
     {
+        if (_configurationService.Value.ApplicationSuperPowerActivated)
+            if (query == "/gamemode 1")
+            {
+                _navigationService.Navigate<UnknownView>();
+                return;
+            }
+
         _navigationService.Navigate<MarketplaceSearchView>(new MarketplaceSearchViewModel.SearchArguments(query, null));
     }
 
