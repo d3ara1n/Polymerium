@@ -43,8 +43,7 @@
                 <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome8,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4">
-                            <Button Command="{Binding ClearTextCommand}"
-                                    CommandParameter="{Binding $parent[TextBox]}">
+                            <Button Command="{Binding $parent[TextBox].Clear}">
                                 <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
                             </Button>
                             <Button Command="{Binding PickFileCommand}"
@@ -59,8 +58,7 @@
                 <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome11,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4">
-                            <Button Command="{Binding ClearTextCommand}"
-                                    CommandParameter="{Binding $parent[TextBox]}">
+                            <Button Command="{Binding $parent[TextBox].Clear}">
                                 <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
                             </Button>
                             <Button Command="{Binding PickFileCommand}"
@@ -75,8 +73,7 @@
                 <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome17,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4">
-                            <Button Command="{Binding ClearTextCommand}"
-                                    CommandParameter="{Binding $parent[TextBox]}">
+                            <Button Command="{Binding $parent[TextBox].Clear}">
                                 <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
                             </Button>
                             <Button Command="{Binding PickFileCommand}"
@@ -91,8 +88,7 @@
                 <TextBox Watermark="Fallback to the bundled if unset" Text="{Binding JavaHome21,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4">
-                            <Button Command="{Binding ClearTextCommand}"
-                                    CommandParameter="{Binding $parent[TextBox]}">
+                            <Button Command="{Binding $parent[TextBox].Clear}">
                                 <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
                             </Button>
                             <Button Command="{Binding PickFileCommand}"

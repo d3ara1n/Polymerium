@@ -11,9 +11,11 @@ public record DataLock(
     IReadOnlyList<DataLock.Parcel> Parcels,
     DataLock.AssetData AssetIndex)
 {
+    public const int FORMAT = 1;
     // 对于 github:user/package 这种没有标记 version 也就是特定 commit/release 的，会视为有效，本着构建完尽可能不修改原则
     // Home 是 Trident Home，Key 是 Profile Key，这两者结合来保证必须是同一个目录的实例
     public record ViabilityData(
+        int Format,
         string Home,
         string Key,
         string Version,
@@ -35,10 +37,9 @@ public record DataLock(
         string? Namespace,
         string Pid,
         string Vid,
-        string SourcePath,
-        string TargetPath,
+        string Path,
         Uri Download,
-        string Sha1);
+        string? Sha1);
 
     public record AssetData(string Id, Uri Url, string Sha1);
 }

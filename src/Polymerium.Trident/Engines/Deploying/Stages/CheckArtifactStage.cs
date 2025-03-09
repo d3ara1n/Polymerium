@@ -41,6 +41,9 @@ public class CheckArtifactStage(ILogger<CheckArtifactStage> logger) : StageBase
 
     private bool Verify(DataLock.ViabilityData data)
     {
+        if (data.Format != DataLock.FORMAT)
+            return false;
+        
         if (data.Home != PathDef.Default.Home
          || data.Key != Context.Key
          || data.Version != Context.Setup.Version

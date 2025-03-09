@@ -9,12 +9,11 @@ public static class DataLockBuilderExtensions
         string label,
         string? @namespace,
         string pid,
-        string vid,
-        string source,
+        string vid,                          
         string target,
         Uri url,
-        string sha1) =>
-        self.AddParcel(new DataLock.Parcel(label, @namespace, pid, vid, source, target, url, sha1));
+        string? sha1) =>
+        self.AddParcel(new DataLock.Parcel(label, @namespace, pid, vid, target, url, sha1));
 
     // PATCH: 为了适配奇葩 PrismLauncher Meta 的多态数据
     public static DataLockBuilder AddLibraryPrismFlavor(this DataLockBuilder self, string fullname, Uri url)

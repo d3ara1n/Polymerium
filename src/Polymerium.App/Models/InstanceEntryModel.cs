@@ -10,7 +10,7 @@ public partial class InstanceEntryModel : ModelBase
 
     public InstanceBasicModel Basic { get; }
 
-    #region Reactive Properties
+    #region Reactive
 
     [ObservableProperty]
     public partial InstanceEntryState State { get; set; }

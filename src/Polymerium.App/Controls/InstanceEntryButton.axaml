@@ -44,8 +44,8 @@
                         </Rectangle>
                         <ProgressBar Name="Progress" CornerRadius="0" Height="2"
                                      VerticalAlignment="Bottom" IsVisible="False"
-                                     IsIndeterminate="{TemplateBinding IsPending,Mode=OneWay}"
-                                     Value="{TemplateBinding Progress,Mode=OneWay}">
+                                     IsIndeterminate="{TemplateBinding IsPending}"
+                                     Value="{TemplateBinding Progress}">
                             <ProgressBar.Transitions>
                                 <Transitions>
                                     <DoubleTransition Property="Value" Easing="SineEaseOut"

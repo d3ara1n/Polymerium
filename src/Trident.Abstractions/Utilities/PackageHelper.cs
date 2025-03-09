@@ -28,7 +28,7 @@ public static class PackageHelper
 
     public static string ToPurl(string label, string? ns, string pid, string? vid)
     {
-        StringBuilder? sb = new();
+        var sb = new StringBuilder();
         sb.Append(label);
         sb.Append(':');
         if (ns != null)

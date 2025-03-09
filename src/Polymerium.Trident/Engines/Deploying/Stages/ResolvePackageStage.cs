@@ -98,7 +98,6 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                               key.Namespace,
                               key.Pid,
                               value.Vid,
-                              PathDef.Default.FileOfObject(value.Sha1),
                               Path.Combine(PathDef.Default.DirectoryOfBuild(Context.Key),
                                            FileHelper.GetAssetFolderName(value.Kind),
                                            value.FileName),
@@ -117,7 +116,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
         ResourceKind Kind,
         DateTimeOffset ReleasedAt,
         string FileName,
-        string Sha1,
+        string? Sha1,
         Uri Download,
         bool IsReliable = true);
 }

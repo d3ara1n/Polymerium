@@ -29,6 +29,15 @@ public class PathDef
 
     public string Home { get; }
 
+    #region Private Folder
+
+    public string PrivateDirectory => Path.Combine(Home, ".polymerium");
+
+    public string FileOfPrivateSettings => Path.Combine(PrivateDirectory, "settings.json");
+    public string FileOfPrivateCache => Path.Combine(PrivateDirectory, "cache.sqlite.db");
+
+    #endregion
+
     #region Cache Folder
 
     public string CacheDirectory => Path.Combine(Home, "cache");
@@ -36,7 +45,6 @@ public class PathDef
     public string CacheAssetDirectory => Path.Combine(CacheDirectory, "assets");
     public string CacheLibraryDirectory => Path.Combine(CacheDirectory, "libraries");
     public string CachePackageDirectory => Path.Combine(CacheDirectory, "packages");
-    public string CacheObjectDirectory => Path.Combine(CacheDirectory, "objects");
 
     public string FileOfLibrary(string ns, string name, string version, string? platform, string extension)
     {
@@ -50,7 +58,19 @@ public class PathDef
                                 : $"{name}-{version}.{extension}");
     }
 
-    public string FileOfObject(string hash) => Path.Combine(CacheObjectDirectory, hash[..2], hash);
+    public string FileOfPackageObject(string label, string? ns, string pid, string vid) =>
+        ns != null
+            ? Path.Combine(CachePackageDirectory, label, ns, pid, $"{vid}.obj")
+            : Path.Combine(CachePackageDirectory, label, pid, $"{vid}.obj");
+
+    public string FileOfPackageMetadata(string label, string? ns, string pid, string vid) =>
+        ns != null
+            ? Path.Combine(CachePackageDirectory, label, ns, pid, $"{vid}.json")
+            : Path.Combine(CachePackageDirectory, label, pid, $"{vid}.json");
+
+    public string FileOfAssetIndex(string index) => Path.Combine(CacheAssetDirectory, "indexes", $"{index}.json");
+
+    public string FileOfAssetObject(string hash) => Path.Combine(CacheAssetDirectory, "objects", hash[..2], hash);
 
     #endregion
 
@@ -74,6 +94,7 @@ public class PathDef
     public string DirectoryOfHome(string key) => Path.Combine(InstanceDirectory, key);
 
     public string DirectoryOfBuild(string key) => Path.Combine(InstanceDirectory, key, "build");
+    public string DirectoryOfNatives(string key) => Path.Combine(DirectoryOfBuild(key), "natives");
 
     public string DirectoryOfImport(string key) => Path.Combine(InstanceDirectory, key, "import");
 

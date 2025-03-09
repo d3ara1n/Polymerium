@@ -139,12 +139,23 @@ public class InstanceManager(
                         new Progress<(int, int)>(x =>
                                                      reporter
                                                         .Report(new
-                                                                    DeployTracker.
-                                                                    DeployProgress($"Resolving packages...({x.Item1}/{x.Item2})",
+                                                                    DeployTracker.DeployProgress($"Resolving packages...({x.Item1}/{x.Item2})",
                                                                         (double)x.Item1 * 100 / x.Item2)));
                     break;
                 case BuildArtifactStage:
                     reporter.Report(new DeployTracker.DeployProgress("Building artifacts..."));
+                    break;
+                case GenerateManifestStage:
+                    reporter.Report(new DeployTracker.DeployProgress("Generating manifest..."));
+                    break;
+                case SolidifyManifestStage solidifyManifestStage:
+                    reporter.Report(new DeployTracker.DeployProgress("Solidifying files..."));
+                    solidifyManifestStage.ProgressReporter =
+                        new Progress<(int, int)>(x =>
+                                                     reporter
+                                                        .Report(new
+                                                                    DeployTracker.DeployProgress($"Solidifying files...({x.Item1}/{x.Item2})",
+                                                                        (double)x.Item1 * 100 / x.Item2)));
                     break;
             }
 
