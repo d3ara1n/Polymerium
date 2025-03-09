@@ -27,10 +27,10 @@ public class InstanceEntryButton : Button
         set => SetValue(StateProperty, value);
     }
 
-    public static readonly StyledProperty<bool> ProgressProperty =
-        AvaloniaProperty.Register<InstanceEntryButton, bool>(nameof(Progress));
+    public static readonly StyledProperty<double> ProgressProperty =
+        AvaloniaProperty.Register<InstanceEntryButton, double>(nameof(Progress));
 
-    public bool Progress
+    public double Progress
     {
         get => GetValue(ProgressProperty);
         set => SetValue(ProgressProperty, value);

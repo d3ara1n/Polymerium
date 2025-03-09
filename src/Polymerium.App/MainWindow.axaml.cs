@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Input;
@@ -277,17 +278,21 @@ public partial class MainWindow : AppWindow
                     model.Progress = 0d;
                     break;
                 case TrackerState.Faulted:
-                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
+                    Dispatcher.UIThread.Post(() =>
                     {
-                        Content = e.FailureReason,
-                        Title = $"Failed to update {e.Key}",
-                        Level = NotificationLevel.Danger
-                    }));
+                        model.State = InstanceEntryState.Idle;
+                        PopNotification(new NotificationItem
+                        {
+                            Content = e.FailureReason,
+                            Title = $"Failed to update {e.Key}",
+                            Level = NotificationLevel.Danger
+                        });
+                    });
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
-                    model.State = InstanceEntryState.Idle;
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -302,20 +307,23 @@ public partial class MainWindow : AppWindow
     private void OnInstanceInstalling(object? sender, InstallTracker e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        InstanceEntryModel model = new(e.Key, e.Key, "Unknown", null, null) { State = InstanceEntryState.Installing };
+        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
+        {
+            State = InstanceEntryState.Installing
+        };
         var progressUpdater = Observable
                              .Interval(TimeSpan.FromSeconds(1))
                              .Subscribe(_ =>
                               {
                                   if (e.Progress.HasValue)
                                   {
-                                      model.IsPending = false;
                                       model.Progress = e.Progress.Value;
+                                      model.IsPending = false;
                                   }
                                   else
                                   {
-                                      model.IsPending = true;
                                       model.Progress = 0d;
+                                      model.IsPending = true;
                                   }
                               });
 
@@ -330,18 +338,27 @@ public partial class MainWindow : AppWindow
                     model.Progress = 0d;
                     break;
                 case TrackerState.Faulted:
-                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
+                    Dispatcher.UIThread.Post(() =>
                     {
-                        Content = e.FailureReason,
-                        Title = $"Failed to install {e.Key}",
-                        Level = NotificationLevel.Danger
-                    }));
+                        model.State = InstanceEntryState.Idle;
+                        PopNotification(new NotificationItem
+                        {
+                            Content = Debugger.IsAttached
+                                          ? e.FailureReason?.ToString()
+                                          : e.FailureReason?.Message,
+                            Title = $"Failed to install {e.Key}",
+                            Level = NotificationLevel.Danger
+                        });
+                    });
                     _entries.Remove(model);
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
-                    model.State = InstanceEntryState.Idle;
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                    });
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -389,17 +406,26 @@ public partial class MainWindow : AppWindow
                     model.Progress = 0d;
                     break;
                 case TrackerState.Faulted:
-                    Dispatcher.UIThread.Post(() => PopNotification(new NotificationItem
+                    Dispatcher.UIThread.Post(() =>
                     {
-                        Content = e.FailureReason,
-                        Title = $"Failed to deploy {e.Key}",
-                        Level = NotificationLevel.Danger
-                    }));
+                        model.State = InstanceEntryState.Idle;
+                        PopNotification(new NotificationItem
+                        {
+                            Content = Debugger.IsAttached
+                                          ? e.FailureReason?.ToString()
+                                          : e.FailureReason?.Message,
+                            Title = $"Failed to deploy {e.Key}",
+                            Level = NotificationLevel.Danger
+                        });
+                    });
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
-                    model.State = InstanceEntryState.Idle;
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                    });
                     progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;

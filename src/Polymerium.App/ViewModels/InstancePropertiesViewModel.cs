@@ -76,13 +76,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     #endregion
 
     #region Commands
-
-    [RelayCommand]
-    private void ClearText(TextBox? box)
-    {
-        box?.Clear();
-    }
-
+    
     [RelayCommand]
     private async Task PickFile(TextBox? box)
     {

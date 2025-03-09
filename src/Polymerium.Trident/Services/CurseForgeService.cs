@@ -88,10 +88,10 @@ public class CurseForgeService(ICurseForgeClient client)
         file.DownloadUrl
      ?? new Uri($"https://mediafilez.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{file.FileName}");
 
-    public string ToSha1(FileModel file) =>
+    public string? ToSha1(FileModel file) =>
         file.Hashes.Any(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1)
             ? file.Hashes.First(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1).Value
-            : throw new NotImplementedException();
+            : null;
 
     public Requirement ToRequirement(FileModel file)
     {

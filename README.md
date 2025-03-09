@@ -67,6 +67,9 @@ Available in Windows 10&11 only.
 - ☕ 手动配置 Java 并在运行时智能选择版本 | No stupid Java auto-detection. Configure Java once, configured every time.
 - 📜 实例元数据附件分层管理 | Layered attachment management.
 - ✨ 发布所游玩的实例为整合包，自动编写更新日志 | Publish the instance as a modpack with generated changelog.
+- 🛁 洁癖友好，看不惯友商所谓智能不是在扫盘就是后台安装第三方软件 | Never touch user's filesystem other than instance
+  folder. Never scan disks for java binaries. Uninstall by clicking
+  DELETE on the program folder and instance folder; boom, they were all gone like they never came.
 
 <!-- GETTING STARTED -->
 
@@ -197,11 +200,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [product-screenshot]: assets/images/Screenshot.gif
 
-[CSharp]: https://img.shields.io/badge/C%23-12-239120?style=for-the-badge&logoColor=white
+[CSharp]: https://img.shields.io/badge/C%23-13-239120?style=for-the-badge&logoColor=white
 
 [CSharp-url]: https://learn.microsoft.com/en-us/dotnet/csharp/
 
-[DotNet]: https://img.shields.io/badge/.NET-8-5C2D91?style=for-the-badge&logoColor=white
+[DotNet]: https://img.shields.io/badge/.NET-9-5C2D91?style=for-the-badge&logoColor=white
 
 [DotNet-url]: https://dotnet.microsoft.com/
 

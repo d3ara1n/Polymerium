@@ -181,8 +181,8 @@
                                         Basic="{Binding Basic}"
                                         Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
                                         CommandParameter="{Binding Basic.Key}"
-                                        Progress="{Binding Progress}"
-                                        IsPending="{Binding IsPending}"
+                                        Progress="{Binding Progress,Mode=OneWay}"
+                                        IsPending="{Binding IsPending,Mode=OneWay}"
                                         State="{Binding State}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

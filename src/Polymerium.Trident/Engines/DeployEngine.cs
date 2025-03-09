@@ -52,9 +52,18 @@ public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provi
 
         private StageBase? DecideNext()
         {
-            if (_context.Artifact != null)
-                // TODO: Build Transients
+            if (_context.Manifest != null)
+            {
+                if (!_context.IsSolidified)
+                    return CreateStage<SolidifyManifestStage>();
+
+                // Done
                 return null;
+            }
+
+            if (_context.Artifact != null)
+                return CreateStage<GenerateManifestStage>();
+
 
             if (_context.ArtifactBuilder != null)
             {

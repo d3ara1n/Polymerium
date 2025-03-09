@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
+using Polymerium.Trident;
 
 namespace Polymerium.App.Services;
 
 public sealed class ConfigurationService : IDisposable
 {
     private readonly Configuration _configuration;
-    private readonly string _filePath = Path.Combine(Environment.CurrentDirectory, "polymerium.json");
+    private readonly string _filePath = PathDef.Default.FileOfPrivateSettings;
 
     private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
 
@@ -35,6 +36,9 @@ public sealed class ConfigurationService : IDisposable
     {
         try
         {
+            var dir = Path.GetDirectoryName(_filePath);
+            if (dir != null && !Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
             File.WriteAllText(_filePath, JsonSerializer.Serialize(_configuration, _serializerOptions));
         }
         catch

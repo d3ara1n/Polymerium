@@ -41,12 +41,6 @@ public partial class SettingsViewModel : ViewModelBase
     #region Commands
 
     [RelayCommand]
-    private void ClearText(TextBox? box)
-    {
-        box?.Clear();
-    }
-
-    [RelayCommand]
     private async Task PickFile(TextBox? box)
     {
         if (box != null)
