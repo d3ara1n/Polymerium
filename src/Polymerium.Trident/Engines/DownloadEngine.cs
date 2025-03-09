@@ -41,9 +41,9 @@ public class DownloadEngine(ILogger<DownloadEngine> logger, IHttpClientFactory f
             _factory = factory;
             _logger = logger;
             _token = token;
-            bag = new ConcurrentBag<InternalTask>(tasks.Select((x, i) =>
-                new InternalTask(x.Target, x.Source, x.Sha1, (uint)i, (uint)tasks.Count, x.Tag)).ToArray());
-            finished = new ConcurrentBag<DownloadResult>();
+            bag = [.. tasks.Select((x, i) =>
+                new InternalTask(x.Target, x.Source, x.Sha1, (uint)i, (uint)tasks.Count, x.Tag))];
+            finished = [];
             total = bag.Count;
 
             var needed = Math.Min(maxWorkerCount, tasks.Count);

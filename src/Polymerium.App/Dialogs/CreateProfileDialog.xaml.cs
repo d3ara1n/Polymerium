@@ -23,8 +23,8 @@ namespace Polymerium.App.Dialogs;
 
 public sealed partial class CreateProfileDialog
 {
-    private static readonly ContentInspector INSPECTOR =
-        new ContentInspectorBuilder { Definitions = Default.All() }.Build();
+    private static readonly IContentInspector INSPECTOR =
+        new ContentInspectorBuilder { Definitions = DefaultDefinitions.All() }.Build();
 
     // https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.image?view=windows-app-sdk-1.4
     private static readonly string[] SUPPORTED_MIMES =

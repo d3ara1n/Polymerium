@@ -39,13 +39,13 @@
                     Orientation="Horizontal"
                     Spacing="{StaticResource SmallGap}">
                     <Button Style="{StaticResource AccentButtonStyle}">
-                        <StackPane
+                        <StackPanel
                             x:Name="PART_UninstalledState"
                             Orientation="Horizontal"
                             Spacing="{StaticResource TinyGap}">
                             <FontIcon FontSize="{StaticResource ButtonFontIconFontSize}" Glyph="&#xEBD3;" />
                             <TextBlock Text="Apply" />
-                        </StackPane>
+                        </StackPanel>
                     </Button>
                     <Button Command="{x:Bind DismissCommand}" Content="Close" />
                 </StackPanel>

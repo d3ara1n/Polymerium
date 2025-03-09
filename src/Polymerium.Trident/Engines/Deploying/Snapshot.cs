@@ -11,8 +11,8 @@ public class Snapshot : Collection<Entity>
             throw new DirectoryNotFoundException($"Directory {directory} not found");
         }
 
-        Snapshot snapshot = new();
-        Queue<DirectoryInfo> subs = new();
+        var snapshot = new Snapshot();
+        var subs = new Queue<DirectoryInfo>();
         subs.Enqueue(new DirectoryInfo(directory));
         while (subs.TryDequeue(out var dir))
         {
@@ -38,7 +38,7 @@ public class Snapshot : Collection<Entity>
     public static void Populate(string directory, IList<Entity> toPopulate)
     {
         var current = Take(directory);
-        Collection<Entity> entities = new(toPopulate);
+        var entities = new Collection<Entity>(toPopulate);
         foreach (var exist in current)
         {
             var final = entities.FirstOrDefault(x => x.Path == exist.Path);

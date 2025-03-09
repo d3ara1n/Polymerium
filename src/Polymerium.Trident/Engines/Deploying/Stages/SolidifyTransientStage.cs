@@ -27,7 +27,7 @@ public class SolidifyTransientStage(DownloadEngine downloader) : StageBase
         Logger.LogInformation("Created download tasks of {count}", downloader.Count);
 
         var count = 0u;
-        List<Entity> entities = new();
+        var entities = new List<Entity>();
 
         var watch = Stopwatch.StartNew();
 
@@ -47,8 +47,6 @@ public class SolidifyTransientStage(DownloadEngine downloader) : StageBase
                     entities.Add(new Entity(fragile.TargetPath, fragile.SourcePath));
                     break;
 
-                case TransientData.PersistentFile:
-                    throw new NotImplementedException();
                 case TransientData.PresentFile:
                     // do nothing
                     break;
@@ -64,17 +62,17 @@ public class SolidifyTransientStage(DownloadEngine downloader) : StageBase
 
         Logger.LogInformation("Download finished in {ms}ms", watch.ElapsedMilliseconds);
 
-        foreach (var presistent in transient.PersistentFiles)
+        foreach (var persistent in transient.PersistentFiles)
         {
-            if (!File.Exists(presistent.TargetPath))
+            if (!File.Exists(persistent.TargetPath))
             {
-                var dir = Path.GetDirectoryName(presistent.TargetPath);
+                var dir = Path.GetDirectoryName(persistent.TargetPath);
                 if (dir != null && !Directory.Exists(dir))
                 {
                     Directory.CreateDirectory(dir);
                 }
 
-                File.Copy(presistent.SourcePath, presistent.TargetPath);
+                File.Copy(persistent.SourcePath, persistent.TargetPath);
             }
         }
 

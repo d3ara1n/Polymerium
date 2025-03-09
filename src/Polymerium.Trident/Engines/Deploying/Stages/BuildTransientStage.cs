@@ -14,7 +14,7 @@ public class BuildTransientStage(IHttpClientFactory factory) : StageBase
     {
         // transfer basic data from artifact
         var artifact = Context.Artifact!;
-        TransientData transient = new();
+        var transient = new TransientData();
 
         var indexFile = Context.Trident.AssetIndexPath(artifact.AssetIndex.Id);
         transient.AddPresent(
@@ -46,7 +46,7 @@ public class BuildTransientStage(IHttpClientFactory factory) : StageBase
                 library.Id.Version,
                 library.Id.Platform, library.Id.Extension);
             transient.AddPresent(
-                new TransientData.PresentFile(Path.Combine(libraryPath), library.Url, library.Sha1));
+                new TransientData.PresentFile(libraryPath, library.Url, library.Sha1));
             if (library.IsNative)
             {
                 transient.AddExplosive(new TransientData.ExplosiveFile(libraryPath, nativesDir));
@@ -70,7 +70,7 @@ public class BuildTransientStage(IHttpClientFactory factory) : StageBase
                             Path.Combine(Context.Trident.StorageDir, processor.Data ?? string.Empty);
                         if (Directory.Exists(storageHome))
                         {
-                            List<string> files = new();
+                            var files = new List<string>();
                             FillAllFilesInDirectory(files, storageHome);
                             var instanceHome = Context.Trident.InstanceHomePath(Context.Key);
                             foreach (var file in files)
