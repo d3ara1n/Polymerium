@@ -144,6 +144,9 @@
                             <Border Background="{DynamicResource ControlBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                 <StackPanel Margin="8,4">
+                                    <TextBlock Text="config" />
+                                    <TextBlock Text="defaultconfigs" />
+                                    <TextBlock Text="logs" />
                                     <TextBlock Text="saves" />
                                     <TextBlock Text="screenshots" />
                                     <TextBlock Text="options.txt" />
