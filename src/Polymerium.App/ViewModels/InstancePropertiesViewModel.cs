@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,6 +15,7 @@ using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Profiles;
 using Polymerium.Trident.Utilities;
+using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;
@@ -28,11 +30,13 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         InstanceManager instanceManager,
         OverlayService overlayService,
         NotificationService notificationService,
-        NavigationService navigationService) : base(bag, instanceManager, profileManager)
+        NavigationService navigationService,
+        ConfigurationService configurationService) : base(bag, instanceManager, profileManager)
     {
         _overlayService = overlayService;
         _notificationService = notificationService;
         _navigationService = navigationService;
+        _configurationService = configurationService;
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
     }
@@ -45,10 +49,50 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         ThumbnailOverwrite = Basic.Thumbnail;
     }
 
+    private string AccessOverride<T>(string key)
+    {
+        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result is T rv)
+            return rv.ToString() ?? string.Empty;
+
+        return string.Empty;
+    }
+
+    private void WriteOverride(string key, object? value)
+    {
+        if (_owned == null)
+            return;
+        if (value is not null and not "")
+        {
+            _owned.Value.Overrides[key] = value;
+        }
+        else
+        {
+            _owned.Value.Overrides.Remove(key);
+        }
+    }
+
     protected override Task OnInitializedAsync(CancellationToken token)
     {
         if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        {
             _owned = guard;
+        }
+
+        #region Update Overrides & Perferences
+
+        JavaHomeOverride = AccessOverride<string>(Profile.OVERRIDE_JAVA_HOME);
+        JavaHomeWatermark = "Auto decide if unset";
+        JavaMaxMemoryOverride = AccessOverride<uint>(Profile.OVERRIDE_JAVA_MAX_MEMORY);
+        JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
+        JavaAdditionalArgumentsOverride = AccessOverride<string>(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
+        JavaAdditionalArgumentsWatermark = _configurationService.Value.GameJavaAdditionalArguments;
+        WindowInitialHeightOverride = AccessOverride<uint>(Profile.OVERRIDE_WINDOW_HEIGHT);
+        WindowInitialHeightWatermark = _configurationService.Value.GameWindowInitialHeight.ToString();
+        WindowInitialWidthOverride = AccessOverride<uint>(Profile.OVERRIDE_WINDOW_WIDTH);
+        WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
+
+        #endregion
+
         return base.OnInitializedAsync(token);
     }
 
@@ -72,11 +116,12 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     private readonly OverlayService _overlayService;
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
+    private readonly ConfigurationService _configurationService;
 
     #endregion
 
     #region Commands
-    
+
     [RelayCommand]
     private async Task PickFile(TextBox? box)
     {
@@ -162,6 +207,71 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
     [ObservableProperty]
     public partial string SafeCode { get; set; }
+
+    #endregion
+
+    #region Overrides
+
+    [ObservableProperty]
+    public partial string? JavaHomeOverride { get; set; }
+
+    [ObservableProperty]
+    public partial string JavaHomeWatermark { get; set; }
+
+    partial void OnJavaHomeOverrideChanged(string? value)
+    {
+        WriteOverride(Profile.OVERRIDE_JAVA_HOME, value);
+    }
+
+    [ObservableProperty]
+    public partial string JavaMaxMemoryOverride { get; set; }
+
+    [ObservableProperty]
+    public partial string JavaMaxMemoryWatermark { get; set; }
+
+    partial void OnJavaMaxMemoryOverrideChanged(string? value)
+    {
+        WriteOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
+                      value is not null && uint.TryParse(value, out var ui) ? ui : null);
+    }
+
+    [ObservableProperty]
+    public partial string? JavaAdditionalArgumentsOverride { get; set; }
+
+    [ObservableProperty]
+    public partial string JavaAdditionalArgumentsWatermark { get; set; }
+
+    partial void OnJavaAdditionalArgumentsOverrideChanged(string? value)
+    {
+        WriteOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS, value);
+    }
+
+    [ObservableProperty]
+    public partial string WindowInitialHeightOverride { get; set; }
+
+    [ObservableProperty]
+    public partial string WindowInitialHeightWatermark { get; set; }
+
+    partial void OnWindowInitialHeightOverrideChanged(string? value)
+    {
+        WriteOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
+                      value is not null && uint.TryParse(value, out var ui) ? ui : null);
+    }
+
+    [ObservableProperty]
+    public partial string WindowInitialWidthOverride { get; set; }
+
+    [ObservableProperty]
+    public partial string WindowInitialWidthWatermark { get; set; }
+
+    partial void OnWindowInitialWidthOverrideChanged(string? value)
+    {
+        WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH, value is not null && uint.TryParse(value, out var ui) ? ui : null);
+    }
+
+    #endregion
+
+    #region Preferences
 
     #endregion
 }

@@ -6,6 +6,7 @@ using Polymerium.Trident.Engines.Deploying.Stages;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
 using Polymerium.Trident.Utilities;
+using Trident.Abstractions;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
@@ -97,13 +98,13 @@ public class InstanceManager(
 
     #region Deploy
 
-    public DeployTracker Deploy(string key)
+    public DeployTracker Deploy(string key, DeployOptions options)
     {
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new DeployTracker(key,
-                                        async t => await DeployInternalAsync((DeployTracker)t, key),
+                                        async t => await DeployInternalAsync((DeployTracker)t, key, options),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, tracker);
@@ -111,20 +112,22 @@ public class InstanceManager(
         return tracker;
     }
 
-    private async Task DeployInternalAsync(DeployTracker tracker, string key)
+    private async Task DeployInternalAsync(DeployTracker tracker, string key, DeployOptions options)
     {
         logger.LogInformation("Begin deploy {}", key);
 
         if (!profileManager.TryGetImmutable(key, out var profile))
             throw new KeyNotFoundException($"{key} is not a key to the managed profile");
 
-        var watch = new Stopwatch();
-        var engine = new DeployEngine(key, profile.Setup, provider);
 
-        watch.Start();
+        var engine = new DeployEngine(key, profile.Setup, provider, options);
+
+        var watch = Stopwatch.StartNew();
+        IProgress<DeployTracker.DeployProgress> reporter = tracker;
         foreach (var stage in engine)
         {
-            IProgress<DeployTracker.DeployProgress> reporter = tracker;
+            if (tracker.Token.IsCancellationRequested)
+                break;
             switch (stage)
             {
                 case CheckArtifactStage:
@@ -139,7 +142,8 @@ public class InstanceManager(
                         new Progress<(int, int)>(x =>
                                                      reporter
                                                         .Report(new
-                                                                    DeployTracker.DeployProgress($"Resolving packages...({x.Item1}/{x.Item2})",
+                                                                    DeployTracker.
+                                                                    DeployProgress($"Resolving packages...({x.Item1}/{x.Item2})",
                                                                         (double)x.Item1 * 100 / x.Item2)));
                     break;
                 case BuildArtifactStage:
@@ -154,7 +158,8 @@ public class InstanceManager(
                         new Progress<(int, int)>(x =>
                                                      reporter
                                                         .Report(new
-                                                                    DeployTracker.DeployProgress($"Solidifying files...({x.Item1}/{x.Item2})",
+                                                                    DeployTracker.
+                                                                    DeployProgress($"Solidifying files...({x.Item1}/{x.Item2})",
                                                                         (double)x.Item1 * 100 / x.Item2)));
                     break;
             }

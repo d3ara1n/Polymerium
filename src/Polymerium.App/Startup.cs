@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
@@ -8,12 +9,16 @@ using NeoSmart.Caching.Sqlite;
 using Polymerium.App.Services;
 using Polymerium.Trident;
 using Polymerium.Trident.Services;
+using Trident.Abstractions;
 
 namespace Polymerium.App;
 
 public static class Startup
 {
-    public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    public static void ConfigureServices(
+        IServiceCollection services,
+        IConfiguration configuration,
+        IHostEnvironment environment)
     {
         services
            .AddAvalonia()
@@ -22,12 +27,15 @@ public static class Startup
            .AddLogging(logging => logging
                                  .AddConsole()
                                  .AddDebug()
-                                 .AddFilter<ConsoleLoggerProvider>(null, LogLevel.Information)
-                                 .AddFilter<DebugLoggerProvider>(null, LogLevel.Debug))
+                                 .AddFilter<ConsoleLoggerProvider>(null,
+                                                                   environment.EnvironmentName == "Development"
+                                                                       ? LogLevel.Debug
+                                                                       : LogLevel.Information)
+                                 .AddFilter<DebugLoggerProvider>(null, LogLevel.Trace))
            .AddSqliteCache(setup =>
             {
                 setup.MemoryOnly = false;
-                var path = PathDef.Default.FileOfPrivateCache;
+                var path = PathDef.Default.FileOfPrivateCache(Program.Brand);
                 var dir = Path.GetDirectoryName(path);
                 if (dir != null && !Directory.Exists(dir))
                     Directory.CreateDirectory(dir);

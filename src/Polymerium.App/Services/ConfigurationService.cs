@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
-using Polymerium.Trident;
+using Trident.Abstractions;
 
 namespace Polymerium.App.Services;
 
 public sealed class ConfigurationService : IDisposable
 {
     private readonly Configuration _configuration;
-    private readonly string _filePath = PathDef.Default.FileOfPrivateSettings;
+    private readonly string _filePath = PathDef.Default.FileOfPrivateSettings(Program.Brand);
 
     private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
 

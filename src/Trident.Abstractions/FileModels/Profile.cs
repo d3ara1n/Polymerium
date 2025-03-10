@@ -2,6 +2,13 @@
 
 public class Profile(string name, Profile.Rice setup, IDictionary<string, object>? overrides)
 {
+    public const string OVERRIDE_JAVA_HOME = "java.home";
+    public const string OVERRIDE_JAVA_MAX_MEMORY = "java.max_memory";
+    public const string OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS = "java.additional_arguments";
+    public const string OVERRIDE_WINDOW_HEIGHT = "window.height";
+    public const string OVERRIDE_WINDOW_WIDTH = "window.width";
+    public const string OVERRIDE_WINDOW_TITLE = "window.title";
+
     public string Name { get; set; } = name ?? throw new ArgumentNullException(nameof(name));
     public Rice Setup { get; private set; } = setup ?? throw new ArgumentNullException(nameof(setup));
 

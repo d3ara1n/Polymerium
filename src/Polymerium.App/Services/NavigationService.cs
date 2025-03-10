@@ -12,17 +12,20 @@ public class NavigationService
     private Action<Type, object?, IPageTransition>? _navigateHandler;
     private Action? _goBackHandler;
     private Func<bool>? _canGoBackHandler;
+    private Action? _clearHistoryHandler;
 
     public bool CanGoBack => _canGoBackHandler?.Invoke() ?? false;
 
     public void SetHandler(
         Action<Type, object?, IPageTransition> navigateHandler,
         Action goBackHandler,
-        Func<bool> canGoBackHandler)
+        Func<bool> canGoBackHandler,
+        Action clearHistoryHandler)
     {
         _navigateHandler = navigateHandler;
         _goBackHandler = goBackHandler;
         _canGoBackHandler = canGoBackHandler;
+        _clearHistoryHandler = clearHistoryHandler;
     }
 
     public void Navigate(Type page, object? parameter = null, IPageTransition? transition = null) =>
@@ -38,4 +41,6 @@ public class NavigationService
         Navigate(typeof(T), parameter, transition);
 
     public void GoBack() => Dispatcher.UIThread.Post(() => _goBackHandler?.Invoke());
+
+    public void ClearHistory() => Dispatcher.UIThread.Post(() => _clearHistoryHandler?.Invoke());
 }

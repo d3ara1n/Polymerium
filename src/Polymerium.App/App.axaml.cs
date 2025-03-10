@@ -194,7 +194,7 @@ public class App : Application
         // Closure captures Program.AppHost.Services
         window.BindNavigation(navigation.Navigate, ActivatePage);
 
-        navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack);
+        navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack, window.ClearHistory);
 
         #endregion
 

@@ -9,6 +9,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
+using Polymerium.Trident.Engines;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Utilities;
@@ -25,10 +26,12 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
         ProfileManager profileManager,
         OverlayService overlayService,
         InstanceManager instanceManager,
-        NotificationService notificationService) : base(bag, instanceManager, profileManager)
+        NotificationService notificationService,
+        ConfigurationService configurationService) : base(bag, instanceManager, profileManager)
     {
         _overlayService = overlayService;
         _notificationService = notificationService;
+        _configurationService = configurationService;
     }
 
     protected override void OnUpdateModel(string key, Profile profile)
@@ -86,7 +89,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     {
         try
         {
-            InstanceManager.Deploy(Basic.Key);
+            InstanceManager.Deploy(Basic.Key, new DeployOptions(null));
         }
         catch (Exception ex)
         {
@@ -119,6 +122,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
 
     private readonly OverlayService _overlayService;
     private readonly NotificationService _notificationService;
+    private readonly ConfigurationService _configurationService;
 
     #endregion
 

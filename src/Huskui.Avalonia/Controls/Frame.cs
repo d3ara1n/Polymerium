@@ -82,10 +82,11 @@ public class Frame : TemplatedControl
         set => SetAndRaise(DefaultTransitionProperty, ref _defaultTransition, value);
     }
 
-    public IReadOnlyList<FrameFrame> History => _history.ToList();
     public ICommand GoBackCommand => _goBackCommand;
 
     public bool CanGoBack => _history.Count > 0 || CanGoBackOutOfStack;
+
+    public void ClearHistory() => _history.Clear();
 
     public PageActivatorDelegate PageActivator { get; set; } = (t, _) => Activator.CreateInstance(t);
 
@@ -137,10 +138,10 @@ public class Frame : TemplatedControl
     protected override Size ArrangeOverride(Size finalSize)
     {
         var rv = base.ArrangeOverride(finalSize);
-    
+
         ArgumentNullException.ThrowIfNull(_presenter);
         ArgumentNullException.ThrowIfNull(_presenter2);
-    
+
         if (_current.HasValue && _doubleArrangeSafeLock)
         {
             _doubleArrangeSafeLock = false;
@@ -148,7 +149,7 @@ public class Frame : TemplatedControl
             var cancel = new CancellationTokenSource();
             _currentToken = cancel;
             var (from, to) = _presenter.Content is not null ? (_presenter, _presenter2) : (_presenter2, _presenter);
-    
+
             (from.ZIndex, to.ZIndex) = (0, 1);
             (from.IsVisible, to.IsVisible) = (true, true);
             to.Content = _current.Value.Content;
@@ -166,7 +167,7 @@ public class Frame : TemplatedControl
                              },
                              TaskScheduler.FromCurrentSynchronizationContext());
         }
-    
+
         return rv;
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages;
