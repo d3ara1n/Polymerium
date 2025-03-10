@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Polymerium.App.Services;
 
@@ -11,10 +13,23 @@ public class AvaloniaLifetime : IHostLifetime
     private readonly IHostApplicationLifetime _parent;
     private readonly Thread _thread;
 
-    public AvaloniaLifetime(IHostApplicationLifetime parent)
+    public AvaloniaLifetime(
+        IHostApplicationLifetime parent,
+        ILogger<AvaloniaLifetime> logger,
+        IHostEnvironment environment)
     {
         _parent = parent;
 
+        logger.LogInformation("""
+                              {}({}):{}
+                              Polymerium/{}
+                              Avalonia/{}
+                              """,
+                              environment.ApplicationName,
+                              environment.EnvironmentName,
+                              environment.ContentRootPath,
+                              typeof(AvaloniaLifetime).Assembly.GetName().Version,
+                              typeof(AvaloniaObject).Assembly.GetName().Version);
 
         if (OperatingSystem.IsWindows())
         {

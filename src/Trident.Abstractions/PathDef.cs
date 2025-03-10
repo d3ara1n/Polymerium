@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 
-namespace Polymerium.Trident;
+namespace Trident.Abstractions;
 
 public class PathDef
 {
@@ -31,10 +32,10 @@ public class PathDef
 
     #region Private Folder
 
-    public string PrivateDirectory => Path.Combine(Home, ".polymerium");
+    public string PrivateDirectory(string brand) => Path.Combine(Home, $".{brand.ToLower()}");
 
-    public string FileOfPrivateSettings => Path.Combine(PrivateDirectory, "settings.json");
-    public string FileOfPrivateCache => Path.Combine(PrivateDirectory, "cache.sqlite.db");
+    public string FileOfPrivateSettings(string brand) => Path.Combine(PrivateDirectory(brand), "settings.json");
+    public string FileOfPrivateCache(string brand) => Path.Combine(PrivateDirectory(brand), "cache.sqlite.db");
 
     #endregion
 

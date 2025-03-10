@@ -16,7 +16,7 @@ namespace Polymerium.Trident.Engines;
 // ...
 // 版本锁中需要保存验证信息，例如当时的所有包列表
 
-public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider) : IEnumerable<StageBase>
+public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider, DeployOptions options) : IEnumerable<StageBase>
 {
     public IEnumerator<StageBase> GetEnumerator() => new DeployEngineEnumerator(key, setup, provider);
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

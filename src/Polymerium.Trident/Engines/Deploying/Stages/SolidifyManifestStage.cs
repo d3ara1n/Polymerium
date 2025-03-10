@@ -2,6 +2,7 @@
 using System.IO.Compression;
 using System.Security.Cryptography;
 using Microsoft.Extensions.Logging;
+using Trident.Abstractions;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages;
 

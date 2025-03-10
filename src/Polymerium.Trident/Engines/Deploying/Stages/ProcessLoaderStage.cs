@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Models.PrismLauncherApi;
 using Polymerium.Trident.Services;
+using Trident.Abstractions;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Engines.Deploying.Stages;

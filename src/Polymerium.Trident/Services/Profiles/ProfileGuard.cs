@@ -16,6 +16,8 @@ public class ProfileGuard : IAsyncDisposable
     public string Key => _handle.Key;
     public Profile Value => _handle.Value;
 
+    public void Discard() => _handle.IsActive = false;
+
     #region IAsyncDisposable Members
 
     public async ValueTask DisposeAsync()

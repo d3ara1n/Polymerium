@@ -7,6 +7,8 @@ namespace Polymerium.App;
 
 internal static class Program
 {
+    public const string Brand = "Polymerium";
+
     // // Initialization code. Don't use any Avalonia, third-party APIs or any
     // // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
     // // yet and stuff might break.
@@ -21,8 +23,8 @@ internal static class Program
 
     public static void Main(string[] args)
     {
-        var builder = Host.CreateApplicationBuilder();
-        Startup.ConfigureServices(builder.Services, builder.Configuration);
+        var builder = Host.CreateApplicationBuilder(args);
+        Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
         AppHost = builder.Build();
         AppHost.Run();
     }

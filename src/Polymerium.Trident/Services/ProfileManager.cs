@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services.Profiles;
+using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Services;

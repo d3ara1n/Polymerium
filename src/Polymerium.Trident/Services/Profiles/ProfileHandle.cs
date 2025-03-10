@@ -8,8 +8,12 @@ internal class ProfileHandle(string key, Profile value, string path, JsonSeriali
     public string Key => key;
     public Profile Value => value;
 
+    internal bool IsActive { get; set; } = true;
+
     internal Task SaveAsync()
     {
+        if (!IsActive)
+            return Task.CompletedTask;
         var json = JsonSerializer.Serialize(Value, options);
         var dir = Path.GetDirectoryName(path);
         if (dir is not null && !Directory.Exists(dir))

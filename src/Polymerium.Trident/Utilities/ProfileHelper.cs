@@ -1,4 +1,6 @@
-﻿namespace Polymerium.Trident.Utilities;
+﻿using Trident.Abstractions;
+
+namespace Polymerium.Trident.Utilities;
 
 public static class ProfileHelper
 {

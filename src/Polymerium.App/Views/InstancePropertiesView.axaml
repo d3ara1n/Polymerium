@@ -4,6 +4,7 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:controls="using:Polymerium.App.Controls"
+                  xmlns:converters="using:Polymerium.App.Converters"
                   xmlns:vm="using:Polymerium.App.ViewModels"
                   xmlns:components="using:Polymerium.App.Components"
                   xmlns:fi="using:FluentIcons.Avalonia"
@@ -72,9 +73,12 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Title="Game Overrides" Summary="Configuration specified to the instance" Icon="Games">
+        <controls:SettingsEntry Title="Game Overrides"
+                                Summary="Configuration specified to the instance; left blank to refer to the global settings"
+                                Icon="Games">
             <controls:SettingsEntryItem Header="Java Home">
-                <TextBox Watermark="Fallbacks to the global settings if unset">
+                <TextBox Watermark="{Binding JavaHomeWatermark,FallbackValue=Unset}"
+                         Text="{Binding JavaHomeOverride,Mode=TwoWay,FallbackValue={x:Null}}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal" Margin="4">
                             <Button Command="{Binding $parent[TextBox].Clear}">
@@ -89,7 +93,9 @@
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java Max Memory">
-                <TextBox Watermark="Bigger is better">
+                <TextBox
+                    Text="{Binding JavaMaxMemoryOverride,Mode=TwoWay}"
+                    Watermark="{Binding JavaMaxMemoryWatermark}">
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
@@ -100,11 +106,13 @@
                 </TextBox>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java Additional Arguments">
-                <TextBox Watermark="Less is more" />
+                <TextBox Text="{Binding JavaAdditionalArgumentsOverride,Mode=TwoWay}"
+                         Watermark="{Binding JavaAdditionalArgumentsWatermark}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Window Initial Size">
                 <Grid ColumnDefinitions="*,7,*">
-                    <TextBox Grid.Column="0" Watermark="1270">
+                    <TextBox Grid.Column="0" Text="{Binding WindowInitialWidthOverride,Mode=TwoWay}"
+                             Watermark="{Binding WindowInitialWidthWatermark}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Width" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
@@ -113,7 +121,8 @@
                             </StackPanel>
                         </TextBox.InnerLeftContent>
                     </TextBox>
-                    <TextBox Grid.Column="2" Watermark="720">
+                    <TextBox Grid.Column="2" Text="{Binding WindowInitialHeightOverride,Mode=TwoWay}"
+                             Watermark="{Binding WindowInitialHeightWatermark}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Height" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"

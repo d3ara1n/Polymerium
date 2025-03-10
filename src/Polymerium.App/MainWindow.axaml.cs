@@ -107,6 +107,7 @@ public partial class MainWindow : AppWindow
     internal bool CanGoBack() => Root.CanGoBack;
 
     internal void GoBack() => Root.GoBack();
+    internal void ClearHistory() => Root.ClearHistory();
 
     internal void BindNavigation(
         Action<Type, object?, IPageTransition?> navigate,
