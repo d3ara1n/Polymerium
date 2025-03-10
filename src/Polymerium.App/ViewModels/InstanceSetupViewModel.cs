@@ -50,6 +50,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     private void TriggerRefresh(CancellationToken token)
     {
         _updatingCancellationTokenSource?.Cancel();
+        _updatingCancellationTokenSource?.Dispose();
         _updatingCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
         var inner = _updatingCancellationTokenSource.Token;
         var semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
@@ -104,7 +105,8 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                               {
                                                   var c = _clientFactory.CreateClient();
                                                   var b = await c.GetByteArrayAsync(p.Thumbnail, inner);
-                                                  model.Thumbnail = Bitmap.DecodeToWidth(new MemoryStream(b), 64);
+                                                  await using var ms = new MemoryStream(b);
+                                                  model.Thumbnail = Bitmap.DecodeToWidth(ms, 64);
                                               }
                                               else
                                               {
@@ -149,7 +151,8 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                 {
                     using var client = _clientFactory.CreateClient();
                     var bytes = await client.GetByteArrayAsync(package.Thumbnail, inner);
-                    thumbnail = Bitmap.DecodeToWidth(new MemoryStream(bytes), 64);
+                    await using var ms = new MemoryStream(bytes);
+                    thumbnail = Bitmap.DecodeToWidth(ms, 64);
                 }
                 else
                 {
@@ -222,6 +225,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     protected override Task OnDeinitializeAsync(CancellationToken token)
     {
         _pageCancellationTokenSource?.Cancel();
+        _pageCancellationTokenSource?.Dispose();
         _updatingSubscription?.Dispose();
 
         return base.OnDeinitializeAsync(token);
