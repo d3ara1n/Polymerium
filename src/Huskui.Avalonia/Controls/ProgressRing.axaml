@@ -38,23 +38,21 @@
         </Grid>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:ProgressRing}" TargetType="local:ProgressRing">
-        <!-- <Setter Property="Height" Value="64" /> -->
-        <!-- <Setter Property="Width" Value="64" /> -->
         <Setter Property="StrokeWidth" Value="4" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
         <Setter Property="ProgressTextFormat" Value="{}{1:0}%" />
         <Setter Property="ShowProgressText" Value="True" />
-        <Setter Property="Padding" Value="1" />
+        <Setter Property="TrackStrokeWidth" Value="4" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="Container">
                     <Arc Name="Track"
                          StartAngle="0"
-                         Margin="{TemplateBinding Padding}"
+                         Margin="{TemplateBinding TrackerPadding}"
                          Stretch="None"
                          Stroke="{DynamicResource ControlBackgroundBrush}"
-                         StrokeThickness="{TemplateBinding StrokeWidth,Converter={x:Static huskc:DoubleConverters.DividedBy},ConverterParameter=2}"
+                         StrokeThickness="{TemplateBinding TrackStrokeWidth}"
                          SweepAngle="360" />
                     <Panel Name="Indeterminate" IsVisible="False">
                         <Arc Name="Chaser"
