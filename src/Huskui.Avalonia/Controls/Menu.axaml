@@ -78,8 +78,6 @@
                                     </Transitions>
                                 </ContentPresenter.Transitions>
                             </ContentPresenter>
-
-
                             <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="6">
                                 <Panel>
                                     <TextBlock VerticalAlignment="Center"
@@ -125,7 +123,7 @@
         <Style Selector="^:separator">
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Separator Margin="4" />
+                    <Separator />
                 </ControlTemplate>
             </Setter>
         </Style>

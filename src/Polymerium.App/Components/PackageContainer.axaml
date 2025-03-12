@@ -6,7 +6,6 @@
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:m="using:Polymerium.App.Models"
              xmlns:cp="using:Polymerium.App.Components"
-             xmlns:fi="using:FluentIcons.Avalonia"
              xmlns:fie="using:FluentIcons.Avalonia.MarkupExtensions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
@@ -83,18 +82,20 @@
                                                                   Command="{Binding $parent[cp:PackageContainer].OpenUrlCommand}"
                                                                   CommandParameter="{Binding Reference}"
                                                                   Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
+                                                        <MenuItem Header="Add to Favorites"
+                                                                  Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" />
+                                                        <MenuItem Header="Favorite"
+                                                                  Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem Header="-" />
-                                                        <MenuItem Header="Move"
+                                                        <MenuItem Header="Move to"
+                                                                  IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"
                                                                   Icon="{fie:SymbolIcon Symbol=TableMoveRight,FontSize={StaticResource MediumFontSize}}">
-                                                            <MenuItem Header="Stage"
-                                                                      Icon="{fie:SymbolIcon Symbol=Status,FontSize={StaticResource MediumFontSize}}" />
-                                                            <MenuItem Header="Stash"
-                                                                      Icon="{fie:SymbolIcon Symbol=Person,FontSize={StaticResource MediumFontSize}}" />
                                                             <MenuItem Header="Draft"
                                                                       Icon="{fie:SymbolIcon Symbol=Drafts,FontSize={StaticResource MediumFontSize}}" />
                                                         </MenuItem>
                                                         <MenuItem Header="-" />
                                                         <MenuItem Header="Remove"
+                                                                  IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"
                                                                   Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
                                                     </MenuFlyout>
                                                 </Button.Flyout>

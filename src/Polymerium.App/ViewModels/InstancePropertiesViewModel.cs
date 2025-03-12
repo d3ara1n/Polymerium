@@ -213,10 +213,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     #region Overrides
 
     [ObservableProperty]
-    public partial string? JavaHomeOverride { get; set; }
+    public partial string JavaHomeOverride { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string JavaHomeWatermark { get; set; }
+    public partial string JavaHomeWatermark { get; set; } = string.Empty;
 
     partial void OnJavaHomeOverrideChanged(string? value)
     {
@@ -224,10 +224,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     }
 
     [ObservableProperty]
-    public partial string JavaMaxMemoryOverride { get; set; }
+    public partial string JavaMaxMemoryOverride { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string JavaMaxMemoryWatermark { get; set; }
+    public partial string JavaMaxMemoryWatermark { get; set; } = string.Empty;
 
     partial void OnJavaMaxMemoryOverrideChanged(string? value)
     {
@@ -236,10 +236,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     }
 
     [ObservableProperty]
-    public partial string? JavaAdditionalArgumentsOverride { get; set; }
+    public partial string JavaAdditionalArgumentsOverride { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string JavaAdditionalArgumentsWatermark { get; set; }
+    public partial string JavaAdditionalArgumentsWatermark { get; set; } = string.Empty;
 
     partial void OnJavaAdditionalArgumentsOverrideChanged(string? value)
     {
@@ -247,10 +247,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     }
 
     [ObservableProperty]
-    public partial string WindowInitialHeightOverride { get; set; }
+    public partial string WindowInitialHeightOverride { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string WindowInitialHeightWatermark { get; set; }
+    public partial string WindowInitialHeightWatermark { get; set; } = string.Empty;
 
     partial void OnWindowInitialHeightOverrideChanged(string? value)
     {
@@ -259,10 +259,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     }
 
     [ObservableProperty]
-    public partial string WindowInitialWidthOverride { get; set; }
+    public partial string WindowInitialWidthOverride { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string WindowInitialWidthWatermark { get; set; }
+    public partial string WindowInitialWidthWatermark { get; set; } = string.Empty;
 
     partial void OnWindowInitialWidthOverrideChanged(string? value)
     {
