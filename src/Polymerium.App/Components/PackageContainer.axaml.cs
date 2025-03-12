@@ -16,7 +16,6 @@ public partial class PackageContainer : UserControl
                                                                   o => o.FilterText,
                                                                   (o, v) => o.FilterText = v);
 
-
     public static readonly DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageModel>?>
         ViewProperty =
             AvaloniaProperty
@@ -45,45 +44,34 @@ public partial class PackageContainer : UserControl
                                                                 (o, v) => o.IsLocked = v);
 
 
-    private string _filterText = string.Empty;
-
-    private bool _isLocked;
-
-    private SourceCache<InstancePackageModel, string>? _items;
-
-    private ICommand? _openUrlCommand;
     private IDisposable? _subscription;
-
-    private int _totalCount;
-
-    private ReadOnlyObservableCollection<InstancePackageModel>? _view;
 
     public PackageContainer() => InitializeComponent();
 
     public ICommand? OpenUrlCommand
     {
-        get => _openUrlCommand;
-        set => SetAndRaise(OpenUrlCommandProperty, ref _openUrlCommand, value);
+        get;
+        set => SetAndRaise(OpenUrlCommandProperty, ref field, value);
     }
 
     public string FilterText
     {
-        get => _filterText;
-        set => SetAndRaise(FilterTextProperty, ref _filterText, value);
-    }
+        get;
+        set => SetAndRaise(FilterTextProperty, ref field, value);
+    } = string.Empty;
 
     public ReadOnlyObservableCollection<InstancePackageModel>? View
     {
-        get => _view;
-        set => SetAndRaise(ViewProperty, ref _view, value);
+        get;
+        set => SetAndRaise(ViewProperty, ref field, value);
     }
 
     public SourceCache<InstancePackageModel, string>? Items
     {
-        get => _items;
+        get;
         set
         {
-            if (SetAndRaise(ItemsProperty, ref _items, value))
+            if (SetAndRaise(ItemsProperty, ref field, value))
             {
                 _subscription?.Dispose();
                 if (value is not null)
@@ -98,14 +86,14 @@ public partial class PackageContainer : UserControl
 
     public bool IsLocked
     {
-        get => _isLocked;
-        set => SetAndRaise(IsLockedProperty, ref _isLocked, value);
+        get;
+        set => SetAndRaise(IsLockedProperty, ref field, value);
     }
 
     public int TotalCount
     {
-        get => _totalCount;
-        set => SetAndRaise(TotalCountProperty, ref _totalCount, value);
+        get;
+        set => SetAndRaise(TotalCountProperty, ref field, value);
     }
 
     private static Func<InstancePackageModel, bool> BuildFilter(string filter) =>

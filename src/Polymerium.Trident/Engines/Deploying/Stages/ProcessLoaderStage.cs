@@ -14,7 +14,7 @@ public class ProcessLoaderStage(
     {
         var loader = Context.Setup.Loader;
         var builder = Context.ArtifactBuilder!;
-        logger.LogInformation("Process loader: {loader}", loader ?? "(None)");
+        logger.LogInformation("Process loader: {}", loader ?? "(None)");
         if (loader != null)
             if (LoaderHelper.TryParse(loader, out var parsed))
                 switch (parsed.Identity)

@@ -53,7 +53,7 @@
                         <TextBlock Text="{Binding LoaderLabel,FallbackValue=None}" />
                         <HyperlinkButton Content="Switch" />
                     </StackPanel>
-                    <husk:InfoBar Background="{DynamicResource Card3BackgroundBrush}">
+                    <husk:InfoBar Background="{DynamicResource Layer0BackgroundBrush}">
                         <TextBlock
                             Text="[Stage] and [Stash] apply items to deployment while [Draft] does not. Instance imported online will lock the [Stage] up."
                             TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" />

@@ -56,7 +56,7 @@ public class InstanceManager(
     {
         var stream = await client.GetStreamAsync(download, token);
         var memory = new MemoryStream();
-        var buffer = new byte[8192];
+        var buffer = new byte[8*1024];
         int read;
         var totalRead = 0L;
         do

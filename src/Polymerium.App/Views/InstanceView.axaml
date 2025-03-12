@@ -196,7 +196,6 @@
                     </Button>
                     <Border Grid.Row="8" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
                             BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="2"
-                            BackgroundSizing="InnerBorderEdge"
                             Height="{Binding Bounds.Width,RelativeSource={RelativeSource Mode=Self}}">
                         <Border.Background>
                             <ImageBrush Source="{Binding Basic.Thumbnail}" />

@@ -85,7 +85,6 @@
                 </ItemsControl>
             </ScrollViewer>
         </husk:SkeletonContainer>
-
         <StackPanel Spacing="24">
             <TextBlock Text="Search Center" Theme="{StaticResource PageHeaderTextBlockTheme}">
                 <TextBlock.Foreground>
@@ -95,7 +94,7 @@
                     </LinearGradientBrush>
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBox Name="QueryBox" Watermark="Everything(mostly) begins here" HorizontalAlignment="Center"
+            <TextBox Name="QueryBox" Watermark="Everything(mostly) begins here" HorizontalAlignment="Stretch"
                      HorizontalContentAlignment="Center"
                      Foreground="{DynamicResource ControlAccentForegroundBrush}" Margin="36,0"
                      Theme="{StaticResource UnderlineTextBoxTheme}" BorderThickness="0,0,0,2" />
