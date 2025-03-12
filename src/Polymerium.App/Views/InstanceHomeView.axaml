@@ -201,7 +201,7 @@
                         Grid.Row="0"
                         Width="122"
                         Height="122">
-                        <husk:ProgressRing ShowProgressText="False" Value="37" />
+                        <husk:ProgressRing ShowProgressText="False" Value="37" TrackStrokeWidth="2" TrackerPadding="1"/>
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock TextAlignment="Center">
                                 <Run Text="Total Hours" />

@@ -95,11 +95,11 @@
 
         <Style Selector="^:selected">
             <Style Selector="^ /template/ Border#Indicator">
-                <Setter Property="Background" Value="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
                 <Setter Property="Opacity" Value="1.0" />
             </Style>
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
             </Style>
         </Style>
 

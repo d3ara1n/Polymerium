@@ -95,8 +95,10 @@
                     </LinearGradientBrush>
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBox Name="QueryBox" Watermark="Everything(mostly) begins here" HorizontalContentAlignment="Center"
-                     Margin="36,0" />
+            <TextBox Name="QueryBox" Watermark="Everything(mostly) begins here" HorizontalAlignment="Center"
+                     HorizontalContentAlignment="Center"
+                     Foreground="{DynamicResource ControlAccentForegroundBrush}" Margin="36,0"
+                     Theme="{StaticResource UnderlineTextBoxTheme}" BorderThickness="0,0,0,2" />
             <Button Command="{Binding GotoSearchViewCommand}"
                     CommandParameter="{Binding #QueryBox.Text}" Classes="Primary"
                     Theme="{StaticResource OutlineButtonTheme}" HorizontalAlignment="Center">

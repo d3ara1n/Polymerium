@@ -24,6 +24,12 @@ public class ProgressRing : RangeBase
     public static readonly StyledProperty<double> StrokeWidthProperty =
         AvaloniaProperty.Register<ProgressRing, double>(nameof(StrokeWidth), 4);
 
+    public static readonly StyledProperty<double> TrackStrokeWidthProperty =
+        AvaloniaProperty.Register<ProgressRing, double>(nameof(TrackStrokeWidth));
+
+    public static readonly StyledProperty<Thickness> TrackerPaddingProperty =
+        AvaloniaProperty.Register<ProgressRing, Thickness>(nameof(TrackerPadding));
+
 
     public static readonly DirectProperty<ProgressRing, double> PercentageProperty =
         AvaloniaProperty.RegisterDirect<ProgressRing, double>(nameof(Percentage), o => o.Percentage);
@@ -31,6 +37,18 @@ public class ProgressRing : RangeBase
     private Arc? _indicator;
 
     private double _percentage;
+
+    public double TrackStrokeWidth
+    {
+        get => GetValue(TrackStrokeWidthProperty);
+        set => SetValue(TrackStrokeWidthProperty, value);
+    }
+
+    public Thickness TrackerPadding
+    {
+        get => GetValue(TrackerPaddingProperty);
+        set => SetValue(TrackerPaddingProperty, value);
+    }
 
     public bool IsIndeterminate
     {
