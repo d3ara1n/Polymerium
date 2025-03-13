@@ -89,7 +89,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     {
         try
         {
-            InstanceManager.Deploy(Basic.Key, new DeployOptions(null));
+            InstanceManager.Deploy(Basic.Key);
         }
         catch (Exception ex)
         {
