@@ -51,6 +51,12 @@ public class PrismLauncherService(IPrismLauncherClient client)
         return libraries;
     }
 
+    public async Task<RuntimeManifest> GetRuntimeAsync(uint major, CancellationToken token)
+    {
+        var manifest = await client.GetRuntimeAsync(major, token);
+        return manifest;
+    }
+
     public static bool ValidateLibraryRule(Component.Library lib)
     {
         if (lib.Rules != null && lib.Rules.Any())

@@ -2,7 +2,7 @@
 
 namespace Polymerium.Trident.Engines.Deploying;
 
-public class DeployContext(string key, Profile.Rice setup, IServiceProvider provider)
+public class DeployContext(string key, Profile.Rice setup, IServiceProvider provider, DeployOptions options)
 {
     // 通过把 Context 填满，当内容被填满时代表部署完成
 
@@ -20,4 +20,5 @@ public class DeployContext(string key, Profile.Rice setup, IServiceProvider prov
 
     // Preference
     public IServiceProvider Provider => provider;
+    public DeployOptions Options => options;
 }

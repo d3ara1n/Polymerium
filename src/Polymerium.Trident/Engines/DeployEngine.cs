@@ -16,16 +16,16 @@ namespace Polymerium.Trident.Engines;
 // ...
 // 版本锁中需要保存验证信息，例如当时的所有包列表
 
-public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider, DeployOptions options) : IEnumerable<StageBase>
+public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider, DeployOptions options)
+    : IEnumerable<StageBase>
 {
-    public IEnumerator<StageBase> GetEnumerator() => new DeployEngineEnumerator(key, setup, provider);
+    public IEnumerator<StageBase> GetEnumerator() =>
+        new DeployEngineEnumerator(new DeployContext(key, setup, provider, options));
+
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private class DeployEngineEnumerator(string key, Profile.Rice setup, IServiceProvider provider)
-        : IEnumerator<StageBase>
+    private class DeployEngineEnumerator(DeployContext context) : IEnumerator<StageBase>
     {
-        private readonly DeployContext _context = new(key, setup, provider);
-
         public void Reset() => throw new NotImplementedException();
 
         public bool MoveNext()
@@ -52,28 +52,28 @@ public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provi
 
         private StageBase? DecideNext()
         {
-            if (_context.Manifest != null)
+            if (context.Manifest != null)
             {
-                if (!_context.IsSolidified)
+                if (!context.IsSolidified)
                     return CreateStage<SolidifyManifestStage>();
 
                 // Done
                 return null;
             }
 
-            if (_context.Artifact != null)
+            if (context.Artifact != null)
                 return CreateStage<GenerateManifestStage>();
 
 
-            if (_context.ArtifactBuilder != null)
+            if (context.ArtifactBuilder != null)
             {
-                if (!_context.IsVanillaInstalled)
+                if (!context.IsVanillaInstalled)
                     return CreateStage<InstallVanillaStage>();
 
-                if (!_context.IsLoaderProcess)
+                if (!context.IsLoaderProcess)
                     return CreateStage<ProcessLoaderStage>();
 
-                if (!_context.IsPackageResolved)
+                if (!context.IsPackageResolved)
                     return CreateStage<ResolvePackageStage>();
 
                 return CreateStage<BuildArtifactStage>();
@@ -84,8 +84,8 @@ public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provi
 
         private T CreateStage<T>() where T : StageBase
         {
-            var stage = ActivatorUtilities.CreateInstance<T>(_context.Provider);
-            stage.Context = _context;
+            var stage = ActivatorUtilities.CreateInstance<T>(context.Provider);
+            stage.Context = context;
             return stage;
         }
     }

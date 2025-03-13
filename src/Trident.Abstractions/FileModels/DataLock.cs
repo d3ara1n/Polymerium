@@ -12,6 +12,7 @@ public record DataLock(
     DataLock.AssetData AssetIndex)
 {
     public const int FORMAT = 1;
+
     // 对于 github:user/package 这种没有标记 version 也就是特定 commit/release 的，会视为有效，本着构建完尽可能不修改原则
     // Home 是 Trident Home，Key 是 Profile Key，这两者结合来保证必须是同一个目录的实例
     public record ViabilityData(

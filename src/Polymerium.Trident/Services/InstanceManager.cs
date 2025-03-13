@@ -7,6 +7,7 @@ using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Services.Profiles;
 using Polymerium.Trident.Utilities;
 using Trident.Abstractions;
+using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Importers;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
@@ -56,7 +57,7 @@ public class InstanceManager(
     {
         var stream = await client.GetStreamAsync(download, token);
         var memory = new MemoryStream();
-        var buffer = new byte[8*1024];
+        var buffer = new byte[8 * 1024];
         int read;
         var totalRead = 0L;
         do
@@ -98,13 +99,13 @@ public class InstanceManager(
 
     #region Deploy
 
-    public DeployTracker Deploy(string key, DeployOptions options)
+    public DeployTracker Deploy(string key)
     {
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new DeployTracker(key,
-                                        async t => await DeployInternalAsync((DeployTracker)t, key, options),
+                                        async t => await DeployInternalAsync((DeployTracker)t, key),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, tracker);
@@ -112,14 +113,18 @@ public class InstanceManager(
         return tracker;
     }
 
-    private async Task DeployInternalAsync(DeployTracker tracker, string key, DeployOptions options)
+    private async Task DeployInternalAsync(DeployTracker tracker, string key)
     {
         logger.LogInformation("Begin deploy {}", key);
 
         if (!profileManager.TryGetImmutable(key, out var profile))
             throw new KeyNotFoundException($"{key} is not a key to the managed profile");
 
-
+        var javaHomeOverride = profile.Overrides.TryGetValue(Profile.OVERRIDE_JAVA_HOME, out var result)
+                            && result is string home
+                                   ? home
+                                   : null;
+        var options = new DeployOptions(javaHomeOverride);
         var engine = new DeployEngine(key, profile.Setup, provider, options);
 
         var watch = Stopwatch.StartNew();
