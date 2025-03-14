@@ -6,6 +6,7 @@ using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
+using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions.FileModels;
@@ -15,9 +16,7 @@ namespace Polymerium.App.ViewModels;
 
 public abstract partial class InstanceViewModelBase : ViewModelBase
 {
-    #pragma warning disable CS8618, CS9264
     public InstanceViewModelBase(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
-        #pragma warning restore CS8618, CS9264
     {
         InstanceManager = instanceManager;
         ProfileManager = profileManager;

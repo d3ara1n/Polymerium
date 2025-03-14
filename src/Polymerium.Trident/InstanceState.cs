@@ -1,3 +1,3 @@
-﻿namespace Polymerium.App.Models;
+﻿namespace Polymerium.Trident;
 
 public enum InstanceState { Idle, Installing, Updating, Deploying, Running }

@@ -8,10 +8,10 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-    xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="using:Polymerium.App.Views"
     xmlns:vm="using:Polymerium.App.ViewModels"
+    xmlns:trident="using:Polymerium.Trident"
     d:DesignHeight="566"
     d:DesignWidth="780"
     x:DataType="vm:InstanceHomeViewModel"
@@ -322,7 +322,7 @@
                 Grid.Column="0"
                 Padding="0"
                 Background="{DynamicResource Layer0BackgroundBrush}">
-                <husk:SwitchPresenter TargetType="m:InstanceState" Value="{Binding State}">
+                <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
                         <StackPanel
                             HorizontalAlignment="Center"
@@ -375,7 +375,7 @@
                 Grid.Column="2"
                 Padding="0"
                 Background="{DynamicResource Layer0BackgroundBrush}">
-                <husk:SwitchPresenter TargetType="m:InstanceState" Value="{Binding State}">
+                <husk:SwitchPresenter TargetType="trident:InstanceState" Value="{Binding State}">
                     <husk:SwitchCase Value="Idle">
                         <Grid ColumnDefinitions="Auto,0,Auto">
                             <Button
