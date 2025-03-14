@@ -7,12 +7,13 @@
                      xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                      xmlns:m="using:Polymerium.App.Models"
                      xmlns:controls="using:Polymerium.App.Controls"
+                     xmlns:trident="clr-namespace:Polymerium.Trident;assembly=Polymerium.Trident"
                      mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600" x:DataType="vm:InstanceViewModel"
                      Padding="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" IsHeaderVisible="False"
                      Key="{Binding Basic.Key,Mode=OneWay}"
                      x:Class="Polymerium.App.Views.InstanceView">
     <Panel>
-        <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="m:InstanceState">
+        <husk:SwitchPresenter Value="{Binding State,Mode=OneWay}" TargetType="trident:InstanceState">
             <husk:SwitchCase Value="Idle">
                 <Rectangle Margin="-250" Opacity="0.2">
                     <Rectangle.Fill>

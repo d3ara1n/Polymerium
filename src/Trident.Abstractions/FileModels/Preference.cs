@@ -2,7 +2,6 @@
 
 public record Preference(
     Preference.AccountSection Account,
-    Preference.LaunchSection Launch,
     Preference.SnapshotSection Snapshot,
     Preference.PersistSection Persist)
 {
@@ -15,12 +14,6 @@ public record Preference(
     #region Nested type: EntryCollection
 
     public record struct EntryCollection(IEnumerable<string> Files, IEnumerable<string> Folders);
-
-    #endregion
-
-    #region Nested type: LaunchSection
-
-    public record struct LaunchSection(LaunchMode Mode, string? JavaHome);
 
     #endregion
 

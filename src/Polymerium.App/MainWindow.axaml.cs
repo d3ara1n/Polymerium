@@ -37,10 +37,7 @@ public partial class MainWindow : AppWindow
     private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
     private readonly IDisposable _subscription;
 
-    private string _filterText = string.Empty;
     private Action<Type, object?, IPageTransition?>? _navigate;
-
-    private ReadOnlyObservableCollection<InstanceEntryModel> _view = null!;
 
 
     public MainWindow()
@@ -60,17 +57,17 @@ public partial class MainWindow : AppWindow
 
     public string FilterText
     {
-        get => _filterText;
-        set => SetAndRaise(FilterTextProperty, ref _filterText, value);
-    }
+        get;
+        set => SetAndRaise(FilterTextProperty, ref field, value);
+    } = string.Empty;
 
     public Frame.PageActivatorDelegate PageActivator { get; private set; } = null!;
 
     public ReadOnlyObservableCollection<InstanceEntryModel> View
     {
-        get => _view;
-        set => SetAndRaise(ViewProperty, ref _view, value);
-    }
+        get;
+        set => SetAndRaise(ViewProperty, ref field, value);
+    } = null!;
 
     public ICommand ViewInstanceCommand { get; }
 

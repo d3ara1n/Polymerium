@@ -9,6 +9,7 @@ using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
+using Polymerium.Trident;
 using Polymerium.Trident.Engines;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
