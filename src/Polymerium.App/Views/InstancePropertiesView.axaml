@@ -75,6 +75,17 @@
         <controls:SettingsEntry Title="Game Overrides"
                                 Summary="Configuration specified to the instance; left blank to refer to the global settings"
                                 Icon="Games">
+            <Button Command="{Binding GotoSettingsCommand}">
+                <Grid ColumnDefinitions="Auto,8,*">
+                    <fi:SymbolIcon Grid.Column="0" Symbol="DocumentOnePage" />
+                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                        <TextBlock Text="Navigate to the global settings page" />
+                        <TextBlock Text="Entries here will overwrite the global settings"
+                                   FontSize="{StaticResource SmallFontSize}"
+                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    </StackPanel>
+                </Grid>
+            </Button>
             <controls:SettingsEntryItem Header="Java Home">
                 <TextBox Watermark="{Binding JavaHomeWatermark,FallbackValue=Unset}"
                          Text="{Binding JavaHomeOverride,Mode=TwoWay,FallbackValue={x:Null}}">
@@ -137,7 +148,7 @@
         <controls:SettingsEntry Title="Persistence Storage" Summary="Files or folders that are shared between builds"
                                 Icon="HardDrive">
             <controls:SettingsEntryItem Header="Plans">
-                <TabStrip SelectedIndex="1" IsEnabled="False">
+                <TabStrip SelectedIndex="1" IsEnabled="False" AutoScrollToSelectedItem="False">
                     <TabStrip.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Grid ColumnDefinitions="*,6,*" />

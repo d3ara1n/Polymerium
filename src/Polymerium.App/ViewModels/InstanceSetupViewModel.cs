@@ -26,10 +26,8 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceSetupViewModel : InstanceViewModelBase
 {
-    internal const string DATAFORMATS = "never-gonna-give-you-up";
-
     private CancellationTokenSource? _pageCancellationTokenSource;
-    private CancellationTokenSource? _updatingCancellationTokenSource;
+    private CancellationTokenSource? _refreshingCancellationTokenSource;
     private IDisposable? _updatingSubscription;
 
     public InstanceSetupViewModel(
@@ -47,10 +45,10 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
 
     private void TriggerRefresh(CancellationToken token)
     {
-        _updatingCancellationTokenSource?.Cancel();
-        _updatingCancellationTokenSource?.Dispose();
-        _updatingCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-        var inner = _updatingCancellationTokenSource.Token;
+        _refreshingCancellationTokenSource?.Cancel();
+        _refreshingCancellationTokenSource?.Dispose();
+        _refreshingCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
+        var inner = _refreshingCancellationTokenSource.Token;
         var semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
         try
         {
@@ -94,10 +92,10 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                               //  当然也可以不这么干，对于版本锁，给一个单独的页面来查看锁定的版本就行
                                               //  因为版本锁是为构建服务的，不应该暴露给用户看当前锁定的版本是哪个
                                               var p = await _dataService.ResolvePackageAsync(v.Label,
-                                                               v.Namespace,
-                                                               v.Pid,
-                                                               v.Vid,
-                                                               Filter.Empty);
+                                                          v.Namespace,
+                                                          v.Pid,
+                                                          v.Vid,
+                                                          Filter.Empty);
 
                                               model.Thumbnail = p.Thumbnail is not null
                                                                     ? await _dataService.GetBitmapAsync(p.Thumbnail)
@@ -182,6 +180,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
 
     protected override void OnUpdateModel(string key, Profile profile)
     {
+        base.OnUpdateModel(key, profile);
         if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var result))
             LoaderLabel = LoaderHelper.ToDisplayLabel(result.Identity, result.Version);
         else
@@ -190,8 +189,6 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         _updatingSubscription?.Dispose();
         UpdatingPending = true;
         UpdatingProgress = 0;
-
-        base.OnUpdateModel(key, profile);
     }
 
     protected override async Task OnInitializedAsync(CancellationToken token)
@@ -214,7 +211,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
 
     protected override void OnInstanceUpdating(UpdateTracker tracker)
     {
-        _updatingCancellationTokenSource?.Cancel();
+        _refreshingCancellationTokenSource?.Cancel();
         TrackUpdateProgress(tracker);
         base.OnInstanceUpdating(tracker);
     }
@@ -228,6 +225,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
 
     private void TrackUpdateProgress(UpdateTracker update)
     {
+        _updatingSubscription?.Dispose();
         _updatingSubscription = update
                                .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
                                .Where(x => x.Any())
@@ -259,6 +257,9 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
 
         try
         {
+            _refreshingCancellationTokenSource?.Cancel();
+            _refreshingCancellationTokenSource?.Dispose();
+            _refreshingCancellationTokenSource = null;
             InstanceManager.Update(Basic.Key, model.Label, model.Namespace, model.Pid, model.Vid);
         }
         catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -10,7 +11,6 @@ using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
-using Polymerium.Trident;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Igniters;
 using Polymerium.Trident.Services;
@@ -40,10 +40,10 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
 
     protected override void OnUpdateModel(string key, Profile profile)
     {
+        base.OnUpdateModel(key, profile);
         var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
         Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
         PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
-        base.OnUpdateModel(key, profile);
     }
 
     #region Tracking
@@ -53,6 +53,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
         base.OnInstanceDeploying(tracker);
         _subscription?.Dispose();
         _subscription = new CompositeDisposable();
+        DeployingMessage = GetStageTitle(tracker.CurrentStage);
         tracker
            .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
            .Where(x => x.Any())
@@ -68,21 +69,31 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
         tracker
            .StageStream.Subscribe(stage =>
             {
-                DeployingMessage = stage switch
-                {
-                    DeployStage.CheckArtifact => "Checking artifacts...",
-                    DeployStage.InstallVanilla => "Installing vanilla...",
-                    DeployStage.ProcessLoader => "Processing loader...",
-                    DeployStage.ResolvePackage => "Resolving packages...",
-                    DeployStage.BuildArtifact => "Building artifacts...",
-                    DeployStage.GenerateManifest => "Generating manifest...",
-                    DeployStage.SolidifyManifest => "Solidifying files...",
-                    _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
-                };
+                DeployingMessage = GetStageTitle(stage);
                 DeployingPending = true;
             })
            .DisposeWith(tracker)
            .DisposeWith(_subscription);
+    }
+
+    private string GetStageTitle(DeployStage stage) =>
+        stage switch
+        {
+            DeployStage.CheckArtifact => "Checking artifacts...",
+            DeployStage.InstallVanilla => "Installing vanilla...",
+            DeployStage.ProcessLoader => "Processing loader...",
+            DeployStage.ResolvePackage => "Resolving packages...",
+            DeployStage.BuildArtifact => "Building artifacts...",
+            DeployStage.GenerateManifest => "Generating manifest...",
+            DeployStage.SolidifyManifest => "Solidifying files...",
+            _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
+        };
+
+    protected override void OnInstanceLaunching(LaunchTracker tracker)
+    {
+        base.OnInstanceLaunching(tracker);
+
+        tracker.ScrapStream.Subscribe(scrap => Debug.WriteLine(scrap.Message)).DisposeWith(tracker);
     }
 
     #endregion
@@ -128,7 +139,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
                                             (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, _configurationService.Value.GameWindowInitialWidth),
                                              profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
                                                                  _configurationService.Value.GameWindowInitialHeight)),
-                                            launchMode: LaunchMode.FireAndForget);
+                                            launchMode: LaunchMode.Managed);
             InstanceManager.DeployAndLaunch(Basic.Key, options);
         }
         catch (Exception ex)
@@ -145,15 +156,37 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     }
 
     [RelayCommand]
+    private void Eject()
+    {
+        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
+        {
+            launch.IsDetaching = true;
+            tracker.Abort();
+        }
+    }
+
+    [RelayCommand]
     private void Stop()
     {
-        State = InstanceState.Idle;
+        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker)
+            tracker.Abort();
     }
 
     [RelayCommand]
     private void OpenDashboard()
     {
         _overlayService.PopToast(new ExhibitionModpackToast());
+    }
+
+    [RelayCommand]
+    private void SwitchMode()
+    {
+        Mode = Mode switch
+        {
+            LaunchMode.Managed => LaunchMode.FireAndForget,
+            LaunchMode.FireAndForget => LaunchMode.Managed,
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 
     #endregion
@@ -185,6 +218,9 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
 
     [ObservableProperty]
     public partial bool DeployingPending { get; set; }
+
+    [ObservableProperty]
+    public partial LaunchMode Mode { get; set; } = LaunchMode.Managed;
 
     #endregion
 }
