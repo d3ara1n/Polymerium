@@ -288,7 +288,7 @@ public class InstanceManager(
                 {
                     var launcher = new LaunchEngine(process);
                     await foreach (var scrap in launcher.WithCancellation(tracker.Token).ConfigureAwait(false))
-                        tracker.ScrapStream.OnNext(scrap);
+                        tracker.ScrapBuffer.AddLast(scrap);
 
                     if (tracker.Token.IsCancellationRequested)
                     {

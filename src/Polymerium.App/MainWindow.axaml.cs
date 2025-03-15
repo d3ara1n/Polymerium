@@ -212,7 +212,7 @@ public partial class MainWindow : AppWindow
                     model.IsPending = true;
                     model.Progress = 0d;
                     break;
-                case TrackerState.Faulted:
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -228,6 +228,7 @@ public partial class MainWindow : AppWindow
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -269,7 +270,7 @@ public partial class MainWindow : AppWindow
                     model.IsPending = true;
                     model.Progress = 0d;
                     break;
-                case TrackerState.Faulted:
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -285,6 +286,7 @@ public partial class MainWindow : AppWindow
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -325,7 +327,7 @@ public partial class MainWindow : AppWindow
                     model.IsPending = true;
                     model.Progress = 0d;
                     break;
-                case TrackerState.Faulted:
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -342,6 +344,7 @@ public partial class MainWindow : AppWindow
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -393,7 +396,7 @@ public partial class MainWindow : AppWindow
                     model.IsPending = true;
                     model.Progress = 0d;
                     break;
-                case TrackerState.Faulted:
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -409,6 +412,7 @@ public partial class MainWindow : AppWindow
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;

@@ -89,13 +89,6 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
             _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
         };
 
-    protected override void OnInstanceLaunching(LaunchTracker tracker)
-    {
-        base.OnInstanceLaunching(tracker);
-
-        tracker.ScrapStream.Subscribe(scrap => Debug.WriteLine(scrap.Message)).DisposeWith(tracker);
-    }
-
     #endregion
 
     #region Commands
