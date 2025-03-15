@@ -29,7 +29,8 @@
             BasedOn="{StaticResource {x:Type Button}}"
             TargetType="Button">
             <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
-            <Setter Property="BorderThickness" Value="0,0,0,6" />
+            <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+            <Setter Property="BorderThickness" Value="0,0,0,3" />
             <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
             <Setter Property="BorderBrush" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
             <Setter Property="RenderTransformOrigin" Value="50%,100%" />
@@ -48,14 +49,7 @@
             </Style>
         </ControlTheme>
     </controls:Subpage.Resources>
-    <Grid MaxWidth="1024" MaxHeight="648">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="24" />
-            <RowDefinition Height="230" />
-            <RowDefinition Height="24" />
-            <RowDefinition Height="100" />
-        </Grid.RowDefinitions>
+    <Grid MaxWidth="1024" MaxHeight="648" RowDefinitions="2*,24,230,24,100">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230" />
             <ColumnDefinition Width="24" />
@@ -98,15 +92,12 @@
         <husk:BusyContainer
             Grid.Row="0"
             Grid.Column="4"
-            Background="{DynamicResource Layer0BackgroundBrush}"
-            BorderBrush="{DynamicResource ControlBorderBrush}"
-            BorderThickness="1"
             CornerRadius="{StaticResource MediumCornerRadius}"
             IsBusy="{Binding State, Converter={x:Static huskc:ObjectConverters.Match}, ConverterParameter=Updating}">
             <husk:Card
-                Background="{x:Null}"
-                BorderBrush="{x:Null}"
-                BorderThickness="0">
+                Background="{DynamicResource Layer0BackgroundBrush}"
+                BorderBrush="{DynamicResource ControlBorderBrush}"
+                BorderThickness="1">
                 <Grid RowDefinitions="Auto,8,*,8,Auto,8,Auto,8,Auto">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*,8,Auto">
                         <icons:PackIconLucide

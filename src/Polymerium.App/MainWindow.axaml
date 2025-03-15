@@ -174,7 +174,8 @@
                         Grid.Column="0"
                         Grid.ColumnSpan="5"
                         Margin="0,0,-8,0">
-                        <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding $parent[local:MainWindow].View}">
+                        <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding $parent[local:MainWindow].View}"
+                                      ClipToBounds="False">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="m:InstanceEntryModel">
                                     <controls:InstanceEntryButton

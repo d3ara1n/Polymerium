@@ -298,10 +298,12 @@ public class InstanceManager(
                     else
                     {
                         await process.WaitForExitAsync(tracker.Token);
+
+                        if (process.ExitCode != 0)
+                            throw new Exception($"The process has exited with non-zero code {process.ExitCode}");
                     }
 
-                    if (process.ExitCode != 0)
-                        throw new Exception($"The process has exited with non-zero code {process.ExitCode}");
+                    process.Close();
                 }
                 else
                 {

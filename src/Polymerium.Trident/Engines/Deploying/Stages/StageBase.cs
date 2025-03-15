@@ -8,12 +8,12 @@ public abstract class StageBase : IDisposableLifetime
     public DeployContext Context { get; set; } = null!;
     public CompositeDisposable DisposableLifetime { get; } = new();
 
-    protected abstract Task OnProcessAsync(CancellationToken token);
-
-    public Task ProcessAsync(CancellationToken token) => OnProcessAsync(token);
-
     public virtual void Dispose()
     {
         DisposableLifetime.Dispose();
     }
+
+    protected abstract Task OnProcessAsync(CancellationToken token);
+
+    public Task ProcessAsync(CancellationToken token) => OnProcessAsync(token);
 }

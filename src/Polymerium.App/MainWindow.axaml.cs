@@ -40,9 +40,9 @@ public partial class MainWindow : AppWindow
 
     private Action<Type, object?, IPageTransition?>? _navigate;
 
-
     public MainWindow()
     {
+        Instance = this;
         InitializeComponent();
 
         ViewInstanceCommand = new RelayCommand<string>(ViewInstance);
@@ -55,6 +55,8 @@ public partial class MainWindow : AppWindow
 
         #endregion
     }
+
+    public static MainWindow Instance { get; private set; } = null!;
 
     public string FilterText
     {

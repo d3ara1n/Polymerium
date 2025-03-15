@@ -3,6 +3,9 @@
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:fi="using:FluentIcons.Avalonia">
     <Thickness x:Key="ToastContentMargin">24,76,24,24</Thickness>
+    <Thickness x:Key="ToastHeaderlessContentMargin">24,24,24,24</Thickness>
+    <Thickness x:Key="ToastHeaderContentMargin">0,76,0,0</Thickness>
+    <Thickness x:Key="ToastToplessContentMargin">24,0,24,24</Thickness>
     <ControlTheme x:Key="{x:Type local:Toast}" TargetType="local:Toast">
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="1" />

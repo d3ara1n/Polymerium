@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Facilities;
@@ -27,6 +27,13 @@ public partial class MarketplacePortalViewModel : ViewModelBase
         _dataService = dataService;
     }
 
+    #region Reactive
+
+    [ObservableProperty]
+    public partial IReadOnlyList<MinecraftNewsModel>? News { get; set; }
+
+    #endregion
+
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
@@ -46,13 +53,6 @@ public partial class MarketplacePortalViewModel : ViewModelBase
         News = models.ToList();
     }
 
-    #region Reactive
-
-    [ObservableProperty]
-    public partial IReadOnlyList<MinecraftNewsModel>? News { get; set; }
-
-    #endregion
-
     #region Injected
 
     private readonly MojangLauncherService _mojangLauncherService;
@@ -68,7 +68,8 @@ public partial class MarketplacePortalViewModel : ViewModelBase
     private void OpenReadMoreLink(MinecraftNewsModel? news)
     {
         if (news != null)
-            Process.Start(new ProcessStartInfo(news.ReadMoreLink.AbsoluteUri) { UseShellExecute = true });
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(news.ReadMoreLink);
+        // Process.Start(new ProcessStartInfo(news.ReadMoreLink.AbsoluteUri) { UseShellExecute = true });
     }
 
     [RelayCommand]

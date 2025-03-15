@@ -10,11 +10,17 @@ public abstract class TrackerBase(
     CancellationToken token = default) : IDisposableLifetime
 {
     private readonly CancellationTokenSource _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-    public CompositeDisposable DisposableLifetime { get; } = new();
     public string Key => key;
     public CancellationToken Token => _tokenSource.Token;
     public TrackerState State { get; private set; } = TrackerState.Idle;
     public Exception? FailureReason { get; private set; }
+    public CompositeDisposable DisposableLifetime { get; } = new();
+
+    public virtual void Dispose()
+    {
+        _tokenSource.Dispose();
+        DisposableLifetime.Dispose();
+    }
 
     public event TrackerStateUpdatedHandler? StateUpdated;
 
@@ -55,11 +61,5 @@ public abstract class TrackerBase(
         State = TrackerState.Faulted;
         StateUpdated?.Invoke(this, State);
         onCompleted?.Invoke(this);
-    }
-
-    public virtual void Dispose()
-    {
-        _tokenSource.Dispose();
-        DisposableLifetime.Dispose();
     }
 }
