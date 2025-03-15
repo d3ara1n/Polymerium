@@ -372,7 +372,7 @@
 
                         </Panel>
                     </husk:SwitchCase>
-                    <husk:SwitchCase>
+                    <husk:SwitchCase Value="Running">
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -407,14 +407,15 @@
                                 </StackPanel>
                             </Button>
                             <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
-                                <Border
-                                    Grid.Row="0"
-                                    Margin="0,0,8,0"
-                                    HorizontalAlignment="Center"
-                                    Background="{DynamicResource ControlBackgroundBrush}"
-                                    CornerRadius="0,0,6,6">
-                                    <TextBlock Margin="12,6" Text="Managed" />
-                                </Border>
+                                <Button Grid.Row="0"
+                                        Command="{Binding SwitchModeCommand}"
+                                        Margin="0,0,8,0"
+                                        HorizontalAlignment="Center"
+                                        Background="{DynamicResource ControlBackgroundBrush}"
+                                        CornerRadius="0,0,6,6"
+                                        Padding="12,6">
+                                    <TextBlock Text="{Binding Mode}" />
+                                </Button>
                                 <Button
                                     Grid.Row="2"
                                     Margin="0,8,8,8"
@@ -486,6 +487,7 @@
                             <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
                                 <Button
                                     Grid.Row="0"
+                                    Command="{Binding EjectCommand}"
                                     Margin="0,8,8,0"
                                     Classes="Small">
                                     <TextBlock Text="Eject" />

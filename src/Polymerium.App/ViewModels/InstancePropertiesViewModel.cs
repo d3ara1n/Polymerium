@@ -187,6 +187,9 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         }
     }
 
+    [RelayCommand]
+    private void GotoSettings() => _navigationService.Navigate<SettingsView>();
+
     #endregion
 
     #region Reactive

@@ -68,13 +68,9 @@ public class InstanceManager(
                                         async t => await DeployInternalAsync((DeployTracker)t),
                                         t =>
                                         {
-                                            if (t is
-                                                {
-                                                    State: TrackerState.Finished, Token.IsCancellationRequested: false
-                                                })
-                                                Launch(key, options);
-                                            // 这一步会处置掉 t.Token 导致上一行代码挂掉
                                             TrackerOnCompleted(t);
+                                            if (t is { State: TrackerState.Finished })
+                                                Launch(key, options);
                                         });
         _trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, tracker);
@@ -164,27 +160,34 @@ public class InstanceManager(
             {
                 case CheckArtifactStage:
                     tracker.StageStream.OnNext(DeployStage.CheckArtifact);
+                    tracker.CurrentStage = DeployStage.CheckArtifact;
                     break;
                 case InstallVanillaStage:
                     tracker.StageStream.OnNext(DeployStage.InstallVanilla);
+                    tracker.CurrentStage = DeployStage.InstallVanilla;
                     break;
                 case ProcessLoaderStage:
                     tracker.StageStream.OnNext(DeployStage.ProcessLoader);
+                    tracker.CurrentStage = DeployStage.ProcessLoader;
                     break;
                 case ResolvePackageStage resolvePackageStage:
                     tracker.StageStream.OnNext(DeployStage.ResolvePackage);
+                    tracker.CurrentStage = DeployStage.ResolvePackage;
                     resolvePackageStage
                        .ProgressStream.Subscribe(tracker.ProgressStream)
                        .DisposeWith(resolvePackageStage);
                     break;
                 case BuildArtifactStage:
                     tracker.StageStream.OnNext(DeployStage.BuildArtifact);
+                    tracker.CurrentStage = DeployStage.BuildArtifact;
                     break;
                 case GenerateManifestStage:
                     tracker.StageStream.OnNext(DeployStage.GenerateManifest);
+                    tracker.CurrentStage = DeployStage.GenerateManifest;
                     break;
                 case SolidifyManifestStage solidifyManifestStage:
                     tracker.StageStream.OnNext(DeployStage.SolidifyManifest);
+                    tracker.CurrentStage = DeployStage.SolidifyManifest;
                     solidifyManifestStage
                        .ProgressStream.Subscribe(tracker.ProgressStream)
                        .DisposeWith(solidifyManifestStage);
@@ -276,7 +279,7 @@ public class InstanceManager(
                 foreach (var additional in options.AdditionalArguments.Split(' '))
                     igniter.AddJvmArgument(additional);
 
-                igniter.IsDebug = Debugger.IsAttached;
+                igniter.IsDebug = options.Mode == LaunchMode.FireAndForget;
                 var process = igniter.Build();
                 await File.WriteAllLinesAsync(Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key),
                                                            "trident.launch.dump.txt"),
@@ -287,7 +290,16 @@ public class InstanceManager(
                     await foreach (var scrap in launcher.WithCancellation(tracker.Token).ConfigureAwait(false))
                         tracker.ScrapStream.OnNext(scrap);
 
-                    await process.WaitForExitAsync();
+                    if (tracker.Token.IsCancellationRequested)
+                    {
+                        if (!tracker.IsDetaching)
+                            process.Kill();
+                    }
+                    else
+                    {
+                        await process.WaitForExitAsync(tracker.Token);
+                    }
+
                     if (process.ExitCode != 0)
                         throw new Exception($"The process has exited with non-zero code {process.ExitCode}");
                 }

@@ -12,7 +12,6 @@
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-        <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border HorizontalAlignment="{TemplateBinding HorizontalAlignment}"

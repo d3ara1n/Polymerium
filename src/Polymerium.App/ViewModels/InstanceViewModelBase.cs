@@ -47,9 +47,11 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
     protected virtual void OnInstanceUpdating(UpdateTracker tracker) { }
 
     protected virtual void OnInstanceDeploying(DeployTracker tracker) { }
+    protected virtual void OnInstanceLaunching(LaunchTracker tracker) { }
 
     protected virtual void OnInstanceUpdated(UpdateTracker tracker) { }
     protected virtual void OnInstanceDeployed(DeployTracker tracker) { }
+    protected virtual void OnInstanceLaunched(LaunchTracker tracker) { }
 
     #endregion
 
@@ -66,6 +68,7 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
     {
         InstanceManager.InstanceUpdating += OnProfileUpdating;
         InstanceManager.InstanceDeploying += OnProfileDeploying;
+        InstanceManager.InstanceLaunching += OnProfileLaunching;
         ProfileManager.ProfileUpdated += OnProfileUpdated;
         if (InstanceManager.IsTracking(Basic.Key, out var tracker))
             if (tracker is UpdateTracker update)
@@ -82,6 +85,13 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
                 deploy.StateUpdated += OnProfileDeployStateChanged;
                 OnInstanceDeploying(deploy);
             }
+            else if (tracker is LaunchTracker launch)
+            {
+                // 已经处于启动状态而未收到事件
+                State = InstanceState.Running;
+                launch.StateUpdated += OnProfileLaunchingStateChanged;
+                OnInstanceLaunching(launch);
+            }
 
         return Task.CompletedTask;
     }
@@ -90,6 +100,7 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
     {
         InstanceManager.InstanceUpdating -= OnProfileUpdating;
         InstanceManager.InstanceDeploying -= OnProfileDeploying;
+        InstanceManager.InstanceLaunching -= OnProfileLaunching;
         ProfileManager.ProfileUpdated -= OnProfileUpdated;
         return Task.CompletedTask;
     }
@@ -109,6 +120,14 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
         tracker.StateUpdated += OnProfileDeployStateChanged;
         OnInstanceDeploying(tracker);
+    }
+
+    private void OnProfileLaunching(object? sender, LaunchTracker tracker)
+    {
+        Dispatcher.UIThread.Post(() => State = InstanceState.Running);
+
+        tracker.StateUpdated += OnProfileLaunchingStateChanged;
+        OnInstanceLaunching(tracker);
     }
 
     private void OnProfileUpdateStateChanged(TrackerBase sender, TrackerState state)
@@ -133,6 +152,19 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
             {
                 State = InstanceState.Idle;
                 OnInstanceDeployed((DeployTracker)sender);
+            });
+        }
+    }
+
+    private void OnProfileLaunchingStateChanged(TrackerBase sender, TrackerState state)
+    {
+        if (state is TrackerState.Faulted or TrackerState.Finished)
+        {
+            sender.StateUpdated -= OnProfileLaunchingStateChanged;
+            Dispatcher.UIThread.Post(() =>
+            {
+                State = InstanceState.Idle;
+                OnInstanceLaunched((LaunchTracker)sender);
             });
         }
     }

@@ -164,6 +164,8 @@ Polymerium 没有遥测。
 - Modrinth Api V2 的 Version.Loaders 字段中存在污染数据需要手动过滤
 - CurseForge Api 拉取到的 ModFile 包含的 Dependencies 可能有不兼容的项目，或者单纯就是所有的 ModFile 含有相同的依赖哪怕加载器和游戏版本不支持
 - CurseForge Api 用空串代表 null，🐂🍺
+- 这游戏的模组依赖仅供参考，不可解析，毕竟有模组的依赖是两个互相冲突的模组
+- ATM 10 的 import/mods 里塞了和元数据冲突的模组
 
 <!-- LICENSE -->
 

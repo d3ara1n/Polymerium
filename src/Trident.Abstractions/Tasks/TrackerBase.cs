@@ -30,12 +30,12 @@ public abstract class TrackerBase(
            .Run(async () => await handler(this), Token)
            .ContinueWith(t =>
                          {
-                             if (t.IsCompletedSuccessfully)
-                                 OnFinish();
-                             else if (t.IsCanceled)
+                             if (t.IsCanceled || Token.IsCancellationRequested)
                                  OnFault(new OperationCanceledException());
                              else if (t.IsFaulted)
                                  OnFault(t.Exception);
+                             else if (t.IsCompletedSuccessfully)
+                                 OnFinish();
                              else
                                  throw new NotImplementedException();
                          },

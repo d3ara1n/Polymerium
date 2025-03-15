@@ -12,6 +12,8 @@ public class LaunchTracker(
 {
     public Subject<Scrap> ScrapStream { get; } = new();
 
+    public bool IsDetaching { get; set; } = false;
+
     public override void Dispose()
     {
         base.Dispose();

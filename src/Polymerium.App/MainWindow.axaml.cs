@@ -68,7 +68,7 @@ public partial class MainWindow : AppWindow
     {
         get;
         set => SetAndRaise(ViewProperty, ref field, value);
-    } = null!;
+    }
 
     public ICommand ViewInstanceCommand { get; }
 
@@ -190,6 +190,53 @@ public partial class MainWindow : AppWindow
         manager.InstanceInstalling += OnInstanceInstalling;
         manager.InstanceUpdating += OnInstanceUpdating;
         manager.InstanceDeploying += OnInstanceDeploying;
+        manager.InstanceLaunching += OnInstanceLaunching;
+    }
+
+    private void OnInstanceLaunching(object? sender, LaunchTracker e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is null)
+            return;
+
+        model.State = InstanceEntryState.Running;
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.IsPending = true;
+                    model.Progress = 0d;
+                    break;
+                case TrackerState.Faulted:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        PopNotification(new NotificationItem
+                        {
+                            Content = Debugger.IsAttached
+                                          ? e.FailureReason?.ToString()
+                                          : e.FailureReason?.Message ?? "Unknown error",
+                            Title = $"{e.Key}",
+                            Level = NotificationLevel.Danger
+                        });
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Finished:
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+
+        e.StateUpdated += OnStateChanged;
     }
 
     private void OnInstanceUpdating(object? sender, UpdateTracker e)
@@ -228,7 +275,9 @@ public partial class MainWindow : AppWindow
                         model.State = InstanceEntryState.Idle;
                         PopNotification(new NotificationItem
                         {
-                            Content = e.FailureReason,
+                            Content = Debugger.IsAttached
+                                          ? e.FailureReason?.ToString()
+                                          : e.FailureReason?.Message ?? "Unknown error",
                             Title = $"Failed to update {e.Key}",
                             Level = NotificationLevel.Danger
                         });
@@ -284,7 +333,7 @@ public partial class MainWindow : AppWindow
                         {
                             Content = Debugger.IsAttached
                                           ? e.FailureReason?.ToString()
-                                          : e.FailureReason?.Message,
+                                          : e.FailureReason?.Message ?? "Unknown error",
                             Title = $"Failed to install {e.Key}",
                             Level = NotificationLevel.Danger
                         });
@@ -330,7 +379,7 @@ public partial class MainWindow : AppWindow
            .Subscribe(x =>
             {
                 model.IsPending = false;
-                model.Progress = x.Item2 != 0 ? (double)x.Item1 / x.Item2 : 0;
+                model.Progress = x.Item2 != 0 ? x.Item1 * 100d / x.Item2 : 0;
             })
            .DisposeWith(e);
 
@@ -352,7 +401,7 @@ public partial class MainWindow : AppWindow
                         {
                             Content = Debugger.IsAttached
                                           ? e.FailureReason?.ToString()
-                                          : e.FailureReason?.Message,
+                                          : e.FailureReason?.Message ?? "Unknown error",
                             Title = $"Failed to deploy {e.Key}",
                             Level = NotificationLevel.Danger
                         });

@@ -86,7 +86,7 @@
                 </Rectangle>
             </husk:SwitchCase>
             <husk:SwitchCase Value="Running">
-                <Rectangle Margin="-250" Opacity="0.8">
+                <Rectangle Margin="-250" Opacity="0.2">
                     <Rectangle.Fill>
                         <VisualBrush DestinationRect="0,0,250,250" SourceRect="0,0,250,250" TileMode="Tile"
                                      Stretch="Fill">
