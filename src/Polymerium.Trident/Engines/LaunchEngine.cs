@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Channels;
 using Polymerium.Trident.Engines.Launching;
@@ -69,17 +68,13 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.Data))
-            {
                 _channel.Writer.TryWrite(TryConstruct(e.Data));
-            }
         }
 
         private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.Data))
-            {
                 _channel.Writer.TryWrite(TryConstruct(e.Data));
-            }
         }
 
         private Scrap TryConstruct(string data)

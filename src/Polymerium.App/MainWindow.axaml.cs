@@ -18,6 +18,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using Trident.Abstractions.Extensions;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.App;
@@ -200,21 +201,16 @@ public partial class MainWindow : AppWindow
 
         model.State = InstanceEntryState.Updating;
 
-        var progressUpdater = Observable
-                             .Interval(TimeSpan.FromSeconds(1))
-                             .Subscribe(_ =>
-                              {
-                                  if (e.Progress.HasValue)
-                                  {
-                                      model.IsPending = false;
-                                      model.Progress = e.Progress.Value;
-                                  }
-                                  else
-                                  {
-                                      model.IsPending = true;
-                                      model.Progress = 0d;
-                                  }
-                              });
+        e
+           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+           .Where(x => x.Any())
+           .Select(x => x.Last())
+           .Subscribe(x =>
+            {
+                model.IsPending = !x.HasValue;
+                model.Progress = x ?? 0d;
+            })
+           .DisposeWith(e);
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -237,12 +233,10 @@ public partial class MainWindow : AppWindow
                             Level = NotificationLevel.Danger
                         });
                     });
-                    progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
                     Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
-                    progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
@@ -260,21 +254,17 @@ public partial class MainWindow : AppWindow
         {
             State = InstanceEntryState.Installing
         };
-        var progressUpdater = Observable
-                             .Interval(TimeSpan.FromSeconds(1))
-                             .Subscribe(_ =>
-                              {
-                                  if (e.Progress.HasValue)
-                                  {
-                                      model.Progress = e.Progress.Value;
-                                      model.IsPending = false;
-                                  }
-                                  else
-                                  {
-                                      model.Progress = 0d;
-                                      model.IsPending = true;
-                                  }
-                              });
+
+        e
+           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+           .Where(x => x.Any())
+           .Select(x => x.Last())
+           .Subscribe(x =>
+            {
+                model.IsPending = !x.HasValue;
+                model.Progress = x ?? 0d;
+            })
+           .DisposeWith(e);
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -300,7 +290,6 @@ public partial class MainWindow : AppWindow
                         });
                     });
                     _entries.Remove(model);
-                    progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -308,7 +297,6 @@ public partial class MainWindow : AppWindow
                     {
                         model.State = InstanceEntryState.Idle;
                     });
-                    progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
@@ -328,21 +316,23 @@ public partial class MainWindow : AppWindow
 
         model.State = InstanceEntryState.Preparing;
 
-        var progressUpdater = Observable
-                             .Interval(TimeSpan.FromSeconds(1))
-                             .Subscribe(_ =>
-                              {
-                                  if (e.Progress.Percentage.HasValue)
-                                  {
-                                      model.IsPending = false;
-                                      model.Progress = e.Progress.Percentage.Value;
-                                  }
-                                  else
-                                  {
-                                      model.IsPending = true;
-                                      model.Progress = 0d;
-                                  }
-                              });
+        e
+           .StageStream.Subscribe(x =>
+            {
+                model.IsPending = true;
+                model.Progress = 0d;
+            })
+           .DisposeWith(e);
+        e
+           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+           .Where(x => x.Any())
+           .Select(x => x.Last())
+           .Subscribe(x =>
+            {
+                model.IsPending = false;
+                model.Progress = x.Item2 != 0 ? (double)x.Item1 / x.Item2 : 0;
+            })
+           .DisposeWith(e);
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -367,7 +357,6 @@ public partial class MainWindow : AppWindow
                             Level = NotificationLevel.Danger
                         });
                     });
-                    progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -375,7 +364,6 @@ public partial class MainWindow : AppWindow
                     {
                         model.State = InstanceEntryState.Idle;
                     });
-                    progressUpdater.Dispose();
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:

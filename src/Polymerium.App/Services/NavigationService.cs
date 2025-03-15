@@ -9,10 +9,10 @@ namespace Polymerium.App.Services;
 
 public class NavigationService
 {
-    private Action<Type, object?, IPageTransition>? _navigateHandler;
-    private Action? _goBackHandler;
     private Func<bool>? _canGoBackHandler;
     private Action? _clearHistoryHandler;
+    private Action? _goBackHandler;
+    private Action<Type, object?, IPageTransition>? _navigateHandler;
 
     public bool CanGoBack => _canGoBackHandler?.Invoke() ?? false;
 

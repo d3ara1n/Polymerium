@@ -18,18 +18,20 @@ public partial class MarketplacePortalViewModel : ViewModelBase
     public MarketplacePortalViewModel(
         MojangLauncherService mojangLauncherService,
         ConfigurationService configurationService,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        DataService dataService)
     {
         _mojangLauncherService = mojangLauncherService;
         _configurationService = configurationService;
         _navigationService = navigationService;
+        _dataService = dataService;
     }
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
             return;
-        var news = await _mojangLauncherService.GetMinecraftNewsAsync();
+        var news = await _dataService.GetMinecraftNewsAsync();
         var models = news
                     .Entries.Take(16)
                     .Select((x, i) =>
@@ -56,6 +58,7 @@ public partial class MarketplacePortalViewModel : ViewModelBase
     private readonly MojangLauncherService _mojangLauncherService;
     private readonly ConfigurationService _configurationService;
     private readonly NavigationService _navigationService;
+    private readonly DataService _dataService;
 
     #endregion
 

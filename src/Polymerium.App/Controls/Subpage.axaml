@@ -12,6 +12,7 @@
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
@@ -24,7 +25,8 @@
                         HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                         IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                         IsScrollChainingEnabled="{TemplateBinding ScrollViewer.IsScrollChainingEnabled}"
-                        IsScrollInertiaEnabled="{TemplateBinding ScrollViewer.IsScrollInertiaEnabled}">
+                        IsScrollInertiaEnabled="{TemplateBinding ScrollViewer.IsScrollInertiaEnabled}"
+                        BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}">
                         <Panel>
                             <ContentPresenter Name="PART_ContentPresenter"
                                               Content="{TemplateBinding Content}"

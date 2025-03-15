@@ -25,7 +25,8 @@ public class PrismLauncherService(IPrismLauncherClient client)
         return index;
     }
 
-    public Task<ComponentIndex> GetGameVersionsAsync(CancellationToken token) => GetVersionsAsync(UID_MINECRAFT, token);
+    public Task<ComponentIndex> GetMinecraftVersionsAsync(CancellationToken token) =>
+        GetVersionsAsync(UID_MINECRAFT, token);
 
     public async Task<Component> GetVersionAsync(string uid, string version, CancellationToken token)
     {

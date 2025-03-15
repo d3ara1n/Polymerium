@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
 
 namespace Trident.Abstractions;
 
@@ -47,6 +46,7 @@ public class PathDef
     public string CacheLibraryDirectory => Path.Combine(CacheDirectory, "libraries");
     public string CachePackageDirectory => Path.Combine(CacheDirectory, "packages");
     public string CacheRuntimeDirectory => Path.Combine(CacheDirectory, "runtimes");
+
     public string FileOfLibrary(string ns, string name, string version, string? platform, string extension)
     {
         var nsDir = string.Join(Path.DirectorySeparatorChar, ns.Split('.'));
@@ -58,6 +58,7 @@ public class PathDef
                                 ? $"{name}-{version}-{platform}.{extension}"
                                 : $"{name}-{version}.{extension}");
     }
+
     public string FileOfPackageObject(string label, string? ns, string pid, string vid) =>
         ns != null
             ? Path.Combine(CachePackageDirectory, label, ns, pid, $"{vid}.obj")

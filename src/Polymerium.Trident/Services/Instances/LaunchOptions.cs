@@ -1,7 +1,7 @@
 ﻿using Polymerium.Trident.Exceptions;
-using Trident.Abstractions;
+using Polymerium.Trident.Igniters;
 
-namespace Polymerium.Trident.Igniters;
+namespace Polymerium.Trident.Services.Instances;
 
 public class LaunchOptions(
     LaunchMode launchMode = LaunchMode.Managed,
@@ -17,6 +17,4 @@ public class LaunchOptions(
 
     public JavaHomeLocatorDelegate JavaHomeLocator { get; set; } =
         javaHomeLocator ?? (v => throw new JavaNotFoundException(v));
-
-    public static LaunchOptionsBuilder Builder() => new();
 }

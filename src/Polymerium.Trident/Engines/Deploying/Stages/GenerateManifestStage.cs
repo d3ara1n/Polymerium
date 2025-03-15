@@ -77,11 +77,6 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
         Context.Manifest = manifest;
     }
 
-    private record MinecraftAssetIndex(IDictionary<string, MinecraftAssetIndex.MinecraftAssetIndexObject> Objects)
-    {
-        public record MinecraftAssetIndexObject(string Hash, uint Size);
-    }
-
     private async ValueTask<MinecraftAssetIndex?> GetAssetIndexAsync(string indexFile, Uri url, string hash)
     {
         if (File.Exists(indexFile))
@@ -95,5 +90,10 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
 
         using var client = factory.CreateClient();
         return await client.GetFromJsonAsync<MinecraftAssetIndex>(url, JsonSerializerOptions.Web);
+    }
+
+    private record MinecraftAssetIndex(IDictionary<string, MinecraftAssetIndex.MinecraftAssetIndexObject> Objects)
+    {
+        public record MinecraftAssetIndexObject(string Hash, uint Size);
     }
 }

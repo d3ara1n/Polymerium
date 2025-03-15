@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using NeoSmart.Caching.Sqlite;
 using Polymerium.App.Services;
-using Polymerium.Trident;
+using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
 using Trident.Abstractions;
 
@@ -15,10 +15,7 @@ namespace Polymerium.App;
 
 public static class Startup
 {
-    public static void ConfigureServices(
-        IServiceCollection services,
-        IConfiguration configuration,
-        IHostEnvironment environment)
+    public static void ConfigureServices(IServiceCollection services, IConfiguration _, IHostEnvironment environment)
     {
         services
            .AddAvalonia()
@@ -40,7 +37,8 @@ public static class Startup
                 if (dir != null && !Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
                 setup.CachePath = path;
-            });
+            })
+           .AddMemoryCache();
 
         // Trident
         services
@@ -59,6 +57,8 @@ public static class Startup
            .AddSingleton<ConfigurationService>()
            .AddSingleton<NotificationService>()
            .AddSingleton<NavigationService>()
-           .AddSingleton<OverlayService>();
+           .AddSingleton<OverlayService>()
+           .AddSingleton<DataService>()
+           .AddSingleton<StateService>();
     }
 }

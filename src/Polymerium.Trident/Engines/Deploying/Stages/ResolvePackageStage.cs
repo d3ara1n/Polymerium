@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Reactive.Subjects;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Utilities;
@@ -11,7 +12,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages;
 
 public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, RepositoryAgent agent) : StageBase
 {
-    public IProgress<(int, int)>? ProgressReporter { get; set; }
+    public Subject<(int, int)> ProgressStream { get; } = new();
 
     protected override async Task OnProcessAsync(CancellationToken token)
     {
@@ -41,7 +42,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                                               }));
         var flatten = new Dictionary<Identity, Version>();
 
-        ProgressReporter?.Report((0, purls.Count));
+        ProgressStream.OnNext((0, purls.Count));
 
         // 不同于依赖解决方案，由于各个资源平台本身就没考虑过版本兼容性，这里直接按可用的最高版本选择
         var tasks = Enumerable.Range(0, Math.Max(Environment.ProcessorCount / 2, 1)).Select(_ => ResolveAsync());
@@ -114,9 +115,15 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                 }
                 finally
                 {
-                    ProgressReporter?.Report((flatten.Count, purls.Count + flatten.Count));
+                    ProgressStream.OnNext((flatten.Count, purls.Count + flatten.Count));
                 }
         }
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        ProgressStream.Dispose();
     }
 
     private record Purl(Identity Identity, string? Vid, bool IsPhantom);

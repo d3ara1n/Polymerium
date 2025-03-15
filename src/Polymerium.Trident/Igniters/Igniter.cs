@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
+using IBuilder;
 
 namespace Polymerium.Trident.Igniters;
 
-public class Igniter : IBuilder.IBuilder<Process>
+public class Igniter : IBuilder<Process>
 {
     public IList<string> GameArguments { get; } = new List<string>();
     public IList<string> JvmArguments { get; } = new List<string>();
@@ -33,7 +34,7 @@ public class Igniter : IBuilder.IBuilder<Process>
     public Process Build()
     {
         var classPath = string.Join(ClassPathSeparator!.Value, Libraries);
-        Dictionary<string, string> crates = new()
+        var crates = new Dictionary<string, string>
         {
             { "${auth_player_name}", UserName! },
             { "${version_name}", VersionName! },
@@ -58,7 +59,10 @@ public class Igniter : IBuilder.IBuilder<Process>
             { "${classpath}", classPath }
         };
         var executable = Path.Combine(JavaHome!, "bin", IsDebug ? "java.exe" : "javaw.exe");
-        ProcessStartInfo start = new(executable) { WorkingDirectory = WorkingDirectory!, UseShellExecute = IsDebug };
+        var start = new ProcessStartInfo(executable)
+        {
+            WorkingDirectory = WorkingDirectory!, UseShellExecute = IsDebug
+        };
         foreach (var argument in JvmArguments.Where(x => !string.IsNullOrEmpty(x)))
         {
             var crate = crates.FirstOrDefault(x => argument.Contains(x.Key));
@@ -73,7 +77,7 @@ public class Igniter : IBuilder.IBuilder<Process>
             start.ArgumentList.Add(line);
         }
 
-        Process process = new() { StartInfo = start };
+        var process = new Process { StartInfo = start };
         return process;
     }
 

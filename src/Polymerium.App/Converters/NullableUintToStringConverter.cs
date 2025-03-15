@@ -6,7 +6,7 @@ namespace Polymerium.App.Converters;
 
 public class NullableUintToStringConverter : IValueConverter
 {
-    public static readonly NullableUintToStringConverter Instance = new NullableUintToStringConverter();
+    public static readonly NullableUintToStringConverter Instance = new();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
         value switch

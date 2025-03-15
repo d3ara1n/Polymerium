@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -6,21 +8,22 @@ using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
-using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.Trident;
-using Polymerium.Trident.Engines;
+using Polymerium.Trident.Engines.Deploying;
+using Polymerium.Trident.Igniters;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Utilities;
+using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;
 
 public partial class InstanceHomeViewModel : InstanceViewModelBase
 {
-    private IDisposable? _subscription;
+    private CompositeDisposable? _subscription;
 
     public InstanceHomeViewModel(
         ViewBag bag,
@@ -47,35 +50,39 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
 
     protected override void OnInstanceDeploying(DeployTracker tracker)
     {
-        _subscription?.Dispose();
-        _subscription = Observable
-                       .Interval(TimeSpan.FromSeconds(1))
-                       .Subscribe(_ =>
-                        {
-                            var progress = tracker.Progress;
-                            if (progress.Percentage.HasValue)
-                            {
-                                DeployingProgress = progress.Percentage.Value;
-                                DeployingPending = false;
-                            }
-                            else
-                            {
-                                DeployingPending = true;
-                            }
-
-                            DeployingMessage = progress.Message;
-                        });
         base.OnInstanceDeploying(tracker);
-    }
-
-    protected override void OnInstanceUpdated(UpdateTracker tracker)
-    {
         _subscription?.Dispose();
-    }
-
-    protected override void OnInstanceDeployed(DeployTracker tracker)
-    {
-        _subscription?.Dispose();
+        _subscription = new CompositeDisposable();
+        tracker
+           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+           .Where(x => x.Any())
+           .Select(x => x.Last())
+           .Subscribe(x =>
+            {
+                DeployingProgressTotal = x.Item2;
+                DeployingProgressCurrent = x.Item1;
+                DeployingPending = false;
+            })
+           .DisposeWith(tracker)
+           .DisposeWith(_subscription);
+        tracker
+           .StageStream.Subscribe(stage =>
+            {
+                DeployingMessage = stage switch
+                {
+                    DeployStage.CheckArtifact => "Checking artifacts...",
+                    DeployStage.InstallVanilla => "Installing vanilla...",
+                    DeployStage.ProcessLoader => "Processing loader...",
+                    DeployStage.ResolvePackage => "Resolving packages...",
+                    DeployStage.BuildArtifact => "Building artifacts...",
+                    DeployStage.GenerateManifest => "Generating manifest...",
+                    DeployStage.SolidifyManifest => "Solidifying files...",
+                    _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
+                };
+                DeployingPending = true;
+            })
+           .DisposeWith(tracker)
+           .DisposeWith(_subscription);
     }
 
     #endregion
@@ -90,7 +97,39 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     {
         try
         {
-            InstanceManager.Deploy(Basic.Key);
+            var profile = ProfileManager.GetImmutable(Basic.Key);
+            var options = new LaunchOptions(javaHomeLocator: major => profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
+                                                                          major switch
+                                                                          {
+                                                                              8 => _configurationService.Value
+                                                                                 .RuntimeJavaHome8,
+                                                                              11 => _configurationService.Value
+                                                                                 .RuntimeJavaHome11,
+                                                                              17 => _configurationService.Value
+                                                                                 .RuntimeJavaHome17,
+                                                                              21 => _configurationService.Value
+                                                                                 .RuntimeJavaHome21,
+                                                                              _ => throw new
+                                                                                  ArgumentOutOfRangeException(nameof
+                                                                                          (major),
+                                                                                      major,
+                                                                                      "Not supported java version")
+                                                                          })
+                                                                   ?? throw new
+                                                                          InvalidOperationException("Java home fallback unset"),
+                                            additionalArguments:
+                                            profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+                                                                _configurationService.Value
+                                                                   .GameJavaAdditionalArguments),
+                                            maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
+                                                                           _configurationService.Value
+                                                                              .GameJavaMaxMemory),
+                                            windowSize:
+                                            (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, _configurationService.Value.GameWindowInitialWidth),
+                                             profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
+                                                                 _configurationService.Value.GameWindowInitialHeight)),
+                                            launchMode: LaunchMode.FireAndForget);
+            InstanceManager.DeployAndLaunch(Basic.Key, options);
         }
         catch (Exception ex)
         {
@@ -136,7 +175,10 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     public partial int PackageCount { get; set; }
 
     [ObservableProperty]
-    public partial double DeployingProgress { get; set; }
+    public partial double DeployingProgressTotal { get; set; }
+
+    [ObservableProperty]
+    public partial double DeployingProgressCurrent { get; set; }
 
     [ObservableProperty]
     public partial string DeployingMessage { get; set; } = string.Empty;

@@ -1,12 +1,16 @@
-﻿namespace Trident.Abstractions.Tasks;
+﻿using System.Reactive.Disposables;
+using Trident.Abstractions.Reactive;
+
+namespace Trident.Abstractions.Tasks;
 
 public abstract class TrackerBase(
     string key,
     Func<TrackerBase, Task> handler,
     Action<TrackerBase>? onCompleted,
-    CancellationToken token = default)
+    CancellationToken token = default) : IDisposableLifetime
 {
     private readonly CancellationTokenSource _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
+    public CompositeDisposable DisposableLifetime { get; } = new();
     public string Key => key;
     public CancellationToken Token => _tokenSource.Token;
     public TrackerState State { get; private set; } = TrackerState.Idle;
@@ -51,5 +55,11 @@ public abstract class TrackerBase(
         State = TrackerState.Faulted;
         StateUpdated?.Invoke(this, State);
         onCompleted?.Invoke(this);
+    }
+
+    public virtual void Dispose()
+    {
+        _tokenSource.Dispose();
+        DisposableLifetime.Dispose();
     }
 }

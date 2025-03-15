@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,7 +10,6 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Profiles;
 using Polymerium.Trident.Utilities;
@@ -62,21 +60,15 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         if (_owned == null)
             return;
         if (value is not null and not "")
-        {
             _owned.Value.Overrides[key] = value;
-        }
         else
-        {
             _owned.Value.Overrides.Remove(key);
-        }
     }
 
     protected override Task OnInitializedAsync(CancellationToken token)
     {
         if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
-        {
             _owned = guard;
-        }
 
         #region Update Overrides & Perferences
 
@@ -131,7 +123,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                                                               "Select a Java executable");
             if (path != null && File.Exists(path))
             {
-                var dir = Path.GetDirectoryName(path);
+                var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
                 if (dir != null)
                     box.Text = dir;
             }
@@ -268,10 +260,6 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     {
         WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH, value is not null && uint.TryParse(value, out var ui) ? ui : null);
     }
-
-    #endregion
-
-    #region Preferences
 
     #endregion
 }

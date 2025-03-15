@@ -27,10 +27,10 @@ public class Snapshot : Collection<Snapshot.Entity>
         return snapshot;
     }
 
-    public static void Apply(string directory, IList<Entity> toPopulate)
+    public static void Apply(string directory, IReadOnlyList<Entity> toPopulate)
     {
         var current = Take(directory);
-        var entities = new Collection<Entity>(toPopulate);
+        var entities = new List<Entity>(toPopulate);
         foreach (var exist in current)
         {
             var final = entities.FirstOrDefault(x => x.Path == exist.Path);

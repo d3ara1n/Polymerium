@@ -1,22 +1,20 @@
 ﻿using System.Reactive.Subjects;
-using Polymerium.Trident.Engines.Deploying;
+using Polymerium.Trident.Engines.Launching;
 using Trident.Abstractions.Tasks;
 
 namespace Polymerium.Trident.Services.Instances;
 
-public class DeployTracker(
+public class LaunchTracker(
     string key,
     Func<TrackerBase, Task> handler,
-    Action<TrackerBase>? onCompleted = null,
+    Action<TrackerBase>? onCompleted,
     CancellationToken token = default) : TrackerBase(key, handler, onCompleted, token)
 {
-    public Subject<(int, int)> ProgressStream { get; } = new();
-    public Subject<DeployStage> StageStream { get; } = new();
+    public Subject<Scrap> ScrapStream { get; } = new();
 
     public override void Dispose()
     {
         base.Dispose();
-        ProgressStream.Dispose();
-        StageStream.Dispose();
+        ScrapStream.Dispose();
     }
 }

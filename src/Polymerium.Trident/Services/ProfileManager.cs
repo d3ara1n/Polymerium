@@ -85,6 +85,16 @@ public class ProfileManager : IDisposable
         return false;
     }
 
+    public Profile GetImmutable(string key) =>
+        TryGetImmutable(key, out var profile)
+            ? profile
+            : throw new KeyNotFoundException($"{key} is not a key to the managed profile");
+
+    public ProfileGuard GetMutable(string key) =>
+        TryGetMutable(key, out var profile)
+            ? profile
+            : throw new KeyNotFoundException($"{key} is not a key to the managed profile");
+
     public ReservedKey RequestKey(string key)
     {
         var sanitized = !string.IsNullOrEmpty(key)

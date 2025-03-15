@@ -38,7 +38,7 @@ public abstract class PageTransitionBase(TimeSpan? duration = null) : IPageTrans
 
         if (to != null)
             tasks.AddRange(toAnimations.Select(animation => animation.RunAsync(to, cancellationToken)));
-        
+
         await Task.WhenAll(tasks);
 
         Cleanup(from, to);
