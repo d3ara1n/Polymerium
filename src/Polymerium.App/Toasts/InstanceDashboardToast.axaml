@@ -1,0 +1,105 @@
+﻿<husk:Toast xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            xmlns:local="using:Polymerium.App.Toasts"
+            xmlns:launching="clr-namespace:Polymerium.Trident.Engines.Launching;assembly=Polymerium.Trident"
+            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            Title="Dashboard" Padding="0"
+            x:Class="Polymerium.App.Toasts.InstanceDashboardToast">
+    <husk:Toast.Resources>
+        <DataTemplate x:Key="ScrapTemplate" DataType="launching:Scrap">
+            <Border Background="Transparent">
+                <Panel Margin="4,2">
+                    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+                    <StackPanel x:Name="InfoPanel" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Orientation="Horizontal" Spacing="2">
+                        <husk:Tag Content="{Binding Sender,FallbackValue=*}" FontSize="{StaticResource SmallFontSize}" />
+                        <husk:Tag Content="{Binding Thread,FallbackValue=None}"
+                                  FontSize="{StaticResource SmallFontSize}" />
+                        <husk:Tag Content="{Binding Time, StringFormat=HH:mm:ss}"
+                                  FontSize="{StaticResource SmallFontSize}" />
+                        <StackPanel.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Easing="SineEaseInOut"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </StackPanel.Transitions>
+                    </StackPanel>
+                </Panel>
+                <Border.Styles>
+                    <Style Selector="Border:pointerover StackPanel#InfoPanel">
+                        <Setter Property="Opacity" Value="0.0" />
+                    </Style>
+                </Border.Styles>
+            </Border>
+        </DataTemplate>
+    </husk:Toast.Resources>
+    <Grid RowDefinitions="*,0,Auto">
+        <Border Grid.Row="0">
+            <ScrollViewer x:Name="Viewer" Margin="0,72,0,0">
+                <ItemsControl ItemsSource="{Binding $parent[local:InstanceDashboardToast].Bindable}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="launching:Scrap">
+                            <Panel>
+                                <husk:SwitchPresenter Value="{Binding Level}" TargetType="launching:ScrapLevel">
+                                    <husk:SwitchCase Value="Information">
+                                        <Border BorderBrush="{DynamicResource ControlBorderBrush}"
+                                                BorderThickness="3,0,0,0"
+                                                Background="{DynamicResource ControlTranslucentBackgroundBrush}">
+                                            <ContentControl Content="{Binding}"
+                                                            ContentTemplate="{StaticResource ScrapTemplate}" />
+                                        </Border>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Warning">
+                                        <Border BorderBrush="{DynamicResource ControlWarningBorderBrush}"
+                                                BorderThickness="3,0,0,0"
+                                                Background="{DynamicResource ControlTranslucentWarningBackgroundBrush}">
+                                            <ContentControl Content="{Binding}"
+                                                            ContentTemplate="{StaticResource ScrapTemplate}"
+                                                            Foreground="{DynamicResource ControlWarningForegroundBrush}" />
+                                        </Border>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Error">
+                                        <Border BorderBrush="{DynamicResource ControlDangerBorderBrush}"
+                                                BorderThickness="3,0,0,0"
+                                                Background="{DynamicResource ControlTranslucentDangerBackgroundBrush}">
+                                            <ContentControl Content="{Binding}"
+                                                            ContentTemplate="{StaticResource ScrapTemplate}"
+                                                            Foreground="{DynamicResource ControlDangerForegroundBrush}" />
+                                        </Border>
+                                    </husk:SwitchCase>
+                                </husk:SwitchPresenter>
+                            </Panel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,0,*,4,Auto" Margin="12">
+            <TextBox Grid.Column="2" Watermark="Filter by content..."
+                     Text="{Binding $parent[local:InstanceDashboardToast].FilterText,Mode=TwoWay}">
+                <TextBox.InnerRightContent>
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,8,0">
+                        <Run
+                            Text="{Binding $parent[local:InstanceDashboardToast].Bindable.Count,Mode=OneWay,FallbackValue=0}" />
+                        <Run Text="/" />
+                        <Run
+                            Text="9527" />
+                    </TextBlock>
+                </TextBox.InnerRightContent>
+            </TextBox>
+            <ToggleButton Grid.Column="4" Classes="Small"
+                          IsChecked="{Binding $parent[local:InstanceDashboardToast].IsAutoScroll,Mode=TwoWay}">
+                <fi:SymbolIcon Symbol="TextboxAlignBottom" FontSize="{StaticResource LargeFontSize}" />
+            </ToggleButton>
+        </Grid>
+    </Grid>
+</husk:Toast>

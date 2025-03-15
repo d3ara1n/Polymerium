@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Collections;
+using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -194,7 +194,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-        if (!InstanceManager.IsInUse(Basic.Key))
+        if (!InstanceManager.IsTracking(Basic.Key, out var tracker) || tracker is not UpdateTracker)
             TriggerRefresh(_pageCancellationTokenSource.Token);
 
         await base.OnInitializedAsync(token);
@@ -244,7 +244,8 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     private void OpenSourceUrl(Uri? url)
     {
         if (url is not null)
-            Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(url);
+        // Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
     }
 
     private bool CanUpdate(InstanceVersionModel? model) => model is { IsCurrent: false };

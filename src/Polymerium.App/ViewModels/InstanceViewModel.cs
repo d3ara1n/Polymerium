@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -33,7 +35,8 @@ public partial class InstanceViewModel : InstanceViewModelBase
     private void OpenFolder()
     {
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
-        Process.Start(new ProcessStartInfo(dir) { UseShellExecute = true });
+        // Process.Start(new ProcessStartInfo(dir) { UseShellExecute = true });
+        TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(dir));
     }
 
     #endregion

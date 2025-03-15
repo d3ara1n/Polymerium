@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -218,7 +219,8 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     private void OpenWebsite(ExhibitModel? exhibit)
     {
         if (exhibit is not null)
-            Process.Start(new ProcessStartInfo(exhibit.Reference.AbsoluteUri) { UseShellExecute = true });
+            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(exhibit.Reference);
+        // Process.Start(new ProcessStartInfo(exhibit.Reference.AbsoluteUri) { UseShellExecute = true });
     }
 
     #endregion

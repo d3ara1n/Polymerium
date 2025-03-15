@@ -17,18 +17,18 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:BusyContainer}" TargetType="local:BusyContainer">
+        <Setter Property="Background" Value="{DynamicResource LayerSmokeReversedBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}"
-                        ClipToBounds="{TemplateBinding ClipToBounds}">
+                <Border ClipToBounds="{TemplateBinding ClipToBounds}">
                     <Panel>
                         <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Padding="{TemplateBinding Padding}" />
-                        <Border Name="Mask" Background="{DynamicResource LayerSmokeReversedBackgroundBrush}"
-                                IsVisible="False"
-                                CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
+                        <Border Name="Mask" Background="{TemplateBinding Background}"
+                                IsVisible="False" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
                             <ContentPresenter Content="{TemplateBinding PendingContent}" />
                         </Border>
                     </Panel>

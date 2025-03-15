@@ -30,7 +30,6 @@ public partial class NewInstanceViewModel(
     ImporterAgent importerAgent,
     DataService dataService) : ViewModelBase
 {
-
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
@@ -137,10 +136,6 @@ public partial class NewInstanceViewModel(
 
         navigationService.Navigate<InstanceView>(key.Key);
     }
-
-    #endregion
-
-    #region Injected
 
     #endregion
 

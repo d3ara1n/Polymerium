@@ -206,7 +206,8 @@
             </StackPanel>
         </husk:Divider>
         <husk:BusyContainer
-            IsBusy="{Binding State, Converter={x:Static huskc:ObjectConverters.NotMatch}, ConverterParameter=Idle}">
+            Background="Transparent"
+            IsBusy="{Binding State,Converter={x:Static huskc:ObjectConverters.NotMatch},ConverterParameter=Idle,FallbackValue=True}">
             <controls:SettingsEntry Icon="Bug" Title="Danger Zone"
                                     Summary="These settings are applied instantly and can't be recovered">
                 <components:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
@@ -223,7 +224,8 @@
                 </controls:SettingsEntryItem>
             </controls:SettingsEntry>
             <husk:BusyContainer.PendingContent>
-                <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center">
+                <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Background="{DynamicResource LayerSolidBackgroundBrush}">
                     <StackPanel Spacing="12">
                         <icons:PackIconLucide Kind="Info" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"

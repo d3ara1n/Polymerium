@@ -50,6 +50,11 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
             _inner.CancelErrorRead();
             _inner.CancelOutputRead();
 
+            _inner.EnableRaisingEvents = false;
+            _inner.OutputDataReceived -= ProcessOnOutputDataReceived;
+            _inner.ErrorDataReceived -= ProcessOnErrorDataReceived;
+            _inner.Exited -= ProcessOnExited;
+
             // inner.Close()
             // it throws exception for some reason
             return ValueTask.CompletedTask;

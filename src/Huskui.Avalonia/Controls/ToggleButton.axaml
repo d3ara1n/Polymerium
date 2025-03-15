@@ -1,0 +1,120 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Panel Background="White">
+            <StackPanel Margin="24" Spacing="12">
+                <ToggleButton Content="Hello World" />
+                <ToggleButton Content="Hello World" IsChecked="True" />
+                <ToggleButton Content="Hello World" IsChecked="False" IsEnabled="False" />
+                <ToggleButton Content="Hello World" IsChecked="True" IsEnabled="False" />
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="ToggleButtonBaseTheme" TargetType="ToggleButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="14,9" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
+        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+        <Setter Property="BorderThickness" Value="1,1,1,2" />
+        <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border
+                        x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="Background"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="BorderBrush"
+                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                <ThicknessTransition
+                                    Easing="SineEaseOut"
+                                    Property="BorderThickness"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+
+                    <ContentPresenter
+                        Name="PART_ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Background="{DynamicResource TransparentBrush}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        RecognizesAccessKey="True"
+                        TextElement.FontSize="{TemplateBinding FontSize}"
+                        TextElement.FontWeight="{TemplateBinding FontWeight}"
+                        UseLayoutRounding="False" />
+                    <Border
+                        x:Name="Indicator"
+                        Background="{DynamicResource TransparentBrush}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="Background"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Indicator">
+            <Setter Property="Background" Value="{DynamicResource OverlayHalfBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#Indicator">
+            <Setter Property="Background" Value="{DynamicResource OverlayFullBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:checked /template/ Border#Border">
+            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
+        </Style>
+
+        <!-- <Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter"> -->
+        <!--     <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" /> -->
+        <!-- </Style> -->
+
+        <Style Selector="^:disabled /template/ Border#Border">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+        <Style Selector="^.Small">
+            <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+            <Setter Property="Padding" Value="10,6" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type ToggleButton}" TargetType="ToggleButton"
+                  BasedOn="{StaticResource ToggleButtonBaseTheme}" />
+</ResourceDictionary>

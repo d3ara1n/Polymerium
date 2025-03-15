@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -168,7 +167,12 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     [RelayCommand]
     private void OpenDashboard()
     {
-        _overlayService.PopToast(new ExhibitionModpackToast());
+        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
+        {
+            var toast = new InstanceDashboardToast();
+            toast.SetItems(launch.ScrapBuffer);
+            _overlayService.PopToast(toast);
+        }
     }
 
     [RelayCommand]

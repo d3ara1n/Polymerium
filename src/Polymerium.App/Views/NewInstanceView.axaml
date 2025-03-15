@@ -157,23 +157,23 @@
                         </Button>
                         <Border Grid.Column="0" Background="{DynamicResource LayerSolidBackgroundBrush}" Padding="8"
                                 CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Grid ColumnDefinitions="Auto,8,*">
-                                <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
-                                <Grid Grid.Column="2" ColumnDefinitions="*,8,Auto,8,*">
-                                    <StackPanel Grid.Column="0">
+                            <Grid ColumnDefinitions="*,8,Auto,8,*">
+                                <Grid Grid.Column="0" ColumnDefinitions="Auto,8,*">
+                                    <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
+                                    <StackPanel Grid.Column="2">
                                         <TextBlock Text="Packages"
                                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                         <TextBlock Text="{Binding ImportedPack.PackageCount,FallbackValue=114514}"
                                                    FontSize="{StaticResource LargeFontSize}" />
                                     </StackPanel>
-                                    <husk:Divider Grid.Column="2" Orientation="Vertical" />
-                                    <StackPanel Grid.Column="4">
-                                        <TextBlock Text="Mod Loader"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                        <TextBlock Text="{Binding ImportedPack.LoaderLabel,FallbackValue=None}"
-                                                   FontSize="{StaticResource LargeFontSize}" />
-                                    </StackPanel>
                                 </Grid>
+                                <husk:Divider Grid.Column="2" Orientation="Vertical" />
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="Mod Loader"
+                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                    <TextBlock Text="{Binding ImportedPack.LoaderLabel,FallbackValue=None}"
+                                               FontSize="{StaticResource LargeFontSize}" />
+                                </StackPanel>
                             </Grid>
                         </Border>
                     </Grid>

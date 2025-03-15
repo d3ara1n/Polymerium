@@ -13,10 +13,4 @@ public class LaunchTracker(
     public ObservableFixedSizeRingBuffer<Scrap> ScrapBuffer { get; } = new(9527);
 
     public bool IsDetaching { get; set; } = false;
-
-    public override void Dispose()
-    {
-        base.Dispose();
-        ScrapBuffer.Clear();
-    }
 }
