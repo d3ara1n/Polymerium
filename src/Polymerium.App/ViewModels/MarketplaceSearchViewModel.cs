@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
@@ -33,18 +32,16 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     public MarketplaceSearchViewModel(
         ViewBag bag,
         RepositoryAgent agent,
-        IHttpClientFactory factory,
         InstanceManager instanceManager,
         NotificationService notificationService,
-        NavigationService navigationService,
-        OverlayService overlayService)
+        OverlayService overlayService,
+        DataService dataService)
     {
         _agent = agent;
-        _factory = factory;
         _instanceManager = instanceManager;
         _notificationService = notificationService;
-        _navigationService = navigationService;
         _overlayService = overlayService;
+        _dataService = dataService;
         // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
         Repositories = r;
@@ -71,7 +68,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         foreach (var repository in Repositories)
             if (repository.Loaders.Count == 0 || repository.Versions.Count == 0)
             {
-                var status = await _agent.CheckStatusAsync(repository.Label);
+                var status = await _dataService.CheckStatusAsync(repository.Label);
                 repository.Loaders = status
                                     .SupportedLoaders.Select(x => new LoaderBasicModel(x,
                                                                  x switch
@@ -120,11 +117,10 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     #region Injected
 
     private readonly RepositoryAgent _agent;
-    private readonly IHttpClientFactory _factory;
     private readonly InstanceManager _instanceManager;
     private readonly NotificationService _notificationService;
-    private readonly NavigationService _navigationService;
     private readonly OverlayService _overlayService;
+    private readonly DataService _dataService;
 
     #endregion
 
@@ -166,7 +162,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                   new Filter(FilteredVersion,
                                                              FilteredLoader?.LoaderId,
                                                              ResourceKind.Modpack));
-            InfiniteCollection<ExhibitModel> source = new(async i =>
+            var source = new InfiniteCollection<ExhibitModel>(async i =>
             {
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
                 try

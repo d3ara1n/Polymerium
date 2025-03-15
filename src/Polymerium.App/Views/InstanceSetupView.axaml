@@ -90,13 +90,14 @@
                                       SelectedItem="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}">
                                 <ComboBox.SelectionBoxItemTemplate>
                                     <DataTemplate DataType="m:InstanceVersionModel">
-                                        <husk:SwitchPresenter Value="{Binding IsCurrent}" TargetType="x:Boolean">
+                                        <husk:SwitchPresenter Value="{Binding IsCurrent,FallbackValue=False}"
+                                                              TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
-                                                <TextBlock Text="{Binding Display}"
+                                                <TextBlock Text="{Binding Display,FallbackValue=Display}"
                                                            Foreground="{DynamicResource ControlAccentForegroundBrush}" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
-                                                <TextBlock Text="{Binding Display}" />
+                                                <TextBlock Text="{Binding Display,FallbackValue=Display}" />
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
                                     </DataTemplate>
@@ -104,13 +105,14 @@
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="m:InstanceVersionModel">
                                         <StackPanel>
-                                            <husk:SwitchPresenter Value="{Binding IsCurrent}" TargetType="x:Boolean">
+                                            <husk:SwitchPresenter Value="{Binding IsCurrent,FallbackValue=False}"
+                                                                  TargetType="x:Boolean">
                                                 <husk:SwitchCase Value="True">
-                                                    <TextBlock Text="{Binding Display}"
+                                                    <TextBlock Text="{Binding Display,FallbackValue=Display}"
                                                                Foreground="{DynamicResource ControlAccentForegroundBrush}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="False">
-                                                    <TextBlock Text="{Binding Display}" />
+                                                    <TextBlock Text="{Binding Display,FallbackValue=Display}" />
                                                 </husk:SwitchCase>
                                             </husk:SwitchPresenter>
                                             <DockPanel>
@@ -118,7 +120,7 @@
                                                     <TextBlock Text="{Binding UpdatedAt}" />
                                                 </StackPanel>
                                                 <husk:SwitchPresenter TargetType="trident:ReleaseType"
-                                                                      Value="{Binding ReleaseTypeRaw}">
+                                                                      Value="{Binding ReleaseTypeRaw,FallbackValue=Release}">
                                                     <husk:SwitchCase Value="Release">
                                                         <husk:Tag Classes="Success"
                                                                   CornerRadius="{StaticResource SmallCornerRadius}">
@@ -145,7 +147,7 @@
                             </ComboBox>
                             <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCommand}"
                                     CommandParameter="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}"
-                                    IsEnabled="{Binding !Reference.CurrentVersion.IsCurrent,FallbackValue=False}" />
+                                    IsEnabled="{Binding Reference.CurrentVersion.IsCurrent,FallbackValue=False,Converter={x:Static BoolConverters.Not}}" />
                         </Grid>
                     </Grid>
                 </husk:Card>

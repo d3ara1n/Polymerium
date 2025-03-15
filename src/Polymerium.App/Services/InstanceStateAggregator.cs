@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reactive;
 using System.Reactive.Subjects;
 using Polymerium.App.Services.States;
 using Polymerium.Trident;
@@ -11,7 +10,11 @@ namespace Polymerium.App.Services;
 
 public class InstanceStateAggregator : IDisposable
 {
-    public Subject<ITracklet> Stream { get; } = new();
+    #region Injected
+
+    private readonly InstanceManager _instanceManager;
+
+    #endregion
 
     public InstanceStateAggregator(InstanceManager instanceManager)
     {
@@ -20,6 +23,16 @@ public class InstanceStateAggregator : IDisposable
         instanceManager.InstanceInstalling += InstanceManagerOnInstanceInstalling;
         instanceManager.InstanceDeploying += InstanceManagerOnInstanceDeploying;
         instanceManager.InstanceUpdating += InstanceManagerOnInstanceUpdating;
+    }
+
+    public Subject<ITracklet> Stream { get; } = new();
+
+    public void Dispose()
+    {
+        Stream.Dispose();
+        _instanceManager.InstanceDeploying -= InstanceManagerOnInstanceDeploying;
+        _instanceManager.InstanceInstalling -= InstanceManagerOnInstanceInstalling;
+        _instanceManager.InstanceUpdating -= InstanceManagerOnInstanceUpdating;
     }
 
     private void InstanceManagerOnInstanceUpdating(object? sender, UpdateTracker e)
@@ -56,6 +69,7 @@ public class InstanceStateAggregator : IDisposable
                 {
                     // TODO
                 }
+
                 break;
             case TrackerState.Faulted:
                 Stream.OnNext(new ExceptionTracklet(tracker.Key,
@@ -69,19 +83,5 @@ public class InstanceStateAggregator : IDisposable
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
-    }
-
-    #region Injected
-
-    private readonly InstanceManager _instanceManager;
-
-    #endregion
-
-    public void Dispose()
-    {
-        Stream.Dispose();
-        _instanceManager.InstanceDeploying -= InstanceManagerOnInstanceDeploying;
-        _instanceManager.InstanceInstalling -= InstanceManagerOnInstanceInstalling;
-        _instanceManager.InstanceUpdating -= InstanceManagerOnInstanceUpdating;
     }
 }

@@ -31,13 +31,6 @@ public partial class SettingsViewModel : ViewModelBase
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
     }
 
-    #region Injected
-
-    private readonly ConfigurationService _configurationService;
-    private readonly OverlayService _overlayService;
-
-    #endregion
-
     #region Commands
 
     [RelayCommand]
@@ -49,12 +42,19 @@ public partial class SettingsViewModel : ViewModelBase
                                                               "Select a Java executable");
             if (path != null && File.Exists(path))
             {
-                var dir = Path.GetDirectoryName(path);
+                var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
                 if (dir != null)
                     box.Text = dir;
             }
         }
     }
+
+    #endregion
+
+    #region Injected
+
+    private readonly ConfigurationService _configurationService;
+    private readonly OverlayService _overlayService;
 
     #endregion
 

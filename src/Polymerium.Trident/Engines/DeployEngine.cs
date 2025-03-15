@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Engines.Deploying.Stages;
 using Trident.Abstractions.FileModels;
+using Trident.Abstractions.Reactive;
 
 namespace Polymerium.Trident.Engines;
 
@@ -16,11 +17,11 @@ namespace Polymerium.Trident.Engines;
 // ...
 // 版本锁中需要保存验证信息，例如当时的所有包列表
 
-public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider, DeployOptions options)
+public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider, DeployEngineOptions options)
     : IEnumerable<StageBase>
 {
     public IEnumerator<StageBase> GetEnumerator() =>
-        new DeployEngineEnumerator(new DeployContext(key, setup, provider, options));
+        new DeployEngineEnumerator(new DeployContext(key, setup, provider));
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -30,6 +31,8 @@ public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provi
 
         public bool MoveNext()
         {
+            if (Current is IDisposableLifetime disposable)
+                disposable.Dispose();
             var next = DecideNext();
             if (next != null)
             {
@@ -47,7 +50,9 @@ public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provi
 
         public void Dispose()
         {
-            // TODO 在此释放托管资源
+            // 中断导致没有 MoveNext
+            if (Current is IDisposableLifetime disposable)
+                disposable.Dispose();
         }
 
         private StageBase? DecideNext()

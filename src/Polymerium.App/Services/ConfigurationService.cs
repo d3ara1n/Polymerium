@@ -7,7 +7,6 @@ namespace Polymerium.App.Services;
 
 public sealed class ConfigurationService : IDisposable
 {
-    private readonly Configuration _configuration;
     private readonly string _filePath = PathDef.Default.FileOfPrivateSettings(Program.Brand);
 
     private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
@@ -27,10 +26,10 @@ public sealed class ConfigurationService : IDisposable
             }
         }
 
-        _configuration = read ?? new Configuration();
+        Value = read ?? new Configuration();
     }
 
-    public Configuration Value => _configuration;
+    public Configuration Value { get; }
 
     public void Dispose()
     {
@@ -39,7 +38,7 @@ public sealed class ConfigurationService : IDisposable
             var dir = Path.GetDirectoryName(_filePath);
             if (dir != null && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
-            File.WriteAllText(_filePath, JsonSerializer.Serialize(_configuration, _serializerOptions));
+            File.WriteAllText(_filePath, JsonSerializer.Serialize(Value, _serializerOptions));
         }
         catch
         {

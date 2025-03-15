@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO.Compression;
+using System.Reactive.Subjects;
 using System.Security.Cryptography;
 using Microsoft.Extensions.Logging;
 using Trident.Abstractions;
@@ -8,7 +9,7 @@ namespace Polymerium.Trident.Engines.Deploying.Stages;
 
 public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpClientFactory factory) : StageBase
 {
-    public IProgress<(int, int)>? ProgressReporter { get; set; }
+    public Subject<(int, int)> ProgressStream { get; } = new();
 
     protected override async Task OnProcessAsync(CancellationToken token)
     {
@@ -39,7 +40,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         var cancel = CancellationTokenSource.CreateLinkedTokenSource(token);
         var entities = new List<Snapshot.Entity>();
 
-        ProgressReporter?.Report((downloaded, files.Count));
+        ProgressStream.OnNext((downloaded, files.Count));
         var tasks = files
                    .Select(async x =>
                     {
@@ -66,7 +67,6 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                                                                     FileMode.Create,
                                                                                     FileAccess.Write);
                                         await reader.CopyToAsync(writer, cancel.Token);
-                                        entities.Add(new Snapshot.Entity(fragile.TargetPath, fragile.SourcePath));
                                     }
                                     else
                                     {
@@ -74,6 +74,8 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                                         fragile.SourcePath,
                                                         fragile.Url);
                                     }
+
+                                    entities.Add(new Snapshot.Entity(fragile.TargetPath, fragile.SourcePath));
 
                                     break;
                                 }
@@ -156,7 +158,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                             }
 
                             Interlocked.Increment(ref downloaded);
-                            ProgressReporter?.Report((downloaded, files.Count));
+                            ProgressStream.OnNext((downloaded, files.Count));
                         }
                         catch (OperationCanceledException) { }
                         catch (Exception ex)
@@ -196,5 +198,11 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         }
 
         return false;
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        ProgressStream.Dispose();
     }
 }

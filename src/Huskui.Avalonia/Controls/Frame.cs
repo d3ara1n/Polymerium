@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
@@ -86,9 +85,9 @@ public class Frame : TemplatedControl
 
     public bool CanGoBack => _history.Count > 0 || CanGoBackOutOfStack;
 
-    public void ClearHistory() => _history.Clear();
-
     public PageActivatorDelegate PageActivator { get; set; } = (t, _) => Activator.CreateInstance(t);
+
+    public void ClearHistory() => _history.Clear();
 
     public void Navigate(Type page, object? parameter, IPageTransition? transition)
     {

@@ -9,7 +9,7 @@ public static class DataLockBuilderExtensions
         string label,
         string? @namespace,
         string pid,
-        string vid,                          
+        string vid,
         string target,
         Uri url,
         string? sha1) =>

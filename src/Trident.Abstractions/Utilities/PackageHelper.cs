@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 
 namespace Trident.Abstractions.Utilities;
@@ -49,4 +50,44 @@ public static class PackageHelper
 
     public static string ToPurl(Package package) =>
         ToPurl(package.Label, package.Namespace, package.ProjectId, package.VersionId);
+
+    public static string Identify(string label, string? ns, string pid, string? vid, Filter filter)
+    {
+        var sb = new StringBuilder(label);
+        sb.Append(':');
+        if (ns != null)
+        {
+            sb.Append(ns);
+            sb.Append('/');
+        }
+
+        sb.Append(pid);
+        if (vid != null)
+        {
+            sb.Append('@');
+            sb.Append(vid);
+        }
+        else
+        {
+            if (filter.Kind != null)
+            {
+                sb.Append("#kind=");
+                sb.Append(filter.Kind);
+            }
+
+            if (filter.Version != null)
+            {
+                sb.Append("#version=");
+                sb.Append(filter.Version);
+            }
+
+            if (filter.Loader != null)
+            {
+                sb.Append("#loader=");
+                sb.Append(filter.Loader);
+            }
+        }
+
+        return sb.ToString();
+    }
 }

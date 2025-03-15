@@ -10,7 +10,6 @@ using IconPacks.Avalonia.Lucide;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Views;
-using Polymerium.Trident;
 using Polymerium.Trident.Services;
 using Trident.Abstractions;
 

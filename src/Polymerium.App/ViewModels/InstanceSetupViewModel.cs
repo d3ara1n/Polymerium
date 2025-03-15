@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Collections;
-using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -19,6 +16,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
@@ -38,13 +36,13 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         ViewBag bag,
         ProfileManager profileManager,
         RepositoryAgent repositories,
-        IHttpClientFactory clientFactory,
         NotificationService notificationService,
-        InstanceManager instanceManager) : base(bag, instanceManager, profileManager)
+        InstanceManager instanceManager,
+        DataService dataService) : base(bag, instanceManager, profileManager)
     {
         _repositories = repositories;
-        _clientFactory = clientFactory;
         _notificationService = notificationService;
+        _dataService = dataService;
     }
 
     private void TriggerRefresh(CancellationToken token)
@@ -95,23 +93,15 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                               // NOTE: 如果可以的话，对于 Purl.Vid 为空的，需要去 LockData 里找 Packages[i].Vid，获取锁定的版本
                                               //  当然也可以不这么干，对于版本锁，给一个单独的页面来查看锁定的版本就行
                                               //  因为版本锁是为构建服务的，不应该暴露给用户看当前锁定的版本是哪个
-                                              var p = await _repositories.ResolveAsync(v.Label,
-                                                          v.Namespace,
-                                                          v.Pid,
-                                                          v.Vid,
-                                                          Filter.Empty);
+                                              var p = await _dataService.ResolvePackageAsync(v.Label,
+                                                               v.Namespace,
+                                                               v.Pid,
+                                                               v.Vid,
+                                                               Filter.Empty);
 
-                                              if (p.Thumbnail is not null)
-                                              {
-                                                  var c = _clientFactory.CreateClient();
-                                                  var b = await c.GetByteArrayAsync(p.Thumbnail, inner);
-                                                  await using var ms = new MemoryStream(b);
-                                                  model.Thumbnail = Bitmap.DecodeToWidth(ms, 64);
-                                              }
-                                              else
-                                              {
-                                                  model.Thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
-                                              }
+                                              model.Thumbnail = p.Thumbnail is not null
+                                                                    ? await _dataService.GetBitmapAsync(p.Thumbnail)
+                                                                    : AssetUriIndex.DIRT_IMAGE_BITMAP;
 
                                               model.Name = p.ProjectName;
                                               model.Version = p.VersionName;
@@ -140,24 +130,15 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         {
             try
             {
-                var package = await _repositories.ResolveAsync(label,
-                                                               @namespace,
-                                                               pid,
-                                                               vid,
-                                                               Filter.Empty with { Kind = ResourceKind.Modpack });
+                var package = await _dataService.ResolvePackageAsync(label,
+                                                                     @namespace,
+                                                                     pid,
+                                                                     vid,
+                                                                     Filter.Empty with { Kind = ResourceKind.Modpack });
 
-                Bitmap thumbnail;
-                if (package.Thumbnail is not null)
-                {
-                    using var client = _clientFactory.CreateClient();
-                    var bytes = await client.GetByteArrayAsync(package.Thumbnail, inner);
-                    await using var ms = new MemoryStream(bytes);
-                    thumbnail = Bitmap.DecodeToWidth(ms, 64);
-                }
-                else
-                {
-                    thumbnail = AssetUriIndex.DIRT_IMAGE_BITMAP;
-                }
+                var thumbnail = package.Thumbnail is not null
+                                    ? await _dataService.GetBitmapAsync(package.Thumbnail)
+                                    : AssetUriIndex.DIRT_IMAGE_BITMAP;
 
                 var page = await (await _repositories.InspectAsync(label,
                                                                    @namespace,
@@ -247,25 +228,16 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
 
     private void TrackUpdateProgress(UpdateTracker update)
     {
-        _updatingSubscription?.Dispose();
-        _updatingSubscription = Observable
-                               .Interval(TimeSpan.FromSeconds(1))
-                               .Subscribe(_ =>
+        _updatingSubscription = update
+                               .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+                               .Where(x => x.Any())
+                               .Select(x => x.Last())
+                               .Subscribe(x =>
                                 {
-                                    var progress = update.Progress;
-                                    Dispatcher.UIThread.Post(() =>
-                                    {
-                                        if (progress.HasValue)
-                                        {
-                                            UpdatingProgress = progress.Value;
-                                            UpdatingPending = false;
-                                        }
-                                        else
-                                        {
-                                            UpdatingPending = true;
-                                        }
-                                    });
-                                });
+                                    UpdatingProgress = x ?? 0d;
+                                    UpdatingPending = !x.HasValue;
+                                })
+                               .DisposeWith(update);
     }
 
     #region Commands
@@ -300,8 +272,8 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     #region Injected
 
     private readonly RepositoryAgent _repositories;
-    private readonly IHttpClientFactory _clientFactory;
     private readonly NotificationService _notificationService;
+    private readonly DataService _dataService;
 
     #endregion
 

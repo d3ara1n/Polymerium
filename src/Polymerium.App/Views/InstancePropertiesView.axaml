@@ -4,7 +4,6 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                   xmlns:controls="using:Polymerium.App.Controls"
-                  xmlns:converters="using:Polymerium.App.Converters"
                   xmlns:vm="using:Polymerium.App.ViewModels"
                   xmlns:components="using:Polymerium.App.Components"
                   xmlns:fi="using:FluentIcons.Avalonia"
@@ -38,7 +37,7 @@
                             HorizontalAlignment="Center"
                             Background="{DynamicResource Layer0BackgroundBrush}"
                             BorderBrush="{x:Null}"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                         <Border.Effect>
                             <DropShadowEffect Opacity="0.1" />
                         </Border.Effect>
