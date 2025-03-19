@@ -25,7 +25,7 @@ public record Component(
     public record AssetIndexEntry(string Id, string Sha1, ulong Size, ulong TotalSize, Uri Url);
 
     public record Library(
-        Library.DownloadsEntry Downloads,
+        Library.DownloadsEntry? Downloads,
         Library.ExtractExtry? Extract,
         string Name,
         Uri? Url,

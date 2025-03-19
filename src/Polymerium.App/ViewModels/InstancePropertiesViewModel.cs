@@ -131,7 +131,22 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     }
 
     [RelayCommand]
-    private void ResetInstance() { }
+    private void ResetInstance()
+    {
+        if (!InstanceManager.IsInUse(Basic.Key))
+        {
+            var path = PathDef.Default.DirectoryOfBuild(Basic.Key);
+            try
+            {
+                Directory.Delete(path, true);
+                _notificationService.PopMessage("Instance reset", Basic.Key);
+            }
+            catch (Exception ex)
+            {
+                _notificationService.PopMessage(ex);
+            }
+        }
+    }
 
     [RelayCommand]
     private void DeleteInstance()

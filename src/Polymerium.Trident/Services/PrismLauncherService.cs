@@ -85,10 +85,10 @@ public class PrismLauncherService(IPrismLauncherClient client)
             if (lib.Url != null)
                 // old fashion
                 builder.AddLibraryPrismFlavor(lib.Name, lib.Url);
-            else if (lib.Downloads.Artifact != null)
+            else if (lib.Downloads?.Artifact != null)
                 builder.AddLibrary(lib.Name, lib.Downloads.Artifact.Url, lib.Downloads.Artifact.Sha1);
 
-            if (lib.Natives is { Windows: not null })
+            if (lib is { Natives: { Windows: not null }, Downloads: not null })
             {
                 var classifier = lib.Natives.Windows.Replace("${arch}",
                                                              Environment.Is64BitOperatingSystem ? "64" : "32");

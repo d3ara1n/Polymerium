@@ -26,10 +26,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         foreach (var persistent in manifest.PersistentFiles)
             files.Add(persistent);
 
-        foreach (var explosive in manifest.ExplosiveFiles)
-            files.Add(explosive);
-
-        logger.LogInformation("Created solidifying tasks of {}", files.Count);
+        logger.LogInformation("Created solidifying tasks of {}", files.Count + manifest.ExplosiveFiles.Count);
 
         var buildDir = PathDef.Default.DirectoryOfBuild(Context.Key);
         var fullBuildDir = Path.GetFullPath(buildDir);
@@ -87,11 +84,11 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
                                         var client = factory.CreateClient();
-                                        await using var reader = await client.GetStreamAsync(present.Url, cancel.Token);
-                                        await using var writer = new FileStream(present.Path,
-                                                                                    FileMode.Create,
-                                                                                    FileAccess.Write);
+                                        var reader = await client.GetStreamAsync(present.Url, cancel.Token);
+                                        var writer = new FileStream(present.Path, FileMode.Create, FileAccess.Write);
                                         await reader.CopyToAsync(writer, cancel.Token);
+                                        reader.Close();
+                                        writer.Close();
                                     }
                                     else
                                     {
@@ -133,32 +130,10 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
 
                                     break;
                                 }
-                                case EntityManifest.ExplosiveFile explosive:
-                                {
-                                    if (Directory.Exists(explosive.TargetDirectory))
-                                    {
-                                        // 只有 build 目录里才具有摧毁性
-                                        var full = Path.GetFullPath(explosive.TargetDirectory);
-                                        if (full.StartsWith(fullBuildDir))
-                                        {
-                                            logger.LogDebug("Destroying {}", full);
-                                            Directory.Delete(explosive.TargetDirectory, true);
-                                        }
-                                    }
-
-                                    if (!Directory.Exists(explosive.TargetDirectory))
-                                        Directory.CreateDirectory(explosive.TargetDirectory);
-
-                                    logger.LogDebug("Extracting {} to {}",
-                                                    explosive.SourcePath,
-                                                    explosive.TargetDirectory);
-                                    ZipFile.ExtractToDirectory(explosive.SourcePath, explosive.TargetDirectory, true);
-                                    break;
-                                }
                             }
 
                             Interlocked.Increment(ref downloaded);
-                            ProgressStream.OnNext((downloaded, files.Count));
+                            ProgressStream.OnNext((downloaded, files.Count + manifest.ExplosiveFiles.Count));
                         }
                         catch (OperationCanceledException) { }
                         catch (Exception ex)
@@ -174,6 +149,28 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                     })
                    .ToArray();
         await Task.WhenAll(tasks);
+        foreach (var explosive in manifest.ExplosiveFiles)
+        {
+            if (Directory.Exists(explosive.TargetDirectory))
+            {
+                // 只有 build 目录里才具有摧毁性
+                var full = Path.GetFullPath(explosive.TargetDirectory);
+                if (full.StartsWith(fullBuildDir))
+                {
+                    logger.LogDebug("Destroying {}", full);
+                    Directory.Delete(explosive.TargetDirectory, true);
+                }
+            }
+
+            if (!Directory.Exists(explosive.TargetDirectory))
+                Directory.CreateDirectory(explosive.TargetDirectory);
+
+            logger.LogDebug("Extracting {} to {}", explosive.SourcePath, explosive.TargetDirectory);
+            ZipFile.ExtractToDirectory(explosive.SourcePath, explosive.TargetDirectory, true);
+            ProgressStream.OnNext((++downloaded, files.Count + manifest.ExplosiveFiles.Count));
+        }
+
+
         watch.Stop();
         logger.LogInformation("Solidifying finished in {ms}ms", watch.ElapsedMilliseconds);
 

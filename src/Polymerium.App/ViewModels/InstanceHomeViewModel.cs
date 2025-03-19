@@ -131,7 +131,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
                                             (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, _configurationService.Value.GameWindowInitialWidth),
                                              profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
                                                                  _configurationService.Value.GameWindowInitialHeight)),
-                                            launchMode: LaunchMode.Managed);
+                                            launchMode: Mode);
             InstanceManager.DeployAndLaunch(Basic.Key, options);
         }
         catch (Exception ex)
