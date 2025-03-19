@@ -29,6 +29,8 @@ public class Snapshot : Collection<Snapshot.Entity>
 
     public static void Apply(string directory, IReadOnlyList<Entity> toPopulate)
     {
+        if (!Directory.Exists(directory))
+            Directory.CreateDirectory(directory);
         var current = Take(directory);
         var entities = new List<Entity>(toPopulate);
         foreach (var exist in current)

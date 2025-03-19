@@ -14,7 +14,7 @@ public record ModModel(
     IReadOnlyList<CategoryModel> Categories,
     uint? ClassId,
     IReadOnlyList<ModModel.ModAuthor> Authors,
-    ModModel.ModAsset Logo,
+    ModModel.ModAsset? Logo,
     IReadOnlyList<ModModel.ModAsset> Screenshots,
     uint MainFileId,
     DateTimeOffset DateModified,

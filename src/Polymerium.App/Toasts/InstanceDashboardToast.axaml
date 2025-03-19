@@ -56,7 +56,7 @@
                                     <husk:SwitchCase Value="Warning">
                                         <Border BorderBrush="{DynamicResource ControlWarningBorderBrush}"
                                                 BorderThickness="3,0,0,0"
-                                                Background="{DynamicResource ControlTranslucentWarningBackgroundBrush}">
+                                                Background="{DynamicResource ControlTranslucentOverlayWarningBackgroundBrush}">
                                             <ContentControl Content="{Binding}"
                                                             ContentTemplate="{StaticResource ScrapTemplate}"
                                                             Foreground="{DynamicResource ControlWarningForegroundBrush}" />
@@ -65,7 +65,7 @@
                                     <husk:SwitchCase Value="Error">
                                         <Border BorderBrush="{DynamicResource ControlDangerBorderBrush}"
                                                 BorderThickness="3,0,0,0"
-                                                Background="{DynamicResource ControlTranslucentDangerBackgroundBrush}">
+                                                Background="{DynamicResource ControlTranslucentOverlayDangerBackgroundBrush}">
                                             <ContentControl Content="{Binding}"
                                                             ContentTemplate="{StaticResource ScrapTemplate}"
                                                             Foreground="{DynamicResource ControlDangerForegroundBrush}" />

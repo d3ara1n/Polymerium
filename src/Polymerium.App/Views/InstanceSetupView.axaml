@@ -183,7 +183,9 @@
                                                        Width="64">
                                                 <Border CornerRadius="{StaticResource MediumCornerRadius}"
                                                         ClipToBounds="True">
-                                                    <Image Source="{Binding Thumbnail}" />
+                                                    <Border.Background>
+                                                        <ImageBrush Source="{Binding Thumbnail}" />
+                                                    </Border.Background>
                                                 </Border>
                                             </husk:Card>
                                         </husk:SkeletonContainer>
