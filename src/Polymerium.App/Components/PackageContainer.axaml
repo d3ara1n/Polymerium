@@ -45,8 +45,11 @@
                             <husk:Card Height="78" Background="{DynamicResource Layer0BackgroundBrush}">
                                 <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*">
                                     <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-                                            CornerRadius="{StaticResource MediumCornerRadius}" ClipToBounds="True">
-                                        <Image Source="{Binding Thumbnail}" />
+                                            CornerRadius="{StaticResource MediumCornerRadius}" ClipToBounds="True"
+                                            Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=Self}}">
+                                        <Border.Background>
+                                            <ImageBrush Source="{Binding Thumbnail}" />
+                                        </Border.Background>
                                     </Border>
                                     <DockPanel Grid.Row="0" Grid.Column="2">
                                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"

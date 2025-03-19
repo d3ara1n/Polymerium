@@ -128,7 +128,7 @@ public class CurseForgeService(ICurseForgeClient client)
             null,
             model.Id.ToString(),
             model.Name,
-            model.Logo.ThumbnailUrl?.IsAbsoluteUri is false ? model.Logo.Url : model.Logo.ThumbnailUrl,
+            model.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? model.Logo.Url : model.Logo?.ThumbnailUrl,
             model.Authors.Select(x => x.Name).FirstOrDefault() ?? "??",
             model.Summary,
             ClassIdToResourceKind(model.ClassId) ?? ResourceKind.Unknown,
@@ -147,7 +147,7 @@ public class CurseForgeService(ICurseForgeClient client)
             file.Id.ToString(),
             mod.Name,
             file.DisplayName,
-            mod.Logo.ThumbnailUrl?.IsAbsoluteUri is false ? mod.Logo.Url : mod.Logo.ThumbnailUrl,
+            mod.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? mod.Logo.Url : mod.Logo?.ThumbnailUrl,
             mod.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
             mod.Summary,
             mod.Links.WebsiteUrl
