@@ -50,6 +50,8 @@ public class CurseForgeService(ICurseForgeClient client)
             ResourceKind.Mod => CLASSID_MOD,
             ResourceKind.ResourcePack => CLASSID_RESOURCEPACK,
             ResourceKind.ShaderPack => CLASSID_SHADERPACK,
+            ResourceKind.World => CLASSID_WORLD,
+            ResourceKind.DataPack => CLASSID_DATAPACK,
             _ => null
         };
 
@@ -60,6 +62,8 @@ public class CurseForgeService(ICurseForgeClient client)
             CLASSID_MOD => ResourceKind.Mod,
             CLASSID_RESOURCEPACK => ResourceKind.ResourcePack,
             CLASSID_SHADERPACK => ResourceKind.ShaderPack,
+            CLASSID_WORLD => ResourceKind.World,
+            CLASSID_DATAPACK => ResourceKind.DataPack,
             _ => null
         };
 

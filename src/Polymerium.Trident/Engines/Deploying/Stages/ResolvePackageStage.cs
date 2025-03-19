@@ -40,7 +40,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
 
                                                   throw new FormatException($"Package {x} is not a valid package");
                                               }));
-        var flatten = new Dictionary<Identity, Version>();
+        var flatten = new ConcurrentDictionary<Identity, Version>();
 
         ProgressStream.OnNext((0, purls.Count));
 
@@ -101,7 +101,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                     }
                     else
                     {
-                        flatten.Add(parsed.Identity, version);
+                        flatten.TryAdd(parsed.Identity, version);
                         // NOTE: 实测有些模组的依赖是互相冲突的，这游戏的资源托管站数据就是依托狗屎
                         // foreach (var dep in resolved.Dependencies.Where(x => x.IsRequired))
                         //     purls.Push(new Purl(new Identity(dep.Label, dep.Namespace, dep.Pid), dep.Vid, true));
