@@ -135,10 +135,14 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     {
         if (!InstanceManager.IsInUse(Basic.Key))
         {
-            var path = PathDef.Default.DirectoryOfBuild(Basic.Key);
+            var dir = PathDef.Default.DirectoryOfBuild(Basic.Key);
+            var file = PathDef.Default.FileOfLockData(Basic.Key);
             try
             {
-                Directory.Delete(path, true);
+                if (Directory.Exists(dir))
+                    Directory.Delete(dir, true);
+                if (File.Exists(file))
+                    File.Delete(file);
                 _notificationService.PopMessage("Instance reset", Basic.Key);
             }
             catch (Exception ex)

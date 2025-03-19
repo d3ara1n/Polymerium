@@ -91,7 +91,7 @@ public class CurseForgeService(ICurseForgeClient client)
     public Uri ToDownloadUrl(FileModel file) =>
         file.DownloadUrl
      ?? new
-            Uri($"https://mediafilez.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{Uri.EscapeDataString(file.FileName)}");
+            Uri($"https://edge.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{Uri.EscapeDataString(file.FileName)}");
 
     public string? ToSha1(FileModel file) =>
         file.Hashes.Any(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1)

@@ -108,6 +108,8 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
                                                                                  .RuntimeJavaHome8,
                                                                               11 => _configurationService.Value
                                                                                  .RuntimeJavaHome11,
+                                                                              16 => _configurationService.Value
+                                                                                 .RuntimeJavaHome16,
                                                                               17 => _configurationService.Value
                                                                                  .RuntimeJavaHome17,
                                                                               21 => _configurationService.Value

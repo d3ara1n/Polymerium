@@ -1,4 +1,5 @@
 ﻿using IBuilder;
+using Semver;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Engines.Deploying;
@@ -70,8 +71,21 @@ public class DataLockBuilder : IBuilder<DataLock>
 
     public DataLockBuilder AddLibrary(DataLock.Library library)
     {
-        var found = _libraries.Any(x => x == library);
-        if (!found)
+        var found = _libraries.FirstOrDefault(x => x.Id.Namespace == library.Id.Namespace
+                                                && x.Id.Name == library.Id.Name
+                                                && x.Id.Platform == library.Id.Platform
+                                                && x.Id.Extension == library.Id.Extension);
+        if (found != null)
+        {
+            if (SemVersion.TryParse(found.Id.Version, out var oldVersion)
+             && SemVersion.TryParse(library.Id.Version, out var newVersion)
+             && newVersion.CompareSortOrderTo(oldVersion) > 0)
+            {
+                _libraries.Remove(found);
+                _libraries.Add(library);
+            }
+        }
+        else
             _libraries.Add(library);
 
         return this;

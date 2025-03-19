@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using NeoSmart.Caching.Sqlite;
+using Polly;
 using Polymerium.App.Services;
 using Polymerium.Trident.Extensions;
 using Polymerium.Trident.Services;
@@ -20,7 +22,12 @@ public static class Startup
         services
            .AddAvalonia()
            .AddHttpClient()
-           .ConfigureHttpClientDefaults(builder => builder.RemoveAllLoggers())
+           .ConfigureHttpClientDefaults(builder => builder
+                                                  .RemoveAllLoggers()
+                                                  .ConfigureHttpClient(client => client.DefaultRequestHeaders.UserAgent
+                                                                          .Add(new ProductInfoHeaderValue(Program.Brand,
+                                                                                   Program.Version)))
+                                                  .AddTransientHttpErrorPolicy(configure => configure.RetryAsync()))
            .AddLogging(logging => logging
                                  .AddConsole()
                                  .AddDebug()

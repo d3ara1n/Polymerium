@@ -59,11 +59,13 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
                                         var client = factory.CreateClient();
-                                        await using var reader = await client.GetStreamAsync(fragile.Url, cancel.Token);
-                                        await using var writer = new FileStream(fragile.SourcePath,
-                                                                                    FileMode.Create,
-                                                                                    FileAccess.Write);
+                                        var reader = await client.GetStreamAsync(fragile.Url, cancel.Token);
+                                        var writer = new FileStream(fragile.SourcePath,
+                                                                    FileMode.Create,
+                                                                    FileAccess.Write);
                                         await reader.CopyToAsync(writer, cancel.Token);
+                                        reader.Close();
+                                        writer.Close();
                                     }
                                     else
                                     {
@@ -151,7 +153,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         await Task.WhenAll(tasks);
         foreach (var explosive in manifest.ExplosiveFiles)
         {
-            if (Directory.Exists(explosive.TargetDirectory))
+            if (Directory.Exists(explosive.TargetDirectory) && explosive.IsDestructive)
             {
                 // 只有 build 目录里才具有摧毁性
                 var full = Path.GetFullPath(explosive.TargetDirectory);

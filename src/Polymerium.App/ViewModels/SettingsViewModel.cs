@@ -23,6 +23,7 @@ public partial class SettingsViewModel : ViewModelBase
                 ?? Languages.First();
         JavaHome8 = configurationService.Value.RuntimeJavaHome8;
         JavaHome11 = configurationService.Value.RuntimeJavaHome11;
+        JavaHome16 = configurationService.Value.RuntimeJavaHome16;
         JavaHome17 = configurationService.Value.RuntimeJavaHome17;
         JavaHome21 = configurationService.Value.RuntimeJavaHome21;
         JavaMaxMemory = configurationService.Value.GameJavaMaxMemory;
@@ -90,6 +91,11 @@ public partial class SettingsViewModel : ViewModelBase
     public partial string JavaHome11 { get; set; }
 
     partial void OnJavaHome11Changed(string value) => _configurationService.Value.RuntimeJavaHome11 = value;
+
+    [ObservableProperty]
+    public partial string JavaHome16 { get; set; }
+
+    partial void OnJavaHome16Changed(string value) => _configurationService.Value.RuntimeJavaHome16 = value;
 
     [ObservableProperty]
     public partial string JavaHome17 { get; set; }
