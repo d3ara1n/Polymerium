@@ -51,7 +51,7 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
                                                      lib.Id.Extension);
             manifest.PresentFiles.Add(new EntityManifest.PresentFile(path, lib.Url, lib.Sha1));
             if (lib.IsNative)
-                manifest.ExplosiveFiles.Add(new EntityManifest.ExplosiveFile(path, nativesDir, true));
+                manifest.ExplosiveFiles.Add(new EntityManifest.ExplosiveFile(path, nativesDir, false));
         }
 
         var importDir = PathDef.Default.DirectoryOfImport(Context.Key);

@@ -98,7 +98,7 @@
                      HorizontalContentAlignment="Center"
                      Foreground="{DynamicResource ControlAccentForegroundBrush}" Margin="36,0"
                      Theme="{StaticResource UnderlineTextBoxTheme}" BorderThickness="0,0,0,2" />
-            <Button Command="{Binding GotoSearchViewCommand}"
+            <Button Command="{Binding GotoSearchViewCommand}" IsDefault="True"
                     CommandParameter="{Binding #QueryBox.Text}" Classes="Primary"
                     Theme="{StaticResource OutlineButtonTheme}" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Margin="8,4" Spacing="8">

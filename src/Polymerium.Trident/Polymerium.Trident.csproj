@@ -20,6 +20,7 @@
         <PackageReference Include="ObservableCollections" Version="3.3.3"/>
         <PackageReference Include="Refit" Version="8.0.0"/>
         <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0"/>
+        <PackageReference Include="Semver" Version="3.0.0"/>
         <PackageReference Include="System.Net.Http.Json" Version="9.0.3"/>
         <PackageReference Include="System.Text.Json" Version="9.0.3"/>
     </ItemGroup>

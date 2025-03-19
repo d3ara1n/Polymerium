@@ -41,7 +41,7 @@
                         <Border.Effect>
                             <DropShadowEffect Opacity="0.1" />
                         </Border.Effect>
-                        <Border Name="ThumbnailBox" CornerRadius="{StaticResource MediumCornerRadius}">
+                        <Border Name="ThumbnailBox" CornerRadius="{StaticResource SmallCornerRadius}">
                             <Border.Background>
                                 <ImageBrush Source="{Binding ThumbnailOverwrite}" />
                             </Border.Background>

@@ -91,7 +91,7 @@
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
 
-        <Style Selector="^:indeterminate">
+        <Style Selector="^[IsVisible=True]:indeterminate">
             <Style Selector="^ /template/ Panel#Determinate">
                 <Setter Property="IsVisible" Value="False" />
             </Style>

@@ -69,6 +69,21 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Java Home 16">
+                <TextBox Watermark="Never fallback to the bundled if unset" Text="{Binding JavaHome16,Mode=TwoWay}">
+                    <TextBox.InnerRightContent>
+                        <StackPanel Orientation="Horizontal" Margin="4">
+                            <Button Command="{Binding $parent[TextBox].Clear}">
+                                <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
+                            </Button>
+                            <Button Command="{Binding PickFileCommand}"
+                                    CommandParameter="{Binding $parent[TextBox]}">
+                                <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </StackPanel>
+                    </TextBox.InnerRightContent>
+                </TextBox>
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java Home 17">
                 <TextBox Watermark="Never fallback to the bundled if unset" Text="{Binding JavaHome17,Mode=TwoWay}">
                     <TextBox.InnerRightContent>
