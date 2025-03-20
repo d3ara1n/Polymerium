@@ -202,6 +202,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     {
         _pageCancellationTokenSource?.Cancel();
         _pageCancellationTokenSource?.Dispose();
+        _pageCancellationTokenSource = null;
         _updatingSubscription?.Dispose();
 
         return base.OnDeinitializeAsync(token);
@@ -249,7 +250,6 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     private async Task ViewDetails()
     {
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var source))
-        {
             try
             {
                 var versions = await _dataService.InspectVersionsAsync(source.Label,
@@ -297,7 +297,6 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
             {
                 _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
             }
-        }
     }
 
     private bool CanUpdate(InstanceReferenceVersionModel? model) => model is { IsCurrent: false };

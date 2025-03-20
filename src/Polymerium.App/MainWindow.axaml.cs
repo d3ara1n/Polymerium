@@ -98,6 +98,12 @@ public partial class MainWindow : AppWindow
             _navigate?.Invoke(typeof(InstanceView), key, null);
     }
 
+    #region Notification Service
+
+    internal void BindNotification(Action<string, string, NotificationLevel, bool> pop) => _popMessage = pop;
+
+    #endregion
+
     #region Navigation Service
 
     internal void Navigate(Type page, object? parameter, IPageTransition transition) =>
@@ -182,12 +188,6 @@ public partial class MainWindow : AppWindow
         if (model is not null)
             _entries.Remove(model);
     }
-
-    #endregion
-
-    #region Notification Service
-
-    internal void BindNotification(Action<string, string, NotificationLevel, bool> pop) => _popMessage = pop;
 
     #endregion
 

@@ -27,9 +27,6 @@ namespace Polymerium.App.ViewModels;
 
 public partial class MarketplaceSearchViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    public partial string QueryText { get; set; } = string.Empty;
-
     public MarketplaceSearchViewModel(
         ViewBag bag,
         RepositoryAgent agent,
@@ -56,6 +53,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             SelectedRepository = r.First();
         }
     }
+
+    [ObservableProperty]
+    public partial string QueryText { get; set; } = string.Empty;
 
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
 
