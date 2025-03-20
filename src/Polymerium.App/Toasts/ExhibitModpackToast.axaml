@@ -10,6 +10,7 @@
             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             xmlns:md="https://github.com/whistyun/Markdown.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+            xmlns:local="clr-namespace:Polymerium.App.Toasts"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Padding="0"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
     <ScrollViewer>
@@ -17,7 +18,7 @@
             <Grid ColumnDefinitions="*,24,Auto" RowDefinitions="*,24,Auto" Height="240">
                 <StackPanel Grid.Row="0" Grid.Column="0" Spacing="12">
                     <Grid ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,0,Auto">
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="All The Mods 10"
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding DisplayName}"
                                    FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold" />
                         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
                             <Button>
@@ -74,7 +75,9 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </StackPanel>
-                <Carousel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}" Width="360" ItemsSource="{Binding Gallery}"
+                <Carousel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
+                          IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}"
+                          Width="360" ItemsSource="{Binding Gallery}"
                           CornerRadius="{StaticResource SmallCornerRadius}">
                     <Carousel.ItemTemplate>
                         <DataTemplate x:DataType="x:Uri">
@@ -83,7 +86,8 @@
                     </Carousel.ItemTemplate>
                 </Carousel>
                 <Grid Grid.Row="2" Grid.Column="0">
-                    <Button Classes="Primary">
+                    <Button Classes="Primary" Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
+                            CommandParameter="{Binding Versions[0],FallbackValue={x:Null}}">
                         <TextBlock Text="Install" />
                     </Button>
                 </Grid>
@@ -96,14 +100,15 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Background="{StaticResource OverlayDarker1BackgroundBrush}" Padding="12"
                         CornerRadius="{StaticResource SmallCornerRadius}">
-                    <md:MarkdownScrollViewer Markdown="{Binding Description}" />
+                    <md:MarkdownScrollViewer Markdown="{Binding Description}"
+                                             ScrollViewer.IsScrollChainingEnabled="False" />
                 </Border>
                 <husk:Card Grid.Column="2" Padding="0">
                     <ListBox Padding="4" ItemsSource="{Binding Versions}" ScrollViewer.IsScrollChainingEnabled="False">
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="m:ExhibitVersionModel">
                                 <StackPanel Spacing="4">
-                                    <TextBlock Text="{Binding DisplayName}" />
+                                    <TextBlock Text="{Binding VersionName}" />
                                     <DockPanel>
                                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
                                             <TextBlock Text="{Binding PublishedAt}" />
@@ -131,6 +136,8 @@
                                         </husk:SwitchPresenter>
                                     </DockPanel>
                                     <Button Name="InstallButton" Classes="Small"
+                                            Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
+                                            CommandParameter="{Binding }"
                                             IsVisible="{Binding $parent[ListBoxItem].IsSelected,Mode=OneWay}">
                                         <TextBlock Text="Install" />
                                     </Button>

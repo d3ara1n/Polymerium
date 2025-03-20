@@ -6,6 +6,7 @@
             xmlns:local="using:Polymerium.App.Toasts"
             xmlns:launching="clr-namespace:Polymerium.Trident.Engines.Launching;assembly=Polymerium.Trident"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             Title="Dashboard" Padding="0"
             x:Class="Polymerium.App.Toasts.InstanceDashboardToast">
@@ -86,6 +87,17 @@
         <Grid Grid.Row="2" ColumnDefinitions="Auto,0,*,4,Auto" Margin="12">
             <TextBox Grid.Column="2" Watermark="Filter by content..."
                      Text="{Binding $parent[local:InstanceDashboardToast].FilterText,Mode=TwoWay}">
+                <TextBox.InnerLeftContent>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <icons:PackIconLucide Margin="10,0"
+                                                  Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                  Kind="Filter" Height="{StaticResource MediumFontSize}"
+                                                  VerticalAlignment="Center" />
+                            <husk:Divider Orientation="Vertical" />
+                        </StackPanel>
+                    </StackPanel>
+                </TextBox.InnerLeftContent>
                 <TextBox.InnerRightContent>
                     <TextBlock VerticalAlignment="Center" Margin="0,0,8,0">
                         <Run

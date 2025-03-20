@@ -107,7 +107,7 @@
                                     </Border.Background>
                                 </Border>
                                 <StackPanel Grid.Row="0" Grid.Column="2">
-                                    <TextBlock Text="{Binding Name}" FontSize="{StaticResource LargeFontSize}"
+                                    <TextBlock Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}"
                                                FontWeight="Bold" />
                                     <TextBlock Text="{Binding Summary}" MaxLines="2" TextWrapping="Wrap"
                                                TextTrimming="CharacterEllipsis" />
@@ -138,7 +138,7 @@
                                 <DockPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5">
                                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4">
                                         <Button Classes="Primary Small"
-                                                Command="{Binding #Exhibition.((vm:MarketplaceSearchViewModel)DataContext).InstallCommand, FallbackValue={x:Null}}"
+                                                Command="{Binding #Exhibition.((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal" Spacing="6">
                                                 <icons:PackIconLucide Kind="Download"

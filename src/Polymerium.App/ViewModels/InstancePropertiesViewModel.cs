@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
@@ -143,7 +144,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                     Directory.Delete(dir, true);
                 if (File.Exists(file))
                     File.Delete(file);
-                _notificationService.PopMessage("Instance reset", Basic.Key);
+                _notificationService.PopMessage("Instance reset", Basic.Key, NotificationLevel.Success);
             }
             catch (Exception ex)
             {

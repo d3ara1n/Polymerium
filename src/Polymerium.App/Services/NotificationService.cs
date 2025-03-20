@@ -43,7 +43,7 @@ public class NotificationService
         bool forceExpire = false) =>
         Dispatcher.UIThread.Post(() =>
         {
-            NotificationItem? item = new() { Content = message, Title = title, Level = level };
+            var item = new NotificationItem { Content = message, Title = title, Level = level };
             Pop(item);
             if (level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success
              || forceExpire)
