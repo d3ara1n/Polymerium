@@ -36,9 +36,9 @@ public partial class MainWindow : AppWindow
             (o, v) => o.View = v);
 
     private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
-    private readonly IDisposable _subscription;
 
     private Action<Type, object?, IPageTransition?>? _navigate;
+    private Action<string, string, NotificationLevel, bool>? _popMessage;
 
     public MainWindow()
     {
@@ -50,7 +50,7 @@ public partial class MainWindow : AppWindow
         #region Setup Entries View
 
         var filter = this.GetObservable(FilterTextProperty).Select(BuildFilter);
-        _subscription = _entries.Connect().Filter(filter).Bind(out var view).Subscribe();
+        _entries.Connect().Filter(filter).Bind(out var view).Subscribe();
         View = view;
 
         #endregion
@@ -185,24 +185,44 @@ public partial class MainWindow : AppWindow
 
     #endregion
 
+    #region Notification Service
+
+    internal void BindNotification(Action<string, string, NotificationLevel, bool> pop) => _popMessage = pop;
+
+    #endregion
+
     #region State Service
 
     internal void SubscribeState(InstanceManager manager)
     {
-        manager.InstanceInstalling += OnInstanceInstalling;
         manager.InstanceUpdating += OnInstanceUpdating;
+        manager.InstanceInstalling += OnInstanceInstalling;
         manager.InstanceDeploying += OnInstanceDeploying;
         manager.InstanceLaunching += OnInstanceLaunching;
     }
 
-    private void OnInstanceLaunching(object? sender, LaunchTracker e)
+    private void OnInstanceInstalling(object? sender, InstallTracker e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is null)
-            return;
+        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
+        {
+            State = InstanceEntryState.Installing
+        };
 
-        model.State = InstanceEntryState.Running;
+        e
+           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+           .Where(x => x.Any())
+           .Select(x => x.Last())
+           .Subscribe(x =>
+            {
+                model.IsPending = !x.HasValue;
+                model.Progress = x ?? 0d;
+            })
+           .DisposeWith(e);
+
+        e.StateUpdated += OnStateChanged;
+        _entries.AddOrUpdate(model);
+        return;
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -218,28 +238,30 @@ public partial class MainWindow : AppWindow
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        PopNotification(new NotificationItem
-                        {
-                            Content = Debugger.IsAttached
-                                          ? e.FailureReason?.ToString()
-                                          : e.FailureReason?.Message ?? "Unknown error",
-                            Title = $"{e.Key}",
-                            Level = NotificationLevel.Danger
-                        });
+                        _popMessage?.Invoke((Debugger.IsAttached
+                                                 ? e.FailureReason?.ToString()
+                                                 : e.FailureReason?.Message)
+                                         ?? "Unknown error",
+                                            $"Failed to install {e.Key}",
+                                            NotificationLevel.Danger,
+                                            false);
                     });
+                    _entries.Remove(model);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _popMessage?.Invoke("The instance has been installed", e.Key, NotificationLevel.Success, false);
+                    });
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
-
-        e.StateUpdated += OnStateChanged;
     }
 
     private void OnInstanceUpdating(object? sender, UpdateTracker e)
@@ -262,62 +284,8 @@ public partial class MainWindow : AppWindow
             })
            .DisposeWith(e);
 
-        void OnStateChanged(TrackerBase _, TrackerState state)
-        {
-            switch (state)
-            {
-                case TrackerState.Idle:
-                    break;
-                case TrackerState.Running:
-                    model.IsPending = true;
-                    model.Progress = 0d;
-                    break;
-                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        model.State = InstanceEntryState.Idle;
-                        PopNotification(new NotificationItem
-                        {
-                            Content = Debugger.IsAttached
-                                          ? e.FailureReason?.ToString()
-                                          : e.FailureReason?.Message ?? "Unknown error",
-                            Title = $"Failed to update {e.Key}",
-                            Level = NotificationLevel.Danger
-                        });
-                    });
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                case TrackerState.Finished:
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
-                    e.StateUpdated -= OnStateChanged;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
-        }
-
         e.StateUpdated += OnStateChanged;
-    }
-
-    private void OnInstanceInstalling(object? sender, InstallTracker e)
-    {
-        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
-        {
-            State = InstanceEntryState.Installing
-        };
-
-        e
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
-           .Subscribe(x =>
-            {
-                model.IsPending = !x.HasValue;
-                model.Progress = x ?? 0d;
-            })
-           .DisposeWith(e);
+        return;
 
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
@@ -332,17 +300,14 @@ public partial class MainWindow : AppWindow
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
-                        PopNotification(new NotificationItem
-                        {
-                            Content = Debugger.IsAttached
-                                          ? e.FailureReason?.ToString()
-                                          : e.FailureReason?.Message ?? "Unknown error",
-                            Title = $"Failed to install {e.Key}",
-                            Level = NotificationLevel.Danger
-                        });
+                        _popMessage?.Invoke((Debugger.IsAttached
+                                                 ? e.FailureReason?.ToString()
+                                                 : e.FailureReason?.Message)
+                                         ?? "Unknown error",
+                                            $"Failed to update {e.Key}",
+                                            NotificationLevel.Danger,
+                                            false);
                     });
-                    _entries.Remove(model);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -350,6 +315,7 @@ public partial class MainWindow : AppWindow
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
+                        _popMessage?.Invoke("The instance has been updated", e.Key, NotificationLevel.Success, false);
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -357,9 +323,6 @@ public partial class MainWindow : AppWindow
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
-
-        e.StateUpdated += OnStateChanged;
-        _entries.AddOrUpdate(model);
     }
 
     private void OnInstanceDeploying(object? sender, DeployTracker e)
@@ -388,6 +351,9 @@ public partial class MainWindow : AppWindow
             })
            .DisposeWith(e);
 
+        e.StateUpdated += OnStateChanged;
+        return;
+
         void OnStateChanged(TrackerBase _, TrackerState state)
         {
             switch (state)
@@ -402,14 +368,13 @@ public partial class MainWindow : AppWindow
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        PopNotification(new NotificationItem
-                        {
-                            Content = Debugger.IsAttached
-                                          ? e.FailureReason?.ToString()
-                                          : e.FailureReason?.Message ?? "Unknown error",
-                            Title = $"Failed to deploy {e.Key}",
-                            Level = NotificationLevel.Danger
-                        });
+                        _popMessage?.Invoke((Debugger.IsAttached
+                                                 ? e.FailureReason?.ToString()
+                                                 : e.FailureReason?.Message)
+                                         ?? "Unknown error",
+                                            $"Failed to deploy {e.Key}",
+                                            NotificationLevel.Danger,
+                                            false);
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -418,6 +383,7 @@ public partial class MainWindow : AppWindow
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
+                        _popMessage?.Invoke("The instance has been deployed", e.Key, NotificationLevel.Success, false);
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -425,8 +391,61 @@ public partial class MainWindow : AppWindow
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
+    }
+
+    private void OnInstanceLaunching(object? sender, LaunchTracker e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is null)
+            return;
+
+        model.State = InstanceEntryState.Running;
 
         e.StateUpdated += OnStateChanged;
+        return;
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.IsPending = true;
+                    model.Progress = 0d;
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _popMessage?.Invoke("The instance has been launched", e.Key, NotificationLevel.Success, false);
+                    });
+                    break;
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        _popMessage?.Invoke((Debugger.IsAttached
+                                                 ? e.FailureReason?.ToString()
+                                                 : e.FailureReason?.Message)
+                                         ?? "Unknown error",
+                                            $"{e.Key}",
+                                            NotificationLevel.Danger,
+                                            false);
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _popMessage?.Invoke("The instance has been exited", e.Key, NotificationLevel.Success, false);
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
     }
 
     #endregion

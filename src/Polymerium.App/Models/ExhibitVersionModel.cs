@@ -6,8 +6,12 @@ using Trident.Abstractions.Repositories.Resources;
 namespace Polymerium.App.Models;
 
 public class ExhibitVersionModel(
-    string displayName,
-    string vid,
+    string label,
+    string? @namespace,
+    string projectName,
+    string projectId,
+    string versionName,
+    string versionid,
     string changelog,
     DateTimeOffset publishedAt,
     ulong downloadCount,
@@ -16,8 +20,12 @@ public class ExhibitVersionModel(
 {
     #region Direct
 
-    public string DisplayName => displayName;
-    public string Version => vid;
+    public string Label => label;
+    public string? Namespace => @namespace;
+    public string ProjectName => projectName;
+    public string ProjectId => projectId;
+    public string VersionName => versionName;
+    public string Versionid => versionid;
     public string Changelog => changelog;
     public DateTimeOffset PublishedAtRaw => publishedAt;
     public string PublishedAt => publishedAt.Humanize();

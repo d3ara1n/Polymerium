@@ -42,6 +42,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     {
         _repositories = repositories;
         _notificationService = notificationService;
+        _instanceManager = instanceManager;
         _dataService = dataService;
         _overlayService = overlayService;
     }
@@ -52,7 +53,6 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         _refreshingCancellationTokenSource?.Dispose();
         _refreshingCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
         var inner = _refreshingCancellationTokenSource.Token;
-        var semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
         try
         {
             if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
@@ -90,7 +90,6 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                           {
                                               if (inner.IsCancellationRequested)
                                                   return;
-                                              await semaphore.WaitAsync(inner);
                                               // NOTE: 如果可以的话，对于 Purl.Vid 为空的，需要去 LockData 里找 Packages[i].Vid，获取锁定的版本
                                               //  当然也可以不这么干，对于版本锁，给一个单独的页面来查看锁定的版本就行
                                               //  因为版本锁是为构建服务的，不应该暴露给用户看当前锁定的版本是哪个
@@ -117,10 +116,6 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                               _notificationService.PopMessage($"{purl}: {ex.Message}",
                                                                               "Failed to parse purl",
                                                                               NotificationLevel.Warning);
-                                          }
-                                          finally
-                                          {
-                                              semaphore.Release();
                                           }
                                   },
                                   inner);
@@ -277,7 +272,11 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                     project.UpdatedAt,
                                                     project.Gallery.Select(x => x.Url).ToList(),
                                                     versions
-                                                       .Select(x => new ExhibitVersionModel(x.VersionName,
+                                                       .Select(x => new ExhibitVersionModel(project.Label,
+                                                                   project.Namespace,
+                                                                   project.ProjectName,
+                                                                   project.ProjectId,
+                                                                   x.VersionName,
                                                                    x.VersionId,
                                                                    x.Changelog,
                                                                    x.PublishedAt,
@@ -288,7 +287,10 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                                        x.ProjectId,
                                                                        x.VersionId)))
                                                        .ToList());
-                _overlayService.PopToast(new ExhibitModpackToast { DataContext = model });
+                _overlayService.PopToast(new ExhibitModpackToast
+                {
+                    DataContext = model, InstallCommand = InstallVersionCommand
+                });
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
@@ -319,6 +321,20 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         }
     }
 
+    [RelayCommand]
+    private void InstallVersion(ExhibitVersionModel? version)
+    {
+        if (version is not null)
+        {
+            _instanceManager.Install(version.ProjectName,
+                                     version.Label,
+                                     version.Namespace,
+                                     version.ProjectId,
+                                     version.Versionid);
+            _notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
+        }
+    }
+
     #endregion
 
     #region Injected
@@ -327,6 +343,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     private readonly NotificationService _notificationService;
     private readonly DataService _dataService;
     private readonly OverlayService _overlayService;
+    private readonly InstanceManager _instanceManager;
 
     #endregion
 

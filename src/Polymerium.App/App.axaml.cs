@@ -213,6 +213,7 @@ public class App : Application
         overlay.SetHandler(window.PopToast, window.PopModal, window.PopDialog);
         var notification = Program.AppHost.Services.GetRequiredService<NotificationService>();
         notification.SetHandler(window.PopNotification);
+        window.BindNotification(notification.PopMessage);
 
         #endregion
 

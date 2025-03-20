@@ -32,7 +32,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         var fullBuildDir = Path.GetFullPath(buildDir);
 
         var downloaded = 0;
-        var semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount / 2, 1));
+        var semaphore = new SemaphoreSlim(Math.Max(Environment.ProcessorCount - 1, 1));
         var watch = Stopwatch.StartNew();
         var cancel = CancellationTokenSource.CreateLinkedTokenSource(token);
         var entities = new List<Snapshot.Entity>();

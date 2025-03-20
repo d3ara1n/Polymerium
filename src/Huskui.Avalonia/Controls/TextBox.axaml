@@ -39,7 +39,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlActiveForegroundBrush}" />
+        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlHighlightForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="CaretBrush" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
@@ -155,7 +155,7 @@
         <Setter Property="BorderThickness" Value="1,1,1,2" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlActiveForegroundBrush}" />
+        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlHighlightForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="CaretBrush" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />

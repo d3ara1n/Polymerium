@@ -28,7 +28,7 @@ namespace Polymerium.App.ViewModels;
 public partial class MarketplaceSearchViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private string _queryText = string.Empty;
+    public partial string QueryText { get; set; } = string.Empty;
 
     public MarketplaceSearchViewModel(
         ViewBag bag,
@@ -128,19 +128,19 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     #region Reactive
 
     [ObservableProperty]
-    private RepositoryBasicModel _selectedRepository;
+    public partial RepositoryBasicModel SelectedRepository { get; set; }
 
     [ObservableProperty]
-    private string? _filteredVersion;
+    public partial string? FilteredVersion { get; set; }
 
     [ObservableProperty]
-    private LoaderBasicModel? _filteredLoader;
+    public partial LoaderBasicModel? FilteredLoader { get; set; }
 
     [ObservableProperty]
-    private InfiniteCollection<ExhibitModel>? _exhibits;
+    public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }
 
     [ObservableProperty]
-    private Bitmap? _headerImage;
+    public partial Bitmap? HeaderImage { get; set; }
 
     #endregion
 
@@ -202,10 +202,13 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void Install(ExhibitModel? exhibit)
+    private void InstallLatest(ExhibitModel? exhibit)
     {
         if (exhibit is not null)
-            _instanceManager.Install(exhibit.Name, exhibit.Label, exhibit.Ns, exhibit.Pid, null);
+        {
+            _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Ns, exhibit.ProjectId, null);
+            _notificationService.PopMessage($"{exhibit.ProjectName} has added to install queue");
+        }
     }
 
     [RelayCommand]
@@ -216,12 +219,12 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             {
                 var versions = await _dataService.InspectVersionsAsync(exhibit.Label,
                                                                        exhibit.Ns,
-                                                                       exhibit.Pid,
+                                                                       exhibit.ProjectId,
                                                                        Filter.Empty with
                                                                        {
                                                                            Kind = ResourceKind.Modpack
                                                                        });
-                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.Pid);
+                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
                 var model = new ExhibitModpackModel(project.ProjectName,
                                                     project.ProjectId,
                                                     project.Author,
@@ -234,7 +237,11 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                     project.UpdatedAt,
                                                     project.Gallery.Select(x => x.Url).ToList(),
                                                     versions
-                                                       .Select(x => new ExhibitVersionModel(x.VersionName,
+                                                       .Select(x => new ExhibitVersionModel(project.Label,
+                                                                   project.Namespace,
+                                                                   project.ProjectName,
+                                                                   project.ProjectId,
+                                                                   x.VersionName,
                                                                    x.VersionId,
                                                                    x.Changelog,
                                                                    x.PublishedAt,
@@ -245,7 +252,10 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                                        x.ProjectId,
                                                                        x.VersionId)))
                                                        .ToList());
-                _overlayService.PopToast(new ExhibitModpackToast { DataContext = model });
+                _overlayService.PopToast(new ExhibitModpackToast
+                {
+                    DataContext = model, InstallCommand = InstallVersionCommand
+                });
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
@@ -259,7 +269,20 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     {
         if (exhibit is not null)
             TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(exhibit.Reference);
-        // Process.Start(new ProcessStartInfo(exhibit.Reference.AbsoluteUri) { UseShellExecute = true });
+    }
+
+    [RelayCommand]
+    private void InstallVersion(ExhibitVersionModel? version)
+    {
+        if (version is not null)
+        {
+            _instanceManager.Install(version.ProjectName,
+                                     version.Label,
+                                     version.Namespace,
+                                     version.ProjectId,
+                                     version.Versionid);
+            _notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
+        }
     }
 
     #endregion

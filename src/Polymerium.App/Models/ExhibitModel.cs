@@ -8,8 +8,8 @@ namespace Polymerium.App.Models;
 public class ExhibitModel(
     string label,
     string? ns,
-    string pid,
-    string name,
+    string projectId,
+    string projectName,
     string summary,
     Uri thumbnail,
     string author,
@@ -24,9 +24,9 @@ public class ExhibitModel(
 
     public string? Ns => ns;
 
-    public string Pid => pid;
+    public string ProjectId => projectId;
 
-    public string Name => name;
+    public string ProjectName => projectName;
 
     public string Summary => summary;
 

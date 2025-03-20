@@ -26,7 +26,7 @@
                                 Background="{DynamicResource LayerSmokeBackgroundBrush}"
                                 CornerRadius="99">
                             <icons:PackIconLucide Kind="Newspaper" Height="14" Width="14"
-                                                  Foreground="{DynamicResource ControlActiveForegroundBrush}"
+                                                  Foreground="{DynamicResource ControlHighlightForegroundBrush}"
                                                   Margin="8" />
                         </Border>
                         <StackPanel Grid.Column="2" VerticalAlignment="Center">

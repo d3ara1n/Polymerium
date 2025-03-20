@@ -76,7 +76,8 @@
     <SolidColorBrush x:Key="ControlWarningBorderBrush" Color="{StaticResource Yellow11Color}" />
     <SolidColorBrush x:Key="ControlDangerBorderBrush" Color="{StaticResource Tomato11Color}" />
 
-    <SolidColorBrush x:Key="ControlActiveForegroundBrush" Color="{StaticResource Sand12Color}" />
+    <SolidColorBrush x:Key="ControlHighlightForegroundBrush" Color="{StaticResource Sand12Color}" />
+    <SolidColorBrush x:Key="ControlActiveForegroundBrush" Color="{StaticResource Sand1Color}" />
     <SolidColorBrush x:Key="ControlForegroundBrush" Color="{StaticResource Sand3Color}" />
     <SolidColorBrush x:Key="ControlTranslucentForegroundBrush" Color="{StaticResource Sand2Color}" />
     <SolidColorBrush x:Key="ControlSecondaryForegroundBrush" Color="{StaticResource Sand8Color}" />
