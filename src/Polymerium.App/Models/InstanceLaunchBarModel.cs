@@ -5,10 +5,10 @@ namespace Polymerium.App.Models;
 
 public partial class InstanceLaunchBarModel : ModelBase
 {
-    #region Reactive Properties
+    #region Reactive
 
     [ObservableProperty]
-    private LaunchBarState _state = LaunchBarState.Idle;
+    public partial LaunchBarState State { get; set; } = LaunchBarState.Idle;
 
     #endregion
 }

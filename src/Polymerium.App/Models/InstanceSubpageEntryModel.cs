@@ -10,7 +10,7 @@ public partial class InstanceSubpageEntryModel(Type page, PackIconLucideKind ico
     #region Reactive
 
     [ObservableProperty]
-    private PackIconLucideKind _icon = icon;
+    public partial PackIconLucideKind Icon { get; set; } = icon;
 
     #endregion
 

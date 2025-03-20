@@ -86,7 +86,9 @@ public class DataLockBuilder : IBuilder<DataLock>
             }
         }
         else
+        {
             _libraries.Add(library);
+        }
 
         return this;
     }

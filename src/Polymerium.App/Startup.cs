@@ -24,8 +24,10 @@ public static class Startup
            .AddHttpClient()
            .ConfigureHttpClientDefaults(builder => builder
                                                   .RemoveAllLoggers()
-                                                  .ConfigureHttpClient(client => client.DefaultRequestHeaders.UserAgent
-                                                                          .Add(new ProductInfoHeaderValue(Program.Brand,
+                                                  .ConfigureHttpClient(client =>
+                                                                           client.DefaultRequestHeaders.UserAgent
+                                                                              .Add(new ProductInfoHeaderValue(Program
+                                                                                      .Brand,
                                                                                    Program.Version)))
                                                   .AddTransientHttpErrorPolicy(configure => configure.RetryAsync()))
            .AddLogging(logging => logging

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -11,6 +12,7 @@ using Polymerium.Trident.Services;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
+using Version = Trident.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.App.Services;
 
@@ -41,6 +43,14 @@ public class DataService(
                         var bytes = await client.GetByteArrayAsync(url);
                         return Bitmap.DecodeToWidth(new MemoryStream(bytes), 64);
                     });
+
+    public ValueTask<Project> QueryProjectAsync(string label, string? ns, string pid) =>
+        GetOrCreate($"project:{PackageHelper.Identify(label, ns, pid, null, null)}",
+                    () => agent.QueryAsync(label, ns, pid));
+
+    public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
+        GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
+                    async () => await (await agent.InspectAsync(label, ns, pid, filter)).FetchAsync());
 
     public ValueTask<ComponentIndex> GetMinecraftVersionsAsync() =>
         GetOrCreate("minecraft:versions", () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None));

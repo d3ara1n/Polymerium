@@ -33,7 +33,7 @@ public class CurseForgeService(ICurseForgeClient client)
         ["Any"] = "Any"
     };
 
-    public ModLoaderTypeModel? LoaderIdToType(string? loader) =>
+    public static ModLoaderTypeModel? LoaderIdToType(string? loader) =>
         loader switch
         {
             LoaderHelper.LOADERID_NEOFORGE => ModLoaderTypeModel.NeoForge,
@@ -43,7 +43,7 @@ public class CurseForgeService(ICurseForgeClient client)
             _ => null
         };
 
-    public uint? ResourceKindToClassId(ResourceKind? kind) =>
+    public static uint? ResourceKindToClassId(ResourceKind? kind) =>
         kind switch
         {
             ResourceKind.Modpack => CLASSID_MODPACK,
@@ -55,7 +55,7 @@ public class CurseForgeService(ICurseForgeClient client)
             _ => null
         };
 
-    public ResourceKind? ClassIdToResourceKind(uint? classId) =>
+    public static ResourceKind? ClassIdToResourceKind(uint? classId) =>
         classId switch
         {
             CLASSID_MODPACK => ResourceKind.Modpack,
@@ -79,7 +79,7 @@ public class CurseForgeService(ICurseForgeClient client)
             _ => "unknown"
         };
 
-    public ReleaseType ToReleaseType(FileModel.FileReleaseType type) =>
+    public static ReleaseType ToReleaseType(FileModel.FileReleaseType type) =>
         type switch
         {
             FileModel.FileReleaseType.Alpha => ReleaseType.Alpha,
@@ -88,17 +88,17 @@ public class CurseForgeService(ICurseForgeClient client)
             _ => ReleaseType.Release
         };
 
-    public Uri ToDownloadUrl(FileModel file) =>
+    public static Uri ToDownloadUrl(FileModel file) =>
         file.DownloadUrl
      ?? new
             Uri($"https://edge.forgecdn.net/files/{file.Id / 1000}/{file.Id % 1000}/{Uri.EscapeDataString(file.FileName)}");
 
-    public string? ToSha1(FileModel file) =>
+    public static string? ToSha1(FileModel file) =>
         file.Hashes.Any(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1)
             ? file.Hashes.First(x => x.Algo == FileModel.FileHash.HashAlgo.Sha1).Value
             : null;
 
-    public Requirement ToRequirement(FileModel file)
+    public static Requirement ToRequirement(FileModel file)
     {
         List<string> gameReq = [];
         List<string> loaderReq = [];
@@ -111,7 +111,7 @@ public class CurseForgeService(ICurseForgeClient client)
         return new Requirement(gameReq, loaderReq);
     }
 
-    public IEnumerable<Dependency> ToDependencies(FileModel file) =>
+    public static IEnumerable<Dependency> ToDependencies(FileModel file) =>
         file
            .Dependencies
            .Where(x => x.RelationType is FileModel.FileDependency.FileRelationType.RequiredDependency
@@ -123,13 +123,13 @@ public class CurseForgeService(ICurseForgeClient client)
                                        x.RelationType == FileModel.FileDependency.FileRelationType.RequiredDependency));
 
 
-    public Exhibit ToExhibit(ModModel model) =>
+    public static Exhibit ToExhibit(ModModel model) =>
         new(LABEL,
             null,
             model.Id.ToString(),
             model.Name,
             model.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? model.Logo.Url : model.Logo?.ThumbnailUrl,
-            model.Authors.Select(x => x.Name).FirstOrDefault() ?? "??",
+            model.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
             model.Summary,
             ClassIdToResourceKind(model.ClassId) ?? ResourceKind.Unknown,
             model.DownloadCount,
@@ -140,7 +140,7 @@ public class CurseForgeService(ICurseForgeClient client)
             model.DateModified);
 
 
-    public Package ToPackage(ModModel mod, FileModel file) =>
+    public static Package ToPackage(ModModel mod, FileModel file) =>
         new(LABEL,
             null,
             mod.Id.ToString(),
@@ -162,7 +162,7 @@ public class CurseForgeService(ICurseForgeClient client)
             ToRequirement(file),
             ToDependencies(file));
 
-    public Version ToVersion(FileModel file) =>
+    public static Version ToVersion(FileModel file, string changelog) =>
         new(LABEL,
             null,
             file.ModId.ToString(),
@@ -171,7 +171,30 @@ public class CurseForgeService(ICurseForgeClient client)
             ToReleaseType(file.ReleaseType),
             file.FileDate,
             file.DownloadCount,
-            string.Empty);
+            changelog);
+
+
+    public static Project ToProject(ModModel model, string description) =>
+        new(LABEL,
+            null,
+            model.Id.ToString(),
+            model.Name,
+            model.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? model.Logo.Url : model.Logo?.ThumbnailUrl,
+            model.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
+            model.Summary,
+            model.Links.WebsiteUrl,
+            ClassIdToResourceKind(model.ClassId) ?? ResourceKind.Unknown,
+            model.Categories.Select(x => x.Name).ToList(),
+            model.DateCreated,
+            model.DateModified,
+            model.DownloadCount,
+            description,
+            model.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList());
+
+    public async Task<string> GetModDescriptionAsync(uint modId) => (await client.GetModDescriptionAsync(modId)).Data;
+
+    public async Task<string> GetModFileChangelogAsync(uint modId, uint fileId) =>
+        (await client.GetModFileChangelogAsync(modId, fileId)).Data;
 
     public async Task<IReadOnlyList<string>> GetGameVersionsAsync()
     {
@@ -212,7 +235,6 @@ public class CurseForgeService(ICurseForgeClient client)
         int index = 0,
         int count = 50)
     {
-        // TODO: 改造成能分页拉取直到满足 count 或无剩余
         var rv = await client.GetModFilesAsync(modId, gameVersion, modLoader, (uint)index, (uint)count);
         return rv;
     }

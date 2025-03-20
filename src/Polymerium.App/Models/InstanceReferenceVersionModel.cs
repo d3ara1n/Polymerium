@@ -6,7 +6,7 @@ using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 
-public partial class InstanceVersionModel(
+public partial class InstanceReferenceVersionModel(
     string label,
     string? @namespace,
     string pid,
@@ -18,7 +18,7 @@ public partial class InstanceVersionModel(
     #region Reactive Properties
 
     [ObservableProperty]
-    private bool _isCurrent;
+    public partial bool IsCurrent { get; set; }
 
     #endregion
 

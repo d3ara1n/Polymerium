@@ -28,7 +28,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border CornerRadius="{TemplateBinding CornerRadius}" 
+                <Border CornerRadius="{TemplateBinding CornerRadius}"
                         Background="{TemplateBinding Background}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         BorderBrush="{TemplateBinding BorderBrush}"

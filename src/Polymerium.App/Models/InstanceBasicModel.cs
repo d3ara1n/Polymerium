@@ -16,8 +16,7 @@ public partial class InstanceBasicModel : ModelBase
         Version = version;
         Loader = loader;
         Source = source;
-
-        _thumbnail = null!;
+        Thumbnail = null!;
 
         UpdateIcon();
     }
@@ -37,41 +36,37 @@ public partial class InstanceBasicModel : ModelBase
     #region Reactive
 
     [ObservableProperty]
-    private string _name;
+    public partial string Name { get; set; }
 
     [ObservableProperty]
-    private string _version;
+    public partial string Version { get; set; }
 
     [ObservableProperty]
-    private string _loaderLabel = "Vanilla";
+    public partial string LoaderLabel { get; set; } = "Vanilla";
 
     [ObservableProperty]
-    private string _sourceLabel = "local";
+    public partial string SourceLabel { get; set; } = "local";
 
     [ObservableProperty]
-    private Bitmap _thumbnail;
-
-    private string? _source;
+    public partial Bitmap Thumbnail { get; set; }
 
     public string? Source
     {
-        get => _source;
+        get;
         set
         {
-            SetProperty(ref _source, value);
+            SetProperty(ref field, value);
             if (!string.IsNullOrEmpty(value) && PackageHelper.TryParse(value, out var result))
                 SourceLabel = result.Label;
         }
     }
 
-    private string? _loader;
-
     public string? Loader
     {
-        get => _loader;
+        get;
         set
         {
-            SetProperty(ref _loader, value);
+            SetProperty(ref field, value);
 
 
             if (value != null && LoaderHelper.TryParse(value, out var result))

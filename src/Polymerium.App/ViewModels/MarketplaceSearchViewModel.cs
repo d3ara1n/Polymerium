@@ -209,10 +209,49 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ViewDetails(ExhibitModel? exhibit)
+    private async Task ViewDetails(ExhibitModel? exhibit)
     {
         if (exhibit is not null)
-            _overlayService.PopToast(new ExhibitionModpackToast());
+            try
+            {
+                var versions = await _dataService.InspectVersionsAsync(exhibit.Label,
+                                                                       exhibit.Ns,
+                                                                       exhibit.Pid,
+                                                                       Filter.Empty with
+                                                                       {
+                                                                           Kind = ResourceKind.Modpack
+                                                                       });
+                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.Pid);
+                var model = new ExhibitModpackModel(project.ProjectName,
+                                                    project.ProjectId,
+                                                    project.Author,
+                                                    project.Label,
+                                                    project.Reference,
+                                                    project.Tags,
+                                                    project.DownloadCount,
+                                                    project.Summary,
+                                                    project.Description,
+                                                    project.UpdatedAt,
+                                                    project.Gallery.Select(x => x.Url).ToList(),
+                                                    versions
+                                                       .Select(x => new ExhibitVersionModel(x.VersionName,
+                                                                   x.VersionId,
+                                                                   x.Changelog,
+                                                                   x.PublishedAt,
+                                                                   x.DownloadCount,
+                                                                   x.ReleaseType,
+                                                                   PackageHelper.ToPurl(x.Label,
+                                                                       x.Namespace,
+                                                                       x.ProjectId,
+                                                                       x.VersionId)))
+                                                       .ToList());
+                _overlayService.PopToast(new ExhibitModpackToast { DataContext = model });
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
+            {
+                _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
+            }
     }
 
     [RelayCommand]

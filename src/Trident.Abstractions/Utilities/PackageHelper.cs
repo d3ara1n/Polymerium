@@ -51,7 +51,7 @@ public static class PackageHelper
     public static string ToPurl(Package package) =>
         ToPurl(package.Label, package.Namespace, package.ProjectId, package.VersionId);
 
-    public static string Identify(string label, string? ns, string pid, string? vid, Filter filter)
+    public static string Identify(string label, string? ns, string pid, string? vid, Filter? filter)
     {
         var sb = new StringBuilder(label);
         sb.Append(':');
@@ -67,7 +67,7 @@ public static class PackageHelper
             sb.Append('@');
             sb.Append(vid);
         }
-        else
+        else if (filter != null)
         {
             if (filter.Kind != null)
             {
