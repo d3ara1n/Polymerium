@@ -36,4 +36,10 @@ public interface ICurseForgeClient
         ModLoaderTypeModel? modLoaderType,
         uint? index,
         uint? pageSize);
+
+    [Get("/v1/mods/{modId}/description")]
+    Task<ObjectResponse<string>> GetModDescriptionAsync(uint modId);
+
+    [Get("/v1/mods/{modId}/files/{fileId}/changelog")]
+    Task<ObjectResponse<string>> GetModFileChangelogAsync(uint modId, uint fileId);
 }

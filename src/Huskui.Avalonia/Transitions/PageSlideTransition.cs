@@ -10,7 +10,7 @@ public class PageSlideTransition(DirectionFrom direction = DirectionFrom.Right)
     protected override void Cleanup(Visual? from, Visual? to)
     {
         base.Cleanup(from, to);
-        
+
         if (from != null)
             from.RenderTransform = null;
         if (to != null)

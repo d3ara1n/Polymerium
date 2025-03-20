@@ -7,6 +7,7 @@
                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                   xmlns:cp="using:Polymerium.App.Components"
                   xmlns:m="using:Polymerium.App.Models"
+                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
                   xmlns:controls="using:Polymerium.App.Controls"
@@ -85,11 +86,11 @@
                                 </HyperlinkButton>
                             </StackPanel>
                         </StackPanel>
-                        <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto">
+                        <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto,8,Auto">
                             <ComboBox Grid.Column="0" ItemsSource="{Binding Reference.Versions,FallbackValue={x:Null}}"
                                       SelectedItem="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}">
                                 <ComboBox.SelectionBoxItemTemplate>
-                                    <DataTemplate DataType="m:InstanceVersionModel">
+                                    <DataTemplate DataType="m:InstanceReferenceVersionModel">
                                         <husk:SwitchPresenter Value="{Binding IsCurrent,FallbackValue=False}"
                                                               TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
@@ -103,7 +104,7 @@
                                     </DataTemplate>
                                 </ComboBox.SelectionBoxItemTemplate>
                                 <ComboBox.ItemTemplate>
-                                    <DataTemplate DataType="m:InstanceVersionModel">
+                                    <DataTemplate DataType="m:InstanceReferenceVersionModel">
                                         <StackPanel>
                                             <husk:SwitchPresenter Value="{Binding IsCurrent,FallbackValue=False}"
                                                                   TargetType="x:Boolean">
@@ -148,6 +149,12 @@
                             <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCommand}"
                                     CommandParameter="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}"
                                     IsEnabled="{Binding Reference.CurrentVersion.IsCurrent,FallbackValue=False,Converter={x:Static BoolConverters.Not}}" />
+                            <Button Grid.Column="4" Command="{Binding ViewDetailsCommand}">
+                                <icons:PackIconLucide Kind="AppWindow"
+                                                      Height="{StaticResource MediumFontSize}"
+                                                      Width="{StaticResource MediumFontSize}"
+                                                      VerticalAlignment="Center" />
+                            </Button>
                         </Grid>
                     </Grid>
                 </husk:Card>

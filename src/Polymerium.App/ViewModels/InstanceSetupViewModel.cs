@@ -14,6 +14,7 @@ using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Toasts;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions.Extensions;
@@ -36,11 +37,13 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         RepositoryAgent repositories,
         NotificationService notificationService,
         InstanceManager instanceManager,
-        DataService dataService) : base(bag, instanceManager, profileManager)
+        DataService dataService,
+        OverlayService overlayService) : base(bag, instanceManager, profileManager)
     {
         _repositories = repositories;
         _notificationService = notificationService;
         _dataService = dataService;
+        _overlayService = overlayService;
     }
 
     private void TriggerRefresh(CancellationToken token)
@@ -144,13 +147,13 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                                    Filter.Empty with { Kind = ResourceKind.Modpack }))
                               .FetchAsync();
                 var versions = page
-                              .Select(x => new InstanceVersionModel(x.Label,
-                                                                    x.Namespace,
-                                                                    x.ProjectId,
-                                                                    x.VersionId,
-                                                                    x.VersionName,
-                                                                    x.ReleaseType,
-                                                                    x.PublishedAt)
+                              .Select(x => new InstanceReferenceVersionModel(x.Label,
+                                                                             x.Namespace,
+                                                                             x.ProjectId,
+                                                                             x.VersionId,
+                                                                             x.VersionName,
+                                                                             x.ReleaseType,
+                                                                             x.PublishedAt)
                                {
                                    IsCurrent = x.VersionId == package.VersionId
                                })
@@ -245,13 +248,60 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     {
         if (url is not null)
             TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(url);
-        // Process.Start(new ProcessStartInfo(url.AbsoluteUri) { UseShellExecute = true });
     }
 
-    private bool CanUpdate(InstanceVersionModel? model) => model is { IsCurrent: false };
+    [RelayCommand]
+    private async Task ViewDetails()
+    {
+        if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var source))
+        {
+            try
+            {
+                var versions = await _dataService.InspectVersionsAsync(source.Label,
+                                                                       source.Namespace,
+                                                                       source.Pid,
+                                                                       Filter.Empty with
+                                                                       {
+                                                                           Kind = ResourceKind.Modpack
+                                                                       });
+                var project = await _dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
+                var model = new ExhibitModpackModel(project.ProjectName,
+                                                    project.ProjectId,
+                                                    project.Author,
+                                                    project.Label,
+                                                    project.Reference,
+                                                    project.Tags,
+                                                    project.DownloadCount,
+                                                    project.Summary,
+                                                    project.Description,
+                                                    project.UpdatedAt,
+                                                    project.Gallery.Select(x => x.Url).ToList(),
+                                                    versions
+                                                       .Select(x => new ExhibitVersionModel(x.VersionName,
+                                                                   x.VersionId,
+                                                                   x.Changelog,
+                                                                   x.PublishedAt,
+                                                                   x.DownloadCount,
+                                                                   x.ReleaseType,
+                                                                   PackageHelper.ToPurl(x.Label,
+                                                                       x.Namespace,
+                                                                       x.ProjectId,
+                                                                       x.VersionId)))
+                                                       .ToList());
+                _overlayService.PopToast(new ExhibitModpackToast { DataContext = model });
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
+            {
+                _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
+            }
+        }
+    }
+
+    private bool CanUpdate(InstanceReferenceVersionModel? model) => model is { IsCurrent: false };
 
     [RelayCommand(CanExecute = nameof(CanUpdate))]
-    private void Update(InstanceVersionModel? model)
+    private void Update(InstanceReferenceVersionModel? model)
     {
         if (model is null)
             return;
@@ -276,6 +326,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     private readonly RepositoryAgent _repositories;
     private readonly NotificationService _notificationService;
     private readonly DataService _dataService;
+    private readonly OverlayService _overlayService;
 
     #endregion
 

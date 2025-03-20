@@ -22,28 +22,28 @@ public partial class InstancePackageModel(string purl) : ModelBase
     #region Rective Properties
 
     [ObservableProperty]
-    private bool _isLoaded;
+    public partial bool IsLoaded { get; set; }
 
     [ObservableProperty]
-    private string? _name;
+    public partial string? Name { get; set; }
 
     [ObservableProperty]
-    private string? _version;
+    public partial string? Version { get; set; }
 
     [ObservableProperty]
-    private string? _summary;
+    public partial string? Summary { get; set; }
 
     [ObservableProperty]
-    private Uri? _reference;
+    public partial Uri? Reference { get; set; }
 
     [ObservableProperty]
-    private Bitmap? _thumbnail;
+    public partial Bitmap? Thumbnail { get; set; }
 
     [ObservableProperty]
-    private ResourceKind? _kind;
+    public partial ResourceKind? Kind { get; set; }
 
     [ObservableProperty]
-    private Control? _container;
+    public partial Control? Container { get; set; }
 
     #endregion
 }

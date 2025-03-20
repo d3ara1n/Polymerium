@@ -4,14 +4,16 @@ public record Project(
     string Label,
     string? Namespace,
     string ProjectId,
+    string ProjectName,
     Uri? Thumbnail,
     string Author,
     string Summary,
-    Uri Reference,
+    Uri? Reference,
     ResourceKind Kind,
+    IReadOnlyList<string> Tags,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
-    uint DownloadCount,
+    ulong DownloadCount,
     string Description,
     IEnumerable<Project.Screenshot> Gallery)
 {

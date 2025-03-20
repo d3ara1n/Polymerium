@@ -11,8 +11,8 @@
     xmlns:m="using:Polymerium.App.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Static local:Program.Brand}"
-    Width="1024"
-    Height="600"
+    Width="1280"
+    Height="720"
     MinWidth="600"
     MinHeight="460"
     d:DesignHeight="450"
@@ -55,7 +55,7 @@
                     TextAlignment="Center"
                     TextWrapping="WrapWithOverflow" />
             </StackPanel>
-            <husk:Frame x:Name="Root" CanGoBackOutOfStack="True"/>
+            <husk:Frame x:Name="Root" CanGoBackOutOfStack="True" />
         </Panel>
         <Panel x:Name="Sidebar" Grid.Column="1">
             <DockPanel>

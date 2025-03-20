@@ -1,73 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public partial class ExhibitModel : ModelBase
+public class ExhibitModel(
+    string label,
+    string? ns,
+    string pid,
+    string name,
+    string summary,
+    Uri thumbnail,
+    string author,
+    IReadOnlyList<string> tags,
+    DateTimeOffset updatedAt,
+    ulong downloads,
+    Uri reference) : ModelBase
 {
-    public ExhibitModel(
-        string label,
-        string? ns,
-        string pid,
-        string name,
-        string summary,
-        Uri thumbnail,
-        string author,
-        IReadOnlyList<string> tags,
-        DateTimeOffset updatedAt,
-        ulong downloads,
-        Uri reference)
-    {
-        _label = label;
-        _ns = ns;
-        _pid = pid;
-        _name = name;
-        _summary = summary;
-        _thumbnail = thumbnail;
-        _author = author;
-        _tags = tags;
-        _updatedAt = updatedAt.Humanize();
-        _downloads = ((double)downloads).ToMetric(decimals: 2);
-        _reference = reference;
-    }
+    #region Direct
 
-    #region Reactive
+    public string Label => label;
 
-    [ObservableProperty]
-    private string _label;
+    public string? Ns => ns;
 
-    [ObservableProperty]
-    private string? _ns;
+    public string Pid => pid;
 
-    [ObservableProperty]
-    private string _pid;
+    public string Name => name;
 
-    [ObservableProperty]
-    private string _name;
+    public string Summary => summary;
 
-    [ObservableProperty]
-    private string _summary;
+    public Uri Thumbnail => thumbnail;
 
-    [ObservableProperty]
-    private Uri _thumbnail;
+    public string Author => author;
 
-    [ObservableProperty]
-    private string _author;
+    public IReadOnlyList<string> Tags => tags;
 
-    [ObservableProperty]
-    private IReadOnlyList<string> _tags;
+    public string UpdatedAt => updatedAt.Humanize();
 
-    [ObservableProperty]
-    private string _updatedAt;
+    public string Downloads => ((double)downloads).ToMetric(decimals: 2);
 
-    [ObservableProperty]
-    private string _downloads;
-
-    [ObservableProperty]
-    private Uri _reference;
+    public Uri Reference => reference;
 
     #endregion
 }

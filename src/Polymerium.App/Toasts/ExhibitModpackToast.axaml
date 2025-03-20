@@ -1,0 +1,145 @@
+﻿<husk:Toast xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            xmlns:m="using:Polymerium.App.Models"
+            xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
+            xmlns:async="using:AsyncImageLoader"
+            xmlns:fi="using:FluentIcons.Avalonia"
+            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+            xmlns:md="https://github.com/whistyun/Markdown.Avalonia"
+            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Padding="0"
+            x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
+    <ScrollViewer>
+        <StackPanel Spacing="36" Margin="{StaticResource ToastContentMargin}">
+            <Grid ColumnDefinitions="*,24,Auto" RowDefinitions="*,24,Auto" Height="240">
+                <StackPanel Grid.Row="0" Grid.Column="0" Spacing="12">
+                    <Grid ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,0,Auto">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="All The Mods 10"
+                                   FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold" />
+                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                            <Button>
+                                <icons:PackIconLucide Height="{StaticResource SmallFontSize}" Kind="Bookmark" />
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
+                                    Spacing="10">
+                            <HyperlinkButton Click="SourceLinkButton_OnClick"
+                                             IsEnabled="{Binding ReferenceUrl,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}">
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock
+                                        Text="{Binding ReferenceLabel,FallbackValue=SOURCE,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                    <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                            <TextBlock>
+                                <Run Text="@" />
+                                <Run Text="{Binding AuthorName,FallbackValue=Author}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Spacing="4" TextElement.Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <icons:PackIconLucide Kind="CircleArrowDown" Height="{StaticResource MediumFontSize}"
+                                                  VerticalAlignment="Center" />
+                            <TextBlock>
+                                <Run Text="Download Count:" />
+                                <Run Text="{Binding DownloadCount,FallbackValue=1.14M}" />
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <icons:PackIconLucide Kind="Clock" Height="{StaticResource MediumFontSize}"
+                                                  VerticalAlignment="Center" />
+                            <TextBlock>
+                                <Run Text="Last Update:" />
+                                <Run Text="{Binding UpdatedAt,FallbackValue=one day ago}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock
+                        Text="{Binding Summary,FallbackValue=Summary}"
+                        TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4" />
+                    <ItemsControl ItemsSource="{Binding Tags}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="x:String">
+                                <husk:Tag Content="{Binding}" CornerRadius="{StaticResource SmallCornerRadius}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="8" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+                <Carousel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}" Width="360" ItemsSource="{Binding Gallery}"
+                          CornerRadius="{StaticResource SmallCornerRadius}">
+                    <Carousel.ItemTemplate>
+                        <DataTemplate x:DataType="x:Uri">
+                            <Image async:ImageLoader.Source="{Binding}" />
+                        </DataTemplate>
+                    </Carousel.ItemTemplate>
+                </Carousel>
+                <Grid Grid.Row="2" Grid.Column="0">
+                    <Button Classes="Primary">
+                        <TextBlock Text="Install" />
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid MaxHeight="768">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition MaxWidth="240" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Background="{StaticResource OverlayDarker1BackgroundBrush}" Padding="12"
+                        CornerRadius="{StaticResource SmallCornerRadius}">
+                    <md:MarkdownScrollViewer Markdown="{Binding Description}" />
+                </Border>
+                <husk:Card Grid.Column="2" Padding="0">
+                    <ListBox Padding="4" ItemsSource="{Binding Versions}" ScrollViewer.IsScrollChainingEnabled="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="m:ExhibitVersionModel">
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="{Binding DisplayName}" />
+                                    <DockPanel>
+                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                            <TextBlock Text="{Binding PublishedAt}" />
+                                        </StackPanel>
+                                        <husk:SwitchPresenter TargetType="trident:ReleaseType"
+                                                              Value="{Binding TypeRaw}">
+                                            <husk:SwitchCase Value="Release">
+                                                <husk:Tag Classes="Success"
+                                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    <TextBlock Text="Release" />
+                                                </husk:Tag>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Beta">
+                                                <husk:Tag Classes="Warning"
+                                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    <TextBlock Text="Beta" />
+                                                </husk:Tag>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="Alpha">
+                                                <husk:Tag Classes="Danger"
+                                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    <TextBlock Text="Alpha" />
+                                                </husk:Tag>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                    </DockPanel>
+                                    <Button Name="InstallButton" Classes="Small"
+                                            IsVisible="{Binding $parent[ListBoxItem].IsSelected,Mode=OneWay}">
+                                        <TextBlock Text="Install" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </husk:Card>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</husk:Toast>

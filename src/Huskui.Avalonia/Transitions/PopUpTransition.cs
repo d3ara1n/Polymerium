@@ -13,7 +13,7 @@ public sealed class PopUpTransition : PageTransitionBase
     protected override void Cleanup(Visual? from, Visual? to)
     {
         base.Cleanup(from, to);
-        
+
         if (from != null)
             from.RenderTransform = null;
         if (to != null)

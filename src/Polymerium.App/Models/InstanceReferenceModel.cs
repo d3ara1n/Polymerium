@@ -11,22 +11,22 @@ public partial class InstanceReferenceModel : ModelBase
     #region Reactive Properties
 
     [ObservableProperty]
-    private string? _name;
+    public partial string? Name { get; set; }
 
     [ObservableProperty]
-    private Bitmap? _thumbnail;
+    public partial Bitmap? Thumbnail { get; set; }
 
     [ObservableProperty]
-    private IReadOnlyList<InstanceVersionModel>? _versions;
+    public partial IReadOnlyList<InstanceReferenceVersionModel>? Versions { get; set; }
 
     [ObservableProperty]
-    private InstanceVersionModel? _currentVersion;
+    public partial InstanceReferenceVersionModel? CurrentVersion { get; set; }
 
     [ObservableProperty]
-    private string? _sourceLabel;
+    public partial string? SourceLabel { get; set; }
 
     [ObservableProperty]
-    private Uri? _sourceUrl;
+    public partial Uri? SourceUrl { get; set; }
 
     #endregion
 }
