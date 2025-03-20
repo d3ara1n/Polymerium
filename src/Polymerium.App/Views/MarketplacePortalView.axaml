@@ -12,8 +12,8 @@
            x:Class="Polymerium.App.Views.MarketplacePortalView" x:DataType="vm:MarketplacePortalViewModel">
     <husk:Page.Resources>
         <DataTemplate x:Key="BigNewsDataTemplate" DataType="m:MinecraftNewsModel">
-            <Grid RowDefinitions="4*,Auto,*" Height="256" Width="360">
-                <Border Grid.Row="0" Grid.RowSpan="3" Margin="12"
+            <Grid RowDefinitions="4*,Auto,*" Width="342">
+                <Border Grid.Row="0" Grid.RowSpan="3" Margin="16"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
                         <ImageBrush async:ImageBrushLoader.Source="{Binding Cover}" Stretch="Fill" />
@@ -50,7 +50,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="SmallNewsDataTemplate" DataType="m:MinecraftNewsModel">
-            <Grid RowDefinitions="*,0,Auto" Height="156" Width="198" Margin="12" VerticalAlignment="Bottom">
+            <Grid RowDefinitions="*,0,Auto" Margin="8" Width="256">
                 <Border Grid.Row="0" Grid.RowSpan="3"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <Border.Background>
@@ -73,18 +73,28 @@
             </Grid>
         </DataTemplate>
     </husk:Page.Resources>
-    <StackPanel Spacing="36" MaxWidth="1440">
-        <husk:SkeletonContainer IsLoading="{Binding News,Converter={x:Static ObjectConverters.IsNull}}">
-            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                <ItemsControl x:Name="NewsContainer" ItemsSource="{Binding News}" MinHeight="256">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </ScrollViewer>
-        </husk:SkeletonContainer>
+    <StackPanel Spacing="36">
+        <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="Auto,0,*" Height="256">
+            <husk:SkeletonContainer Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                                    IsLoading="{Binding HeadNews,Converter={x:Static ObjectConverters.IsNull}}">
+                <ContentControl Content="{Binding HeadNews}" ContentTemplate="{StaticResource BigNewsDataTemplate}" />
+            </husk:SkeletonContainer>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text="News" Margin="12,12,0,0" VerticalAlignment="Center"
+                       FontSize="{StaticResource ExtraLargeFontSize}" />
+            <husk:SkeletonContainer Grid.Column="2" Grid.Row="2" Margin="6"
+                                    IsLoading="{Binding TailNews,Converter={x:Static ObjectConverters.IsNull}}">
+                <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding TailNews}"
+                                  ItemTemplate="{StaticResource SmallNewsDataTemplate}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </husk:SkeletonContainer>
+        </Grid>
         <StackPanel Spacing="24">
             <TextBlock Text="Search Center" Theme="{StaticResource PageHeaderTextBlockTheme}">
                 <TextBlock.Foreground>

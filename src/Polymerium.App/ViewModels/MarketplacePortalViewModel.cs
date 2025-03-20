@@ -27,20 +27,13 @@ public partial class MarketplacePortalViewModel : ViewModelBase
         _dataService = dataService;
     }
 
-    #region Reactive
-
-    [ObservableProperty]
-    public partial IReadOnlyList<MinecraftNewsModel>? News { get; set; }
-
-    #endregion
-
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
             return;
         var news = await _dataService.GetMinecraftNewsAsync();
         var models = news
-                    .Entries.Take(16)
+                    .Entries.Take(25)
                     .Select((x, i) =>
                      {
                          var url = _mojangLauncherService.GetAbsoluteImageUrl(x.PlayPageImage.Url);
@@ -49,9 +42,21 @@ public partial class MarketplacePortalViewModel : ViewModelBase
                          {
                              IsVeryBig = i == 0
                          };
-                     });
-        News = models.ToList();
+                     })
+                    .ToArray();
+        HeadNews = models.FirstOrDefault();
+        TailNews = models.Skip(1).ToList();
     }
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial IReadOnlyList<MinecraftNewsModel>? TailNews { get; set; }
+
+    [ObservableProperty]
+    public partial MinecraftNewsModel? HeadNews { get; set; }
+
+    #endregion
 
     #region Injected
 
