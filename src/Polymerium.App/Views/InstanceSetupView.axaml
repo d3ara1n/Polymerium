@@ -60,18 +60,14 @@
                             TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" />
                     </husk:InfoBar>
                 </StackPanel>
-                <husk:BusyContainer Grid.Column="2" CornerRadius="{StaticResource MediumCornerRadius}"
-                                    IsBusy="{Binding Reference,Converter={x:Static ObjectConverters.IsNull}}">
-                    <husk:BusyContainer.PendingContent>
-                        <husk:ProgressRing IsIndeterminate="True" Height="48" Width="48" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                    </husk:BusyContainer.PendingContent>
+                <husk:SkeletonContainer Grid.Column="2" CornerRadius="{StaticResource MediumCornerRadius}"
+                                        IsLoading="{Binding Reference,Converter={x:Static ObjectConverters.IsNull}}">
                     <husk:Card MaxWidth="360" BorderThickness="2"
                                BorderBrush="{DynamicResource ControlAccentBorderBrush}"
                                IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull}}">
                         <Grid RowDefinitions="*,8,Auto">
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8">
-                                <Border CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
+                            <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*">
+                                <Border Grid.Column="0" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
                                         BorderBrush="{DynamicResource ControlAccentBorderBrush}" BorderThickness="2"
                                         BackgroundSizing="InnerBorderEdge" Height="42" Width="42">
                                     <Border.Background>
@@ -79,9 +75,10 @@
                                                     Stretch="UniformToFill" />
                                     </Border.Background>
                                 </Border>
-                                <StackPanel VerticalAlignment="Center" Spacing="2">
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="2">
                                     <TextBlock Text="{Binding Reference.Name,FallbackValue=Package Name}"
-                                               FontSize="{StaticResource LargeFontSize}" />
+                                               FontSize="{StaticResource LargeFontSize}"
+                                               TextTrimming="CharacterEllipsis" />
                                     <HyperlinkButton Command="{Binding OpenSourceUrlCommand}"
                                                      CommandParameter="{Binding Reference.SourceUrl,FallbackValue={x:Null}}">
                                         <StackPanel Orientation="Horizontal" Spacing="4">
@@ -91,7 +88,7 @@
                                         </StackPanel>
                                     </HyperlinkButton>
                                 </StackPanel>
-                            </StackPanel>
+                            </Grid>
                             <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto,8,Auto">
                                 <ComboBox Grid.Column="0"
                                           ItemsSource="{Binding Reference.Versions,FallbackValue={x:Null}}"
@@ -165,7 +162,7 @@
                             </Grid>
                         </Grid>
                     </husk:Card>
-                </husk:BusyContainer>
+                </husk:SkeletonContainer>
             </Grid>
             <Panel Grid.Row="2" Grid.Column="0">
                 <TabControl Margin="{StaticResource PageToplessBottomlessContentMargin}" Padding="-16,0"
