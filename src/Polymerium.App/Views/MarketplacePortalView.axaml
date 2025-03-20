@@ -74,7 +74,7 @@
         </DataTemplate>
     </husk:Page.Resources>
     <StackPanel Spacing="36">
-        <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="Auto,0,*" Height="256">
+        <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="Auto,0,*" Height="232">
             <husk:SkeletonContainer Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
                                     IsLoading="{Binding HeadNews,Converter={x:Static ObjectConverters.IsNull}}">
                 <ContentControl Content="{Binding HeadNews}" ContentTemplate="{StaticResource BigNewsDataTemplate}" />
