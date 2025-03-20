@@ -13,6 +13,16 @@ public class FocusOnTransition : PageTransitionBase
 
     public DirectionFrom Direction { get; set; }
 
+    protected override void Cleanup(Visual? from, Visual? to)
+    {
+        base.Cleanup(from, to);
+
+        if (from != null)
+            from.RenderTransform = null;
+        if (to != null)
+            to.RenderTransform = null;
+    }
+
     protected override void Configure(Builder from, Builder to, Lazy<Visual> parentAccessor)
     {
         var parent = parentAccessor.Value;
