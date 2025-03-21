@@ -68,7 +68,7 @@
                 </ControlTemplate>
             </Setter>
 
-            <Style Selector="^:not(:pointerover)">
+            <Style Selector="^ScrollBar[AllowAutoHide=True]:not(:pointerover)">
                 <Style Selector="^ /template/ RepeatButton">
                     <Setter Property="Opacity" Value="0" />
                 </Style>

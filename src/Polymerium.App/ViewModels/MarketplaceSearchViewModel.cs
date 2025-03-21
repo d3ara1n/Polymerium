@@ -67,7 +67,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         _ = SearchAsync();
 
         foreach (var repository in Repositories)
-            if (repository.Loaders.Count == 0 || repository.Versions.Count == 0)
+            if (repository.Loaders == null || repository.Versions == null)
             {
                 var status = await _dataService.CheckStatusAsync(repository.Label);
                 repository.Loaders = status
@@ -102,8 +102,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             var cur = SelectedRepository;
             HeaderImage = cur.Label switch
             {
-                "curseforge" => new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.REPOSITORY_HEADER_CURSEFORGE))),
-                "modrinth" => new Bitmap(AssetLoader.Open(new Uri(AssetUriIndex.REPOSITORY_HEADER_MODRINTH))),
+                "curseforge" => AssetUriIndex.REPOSITORY_HEADER_CURSEFORGE_BITMAP,
+                "modrinth" => AssetUriIndex.REPOSITORY_HEADER_MODRINTH_BITMAP,
+                "favorite" => AssetUriIndex.REPOSITORY_HEADER_FAVORITE_BITMAP,
                 _ => HeaderImage
             };
         }
@@ -129,6 +130,11 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial RepositoryBasicModel SelectedRepository { get; set; }
+
+    partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
+    {
+        _ = SearchAsync();
+    }
 
     [ObservableProperty]
     public partial string? FilteredVersion { get; set; }

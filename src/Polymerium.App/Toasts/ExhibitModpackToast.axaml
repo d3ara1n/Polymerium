@@ -19,7 +19,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="0" Spacing="12">
                     <Grid ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,0,Auto">
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding DisplayName}"
-                                   FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold" />
+                                   FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"/>
                         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
                             <Button>
                                 <icons:PackIconLucide Height="{StaticResource SmallFontSize}" Kind="Bookmark" />
@@ -77,7 +77,7 @@
                 </StackPanel>
                 <Carousel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
                           IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}"
-                          Width="360" ItemsSource="{Binding Gallery}"
+                          Width="420" ItemsSource="{Binding Gallery}"
                           CornerRadius="{StaticResource SmallCornerRadius}">
                     <Carousel.ItemTemplate>
                         <DataTemplate x:DataType="x:Uri">
@@ -96,7 +96,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="24" />
-                    <ColumnDefinition MaxWidth="240" />
+                    <ColumnDefinition MaxWidth="256" />
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Background="{StaticResource OverlayDarker1BackgroundBrush}" Padding="12"
                         CornerRadius="{StaticResource SmallCornerRadius}">

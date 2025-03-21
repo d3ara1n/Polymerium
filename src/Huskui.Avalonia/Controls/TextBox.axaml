@@ -151,6 +151,7 @@
 
     <ControlTheme x:Key="UnderlineTextBoxTheme" TargetType="TextBox">
         <Setter Property="Cursor" Value="Ibeam" />
+        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="1,1,1,2" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
@@ -166,6 +167,13 @@
                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}"
+                                                 Easing="SineEaseOut" />
+                            </Transitions>
+                        </Border.Transitions>
                         <Grid ColumnDefinitions="Auto,0,*,0,Auto">
                             <Grid.Styles>
                                 <Style Selector="ContentPresenter Button">
@@ -244,6 +252,10 @@
         <Style Selector="^:focus /template/ Border#Indicator">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
             <Setter Property="RenderTransform" Value="scaleX(1.0)" />
+        </Style>
+        
+        <Style Selector="^:focus /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Panel#Root">

@@ -6,13 +6,21 @@ namespace Polymerium.App.Models;
 
 public partial class RepositoryBasicModel(string label, string name) : ModelBase
 {
-    [ObservableProperty]
-    private IReadOnlyList<LoaderBasicModel> _loaders = [];
+    #region Reactive
 
     [ObservableProperty]
-    private IReadOnlyList<string> _versions = [];
+    public partial IReadOnlyList<LoaderBasicModel>? Loaders { get; set; }
 
-    public string Label { get; } = label;
+    [ObservableProperty]
+    public partial IReadOnlyList<string>? Versions { get; set; }
 
-    public string Name { get; } = name;
+    #endregion
+
+    #region Direct
+
+    public string Label => label;
+
+    public string Name => name;
+
+    #endregion
 }
