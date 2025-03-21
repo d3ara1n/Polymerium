@@ -6,9 +6,7 @@ namespace Huskui.Avalonia.Models;
 public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int startIndex = 0)
     : ObservableCollection<T>, IInfiniteCollection
 {
-    private bool _hasNext = true;
     private int _index = startIndex;
-    private bool _isFetching;
 
     #region IInfiniteCollection Members
 
@@ -32,26 +30,26 @@ public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int 
 
     public bool HasNext
     {
-        get => _hasNext;
+        get;
         set
         {
-            if (_hasNext == value)
+            if (field == value)
                 return;
 
-            _hasNext = value;
+            field = value;
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(HasNext)));
         }
-    }
+    } = true;
 
     public bool IsFetching
     {
-        get => _isFetching;
+        get;
         set
         {
-            if (_isFetching == value)
+            if (field == value)
                 return;
 
-            _isFetching = value;
+            field = value;
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsFetching)));
         }
     }

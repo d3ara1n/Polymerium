@@ -30,9 +30,9 @@
                                        VerticalAlignment="Center" />
                         </StackPanel>
                         <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
-                              Margin="64,0,64,12">
+                              Margin="64,0,64,0">
                             <TextBox Grid.Column="0" Watermark="With the keywords in..."
-                                     Text="{Binding QueryText,Mode=TwoWay}" />
+                                     Text="{Binding QueryText,Mode=TwoWay}"/>
                             <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
                                       SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
                                 <ComboBox.ItemTemplate>
@@ -76,7 +76,7 @@
                             <Run Text="Results:" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                             <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
                         </TextBlock>
-                        <husk:ProgressRing IsVisible="{Binding Exhibits.IsFetching,FallbackValue=False}" Height="18"
+                        <husk:ProgressRing IsVisible="{Binding Exhibits.IsFetching,FallbackValue=True}" Height="18"
                                            Width="18" StrokeWidth="3" IsIndeterminate="True" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
