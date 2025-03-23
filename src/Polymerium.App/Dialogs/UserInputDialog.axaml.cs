@@ -19,6 +19,22 @@ public partial class UserInputDialog : Dialog
         set => SetValue(WatermarkProperty, value);
     }
 
+    public static readonly StyledProperty<string> PresetTextProperty =
+        AvaloniaProperty.Register<UserInputDialog, string>(nameof(PresetText));
+
+    public string PresetText
+    {
+        get => GetValue(PresetTextProperty);
+        set => SetValue(PresetTextProperty, value);
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == PresetTextProperty && change.NewValue is string preset)
+            Result = preset;
+    }
+
 
     protected override bool ValidateResult(object? result) => result is string str && !string.IsNullOrEmpty(str);
 }

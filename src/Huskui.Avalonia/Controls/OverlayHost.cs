@@ -36,32 +36,26 @@ public class OverlayHost : TemplatedControl
                                                                       o => o.Transition,
                                                                       (o, v) => o.Transition = v);
 
-    private bool _isPresent;
-
-    private OverlayItems _items = new();
-
     private Border? _stage;
-
-    private IPageTransition _transition = new PageCoverOverTransition(null, DirectionFrom.Bottom);
 
     [Content]
     public OverlayItems Items
     {
-        get => _items;
-        set => SetAndRaise(ItemsProperty, ref _items, value);
-    }
+        get;
+        set => SetAndRaise(ItemsProperty, ref field, value);
+    } = [];
 
     public bool IsPresent
     {
-        get => _isPresent;
-        set => SetAndRaise(IsPresentProperty, ref _isPresent, value);
+        get;
+        set => SetAndRaise(IsPresentProperty, ref field, value);
     }
 
     public IPageTransition Transition
     {
-        get => _transition;
-        set => SetAndRaise(TransitionProperty, ref _transition, value);
-    }
+        get;
+        set => SetAndRaise(TransitionProperty, ref field, value);
+    } = new PageCoverOverTransition(null, DirectionFrom.Bottom);
 
     protected override Type StyleKeyOverride => typeof(OverlayHost);
 

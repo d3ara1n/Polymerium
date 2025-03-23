@@ -41,20 +41,20 @@ public partial class InstanceDashboardToast : Toast
 
     public NotifyCollectionChangedSynchronizedViewList<Scrap>? Bindable
     {
-        get => field;
+        get;
         set => SetAndRaise(BindableProperty, ref field, value);
     }
 
     public bool IsAutoScroll
     {
-        get => field;
+        get;
         set => SetAndRaise(IsAutoScrollProperty, ref field, value);
     } = true;
 
 
     public string FilterText
     {
-        get => field;
+        get;
         set => SetAndRaise(FilterTextProperty, ref field, value);
     } = string.Empty;
 

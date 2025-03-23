@@ -59,7 +59,11 @@ public class OverlayService
         if (message != null)
             dialog.Message = message;
         if (watermark != null)
+        {
             dialog.Watermark = watermark;
+            dialog.PresetText = watermark;
+        }
+
         if (await PopDialogAsync(dialog) && dialog.Result is string input)
             return input;
 

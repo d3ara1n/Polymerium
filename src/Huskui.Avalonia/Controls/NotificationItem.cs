@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -11,6 +10,7 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":open", ":information", ":success", ":warning", ":danger")]
 public class NotificationItem : ContentControl
 {
+
     public static readonly StyledProperty<NotificationLevel> LevelProperty =
         AvaloniaProperty.Register<NotificationItem, NotificationLevel>(nameof(Level));
 
@@ -23,16 +23,16 @@ public class NotificationItem : ContentControl
         AvaloniaProperty.Register<NotificationItem, string>(nameof(Title), string.Empty);
 
     public static readonly StyledProperty<bool> IsOpenProperty =
-        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsOpen));
+        AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsOpen), true);
 
     public static readonly StyledProperty<bool> IsCloseButtonVisibleProperty =
         AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsCloseButtonVisible));
 
     public static readonly RoutedEvent<RoutedEventArgs> OpenedEvent =
-        RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Opened), RoutingStrategies.Direct);
+        RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Opened), RoutingStrategies.Bubble);
 
     public static readonly RoutedEvent<RoutedEventArgs> ClosedEvent =
-        RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Closed), RoutingStrategies.Direct);
+        RoutedEvent.Register<NotificationItem, RoutedEventArgs>(nameof(Closed), RoutingStrategies.Bubble);
 
     public static readonly StyledProperty<double> ProgressProperty =
         AvaloniaProperty.Register<NotificationItem, double>(nameof(Progress));
@@ -47,8 +47,6 @@ public class NotificationItem : ContentControl
     public static readonly StyledProperty<bool> IsProgressBarVisibleProperty =
         AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsProgressBarVisible));
 
-
-    private AvaloniaList<NotificationAction> _actions = [];
 
     public bool IsOpen
     {
@@ -94,9 +92,9 @@ public class NotificationItem : ContentControl
 
     public AvaloniaList<NotificationAction> Actions
     {
-        get => _actions;
-        set => SetAndRaise(ActionsProperty, ref _actions, value);
-    }
+        get;
+        set => SetAndRaise(ActionsProperty, ref field, value);
+    } = [];
 
     public string Title
     {
@@ -133,9 +131,13 @@ public class NotificationItem : ContentControl
         if (change.Property == IsOpenProperty)
         {
             var opened = change.GetNewValue<bool>();
-            RaiseEvent(opened ? new RoutedEventArgs(OpenedEvent, this) : new RoutedEventArgs(ClosedEvent, this));
+            if (opened)
+                RaiseEvent(new RoutedEventArgs(OpenedEvent, this));
             PseudoClasses.Set(":open", opened);
         }
+
+        if (change.Property == OpacityProperty && change.NewValue is < double.Epsilon && IsOpen == false)
+            RaiseEvent(new RoutedEventArgs(ClosedEvent, this));
     }
 
     public void Close() => IsOpen = false;
@@ -145,25 +147,4 @@ public class NotificationItem : ContentControl
         foreach (var i in (string[]) [":information", ":success", ":warning", ":danger"])
             PseudoClasses.Set(i, name == i);
     }
-
-    #region Nested type: InternalDismissCommand
-
-    private class InternalDismissCommand : ICommand
-    {
-        #region ICommand Members
-
-        public bool CanExecute(object? parameter) => parameter is NotificationItem { IsOpen: true };
-
-        public void Execute(object? parameter)
-        {
-            if (parameter is NotificationItem { IsOpen: true } item)
-                item.IsOpen = false;
-        }
-
-        public event EventHandler? CanExecuteChanged;
-
-        #endregion
-    }
-
-    #endregion
 }

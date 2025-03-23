@@ -17,48 +17,51 @@
         </Setter>
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel Name="PART_ScaleRoot">
-                    <Panel.Transitions>
+                <Border Name="PART_ScaleRoot">
+                    <Border.Transitions>
                         <Transitions>
                             <TransformOperationsTransition Property="RenderTransform"
                                                            Delay="{StaticResource ControlFastestAnimationDuration}"
                                                            Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
-                    </Panel.Transitions>
+                    </Border.Transitions>
                     <ContentPresenter Name="{x:Static local:OverlayItem.PART_ContentPresenter}"
                                       Content="{TemplateBinding Content}"
                                       Background="{TemplateBinding Background}"
                                       Padding="{TemplateBinding Padding}"
                                       BackgroundSizing="{TemplateBinding BackgroundSizing}" />
-                </Panel>
+                </Border>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:active">
-            <Setter Property="Effect">
-                <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="12" Opacity="0.2" />
-            </Setter>
-        </Style>
+        <!-- <Style Selector="^:active"> -->
+        <!--     <Setter Property="Effect"> -->
+        <!--         <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="12" Opacity="0.2" /> -->
+        <!--     </Setter> -->
+        <!-- </Style> -->
 
         <Style Selector="^">
             <Setter Property="Opacity" Value="0.0" />
 
             <Setter Property="RenderTransform" Value="translateY(-36px)" />
 
-            <Setter Property="Effect">
-                <BlurEffect Radius="6" />
-            </Setter>
+            <!-- <Setter Property="Effect"> -->
+            <!--     <BlurEffect Radius="6" /> -->
+            <!-- </Setter> -->
 
-            <Style Selector="^ /template/ Panel#PART_ScaleRoot">
+            <Style Selector="^ /template/ Border#PART_ScaleRoot" />
+
+            <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.90)" />
             </Style>
         </Style>
+        
         <Style Selector="^[Distance=0]">
             <Setter Property="Opacity" Value="1.0" />
 
             <Setter Property="RenderTransform" Value="translateY(0px)" />
 
-            <Style Selector="^ /template/ Panel#PART_ScaleRoot">
+            <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(1.0)" />
             </Style>
         </Style>
@@ -67,7 +70,7 @@
 
             <Setter Property="RenderTransform" Value="translateY(-12px)" />
 
-            <Style Selector="^ /template/ Panel#PART_ScaleRoot">
+            <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.98)" />
             </Style>
         </Style>
@@ -76,7 +79,7 @@
 
             <Setter Property="RenderTransform" Value="translateY(-24px)" />
 
-            <Style Selector="^ /template/ Panel#PART_ScaleRoot">
+            <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.96)" />
             </Style>
         </Style>
@@ -85,7 +88,7 @@
 
             <Setter Property="RenderTransform" Value="translateY(-36px)" />
 
-            <Style Selector="^ /template/ Panel#PART_ScaleRoot">
+            <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.94)" />
             </Style>
         </Style>
@@ -94,7 +97,7 @@
 
             <Setter Property="RenderTransform" Value="translateY(-48px)" />
 
-            <Style Selector="^ /template/ Panel#PART_ScaleRoot">
+            <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.92)" />
             </Style>
         </Style>

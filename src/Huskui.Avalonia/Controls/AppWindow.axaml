@@ -35,6 +35,7 @@
                         <VisualLayerManager.ChromeOverlayLayer>
                             <TitleBar />
                         </VisualLayerManager.ChromeOverlayLayer>
+
                         <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
                             <ContentPresenter
                                 Name="ContentPresenter"
@@ -50,7 +51,6 @@
                                     </Transitions>
                                 </ContentPresenter.Transitions>
                             </ContentPresenter>
-
                             <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" Padding="48,64,48,0" />
                             <local:OverlayHost
                                 Name="{x:Static local:AppWindow.PART_ModalHost}"
@@ -69,7 +69,7 @@
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
                             <local:NotificationHost
-                                Name="PART_NotificationHost"
+                                Name="{x:Static local:AppWindow.PART_NotificationHost}"
                                 Margin="18,12"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"

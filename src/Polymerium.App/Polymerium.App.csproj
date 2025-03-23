@@ -29,7 +29,7 @@
         <PackageReference Include="Avalonia.Svg" Version="11.2.0.2"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
         <PackageReference Include="DynamicData" Version="9.2.1"/>
-        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.278"/>
+        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.292"/>
         <PackageReference Include="Humanizer" Version="3.0.0-beta.54"/>
         <PackageReference Include="IconPacks.Avalonia.Lucide" Version="1.0.0"/>
         <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc5.4"/>

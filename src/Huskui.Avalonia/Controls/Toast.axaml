@@ -2,25 +2,28 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:fi="using:FluentIcons.Avalonia">
-    <Thickness x:Key="ToastContentMargin">24,76,24,24</Thickness>
-    <Thickness x:Key="ToastHeaderlessContentMargin">24,24,24,24</Thickness>
-    <Thickness x:Key="ToastHeaderContentMargin">0,76,0,0</Thickness>
-    <Thickness x:Key="ToastToplessContentMargin">24,0,24,24</Thickness>
+    <Thickness x:Key="ToastContentMargin">18,68,18,18</Thickness>
+    <Thickness x:Key="ToastHeaderlessContentMargin">18</Thickness>
+    <Thickness x:Key="ToastHeaderContentMargin">0,68,0,0</Thickness>
+    <Thickness x:Key="ToastToplessContentMargin">18,0,18,18</Thickness>
     <ControlTheme x:Key="{x:Type local:Toast}" TargetType="local:Toast">
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="Padding" Value="{StaticResource ToastContentMargin}" />
+        <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+        <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border CornerRadius="36,36,0,0" BorderBrush="{TemplateBinding BorderBrush}"
+                <Border CornerRadius="32,32,0,0" BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        ClipToBounds="{TemplateBinding ClipToBounds}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}" Background="{TemplateBinding Background}">
                     <Panel>
                         <ContentPresenter Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Padding="{TemplateBinding Padding}" />
-                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="24,24,24,0">
+                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="18,18,18,0">
                             <Button Padding="8" CornerRadius="26" Theme="{StaticResource OutlineButtonTheme}"
                                     DockPanel.Dock="Right"
                                     Command="{Binding $parent[local:OverlayItem].DismissCommand}">

@@ -10,23 +10,21 @@
             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             xmlns:md="https://github.com/whistyun/Markdown.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-            xmlns:local="clr-namespace:Polymerium.App.Toasts"
+            xmlns:local="clr-namespace:Polymerium.App.Toasts" Title="{Binding DisplayName}"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Padding="0"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
     <ScrollViewer>
         <StackPanel Spacing="36" Margin="{StaticResource ToastContentMargin}">
-            <Grid ColumnDefinitions="*,24,Auto" RowDefinitions="*,24,Auto" Height="240">
+            <Grid ColumnDefinitions="*,24,Auto" RowDefinitions="*,24,Auto" Height="222">
                 <StackPanel Grid.Row="0" Grid.Column="0" Spacing="12">
-                    <Grid ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,0,Auto">
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding DisplayName}"
-                                   FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"/>
+                    <Grid ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,0,Auto,0,Auto">
                         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
                             <Button>
                                 <icons:PackIconLucide Height="{StaticResource SmallFontSize}" Kind="Bookmark" />
                             </Button>
                         </StackPanel>
-                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
-                                    Spacing="10">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
+                                    Spacing="10" VerticalAlignment="Top">
                             <HyperlinkButton Click="SourceLinkButton_OnClick"
                                              IsEnabled="{Binding ReferenceUrl,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}">
                                 <StackPanel Orientation="Horizontal" Spacing="4">
@@ -40,25 +38,26 @@
                                 <Run Text="{Binding AuthorName,FallbackValue=Author}" />
                             </TextBlock>
                         </StackPanel>
+                        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Spacing="4"
+                                    TextElement.Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <icons:PackIconLucide Kind="CircleArrowDown" Height="{StaticResource MediumFontSize}"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock>
+                                    <Run Text="Download Count:" />
+                                    <Run Text="{Binding DownloadCount,FallbackValue=1.14M}" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <icons:PackIconLucide Kind="Clock" Height="{StaticResource MediumFontSize}"
+                                                      VerticalAlignment="Center" />
+                                <TextBlock>
+                                    <Run Text="Last Update:" />
+                                    <Run Text="{Binding UpdatedAt,FallbackValue=one day ago}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
                     </Grid>
-                    <StackPanel Spacing="4" TextElement.Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <icons:PackIconLucide Kind="CircleArrowDown" Height="{StaticResource MediumFontSize}"
-                                                  VerticalAlignment="Center" />
-                            <TextBlock>
-                                <Run Text="Download Count:" />
-                                <Run Text="{Binding DownloadCount,FallbackValue=1.14M}" />
-                            </TextBlock>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <icons:PackIconLucide Kind="Clock" Height="{StaticResource MediumFontSize}"
-                                                  VerticalAlignment="Center" />
-                            <TextBlock>
-                                <Run Text="Last Update:" />
-                                <Run Text="{Binding UpdatedAt,FallbackValue=one day ago}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </StackPanel>
                     <TextBlock
                         Text="{Binding Summary,FallbackValue=Summary}"
                         TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4" />
@@ -75,16 +74,25 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </StackPanel>
-                <Carousel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
-                          IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}"
-                          Width="420" ItemsSource="{Binding Gallery}"
-                          CornerRadius="{StaticResource SmallCornerRadius}">
-                    <Carousel.ItemTemplate>
-                        <DataTemplate x:DataType="x:Uri">
-                            <Image async:ImageLoader.Source="{Binding}" />
-                        </DataTemplate>
-                    </Carousel.ItemTemplate>
-                </Carousel>
+                <Panel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
+                       IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}">
+                    <Carousel Name="ImageViewer"
+                              Width="420" ItemsSource="{Binding Gallery}"
+                              CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Carousel.ItemTemplate>
+                            <DataTemplate x:DataType="x:Uri">
+                                <Image async:ImageLoader.Source="{Binding}" />
+                            </DataTemplate>
+                        </Carousel.ItemTemplate>
+                    </Carousel>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                            Theme="{StaticResource GhostButtonTheme}"
+                            Command="{Binding $parent[local:ExhibitModpackToast].ViewImagesCommand}"
+                            CommandParameter="{Binding #ImageViewer.SelectedItem}">
+                        <icons:PackIconLucide Kind="SearchSlash" Height="{StaticResource MediumFontSize}"
+                                              Width="{StaticResource MediumFontSize}" />
+                    </Button>
+                </Panel>
                 <Grid Grid.Row="2" Grid.Column="0">
                     <Button Classes="Primary" Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
                             CommandParameter="{Binding Versions[0],FallbackValue={x:Null}}">
@@ -100,11 +108,10 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Background="{StaticResource OverlayDarker1BackgroundBrush}" Padding="12"
                         CornerRadius="{StaticResource SmallCornerRadius}">
-                    <md:MarkdownScrollViewer Markdown="{Binding Description}"
-                                             ScrollViewer.IsScrollChainingEnabled="False" />
+                    <md:MarkdownScrollViewer Markdown="{Binding Description}" />
                 </Border>
                 <husk:Card Grid.Column="2" Padding="0">
-                    <ListBox Padding="4" ItemsSource="{Binding Versions}" ScrollViewer.IsScrollChainingEnabled="False">
+                    <ListBox Padding="4" ItemsSource="{Binding Versions}">
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="m:ExhibitVersionModel">
                                 <StackPanel Spacing="4">

@@ -28,18 +28,11 @@ public class OverlayItem : ContentControl
                                                                        (o, v) => o.Transition = v);
 
     private ContentPresenter? _contentPresenter;
-
-
-    private ICommand? _dismissCommand;
-
-    private int _distance;
-
-    private IPageTransition? _transition;
-
+    
     public IPageTransition? Transition
     {
-        get => _transition;
-        set => SetAndRaise(TransitionProperty, ref _transition, value);
+        get;
+        set => SetAndRaise(TransitionProperty, ref field, value);
     }
 
     public ContentPresenter ContentPresenter =>
@@ -48,10 +41,10 @@ public class OverlayItem : ContentControl
 
     public int Distance
     {
-        get => _distance;
+        get;
         set
         {
-            if (SetAndRaise(DistanceProperty, ref _distance, value))
+            if (SetAndRaise(DistanceProperty, ref field, value))
                 ZIndex = -value;
 
             PseudoClasses.Set(":active", value == 0);
@@ -60,8 +53,8 @@ public class OverlayItem : ContentControl
 
     public ICommand? DismissCommand
     {
-        get => _dismissCommand;
-        set => SetAndRaise(DismissCommandProperty, ref _dismissCommand, value);
+        get;
+        set => SetAndRaise(DismissCommandProperty, ref field, value);
     }
 
     protected override Type StyleKeyOverride => typeof(OverlayItem);
