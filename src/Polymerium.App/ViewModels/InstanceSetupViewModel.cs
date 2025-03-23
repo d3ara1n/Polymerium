@@ -289,7 +289,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                        .ToList());
                 _overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataContext = model, InstallCommand = InstallVersionCommand
+                    DataContext = model, InstallCommand = InstallVersionCommand, ViewImagesCommand = ViewImageCommand
                 });
             }
             catch (OperationCanceledException) { }
@@ -332,6 +332,13 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                      version.Versionid);
             _notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
         }
+    }
+
+    [RelayCommand]
+    private void ViewImage(Uri? image)
+    {
+        if (image != null)
+            _overlayService.PopToast(new ImageViewerToast { ImageSource = image });
     }
 
     #endregion

@@ -46,16 +46,11 @@ public class Frame : TemplatedControl
 
     private readonly Stack<FrameFrame> _history = new();
 
-    private bool _canGoBackOutOfStack;
     private (object? Content, IPageTransition Transition, bool Reverse)? _current;
 
     private FrameFrame? _currentFrame;
     private CancellationTokenSource? _currentToken;
 
-
-    private IPageTransition _defaultTransition =
-        TransitioningContentControl.PageTransitionProperty.GetDefaultValue(typeof(TransitioningContentControl))
-     ?? new CrossFade(TimeSpan.FromMilliseconds(197));
 
     private bool _doubleArrangeSafeLock;
     private ContentPresenter? _presenter;
@@ -71,15 +66,16 @@ public class Frame : TemplatedControl
 
     public bool CanGoBackOutOfStack
     {
-        get => _canGoBackOutOfStack;
-        set => SetAndRaise(CanGoBackOutOfStackProperty, ref _canGoBackOutOfStack, value);
+        get;
+        set => SetAndRaise(CanGoBackOutOfStackProperty, ref field, value);
     }
 
     public IPageTransition DefaultTransition
     {
-        get => _defaultTransition;
-        set => SetAndRaise(DefaultTransitionProperty, ref _defaultTransition, value);
-    }
+        get;
+        set => SetAndRaise(DefaultTransitionProperty, ref field, value);
+    } = TransitioningContentControl.PageTransitionProperty.GetDefaultValue(typeof(TransitioningContentControl))
+     ?? new CrossFade(TimeSpan.FromMilliseconds(197));
 
     public ICommand GoBackCommand => _goBackCommand;
 

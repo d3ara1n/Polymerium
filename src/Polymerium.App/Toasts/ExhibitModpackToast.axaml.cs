@@ -1,4 +1,6 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
@@ -10,7 +12,23 @@ public partial class ExhibitModpackToast : Toast
 {
     public ExhibitModpackToast() => InitializeComponent();
 
-    public required IRelayCommand<ExhibitVersionModel> InstallCommand { get; init; }
+    public static readonly StyledProperty<IRelayCommand<ExhibitVersionModel>?> InstallCommandProperty =
+        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<ExhibitVersionModel>?>(nameof(InstallCommand));
+
+    public IRelayCommand<ExhibitVersionModel>? InstallCommand
+    {
+        get => GetValue(InstallCommandProperty);
+        set => SetValue(InstallCommandProperty, value);
+    }
+
+    public static readonly StyledProperty<IRelayCommand<Uri>?> ViewImagesCommandProperty =
+        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<Uri>?>(nameof(ViewImagesCommand));
+
+    public IRelayCommand<Uri>? ViewImagesCommand
+    {
+        get => GetValue(ViewImagesCommandProperty);
+        set => SetValue(ViewImagesCommandProperty, value);
+    }
 
     private void SourceLinkButton_OnClick(object? sender, RoutedEventArgs e)
     {

@@ -49,7 +49,6 @@
     <ControlTheme x:Key="{x:Type local:NotificationItem}" TargetType="local:NotificationItem">
         <Setter Property="Level" Value="Information" />
         <Setter Property="Title" Value="Information" />
-        <Setter Property="IsOpen" Value="True" />
         <Setter Property="IsCloseButtonVisible" Value="True" />
         <Setter Property="HorizontalAlignment"
                 Value="{Binding HorizontalContentAlignment,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NotificationHost}}" />
@@ -59,24 +58,25 @@
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="3" />
-        <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="MinWidth" Value="220" />
+        <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">
             <ControlTemplate>
-                <LayoutTransformControl Name="PART_LayoutTransform">
+                <LayoutTransformControl Name="PART_LayoutTransform" UseRenderTransform="True">
                     <Panel>
-                        <Border Name="Border" ClipToBounds="{TemplateBinding ClipToBounds}"
+                        <Border Name="Border" ClipToBounds="False"
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 Background="{TemplateBinding Background}"
                                 BackgroundSizing="{TemplateBinding BackgroundSizing}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                Margin="3">
-                            <Border.Effect>
-                                <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.15" />
-                            </Border.Effect>
-                            <Border CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
+                                Margin="3" BoxShadow="0 0 8 0 #3F000000">
+                            <!-- <Border.Effect> -->
+                            <!--     <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.15" /> -->
+                            <!-- </Border.Effect> -->
+                            <Border CornerRadius="{TemplateBinding CornerRadius}"
+                                    ClipToBounds="{TemplateBinding ClipToBounds}">
                                 <DockPanel>
                                     <ProgressBar DockPanel.Dock="Bottom" CornerRadius="0"
                                                  Value="{TemplateBinding Progress}"
@@ -153,6 +153,57 @@
         <Style Selector="^:danger">
             <Setter Property="Title" Value="Danger" />
             <Setter Property="Background" Value="{DynamicResource NotificationDangerBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^[IsOpen=True]">
+            <Style.Animations>
+                <Animation Duration="0:0:0.4" Easing="CubicEaseOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0.0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="50%">
+                        <Setter Property="Opacity" Value="0.0" />
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.95" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.95" />
+                    </KeyFrame>
+                    <KeyFrame Cue="90%">
+                        <Setter Property="Opacity" Value="1.0" />
+                        <Setter Property="ScaleTransform.ScaleX" Value="1.05" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="1.05" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1.0" />
+                        <Setter Property="ScaleTransform.ScaleX" Value="1.0" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="1.0" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="^[IsOpen=False]">
+            <Style.Animations>
+                <Animation Duration="0:0:0.4" Easing="CubicEaseOut" FillMode="Forward">
+                    <KeyFrame Cue="30%">
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.95" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.95" />
+                        <Setter Property="TranslateTransform.X"
+                                Value="0.0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="90%">
+                        <Setter Property="Opacity" Value="1.0" />
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.95" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.95" />
+                        <Setter Property="TranslateTransform.X"
+                                Value="0.0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0" />
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.95" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.95" />
+                        <Setter Property="TranslateTransform.X"
+                                Value="{Binding $parent[local:NotificationHost].Bounds.Width}" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
         </Style>
     </ControlTheme>
 </ResourceDictionary>

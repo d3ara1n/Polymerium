@@ -4,9 +4,9 @@
     <ControlTheme x:Key="{x:Type local:NotificationHost}" TargetType="local:NotificationHost">
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel>
-                    <ItemsControl ItemsSource="{TemplateBinding Items}" ItemsPanel="{TemplateBinding ItemsPanel}" />
-                </Panel>
+                <Border>
+                    <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                </Border>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

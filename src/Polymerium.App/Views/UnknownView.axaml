@@ -142,11 +142,14 @@
                         </CheckBox>
                     </DockPanel>
                     <husk:InfoBar Header="You know what?">
-                        <DockPanel>
-                            <HyperlinkButton DockPanel.Dock="Bottom" Content="Undo" />
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata" />
-                        </DockPanel>
+                        <TextBlock TextWrapping="WrapWithOverflow">
+                            <Run
+                                Text="At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata" />
+                            <HyperlinkButton Content="Undo" />
+                            <HyperlinkButton Content="Redo" IsEnabled="False" />
+                            <Run
+                                Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." />
+                        </TextBlock>
                     </husk:InfoBar>
                 </StackPanel>
             </TabItem>

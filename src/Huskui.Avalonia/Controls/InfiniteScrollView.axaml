@@ -21,14 +21,14 @@
                                   VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}"
                                   VerticalSnapPointsType="{TemplateBinding (ScrollViewer.VerticalSnapPointsType)}"
                                   HorizontalSnapPointsType="{TemplateBinding (ScrollViewer.HorizontalSnapPointsType)}">
-                        <StackPanel>
-                            <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
-                            <Border Name="Container">
+                        <DockPanel>
+                            <Border DockPanel.Dock="Bottom" Name="Container">
                                 <ContentPresenter Name="{x:Static local:InfiniteScrollView.PART_PendingPresenter}"
                                                   Content="{TemplateBinding PendingContent}" IsVisible="False"
                                                   ContentTemplate="{TemplateBinding PendingContentTemplate}" />
                             </Border>
-                        </StackPanel>
+                            <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                        </DockPanel>
                     </ScrollViewer>
                 </Border>
             </ControlTemplate>

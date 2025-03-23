@@ -162,8 +162,9 @@
                 <Panel Background="{DynamicResource TransparentBrush}">
                     <Border Name="Indicator" Background="{TemplateBinding Background}" Opacity="0"
                             RenderTransform="scale(0.95)"
+                            ClipToBounds="{TemplateBinding ClipToBounds}"
                             BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding CornerRadius}"
-                            BorderThickness="{TemplateBinding BorderThickness}" BoxShadow="0 1 6 0 #7F7F7F7F">
+                            BorderThickness="{TemplateBinding BorderThickness}" BoxShadow="0 2 8 0 #1F000000">
                         <Border.Transitions>
                             <Transitions>
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"

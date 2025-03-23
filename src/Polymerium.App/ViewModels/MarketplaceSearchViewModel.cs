@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
@@ -45,8 +44,8 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         Repositories = r;
         if (bag.Parameter is SearchArguments arguments)
         {
-            SelectedRepository = r.FirstOrDefault(x => x.Label == arguments.Label) ?? r.First();
             QueryText = arguments.Query ?? string.Empty;
+            SelectedRepository = r.FirstOrDefault(x => x.Label == arguments.Label) ?? r.First();
         }
         else
         {
@@ -63,8 +62,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     {
         if (token.IsCancellationRequested)
             return;
-
-        _ = SearchAsync();
 
         foreach (var repository in Repositories)
             if (repository.Loaders == null || repository.Versions == null)
@@ -260,7 +257,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                        .ToList());
                 _overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataContext = model, InstallCommand = InstallVersionCommand
+                    DataContext = model, InstallCommand = InstallVersionCommand, ViewImagesCommand = ViewImageCommand
                 });
             }
             catch (OperationCanceledException) { }
@@ -289,6 +286,13 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                      version.Versionid);
             _notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
         }
+    }
+
+    [RelayCommand]
+    private void ViewImage(Uri? image)
+    {
+        if (image != null)
+            _overlayService.PopToast(new ImageViewerToast { ImageSource = image });
     }
 
     #endregion

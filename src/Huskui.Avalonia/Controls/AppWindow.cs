@@ -24,7 +24,6 @@ public class AppWindow : Window
 
     private OverlayHost? _dialogHost;
 
-    private bool _isMaximized;
     private OverlayHost? _modalHost;
     private NotificationHost? _notificationHost;
 
@@ -34,8 +33,8 @@ public class AppWindow : Window
 
     public bool IsMaximized
     {
-        get => _isMaximized;
-        set => SetAndRaise(IsMaximizedProperty, ref _isMaximized, value);
+        get;
+        set => SetAndRaise(IsMaximizedProperty, ref field, value);
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -56,6 +55,15 @@ public class AppWindow : Window
         _toastHost?.GetObservable(OverlayHost.IsPresentProperty).Subscribe(UpdateObstructed);
         _modalHost?.GetObservable(OverlayHost.IsPresentProperty).Subscribe(UpdateObstructed);
         _dialogHost?.GetObservable(OverlayHost.IsPresentProperty).Subscribe(UpdateObstructed);
+
+        if (_toastHost is not null)
+            LogicalChildren.Add(_toastHost);
+        if (_modalHost is not null)
+            LogicalChildren.Add(_modalHost);
+        if (_dialogHost is not null)
+            LogicalChildren.Add(_dialogHost);
+        if (_notificationHost is not null)
+            LogicalChildren.Add(_notificationHost);
     }
 
     private void UpdateObstructed(bool _)
