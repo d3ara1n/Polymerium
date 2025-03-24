@@ -11,149 +11,147 @@
             xmlns:md="https://github.com/whistyun/Markdown.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:local="clr-namespace:Polymerium.App.Toasts" Title="{Binding DisplayName}"
-            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Padding="0"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
-    <ScrollViewer>
-        <StackPanel Spacing="36" Margin="{StaticResource ToastContentMargin}">
-            <Grid ColumnDefinitions="*,24,Auto" RowDefinitions="*,24,Auto" Height="222">
-                <StackPanel Grid.Row="0" Grid.Column="0" Spacing="12">
-                    <Grid ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,0,Auto,0,Auto">
-                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
-                            <Button>
-                                <icons:PackIconLucide Height="{StaticResource SmallFontSize}" Kind="Bookmark" />
-                            </Button>
-                        </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
-                                    Spacing="10" VerticalAlignment="Top">
-                            <HyperlinkButton Click="SourceLinkButton_OnClick"
-                                             IsEnabled="{Binding ReferenceUrl,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <TextBlock
-                                        Text="{Binding ReferenceLabel,FallbackValue=SOURCE,Converter={x:Static huskc:StringConverters.ToUpper}}" />
-                                    <fi:SymbolIcon Symbol="Open" FontSize="12" />
-                                </StackPanel>
-                            </HyperlinkButton>
+    <StackPanel Spacing="36">
+        <Grid ColumnDefinitions="*,24,Auto" RowDefinitions="*,24,Auto" Height="222">
+            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="12">
+                <Grid ColumnDefinitions="*,8,Auto" RowDefinitions="Auto,0,Auto,0,Auto">
+                    <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                        <Button>
+                            <icons:PackIconLucide Height="{StaticResource SmallFontSize}" Kind="Bookmark" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal"
+                                Spacing="10" VerticalAlignment="Top">
+                        <HyperlinkButton Click="SourceLinkButton_OnClick"
+                                         IsEnabled="{Binding ReferenceUrl,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock
+                                    Text="{Binding ReferenceLabel,FallbackValue=SOURCE,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                            </StackPanel>
+                        </HyperlinkButton>
+                        <TextBlock>
+                            <Run Text="@" />
+                            <Run Text="{Binding AuthorName,FallbackValue=Author}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Spacing="4"
+                                TextElement.Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <icons:PackIconLucide Kind="CircleArrowDown" Height="{StaticResource MediumFontSize}"
+                                                  VerticalAlignment="Center" />
                             <TextBlock>
-                                <Run Text="@" />
-                                <Run Text="{Binding AuthorName,FallbackValue=Author}" />
+                                <Run Text="Download Count:" />
+                                <Run Text="{Binding DownloadCount,FallbackValue=1.14M}" />
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Spacing="4"
-                                    TextElement.Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <icons:PackIconLucide Kind="CircleArrowDown" Height="{StaticResource MediumFontSize}"
-                                                      VerticalAlignment="Center" />
-                                <TextBlock>
-                                    <Run Text="Download Count:" />
-                                    <Run Text="{Binding DownloadCount,FallbackValue=1.14M}" />
-                                </TextBlock>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <icons:PackIconLucide Kind="Clock" Height="{StaticResource MediumFontSize}"
-                                                      VerticalAlignment="Center" />
-                                <TextBlock>
-                                    <Run Text="Last Update:" />
-                                    <Run Text="{Binding UpdatedAt,FallbackValue=one day ago}" />
-                                </TextBlock>
-                            </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <icons:PackIconLucide Kind="Clock" Height="{StaticResource MediumFontSize}"
+                                                  VerticalAlignment="Center" />
+                            <TextBlock>
+                                <Run Text="Last Update:" />
+                                <Run Text="{Binding UpdatedAt,FallbackValue=one day ago}" />
+                            </TextBlock>
                         </StackPanel>
-                    </Grid>
-                    <TextBlock
-                        Text="{Binding Summary,FallbackValue=Summary}"
-                        TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4" />
-                    <ItemsControl ItemsSource="{Binding Tags}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="x:String">
-                                <husk:Tag Content="{Binding}" CornerRadius="{StaticResource SmallCornerRadius}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="8" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </StackPanel>
-                <Panel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
-                       IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}">
-                    <Carousel Name="ImageViewer"
-                              Width="420" ItemsSource="{Binding Gallery}"
-                              CornerRadius="{StaticResource SmallCornerRadius}">
-                        <Carousel.ItemTemplate>
-                            <DataTemplate x:DataType="x:Uri">
-                                <Image async:ImageLoader.Source="{Binding}" />
-                            </DataTemplate>
-                        </Carousel.ItemTemplate>
-                    </Carousel>
-                    <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                            Theme="{StaticResource GhostButtonTheme}"
-                            Command="{Binding $parent[local:ExhibitModpackToast].ViewImagesCommand}"
-                            CommandParameter="{Binding #ImageViewer.SelectedItem}">
-                        <icons:PackIconLucide Kind="SearchSlash" Height="{StaticResource MediumFontSize}"
-                                              Width="{StaticResource MediumFontSize}" />
-                    </Button>
-                </Panel>
-                <Grid Grid.Row="2" Grid.Column="0">
-                    <Button Classes="Primary" Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
-                            CommandParameter="{Binding Versions[0],FallbackValue={x:Null}}">
-                        <TextBlock Text="Install" />
-                    </Button>
+                    </StackPanel>
                 </Grid>
+                <TextBlock
+                    Text="{Binding Summary,FallbackValue=Summary}"
+                    TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4" />
+                <ItemsControl ItemsSource="{Binding Tags}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="x:String">
+                            <husk:Tag Content="{Binding}" CornerRadius="{StaticResource SmallCornerRadius}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </StackPanel>
+            <Panel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
+                   IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}">
+                <Carousel Name="ImageViewer"
+                          Width="420" ItemsSource="{Binding Gallery}"
+                          CornerRadius="{StaticResource SmallCornerRadius}">
+                    <Carousel.ItemTemplate>
+                        <DataTemplate x:DataType="x:Uri">
+                            <Image async:ImageLoader.Source="{Binding}" />
+                        </DataTemplate>
+                    </Carousel.ItemTemplate>
+                </Carousel>
+                <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                        Theme="{StaticResource GhostButtonTheme}"
+                        Command="{Binding $parent[local:ExhibitModpackToast].ViewImagesCommand}"
+                        CommandParameter="{Binding #ImageViewer.SelectedItem}">
+                    <icons:PackIconLucide Kind="SearchSlash" Height="{StaticResource MediumFontSize}"
+                                          Width="{StaticResource MediumFontSize}" />
+                </Button>
+            </Panel>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Button Classes="Primary" Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
+                        CommandParameter="{Binding Versions[0],FallbackValue={x:Null}}">
+                    <TextBlock Text="Install" />
+                </Button>
             </Grid>
-            <Grid MaxHeight="768">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="24" />
-                    <ColumnDefinition MaxWidth="256" />
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Background="{StaticResource OverlayDarker1BackgroundBrush}" Padding="12"
-                        CornerRadius="{StaticResource SmallCornerRadius}">
-                    <md:MarkdownScrollViewer Markdown="{Binding Description}" />
-                </Border>
-                <husk:Card Grid.Column="2" Padding="0">
-                    <ListBox Padding="4" ItemsSource="{Binding Versions}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate x:DataType="m:ExhibitVersionModel">
-                                <StackPanel Spacing="4">
-                                    <TextBlock Text="{Binding VersionName}" />
-                                    <DockPanel>
-                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                                            <TextBlock Text="{Binding PublishedAt}" />
-                                        </StackPanel>
-                                        <husk:SwitchPresenter TargetType="trident:ReleaseType"
-                                                              Value="{Binding TypeRaw}">
-                                            <husk:SwitchCase Value="Release">
-                                                <husk:Tag Classes="Success"
-                                                          CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <TextBlock Text="Release" />
-                                                </husk:Tag>
-                                            </husk:SwitchCase>
-                                            <husk:SwitchCase Value="Beta">
-                                                <husk:Tag Classes="Warning"
-                                                          CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <TextBlock Text="Beta" />
-                                                </husk:Tag>
-                                            </husk:SwitchCase>
-                                            <husk:SwitchCase Value="Alpha">
-                                                <husk:Tag Classes="Danger"
-                                                          CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <TextBlock Text="Alpha" />
-                                                </husk:Tag>
-                                            </husk:SwitchCase>
-                                        </husk:SwitchPresenter>
-                                    </DockPanel>
-                                    <Button Name="InstallButton" Classes="Small"
-                                            Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
-                                            CommandParameter="{Binding }"
-                                            IsVisible="{Binding $parent[ListBoxItem].IsSelected,Mode=OneWay}">
-                                        <TextBlock Text="Install" />
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </husk:Card>
-            </Grid>
-        </StackPanel>
-    </ScrollViewer>
+        </Grid>
+        <Grid MaxHeight="768">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition MaxWidth="256" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="{StaticResource OverlayDarker1BackgroundBrush}" Padding="12"
+                    CornerRadius="{StaticResource SmallCornerRadius}">
+                <md:MarkdownScrollViewer Markdown="{Binding Description}" />
+            </Border>
+            <husk:Card Grid.Column="2" Padding="0">
+                <ListBox Padding="4" ItemsSource="{Binding Versions}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="m:ExhibitVersionModel">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="{Binding VersionName}" />
+                                <DockPanel>
+                                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                        <TextBlock Text="{Binding PublishedAt}" />
+                                    </StackPanel>
+                                    <husk:SwitchPresenter TargetType="trident:ReleaseType"
+                                                          Value="{Binding TypeRaw}">
+                                        <husk:SwitchCase Value="Release">
+                                            <husk:Tag Classes="Success"
+                                                      CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <TextBlock Text="Release" />
+                                            </husk:Tag>
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Beta">
+                                            <husk:Tag Classes="Warning"
+                                                      CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <TextBlock Text="Beta" />
+                                            </husk:Tag>
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Alpha">
+                                            <husk:Tag Classes="Danger"
+                                                      CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <TextBlock Text="Alpha" />
+                                            </husk:Tag>
+                                        </husk:SwitchCase>
+                                    </husk:SwitchPresenter>
+                                </DockPanel>
+                                <Button Name="InstallButton" Classes="Small"
+                                        Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
+                                        CommandParameter="{Binding }"
+                                        IsVisible="{Binding $parent[ListBoxItem].IsSelected,Mode=OneWay}">
+                                    <TextBlock Text="Install" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </husk:Card>
+        </Grid>
+    </StackPanel>
 </husk:Toast>
