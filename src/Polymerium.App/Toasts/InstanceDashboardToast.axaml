@@ -8,7 +8,7 @@
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-            Title="Dashboard" Padding="0"
+            Header="Dashboard" Padding="0"
             x:Class="Polymerium.App.Toasts.InstanceDashboardToast"
             ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <husk:Toast.Resources>

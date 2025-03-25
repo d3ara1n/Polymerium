@@ -43,7 +43,7 @@
         <Style Selector="^">
             <Setter Property="Opacity" Value="0.0" />
 
-            <Setter Property="RenderTransform" Value="translateY(-36px)" />
+            <Setter Property="RenderTransform" Value="translateY(-30px)" />
 
             <!-- <Setter Property="Effect"> -->
             <!--     <BlurEffect Radius="6" /> -->
@@ -68,7 +68,7 @@
         <Style Selector="^[Distance=1]">
             <Setter Property="Opacity" Value="0.8" />
 
-            <Setter Property="RenderTransform" Value="translateY(-12px)" />
+            <Setter Property="RenderTransform" Value="translateY(-6px)" />
 
             <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.98)" />
@@ -77,7 +77,7 @@
         <Style Selector="^[Distance=2]">
             <Setter Property="Opacity" Value="0.6" />
 
-            <Setter Property="RenderTransform" Value="translateY(-24px)" />
+            <Setter Property="RenderTransform" Value="translateY(-12px)" />
 
             <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.96)" />
@@ -86,7 +86,7 @@
         <Style Selector="^[Distance=3]">
             <Setter Property="Opacity" Value="0.4" />
 
-            <Setter Property="RenderTransform" Value="translateY(-36px)" />
+            <Setter Property="RenderTransform" Value="translateY(-18px)" />
 
             <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.94)" />
@@ -95,7 +95,7 @@
         <Style Selector="^[Distance=4]">
             <Setter Property="Opacity" Value="0.2" />
 
-            <Setter Property="RenderTransform" Value="translateY(-48px)" />
+            <Setter Property="RenderTransform" Value="translateY(-24px)" />
 
             <Style Selector="^ /template/ Border#PART_ScaleRoot">
                 <Setter Property="RenderTransform" Value="scaleX(0.92)" />

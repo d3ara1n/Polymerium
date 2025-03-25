@@ -1,4 +1,5 @@
-﻿using Avalonia.Data.Converters;
+﻿using Avalonia;
+using Avalonia.Data.Converters;
 using Avalonia.Input;
 
 namespace Huskui.Avalonia.Converters;
@@ -53,6 +54,14 @@ internal static class InternalConverters
     {
         if (v is int count)
             return Enumerable.Range(0, count).ToArray();
+
+        return v;
+    });
+    
+    public static IMultiValueConverter OffsetToOpacity { get; } = new RelayMultiConverter((v, _, info) =>
+    {
+        if (v is [Vector offset, double max])
+            return Math.Min(offset.Y, max) / max;
 
         return v;
     });
