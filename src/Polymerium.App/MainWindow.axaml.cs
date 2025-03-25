@@ -35,6 +35,16 @@ public partial class MainWindow : AppWindow
             o => o.View,
             (o, v) => o.View = v);
 
+    public static readonly StyledProperty<bool> IsLeftPanelModeProperty =
+        AvaloniaProperty.Register<MainWindow, bool>(nameof(IsLeftPanelMode));
+
+    public bool IsLeftPanelMode
+    {
+        get => GetValue(IsLeftPanelModeProperty);
+        set => SetValue(IsLeftPanelModeProperty, value);
+    }
+
+
     private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
 
     private Action<Type, object?, IPageTransition?>? _navigate;
@@ -96,6 +106,35 @@ public partial class MainWindow : AppWindow
     {
         if (key is not null)
             _navigate?.Invoke(typeof(InstanceView), key, null);
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == IsLeftPanelModeProperty)
+        {
+            var mode = change.GetNewValue<bool>();
+            if (mode)
+            {
+                if (Container.ColumnDefinitions is [var mainColumn, var sidebarColumn])
+                {
+                    Container.ColumnDefinitions = [sidebarColumn, mainColumn];
+
+                    Main.SetValue(Grid.ColumnProperty, 1);
+                    Sidebar.SetValue(Grid.ColumnProperty, 0);
+                }
+            }
+            else
+            {
+                if (Container.ColumnDefinitions is [var sidebarColumn, var mainColumn])
+                {
+                    Container.ColumnDefinitions = [mainColumn, sidebarColumn];
+
+                    Main.SetValue(Grid.ColumnProperty, 0);
+                    Sidebar.SetValue(Grid.ColumnProperty, 1);
+                }
+            }
+        }
     }
 
     #region Notification Service
