@@ -10,7 +10,7 @@
             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             xmlns:md="https://github.com/whistyun/Markdown.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-            xmlns:local="clr-namespace:Polymerium.App.Toasts" Title="{Binding DisplayName}"
+            xmlns:local="clr-namespace:Polymerium.App.Toasts" Header="{Binding DisplayName}"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
     <StackPanel Spacing="36">

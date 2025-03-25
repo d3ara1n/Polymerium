@@ -62,7 +62,7 @@ public partial class UnknownViewModel(
             pop.Click += (_, __) => PopToast();
             overlayService.PopToast(new Toast
             {
-                Title = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
+                Header = $"A VERY LONG TOAST TITLE {Random.Shared.Next(1000, 9999)}",
                 Content = new StackPanel
                 {
                     Spacing = 8d,
