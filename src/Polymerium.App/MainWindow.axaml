@@ -20,204 +20,201 @@
     ExtendClientAreaTitleBarHeightHint="44"
     TransparencyLevelHint="Mica, None"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*" />
-            <ColumnDefinition
-                Width="27*"
-                MinWidth="200"
-                MaxWidth="400" />
+            <ColumnDefinition Width="27*"
+                              MinWidth="200"
+                              MaxWidth="400" />
         </Grid.ColumnDefinitions>
-        <Panel Grid.Column="0">
-            <StackPanel VerticalAlignment="Center"
-                        Opacity="{Binding #Root.Content, Converter={x:Static huskc:OpacityConverters.IsNull}}">
-                <StackPanel.Transitions>
-                    <Transitions>
-                        <DoubleTransition
-                            Easing="CubicEaseInOut"
-                            Property="Opacity"
-                            Duration="{StaticResource ControlFasterAnimationDuration}" />
-                    </Transitions>
-                </StackPanel.Transitions>
-                <StackPanel.Effect>
-                    <DropShadowEffect BlurRadius="6" Opacity="0.1" />
-                </StackPanel.Effect>
-                <Image
-                    Width="128"
-                    Height="128"
-                    HorizontalAlignment="Center"
-                    Source="/Assets/Icons/Bird.png" />
-                <TextBlock
-                    Margin="48,12,48,12"
-                    FontSize="24"
-                    FontWeight="Bold"
-                    Text="B-b-b-bird, bird, bird, b-bird's the word..."
-                    TextAlignment="Center"
-                    TextWrapping="WrapWithOverflow" />
-            </StackPanel>
-            <husk:Frame x:Name="Root" CanGoBackOutOfStack="True" />
-        </Panel>
-        <Panel x:Name="Sidebar" Grid.Column="1">
-            <DockPanel>
-                <DockPanel DockPanel.Dock="Top">
-                    <StackPanel DockPanel.Dock="Right">
-                        <husk:ButtonGroup BorderThickness="0">
-                            <Button
-                                x:Name="MinimizeButton"
-                                Padding="10"
-                                Click="MinimizeButton_OnClick">
-                                <icons:PackIconLucide
-                                    Width="10"
-                                    Height="10"
-                                    Kind="Minus" />
-                            </Button>
-                            <Button
-                                x:Name="ToggleMaximizeButton"
-                                Padding="10"
-                                Click="ToggleMaximizeButton_OnClick">
-                                <icons:PackIconLucide
-                                    Width="10"
-                                    Height="10"
-                                    Kind="Square" />
-                            </Button>
-                            <Button
-                                x:Name="CloseButton"
-                                Padding="10"
-                                Click="CloseButton_OnClick">
-                                <icons:PackIconLucide
-                                    Width="10"
-                                    Height="10"
-                                    Kind="X" />
-                            </Button>
-                        </husk:ButtonGroup>
-                    </StackPanel>
-                    <StackPanel
-                        Margin="9,12,12,12"
-                        IsHitTestVisible="False"
-                        Orientation="Horizontal"
-                        Spacing="6">
-                        <StackPanel.Effect>
-                            <DropShadowEffect BlurRadius="6" Opacity="0.1" />
-                        </StackPanel.Effect>
-                        <!-- <Svg Path="/Assets/Logo.svg" Width="12" /> -->
-                        <icons:PackIconLucide Width="12" Kind="Squirrel" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource SmallFontSize}"
-                            Text="{Binding $parent[Window].Title, Mode=OneWay}" />
-                    </StackPanel>
-                </DockPanel>
-                <Grid
-                    Margin="9,0,16,16"
-                    ColumnDefinitions="Auto,8,*,8,Auto"
-                    DockPanel.Dock="Top"
-                    RowDefinitions="Auto,8,Auto,8,Auto,8,Auto,8,*,8,Auto,8,Auto">
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Height="48"
-                        Click="NavigationButton_OnClick"
-                        Tag="LandingView"
-                        Theme="{StaticResource OutlineButtonTheme}">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
+        <DockPanel x:Name="Main" Grid.Column="0">
+            <Panel>
+                <StackPanel VerticalAlignment="Center"
+                            Opacity="{Binding #Root.Content, Converter={x:Static huskc:OpacityConverters.IsNull}}">
+                    <StackPanel.Transitions>
+                        <Transitions>
+                            <DoubleTransition
+                                Easing="CubicEaseInOut"
+                                Property="Opacity"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </StackPanel.Transitions>
+                    <StackPanel.Effect>
+                        <DropShadowEffect BlurRadius="6" Opacity="0.1" />
+                    </StackPanel.Effect>
+                    <Image
+                        Width="128"
+                        Height="128"
+                        HorizontalAlignment="Center"
+                        Source="/Assets/Icons/Bird.png" />
+                    <TextBlock
+                        Margin="48,12,48,12"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Text="B-b-b-bird, bird, bird, b-bird's the word..."
+                        TextAlignment="Center"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+                <husk:Frame x:Name="Root" CanGoBackOutOfStack="True" ClipToBounds="False" />
+            </Panel>
+        </DockPanel>
+        <DockPanel x:Name="Sidebar" Grid.Column="1">
+            <DockPanel x:Name="TitleBar" DockPanel.Dock="Top">
+                <StackPanel DockPanel.Dock="Right">
+                    <husk:ButtonGroup BorderThickness="0">
+                        <Button
+                            x:Name="MinimizeButton"
+                            Padding="10"
+                            Click="MinimizeButton_OnClick">
                             <icons:PackIconLucide
-                                Width="18"
-                                Height="18"
-                                VerticalAlignment="Center"
-                                Kind="Ghost" />
-                            <TextBlock VerticalAlignment="Center" Text="Home" />
-                        </StackPanel>
-                    </Button>
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="4"
-                        Width="48"
-                        Height="48"
-                        Click="NavigationButton_OnClick"
-                        Tag="CreateInstanceView"
-                        Theme="{StaticResource OutlineButtonTheme}">
+                                Width="10"
+                                Height="10"
+                                Kind="Minus" />
+                        </Button>
+                        <Button
+                            x:Name="ToggleMaximizeButton"
+                            Padding="10"
+                            Click="ToggleMaximizeButton_OnClick">
+                            <icons:PackIconLucide
+                                Width="10"
+                                Height="10"
+                                Kind="Square" />
+                        </Button>
+                        <Button
+                            x:Name="CloseButton"
+                            Padding="10"
+                            Click="CloseButton_OnClick">
+                            <icons:PackIconLucide
+                                Width="10"
+                                Height="10"
+                                Kind="X" />
+                        </Button>
+                    </husk:ButtonGroup>
+                </StackPanel>
+                <StackPanel
+                    Margin="12,12,12,0"
+                    IsHitTestVisible="False"
+                    Orientation="Horizontal"
+                    Spacing="6">
+                    <StackPanel.Effect>
+                        <DropShadowEffect BlurRadius="6" Opacity="0.1" />
+                    </StackPanel.Effect>
+                    <icons:PackIconLucide Width="12" Kind="Squirrel" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource SmallFontSize}"
+                        Text="{Binding $parent[Window].Title, Mode=OneWay}" />
+                </StackPanel>
+            </DockPanel>
+            <Grid
+                Margin="9"
+                ColumnDefinitions="Auto,8,*,8,Auto"
+                RowDefinitions="Auto,8,Auto,8,Auto,8,Auto,8,*,8,Auto,8,Auto">
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Height="48"
+                    Click="NavigationButton_OnClick"
+                    Tag="LandingView"
+                    Theme="{StaticResource OutlineButtonTheme}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
                         <icons:PackIconLucide
                             Width="18"
                             Height="18"
-                            Kind="PackagePlus" />
-                    </Button>
-                    <Button
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="5"
-                        Height="36"
-                        Classes="Primary"
-                        Click="NavigationButton_OnClick"
-                        Tag="MarketplacePortalView">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <icons:PackIconLucide
-                                Width="18"
-                                Height="18"
-                                Kind="Store" />
-                            <TextBlock VerticalAlignment="Center" Text="Go to Marketplace" />
-                        </StackPanel>
-                    </Button>
-                    <husk:Divider
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="5" />
-                    <!-- <AutoCompleteBox/> -->
-                    <TextBox
-                        Grid.Row="6"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="5"
-                        Text="{Binding $parent[local:MainWindow].FilterText, Mode=TwoWay}"
-                        Watermark="Filter entries by names..." />
-                    <ScrollViewer
-                        Grid.Row="8"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="5"
-                        Margin="0,0,-8,0">
-                        <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding $parent[local:MainWindow].View}"
-                                      ClipToBounds="False">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="m:InstanceEntryModel">
-                                    <controls:InstanceEntryButton
-                                        Basic="{Binding Basic}"
-                                        Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
-                                        CommandParameter="{Binding Basic.Key}"
-                                        Progress="{Binding Progress,Mode=OneWay}"
-                                        IsPending="{Binding IsPending,Mode=OneWay}"
-                                        State="{Binding State}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Spacing="4" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                    <husk:Divider
-                        Grid.Row="10"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="5" />
-                    <Button
-                        Grid.Row="12"
-                        Grid.Column="0"
-                        Click="NavigationButton_OnClick"
-                        DockPanel.Dock="Left"
-                        Tag="SettingsView"
-                        Theme="{StaticResource GhostButtonTheme}">
-                        <icons:PackIconLucide Height="18" Kind="Settings" />
-                    </Button>
-                    <Button
-                        Grid.Row="12"
-                        Grid.Column="2"
-                        Grid.ColumnSpan="3"
-                        Click="NavigationButton_OnClick"
-                        Tag="AccountsView"
-                        Theme="{StaticResource OutlineButtonTheme}">
-                        Accounts
-                    </Button>
-                </Grid>
-            </DockPanel>
-        </Panel>
+                            VerticalAlignment="Center"
+                            Kind="Ghost" />
+                        <TextBlock VerticalAlignment="Center" Text="Home" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    Width="48"
+                    Height="48"
+                    Click="NavigationButton_OnClick"
+                    Tag="CreateInstanceView"
+                    Theme="{StaticResource OutlineButtonTheme}">
+                    <icons:PackIconLucide
+                        Width="18"
+                        Height="18"
+                        Kind="PackagePlus" />
+                </Button>
+                <Button
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    Height="36"
+                    Classes="Primary"
+                    Click="NavigationButton_OnClick"
+                    Tag="MarketplacePortalView">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <icons:PackIconLucide
+                            Width="18"
+                            Height="18"
+                            Kind="Store" />
+                        <TextBlock VerticalAlignment="Center" Text="Go to Marketplace" />
+                    </StackPanel>
+                </Button>
+                <husk:Divider
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5" />
+                <!-- <AutoCompleteBox/> -->
+                <TextBox
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    Text="{Binding $parent[local:MainWindow].FilterText, Mode=TwoWay}"
+                    Watermark="Filter entries by names..." />
+                <ScrollViewer
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    Margin="0,0,-8,0">
+                    <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding $parent[local:MainWindow].View}"
+                                  ClipToBounds="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="m:InstanceEntryModel">
+                                <controls:InstanceEntryButton
+                                    Basic="{Binding Basic}"
+                                    Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
+                                    CommandParameter="{Binding Basic.Key}"
+                                    Progress="{Binding Progress,Mode=OneWay}"
+                                    IsPending="{Binding IsPending,Mode=OneWay}"
+                                    State="{Binding State}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+                <husk:Divider
+                    Grid.Row="10"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5" />
+                <Button
+                    Grid.Row="12"
+                    Grid.Column="0"
+                    Click="NavigationButton_OnClick"
+                    DockPanel.Dock="Left"
+                    Tag="SettingsView"
+                    Theme="{StaticResource GhostButtonTheme}">
+                    <icons:PackIconLucide Height="18" Kind="Settings" />
+                </Button>
+                <Button
+                    Grid.Row="12"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="3"
+                    Click="NavigationButton_OnClick"
+                    Tag="AccountsView"
+                    Theme="{StaticResource OutlineButtonTheme}">
+                    Accounts
+                </Button>
+            </Grid>
+        </DockPanel>
     </Grid>
 </husk:AppWindow>

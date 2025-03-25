@@ -11,7 +11,7 @@
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="6*,12,4*">
+                <Grid ColumnDefinitions="55*,12,45*">
                     <Grid Grid.Column="0" ColumnDefinitions="Auto,8,*">
                         <fi:SymbolIcon Grid.Column="0" Symbol="{TemplateBinding Icon}"
                                        FontSize="26" VerticalAlignment="Top" Margin="3" IconVariant="Regular" />
