@@ -22,7 +22,7 @@ public class BuildArtifactStage : StageBase
         var dir = Path.GetDirectoryName(path);
         if (dir != null && !Directory.Exists(dir))
             Directory.CreateDirectory(dir);
-        await File.WriteAllTextAsync(path, JsonSerializer.Serialize(artifact, JsonSerializerOptions.Web), token);
+        await File.WriteAllTextAsync(path, JsonSerializer.Serialize(artifact, JsonSerializerOptions.Web), token).ConfigureAwait(false);
 
         Context.Artifact = artifact;
     }

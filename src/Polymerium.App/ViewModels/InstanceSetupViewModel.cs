@@ -25,27 +25,18 @@ using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceSetupViewModel : InstanceViewModelBase
+public partial class InstanceSetupViewModel(
+    ViewBag bag,
+    ProfileManager profileManager,
+    RepositoryAgent repositories,
+    NotificationService notificationService,
+    InstanceManager instanceManager,
+    DataService dataService,
+    OverlayService overlayService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     private CancellationTokenSource? _pageCancellationTokenSource;
     private CancellationTokenSource? _refreshingCancellationTokenSource;
     private IDisposable? _updatingSubscription;
-
-    public InstanceSetupViewModel(
-        ViewBag bag,
-        ProfileManager profileManager,
-        RepositoryAgent repositories,
-        NotificationService notificationService,
-        InstanceManager instanceManager,
-        DataService dataService,
-        OverlayService overlayService) : base(bag, instanceManager, profileManager)
-    {
-        _repositories = repositories;
-        _notificationService = notificationService;
-        _instanceManager = instanceManager;
-        _dataService = dataService;
-        _overlayService = overlayService;
-    }
 
     private void TriggerRefresh(CancellationToken token)
     {
@@ -72,7 +63,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "Loading package list failed", NotificationLevel.Warning);
+            notificationService.PopMessage(ex, "Loading package list failed", NotificationLevel.Warning);
         }
 
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
@@ -93,14 +84,14 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                               // NOTE: 如果可以的话，对于 Purl.Vid 为空的，需要去 LockData 里找 Packages[i].Vid，获取锁定的版本
                                               //  当然也可以不这么干，对于版本锁，给一个单独的页面来查看锁定的版本就行
                                               //  因为版本锁是为构建服务的，不应该暴露给用户看当前锁定的版本是哪个
-                                              var p = await _dataService.ResolvePackageAsync(v.Label,
+                                              var p = await dataService.ResolvePackageAsync(v.Label,
                                                           v.Namespace,
                                                           v.Pid,
                                                           v.Vid,
                                                           Filter.Empty);
 
                                               model.Thumbnail = p.Thumbnail is not null
-                                                                    ? await _dataService.GetBitmapAsync(p.Thumbnail)
+                                                                    ? await dataService.GetBitmapAsync(p.Thumbnail)
                                                                     : AssetUriIndex.DIRT_IMAGE_BITMAP;
 
                                               model.Name = p.ProjectName;
@@ -113,7 +104,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                           catch (OperationCanceledException) { }
                                           catch (Exception ex)
                                           {
-                                              _notificationService.PopMessage($"{purl}: {ex.Message}",
+                                              notificationService.PopMessage($"{purl}: {ex.Message}",
                                                                               "Failed to parse purl",
                                                                               NotificationLevel.Warning);
                                           }
@@ -126,17 +117,17 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         {
             try
             {
-                var package = await _dataService.ResolvePackageAsync(label,
+                var package = await dataService.ResolvePackageAsync(label,
                                                                      @namespace,
                                                                      pid,
                                                                      vid,
                                                                      Filter.Empty with { Kind = ResourceKind.Modpack });
 
                 var thumbnail = package.Thumbnail is not null
-                                    ? await _dataService.GetBitmapAsync(package.Thumbnail)
+                                    ? await dataService.GetBitmapAsync(package.Thumbnail)
                                     : AssetUriIndex.DIRT_IMAGE_BITMAP;
 
-                var page = await (await _repositories.InspectAsync(label,
+                var page = await (await repositories.InspectAsync(label,
                                                                    @namespace,
                                                                    pid,
                                                                    Filter.Empty with { Kind = ResourceKind.Modpack }))
@@ -169,7 +160,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
+                notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
                                                 "Fetching modpack information failed",
                                                 NotificationLevel.Warning);
             }
@@ -252,14 +243,14 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var source))
             try
             {
-                var versions = await _dataService.InspectVersionsAsync(source.Label,
+                var versions = await dataService.InspectVersionsAsync(source.Label,
                                                                        source.Namespace,
                                                                        source.Pid,
                                                                        Filter.Empty with
                                                                        {
                                                                            Kind = ResourceKind.Modpack
                                                                        });
-                var project = await _dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
+                var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
                 var model = new ExhibitModpackModel(project.ProjectName,
                                                     project.ProjectId,
                                                     project.Author,
@@ -287,7 +278,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                                                        x.ProjectId,
                                                                        x.VersionId)))
                                                        .ToList());
-                _overlayService.PopToast(new ExhibitModpackToast
+                overlayService.PopToast(new ExhibitModpackToast
                 {
                     DataContext = model, InstallCommand = InstallVersionCommand, ViewImagesCommand = ViewImageCommand
                 });
@@ -295,7 +286,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
             catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
+                notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
             }
     }
 
@@ -316,7 +307,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "Update failed");
+            notificationService.PopMessage(ex, "Update failed");
         }
     }
 
@@ -330,7 +321,7 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
                                      version.Namespace,
                                      version.ProjectId,
                                      version.Versionid);
-            _notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
+            notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
         }
     }
 
@@ -338,18 +329,14 @@ public partial class InstanceSetupViewModel : InstanceViewModelBase
     private void ViewImage(Uri? image)
     {
         if (image != null)
-            _overlayService.PopToast(new ImageViewerToast { ImageSource = image });
+            overlayService.PopToast(new ImageViewerToast { ImageSource = image });
     }
 
     #endregion
 
     #region Injected
 
-    private readonly RepositoryAgent _repositories;
-    private readonly NotificationService _notificationService;
-    private readonly DataService _dataService;
-    private readonly OverlayService _overlayService;
-    private readonly InstanceManager _instanceManager;
+    private readonly InstanceManager _instanceManager = instanceManager;
 
     #endregion
 

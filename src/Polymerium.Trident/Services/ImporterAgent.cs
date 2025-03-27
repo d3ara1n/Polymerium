@@ -11,7 +11,7 @@ public class ImporterAgent(IEnumerable<IProfileImporter> importers)
     {
         var importer = importers.FirstOrDefault(x => pack.FileNames.Contains(x.IndexFileName));
         if (importer is not null)
-            return await importer.ExtractAsync(pack);
+            return await importer.ExtractAsync(pack).ConfigureAwait(false);
 
         throw new ImporterNotFoundException();
     }
@@ -33,8 +33,8 @@ public class ImporterAgent(IEnumerable<IProfileImporter> importers)
 
             var fromStream = pack.Open(source);
             var file = new FileStream(to, FileMode.Create);
-            await fromStream.CopyToAsync(file);
-            await file.FlushAsync();
+            await fromStream.CopyToAsync(file).ConfigureAwait(false);
+            await file.FlushAsync().ConfigureAwait(false);
             file.Close();
             fromStream.Close();
         }

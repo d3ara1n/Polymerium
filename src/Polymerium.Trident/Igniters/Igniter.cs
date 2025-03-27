@@ -73,7 +73,7 @@ public class Igniter : IBuilder<Process>
         start.ArgumentList.Add(MainClass!);
         foreach (var argument in GameArguments.Where(x => !string.IsNullOrEmpty(x)))
         {
-            var line = crates.TryGetValue(argument, out var value) ? value : argument;
+            var line = crates.GetValueOrDefault(argument, argument);
             start.ArgumentList.Add(line);
         }
 

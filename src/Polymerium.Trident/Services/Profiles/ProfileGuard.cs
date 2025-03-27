@@ -20,7 +20,7 @@ public class ProfileGuard : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        await _handle.SaveAsync();
+        await _handle.SaveAsync().ConfigureAwait(false);
         _root.OnProfileUpdated(Key, _handle.Value);
     }
 

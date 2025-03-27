@@ -55,7 +55,7 @@ public class RepositoryAgent
 
     private async Task<T> RetrieveCachedAsync<T>(string key, Func<Task<T>> factory)
     {
-        var cachedJson = await _cache.GetStringAsync(key);
+        var cachedJson = await _cache.GetStringAsync(key).ConfigureAwait(false);
         if (cachedJson != null)
             try
             {
@@ -63,7 +63,7 @@ public class RepositoryAgent
                 if (cached != null)
                 {
                     _logger.LogDebug("Cache hit: {}", key);
-                    await _cache.RefreshAsync(key);
+                    await _cache.RefreshAsync(key).ConfigureAwait(false);
                     return cached;
                 }
 
@@ -76,10 +76,10 @@ public class RepositoryAgent
 
         try
         {
-            var result = await factory();
+            var result = await factory().ConfigureAwait(false);
             await _cache.SetStringAsync(key,
                                         JsonSerializer.Serialize(result),
-                                        new DistributedCacheEntryOptions { SlidingExpiration = EXPIRED_IN });
+                                        new DistributedCacheEntryOptions { SlidingExpiration = EXPIRED_IN }).ConfigureAwait(false);
             _logger.LogDebug("Cache missed but recorded: {}", key);
 
 

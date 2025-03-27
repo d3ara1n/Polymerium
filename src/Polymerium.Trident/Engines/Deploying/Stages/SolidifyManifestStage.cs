@@ -45,7 +45,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                             return;
                         try
                         {
-                            await semaphore.WaitAsync(cancel.Token);
+                            await semaphore.WaitAsync(cancel.Token).ConfigureAwait(false);
                             switch (x)
                             {
                                 case EntityManifest.FragileFile fragile:
@@ -59,11 +59,11 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
                                         var client = factory.CreateClient();
-                                        var reader = await client.GetStreamAsync(fragile.Url, cancel.Token);
+                                        var reader = await client.GetStreamAsync(fragile.Url, cancel.Token).ConfigureAwait(false);
                                         var writer = new FileStream(fragile.SourcePath,
                                                                     FileMode.Create,
                                                                     FileAccess.Write);
-                                        await reader.CopyToAsync(writer, cancel.Token);
+                                        await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
                                         reader.Close();
                                         writer.Close();
                                     }
@@ -86,9 +86,9 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
                                         var client = factory.CreateClient();
-                                        var reader = await client.GetStreamAsync(present.Url, cancel.Token);
+                                        var reader = await client.GetStreamAsync(present.Url, cancel.Token).ConfigureAwait(false);
                                         var writer = new FileStream(present.Path, FileMode.Create, FileAccess.Write);
-                                        await reader.CopyToAsync(writer, cancel.Token);
+                                        await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
                                         reader.Close();
                                         writer.Close();
                                     }
@@ -140,7 +140,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                         catch (OperationCanceledException) { }
                         catch (Exception ex)
                         {
-                            await cancel.CancelAsync();
+                            await cancel.CancelAsync().ConfigureAwait(false);
                             logger.LogError(ex, "Failed to solidify {}", x);
                             throw;
                         }
@@ -150,7 +150,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                         }
                     })
                    .ToArray();
-        await Task.WhenAll(tasks);
+        await Task.WhenAll(tasks).ConfigureAwait(false);
         foreach (var explosive in manifest.ExplosiveFiles)
         {
             if (Directory.Exists(explosive.TargetDirectory) && explosive.IsDestructive)

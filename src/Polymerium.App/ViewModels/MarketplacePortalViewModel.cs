@@ -13,30 +13,22 @@ using Polymerium.Trident.Services;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class MarketplacePortalViewModel : ViewModelBase
+public partial class MarketplacePortalViewModel(
+    MojangLauncherService mojangLauncherService,
+    ConfigurationService configurationService,
+    NavigationService navigationService,
+    DataService dataService) : ViewModelBase
 {
-    public MarketplacePortalViewModel(
-        MojangLauncherService mojangLauncherService,
-        ConfigurationService configurationService,
-        NavigationService navigationService,
-        DataService dataService)
-    {
-        _mojangLauncherService = mojangLauncherService;
-        _configurationService = configurationService;
-        _navigationService = navigationService;
-        _dataService = dataService;
-    }
-
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         if (token.IsCancellationRequested)
             return;
-        var news = await _dataService.GetMinecraftNewsAsync();
+        var news = await dataService.GetMinecraftNewsAsync();
         var models = news
                     .Entries.Take(25)
                     .Select((x, i) =>
                      {
-                         var url = _mojangLauncherService.GetAbsoluteImageUrl(x.PlayPageImage.Url);
+                         var url = mojangLauncherService.GetAbsoluteImageUrl(x.PlayPageImage.Url);
 
                          return new MinecraftNewsModel(url, x.Category, x.Title, x.Text, x.ReadMoreLink, x.NewsType)
                          {
@@ -60,11 +52,6 @@ public partial class MarketplacePortalViewModel : ViewModelBase
 
     #region Injected
 
-    private readonly MojangLauncherService _mojangLauncherService;
-    private readonly ConfigurationService _configurationService;
-    private readonly NavigationService _navigationService;
-    private readonly DataService _dataService;
-
     #endregion
 
     #region Commands
@@ -80,14 +67,14 @@ public partial class MarketplacePortalViewModel : ViewModelBase
     [RelayCommand]
     private void GotoSearchView(string? query)
     {
-        if (_configurationService.Value.ApplicationSuperPowerActivated)
+        if (configurationService.Value.ApplicationSuperPowerActivated)
             if (query == "/gamemode 1")
             {
-                _navigationService.Navigate<UnknownView>();
+                navigationService.Navigate<UnknownView>();
                 return;
             }
 
-        _navigationService.Navigate<MarketplaceSearchView>(new MarketplaceSearchViewModel.SearchArguments(query, null));
+        navigationService.Navigate<MarketplaceSearchView>(new MarketplaceSearchViewModel.SearchArguments(query, null));
     }
 
     #endregion

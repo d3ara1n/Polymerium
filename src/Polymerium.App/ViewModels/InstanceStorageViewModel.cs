@@ -3,8 +3,5 @@ using Polymerium.Trident.Services;
 
 namespace Polymerium.App.ViewModels;
 
-public class InstanceStorageViewModel : InstanceViewModelBase
-{
-    public InstanceStorageViewModel(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager) :
-        base(bag, instanceManager, profileManager) { }
-}
+public class InstanceStorageViewModel(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager)
+    : InstanceViewModelBase(bag, instanceManager, profileManager);

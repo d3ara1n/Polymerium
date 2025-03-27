@@ -47,7 +47,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
         // 不同于依赖解决方案，由于各个资源平台本身就没考虑过版本兼容性，这里直接按可用的最高版本选择
         var tasks = Enumerable.Range(0, Math.Max(Environment.ProcessorCount / 2, 1)).Select(_ => ResolveAsync());
 
-        await Task.WhenAll(tasks);
+        await Task.WhenAll(tasks).ConfigureAwait(false);
 
         foreach (var (key, value) in flatten)
             builder.AddParcel(key.Label,
@@ -75,7 +75,7 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                                                             Filter.Empty with
                                                             {
                                                                 Loader = loader, Version = Context.Setup.Version
-                                                            });
+                                                            }).ConfigureAwait(false);
                     logger.LogDebug("Resolved {} package {}({}/{}) with {}",
                                     parsed.IsPhantom ? "phantom" : "non-phantom",
                                     resolved.ProjectName,

@@ -21,7 +21,7 @@ public class PrismLauncherService(IPrismLauncherClient client)
 
     public async Task<ComponentIndex> GetVersionsAsync(string uid, CancellationToken token)
     {
-        var index = await client.GetComponentIndexAsync(uid, token);
+        var index = await client.GetComponentIndexAsync(uid, token).ConfigureAwait(false);
         return index;
     }
 
@@ -30,7 +30,7 @@ public class PrismLauncherService(IPrismLauncherClient client)
 
     public async Task<Component> GetVersionAsync(string uid, string version, CancellationToken token)
     {
-        var component = await client.GetComponentAsync(uid, version, token);
+        var component = await client.GetComponentAsync(uid, version, token).ConfigureAwait(false);
         return component;
     }
 
@@ -45,7 +45,7 @@ public class PrismLauncherService(IPrismLauncherClient client)
                                          ?? requirement.Equal
                                          ?? throw new
                                                 FormatException($"{version.Uid}.json/requires[{requirement.Uid}].equals|suggests"),
-                                            token);
+                                            token).ConfigureAwait(false);
             libraries.AddRange(sub.Libraries ?? Enumerable.Empty<Component.Library>());
         }
 
@@ -54,7 +54,7 @@ public class PrismLauncherService(IPrismLauncherClient client)
 
     public async Task<RuntimeManifest> GetRuntimeAsync(uint major, CancellationToken token)
     {
-        var manifest = await client.GetRuntimeAsync(major, token);
+        var manifest = await client.GetRuntimeAsync(major, token).ConfigureAwait(false);
         return manifest;
     }
 
