@@ -55,7 +55,8 @@
                         TextAlignment="Center"
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>
-                <husk:Frame x:Name="Root" CanGoBackOutOfStack="True" ClipToBounds="False" />
+                <!-- NOTE: ClipToBounds=False 是为了让 Page.Effect 不被隐藏，为了实现左右布局对换而不得不去掉了 Page.Margin.Left|Right -->
+                <husk:Frame x:Name="Root" CanGoBackOutOfStack="True" />
             </Panel>
         </DockPanel>
         <DockPanel x:Name="Sidebar" Grid.Column="1">

@@ -19,6 +19,7 @@ public partial class SettingsViewModel : ViewModelBase
 
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
+        SidebarPlacement = configurationService.Value.ApplicationLeftPanelMode ? 0 : 1;
         Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
                 ?? Languages.First();
         JavaHome8 = configurationService.Value.RuntimeJavaHome8;
@@ -66,6 +67,16 @@ public partial class SettingsViewModel : ViewModelBase
 
     partial void OnSuperPowerActivatedChanged(bool value) =>
         _configurationService.Value.ApplicationSuperPowerActivated = value;
+
+    #endregion
+
+    #region SidebarPlacement
+
+    [ObservableProperty]
+    public partial int SidebarPlacement { get; set; }
+
+    partial void OnSidebarPlacementChanged(int value) =>
+        _configurationService.Value.ApplicationLeftPanelMode = value == 0;
 
     #endregion
 

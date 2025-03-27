@@ -4,6 +4,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+           xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
            xmlns:controls="using:Polymerium.App.Controls"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:m="using:Polymerium.App.Models"
@@ -17,7 +18,27 @@
         </controls:SettingsEntry>
         <husk:Divider />
         <controls:SettingsEntry Icon="LocalLanguage" Title="Display and Appearance"
-                                Summary="The language the application displays in">
+                                Summary="The look, the language, the font">
+            <controls:SettingsEntryItem Header="Sidebar Placement">
+                <TabStrip SelectedIndex="{Binding SidebarPlacement,Mode=TwoWay}">
+                    <TabStripItem>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <icons:PackIconLucide Kind="PanelLeft" Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
+                            <husk:Divider Orientation="Vertical" />
+                            <TextBlock Text="Left" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabStripItem>
+                    <TabStripItem>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock Text="Right" VerticalAlignment="Center" />
+                            <husk:Divider Orientation="Vertical" />
+                            <icons:PackIconLucide Kind="PanelRight" Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabStripItem>
+                </TabStrip>
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Language">
                 <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language,Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
