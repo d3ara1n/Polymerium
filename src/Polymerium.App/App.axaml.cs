@@ -182,7 +182,7 @@ public class App : Application
         #region Window Configuration
 
         var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();
-
+        window.IsLeftPanelMode = configuration.Value.ApplicationLeftPanelMode;
         // 并不还原窗体大小，没必要
 
         #endregion

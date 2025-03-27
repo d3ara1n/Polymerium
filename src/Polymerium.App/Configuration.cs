@@ -5,6 +5,7 @@ namespace Polymerium.App;
 public class Configuration
 {
     public const string APPLICATION_SUPERPOWER_ACTIVATED = "Application.SuperpowerActivated";
+    public const string APPLICATION_LEFT_PANEL_MODE = "Application.LeftPanelMode";
     public const string APPLICATION_STYLE = "Application.Style";
     public const string APPLICATION_LANGUAGE = "Application.Language";
     public const string RUNTIME_JAVA_HOME_8 = "Runtime.Java.Home.8";
@@ -20,6 +21,7 @@ public class Configuration
     private static readonly IReadOnlyDictionary<string, object?> Defaults = new Dictionary<string, object?>
     {
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
+        { APPLICATION_LEFT_PANEL_MODE, false },
         { APPLICATION_STYLE, "Mica" },
         { APPLICATION_LANGUAGE, "en_US" },
         { RUNTIME_JAVA_HOME_8, string.Empty },
@@ -34,6 +36,7 @@ public class Configuration
     };
 
     public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
+    public bool ApplicationLeftPanelMode { get; set; } = AccessDefault<bool>(APPLICATION_LEFT_PANEL_MODE);
     public string ApplicationLanguage { get; set; } = AccessDefault<string>(APPLICATION_STYLE);
     public string RuntimeJavaHome8 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_8);
     public string RuntimeJavaHome11 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_11);
