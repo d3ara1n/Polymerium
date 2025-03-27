@@ -67,7 +67,7 @@ public class NotificationService
         NotificationLevel level = NotificationLevel.Information) =>
         Dispatcher.UIThread.Post(() =>
         {
-            NotificationItem? item = new()
+            var item = new NotificationItem
             {
                 Content = message, Title = title, Level = level, IsProgressBarVisible = true
             };

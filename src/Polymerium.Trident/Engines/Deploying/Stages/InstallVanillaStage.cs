@@ -15,11 +15,11 @@ public class InstallVanillaStage(
 
         var version = await prismLauncherService.GetVersionAsync(PrismLauncherService.UID_MINECRAFT,
                                                                  Context.Setup.Version,
-                                                                 token);
+                                                                 token).ConfigureAwait(false);
         logger.LogInformation("Got version index {version}({uid})", version.Version, version.Uid);
 
         // Libraries
-        var patched = await prismLauncherService.GetPatchedLibraries(version, token);
+        var patched = await prismLauncherService.GetPatchedLibraries(version, token).ConfigureAwait(false);
         PrismLauncherService.AddValidatedLibrariesToArtifact(builder, patched);
 
         logger.LogInformation("Libraries added, refer to artifact file for details");

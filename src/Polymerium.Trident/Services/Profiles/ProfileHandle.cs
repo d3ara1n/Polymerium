@@ -47,7 +47,7 @@ internal class ProfileHandle(string key, Profile value, string path, JsonSeriali
 
         _isDisposing = true;
 
-        await SaveAsync();
+        await SaveAsync().ConfigureAwait(false);
     }
 
     #endregion

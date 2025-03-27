@@ -17,7 +17,7 @@ public class CurseForgeImporter : IProfileImporter
         ["quilt"] = LoaderHelper.LOADERID_QUILT
     };
 
-    private bool TryExtractLoader(
+    private static bool TryExtractLoader(
         IEnumerable<ManifestModel.MinecraftModel.ModLoaderModel> loaders,
         out (string Identity, string Version) loader)
     {
@@ -43,7 +43,7 @@ public class CurseForgeImporter : IProfileImporter
     public async Task<ImportedProfileContainer> ExtractAsync(CompressedProfilePack pack)
     {
         await using var manifestStream = pack.Open(IndexFileName);
-        var manifest = await JsonSerializer.DeserializeAsync<ManifestModel>(manifestStream, JsonSerializerOptions.Web);
+        var manifest = await JsonSerializer.DeserializeAsync<ManifestModel>(manifestStream, JsonSerializerOptions.Web).ConfigureAwait(false);
         if (manifest is null || !TryExtractLoader(manifest.Minecraft.ModLoaders, out var loader))
             throw new FormatException($"{IndexFileName} is not a valid manifest");
 

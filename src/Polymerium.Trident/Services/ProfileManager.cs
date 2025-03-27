@@ -17,7 +17,7 @@ public class ProfileManager : IDisposable
 
     #endregion
 
-    private readonly IList<ProfileHandle> _profiles = new List<ProfileHandle>();
+    private readonly List<ProfileHandle> _profiles = [];
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly IList<ReservedKey> ReservedKeys = new List<ReservedKey>();
 

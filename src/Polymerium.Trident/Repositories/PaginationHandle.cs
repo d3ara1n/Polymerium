@@ -18,7 +18,7 @@ public class PaginationHandle<T>(
         if (_currentPage == PageIndex && _currentItems.Any())
             return _currentItems;
 
-        var rv = await next(PageIndex);
+        var rv = await next(PageIndex).ConfigureAwait(false);
         var currentItems = rv as T[] ?? rv.ToArray();
         _currentItems = currentItems;
         _currentPage = PageIndex;

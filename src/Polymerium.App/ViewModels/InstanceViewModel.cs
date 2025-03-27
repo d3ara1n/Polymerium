@@ -17,12 +17,9 @@ using Trident.Abstractions;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceViewModel : InstanceViewModelBase
+public partial class InstanceViewModel(ViewBag bag, ProfileManager profileManager, InstanceManager instanceManager)
+    : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    public InstanceViewModel(ViewBag bag, ProfileManager profileManager, InstanceManager instanceManager) :
-        base(bag, instanceManager, profileManager) { }
-
-
     protected override Task OnInitializedAsync(CancellationToken token)
     {
         Dispatcher.UIThread.Post(() => SelectedPage = PageEntries.FirstOrDefault());

@@ -20,19 +20,19 @@ public class ProcessLoaderStage(
                 switch (parsed.Identity)
                 {
                     case LoaderHelper.LOADERID_FORGE:
-                        await InstallForgeAsync(builder, PrismLauncherService.UID_FORGE, parsed.Version, token);
+                        await InstallForgeAsync(builder, PrismLauncherService.UID_FORGE, parsed.Version, token).ConfigureAwait(false);
                         break;
 
                     case LoaderHelper.LOADERID_NEOFORGE:
-                        await InstallForgeAsync(builder, PrismLauncherService.UID_NEOFORGE, parsed.Version, token);
+                        await InstallForgeAsync(builder, PrismLauncherService.UID_NEOFORGE, parsed.Version, token).ConfigureAwait(false);
                         break;
 
                     case LoaderHelper.LOADERID_FABRIC:
-                        await InstallFabricAsync(builder, PrismLauncherService.UID_FABRIC, parsed.Version, token);
+                        await InstallFabricAsync(builder, PrismLauncherService.UID_FABRIC, parsed.Version, token).ConfigureAwait(false);
                         break;
 
                     case LoaderHelper.LOADERID_QUILT:
-                        await InstallFabricAsync(builder, PrismLauncherService.UID_QUILT, parsed.Version, token);
+                        await InstallFabricAsync(builder, PrismLauncherService.UID_QUILT, parsed.Version, token).ConfigureAwait(false);
                         break;
 
                     default:
@@ -44,7 +44,7 @@ public class ProcessLoaderStage(
 
     private async Task InstallForgeAsync(DataLockBuilder builder, string uid, string version, CancellationToken token)
     {
-        var index = await prismLauncherService.GetVersionAsync(uid, version, token);
+        var index = await prismLauncherService.GetVersionAsync(uid, version, token).ConfigureAwait(false);
 
         PrismLauncherService.AddValidatedLibrariesToArtifact(builder,
                                                              index.Libraries ?? Enumerable.Empty<Component.Library>());
@@ -83,14 +83,14 @@ public class ProcessLoaderStage(
 
     private async Task InstallFabricAsync(DataLockBuilder builder, string uid, string version, CancellationToken token)
     {
-        var index = await prismLauncherService.GetVersionAsync(uid, version, token);
+        var index = await prismLauncherService.GetVersionAsync(uid, version, token).ConfigureAwait(false);
 
         PrismLauncherService.AddValidatedLibrariesToArtifact(builder,
                                                              index.Libraries ?? Enumerable.Empty<Component.Library>());
 
         var intermediary = await prismLauncherService.GetVersionAsync(PrismLauncherService.UID_INTERMEDIARY,
                                                                       Context.Setup.Version,
-                                                                      token);
+                                                                      token).ConfigureAwait(false);
 
         PrismLauncherService.AddValidatedLibrariesToArtifact(builder,
                                                              intermediary.Libraries

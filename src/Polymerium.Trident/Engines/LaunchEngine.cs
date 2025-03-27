@@ -66,7 +66,7 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
             {
                 _cancellationToken.ThrowIfCancellationRequested();
 
-                if (await _channel.Reader.WaitToReadAsync(_cancellationToken))
+                if (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                     if (_channel.Reader.TryRead(out var piece))
                     {
                         Current = piece;

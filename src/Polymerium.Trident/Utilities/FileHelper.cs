@@ -64,8 +64,8 @@ public static class FileHelper
             if (parent != null && !Directory.Exists(parent))
                 Directory.CreateDirectory(parent);
             var writer = new FileStream(path, FileMode.Create, FileAccess.Write);
-            await stream.CopyToAsync(writer);
-            await writer.FlushAsync();
+            await stream.CopyToAsync(writer).ConfigureAwait(false);
+            await writer.FlushAsync().ConfigureAwait(false);
             writer.Close();
             return true;
         }

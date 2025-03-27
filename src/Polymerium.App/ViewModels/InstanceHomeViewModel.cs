@@ -20,22 +20,15 @@ using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.ViewModels;
 
-public partial class InstanceHomeViewModel : InstanceViewModelBase
+public partial class InstanceHomeViewModel(
+    ViewBag bag,
+    ProfileManager profileManager,
+    OverlayService overlayService,
+    InstanceManager instanceManager,
+    NotificationService notificationService,
+    ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     private CompositeDisposable? _subscription;
-
-    public InstanceHomeViewModel(
-        ViewBag bag,
-        ProfileManager profileManager,
-        OverlayService overlayService,
-        InstanceManager instanceManager,
-        NotificationService notificationService,
-        ConfigurationService configurationService) : base(bag, instanceManager, profileManager)
-    {
-        _overlayService = overlayService;
-        _notificationService = notificationService;
-        _configurationService = configurationService;
-    }
 
     protected override void OnUpdateModel(string key, Profile profile)
     {
@@ -93,7 +86,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     #region Commands
 
     [RelayCommand]
-    private void SwitchAccount() => _overlayService.PopDialog(new AccountPickerDialog());
+    private void SwitchAccount() => overlayService.PopDialog(new AccountPickerDialog());
 
     [RelayCommand]
     private void Play()
@@ -104,15 +97,15 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
             var options = new LaunchOptions(javaHomeLocator: major => profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
                                                                           major switch
                                                                           {
-                                                                              8 => _configurationService.Value
+                                                                              8 => configurationService.Value
                                                                                  .RuntimeJavaHome8,
-                                                                              11 => _configurationService.Value
+                                                                              11 => configurationService.Value
                                                                                  .RuntimeJavaHome11,
-                                                                              16 => _configurationService.Value
+                                                                              16 => configurationService.Value
                                                                                  .RuntimeJavaHome16,
-                                                                              17 => _configurationService.Value
+                                                                              17 => configurationService.Value
                                                                                  .RuntimeJavaHome17,
-                                                                              21 => _configurationService.Value
+                                                                              21 => configurationService.Value
                                                                                  .RuntimeJavaHome21,
                                                                               _ => throw new
                                                                                   ArgumentOutOfRangeException(nameof
@@ -124,21 +117,21 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
                                                                           InvalidOperationException("Java home fallback unset"),
                                             additionalArguments:
                                             profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
-                                                                _configurationService.Value
+                                                                configurationService.Value
                                                                    .GameJavaAdditionalArguments),
                                             maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                                                                           _configurationService.Value
+                                                                           configurationService.Value
                                                                               .GameJavaMaxMemory),
                                             windowSize:
-                                            (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, _configurationService.Value.GameWindowInitialWidth),
+                                            (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, configurationService.Value.GameWindowInitialWidth),
                                              profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
-                                                                 _configurationService.Value.GameWindowInitialHeight)),
+                                                                 configurationService.Value.GameWindowInitialHeight)),
                                             launchMode: Mode);
             InstanceManager.DeployAndLaunch(Basic.Key, options);
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "Update failed");
+            notificationService.PopMessage(ex, "Update failed");
         }
     }
 
@@ -173,7 +166,7 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
         {
             var toast = new InstanceDashboardToast();
             toast.SetItems(launch.ScrapBuffer);
-            _overlayService.PopToast(toast);
+            overlayService.PopToast(toast);
         }
     }
 
@@ -191,10 +184,6 @@ public partial class InstanceHomeViewModel : InstanceViewModelBase
     #endregion
 
     #region Injected
-
-    private readonly OverlayService _overlayService;
-    private readonly NotificationService _notificationService;
-    private readonly ConfigurationService _configurationService;
 
     #endregion
 

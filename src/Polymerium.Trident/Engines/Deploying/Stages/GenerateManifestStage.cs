@@ -17,7 +17,7 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
         manifest.PresentFiles.Add(new EntityManifest.PresentFile(indexPath,
                                                                  artifact.AssetIndex.Url,
                                                                  artifact.AssetIndex.Sha1));
-        var index = await GetAssetIndexAsync(indexPath, artifact.AssetIndex.Url, artifact.AssetIndex.Sha1)
+        var index = await GetAssetIndexAsync(indexPath, artifact.AssetIndex.Url, artifact.AssetIndex.Sha1).ConfigureAwait(false)
                  ?? throw new
                         InvalidOperationException("Asset index file is broken or not matched with builtin models");
         foreach (var obj in index.Objects)
@@ -82,14 +82,14 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
         if (File.Exists(indexFile))
         {
             await using var reader = File.OpenRead(indexFile);
-            var computed = Convert.ToHexStringLower(await SHA1.HashDataAsync(reader));
+            var computed = Convert.ToHexStringLower(await SHA1.HashDataAsync(reader).ConfigureAwait(false));
             reader.Position = 0;
             if (computed == hash)
-                return await JsonSerializer.DeserializeAsync<MinecraftAssetIndex>(reader, JsonSerializerOptions.Web);
+                return await JsonSerializer.DeserializeAsync<MinecraftAssetIndex>(reader, JsonSerializerOptions.Web).ConfigureAwait(false);
         }
 
         using var client = factory.CreateClient();
-        return await client.GetFromJsonAsync<MinecraftAssetIndex>(url, JsonSerializerOptions.Web);
+        return await client.GetFromJsonAsync<MinecraftAssetIndex>(url, JsonSerializerOptions.Web).ConfigureAwait(false);
     }
 
     private record MinecraftAssetIndex(IDictionary<string, MinecraftAssetIndex.MinecraftAssetIndexObject> Objects)

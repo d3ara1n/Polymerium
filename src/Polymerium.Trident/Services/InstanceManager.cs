@@ -65,7 +65,7 @@ public class InstanceManager(
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new DeployTracker(key,
-                                        async t => await DeployInternalAsync((DeployTracker)t),
+                                        async t => await DeployInternalAsync((DeployTracker)t).ConfigureAwait(false),
                                         t =>
                                         {
                                             TrackerOnCompleted(t);
@@ -86,15 +86,15 @@ public class InstanceManager(
         HttpClient client,
         CancellationToken token)
     {
-        var stream = await client.GetStreamAsync(download, token);
+        var stream = await client.GetStreamAsync(download, token).ConfigureAwait(false);
         var memory = new MemoryStream();
         var buffer = new byte[8 * 1024];
         int read;
         var totalRead = 0L;
         do
         {
-            read = await stream.ReadAsync(buffer, token);
-            await memory.WriteAsync(buffer.AsMemory(0, read), token);
+            read = await stream.ReadAsync(buffer, token).ConfigureAwait(false);
+            await memory.WriteAsync(buffer.AsMemory(0, read), token).ConfigureAwait(false);
             totalRead += read;
             var progress = (double)(totalRead * 100) / size;
             reporter?.OnNext(progress);
@@ -108,9 +108,9 @@ public class InstanceManager(
 
     private static async Task ExtractIconFileAsync(string key, ImportedProfileContainer container, HttpClient client)
     {
-        var iconReader = await client.GetStreamAsync(container.IconUrl);
+        var iconReader = await client.GetStreamAsync(container.IconUrl).ConfigureAwait(false);
         var iconMemory = new MemoryStream();
-        await iconReader.CopyToAsync(iconMemory);
+        await iconReader.CopyToAsync(iconMemory).ConfigureAwait(false);
         iconMemory.Position = 0;
         var extension = FileHelper.GuessBitmapExtension(iconMemory);
         var iconPath = PathDef.Default.FileOfIcon(key, extension);
@@ -119,8 +119,8 @@ public class InstanceManager(
             Directory.CreateDirectory(dir);
         iconMemory.Position = 0;
         var iconWriter = new FileStream(iconPath, FileMode.Create);
-        await iconMemory.CopyToAsync(iconWriter);
-        await iconWriter.FlushAsync();
+        await iconMemory.CopyToAsync(iconWriter).ConfigureAwait(false);
+        await iconWriter.FlushAsync().ConfigureAwait(false);
         iconWriter.Close();
         iconMemory.Close();
         iconReader.Close();
@@ -136,7 +136,7 @@ public class InstanceManager(
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new DeployTracker(key,
-                                        async t => await DeployInternalAsync((DeployTracker)t),
+                                        async t => await DeployInternalAsync((DeployTracker)t).ConfigureAwait(false),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, tracker);
@@ -195,8 +195,8 @@ public class InstanceManager(
             }
 
             logger.LogInformation("Enter stage {}", stage.GetType().Name);
-            await stage.ProcessAsync(tracker.Token);
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            await stage.ProcessAsync(tracker.Token).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
         }
 
         watch.Stop();
@@ -213,7 +213,7 @@ public class InstanceManager(
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new LaunchTracker(key,
-                                        async t => await LaunchInternalAsync((LaunchTracker)t, options),
+                                        async t => await LaunchInternalAsync((LaunchTracker)t, options).ConfigureAwait(false),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceLaunching?.Invoke(this, tracker);
@@ -232,7 +232,7 @@ public class InstanceManager(
         if (found)
         {
             var artifact =
-                JsonSerializer.Deserialize<DataLock>(await File.ReadAllTextAsync(artifactPath, tracker.Token),
+                JsonSerializer.Deserialize<DataLock>(await File.ReadAllTextAsync(artifactPath, tracker.Token).ConfigureAwait(false),
                                                      JsonSerializerOptions.Web);
 
             if (artifact == null || !artifact.Verify(tracker.Key, profile.Setup))
@@ -283,7 +283,7 @@ public class InstanceManager(
                 var process = igniter.Build();
                 await File.WriteAllLinesAsync(Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key),
                                                            "trident.launch.dump.txt"),
-                                              process.StartInfo.ArgumentList);
+                                              process.StartInfo.ArgumentList).ConfigureAwait(false);
                 if (options.Mode == LaunchMode.Managed)
                 {
                     var launcher = new LaunchEngine(process);
@@ -297,7 +297,7 @@ public class InstanceManager(
                     }
                     else
                     {
-                        await process.WaitForExitAsync(tracker.Token);
+                        await process.WaitForExitAsync(tracker.Token).ConfigureAwait(false);
 
                         if (process.ExitCode != 0)
                             throw new Exception($"The process has exited with non-zero code {process.ExitCode}");
@@ -312,7 +312,7 @@ public class InstanceManager(
 
                 // profile.Records.Timeline.Add(new Profile.RecordData.TimelinePoint(true,
                 //                                  profile.Reference,
-                //                                  Profile.RecordData.TimelinePoint.TimelimeAction.Play,
+                //                                  Profile.RecordData.TimelinePoint.TimelineAction.Play,
                 //                                  beginTime,
                 //                                  DateTimeOffset.Now));
             }
@@ -321,7 +321,7 @@ public class InstanceManager(
                 logger.LogError(e, "Launch failed due to exception: {ex}", e.Message);
                 // profile.Records.Timeline.Add(new Profile.RecordData.TimelinePoint(false,
                 //                                  profile.Reference,
-                //                                  Profile.RecordData.TimelinePoint.TimelimeAction.Play,
+                //                                  Profile.RecordData.TimelinePoint.TimelineAction.Play,
                 //                                  beginTime,
                 //                                  DateTimeOffset.Now));
                 throw;
@@ -348,7 +348,7 @@ public class InstanceManager(
                                                                                label,
                                                                                ns,
                                                                                pid,
-                                                                               vid),
+                                                                               vid).ConfigureAwait(false),
                                          TrackerOnCompleted);
         _trackers.Add(reserved.Key, tracker);
         InstanceInstalling?.Invoke(this, tracker);
@@ -369,29 +369,29 @@ public class InstanceManager(
                                                       ns,
                                                       pid,
                                                       vid,
-                                                      Filter.Empty with { Kind = ResourceKind.Modpack });
+                                                      Filter.Empty with { Kind = ResourceKind.Modpack }).ConfigureAwait(false);
         var size = package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
 
-        var memory = await DownloadFileAsync(package.Download, size, tracker.ProgressStream, client, tracker.Token);
+        var memory = await DownloadFileAsync(package.Download, size, tracker.ProgressStream, client, tracker.Token).ConfigureAwait(false);
 
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 
         tracker.ProgressStream.OnNext(100d);
-        await Task.Delay(TimeSpan.FromSeconds(1));
+        await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
 
         tracker.ProgressStream.OnNext(null);
         CompressedProfilePack pack = new(memory) { Reference = package };
-        var container = await importers.ImportAsync(pack);
+        var container = await importers.ImportAsync(pack).ConfigureAwait(false);
 
         if (container.IconUrl is not null)
-            await ExtractIconFileAsync(key.Key, container, client);
+            await ExtractIconFileAsync(key.Key, container, client).ConfigureAwait(false);
 
 
         logger.LogDebug("{} files collected to extract", container.ImportFileNames.Count);
 
-        await importers.ExtractImportFilesAsync(key.Key, container, pack);
+        await importers.ExtractImportFilesAsync(key.Key, container, pack).ConfigureAwait(false);
 
         profileManager.Add(key, container.Profile);
 
@@ -411,7 +411,7 @@ public class InstanceManager(
 
         var tracker = new UpdateTracker(key,
                                         async t =>
-                                            await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid),
+                                            await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid).ConfigureAwait(false),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceUpdating?.Invoke(this, tracker);
@@ -432,24 +432,24 @@ public class InstanceManager(
                                                       ns,
                                                       pid,
                                                       vid,
-                                                      Filter.Empty with { Kind = ResourceKind.Modpack });
+                                                      Filter.Empty with { Kind = ResourceKind.Modpack }).ConfigureAwait(false);
         var size = package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
 
-        var memory = await DownloadFileAsync(package.Download, size, tracker.ProgressStream, client, tracker.Token);
+        var memory = await DownloadFileAsync(package.Download, size, tracker.ProgressStream, client, tracker.Token).ConfigureAwait(false);
 
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 
         tracker.ProgressStream.OnNext(100d);
-        await Task.Delay(TimeSpan.FromSeconds(1));
+        await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
 
         tracker.ProgressStream.OnNext(null);
         CompressedProfilePack pack = new(memory) { Reference = package };
-        var container = await importers.ImportAsync(pack);
+        var container = await importers.ImportAsync(pack).ConfigureAwait(false);
 
         if (container.IconUrl is not null)
-            await ExtractIconFileAsync(key, container, client);
+            await ExtractIconFileAsync(key, container, client).ConfigureAwait(false);
 
         logger.LogDebug("{} files collected to extract", container.ImportFileNames.Count);
 
@@ -458,7 +458,7 @@ public class InstanceManager(
         if (Directory.Exists(importDir))
             Directory.Delete(importDir, true);
 
-        await importers.ExtractImportFilesAsync(key, container, pack);
+        await importers.ExtractImportFilesAsync(key, container, pack).ConfigureAwait(false);
 
         profileManager.Update(key,
                               container.Profile.Setup.Source,
