@@ -10,7 +10,7 @@ namespace Polymerium.Trident.Services;
 
 public class RepositoryAgent
 {
-    private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromHours(72);
+    private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromDays(7);
     private readonly IDistributedCache _cache;
     private readonly ILogger<RepositoryAgent> _logger;
     private readonly IReadOnlyDictionary<string, IRepository> _repositories;

@@ -465,7 +465,7 @@ public class InstanceManager(
                               container.Profile.Name,
                               container.Profile.Setup.Version,
                               container.Profile.Setup.Loader,
-                              container.Profile.Setup.Stage.AsReadOnly(),
+                              container.Profile.Setup.Packages.Select(x => x.Purl).ToList(),
                               container.Profile.Overrides);
 
         logger.LogInformation("{} updated", key);
