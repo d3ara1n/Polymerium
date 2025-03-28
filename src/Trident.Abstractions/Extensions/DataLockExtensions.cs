@@ -15,12 +15,12 @@ public static class DataLockExtensions
          || self.Viability.Loader != setup.Loader)
             return false;
 
-        if (self.Viability.Packages.Count != setup.Stage.Count + setup.Stash.Count)
+        if (self.Viability.Packages.Count != setup.Packages.Count)
             return false;
 
         var map = self.Viability.Packages.Distinct().ToDictionary(x => x, _ => 0);
 
-        foreach (var check in setup.Stage.Concat(setup.Stash))
+        foreach (var check in setup.Packages.Where(x => x.IsEnabled).Select(x => x.Purl))
         {
             if (!map.TryGetValue(check, out var value))
                 return false;

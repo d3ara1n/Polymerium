@@ -16,20 +16,20 @@ public class Profile(string name, Profile.Rice setup, IDictionary<string, object
 
     #region Nested type: Rice
 
-    public class Rice(
-        string? source,
-        string version,
-        string? loader,
-        IList<string>? stage,
-        IList<string>? stash,
-        IList<string>? draft)
+    public class Rice(string? source, string version, string? loader, IList<Rice.Entry>? packages)
     {
         public string? Source { get; set; } = source;
         public string Version { get; set; } = version ?? throw new ArgumentNullException(nameof(version));
         public string? Loader { get; set; } = loader;
-        public IList<string> Stage { get; private set; } = stage ?? new List<string>();
-        public IList<string> Stash { get; private set; } = stash ?? new List<string>();
-        public IList<string> Draft { get; private set; } = draft ?? new List<string>();
+        public IList<Entry> Packages { get; private set; } = packages ?? new List<Entry>();
+
+        public class Entry(string purl, bool isEnabled, string? source, IList<string>? tags)
+        {
+            public string Purl { get; set; } = purl ?? throw new ArgumentNullException(nameof(purl));
+            public bool IsEnabled { get; set; } = isEnabled;
+            public string? Source { get; set; } = source;
+            public IList<string> Tags { get; private set; } = tags ?? new List<string>();
+        }
     }
 
     #endregion

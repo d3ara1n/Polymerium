@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions;
 using Trident.Abstractions.FileModels;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Services;
 
@@ -155,9 +156,9 @@ public class ProfileManager : IDisposable
         handle.Value.Setup.Source = source;
         handle.Value.Setup.Version = version;
         handle.Value.Setup.Loader = loader;
-        handle.Value.Setup.Stage.Clear();
-        foreach (var package in packages)
-            handle.Value.Setup.Stage.Add(package);
+
+        // TODO: 合并 Packages[.Source == source]
+        var changeset = packages.ToDictionary(PackageHelper.ExtractProjectIdentityIfValid);
 
         foreach (var (k, v) in overrides)
             handle.Value.Overrides[k] = v;

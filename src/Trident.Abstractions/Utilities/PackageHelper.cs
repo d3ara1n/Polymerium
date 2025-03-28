@@ -27,6 +27,9 @@ public static class PackageHelper
         return false;
     }
 
+    public static string ExtractProjectIdentityIfValid(string purl) => 
+        TryParse(purl, out var result) ? ToPurl(result.Label, result.Namespace, result.Pid, null) : purl;
+
     public static string ToPurl(string label, string? ns, string pid, string? vid)
     {
         var sb = new StringBuilder();

@@ -171,7 +171,7 @@
                         <cp:PackageContainer x:Name="StageContainer" DragDrop.AllowDrop="True" Items="{Binding Stage}"
                                              TotalCount="{Binding StageCount}"
                                              OpenUrlCommand="{Binding OpenSourceUrlCommand}"
-                                             IsLocked="{Binding Reference,Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                             IsLocked="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull}}" />
                     </TabItem>
                     <TabItem Header="Stash">
                         <cp:PackageContainer x:Name="StashContainer" DragDrop.AllowDrop="True" Items="{Binding Stash}"
