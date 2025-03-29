@@ -44,7 +44,8 @@
                   Margin="{StaticResource PageHeaderlessContentMargin}">
                 <StackPanel Grid.Column="0" Spacing="4">
                     <TextBlock Text="{Binding Basic.Name,FallbackValue=Name}"
-                               FontSize="{StaticResource ExtraLargeFontSize}" />
+                               FontSize="{StaticResource ExtraLargeFontSize}" TextWrapping="Wrap" MaxLines="3"
+                               TextTrimming="CharacterEllipsis" />
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <TextBlock Text="Minecraft:" />
                         <TextBlock Text="{Binding Basic.Version,FallbackValue=Version}" />
@@ -54,15 +55,10 @@
                         <TextBlock Text="{Binding LoaderLabel,FallbackValue=None}" />
                         <HyperlinkButton Content="Switch" />
                     </StackPanel>
-                    <husk:InfoBar Background="{DynamicResource Layer0BackgroundBrush}">
-                        <TextBlock
-                            Text="[Stage] and [Stash] apply items to deployment while [Draft] does not. Instance imported online will lock the [Stage] up."
-                            TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" />
-                    </husk:InfoBar>
                 </StackPanel>
                 <husk:SkeletonContainer Grid.Column="2" CornerRadius="{StaticResource MediumCornerRadius}"
                                         IsLoading="{Binding Reference,Converter={x:Static ObjectConverters.IsNull}}">
-                    <husk:Card MaxWidth="360" BorderThickness="2"
+                    <husk:Card MaxWidth="320" BorderThickness="2"
                                BorderBrush="{DynamicResource ControlAccentBorderBrush}"
                                IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull}}">
                         <Grid RowDefinitions="*,8,Auto">
@@ -150,14 +146,21 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <Button Grid.Column="2" Content="Update" Command="{Binding UpdateCommand}"
+                                <Button Grid.Column="2" Command="{Binding UpdateCommand}"
                                         CommandParameter="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}"
-                                        IsEnabled="{Binding Reference.CurrentVersion.IsCurrent,FallbackValue=False,Converter={x:Static BoolConverters.Not}}" />
+                                        IsEnabled="{Binding Reference.CurrentVersion.IsCurrent,FallbackValue=False,Converter={x:Static BoolConverters.Not}}">
+                                    <!-- <icons:PackIconLucide Kind="Soup" -->
+                                    <!--                       Height="{StaticResource MediumFontSize}" -->
+                                    <!--                       Width="{StaticResource MediumFontSize}" -->
+                                    <!--                       VerticalAlignment="Center" /> -->
+                                    <fi:SymbolIcon Symbol="BoxArrowUp" FontSize="{StaticResource MediumFontSize}" />
+                                </Button>
                                 <Button Grid.Column="4" Command="{Binding ViewDetailsCommand}">
-                                    <icons:PackIconLucide Kind="AppWindow"
-                                                          Height="{StaticResource MediumFontSize}"
-                                                          Width="{StaticResource MediumFontSize}"
-                                                          VerticalAlignment="Center" />
+                                    <!-- <icons:PackIconLucide Kind="AppWindow" -->
+                                    <!--                       Height="{StaticResource MediumFontSize}" -->
+                                    <!--                       Width="{StaticResource MediumFontSize}" -->
+                                    <!--                       VerticalAlignment="Center" /> -->
+                                    <fi:SymbolIcon Symbol="WindowNew" FontSize="{StaticResource MediumFontSize}" />
                                 </Button>
                             </Grid>
                         </Grid>

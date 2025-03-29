@@ -90,7 +90,7 @@
                 <TextBox Watermark="{Binding JavaHomeWatermark,FallbackValue=Unset}"
                          Text="{Binding JavaHomeOverride,Mode=TwoWay,FallbackValue={x:Null}}">
                     <TextBox.InnerRightContent>
-                        <StackPanel Orientation="Horizontal" Margin="4">
+                        <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding $parent[TextBox].Clear}">
                                 <icons:PackIconLucide Kind="Delete" Height="{StaticResource SmallFontSize}" />
                             </Button>

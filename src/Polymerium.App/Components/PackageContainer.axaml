@@ -47,7 +47,7 @@
                           ItemsSource="{Binding $parent[cp:PackageContainer].View}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="m:InstancePackageModel">
-                        <controls:PackageEntryButton Margin="0,2"
+                        <controls:PackageEntryButton Margin="0,3"
                                                      Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
                                                      CommandParameter="{Binding }" />
                     </DataTemplate>
