@@ -8,6 +8,9 @@ public partial class UserInputDialog : Dialog
     public static readonly StyledProperty<string> WatermarkProperty =
         AvaloniaProperty.Register<UserInputDialog, string>(nameof(Watermark));
 
+    public static readonly StyledProperty<string> PresetTextProperty =
+        AvaloniaProperty.Register<UserInputDialog, string>(nameof(PresetText));
+
     public UserInputDialog()
     {
         InitializeComponent();
@@ -18,9 +21,6 @@ public partial class UserInputDialog : Dialog
         get => GetValue(WatermarkProperty);
         set => SetValue(WatermarkProperty, value);
     }
-
-    public static readonly StyledProperty<string> PresetTextProperty =
-        AvaloniaProperty.Register<UserInputDialog, string>(nameof(PresetText));
 
     public string PresetText
     {

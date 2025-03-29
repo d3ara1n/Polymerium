@@ -47,21 +47,27 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
 
     public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
     {
-        var first = await service.SearchAsync(query,
-                                              CurseForgeService.ResourceKindToClassId(filter.Kind),
-                                              filter.Version,
-                                              CurseForgeService.LoaderIdToType(filter.Loader)).ConfigureAwait(false);
+        var first = await service
+                         .SearchAsync(query,
+                                      CurseForgeService.ResourceKindToClassId(filter.Kind),
+                                      filter.Version,
+                                      CurseForgeService.LoaderIdToType(filter.Loader))
+                         .ConfigureAwait(false);
         var initial = first.Data.Select(CurseForgeService.ToExhibit);
         return new PaginationHandle<Exhibit>(initial,
                                              50,
                                              first.Pagination.TotalCount,
                                              async index =>
                                              {
-                                                 var rv = await service.SearchAsync(query,
-                                                              CurseForgeService.ResourceKindToClassId(filter.Kind),
-                                                              filter.Version,
-                                                              CurseForgeService.LoaderIdToType(filter.Loader),
-                                                              index).ConfigureAwait(false);
+                                                 var rv = await service
+                                                               .SearchAsync(query,
+                                                                            CurseForgeService
+                                                                               .ResourceKindToClassId(filter.Kind),
+                                                                            filter.Version,
+                                                                            CurseForgeService
+                                                                               .LoaderIdToType(filter.Loader),
+                                                                            index)
+                                                               .ConfigureAwait(false);
                                                  var exhibits = rv.Data.Select(CurseForgeService.ToExhibit).ToList();
                                                  return exhibits;
                                              });
@@ -106,10 +112,12 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                 }
 
                 {
-                    var files = await service.GetModFilesAsync(modId,
-                                                               filter.Version,
-                                                               CurseForgeService.LoaderIdToType(filter.Loader),
-                                                               count: 1).ConfigureAwait(false);
+                    var files = await service
+                                     .GetModFilesAsync(modId,
+                                                       filter.Version,
+                                                       CurseForgeService.LoaderIdToType(filter.Loader),
+                                                       count: 1)
+                                     .ConfigureAwait(false);
                     var file = files.Data.FirstOrDefault();
                     if (file is not null)
                         return CurseForgeService.ToPackage(mod, file);
@@ -132,19 +140,19 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
     {
         if (uint.TryParse(pid, out var modId))
         {
-            var initial = await GetVersionsAsync(modId,
-                                                 filter.Version,
-                                                 CurseForgeService.LoaderIdToType(filter.Loader)).ConfigureAwait(false);
+            var initial = await GetVersionsAsync(modId, filter.Version, CurseForgeService.LoaderIdToType(filter.Loader))
+                             .ConfigureAwait(false);
             return new PaginationHandle<Version>(initial.Item1,
                                                  50,
                                                  initial.Item2,
                                                  async index =>
                                                  {
                                                      var data = await GetVersionsAsync(modId,
-                                                                    filter.Version,
-                                                                    CurseForgeService
-                                                                       .LoaderIdToType(filter.Loader),
-                                                                    (int)index).ConfigureAwait(false);
+                                                                        filter.Version,
+                                                                        CurseForgeService
+                                                                           .LoaderIdToType(filter.Loader),
+                                                                        (int)index)
+                                                                   .ConfigureAwait(false);
                                                      return data.Item1;
                                                  });
         }

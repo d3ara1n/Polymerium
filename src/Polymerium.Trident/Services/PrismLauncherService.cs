@@ -45,7 +45,8 @@ public class PrismLauncherService(IPrismLauncherClient client)
                                          ?? requirement.Equal
                                          ?? throw new
                                                 FormatException($"{version.Uid}.json/requires[{requirement.Uid}].equals|suggests"),
-                                            token).ConfigureAwait(false);
+                                            token)
+                         .ConfigureAwait(false);
             libraries.AddRange(sub.Libraries ?? Enumerable.Empty<Component.Library>());
         }
 
