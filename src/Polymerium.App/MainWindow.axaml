@@ -9,7 +9,9 @@
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:local="using:Polymerium.App"
     xmlns:m="using:Polymerium.App.Models"
+    xmlns:v="using:Polymerium.App.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
     Title="{x:Static local:Program.Brand}"
     Width="1280"
     Height="720"
@@ -19,7 +21,7 @@
     d:DesignWidth="800"
     ExtendClientAreaTitleBarHeightHint="44"
     TransparencyLevelHint="Mica, None"
-    mc:Ignorable="d">
+    mc:Ignorable="d" x:DataType="local:MainWindowContext">
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*" />
@@ -116,8 +118,8 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Height="48"
-                    Click="NavigationButton_OnClick"
-                    Tag="LandingView"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type v:LandingView}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <icons:PackIconLucide
@@ -133,8 +135,8 @@
                     Grid.Column="4"
                     Width="48"
                     Height="48"
-                    Click="NavigationButton_OnClick"
-                    Tag="CreateInstanceView"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type v:NewInstanceView}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     <icons:PackIconLucide
                         Width="18"
@@ -147,8 +149,8 @@
                     Grid.ColumnSpan="5"
                     Height="36"
                     Classes="Primary"
-                    Click="NavigationButton_OnClick"
-                    Tag="MarketplacePortalView">
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type v:MarketplacePortalView}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <icons:PackIconLucide
                             Width="18"
@@ -166,20 +168,28 @@
                     Grid.Row="6"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    Text="{Binding $parent[local:MainWindow].FilterText, Mode=TwoWay}"
-                    Watermark="Filter entries by names..." />
+                    Text="{Binding FilterText, Mode=TwoWay}"
+                    Watermark="Filter entries by names...">
+                    <TextBox.InnerRightContent>
+                        <Button
+                            IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                            Command="{Binding $parent[TextBox].Clear}"
+                            Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
+                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
                 <ScrollViewer
                     Grid.Row="8"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Margin="0,0,-8,0">
-                    <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding $parent[local:MainWindow].View}"
+                    <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding View}"
                                   ClipToBounds="False">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="m:InstanceEntryModel">
                                 <controls:InstanceEntryButton
                                     Basic="{Binding Basic}"
-                                    Command="{Binding $parent[local:MainWindow].ViewInstanceCommand}"
+                                    Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand,FallbackValue={x:Null}}"
                                     CommandParameter="{Binding Basic.Key}"
                                     Progress="{Binding Progress,Mode=OneWay}"
                                     IsPending="{Binding IsPending,Mode=OneWay}"
@@ -200,9 +210,9 @@
                 <Button
                     Grid.Row="12"
                     Grid.Column="0"
-                    Click="NavigationButton_OnClick"
+                    Command="{Binding NavigateCommand}"
                     DockPanel.Dock="Left"
-                    Tag="SettingsView"
+                    CommandParameter="{x:Type v:SettingsView}"
                     Theme="{StaticResource GhostButtonTheme}">
                     <icons:PackIconLucide Height="18" Kind="Settings" />
                 </Button>
@@ -210,8 +220,8 @@
                     Grid.Row="12"
                     Grid.Column="2"
                     Grid.ColumnSpan="3"
-                    Click="NavigationButton_OnClick"
-                    Tag="AccountsView"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Type v:AccountsView}"
                     Theme="{StaticResource OutlineButtonTheme}">
                     Accounts
                 </Button>

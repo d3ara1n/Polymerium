@@ -10,7 +10,6 @@ namespace Huskui.Avalonia.Controls;
 [PseudoClasses(":open", ":information", ":success", ":warning", ":danger")]
 public class NotificationItem : ContentControl
 {
-
     public static readonly StyledProperty<NotificationLevel> LevelProperty =
         AvaloniaProperty.Register<NotificationItem, NotificationLevel>(nameof(Level));
 

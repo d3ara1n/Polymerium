@@ -28,10 +28,10 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
         }
 
         var purls = new ConcurrentStack<Purl>(Context
-                                             .Setup.Stage.Concat(Context.Setup.Stash)
+                                             .Setup.Packages.Where(x => x.Enabled)
                                              .Select(x =>
                                               {
-                                                  if (PackageHelper.TryParse(x, out var parsed))
+                                                  if (PackageHelper.TryParse(x.Purl, out var parsed))
                                                       return new Purl(new Identity(parsed.Label,
                                                                           parsed.Namespace,
                                                                           parsed.Pid),
@@ -68,14 +68,16 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
             while (purls.TryPop(out var parsed) && !token.IsCancellationRequested)
                 try
                 {
-                    var resolved = await agent.ResolveAsync(parsed.Identity.Label,
-                                                            parsed.Identity.Namespace,
-                                                            parsed.Identity.Pid,
-                                                            parsed.Vid,
-                                                            Filter.Empty with
-                                                            {
-                                                                Loader = loader, Version = Context.Setup.Version
-                                                            }).ConfigureAwait(false);
+                    var resolved = await agent
+                                        .ResolveAsync(parsed.Identity.Label,
+                                                      parsed.Identity.Namespace,
+                                                      parsed.Identity.Pid,
+                                                      parsed.Vid,
+                                                      Filter.Empty with
+                                                      {
+                                                          Loader = loader, Version = Context.Setup.Version
+                                                      })
+                                        .ConfigureAwait(false);
                     logger.LogDebug("Resolved {} package {}({}/{}) with {}",
                                     parsed.IsPhantom ? "phantom" : "non-phantom",
                                     resolved.ProjectName,

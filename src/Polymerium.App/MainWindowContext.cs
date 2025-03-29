@@ -1,0 +1,394 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reactive.Linq;
+using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DynamicData;
+using DynamicData.Binding;
+using Huskui.Avalonia.Models;
+using Polymerium.App.Models;
+using Polymerium.App.Services;
+using Polymerium.App.Views;
+using Polymerium.Trident.Services;
+using Polymerium.Trident.Services.Instances;
+using Trident.Abstractions.Extensions;
+using Trident.Abstractions.Tasks;
+
+namespace Polymerium.App;
+
+public partial class MainWindowContext : ObservableObject
+{
+    #region Fields
+
+    private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
+
+    #endregion
+
+    public MainWindowContext(
+        ProfileManager profileManager,
+        InstanceManager instanceManager,
+        NotificationService notificationService,
+        NavigationService navigationService)
+    {
+        _notificationService = notificationService;
+        _navigationService = navigationService;
+        SubscribeProfileList(profileManager);
+        SubscribeState(instanceManager);
+
+        var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
+        _ = _entries.Connect().Filter(filter).Bind(out var view).Subscribe();
+        View = view;
+    }
+
+
+    private static Func<InstanceEntryModel, bool> BuildFilter(string? filter) =>
+        x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
+
+    #region Injected
+
+    private readonly NotificationService _notificationService;
+    private readonly NavigationService _navigationService;
+
+    #endregion
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial ReadOnlyObservableCollection<InstanceEntryModel> View { get; set; }
+
+    [ObservableProperty]
+    public partial string FilterText { get; set; } = string.Empty;
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void ViewInstance(string? key)
+    {
+        if (key is not null)
+            _navigationService.Navigate<InstanceView>(key);
+    }
+
+    [RelayCommand]
+    private void Navigate(Type? page)
+    {
+        if (page != null)
+            _navigationService.Navigate(page);
+    }
+
+    #endregion
+
+    #region Profile Service
+
+    internal void SubscribeProfileList(ProfileManager manager)
+    {
+        manager.ProfileAdded += OnProfileAdded;
+        manager.ProfileUpdated += OnProfileUpdated;
+        manager.ProfileRemoved += OnProfileRemoved;
+
+        var list = new List<InstanceEntryModel>();
+        foreach (var (key, item) in manager.Profiles)
+        {
+            InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source);
+            list.Add(model);
+        }
+
+        _entries.AddOrUpdate(list);
+    }
+
+    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var exist = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (exist != null)
+        {
+            exist.Basic.Name = e.Value.Name;
+            exist.Basic.Source = e.Value.Setup.Source;
+            exist.Basic.Version = e.Value.Setup.Version;
+            exist.Basic.Loader = e.Value.Setup.Loader;
+            exist.Basic.UpdateIcon();
+        }
+        else
+        {
+            InstanceEntryModel model = new(e.Key,
+                                           e.Value.Name,
+                                           e.Value.Setup.Version,
+                                           e.Value.Setup.Loader,
+                                           e.Value.Setup.Source);
+            _entries.AddOrUpdate(model);
+        }
+    }
+
+    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is not null)
+        {
+            model.Basic.Name = e.Value.Name;
+            model.Basic.Source = e.Value.Setup.Source;
+            model.Basic.Version = e.Value.Setup.Version;
+            model.Basic.Loader = e.Value.Setup.Loader;
+            model.Basic.UpdateIcon();
+        }
+    }
+
+    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is not null)
+            _entries.Remove(model);
+    }
+
+    #endregion
+
+    #region State Service
+
+    internal void SubscribeState(InstanceManager manager)
+    {
+        manager.InstanceUpdating += OnInstanceUpdating;
+        manager.InstanceInstalling += OnInstanceInstalling;
+        manager.InstanceDeploying += OnInstanceDeploying;
+        manager.InstanceLaunching += OnInstanceLaunching;
+    }
+
+    private void OnInstanceInstalling(object? sender, InstallTracker e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
+        {
+            State = InstanceEntryState.Installing
+        };
+
+        e
+           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+           .Where(x => x.Any())
+           .Select(x => x.Last())
+           .Subscribe(x =>
+            {
+                model.IsPending = !x.HasValue;
+                model.Progress = x ?? 0d;
+            })
+           .DisposeWith(e);
+
+        e.StateUpdated += OnStateChanged;
+        _entries.AddOrUpdate(model);
+        return;
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.IsPending = true;
+                    model.Progress = 0d;
+                    break;
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _notificationService.PopMessage(e.FailureReason, $"Failed to install {e.Key}");
+                    });
+                    _entries.Remove(model);
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _notificationService.PopMessage("The instance has been installed",
+                                                        e.Key,
+                                                        NotificationLevel.Success);
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+    }
+
+    private void OnInstanceUpdating(object? sender, UpdateTracker e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is null)
+            return;
+
+        model.State = InstanceEntryState.Updating;
+
+        e
+           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+           .Where(x => x.Any())
+           .Select(x => x.Last())
+           .Subscribe(x =>
+            {
+                model.IsPending = !x.HasValue;
+                model.Progress = x ?? 0d;
+            })
+           .DisposeWith(e);
+
+        e.StateUpdated += OnStateChanged;
+        return;
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.IsPending = true;
+                    model.Progress = 0d;
+                    break;
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        _notificationService.PopMessage(e.FailureReason, $"Failed to update {e.Key}");
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _notificationService.PopMessage("The instance has been updated",
+                                                        e.Key,
+                                                        NotificationLevel.Success);
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+    }
+
+    private void OnInstanceDeploying(object? sender, DeployTracker e)
+    {
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is null)
+            return;
+
+        model.State = InstanceEntryState.Preparing;
+
+        e
+           .StageStream.Subscribe(x =>
+            {
+                model.IsPending = true;
+                model.Progress = 0d;
+            })
+           .DisposeWith(e);
+        e
+           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
+           .Where(x => x.Any())
+           .Select(x => x.Last())
+           .Subscribe(x =>
+            {
+                model.IsPending = false;
+                model.Progress = x.Item2 != 0 ? x.Item1 * 100d / x.Item2 : 0;
+            })
+           .DisposeWith(e);
+
+        e.StateUpdated += OnStateChanged;
+        return;
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.IsPending = true;
+                    model.Progress = 0d;
+                    break;
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _notificationService.PopMessage(e.FailureReason, $"Failed to deploy {e.Key}");
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _notificationService.PopMessage("The instance has been deployed",
+                                                        e.Key,
+                                                        NotificationLevel.Success);
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+    }
+
+    private void OnInstanceLaunching(object? sender, LaunchTracker e)
+    {
+        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
+        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
+        if (model is null)
+            return;
+
+        model.State = InstanceEntryState.Running;
+
+        e.StateUpdated += OnStateChanged;
+        return;
+
+        void OnStateChanged(TrackerBase _, TrackerState state)
+        {
+            switch (state)
+            {
+                case TrackerState.Idle:
+                    break;
+                case TrackerState.Running:
+                    model.IsPending = true;
+                    model.Progress = 0d;
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _notificationService.PopMessage("The instance has been launched",
+                                                        e.Key,
+                                                        NotificationLevel.Success);
+                    });
+                    break;
+                case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        _notificationService.PopMessage(e.FailureReason, $"{e.Key}");
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Finished:
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _notificationService.PopMessage("The instance has been exited",
+                                                        e.Key,
+                                                        NotificationLevel.Success);
+                    });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+    }
+
+    #endregion
+}

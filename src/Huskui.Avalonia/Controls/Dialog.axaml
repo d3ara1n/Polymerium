@@ -24,10 +24,10 @@
                                           Content="{TemplateBinding Header}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <TextBlock Grid.Row="1" Text="{TemplateBinding Title}" Margin="16,20,16,0"
-                                   IsVisible="{Binding Title,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static converters:StringConverters.IsNonEmpty}}"
+                                   IsVisible="{Binding Title,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                    FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
                         <TextBlock Grid.Row="2" Text="{TemplateBinding Message}" Margin="18,16,18,0"
-                                   IsVisible="{Binding Message,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static converters:StringConverters.IsNonEmpty}}"
+                                   IsVisible="{Binding Message,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
                                    TextWrapping="WrapWithOverflow"
                                    MaxWidth="{Binding #PART_ContentPresenter.Bounds.Width}" />

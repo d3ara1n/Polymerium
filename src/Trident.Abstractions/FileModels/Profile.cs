@@ -23,10 +23,10 @@ public class Profile(string name, Profile.Rice setup, IDictionary<string, object
         public string? Loader { get; set; } = loader;
         public IList<Entry> Packages { get; private set; } = packages ?? new List<Entry>();
 
-        public class Entry(string purl, bool isEnabled, string? source, IList<string>? tags)
+        public class Entry(string purl, bool enabled, string? source, IList<string>? tags)
         {
             public string Purl { get; set; } = purl ?? throw new ArgumentNullException(nameof(purl));
-            public bool IsEnabled { get; set; } = isEnabled;
+            public bool Enabled { get; set; } = enabled;
             public string? Source { get; set; } = source;
             public IList<string> Tags { get; private set; } = tags ?? new List<string>();
         }

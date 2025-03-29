@@ -12,5 +12,5 @@
     </Styles.Resources>
 
     <StyleInclude Source="/Themes/Animations.axaml" />
-    <StyleInclude Source="/Themes/Decorations.axaml" />
+    <StyleInclude Source="/Themes/Miscellaneous.axaml" />
 </Styles>

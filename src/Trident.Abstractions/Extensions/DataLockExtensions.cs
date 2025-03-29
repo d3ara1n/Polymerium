@@ -20,7 +20,7 @@ public static class DataLockExtensions
 
         var map = self.Viability.Packages.Distinct().ToDictionary(x => x, _ => 0);
 
-        foreach (var check in setup.Packages.Where(x => x.IsEnabled).Select(x => x.Purl))
+        foreach (var check in setup.Packages.Where(x => x.Enabled).Select(x => x.Purl))
         {
             if (!map.TryGetValue(check, out var value))
                 return false;

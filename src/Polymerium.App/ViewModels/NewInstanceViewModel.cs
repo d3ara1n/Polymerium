@@ -110,12 +110,7 @@ public partial class NewInstanceViewModel(
         else
         {
             profile = new Profile(display,
-                                  new Profile.Rice(null,
-                                                   VersionName,
-                                                   null,
-                                                   new List<string>(),
-                                                   new List<string>(),
-                                                   new List<string>()),
+                                  new Profile.Rice(null, VersionName, null, []),
                                   new Dictionary<string, object>());
         }
 

@@ -1,0 +1,141 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:Polymerium.App.Controls"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                    xmlns:cp="using:Polymerium.App.Components"
+                    xmlns:fie="using:FluentIcons.Avalonia.MarkupExtensions"
+                    xmlns:m="using:Polymerium.App.Models"
+                    xmlns:converters="using:Polymerium.App.Converters">
+    <ControlTheme x:Key="{x:Type local:PackageEntryButton}" TargetType="local:PackageEntryButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="m:InstancePackageModel">
+                <husk:Card Name="Background" Height="78" Background="{DynamicResource Layer0BackgroundBrush}">
+                    <husk:Card.Opacity>
+                        <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
+                            <Binding Path="IsEnabled" Mode="OneWay" />
+                            <Binding Source="{StaticResource ControlDimOpacity}" />
+                        </MultiBinding>
+                    </husk:Card.Opacity>
+                    <husk:Card.Transitions>
+                        <Transitions>
+                            <BrushTransition Property="Background" Easing="SineEaseOut"
+                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
+                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </husk:Card.Transitions>
+                    <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*">
+                        <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+                                CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True"
+                                Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=Self}}">
+                            <Border.Background>
+                                <ImageBrush Source="{Binding Thumbnail}" />
+                            </Border.Background>
+                        </Border>
+                        <DockPanel Grid.Row="0" Grid.Column="2">
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                                        Spacing="4">
+                                <TextBlock Text="{Binding Version}"
+                                           VerticalAlignment="Center" FontWeight="Bold" />
+                            </StackPanel>
+                            <Grid ColumnDefinitions="Auto,6,*">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
+                                    <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
+                                              Classes="Primary" IsVisible="{Binding IsLocked}">
+                                        <TextBlock Text="Original" />
+                                    </husk:Tag>
+                                    <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <TextBlock Text="{Binding Kind}" />
+                                    </husk:Tag>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="{Binding Name}"
+                                           TextTrimming="CharacterEllipsis"
+                                           FontSize="{StaticResource LargeFontSize}"
+                                           FontWeight="Bold" />
+                            </Grid>
+                        </DockPanel>
+                        <Grid Grid.Row="1" Grid.Column="2" ColumnDefinitions="*,4,Auto" RowDefinitions="*,0,Auto">
+                            <StackPanel Name="ActionBlock" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Bottom" Spacing="4" Opacity="0.0">
+                                <StackPanel.Transitions>
+                                    <Transitions>
+                                        <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                          Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    </Transitions>
+                                </StackPanel.Transitions>
+                                <ItemsControl Name="TagBlock"
+                                              ItemsSource="{Binding Tags}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <husk:Tag>
+                                                <TextBlock Text="{Binding}" />
+                                            </husk:Tag>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="4" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                                <Button Classes="Small"
+                                        Theme="{StaticResource OutlineButtonTheme}">
+                                    <icons:PackIconLucide Kind="Ellipsis" Width="12" Height="12" />
+                                    <Button.Flyout>
+                                        <MenuFlyout>
+                                            <MenuItem Header="Active"
+                                                      IsChecked="{Binding IsEnabled,Mode=TwoWay}"
+                                                      ToggleType="CheckBox"
+                                                      Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
+                                            <MenuItem Header="-" />
+                                            <MenuItem Header="Open Website"
+                                                      Command="{Binding $parent[cp:PackageContainer].OpenUrlCommand}"
+                                                      CommandParameter="{Binding Reference}"
+                                                      Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
+                                            <MenuItem Header="Add to Favorites"
+                                                      Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" />
+                                            <MenuItem Header="Remove from Favorite"
+                                                      Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" />
+                                            <MenuItem Header="-" />
+                                            <MenuItem Header="Remove"
+                                                      IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"
+                                                      Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </StackPanel>
+                            <Panel Name="SummaryBlock" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                                <TextBlock Text="{Binding Summary}"
+                                           MaxLines="2"
+                                           TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
+                            </Panel>
+                        </Grid>
+                    </Grid>
+                </husk:Card>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ StackPanel#ActionBlock">
+            <Setter Property="Opacity" Value="1.0" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ husk|Card#Background">
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource ControlAccentBorderBrush}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ husk|Card#Background">
+            <Setter Property="Background"
+                    Value="{DynamicResource OverlayFullBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ husk|Card#Background">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

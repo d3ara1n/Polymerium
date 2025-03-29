@@ -50,10 +50,6 @@ public partial class MarketplacePortalViewModel(
 
     #endregion
 
-    #region Injected
-
-    #endregion
-
     #region Commands
 
     [RelayCommand]

@@ -35,7 +35,7 @@ public partial class InstanceHomeViewModel(
         base.OnUpdateModel(key, profile);
         var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
         Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
-        PackageCount = profile.Setup.Stage.Count + profile.Setup.Stash.Count;
+        PackageCount = profile.Setup.Packages.Count;
     }
 
     #region Tracking
@@ -117,8 +117,7 @@ public partial class InstanceHomeViewModel(
                                                                           InvalidOperationException("Java home fallback unset"),
                                             additionalArguments:
                                             profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
-                                                                configurationService.Value
-                                                                   .GameJavaAdditionalArguments),
+                                                                configurationService.Value.GameJavaAdditionalArguments),
                                             maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
                                                                            configurationService.Value
                                                                               .GameJavaMaxMemory),
@@ -180,10 +179,6 @@ public partial class InstanceHomeViewModel(
             _ => throw new ArgumentOutOfRangeException()
         };
     }
-
-    #endregion
-
-    #region Injected
 
     #endregion
 

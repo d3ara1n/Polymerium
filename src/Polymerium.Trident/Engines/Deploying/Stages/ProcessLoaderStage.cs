@@ -20,19 +20,23 @@ public class ProcessLoaderStage(
                 switch (parsed.Identity)
                 {
                     case LoaderHelper.LOADERID_FORGE:
-                        await InstallForgeAsync(builder, PrismLauncherService.UID_FORGE, parsed.Version, token).ConfigureAwait(false);
+                        await InstallForgeAsync(builder, PrismLauncherService.UID_FORGE, parsed.Version, token)
+                           .ConfigureAwait(false);
                         break;
 
                     case LoaderHelper.LOADERID_NEOFORGE:
-                        await InstallForgeAsync(builder, PrismLauncherService.UID_NEOFORGE, parsed.Version, token).ConfigureAwait(false);
+                        await InstallForgeAsync(builder, PrismLauncherService.UID_NEOFORGE, parsed.Version, token)
+                           .ConfigureAwait(false);
                         break;
 
                     case LoaderHelper.LOADERID_FABRIC:
-                        await InstallFabricAsync(builder, PrismLauncherService.UID_FABRIC, parsed.Version, token).ConfigureAwait(false);
+                        await InstallFabricAsync(builder, PrismLauncherService.UID_FABRIC, parsed.Version, token)
+                           .ConfigureAwait(false);
                         break;
 
                     case LoaderHelper.LOADERID_QUILT:
-                        await InstallFabricAsync(builder, PrismLauncherService.UID_QUILT, parsed.Version, token).ConfigureAwait(false);
+                        await InstallFabricAsync(builder, PrismLauncherService.UID_QUILT, parsed.Version, token)
+                           .ConfigureAwait(false);
                         break;
 
                     default:
@@ -88,9 +92,9 @@ public class ProcessLoaderStage(
         PrismLauncherService.AddValidatedLibrariesToArtifact(builder,
                                                              index.Libraries ?? Enumerable.Empty<Component.Library>());
 
-        var intermediary = await prismLauncherService.GetVersionAsync(PrismLauncherService.UID_INTERMEDIARY,
-                                                                      Context.Setup.Version,
-                                                                      token).ConfigureAwait(false);
+        var intermediary = await prismLauncherService
+                                .GetVersionAsync(PrismLauncherService.UID_INTERMEDIARY, Context.Setup.Version, token)
+                                .ConfigureAwait(false);
 
         PrismLauncherService.AddValidatedLibrariesToArtifact(builder,
                                                              intermediary.Libraries

@@ -138,7 +138,7 @@
                                         </StackPanel>
                                     </TextBox.InnerLeftContent>
                                     <TextBox.InnerRightContent>
-                                        <Button Margin="4" Command="{Binding PickVersionCommand}">
+                                        <Button Command="{Binding PickVersionCommand}">
                                             <icons:PackIconLucide Height="{StaticResource MediumFontSize}" Kind="List" />
                                         </Button>
                                     </TextBox.InnerRightContent>

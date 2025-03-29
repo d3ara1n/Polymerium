@@ -7,6 +7,7 @@
             xmlns:launching="clr-namespace:Polymerium.Trident.Engines.Launching;assembly=Polymerium.Trident"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+            xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             Header="Dashboard" Padding="0"
             x:Class="Polymerium.App.Toasts.InstanceDashboardToast"
@@ -100,13 +101,20 @@
                     </StackPanel>
                 </TextBox.InnerLeftContent>
                 <TextBox.InnerRightContent>
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,8,0">
-                        <Run
-                            Text="{Binding $parent[local:InstanceDashboardToast].Bindable.Count,Mode=OneWay,FallbackValue=0}" />
-                        <Run Text="/" />
-                        <Run
-                            Text="9527" />
-                    </TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,8,0">
+                            <Run
+                                Text="{Binding $parent[local:InstanceDashboardToast].Bindable.Count,Mode=OneWay,FallbackValue=0}" />
+                            <Run Text="/" />
+                            <Run
+                                Text="9527" />
+                        </TextBlock>
+                        <Button
+                            IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                            Command="{Binding $parent[TextBox].Clear}"
+                            Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
+                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    </StackPanel>
                 </TextBox.InnerRightContent>
             </TextBox>
             <ToggleButton Grid.Column="4" Classes="Small"

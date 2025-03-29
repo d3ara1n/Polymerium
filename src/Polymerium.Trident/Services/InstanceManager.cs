@@ -213,7 +213,8 @@ public class InstanceManager(
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new LaunchTracker(key,
-                                        async t => await LaunchInternalAsync((LaunchTracker)t, options).ConfigureAwait(false),
+                                        async t => await LaunchInternalAsync((LaunchTracker)t, options)
+                                                      .ConfigureAwait(false),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceLaunching?.Invoke(this, tracker);
@@ -232,7 +233,9 @@ public class InstanceManager(
         if (found)
         {
             var artifact =
-                JsonSerializer.Deserialize<DataLock>(await File.ReadAllTextAsync(artifactPath, tracker.Token).ConfigureAwait(false),
+                JsonSerializer.Deserialize<DataLock>(await File
+                                                          .ReadAllTextAsync(artifactPath, tracker.Token)
+                                                          .ConfigureAwait(false),
                                                      JsonSerializerOptions.Web);
 
             if (artifact == null || !artifact.Verify(tracker.Key, profile.Setup))
@@ -281,9 +284,11 @@ public class InstanceManager(
 
                 igniter.IsDebug = options.Mode == LaunchMode.FireAndForget;
                 var process = igniter.Build();
-                await File.WriteAllLinesAsync(Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key),
-                                                           "trident.launch.dump.txt"),
-                                              process.StartInfo.ArgumentList).ConfigureAwait(false);
+                await File
+                     .WriteAllLinesAsync(Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key),
+                                                      "trident.launch.dump.txt"),
+                                         process.StartInfo.ArgumentList)
+                     .ConfigureAwait(false);
                 if (options.Mode == LaunchMode.Managed)
                 {
                     var launcher = new LaunchEngine(process);
@@ -348,7 +353,8 @@ public class InstanceManager(
                                                                                label,
                                                                                ns,
                                                                                pid,
-                                                                               vid).ConfigureAwait(false),
+                                                                               vid)
+                                                       .ConfigureAwait(false),
                                          TrackerOnCompleted);
         _trackers.Add(reserved.Key, tracker);
         InstanceInstalling?.Invoke(this, tracker);
@@ -365,16 +371,15 @@ public class InstanceManager(
         string? vid)
     {
         logger.LogInformation("Begin install package {} as {}", PackageHelper.ToPurl(label, ns, pid, vid), key.Key);
-        var package = await repositories.ResolveAsync(label,
-                                                      ns,
-                                                      pid,
-                                                      vid,
-                                                      Filter.Empty with { Kind = ResourceKind.Modpack }).ConfigureAwait(false);
+        var package = await repositories
+                           .ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack })
+                           .ConfigureAwait(false);
         var size = package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
 
-        var memory = await DownloadFileAsync(package.Download, size, tracker.ProgressStream, client, tracker.Token).ConfigureAwait(false);
+        var memory = await DownloadFileAsync(package.Download, size, tracker.ProgressStream, client, tracker.Token)
+                        .ConfigureAwait(false);
 
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 
@@ -410,8 +415,8 @@ public class InstanceManager(
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new UpdateTracker(key,
-                                        async t =>
-                                            await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid).ConfigureAwait(false),
+                                        async t => await UpdateInternalAsync((UpdateTracker)t, key, label, ns, pid, vid)
+                                                      .ConfigureAwait(false),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceUpdating?.Invoke(this, tracker);
@@ -428,16 +433,15 @@ public class InstanceManager(
         string vid)
     {
         logger.LogInformation("Begin update {} from package {}", key, PackageHelper.ToPurl(label, ns, pid, vid));
-        var package = await repositories.ResolveAsync(label,
-                                                      ns,
-                                                      pid,
-                                                      vid,
-                                                      Filter.Empty with { Kind = ResourceKind.Modpack }).ConfigureAwait(false);
+        var package = await repositories
+                           .ResolveAsync(label, ns, pid, vid, Filter.Empty with { Kind = ResourceKind.Modpack })
+                           .ConfigureAwait(false);
         var size = package.Size;
         logger.LogDebug("Downloading package file {} sized {} bytes", package.Download.AbsoluteUri, size);
         var client = clientFactory.CreateClient();
 
-        var memory = await DownloadFileAsync(package.Download, size, tracker.ProgressStream, client, tracker.Token).ConfigureAwait(false);
+        var memory = await DownloadFileAsync(package.Download, size, tracker.ProgressStream, client, tracker.Token)
+                        .ConfigureAwait(false);
 
         logger.LogDebug("Downloaded {} bytes", memory.Length);
 

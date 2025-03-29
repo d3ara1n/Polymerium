@@ -39,8 +39,8 @@
                 </StackPanel>
             </husk:Card>
         </husk:BusyContainer.PendingContent>
-        <Grid ColumnDefinitions="*,12,Auto" RowDefinitions="Auto,0,*">
-            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" ColumnDefinitions="*,8,Auto"
+        <Grid RowDefinitions="Auto,0,*">
+            <Grid Grid.Row="0" ColumnDefinitions="*,8,Auto"
                   Margin="{StaticResource PageHeaderlessContentMargin}">
                 <StackPanel Grid.Column="0" Spacing="4">
                     <TextBlock Text="{Binding Basic.Name,FallbackValue=Name}"
@@ -164,55 +164,28 @@
                     </husk:Card>
                 </husk:SkeletonContainer>
             </Grid>
-            <Panel Grid.Row="2" Grid.Column="0">
-                <TabControl Margin="{StaticResource PageToplessBottomlessContentMargin}" Padding="-16,0"
-                            ClipToBounds="False">
-                    <TabItem Header="Stage">
-                        <cp:PackageContainer x:Name="StageContainer" DragDrop.AllowDrop="True" Items="{Binding Stage}"
-                                             TotalCount="{Binding StageCount}"
-                                             OpenUrlCommand="{Binding OpenSourceUrlCommand}"
-                                             IsLocked="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull}}" />
-                    </TabItem>
-                    <TabItem Header="Stash">
-                        <cp:PackageContainer x:Name="StashContainer" DragDrop.AllowDrop="True" Items="{Binding Stash}"
-                                             OpenUrlCommand="{Binding OpenSourceUrlCommand}"
-                                             TotalCount="{Binding StashCount}" />
-                    </TabItem>
-                </TabControl>
-            </Panel>
-            <Panel Grid.Row="2" Grid.Column="2" Background="{DynamicResource Layer1BackgroundBrush}">
-                <TabControl Margin="{StaticResource PageHeaderlessContentMargin}" Padding="-16,0">
-                    <TabItem Header="Draft">
-                        <ScrollViewer DragDrop.AllowDrop="True">
-                            <ItemsControl x:Name="DraftContainer" Margin="{StaticResource PageToplessContentMargin}"
-                                          ItemsSource="{Binding Draft}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="m:InstancePackageModel">
-                                        <husk:SkeletonContainer Margin="0,2"
-                                                                CornerRadius="{StaticResource MediumCornerRadius}"
-                                                                IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
-                                            <husk:Card Background="{DynamicResource Layer0BackgroundBrush}" Height="64"
-                                                       Width="64">
-                                                <Border CornerRadius="{StaticResource MediumCornerRadius}"
-                                                        ClipToBounds="True">
-                                                    <Border.Background>
-                                                        <ImageBrush Source="{Binding Thumbnail}" />
-                                                    </Border.Background>
-                                                </Border>
-                                            </husk:Card>
-                                        </husk:SkeletonContainer>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </TabItem>
-                </TabControl>
-            </Panel>
+            <husk:SwitchPresenter Grid.Row="2" Value="{Binding IsRefreshing}" TargetType="x:Boolean">
+                <husk:SwitchCase Value="False">
+                    <cp:PackageContainer Items="{Binding Stage}"
+                                         TotalCount="{Binding StageCount}"
+                                         OpenUrlCommand="{Binding OpenSourceUrlCommand}"
+                                         PrimaryCommand="{Binding ViewPackageCommand}" />
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="True">
+                    <StackPanel VerticalAlignment="Center" Spacing="8">
+                        <husk:ProgressRing Width="56" Height="56" Value="{Binding RefreshingCount}"
+                                           Maximum="{Binding StageCount}" />
+                        <TextBlock HorizontalAlignment="Center">
+                            <Run Text="Loading packages metadata..." />
+                            <Run Text="(" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="{Binding RefreshingCount,FallbackValue=0}" />
+                            <Run Text="/" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="{Binding StageCount,FallbackValue=514}" />
+                            <Run Text=")" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                        </TextBlock>
+                    </StackPanel>
+                </husk:SwitchCase>
+            </husk:SwitchPresenter>
         </Grid>
     </husk:BusyContainer>
 </controls:Subpage>

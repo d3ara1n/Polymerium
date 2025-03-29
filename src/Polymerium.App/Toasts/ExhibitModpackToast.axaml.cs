@@ -10,19 +10,19 @@ namespace Polymerium.App.Toasts;
 
 public partial class ExhibitModpackToast : Toast
 {
-    public ExhibitModpackToast() => InitializeComponent();
-
     public static readonly StyledProperty<IRelayCommand<ExhibitVersionModel>?> InstallCommandProperty =
         AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<ExhibitVersionModel>?>(nameof(InstallCommand));
+
+    public static readonly StyledProperty<IRelayCommand<Uri>?> ViewImagesCommandProperty =
+        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<Uri>?>(nameof(ViewImagesCommand));
+
+    public ExhibitModpackToast() => InitializeComponent();
 
     public IRelayCommand<ExhibitVersionModel>? InstallCommand
     {
         get => GetValue(InstallCommandProperty);
         set => SetValue(InstallCommandProperty, value);
     }
-
-    public static readonly StyledProperty<IRelayCommand<Uri>?> ViewImagesCommandProperty =
-        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<Uri>?>(nameof(ViewImagesCommand));
 
     public IRelayCommand<Uri>? ViewImagesCommand
     {

@@ -63,6 +63,7 @@
                                     <Setter Property="Theme" Value="{StaticResource GhostButtonTheme}" />
                                     <Setter Property="Padding" Value="8,4" />
                                     <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+                                    <Setter Property="Margin" Value="4" />
                                 </Style>
                             </Grid.Styles>
                             <ContentPresenter Grid.Column="0" Content="{TemplateBinding InnerLeftContent}"
@@ -253,7 +254,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
             <Setter Property="RenderTransform" Value="scaleX(1.0)" />
         </Style>
-        
+
         <Style Selector="^:focus /template/ Border#Root">
             <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
         </Style>

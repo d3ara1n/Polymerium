@@ -43,31 +43,34 @@ public class CurseForgeImporter : IProfileImporter
     public async Task<ImportedProfileContainer> ExtractAsync(CompressedProfilePack pack)
     {
         await using var manifestStream = pack.Open(IndexFileName);
-        var manifest = await JsonSerializer.DeserializeAsync<ManifestModel>(manifestStream, JsonSerializerOptions.Web).ConfigureAwait(false);
+        var manifest = await JsonSerializer
+                            .DeserializeAsync<ManifestModel>(manifestStream, JsonSerializerOptions.Web)
+                            .ConfigureAwait(false);
         if (manifest is null || !TryExtractLoader(manifest.Minecraft.ModLoaders, out var loader))
             throw new FormatException($"{IndexFileName} is not a valid manifest");
 
+        var source = pack.Reference is not null ? PackageHelper.ToPurl(pack.Reference) : null;
         return new ImportedProfileContainer(new Profile(manifest.Name,
-                                                        new Profile.Rice(pack.Reference is not null
-                                                                             ? PackageHelper.ToPurl(pack.Reference)
-                                                                             : null,
+                                                        new Profile.Rice(source,
                                                                          manifest.Minecraft.Version,
                                                                          LoaderHelper.ToLurl(loader.Identity,
                                                                              loader.Version),
                                                                          manifest
                                                                             .Files
                                                                             .Select(x =>
-                                                                                 PackageHelper
-                                                                                    .ToPurl(CurseForgeService
-                                                                                            .LABEL,
-                                                                                         null,
-                                                                                         x.ProjectId
-                                                                                            .ToString(),
-                                                                                         x.FileId
-                                                                                            .ToString()))
-                                                                            .ToList(),
-                                                                         new List<string>(),
-                                                                         new List<string>()),
+                                                                                 new
+                                                                                     Profile.Rice.Entry(PackageHelper
+                                                                                            .ToPurl(CurseForgeService
+                                                                                                    .LABEL,
+                                                                                                 null,
+                                                                                                 x.ProjectId
+                                                                                                    .ToString(),
+                                                                                                 x.FileId
+                                                                                                    .ToString()),
+                                                                                         x.Required,
+                                                                                         source,
+                                                                                         []))
+                                                                            .ToList()),
                                                         new Dictionary<string, object>()),
                                             pack
                                                .FileNames
