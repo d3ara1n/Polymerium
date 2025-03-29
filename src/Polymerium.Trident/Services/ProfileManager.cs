@@ -152,16 +152,35 @@ public class ProfileManager : IDisposable
         if (handle is null)
             throw new InvalidOperationException($"{key} is not in profiles");
 
+        var changeSet = packages.ToDictionary(PackageHelper.ExtractProjectIdentityIfValid);
+        var removeSet = new List<Profile.Rice.Entry>();
+        foreach (var entry in handle.Value.Setup.Packages.Where(x => x.Source == handle.Value.Setup.Source))
+        {
+            var extracted = PackageHelper.ExtractProjectIdentityIfValid(entry.Purl);
+            if (changeSet.TryGetValue(extracted, out var change))
+            {
+                entry.Purl = change;
+                entry.Source = source;
+                changeSet.Remove(extracted);
+            }
+            else
+            {
+                removeSet.Add(entry);
+            }
+        }
+
+        foreach (var remove in removeSet)
+            handle.Value.Setup.Packages.Remove(remove);
+        foreach (var add in changeSet.Values)
+            handle.Value.Setup.Packages.Add(new Profile.Rice.Entry(add, true, source, null));
+
+        foreach (var (k, v) in overrides)
+            handle.Value.Overrides[k] = v;
+
         handle.Value.Name = name;
         handle.Value.Setup.Source = source;
         handle.Value.Setup.Version = version;
         handle.Value.Setup.Loader = loader;
-
-        // TODO: 合并 Packages[.Source == source]
-        var changeset = packages.ToDictionary(PackageHelper.ExtractProjectIdentityIfValid);
-
-        foreach (var (k, v) in overrides)
-            handle.Value.Overrides[k] = v;
 
         handle.SaveAsync().Wait();
         _logger.LogInformation("{} updated", key);

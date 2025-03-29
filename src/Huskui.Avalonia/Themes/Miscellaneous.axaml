@@ -4,9 +4,4 @@
     <Style Selector="TextBlock HyperlinkButton">
         <Setter Property="Theme" Value="{StaticResource InlineHyperlinkButtonTheme}" />
     </Style>
-
-    <Style Selector="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <Setter Property="ClipToBounds" Value="False" />
-    </Style>
 </Styles>

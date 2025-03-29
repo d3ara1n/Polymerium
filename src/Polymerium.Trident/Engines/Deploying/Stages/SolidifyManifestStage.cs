@@ -59,7 +59,9 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
                                         var client = factory.CreateClient();
-                                        var reader = await client.GetStreamAsync(fragile.Url, cancel.Token).ConfigureAwait(false);
+                                        var reader = await client
+                                                          .GetStreamAsync(fragile.Url, cancel.Token)
+                                                          .ConfigureAwait(false);
                                         var writer = new FileStream(fragile.SourcePath,
                                                                     FileMode.Create,
                                                                     FileAccess.Write);
@@ -86,7 +88,9 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
                                         var client = factory.CreateClient();
-                                        var reader = await client.GetStreamAsync(present.Url, cancel.Token).ConfigureAwait(false);
+                                        var reader = await client
+                                                          .GetStreamAsync(present.Url, cancel.Token)
+                                                          .ConfigureAwait(false);
                                         var writer = new FileStream(present.Path, FileMode.Create, FileAccess.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
                                         reader.Close();

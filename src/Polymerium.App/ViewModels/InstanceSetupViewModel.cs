@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -34,6 +33,12 @@ public partial class InstanceSetupViewModel(
     DataService dataService,
     OverlayService overlayService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
+    #region Injected
+
+    private readonly InstanceManager _instanceManager = instanceManager;
+
+    #endregion
+
     private CancellationTokenSource? _pageCancellationTokenSource;
     private CancellationTokenSource? _refreshingCancellationTokenSource;
     private IDisposable? _updatingSubscription;
@@ -49,16 +54,22 @@ public partial class InstanceSetupViewModel(
             if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
             {
                 Stage.Clear();
-                Stash.Clear();
-                Draft.Clear();
-                var stages = profile.Setup.Stage.Select(Load).ToList();
-                var stashes = profile.Setup.Stash.Select(Load).ToList();
-                var drafts = profile.Setup.Draft.Select(Load).ToList();
-                StageCount = stages.Count;
-                StashCount = stashes.Count;
-                Stage.AddOrUpdate(stages);
-                Stash.AddOrUpdate(stashes);
-                Draft.AddRange(drafts);
+                StageCount = profile.Setup.Packages.Count;
+                RefreshingCount = 0;
+                IsRefreshing = true;
+                Task.Run(() =>
+                         {
+                             var tasks = profile.Setup.Packages.Select(LoadAsync).ToList();
+                             Task.WaitAll(tasks, inner);
+                             var stages = tasks.Where(x => x.Result is not null).Select(x => x.Result!).ToList();
+                             Dispatcher.UIThread.Post(() =>
+                             {
+                                 StageCount = stages.Count;
+                                 Stage.AddOrUpdate(stages);
+                                 IsRefreshing = false;
+                             });
+                         },
+                         inner);
             }
         }
         catch (Exception ex)
@@ -67,71 +78,71 @@ public partial class InstanceSetupViewModel(
         }
 
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
-            Task.Run(() => LoadReference(r.Label, r.Namespace, r.Pid, r.Vid), inner);
+            Task.Run(() => LoadReferenceAsync(r.Label, r.Namespace, r.Pid, r.Vid), inner);
         return;
 
-
-        InstancePackageModel Load(string purl)
+        async Task<InstancePackageModel?> LoadAsync(Profile.Rice.Entry entry)
         {
-            InstancePackageModel model = new(purl);
-            model.Task = Task.Run(async () =>
-                                  {
-                                      if (PackageHelper.TryParse(model.Purl, out var v))
-                                          try
-                                          {
-                                              if (inner.IsCancellationRequested)
-                                                  return;
-                                              // NOTE: 如果可以的话，对于 Purl.Vid 为空的，需要去 LockData 里找 Packages[i].Vid，获取锁定的版本
-                                              //  当然也可以不这么干，对于版本锁，给一个单独的页面来查看锁定的版本就行
-                                              //  因为版本锁是为构建服务的，不应该暴露给用户看当前锁定的版本是哪个
-                                              var p = await dataService.ResolvePackageAsync(v.Label,
-                                                          v.Namespace,
-                                                          v.Pid,
-                                                          v.Vid,
-                                                          Filter.Empty);
+            if (PackageHelper.TryParse(entry.Purl, out var v))
+                try
+                {
+                    if (inner.IsCancellationRequested)
+                        return null;
+                    // NOTE: 如果可以的话，对于 Purl.Vid 为空的，需要去 LockData 里找 Packages[i].Vid，获取锁定的版本
+                    //  当然也可以不这么干，对于版本锁，给一个单独的页面来查看锁定的版本就行
+                    //  因为版本锁是为构建服务的，不应该暴露给用户看当前锁定的版本是哪个
+                    var p = await dataService
+                                 .ResolvePackageAsync(v.Label, v.Namespace, v.Pid, v.Vid, Filter.Empty)
+                                 .ConfigureAwait(false);
+                    Dispatcher.UIThread.Post(() => RefreshingCount++);
+                    return new InstancePackageModel(entry,
+                                                    entry.Source == Basic.Source,
+                                                    p.ProjectName,
+                                                    p.VersionName,
+                                                    p.Summary,
+                                                    p.Reference,
+                                                    p.Thumbnail is not null
+                                                        ? await dataService
+                                                               .GetBitmapAsync(p.Thumbnail)
+                                                               .ConfigureAwait(false)
+                                                        : AssetUriIndex.DIRT_IMAGE_BITMAP,
+                                                    p.Kind);
+                }
+                catch (OperationCanceledException) { }
+                catch (Exception ex)
+                {
+                    notificationService.PopMessage($"{entry.Purl}: {ex.Message}",
+                                                   "Failed to parse purl",
+                                                   NotificationLevel.Warning);
+                }
 
-                                              model.Thumbnail = p.Thumbnail is not null
-                                                                    ? await dataService.GetBitmapAsync(p.Thumbnail)
-                                                                    : AssetUriIndex.DIRT_IMAGE_BITMAP;
-
-                                              model.Name = p.ProjectName;
-                                              model.Version = p.VersionName;
-                                              model.Summary = p.Summary;
-                                              model.Kind = p.Kind;
-                                              model.Reference = p.Reference;
-                                              model.IsLoaded = true;
-                                          }
-                                          catch (OperationCanceledException) { }
-                                          catch (Exception ex)
-                                          {
-                                              notificationService.PopMessage($"{purl}: {ex.Message}",
-                                                                              "Failed to parse purl",
-                                                                              NotificationLevel.Warning);
-                                          }
-                                  },
-                                  inner);
-            return model;
+            return null;
         }
 
-        async Task LoadReference(string label, string? @namespace, string pid, string? vid)
+        async Task LoadReferenceAsync(string label, string? @namespace, string pid, string? vid)
         {
             try
             {
-                var package = await dataService.ResolvePackageAsync(label,
-                                                                     @namespace,
-                                                                     pid,
-                                                                     vid,
-                                                                     Filter.Empty with { Kind = ResourceKind.Modpack });
+                var package = await dataService
+                                   .ResolvePackageAsync(label,
+                                                        @namespace,
+                                                        pid,
+                                                        vid,
+                                                        Filter.Empty with { Kind = ResourceKind.Modpack })
+                                   .ConfigureAwait(false);
 
                 var thumbnail = package.Thumbnail is not null
                                     ? await dataService.GetBitmapAsync(package.Thumbnail)
                                     : AssetUriIndex.DIRT_IMAGE_BITMAP;
 
-                var page = await (await repositories.InspectAsync(label,
-                                                                   @namespace,
-                                                                   pid,
-                                                                   Filter.Empty with { Kind = ResourceKind.Modpack }))
-                              .FetchAsync();
+                var page = await (await repositories
+                                       .InspectAsync(label,
+                                                     @namespace,
+                                                     pid,
+                                                     Filter.Empty with { Kind = ResourceKind.Modpack })
+                                       .ConfigureAwait(false))
+                                .FetchAsync()
+                                .ConfigureAwait(false);
                 var versions = page
                               .Select(x => new InstanceReferenceVersionModel(x.Label,
                                                                              x.Namespace,
@@ -161,8 +172,8 @@ public partial class InstanceSetupViewModel(
             catch (Exception ex)
             {
                 notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
-                                                "Fetching modpack information failed",
-                                                NotificationLevel.Warning);
+                                               "Fetching modpack information failed",
+                                               NotificationLevel.Warning);
             }
         }
     }
@@ -238,18 +249,25 @@ public partial class InstanceSetupViewModel(
     }
 
     [RelayCommand]
+    private void ViewPackage(InstancePackageModel? model)
+    {
+        // if (model is not null)
+        //     model.IsEnabled = !model.IsEnabled;
+    }
+
+    [RelayCommand]
     private async Task ViewDetails()
     {
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var source))
             try
             {
                 var versions = await dataService.InspectVersionsAsync(source.Label,
-                                                                       source.Namespace,
-                                                                       source.Pid,
-                                                                       Filter.Empty with
-                                                                       {
-                                                                           Kind = ResourceKind.Modpack
-                                                                       });
+                                                                      source.Namespace,
+                                                                      source.Pid,
+                                                                      Filter.Empty with
+                                                                      {
+                                                                          Kind = ResourceKind.Modpack
+                                                                      });
                 var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
                 var model = new ExhibitModpackModel(project.ProjectName,
                                                     project.ProjectId,
@@ -334,12 +352,6 @@ public partial class InstanceSetupViewModel(
 
     #endregion
 
-    #region Injected
-
-    private readonly InstanceManager _instanceManager = instanceManager;
-
-    #endregion
-
     #region Reactive
 
     [ObservableProperty]
@@ -349,25 +361,22 @@ public partial class InstanceSetupViewModel(
     public partial string LoaderLabel { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial SourceCache<InstancePackageModel, string> Stage { get; set; } = new(x => x.Purl);
-
-    [ObservableProperty]
-    public partial SourceCache<InstancePackageModel, string> Stash { get; set; } = new(x => x.Purl);
-
-    [ObservableProperty]
-    public partial AvaloniaList<InstancePackageModel> Draft { get; set; } = [];
+    public partial SourceCache<InstancePackageModel, Profile.Rice.Entry> Stage { get; set; } = new(x => x.Entry);
 
     [ObservableProperty]
     public partial int StageCount { get; set; }
-
-    [ObservableProperty]
-    public partial int StashCount { get; set; }
 
     [ObservableProperty]
     public partial double UpdatingProgress { get; set; }
 
     [ObservableProperty]
     public partial bool UpdatingPending { get; set; } = true;
+
+    [ObservableProperty]
+    public partial bool IsRefreshing { get; set; } = false;
+
+    [ObservableProperty]
+    public partial int RefreshingCount { get; set; }
 
     #endregion
 }

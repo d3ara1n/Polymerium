@@ -3,8 +3,17 @@ using Avalonia.Data.Converters;
 
 namespace Huskui.Avalonia.Converters;
 
-public class RelayConverter(Func<object?, object?, object?> convert) : IValueConverter
+public class RelayConverter : IValueConverter
 {
+    private readonly Func<object?, Type, object?, CultureInfo, object?> _convert;
+
+    public RelayConverter(Func<object?, Type, object?, CultureInfo, object?> convert) => _convert = convert;
+
+    public RelayConverter(Func<object?, object?, object?> convert) =>
+        _convert = (value, _, parameter, _) => convert(value, parameter);
+
+    public RelayConverter(Func<object?, object?> convert) => _convert = (value, _, _, _) => convert(value);
+
     internal static object ConvertValue(Type targetType, object value)
     {
         if (targetType.IsInstanceOfType(value))
@@ -51,7 +60,7 @@ public class RelayConverter(Func<object?, object?, object?> convert) : IValueCon
     #region IValueConverter Members
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
-        convert(value, parameter);
+        _convert(value, targetType, parameter, culture);
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
         throw new NotImplementedException();

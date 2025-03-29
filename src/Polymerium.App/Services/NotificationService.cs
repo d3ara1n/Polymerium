@@ -56,10 +56,10 @@ public class NotificationService
         });
 
     public void PopMessage(
-        Exception ex,
+        Exception? ex,
         string title = "Operation failed",
         NotificationLevel level = NotificationLevel.Danger) =>
-        PopMessage(Debugger.IsAttached ? ex.ToString() : ex.Message, title, level);
+        PopMessage(ex is not null ? Debugger.IsAttached ? ex.ToString() : ex.Message : "Unknown error", title, level);
 
     public void PopProgress(
         string message,

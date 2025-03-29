@@ -2,18 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:m="using:Polymerium.App.Models"
              xmlns:cp="using:Polymerium.App.Components"
              xmlns:fie="using:FluentIcons.Avalonia.MarkupExtensions"
+             xmlns:controls="clr-namespace:Polymerium.App.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
     <Grid RowDefinitions="Auto,0,*">
         <Grid Grid.Row="0" ColumnDefinitions="Auto,12,*,12,Auto" Margin="16,8">
             <TextBox Grid.Column="0" Watermark="Enter filter string..."
                      MinWidth="168"
-                     Text="{Binding $parent[cp:PackageContainer].FilterText,Mode=OneWayToSource}" />
+                     Text="{Binding $parent[cp:PackageContainer].FilterText,Mode=OneWayToSource}">
+                <TextBox.InnerRightContent>
+                    <Button
+                        IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                        Command="{Binding $parent[TextBox].Clear}"
+                        Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
+                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                </TextBox.InnerRightContent>
+            </TextBox>
             <TextBlock Grid.Column="2">
                 <Run Text="Results"
                      Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
@@ -25,7 +33,7 @@
             <StackPanel Grid.Column="4" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
                 <Button Content="Bulk Update" />
                 <Button Content="Export List" />
-                <Button Classes="Primary" IsEnabled="{Binding !$parent[cp:PackageContainer].IsLocked}">
+                <Button Classes="Primary">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <icons:PackIconLucide Kind="WandSparkles" Height="{StaticResource MediumFontSize}"
                                               VerticalAlignment="Center" />
@@ -36,81 +44,12 @@
         </Grid>
         <ScrollViewer Grid.Row="2">
             <ItemsControl Margin="{StaticResource PageToplessContentMargin}"
-                          ItemsSource="{Binding $parent[cp:PackageContainer].View,Mode=OneWay}">
+                          ItemsSource="{Binding $parent[cp:PackageContainer].View}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="m:InstancePackageModel">
-                        <husk:SkeletonContainer Margin="0,3"
-                                                CornerRadius="{StaticResource MediumCornerRadius}"
-                                                IsLoading="{Binding IsLoaded,Converter={x:Static BoolConverters.Not}}">
-                            <husk:Card Height="78" Background="{DynamicResource Layer0BackgroundBrush}">
-                                <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*">
-                                    <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
-                                            CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True"
-                                            Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=Self}}">
-                                        <Border.Background>
-                                            <ImageBrush Source="{Binding Thumbnail}" />
-                                        </Border.Background>
-                                    </Border>
-                                    <DockPanel Grid.Row="0" Grid.Column="2">
-                                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
-                                                    Spacing="4">
-                                            <TextBlock Text="{Binding Version}"
-                                                       VerticalAlignment="Center" FontWeight="Bold" />
-                                        </StackPanel>
-                                        <Grid ColumnDefinitions="Auto,6,*">
-                                            <husk:Tag Grid.Column="0"
-                                                      CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <TextBlock Text="{Binding Kind}" />
-                                            </husk:Tag>
-                                            <TextBlock Grid.Column="2" Text="{Binding Name}"
-                                                       TextTrimming="CharacterEllipsis"
-                                                       FontSize="{StaticResource LargeFontSize}"
-                                                       FontWeight="Bold" />
-                                        </Grid>
-                                    </DockPanel>
-                                    <DockPanel Grid.Row="1" Grid.Column="2">
-                                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
-                                                    VerticalAlignment="Bottom" Spacing="4">
-                                            <Button Classes="Small"
-                                                    IsEnabled="{Binding !$parent[cp:PackageContainer].IsLocked}"
-                                                    Theme="{StaticResource OutlineButtonTheme}">
-                                                <icons:PackIconLucide Kind="Pen" Width="12" />
-                                            </Button>
-                                            <Button Classes="Small"
-                                                    Theme="{StaticResource OutlineButtonTheme}">
-                                                <icons:PackIconLucide Kind="Ellipsis" Width="12" />
-                                                <Button.Flyout>
-                                                    <MenuFlyout>
-                                                        <MenuItem Header="Open Website"
-                                                                  Command="{Binding $parent[cp:PackageContainer].OpenUrlCommand}"
-                                                                  CommandParameter="{Binding Reference}"
-                                                                  Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
-                                                        <MenuItem Header="Add to Favorites"
-                                                                  Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" />
-                                                        <MenuItem Header="Favorite"
-                                                                  Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" />
-                                                        <MenuItem Header="-" />
-                                                        <MenuItem Header="Move to"
-                                                                  IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"
-                                                                  Icon="{fie:SymbolIcon Symbol=TableMoveRight,FontSize={StaticResource MediumFontSize}}">
-                                                            <MenuItem Header="Draft"
-                                                                      Icon="{fie:SymbolIcon Symbol=Drafts,FontSize={StaticResource MediumFontSize}}" />
-                                                        </MenuItem>
-                                                        <MenuItem Header="-" />
-                                                        <MenuItem Header="Remove"
-                                                                  IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"
-                                                                  Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
-                                                    </MenuFlyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                        </StackPanel>
-                                        <TextBlock Text="{Binding Summary}"
-                                                   MaxLines="2"
-                                                   TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
-                                    </DockPanel>
-                                </Grid>
-                            </husk:Card>
-                        </husk:SkeletonContainer>
+                        <controls:PackageEntryButton Margin="0,2"
+                                                     Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
+                                                     CommandParameter="{Binding }" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>

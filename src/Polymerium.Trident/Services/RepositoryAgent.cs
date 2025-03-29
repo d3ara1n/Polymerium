@@ -77,9 +77,11 @@ public class RepositoryAgent
         try
         {
             var result = await factory().ConfigureAwait(false);
-            await _cache.SetStringAsync(key,
-                                        JsonSerializer.Serialize(result),
-                                        new DistributedCacheEntryOptions { SlidingExpiration = EXPIRED_IN }).ConfigureAwait(false);
+            await _cache
+                 .SetStringAsync(key,
+                                 JsonSerializer.Serialize(result),
+                                 new DistributedCacheEntryOptions { SlidingExpiration = EXPIRED_IN })
+                 .ConfigureAwait(false);
             _logger.LogDebug("Cache missed but recorded: {}", key);
 
 

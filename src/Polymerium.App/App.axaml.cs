@@ -10,7 +10,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
-using HotAvalonia;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +17,6 @@ using Polymerium.App.Exceptions;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
-using Polymerium.Trident.Services;
 
 namespace Polymerium.App;
 
@@ -28,9 +26,6 @@ public class App : Application
 
     public override void Initialize()
     {
-        #if DEBUG
-        this.EnableHotReload();
-        #endif
         AvaloniaXamlLoader.Load(this);
     }
 
@@ -177,7 +172,7 @@ public class App : Application
         if (Program.AppHost is null)
             return new MainWindow();
 
-        MainWindow window = new();
+        MainWindow window = new() { DataContext = Program.AppHost.Services.GetRequiredService<MainWindowContext>() };
 
         #region Window Configuration
 
@@ -191,19 +186,9 @@ public class App : Application
 
         // Link navigation service
         var navigation = Program.AppHost.Services.GetRequiredService<NavigationService>();
-        // Closure captures Program.AppHost.Services
-        window.BindNavigation(navigation.Navigate, ActivatePage);
-
         navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack, window.ClearHistory);
-
-        #endregion
-
-        #region Profile
-
-        var profile = Program.AppHost.Services.GetRequiredService<ProfileManager>();
-        window.SubscribeProfileList(profile);
-        var instance = Program.AppHost.Services.GetRequiredService<InstanceManager>();
-        window.SubscribeState(instance);
+        // Closure captures Program.AppHost.Services
+        window.PageActivator = ActivatePage;
 
         #endregion
 
@@ -213,7 +198,6 @@ public class App : Application
         overlay.SetHandler(window.PopToast, window.PopModal, window.PopDialog);
         var notification = Program.AppHost.Services.GetRequiredService<NotificationService>();
         notification.SetHandler(window.PopNotification);
-        window.BindNotification(notification.PopMessage);
 
         #endregion
 

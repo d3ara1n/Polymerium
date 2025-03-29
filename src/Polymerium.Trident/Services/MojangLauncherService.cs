@@ -7,7 +7,8 @@ public class MojangLauncherService(IMojangLauncherClient client)
 {
     public const string ENDPOINT = "https://launchercontent.mojang.com";
 
-    public async Task<MinecraftNewsResponse> GetMinecraftNewsAsync() => await client.GetNewsAsync().ConfigureAwait(false);
+    public async Task<MinecraftNewsResponse> GetMinecraftNewsAsync() =>
+        await client.GetNewsAsync().ConfigureAwait(false);
 
     public Uri GetAbsoluteImageUrl(Uri imageUrl) => new(new Uri(ENDPOINT, UriKind.Absolute), imageUrl);
 }

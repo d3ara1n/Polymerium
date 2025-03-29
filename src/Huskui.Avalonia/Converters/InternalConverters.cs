@@ -57,7 +57,7 @@ internal static class InternalConverters
 
         return v;
     });
-    
+
     public static IMultiValueConverter OffsetToOpacity { get; } = new RelayMultiConverter((v, _, info) =>
     {
         if (v is [Vector offset, double max])

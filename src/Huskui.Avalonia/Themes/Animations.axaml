@@ -1,17 +1,16 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style Selector="Popup[IsOpen=True] LayoutTransformControl#PART_LayoutTransform">
         <Style.Animations>
-            <Animation Duration="{StaticResource ControlNormalAnimationDuration}" Easing="SineEaseOut">
+            <Animation Duration="{StaticResource ControlNormalAnimationDuration}" Easing="BackEaseOut">
                 <KeyFrame Cue="0.0">
                     <Setter Property="ScaleTransform.ScaleX" Value="0.99" />
                     <Setter Property="ScaleTransform.ScaleY" Value="0.99" />
                 </KeyFrame>
                 <KeyFrame Cue="1.0">
-                    <Setter Property="ScaleTransform.ScaleX" Value="1" />
-                    <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                    <Setter Property="ScaleTransform.ScaleX" Value="1.0" />
+                    <Setter Property="ScaleTransform.ScaleY" Value="1.0" />
                 </KeyFrame>
             </Animation>
         </Style.Animations>

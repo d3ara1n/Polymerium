@@ -8,7 +8,7 @@ public class FloatingImportedPackModel(CompressedProfilePack pack, ImportedProfi
 {
     #region Direct
 
-    public int PackageCount { get; } = container.Profile.Setup.Stage.Count + container.Profile.Setup.Stash.Count;
+    public int PackageCount { get; } = container.Profile.Setup.Packages.Count;
 
     public string LoaderLabel { get; } =
         container.Profile.Setup.Loader != null && LoaderHelper.TryParse(container.Profile.Setup.Loader, out var result)

@@ -28,7 +28,7 @@ public class OverlayItem : ContentControl
                                                                        (o, v) => o.Transition = v);
 
     private ContentPresenter? _contentPresenter;
-    
+
     public IPageTransition? Transition
     {
         get;
