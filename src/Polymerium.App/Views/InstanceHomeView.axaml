@@ -98,7 +98,41 @@
                 Background="{DynamicResource Layer0BackgroundBrush}"
                 BorderBrush="{DynamicResource ControlBorderBrush}"
                 BorderThickness="1">
-                <Grid RowDefinitions="Auto,8,*,8,Auto,8,Auto,8,Auto">
+                <Grid RowDefinitions="Auto,8,*,8,Auto">
+                    <husk:Card Grid.Row="4" BorderThickness="0" CornerRadius="{StaticResource MediumCornerRadius}">
+                        <Grid ColumnDefinitions="*,6,Auto,6,*">
+                            <Grid Grid.Column="0" RowDefinitions="Auto,4,*">
+                                <TextBlock Grid.Row="0" Text="Type"
+                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Row="2"
+                                           Text="{Binding Basic.LoaderLabel, FallbackValue=Type}"
+                                           FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                            <husk:Divider Grid.Column="2" Orientation="Vertical" />
+                            <Grid Grid.Column="4" RowDefinitions="Auto,4,*">
+                                <TextBlock Grid.Row="0" Text="Version"
+                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Row="2"
+                                           Text="{Binding Basic.Version, FallbackValue=Version}"
+                                           FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </Grid>
+                    </husk:Card>
+                    <StackPanel
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock FontSize="{StaticResource ExtraLargeFontSize}"
+                                   Text="{Binding PackageCount, FallbackValue=114514}" />
+                        <TextBlock
+                            Margin="4"
+                            VerticalAlignment="Bottom"
+                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                            Text="packages" />
+                    </StackPanel>
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*,8,Auto">
                         <icons:PackIconLucide
                             Grid.Column="0"
@@ -119,34 +153,6 @@
                                 <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
                             </StackPanel>
                         </Button>
-                    </Grid>
-                    <StackPanel
-                        Grid.Row="2"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock FontSize="{StaticResource ExtraLargeFontSize}"
-                                   Text="{Binding PackageCount, FallbackValue=114514}" />
-                        <TextBlock
-                            Margin="4"
-                            VerticalAlignment="Bottom"
-                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                            Text="packages" />
-                    </StackPanel>
-                    <husk:Divider Grid.Row="4" />
-                    <Grid Grid.Row="6" ColumnDefinitions="Auto,8,*,8,Auto">
-                        <TextBlock
-                            Grid.Column="0"
-                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                            Text="Type" />
-                        <TextBlock Grid.Column="4" Text="{Binding Basic.LoaderLabel, FallbackValue=Type}" />
-                    </Grid>
-                    <Grid Grid.Row="8" ColumnDefinitions="Auto,8,*,8,Auto">
-                        <TextBlock
-                            Grid.Column="0"
-                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                            Text="Version" />
-                        <TextBlock Grid.Column="4" Text="{Binding Basic.Version, FallbackValue=Version}" />
                     </Grid>
                 </Grid>
             </husk:Card>
@@ -403,9 +409,9 @@
                                         Margin="0,0,8,0"
                                         HorizontalAlignment="Center"
                                         Background="{DynamicResource ControlBackgroundBrush}"
-                                        CornerRadius="0,0,6,6"
+                                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}"
                                         Padding="12,6">
-                                    <TextBlock Text="{Binding Mode}" />
+                                    <TextBlock Text="{Binding Mode,FallbackValue=Mode}" />
                                 </Button>
                                 <Button
                                     Grid.Row="2"
@@ -438,7 +444,7 @@
                                             Grid.Row="2"
                                             Grid.Column="2"
                                             Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                            Text="Microsoft" />
+                                            Text="Legacy" />
                                     </Grid>
                                 </Button>
                             </Grid>

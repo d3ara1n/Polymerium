@@ -14,15 +14,4 @@
     <sys:Double x:Key="OverlayFullOpacity">1.0</sys:Double>
     <sys:Double x:Key="ControlDimOpacity">0.5</sys:Double>
 
-    <CornerRadius x:Key="ExtraSmallCornerRadius">1</CornerRadius>
-    <CornerRadius x:Key="SmallCornerRadius">3</CornerRadius>
-    <CornerRadius x:Key="MediumCornerRadius">6</CornerRadius>
-    <CornerRadius x:Key="LargeCornerRadius">9</CornerRadius>
-    <CornerRadius x:Key="ExtraLargeCornerRadius">14</CornerRadius>
-
-    <!-- <CornerRadius x:Key="ExtraSmallCornerRadius">0</CornerRadius> -->
-    <!-- <CornerRadius x:Key="SmallCornerRadius">0</CornerRadius> -->
-    <!-- <CornerRadius x:Key="MediumCornerRadius">0</CornerRadius> -->
-    <!-- <CornerRadius x:Key="LargeCornerRadius">0</CornerRadius> -->
-    <!-- <CornerRadius x:Key="ExtraLargeCornerRadius">0</CornerRadius> -->
 </ResourceDictionary>

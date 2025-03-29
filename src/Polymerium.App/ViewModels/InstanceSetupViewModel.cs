@@ -251,8 +251,8 @@ public partial class InstanceSetupViewModel(
     [RelayCommand]
     private void ViewPackage(InstancePackageModel? model)
     {
-        // if (model is not null)
-        //     model.IsEnabled = !model.IsEnabled;
+        if (model is not null)
+            model.IsEnabled = !model.IsEnabled;
     }
 
     [RelayCommand]

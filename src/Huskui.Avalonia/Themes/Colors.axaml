@@ -1,133 +1,130 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary>
-            <!-- Black -->
-            <Color x:Key="Black1Color">#0d000000</Color>
-            <Color x:Key="Black2Color">#1a000000</Color>
-            <Color x:Key="Black3Color">#26000000</Color>
-            <Color x:Key="Black4Color">#33000000</Color>
-            <Color x:Key="Black5Color">#4d000000</Color>
-            <Color x:Key="Black6Color">#66000000</Color>
-            <Color x:Key="Black7Color">#80000000</Color>
-            <Color x:Key="Black8Color">#99000000</Color>
-            <Color x:Key="Black9Color">#b3000000</Color>
-            <Color x:Key="Black10Color">#cc000000</Color>
-            <Color x:Key="Black11Color">#e6000000</Color>
-            <Color x:Key="Black12Color">#f2000000</Color>
-            <!-- White -->
-            <Color x:Key="White1Color">#0dffffff</Color>
-            <Color x:Key="White2Color">#1affffff</Color>
-            <Color x:Key="White3Color">#26ffffff</Color>
-            <Color x:Key="White4Color">#33ffffff</Color>
-            <Color x:Key="White5Color">#4dffffff</Color>
-            <Color x:Key="White6Color">#66ffffff</Color>
-            <Color x:Key="White7Color">#80ffffff</Color>
-            <Color x:Key="White8Color">#99ffffff</Color>
-            <Color x:Key="White9Color">#b3ffffff</Color>
-            <Color x:Key="White10Color">#ccffffff</Color>
-            <Color x:Key="White11Color">#e6ffffff</Color>
-            <Color x:Key="White12Color">#f2ffffff</Color>
-
-            <!-- Neutral Colors -->
-            <Color x:Key="Sand1Color">#FDFDFC</Color>
-            <Color x:Key="Sand2Color">#F9F9F8</Color>
-            <Color x:Key="Sand3Color">#F1F0EF</Color>
-            <Color x:Key="Sand4Color">#E9E8E6</Color>
-            <Color x:Key="Sand5Color">#E2E1DE</Color>
-            <Color x:Key="Sand6Color">#DAD9D6</Color>
-            <Color x:Key="Sand7Color">#CFCECA</Color>
-            <Color x:Key="Sand8Color">#BCBBB5</Color>
-            <Color x:Key="Sand9Color">#8D8D86</Color>
-            <Color x:Key="Sand10Color">#82827C</Color>
-            <Color x:Key="Sand11Color">#63635E</Color>
-            <Color x:Key="Sand12Color">#21201C</Color>
-
-            <!-- Accent Colors -->
-            <Color x:Key="Sky1Color">#F9FEFF</Color>
-            <Color x:Key="Sky2Color">#F1FAFD</Color>
-            <Color x:Key="Sky3Color">#E1F6FD</Color>
-            <Color x:Key="Sky4Color">#D1F0FA</Color>
-            <Color x:Key="Sky5Color">#BEE7F5</Color>
-            <Color x:Key="Sky6Color">#A9DAED</Color>
-            <Color x:Key="Sky7Color">#8DCAE3</Color>
-            <Color x:Key="Sky8Color">#60B3D7</Color>
-            <Color x:Key="Sky9Color">#7CE2FE</Color>
-            <Color x:Key="Sky10Color">#74DAF8</Color>
-            <Color x:Key="Sky11Color">#00749E</Color>
-            <Color x:Key="Sky12Color">#1D3E56</Color>
-
-            <Color x:Key="Amber1Color">#FEFDFB</Color>
-            <Color x:Key="Amber2Color">#FEFBE9</Color>
-            <Color x:Key="Amber3Color">#FFF7C2</Color>
-            <Color x:Key="Amber4Color">#FFEE9C</Color>
-            <Color x:Key="Amber5Color">#FBE577</Color>
-            <Color x:Key="Amber6Color">#F3D673</Color>
-            <Color x:Key="Amber7Color">#E9C162</Color>
-            <Color x:Key="Amber8Color">#E2A336</Color>
-            <Color x:Key="Amber9Color">#FFC53D</Color>
-            <Color x:Key="Amber10Color">#FFBA18</Color>
-            <Color x:Key="Amber11Color">#AB6400</Color>
-            <Color x:Key="Amber12Color">#4F3422</Color>
-
-            <!-- Success Colors -->
-            <Color x:Key="Grass1Color">#FBFEFB</Color>
-            <Color x:Key="Grass2Color">#F5FBF5</Color>
-            <Color x:Key="Grass3Color">#E9F6E9</Color>
-            <Color x:Key="Grass4Color">#DAF1DB</Color>
-            <Color x:Key="Grass5Color">#C9E8CA</Color>
-            <Color x:Key="Grass6Color">#B2DDB5</Color>
-            <Color x:Key="Grass7Color">#94CE9A</Color>
-            <Color x:Key="Grass8Color">#65BA74</Color>
-            <Color x:Key="Grass9Color">#46A758</Color>
-            <Color x:Key="Grass10Color">#3E9B4F</Color>
-            <Color x:Key="Grass11Color">#2A7E3B</Color>
-            <Color x:Key="Grass12Color">#203C25</Color>
-
-            <!-- Warning Colors -->
-            <Color x:Key="Yellow1Color">#FDFDF9</Color>
-            <Color x:Key="Yellow2Color">#FEFCE9</Color>
-            <Color x:Key="Yellow3Color">#FFFAB8</Color>
-            <Color x:Key="Yellow4Color">#FFF394</Color>
-            <Color x:Key="Yellow5Color">#FFE770</Color>
-            <Color x:Key="Yellow6Color">#F3D768</Color>
-            <Color x:Key="Yellow7Color">#E4C767</Color>
-            <Color x:Key="Yellow8Color">#D5AE39</Color>
-            <Color x:Key="Yellow9Color">#FFE629</Color>
-            <Color x:Key="Yellow10Color">#FFDC00</Color>
-            <Color x:Key="Yellow11Color">#9E6C00</Color>
-            <Color x:Key="Yellow12Color">#473B1F</Color>
-
-            <Color x:Key="Orange1Color">#FEFCFB</Color>
-            <Color x:Key="Orange2Color">#FFF7ED</Color>
-            <Color x:Key="Orange3Color">#FFEFD6</Color>
-            <Color x:Key="Orange4Color">#FFDFB5</Color>
-            <Color x:Key="Orange5Color">#FFD19A</Color>
-            <Color x:Key="Orange6Color">#FFC182</Color>
-            <Color x:Key="Orange7Color">#F5AE73</Color>
-            <Color x:Key="Orange8Color">#EC9455</Color>
-            <Color x:Key="Orange9Color">#F76B15</Color>
-            <Color x:Key="Orange10Color">#EF5F00</Color>
-            <Color x:Key="Orange11Color">#CC4E00</Color>
-            <Color x:Key="Orange12Color">#582D1D</Color>
-
-            <!-- Danger Colors -->
-            <Color x:Key="Tomato1Color">#FFFCFC</Color>
-            <Color x:Key="Tomato2Color">#FFF8F7</Color>
-            <Color x:Key="Tomato3Color">#FEEBE7</Color>
-            <Color x:Key="Tomato4Color">#FFDCD3</Color>
-            <Color x:Key="Tomato5Color">#FFCDC2</Color>
-            <Color x:Key="Tomato6Color">#FDBDAF</Color>
-            <Color x:Key="Tomato7Color">#F5A898</Color>
-            <Color x:Key="Tomato8Color">#EC8E7B</Color>
-            <Color x:Key="Tomato9Color">#E54D2E</Color>
-            <Color x:Key="Tomato10Color">#DD4425</Color>
-            <Color x:Key="Tomato11Color">#D13415</Color>
-            <Color x:Key="Tomato12Color">#5C271F</Color>
-        </ResourceDictionary>
-    </ResourceDictionary.MergedDictionaries>
     <ResourceDictionary.ThemeDictionaries>
         <ResourceInclude x:Key="Default" Source="/Themes/Colors.Light.axaml" />
         <ResourceInclude x:Key="Dark" Source="/Themes/Colors.Dark.axaml" />
     </ResourceDictionary.ThemeDictionaries>
+
+    <!-- Black -->
+    <Color x:Key="Black1Color">#0d000000</Color>
+    <Color x:Key="Black2Color">#1a000000</Color>
+    <Color x:Key="Black3Color">#26000000</Color>
+    <Color x:Key="Black4Color">#33000000</Color>
+    <Color x:Key="Black5Color">#4d000000</Color>
+    <Color x:Key="Black6Color">#66000000</Color>
+    <Color x:Key="Black7Color">#80000000</Color>
+    <Color x:Key="Black8Color">#99000000</Color>
+    <Color x:Key="Black9Color">#b3000000</Color>
+    <Color x:Key="Black10Color">#cc000000</Color>
+    <Color x:Key="Black11Color">#e6000000</Color>
+    <Color x:Key="Black12Color">#f2000000</Color>
+    <!-- White -->
+    <Color x:Key="White1Color">#0dffffff</Color>
+    <Color x:Key="White2Color">#1affffff</Color>
+    <Color x:Key="White3Color">#26ffffff</Color>
+    <Color x:Key="White4Color">#33ffffff</Color>
+    <Color x:Key="White5Color">#4dffffff</Color>
+    <Color x:Key="White6Color">#66ffffff</Color>
+    <Color x:Key="White7Color">#80ffffff</Color>
+    <Color x:Key="White8Color">#99ffffff</Color>
+    <Color x:Key="White9Color">#b3ffffff</Color>
+    <Color x:Key="White10Color">#ccffffff</Color>
+    <Color x:Key="White11Color">#e6ffffff</Color>
+    <Color x:Key="White12Color">#f2ffffff</Color>
+
+    <!-- Neutral Colors -->
+    <Color x:Key="Sand1Color">#FDFDFC</Color>
+    <Color x:Key="Sand2Color">#F9F9F8</Color>
+    <Color x:Key="Sand3Color">#F1F0EF</Color>
+    <Color x:Key="Sand4Color">#E9E8E6</Color>
+    <Color x:Key="Sand5Color">#E2E1DE</Color>
+    <Color x:Key="Sand6Color">#DAD9D6</Color>
+    <Color x:Key="Sand7Color">#CFCECA</Color>
+    <Color x:Key="Sand8Color">#BCBBB5</Color>
+    <Color x:Key="Sand9Color">#8D8D86</Color>
+    <Color x:Key="Sand10Color">#82827C</Color>
+    <Color x:Key="Sand11Color">#63635E</Color>
+    <Color x:Key="Sand12Color">#21201C</Color>
+
+    <!-- Accent Colors -->
+    <Color x:Key="Sky1Color">#F9FEFF</Color>
+    <Color x:Key="Sky2Color">#F1FAFD</Color>
+    <Color x:Key="Sky3Color">#E1F6FD</Color>
+    <Color x:Key="Sky4Color">#D1F0FA</Color>
+    <Color x:Key="Sky5Color">#BEE7F5</Color>
+    <Color x:Key="Sky6Color">#A9DAED</Color>
+    <Color x:Key="Sky7Color">#8DCAE3</Color>
+    <Color x:Key="Sky8Color">#60B3D7</Color>
+    <Color x:Key="Sky9Color">#7CE2FE</Color>
+    <Color x:Key="Sky10Color">#74DAF8</Color>
+    <Color x:Key="Sky11Color">#00749E</Color>
+    <Color x:Key="Sky12Color">#1D3E56</Color>
+
+    <Color x:Key="Amber1Color">#FEFDFB</Color>
+    <Color x:Key="Amber2Color">#FEFBE9</Color>
+    <Color x:Key="Amber3Color">#FFF7C2</Color>
+    <Color x:Key="Amber4Color">#FFEE9C</Color>
+    <Color x:Key="Amber5Color">#FBE577</Color>
+    <Color x:Key="Amber6Color">#F3D673</Color>
+    <Color x:Key="Amber7Color">#E9C162</Color>
+    <Color x:Key="Amber8Color">#E2A336</Color>
+    <Color x:Key="Amber9Color">#FFC53D</Color>
+    <Color x:Key="Amber10Color">#FFBA18</Color>
+    <Color x:Key="Amber11Color">#AB6400</Color>
+    <Color x:Key="Amber12Color">#4F3422</Color>
+
+    <!-- Success Colors -->
+    <Color x:Key="Grass1Color">#FBFEFB</Color>
+    <Color x:Key="Grass2Color">#F5FBF5</Color>
+    <Color x:Key="Grass3Color">#E9F6E9</Color>
+    <Color x:Key="Grass4Color">#DAF1DB</Color>
+    <Color x:Key="Grass5Color">#C9E8CA</Color>
+    <Color x:Key="Grass6Color">#B2DDB5</Color>
+    <Color x:Key="Grass7Color">#94CE9A</Color>
+    <Color x:Key="Grass8Color">#65BA74</Color>
+    <Color x:Key="Grass9Color">#46A758</Color>
+    <Color x:Key="Grass10Color">#3E9B4F</Color>
+    <Color x:Key="Grass11Color">#2A7E3B</Color>
+    <Color x:Key="Grass12Color">#203C25</Color>
+
+    <!-- Warning Colors -->
+    <Color x:Key="Yellow1Color">#FDFDF9</Color>
+    <Color x:Key="Yellow2Color">#FEFCE9</Color>
+    <Color x:Key="Yellow3Color">#FFFAB8</Color>
+    <Color x:Key="Yellow4Color">#FFF394</Color>
+    <Color x:Key="Yellow5Color">#FFE770</Color>
+    <Color x:Key="Yellow6Color">#F3D768</Color>
+    <Color x:Key="Yellow7Color">#E4C767</Color>
+    <Color x:Key="Yellow8Color">#D5AE39</Color>
+    <Color x:Key="Yellow9Color">#FFE629</Color>
+    <Color x:Key="Yellow10Color">#FFDC00</Color>
+    <Color x:Key="Yellow11Color">#9E6C00</Color>
+    <Color x:Key="Yellow12Color">#473B1F</Color>
+
+    <Color x:Key="Orange1Color">#FEFCFB</Color>
+    <Color x:Key="Orange2Color">#FFF7ED</Color>
+    <Color x:Key="Orange3Color">#FFEFD6</Color>
+    <Color x:Key="Orange4Color">#FFDFB5</Color>
+    <Color x:Key="Orange5Color">#FFD19A</Color>
+    <Color x:Key="Orange6Color">#FFC182</Color>
+    <Color x:Key="Orange7Color">#F5AE73</Color>
+    <Color x:Key="Orange8Color">#EC9455</Color>
+    <Color x:Key="Orange9Color">#F76B15</Color>
+    <Color x:Key="Orange10Color">#EF5F00</Color>
+    <Color x:Key="Orange11Color">#CC4E00</Color>
+    <Color x:Key="Orange12Color">#582D1D</Color>
+
+    <!-- Danger Colors -->
+    <Color x:Key="Tomato1Color">#FFFCFC</Color>
+    <Color x:Key="Tomato2Color">#FFF8F7</Color>
+    <Color x:Key="Tomato3Color">#FEEBE7</Color>
+    <Color x:Key="Tomato4Color">#FFDCD3</Color>
+    <Color x:Key="Tomato5Color">#FFCDC2</Color>
+    <Color x:Key="Tomato6Color">#FDBDAF</Color>
+    <Color x:Key="Tomato7Color">#F5A898</Color>
+    <Color x:Key="Tomato8Color">#EC8E7B</Color>
+    <Color x:Key="Tomato9Color">#E54D2E</Color>
+    <Color x:Key="Tomato10Color">#DD4425</Color>
+    <Color x:Key="Tomato11Color">#D13415</Color>
+    <Color x:Key="Tomato12Color">#5C271F</Color>
 </ResourceDictionary>

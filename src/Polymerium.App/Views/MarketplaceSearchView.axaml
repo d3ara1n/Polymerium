@@ -22,7 +22,7 @@
                     </Border.Background>
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Button Theme="{StaticResource OutlineButtonTheme}"
+                            <Button Theme="{StaticResource GhostButtonTheme}"
                                     Command="{Binding $parent[husk:Frame].GoBackCommand}">
                                 <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
                             </Button>
@@ -32,8 +32,10 @@
                         <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
                               Margin="64,0,64,0">
                             <TextBox Grid.Column="0" Watermark="With the keywords in..."
+                                     BorderThickness="0"
                                      Text="{Binding QueryText,Mode=TwoWay}" />
                             <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
+                                      BorderThickness="0"
                                       SelectedItem="{Binding SelectedRepository,Mode=TwoWay}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="m:RepositoryBasicModel">
@@ -101,7 +103,7 @@
                 </husk:InfiniteScrollView.ItemsPanel>
                 <husk:InfiniteScrollView.ItemTemplate>
                     <DataTemplate x:DataType="m:ExhibitModel">
-                        <husk:Card Margin="16,4" Height="118">
+                        <husk:Card Margin="16,4" Height="118" CornerRadius="{StaticResource MediumCornerRadius}">
                             <Grid RowDefinitions="*,6,Auto,6,Auto" ColumnDefinitions="Auto,8,*,8,Auto">
                                 <Border Grid.Row="0" Grid.Column="0"
                                         CornerRadius="{StaticResource MediumCornerRadius}"
@@ -146,8 +148,10 @@
                                                 Command="{Binding #Exhibition.((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal" Spacing="6">
-                                                <icons:PackIconLucide Kind="Download"
-                                                                      Height="10" Width="10" VerticalAlignment="Center" />
+                                                <!-- <icons:PackIconLucide Kind="Download" -->
+                                                <!--                       Height="10" Width="10" VerticalAlignment="Center" /> -->
+                                                <fi:SymbolIcon Symbol="ArrowDownload"
+                                                               FontSize="{StaticResource SmallFontSize}" />
                                                 <TextBlock Text="Install" />
                                             </StackPanel>
                                         </Button>
@@ -155,8 +159,10 @@
                                                 Command="{Binding #Exhibition.((vm:MarketplaceSearchViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal" Spacing="6">
-                                                <icons:PackIconLucide Kind="AppWindow"
-                                                                      Height="10" Width="10" VerticalAlignment="Center" />
+                                                <!-- <icons:PackIconLucide Kind="AppWindow" -->
+                                                <!--                       Height="10" Width="10" VerticalAlignment="Center" /> -->
+                                                <fi:SymbolIcon Symbol="WindowNew"
+                                                               FontSize="{StaticResource SmallFontSize}" />
                                                 <TextBlock Text="Details" />
                                             </StackPanel>
                                         </Button>
@@ -182,8 +188,10 @@
                                                     <!-- </MenuItem> -->
                                                 </MenuFlyout>
                                             </Button.Flyout>
-                                            <icons:PackIconLucide Kind="Ellipsis" Height="8" Width="10"
-                                                                  VerticalAlignment="Center" />
+                                            <!-- <icons:PackIconLucide Kind="Ellipsis" Height="8" Width="10" -->
+                                            <!--                       VerticalAlignment="Center" /> -->
+                                            <fi:SymbolIcon Symbol="MoreHorizontal"
+                                                           FontSize="{StaticResource SmallFontSize}" />
                                         </Button>
                                     </StackPanel>
                                     <ItemsControl ItemsSource="{Binding Tags}">
