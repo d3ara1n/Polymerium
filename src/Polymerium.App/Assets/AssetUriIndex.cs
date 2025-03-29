@@ -25,7 +25,7 @@ public static class AssetUriIndex
         new(AssetLoader.Open(REPOSITORY_HEADER_CURSEFORGE));
 
     public static readonly Bitmap REPOSITORY_HEADER_MODRINTH_BITMAP = new(AssetLoader.Open(REPOSITORY_HEADER_MODRINTH));
-    
+
     public static readonly Bitmap REPOSITORY_HEADER_FAVORITE_BITMAP = new(AssetLoader.Open(REPOSITORY_HEADER_FAVORITE));
 
     public static readonly Bitmap DIRT_IMAGE_BITMAP = new(AssetLoader.Open(DIRT_IMAGE));

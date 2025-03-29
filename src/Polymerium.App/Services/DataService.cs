@@ -33,7 +33,7 @@ public class DataService(
 
     public ValueTask<Package> ResolvePackageAsync(string label, string? ns, string pid, string? vid, Filter filter) =>
         GetOrCreate($"package:{PackageHelper.Identify(label, ns, pid, vid, filter)}",
-                             () => agent.ResolveAsync(label, ns, pid, vid, filter));
+                    () => agent.ResolveAsync(label, ns, pid, vid, filter));
 
     public ValueTask<Bitmap> GetBitmapAsync(Uri url, int widthDesired = 64) =>
         GetOrCreate($"bitmap:{url.AbsoluteUri}:{widthDesired}",

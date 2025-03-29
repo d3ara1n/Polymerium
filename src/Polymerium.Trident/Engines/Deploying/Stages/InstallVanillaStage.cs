@@ -13,9 +13,9 @@ public class InstallVanillaStage(
         var builder = Context.ArtifactBuilder!;
         using var client = factory.CreateClient();
 
-        var version = await prismLauncherService.GetVersionAsync(PrismLauncherService.UID_MINECRAFT,
-                                                                 Context.Setup.Version,
-                                                                 token).ConfigureAwait(false);
+        var version = await prismLauncherService
+                           .GetVersionAsync(PrismLauncherService.UID_MINECRAFT, Context.Setup.Version, token)
+                           .ConfigureAwait(false);
         logger.LogInformation("Got version index {version}({uid})", version.Version, version.Uid);
 
         // Libraries

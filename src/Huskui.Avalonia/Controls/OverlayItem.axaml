@@ -55,7 +55,7 @@
                 <Setter Property="RenderTransform" Value="scaleX(0.90)" />
             </Style>
         </Style>
-        
+
         <Style Selector="^[Distance=0]">
             <Setter Property="Opacity" Value="1.0" />
 

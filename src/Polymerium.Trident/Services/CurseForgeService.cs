@@ -191,7 +191,8 @@ public class CurseForgeService(ICurseForgeClient client)
             description,
             model.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList());
 
-    public async Task<string> GetModDescriptionAsync(uint modId) => (await client.GetModDescriptionAsync(modId).ConfigureAwait(false)).Data;
+    public async Task<string> GetModDescriptionAsync(uint modId) =>
+        (await client.GetModDescriptionAsync(modId).ConfigureAwait(false)).Data;
 
     public async Task<string> GetModFileChangelogAsync(uint modId, uint fileId) =>
         (await client.GetModFileChangelogAsync(modId, fileId).ConfigureAwait(false)).Data;
