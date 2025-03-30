@@ -78,7 +78,7 @@ public partial class InstanceSetupViewModel(
         }
 
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
-            Task.Run(() => LoadReferenceAsync(r.Label, r.Namespace, r.Pid, r.Vid), inner);
+            Reference = new LazyObject(t => LoadReferenceAsync(r.Label, r.Namespace, r.Pid, r.Vid, t));
         return;
 
         async Task<InstancePackageModel?> LoadAsync(Profile.Rice.Entry entry)
@@ -119,7 +119,12 @@ public partial class InstanceSetupViewModel(
             return null;
         }
 
-        async Task LoadReferenceAsync(string label, string? @namespace, string pid, string? vid)
+        async Task<object?> LoadReferenceAsync(
+            string label,
+            string? @namespace,
+            string pid,
+            string? vid,
+            CancellationToken _)
         {
             try
             {
@@ -156,24 +161,22 @@ public partial class InstanceSetupViewModel(
                                })
                               .ToList();
 
-                Dispatcher.UIThread.Post(() =>
+                return new InstanceReferenceModel
                 {
-                    Reference = new InstanceReferenceModel
-                    {
-                        Name = package.ProjectName,
-                        Thumbnail = thumbnail,
-                        SourceUrl = package.Reference,
-                        SourceLabel = package.Label,
-                        Versions = versions,
-                        CurrentVersion = versions.FirstOrDefault()
-                    };
-                });
+                    Name = package.ProjectName,
+                    Thumbnail = thumbnail,
+                    SourceUrl = package.Reference,
+                    SourceLabel = package.Label,
+                    Versions = versions,
+                    CurrentVersion = versions.FirstOrDefault()
+                };
             }
             catch (Exception ex)
             {
                 notificationService.PopMessage($"{Basic.Source}: {ex.Message}",
                                                "Fetching modpack information failed",
                                                NotificationLevel.Warning);
+                throw;
             }
         }
     }
@@ -355,7 +358,7 @@ public partial class InstanceSetupViewModel(
     #region Reactive
 
     [ObservableProperty]
-    public partial InstanceReferenceModel? Reference { get; set; }
+    public partial LazyObject? Reference { get; set; }
 
     [ObservableProperty]
     public partial string LoaderLabel { get; set; } = string.Empty;

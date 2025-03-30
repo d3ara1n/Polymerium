@@ -214,7 +214,9 @@ public class CurseForgeService(ICurseForgeClient client)
         ModLoaderTypeModel? modLoader,
         uint index = 0,
         uint pageSize = 50) =>
-        await client.SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index, pageSize: pageSize);
+        await client
+             .SearchModsAsync(searchFilter, classId, gameVersion, modLoader, index: index, pageSize: pageSize)
+             .ConfigureAwait(false);
 
     public async Task<ModModel> GetModAsync(uint modId)
     {
@@ -236,7 +238,9 @@ public class CurseForgeService(ICurseForgeClient client)
         int index = 0,
         int count = 50)
     {
-        var rv = await client.GetModFilesAsync(modId, gameVersion, modLoader, (uint)index, (uint)count);
+        var rv = await client
+                      .GetModFilesAsync(modId, gameVersion, modLoader, (uint)index, (uint)count)
+                      .ConfigureAwait(false);
         return rv;
     }
 }

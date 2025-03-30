@@ -7,6 +7,7 @@
         <ResourceInclude Source="/Controls/LaunchBar.axaml" />
         <ResourceInclude Source="/Controls/InstanceEntryButton.axaml" />
         <ResourceInclude Source="/Controls/PackageEntryButton.axaml" />
+        <ResourceInclude Source="/Controls/ModpackEntryButton.axaml" />
         <ResourceInclude Source="/Controls/SettingsEntry.axaml" />
         <ResourceInclude Source="/Controls/SettingsEntryItem.axaml" />
     </ResourceDictionary.MergedDictionaries>
