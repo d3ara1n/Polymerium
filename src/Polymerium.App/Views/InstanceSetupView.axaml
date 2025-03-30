@@ -11,6 +11,7 @@
                   xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
                   xmlns:controls="using:Polymerium.App.Controls"
+                  xmlns:v="clr-namespace:Polymerium.App.Views"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                   x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -56,116 +57,142 @@
                         <HyperlinkButton Content="Switch" />
                     </StackPanel>
                 </StackPanel>
-                <husk:SkeletonContainer Grid.Column="2" CornerRadius="{StaticResource MediumCornerRadius}"
-                                        IsLoading="{Binding Reference,Converter={x:Static ObjectConverters.IsNull}}">
-                    <husk:Card MaxWidth="320" BorderThickness="2"
-                               BorderBrush="{DynamicResource ControlAccentBorderBrush}"
-                               IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull}}">
-                        <Grid RowDefinitions="*,8,Auto">
-                            <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*">
-                                <Border Grid.Column="0" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
-                                        BorderBrush="{DynamicResource ControlAccentBorderBrush}" BorderThickness="2"
-                                        BackgroundSizing="InnerBorderEdge" Height="42" Width="42">
-                                    <Border.Background>
-                                        <ImageBrush Source="{Binding Reference.Thumbnail,FallbackValue={x:Null}}"
+                <husk:LazyContainer Grid.Column="2" MinWidth="128" LazySource="{Binding Reference}"
+                                    IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
+                    <husk:LazyContainer.BadContent>
+                        <husk:Card BorderThickness="2"
+                                   BorderBrush="{DynamicResource ControlBorderBrush}">
+                            <StackPanel>
+                                <TextBlock Text="Something went wrong" />
+                                <Button Content="Retry" />
+                            </StackPanel>
+                        </husk:Card>
+                    </husk:LazyContainer.BadContent>
+                    <husk:LazyContainer.ContentTemplate>
+                        <DataTemplate x:DataType="m:InstanceReferenceModel">
+                            <husk:Card MaxWidth="320" BorderThickness="2"
+                                       BorderBrush="{DynamicResource ControlAccentBorderBrush}">
+                                <Grid RowDefinitions="*,8,Auto">
+                                    <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*">
+                                        <Border Grid.Column="0" CornerRadius="{StaticResource SmallCornerRadius}"
+                                                BorderBrush="{DynamicResource ControlAccentBorderBrush}"
+                                                BorderThickness="2"
+                                                BackgroundSizing="InnerBorderEdge" Height="42" Width="42">
+                                            <Border.Background>
+                                                <ImageBrush
+                                                    Source="{Binding Thumbnail,FallbackValue={x:Null}}"
                                                     Stretch="UniformToFill" />
-                                    </Border.Background>
-                                </Border>
-                                <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="2">
-                                    <TextBlock Text="{Binding Reference.Name,FallbackValue=Package Name}"
-                                               FontSize="{StaticResource LargeFontSize}"
-                                               TextTrimming="CharacterEllipsis" />
-                                    <HyperlinkButton Command="{Binding OpenSourceUrlCommand}"
-                                                     CommandParameter="{Binding Reference.SourceUrl,FallbackValue={x:Null}}">
-                                        <StackPanel Orientation="Horizontal" Spacing="4">
-                                            <TextBlock
-                                                Text="{Binding Reference.SourceLabel,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
-                                            <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                            </Border.Background>
+                                        </Border>
+                                        <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="2">
+                                            <TextBlock Text="{Binding Name,FallbackValue=Package Name}"
+                                                       FontSize="{StaticResource LargeFontSize}"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <HyperlinkButton
+                                                Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).OpenSourceUrlCommand,FallbackValue={x:Null}}"
+                                                CommandParameter="{Binding SourceUrl,FallbackValue={x:Null}}">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <TextBlock
+                                                        Text="{Binding SourceLabel,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                                    <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                                </StackPanel>
+                                            </HyperlinkButton>
                                         </StackPanel>
-                                    </HyperlinkButton>
-                                </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto,8,Auto">
-                                <ComboBox Grid.Column="0"
-                                          ItemsSource="{Binding Reference.Versions,FallbackValue={x:Null}}"
-                                          SelectedItem="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}">
-                                    <ComboBox.SelectionBoxItemTemplate>
-                                        <DataTemplate DataType="m:InstanceReferenceVersionModel">
-                                            <husk:SwitchPresenter Value="{Binding IsCurrent,FallbackValue=False}"
-                                                                  TargetType="x:Boolean">
-                                                <husk:SwitchCase Value="True">
-                                                    <TextBlock Text="{Binding Display,FallbackValue=Display}"
-                                                               Foreground="{DynamicResource ControlAccentForegroundBrush}" />
-                                                </husk:SwitchCase>
-                                                <husk:SwitchCase Value="False">
-                                                    <TextBlock Text="{Binding Display,FallbackValue=Display}" />
-                                                </husk:SwitchCase>
-                                            </husk:SwitchPresenter>
-                                        </DataTemplate>
-                                    </ComboBox.SelectionBoxItemTemplate>
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate DataType="m:InstanceReferenceVersionModel">
-                                            <StackPanel>
-                                                <husk:SwitchPresenter Value="{Binding IsCurrent,FallbackValue=False}"
-                                                                      TargetType="x:Boolean">
-                                                    <husk:SwitchCase Value="True">
-                                                        <TextBlock Text="{Binding Display,FallbackValue=Display}"
-                                                                   Foreground="{DynamicResource ControlAccentForegroundBrush}" />
-                                                    </husk:SwitchCase>
-                                                    <husk:SwitchCase Value="False">
-                                                        <TextBlock Text="{Binding Display,FallbackValue=Display}" />
-                                                    </husk:SwitchCase>
-                                                </husk:SwitchPresenter>
-                                                <DockPanel>
-                                                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                                                        <TextBlock Text="{Binding UpdatedAt}" />
-                                                    </StackPanel>
-                                                    <husk:SwitchPresenter TargetType="trident:ReleaseType"
-                                                                          Value="{Binding ReleaseTypeRaw,FallbackValue=Release}">
-                                                        <husk:SwitchCase Value="Release">
-                                                            <husk:Tag Classes="Success"
-                                                                      CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="Release" />
-                                                            </husk:Tag>
+                                    </Grid>
+                                    <Grid Grid.Row="2" ColumnDefinitions="*,8,Auto,8,Auto">
+                                        <ComboBox Grid.Column="0"
+                                                  ItemsSource="{Binding Versions,FallbackValue={x:Null}}"
+                                                  SelectedItem="{Binding CurrentVersion,FallbackValue={x:Null}}">
+                                            <ComboBox.SelectionBoxItemTemplate>
+                                                <DataTemplate DataType="m:InstanceReferenceVersionModel">
+                                                    <husk:SwitchPresenter
+                                                        Value="{Binding IsCurrent,FallbackValue=False}"
+                                                        TargetType="x:Boolean">
+                                                        <husk:SwitchCase Value="True">
+                                                            <TextBlock
+                                                                Text="{Binding Display,FallbackValue=Display}"
+                                                                Foreground="{DynamicResource ControlAccentForegroundBrush}" />
                                                         </husk:SwitchCase>
-                                                        <husk:SwitchCase Value="Beta">
-                                                            <husk:Tag Classes="Warning"
-                                                                      CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="Beta" />
-                                                            </husk:Tag>
-                                                        </husk:SwitchCase>
-                                                        <husk:SwitchCase Value="Alpha">
-                                                            <husk:Tag Classes="Danger"
-                                                                      CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                <TextBlock Text="Alpha" />
-                                                            </husk:Tag>
+                                                        <husk:SwitchCase Value="False">
+                                                            <TextBlock
+                                                                Text="{Binding Display,FallbackValue=Display}" />
                                                         </husk:SwitchCase>
                                                     </husk:SwitchPresenter>
-                                                </DockPanel>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <Button Grid.Column="2" Command="{Binding UpdateCommand}"
-                                        CommandParameter="{Binding Reference.CurrentVersion,FallbackValue={x:Null}}"
-                                        IsEnabled="{Binding Reference.CurrentVersion.IsCurrent,FallbackValue=False,Converter={x:Static BoolConverters.Not}}">
-                                    <!-- <icons:PackIconLucide Kind="Soup" -->
-                                    <!--                       Height="{StaticResource MediumFontSize}" -->
-                                    <!--                       Width="{StaticResource MediumFontSize}" -->
-                                    <!--                       VerticalAlignment="Center" /> -->
-                                    <fi:SymbolIcon Symbol="BoxArrowUp" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                                <Button Grid.Column="4" Command="{Binding ViewDetailsCommand}">
-                                    <!-- <icons:PackIconLucide Kind="AppWindow" -->
-                                    <!--                       Height="{StaticResource MediumFontSize}" -->
-                                    <!--                       Width="{StaticResource MediumFontSize}" -->
-                                    <!--                       VerticalAlignment="Center" /> -->
-                                    <fi:SymbolIcon Symbol="WindowNew" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </husk:Card>
-                </husk:SkeletonContainer>
+                                                </DataTemplate>
+                                            </ComboBox.SelectionBoxItemTemplate>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate DataType="m:InstanceReferenceVersionModel">
+                                                    <StackPanel>
+                                                        <husk:SwitchPresenter
+                                                            Value="{Binding IsCurrent,FallbackValue=False}"
+                                                            TargetType="x:Boolean">
+                                                            <husk:SwitchCase Value="True">
+                                                                <TextBlock
+                                                                    Text="{Binding Display,FallbackValue=Display}"
+                                                                    Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                                                            </husk:SwitchCase>
+                                                            <husk:SwitchCase Value="False">
+                                                                <TextBlock
+                                                                    Text="{Binding Display,FallbackValue=Display}" />
+                                                            </husk:SwitchCase>
+                                                        </husk:SwitchPresenter>
+                                                        <DockPanel>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        DockPanel.Dock="Right">
+                                                                <TextBlock Text="{Binding UpdatedAt}" />
+                                                            </StackPanel>
+                                                            <husk:SwitchPresenter TargetType="trident:ReleaseType"
+                                                                Value="{Binding ReleaseTypeRaw,FallbackValue=Release}">
+                                                                <husk:SwitchCase Value="Release">
+                                                                    <husk:Tag Classes="Success"
+                                                                              CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                        <TextBlock Text="Release" />
+                                                                    </husk:Tag>
+                                                                </husk:SwitchCase>
+                                                                <husk:SwitchCase Value="Beta">
+                                                                    <husk:Tag Classes="Warning"
+                                                                              CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                        <TextBlock Text="Beta" />
+                                                                    </husk:Tag>
+                                                                </husk:SwitchCase>
+                                                                <husk:SwitchCase Value="Alpha">
+                                                                    <husk:Tag Classes="Danger"
+                                                                              CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                        <TextBlock Text="Alpha" />
+                                                                    </husk:Tag>
+                                                                </husk:SwitchCase>
+                                                            </husk:SwitchPresenter>
+                                                        </DockPanel>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Button Grid.Column="2"
+                                                Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).UpdateCommand,FallbackValue={x:Null}}"
+                                                CommandParameter="{Binding CurrentVersion,FallbackValue={x:Null}}"
+                                                IsEnabled="{Binding CurrentVersion.IsCurrent,FallbackValue=False,Converter={x:Static BoolConverters.Not}}">
+                                            <!-- <icons:PackIconLucide Kind="Soup" -->
+                                            <!--                       Height="{StaticResource MediumFontSize}" -->
+                                            <!--                       Width="{StaticResource MediumFontSize}" -->
+                                            <!--                       VerticalAlignment="Center" /> -->
+                                            <fi:SymbolIcon Symbol="BoxArrowUp"
+                                                           FontSize="{StaticResource MediumFontSize}" />
+                                        </Button>
+                                        <Button Grid.Column="4"
+                                                Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}">
+                                            <!-- <icons:PackIconLucide Kind="AppWindow" -->
+                                            <!--                       Height="{StaticResource MediumFontSize}" -->
+                                            <!--                       Width="{StaticResource MediumFontSize}" -->
+                                            <!--                       VerticalAlignment="Center" /> -->
+                                            <fi:SymbolIcon Symbol="WindowNew"
+                                                           FontSize="{StaticResource MediumFontSize}" />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </husk:Card>
+                        </DataTemplate>
+                    </husk:LazyContainer.ContentTemplate>
+                </husk:LazyContainer>
             </Grid>
             <husk:SwitchPresenter Grid.Row="2" Value="{Binding IsRefreshing}" TargetType="x:Boolean">
                 <husk:SwitchCase Value="False">

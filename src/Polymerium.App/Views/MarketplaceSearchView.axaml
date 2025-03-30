@@ -8,7 +8,9 @@
            xmlns:async="using:AsyncImageLoader"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:v="using:Polymerium.App.Views"
-           xmlns:m="using:Polymerium.App.Models" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+           xmlns:m="using:Polymerium.App.Models"
+           xmlns:controls="clr-namespace:Polymerium.App.Controls"
+           ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:MarketplaceSearchViewModel" Padding="0"
            x:Class="Polymerium.App.Views.MarketplaceSearchView" x:Name="Exhibition">
@@ -96,122 +98,16 @@
                         <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
-                <husk:InfiniteScrollView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </husk:InfiniteScrollView.ItemsPanel>
+                <!-- <husk:InfiniteScrollView.ItemsPanel> -->
+                <!--     <ItemsPanelTemplate> -->
+                <!--         <VirtualizingStackPanel /> -->
+                <!--     </ItemsPanelTemplate> -->
+                <!-- </husk:InfiniteScrollView.ItemsPanel> -->
                 <husk:InfiniteScrollView.ItemTemplate>
                     <DataTemplate x:DataType="m:ExhibitModel">
-                        <husk:Card Margin="16,4" Height="118" CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Grid RowDefinitions="*,6,Auto,6,Auto" ColumnDefinitions="Auto,8,*,8,Auto">
-                                <Border Grid.Row="0" Grid.Column="0"
-                                        CornerRadius="{StaticResource MediumCornerRadius}"
-                                        Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=Self}}">
-                                    <Border.Background>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    async:ImageBrushLoader.Source="{Binding Thumbnail}" />
-                                    </Border.Background>
-                                </Border>
-                                <StackPanel Grid.Row="0" Grid.Column="2">
-                                    <TextBlock Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}"
-                                               FontWeight="Bold" />
-                                    <TextBlock Text="{Binding Summary}" MaxLines="2" TextWrapping="Wrap"
-                                               TextTrimming="CharacterEllipsis" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="0" Grid.Column="4" Spacing="4">
-                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
-                                        <icons:PackIconLucide Kind="CircleUser" Height="12" VerticalAlignment="Center"
-                                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                        <TextBlock Text="{Binding Author}"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
-                                        <icons:PackIconLucide Kind="CircleArrowDown" Height="12"
-                                                              VerticalAlignment="Center"
-                                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                        <TextBlock Text="{Binding Downloads}"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
-                                        <icons:PackIconLucide Kind="Clock"
-                                                              Height="12" VerticalAlignment="Center"
-                                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                        <TextBlock Text="{Binding UpdatedAt}"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
-                                    </StackPanel>
-                                </StackPanel>
-                                <husk:Divider Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" />
-                                <DockPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5">
-                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4">
-                                        <Button Classes="Primary Small"
-                                                Command="{Binding #Exhibition.((vm:MarketplaceSearchViewModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding}">
-                                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                                <!-- <icons:PackIconLucide Kind="Download" -->
-                                                <!--                       Height="10" Width="10" VerticalAlignment="Center" /> -->
-                                                <fi:SymbolIcon Symbol="ArrowDownload"
-                                                               FontSize="{StaticResource SmallFontSize}" />
-                                                <TextBlock Text="Install" />
-                                            </StackPanel>
-                                        </Button>
-                                        <Button Classes="Small"
-                                                Command="{Binding #Exhibition.((vm:MarketplaceSearchViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding}">
-                                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                                <!-- <icons:PackIconLucide Kind="AppWindow" -->
-                                                <!--                       Height="10" Width="10" VerticalAlignment="Center" /> -->
-                                                <fi:SymbolIcon Symbol="WindowNew"
-                                                               FontSize="{StaticResource SmallFontSize}" />
-                                                <TextBlock Text="Details" />
-                                            </StackPanel>
-                                        </Button>
-                                        <Button Classes="Small">
-                                            <Button.Flyout>
-                                                <MenuFlyout>
-                                                    <MenuItem Header="Open Website"
-                                                              Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).OpenWebsiteCommand,FallbackValue={x:Null}}"
-                                                              CommandParameter="{Binding}">
-                                                        <MenuItem.Icon>
-                                                            <icons:PackIconLucide Kind="ExternalLink"
-                                                                Height="{StaticResource MediumFontSize}"
-                                                                Width="{StaticResource MediumFontSize}"
-                                                                VerticalAlignment="Center" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <!-- <MenuItem Header="Save to Favorites"> -->
-                                                    <!--     <MenuItem.Icon> -->
-                                                    <!--         <icons:PackIconLucide Kind="Bookmark" -->
-                                                    <!--             Height="10" Width="10" -->
-                                                    <!--             VerticalAlignment="Center" /> -->
-                                                    <!--     </MenuItem.Icon> -->
-                                                    <!-- </MenuItem> -->
-                                                </MenuFlyout>
-                                            </Button.Flyout>
-                                            <!-- <icons:PackIconLucide Kind="Ellipsis" Height="8" Width="10" -->
-                                            <!--                       VerticalAlignment="Center" /> -->
-                                            <fi:SymbolIcon Symbol="MoreHorizontal"
-                                                           FontSize="{StaticResource SmallFontSize}" />
-                                        </Button>
-                                    </StackPanel>
-                                    <ItemsControl ItemsSource="{Binding Tags}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="x:String">
-                                                <husk:Tag Margin="4,0">
-                                                    <TextBlock Text="{Binding}"
-                                                               FontSize="{StaticResource SmallFontSize}" />
-                                                </husk:Tag>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </DockPanel>
-                            </Grid>
-                        </husk:Card>
+                        <controls:ModpackEntryButton
+                            Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewDetailsCommand,FallbackValue={x:Null}}"
+                            CommandParameter="{Binding}" />
                     </DataTemplate>
                 </husk:InfiniteScrollView.ItemTemplate>
             </husk:InfiniteScrollView>

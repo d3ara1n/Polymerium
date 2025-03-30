@@ -78,17 +78,16 @@
                                 </Grid>
                             </DockPanel>
                             <Grid Grid.Row="1" Grid.Column="2" ColumnDefinitions="*,4,Auto" RowDefinitions="*,0,Auto">
-                                <StackPanel Name="ActionBlock" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
-                                            Orientation="Horizontal" VerticalAlignment="Bottom" Spacing="4"
-                                            Opacity="0.0">
-                                    <StackPanel.Transitions>
-                                        <Transitions>
-                                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                        </Transitions>
-                                    </StackPanel.Transitions>
+                                <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
+                                            Orientation="Horizontal" VerticalAlignment="Bottom" Spacing="4">
                                     <ItemsControl Name="TagBlock"
-                                                  ItemsSource="{Binding Tags}">
+                                                  ItemsSource="{Binding Tags}" Opacity="0.0">
+                                        <ItemsControl.Transitions>
+                                            <Transitions>
+                                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                            </Transitions>
+                                        </ItemsControl.Transitions>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate x:DataType="x:String">
                                                 <husk:Tag>
@@ -128,7 +127,7 @@
                                         </Button.Flyout>
                                     </Button>
                                 </StackPanel>
-                                <Panel Name="SummaryBlock" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                                <Panel Name="SummaryBlock" Grid.Row="0" Grid.Column="0">
                                     <TextBlock Text="{Binding Summary}"
                                                MaxLines="2"
                                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
@@ -140,7 +139,7 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover /template/ StackPanel#ActionBlock">
+        <Style Selector="^:pointerover /template/ ItemsControl#TagBlock">
             <Setter Property="Opacity" Value="1.0" />
         </Style>
 
