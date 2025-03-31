@@ -22,11 +22,12 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         int count = 50)
     {
         var data = await service.GetModFilesAsync(modId, version, loader, index, count).ConfigureAwait(false);
-        var tasks = data.Data.Select(x => service.GetModFileChangelogAsync(modId, x.Id)).ToArray();
-        await Task.WhenAll(tasks).ConfigureAwait(false);
-        return
-            (data.Data.Zip(tasks).Select(x => CurseForgeService.ToVersion(x.First, CONVERTER.Convert(x.Second.Result))),
-             data.Pagination.TotalCount);
+        // var tasks = data.Data.Select(x => service.GetModFileChangelogAsync(modId, x.Id)).ToArray();
+        // await Task.WhenAll(tasks).ConfigureAwait(false);
+        // return
+        //     (data.Data.Zip(tasks).Select(x => CurseForgeService.ToVersion(x.First, CONVERTER.Convert(x.Second.Result))),
+        //      data.Pagination.TotalCount);
+        return (data.Data.Select(CurseForgeService.ToVersion), data.Pagination.TotalCount);
     }
 
     #region IRepository Members
@@ -79,10 +80,8 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         if (uint.TryParse(pid, out var modId))
             try
             {
-                var (modTask, descriptionTask) = (service.GetModAsync(modId), service.GetModDescriptionAsync(modId));
-                await Task.WhenAll(modTask, descriptionTask).ConfigureAwait(false);
-                var (mod, description) = (modTask.Result, descriptionTask.Result);
-                return CurseForgeService.ToProject(mod, CONVERTER.Convert(description));
+                var mod = await service.GetModAsync(modId).ConfigureAwait(false);
+                return CurseForgeService.ToProject(mod);
             }
             catch (ApiException ex)
             {
