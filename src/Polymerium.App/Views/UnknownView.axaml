@@ -6,6 +6,7 @@
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:fi="using:FluentIcons.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
+           xmlns:v="using:Polymerium.App.Views"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
     <husk:Page.Header>
@@ -107,7 +108,8 @@
                             Command="{Binding ButcherCommand}" />
                     <HyperlinkButton Content="THIS A LINK!" />
 
-                    <husk:NotificationItem Actions="{Binding Actions}" Title="Downloading file..." Progress="54"
+                    <husk:NotificationItem x:Name="Notification" Actions="{Binding $parent[v:UnknownView].Actions}"
+                                           Title="Downloading file..." Progress="54"
                                            IsProgressBarVisible="True">
                         <StackPanel Spacing="4">
                             <StackPanel Orientation="Horizontal" Spacing="6">

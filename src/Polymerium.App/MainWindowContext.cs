@@ -206,7 +206,10 @@ public partial class MainWindowContext : ObservableObject
                         model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage("The instance has been installed",
                                                         e.Key,
-                                                        NotificationLevel.Success);
+                                                        NotificationLevel.Success,
+                                                        actions: new NotificationAction("Open",
+                                                            ViewInstanceCommand,
+                                                            e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;
@@ -263,7 +266,10 @@ public partial class MainWindowContext : ObservableObject
                         model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage("The instance has been updated",
                                                         e.Key,
-                                                        NotificationLevel.Success);
+                                                        NotificationLevel.Success,
+                                                        actions: new NotificationAction("Open",
+                                                            ViewInstanceCommand,
+                                                            e.Key));
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;

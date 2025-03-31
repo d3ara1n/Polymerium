@@ -2,21 +2,14 @@
 
 namespace Huskui.Avalonia.Models;
 
-public class NotificationAction
+public class NotificationAction(string text, ICommand command, object? parameter = null)
 {
-    public NotificationAction()
+    public NotificationAction() : this("_", null!)
     {
-        Text = string.Empty;
         // TODO: Set to DismissCommand
-        Command = null!;
     }
 
-    public NotificationAction(string text, ICommand command)
-    {
-        Text = text;
-        Command = command;
-    }
-
-    public string Text { get; set; }
-    public ICommand Command { get; set; }
+    public string Text { get; set; } = text;
+    public ICommand Command { get; set; } = command;
+    public object? Parameter { get; set; } = parameter;
 }
