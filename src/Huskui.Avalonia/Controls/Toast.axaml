@@ -34,7 +34,7 @@
                                               Padding="{TemplateBinding Padding}" />
                         </ScrollViewer>
                         <Panel VerticalAlignment="Top">
-                            <Border Name="HeaderBackground"
+                            <Border Name="HeaderBackground" IsVisible="{TemplateBinding IsHeaderVisible}"
                                     CornerRadius="{TemplateBinding CornerRadius,Converter={x:Static huskc:CornerRadiusConverters.Upper}}"
                                     Background="{DynamicResource LayerSolidBackgroundBrush}">
                                 <Border.Opacity>
@@ -52,7 +52,8 @@
                                     <fi:SymbolIcon Symbol="Dismiss" Height="16" Width="16" />
                                 </Button>
                                 <ContentPresenter Content="{TemplateBinding Header}"
-                                                  ContentTemplate="{TemplateBinding HeaderTemplate}">
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                  IsVisible="{TemplateBinding IsHeaderVisible}">
                                     <ContentPresenter.Styles>
                                         <Style Selector="ContentPresenter > TextBlock">
                                             <Setter Property="FontSize" Value="{StaticResource ExtraLargeFontSize}" />
