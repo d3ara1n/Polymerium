@@ -210,7 +210,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         if (exhibit is not null)
         {
             _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Ns, exhibit.ProjectId, null);
-            _notificationService.PopMessage($"{exhibit.ProjectName} has added to install queue");
+            _notificationService.PopMessage($"Task has been added to install queue", exhibit.ProjectName);
         }
     }
 
@@ -257,7 +257,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                        .ToList());
                 _overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataContext = model, InstallCommand = InstallVersionCommand, ViewImagesCommand = ViewImageCommand
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand,
+                    ViewImagesCommand = ViewImageCommand
                 });
             }
             catch (OperationCanceledException) { }

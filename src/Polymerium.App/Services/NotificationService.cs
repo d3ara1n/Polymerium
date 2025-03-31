@@ -40,10 +40,12 @@ public class NotificationService
         string message,
         string title = "Notification",
         NotificationLevel level = NotificationLevel.Information,
-        bool forceExpire = false) =>
+        bool forceExpire = false,
+        params NotificationAction[] actions) =>
         Dispatcher.UIThread.Post(() =>
         {
             var item = new NotificationItem { Content = message, Title = title, Level = level };
+            item.Actions.AddRange(actions);
             Pop(item);
             if (level is NotificationLevel.Information or NotificationLevel.Warning or NotificationLevel.Success
              || forceExpire)
@@ -58,8 +60,13 @@ public class NotificationService
     public void PopMessage(
         Exception? ex,
         string title = "Operation failed",
-        NotificationLevel level = NotificationLevel.Danger) =>
-        PopMessage(ex is not null ? Debugger.IsAttached ? ex.ToString() : ex.Message : "Unknown error", title, level);
+        NotificationLevel level = NotificationLevel.Danger,
+        params NotificationAction[] actions) =>
+        PopMessage(ex is not null ? Debugger.IsAttached ? ex.ToString() : ex.Message : "Unknown error",
+                   title,
+                   level,
+                   false,
+                   actions);
 
     public void PopProgress(
         string message,

@@ -56,4 +56,8 @@
     <ItemGroup>
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Modals\ExhibitModpackModal.axaml" />
+    </ItemGroup>
 </Project>
