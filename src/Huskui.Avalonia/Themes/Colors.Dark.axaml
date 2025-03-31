@@ -39,7 +39,7 @@
     <SolidColorBrush x:Key="Card3BackgroundBrush" Color="{StaticResource White3Color}" />
 
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource Sand11Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentBackgroundBrush" Color="{StaticResource Sand6Color}"
+    <SolidColorBrush x:Key="ControlTranslucentBackgroundBrush" Color="{StaticResource Sand11Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{StaticResource Amber11Color}" />
     <SolidColorBrush x:Key="ControlTranslucentAccentBackgroundBrush" Color="{StaticResource Amber11Color}"
