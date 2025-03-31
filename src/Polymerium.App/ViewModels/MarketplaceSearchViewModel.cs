@@ -236,7 +236,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                     project.Tags,
                                                     project.DownloadCount,
                                                     project.Summary,
-                                                    project.Description,
+                                                    string.Empty,
                                                     project.UpdatedAt,
                                                     project.Gallery.Select(x => x.Url).ToList(),
                                                     versions
@@ -246,7 +246,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                                    project.ProjectId,
                                                                    x.VersionName,
                                                                    x.VersionId,
-                                                                   x.Changelog,
+                                                                   string.Empty,
                                                                    x.PublishedAt,
                                                                    x.DownloadCount,
                                                                    x.ReleaseType,

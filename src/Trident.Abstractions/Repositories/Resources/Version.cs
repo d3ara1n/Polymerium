@@ -8,5 +8,4 @@ public record Version(
     string VersionName,
     ReleaseType ReleaseType,
     DateTimeOffset PublishedAt,
-    ulong DownloadCount,
-    string Changelog);
+    ulong DownloadCount);
