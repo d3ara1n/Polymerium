@@ -10,25 +10,25 @@ public class LazyContainer : ContentControl
     public static readonly StyledProperty<object?> BadContentProperty =
         AvaloniaProperty.Register<LazyContainer, object?>(nameof(BadContent));
 
+    public static readonly DirectProperty<LazyContainer, LazyObject?> LazySourceProperty =
+        AvaloniaProperty.RegisterDirect<LazyContainer, LazyObject?>(nameof(LazySource),
+                                                                    o => o.LazySource,
+                                                                    (o, v) => o.LazySource = v);
+
+    public static readonly StyledProperty<bool> IsBadProperty =
+        AvaloniaProperty.Register<LazyContainer, bool>(nameof(IsBad));
+
     public object? BadContent
     {
         get => GetValue(BadContentProperty);
         set => SetValue(BadContentProperty, value);
     }
 
-    public static readonly DirectProperty<LazyContainer, LazyObject?> LazySourceProperty =
-        AvaloniaProperty.RegisterDirect<LazyContainer, LazyObject?>(nameof(LazySource),
-                                                                    o => o.LazySource,
-                                                                    (o, v) => o.LazySource = v);
-
     public LazyObject? LazySource
     {
         get;
         set => SetAndRaise(LazySourceProperty, ref field, value);
     }
-
-    public static readonly StyledProperty<bool> IsBadProperty =
-        AvaloniaProperty.Register<LazyContainer, bool>(nameof(IsBad));
 
     public bool IsBad
     {

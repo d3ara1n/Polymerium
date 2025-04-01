@@ -2,4 +2,4 @@
 
 namespace Huskui.Avalonia.Controls;
 
-public class ButtonGroup : ItemsControl { }
+public class ButtonGroup : ItemsControl;

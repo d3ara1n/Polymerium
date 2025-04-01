@@ -71,7 +71,7 @@
                             <Border Name="SpacingPlaceholder" />
                             <WrapPanel DockPanel.Dock="Bottom">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <husk:Tag Name="InstallingTag" Classes="Warning">
+                                    <husk:Tag Name="InstallingTag" Classes="Status Warning">
                                         <StackPanel Orientation="Horizontal"
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
@@ -79,7 +79,7 @@
                                             <TextBlock Text="INSTALLING" />
                                         </StackPanel>
                                     </husk:Tag>
-                                    <husk:Tag Name="UpdatingTag" Classes="Warning">
+                                    <husk:Tag Name="UpdatingTag" Classes="Status Warning">
                                         <StackPanel Orientation="Horizontal"
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
@@ -87,7 +87,7 @@
                                             <TextBlock Text="UPDATING" />
                                         </StackPanel>
                                     </husk:Tag>
-                                    <husk:Tag Name="PreparingTag" Classes="Warning">
+                                    <husk:Tag Name="PreparingTag" Classes="Status Warning">
                                         <StackPanel Orientation="Horizontal"
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
@@ -95,7 +95,7 @@
                                             <TextBlock Text="PREPARING" />
                                         </StackPanel>
                                     </husk:Tag>
-                                    <husk:Tag Name="RunningTag" Classes="Success">
+                                    <husk:Tag Name="RunningTag" Classes="Status Success">
                                         <StackPanel Orientation="Horizontal"
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
@@ -104,10 +104,10 @@
                                         </StackPanel>
                                     </husk:Tag>
                                     <StackPanel Name="InfoTags" Orientation="Horizontal" Spacing="8">
-                                        <husk:Tag
-                                            Content="{Binding Basic.LoaderLabel,FallbackValue=Unknown,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                                        <husk:Tag
-                                            Content="{Binding Basic.Version,FallbackValue=Unknown,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                        <husk:Tag Classes="Status"
+                                                  Content="{Binding Basic.LoaderLabel,FallbackValue=Unknown,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                        <husk:Tag Classes="Status"
+                                                  Content="{Binding Basic.Version,FallbackValue=Unknown,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                     </StackPanel>
                                 </StackPanel>
                             </WrapPanel>

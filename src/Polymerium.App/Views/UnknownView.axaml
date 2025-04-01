@@ -6,6 +6,8 @@
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            xmlns:fi="using:FluentIcons.Avalonia"
            xmlns:vm="using:Polymerium.App.ViewModels"
+           xmlns:v="using:Polymerium.App.Views"
+           xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
     <husk:Page.Header>
@@ -107,7 +109,8 @@
                             Command="{Binding ButcherCommand}" />
                     <HyperlinkButton Content="THIS A LINK!" />
 
-                    <husk:NotificationItem Actions="{Binding Actions}" Title="Downloading file..." Progress="54"
+                    <husk:NotificationItem x:Name="Notification" Actions="{Binding $parent[v:UnknownView].Actions}"
+                                           Title="Downloading file..." Progress="54"
                                            IsProgressBarVisible="True">
                         <StackPanel Spacing="4">
                             <StackPanel Orientation="Horizontal" Spacing="6">
@@ -141,7 +144,7 @@
                             <TextBlock Text="Make it REAL" />
                         </CheckBox>
                     </DockPanel>
-                    <husk:InfoBar Header="You know what?">
+                    <husk:InfoBar Header="You know what?" Background="{x:Null}">
                         <TextBlock TextWrapping="WrapWithOverflow">
                             <Run
                                 Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." />
@@ -226,7 +229,35 @@
                                     <Setter Property="Margin" Value="0" />
                                 </Style>
                             </TabControl.Styles>
-                            <TabItem Header="Description" />
+                            <TabItem Header="Description">
+                                <StackPanel>
+                                    <Border Background="{DynamicResource ControlTranslucentBackgroundBrush}"
+                                            HorizontalAlignment="Left"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <Grid ColumnDefinitions="Auto,0,Auto,0,Auto">
+                                            <Button Grid.Column="0" Theme="{StaticResource GhostButtonTheme}"
+                                                    Classes="Small"
+                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Left}}">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <fi:SymbolIcon Symbol="Calendar"
+                                                                   FontSize="{StaticResource MediumFontSize}" />
+                                                    <TextBlock Text="November 10, 2023" />
+                                                </StackPanel>
+                                            </Button>
+                                            <husk:Divider Grid.Column="2" Margin="0,4" Orientation="Vertical" />
+                                            <Button Grid.Column="4" Theme="{StaticResource GhostButtonTheme}"
+                                                    Classes="Small"
+                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <fi:SymbolIcon Symbol="Clock"
+                                                                   FontSize="{StaticResource MediumFontSize}" />
+                                                    <TextBlock Text="18:13 PM" />
+                                                </StackPanel>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                            </TabItem>
                             <TabItem Header="Versions" />
                         </TabControl>
                     </husk:Card>

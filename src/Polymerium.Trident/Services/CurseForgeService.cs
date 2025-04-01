@@ -162,7 +162,7 @@ public class CurseForgeService(ICurseForgeClient client)
             ToRequirement(file),
             ToDependencies(file));
 
-    public static Version ToVersion(FileModel file, string changelog) =>
+    public static Version ToVersion(FileModel file) =>
         new(LABEL,
             null,
             file.ModId.ToString(),
@@ -170,11 +170,10 @@ public class CurseForgeService(ICurseForgeClient client)
             file.DisplayName,
             ToReleaseType(file.ReleaseType),
             file.FileDate,
-            file.DownloadCount,
-            changelog);
+            file.DownloadCount);
 
 
-    public static Project ToProject(ModModel model, string description) =>
+    public static Project ToProject(ModModel model) =>
         new(LABEL,
             null,
             model.Id.ToString(),
@@ -188,7 +187,6 @@ public class CurseForgeService(ICurseForgeClient client)
             model.DateCreated,
             model.DateModified,
             model.DownloadCount,
-            description,
             model.Screenshots.Select(x => new Project.Screenshot(x.Title, x.Url)).ToList());
 
     public async Task<string> GetModDescriptionAsync(uint modId) =>

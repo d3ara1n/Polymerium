@@ -19,7 +19,7 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <local:SkeletonContainer CornerRadius="{TemplateBinding CornerRadius}"
-                                         IsLoading="{TemplateBinding Content,Converter={x:Static ObjectConverters.IsNull}}">
+                                         IsLoading="{Binding Content,Converter={x:Static ObjectConverters.IsNull},RelativeSource={RelativeSource Mode=TemplatedParent},FallbackValue=False}">
                     <local:SwitchPresenter Value="{TemplateBinding IsBad}" TargetType="x:Boolean">
                         <local:SwitchCase Value="False">
                             <ContentPresenter Content="{TemplateBinding Content}"

@@ -24,6 +24,7 @@
         <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Template">

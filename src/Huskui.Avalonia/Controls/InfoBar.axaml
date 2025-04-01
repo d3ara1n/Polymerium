@@ -16,7 +16,7 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:InfoBar}" TargetType="local:InfoBar">
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="4,1,1,1" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
@@ -45,15 +45,19 @@
 
         <Style Selector="^.Primary">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            <Setter Property="Background" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
         </Style>
         <Style Selector="^.Success">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlSuccessBorderBrush}" />
+            <Setter Property="Background" Value="{DynamicResource ControlTranslucentSuccessBackgroundBrush}" />
         </Style>
         <Style Selector="^.Warning">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlWarningBorderBrush}" />
+            <Setter Property="Background" Value="{DynamicResource ControlTranslucentWarningBackgroundBrush}" />
         </Style>
         <Style Selector="^.Danger">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBorderBrush}" />
+            <Setter Property="Background" Value="{DynamicResource ControlTranslucentDangerBackgroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>
