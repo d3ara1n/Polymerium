@@ -9,16 +9,14 @@
                 <local:ButtonGroup>
                     <Button Content="访问" />
                     <Button>
-                        <fi:SymbolIcon Symbol="Copy" />
+                        <fi:SymbolIcon Symbol="Copy" FontSize="{StaticResource MediumFontSize}"/>
                     </Button>
                 </local:ButtonGroup>
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:ButtonGroup}" TargetType="local:ButtonGroup">
-        <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource ButtonGroupItemTheme}" />
         <Setter Property="ItemsPanel">
@@ -34,7 +32,7 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     ClipToBounds="True"
                     CornerRadius="{TemplateBinding CornerRadius}">
-                    <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                    <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}"/>
                 </Border>
             </ControlTemplate>
         </Setter>
@@ -47,7 +45,6 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />

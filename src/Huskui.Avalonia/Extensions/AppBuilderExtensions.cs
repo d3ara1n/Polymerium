@@ -17,11 +17,18 @@ public static class AppBuilderExtensions
                 fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:MaoKenWangXingYuan"),
                                                                          new
                                                                              Uri("avares://Huskui.Avalonia/Assets/Fonts/MaoKenWangXingYuan")));
+                fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:ChillRoundM"),
+                                                                         new
+                                                                             Uri("avares://Huskui.Avalonia/Assets/Fonts/ChillRoundM")));
             })
            .With(new FontManagerOptions
             {
                 DefaultFamilyName = "fonts:Quicksand#Quicksand",
-                FontFallbacks = [new FontFallback { FontFamily = "fonts:MaoKenWangXingYuan#猫啃忘形圆" }]
+                FontFallbacks =
+                [
+                    new FontFallback { FontFamily = "fonts:ChillRoundM#寒蝉半圆体" }
+                    // new FontFallback { FontFamily = "fonts:MaoKenWangXingYuan#猫啃忘形圆" }
+                ]
             });
 
         return appBuilder;

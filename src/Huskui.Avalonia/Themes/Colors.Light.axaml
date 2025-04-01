@@ -61,9 +61,9 @@
                      Opacity="0.1" />
     <SolidColorBrush x:Key="ControlDangerBackgroundBrush" Color="{StaticResource Tomato9Color}" />
     <SolidColorBrush x:Key="ControlTranslucentOverlayDangerBackgroundBrush"
-                     Color="{StaticResource Tomato9Color}"
+                     Color="{StaticResource Tomato6Color}"
                      Opacity="0.4" />
-    <SolidColorBrush x:Key="ControlTranslucentDangerBackgroundBrush" Color="{StaticResource Tomato6Color}"
+    <SolidColorBrush x:Key="ControlTranslucentDangerBackgroundBrush" Color="{StaticResource Tomato9Color}"
                      Opacity="0.1" />
 
     <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{StaticResource White8Color}" />
