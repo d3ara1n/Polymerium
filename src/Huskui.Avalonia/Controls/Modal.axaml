@@ -5,7 +5,7 @@
         <Setter Property="MinHeight" Value="128" />
         <Setter Property="MinWidth" Value="256" />
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
-        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="12" />
