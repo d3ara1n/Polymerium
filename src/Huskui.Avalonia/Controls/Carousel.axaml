@@ -93,17 +93,19 @@
     <ControlTheme x:Key="SimpleCarouselTheme" TargetType="Carousel">
         <Setter Property="Template">
             <ControlTemplate>
-                <ScrollViewer Name="PART_ScrollViewer"
-                              Background="{TemplateBinding Background}"
-                              BorderBrush="{TemplateBinding BorderBrush}"
-                              BorderThickness="{TemplateBinding BorderThickness}"
-                              BringIntoViewOnFocusChange="False"
-                              HorizontalScrollBarVisibility="Hidden"
-                              VerticalScrollBarVisibility="Hidden">
-                    <ItemsPresenter Name="PART_ItemsPresenter"
-                                    ItemsPanel="{TemplateBinding ItemsPanel}"
-                                    Margin="{TemplateBinding Padding}" />
-                </ScrollViewer>
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="{TemplateBinding ClipToBounds}">
+                    <ScrollViewer Name="PART_ScrollViewer"
+                                  BringIntoViewOnFocusChange="False"
+                                  HorizontalScrollBarVisibility="Hidden"
+                                  VerticalScrollBarVisibility="Hidden">
+                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                        Margin="{TemplateBinding Padding}" />
+                    </ScrollViewer>
+                </Border>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

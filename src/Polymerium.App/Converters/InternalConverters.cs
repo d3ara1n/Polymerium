@@ -1,4 +1,5 @@
-﻿using Avalonia.Data.Converters;
+﻿using System;
+using Avalonia.Data.Converters;
 using Huskui.Avalonia.Converters;
 
 namespace Polymerium.App.Converters;
@@ -19,5 +20,13 @@ public static class InternalConverters
             return b ? 0.0d : d;
 
         return 0.0d;
+    });
+
+    public static IValueConverter Weird { get; } = new RelayConverter((v, _) =>
+    {
+        if (v is double d)
+            return Math.Min(Math.Max((1 - d) * 2, 0.0d), 1.0d);
+
+        return v;
     });
 }

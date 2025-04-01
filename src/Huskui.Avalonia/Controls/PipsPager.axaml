@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
+    <ControlTheme x:Key="{x:Type local:PipsPager}" TargetType="local:PipsPager">
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ListBox HorizontalAlignment="Center" Margin="24"
+                         SelectionMode="AlwaysSelected"
+                         SelectedIndex="{TemplateBinding SelectedIndex,Mode=TwoWay}"
+                         ItemsSource="{TemplateBinding ItemCount,Converter={x:Static huskc:InternalConverters.CountToArray}}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="4" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemContainerTheme>
+                        <ControlTheme TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <ControlTemplate>
+                                    <avalonia:SymbolIcon Name="Icon" Symbol="RadioButton"
+                                                         FontSize="{StaticResource ExtraSmallFontSize}" />
+                                </ControlTemplate>
+                            </Setter>
+
+                            <Style Selector="^:selected /template/ avalonia|SymbolIcon#Icon">
+                                <Setter Property="IconVariant" Value="Filled" />
+                            </Style>
+                        </ControlTheme>
+                    </ListBox.ItemContainerTheme>
+                </ListBox>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

@@ -7,6 +7,7 @@
         <ResourceInclude Source="/Controls/BusyContainer.axaml" />
         <ResourceInclude Source="/Controls/Card.axaml" />
         <ResourceInclude Source="/Controls/Carousel.axaml" />
+        <ResourceInclude Source="/Controls/PipsPager.axaml" />
         <ResourceInclude Source="/Controls/CheckBox.axaml" />
         <ResourceInclude Source="/Controls/ComboBox.axaml" />
         <ResourceInclude Source="/Controls/Dialog.axaml" />
