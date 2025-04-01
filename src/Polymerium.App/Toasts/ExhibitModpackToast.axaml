@@ -36,10 +36,14 @@
                     </Border.Background>
                     <StackPanel Margin="64" VerticalAlignment="Center" Spacing="24" HorizontalAlignment="Left"
                                 MaxWidth="450">
-                        <Border Background="{DynamicResource ControlAccentBackgroundBrush}"
-                                HorizontalAlignment="Left" Padding="12,4">
-                            <TextBlock Text="Modpack" FontSize="28" />
-                        </Border>
+                        <Button Padding="12,4" Classes="Primary" HorizontalAlignment="Left"
+                                Click="SourceLinkButton_OnClick">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock
+                                    Text="{Binding ReferenceLabel,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                            </StackPanel>
+                        </Button>
                         <ItemsControl ItemsSource="{Binding Tags}" Margin="-4">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
@@ -54,10 +58,13 @@
                         </ItemsControl>
                         <TextBlock Text="{Binding Summary,FallbackValue=Summary}" FontWeight="Bold" TextWrapping="Wrap"
                                    TextTrimming="CharacterEllipsis" MaxLines="4" />
-                        <TextBlock Text="{Binding DisplayName,FallbackValue=DisplayName}" FontSize="36" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2"/>
+                        <TextBlock Text="{Binding DisplayName,FallbackValue=DisplayName}" FontSize="36"
+                                   TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2" />
                         <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Button Classes="Primary">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Classes="Primary"
+                                    Command="{Binding $parent[local:ExhibitModpackToast].InstallCommand}"
+                                    CommandParameter="{Binding #VersionBox.SelectedItem,FallbackValue={x:Null}}">
+                                <StackPanel Orientation="Horizontal" Spacing="8" Margin="6,0">
                                     <fi:SymbolIcon Symbol="ArrowDownload" FontSize="{StaticResource MediumFontSize}" />
                                     <TextBlock Text="Install" />
                                 </StackPanel>
@@ -65,6 +72,51 @@
                             <Button>
                                 <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
                             </Button>
+                            <ComboBox Name="VersionBox" ItemsSource="{Binding Versions}"
+                                      Background="{DynamicResource ControlInteractiveSolidBackgroundBrush}"
+                                      SelectedItem="{Binding Versions[0],FallbackValue={x:Null}}">
+                                <ComboBox.SelectionBoxItemTemplate>
+                                    <DataTemplate DataType="m:ExhibitVersionModel">
+                                        <TextBlock
+                                            Text="{Binding VersionName,FallbackValue=Display}" />
+                                    </DataTemplate>
+                                </ComboBox.SelectionBoxItemTemplate>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate DataType="m:ExhibitVersionModel">
+                                        <StackPanel>
+                                            <TextBlock
+                                                Text="{Binding VersionName,FallbackValue=Display}" />
+                                            <DockPanel>
+                                                <StackPanel Orientation="Horizontal"
+                                                            DockPanel.Dock="Right">
+                                                    <TextBlock Text="{Binding PublishedAt}" />
+                                                </StackPanel>
+                                                <husk:SwitchPresenter TargetType="trident:ReleaseType"
+                                                                      Value="{Binding TypeRaw,FallbackValue=Release}">
+                                                    <husk:SwitchCase Value="Release">
+                                                        <husk:Tag Classes="Success"
+                                                                  CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <TextBlock Text="Release" />
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Beta">
+                                                        <husk:Tag Classes="Warning"
+                                                                  CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <TextBlock Text="Beta" />
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="Alpha">
+                                                        <husk:Tag Classes="Danger"
+                                                                  CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <TextBlock Text="Alpha" />
+                                                        </husk:Tag>
+                                                    </husk:SwitchCase>
+                                                </husk:SwitchPresenter>
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                         </StackPanel>
                     </StackPanel>
                 </Border>
