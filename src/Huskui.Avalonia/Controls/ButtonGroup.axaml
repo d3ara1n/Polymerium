@@ -9,7 +9,7 @@
                 <local:ButtonGroup>
                     <Button Content="访问" />
                     <Button>
-                        <fi:SymbolIcon Symbol="Copy" FontSize="{StaticResource MediumFontSize}"/>
+                        <fi:SymbolIcon Symbol="Copy" FontSize="{StaticResource MediumFontSize}" />
                     </Button>
                 </local:ButtonGroup>
             </StackPanel>
@@ -32,7 +32,7 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     ClipToBounds="True"
                     CornerRadius="{TemplateBinding CornerRadius}">
-                    <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}"/>
+                    <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
                 </Border>
             </ControlTemplate>
         </Setter>

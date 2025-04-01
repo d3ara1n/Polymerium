@@ -105,9 +105,9 @@
                                     </husk:Tag>
                                     <StackPanel Name="InfoTags" Orientation="Horizontal" Spacing="8">
                                         <husk:Tag Classes="Status"
-                                            Content="{Binding Basic.LoaderLabel,FallbackValue=Unknown,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                                  Content="{Binding Basic.LoaderLabel,FallbackValue=Unknown,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                         <husk:Tag Classes="Status"
-                                            Content="{Binding Basic.Version,FallbackValue=Unknown,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                                  Content="{Binding Basic.Version,FallbackValue=Unknown,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                     </StackPanel>
                                 </StackPanel>
                             </WrapPanel>

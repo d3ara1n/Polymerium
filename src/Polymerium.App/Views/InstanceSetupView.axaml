@@ -7,7 +7,6 @@
                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                   xmlns:cp="using:Polymerium.App.Components"
                   xmlns:m="using:Polymerium.App.Models"
-                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
                   xmlns:controls="using:Polymerium.App.Controls"

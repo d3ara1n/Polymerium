@@ -210,7 +210,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         if (exhibit is not null)
         {
             _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Ns, exhibit.ProjectId, null);
-            _notificationService.PopMessage($"Task has been added to install queue", exhibit.ProjectName);
+            _notificationService.PopMessage("Task has been added to install queue", exhibit.ProjectName);
         }
     }
 
