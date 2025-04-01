@@ -8,16 +8,26 @@
             xmlns:async="using:AsyncImageLoader"
             xmlns:fi="using:FluentIcons.Avalonia"
             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-            xmlns:local="clr-namespace:Polymerium.App.Toasts" IsHeaderVisible="False"
+            xmlns:local="clr-namespace:Polymerium.App.Toasts"
+            xmlns:converters="clr-namespace:Polymerium.App.Converters"
+            IsHeaderVisible="False"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" MaxWidth="800" Padding="0"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
+    <husk:Toast.Styles>
+        <Style Selector="Border#IndicatorBar:pointerover">
+            <Setter Property="Opacity" Value="1.0" />
+        </Style>
+        <Style Selector="Border#IndicatorBar:not(:pointerover)">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+    </husk:Toast.Styles>
     <StackPanel Spacing="36">
         <husk:ConstrainedBox AspectRatio="1.78">
             <Panel>
-                <Carousel
-                    CornerRadius="{Binding Source={StaticResource ExtraExtraLargeCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}"
-                    IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}"
-                    ItemsSource="{Binding Gallery}">
+                <Carousel Name="GalleryCarousel" Theme="{StaticResource SimpleCarouselTheme}"
+                          CornerRadius="{Binding Source={StaticResource ExtraExtraLargeCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}"
+                          IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}"
+                          ItemsSource="{Binding Gallery}">
                     <Carousel.ItemTemplate>
                         <DataTemplate x:DataType="x:Uri">
                             <Image async:ImageLoader.Source="{Binding}" Stretch="UniformToFill" />
@@ -25,6 +35,7 @@
                     </Carousel.ItemTemplate>
                 </Carousel>
                 <Border
+                    Opacity="{Binding Opacity,ElementName=IndicatorBar,Mode=OneWay,Converter={x:Static converters:InternalConverters.Weird}}"
                     CornerRadius="{Binding Source={StaticResource ExtraExtraLargeCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="100%,50%" StartPoint="0%,50%">
@@ -117,6 +128,18 @@
                             </ComboBox>
                         </StackPanel>
                     </StackPanel>
+                </Border>
+                <Border Name="IndicatorBar" Background="Transparent" HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        IsVisible="{Binding Gallery,Converter={x:Static huskc:CollectionConverters.IsNotEmpty}}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <DoubleTransition Property="Opacity" Easing="SineEaseInOut"
+                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <husk:PipsPager SelectedIndex="{Binding #GalleryCarousel.SelectedIndex,Mode=TwoWay}"
+                                    ItemCount="{Binding #GalleryCarousel.ItemCount}" />
                 </Border>
             </Panel>
         </husk:ConstrainedBox>

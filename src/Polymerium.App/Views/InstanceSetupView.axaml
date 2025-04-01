@@ -44,7 +44,7 @@
                   Margin="{StaticResource PageHeaderlessContentMargin}">
                 <Grid Grid.Column="0" RowDefinitions="*,4,Auto">
                     <TextBlock Grid.Row="0" Text="{Binding Basic.Name,FallbackValue=Name}"
-                               FontSize="{StaticResource ExtraLargeFontSize}" TextWrapping="Wrap" MaxLines="3"
+                               FontSize="{StaticResource ExtraLargeFontSize}" TextWrapping="Wrap" MaxLines="2"
                                TextTrimming="CharacterEllipsis" />
                     <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12">
                         <Border BorderThickness="3,0,0,0" CornerRadius="{StaticResource SmallCornerRadius}"
@@ -52,11 +52,12 @@
                                 Background="{DynamicResource ControlTranslucentAccentBackgroundBrush}"
                                 VerticalAlignment="Center">
                             <StackPanel Margin="12,6">
-                                <TextBlock FontSize="{StaticResource LargeFontSize}"
-                                           Text="{Binding Basic.Version, FallbackValue=Version}" />
                                 <TextBlock
                                     Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
                                     Text="Game Version" />
+                                <TextBlock FontSize="{StaticResource LargeFontSize}"
+                                           Text="{Binding Basic.Version, FallbackValue=Version}" />
+
                             </StackPanel>
                         </Border>
                         <Border BorderThickness="3,0,0,0" CornerRadius="{StaticResource SmallCornerRadius}"
@@ -65,16 +66,16 @@
                                 VerticalAlignment="Center">
                             <DockPanel>
                                 <Button DockPanel.Dock="Right" Padding="8.4"
-                                        IsEnabled="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNull}}"
+                                        IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNull}}"
                                         CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
                                     <fi:SymbolIcon Symbol="Branch" FontSize="{StaticResource LargeFontSize}" />
                                 </Button>
                                 <StackPanel Margin="12,6">
-                                    <TextBlock FontSize="{StaticResource LargeFontSize}"
-                                               Text="{Binding LoaderLabel, FallbackValue=None}" />
                                     <TextBlock
                                         Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
                                         Text="Mod Loader" />
+                                    <TextBlock FontSize="{StaticResource LargeFontSize}"
+                                               Text="{Binding LoaderLabel, FallbackValue=None}" />
                                 </StackPanel>
                             </DockPanel>
                         </Border>
@@ -194,12 +195,7 @@
                                                 Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).UpdateCommand,FallbackValue={x:Null}}"
                                                 CommandParameter="{Binding CurrentVersion,FallbackValue={x:Null}}"
                                                 IsEnabled="{Binding CurrentVersion.IsCurrent,FallbackValue=False,Converter={x:Static BoolConverters.Not}}">
-                                            <!-- <icons:PackIconLucide Kind="Soup" -->
-                                            <!--                       Height="{StaticResource MediumFontSize}" -->
-                                            <!--                       Width="{StaticResource MediumFontSize}" -->
-                                            <!--                       VerticalAlignment="Center" /> -->
-                                            <fi:SymbolIcon Symbol="BoxArrowUp"
-                                                           FontSize="{StaticResource MediumFontSize}" />
+                                            <TextBlock Text="Update" />
                                         </Button>
                                         <Button Grid.Column="4"
                                                 Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).ViewDetailsCommand, FallbackValue={x:Null}}">
