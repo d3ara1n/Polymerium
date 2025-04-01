@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
@@ -27,7 +26,7 @@ public partial class InstancePackageModel(
     public Bitmap Thumbnail => thumbnail;
     public ResourceKind Kind => kind;
 
-    public ObservableCollection<string> Tags { get; } = new(entry.Tags);
+    public MappingCollection<string, string> Tags { get; } = new(entry.Tags, x => x, x => x);
 
     #endregion
 

@@ -129,7 +129,7 @@
                                                 <DataTemplate DataType="models:NotificationAction">
                                                     <HyperlinkButton Content="{Binding Text}"
                                                                      Command="{Binding Command}"
-                                                                     CommandParameter="{Binding $parent[local:NotificationItem]}" />
+                                                                     CommandParameter="{Binding  Parameter}" />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>

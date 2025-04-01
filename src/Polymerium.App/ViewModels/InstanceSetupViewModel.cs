@@ -280,7 +280,7 @@ public partial class InstanceSetupViewModel(
                                                     project.Tags,
                                                     project.DownloadCount,
                                                     project.Summary,
-                                                    project.Description,
+                                                    string.Empty,
                                                     project.UpdatedAt,
                                                     project.Gallery.Select(x => x.Url).ToList(),
                                                     versions
@@ -290,7 +290,7 @@ public partial class InstanceSetupViewModel(
                                                                    project.ProjectId,
                                                                    x.VersionName,
                                                                    x.VersionId,
-                                                                   x.Changelog,
+                                                                   string.Empty,
                                                                    x.PublishedAt,
                                                                    x.DownloadCount,
                                                                    x.ReleaseType,
@@ -301,7 +301,9 @@ public partial class InstanceSetupViewModel(
                                                        .ToList());
                 overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataContext = model, InstallCommand = InstallVersionCommand, ViewImagesCommand = ViewImageCommand
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand,
+                    ViewImagesCommand = ViewImageCommand
                 });
             }
             catch (OperationCanceledException) { }

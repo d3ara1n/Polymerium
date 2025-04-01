@@ -4,6 +4,7 @@
     <!-- Naming: OwnerLevelSubtle(Accent)PropertyType -->
 
     <Color x:Key="TransparentColor">#00ffffff</Color>
+    <StaticResource x:Key="SolidColor" ResourceKey="Sand1Color" />
     <SolidColorBrush x:Key="TransparentBrush" Color="{StaticResource TransparentColor}" />
 
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource Sand4Color}" />
@@ -20,7 +21,7 @@
     <SolidColorBrush x:Key="OverlayFullBackgroundBrush" Color="{StaticResource Black2Color}" />
 
     <!-- 颜色会相对亮暗主题改变，用作层叠项目背景 -->
-    <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{StaticResource Sand1Color}" />
+    <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{StaticResource SolidColor}" />
     <SolidColorBrush x:Key="Layer0BackgroundBrush" Color="{StaticResource White10Color}" />
     <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{StaticResource Black1Color}" />
     <SolidColorBrush x:Key="Layer1ReversedBackgroundBrush" Color="{StaticResource White1Color}" />
@@ -41,26 +42,26 @@
     <SolidColorBrush x:Key="ControlTranslucentBackgroundBrush" Color="{StaticResource Sand6Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{StaticResource Amber9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentAccentBackgroundBrush" Color="{StaticResource Amber9Color}"
+    <SolidColorBrush x:Key="ControlTranslucentAccentBackgroundBrush" Color="{StaticResource Amber6Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlTranslucentOverlayAccentBackgroundBrush"
                      Color="{StaticResource Amber9Color}"
                      Opacity="0.1" />
     <SolidColorBrush x:Key="ControlSuccessBackgroundBrush" Color="{StaticResource Grass9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentSuccessBackgroundBrush" Color="{StaticResource Grass9Color}"
+    <SolidColorBrush x:Key="ControlTranslucentSuccessBackgroundBrush" Color="{StaticResource Grass6Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlTranslucentOverlaySuccessBackgroundBrush"
                      Color="{StaticResource Grass9Color}"
                      Opacity="0.1" />
     <SolidColorBrush x:Key="ControlWarningBackgroundBrush" Color="{StaticResource Yellow9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentWarningBackgroundBrush" Color="{StaticResource Yellow9Color}"
+    <SolidColorBrush x:Key="ControlTranslucentWarningBackgroundBrush" Color="{StaticResource Yellow6Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlTranslucentOverlayWarningBackgroundBrush"
                      Color="{StaticResource Yellow9Color}"
                      Opacity="0.1" />
     <SolidColorBrush x:Key="ControlDangerBackgroundBrush" Color="{StaticResource Tomato9Color}" />
     <SolidColorBrush x:Key="ControlTranslucentOverlayDangerBackgroundBrush"
-                     Color="{StaticResource Tomato9Color}"
+                     Color="{StaticResource Tomato6Color}"
                      Opacity="0.4" />
     <SolidColorBrush x:Key="ControlTranslucentDangerBackgroundBrush" Color="{StaticResource Tomato9Color}"
                      Opacity="0.1" />

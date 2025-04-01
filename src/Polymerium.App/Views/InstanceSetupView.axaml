@@ -7,7 +7,6 @@
                   xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                   xmlns:cp="using:Polymerium.App.Components"
                   xmlns:m="using:Polymerium.App.Models"
-                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                   xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
                   xmlns:controls="using:Polymerium.App.Controls"
@@ -43,20 +42,44 @@
         <Grid RowDefinitions="Auto,0,*">
             <Grid Grid.Row="0" ColumnDefinitions="*,8,Auto"
                   Margin="{StaticResource PageHeaderlessContentMargin}">
-                <StackPanel Grid.Column="0" Spacing="4">
-                    <TextBlock Text="{Binding Basic.Name,FallbackValue=Name}"
+                <Grid Grid.Column="0" RowDefinitions="*,4,Auto">
+                    <TextBlock Grid.Row="0" Text="{Binding Basic.Name,FallbackValue=Name}"
                                FontSize="{StaticResource ExtraLargeFontSize}" TextWrapping="Wrap" MaxLines="3"
                                TextTrimming="CharacterEllipsis" />
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text="Minecraft:" />
-                        <TextBlock Text="{Binding Basic.Version,FallbackValue=Version}" />
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12">
+                        <Border BorderThickness="3,0,0,0" CornerRadius="{StaticResource SmallCornerRadius}"
+                                BorderBrush="{DynamicResource ControlAccentBackgroundBrush}"
+                                Background="{DynamicResource ControlTranslucentAccentBackgroundBrush}"
+                                VerticalAlignment="Center">
+                            <StackPanel Margin="12,6">
+                                <TextBlock FontSize="{StaticResource LargeFontSize}"
+                                           Text="{Binding Basic.Version, FallbackValue=Version}" />
+                                <TextBlock
+                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                    Text="Game Version" />
+                            </StackPanel>
+                        </Border>
+                        <Border BorderThickness="3,0,0,0" CornerRadius="{StaticResource SmallCornerRadius}"
+                                BorderBrush="{DynamicResource ControlBackgroundBrush}"
+                                Background="{DynamicResource ControlTranslucentBackgroundBrush}"
+                                VerticalAlignment="Center">
+                            <DockPanel>
+                                <Button DockPanel.Dock="Right" Padding="8.4"
+                                        IsEnabled="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNull}}"
+                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
+                                    <fi:SymbolIcon Symbol="Branch" FontSize="{StaticResource LargeFontSize}" />
+                                </Button>
+                                <StackPanel Margin="12,6">
+                                    <TextBlock FontSize="{StaticResource LargeFontSize}"
+                                               Text="{Binding LoaderLabel, FallbackValue=None}" />
+                                    <TextBlock
+                                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                        Text="Mod Loader" />
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock Text="Mod Loader:" />
-                        <TextBlock Text="{Binding LoaderLabel,FallbackValue=None}" />
-                        <HyperlinkButton Content="Switch" />
-                    </StackPanel>
-                </StackPanel>
+                </Grid>
                 <husk:LazyContainer Grid.Column="2" MinWidth="128" LazySource="{Binding Reference}"
                                     IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
                     <husk:LazyContainer.BadContent>

@@ -14,7 +14,6 @@ public record Project(
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
     ulong DownloadCount,
-    string Description,
     IEnumerable<Project.Screenshot> Gallery)
 {
     #region Nested type: Screenshot
