@@ -1,0 +1,9 @@
+﻿<husk:Modal xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            x:Class="Polymerium.App.Modals.PackageEntryModal">
+    <Grid RowDefinitions="Auto,4,*,4,Auto,4,Auto" />
+</husk:Modal>
