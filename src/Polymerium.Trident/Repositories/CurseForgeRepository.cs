@@ -67,8 +67,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                                                             filter.Version,
                                                                             CurseForgeService
                                                                                .LoaderIdToType(filter.Loader),
-                                                                            index,
-                                                                            50)
+                                                                            index)
                                                                .ConfigureAwait(false);
                                                  var exhibits = rv.Data.Select(CurseForgeService.ToExhibit).ToList();
                                                  return exhibits;

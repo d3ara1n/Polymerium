@@ -10,8 +10,9 @@ namespace Polymerium.App.Models;
 public class MappingCollection<TSource, TValue>(
     IList<TSource> from,
     Func<TSource, TValue> mapper,
-    Func<TValue, TSource> selector)
-    : Collection<TValue>(from.Select(mapper).ToList()), INotifyCollectionChanged, INotifyPropertyChanged
+    Func<TValue, TSource> selector) : Collection<TValue>(from.Select(mapper).ToList()),
+                                      INotifyCollectionChanged,
+                                      INotifyPropertyChanged
 {
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -60,16 +61,17 @@ public class MappingCollection<TSource, TValue>(
     }
 
     private void OnCollectionChanged(NotifyCollectionChangedAction action, TValue item, int index) =>
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(action, item, index));
+        CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, item, index));
 
     private void OnCollectionSet(TValue add, TValue old, int index) =>
         CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, add, old, index));
+                                  new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace,
+                                                                       add,
+                                                                       old,
+                                                                       index));
 
     private void OnCollectionReset() =>
-        CollectionChanged?.Invoke(this,
-            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
     private void OnPropertyChanged(string propertyName) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

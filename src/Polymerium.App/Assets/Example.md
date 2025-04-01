@@ -15,7 +15,11 @@
 <br/>
 
 > [!IMPORTANT]
-> Check out the official documentation on [GitHub](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) to learn more about writing and formatting syntax. Additionally, you can read the latest updates and features on Markdown by visiting the [GitHub changelog posts](https://github.blog/changelog/label/markdown/).
+> Check out the official documentation
+>
+on [GitHub](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+> to learn more about writing and formatting syntax. Additionally, you can read the latest updates and features on
+> Markdown by visiting the [GitHub changelog posts](https://github.blog/changelog/label/markdown/).
 
 - [Introduction](#introduction)
 - [Headings](#headings)
@@ -87,12 +91,20 @@
 
 # Introduction
 
-Markdown is a way of writing rich-text (formatted text) content using plain text formatting syntax. It is also a tool that converts the plain text formatting to HTML.
+Markdown is a way of writing rich-text (formatted text) content using plain text formatting syntax. It is also a tool
+that converts the plain text formatting to HTML.
 
 - **2004:** [John Gruber](https://daringfireball.net/projects/markdown/) developed Markdown.
-- **2014:** [CommonMark](https://commonmark.org/) was established as a standard specification for Markdown to resolve inconsistencies and ambiguities in Markdown implementations. This initiative was spearheaded by [John MacFarlane](https://github.com/jgm) and backed by other Markdown enthusiasts to ensure a reliable and consistent specification.
+- **2014:** [CommonMark](https://commonmark.org/) was established as a standard specification for Markdown to resolve
+  inconsistencies and ambiguities in Markdown implementations. This initiative was spearheaded
+  by [John MacFarlane](https://github.com/jgm) and backed by other Markdown enthusiasts to ensure a reliable and
+  consistent specification.
 
-This guide will provide you with a comprehensive understanding of the key commands in [GitHub Flavored Markdown (GFM)](https://github.github.com/gfm/), it is a strict superset of CommonMark. You can read the full article, [The Ultimate Markdown Cheat Sheet](https://towardsdatascience.com/the-ultimate-markdown-cheat-sheet-3d3976b31a0) on Medium.
+This guide will provide you with a comprehensive understanding of the key commands
+in [GitHub Flavored Markdown (GFM)](https://github.github.com/gfm/), it is a strict superset of CommonMark. You can read
+the full
+article, [The Ultimate Markdown Cheat Sheet](https://towardsdatascience.com/the-ultimate-markdown-cheat-sheet-3d3976b31a0)
+on Medium.
 
 # Headings
 
@@ -104,17 +116,29 @@ This guide will provide you with a comprehensive understanding of the key comman
 ##### Heading 5
 ###### Heading 6
 ```
+
 <!-- omit in toc -->
+
 # Heading 1
+
 <!-- omit in toc -->
+
 ## Heading 2
+
 <!-- omit in toc -->
+
 ### Heading 3
+
 <!-- omit in toc -->
+
 #### Heading 4
+
 <!-- omit in toc -->
+
 ##### Heading 5
+
 <!-- omit in toc -->
+
 ###### Heading 6
 
 ```md
@@ -207,6 +231,7 @@ _The quick brown fox jumps over the lazy dog._
 **_The quick brown fox jumps over the lazy dog._**
 <strong><em>The quick brown fox jumps over the lazy dog.</em></strong>
 ```
+
 <!-- markdownlint-disable-next-line MD049 -->
 **_The quick brown fox jumps over the lazy dog._**
 
@@ -364,12 +389,12 @@ Start <sub><sup>The quick brown fox jumps over the lazy dog.</sup></sub> End
 
 Using [MathJax](#mathematical-expressions-19-july-2022) syntax:
 
-| Color Name      | Code                                                                                         | Example                                                        |
-|-----------------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| Apricot         | `$\color{Apricot}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$`                    | $\color{Apricot}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$      |
-| Aquamarine      | `$\color{Aquamarine}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$`                 | $\color{Aquamarine}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$   |
-| Bittersweet     | `$\color{Bittersweet}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$`                | $\color{Bittersweet}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$  |
-| Black           | `$\color{Black}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$`                      | $\color{Black}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$        |
+| Color Name  | Code                                                                          | Example                                                                     |
+|-------------|-------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| Apricot     | `$\color{Apricot}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$`     | $\color{Apricot}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$     |
+| Aquamarine  | `$\color{Aquamarine}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$`  | $\color{Aquamarine}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$  |
+| Bittersweet | `$\color{Bittersweet}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$` | $\color{Bittersweet}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$ |
+| Black       | `$\color{Black}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$`       | $\color{Black}{The\ quick\ brown\ fox\ jumps\ over\ the\ lazy\ dog.}$       |
 
 [Full Table](./MathJax.md)
 
@@ -391,7 +416,8 @@ the lazy dog.
 
 ## Inline code
 
-A class method is an instance method of the class object. When a new class is created, an object of type `Class` is initialized and assigned to a global constant (Mobile in this case).
+A class method is an instance method of the class object. When a new class is created, an object of type `Class` is
+initialized and assigned to a global constant (Mobile in this case).
 
 You can use <kbd>command + e </kbd> on Mac or <kbd>control + e</kbd> on Windows to insert inline code.
 
@@ -421,7 +447,9 @@ public static String monthNames[] = {"January", "February", "March", "April", "M
 ```
 ````
 
-Refer to [this](https://github.com/github-linguist/linguist/blob/master/lib/linguist/languages.yml) and [this](https://github.com/github-linguist/linguist/tree/master/vendor) GitHub document to find all the valid keywords.
+Refer to [this](https://github.com/github-linguist/linguist/blob/master/lib/linguist/languages.yml)
+and [this](https://github.com/github-linguist/linguist/tree/master/vendor) GitHub document to find all the valid
+keywords.
 
 ## Diff Code block
 
@@ -578,27 +606,29 @@ Default    | Left align | Center align | Right align
 9999999    | 9999999    | 9999999      | 9999999
 ```
 
-| Default | Left align | Center align | Right align |
-| - | :- | :-: | -: |
-| 9999999999 | 9999999999 | 9999999999 | 9999999999 |
-| 999999999 | 999999999 | 999999999 | 999999999 |
-| 99999999 | 99999999 | 99999999 | 99999999 |
-| 9999999 | 9999999 | 9999999 | 9999999 |
+| Default    | Left align | Center align | Right align |
+|------------|:-----------|:------------:|------------:|
+| 9999999999 | 9999999999 |  9999999999  |  9999999999 |
+| 999999999  | 999999999  |  999999999   |   999999999 |
+| 99999999   | 99999999   |   99999999   |    99999999 |
+| 9999999    | 9999999    |   9999999    |     9999999 |
 
 | Default    | Left align | Center align | Right align |
-| ---------- | :--------- | :----------: | ----------: |
-| 9999999999 | 9999999999 | 9999999999   | 9999999999  |
-| 999999999  | 999999999  | 999999999    | 999999999   |
-| 99999999   | 99999999   | 99999999     | 99999999    |
-| 9999999    | 9999999    | 9999999      | 9999999     |
+|------------|:-----------|:------------:|------------:|
+| 9999999999 | 9999999999 |  9999999999  |  9999999999 |
+| 999999999  | 999999999  |  999999999   |   999999999 |
+| 99999999   | 99999999   |   99999999   |    99999999 |
+| 9999999    | 9999999    |   9999999    |     9999999 |
 
 <!-- markdownlint-disable MD055 -->
-Default    | Left align | Center align | Right align
----------- | :--------- | :----------: | ----------:
-9999999999 | 9999999999 | 9999999999   | 9999999999
-999999999  | 999999999  | 999999999    | 999999999
-99999999   | 99999999   | 99999999     | 99999999
-9999999    | 9999999    | 9999999      | 9999999
+
+ Default    | Left align | Center align | Right align 
+------------|:-----------|:------------:|------------:
+ 9999999999 | 9999999999 |  9999999999  |  9999999999 
+ 999999999  | 999999999  |  999999999   |   999999999 
+ 99999999   | 99999999   |   99999999   |    99999999 
+ 9999999    | 9999999    |   9999999    |     9999999 
+
 <!-- markdownlint-enable MD055 -->
 
 ```md
@@ -634,13 +664,13 @@ Default    | Left align | Center align | Right align
 <td>
 
 | A | B | C |
-|--|--|--|
+|---|---|---|
 | 1 | 2 | 3 |
 
 </td><td>
 
 | A | B | C |
-|--|--|--|
+|---|---|---|
 | 1 | 2 | 3 |
 
 </td></tr> </table>
@@ -651,8 +681,8 @@ Default    | Left align | Center align | Right align
 | 1 | 2 | 3 <br/> 4 <br/> 5 |
 ```
 
-| A | B | C |
-|---|---|---|
+| A | B | C                 |
+|---|---|-------------------|
 | 1 | 2 | 3 <br/> 4 <br/> 5 |
 
 ```md
@@ -738,7 +768,9 @@ console.log(fullName); // Dariana Trahan
 [Markdown-Cheat-Sheet]
 
 [reference text]: https://github.com/lifeparticle/The-Ultimate-Markdown-Cheat-Sheet
+
 [1]: https://github.com/lifeparticle/The-Ultimate-Markdown-Cheat-Sheet
+
 [Markdown-Cheat-Sheet]: https://github.com/lifeparticle/The-Ultimate-Markdown-Cheat-Sheet
 
 ## Footnote
@@ -789,10 +821,12 @@ Email at example@example.com
 
 ## Hover
 
-You can use [BinaryTree](https://binarytree.dev/ "Array of Developer Productivity Tools Designed to Help You Save Time") to create markdown tables.
+You can use [BinaryTree](https://binarytree.dev/ "Array of Developer Productivity Tools Designed to Help You Save Time")
+to create markdown tables.
 
 <!-- markdownlint-disable MD051 -->
-You can use [BinaryTree](## "Array of Developer Productivity Tools Designed to Help You Save Time") to create markdown tables.
+You can use [BinaryTree](## "Array of Developer Productivity Tools Designed to Help You Save Time") to create markdown
+tables.
 
 ## Enclosed
 
@@ -874,9 +908,11 @@ Alt text and title are optional.
 
 ### Using picture tag
 
-The HTML `<picture>` element, along with the `prefers-color-scheme` media feature, enables you to dynamically adjust images according to the user's color scheme preference, providing options for both light and dark modes.
+The HTML `<picture>` element, along with the `prefers-color-scheme` media feature, enables you to dynamically adjust
+images according to the user's color scheme preference, providing options for both light and dark modes.
 
-For example, the code snippet below demonstrates how to display a dark-themed BinaryTree logo when the user's device is set to a dark mode, and a light-themed BinaryTree logo for light mode settings:
+For example, the code snippet below demonstrates how to display a dark-themed BinaryTree logo when the user's device is
+set to a dark mode, and a light-themed BinaryTree logo for light mode settings:
 
 ```md
 <picture>
@@ -906,6 +942,7 @@ For example, the code snippet below demonstrates how to display a dark-themed Bi
 [![Badge][Logo-light]](https://binarytree.dev#gh-light-mode-only)
 
 [Logo-light]: https://github-readme-stats.vercel.app/api?username=lifeparticle&theme=graywhite&show_icons=true#gh-light-mode-only
+
 [Logo-dark]: https://github-readme-stats.vercel.app/api?username=lifeparticle&theme=dark&show_icons=true#gh-dark-mode-only
 
 ```md
@@ -1151,7 +1188,7 @@ Windows: <kbd>control+shift+8</kbd>
 <kbd> <br> cmd + shift + p <br> </kbd>
 ```
 
-<kbd> <br> cmd + shift + p <br> </kbd>
+<kbd><br>cmd + shift + p<br></kbd>
 
 ```md
 <kbd>[Markdown-Cheatsheet](https://github.com/lifeparticle/Markdown-Cheatsheet)</kbd>
@@ -1168,7 +1205,7 @@ Windows: <kbd>control+shift+8</kbd>
 ## Button with emoji
 
 <!-- markdownlint-disable-next-line MD013 -->
-<kbd> <br> [Markdown-Cheatsheet](https://github.com/lifeparticle/Markdown-Cheatsheet) ↗️ <br> </kbd>
+<kbd><br> [Markdown-Cheatsheet](https://github.com/lifeparticle/Markdown-Cheatsheet) ↗️ <br></kbd>
 
 ```md
 <kbd> <br> [Markdown-Cheatsheet](https://github.com/lifeparticle/Markdown-Cheatsheet) ↗️ <br> </kbd>
@@ -1231,7 +1268,10 @@ pie
 # Mathematical expressions (19 July 2022)
 
 > [!IMPORTANT]
-> Check out the official documentation on [GitHub](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions) to learn more about writing and formatting MathJax syntax.
+> Check out the official documentation
+>
+on [GitHub](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions)
+> to learn more about writing and formatting MathJax syntax.
 
 ```md
 This is an inline math expression $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$
@@ -1430,7 +1470,9 @@ _ Underscore`
   {} Curly braces
   . Dot
   ! Exclamation mark
+
 <!-- omit in toc -->
+
 # Hash symbol <!-- markdownlint-disable-line MD022 -->
 
 - Hyphen symbol
@@ -1527,11 +1569,14 @@ Then use one of the following code at the place you want to return to top.
 
 # Bitbucket
 
-Bitbucket Supported Markdown for [READMEs](https://confluence.atlassian.com/bitbucketserver/markdown-syntax-guide-776639995.html). Also, create a [table of contents](https://support.atlassian.com/bitbucket-cloud/docs/add-a-table-of-contents-to-a-wiki/).
+Bitbucket Supported Markdown
+for [READMEs](https://confluence.atlassian.com/bitbucketserver/markdown-syntax-guide-776639995.html). Also, create
+a [table of contents](https://support.atlassian.com/bitbucket-cloud/docs/add-a-table-of-contents-to-a-wiki/).
 
 # Azure DevOps Project wiki
 
-Azure DevOps Supported Markdown for [Project wiki](https://learn.microsoft.com/en-us/azure/devops/project/wiki/markdown-guidance?view=azure-devops).
+Azure DevOps Supported Markdown
+for [Project wiki](https://learn.microsoft.com/en-us/azure/devops/project/wiki/markdown-guidance?view=azure-devops).
 
 # MDX
 
@@ -1539,13 +1584,17 @@ You can write JSX in your markdown document using [MDX](https://mdxjs.com/).
 
 # Tools
 
-1. Create a Markdown table of content - [binarytree](https://binarytree.dev/markdown/toc), [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc)
-2. Create an empty Markdown table - [Tablesgenerator](https://www.tablesgenerator.com/markdown_tables)
-3. Convert Excel to Markdown table - [Tableconvert](https://tableconvert.com/)
-4. Markdown preview for Sublime Text 3 - [Packagecontrol](https://packagecontrol.io/packages/MarkdownPreview)
-5. Markdown preview Visual Studio Code - [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)
+1. Create a Markdown table of
+   content -[binarytree](https://binarytree.dev/markdown/toc), [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc)
+2. Create an empty Markdown table -[Tablesgenerator](https://www.tablesgenerator.com/markdown_tables)
+3. Convert Excel to Markdown table -[Tableconvert](https://tableconvert.com/)
+4. Markdown preview for Sublime Text 3 -[Packagecontrol](https://packagecontrol.io/packages/MarkdownPreview)
+5. Markdown preview Visual Studio
+   Code -[Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)
 6. A collection of awesome markdown goodies - [Awesome Markdown](https://github.com/mundimark/awesome-markdown)
-7. Markdownlint - [markdownlint](https://github.com/DavidAnson/markdownlint), [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2), [markdownlint-cli2-action](https://github.com/DavidAnson/markdownlint-cli2-action), [vscode-markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+7.
+
+Markdownlint - [markdownlint](https://github.com/DavidAnson/markdownlint), [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2), [markdownlint-cli2-action](https://github.com/DavidAnson/markdownlint-cli2-action), [vscode-markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
 
 ---
 

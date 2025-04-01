@@ -8,8 +8,6 @@
             xmlns:async="using:AsyncImageLoader"
             xmlns:fi="using:FluentIcons.Avalonia"
             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-            xmlns:md="https://github.com/whistyun/Markdown.Avalonia"
-            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:local="clr-namespace:Polymerium.App.Toasts" IsHeaderVisible="False"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" MaxWidth="800" Padding="0"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">

@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Markdown.Avalonia" Version="11.0.3-a1" />
+        <PackageReference Include="Markdown.Avalonia" Version="11.0.3-a1"/>
     </ItemGroup>
 
 </Project>

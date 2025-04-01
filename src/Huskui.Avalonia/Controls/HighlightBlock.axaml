@@ -7,7 +7,7 @@
                 <TextBlock>
                     <local:HighlightBlock Text="Ctrl+C" Classes="Shortcut" />
                     <Run Text="and" />
-                    <local:HighlightBlock Text="Ctrl+C" Classes="Shortcut Primary" />
+                    <local:HighlightBlock Text="Ctrl+C" Classes="Primary Shortcut" />
                     <Run Text="then" />
                     <local:HighlightBlock Text="✨ git push -f" />
                     <Run Text="or" />
@@ -42,9 +42,6 @@
         <Style Selector="^.Primary">
             <Setter Property="Background" Value="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}" />
             <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
-        </Style>
-
-        <Style Selector="^.Shortcut.Primary">
             <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
         </Style>
     </ControlTheme>
