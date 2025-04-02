@@ -65,7 +65,7 @@
                                 Background="{DynamicResource ControlTranslucentBackgroundBrush}"
                                 VerticalAlignment="Center">
                             <DockPanel>
-                                <Button DockPanel.Dock="Right" Padding="8.4"
+                                <Button DockPanel.Dock="Right" Padding="8,4" Command="{Binding EditLoaderCommand}"
                                         IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNull}}"
                                         CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
                                     <fi:SymbolIcon Symbol="Branch" FontSize="{StaticResource LargeFontSize}" />
