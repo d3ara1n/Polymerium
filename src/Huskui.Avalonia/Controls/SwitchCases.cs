@@ -1,4 +1,5 @@
-﻿using Avalonia.Collections;
+﻿using Avalonia;
+using Avalonia.Collections;
 using Huskui.Avalonia.Converters;
 
 namespace Huskui.Avalonia.Controls;
@@ -13,6 +14,6 @@ public class SwitchCases : AvaloniaList<SwitchCase>
             return null;
 
         return this.FirstOrDefault(@case => RelayConverter.CompareValues(value, @case.Value, targetType))
-            ?? this.FirstOrDefault();
+            ?? this.FirstOrDefault(x => x.Value == AvaloniaProperty.UnsetValue) ?? this.FirstOrDefault();
     }
 }

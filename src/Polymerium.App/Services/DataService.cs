@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Microsoft.Extensions.Caching.Memory;
+using Polymerium.App.Models;
 using Polymerium.Trident.Models.MojangLauncherApi;
 using Polymerium.Trident.Models.PrismLauncherApi;
 using Polymerium.Trident.Services;
@@ -51,7 +52,10 @@ public class DataService(
     public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
         GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
                     async () => await (await agent.InspectAsync(label, ns, pid, filter)).FetchAsync());
-
+    public ValueTask<ComponentIndex> GetComponentAsync(string loaderId) =>
+        GetOrCreate($"loader:{loaderId}",
+                    () => prismLauncherService.GetVersionsAsync(loaderId, CancellationToken.None));
+    
     public ValueTask<ComponentIndex> GetMinecraftVersionsAsync() =>
         GetOrCreate("minecraft:versions", () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None));
 

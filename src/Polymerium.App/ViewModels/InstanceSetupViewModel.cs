@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
+using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
@@ -222,7 +223,16 @@ public partial class InstanceSetupViewModel(
 
     protected override void OnInstanceUpdated(UpdateTracker tracker)
     {
-        ArgumentNullException.ThrowIfNull(_pageCancellationTokenSource);
+        if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
+        {
+            // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
+            //  但该 TrackerBase.StateChanged 事件未接触订阅
+            //  实际是状态订阅有三层，第一层由 InstanceViewModelBase 维护，且正确工作
+            //  第二层是第一层的订阅事件中创建，由事件处理函数维护
+            //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
+            //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
+            return;
+        }
         TriggerRefresh(_pageCancellationTokenSource.Token);
         base.OnInstanceUpdated(tracker);
     }
@@ -243,6 +253,17 @@ public partial class InstanceSetupViewModel(
     }
 
     #region Commands
+
+    [RelayCommand]
+    private void EditLoader()
+    {
+        var dialog = new LoaderEditorDialog()
+        {
+            OverlayService = overlayService,
+            DataService = dataService
+        };
+        overlayService.PopDialog(dialog);
+    }
 
     [RelayCommand]
     private void OpenSourceUrl(Uri? url)

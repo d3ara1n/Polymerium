@@ -156,7 +156,7 @@
                             <icons:PackIconLucide Kind="X" Height="{StaticResource SmallFontSize}" />
                         </Button>
                         <Border Grid.Column="0" Background="{DynamicResource LayerSolidBackgroundBrush}" Padding="8"
-                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                CornerRadius="{StaticResource SmallCornerRadius}">
                             <Grid ColumnDefinitions="*,8,Auto,8,*">
                                 <Grid Grid.Column="0" ColumnDefinitions="Auto,8,*">
                                     <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />

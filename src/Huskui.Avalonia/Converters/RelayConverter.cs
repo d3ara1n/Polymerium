@@ -19,13 +19,24 @@ public class RelayConverter : IValueConverter
         if (targetType.IsInstanceOfType(value))
             return value;
 
-        if (targetType.IsEnum && value is string str)
+        if (value is string str)
         {
-            if (Enum.TryParse(targetType, str, out var result))
-                return result;
+            if (targetType == typeof(bool))
+            {
+                if (bool.TryParse(str, out var result))
+                    return result;
+                throw new InvalidOperationException("The requested bool value was not present in the provided type.");
+            }
 
-            throw new InvalidOperationException("The requested enum value was not present in the provided type.");
+            if (targetType.IsEnum)
+            {
+                if (Enum.TryParse(targetType, str, out var result))
+                    return result;
+
+                throw new InvalidOperationException("The requested enum value was not present in the provided type.");
+            }
         }
+
 
         return DefaultValueConverter.Instance.Convert(value, targetType, null, CultureInfo.CurrentCulture) ?? value;
     }

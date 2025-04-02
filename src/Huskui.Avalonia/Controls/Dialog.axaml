@@ -32,7 +32,7 @@
                                    TextWrapping="WrapWithOverflow"
                                    MaxWidth="{Binding #PART_ContentPresenter.Bounds.Width}" />
                         <ContentPresenter Grid.Row="3" Name="PART_ContentPresenter"
-                                          Margin="18,12,18,12" Foreground="{TemplateBinding Foreground}"
+                                          Margin="18,12,18,0" Foreground="{TemplateBinding Foreground}"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
                         <Grid Grid.Row="4" ColumnDefinitions="*,8,*" Margin="18">

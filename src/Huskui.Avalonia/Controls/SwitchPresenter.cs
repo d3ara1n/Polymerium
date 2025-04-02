@@ -25,42 +25,34 @@ public class SwitchPresenter : ContentControl
                                                                o => o.TargetType,
                                                                (o, v) => o.TargetType = v);
 
-    private SwitchCases _cases = [];
-
-    private SwitchCase? _currentCase;
-
-    private Type _targetType = typeof(object);
-
-    private object? _value;
-
     [Content]
     public SwitchCases Cases
     {
-        get => _cases;
-        set => SetAndRaise(CasesProperty, ref _cases, value);
-    }
+        get;
+        set => SetAndRaise(CasesProperty, ref field, value);
+    } = [];
 
     public SwitchCase? CurrentCase
     {
-        get => _currentCase;
-        set => SetAndRaise(CurrentCaseProperty, ref _currentCase, value);
+        get;
+        set => SetAndRaise(CurrentCaseProperty, ref field, value);
     }
 
     public object? Value
     {
-        get => _value;
+        get;
         set
         {
-            if (SetAndRaise(ValueProperty, ref _value, value))
+            if (SetAndRaise(ValueProperty, ref field, value))
                 EvaluateCases();
         }
     }
 
     public Type TargetType
     {
-        get => _targetType;
-        set => SetAndRaise(TargetTypeProperty, ref _targetType, value);
-    }
+        get;
+        set => SetAndRaise(TargetTypeProperty, ref field, value);
+    } = typeof(object);
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
