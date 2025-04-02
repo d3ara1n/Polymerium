@@ -85,8 +85,8 @@ public class Dialog : HeaderedContentControl
         get => _result;
         set
         {
-            if (SetAndRaise(ResultProperty, ref _result, value))
-                (PrimaryCommand as InternalCommand)?.OnCanExecuteChanged();
+            SetAndRaise(ResultProperty, ref _result, value);
+            (PrimaryCommand as InternalCommand)?.OnCanExecuteChanged();
         }
     }
 
