@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
@@ -18,9 +16,51 @@ public partial class LoaderEditorDialog : Dialog
     public required OverlayService OverlayService { get; init; }
     public required DataService DataService { get; init; }
 
+    private static readonly LoaderCandidateModel[] candidates =
+    [
+        new(LoaderHelper.LOADERID_NEOFORGE, "NeoForge", AssetUriIndex.LOADER_NEOFORGE_BITMAP),
+        new(LoaderHelper.LOADERID_FORGE, "Forge", AssetUriIndex.LOADER_FORGE_BITMAP),
+        new(LoaderHelper.LOADERID_FABRIC, "Fabric", AssetUriIndex.LOADER_FABRIC_BITMAP),
+        new(LoaderHelper.LOADERID_QUILT, "Quilt", AssetUriIndex.LOADER_QUILT_BITMAP)
+    ];
+
     public LoaderEditorDialog()
     {
         InitializeComponent();
+    }
+
+    public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedLoaderProperty =
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(nameof(SelectedLoader),
+                                                                     o => o.SelectedLoader,
+                                                                     (o, v) => o.SelectedLoader = v);
+
+    public string? SelectedLoader
+    {
+        get;
+        set => SetAndRaise(SelectedLoaderProperty, ref field, value);
+    }
+
+    public static readonly DirectProperty<LoaderEditorDialog, LazyObject?> LazyVersionsProperty =
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LazyObject?>(nameof(LazyVersions),
+                                                                         o => o.LazyVersions,
+                                                                         (o, v) => o.LazyVersions = v);
+
+
+    public LazyObject? LazyVersions
+    {
+        get;
+        set => SetAndRaise(LazyVersionsProperty, ref field, value);
+    }
+
+    public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedVersionProperty =
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(nameof(SelectedVersion),
+                                                                     o => o.SelectedVersion,
+                                                                     (o, v) => o.SelectedVersion = v);
+
+    public string? SelectedVersion
+    {
+        get;
+        set => SetAndRaise(SelectedVersionProperty, ref field, value);
     }
 
     public static readonly DirectProperty<LoaderEditorDialog, LoaderCandidateModel?> LoaderProperty =
@@ -34,43 +74,14 @@ public partial class LoaderEditorDialog : Dialog
         set => SetAndRaise(LoaderProperty, ref field, value);
     }
 
-    public static readonly DirectProperty<LoaderEditorDialog, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LazyObject?>(nameof(LazyVersions),
-                                                                         o => o.LazyVersions,
-                                                                         (o, v) => o.LazyVersions = v);
-
-    public LazyObject? LazyVersions
-    {
-        get;
-        set => SetAndRaise(LazyVersionsProperty, ref field, value);
-    }
-
-    public static readonly DirectProperty<LoaderEditorDialog, LoaderCandidateVersionModel?> SelectedVersionProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LoaderCandidateVersionModel?>(nameof(SelectedVersion),
-            o => o.SelectedVersion,
-            (o, v) => o.SelectedVersion = v);
-
-    public LoaderCandidateVersionModel? SelectedVersion
-    {
-        get;
-        set => SetAndRaise(SelectedVersionProperty, ref field, value);
-    }
-
-
-    protected override void OnLoaded(RoutedEventArgs e)
-    {
-        base.OnLoaded(e);
-
-        LoadVersions();
-    }
 
     private void LoadVersions()
     {
-        if (Loader != null)
+        if (SelectedLoader != null)
         {
             var lazy = new LazyObject(async token =>
                                       {
-                                          var index = await DataService.GetComponentAsync(Loader.Id);
+                                          var index = await DataService.GetComponentAsync(SelectedLoader);
                                           return new LoaderCandidateVersionCollectionModel(index
                                              .Versions.OrderByDescending(x => x.ReleaseTime)
                                              .Select(x => new LoaderCandidateVersionModel(x.Version))
@@ -81,33 +92,47 @@ public partial class LoaderEditorDialog : Dialog
         }
     }
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+
+        if (change.Property == LoaderProperty)
+            LoadVersions();
+
+        if (change.Property == SelectedLoaderProperty)
+        {
+            var id = change.GetNewValue<string>();
+            var model = candidates.FirstOrDefault(x => x.Id == id);
+            Loader = model;
+        }
+
+        if (change.Property == SelectedLoaderProperty || change.Property == SelectedVersionProperty)
+        {
+            if (SelectedLoader != null && SelectedVersion != null)
+                Result = new LoaderCandidateSelectionModel(SelectedLoader, SelectedVersion);
+            else
+                Result = null;
+        }
+    }
+
+    protected override bool ValidateResult(object? result) =>
+        result is LoaderCandidateSelectionModel
+     || (result is null && SelectedLoader == null && SelectedVersion == null);
 
     private async void AddLoaderButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var dialog = new LoaderPickerDialog
-        {
-            Candidates =
-            [
-                new LoaderCandidateModel(LoaderHelper.LOADERID_FORGE,
-                                         "Forge",
-                                         AssetUriIndex.LOADER_FORGE_BITMAP),
-                new LoaderCandidateModel(LoaderHelper.LOADERID_NEOFORGE,
-                                         "NeoForge",
-                                         AssetUriIndex.LOADER_NEOFORGE_BITMAP),
-                new LoaderCandidateModel(LoaderHelper.LOADERID_FABRIC,
-                                         "Fabric",
-                                         AssetUriIndex.LOADER_FABRIC_BITMAP),
-                new LoaderCandidateModel(LoaderHelper.LOADERID_QUILT,
-                                         "Quilt",
-                                         AssetUriIndex.LOADER_QUILT_BITMAP)
-            ]
-        };
+        var dialog = new LoaderPickerDialog { Candidates = candidates };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is LoaderCandidateModel model)
         {
-            Loader = model;
-            LoadVersions();
+            SelectedLoader = model.Id;
         }
-        else
-            Loader = null;
+    }
+
+    private void RemoveButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        Result = null;
+        SelectedVersion = null;
+        SelectedLoader = null;
     }
 }

@@ -7,13 +7,13 @@
              xmlns:local="clr-namespace:Polymerium.App.Dialogs"
              xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              xmlns:m="clr-namespace:Polymerium.App.Models"
-             mc:Ignorable="d" d:DesignWidth="460"
+             mc:Ignorable="d" d:DesignWidth="460" IsPrimaryButtonVisible="True"
              x:Class="Polymerium.App.Dialogs.LoaderEditorDialog">
     <husk:SwitchPresenter
-        Value="{Binding $parent[local:LoaderEditorDialog].Loader,Converter={x:Static ObjectConverters.IsNotNull},Mode=OneWay}"
+        Value="{Binding $parent[local:LoaderEditorDialog].SelectedLoader,Converter={x:Static ObjectConverters.IsNotNull},Mode=OneWay}"
         TargetType="x:Boolean">
         <husk:SwitchCase Value="True">
-            <Grid RowDefinitions="*,12,Auto">
+            <Grid RowDefinitions="*,12,Auto,4,Auto">
                 <Border Grid.Row="0" Background="{DynamicResource ControlBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="*,4,Auto" Margin="4">
@@ -33,25 +33,32 @@
                                         FontSize="{StaticResource LargeFontSize}"
                                         FontWeight="Bold" />
                                     <TextBlock
-                                        Text="{Binding $parent[local:LoaderEditorDialog].Loader.Id,FallbackValue=ID}"
+                                        Text="{Binding $parent[local:LoaderEditorDialog].Loader.Id,FallbackValue=Identity}"
                                         Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}" Classes="Small">
+                        <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
+                                Click="RemoveButton_OnClick">
                             <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}"
                                            VerticalAlignment="Center" />
                         </Button>
                     </Grid>
                 </Border>
-                <husk:LazyContainer Grid.Row="2" LazySource="{Binding $parent[local:LoaderEditorDialog].LazyVersions}">
+                <TextBlock Grid.Row="2" Text="More Versions" />
+                <husk:LazyContainer Grid.Row="4" LazySource="{Binding $parent[local:LoaderEditorDialog].LazyVersions}"
+                                    MinHeight="24">
                     <husk:LazyContainer.ContentTemplate>
                         <DataTemplate DataType="m:LoaderCandidateVersionCollectionModel">
                             <ComboBox
-                                SelectedItem="{Binding $parent[local:LoaderEditorDialog].SelectedVersion,Mode=TwoWay}"
-                                ItemsSource="{Binding Versions}" />
+                                SelectedValue="{Binding $parent[local:LoaderEditorDialog].SelectedVersion,Mode=TwoWay}"
+                                DisplayMemberBinding="{Binding Version}"
+                                ItemsSource="{Binding Versions}" SelectedValueBinding="{Binding Version}" />
                         </DataTemplate>
                     </husk:LazyContainer.ContentTemplate>
+                    <husk:LazyContainer.BadContent>
+                        <TextBlock Text="(Network unreachable)" />
+                    </husk:LazyContainer.BadContent>
                 </husk:LazyContainer>
             </Grid>
         </husk:SwitchCase>

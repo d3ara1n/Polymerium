@@ -233,6 +233,7 @@ public partial class InstanceSetupViewModel(
             //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
             return;
         }
+
         TriggerRefresh(_pageCancellationTokenSource.Token);
         base.OnInstanceUpdated(tracker);
     }
@@ -255,14 +256,34 @@ public partial class InstanceSetupViewModel(
     #region Commands
 
     [RelayCommand]
-    private void EditLoader()
+    private async Task EditLoader()
     {
-        var dialog = new LoaderEditorDialog()
+        string? loader = null;
+        string? version = null;
+        if (Basic.Loader is not null && LoaderHelper.TryParse(Basic.Loader, out var result))
+        {
+            loader = result.Identity;
+            version = result.Version;
+        }
+
+        var dialog = new LoaderEditorDialog
         {
             OverlayService = overlayService,
-            DataService = dataService
+            DataService = dataService,
+            SelectedLoader = loader,
+            SelectedVersion = version
         };
-        overlayService.PopDialog(dialog);
+        if (await overlayService.PopDialogAsync(dialog))
+        {
+            if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+            {
+                if (dialog.Result is LoaderCandidateSelectionModel selection)
+                    guard.Value.Setup.Loader = LoaderHelper.ToLurl(selection.Id, selection.Version);
+                else
+                    guard.Value.Setup.Loader = null;
+                await guard.DisposeAsync();
+            }
+        }
     }
 
     [RelayCommand]
