@@ -1,4 +1,6 @@
-﻿namespace Polymerium.Trident.Models.PrismLauncherApi;
+﻿using System.Text.Json.Serialization;
+
+namespace Polymerium.Trident.Models.PrismLauncherApi;
 
 public record ComponentIndex(
     int FormatVersion,
@@ -18,7 +20,11 @@ public record ComponentIndex(
     {
         #region Nested type: VersionRequirement
 
-        public record VersionRequirement(string Suggests, string Uid);
+        public record VersionRequirement(
+            [property: JsonPropertyName("suggests")]
+            string? Suggest,
+            [property: JsonPropertyName("equals")] string? Equal,
+            string Uid);
 
         #endregion
     }

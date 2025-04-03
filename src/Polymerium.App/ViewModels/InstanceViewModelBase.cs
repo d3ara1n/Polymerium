@@ -107,6 +107,9 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     private void OnProfileUpdating(object? sender, UpdateTracker tracker)
     {
+        if (tracker.Key != Basic.Key)
+            return;
+
         Dispatcher.UIThread.Post(() => State = InstanceState.Updating);
 
         tracker.StateUpdated += OnProfileUpdateStateChanged;
@@ -116,6 +119,9 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     private void OnProfileDeploying(object? sender, DeployTracker tracker)
     {
+        if (tracker.Key != Basic.Key)
+            return;
+
         Dispatcher.UIThread.Post(() => State = InstanceState.Deploying);
 
         tracker.StateUpdated += OnProfileDeployStateChanged;
@@ -124,6 +130,9 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     private void OnProfileLaunching(object? sender, LaunchTracker tracker)
     {
+        if (tracker.Key != Basic.Key)
+            return;
+
         Dispatcher.UIThread.Post(() => State = InstanceState.Running);
 
         tracker.StateUpdated += OnProfileLaunchingStateChanged;
@@ -171,6 +180,9 @@ public abstract partial class InstanceViewModelBase : ViewModelBase
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
+        if (e.Key != Basic.Key)
+            return;
+
         UpdateBasic(e.Key, e.Value);
         OnUpdateModel(e.Key, e.Value);
     }

@@ -71,24 +71,28 @@ public class DataLockBuilder : IBuilder<DataLock>
 
     public DataLockBuilder AddLibrary(DataLock.Library library)
     {
-        var found = _libraries.FirstOrDefault(x => x.Id.Namespace == library.Id.Namespace
-                                                && x.Id.Name == library.Id.Name
-                                                && x.Id.Platform == library.Id.Platform
-                                                && x.Id.Extension == library.Id.Extension);
-        if (found != null)
-        {
-            if (SemVersion.TryParse(found.Id.Version, out var oldVersion)
-             && SemVersion.TryParse(library.Id.Version, out var newVersion)
-             && newVersion.CompareSortOrderTo(oldVersion) > 0)
-            {
-                _libraries.Remove(found);
-                _libraries.Add(library);
-            }
-        }
-        else
-        {
+        // var found = _libraries.FirstOrDefault(x => x.Id.Namespace == library.Id.Namespace
+        //                                         && x.Id.Name == library.Id.Name
+        //                                         && x.Id.Platform == library.Id.Platform
+        //                                         && x.Id.Extension == library.Id.Extension);
+        // if (found != null)
+        // {
+        //     if (SemVersion.TryParse(found.Id.Version, out var oldVersion)
+        //      && SemVersion.TryParse(library.Id.Version, out var newVersion)
+        //      && newVersion.CompareSortOrderTo(oldVersion) > 0)
+        //     {
+        //         _libraries.Remove(found);
+        //         _libraries.Add(library);
+        //     }
+        // }
+        // else
+        // {
+        //     _libraries.Add(library);
+        // }
+
+        // 傻逼 Fabric 两个不同版本库会导致冲突，NeoForge 则必须多版本库同时存在
+        if (_libraries.All(x => x != library))
             _libraries.Add(library);
-        }
 
         return this;
     }

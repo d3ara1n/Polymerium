@@ -270,6 +270,7 @@ public partial class InstanceSetupViewModel(
         {
             OverlayService = overlayService,
             DataService = dataService,
+            GameVersion = Basic.Version,
             SelectedLoader = loader,
             SelectedVersion = version
         };
