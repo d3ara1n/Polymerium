@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 using System.Reactive.Subjects;
 using System.Security.Cryptography;
@@ -185,21 +186,20 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         Context.IsSolidified = true;
     }
 
-    private bool Verify(string path, string? hash)
+    private static bool Verify(string path, string? hash)
     {
         if (File.Exists(path))
         {
             if (hash != null)
             {
-                var reader = File.OpenRead(path);
+                var reader = new FileStream(path, FileMode.Open, FileAccess.Read);
                 var computed = Convert.ToHexString(SHA1.HashData(reader));
-                reader.Dispose();
+                reader.Close();
                 return hash.Equals(computed, StringComparison.InvariantCultureIgnoreCase);
             }
 
             return true;
         }
-
         return false;
     }
 

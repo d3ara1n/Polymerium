@@ -15,8 +15,9 @@ public partial class LoaderEditorDialog : Dialog
 {
     public required OverlayService OverlayService { get; init; }
     public required DataService DataService { get; init; }
+    public required string GameVersion { get; init; }
 
-    private static readonly LoaderCandidateModel[] candidates =
+    private static readonly LoaderCandidateModel[] Candidates =
     [
         new(LoaderHelper.LOADERID_NEOFORGE, "NeoForge", AssetUriIndex.LOADER_NEOFORGE_BITMAP),
         new(LoaderHelper.LOADERID_FORGE, "Forge", AssetUriIndex.LOADER_FORGE_BITMAP),
@@ -81,10 +82,12 @@ public partial class LoaderEditorDialog : Dialog
         {
             var lazy = new LazyObject(async token =>
                                       {
-                                          var index = await DataService.GetComponentAsync(SelectedLoader);
+                                          var index = await DataService.GetComponentVersionsAsync(SelectedLoader,
+                                                          GameVersion);
                                           return new LoaderCandidateVersionCollectionModel(index
-                                             .Versions.OrderByDescending(x => x.ReleaseTime)
-                                             .Select(x => new LoaderCandidateVersionModel(x.Version))
+                                             .OrderByDescending(x => x.ReleaseTime)
+                                             .Select(x => new LoaderCandidateVersionModel(x.Version,
+                                                         x.Recommended))
                                              .ToList());
                                       },
                                       CancellationToken.None);
@@ -103,7 +106,7 @@ public partial class LoaderEditorDialog : Dialog
         if (change.Property == SelectedLoaderProperty)
         {
             var id = change.GetNewValue<string>();
-            var model = candidates.FirstOrDefault(x => x.Id == id);
+            var model = Candidates.FirstOrDefault(x => x.Id == id);
             Loader = model;
         }
 
@@ -122,7 +125,7 @@ public partial class LoaderEditorDialog : Dialog
 
     private async void AddLoaderButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var dialog = new LoaderPickerDialog { Candidates = candidates };
+        var dialog = new LoaderPickerDialog { Candidates = Candidates };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is LoaderCandidateModel model)
         {
             SelectedLoader = model.Id;

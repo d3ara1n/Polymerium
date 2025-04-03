@@ -18,18 +18,18 @@
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <local:SkeletonContainer CornerRadius="{TemplateBinding CornerRadius}"
-                                         IsLoading="{Binding Content,Converter={x:Static ObjectConverters.IsNull},RelativeSource={RelativeSource Mode=TemplatedParent},FallbackValue=False}">
-                    <local:SwitchPresenter Value="{TemplateBinding IsBad}" TargetType="x:Boolean">
-                        <local:SwitchCase Value="False">
+                <local:SwitchPresenter Value="{TemplateBinding IsBad}" TargetType="x:Boolean">
+                    <local:SwitchCase Value="False">
+                        <local:SkeletonContainer CornerRadius="{TemplateBinding CornerRadius}"
+                                                 IsLoading="{Binding Content,Converter={x:Static ObjectConverters.IsNull},RelativeSource={RelativeSource Mode=TemplatedParent},FallbackValue=False}">
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}" />
-                        </local:SwitchCase>
-                        <local:SwitchCase Value="True">
-                            <ContentPresenter Content="{TemplateBinding BadContent}" />
-                        </local:SwitchCase>
-                    </local:SwitchPresenter>
-                </local:SkeletonContainer>
+                        </local:SkeletonContainer>
+                    </local:SwitchCase>
+                    <local:SwitchCase Value="True">
+                        <ContentPresenter Content="{TemplateBinding BadContent}" />
+                    </local:SwitchCase>
+                </local:SwitchPresenter>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

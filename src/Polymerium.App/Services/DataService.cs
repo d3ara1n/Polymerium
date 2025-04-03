@@ -52,10 +52,20 @@ public class DataService(
     public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
         GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
                     async () => await (await agent.InspectAsync(label, ns, pid, filter)).FetchAsync());
+
     public ValueTask<ComponentIndex> GetComponentAsync(string loaderId) =>
         GetOrCreate($"loader:{loaderId}",
-                    () => prismLauncherService.GetVersionsAsync(loaderId, CancellationToken.None));
-    
+                    () => prismLauncherService.GetVersionsAsync(PrismLauncherService.UID_MAPPINGS[loaderId],
+                                                                CancellationToken.None));
+
+    public ValueTask<IReadOnlyList<ComponentIndex.ComponentVersion>>
+        GetComponentVersionsAsync(string loaderId, string gameVersion) =>
+        GetOrCreate($"loader:{loaderId}:{gameVersion}",
+                    () => prismLauncherService.GetVersionsForMinecraftVersionAsync(PrismLauncherService.UID_MAPPINGS
+                            [loaderId],
+                        gameVersion,
+                        CancellationToken.None));
+
     public ValueTask<ComponentIndex> GetMinecraftVersionsAsync() =>
         GetOrCreate("minecraft:versions", () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None));
 

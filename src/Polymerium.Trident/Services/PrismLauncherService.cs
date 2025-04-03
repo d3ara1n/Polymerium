@@ -2,6 +2,7 @@
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Models.PrismLauncherApi;
 using Polymerium.Trident.Utilities;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Services;
 
@@ -19,10 +20,31 @@ public class PrismLauncherService(IPrismLauncherClient client)
     public static readonly string OsNameString = PlatformHelper.GetOsName();
     private static readonly string OsFullString = $"{OsNameString}-{PlatformHelper.GetOsArch()}";
 
+    public static readonly IReadOnlyDictionary<string, string> UID_MAPPINGS = new Dictionary<string, string>()
+    {
+        [LoaderHelper.LOADERID_FORGE] = UID_FORGE,
+        [LoaderHelper.LOADERID_NEOFORGE] = UID_NEOFORGE,
+        [LoaderHelper.LOADERID_FABRIC] = UID_FABRIC,
+        [LoaderHelper.LOADERID_QUILT] = UID_QUILT
+    };
+
     public async Task<ComponentIndex> GetVersionsAsync(string uid, CancellationToken token)
     {
         var index = await client.GetComponentIndexAsync(uid, token).ConfigureAwait(false);
         return index;
+    }
+
+    public async Task<IReadOnlyList<ComponentIndex.ComponentVersion>> GetVersionsForMinecraftVersionAsync(
+        string uid,
+        string version,
+        CancellationToken token)
+    {
+        var index = await client.GetComponentIndexAsync(uid, token).ConfigureAwait(false);
+        return index
+              .Versions.Where(x => x.Requires.Any(y => y.Uid == UID_INTERMEDIARY
+                                                    || (y.Uid == UID_MINECRAFT
+                                                     && (y.Suggest == version || y.Equal == version))))
+              .ToList();
     }
 
     public Task<ComponentIndex> GetMinecraftVersionsAsync(CancellationToken token) =>
