@@ -5,5 +5,5 @@
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             x:Class="Polymerium.App.Modals.PackageEntryModal">
-    <Grid RowDefinitions="Auto,4,*,4,Auto,4,Auto" />
+    <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="4" />
 </husk:Modal>

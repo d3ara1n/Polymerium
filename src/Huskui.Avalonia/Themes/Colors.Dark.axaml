@@ -41,6 +41,8 @@
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource Sand11Color}" />
     <SolidColorBrush x:Key="ControlTranslucentBackgroundBrush" Color="{StaticResource Sand11Color}"
                      Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlTranslucentOverlayBackgroundBrush" Color="{StaticResource Sand11Color}"
+                     Opacity="0.1" />
     <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{StaticResource Amber11Color}" />
     <SolidColorBrush x:Key="ControlTranslucentAccentBackgroundBrush" Color="{StaticResource Amber11Color}"
                      Opacity="0.4" />

@@ -35,16 +35,16 @@
                                           Margin="18,12,18,0" Foreground="{TemplateBinding Foreground}"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
-                        <Grid Grid.Row="4" ColumnDefinitions="*,8,*" Margin="18">
-                            <Button Grid.Column="0" Classes="Primary"
+                        <Grid Grid.Row="4" ColumnDefinitions="*,*" Margin="18" ColumnSpacing="8">
+                            <Button Grid.Column="0" Classes="Primary" IsDefault="True"
                                     Command="{Binding PrimaryCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     IsVisible="{TemplateBinding IsPrimaryButtonVisible}">
                                 <TextBlock Text="{TemplateBinding PrimaryText}" />
                             </Button>
-                            <Button
-                                Grid.Column="{TemplateBinding IsPrimaryButtonVisible, Converter={x:Static converters:InternalConverters.ButtonColumn},ConverterParameter=2}"
-                                Grid.ColumnSpan="{TemplateBinding IsPrimaryButtonVisible, Converter={x:Static converters:InternalConverters.ButtonColumnSpan},ConverterParameter=3}"
-                                Command="{Binding SecondaryCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <Button IsCancel="True"
+                                    Grid.Column="{TemplateBinding IsPrimaryButtonVisible, Converter={x:Static converters:InternalConverters.ButtonColumn},ConverterParameter=1}"
+                                    Grid.ColumnSpan="{TemplateBinding IsPrimaryButtonVisible, Converter={x:Static converters:InternalConverters.ButtonColumnSpan},ConverterParameter=2}"
+                                    Command="{Binding SecondaryCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <TextBlock Text="{TemplateBinding SecondaryText}" />
                             </Button>
                         </Grid>

@@ -63,7 +63,8 @@ public class RepositoryAgent
                 if (cached != null)
                 {
                     _logger.LogDebug("Cache hit: {}", key);
-                    await _cache.RefreshAsync(key).ConfigureAwait(false);
+                    // await _cache.RefreshAsync(key).ConfigureAwait(false);
+                    // NOTE: 不刷新！过期就让他过期，因为是由时效性的
                     return cached;
                 }
 
