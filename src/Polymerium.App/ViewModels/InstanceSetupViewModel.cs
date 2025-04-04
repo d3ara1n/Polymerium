@@ -12,6 +12,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
+using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
@@ -298,7 +299,7 @@ public partial class InstanceSetupViewModel(
     private void ViewPackage(InstancePackageModel? model)
     {
         if (model is not null)
-            model.IsEnabled = !model.IsEnabled;
+            overlayService.PopModal(new PackageEntryModal());
     }
 
     [RelayCommand]

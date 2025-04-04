@@ -1,5 +1,5 @@
-﻿using IBuilder;
-using Semver;
+﻿using System.Diagnostics;
+using IBuilder;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Engines.Deploying;
@@ -91,8 +91,32 @@ public class DataLockBuilder : IBuilder<DataLock>
         // }
 
         // 傻逼 Fabric 两个不同版本库会导致冲突，NeoForge 则必须多版本库同时存在
-        if (_libraries.All(x => x != library))
+
+
+        // 规则：
+        //  允许除 IsNative 不同的同时存在，但不允许除了 IsPresent 不同的同时存在， IsPresent==True的优先
+        var found = _libraries.FirstOrDefault(x => x.Id == library.Id && x.IsNative == library.IsNative);
+        if (found != null)
+        {
+            if (!found.IsPresent && library.IsPresent)
+            {
+                _libraries.Remove(found);
+                _libraries.Add(library);
+            }
+            else
+            {
+                Debug.WriteLine($"[DUPLICATE]: {library}");
+            }
+        }
+        else
+        {
             _libraries.Add(library);
+        }
+
+        // if (_libraries.All(x => x != library))
+        //     _libraries.Add(library);
+        // else
+        //     Debug.WriteLine($"[DUPLICATE]: {library}");
 
         return this;
     }

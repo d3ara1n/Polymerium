@@ -1,18 +1,19 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <ListBox Margin="20" Width="220" Height="220" BorderThickness="1" BorderBrush="Black">
-            <ListBoxItem>Item 1</ListBoxItem>
-            <ListBoxItem>Item 2</ListBoxItem>
-            <ListBoxItem>Item 3</ListBoxItem>
-            <ListBoxItem IsEnabled="False" IsSelected="True"> Selected Disabled</ListBoxItem>
-            <ListBoxItem IsEnabled="False" IsSelected="False">Disabled</ListBoxItem>
-            <ListBoxItem>Item 4</ListBoxItem>
-        </ListBox>
+        <Panel Background="White">
+            <ListBox Margin="20" Width="220" Height="220" BorderThickness="1" BorderBrush="Black">
+                <ListBoxItem>Item 1</ListBoxItem>
+                <ListBoxItem>Item 2</ListBoxItem>
+                <ListBoxItem>Item 3</ListBoxItem>
+                <ListBoxItem IsEnabled="False" IsSelected="True"> Selected Disabled</ListBoxItem>
+                <ListBoxItem IsEnabled="False" IsSelected="False">Disabled</ListBoxItem>
+                <ListBoxItem>Item 4</ListBoxItem>
+            </ListBox>
+        </Panel>
     </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type ListBox}" TargetType="ListBox">
-        <Setter Property="Padding" Value="8" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="True" />
@@ -50,61 +51,81 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
-        <Setter Property="Background" Value="{DynamicResource OverlayHalfBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlTranslucentOverlayBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate TargetType="ListBoxItem">
-                <Panel ClipToBounds="{TemplateBinding ClipToBounds}">
-                    <Border x:Name="Indicator" Margin="4,2" ClipToBounds="{TemplateBinding ClipToBounds}"
+                <Panel>
+                    <Border x:Name="Background" Margin="4,2,4,2"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             CornerRadius="{TemplateBinding CornerRadius}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" Opacity="0">
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background" Easing="SineEaseInOut"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition Property="BorderBrush" Easing="SineEaseInOut"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <Border Name="Indicator" Width="3" Opacity="0" HorizontalAlignment="Left"
+                            RenderTransform="translateX(-4px)" BorderThickness="1"
+                            BorderBrush="{DynamicResource ControlTranslucentAccentBackgroundBrush}"
+                            Background="{DynamicResource ControlAccentBackgroundBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}" Margin="0,4">
                         <Border.Transitions>
                             <Transitions>
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                  Duration="{StaticResource ControlFastestAnimationDuration}" />
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                               Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
                     <ContentPresenter
                         Name="PART_ContentPresenter"
                         Padding="{TemplateBinding Padding}"
+                        ClipToBounds="{TemplateBinding ClipToBounds}"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                         Content="{TemplateBinding Content}"
                         ContentTemplate="{TemplateBinding ContentTemplate}"
-                        Foreground="{TemplateBinding Foreground}">
-                        <ContentPresenter.Transitions>
-                            <Transitions>
-                                <BrushTransition Property="Foreground" Easing="SineEaseOut"
-                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
-                            </Transitions>
-                        </ContentPresenter.Transitions>
-                    </ContentPresenter>
+                        Foreground="{TemplateBinding Foreground}" />
                 </Panel>
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover:not(:selected) /template/ Border#Indicator">
-            <Setter Property="Opacity" Value="1.0" />
+        <Style Selector="^:pointerover:not(:selected) /template/ Border#Background">
+            <Setter Property="Background" Value="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
         </Style>
 
 
         <Style Selector="^:selected">
-            <Style Selector="^ /template/ Border#Indicator">
-                <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-                <Setter Property="Opacity" Value="1.0" />
+            <Style Selector="^ /template/ Border#Background">
+                <Setter Property="Background" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
             </Style>
-            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
+            <Style Selector="^ /template/ Border#Indicator">
+                <Setter Property="Opacity" Value="1" />
+                <Setter Property="RenderTransform" Value="translateX(0px)" />
             </Style>
         </Style>
 
-        <Style Selector="^:disabled /template/ Border#Indicator">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        <Style Selector="^:disabled">
+            <Style Selector="^ /template/ Border#Background">
+                <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+            </Style>
         </Style>
     </ControlTheme>
 
