@@ -13,10 +13,6 @@ namespace Polymerium.App.Dialogs;
 
 public partial class LoaderEditorDialog : Dialog
 {
-    public required OverlayService OverlayService { get; init; }
-    public required DataService DataService { get; init; }
-    public required string GameVersion { get; init; }
-
     private static readonly LoaderCandidateModel[] Candidates =
     [
         new(LoaderHelper.LOADERID_NEOFORGE, "NeoForge", AssetUriIndex.LOADER_NEOFORGE_BITMAP),
@@ -25,26 +21,40 @@ public partial class LoaderEditorDialog : Dialog
         new(LoaderHelper.LOADERID_QUILT, "Quilt", AssetUriIndex.LOADER_QUILT_BITMAP)
     ];
 
+    public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedLoaderProperty =
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(nameof(SelectedLoader),
+                                                                     o => o.SelectedLoader,
+                                                                     (o, v) => o.SelectedLoader = v);
+
+    public static readonly DirectProperty<LoaderEditorDialog, LazyObject?> LazyVersionsProperty =
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LazyObject?>(nameof(LazyVersions),
+                                                                         o => o.LazyVersions,
+                                                                         (o, v) => o.LazyVersions = v);
+
+    public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedVersionProperty =
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(nameof(SelectedVersion),
+                                                                     o => o.SelectedVersion,
+                                                                     (o, v) => o.SelectedVersion = v);
+
+    public static readonly DirectProperty<LoaderEditorDialog, LoaderCandidateModel?> LoaderProperty =
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LoaderCandidateModel?>(nameof(Loader),
+            o => o.Loader,
+            (o, v) => o.Loader = v);
+
     public LoaderEditorDialog()
     {
         InitializeComponent();
     }
 
-    public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedLoaderProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(nameof(SelectedLoader),
-                                                                     o => o.SelectedLoader,
-                                                                     (o, v) => o.SelectedLoader = v);
+    public required OverlayService OverlayService { get; init; }
+    public required DataService DataService { get; init; }
+    public required string GameVersion { get; init; }
 
     public string? SelectedLoader
     {
         get;
         set => SetAndRaise(SelectedLoaderProperty, ref field, value);
     }
-
-    public static readonly DirectProperty<LoaderEditorDialog, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LazyObject?>(nameof(LazyVersions),
-                                                                         o => o.LazyVersions,
-                                                                         (o, v) => o.LazyVersions = v);
 
 
     public LazyObject? LazyVersions
@@ -53,21 +63,11 @@ public partial class LoaderEditorDialog : Dialog
         set => SetAndRaise(LazyVersionsProperty, ref field, value);
     }
 
-    public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedVersionProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(nameof(SelectedVersion),
-                                                                     o => o.SelectedVersion,
-                                                                     (o, v) => o.SelectedVersion = v);
-
     public string? SelectedVersion
     {
         get;
         set => SetAndRaise(SelectedVersionProperty, ref field, value);
     }
-
-    public static readonly DirectProperty<LoaderEditorDialog, LoaderCandidateModel?> LoaderProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LoaderCandidateModel?>(nameof(Loader),
-            o => o.Loader,
-            (o, v) => o.Loader = v);
 
     public LoaderCandidateModel? Loader
     {
@@ -127,9 +127,7 @@ public partial class LoaderEditorDialog : Dialog
     {
         var dialog = new LoaderPickerDialog { Candidates = Candidates };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is LoaderCandidateModel model)
-        {
             SelectedLoader = model.Id;
-        }
     }
 
     private void RemoveButton_OnClick(object? sender, RoutedEventArgs e)
