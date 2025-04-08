@@ -102,11 +102,13 @@
                                                 BorderBrush="{DynamicResource ControlAccentBorderBrush}"
                                                 BorderThickness="2"
                                                 BackgroundSizing="InnerBorderEdge" Height="42" Width="42">
-                                            <Border.Background>
-                                                <ImageBrush
-                                                    Source="{Binding Thumbnail,FallbackValue={x:Null}}"
-                                                    Stretch="UniformToFill" />
-                                            </Border.Background>
+                                            <Border Margin="1" CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <Border.Background>
+                                                    <ImageBrush
+                                                        Source="{Binding Thumbnail,FallbackValue={x:Null}}"
+                                                        Stretch="UniformToFill" />
+                                                </Border.Background>
+                                            </Border>
                                         </Border>
                                         <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="2">
                                             <TextBlock Text="{Binding Name,FallbackValue=Package Name}"
