@@ -5,7 +5,6 @@
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="ClipToBounds" Value="True" />
-        <Setter Property="Padding" Value="12,8" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="LayoutRoot" Margin="2"
@@ -17,18 +16,13 @@
                         <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
                     </Border.Effect>
                     <ContentPresenter Name="PART_ContentPresenter"
-                                      Background="{TemplateBinding Background}"
-                                      BorderBrush="{TemplateBinding BorderBrush}"
-                                      BorderThickness="{TemplateBinding BorderThickness}"
                                       Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      CornerRadius="{TemplateBinding CornerRadius}">
-                        <ContentPresenter.Styles>
-                            <Style Selector="ContentPresenter > TextBlock">
-                                <Setter Property="Margin" Value="{TemplateBinding Padding}" />
-                                <Setter Property="TextWrapping" Value="Wrap" />
-                            </Style>
-                        </ContentPresenter.Styles>
+                                      ContentTemplate="{TemplateBinding ContentTemplate}">
+                        <ContentPresenter.DataTemplates>
+                            <DataTemplate DataType="x:String">
+                                <TextBlock Text="{Binding}" Margin="12,6" />
+                            </DataTemplate>
+                        </ContentPresenter.DataTemplates>
                     </ContentPresenter>
                 </Border>
             </ControlTemplate>

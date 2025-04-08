@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
@@ -16,11 +15,14 @@ public partial class InstanceReferenceModel : ModelBase
     [ObservableProperty]
     public partial Bitmap? Thumbnail { get; set; }
 
-    [ObservableProperty]
-    public partial IReadOnlyList<InstanceReferenceVersionModel>? Versions { get; set; }
+    // [ObservableProperty]
+    // public partial IReadOnlyList<InstanceReferenceVersionModel>? Versions { get; set; }
+
+    // [ObservableProperty]
+    // public partial InstanceReferenceVersionModel? CurrentVersion { get; set; }
 
     [ObservableProperty]
-    public partial InstanceReferenceVersionModel? CurrentVersion { get; set; }
+    public partial string? VersionName { get; set; }
 
     [ObservableProperty]
     public partial string? SourceLabel { get; set; }

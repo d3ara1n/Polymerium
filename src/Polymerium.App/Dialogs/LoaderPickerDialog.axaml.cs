@@ -7,15 +7,15 @@ namespace Polymerium.App.Dialogs;
 
 public partial class LoaderPickerDialog : Dialog
 {
-    public LoaderPickerDialog()
-    {
-        InitializeComponent();
-    }
-
     public static readonly DirectProperty<LoaderPickerDialog, IReadOnlyList<LoaderCandidateModel>> CandidatesProperty =
         AvaloniaProperty.RegisterDirect<LoaderPickerDialog, IReadOnlyList<LoaderCandidateModel>>(nameof(Candidates),
             o => o.Candidates,
             (o, v) => o.Candidates = v);
+
+    public LoaderPickerDialog()
+    {
+        InitializeComponent();
+    }
 
     public IReadOnlyList<LoaderCandidateModel> Candidates
     {

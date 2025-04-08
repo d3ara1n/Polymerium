@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Microsoft.Extensions.Caching.Memory;
-using Polymerium.App.Models;
 using Polymerium.Trident.Models.MojangLauncherApi;
 using Polymerium.Trident.Models.PrismLauncherApi;
 using Polymerium.Trident.Services;
