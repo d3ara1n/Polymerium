@@ -12,27 +12,27 @@ using Polymerium.App.Models;
 
 namespace Polymerium.App.Dialogs;
 
-public partial class VersionPickerDialog : Dialog
+public partial class GameVersionPickerDialog : Dialog
 {
-    public static readonly DirectProperty<VersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>?>
+    public static readonly DirectProperty<GameVersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>?>
         ViewProperty =
             AvaloniaProperty
-               .RegisterDirect<VersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>?>(nameof(View),
+               .RegisterDirect<GameVersionPickerDialog, ReadOnlyObservableCollection<GameVersionModel>?>(nameof(View),
                     o => o.View,
                     (o, v) => o.View = v);
 
-    public static readonly DirectProperty<VersionPickerDialog, string> FilterTextProperty =
-        AvaloniaProperty.RegisterDirect<VersionPickerDialog, string>(nameof(FilterText),
+    public static readonly DirectProperty<GameVersionPickerDialog, string> FilterTextProperty =
+        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(nameof(FilterText),
                                                                      o => o.FilterText,
                                                                      (o, v) => o.FilterText = v);
 
-    public static readonly DirectProperty<VersionPickerDialog, string> SelectedTypeProperty =
-        AvaloniaProperty.RegisterDirect<VersionPickerDialog, string>(nameof(SelectedType),
+    public static readonly DirectProperty<GameVersionPickerDialog, string> SelectedTypeProperty =
+        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(nameof(SelectedType),
                                                                      o => o.SelectedType,
                                                                      (o, v) => o.SelectedType = v);
 
-    public static readonly DirectProperty<VersionPickerDialog, string[]> TypesProperty =
-        AvaloniaProperty.RegisterDirect<VersionPickerDialog, string[]>(nameof(Types),
+    public static readonly DirectProperty<GameVersionPickerDialog, string[]> TypesProperty =
+        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string[]>(nameof(Types),
                                                                        o => o.Types,
                                                                        (o, v) => o.Types = v);
 
@@ -40,7 +40,7 @@ public partial class VersionPickerDialog : Dialog
 
     private readonly SourceCache<GameVersionModel, string> _versions = new(x => x.Name);
 
-    public VersionPickerDialog()
+    public GameVersionPickerDialog()
     {
         InitializeComponent();
 

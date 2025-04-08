@@ -116,7 +116,8 @@
                                 <TextBlock Grid.Row="2"
                                            Text="{Binding Basic.Version, FallbackValue=Version}"
                                            FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
+                                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                           ToolTip.Tip="{Binding Basic.Version,FallbackValue=Version}" />
                             </Grid>
                         </Grid>
                     </husk:Card>

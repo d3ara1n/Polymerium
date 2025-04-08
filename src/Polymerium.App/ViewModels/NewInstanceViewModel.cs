@@ -50,7 +50,7 @@ public partial class NewInstanceViewModel(
     {
         if (Versions != null)
         {
-            var dialog = new VersionPickerDialog();
+            var dialog = new GameVersionPickerDialog();
             dialog.SetItems(Versions);
             if (await overlayService.PopDialogAsync(dialog) && dialog.Result is GameVersionModel version)
                 Dispatcher.UIThread.Post(() => VersionName = version.Name);
