@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 using System.Reactive.Subjects;
 using System.Security.Cryptography;
@@ -200,6 +199,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
 
             return true;
         }
+
         return false;
     }
 
