@@ -7,11 +7,11 @@
              xmlns:local="using:Polymerium.App.Dialogs"
              xmlns:m="using:Polymerium.App.Models"
              mc:Ignorable="d" Title="Pick a game version"
-             x:Class="Polymerium.App.Dialogs.VersionPickerDialog"
+             x:Class="Polymerium.App.Dialogs.GameVersionPickerDialog"
              IsPrimaryButtonVisible="True">
     <Grid RowDefinitions="Auto,12,Auto,12,*">
         <TextBox Grid.Row="0" Watermark="Filter by version names..."
-                 Text="{Binding $parent[local:VersionPickerDialog].FilterText,Mode=TwoWay}">
+                 Text="{Binding $parent[local:GameVersionPickerDialog].FilterText,Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
                     <icons:PackIconLucide Margin="10,0"
@@ -23,8 +23,8 @@
             </TextBox.InnerLeftContent>
         </TextBox>
         <TabStrip Grid.Row="2" Theme="{StaticResource SegmentedTabStripTheme}" HorizontalAlignment="Center"
-                  SelectedValue="{Binding $parent[local:VersionPickerDialog].SelectedType}"
-                  ItemsSource="{Binding $parent[local:VersionPickerDialog].Types}">
+                  SelectedValue="{Binding $parent[local:GameVersionPickerDialog].SelectedType}"
+                  ItemsSource="{Binding $parent[local:GameVersionPickerDialog].Types}">
             <TabStrip.ItemTemplate>
                 <DataTemplate DataType="x:String">
                     <TextBlock Text="{Binding}" />
@@ -32,8 +32,8 @@
             </TabStrip.ItemTemplate>
         </TabStrip>
         <ListBox Grid.Row="4" MinHeight="64"
-                 SelectedValue="{Binding $parent[local:VersionPickerDialog].Result,Mode=OneWayToSource}"
-                 ItemsSource="{Binding $parent[local:VersionPickerDialog].View}">
+                 SelectedValue="{Binding $parent[local:GameVersionPickerDialog].Result,Mode=OneWayToSource}"
+                 ItemsSource="{Binding $parent[local:GameVersionPickerDialog].View}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="m:GameVersionModel">
                     <Grid ColumnDefinitions="*,4,Auto">

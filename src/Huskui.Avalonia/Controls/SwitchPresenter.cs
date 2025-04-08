@@ -1,11 +1,11 @@
 ﻿using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.LogicalTree;
 using Avalonia.Metadata;
 
 namespace Huskui.Avalonia.Controls;
 
-public class SwitchPresenter : ContentControl
+public class SwitchPresenter : TemplatedControl
 {
     public static readonly DirectProperty<SwitchPresenter, SwitchCases> CasesProperty =
         AvaloniaProperty.RegisterDirect<SwitchPresenter, SwitchCases>(nameof(Cases),
@@ -24,6 +24,15 @@ public class SwitchPresenter : ContentControl
         AvaloniaProperty.RegisterDirect<SwitchPresenter, Type>(nameof(TargetType),
                                                                o => o.TargetType,
                                                                (o, v) => o.TargetType = v);
+
+    public static readonly StyledProperty<object?> ContentProperty =
+        AvaloniaProperty.Register<SwitchPresenter, object?>(nameof(Content));
+
+    public object? Content
+    {
+        get => GetValue(ContentProperty);
+        set => SetValue(ContentProperty, value);
+    }
 
     [Content]
     public SwitchCases Cases
@@ -76,6 +85,20 @@ public class SwitchPresenter : ContentControl
             // If we don't have any cases or default, setting these to null is what we want to be blank again.
             Content = result?.Content;
             CurrentCase = result;
+        }
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == ContentProperty)
+        {
+            if (change.OldValue is ILogical oldChild)
+                LogicalChildren.Remove(oldChild);
+
+            if (change.NewValue is ILogical newChild)
+                LogicalChildren.Add(newChild);
         }
     }
 }

@@ -142,26 +142,26 @@ public partial class InstanceSetupViewModel(
                                     ? await dataService.GetBitmapAsync(package.Thumbnail)
                                     : AssetUriIndex.DIRT_IMAGE_BITMAP;
 
-                var page = await (await repositories
-                                       .InspectAsync(label,
-                                                     @namespace,
-                                                     pid,
-                                                     Filter.Empty with { Kind = ResourceKind.Modpack })
-                                       .ConfigureAwait(false))
-                                .FetchAsync()
-                                .ConfigureAwait(false);
-                var versions = page
-                              .Select(x => new InstanceReferenceVersionModel(x.Label,
-                                                                             x.Namespace,
-                                                                             x.ProjectId,
-                                                                             x.VersionId,
-                                                                             x.VersionName,
-                                                                             x.ReleaseType,
-                                                                             x.PublishedAt)
-                               {
-                                   IsCurrent = x.VersionId == package.VersionId
-                               })
-                              .ToList();
+                // var page = await (await repositories
+                //                        .InspectAsync(label,
+                //                                      @namespace,
+                //                                      pid,
+                //                                      Filter.Empty with { Kind = ResourceKind.Modpack })
+                //                        .ConfigureAwait(false))
+                //                 .FetchAsync()
+                //                 .ConfigureAwait(false);
+                // var versions = page
+                //               .Select(x => new InstanceReferenceVersionModel(x.Label,
+                //                                                              x.Namespace,
+                //                                                              x.ProjectId,
+                //                                                              x.VersionId,
+                //                                                              x.VersionName,
+                //                                                              x.ReleaseType,
+                //                                                              x.PublishedAt)
+                //                {
+                //                    IsCurrent = x.VersionId == package.VersionId
+                //                })
+                //               .ToList();
 
                 return new InstanceReferenceModel
                 {
@@ -169,8 +169,9 @@ public partial class InstanceSetupViewModel(
                     Thumbnail = thumbnail,
                     SourceUrl = package.Reference,
                     SourceLabel = package.Label,
-                    Versions = versions,
-                    CurrentVersion = versions.FirstOrDefault()
+                    // Versions = versions,
+                    // CurrentVersion = versions.FirstOrDefault()
+                    VersionName = package.VersionName
                 };
             }
             catch (Exception ex)
@@ -225,7 +226,6 @@ public partial class InstanceSetupViewModel(
     protected override void OnInstanceUpdated(UpdateTracker tracker)
     {
         if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
-        {
             // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
             //  但该 TrackerBase.StateChanged 事件未接触订阅
             //  实际是状态订阅有三层，第一层由 InstanceViewModelBase 维护，且正确工作
@@ -233,7 +233,6 @@ public partial class InstanceSetupViewModel(
             //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
             //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
             return;
-        }
 
         TriggerRefresh(_pageCancellationTokenSource.Token);
         base.OnInstanceUpdated(tracker);
@@ -276,7 +275,6 @@ public partial class InstanceSetupViewModel(
             SelectedVersion = version
         };
         if (await overlayService.PopDialogAsync(dialog))
-        {
             if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
             {
                 if (dialog.Result is LoaderCandidateSelectionModel selection)
@@ -285,7 +283,6 @@ public partial class InstanceSetupViewModel(
                     guard.Value.Setup.Loader = null;
                 await guard.DisposeAsync();
             }
-        }
     }
 
     [RelayCommand]

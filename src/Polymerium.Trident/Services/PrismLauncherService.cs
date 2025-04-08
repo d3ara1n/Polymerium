@@ -20,7 +20,7 @@ public class PrismLauncherService(IPrismLauncherClient client)
     public static readonly string OsNameString = PlatformHelper.GetOsName();
     private static readonly string OsFullString = $"{OsNameString}-{PlatformHelper.GetOsArch()}";
 
-    public static readonly IReadOnlyDictionary<string, string> UID_MAPPINGS = new Dictionary<string, string>()
+    public static readonly IReadOnlyDictionary<string, string> UID_MAPPINGS = new Dictionary<string, string>
     {
         [LoaderHelper.LOADERID_FORGE] = UID_FORGE,
         [LoaderHelper.LOADERID_NEOFORGE] = UID_NEOFORGE,
