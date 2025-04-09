@@ -138,9 +138,10 @@ public partial class InstanceSetupViewModel(
                                                         vid,
                                                         Filter.Empty with { Kind = ResourceKind.Modpack })
                                    .ConfigureAwait(false);
-                
+
                 return new InstanceReferenceModel(purl,
                                                   label,
+                                                  package.ProjectName,
                                                   package.VersionId,
                                                   package.VersionName,
                                                   package.Thumbnail,
@@ -332,12 +333,11 @@ public partial class InstanceSetupViewModel(
         if (Reference is { Value: InstanceReferenceModel reference }
          && PackageHelper.TryParse(reference.Purl, out var result))
         {
-            var page = await (await repositories
-                                   .InspectAsync(result.Label,
-                                                 result.Namespace,
-                                                 result.Pid,
-                                                 Filter.Empty with { Kind = ResourceKind.Modpack }))
-                            .FetchAsync();
+            var page = await (await repositories.InspectAsync(result.Label,
+                                                              result.Namespace,
+                                                              result.Pid,
+                                                              Filter.Empty with { Kind = ResourceKind.Modpack }))
+                          .FetchAsync();
             var versions = page
                           .Select(x => new InstanceReferenceVersionModel(x.Label,
                                                                          x.Namespace,

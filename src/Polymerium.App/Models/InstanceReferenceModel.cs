@@ -8,6 +8,7 @@ namespace Polymerium.App.Models;
 public partial class InstanceReferenceModel(
     string purl,
     string label,
+    string projectName,
     string versionId,
     string versionName,
     Uri? thumbnail,
@@ -17,6 +18,7 @@ public partial class InstanceReferenceModel(
 
     public string Purl => purl;
     public string Label => label;
+    public string ProjectName => projectName;
     public string VersionId => versionId;
     public string VersionName => versionName;
     public Uri? Thumbnail => thumbnail;
