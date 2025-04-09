@@ -80,7 +80,7 @@ public partial class InstanceSetupViewModel(
         }
 
         if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var r))
-            Reference = new LazyObject(t => LoadReferenceAsync(r.Label, r.Namespace, r.Pid, r.Vid, t));
+            Reference = new LazyObject(t => LoadReferenceAsync(Basic.Source, r.Label, r.Namespace, r.Pid, r.Vid, t));
         return;
 
         async Task<InstancePackageModel?> LoadAsync(Profile.Rice.Entry entry)
@@ -122,6 +122,7 @@ public partial class InstanceSetupViewModel(
         }
 
         async Task<object?> LoadReferenceAsync(
+            string purl,
             string label,
             string? @namespace,
             string pid,
@@ -137,42 +138,13 @@ public partial class InstanceSetupViewModel(
                                                         vid,
                                                         Filter.Empty with { Kind = ResourceKind.Modpack })
                                    .ConfigureAwait(false);
-
-                var thumbnail = package.Thumbnail is not null
-                                    ? await dataService.GetBitmapAsync(package.Thumbnail)
-                                    : AssetUriIndex.DIRT_IMAGE_BITMAP;
-
-                // var page = await (await repositories
-                //                        .InspectAsync(label,
-                //                                      @namespace,
-                //                                      pid,
-                //                                      Filter.Empty with { Kind = ResourceKind.Modpack })
-                //                        .ConfigureAwait(false))
-                //                 .FetchAsync()
-                //                 .ConfigureAwait(false);
-                // var versions = page
-                //               .Select(x => new InstanceReferenceVersionModel(x.Label,
-                //                                                              x.Namespace,
-                //                                                              x.ProjectId,
-                //                                                              x.VersionId,
-                //                                                              x.VersionName,
-                //                                                              x.ReleaseType,
-                //                                                              x.PublishedAt)
-                //                {
-                //                    IsCurrent = x.VersionId == package.VersionId
-                //                })
-                //               .ToList();
-
-                return new InstanceReferenceModel
-                {
-                    Name = package.ProjectName,
-                    Thumbnail = thumbnail,
-                    SourceUrl = package.Reference,
-                    SourceLabel = package.Label,
-                    // Versions = versions,
-                    // CurrentVersion = versions.FirstOrDefault()
-                    VersionName = package.VersionName
-                };
+                
+                return new InstanceReferenceModel(purl,
+                                                  label,
+                                                  package.VersionId,
+                                                  package.VersionName,
+                                                  package.Thumbnail,
+                                                  package.Reference);
             }
             catch (Exception ex)
             {
@@ -352,6 +324,36 @@ public partial class InstanceSetupViewModel(
             {
                 notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
             }
+    }
+
+    [RelayCommand]
+    private async Task CheckUpdate()
+    {
+        if (Reference is { Value: InstanceReferenceModel reference }
+         && PackageHelper.TryParse(reference.Purl, out var result))
+        {
+            var page = await (await repositories
+                                   .InspectAsync(result.Label,
+                                                 result.Namespace,
+                                                 result.Pid,
+                                                 Filter.Empty with { Kind = ResourceKind.Modpack }))
+                            .FetchAsync();
+            var versions = page
+                          .Select(x => new InstanceReferenceVersionModel(x.Label,
+                                                                         x.Namespace,
+                                                                         x.ProjectId,
+                                                                         x.VersionId,
+                                                                         x.VersionName,
+                                                                         x.ReleaseType,
+                                                                         x.PublishedAt)
+                           {
+                               IsCurrent = x.VersionId == reference.VersionId
+                           })
+                          .ToList();
+            var dialog = new InstanceVersionPickerDialog { Versions = versions };
+            if (await overlayService.PopDialogAsync(dialog) && dialog.Result is InstanceReferenceVersionModel version)
+                Update(version);
+        }
     }
 
     private bool CanUpdate(InstanceReferenceVersionModel? model) => model is { IsCurrent: false };

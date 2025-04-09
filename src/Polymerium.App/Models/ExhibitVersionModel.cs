@@ -11,7 +11,7 @@ public class ExhibitVersionModel(
     string projectName,
     string projectId,
     string versionName,
-    string versionid,
+    string versionId,
     string changelog,
     DateTimeOffset publishedAt,
     ulong downloadCount,
@@ -25,7 +25,7 @@ public class ExhibitVersionModel(
     public string ProjectName => projectName;
     public string ProjectId => projectId;
     public string VersionName => versionName;
-    public string Versionid => versionid;
+    public string Versionid => versionId;
     public string Changelog => changelog;
     public DateTimeOffset PublishedAtRaw => publishedAt;
     public string PublishedAt => publishedAt.Humanize();

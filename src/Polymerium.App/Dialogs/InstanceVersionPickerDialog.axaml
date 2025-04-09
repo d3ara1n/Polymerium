@@ -3,7 +3,59 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:local="using:Polymerium.App.Dialogs"
+             xmlns:m="using:Polymerium.App.Models"
+             xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
+             Title="Choose a version to upgrade/downgrade to"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsPrimaryButtonVisible="True"
              x:Class="Polymerium.App.Dialogs.InstanceVersionPickerDialog">
-    Welcome to Avalonia!
+    <ListBox MinHeight="64" ItemsSource="{Binding $parent[local:InstanceVersionPickerDialog].Versions}"
+             SelectedItem="{Binding $parent[local:InstanceVersionPickerDialog].Result,Mode=OneWayToSource}">
+        <ListBox.ItemTemplate>
+            <DataTemplate DataType="m:InstanceReferenceVersionModel">
+                <StackPanel>
+                    <husk:SwitchPresenter
+                        Value="{Binding IsCurrent,FallbackValue=False}"
+                        TargetType="x:Boolean">
+                        <husk:SwitchCase Value="True">
+                            <TextBlock
+                                Text="{Binding Display,FallbackValue=Display}"
+                                Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="False">
+                            <TextBlock
+                                Text="{Binding Display,FallbackValue=Display}" />
+                        </husk:SwitchCase>
+                    </husk:SwitchPresenter>
+                    <DockPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    DockPanel.Dock="Right">
+                            <TextBlock Text="{Binding UpdatedAt}" />
+                        </StackPanel>
+                        <husk:SwitchPresenter TargetType="trident:ReleaseType"
+                                              Value="{Binding ReleaseTypeRaw,FallbackValue=Release}">
+                            <husk:SwitchCase Value="Release">
+                                <husk:Tag Classes="Success"
+                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <TextBlock Text="Release" />
+                                </husk:Tag>
+                            </husk:SwitchCase>
+                            <husk:SwitchCase Value="Beta">
+                                <husk:Tag Classes="Warning"
+                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <TextBlock Text="Beta" />
+                                </husk:Tag>
+                            </husk:SwitchCase>
+                            <husk:SwitchCase Value="Alpha">
+                                <husk:Tag Classes="Danger"
+                                          CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <TextBlock Text="Alpha" />
+                                </husk:Tag>
+                            </husk:SwitchCase>
+                        </husk:SwitchPresenter>
+                    </DockPanel>
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </husk:Dialog>

@@ -32,7 +32,7 @@
             </TabStrip.ItemTemplate>
         </TabStrip>
         <ListBox Grid.Row="4" MinHeight="64"
-                 SelectedValue="{Binding $parent[local:GameVersionPickerDialog].Result,Mode=OneWayToSource}"
+                 SelectedItem="{Binding $parent[local:GameVersionPickerDialog].Result,Mode=OneWayToSource}"
                  ItemsSource="{Binding $parent[local:GameVersionPickerDialog].View}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="m:GameVersionModel">
