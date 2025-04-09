@@ -99,6 +99,7 @@ public partial class InstanceSetupViewModel(
                     Dispatcher.UIThread.Post(() => RefreshingCount++);
                     return new InstancePackageModel(entry,
                                                     entry.Source == Basic.Source,
+                                                    p.Label,
                                                     p.ProjectName,
                                                     p.VersionName,
                                                     p.Summary,
@@ -269,7 +270,7 @@ public partial class InstanceSetupViewModel(
     private void ViewPackage(InstancePackageModel? model)
     {
         if (model is not null)
-            overlayService.PopModal(new PackageEntryModal());
+            overlayService.PopModal(new PackageEntryModal { Model = model });
     }
 
     [RelayCommand]
@@ -315,9 +316,7 @@ public partial class InstanceSetupViewModel(
                                                        .ToList());
                 overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataContext = model,
-                    InstallCommand = InstallVersionCommand,
-                    ViewImagesCommand = ViewImageCommand
+                    DataContext = model, InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }
@@ -389,13 +388,6 @@ public partial class InstanceSetupViewModel(
                                      version.Versionid);
             notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
         }
-    }
-
-    [RelayCommand]
-    private void ViewImage(Uri? image)
-    {
-        if (image != null)
-            overlayService.PopToast(new ImageViewerToast { ImageSource = image });
     }
 
     #endregion

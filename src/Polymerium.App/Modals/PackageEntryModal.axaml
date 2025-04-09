@@ -3,7 +3,65 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-            x:Class="Polymerium.App.Modals.PackageEntryModal">
-    <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="4" />
+            xmlns:m="using:Polymerium.App.Models"
+            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Padding="0" MinWidth="360" MinHeight="360"
+            x:Class="Polymerium.App.Modals.PackageEntryModal" x:DataType="m:InstancePackageModel">
+    <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
+        <Grid Grid.Row="0" RowDefinitions="14,36,28" ColumnDefinitions="Auto,*">
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                    Background="{DynamicResource Layer1BackgroundBrush}"
+                    CornerRadius="{Binding $parent[husk:Modal].CornerRadius,Converter={x:Static huskc:CornerRadiusConverters.Upper}}" />
+            <husk:ConstrainedBox Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" AspectRatio="1" Margin="16,8,0,0">
+                <Border
+                    BorderBrush="{DynamicResource ControlBorderBrush}"
+                    CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="2">
+                    <Border.Background>
+                        <ImageBrush Source="{Binding Thumbnail}" />
+                    </Border.Background>
+                </Border>
+            </husk:ConstrainedBox>
+            <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Text="{Binding Name}" FontWeight="Bold"
+                       FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Bottom" Margin="12,0,16,4" />
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="12,4,16,0" Spacing="4"
+                        VerticalAlignment="Top">
+                <HyperlinkButton Content="{Binding Label,Converter={x:Static huskc:StringConverters.ToUpper}}"
+                                 Click="Source_Click" />
+            </StackPanel>
+        </Grid>
+        <TabControl Grid.Row="1" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0">
+            <TabControl.Styles>
+                <Style Selector="TabItem">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </TabControl.Styles>
+            <TabItem Header="Basic">
+
+            </TabItem>
+            <TabItem Header="Versions">
+                <Grid RowDefinitions="Auto,Auto,*" RowSpacing="8">
+                    <Border Grid.Row="0" Background="{DynamicResource ControlTranslucentBackgroundBrush}"
+                            BorderBrush="{DynamicResource ControlBorderBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="3,0,0,0" Padding="8">
+                        <StackPanel>
+                            <TextBlock Text="Current Version"
+                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                       FontSize="{StaticResource SmallFontSize}" />
+                            <TextBlock Text="{Binding Version}" />
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
+                        <CheckBox Grid.Column="0" Content="Show only capable with this instance" />
+                    </Grid>
+                    <ListBox Grid.Row="2"></ListBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="12,0,12,12">
+            <ToggleSwitch Grid.Column="0" OnContent="Enabled" OffContent="Disabled" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
+                <Button Content="Dismiss" Command="{Binding $parent[husk:OverlayItem].DismissCommand}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
 </husk:Modal>
