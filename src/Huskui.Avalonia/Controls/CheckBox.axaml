@@ -81,7 +81,9 @@
                                       IsVisible="{TemplateBinding Content,
                                                         Converter={x:Static ObjectConverters.IsNotNull}}"
                                       RecognizesAccessKey="True"
-                                      TextElement.Foreground="{TemplateBinding Foreground}" />
+                                      TextElement.Foreground="{TemplateBinding Foreground}"
+                                      TextElement.FontSize="{TemplateBinding FontSize}"
+                                      TextElement.FontWeight="{TemplateBinding FontWeight}" />
                 </Grid>
             </ControlTemplate>
         </Setter>

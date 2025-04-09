@@ -10,6 +10,7 @@ namespace Polymerium.App.Models;
 public partial class InstancePackageModel(
     Profile.Rice.Entry entry,
     bool isLocked,
+    string label,
     string name,
     string version,
     string summary,
@@ -21,6 +22,7 @@ public partial class InstancePackageModel(
 
     public Profile.Rice.Entry Entry => entry;
     public Uri? Reference => reference;
+    public string Label => label;
     public string Name => name;
     public string Summary => summary;
     public Bitmap Thumbnail => thumbnail;

@@ -13,21 +13,12 @@ public partial class ExhibitModpackToast : Toast
     public static readonly StyledProperty<IRelayCommand<ExhibitVersionModel>?> InstallCommandProperty =
         AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<ExhibitVersionModel>?>(nameof(InstallCommand));
 
-    public static readonly StyledProperty<IRelayCommand<Uri>?> ViewImagesCommandProperty =
-        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<Uri>?>(nameof(ViewImagesCommand));
-
     public ExhibitModpackToast() => InitializeComponent();
 
     public IRelayCommand<ExhibitVersionModel>? InstallCommand
     {
         get => GetValue(InstallCommandProperty);
         set => SetValue(InstallCommandProperty, value);
-    }
-
-    public IRelayCommand<Uri>? ViewImagesCommand
-    {
-        get => GetValue(ViewImagesCommandProperty);
-        set => SetValue(ViewImagesCommandProperty, value);
     }
 
     private void SourceLinkButton_OnClick(object? sender, RoutedEventArgs e)
