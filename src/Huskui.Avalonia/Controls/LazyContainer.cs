@@ -50,7 +50,8 @@ public class LazyContainer : ContentControl
             if (change.NewValue is LazyObject lazy)
                 try
                 {
-                    Content = await lazy.FetchAsync().ConfigureAwait(true);
+                    await lazy.FetchAsync().ConfigureAwait(true);
+                    Content = lazy.Value;
                 }
                 catch
                 {

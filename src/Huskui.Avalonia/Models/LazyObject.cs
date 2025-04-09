@@ -6,5 +6,11 @@ public class LazyObject(Func<CancellationToken, Task<object?>> factory, Cancella
 
     public bool IsCancelled => _cts.IsCancellationRequested;
     public void Cancel() => _cts.Cancel();
-    public async Task<object?> FetchAsync() => await factory(_cts.Token).ConfigureAwait(false);
+    public object? Value { get; private set; }
+
+    public async Task FetchAsync()
+    {
+        var value = await factory(_cts.Token).ConfigureAwait(false);
+        Value = value;
+    }
 }

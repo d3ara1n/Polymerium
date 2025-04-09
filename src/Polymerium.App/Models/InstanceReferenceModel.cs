@@ -5,30 +5,22 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public partial class InstanceReferenceModel : ModelBase
+public partial class InstanceReferenceModel(
+    string purl,
+    string label,
+    string versionId,
+    string versionName,
+    Uri? thumbnail,
+    Uri sourceUrl) : ModelBase
 {
-    #region Reactive Properties
+    #region Direct
 
-    [ObservableProperty]
-    public partial string? Name { get; set; }
-
-    [ObservableProperty]
-    public partial Bitmap? Thumbnail { get; set; }
-
-    // [ObservableProperty]
-    // public partial IReadOnlyList<InstanceReferenceVersionModel>? Versions { get; set; }
-
-    // [ObservableProperty]
-    // public partial InstanceReferenceVersionModel? CurrentVersion { get; set; }
-
-    [ObservableProperty]
-    public partial string? VersionName { get; set; }
-
-    [ObservableProperty]
-    public partial string? SourceLabel { get; set; }
-
-    [ObservableProperty]
-    public partial Uri? SourceUrl { get; set; }
+    public string Purl => purl;
+    public string Label => label;
+    public string VersionId => versionId;
+    public string VersionName => versionName;
+    public Uri? Thumbnail => thumbnail;
+    public Uri SourceUrl => sourceUrl;
 
     #endregion
 }
