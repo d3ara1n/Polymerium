@@ -10,6 +10,7 @@
                   xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:controls="using:Polymerium.App.Controls"
                   xmlns:v="clr-namespace:Polymerium.App.Views"
+                  xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                   x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -94,7 +95,7 @@
                     <husk:LazyContainer.ContentTemplate>
                         <DataTemplate x:DataType="m:InstanceReferenceModel">
                             <Border Background="{DynamicResource ControlBackgroundBrush}"
-                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                    CornerRadius="{StaticResource MediumCornerRadius}" MaxWidth="320">
                                 <Grid RowDefinitions="*,Auto" RowSpacing="4" Margin="4">
                                     <Border Grid.Row="0" Background="{DynamicResource LayerSolidBackgroundBrush}"
                                             CornerRadius="{StaticResource MediumCornerRadius}" Padding="12">
@@ -103,17 +104,18 @@
                                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                                 <Border.Background>
                                                     <ImageBrush
-                                                        Source="{Binding Thumbnail,FallbackValue={x:Null}}"
+                                                        asyncImageLoader:ImageBrushLoader.Source="{Binding Thumbnail,FallbackValue={x:Null}}"
                                                         Stretch="UniformToFill" />
                                                 </Border.Background>
                                             </Border>
                                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-                                                <TextBlock Text="{Binding VersionName,FallbackValue=Display}"
+                                                <TextBlock Text="{Binding ProjectName,FallbackValue=Display}"
                                                            FontSize="{StaticResource LargeFontSize}"
-                                                           TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+                                                           TextTrimming="CharacterEllipsis" FontWeight="Bold"
+                                                           ToolTip.Tip="{Binding ProjectName,FallbackValue=Name}" />
                                                 <HyperlinkButton
                                                     Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).OpenSourceUrlCommand,FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding SourceUrl,FallbackValue={x:Null}}">
+                                                    CommandParameter="{Binding SourceUrl}">
                                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                                         <TextBlock
                                                             Text="{Binding Label,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
