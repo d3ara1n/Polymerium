@@ -3,7 +3,6 @@
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:converters="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
     <ControlTheme x:Key="{x:Type local:Dialog}" TargetType="local:Dialog">
-        <Setter Property="Host" Value="{Binding $parent[local:OverlayHost], Mode=OneWay}" />
         <Setter Property="Container" Value="{Binding $parent[local:OverlayItem], Mode=OneWay} " />
         <Setter Property="MinHeight" Value="128" />
         <Setter Property="MinWidth" Value="256" />

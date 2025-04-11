@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
+using Polymerium.Trident.Services.Profiles;
 
 namespace Polymerium.App.Modals;
 
@@ -21,6 +22,7 @@ public partial class PackageEntryModal : Modal
         set => SetAndRaise(ModelProperty, ref field, value);
     }
 
+    public required ProfileGuard Guard { get; init; }
 
     private void Source_Click(object? sender, RoutedEventArgs e)
     {
@@ -31,7 +33,10 @@ public partial class PackageEntryModal : Modal
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         base.OnUnloaded(e);
+    }
 
-        // Discard ProfileGuard
+    private void DismissButton_Click(object? sender, RoutedEventArgs e)
+    {
+        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
     }
 }

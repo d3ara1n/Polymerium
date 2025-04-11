@@ -5,15 +5,6 @@ namespace Huskui.Avalonia.Controls;
 
 public class Toast : HeaderedContentControl
 {
-    // public static readonly DirectProperty<Toast, string> TitleProperty =
-    //     AvaloniaProperty.RegisterDirect<Toast, string>(nameof(Title), o => o.Title, (o, v) => o.Title = v);
-    //
-    // public string Title
-    // {
-    //     get;
-    //     set => SetAndRaise(TitleProperty, ref field, value);
-    // } = string.Empty;
-
     public static readonly StyledProperty<bool> IsHeaderVisibleProperty =
         AvaloniaProperty.Register<Toast, bool>(nameof(IsHeaderVisible), true);
 
@@ -23,6 +14,10 @@ public class Toast : HeaderedContentControl
         set => SetValue(IsHeaderVisibleProperty, value);
     }
 
+    public void Dismiss()
+    {
+        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+    }
 
     protected override Type StyleKeyOverride { get; } = typeof(Toast);
 }

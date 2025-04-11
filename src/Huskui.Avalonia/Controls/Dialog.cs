@@ -20,10 +20,6 @@ public class Dialog : HeaderedContentControl
     public static readonly StyledProperty<string> TitleProperty =
         AvaloniaProperty.Register<Dialog, string>(nameof(Title));
 
-
-    public static readonly DirectProperty<Dialog, OverlayHost?> HostProperty =
-        AvaloniaProperty.RegisterDirect<Dialog, OverlayHost?>(nameof(Host), o => o.Host, (o, v) => o.Host = v);
-
     public static readonly DirectProperty<Dialog, OverlayItem?> ContainerProperty =
         AvaloniaProperty.RegisterDirect<Dialog, OverlayItem?>(nameof(Container),
                                                               o => o.Container,
@@ -97,13 +93,6 @@ public class Dialog : HeaderedContentControl
         set => SetAndRaise(ContainerProperty, ref _container, value);
     }
 
-
-    public OverlayHost? Host
-    {
-        get => _host;
-        set => SetAndRaise(HostProperty, ref _host, value);
-    }
-
     public ICommand PrimaryCommand { get; }
     public ICommand SecondaryCommand { get; }
 
@@ -113,10 +102,10 @@ public class Dialog : HeaderedContentControl
 
     private void Confirm()
     {
-        if (Host != null && Container != null)
+        if (Container != null)
         {
             Container.Transition = new PopUpTransition();
-            Host.Dismiss(Container);
+            RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
         }
 
         CompletionSource.TrySetResult(CanConfirm());
@@ -124,8 +113,7 @@ public class Dialog : HeaderedContentControl
 
     private void Cancel()
     {
-        if (Host != null && Container != null)
-            Host.Dismiss(Container);
+        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
         CompletionSource.TrySetResult(false);
     }
 

@@ -48,7 +48,7 @@
                                 <Button Padding="8" CornerRadius="{StaticResource FullCornerRadius}"
                                         Theme="{StaticResource OutlineButtonTheme}"
                                         DockPanel.Dock="Right"
-                                        Command="{Binding $parent[local:OverlayItem].DismissCommand}">
+                                        Command="{Binding Dismiss,RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                     <fi:SymbolIcon Symbol="Dismiss" Height="16" Width="16" />
                                 </Button>
                                 <ContentPresenter Content="{TemplateBinding Header}"
