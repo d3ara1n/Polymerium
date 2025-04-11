@@ -270,7 +270,12 @@ public partial class InstanceSetupViewModel(
     private void ViewPackage(InstancePackageModel? model)
     {
         if (model is not null)
-            overlayService.PopModal(new PackageEntryModal { Model = model });
+        {
+            if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+            {
+                overlayService.PopModal(new PackageEntryModal { Model = model, Guard = guard });
+            }
+        }
     }
 
     [RelayCommand]

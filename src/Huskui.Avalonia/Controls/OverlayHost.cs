@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Metadata;
 using Avalonia.Styling;
@@ -79,7 +80,7 @@ public class OverlayHost : TemplatedControl
         IsVisible = true;
         OverlayItem? item = new() { Content = control };
         Items.Add(item);
-        item.DismissCommand = new InternalDismissCommand(this, item);
+        // item.DismissCommand = new InternalDismissCommand(this, item);
 
 
         // Make control attached to visual tree ensuring its parent is valid
@@ -119,24 +120,23 @@ public class OverlayHost : TemplatedControl
 
     public void Dismiss() => Dismiss(Items.Last());
 
-    #region Nested type: InternalDismissCommand
-
-    private class InternalDismissCommand(OverlayHost host, OverlayItem item) : ICommand
+    protected override void OnLoaded(RoutedEventArgs e)
     {
-        internal void OnCanExecutedChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-
-        #region ICommand Members
-
-        public bool CanExecute(object? parameter) => host.Items.Contains(item);
-
-        public void Execute(object? parameter) => host.Dismiss(item);
-
-        public event EventHandler? CanExecuteChanged;
-
-        #endregion
+        base.OnLoaded(e);
+        AddHandler(OverlayItem.DismissRequestedEvent, DismissRequestedHandler);
     }
 
-    #endregion
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        base.OnUnloaded(e);
+        RemoveHandler(OverlayItem.DismissRequestedEvent, DismissRequestedHandler);
+    }
+
+    private void DismissRequestedHandler(object? sender, OverlayItem.DismissRequestedEventArgs e)
+    {
+        if (e.Container != null)
+            Dismiss(e.Container);
+    }
 
     #region StageInAnimation & StageOutAnimation
 

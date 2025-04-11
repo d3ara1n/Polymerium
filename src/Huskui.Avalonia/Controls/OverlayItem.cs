@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -17,15 +18,25 @@ public class OverlayItem : ContentControl
     public static readonly DirectProperty<OverlayItem, int> DistanceProperty =
         AvaloniaProperty.RegisterDirect<OverlayItem, int>(nameof(Distance), o => o.Distance, (o, v) => o.Distance = v);
 
-    public static readonly DirectProperty<OverlayItem, ICommand?> DismissCommandProperty =
-        AvaloniaProperty.RegisterDirect<OverlayItem, ICommand?>(nameof(DismissCommand),
-                                                                o => o.DismissCommand,
-                                                                (o, v) => o.DismissCommand = v);
-
     public static readonly DirectProperty<OverlayItem, IPageTransition?> TransitionProperty =
         AvaloniaProperty.RegisterDirect<OverlayItem, IPageTransition?>(nameof(Transition),
                                                                        o => o.Transition,
                                                                        (o, v) => o.Transition = v);
+
+    public static readonly RoutedEvent<DismissRequestedEventArgs> DismissRequestedEvent =
+        RoutedEvent.Register<OverlayItem, DismissRequestedEventArgs>(nameof(DismissRequested),
+                                                                     RoutingStrategies.Bubble);
+
+    public class DismissRequestedEventArgs(object? source = null) : RoutedEventArgs(DismissRequestedEvent, source)
+    {
+        public OverlayItem? Container { get; set; }
+    }
+
+    public event EventHandler<DismissRequestedEventArgs>? DismissRequested
+    {
+        add => AddHandler(DismissRequestedEvent, value);
+        remove => RemoveHandler(DismissRequestedEvent, value);
+    }
 
     private ContentPresenter? _contentPresenter;
 
@@ -50,13 +61,6 @@ public class OverlayItem : ContentControl
             PseudoClasses.Set(":active", value == 0);
         }
     }
-
-    public ICommand? DismissCommand
-    {
-        get;
-        set => SetAndRaise(DismissCommandProperty, ref field, value);
-    }
-
     protected override Type StyleKeyOverride => typeof(OverlayItem);
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -64,5 +68,24 @@ public class OverlayItem : ContentControl
         base.OnApplyTemplate(e);
 
         _contentPresenter = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter);
+    }
+
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        base.OnLoaded(e);
+
+        AddHandler(DismissRequestedEvent, DismissRequestedHandler);
+    }
+
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        base.OnUnloaded(e);
+
+        RemoveHandler(DismissRequestedEvent, DismissRequestedHandler);
+    }
+
+    private void DismissRequestedHandler(object? sender, DismissRequestedEventArgs e)
+    {
+        e.Container ??= this;
     }
 }

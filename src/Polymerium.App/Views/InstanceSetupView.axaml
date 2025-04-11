@@ -10,7 +10,7 @@
                   xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                   xmlns:controls="using:Polymerium.App.Controls"
                   xmlns:v="clr-namespace:Polymerium.App.Views"
-                  xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+                  xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                   x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -104,7 +104,7 @@
                                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                                 <Border.Background>
                                                     <ImageBrush
-                                                        asyncImageLoader:ImageBrushLoader.Source="{Binding Thumbnail,FallbackValue={x:Null}}"
+                                                        async:ImageBrushLoader.Source="{Binding Thumbnail,FallbackValue={x:Null}}"
                                                         Stretch="UniformToFill" />
                                                 </Border.Background>
                                             </Border>

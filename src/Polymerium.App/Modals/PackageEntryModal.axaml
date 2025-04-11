@@ -4,9 +4,10 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             xmlns:m="using:Polymerium.App.Models"
+            xmlns:modals="using:Polymerium.App.Modals"
             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Padding="0" MinWidth="360" MinHeight="360"
-            x:Class="Polymerium.App.Modals.PackageEntryModal" x:DataType="m:InstancePackageModel">
+            x:Class="Polymerium.App.Modals.PackageEntryModal">
     <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
         <Grid Grid.Row="0" RowDefinitions="14,36,28" ColumnDefinitions="Auto,*">
             <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
@@ -17,16 +18,18 @@
                     BorderBrush="{DynamicResource ControlBorderBrush}"
                     CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="2">
                     <Border.Background>
-                        <ImageBrush Source="{Binding Thumbnail}" />
+                        <ImageBrush Source="{Binding $parent[modals:PackageEntryModal].Model.Thumbnail}" />
                     </Border.Background>
                 </Border>
             </husk:ConstrainedBox>
-            <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Text="{Binding Name}" FontWeight="Bold"
+            <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+                       Text="{Binding $parent[modals:PackageEntryModal].Model.Name}" FontWeight="Bold"
                        FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Bottom" Margin="12,0,16,4" />
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="12,4,16,0" Spacing="4"
                         VerticalAlignment="Top">
-                <HyperlinkButton Content="{Binding Label,Converter={x:Static huskc:StringConverters.ToUpper}}"
-                                 Click="Source_Click" />
+                <HyperlinkButton
+                    Content="{Binding $parent[modals:PackageEntryModal].Model.Label,Converter={x:Static huskc:StringConverters.ToUpper}}"
+                    Click="Source_Click" />
             </StackPanel>
         </Grid>
         <TabControl Grid.Row="1" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0">
@@ -47,7 +50,7 @@
                             <TextBlock Text="Current Version"
                                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
                                        FontSize="{StaticResource SmallFontSize}" />
-                            <TextBlock Text="{Binding Version}" />
+                            <TextBlock Text="{Binding $parent[modals:PackageEntryModal].Model.Version}" />
                         </StackPanel>
                     </Border>
                     <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
@@ -60,7 +63,7 @@
         <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="12,0,12,12">
             <ToggleSwitch Grid.Column="0" OnContent="Enabled" OffContent="Disabled" />
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
-                <Button Content="Dismiss" Command="{Binding $parent[husk:OverlayItem].DismissCommand}" />
+                <Button Content="Dismiss" Click="DismissButton_Click" />
             </StackPanel>
         </Grid>
     </Grid>
