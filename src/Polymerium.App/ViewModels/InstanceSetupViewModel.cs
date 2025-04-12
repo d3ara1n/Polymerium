@@ -93,23 +93,47 @@ public partial class InstanceSetupViewModel(
                     // NOTE: 如果可以的话，对于 Purl.Vid 为空的，需要去 LockData 里找 Packages[i].Vid，获取锁定的版本
                     //  当然也可以不这么干，对于版本锁，给一个单独的页面来查看锁定的版本就行
                     //  因为版本锁是为构建服务的，不应该暴露给用户看当前锁定的版本是哪个
-                    var p = await dataService
-                                 .ResolvePackageAsync(v.Label, v.Namespace, v.Pid, v.Vid, Filter.Empty)
-                                 .ConfigureAwait(false);
-                    Dispatcher.UIThread.Post(() => RefreshingCount++);
-                    return new InstancePackageModel(entry,
-                                                    entry.Source == Basic.Source,
-                                                    p.Label,
-                                                    p.ProjectName,
-                                                    p.VersionName,
-                                                    p.Summary,
-                                                    p.Reference,
-                                                    p.Thumbnail is not null
-                                                        ? await dataService
-                                                               .GetBitmapAsync(p.Thumbnail)
-                                                               .ConfigureAwait(false)
-                                                        : AssetUriIndex.DIRT_IMAGE_BITMAP,
-                                                    p.Kind);
+                    if (v.Vid is null)
+                    {
+                        var p = await dataService.QueryProjectAsync(v.Label, v.Namespace, v.Pid);
+                        var t = p.Thumbnail is not null
+                                    ? await dataService.GetBitmapAsync(p.Thumbnail).ConfigureAwait(false)
+                                    : AssetUriIndex.DIRT_IMAGE_BITMAP;
+                        Dispatcher.UIThread.Post(() => RefreshingCount++);
+                        return new InstancePackageModel(entry,
+                                                        entry.Source == Basic.Source,
+                                                        p.Label,
+                                                        p.Namespace,
+                                                        p.ProjectId,
+                                                        p.ProjectName,
+                                                        new InstancePackageUnspecifiedVersionModel(),
+                                                        p.Summary,
+                                                        p.Reference,
+                                                        t,
+                                                        p.Kind);
+                    }
+                    else
+                    {
+                        var p = await dataService
+                                     .ResolvePackageAsync(v.Label, v.Namespace, v.Pid, v.Vid, Filter.Empty)
+                                     .ConfigureAwait(false);
+
+                        var t = p.Thumbnail is not null
+                                    ? await dataService.GetBitmapAsync(p.Thumbnail).ConfigureAwait(false)
+                                    : AssetUriIndex.DIRT_IMAGE_BITMAP;
+                        Dispatcher.UIThread.Post(() => RefreshingCount++);
+                        return new InstancePackageModel(entry,
+                                                        entry.Source == Basic.Source,
+                                                        p.Label,
+                                                        p.Namespace,
+                                                        p.ProjectId,
+                                                        p.ProjectName,
+                                                        new InstancePackageVersionModel(p.VersionId, p.VersionName),
+                                                        p.Summary,
+                                                        p.Reference,
+                                                        t,
+                                                        p.Kind);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (Exception ex)
@@ -273,7 +297,7 @@ public partial class InstanceSetupViewModel(
         {
             if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
             {
-                overlayService.PopModal(new PackageEntryModal { Model = model, Guard = guard });
+                overlayService.PopModal(new PackageEntryModal { DataContext = model, Guard = guard });
             }
         }
     }
@@ -406,7 +430,7 @@ public partial class InstanceSetupViewModel(
     public partial string LoaderLabel { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial SourceCache<InstancePackageModel, Profile.Rice.Entry> Stage { get; set; } = new(x => x.Entry);
+    public partial SourceCache<InstancePackageModel, Profile.Rice.Entry> Stage { get; set; } = new(x => x.Key);
 
     [ObservableProperty]
     public partial int StageCount { get; set; }

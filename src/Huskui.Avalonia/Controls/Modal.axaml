@@ -15,7 +15,8 @@
             <ControlTemplate>
                 <Border ClipToBounds="True" Background="{TemplateBinding Background}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
+                        CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
                     <ContentPresenter Name="PART_ContentPresenter"
                                       Padding="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}"
                                       Content="{TemplateBinding Content}"
