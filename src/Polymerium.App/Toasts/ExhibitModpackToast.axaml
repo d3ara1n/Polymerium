@@ -11,7 +11,7 @@
             xmlns:local="clr-namespace:Polymerium.App.Toasts"
             xmlns:converters="clr-namespace:Polymerium.App.Converters"
             IsHeaderVisible="False"
-            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" MaxWidth="800" Padding="0"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Padding="0"
             x:Class="Polymerium.App.Toasts.ExhibitModpackToast" x:DataType="m:ExhibitModpackModel">
     <husk:Toast.Styles>
         <Style Selector="Border#IndicatorBar:pointerover">

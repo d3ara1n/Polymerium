@@ -1,0 +1,22 @@
+﻿<local:WidgetBase xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:local="using:Polymerium.App.Widgets" Title="Note"
+                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                  x:Class="Polymerium.App.Widgets.NoteWidget">
+    <local:WidgetBase.FullTemplate>
+        <DataTemplate x:DataType="local:NoteWidget">
+            <StackPanel Opacity="0.7" VerticalAlignment="Center" Spacing="12">
+                <TextBlock Text="This is Note Widget"
+                           HorizontalAlignment="Center" FontSize="{StaticResource LargeFontSize}" />
+                <TextBlock Text="And this is the thing!" HorizontalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+    </local:WidgetBase.FullTemplate>
+    <local:WidgetBase.SlimTemplate>
+        <DataTemplate x:DataType="local:NoteWidget">
+            <TextBlock Text="This is Note Widget" Opacity="0.7" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </DataTemplate>
+    </local:WidgetBase.SlimTemplate>
+</local:WidgetBase>

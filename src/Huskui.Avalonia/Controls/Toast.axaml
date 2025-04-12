@@ -9,8 +9,8 @@
     <Thickness x:Key="ToastToplessContentMargin">20,0,20,20</Thickness>
     <ControlTheme x:Key="{x:Type local:Toast}" TargetType="local:Toast">
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <!-- <Setter Property="BorderThickness" Value="1" /> -->
+        <!-- <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" /> -->
         <Setter Property="Padding" Value="{StaticResource ToastContentMargin}" />
         <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
         <Setter Property="ClipToBounds" Value="True" />
