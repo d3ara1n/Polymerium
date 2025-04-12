@@ -153,7 +153,7 @@
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="*,4,Auto">
                         <Button Grid.Column="2" Classes="Small" Command="{Binding ClearImportedPackCommand}">
-                            <icons:PackIconLucide Kind="X" Height="{StaticResource SmallFontSize}" />
+                            <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
                         </Button>
                         <Border Grid.Column="0" Background="{DynamicResource LayerSolidBackgroundBrush}" Padding="8"
                                 CornerRadius="{StaticResource SmallCornerRadius}">

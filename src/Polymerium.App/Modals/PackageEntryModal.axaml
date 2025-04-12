@@ -80,7 +80,7 @@
                                         </Border>
                                         <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}"
                                                 Margin="4,0,0,0"
-                                                Padding="6,0"
+                                                Classes="Small"
                                                 IsVisible="{Binding $parent[modals:PackageEntryModal].((m:InstancePackageModel)DataContext).IsLocked,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
                                                 Click="RemoveVersionButton_Click">
                                             <fi:SymbolIcon Symbol="Dismiss"

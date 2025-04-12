@@ -145,10 +145,11 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Title="Persistence Storage" Summary="Files or folders that are shared between builds"
+        <controls:SettingsEntry Title="Persistence Storage (WIP)" IsEnabled="False"
+                                Summary="Files or folders that are shared between builds"
                                 Icon="HardDrive">
             <controls:SettingsEntryItem Header="Plans">
-                <TabStrip SelectedIndex="1" IsEnabled="False" AutoScrollToSelectedItem="False">
+                <TabStrip SelectedIndex="1" AutoScrollToSelectedItem="False">
                     <TabStrip.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Grid ColumnDefinitions="*,6,*" />
@@ -184,7 +185,8 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Title="Snapshots" Icon="Camera" Summary="Backup, yes, it's called backup">
+        <controls:SettingsEntry Title="Snapshots (WIP)" Icon="Camera" Summary="Backup, yes, it's called backup"
+                                IsEnabled="False">
             <controls:SettingsEntryItem Header="Taken Automatically When (Shooting Trigger)">
                 <ComboBox SelectedIndex="0">
                     <ComboBoxItem Content="Never" />

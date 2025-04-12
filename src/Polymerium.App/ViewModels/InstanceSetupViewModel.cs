@@ -287,13 +287,6 @@ public partial class InstanceSetupViewModel(
     }
 
     [RelayCommand]
-    private void OpenSourceUrl(Uri? url)
-    {
-        if (url is not null)
-            TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchUriAsync(url);
-    }
-
-    [RelayCommand]
     private void ViewPackage(InstancePackageModel? model)
     {
         if (model is not null)
