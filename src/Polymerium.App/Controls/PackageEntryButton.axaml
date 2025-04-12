@@ -18,7 +18,7 @@
                           Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
                 <MenuItem Header="-" />
                 <MenuItem Header="Open Website"
-                          Command="{Binding $parent[cp:PackageContainer].OpenUrlCommand}"
+                          Command="{x:Static m:InternalCommands.OpenUriCommand}"
                           CommandParameter="{Binding Reference}"
                           Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
                 <MenuItem Header="Add to Favorites"

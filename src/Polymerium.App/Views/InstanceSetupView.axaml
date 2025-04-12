@@ -114,7 +114,7 @@
                                                            TextTrimming="CharacterEllipsis" FontWeight="Bold"
                                                            ToolTip.Tip="{Binding ProjectName,FallbackValue=Name}" />
                                                 <HyperlinkButton
-                                                    Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).OpenSourceUrlCommand,FallbackValue={x:Null}}"
+                                                    Command="{x:Static m:InternalCommands.OpenUriCommand}"
                                                     CommandParameter="{Binding SourceUrl}">
                                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                                         <TextBlock
@@ -152,7 +152,6 @@
                 <husk:SwitchCase Value="False">
                     <cp:PackageContainer Items="{Binding Stage}"
                                          TotalCount="{Binding StageCount}"
-                                         OpenUrlCommand="{Binding OpenSourceUrlCommand}"
                                          PrimaryCommand="{Binding ViewPackageCommand}" />
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="True">

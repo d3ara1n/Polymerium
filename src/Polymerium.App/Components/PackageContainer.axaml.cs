@@ -37,11 +37,6 @@ public partial class PackageContainer : UserControl
                                                                o => o.TotalCount,
                                                                (o, v) => o.TotalCount = v);
 
-    public static readonly DirectProperty<PackageContainer, ICommand?> OpenUrlCommandProperty =
-        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(OpenUrlCommand),
-                                                                     o => o.OpenUrlCommand,
-                                                                     (o, v) => o.OpenUrlCommand = v);
-
     public static readonly DirectProperty<PackageContainer, ICommand?> PrimaryCommandProperty =
         AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(PrimaryCommand),
                                                                      o => o.PrimaryCommand,
@@ -50,12 +45,6 @@ public partial class PackageContainer : UserControl
     private IDisposable? _subscription;
 
     public PackageContainer() => InitializeComponent();
-
-    public ICommand? OpenUrlCommand
-    {
-        get;
-        set => SetAndRaise(OpenUrlCommandProperty, ref field, value);
-    }
 
     public ICommand? PrimaryCommand
     {
