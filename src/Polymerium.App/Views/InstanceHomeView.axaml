@@ -257,7 +257,7 @@
             <ScrollViewer
                 Grid.Row="2"
                 Margin="0,0,0,-12"
-                HorizontalScrollBarVisibility="Auto">
+                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                 <StackPanel
                     Margin="0,0,0,12"
                     Orientation="Horizontal"

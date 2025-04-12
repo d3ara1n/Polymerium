@@ -3,7 +3,57 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:controls="using:Polymerium.App.Controls"
-                  mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                  x:Class="Polymerium.App.Views.InstanceWidgetsView">
-    Welcome to Avalonia!
+                  xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                  xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+                  xmlns:widgets="clr-namespace:Polymerium.App.Widgets"
+                  xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                  mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+                  x:Class="Polymerium.App.Views.InstanceWidgetsView" x:DataType="vm:InstanceWidgetsViewModel">
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Widgets}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="widgets:WidgetBase">
+                    <husk:Card Padding="0">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <TextBlock Grid.Column="0" Text="{Binding Title}" Margin="12,0"
+                                           VerticalAlignment="Center" />
+                                <ToggleButton Grid.Column="1" Theme="{StaticResource GhostToggleButtonTheme}"
+                                              IsChecked="{Binding IsPinned}" Classes="Small" Margin="4">
+                                    <icons:PackIconLucide Kind="Pin" Width="{StaticResource SmallFontSize}"
+                                                          Height="{StaticResource SmallFontSize}" />
+                                </ToggleButton>
+                            </Grid>
+                            <husk:Divider Grid.Row="1" />
+                            <ContentControl Grid.Row="2" Content="{Binding}" ContentTemplate="{Binding FullTemplate}"
+                                            Padding="12" />
+                        </Grid>
+                    </husk:Card>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerTheme>
+                <ControlTheme TargetType="ContentPresenter">
+                    <Setter Property="MaxWidth" Value="512" />
+                    <Setter Property="MinWidth" Value="256" />
+                    <Setter Property="MaxHeight" Value="512" />
+                    <Setter Property="MinHeight" Value="256" />
+                </ControlTheme>
+            </ItemsControl.ItemContainerTheme>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <husk:FlexWrapPanel ColumnSpacing="12" RowSpacing="12" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <!-- <husk:FlexWrapPanel RowSpacing="8" ColumnSpacing="8"> -->
+        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
+        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="360" /> -->
+        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
+        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
+        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
+        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
+        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
+        <!--     <husk:Card MaxWidth="512" MinWidth="256" MaxHeight="512" MinHeight="256" /> -->
+        <!-- </husk:FlexWrapPanel> -->
+    </Grid>
 </controls:Subpage>
