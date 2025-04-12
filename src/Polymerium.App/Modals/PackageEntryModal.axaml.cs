@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
@@ -11,18 +10,9 @@ public partial class PackageEntryModal : Modal
 {
     public PackageEntryModal() => InitializeComponent();
 
-    public static readonly DirectProperty<PackageEntryModal, InstancePackageModel> ModelProperty =
-        AvaloniaProperty.RegisterDirect<PackageEntryModal, InstancePackageModel>(nameof(Model),
-            o => o.Model,
-            (o, v) => o.Model = v);
-
-    public required InstancePackageModel Model
-    {
-        get;
-        set => SetAndRaise(ModelProperty, ref field, value);
-    }
-
     public required ProfileGuard Guard { get; init; }
+
+    private InstancePackageModel Model => (DataContext as InstancePackageModel)!;
 
     private void Source_Click(object? sender, RoutedEventArgs e)
     {
@@ -38,5 +28,10 @@ public partial class PackageEntryModal : Modal
     private void DismissButton_Click(object? sender, RoutedEventArgs e)
     {
         RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+    }
+
+    private void RemoveVersionButton_Click(object? sender, RoutedEventArgs e)
+    {
+        Model.Version = new InstancePackageUnspecifiedVersionModel();
     }
 }

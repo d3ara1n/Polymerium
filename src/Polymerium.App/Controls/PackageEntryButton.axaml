@@ -58,8 +58,17 @@
                             <DockPanel Grid.Row="0" Grid.Column="2">
                                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
                                             Spacing="4">
-                                    <TextBlock Text="{Binding Version}"
-                                               VerticalAlignment="Center" FontWeight="Bold" />
+                                    <ContentControl Content="{Binding Version}">
+                                        <ContentControl.DataTemplates>
+                                            <DataTemplate DataType="m:InstancePackageVersionModel">
+                                                <TextBlock Text="{Binding Name}"
+                                                           VerticalAlignment="Center" FontWeight="Bold" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
+                                                <husk:Tag Content="Unspecified" />
+                                            </DataTemplate>
+                                        </ContentControl.DataTemplates>
+                                    </ContentControl>
                                 </StackPanel>
                                 <Grid ColumnDefinitions="Auto,6,*">
                                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
@@ -71,7 +80,7 @@
                                             <TextBlock Text="{Binding Kind}" />
                                         </husk:Tag>
                                     </StackPanel>
-                                    <TextBlock Grid.Column="2" Text="{Binding Name}"
+                                    <TextBlock Grid.Column="2" Text="{Binding ProjectName}"
                                                TextTrimming="CharacterEllipsis"
                                                FontSize="{StaticResource LargeFontSize}"
                                                FontWeight="Bold" />

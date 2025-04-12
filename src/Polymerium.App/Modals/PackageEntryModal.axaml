@@ -6,32 +6,31 @@
             xmlns:m="using:Polymerium.App.Models"
             xmlns:modals="using:Polymerium.App.Modals"
             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Padding="0" MinWidth="360" MinHeight="360"
-            x:Class="Polymerium.App.Modals.PackageEntryModal">
+            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" MinWidth="360" MinHeight="360"
+            x:Class="Polymerium.App.Modals.PackageEntryModal" x:DataType="m:InstancePackageModel">
     <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
-        <Grid Grid.Row="0" RowDefinitions="14,36,28" ColumnDefinitions="Auto,*">
-            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
-                    Background="{DynamicResource Layer1BackgroundBrush}"
-                    CornerRadius="{Binding $parent[husk:Modal].CornerRadius,Converter={x:Static huskc:CornerRadiusConverters.Upper}}" />
-            <husk:ConstrainedBox Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" AspectRatio="1" Margin="16,8,0,0">
-                <Border
-                    BorderBrush="{DynamicResource ControlBorderBrush}"
-                    CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="2">
+        <Border Grid.Row="0" Background="{DynamicResource Layer1BackgroundBrush}" Padding="12"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*" ColumnSpacing="12">
+                <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Height="48" Width="48"
+                        BorderBrush="{DynamicResource ControlBorderBrush}"
+                        CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="2">
                     <Border.Background>
-                        <ImageBrush Source="{Binding $parent[modals:PackageEntryModal].Model.Thumbnail}" />
+                        <ImageBrush Source="{Binding Thumbnail}" />
                     </Border.Background>
                 </Border>
-            </husk:ConstrainedBox>
-            <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
-                       Text="{Binding $parent[modals:PackageEntryModal].Model.Name}" FontWeight="Bold"
-                       FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Bottom" Margin="12,0,16,4" />
-            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="12,4,16,0" Spacing="4"
-                        VerticalAlignment="Top">
-                <HyperlinkButton
-                    Content="{Binding $parent[modals:PackageEntryModal].Model.Label,Converter={x:Static huskc:StringConverters.ToUpper}}"
-                    Click="Source_Click" />
-            </StackPanel>
-        </Grid>
+                <TextBlock Grid.Row="0" Grid.Column="1"
+                           Text="{Binding ProjectName}" FontWeight="Bold"
+                           FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center" />
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4"
+                            VerticalAlignment="Center">
+                    <HyperlinkButton
+                        Content="{Binding Label,Converter={x:Static huskc:StringConverters.ToUpper}}"
+                        Click="Source_Click" />
+                </StackPanel>
+            </Grid>
+        </Border>
         <TabControl Grid.Row="1" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0">
             <TabControl.Styles>
                 <Style Selector="TabItem">
@@ -43,25 +42,55 @@
             </TabItem>
             <TabItem Header="Versions">
                 <Grid RowDefinitions="Auto,Auto,*" RowSpacing="8">
-                    <Border Grid.Row="0" Background="{DynamicResource ControlTranslucentBackgroundBrush}"
-                            BorderBrush="{DynamicResource ControlBorderBrush}"
-                            CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="3,0,0,0" Padding="8">
-                        <StackPanel>
-                            <TextBlock Text="Current Version"
-                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
-                                       FontSize="{StaticResource SmallFontSize}" />
-                            <TextBlock Text="{Binding $parent[modals:PackageEntryModal].Model.Version}" />
-                        </StackPanel>
+                    <Border Grid.Row="0" Background="{DynamicResource ControlBackgroundBrush}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                        <ContentControl Content="{Binding Version,Mode=OneWay}">
+                            <ContentControl.DataTemplates>
+                                <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
+                                    <Grid Margin="6,12" ColumnDefinitions="Auto,*" RowDefinitions="*,*"
+                                          HorizontalAlignment="Center" ColumnSpacing="12">
+                                        <fi:SymbolIcon Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Symbol="Branch"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="{StaticResource ExtraLargeFontSize}" />
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Unspecified Version"
+                                                   FontSize="{StaticResource LargeFontSize}" />
+                                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                                   Text="Pick a version in the list below."
+                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource MediumFontSize}" />
+                                    </Grid>
+                                </DataTemplate>
+                                <DataTemplate DataType="m:InstancePackageVersionModel">
+                                    <Grid Margin="4" ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                        <Border Grid.Column="0"
+                                                Background="{DynamicResource LayerSolidBackgroundBrush}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}" Padding="12">
+                                            <StackPanel>
+                                                <TextBlock Text="Current Version"
+                                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                           FontSize="{StaticResource SmallFontSize}" />
+                                                <TextBlock Text="{Binding Name}" />
+                                            </StackPanel>
+                                        </Border>
+                                        <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}" Padding="6,0"
+                                                Click="RemoveVersionButton_Click">
+                                            <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ContentControl.DataTemplates>
+                        </ContentControl>
                     </Border>
                     <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
-                        <CheckBox Grid.Column="0" Content="Show only capable with this instance" />
+                        <CheckBox Grid.Column="0" Content="Show only compatible versions" />
                     </Grid>
                     <ListBox Grid.Row="2"></ListBox>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="12,0,12,12">
-            <ToggleSwitch Grid.Column="0" OnContent="Enabled" OffContent="Disabled" />
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <ToggleSwitch Grid.Column="0" IsChecked="{Binding IsEnabled,Mode=TwoWay}" OnContent="Enabled"
+                          OffContent="Disabled" />
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
                 <Button Content="Dismiss" Click="DismissButton_Click" />
             </StackPanel>

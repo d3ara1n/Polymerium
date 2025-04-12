@@ -107,7 +107,7 @@ public partial class PackageContainer : UserControl
 
     private static Func<InstancePackageModel, bool> BuildFilter(string filter) =>
         x => string.IsNullOrEmpty(filter)
-          || (x is { Name: { } name, Summary: { } summary }
+          || (x is { ProjectName: { } name, Summary: { } summary }
            && (name.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
             || summary.Contains(filter, StringComparison.InvariantCultureIgnoreCase)));
 }

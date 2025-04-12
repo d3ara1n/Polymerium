@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories.Resources;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
 
@@ -11,8 +12,10 @@ public partial class InstancePackageModel(
     Profile.Rice.Entry entry,
     bool isLocked,
     string label,
-    string name,
-    string version,
+    string? @namespace,
+    string projectId,
+    string projectName,
+    InstancePackageVersionModelBase version,
     string summary,
     Uri? reference,
     Bitmap thumbnail,
@@ -20,10 +23,12 @@ public partial class InstancePackageModel(
 {
     #region Direct
 
-    public Profile.Rice.Entry Entry => entry;
+    public Profile.Rice.Entry Key => entry;
     public Uri? Reference => reference;
     public string Label => label;
-    public string Name => name;
+    public string? Namespace => @namespace;
+    public string ProjectId => projectId;
+    public string ProjectName => projectName;
     public string Summary => summary;
     public Bitmap Thumbnail => thumbnail;
     public ResourceKind Kind => kind;
@@ -43,7 +48,13 @@ public partial class InstancePackageModel(
     partial void OnIsEnabledChanged(bool value) => entry.Enabled = value;
 
     [ObservableProperty]
-    public partial string Version { get; set; } = version;
+    public partial InstancePackageVersionModelBase Version { get; set; } = version;
+
+    partial void OnVersionChanged(InstancePackageVersionModelBase value) =>
+        entry.Purl = PackageHelper.ToPurl(label,
+                                          @namespace,
+                                          projectId,
+                                          value is InstancePackageVersionModel v ? v.Id : null);
 
     #endregion
 }
