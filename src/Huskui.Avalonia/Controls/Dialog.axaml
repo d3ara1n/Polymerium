@@ -17,7 +17,8 @@
             <ControlTemplate>
                 <Border ClipToBounds="True" Background="{TemplateBinding Background}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                     <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
                         <ContentPresenter Grid.Row="0" Name="PART_HeaderPresenter"
                                           Content="{TemplateBinding Header}"

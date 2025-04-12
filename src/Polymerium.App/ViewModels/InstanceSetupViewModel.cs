@@ -106,7 +106,7 @@ public partial class InstanceSetupViewModel(
                                                         p.Namespace,
                                                         p.ProjectId,
                                                         p.ProjectName,
-                                                        new InstancePackageUnspecifiedVersionModel(),
+                                                        InstancePackageUnspecifiedVersionModel.Instance,
                                                         p.Summary,
                                                         p.Reference,
                                                         t,
@@ -128,7 +128,10 @@ public partial class InstanceSetupViewModel(
                                                         p.Namespace,
                                                         p.ProjectId,
                                                         p.ProjectName,
-                                                        new InstancePackageVersionModel(p.VersionId, p.VersionName),
+                                                        new InstancePackageVersionModel(p.VersionId,
+                                                            p.VersionName,
+                                                            p.PublishedAt,
+                                                            p.ReleaseType) { IsCurrent = true },
                                                         p.Summary,
                                                         p.Reference,
                                                         t,
@@ -297,7 +300,15 @@ public partial class InstanceSetupViewModel(
         {
             if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
             {
-                overlayService.PopModal(new PackageEntryModal { DataContext = model, Guard = guard });
+                overlayService.PopModal(new PackageEntryModal
+                {
+                    DataContext = model,
+                    Guard = guard,
+                    DataService = dataService,
+                    Filter = new Filter(Kind: model.Kind,
+                                        Version: Basic.Version,
+                                        Loader: Basic.Loader)
+                });
             }
         }
     }

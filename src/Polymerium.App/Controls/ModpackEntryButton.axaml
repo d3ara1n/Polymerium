@@ -9,6 +9,27 @@
                     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
                     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <ControlTheme x:Key="{x:Type controls:ModpackEntryButton}" TargetType="controls:ModpackEntryButton">
+        <Setter Property="ContextFlyout">
+            <MenuFlyout x:DataType="m:ExhibitModel">
+                <MenuItem Header="Open Website"
+                          Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).OpenWebsiteCommand,FallbackValue={x:Null}}"
+                          CommandParameter="{Binding}">
+                    <MenuItem.Icon>
+                        <icons:PackIconLucide Kind="ExternalLink"
+                                              Height="{StaticResource MediumFontSize}"
+                                              Width="{StaticResource MediumFontSize}"
+                                              VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- <MenuItem Header="Save to Favorites"> -->
+                <!--     <MenuItem.Icon> -->
+                <!--         <icons:PackIconLucide Kind="Bookmark" -->
+                <!--             Height="10" Width="10" -->
+                <!--             VerticalAlignment="Center" /> -->
+                <!--     </MenuItem.Icon> -->
+                <!-- </MenuItem> -->
+            </MenuFlyout>
+        </Setter>
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:ExhibitModel">
                 <husk:Card Name="Background" Margin="16,4" Height="118"
@@ -75,28 +96,7 @@
                                         <TextBlock Text="Install" />
                                     </StackPanel>
                                 </Button>
-                                <Button Classes="Small">
-                                    <Button.Flyout>
-                                        <MenuFlyout>
-                                            <MenuItem Header="Open Website"
-                                                      Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).OpenWebsiteCommand,FallbackValue={x:Null}}"
-                                                      CommandParameter="{Binding}">
-                                                <MenuItem.Icon>
-                                                    <icons:PackIconLucide Kind="ExternalLink"
-                                                                          Height="{StaticResource MediumFontSize}"
-                                                                          Width="{StaticResource MediumFontSize}"
-                                                                          VerticalAlignment="Center" />
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                            <!-- <MenuItem Header="Save to Favorites"> -->
-                                            <!--     <MenuItem.Icon> -->
-                                            <!--         <icons:PackIconLucide Kind="Bookmark" -->
-                                            <!--             Height="10" Width="10" -->
-                                            <!--             VerticalAlignment="Center" /> -->
-                                            <!--     </MenuItem.Icon> -->
-                                            <!-- </MenuItem> -->
-                                        </MenuFlyout>
-                                    </Button.Flyout>
+                                <Button Classes="Small" Flyout="{TemplateBinding ContextFlyout}">
                                     <!-- <icons:PackIconLucide Kind="Ellipsis" Height="8" Width="10" -->
                                     <!--                       VerticalAlignment="Center" /> -->
                                     <fi:SymbolIcon Symbol="MoreHorizontal"

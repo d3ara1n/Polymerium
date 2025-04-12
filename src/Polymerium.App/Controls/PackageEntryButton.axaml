@@ -9,6 +9,28 @@
                     xmlns:converters="using:Polymerium.App.Converters">
     <ControlTheme x:Key="{x:Type local:PackageEntryButton}" TargetType="local:PackageEntryButton">
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="ContextFlyout">
+            <MenuFlyout x:DataType="m:InstancePackageModel">
+                <MenuItem Header="Active"
+                          IsChecked="{Binding IsEnabled,Mode=TwoWay}"
+                          ToggleType="CheckBox"
+                          IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
+                          Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
+                <MenuItem Header="-" />
+                <MenuItem Header="Open Website"
+                          Command="{Binding $parent[cp:PackageContainer].OpenUrlCommand}"
+                          CommandParameter="{Binding Reference}"
+                          Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
+                <MenuItem Header="Add to Favorites"
+                          Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" />
+                <MenuItem Header="Remove from Favorite"
+                          Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" />
+                <MenuItem Header="-" />
+                <MenuItem Header="Remove"
+                          IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"
+                          Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
+            </MenuFlyout>
+        </Setter>
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
                 <husk:Card Name="Background" Height="78" Background="{DynamicResource Layer0BackgroundBrush}"
@@ -110,30 +132,9 @@
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                     </ItemsControl>
-                                    <Button Theme="{StaticResource OutlineButtonTheme}" Classes="Small">
+                                    <Button Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
+                                            Flyout="{TemplateBinding ContextFlyout}">
                                         <icons:PackIconLucide Kind="Ellipsis" Width="12" Height="12" />
-                                        <Button.Flyout>
-                                            <MenuFlyout>
-                                                <MenuItem Header="Active"
-                                                          IsChecked="{Binding IsEnabled,Mode=TwoWay}"
-                                                          ToggleType="CheckBox"
-                                                          IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
-                                                          Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
-                                                <MenuItem Header="-" />
-                                                <MenuItem Header="Open Website"
-                                                          Command="{Binding $parent[cp:PackageContainer].OpenUrlCommand}"
-                                                          CommandParameter="{Binding Reference}"
-                                                          Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
-                                                <MenuItem Header="Add to Favorites"
-                                                          Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" />
-                                                <MenuItem Header="Remove from Favorite"
-                                                          Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" />
-                                                <MenuItem Header="-" />
-                                                <MenuItem Header="Remove"
-                                                          IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"
-                                                          Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
-                                            </MenuFlyout>
-                                        </Button.Flyout>
                                     </Button>
                                 </StackPanel>
                                 <Panel Name="SummaryBlock" Grid.Row="0" Grid.Column="0">

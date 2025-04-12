@@ -7,8 +7,6 @@
         <Setter Property="MinWidth" Value="256" />
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="{StaticResource ModalContentMargin}" />
         <Setter Property="Margin" Value="24" />
         <Setter Property="Template">
