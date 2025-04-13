@@ -37,16 +37,16 @@
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       RecognizesAccessKey="True" />
-                    <Grid Grid.Row="1" ColumnDefinitions="Auto,6,Auto">
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="6">
                         <ContentPresenter Name="PART_OffContentPresenter"
-                                          Grid.Column="2"
+                                          Grid.Column="1"
                                           Content="{TemplateBinding OffContent}"
                                           ContentTemplate="{TemplateBinding OffContentTemplate}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
 
                         <ContentPresenter Name="PART_OnContentPresenter"
-                                          Grid.Column="2"
+                                          Grid.Column="1"
                                           Content="{TemplateBinding OnContent}"
                                           ContentTemplate="{TemplateBinding OnContentTemplate}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -54,6 +54,7 @@
 
 
                         <Border Grid.Column="0" Name="SwitchKnobBounds" Height="20" Width="40"
+                                Cursor="Hand"
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -75,7 +76,7 @@
                                              Fill="{DynamicResource LayerSolidBackgroundBrush}"
                                              Width="16" Height="16">
                                         <Ellipse.Effect>
-                                            <DropShadowEffect BlurRadius="6" Opacity="0.1" OffsetX="2" OffsetY="2" />
+                                            <DropShadowEffect BlurRadius="6" Opacity="0.2" OffsetX="2" OffsetY="2" />
                                         </Ellipse.Effect>
                                         <Ellipse.Transitions>
                                             <Transitions>
@@ -87,8 +88,6 @@
                                 </Grid>
                             </Canvas>
                         </Border>
-
-
                     </Grid>
                 </Grid>
             </ControlTemplate>

@@ -5,6 +5,7 @@
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
 
     <ControlTheme x:Key="{x:Type local:InstanceEntryButton}" TargetType="local:InstanceEntryButton">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="CornerRadius"
                 Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background"

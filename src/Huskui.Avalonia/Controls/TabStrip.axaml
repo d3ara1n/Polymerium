@@ -51,7 +51,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <ItemsPresenter Name="PART_ItemsPresenter"
-                                    ItemsPanel="{TemplateBinding ItemsPanel}" />
+                                    ItemsPanel="{TemplateBinding ItemsPanel}" Margin="{TemplateBinding Padding}" />
                 </Border>
             </ControlTemplate>
         </Setter>
@@ -60,7 +60,6 @@
     <ControlTheme x:Key="SegmentedTabStripTheme" TargetType="TabStrip">
         <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource SegmentedTabStripItemTheme}" />
         <Setter Property="Padding" Value="3" />
@@ -80,7 +79,26 @@
         </Setter>
     </ControlTheme>
 
+    <ControlTheme x:Key="PivotTabStripTheme" TargetType="TabStrip">
+        <Setter Property="ItemContainerTheme" Value="{StaticResource PivotTabStripItemTheme}" />
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Padding="{TemplateBinding Padding}" CornerRadius="{TemplateBinding CornerRadius}"
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                    <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
     <ControlTheme x:Key="{x:Type TabStripItem}" TargetType="TabStripItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="10,8" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -154,6 +172,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="SegmentedTabStripItemTheme" TargetType="TabStripItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="8,6" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
@@ -205,5 +224,76 @@
         <Style Selector="^:disabled /template/ Border#Indicator">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="PivotTabStripItemTheme" TargetType="TabStripItem">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="14,6" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Name="Container" Background="{TemplateBinding Background}">
+                    <Panel.Transitions>
+                        <Transitions>
+                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </Panel.Transitions>
+                    <Border x:Name="PART_Indicator" Background="{DynamicResource ControlBackgroundBrush}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition Property="Background" Easing="SineEaseIn"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <TransformOperationsTransition Property="RenderTransform" Easing="QuarticEaseInOut"
+                                                               Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <ContentPresenter
+                        Name="PART_ContentPresenter"
+                        Margin="{TemplateBinding Padding}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+
+        <Style Selector="^:pointerover:not(:selected) /template/ Panel#Container">
+            <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
+        </Style>
+        <Style Selector="^:selected /template/ Border#PART_Indicator">
+            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Panel#Container">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+        <Style Selector="^ /template/ Border#PART_Indicator">
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Height"
+                    Value="{StaticResource TabItemHighlightThickness}" />
+            <Setter Property="RenderTransform" Value="scaleX(0.0)" />
+        </Style>
+
+        <Style Selector="^:selected /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleX(0.7)" />
+        </Style>
+        <Style Selector="^:pointerover /template/ Border#PART_Indicator">
+            <Setter Property="RenderTransform" Value="scaleX(1.0)" />
+        </Style>
+
     </ControlTheme>
 </ResourceDictionary>

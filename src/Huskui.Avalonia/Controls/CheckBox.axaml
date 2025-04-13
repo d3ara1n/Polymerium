@@ -28,7 +28,7 @@
         <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="Auto,6,*" Background="{DynamicResource TransparentBrush}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" Background="{DynamicResource TransparentBrush}">
                     <Border Grid.Column="0" Name="Box"
                             Width="16"
                             Height="16"
@@ -45,7 +45,7 @@
                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
-                        <Panel>
+                        <Panel Cursor="Hand">
                             <fi:SymbolIcon Name="Indeterminate" Symbol="LineHorizontal1"
                                            FontSize="{TemplateBinding FontSize}"
                                            Foreground="{TemplateBinding Foreground}" Opacity="0">
@@ -72,7 +72,7 @@
                         </Panel>
                     </Border>
                     <ContentPresenter Name="PART_ContentPresenter"
-                                      Grid.Column="2"
+                                      Grid.Column="1"
                                       Margin="{TemplateBinding Padding}"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

@@ -9,6 +9,7 @@
                     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
                     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <ControlTheme x:Key="{x:Type controls:ModpackEntryButton}" TargetType="controls:ModpackEntryButton">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="ContextFlyout">
             <MenuFlyout x:DataType="m:ExhibitModel">
                 <MenuItem Header="Open Website"
