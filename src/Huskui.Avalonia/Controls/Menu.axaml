@@ -46,6 +46,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type MenuItem}" TargetType="MenuItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="Padding" Value="12,8" />

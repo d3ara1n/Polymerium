@@ -88,6 +88,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type TabItem}" TargetType="TabItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,6" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
@@ -202,6 +203,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="NeoTabItemTheme" TargetType="TabItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="10,6" />
         <Setter Property="Margin" Value="2" />
         <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
@@ -378,6 +380,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="SolidTabItemTheme" TargetType="TabItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,6" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />

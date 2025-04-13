@@ -18,6 +18,7 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type ComboBox}" TargetType="ComboBox">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
@@ -114,6 +115,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type ComboBoxItem}" TargetType="ComboBoxItem">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="Padding" Value="12,8" />
@@ -181,6 +183,7 @@
     </ControlTheme>
 
     <ControlTheme x:Key="GhostComboBoxTheme" TargetType="ComboBox">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
         <Setter Property="MaxDropDownHeight" Value="504" />

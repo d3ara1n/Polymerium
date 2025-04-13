@@ -21,10 +21,10 @@
                           Command="{x:Static m:InternalCommands.OpenUriCommand}"
                           CommandParameter="{Binding Reference}"
                           Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
-                <MenuItem Header="Add to Favorites"
-                          Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" />
-                <MenuItem Header="Remove from Favorite"
-                          Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" />
+                <!-- <MenuItem Header="Add to Favorites" -->
+                <!--           Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" /> -->
+                <!-- <MenuItem Header="Remove from Favorite" -->
+                <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
                 <MenuItem Header="-" />
                 <MenuItem Header="Remove"
                           IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"

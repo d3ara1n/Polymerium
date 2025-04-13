@@ -35,7 +35,7 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type TextBox}" TargetType="TextBox">
-        <Setter Property="Cursor" Value="Ibeam" />
+        <!-- <Setter Property="Cursor" Value="Ibeam" /> -->
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -71,6 +71,7 @@
                             <ContentPresenter Grid.Column="0" Content="{TemplateBinding InnerLeftContent}"
                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
                             <ScrollViewer Grid.Column="2"
+                                          Cursor="Ibeam"
                                           AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                           HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
                                           IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
