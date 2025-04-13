@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,6 +15,7 @@ using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
+using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Trident.Abstractions.Extensions;
@@ -33,11 +33,12 @@ public partial class InstanceSetupViewModel(
     NotificationService notificationService,
     InstanceManager instanceManager,
     DataService dataService,
-    OverlayService overlayService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    OverlayService overlayService,
+    NavigationService navigationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     #region Injected
 
-    private readonly InstanceManager _instanceManager = instanceManager;
+    private readonly NavigationService _navigationService = navigationService;
 
     #endregion
 
@@ -360,6 +361,12 @@ public partial class InstanceSetupViewModel(
     }
 
     [RelayCommand]
+    private void GotoPackageExplorerView()
+    {
+        _navigationService.Navigate<PackageExplorerView>(Basic.Key);
+    }
+
+    [RelayCommand]
     private async Task CheckUpdate()
     {
         if (Reference is { Value: InstanceReferenceModel reference }
@@ -414,11 +421,11 @@ public partial class InstanceSetupViewModel(
     {
         if (version is not null)
         {
-            _instanceManager.Install(version.ProjectName,
-                                     version.Label,
-                                     version.Namespace,
-                                     version.ProjectId,
-                                     version.Versionid);
+            InstanceManager.Install(version.ProjectName,
+                                    version.Label,
+                                    version.Namespace,
+                                    version.ProjectId,
+                                    version.Versionid);
             notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
         }
     }

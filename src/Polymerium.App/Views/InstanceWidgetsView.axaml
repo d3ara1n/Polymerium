@@ -10,7 +10,7 @@
                   mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
                   x:Class="Polymerium.App.Views.InstanceWidgetsView" x:DataType="vm:InstanceWidgetsViewModel">
     <Grid>
-        <ItemsControl ItemsSource="{Binding Widgets}">
+        <ItemsControl ItemsSource="{Binding Widgets}" VerticalAlignment="Top">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="widgets:WidgetBase">
                     <husk:Card Padding="0">
