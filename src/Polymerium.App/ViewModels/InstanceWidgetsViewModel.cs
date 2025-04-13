@@ -16,6 +16,10 @@ public class InstanceWidgetsViewModel : InstanceViewModelBase
         Widgets =
         [
             new NoteWidget { Context = context },
+            new NoteWidget { Context = context },
+            new NoteWidget { Context = context },
+            new NoteWidget { Context = context },
+            new NoteWidget { Context = context }
         ];
     }
 }
