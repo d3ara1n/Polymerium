@@ -117,6 +117,7 @@
                         </ListBox.ItemTemplate>
                         <ListBox.ItemContainerTheme>
                             <ControlTheme TargetType="ListBoxItem">
+                                <Setter Property="Cursor" Value="Hand" />
                                 <Setter Property="ClipToBounds" Value="False" />
                                 <Setter Property="Template">
                                     <ControlTemplate>

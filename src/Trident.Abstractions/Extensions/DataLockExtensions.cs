@@ -15,7 +15,7 @@ public static class DataLockExtensions
          || self.Viability.Loader != setup.Loader)
             return false;
 
-        if (self.Viability.Packages.Count != setup.Packages.Count)
+        if (self.Viability.Packages.Count != setup.Packages.Count(x => x.Enabled))
             return false;
 
         var map = self.Viability.Packages.Distinct().ToDictionary(x => x, _ => 0);

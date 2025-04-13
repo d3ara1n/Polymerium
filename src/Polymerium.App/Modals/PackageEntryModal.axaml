@@ -109,7 +109,7 @@
                             <!-- TabItem 不是 Lazy 的，导致 LazyContainer 就算不可见也会开始 Load -->
                             <husk:LazyContainer LazySource="{Binding $parent[modals:PackageEntryModal].LazyVersions}">
                                 <husk:LazyContainer.ContentTemplate>
-                                    <DataTemplate DataType="collections:IEnumerable">
+                                    <DataTemplate DataType="m:InstancePackageVersionCollection">
                                         <Grid RowDefinitions="Auto,*" RowSpacing="8">
                                             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                                                 <CheckBox Grid.Column="0" Content="Show compatible versions only"

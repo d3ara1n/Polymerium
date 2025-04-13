@@ -7,6 +7,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Modals;
 
@@ -66,14 +67,19 @@ public partial class PackageEntryModal : Modal
                                                                   Model.Namespace,
                                                                   Model.ProjectId,
                                                                   IsFilterEnabled ? Filter : Filter.Empty);
-            return versions
-                  .Select(x => Model is { Version: InstancePackageVersionModel v } && v.Id == x.VersionId
-                                   ? v
-                                   : new InstancePackageVersionModel(x.VersionId,
-                                                                     x.VersionName,
-                                                                     x.PublishedAt,
-                                                                     x.ReleaseType))
-                  .ToList();
+            return new InstancePackageVersionCollection(versions
+                                                       .Select<Version,
+                                                            InstancePackageVersionModelBase>(x => Model is
+                                                                {
+                                                                    Version: InstancePackageVersionModel v
+                                                                }
+                                                             && v.Id == x.VersionId
+                                                                ? v
+                                                                : new InstancePackageVersionModel(x.VersionId,
+                                                                    x.VersionName,
+                                                                    x.PublishedAt,
+                                                                    x.ReleaseType))
+                                                       .ToList());
         });
 
         return lazy;
