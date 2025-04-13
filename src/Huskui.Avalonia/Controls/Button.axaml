@@ -169,6 +169,7 @@
 
         <Style Selector="^.Primary">
             <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
         </Style>
 
         <Style Selector="^.Success">
