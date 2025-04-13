@@ -102,7 +102,9 @@
                     <StackPanel.Effect>
                         <DropShadowEffect BlurRadius="6" Opacity="0.1" />
                     </StackPanel.Effect>
-                    <icons:PackIconLucide Width="12" Kind="Squirrel" />
+                    <icons:PackIconLucide Height="{StaticResource MediumFontSize}"
+                                          Width="{StaticResource MediumFontSize}" Kind="Squirrel"
+                                          VerticalAlignment="Center" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource SmallFontSize}"

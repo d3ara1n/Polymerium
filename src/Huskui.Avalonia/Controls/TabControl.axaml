@@ -422,8 +422,7 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         RecognizesAccessKey="True"
                         TextElement.FontSize="{TemplateBinding FontSize}"
-                        TextElement.FontWeight="{TemplateBinding FontWeight}"
-                        UseLayoutRounding="False">
+                        TextElement.FontWeight="{TemplateBinding FontWeight}">
                         <ContentPresenter.Transitions>
                             <Transitions>
                                 <DoubleTransition Property="Opacity" Easing="SineEaseOut"

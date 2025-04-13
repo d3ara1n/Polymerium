@@ -55,15 +55,19 @@
                             </ProgressBar.Transitions>
                         </ProgressBar>
                         <StackPanel Spacing="4" Margin="12">
-                            <TextBlock
-                                FontSize="{StaticResource SmallFontSize}"
-                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
-                                <Run
-                                    Text="{Binding Basic.SourceLabel,FallbackValue=LABEL,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={x:Static huskc:StringConverters.ToUpper}}" />
-                                <Run Text="/" />
-                                <Run
-                                    Text="{Binding Basic.Key,FallbackValue=KEY,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            </TextBlock>
+                            <Grid ColumnDefinitions="Auto,Auto,*">
+                                <TextBlock Grid.Column="0"
+                                           Text="{Binding Basic.SourceLabel,FallbackValue=LABEL,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={x:Static huskc:StringConverters.ToUpper}}"
+                                           FontSize="{StaticResource SmallFontSize}"
+                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Column="1" Text="#" FontSize="{StaticResource SmallFontSize}"
+                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Column="2"
+                                           Text="{Binding Basic.Key,FallbackValue=KEY,RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                           FontSize="{StaticResource SmallFontSize}"
+                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                           TextTrimming="CharacterEllipsis" />
+                            </Grid>
                             <TextBlock
                                 Text="{Binding Basic.Name,FallbackValue=NAME,RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                 FontSize="{StaticResource LargeFontSize}"
