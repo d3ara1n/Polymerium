@@ -28,9 +28,14 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4"
                             VerticalAlignment="Center">
                     <HyperlinkButton
-                        Content="{Binding Label,Converter={x:Static huskc:StringConverters.ToUpper}}"
                         Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                        CommandParameter="{Binding Reference}" />
+                        CommandParameter="{Binding Reference}">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock
+                                Text="{Binding Label,FallbackValue=Label,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                            <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                        </StackPanel>
+                    </HyperlinkButton>
                 </StackPanel>
             </Grid>
         </Border>
@@ -101,7 +106,7 @@
                             </StackPanel>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="False">
-                            <!-- TabItem 不是 Lazy 的，导致 LazyContainer 就算不可见也会开始 Load，但是外面套个 SwitchPresenter 问题就解决了 -->
+                            <!-- TabItem 不是 Lazy 的，导致 LazyContainer 就算不可见也会开始 Load -->
                             <husk:LazyContainer LazySource="{Binding $parent[modals:PackageEntryModal].LazyVersions}">
                                 <husk:LazyContainer.ContentTemplate>
                                     <DataTemplate DataType="collections:IEnumerable">
@@ -114,7 +119,7 @@
                                                      SelectedItem="{Binding $parent[modals:PackageEntryModal].SelectedVersionProxy,Mode=TwoWay,FallbackValue={x:Null}}">
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate DataType="m:InstancePackageVersionModel">
-                                                        <StackPanel>
+                                                        <StackPanel Spacing="4">
                                                             <husk:SwitchPresenter
                                                                 Value="{Binding IsCurrent,FallbackValue=False}"
                                                                 TargetType="x:Boolean">
@@ -131,7 +136,7 @@
                                                             <DockPanel>
                                                                 <StackPanel Orientation="Horizontal"
                                                                             DockPanel.Dock="Right">
-                                                                    <TextBlock Text="{Binding ReleaseTypeRaw}" />
+                                                                    <TextBlock Text="{Binding PublishedAt}" />
                                                                 </StackPanel>
                                                                 <husk:SwitchPresenter TargetType="trident:ReleaseType"
                                                                     Value="{Binding ReleaseTypeRaw,FallbackValue=Release}">

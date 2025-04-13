@@ -21,7 +21,7 @@
                 <local:SwitchPresenter Value="{TemplateBinding IsBad}" TargetType="x:Boolean">
                     <local:SwitchCase Value="False">
                         <local:SkeletonContainer CornerRadius="{TemplateBinding CornerRadius}"
-                                                 IsLoading="{Binding Content,Converter={x:Static ObjectConverters.IsNull},RelativeSource={RelativeSource Mode=TemplatedParent},FallbackValue=false}">
+                                                 IsLoading="{Binding Content,Converter={x:Static ObjectConverters.IsNull},RelativeSource={RelativeSource Mode=TemplatedParent},FallbackValue=False}">
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}" />
                         </local:SkeletonContainer>

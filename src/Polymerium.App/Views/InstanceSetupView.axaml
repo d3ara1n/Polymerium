@@ -81,7 +81,8 @@
                         </Border>
                     </StackPanel>
                 </Grid>
-                <husk:LazyContainer Grid.Column="1" MinWidth="128" LazySource="{Binding Reference}"
+                <husk:LazyContainer Grid.Column="1" MinWidth="128"
+                                    LazySource="{Binding Reference,FallbackValue={x:Null}}"
                                     IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
                     <husk:LazyContainer.BadContent>
                         <husk:Card BorderThickness="2"
@@ -152,7 +153,8 @@
                 <husk:SwitchCase Value="False">
                     <cp:PackageContainer Items="{Binding Stage}"
                                          TotalCount="{Binding StageCount}"
-                                         PrimaryCommand="{Binding ViewPackageCommand}" />
+                                         PrimaryCommand="{Binding ViewPackageCommand}"
+                                         GotoExplorerCommand="{Binding GotoPackageExplorerViewCommand}" />
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="True">
                     <StackPanel VerticalAlignment="Center" Spacing="8">

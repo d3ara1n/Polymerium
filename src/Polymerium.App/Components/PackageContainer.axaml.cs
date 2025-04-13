@@ -52,6 +52,18 @@ public partial class PackageContainer : UserControl
         set => SetAndRaise(PrimaryCommandProperty, ref field, value);
     }
 
+    public static readonly DirectProperty<PackageContainer, ICommand?> GotoExplorerCommandProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(GotoExplorerCommand),
+                                                                     o => o.GotoExplorerCommand,
+                                                                     (o, v) => o.GotoExplorerCommand = v);
+
+    public ICommand? GotoExplorerCommand
+    {
+        get;
+        set => SetAndRaise(GotoExplorerCommandProperty, ref field, value);
+    }
+
+
     public string FilterText
     {
         get;

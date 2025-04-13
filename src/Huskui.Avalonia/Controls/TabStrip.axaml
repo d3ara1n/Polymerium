@@ -103,7 +103,8 @@
                                                      Easing="SineEaseOut" />
                             </Transitions>
                         </Border.Transitions>
-                        <Border Name="Indicator" Background="{DynamicResource OverlayFullBackgroundBrush}" Opacity="0">
+                        <Border Name="Indicator" Background="{DynamicResource OverlayFullBackgroundBrush}" Opacity="0"
+                                CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.Transitions>
                                 <Transitions>
                                     <DoubleTransition Property="Opacity"

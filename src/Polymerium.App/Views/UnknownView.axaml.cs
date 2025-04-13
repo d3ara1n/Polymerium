@@ -58,7 +58,7 @@ public partial class UnknownView : Page
     }
 
 
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
+    private void ThemeSwitchButton_OnClick(object? sender, RoutedEventArgs e)
     {
         if (Application.Current != null)
         {

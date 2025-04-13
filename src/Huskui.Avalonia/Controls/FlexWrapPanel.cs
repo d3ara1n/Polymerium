@@ -123,10 +123,11 @@ public class FlexWrapPanel : Panel
                 if (double.IsInfinity(height))
                     height = child.DesiredSize.Height;
 
-                // TODO: 当 usedWidth = x.5 且 width 也是 x.5 时，最后一颗像素会被裁剪掉
+                // 当 usedWidth = x.5 且 width 也是 x.5 时，最后一颗像素会被裁剪掉
+                //  通过 double.Floor(width) 解决
                 // TODO: 当 HorizontalAlignment 不为 Stretch 时，依旧用同一个 count，但取每个 child 的 MinWidth
 
-                child.Arrange(new Rect(usedWidth, totalHeight + RowSpacing * row, width, height));
+                child.Arrange(new Rect(usedWidth, totalHeight + RowSpacing * row, double.Floor(width), height));
                 usedWidth += width + ColumnSpacing;
             }
 

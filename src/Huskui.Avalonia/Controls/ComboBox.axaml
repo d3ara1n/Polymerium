@@ -218,7 +218,9 @@
                                                Text="{TemplateBinding PlaceholderText}" />
                                     <ContentPresenter Name="PART_ContentPresenter"
                                                       Content="{TemplateBinding SelectionBoxItem}"
-                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" />
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                                 </Panel>
                                 <fi:SymbolIcon Grid.Column="2" Symbol="ChevronUpDown"
                                                FontSize="{TemplateBinding FontSize}" IsHitTestVisible="False" />

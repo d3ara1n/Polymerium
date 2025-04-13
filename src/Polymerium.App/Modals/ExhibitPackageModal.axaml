@@ -1,0 +1,124 @@
+﻿<husk:Modal xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            xmlns:m="clr-namespace:Polymerium.App.Models"
+            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+            mc:Ignorable="d" d:DesignWidth="660" d:DesignHeight="420" MinHeight="360"
+            x:Class="Polymerium.App.Modals.ExhibitPackageModal" Background="{x:Null}" BorderBrush="{x:Null}"
+            BorderThickness="0" Padding="0" CornerRadius="0" Margin="0,65">
+    <husk:ConstrainedBox AspectRatio="1.4">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Border Grid.Column="1" Padding="18" Width="280"
+                    Background="{DynamicResource LayerSolidBackgroundBrush}"
+                    BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="12">
+                    <Grid Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border Grid.Column="0" Height="48" Width="48"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                            <Border.Background>
+                                <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
+                            </Border.Background>
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                            <TextBlock Text="Refined Storage" TextTrimming="CharacterEllipsis"
+                                       FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
+                            <HyperlinkButton
+                                Command="{x:Static m:InternalCommands.OpenUriCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock
+                                        Text="CURSEFORGE" />
+                                    <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </StackPanel>
+                        <Grid Grid.Column="2" RowDefinitions="*,*" RowSpacing="4">
+                            <Button Grid.Row="0" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
+                                    Click="DismissButton_OnClick">
+                                <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
+                            </Button>
+                            <!-- <ToggleButton Grid.Row="1"  Classes="Small"> -->
+                            <!--     <fi:SymbolIcon Symbol="MoreHorizontal" FontSize="{StaticResource MediumFontSize}" /> -->
+                            <!-- </ToggleButton> -->
+                        </Grid>
+                    </Grid>
+                    <ItemsControl Grid.Row="1">
+                        <husk:Tag Content="Tech" FontSize="{StaticResource MediumFontSize}" />
+                        <husk:Tag Content="Magic" FontSize="{StaticResource MediumFontSize}" />
+                        <husk:Tag Content="Many Pipes" FontSize="{StaticResource MediumFontSize}" />
+                        <husk:Tag Content="Logistics" FontSize="{StaticResource MediumFontSize}" />
+                        <husk:Tag Content="Big Chests" FontSize="{StaticResource MediumFontSize}" />
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemSpacing="4" LineSpacing="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <TextBlock Grid.Row="2"
+                               Text="Refined Storage is a mass storage mod for Minecraft that offers the player a network-based storage system, allowing them to store items and fluids on a massively expandable device network."
+                               TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
+                    <StackPanel Grid.Row="3" Spacing="4">
+                        <CheckBox>
+                            <TextBlock Text="Show compatible versions only" />
+                        </CheckBox>
+                        <TabStrip>
+                            <TabStrip.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" />
+                                </ItemsPanelTemplate>
+                            </TabStrip.ItemsPanel>
+                            <TabStripItem Grid.Column="0" Padding="0">
+                                <husk:LazyContainer CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <husk:LazyContainer.ContentTemplate>
+                                        <DataTemplate>
+                                            <ComboBox Theme="{StaticResource GhostComboBoxTheme}"
+                                                      PlaceholderText="Specific version..." VerticalAlignment="Stretch"
+                                                      VerticalContentAlignment="Center">
+                                                <ComboBox.SelectionBoxItemTemplate>
+                                                    <DataTemplate DataType="x:String">
+                                                        <StackPanel>
+                                                            <TextBlock Text="Version:"
+                                                                       FontSize="{StaticResource SmallFontSize}"
+                                                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                                            <TextBlock Text="{Binding}" />
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ComboBox.SelectionBoxItemTemplate>
+                                                <ComboBoxItem Content="1.1 - The Best Version" />
+                                                <ComboBoxItem Content="1.2" />
+                                                <ComboBoxItem Content="1.3" />
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </husk:LazyContainer.ContentTemplate>
+                                </husk:LazyContainer>
+                            </TabStripItem>
+                            <TabStripItem Grid.Column="1">
+                                <StackPanel>
+                                    <fi:SymbolIcon Symbol="BoxCheckmark" FontSize="{StaticResource LargeFontSize}" />
+                                    <TextBlock Text="Auto" />
+                                </StackPanel>
+                            </TabStripItem>
+                        </TabStrip>
+                    </StackPanel>
+                    <Grid Grid.Row="4" ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
+                            <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
+                        </Button>
+                        <Button Grid.Column="1" Classes="Primary">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Text="Add to the instance" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Border Grid.Column="0" Padding="{StaticResource ModalContentMargin}"
+                    Background="{DynamicResource LayerSolidBackgroundBrush}"
+                    BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
+                    CornerRadius="{StaticResource MediumCornerRadius}" />
+        </Grid>
+    </husk:ConstrainedBox>
+</husk:Modal>
