@@ -127,7 +127,10 @@ public class FlexWrapPanel : Panel
                 //  通过 double.Floor(width) 解决
                 // TODO: 当 HorizontalAlignment 不为 Stretch 时，依旧用同一个 count，但取每个 child 的 MinWidth
 
-                child.Arrange(new Rect(usedWidth, totalHeight + RowSpacing * row, double.Floor(width), height));
+                child.Arrange(new Rect(usedWidth,
+                                       totalHeight + RowSpacing * row,
+                                       UseLayoutRounding ? double.Floor(width) : width,
+                                       height));
                 usedWidth += width + ColumnSpacing;
             }
 

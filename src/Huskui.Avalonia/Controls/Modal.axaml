@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
-    <Thickness x:Key="ModalContentMargin">12</Thickness>
+    <Thickness x:Key="ModalContentMargin">18</Thickness>
     <ControlTheme x:Key="{x:Type local:Modal}" TargetType="local:Modal">
         <Setter Property="MinHeight" Value="128" />
         <Setter Property="MinWidth" Value="256" />

@@ -23,19 +23,20 @@
                         <ContentPresenter Grid.Row="0" Name="PART_HeaderPresenter"
                                           Content="{TemplateBinding Header}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                        <TextBlock Grid.Row="1" Text="{TemplateBinding Title}" Margin="16,20,16,0"
+                        <TextBlock Grid.Row="1" Text="{TemplateBinding Title}" Margin="24,24,24,0"
                                    IsVisible="{Binding Title,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                    FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
-                        <TextBlock Grid.Row="2" Text="{TemplateBinding Message}" Margin="18,16,18,0"
+                        <TextBlock Grid.Row="2" Text="{TemplateBinding Message}" Margin="24,8,24,0"
                                    IsVisible="{Binding Message,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
                                    TextWrapping="WrapWithOverflow"
-                                   MaxWidth="{Binding #PART_ContentPresenter.Bounds.Width}" />
+                                   MaxWidth="{Binding #PART_ContentPresenter.Bounds.Width}"
+                                   FontSize="{StaticResource SmallFontSize}" />
                         <ContentPresenter Grid.Row="3" Name="PART_ContentPresenter"
-                                          Margin="18,12,18,0" Foreground="{TemplateBinding Foreground}"
+                                          Margin="24,24,24,0" Foreground="{TemplateBinding Foreground}"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" />
-                        <Grid Grid.Row="4" ColumnDefinitions="*,*" Margin="18" ColumnSpacing="8">
+                        <Grid Grid.Row="4" ColumnDefinitions="*,*" Margin="24" ColumnSpacing="8">
                             <Button Grid.Column="0" Classes="Primary" IsDefault="True"
                                     Command="{Binding PrimaryCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     IsVisible="{TemplateBinding IsPrimaryButtonVisible}">
