@@ -17,7 +17,7 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:BusyContainer}" TargetType="local:BusyContainer">
-        <Setter Property="Background" Value="{DynamicResource LayerSmokeReversedBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource OverlaySmokeReversedBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border ClipToBounds="{TemplateBinding ClipToBounds}">

@@ -20,15 +20,15 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type CheckBox}" TargetType="CheckBox">
-        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" Background="{DynamicResource TransparentBrush}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" Background="{StaticResource TransparentBrush}">
                     <Border Grid.Column="0" Name="Box"
                             Width="16"
                             Height="16"
@@ -48,23 +48,25 @@
                         <Panel Cursor="Hand">
                             <fi:SymbolIcon Name="Indeterminate" Symbol="LineHorizontal1"
                                            FontSize="{TemplateBinding FontSize}"
-                                           Foreground="{TemplateBinding Foreground}" Opacity="0">
+                                           Foreground="{TemplateBinding Foreground}" Opacity="0"
+                                           RenderTransform="scale(0.98)">
                                 <fi:SymbolIcon.Transitions>
                                     <Transitions>
                                         <DoubleTransition Property="Opacity" Easing="SineEaseOut"
                                                           Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                        <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                        <TransformOperationsTransition Property="RenderTransform" Easing="BackEaseOut"
                                                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Transitions>
                                 </fi:SymbolIcon.Transitions>
                             </fi:SymbolIcon>
                             <fi:SymbolIcon Name="Determinate" Symbol="Checkmark" FontSize="{TemplateBinding FontSize}"
-                                           Foreground="{TemplateBinding Foreground}" Opacity="0">
+                                           Foreground="{TemplateBinding Foreground}" Opacity="0"
+                                           RenderTransform="scale(0.0)">
                                 <fi:SymbolIcon.Transitions>
                                     <Transitions>
                                         <DoubleTransition Property="Opacity" Easing="SineEaseOut"
                                                           Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                        <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                        <TransformOperationsTransition Property="RenderTransform" Easing="BackEaseOut"
                                                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
                                     </Transitions>
                                 </fi:SymbolIcon.Transitions>
@@ -90,31 +92,33 @@
 
         <Style Selector="^:checked">
             <Style Selector="^ /template/ Border#Box">
-                <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
             </Style>
 
             <Style Selector="^ /template/ fi|SymbolIcon#Determinate">
                 <Setter Property="Opacity" Value="1" />
+                <Setter Property="RenderTransform" Value="scale(1.0)" />
             </Style>
         </Style>
 
         <Style Selector="^:unchecked">
             <Style Selector="^:pointerover">
                 <Style Selector="^ /template/ Border#Box">
-                    <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
+                    <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
                 </Style>
             </Style>
         </Style>
 
         <Style Selector="^:indeterminate">
             <Style Selector="^ /template/ Border#Box">
-                <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
             </Style>
 
             <Style Selector="^ /template/ fi|SymbolIcon#Indeterminate">
                 <Setter Property="Opacity" Value="1" />
+                <Setter Property="RenderTransform" Value="scale(1.0)" />
             </Style>
         </Style>
 

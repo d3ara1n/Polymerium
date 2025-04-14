@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Grid Background="White" ColumnDefinitions="160,160">
+        <Grid Background="AliceBlue" ColumnDefinitions="160,160">
             <StackPanel
                 Grid.Column="0"
                 Margin="20"
@@ -54,15 +54,12 @@
     <ControlTheme x:Key="BaseButtonTheme" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,9" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
-        <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
@@ -78,7 +75,7 @@
                                 <BrushTransition
                                     Easing="SineEaseOut"
                                     Property="Background"
-                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 <BrushTransition
                                     Easing="SineEaseOut"
                                     Property="BorderBrush"
@@ -96,7 +93,7 @@
                         Padding="{TemplateBinding Padding}"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Background="{DynamicResource TransparentBrush}"
+                        Background="{StaticResource TransparentBrush}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         Content="{TemplateBinding Content}"
                         ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -114,39 +111,25 @@
                             </Transitions>
                         </ContentPresenter.Transitions>
                     </ContentPresenter>
-                    <Border
-                        x:Name="Indicator"
-                        Background="{DynamicResource TransparentBrush}"
-                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border x:Name="Indicator" Background="{StaticResource TransparentBrush}"
+                            BorderBrush="{StaticResource TransparentBrush}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition
                                     Easing="SineEaseOut"
                                     Property="Background"
                                     Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                <ThicknessTransition
+                                <BrushTransition
                                     Easing="SineEaseOut"
-                                    Property="BorderThickness"
-                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
-                                <TransformOperationsTransition
-                                    Easing="SineEaseInOut"
-                                    Property="RenderTransform"
-                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                    Property="BorderBrush"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>
                 </Panel>
             </ControlTemplate>
         </Setter>
-
-        <Style Selector="^:pointerover /template/ Border#Indicator">
-            <Setter Property="Background" Value="{DynamicResource OverlayHalfBackgroundBrush}" />
-        </Style>
-
-        <Style Selector="^:pressed /template/ Border#Indicator">
-            <Setter Property="Background" Value="{DynamicResource OverlayFullBackgroundBrush}" />
-        </Style>
 
         <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
@@ -159,32 +142,44 @@
             <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
             <Setter Property="Padding" Value="10,6" />
         </Style>
+
+        <Style Selector="^.Small">
+            <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+            <Setter Property="Padding" Value="18,12" />
+        </Style>
     </ControlTheme>
 
     <ControlTheme
         x:Key="{x:Type Button}"
         BasedOn="{StaticResource BaseButtonTheme}"
         TargetType="Button">
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlInteractiveBackgroundBrush}" />
+
+        <Style Selector="^:pointerover /template/ Border#Indicator">
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Indicator">
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
+        </Style>
 
         <Style Selector="^.Primary">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
         </Style>
 
         <Style Selector="^.Success">
-            <Setter Property="Background" Value="{DynamicResource ControlSuccessBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlSuccessInteractiveBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
         </Style>
 
         <Style Selector="^.Warning">
-            <Setter Property="Background" Value="{DynamicResource ControlWarningBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlWarningInteractiveBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
         </Style>
 
         <Style Selector="^.Danger">
-            <Setter Property="Background" Value="{DynamicResource ControlDangerBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlDangerInteractiveBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
         </Style>
     </ControlTheme>
 
@@ -193,27 +188,102 @@
         BasedOn="{StaticResource BaseButtonTheme}"
         TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
+
+        <Style Selector="^ /template/ Border#Indicator">
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+
+
+        <Style Selector="^:pointerover /template/ Border#Border">
+            <Setter Property="Background" Value="{StaticResource ControlTranslucentHalfBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:pressed">
+            <Style Selector="^ /template/ Border#Border">
+                <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#Indicator">
+                <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
+            </Style>
+        </Style>
 
         <Style Selector="^.Primary">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+
+            <Style Selector="^:pointerover /template/ Border#Border">
+                <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ Border#Border">
+                    <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#Indicator">
+                    <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+                </Style>
+            </Style>
         </Style>
 
         <Style Selector="^.Success">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlSuccessBorderBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlSuccessForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlSuccessInteractiveBorderBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlSuccessForegroundBrush}" />
+
+            <Style Selector="^:pointerover /template/ Border#Border">
+                <Setter Property="Background" Value="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ Border#Border">
+                    <Setter Property="Background" Value="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#Indicator">
+                    <Setter Property="BorderBrush" Value="{StaticResource ControlSuccessInteractiveBorderBrush}" />
+                </Style>
+            </Style>
         </Style>
 
         <Style Selector="^.Warning">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlWarningBorderBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlWarningForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlWarningInteractiveBorderBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlWarningForegroundBrush}" />
+
+            <Style Selector="^:pointerover /template/ Border#Border">
+                <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ Border#Border">
+                    <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentFullBackgroundBrush}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#Indicator">
+                    <Setter Property="BorderBrush" Value="{StaticResource ControlWarningInteractiveBorderBrush}" />
+                </Style>
+            </Style>
         </Style>
 
         <Style Selector="^.Danger">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBorderBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlDangerForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDangerInteractiveBorderBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
+
+            <Style Selector="^:pointerover /template/ Border#Border">
+                <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ Border#Border">
+                    <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#Indicator">
+                    <Setter Property="BorderBrush" Value="{StaticResource ControlDangerInteractiveBorderBrush}" />
+                </Style>
+            </Style>
         </Style>
     </ControlTheme>
 
@@ -227,22 +297,59 @@
 
         <Style Selector="^:pointerover /template/ Border#Indicator">
             <Setter Property="RenderTransform" Value="scale(1.0)" />
+            <Setter Property="Background" Value="{StaticResource ControlTranslucentHalfBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#Indicator">
+            <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^.Primary">
-            <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+
+            <Style Selector="^:pointerover /template/ Border#Indicator">
+                <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:pressed /template/ Border#Indicator">
+                <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Success">
-            <Setter Property="Foreground" Value="{DynamicResource ControlSuccessForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlSuccessForegroundBrush}" />
+
+            <Style Selector="^:pointerover /template/ Border#Indicator">
+                <Setter Property="Background" Value="{StaticResource ControlSuccessTranslucentHalfBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:pressed /template/ Border#Indicator">
+                <Setter Property="Background" Value="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Warning">
-            <Setter Property="Foreground" Value="{DynamicResource ControlWarningForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlWarningForegroundBrush}" />
+
+            <Style Selector="^:pointerover /template/ Border#Indicator">
+                <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:pressed /template/ Border#Indicator">
+                <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentFullBackgroundBrush}" />
+            </Style>
         </Style>
 
         <Style Selector="^.Danger">
-            <Setter Property="Foreground" Value="{DynamicResource ControlDangerForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
+
+            <Style Selector="^:pointerover /template/ Border#Indicator">
+                <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}" />
+            </Style>
+
+            <Style Selector="^:pressed /template/ Border#Indicator">
+                <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
+            </Style>
         </Style>
     </ControlTheme>
 </ResourceDictionary>

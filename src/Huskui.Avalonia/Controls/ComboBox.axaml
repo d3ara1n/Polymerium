@@ -24,7 +24,7 @@
         <Setter Property="PlaceholderForeground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="MaxDropDownHeight" Value="504" />
-        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlTranslucentHalfBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Padding" Value="12,8" />
@@ -61,7 +61,7 @@
                                                       ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" />
                                 </Panel>
                                 <fi:SymbolIcon Grid.Column="2" Symbol="ChevronUpDown"
-                                               FontSize="{TemplateBinding FontSize}" IsHitTestVisible="False" />
+                                               FontSize="{TemplateBinding FontSize}"/>
                             </Grid>
                         </Border>
                         <Border x:Name="GlowBorder" CornerRadius="{TemplateBinding CornerRadius}"
@@ -82,7 +82,7 @@
                                IsOpen="{TemplateBinding IsDropDownOpen,Mode=TwoWay}"
                                PlacementTarget="{TemplateBinding}"
                                InheritsTransform="True">
-                            <Border Margin="2,4" Background="{DynamicResource LayerSolidBackgroundBrush}"
+                            <Border Margin="2,4" Background="{DynamicResource OverlaySolidBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
                                 <Border.Effect>
                                     <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
@@ -102,11 +102,11 @@
 
 
         <Style Selector="^:focus:not(:dropdownopen) /template/ Border#GlowBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Border#Border">
-            <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
+            <Setter Property="Background" Value="{DynamicResource OverlaySolidBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Border#Border">
@@ -158,7 +158,7 @@
 
         <Style Selector="^:pointerover:not(:selected)">
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource ControlTranslucentHalfBackgroundBrush}" />
             </Style>
 
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
@@ -226,7 +226,7 @@
                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                                 </Panel>
                                 <fi:SymbolIcon Grid.Column="2" Symbol="ChevronUpDown"
-                                               FontSize="{TemplateBinding FontSize}" IsHitTestVisible="False" />
+                                               FontSize="{TemplateBinding FontSize}"  />
                             </Grid>
                         </Border>
                         <Popup Name="PART_Popup"
@@ -236,7 +236,7 @@
                                IsOpen="{TemplateBinding IsDropDownOpen,Mode=TwoWay}"
                                PlacementTarget="{TemplateBinding}"
                                InheritsTransform="True">
-                            <Border Margin="2,4" Background="{DynamicResource LayerSolidBackgroundBrush}"
+                            <Border Margin="2,4" Background="{DynamicResource OverlaySolidBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
                                 <Border.Effect>
                                     <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />

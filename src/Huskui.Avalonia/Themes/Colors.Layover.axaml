@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <!-- White -->
+            <Color x:Key="Layover1Color">#0dffffff</Color>
+            <Color x:Key="Layover2Color">#1affffff</Color>
+            <Color x:Key="Layover3Color">#26ffffff</Color>
+            <Color x:Key="Layover4Color">#33ffffff</Color>
+            <Color x:Key="Layover5Color">#4dffffff</Color>
+            <Color x:Key="Layover6Color">#66ffffff</Color>
+            <Color x:Key="Layover7Color">#80ffffff</Color>
+            <Color x:Key="Layover8Color">#99ffffff</Color>
+            <Color x:Key="Layover9Color">#b3ffffff</Color>
+            <Color x:Key="Layover10Color">#ccffffff</Color>
+            <Color x:Key="Layover11Color">#e6ffffff</Color>
+            <Color x:Key="Layover12Color">#f2ffffff</Color>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <!-- Black -->
+            <Color x:Key="Layover1Color">#0d000000</Color>
+            <Color x:Key="Layover2Color">#1a000000</Color>
+            <Color x:Key="Layover3Color">#26000000</Color>
+            <Color x:Key="Layover4Color">#33000000</Color>
+            <Color x:Key="Layover5Color">#4d000000</Color>
+            <Color x:Key="Layover6Color">#66000000</Color>
+            <Color x:Key="Layover7Color">#80000000</Color>
+            <Color x:Key="Layover8Color">#99000000</Color>
+            <Color x:Key="Layover9Color">#b3000000</Color>
+            <Color x:Key="Layover10Color">#cc000000</Color>
+            <Color x:Key="Layover11Color">#e6000000</Color>
+            <Color x:Key="Layover12Color">#f2000000</Color>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

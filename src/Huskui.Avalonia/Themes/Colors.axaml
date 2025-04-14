@@ -1,13 +1,13 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceInclude Source="Colors.White.axaml" />
-        <ResourceInclude Source="Colors.Black.axaml" />
-        <ResourceInclude Source="Colors.Gray.Neutral.axaml" />
-        <ResourceInclude Source="Colors.Accent.Amber.axaml" />
-        <ResourceInclude Source="Colors.Success.Grass.axaml" />
-        <ResourceInclude Source="Colors.Warning.Orange.axaml" />
-        <ResourceInclude Source="Colors.Danger.Tomato.axaml" />
+        <MergeResourceInclude Source="Colors.Overlay.axaml" />
+        <MergeResourceInclude Source="Colors.Layover.axaml" />
+        <MergeResourceInclude Source="Colors.Gray.Neutral.axaml" />
+        <MergeResourceInclude Source="Colors.Accent.Amber.axaml" />
+        <MergeResourceInclude Source="Colors.Success.Grass.axaml" />
+        <MergeResourceInclude Source="Colors.Warning.Orange.axaml" />
+        <MergeResourceInclude Source="Colors.Danger.Tomato.axaml" />
     </ResourceDictionary.MergedDictionaries>
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
@@ -17,98 +17,84 @@
             <Color x:Key="TransparentColor">#00000000</Color>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
-    
-    
-    
 
-    <!-- Naming: OwnerLevelSubtle(Accent)PropertyType -->
-    
+    <!-- Naming: OwnerVariantStatePropertyType -->
+
+    <!-- Control(Variant)BackgroundBrush：基色，通过在此基础上控制透明度实现分层 -->
+    <!-- Control(Variant)InteractiveBackgroundBrush：互动类控件背景色，例如按钮滚动条等 -->
+    <!-- Control(Variant)BorderBrush：非互动类控件边框色 -->
+    <!-- Control(Variant)InteractiveBorderBrush：互动类控件或触发中边框色，例如当控件被选中时 -->
+
     <SolidColorBrush x:Key="TransparentBrush" Color="{DynamicResource TransparentColor}" />
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource Gray4Color}" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource Gray1Color}" />
 
-    <!-- 颜色固定，用作按钮遮罩 -->
-    <SolidColorBrush x:Key="OverlayLighter1BackgroundBrush" Color="{DynamicResource White1Color}" />
-    <SolidColorBrush x:Key="OverlayLighter2BackgroundBrush" Color="{DynamicResource White2Color}" />
-    <SolidColorBrush x:Key="OverlayLighter6BackgroundBrush" Color="{DynamicResource White6Color}" />
-    <SolidColorBrush x:Key="OverlayDarker1BackgroundBrush" Color="{DynamicResource Black1Color}" />
-    <SolidColorBrush x:Key="OverlayDarker2BackgroundBrush" Color="{DynamicResource Black2Color}" />
-    <SolidColorBrush x:Key="OverlayDarker7BackgroundBrush" Color="{DynamicResource Black7Color}" />
-    <!-- 颜色动态，用作按钮遮罩 -->
-    <SolidColorBrush x:Key="OverlayHalfBackgroundBrush" Color="{DynamicResource Black1Color}" />
-    <SolidColorBrush x:Key="OverlayFullBackgroundBrush" Color="{DynamicResource Black2Color}" />
+    <!-- Overlay -->
+    <SolidColorBrush x:Key="OverlayHalfBackgroundBrush" Color="{DynamicResource Overlay1Color}" />
+    <SolidColorBrush x:Key="OverlayFullBackgroundBrush" Color="{DynamicResource Overlay2Color}" />
+    <SolidColorBrush x:Key="OverlaySolidBackgroundBrush" Color="{DynamicResource Gray1Color}" />
+    <SolidColorBrush x:Key="OverlaySmokeBackgroundBrush" Color="{DynamicResource Overlay7Color}" />
+    <SolidColorBrush x:Key="OverlaySmokeReversedBackgroundBrush" Color="{DynamicResource Layover7Color}" />
 
-    <!-- 颜色会相对亮暗主题改变，用作层叠项目背景 -->
-    <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{DynamicResource Gray1Color}" />
-    <SolidColorBrush x:Key="Layer0BackgroundBrush" Color="{DynamicResource White10Color}" />
-    <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{DynamicResource Black1Color}" />
-    <SolidColorBrush x:Key="Layer1ReversedBackgroundBrush" Color="{DynamicResource White1Color}" />
-    <SolidColorBrush x:Key="Layer2BackgroundBrush" Color="{DynamicResource Black2Color}" />
-    <SolidColorBrush x:Key="Layer2ReversedBackgroundBrush" Color="{DynamicResource White2Color}" />
-    <SolidColorBrush x:Key="Layer3BackgroundBrush" Color="{DynamicResource Black3Color}" />
-    <SolidColorBrush x:Key="Layer3ReversedBackgroundBrush" Color="{DynamicResource White3Color}" />
-    <SolidColorBrush x:Key="Layer7BackgroundBrush" Color="{DynamicResource Black7Color}" />
+    <!-- Card -->
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource Layover7Color}" />
 
-    <SolidColorBrush x:Key="LayerSmokeBackgroundBrush" Color="{DynamicResource Black7Color}" />
-    <SolidColorBrush x:Key="LayerSmokeReversedBackgroundBrush" Color="{DynamicResource White7Color}" />
-
-    <SolidColorBrush x:Key="Card1BackgroundBrush" Color="{DynamicResource Gray2Color}" />
-    <SolidColorBrush x:Key="Card2BackgroundBrush" Color="{DynamicResource Gray1Color}" />
-    <SolidColorBrush x:Key="Card3BackgroundBrush" Color="{DynamicResource Gray3Color}" />
-
+    <!-- Normal：这 ParkUI 这部分的颜色就完全没按 Step 分区来 -->
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource Gray5Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentBackgroundBrush" Color="{DynamicResource Gray6Color}"
-                     Opacity="0.4" />
-    <SolidColorBrush x:Key="ControlTranslucentOverlayBackgroundBrush" Color="{DynamicResource Gray6Color}"
-                     Opacity="0.1" />
-    <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{DynamicResource Accent9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentAccentBackgroundBrush" Color="{DynamicResource Accent6Color}"
-                     Opacity="0.4" />
-    <SolidColorBrush x:Key="ControlTranslucentOverlayAccentBackgroundBrush"
-                     Color="{DynamicResource Accent9Color}"
-                     Opacity="0.1" />
-    <SolidColorBrush x:Key="ControlSuccessBackgroundBrush" Color="{DynamicResource Success9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentSuccessBackgroundBrush" Color="{DynamicResource Success6Color}"
-                     Opacity="0.4" />
-    <SolidColorBrush x:Key="ControlTranslucentOverlaySuccessBackgroundBrush"
-                     Color="{DynamicResource Success9Color}"
-                     Opacity="0.1" />
-    <SolidColorBrush x:Key="ControlWarningBackgroundBrush" Color="{DynamicResource Warning9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentWarningBackgroundBrush" Color="{DynamicResource Warning6Color}"
-                     Opacity="0.4" />
-    <SolidColorBrush x:Key="ControlTranslucentOverlayWarningBackgroundBrush"
-                     Color="{DynamicResource Warning9Color}"
-                     Opacity="0.1" />
-    <SolidColorBrush x:Key="ControlDangerBackgroundBrush" Color="{DynamicResource Danger9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentOverlayDangerBackgroundBrush"
-                     Color="{DynamicResource Danger6Color}"
-                     Opacity="0.4" />
-    <SolidColorBrush x:Key="ControlTranslucentDangerBackgroundBrush" Color="{DynamicResource Danger9Color}"
-                     Opacity="0.1" />
-
-    <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{DynamicResource White8Color}" />
-    <SolidColorBrush x:Key="ControlInteractiveSolidBackgroundBrush" Color="{DynamicResource Gray1Color}" />
-    <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{DynamicResource Gray6Color}" />
-    <SolidColorBrush x:Key="ControlInteractiveSolidBorderBrush" Color="{DynamicResource Gray1Color}" />
-
-    <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource Gray5Color}" />
-    <SolidColorBrush x:Key="ControlAccentBorderBrush" Color="{DynamicResource Accent9Color}" />
-    <SolidColorBrush x:Key="ControlSuccessBorderBrush" Color="{DynamicResource Success9Color}" />
-    <SolidColorBrush x:Key="ControlWarningBorderBrush" Color="{DynamicResource Warning9Color}" />
-    <SolidColorBrush x:Key="ControlDangerBorderBrush" Color="{DynamicResource Danger9Color}" />
-
-    <SolidColorBrush x:Key="ControlHighlightForegroundBrush" Color="{DynamicResource Gray1Color}" />
-    <SolidColorBrush x:Key="ControlActiveForegroundBrush" Color="{DynamicResource Gray1Color}" />
+    <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{DynamicResource Gray3Color}" />
+    <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource Gray4Color}" />
+    <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{DynamicResource Gray7Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentHalfBackgroundBrush" Color="{DynamicResource Gray9Color}" Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlTranslucentFullBackgroundBrush" Color="{DynamicResource Gray9Color}" Opacity="0.4" />
     <SolidColorBrush x:Key="ControlForegroundBrush" Color="{DynamicResource Gray12Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentForegroundBrush" Color="{DynamicResource Gray11Color}" />
+
+    <!-- Accent -->
+    <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{DynamicResource Accent9Color}" />
+    <SolidColorBrush x:Key="ControlAccentInteractiveBackgroundBrush" Color="{DynamicResource Accent9Color}" />
+    <SolidColorBrush x:Key="ControlAccentBorderBrush" Color="{DynamicResource Accent8Color}" />
+    <SolidColorBrush x:Key="ControlAccentInteractiveBorderBrush" Color="{DynamicResource Accent9Color}" />
+    <SolidColorBrush x:Key="ControlAccentTranslucentHalfBackgroundBrush" Color="{DynamicResource Accent9Color}"
+                     Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlAccentTranslucentFullBackgroundBrush" Color="{DynamicResource Accent9Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlAccentForegroundBrush" Color="{DynamicResource Accent11Color}" />
+
+    <!-- Success -->
+    <SolidColorBrush x:Key="ControlSuccessBackgroundBrush" Color="{DynamicResource Success9Color}" />
+    <SolidColorBrush x:Key="ControlSuccessInteractiveBackgroundBrush" Color="{DynamicResource Success9Color}" />
+    <SolidColorBrush x:Key="ControlSuccessBorderBrush" Color="{DynamicResource Success8Color}" />
+    <SolidColorBrush x:Key="ControlSuccessInteractiveBorderBrush" Color="{DynamicResource Success9Color}" />
+    <SolidColorBrush x:Key="ControlSuccessTranslucentHalfBackgroundBrush" Color="{DynamicResource Success9Color}"
+                     Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlSuccessTranslucentFullBackgroundBrush" Color="{DynamicResource Success9Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlSuccessForegroundBrush" Color="{DynamicResource Success11Color}" />
+
+    <!-- Warning -->
+    <SolidColorBrush x:Key="ControlWarningBackgroundBrush" Color="{DynamicResource Warning9Color}" />
+    <SolidColorBrush x:Key="ControlWarningInteractiveBackgroundBrush" Color="{DynamicResource Warning9Color}" />
+    <SolidColorBrush x:Key="ControlWarningBorderBrush" Color="{DynamicResource Warning8Color}" />
+    <SolidColorBrush x:Key="ControlWarningInteractiveBorderBrush" Color="{DynamicResource Warning9Color}" />
+    <SolidColorBrush x:Key="ControlWarningTranslucentHalfBackgroundBrush" Color="{DynamicResource Warning9Color}"
+                     Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlWarningTranslucentFullBackgroundBrush" Color="{DynamicResource Warning9Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlWarningForegroundBrush" Color="{DynamicResource Warning11Color}" />
+
+    <!-- Danger -->
+    <SolidColorBrush x:Key="ControlDangerBackgroundBrush" Color="{DynamicResource Danger9Color}" />
+    <SolidColorBrush x:Key="ControlDangerInteractiveBackgroundBrush" Color="{DynamicResource Danger9Color}" />
+    <SolidColorBrush x:Key="ControlDangerBorderBrush" Color="{DynamicResource Danger8Color}" />
+    <SolidColorBrush x:Key="ControlDangerInteractiveBorderBrush" Color="{DynamicResource Danger9Color}" />
+    <SolidColorBrush x:Key="ControlDangerTranslucentHalfBackgroundBrush" Color="{DynamicResource Danger9Color}"
+                     Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlDangerTranslucentFullBackgroundBrush" Color="{DynamicResource Danger9Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlDangerForegroundBrush" Color="{DynamicResource Danger11Color}" />
+
+    <!-- Common -->
+    <!-- Foreground -->
     <SolidColorBrush x:Key="ControlSecondaryForegroundBrush" Color="{DynamicResource Gray9Color}" />
-    <SolidColorBrush x:Key="ControlAccentForegroundBrush" Color="{DynamicResource Accent10Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentAccentForegroundBrush" Color="{DynamicResource Accent11Color}" />
-    <SolidColorBrush x:Key="ControlSuccessForegroundBrush" Color="{DynamicResource Success9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentSuccessForegroundBrush" Color="{DynamicResource Success11Color}" />
-    <SolidColorBrush x:Key="ControlWarningForegroundBrush" Color="{DynamicResource Warning9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentWarningForegroundBrush" Color="{DynamicResource Warning11Color}" />
-    <SolidColorBrush x:Key="ControlDangerForegroundBrush" Color="{DynamicResource Danger9Color}" />
-    <SolidColorBrush x:Key="ControlTranslucentDangerForegroundBrush" Color="{DynamicResource Danger11Color}" />
+    <SolidColorBrush x:Key="ControlReversedForegroundBrush" Color="{DynamicResource Gray1Color}" />
 
     <SolidColorBrush x:Key="NotificationBorderBrush" Color="{DynamicResource Gray1Color}" />
     <SolidColorBrush x:Key="NotificationBackgroundBrush" Color="{DynamicResource Gray1Color}" />
