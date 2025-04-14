@@ -12,7 +12,7 @@
 
     <ControlTheme x:Key="{x:Type husk:Page}" TargetType="husk:Page"
                   BasedOn="{StaticResource {x:Type husk:Page}}">
-        <Setter Property="Background" Value="{DynamicResource Layer0BackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource LayerBackgroundBrush}" />
         <!-- <Setter Property="Effect"> -->
         <!--     <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="8" Opacity="0.1" /> -->
         <!-- </Setter> -->

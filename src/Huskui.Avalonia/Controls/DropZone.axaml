@@ -8,7 +8,7 @@
                 <Panel>
                     <Rectangle RadiusX="6" RadiusY="6"
                                StrokeThickness="2"
-                               Stroke="{DynamicResource ControlBorderBrush}"
+                               Stroke="{StaticResource ControlBorderBrush}"
                                StrokeDashArray="6,2"
                                StrokeLineCap="Round"
                                StrokeJoin="Round" />
@@ -17,10 +17,10 @@
                             <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" />
                             <TextBlock FontWeight="Bold" Text="Drag and drop, or" />
                             <HyperlinkButton Content="Browser files..." FontWeight="Bold"
-                                             Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                                             Foreground="{StaticResource ControlAccentForegroundBrush}" />
                         </StackPanel>
                         <TextBlock Text="Up to 12MB" HorizontalAlignment="Center"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
                 </Panel>
             </local:DropZone>

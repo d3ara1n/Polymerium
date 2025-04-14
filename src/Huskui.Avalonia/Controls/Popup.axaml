@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ControlTheme x:Key="{x:Type PopupRoot}" TargetType="PopupRoot">
         <Setter Property="Cursor" Value="Arrow" />
-        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource WindowBackgroundBrush}" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="TransparencyBackgroundFallback" Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Template">

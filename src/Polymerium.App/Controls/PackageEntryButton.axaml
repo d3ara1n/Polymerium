@@ -33,7 +33,7 @@
         </Setter>
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
-                <husk:Card Name="Background" Height="78" Background="{DynamicResource Layer0BackgroundBrush}"
+                <husk:Card Name="Background" Height="78" Background="{StaticResource LayerBackgroundBrush}"
                            CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Opacity>
                         <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
@@ -55,7 +55,7 @@
                         <TextBlock Text="Disabled" FontSize="36" HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    RenderTransform="scaleX(1.2)"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <TextBlock.Opacity>
                                 <MultiBinding Converter="{x:Static converters:InternalConverters.ZeroOr}">
                                     <Binding Path="IsEnabled" Mode="OneWay" />
@@ -155,12 +155,12 @@
 
         <Style Selector="^:pointerover /template/ husk|Card#Background">
             <Setter Property="BorderBrush"
-                    Value="{DynamicResource ControlAccentBorderBrush}" />
+                    Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
         <Style Selector="^:pressed /template/ husk|Card#Background">
             <Setter Property="Background"
-                    Value="{DynamicResource OverlayFullBackgroundBrush}" />
+                    Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ husk|Card#Background">

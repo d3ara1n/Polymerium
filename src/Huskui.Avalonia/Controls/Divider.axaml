@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme x:Key="{x:Type local:Divider}" TargetType="local:Divider">
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlSecondaryForegroundBrush}" />
         <Setter Property="Orientation" Value="Horizontal" />
 
         <Style Selector="^[Orientation=Horizontal]">

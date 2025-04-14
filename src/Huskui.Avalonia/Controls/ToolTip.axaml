@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ControlTheme x:Key="{x:Type ToolTip}"
                   TargetType="ToolTip">
-        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="Template">

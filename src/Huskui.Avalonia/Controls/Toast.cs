@@ -14,10 +14,10 @@ public class Toast : HeaderedContentControl
         set => SetValue(IsHeaderVisibleProperty, value);
     }
 
+    protected override Type StyleKeyOverride { get; } = typeof(Toast);
+
     public void Dismiss()
     {
         RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
     }
-
-    protected override Type StyleKeyOverride { get; } = typeof(Toast);
 }

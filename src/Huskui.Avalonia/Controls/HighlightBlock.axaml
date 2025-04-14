@@ -18,8 +18,8 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:HighlightBlock}" TargetType="local:HighlightBlock">
-        <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlSecondaryForegroundBrush}" />
         <Setter Property="Padding" Value="6,0" />
         <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
@@ -35,14 +35,14 @@
         </Setter>
 
         <Style Selector="^.Shortcut">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
             <Setter Property="BorderThickness" Value="1,1,1,2" />
         </Style>
 
         <Style Selector="^.Primary">
-            <Setter Property="Background" Value="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

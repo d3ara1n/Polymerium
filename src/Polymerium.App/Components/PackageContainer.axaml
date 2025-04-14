@@ -19,15 +19,15 @@
                         IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                         Command="{Binding $parent[TextBox].Clear}"
                         Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </TextBox.InnerRightContent>
             </TextBox>
             <TextBlock Grid.Column="2">
                 <Run Text="Results"
-                     Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                     Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <LineBreak />
                 <Run Text="{Binding $parent[cp:PackageContainer].View.Count,Mode=OneWay,FallbackValue=0}" />
-                <Run Text="/" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                <Run Text="/" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <Run Text="{Binding $parent[cp:PackageContainer].TotalCount,Mode=OneWay,FallbackValue=0}" />
             </TextBlock>
             <StackPanel Grid.Column="4" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">

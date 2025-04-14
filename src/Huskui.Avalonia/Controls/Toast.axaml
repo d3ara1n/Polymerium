@@ -8,9 +8,9 @@
     <Thickness x:Key="ToastHeaderContentMargin">0,68,0,0</Thickness>
     <Thickness x:Key="ToastToplessContentMargin">24,0,24,24</Thickness>
     <ControlTheme x:Key="{x:Type local:Toast}" TargetType="local:Toast">
-        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <!-- <Setter Property="BorderThickness" Value="1" /> -->
-        <!-- <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" /> -->
+        <!-- <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" /> -->
         <Setter Property="Padding" Value="{StaticResource ToastContentMargin}" />
         <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
         <Setter Property="ClipToBounds" Value="True" />
@@ -36,7 +36,7 @@
                         <Panel VerticalAlignment="Top">
                             <Border Name="HeaderBackground" IsVisible="{TemplateBinding IsHeaderVisible}"
                                     CornerRadius="{TemplateBinding CornerRadius,Converter={x:Static huskc:CornerRadiusConverters.Upper}}"
-                                    Background="{DynamicResource LayerSolidBackgroundBrush}">
+                                    Background="{StaticResource OverlaySolidBackgroundBrush}">
                                 <Border.Opacity>
                                     <MultiBinding Converter="{x:Static huskc:InternalConverters.OffsetToOpacity}">
                                         <Binding ElementName="ScrollViewer" Path="Offset" />

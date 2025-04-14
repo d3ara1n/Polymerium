@@ -52,8 +52,8 @@
 
     <ControlTheme x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Background" Value="{DynamicResource ControlTranslucentOverlayBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlTranslucentHalfBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
@@ -78,8 +78,8 @@
                     </Border>
                     <Border Name="Indicator" Width="3" Opacity="0" HorizontalAlignment="Left"
                             RenderTransform="translateX(-4px)" BorderThickness="1"
-                            BorderBrush="{DynamicResource ControlTranslucentAccentBackgroundBrush}"
-                            Background="{DynamicResource ControlAccentBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                            Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                             CornerRadius="{StaticResource SmallCornerRadius}" Margin="0,4">
                         <Border.Transitions>
                             <Transitions>
@@ -104,15 +104,15 @@
         </Setter>
 
         <Style Selector="^:pointerover:not(:selected) /template/ Border#Background">
-            <Setter Property="Background" Value="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
 
         <Style Selector="^:selected">
             <Style Selector="^ /template/ Border#Background">
-                <Setter Property="Background" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
             </Style>
             <Style Selector="^ /template/ Border#Indicator">
                 <Setter Property="Opacity" Value="1" />
@@ -132,7 +132,7 @@
 
     <ControlTheme x:Key="CleanListBoxItemTheme" TargetType="ListBoxItem">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <ContentPresenter

@@ -16,8 +16,8 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:InfoBar}" TargetType="local:InfoBar">
-        <Setter Property="Background" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
         <Setter Property="BorderThickness" Value="4,1,1,1" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Padding" Value="12" />
@@ -44,20 +44,20 @@
         </Style>
 
         <Style Selector="^.Primary">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
-            <Setter Property="Background" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
         </Style>
         <Style Selector="^.Success">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlSuccessBorderBrush}" />
-            <Setter Property="Background" Value="{DynamicResource ControlTranslucentSuccessBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlSuccessBorderBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}" />
         </Style>
         <Style Selector="^.Warning">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlWarningBorderBrush}" />
-            <Setter Property="Background" Value="{DynamicResource ControlTranslucentWarningBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlWarningBorderBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentFullBackgroundBrush}" />
         </Style>
         <Style Selector="^.Danger">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBorderBrush}" />
-            <Setter Property="Background" Value="{DynamicResource ControlTranslucentDangerBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDangerBorderBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

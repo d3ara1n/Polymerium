@@ -15,7 +15,7 @@
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
                     <icons:PackIconLucide Margin="10,0"
-                                          Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                          Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                           Kind="Filter" Height="{StaticResource MediumFontSize}"
                                           VerticalAlignment="Center" />
                     <husk:Divider Orientation="Vertical" />

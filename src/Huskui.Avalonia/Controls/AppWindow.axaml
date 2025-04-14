@@ -5,11 +5,9 @@
     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
 
     <ControlTheme x:Key="{x:Type local:AppWindow}" TargetType="local:AppWindow">
-        <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
-        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource WindowBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <!-- <Setter Property="ExtendClientAreaChromeHints" Value="NoChrome" /> -->
-        <!-- <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" /> -->
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="TransparencyBackgroundFallback" Value="{StaticResource WindowBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Template">
@@ -31,7 +29,7 @@
                         </Border.Transitions>
                     </Border>
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" />
-                    <VisualLayerManager RenderOptions.TextRenderingMode="Antialias">
+                    <VisualLayerManager>
                         <VisualLayerManager.ChromeOverlayLayer>
                             <TitleBar />
                         </VisualLayerManager.ChromeOverlayLayer>
@@ -93,13 +91,13 @@
         </Style>
 
         <Style Selector="^local|AppWindow[ActualTransparencyLevel=Mica][IsActive=True]">
-            <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+            <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         </Style>
         <Style Selector="^local|AppWindow[ActualTransparencyLevel=AcrylicBlur][IsActive=True]">
-            <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+            <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         </Style>
         <Style Selector="^local|AppWindow[ActualTransparencyLevel=Blur][IsActive=True]">
-            <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+            <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

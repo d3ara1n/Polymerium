@@ -24,7 +24,7 @@
         </husk:BusyContainer.IsBusy>
         <husk:BusyContainer.PendingContent>
             <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Background="{DynamicResource LayerSolidBackgroundBrush}">
+                       Background="{StaticResource OverlaySolidBackgroundBrush}">
                 <StackPanel Spacing="8" Margin="24">
                     <husk:ProgressRing IsIndeterminate="{Binding UpdatingPending}" HorizontalAlignment="Center"
                                        Height="56" Width="56" Value="{Binding UpdatingProgress,Mode=OneWay}">
@@ -48,12 +48,11 @@
                                TextTrimming="CharacterEllipsis" />
                     <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12">
                         <Border BorderThickness="3,0,0,0" CornerRadius="{StaticResource SmallCornerRadius}"
-                                BorderBrush="{DynamicResource ControlAccentBackgroundBrush}"
-                                Background="{DynamicResource ControlTranslucentAccentBackgroundBrush}"
-                                VerticalAlignment="Center">
+                                BorderBrush="{StaticResource ControlAccentBackgroundBrush}"
+                                Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}">
                             <StackPanel Margin="12,6">
                                 <TextBlock
-                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="Game Version" />
                                 <TextBlock FontSize="{StaticResource LargeFontSize}"
                                            Text="{Binding Basic.Version, FallbackValue=Version}" />
@@ -61,18 +60,18 @@
                             </StackPanel>
                         </Border>
                         <Border BorderThickness="3,0,0,0" CornerRadius="{StaticResource SmallCornerRadius}"
-                                BorderBrush="{DynamicResource ControlBackgroundBrush}"
-                                Background="{DynamicResource ControlTranslucentBackgroundBrush}"
-                                VerticalAlignment="Center">
+                                BorderBrush="{StaticResource ControlBackgroundBrush}"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
                             <DockPanel>
                                 <Button DockPanel.Dock="Right" Padding="8,4" Command="{Binding EditLoaderCommand}"
+                                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                         IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNull}}"
                                         CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
                                     <fi:SymbolIcon Symbol="Branch" FontSize="{StaticResource LargeFontSize}" />
                                 </Button>
                                 <StackPanel Margin="12,6">
                                     <TextBlock
-                                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="Mod Loader" />
                                     <TextBlock FontSize="{StaticResource LargeFontSize}"
                                                Text="{Binding LoaderLabel, FallbackValue=None}" />
@@ -86,7 +85,7 @@
                                     IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
                     <husk:LazyContainer.BadContent>
                         <husk:Card BorderThickness="2"
-                                   BorderBrush="{DynamicResource ControlBorderBrush}">
+                                   BorderBrush="{StaticResource ControlBorderBrush}">
                             <StackPanel>
                                 <TextBlock Text="Something went wrong" />
                                 <Button Content="Retry" />
@@ -95,10 +94,10 @@
                     </husk:LazyContainer.BadContent>
                     <husk:LazyContainer.ContentTemplate>
                         <DataTemplate x:DataType="m:InstanceReferenceModel">
-                            <Border Background="{DynamicResource ControlBackgroundBrush}"
+                            <Border Background="{StaticResource ControlBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}" MaxWidth="320">
                                 <Grid RowDefinitions="*,Auto" RowSpacing="4" Margin="4">
-                                    <Border Grid.Row="0" Background="{DynamicResource LayerSolidBackgroundBrush}"
+                                    <Border Grid.Row="0" Background="{StaticResource OverlaySolidBackgroundBrush}"
                                             CornerRadius="{StaticResource MediumCornerRadius}" Padding="12">
                                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
                                             <Border Grid.Column="0" Height="42" Width="42"
@@ -162,11 +161,11 @@
                                            Maximum="{Binding StageCount}" />
                         <TextBlock HorizontalAlignment="Center">
                             <Run Text="Loading packages metadata..." />
-                            <Run Text="(" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="(" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <Run Text="{Binding RefreshingCount,FallbackValue=0}" />
-                            <Run Text="/" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="/" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <Run Text="{Binding StageCount,FallbackValue=514}" />
-                            <Run Text=")" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <Run Text=")" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </TextBlock>
                     </StackPanel>
                 </husk:SwitchCase>

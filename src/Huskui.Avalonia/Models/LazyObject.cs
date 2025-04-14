@@ -5,8 +5,8 @@ public class LazyObject(Func<CancellationToken, Task<object?>> factory, Cancella
     private readonly CancellationTokenSource _cts = CancellationTokenSource.CreateLinkedTokenSource(token);
 
     public bool IsCancelled => _cts.IsCancellationRequested;
-    public void Cancel() => _cts.Cancel();
     public object? Value { get; private set; }
+    public void Cancel() => _cts.Cancel();
 
     public async Task FetchAsync()
     {

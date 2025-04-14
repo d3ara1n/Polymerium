@@ -11,8 +11,8 @@
     <husk:ConstrainedBox AspectRatio="1.4">
         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
             <Border Grid.Column="1" Padding="18" Width="280"
-                    Background="{DynamicResource LayerSolidBackgroundBrush}"
-                    BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
+                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+                    BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                 <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="12">
                     <Grid Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
@@ -81,7 +81,7 @@
                                                         <StackPanel>
                                                             <TextBlock Text="Version:"
                                                                        FontSize="{StaticResource SmallFontSize}"
-                                                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                             <TextBlock Text="{Binding}" />
                                                         </StackPanel>
                                                     </DataTemplate>
@@ -116,8 +116,8 @@
                 </Grid>
             </Border>
             <Border Grid.Column="0" Padding="{StaticResource ModalContentMargin}"
-                    Background="{DynamicResource LayerSolidBackgroundBrush}"
-                    BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
+                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+                    BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                     CornerRadius="{StaticResource MediumCornerRadius}" />
         </Grid>
     </husk:ConstrainedBox>

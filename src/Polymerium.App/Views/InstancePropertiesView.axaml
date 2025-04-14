@@ -14,10 +14,10 @@
     <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
         <controls:SettingsEntry Icon="AppTitle" Title="Title" Summary="How this instance identify itself">
             <controls:SettingsEntryItem Header="Display Name">
-                <Border Background="{DynamicResource ControlBackgroundBrush}"
+                <Border Background="{StaticResource ControlBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <StackPanel Margin="4" Spacing="4">
-                        <Border Background="{DynamicResource LayerSolidBackgroundBrush}"
+                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                             <TextBlock Text="{Binding NameOverwrite,FallbackValue=Name}" Margin="8"
                                        FontSize="{StaticResource LargeFontSize}" TextAlignment="Center"
@@ -35,7 +35,7 @@
                             Width="72"
                             Height="72"
                             HorizontalAlignment="Center"
-                            Background="{DynamicResource Layer0BackgroundBrush}"
+                            Background="{StaticResource LayerBackgroundBrush}"
                             BorderBrush="{x:Null}"
                             CornerRadius="{StaticResource SmallCornerRadius}">
                         <Border.Effect>
@@ -82,7 +82,7 @@
                         <TextBlock Text="Navigate to the global settings page" />
                         <TextBlock Text="Entries here will overwrite the global settings"
                                    FontSize="{StaticResource SmallFontSize}"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
                 </Grid>
             </Button>
@@ -109,7 +109,7 @@
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
-                            <TextBlock Text="MiB" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                            <TextBlock Text="MiB" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                        Margin="8,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </TextBox.InnerRightContent>
@@ -125,7 +125,7 @@
                              Watermark="{Binding WindowInitialWidthWatermark}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Width" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                <TextBlock Text="Width" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            Margin="8,0" VerticalAlignment="Center" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
@@ -135,7 +135,7 @@
                              Watermark="{Binding WindowInitialHeightWatermark}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Height" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                <TextBlock Text="Height" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            Margin="8,0" VerticalAlignment="Center" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
@@ -155,13 +155,13 @@
                             <Grid ColumnDefinitions="*,6,*" />
                         </ItemsPanelTemplate>
                     </TabStrip.ItemsPanel>
-                    <TabStripItem Grid.Column="0" Background="{DynamicResource Layer0BackgroundBrush}">
+                    <TabStripItem Grid.Column="0" Background="{StaticResource LayerBackgroundBrush}">
                         <StackPanel Spacing="4">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <TextBlock Text="Active" FontSize="{StaticResource LargeFontSize}" />
                             </StackPanel>
                             <TextBlock Text="Sharing files and folders below" TextWrapping="Wrap" />
-                            <Border Background="{DynamicResource ControlBackgroundBrush}"
+                            <Border Background="{StaticResource ControlBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                 <StackPanel Margin="8,4">
                                     <TextBlock Text="config" />
@@ -175,7 +175,7 @@
                             </Border>
                         </StackPanel>
                     </TabStripItem>
-                    <TabStripItem Grid.Column="2" Background="{DynamicResource Layer0BackgroundBrush}">
+                    <TabStripItem Grid.Column="2" Background="{StaticResource LayerBackgroundBrush}">
                         <StackPanel Spacing="4">
                             <TextBlock Text="Inactive" FontSize="{StaticResource LargeFontSize}" />
                             <TextBlock Text="No files or folders are shared" TextWrapping="Wrap" />
@@ -227,7 +227,7 @@
             </controls:SettingsEntry>
             <husk:BusyContainer.PendingContent>
                 <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Background="{DynamicResource LayerSolidBackgroundBrush}">
+                           Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <StackPanel Spacing="12">
                         <icons:PackIconLucide Kind="Info" Height="{StaticResource ExtraLargeFontSize}"
                                               Width="{StaticResource ExtraLargeFontSize}"

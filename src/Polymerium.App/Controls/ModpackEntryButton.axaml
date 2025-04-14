@@ -35,7 +35,7 @@
             <ControlTemplate x:DataType="m:ExhibitModel">
                 <husk:Card Name="Background" Margin="16,4" Height="118"
                            CornerRadius="{StaticResource MediumCornerRadius}"
-                           Background="{DynamicResource Layer0BackgroundBrush}">
+                           Background="{StaticResource LayerBackgroundBrush}">
                     <husk:Card.Transitions>
                         <Transitions>
                             <BrushTransition Property="Background" Easing="SineEaseOut"
@@ -64,23 +64,23 @@
                         <StackPanel Grid.Row="0" Grid.Column="4" Spacing="4">
                             <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
                                 <icons:PackIconLucide Kind="CircleUser" Height="12" VerticalAlignment="Center"
-                                                      Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Text="{Binding Author}"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
                                 <icons:PackIconLucide Kind="CircleArrowDown" Height="12"
                                                       VerticalAlignment="Center"
-                                                      Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Text="{Binding Downloads}"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
                                 <icons:PackIconLucide Kind="Clock"
                                                       Height="12" VerticalAlignment="Center"
-                                                      Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Text="{Binding UpdatedAt}"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             </StackPanel>
                         </StackPanel>
                         <husk:Divider Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" />
@@ -128,12 +128,12 @@
 
         <Style Selector="^:pointerover /template/ husk|Card#Background">
             <Setter Property="BorderBrush"
-                    Value="{DynamicResource ControlAccentBorderBrush}" />
+                    Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
         <Style Selector="^:pressed /template/ husk|Card#Background">
             <Setter Property="Background"
-                    Value="{DynamicResource OverlayFullBackgroundBrush}" />
+                    Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ husk|Card#Background">

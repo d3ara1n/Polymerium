@@ -16,14 +16,14 @@
     <ControlTheme x:Key="{x:Type ToggleButton}" TargetType="ToggleButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,9" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="BorderThickness" Value="1,1,1,2" />
@@ -61,18 +61,17 @@
                         Padding="{TemplateBinding Padding}"
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Background="{DynamicResource TransparentBrush}"
+                        Background="{StaticResource TransparentBrush}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         Content="{TemplateBinding Content}"
                         ContentTemplate="{TemplateBinding ContentTemplate}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         RecognizesAccessKey="True"
                         TextElement.FontSize="{TemplateBinding FontSize}"
-                        TextElement.FontWeight="{TemplateBinding FontWeight}"
-                        UseLayoutRounding="False" />
+                        TextElement.FontWeight="{TemplateBinding FontWeight}" />
                     <Border
                         x:Name="Indicator"
-                        Background="{DynamicResource TransparentBrush}"
+                        Background="{StaticResource TransparentBrush}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
@@ -89,20 +88,20 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ Border#Indicator">
-            <Setter Property="Background" Value="{DynamicResource OverlayHalfBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Border#Indicator">
-            <Setter Property="Background" Value="{DynamicResource OverlayFullBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:checked /template/ Border#Border">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
         </Style>
 
         <!-- <Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter"> -->
-        <!--     <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" /> -->
+        <!--     <Setter Property="Foreground" Value="{StaticResource ControlActiveForegroundBrush}" /> -->
         <!-- </Style> -->
 
         <Style Selector="^:disabled /template/ Border#Border">
@@ -121,14 +120,14 @@
     <ControlTheme x:Key="GhostToggleButtonTheme" TargetType="ToggleButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,9" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -161,8 +160,8 @@
                           ColumnSpacing="8"
                           Margin="{TemplateBinding Padding}">
                         <Border Name="Indicator" Grid.Column="0"
-                                Background="{DynamicResource ControlTranslucentBackgroundBrush}"
-                                Width="5" BorderThickness="1" BorderBrush="{DynamicResource ControlBorderBrush}"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                Width="5" BorderThickness="1" BorderBrush="{StaticResource ControlBorderBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                             <Border.Transitions>
                                 <Transitions>
@@ -181,19 +180,18 @@
                                           Name="PART_ContentPresenter"
                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Background="{DynamicResource TransparentBrush}"
+                                          Background="{StaticResource TransparentBrush}"
                                           BackgroundSizing="{TemplateBinding BackgroundSizing}"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           CornerRadius="{TemplateBinding CornerRadius}"
                                           RecognizesAccessKey="True"
                                           TextElement.FontSize="{TemplateBinding FontSize}"
-                                          TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                          UseLayoutRounding="False" />
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}" />
                     </Grid>
                     <Border
                         x:Name="Overlay"
-                        Background="{DynamicResource TransparentBrush}"
+                        Background="{StaticResource TransparentBrush}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
@@ -210,26 +208,26 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ Border#Overlay">
-            <Setter Property="Background" Value="{DynamicResource OverlayHalfBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Border#Overlay">
-            <Setter Property="Background" Value="{DynamicResource OverlayFullBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:checked">
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
             </Style>
             <Style Selector="^ /template/ Border#Indicator">
-                <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
             </Style>
         </Style>
 
         <!-- <Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter"> -->
-        <!--     <Setter Property="Foreground" Value="{DynamicResource ControlActiveForegroundBrush}" /> -->
+        <!--     <Setter Property="Foreground" Value="{StaticResource ControlActiveForegroundBrush}" /> -->
         <!-- </Style> -->
 
         <Style Selector="^:disabled /template/ Border#Border">

@@ -20,9 +20,9 @@
     <ControlTheme TargetType="HyperlinkButton" x:Key="{x:Type HyperlinkButton}">
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="BorderThickness" Value="0,0,0,2" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Cursor" Value="Hand" />
@@ -84,12 +84,12 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme TargetType="HyperlinkButton" x:Key="InlineHyperlinkButtonTheme">
+    <ControlTheme x:Key="InlineHyperlinkButtonTheme" TargetType="HyperlinkButton">
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="BorderThickness" Value="0,0,0,2" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="FontWeight" Value="Bold" />
@@ -139,7 +139,7 @@
         </Setter>
 
         <Style Selector="^:pointerover/template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Foreground" Value="{DynamicResource ControlAccentForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
         </Style>
         <Style Selector="^:pointerover/template/ Border#Underline">
             <Setter Property="RenderTransform" Value="translateY(0px)" />
@@ -154,10 +154,10 @@
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
         <Style Selector="^:disabled /template/ Border#Underline">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         </Style>
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
@@ -27,17 +26,6 @@ public class OverlayItem : ContentControl
         RoutedEvent.Register<OverlayItem, DismissRequestedEventArgs>(nameof(DismissRequested),
                                                                      RoutingStrategies.Bubble);
 
-    public class DismissRequestedEventArgs(object? source = null) : RoutedEventArgs(DismissRequestedEvent, source)
-    {
-        public OverlayItem? Container { get; set; }
-    }
-
-    public event EventHandler<DismissRequestedEventArgs>? DismissRequested
-    {
-        add => AddHandler(DismissRequestedEvent, value);
-        remove => RemoveHandler(DismissRequestedEvent, value);
-    }
-
     private ContentPresenter? _contentPresenter;
 
     public IPageTransition? Transition
@@ -61,7 +49,14 @@ public class OverlayItem : ContentControl
             PseudoClasses.Set(":active", value == 0);
         }
     }
+
     protected override Type StyleKeyOverride => typeof(OverlayItem);
+
+    public event EventHandler<DismissRequestedEventArgs>? DismissRequested
+    {
+        add => AddHandler(DismissRequestedEvent, value);
+        remove => RemoveHandler(DismissRequestedEvent, value);
+    }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
@@ -87,5 +82,10 @@ public class OverlayItem : ContentControl
     private void DismissRequestedHandler(object? sender, DismissRequestedEventArgs e)
     {
         e.Container ??= this;
+    }
+
+    public class DismissRequestedEventArgs(object? source = null) : RoutedEventArgs(DismissRequestedEvent, source)
+    {
+        public OverlayItem? Container { get; set; }
     }
 }

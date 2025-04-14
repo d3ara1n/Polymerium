@@ -21,8 +21,8 @@
     </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type local:Tag}" TargetType="local:Tag">
-        <Setter Property="Background" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlTranslucentForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlTranslucentForegroundBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
@@ -45,31 +45,31 @@
         </Setter>
 
         <Style Selector="^.Primary">
-            <Setter Property="Foreground" Value="{DynamicResource ControlTranslucentAccentForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlAccentTranslucentForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Border">
-                <Setter Property="Background" Value="{DynamicResource ControlTranslucentAccentBackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
             </Style>
         </Style>
         <Style Selector="^.Success">
-            <Setter Property="Foreground" Value="{DynamicResource ControlTranslucentSuccessForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlSuccessTranslucentForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Border">
-                <Setter Property="Background" Value="{DynamicResource ControlTranslucentSuccessBackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}" />
             </Style>
         </Style>
         <Style Selector="^.Warning">
-            <Setter Property="Foreground" Value="{DynamicResource ControlTranslucentWarningForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlWarningTranslucentForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Border">
-                <Setter Property="Background" Value="{DynamicResource ControlTranslucentWarningBackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentFullBackgroundBrush}" />
             </Style>
         </Style>
         <Style Selector="^.Danger">
-            <Setter Property="Foreground" Value="{DynamicResource ControlTranslucentDangerForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDangerTranslucentForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Border">
-                <Setter Property="Background" Value="{DynamicResource ControlTranslucentDangerBackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
             </Style>
         </Style>
         <Style Selector="^.Status">

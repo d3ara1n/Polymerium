@@ -9,8 +9,8 @@
         <Setter Property="CornerRadius"
                 Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Background"
-                Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+                Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -59,13 +59,13 @@
                                 <TextBlock Grid.Column="0"
                                            Text="{Binding Basic.SourceLabel,FallbackValue=LABEL,RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={x:Static huskc:StringConverters.ToUpper}}"
                                            FontSize="{StaticResource SmallFontSize}"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Grid.Column="1" Text="#" FontSize="{StaticResource SmallFontSize}"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Grid.Column="2"
                                            Text="{Binding Basic.Key,FallbackValue=KEY,RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                            FontSize="{StaticResource SmallFontSize}"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            TextTrimming="CharacterEllipsis" />
                             </Grid>
                             <TextBlock
@@ -118,7 +118,7 @@
                             </WrapPanel>
                         </StackPanel>
                         <Border Name="Border" Opacity="0"
-                                BorderBrush="{DynamicResource ControlAccentBorderBrush}"
+                                BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
                                 BorderThickness="2"
                                 CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.Transitions>
@@ -139,7 +139,7 @@
         </Style>
         <Style Selector="^:pressed /template/ Border#Container">
             <Setter Property="Background"
-                    Value="{DynamicResource ControlBackgroundBrush}" />
+                    Value="{StaticResource ControlBackgroundBrush}" />
         </Style>
 
         <Style Selector="^[State=Idle]">
@@ -179,7 +179,7 @@
 
             <Style Selector="^ /template/ Border#Border">
                 <Setter Property="BorderBrush"
-                        Value="{DynamicResource ControlBorderBrush}" />
+                        Value="{StaticResource ControlBorderBrush}" />
             </Style>
         </Style>
 
@@ -205,7 +205,7 @@
 
             <Style Selector="^ /template/ Border#Border">
                 <Setter Property="BorderBrush"
-                        Value="{DynamicResource ControlBorderBrush}" />
+                        Value="{StaticResource ControlBorderBrush}" />
             </Style>
         </Style>
 
@@ -243,7 +243,7 @@
 
             <Style Selector="^ /template/ Border#Border">
                 <Setter Property="BorderBrush"
-                        Value="{DynamicResource ControlSuccessBorderBrush}" />
+                        Value="{StaticResource ControlSuccessBorderBrush}" />
             </Style>
         </Style>
     </ControlTheme>

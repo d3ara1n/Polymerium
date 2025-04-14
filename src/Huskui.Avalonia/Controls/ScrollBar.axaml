@@ -18,20 +18,19 @@
 
     <ControlTheme x:Key="{x:Type ScrollBar}" TargetType="ScrollBar">
         <Setter Property="Cursor" Value="Arrow" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource Layer7BackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource OverlaySmokeBackgroundBrush}" />
 
         <Style Selector="^:horizontal">
             <Setter Property="Height" Value="{StaticResource ScrollBarThickness}" />
             <Setter Property="Margin" Value="1" />
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Border Background="{TemplateBinding Background}"
-                            UseLayoutRounding="False">
+                    <Border Background="{TemplateBinding Background}">
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <RepeatButton Name="PART_LineUpButton"
                                           Grid.Column="0"
-                                          MinWidth="{DynamicResource ScrollBarThickness}"
+                                          MinWidth="{StaticResource ScrollBarThickness}"
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="Center"
                                           Focusable="False">
@@ -57,7 +56,7 @@
                             </Track>
                             <RepeatButton Name="PART_LineDownButton"
                                           Grid.Column="2"
-                                          MinWidth="{DynamicResource ScrollBarThickness}"
+                                          MinWidth="{StaticResource ScrollBarThickness}"
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="Center"
                                           Focusable="False">
@@ -82,12 +81,11 @@
             <Setter Property="Width" Value="{StaticResource ScrollBarThickness}" />
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Border Background="{TemplateBinding Background}"
-                            UseLayoutRounding="False">
+                    <Border Background="{TemplateBinding Background}">
                         <Grid RowDefinitions="Auto,*,Auto">
                             <RepeatButton Name="PART_LineUpButton"
                                           Grid.Row="0"
-                                          MinHeight="{DynamicResource ScrollBarThickness}"
+                                          MinHeight="{StaticResource ScrollBarThickness}"
                                           HorizontalAlignment="Center"
                                           Focusable="False">
                                 <Path Data="M 0 4 L 8 4 L 4 0 Z" Fill="{TemplateBinding Foreground}"
@@ -103,17 +101,17 @@
                                    Value="{TemplateBinding Value,Mode=TwoWay}">
                                 <Track.DecreaseButton>
                                     <RepeatButton Name="PART_PageUpButton"
-                                                  Focusable="False" Background="{DynamicResource TransparentBrush}" />
+                                                  Focusable="False" Background="{StaticResource TransparentBrush}" />
                                 </Track.DecreaseButton>
                                 <Track.IncreaseButton>
                                     <RepeatButton Name="PART_PageDownButton"
-                                                  Focusable="False" Background="{DynamicResource TransparentBrush}" />
+                                                  Focusable="False" Background="{StaticResource TransparentBrush}" />
                                 </Track.IncreaseButton>
                                 <Thumb />
                             </Track>
                             <RepeatButton Name="PART_LineDownButton"
                                           Grid.Row="2"
-                                          MinHeight="{DynamicResource ScrollBarThickness}"
+                                          MinHeight="{StaticResource ScrollBarThickness}"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Focusable="False">
@@ -146,7 +144,7 @@
         </Style>
         <Style Selector="^ /template/ Thumb">
             <Setter Property="CornerRadius" Value="99" />
-            <Setter Property="Background" Value="{DynamicResource Layer7BackgroundBrush}" />
+            <Setter Property="Background" Value="{TemplateBinding Foreground}" />
             <Setter Property="Template">
                 <ControlTemplate>
                     <Border CornerRadius="{TemplateBinding CornerRadius}" Background="{TemplateBinding Background}" />

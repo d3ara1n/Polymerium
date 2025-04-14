@@ -54,8 +54,7 @@
                                 <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}"
                                                IconVariant="Filled" />
                             </Button>
-                            <Panel Grid.Row="2" Grid.Column="1">
-                            </Panel>
+                            <Panel Grid.Row="2" Grid.Column="1" />
                         </Grid>
                     </Panel>
                 </Border>

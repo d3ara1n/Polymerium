@@ -14,7 +14,7 @@
 
     <ControlTheme x:Key="{x:Type local:ScopedPage}" TargetType="local:ScopedPage"
                   BasedOn="{StaticResource {x:Type husk:Page}}">
-        <Setter Property="Background" Value="{DynamicResource Layer0BackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource LayerBackgroundBrush}" />
         <Setter Property="IsMaximized" Value="{Binding $parent[husk:AppWindow].IsMaximized, Mode=OneWay}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Margin" Value=" 7" />

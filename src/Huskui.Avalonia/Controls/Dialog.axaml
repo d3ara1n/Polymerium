@@ -6,9 +6,9 @@
         <Setter Property="Container" Value="{Binding $parent[local:OverlayItem], Mode=OneWay} " />
         <Setter Property="MinHeight" Value="128" />
         <Setter Property="MinWidth" Value="256" />
-        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="PrimaryText" Value="Confirm" />
         <Setter Property="SecondaryText" Value="Cancel" />
@@ -28,7 +28,7 @@
                                    FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
                         <TextBlock Grid.Row="2" Text="{TemplateBinding Message}" Margin="24,8,24,0"
                                    IsVisible="{Binding Message,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    TextWrapping="WrapWithOverflow"
                                    MaxWidth="{Binding #PART_ContentPresenter.Bounds.Width}"
                                    FontSize="{StaticResource SmallFontSize}" />

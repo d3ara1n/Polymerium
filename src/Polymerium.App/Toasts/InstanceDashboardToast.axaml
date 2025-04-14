@@ -49,29 +49,29 @@
                             <Panel>
                                 <husk:SwitchPresenter Value="{Binding Level}" TargetType="launching:ScrapLevel">
                                     <husk:SwitchCase Value="Information">
-                                        <Border BorderBrush="{DynamicResource ControlBorderBrush}"
+                                        <Border BorderBrush="{StaticResource ControlBorderBrush}"
                                                 BorderThickness="3,0,0,0"
-                                                Background="{DynamicResource ControlTranslucentBackgroundBrush}">
+                                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
                                             <ContentControl Content="{Binding}"
                                                             ContentTemplate="{StaticResource ScrapTemplate}" />
                                         </Border>
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="Warning">
-                                        <Border BorderBrush="{DynamicResource ControlWarningBorderBrush}"
+                                        <Border BorderBrush="{StaticResource ControlWarningBorderBrush}"
                                                 BorderThickness="3,0,0,0"
-                                                Background="{DynamicResource ControlTranslucentOverlayWarningBackgroundBrush}">
+                                                Background="{StaticResource ControlWarningTranslucentHalfBackgroundBrush}">
                                             <ContentControl Content="{Binding}"
                                                             ContentTemplate="{StaticResource ScrapTemplate}"
-                                                            Foreground="{DynamicResource ControlWarningForegroundBrush}" />
+                                                            Foreground="{StaticResource ControlWarningForegroundBrush}" />
                                         </Border>
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="Error">
-                                        <Border BorderBrush="{DynamicResource ControlDangerBorderBrush}"
+                                        <Border BorderBrush="{StaticResource ControlDangerBorderBrush}"
                                                 BorderThickness="3,0,0,0"
-                                                Background="{DynamicResource ControlTranslucentOverlayDangerBackgroundBrush}">
+                                                Background="{StaticResource ControlDangerTranslucentHalfBackgroundBrush}">
                                             <ContentControl Content="{Binding}"
                                                             ContentTemplate="{StaticResource ScrapTemplate}"
-                                                            Foreground="{DynamicResource ControlDangerForegroundBrush}" />
+                                                            Foreground="{StaticResource ControlDangerForegroundBrush}" />
                                         </Border>
                                     </husk:SwitchCase>
                                 </husk:SwitchPresenter>
@@ -93,7 +93,7 @@
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal">
                             <icons:PackIconLucide Margin="10,0"
-                                                  Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                   Kind="Filter" Height="{StaticResource MediumFontSize}"
                                                   VerticalAlignment="Center" />
                             <husk:Divider Orientation="Vertical" />
@@ -113,7 +113,7 @@
                             IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                             Command="{Binding $parent[TextBox].Clear}"
                             Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
                 </TextBox.InnerRightContent>
             </TextBox>

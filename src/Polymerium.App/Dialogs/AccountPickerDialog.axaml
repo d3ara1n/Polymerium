@@ -19,15 +19,15 @@
                 <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
                     <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
                     <LineBreak />
-                    <Run Text="Microsoft" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    <Run Text="Microsoft" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </TextBlock>
                 <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
                     <TextBlock Text="Select" />
                 </Button>
             </Grid>
         </husk:Card>
-        <husk:Card Margin="4" BorderBrush="{DynamicResource ControlAccentBorderBrush}" BorderThickness="2"
-                   Background="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}">
+        <husk:Card Margin="4" BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}" BorderThickness="2"
+                   Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
             <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="*,8,Auto">
                 <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Images/Placeholders/Steve_Face.png"
                        Height="48"
@@ -35,7 +35,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
                     <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
                     <LineBreak />
-                    <Run Text="Microsoft" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    <Run Text="Microsoft" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </TextBlock>
                 <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" IsEnabled="False">
                     <TextBlock Text="Selected" />
@@ -50,7 +50,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
                     <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
                     <LineBreak />
-                    <Run Text="Microsoft" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    <Run Text="Microsoft" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </TextBlock>
                 <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
                     <TextBlock Text="Select" />

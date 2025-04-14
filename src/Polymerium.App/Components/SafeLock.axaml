@@ -9,12 +9,12 @@
              x:Class="Polymerium.App.Components.SafeLock">
     <UserControl.Styles>
         <Style Selector=":unlocked Border#Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlTranslucentDangerBackgroundBrush}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlDangerBorderBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDangerBorderBrush}" />
         </Style>
         <Style Selector=":locked Border#Indicator">
-            <Setter Property="Background" Value="{DynamicResource Layer3ReversedBackgroundBrush}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         </Style>
     </UserControl.Styles>
     <Border Name="Indicator" Padding="12" BorderThickness="2"
@@ -29,11 +29,11 @@
         </Border.Transitions>
         <controls:SettingsEntryItem Header="Safe Lock">
             <StackPanel Spacing="8">
-                <Border Background="{DynamicResource Layer0BackgroundBrush}"
+                <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                         CornerRadius="{StaticResource SmallCornerRadius}">
                     <Grid Margin="12,8" ColumnDefinitions="Auto,0,*">
                         <TextBlock Grid.Column="0"
-                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    Text="Code:" />
                         <TextBlock Grid.Column="2" Text="{Binding $parent[local:SafeLock].SafeCode}"
                                    HorizontalAlignment="Center" />

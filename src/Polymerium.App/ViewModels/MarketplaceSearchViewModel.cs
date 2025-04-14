@@ -257,8 +257,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                        .ToList());
                 _overlayService.PopToast(new ExhibitModpackToast
                 {
-                    DataContext = model,
-                    InstallCommand = InstallVersionCommand,
+                    DataContext = model, InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }

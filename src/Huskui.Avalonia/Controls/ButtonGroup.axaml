@@ -17,7 +17,7 @@
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:ButtonGroup}" TargetType="local:ButtonGroup">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource ButtonGroupItemTheme}" />
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
@@ -41,13 +41,13 @@
     <ControlTheme x:Key="ButtonGroupItemTheme" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="6,4" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="Container">
@@ -65,11 +65,10 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         RecognizesAccessKey="True"
                         TextElement.FontSize="{TemplateBinding FontSize}"
-                        TextElement.FontWeight="{TemplateBinding FontWeight}"
-                        UseLayoutRounding="False" />
+                        TextElement.FontWeight="{TemplateBinding FontWeight}" />
                     <Border
                         x:Name="Indicator"
-                        Background="{DynamicResource TransparentBrush}"
+                        Background="{StaticResource TransparentBrush}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>

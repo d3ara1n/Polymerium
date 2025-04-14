@@ -13,6 +13,24 @@ namespace Polymerium.App.Modals;
 
 public partial class PackageEntryModal : Modal
 {
+    public static readonly DirectProperty<PackageEntryModal, LazyObject?> LazyVersionsProperty =
+        AvaloniaProperty.RegisterDirect<PackageEntryModal, LazyObject?>(nameof(LazyVersions),
+                                                                        o => o.LazyVersions,
+                                                                        (o, v) => o.LazyVersions = v);
+
+    public static readonly DirectProperty<PackageEntryModal, bool> IsFilterEnabledProperty =
+        AvaloniaProperty.RegisterDirect<PackageEntryModal, bool>(nameof(IsFilterEnabled),
+                                                                 o => o.IsFilterEnabled,
+                                                                 (o, v) => o.IsFilterEnabled = v);
+
+    public static readonly DirectProperty<PackageEntryModal, InstancePackageVersionModel?>
+        SelectedVersionProxyProperty =
+            AvaloniaProperty
+               .RegisterDirect<PackageEntryModal, InstancePackageVersionModel?>(nameof(SelectedVersionProxy),
+                                                                                    o => o.SelectedVersionProxy,
+                                                                                    (o, v) =>
+                                                                                        o.SelectedVersionProxy = v);
+
     public PackageEntryModal() => InitializeComponent();
 
     public required ProfileGuard Guard { get; init; }
@@ -22,35 +40,17 @@ public partial class PackageEntryModal : Modal
 
     private InstancePackageModel Model => (DataContext as InstancePackageModel)!;
 
-    public static readonly DirectProperty<PackageEntryModal, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<PackageEntryModal, LazyObject?>(nameof(LazyVersions),
-                                                                        o => o.LazyVersions,
-                                                                        (o, v) => o.LazyVersions = v);
-
     public LazyObject? LazyVersions
     {
         get;
         set => SetAndRaise(LazyVersionsProperty, ref field, value);
     }
 
-    public static readonly DirectProperty<PackageEntryModal, bool> IsFilterEnabledProperty =
-        AvaloniaProperty.RegisterDirect<PackageEntryModal, bool>(nameof(IsFilterEnabled),
-                                                                 o => o.IsFilterEnabled,
-                                                                 (o, v) => o.IsFilterEnabled = v);
-
     public bool IsFilterEnabled
     {
         get;
         set => SetAndRaise(IsFilterEnabledProperty, ref field, value);
     } = true;
-
-    public static readonly DirectProperty<PackageEntryModal, InstancePackageVersionModel?>
-        SelectedVersionProxyProperty =
-            AvaloniaProperty
-               .RegisterDirect<PackageEntryModal, InstancePackageVersionModel?>(nameof(SelectedVersionProxy),
-                                                                                    o => o.SelectedVersionProxy,
-                                                                                    (o, v) =>
-                                                                                        o.SelectedVersionProxy = v);
 
     public InstancePackageVersionModel? SelectedVersionProxy
     {

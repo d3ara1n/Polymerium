@@ -156,7 +156,7 @@ public class Frame : TemplatedControl
                                      return;
                                  (from.IsVisible, to.IsVisible) = (false, true);
                                  from.Content = null;
-                                 // NOTE: ContentControl.Content 改变会移除 from.Content 自 LogicalChildren，这会导致 from.Content 的 DynamicResource 全部失效
+                                 // NOTE: ContentControl.Content 改变会移除 from.Content 自 LogicalChildren，这会导致 from.Content 的 StaticResource 全部失效
                                  //  因此要放在动画结束 from 退出时对 Content 进行设置
                                  Content = to.Content;
                              },
