@@ -8,8 +8,8 @@
         <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
         <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource WindowBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <Setter Property="ExtendClientAreaChromeHints" Value="NoChrome" />
-        <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
+        <!-- <Setter Property="ExtendClientAreaChromeHints" Value="NoChrome" /> -->
+        <!-- <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" /> -->
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Template">
@@ -31,7 +31,7 @@
                         </Border.Transitions>
                     </Border>
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" />
-                    <VisualLayerManager>
+                    <VisualLayerManager RenderOptions.TextRenderingMode="Antialias">
                         <VisualLayerManager.ChromeOverlayLayer>
                             <TitleBar />
                         </VisualLayerManager.ChromeOverlayLayer>

@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <!-- Black -->
+            <Color x:Key="Overlay1Color">#0d000000</Color>
+            <Color x:Key="Overlay2Color">#1a000000</Color>
+            <Color x:Key="Overlay3Color">#26000000</Color>
+            <Color x:Key="Overlay4Color">#33000000</Color>
+            <Color x:Key="Overlay5Color">#4d000000</Color>
+            <Color x:Key="Overlay6Color">#66000000</Color>
+            <Color x:Key="Overlay7Color">#80000000</Color>
+            <Color x:Key="Overlay8Color">#99000000</Color>
+            <Color x:Key="Overlay9Color">#b3000000</Color>
+            <Color x:Key="Overlay10Color">#cc000000</Color>
+            <Color x:Key="Overlay11Color">#e6000000</Color>
+            <Color x:Key="Overlay12Color">#f2000000</Color>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <!-- White -->
+            <Color x:Key="Overlay1Color">#0dffffff</Color>
+            <Color x:Key="Overlay2Color">#1affffff</Color>
+            <Color x:Key="Overlay3Color">#26ffffff</Color>
+            <Color x:Key="Overlay4Color">#33ffffff</Color>
+            <Color x:Key="Overlay5Color">#4dffffff</Color>
+            <Color x:Key="Overlay6Color">#66ffffff</Color>
+            <Color x:Key="Overlay7Color">#80ffffff</Color>
+            <Color x:Key="Overlay8Color">#99ffffff</Color>
+            <Color x:Key="Overlay9Color">#b3ffffff</Color>
+            <Color x:Key="Overlay10Color">#ccffffff</Color>
+            <Color x:Key="Overlay11Color">#e6ffffff</Color>
+            <Color x:Key="Overlay12Color">#f2ffffff</Color>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

@@ -55,28 +55,6 @@
                                                IconVariant="Filled" />
                             </Button>
                             <Panel Grid.Row="2" Grid.Column="1">
-                                <!-- <ListBox HorizontalAlignment="Center" SelectedIndex="{TemplateBinding SelectedIndex,Mode=TwoWay}" -->
-                                <!--          ItemsSource="{TemplateBinding ItemCount,Converter={x:Static huskc:InternalConverters.CountToArray}}"> -->
-                                <!--     <ListBox.ItemsPanel> -->
-                                <!--         <ItemsPanelTemplate> -->
-                                <!--             <StackPanel Orientation="Horizontal" Spacing="4" /> -->
-                                <!--         </ItemsPanelTemplate> -->
-                                <!--     </ListBox.ItemsPanel> -->
-                                <!--     <ListBox.ItemContainerTheme> -->
-                                <!--         <ControlTheme TargetType="ListBoxItem"> -->
-                                <!--             <Setter Property="Template"> -->
-                                <!--                 <ControlTemplate> -->
-                                <!--                     <fi:SymbolIcon Name="Icon" Symbol="RadioButton" -->
-                                <!--                                    FontSize="{StaticResource ExtraSmallFontSize}" /> -->
-                                <!--                 </ControlTemplate> -->
-                                <!--             </Setter> -->
-                                <!-- -->
-                                <!--             <Style Selector="^:selected /template/ fi|SymbolIcon#Icon"> -->
-                                <!--                 <Setter Property="IconVariant" Value="Filled" /> -->
-                                <!--             </Style> -->
-                                <!--         </ControlTheme> -->
-                                <!--     </ListBox.ItemContainerTheme> -->
-                                <!-- </ListBox> -->
                             </Panel>
                         </Grid>
                     </Panel>
