@@ -142,12 +142,14 @@
                             <ComboBoxItem Content="这是一个 9" />
                             <ComboBoxItem Content="这是一个 0" />
                         </ComboBox>
-                        <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
-                                      IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <ToggleSwitch OnContent="这是 ON" OffContent="这是 OFF"
+                                          IsChecked="{Binding IsEnabled,ElementName=ComboBox}" />
 
-                        <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
-                            <TextBlock Text="Make it REAL" />
-                        </CheckBox>
+                            <CheckBox IsThreeState="True" IsChecked="{Binding IsEnabled,ElementName=ComboBox}">
+                                <TextBlock Text="Make it REAL" />
+                            </CheckBox>
+                        </StackPanel>
                     </DockPanel>
                     <husk:InfoBar Header="You know what?">
                         <TextBlock TextWrapping="WrapWithOverflow">
