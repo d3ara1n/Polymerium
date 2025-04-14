@@ -1,132 +1,139 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="Colors.White.axaml" />
+        <ResourceInclude Source="Colors.Black.axaml" />
+        <ResourceInclude Source="Colors.Gray.Neutral.axaml" />
+        <ResourceInclude Source="Colors.Accent.Amber.axaml" />
+        <ResourceInclude Source="Colors.Success.Grass.axaml" />
+        <ResourceInclude Source="Colors.Warning.Orange.axaml" />
+        <ResourceInclude Source="Colors.Danger.Tomato.axaml" />
+    </ResourceDictionary.MergedDictionaries>
     <ResourceDictionary.ThemeDictionaries>
-        <ResourceInclude x:Key="Default" Source="/Themes/Colors.Light.axaml" />
-        <ResourceInclude x:Key="Dark" Source="/Themes/Colors.Dark.axaml" />
+        <ResourceDictionary x:Key="Default">
+            <Color x:Key="TransparentColor">#00ffffff</Color>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <Color x:Key="TransparentColor">#00000000</Color>
+        </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
-
-    <!-- Black -->
-    <Color x:Key="Black1Color">#0d000000</Color>
-    <Color x:Key="Black2Color">#1a000000</Color>
-    <Color x:Key="Black3Color">#26000000</Color>
-    <Color x:Key="Black4Color">#33000000</Color>
-    <Color x:Key="Black5Color">#4d000000</Color>
-    <Color x:Key="Black6Color">#66000000</Color>
-    <Color x:Key="Black7Color">#80000000</Color>
-    <Color x:Key="Black8Color">#99000000</Color>
-    <Color x:Key="Black9Color">#b3000000</Color>
-    <Color x:Key="Black10Color">#cc000000</Color>
-    <Color x:Key="Black11Color">#e6000000</Color>
-    <Color x:Key="Black12Color">#f2000000</Color>
     
-    <!-- White -->
-    <Color x:Key="White1Color">#0dffffff</Color>
-    <Color x:Key="White2Color">#1affffff</Color>
-    <Color x:Key="White3Color">#26ffffff</Color>
-    <Color x:Key="White4Color">#33ffffff</Color>
-    <Color x:Key="White5Color">#4dffffff</Color>
-    <Color x:Key="White6Color">#66ffffff</Color>
-    <Color x:Key="White7Color">#80ffffff</Color>
-    <Color x:Key="White8Color">#99ffffff</Color>
-    <Color x:Key="White9Color">#b3ffffff</Color>
-    <Color x:Key="White10Color">#ccffffff</Color>
-    <Color x:Key="White11Color">#e6ffffff</Color>
-    <Color x:Key="White12Color">#f2ffffff</Color>
+    
+    
 
-    <!-- Neutral Colors -->
-    <Color x:Key="Sand1Color">#FDFDFC</Color>
-    <Color x:Key="Sand2Color">#F9F9F8</Color>
-    <Color x:Key="Sand3Color">#F1F0EF</Color>
-    <Color x:Key="Sand4Color">#E9E8E6</Color>
-    <Color x:Key="Sand5Color">#E2E1DE</Color>
-    <Color x:Key="Sand6Color">#DAD9D6</Color>
-    <Color x:Key="Sand7Color">#CFCECA</Color>
-    <Color x:Key="Sand8Color">#BCBBB5</Color>
-    <Color x:Key="Sand9Color">#8D8D86</Color>
-    <Color x:Key="Sand10Color">#82827C</Color>
-    <Color x:Key="Sand11Color">#63635E</Color>
-    <Color x:Key="Sand12Color">#21201C</Color>
+    <!-- Naming: OwnerLevelSubtle(Accent)PropertyType -->
+    
+    <SolidColorBrush x:Key="TransparentBrush" Color="{DynamicResource TransparentColor}" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource Gray4Color}" />
 
-    <!-- Accent Colors -->
-    <Color x:Key="Sky1Color">#F9FEFF</Color>
-    <Color x:Key="Sky2Color">#F1FAFD</Color>
-    <Color x:Key="Sky3Color">#E1F6FD</Color>
-    <Color x:Key="Sky4Color">#D1F0FA</Color>
-    <Color x:Key="Sky5Color">#BEE7F5</Color>
-    <Color x:Key="Sky6Color">#A9DAED</Color>
-    <Color x:Key="Sky7Color">#8DCAE3</Color>
-    <Color x:Key="Sky8Color">#60B3D7</Color>
-    <Color x:Key="Sky9Color">#7CE2FE</Color>
-    <Color x:Key="Sky10Color">#74DAF8</Color>
-    <Color x:Key="Sky11Color">#00749E</Color>
-    <Color x:Key="Sky12Color">#1D3E56</Color>
+    <!-- 颜色固定，用作按钮遮罩 -->
+    <SolidColorBrush x:Key="OverlayLighter1BackgroundBrush" Color="{DynamicResource White1Color}" />
+    <SolidColorBrush x:Key="OverlayLighter2BackgroundBrush" Color="{DynamicResource White2Color}" />
+    <SolidColorBrush x:Key="OverlayLighter6BackgroundBrush" Color="{DynamicResource White6Color}" />
+    <SolidColorBrush x:Key="OverlayDarker1BackgroundBrush" Color="{DynamicResource Black1Color}" />
+    <SolidColorBrush x:Key="OverlayDarker2BackgroundBrush" Color="{DynamicResource Black2Color}" />
+    <SolidColorBrush x:Key="OverlayDarker7BackgroundBrush" Color="{DynamicResource Black7Color}" />
+    <!-- 颜色动态，用作按钮遮罩 -->
+    <SolidColorBrush x:Key="OverlayHalfBackgroundBrush" Color="{DynamicResource Black1Color}" />
+    <SolidColorBrush x:Key="OverlayFullBackgroundBrush" Color="{DynamicResource Black2Color}" />
 
-    <Color x:Key="Amber1Color">#FEFDFB</Color>
-    <Color x:Key="Amber2Color">#FEFBE9</Color>
-    <Color x:Key="Amber3Color">#FFF7C2</Color>
-    <Color x:Key="Amber4Color">#FFEE9C</Color>
-    <Color x:Key="Amber5Color">#FBE577</Color>
-    <Color x:Key="Amber6Color">#F3D673</Color>
-    <Color x:Key="Amber7Color">#E9C162</Color>
-    <Color x:Key="Amber8Color">#E2A336</Color>
-    <Color x:Key="Amber9Color">#FFC53D</Color>
-    <Color x:Key="Amber10Color">#FFBA18</Color>
-    <Color x:Key="Amber11Color">#AB6400</Color>
-    <Color x:Key="Amber12Color">#4F3422</Color>
-  
+    <!-- 颜色会相对亮暗主题改变，用作层叠项目背景 -->
+    <SolidColorBrush x:Key="LayerSolidBackgroundBrush" Color="{DynamicResource Gray1Color}" />
+    <SolidColorBrush x:Key="Layer0BackgroundBrush" Color="{DynamicResource White10Color}" />
+    <SolidColorBrush x:Key="Layer1BackgroundBrush" Color="{DynamicResource Black1Color}" />
+    <SolidColorBrush x:Key="Layer1ReversedBackgroundBrush" Color="{DynamicResource White1Color}" />
+    <SolidColorBrush x:Key="Layer2BackgroundBrush" Color="{DynamicResource Black2Color}" />
+    <SolidColorBrush x:Key="Layer2ReversedBackgroundBrush" Color="{DynamicResource White2Color}" />
+    <SolidColorBrush x:Key="Layer3BackgroundBrush" Color="{DynamicResource Black3Color}" />
+    <SolidColorBrush x:Key="Layer3ReversedBackgroundBrush" Color="{DynamicResource White3Color}" />
+    <SolidColorBrush x:Key="Layer7BackgroundBrush" Color="{DynamicResource Black7Color}" />
 
-    <!-- Success Colors -->
-    <Color x:Key="Grass1Color">#FBFEFB</Color>
-    <Color x:Key="Grass2Color">#F5FBF5</Color>
-    <Color x:Key="Grass3Color">#E9F6E9</Color>
-    <Color x:Key="Grass4Color">#DAF1DB</Color>
-    <Color x:Key="Grass5Color">#C9E8CA</Color>
-    <Color x:Key="Grass6Color">#B2DDB5</Color>
-    <Color x:Key="Grass7Color">#94CE9A</Color>
-    <Color x:Key="Grass8Color">#65BA74</Color>
-    <Color x:Key="Grass9Color">#46A758</Color>
-    <Color x:Key="Grass10Color">#3E9B4F</Color>
-    <Color x:Key="Grass11Color">#2A7E3B</Color>
-    <Color x:Key="Grass12Color">#203C25</Color>
+    <SolidColorBrush x:Key="LayerSmokeBackgroundBrush" Color="{DynamicResource Black7Color}" />
+    <SolidColorBrush x:Key="LayerSmokeReversedBackgroundBrush" Color="{DynamicResource White7Color}" />
 
-    <!-- Warning Colors -->
-    <Color x:Key="Yellow1Color">#FDFDF9</Color>
-    <Color x:Key="Yellow2Color">#FEFCE9</Color>
-    <Color x:Key="Yellow3Color">#FFFAB8</Color>
-    <Color x:Key="Yellow4Color">#FFF394</Color>
-    <Color x:Key="Yellow5Color">#FFE770</Color>
-    <Color x:Key="Yellow6Color">#F3D768</Color>
-    <Color x:Key="Yellow7Color">#E4C767</Color>
-    <Color x:Key="Yellow8Color">#D5AE39</Color>
-    <Color x:Key="Yellow9Color">#FFE629</Color>
-    <Color x:Key="Yellow10Color">#FFDC00</Color>
-    <Color x:Key="Yellow11Color">#9E6C00</Color>
-    <Color x:Key="Yellow12Color">#473B1F</Color>
+    <SolidColorBrush x:Key="Card1BackgroundBrush" Color="{DynamicResource Gray2Color}" />
+    <SolidColorBrush x:Key="Card2BackgroundBrush" Color="{DynamicResource Gray1Color}" />
+    <SolidColorBrush x:Key="Card3BackgroundBrush" Color="{DynamicResource Gray3Color}" />
 
-    <Color x:Key="Orange1Color">#FEFCFB</Color>
-    <Color x:Key="Orange2Color">#FFF7ED</Color>
-    <Color x:Key="Orange3Color">#FFEFD6</Color>
-    <Color x:Key="Orange4Color">#FFDFB5</Color>
-    <Color x:Key="Orange5Color">#FFD19A</Color>
-    <Color x:Key="Orange6Color">#FFC182</Color>
-    <Color x:Key="Orange7Color">#F5AE73</Color>
-    <Color x:Key="Orange8Color">#EC9455</Color>
-    <Color x:Key="Orange9Color">#F76B15</Color>
-    <Color x:Key="Orange10Color">#EF5F00</Color>
-    <Color x:Key="Orange11Color">#CC4E00</Color>
-    <Color x:Key="Orange12Color">#582D1D</Color>
+    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource Gray5Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentBackgroundBrush" Color="{DynamicResource Gray6Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlTranslucentOverlayBackgroundBrush" Color="{DynamicResource Gray6Color}"
+                     Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlAccentBackgroundBrush" Color="{DynamicResource Accent9Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentAccentBackgroundBrush" Color="{DynamicResource Accent6Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlTranslucentOverlayAccentBackgroundBrush"
+                     Color="{DynamicResource Accent9Color}"
+                     Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlSuccessBackgroundBrush" Color="{DynamicResource Success9Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentSuccessBackgroundBrush" Color="{DynamicResource Success6Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlTranslucentOverlaySuccessBackgroundBrush"
+                     Color="{DynamicResource Success9Color}"
+                     Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlWarningBackgroundBrush" Color="{DynamicResource Warning9Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentWarningBackgroundBrush" Color="{DynamicResource Warning6Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlTranslucentOverlayWarningBackgroundBrush"
+                     Color="{DynamicResource Warning9Color}"
+                     Opacity="0.1" />
+    <SolidColorBrush x:Key="ControlDangerBackgroundBrush" Color="{DynamicResource Danger9Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentOverlayDangerBackgroundBrush"
+                     Color="{DynamicResource Danger6Color}"
+                     Opacity="0.4" />
+    <SolidColorBrush x:Key="ControlTranslucentDangerBackgroundBrush" Color="{DynamicResource Danger9Color}"
+                     Opacity="0.1" />
 
-    <!-- Danger Colors -->
-    <Color x:Key="Tomato1Color">#FFFCFC</Color>
-    <Color x:Key="Tomato2Color">#FFF8F7</Color>
-    <Color x:Key="Tomato3Color">#FEEBE7</Color>
-    <Color x:Key="Tomato4Color">#FFDCD3</Color>
-    <Color x:Key="Tomato5Color">#FFCDC2</Color>
-    <Color x:Key="Tomato6Color">#FDBDAF</Color>
-    <Color x:Key="Tomato7Color">#F5A898</Color>
-    <Color x:Key="Tomato8Color">#EC8E7B</Color>
-    <Color x:Key="Tomato9Color">#E54D2E</Color>
-    <Color x:Key="Tomato10Color">#DD4425</Color>
-    <Color x:Key="Tomato11Color">#D13415</Color>
-    <Color x:Key="Tomato12Color">#5C271F</Color>
+    <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{DynamicResource White8Color}" />
+    <SolidColorBrush x:Key="ControlInteractiveSolidBackgroundBrush" Color="{DynamicResource Gray1Color}" />
+    <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{DynamicResource Gray6Color}" />
+    <SolidColorBrush x:Key="ControlInteractiveSolidBorderBrush" Color="{DynamicResource Gray1Color}" />
+
+    <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource Gray5Color}" />
+    <SolidColorBrush x:Key="ControlAccentBorderBrush" Color="{DynamicResource Accent9Color}" />
+    <SolidColorBrush x:Key="ControlSuccessBorderBrush" Color="{DynamicResource Success9Color}" />
+    <SolidColorBrush x:Key="ControlWarningBorderBrush" Color="{DynamicResource Warning9Color}" />
+    <SolidColorBrush x:Key="ControlDangerBorderBrush" Color="{DynamicResource Danger9Color}" />
+
+    <SolidColorBrush x:Key="ControlHighlightForegroundBrush" Color="{DynamicResource Gray1Color}" />
+    <SolidColorBrush x:Key="ControlActiveForegroundBrush" Color="{DynamicResource Gray1Color}" />
+    <SolidColorBrush x:Key="ControlForegroundBrush" Color="{DynamicResource Gray12Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentForegroundBrush" Color="{DynamicResource Gray11Color}" />
+    <SolidColorBrush x:Key="ControlSecondaryForegroundBrush" Color="{DynamicResource Gray9Color}" />
+    <SolidColorBrush x:Key="ControlAccentForegroundBrush" Color="{DynamicResource Accent10Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentAccentForegroundBrush" Color="{DynamicResource Accent11Color}" />
+    <SolidColorBrush x:Key="ControlSuccessForegroundBrush" Color="{DynamicResource Success9Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentSuccessForegroundBrush" Color="{DynamicResource Success11Color}" />
+    <SolidColorBrush x:Key="ControlWarningForegroundBrush" Color="{DynamicResource Warning9Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentWarningForegroundBrush" Color="{DynamicResource Warning11Color}" />
+    <SolidColorBrush x:Key="ControlDangerForegroundBrush" Color="{DynamicResource Danger9Color}" />
+    <SolidColorBrush x:Key="ControlTranslucentDangerForegroundBrush" Color="{DynamicResource Danger11Color}" />
+
+    <SolidColorBrush x:Key="NotificationBorderBrush" Color="{DynamicResource Gray1Color}" />
+    <SolidColorBrush x:Key="NotificationBackgroundBrush" Color="{DynamicResource Gray1Color}" />
+    <LinearGradientBrush x:Key="NotificationSuccessBackgroundBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStops>
+            <GradientStop Offset="0" Color="{DynamicResource Success4Color}" />
+            <GradientStop Offset="0.3" Color="{DynamicResource Success2Color}" />
+            <GradientStop Offset="0.8" Color="{DynamicResource Success1Color}" />
+            <GradientStop Offset="1" Color="{DynamicResource Gray2Color}" />
+        </GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="NotificationWarningBackgroundBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStops>
+            <GradientStop Offset="0" Color="{DynamicResource Warning4Color}" />
+            <GradientStop Offset="0.3" Color="{DynamicResource Warning2Color}" />
+            <GradientStop Offset="0.8" Color="{DynamicResource Warning1Color}" />
+            <GradientStop Offset="1" Color="{DynamicResource Gray2Color}" />
+        </GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="NotificationDangerBackgroundBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStops>
+            <GradientStop Offset="0" Color="{DynamicResource Danger4Color}" />
+            <GradientStop Offset="0.3" Color="{DynamicResource Danger2Color}" />
+            <GradientStop Offset="0.8" Color="{DynamicResource Danger1Color}" />
+            <GradientStop Offset="1" Color="{DynamicResource Gray2Color}" />
+        </GradientStops>
+    </LinearGradientBrush>
 </ResourceDictionary>

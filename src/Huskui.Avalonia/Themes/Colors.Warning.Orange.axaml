@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <Color x:Key="Warning1Color">#FEFCFB</Color>
+            <Color x:Key="Warning2Color">#FFF7ED</Color>
+            <Color x:Key="Warning3Color">#FFEFD6</Color>
+            <Color x:Key="Warning4Color">#FFDFB5</Color>
+            <Color x:Key="Warning5Color">#FFD19A</Color>
+            <Color x:Key="Warning6Color">#FFC182</Color>
+            <Color x:Key="Warning7Color">#F5AE73</Color>
+            <Color x:Key="Warning8Color">#EC9455</Color>
+            <Color x:Key="Warning9Color">#F76B15</Color>
+            <Color x:Key="Warning10Color">#EF5F00</Color>
+            <Color x:Key="Warning11Color">#CC4E00</Color>
+            <Color x:Key="Warning12Color">#582D1D</Color>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <Color x:Key="Warning1Color">#17120E</Color>
+            <Color x:Key="Warning2Color">#1E160F</Color>
+            <Color x:Key="Warning3Color">#331E0B</Color>
+            <Color x:Key="Warning4Color">#462100</Color>
+            <Color x:Key="Warning5Color">#562800</Color>
+            <Color x:Key="Warning6Color">#66350C</Color>
+            <Color x:Key="Warning7Color">#7E451D</Color>
+            <Color x:Key="Warning8Color">#A35829</Color>
+            <Color x:Key="Warning9Color">#F76B15</Color>
+            <Color x:Key="Warning10Color">#FF801F</Color>
+            <Color x:Key="Warning11Color">#FFA057</Color>
+            <Color x:Key="Warning12Color">#FFE0C2</Color>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

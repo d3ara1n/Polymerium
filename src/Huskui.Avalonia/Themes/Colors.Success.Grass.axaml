@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <Color x:Key="Success1Color">#FBFEFB</Color>
+            <Color x:Key="Success2Color">#F5FBF5</Color>
+            <Color x:Key="Success3Color">#E9F6E9</Color>
+            <Color x:Key="Success4Color">#DAF1DB</Color>
+            <Color x:Key="Success5Color">#C9E8CA</Color>
+            <Color x:Key="Success6Color">#B2DDB5</Color>
+            <Color x:Key="Success7Color">#94CE9A</Color>
+            <Color x:Key="Success8Color">#65BA74</Color>
+            <Color x:Key="Success9Color">#46A758</Color>
+            <Color x:Key="Success10Color">#3E9B4F</Color>
+            <Color x:Key="Success11Color">#2A7E3B</Color>
+            <Color x:Key="Success12Color">#203C25</Color>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <Color x:Key="Success1Color">#0E1511</Color>
+            <Color x:Key="Success2Color">#141A15</Color>
+            <Color x:Key="Success3Color">#1B2A1E</Color>
+            <Color x:Key="Success4Color">#1D3A24</Color>
+            <Color x:Key="Success5Color">#25482D</Color>
+            <Color x:Key="Success6Color">#2D5736</Color>
+            <Color x:Key="Success7Color">#366740</Color>
+            <Color x:Key="Success8Color">#3E7949</Color>
+            <Color x:Key="Success9Color">#46A758</Color>
+            <Color x:Key="Success10Color">#53B365</Color>
+            <Color x:Key="Success11Color">#71D083</Color>
+            <Color x:Key="Success12Color">#C2F0C2</Color>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>
