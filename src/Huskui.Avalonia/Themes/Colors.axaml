@@ -15,6 +15,8 @@
         <ResourceDictionary x:Key="Default">
             <Color x:Key="TransparentColor">#00ffffff</Color>
             <StaticResource x:Key="SolidColor" ResourceKey="Gray1Color" />
+            <!-- 👆 两个极端 👆 -->
+            
             <StaticResource x:Key="LayerColor" ResourceKey="White7Color" />
             <StaticResource x:Key="CardColor" ResourceKey="Gray2Color" />
             <StaticResource x:Key="SmokeColor" ResourceKey="Black7Color" />
@@ -24,6 +26,8 @@
         <ResourceDictionary x:Key="Dark">
             <Color x:Key="TransparentColor">#00000000</Color>
             <StaticResource x:Key="SolidColor" ResourceKey="Gray1Color" />
+            <!-- 👆 不准动 👆 -->
+            
             <StaticResource x:Key="LayerColor" ResourceKey="White1Color" />
             <StaticResource x:Key="CardColor" ResourceKey="White1Color" />
             <StaticResource x:Key="SmokeColor" ResourceKey="Black7Color" />

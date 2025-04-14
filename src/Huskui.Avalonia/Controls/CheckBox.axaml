@@ -48,7 +48,7 @@
                         <Panel Cursor="Hand">
                             <fi:SymbolIcon Name="Indeterminate" Symbol="LineHorizontal1"
                                            FontSize="{TemplateBinding FontSize}"
-                                           Foreground="{TemplateBinding Foreground}" Opacity="0"
+                                           Foreground="{StaticResource ControlDarkForegroundBrush}" Opacity="0"
                                            RenderTransform="scale(0.98)">
                                 <fi:SymbolIcon.Transitions>
                                     <Transitions>
@@ -60,7 +60,7 @@
                                 </fi:SymbolIcon.Transitions>
                             </fi:SymbolIcon>
                             <fi:SymbolIcon Name="Determinate" Symbol="Checkmark" FontSize="{TemplateBinding FontSize}"
-                                           Foreground="{TemplateBinding Foreground}" Opacity="0"
+                                           Foreground="{StaticResource ControlDarkForegroundBrush}" Opacity="0"
                                            RenderTransform="scale(0.0)">
                                 <fi:SymbolIcon.Transitions>
                                     <Transitions>
