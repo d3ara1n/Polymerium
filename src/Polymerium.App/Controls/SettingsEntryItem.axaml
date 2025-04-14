@@ -10,7 +10,7 @@
                                       ContentTemplate="{TemplateBinding HeaderTemplate}">
                         <ContentPresenter.Styles>
                             <Style Selector="ContentPresenter > TextBlock">
-                                <Setter Property="Foreground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                <Setter Property="Foreground" Value="{StaticResource ControlSecondaryForegroundBrush}" />
                             </Style>
                         </ContentPresenter.Styles>
                     </ContentPresenter>

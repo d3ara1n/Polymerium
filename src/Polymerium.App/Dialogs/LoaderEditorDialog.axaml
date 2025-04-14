@@ -14,14 +14,14 @@
         TargetType="x:Boolean">
         <husk:SwitchCase Value="True">
             <Grid RowDefinitions="*,12,Auto,4,Auto">
-                <Border Grid.Row="0" Background="{DynamicResource ControlBackgroundBrush}"
+                <Border Grid.Row="0" Background="{StaticResource ControlBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="*,4,Auto" Margin="4">
-                        <Border Grid.Column="0" Background="{DynamicResource LayerSolidBackgroundBrush}"
+                        <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                             <Grid ColumnDefinitions="Auto,8,*">
                                 <Border Grid.Column="0"
-                                        Background="{DynamicResource ControlTranslucentBackgroundBrush}"
+                                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                         CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Left}}">
                                     <Image
                                         Source="{Binding $parent[local:LoaderEditorDialog].Loader.Thumbnail,FallbackValue={x:Null}}"
@@ -34,7 +34,7 @@
                                         FontWeight="Bold" />
                                     <TextBlock
                                         Text="{Binding $parent[local:LoaderEditorDialog].Loader.Id,FallbackValue=Identity}"
-                                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -58,7 +58,7 @@
                                         <husk:SwitchPresenter Value="{Binding IsRecommended}" TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock Text="{Binding Version}"
-                                                           Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                                                           Foreground="{StaticResource ControlAccentForegroundBrush}" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock Text="{Binding Version}" />
@@ -83,7 +83,7 @@
                     <fi:SymbolIcon Symbol="Branch" HorizontalAlignment="Center" />
                     <TextBlock Text="No loader selected yet..." HorizontalAlignment="Center" />
                     <TextBlock Text="Mod functions rely on mod loaders."
-                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                HorizontalAlignment="Center" />
                 </StackPanel>
                 <Button Grid.Row="2" HorizontalAlignment="Center" Name="AddLoaderButton"

@@ -28,7 +28,7 @@
                 </TabItem>
                 <TabItem Header="Disabled" IsSelected="True" Content="The Whole World" IsEnabled="False" />
                 <TabItem Header="Hello" Theme="{StaticResource SolidTabItemTheme}">
-                    <Button Content="Peanut" Background="{DynamicResource TransparentBrush}" />
+                    <Button Content="Peanut" Background="{StaticResource TransparentBrush}" />
                 </TabItem>
                 <TabItem Header="Primary" Classes="Primary" Theme="{StaticResource SolidTabItemTheme}">
                     <Button Content="Butter" Classes="Primary" />
@@ -91,12 +91,12 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,6" />
         <Setter Property="Margin" Value="4" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="Container" Background="{TemplateBinding Background}">
@@ -106,7 +106,7 @@
                                               Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </Panel.Transitions>
-                    <Border x:Name="PART_Indicator" Background="{DynamicResource ControlBackgroundBrush}"
+                    <Border x:Name="PART_Indicator" Background="{StaticResource ControlBackgroundBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
@@ -135,8 +135,7 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         RecognizesAccessKey="True"
                         TextElement.FontSize="{TemplateBinding FontSize}"
-                        TextElement.FontWeight="{TemplateBinding FontWeight}"
-                        UseLayoutRounding="False" />
+                        TextElement.FontWeight="{TemplateBinding FontWeight}" />
                 </Panel>
             </ControlTemplate>
         </Setter>
@@ -145,7 +144,7 @@
             <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
         </Style>
         <Style Selector="^:selected /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Panel#Container">
@@ -206,16 +205,16 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="10,6" />
         <Setter Property="Margin" Value="2" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Background="{TemplateBinding Background}">
-                    <Border Name="PART_Overlay" Background="{DynamicResource ControlAccentBackgroundBrush}"
+                    <Border Name="PART_Overlay" Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}" Opacity="0.65">
                         <Border.OpacityMask>
-                            <SolidColorBrush Color="{DynamicResource TransparentColor}" />
+                            <SolidColorBrush Color="{StaticResource TransparentColor}" />
                         </Border.OpacityMask>
                         <Border.Transitions>
                             <Transitions>
@@ -227,7 +226,7 @@
                     </Border>
                     <Border Name="PART_Indicator"
                             CornerRadius="{TemplateBinding CornerRadius}"
-                            Background="{DynamicResource ControlAccentBorderBrush}">
+                            Background="{StaticResource ControlAccentInteractiveBorderBrush}">
                         <Border.Transitions>
                             <Transitions>
                                 <TransformOperationsTransition Property="RenderTransform"
@@ -296,7 +295,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
                     <GradientStops>
-                        <GradientStop Color="{DynamicResource TransparentColor}"
+                        <GradientStop Color="{StaticResource TransparentColor}"
                                       Offset="{StaticResource TabItemHighlightMidPoint}" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
@@ -307,7 +306,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="50%,100%" EndPoint="50%,0%">
                     <GradientStops>
-                        <GradientStop Color="{DynamicResource TransparentColor}"
+                        <GradientStop Color="{StaticResource TransparentColor}"
                                       Offset="{StaticResource TabItemHighlightMidPoint}" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
@@ -318,7 +317,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="100%,50%" EndPoint="0%,50%">
                     <GradientStops>
-                        <GradientStop Color="{DynamicResource TransparentColor}"
+                        <GradientStop Color="{StaticResource TransparentColor}"
                                       Offset="{StaticResource TabItemHighlightMidPoint}" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
@@ -329,7 +328,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
                     <GradientStops>
-                        <GradientStop Color="{DynamicResource TransparentColor}"
+                        <GradientStop Color="{StaticResource TransparentColor}"
                                       Offset="{StaticResource TabItemHighlightMidPoint}" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
@@ -341,7 +340,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
                     <GradientStops>
-                        <GradientStop Color="{DynamicResource TransparentColor}" Offset="0" />
+                        <GradientStop Color="{StaticResource TransparentColor}" Offset="0" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -351,7 +350,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="50%,100%" EndPoint="50%,0%">
                     <GradientStops>
-                        <GradientStop Color="{DynamicResource TransparentColor}" Offset="0" />
+                        <GradientStop Color="{StaticResource TransparentColor}" Offset="0" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -361,7 +360,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="100%,50%" EndPoint="0%,50%">
                     <GradientStops>
-                        <GradientStop Color="{DynamicResource TransparentColor}" Offset="0" />
+                        <GradientStop Color="{StaticResource TransparentColor}" Offset="0" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -371,7 +370,7 @@
             <Setter Property="OpacityMask">
                 <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
                     <GradientStops>
-                        <GradientStop Color="{DynamicResource TransparentColor}" Offset="0" />
+                        <GradientStop Color="{StaticResource TransparentColor}" Offset="0" />
                         <GradientStop Color="Black" Offset="1" />
                     </GradientStops>
                 </LinearGradientBrush>
@@ -383,16 +382,16 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,6" />
         <Setter Property="Margin" Value="4" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Background="{TemplateBinding Background}">
-                    <Border x:Name="PART_Indicator" Background="{DynamicResource TransparentBrush}"
+                    <Border x:Name="PART_Indicator" Background="{StaticResource TransparentBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
@@ -492,10 +491,10 @@
         </Style>
 
         <Style Selector="^.Primary:pointerover /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
         </Style>
         <Style Selector="^.Primary:selected /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

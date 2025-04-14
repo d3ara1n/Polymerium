@@ -42,6 +42,11 @@ public partial class PackageContainer : UserControl
                                                                      o => o.PrimaryCommand,
                                                                      (o, v) => o.PrimaryCommand = v);
 
+    public static readonly DirectProperty<PackageContainer, ICommand?> GotoExplorerCommandProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(GotoExplorerCommand),
+                                                                     o => o.GotoExplorerCommand,
+                                                                     (o, v) => o.GotoExplorerCommand = v);
+
     private IDisposable? _subscription;
 
     public PackageContainer() => InitializeComponent();
@@ -51,11 +56,6 @@ public partial class PackageContainer : UserControl
         get;
         set => SetAndRaise(PrimaryCommandProperty, ref field, value);
     }
-
-    public static readonly DirectProperty<PackageContainer, ICommand?> GotoExplorerCommandProperty =
-        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(GotoExplorerCommand),
-                                                                     o => o.GotoExplorerCommand,
-                                                                     (o, v) => o.GotoExplorerCommand = v);
 
     public ICommand? GotoExplorerCommand
     {

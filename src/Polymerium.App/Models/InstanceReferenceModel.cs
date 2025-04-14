@@ -1,11 +1,9 @@
 ﻿using System;
-using Avalonia.Media.Imaging;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public partial class InstanceReferenceModel(
+public class InstanceReferenceModel(
     string purl,
     string label,
     string projectName,

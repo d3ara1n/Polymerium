@@ -4,7 +4,7 @@
                     xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
     <ControlTheme x:Key="{x:Type local:PipsPager}" TargetType="local:PipsPager">
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <ListBox HorizontalAlignment="Center" Margin="24"

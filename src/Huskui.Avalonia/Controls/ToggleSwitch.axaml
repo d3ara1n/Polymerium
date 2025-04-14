@@ -12,9 +12,9 @@
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type ToggleSwitch}"
                   TargetType="ToggleSwitch">
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -73,7 +73,7 @@
                                       Width="20" Height="20">
 
                                     <Ellipse Name="SwitchKnob"
-                                             Fill="{DynamicResource LayerSolidBackgroundBrush}"
+                                             Fill="{StaticResource OverlaySolidBackgroundBrush}"
                                              Width="16" Height="16">
                                         <Ellipse.Effect>
                                             <DropShadowEffect BlurRadius="6" Opacity="0.2" OffsetX="2" OffsetY="2" />
@@ -106,7 +106,7 @@
 
         <Style Selector="^:checked">
             <Style Selector="^ /template/ Border#SwitchKnobBounds">
-                <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
             </Style>
             <Style Selector="^ /template/ ContentPresenter#PART_OnContentPresenter">
                 <Setter Property="Opacity" Value="1" />

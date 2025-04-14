@@ -6,8 +6,6 @@ namespace Polymerium.App.ViewModels;
 
 public class InstanceWidgetsViewModel : InstanceViewModelBase
 {
-    public WidgetBase[] Widgets { get; }
-
     public InstanceWidgetsViewModel(ViewBag bag, InstanceManager instanceManager, ProfileManager profileManager) :
         base(bag, instanceManager, profileManager)
     {
@@ -22,4 +20,6 @@ public class InstanceWidgetsViewModel : InstanceViewModelBase
             new NoteWidget { Context = context }
         ];
     }
+
+    public WidgetBase[] Widgets { get; }
 }

@@ -5,7 +5,7 @@
     <ControlTheme x:Key="{x:Type local:Modal}" TargetType="local:Modal">
         <Setter Property="MinHeight" Value="128" />
         <Setter Property="MinWidth" Value="256" />
-        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
         <Setter Property="Padding" Value="{StaticResource ModalContentMargin}" />
         <Setter Property="Margin" Value="24" />

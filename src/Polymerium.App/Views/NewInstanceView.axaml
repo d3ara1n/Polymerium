@@ -51,7 +51,7 @@
                                    Width="108"
                                    Height="108"
                                    Padding="8"
-                                   Background="{DynamicResource Layer0BackgroundBrush}"
+                                   Background="{StaticResource LayerBackgroundBrush}"
                                    BorderBrush="{x:Null}"
                                    CornerRadius="{StaticResource MediumCornerRadius}"
                                    DragOver="DropZone_OnDragOver"
@@ -72,14 +72,14 @@
                                 <Rectangle
                                     RadiusX="3"
                                     RadiusY="3"
-                                    Stroke="{DynamicResource ControlSecondaryForegroundBrush}"
+                                    Stroke="{StaticResource ControlSecondaryForegroundBrush}"
                                     StrokeDashArray="4,2"
                                     StrokeThickness="3" />
 
                                 <icons:PackIconLucide
                                     Name="Icon"
                                     Margin="24"
-                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Kind="Image" />
                             </Panel>
                         </Panel>
@@ -113,7 +113,7 @@
                                             Height="{StaticResource MediumFontSize}"
                                             Margin="10,0"
                                             VerticalAlignment="Center"
-                                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Kind="Tag" />
                                         <husk:Divider Orientation="Vertical" />
                                     </StackPanel>
@@ -132,7 +132,7 @@
                                                 Height="{StaticResource MediumFontSize}"
                                                 Margin="10,0"
                                                 VerticalAlignment="Center"
-                                                Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                 Kind="Compass" />
                                             <husk:Divider Orientation="Vertical" />
                                         </StackPanel>
@@ -149,20 +149,20 @@
                 </Grid>
                 <Border
                     IsVisible="{Binding ImportedPack,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}"
-                    Background="{DynamicResource ControlBackgroundBrush}" Padding="3"
+                    Background="{StaticResource ControlBackgroundBrush}" Padding="3"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="*,4,Auto">
                         <Button Grid.Column="2" Classes="Small" Command="{Binding ClearImportedPackCommand}">
                             <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
                         </Button>
-                        <Border Grid.Column="0" Background="{DynamicResource LayerSolidBackgroundBrush}" Padding="8"
+                        <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                             <Grid ColumnDefinitions="*,8,Auto,8,*">
                                 <Grid Grid.Column="0" ColumnDefinitions="Auto,8,*">
                                     <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
                                     <StackPanel Grid.Column="2">
                                         <TextBlock Text="Packages"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                         <TextBlock Text="{Binding ImportedPack.PackageCount,FallbackValue=114514}"
                                                    FontSize="{StaticResource LargeFontSize}" />
                                     </StackPanel>
@@ -170,7 +170,7 @@
                                 <husk:Divider Grid.Column="2" Orientation="Vertical" />
                                 <StackPanel Grid.Column="4">
                                     <TextBlock Text="Mod Loader"
-                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                     <TextBlock Text="{Binding ImportedPack.LoaderLabel,FallbackValue=None}"
                                                FontSize="{StaticResource LargeFontSize}" />
                                 </StackPanel>

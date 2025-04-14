@@ -68,26 +68,26 @@
                 <TextBlock>
                     <Run Text="Hub" FontSize="{StaticResource LargeFontSize}" />
                     <LineBreak />
-                    <Run Text="Design Center" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    <Run Text="Design Center" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </TextBlock>
             </TabStripItem>
             <TabStripItem IsEnabled="False">
                 <TextBlock>
                     <Run Text="Dock" FontSize="{StaticResource LargeFontSize}" />
                     <LineBreak />
-                    <Run Text="Machine Assembler" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    <Run Text="Machine Assembler" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </TextBlock>
             </TabStripItem>
             <TabStripItem>
                 <TextBlock>
                     <Run Text="Socket" FontSize="{StaticResource LargeFontSize}" />
                     <LineBreak />
-                    <Run Text="Power Supply" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                    <Run Text="Power Supply" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </TextBlock>
             </TabStripItem>
         </TabStrip>
         <TabStrip Theme="{StaticResource SegmentedTabStripTheme}" HorizontalAlignment="Right"
-                  Background="{DynamicResource Layer1BackgroundBrush}">
+                  Background="{StaticResource OverlayBackgroundBrush}">
             <TabStripItem>
                 <icons:PackIconLucide Kind="Menu" Height="12" Width="12" />
             </TabStripItem>
@@ -102,8 +102,8 @@
             <TabStripItem Content="Thursday" />
             <TabStripItem Content="Friday" />
         </TabStrip>
-        <TabControl BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
-                    Background="{DynamicResource Card1BackgroundBrush}"
+        <TabControl BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
+                    Background="{StaticResource CardBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
             <TabItem Header="Foo">
                 <StackPanel Spacing="8">
@@ -122,7 +122,7 @@
                                 <fi:SymbolIcon Symbol="FolderZip" FontSize="{StaticResource MediumFontSize}" />
                                 <TextBlock Text="四大名著.zip" />
                             </StackPanel>
-                            <TextBlock Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                 <Run Text="D: 128 B/s" />
                                 <Run Text="E: 46 s" />
                                 <Run Text="S: 5.4 MiB" />
@@ -149,7 +149,7 @@
                             <TextBlock Text="Make it REAL" />
                         </CheckBox>
                     </DockPanel>
-                    <husk:InfoBar Header="You know what?" Background="{x:Null}">
+                    <husk:InfoBar Header="You know what?">
                         <TextBlock TextWrapping="WrapWithOverflow">
                             <Run
                                 Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." />
@@ -228,7 +228,7 @@
             <TabItem Header="Baz">
                 <StackPanel Spacing="12">
                     <husk:Card Padding="0">
-                        <TabControl BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="0,1,0,0">
+                        <TabControl BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="0,1,0,0">
                             <TabControl.Styles>
                                 <Style Selector="TabItem">
                                     <Setter Property="Margin" Value="0" />
@@ -236,7 +236,7 @@
                             </TabControl.Styles>
                             <TabItem Header="Description">
                                 <StackPanel>
-                                    <Border Background="{DynamicResource ControlTranslucentBackgroundBrush}"
+                                    <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                             HorizontalAlignment="Left"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
                                         <Grid ColumnDefinitions="Auto,0,Auto,0,Auto">

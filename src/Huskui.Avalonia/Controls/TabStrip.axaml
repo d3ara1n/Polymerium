@@ -9,7 +9,7 @@
                         <TextBlock>
                             <Run Text="Hub" FontSize="{StaticResource LargeFontSize}" />
                             <LineBreak />
-                            <Run Text="Design Center" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="Design Center" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </TextBlock>
                     </TabStripItem>
                     <TabStripItem IsEnabled="False">
@@ -17,14 +17,14 @@
                             <Run Text="Dock" FontSize="{StaticResource LargeFontSize}" />
                             <LineBreak />
                             <Run Text="Machine Assembler"
-                                 Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </TextBlock>
                     </TabStripItem>
                     <TabStripItem>
                         <TextBlock>
                             <Run Text="Socket" FontSize="{StaticResource LargeFontSize}" />
                             <LineBreak />
-                            <Run Text="Power Supply" Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="Power Supply" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </TextBlock>
                     </TabStripItem>
                 </TabStrip>
@@ -58,8 +58,8 @@
     </ControlTheme>
 
     <ControlTheme x:Key="SegmentedTabStripTheme" TargetType="TabStrip">
-        <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlayBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource SegmentedTabStripItemTheme}" />
         <Setter Property="Padding" Value="3" />
@@ -102,8 +102,8 @@
         <Setter Property="Padding" Value="10,8" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
@@ -121,7 +121,7 @@
                                                      Easing="SineEaseOut" />
                             </Transitions>
                         </Border.Transitions>
-                        <Border Name="Indicator" Background="{DynamicResource OverlayFullBackgroundBrush}" Opacity="0"
+                        <Border Name="Indicator" Background="{StaticResource OverlayFullBackgroundBrush}" Opacity="0"
                                 CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.Transitions>
                                 <Transitions>
@@ -148,8 +148,7 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         RecognizesAccessKey="True"
                         TextElement.FontSize="{TemplateBinding FontSize}"
-                        TextElement.FontWeight="{TemplateBinding FontWeight}"
-                        UseLayoutRounding="False" />
+                        TextElement.FontWeight="{TemplateBinding FontWeight}" />
                 </Panel>
             </ControlTemplate>
         </Setter>
@@ -159,7 +158,7 @@
         </Style>
 
         <Style Selector="^:selected /template/ Border#Border">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
             <Setter Property="BorderThickness" Value="2" />
         </Style>
 
@@ -175,11 +174,11 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="8,6" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="Background" Value="{DynamicResource LayerSolidBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel Background="{DynamicResource TransparentBrush}">
+                <Panel Background="{StaticResource TransparentBrush}">
                     <Border Name="Indicator" Background="{TemplateBinding Background}" Opacity="0"
                             RenderTransform="scale(0.95)"
                             ClipToBounds="{TemplateBinding ClipToBounds}"
@@ -230,12 +229,12 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,6" />
         <Setter Property="Margin" Value="4" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="Container" Background="{TemplateBinding Background}">
@@ -245,7 +244,7 @@
                                               Duration="{StaticResource ControlFasterAnimationDuration}" />
                         </Transitions>
                     </Panel.Transitions>
-                    <Border x:Name="PART_Indicator" Background="{DynamicResource ControlBackgroundBrush}"
+                    <Border x:Name="PART_Indicator" Background="{StaticResource ControlBackgroundBrush}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                         <Border.Transitions>
                             <Transitions>
@@ -274,7 +273,7 @@
             <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
         </Style>
         <Style Selector="^:selected /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Panel#Container">

@@ -20,7 +20,7 @@
                                 <fi:SymbolIcon Symbol="FolderZip" FontSize="{StaticResource MediumFontSize}" />
                                 <TextBlock Text="四大名著.zip" />
                             </StackPanel>
-                            <TextBlock Foreground="{DynamicResource ControlSecondaryForegroundBrush}">
+                            <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                 <Run Text="D: 128 B/s" />
                                 <Run Text="E: 46 s" />
                                 <Run Text="S: 5.4 MiB" />
@@ -54,9 +54,9 @@
                 Value="{Binding HorizontalContentAlignment,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NotificationHost}}" />
         <Setter Property="VerticalAlignment"
                 Value="{Binding VerticalContentAlignment,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NotificationHost}}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource NotificationBorderBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
-        <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource NotificationBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="3" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="MinWidth" Value="220" />
@@ -114,7 +114,7 @@
                                                     <Setter Property="TextWrapping" Value="Wrap" />
                                                     <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                                                     <Setter Property="Foreground"
-                                                            Value="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                                            Value="{StaticResource ControlSecondaryForegroundBrush}" />
                                                 </Style>
                                             </ContentPresenter.Styles>
                                         </ContentPresenter>
@@ -144,15 +144,15 @@
 
         <Style Selector="^:success">
             <Setter Property="Title" Value="Success" />
-            <Setter Property="Background" Value="{DynamicResource NotificationSuccessBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource NotificationSuccessBackgroundBrush}" />
         </Style>
         <Style Selector="^:warning">
             <Setter Property="Title" Value="Warning" />
-            <Setter Property="Background" Value="{DynamicResource NotificationWarningBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource NotificationWarningBackgroundBrush}" />
         </Style>
         <Style Selector="^:danger">
             <Setter Property="Title" Value="Danger" />
-            <Setter Property="Background" Value="{DynamicResource NotificationDangerBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource NotificationDangerBackgroundBrush}" />
         </Style>
 
         <Style Selector="^[IsOpen=True]">

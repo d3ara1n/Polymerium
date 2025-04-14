@@ -21,7 +21,7 @@
                         <husk:SwitchCase Value="True">
                             <TextBlock
                                 Text="{Binding Display,FallbackValue=Display}"
-                                Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                                Foreground="{StaticResource ControlAccentForegroundBrush}" />
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="False">
                             <TextBlock

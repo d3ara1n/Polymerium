@@ -82,7 +82,7 @@
                                 <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
                             </Button>
                             <ComboBox Name="VersionBox" ItemsSource="{Binding Versions}"
-                                      Background="{DynamicResource ControlInteractiveSolidBackgroundBrush}"
+                                      Background="{StaticResource ControlBackgroundBrush}"
                                       SelectedItem="{Binding Versions[0],FallbackValue={x:Null}}">
                                 <ComboBox.SelectionBoxItemTemplate>
                                     <DataTemplate DataType="m:ExhibitVersionModel">

@@ -143,7 +143,7 @@
                     <TextBox.InnerRightContent>
                         <StackPanel Orientation="Horizontal">
                             <husk:Divider Orientation="Vertical" />
-                            <TextBlock Text="MiB" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                            <TextBlock Text="MiB" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                        Margin="8,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </TextBox.InnerRightContent>
@@ -157,7 +157,7 @@
                     <TextBox Grid.Column="0" Watermark="1270" Text="{Binding WindowInitialHeight,Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Width" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                <TextBlock Text="Width" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            Margin="8,0" VerticalAlignment="Center" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>
@@ -166,7 +166,7 @@
                     <TextBox Grid.Column="2" Watermark="720" Text="{Binding WindowInitialWidth,Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Height" Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                <TextBlock Text="Height" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            Margin="8,0" VerticalAlignment="Center" />
                                 <husk:Divider Orientation="Vertical" />
                             </StackPanel>

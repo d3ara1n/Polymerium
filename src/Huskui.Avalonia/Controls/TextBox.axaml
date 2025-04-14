@@ -9,7 +9,7 @@
                     <TextBox.InnerLeftContent>
                         <StackPanel Orientation="Horizontal">
                             <fi:SymbolIcon Margin="8" IconVariant="Filled"
-                                           Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            Symbol="People" FontSize="{StaticResource MediumFontSize}" />
                             <local:Divider Orientation="Vertical" />
                         </StackPanel>
@@ -36,14 +36,14 @@
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type TextBox}" TargetType="TextBox">
         <!-- <Setter Property="Cursor" Value="Ibeam" /> -->
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
-        <Setter Property="SelectionBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlHighlightForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
+        <Setter Property="SelectionBrush" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+        <Setter Property="SelectionForegroundBrush" Value="{StaticResource ControlReversedForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="CaretBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="Template">
@@ -69,7 +69,7 @@
                                 </Style>
                             </Grid.Styles>
                             <ContentPresenter Grid.Column="0" Content="{TemplateBinding InnerLeftContent}"
-                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <ScrollViewer Grid.Column="2"
                                           Cursor="Ibeam"
                                           AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
@@ -115,11 +115,11 @@
                                 </Panel>
                             </ScrollViewer>
                             <ContentPresenter Grid.Column="4" Content="{TemplateBinding InnerRightContent}"
-                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </Grid>
                     </Border>
                     <Border x:Name="PART_GlowBorder" CornerRadius="{TemplateBinding CornerRadius}"
-                            BorderBrush="{DynamicResource TransparentBrush}" BorderThickness="2">
+                            BorderBrush="{StaticResource TransparentBrush}" BorderThickness="2">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition Property="BorderBrush"
@@ -133,15 +133,15 @@
         </Setter>
 
         <Style Selector="^:focus /template/ Border#PART_GlowBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
 
         <Style Selector="^:focus /template/ Border#PART_Border">
-            <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:pointerover:not(:focus) /template/ Border#PART_Border">
-            <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Border#PART_Border">
@@ -155,14 +155,14 @@
 
     <ControlTheme x:Key="UnderlineTextBoxTheme" TargetType="TextBox">
         <Setter Property="Cursor" Value="Ibeam" />
-        <Setter Property="Background" Value="{DynamicResource ControlInteractiveBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
         <Setter Property="BorderThickness" Value="1,1,1,2" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <Setter Property="SelectionBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlHighlightForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+        <Setter Property="SelectionBrush" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+        <Setter Property="SelectionForegroundBrush" Value="{StaticResource ControlReversedForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="CaretBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="Template">
@@ -188,7 +188,7 @@
                                 </Style>
                             </Grid.Styles>
                             <ContentPresenter Grid.Column="0" Content="{TemplateBinding InnerLeftContent}"
-                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <ScrollViewer Grid.Column="2"
                                           AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                           HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
@@ -233,7 +233,7 @@
                                 </Panel>
                             </ScrollViewer>
                             <ContentPresenter Grid.Column="4" Content="{TemplateBinding InnerRightContent}"
-                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </Grid>
                     </Border>
                     <Border x:Name="Indicator" CornerRadius="{TemplateBinding CornerRadius}"
@@ -255,12 +255,12 @@
         </Setter>
 
         <Style Selector="^:focus /template/ Border#Indicator">
-            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
             <Setter Property="RenderTransform" Value="scaleX(1.0)" />
         </Style>
 
         <Style Selector="^:focus /template/ Border#Root">
-            <Setter Property="Background" Value="{DynamicResource ControlInteractiveSolidBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Panel#Root">
@@ -270,14 +270,14 @@
 
     <ControlTheme x:Key="FieldTextBoxTheme" TargetType="TextBox">
         <Setter Property="Cursor" Value="Ibeam" />
-        <Setter Property="Background" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlTranslucentBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="1,1,1,1" />
-        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <Setter Property="SelectionBrush" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ControlHighlightForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+        <Setter Property="SelectionBrush" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+        <Setter Property="SelectionForegroundBrush" Value="{StaticResource ControlReversedForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="CaretBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="Template">
@@ -303,7 +303,7 @@
                                 </Style>
                             </Grid.Styles>
                             <ContentPresenter Grid.Column="0" Content="{TemplateBinding InnerLeftContent}"
-                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <ScrollViewer Grid.Column="2"
                                           AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                           HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
@@ -348,7 +348,7 @@
                                 </Panel>
                             </ScrollViewer>
                             <ContentPresenter Grid.Column="4" Content="{TemplateBinding InnerRightContent}"
-                                              Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </Grid>
                     </Border>
                 </Panel>

@@ -14,10 +14,10 @@
             <Panel>
                 <Rectangle Name="DashLine" RadiusX="6" RadiusY="6"
                            StrokeThickness="2"
-                           Stroke="{DynamicResource ControlBorderBrush}"
+                           Stroke="{StaticResource ControlInteractiveBorderBrush}"
                            StrokeDashArray="6,2"
                            StrokeLineCap="Round"
-                           StrokeJoin="Round" Fill="{DynamicResource ControlBackgroundBrush}">
+                           StrokeJoin="Round" Fill="{StaticResource OverlayInteractiveBackgroundBrush}">
                     <Rectangle.Transitions>
                         <Transitions>
                             <DoubleTransition Property="Opacity"
@@ -31,10 +31,10 @@
                         <TextBlock FontWeight="Bold" Text="Drag and drop, or" IsHitTestVisible="False" />
                         <HyperlinkButton Name="BrowseButton" Content="Browser files..."
                                          FontWeight="Bold" Click="BrowseButton_OnClick"
-                                         Foreground="{DynamicResource ControlAccentForegroundBrush}" />
+                                         Foreground="{StaticResource ControlAccentForegroundBrush}" />
                     </StackPanel>
                     <TextBlock Text="Up to 1024MiB" HorizontalAlignment="Center" IsHitTestVisible="False"
-                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </StackPanel>
             </Panel>
             <husk:DropZone.Styles>

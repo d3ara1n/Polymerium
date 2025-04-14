@@ -17,7 +17,7 @@
         </Panel>
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:SkeletonContainer}" TargetType="local:SkeletonContainer">
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
@@ -25,7 +25,7 @@
                                       ContentTemplate="{TemplateBinding ContentTemplate}" />
                     <Border Name="Mask" Background="{TemplateBinding Background}" IsVisible="False"
                             CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
-                        <Border Name="Overlay" Background="{DynamicResource OverlayLighter6BackgroundBrush}"
+                        <Border Name="Wave" Background="{StaticResource Overlay7Color}"
                                 Opacity="0" />
                     </Border>
                 </Panel>
@@ -35,7 +35,7 @@
         <Style Selector="^:loading /template/ Border#Mask">
             <Setter Property="IsVisible" Value="True" />
         </Style>
-        <Style Selector="^:loading:animated /template/ Border#Overlay">
+        <Style Selector="^:loading:animated /template/ Border#Wave">
             <Style.Animations>
                 <Animation Duration="0:0:0.8" PlaybackDirection="Alternate" IterationCount="Infinite"
                            Easing="SineEaseOut">

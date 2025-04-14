@@ -5,7 +5,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.IsScrollChainingEnabled" Value="False" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="Border" Background="{TemplateBinding Background}"

@@ -11,7 +11,7 @@
             <TextBlock Text="It seems something went wrong..." FontSize="{StaticResource ExtraLargeFontSize}"
                        TextWrapping="Wrap" />
             <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
-            <Border Background="{DynamicResource ControlBackgroundBrush}"
+            <Border Background="{StaticResource ControlBackgroundBrush}"
                     CornerRadius="{StaticResource SmallCornerRadius}">
                 <TextBlock Text="{Binding StackTrace}" Margin="12" TextWrapping="Wrap" />
             </Border>

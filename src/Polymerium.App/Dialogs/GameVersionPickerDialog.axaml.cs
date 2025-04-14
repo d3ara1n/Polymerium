@@ -23,18 +23,18 @@ public partial class GameVersionPickerDialog : Dialog
 
     public static readonly DirectProperty<GameVersionPickerDialog, string> FilterTextProperty =
         AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(nameof(FilterText),
-                                                                     o => o.FilterText,
-                                                                     (o, v) => o.FilterText = v);
+                                                                         o => o.FilterText,
+                                                                         (o, v) => o.FilterText = v);
 
     public static readonly DirectProperty<GameVersionPickerDialog, string> SelectedTypeProperty =
         AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(nameof(SelectedType),
-                                                                     o => o.SelectedType,
-                                                                     (o, v) => o.SelectedType = v);
+                                                                         o => o.SelectedType,
+                                                                         (o, v) => o.SelectedType = v);
 
     public static readonly DirectProperty<GameVersionPickerDialog, string[]> TypesProperty =
         AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string[]>(nameof(Types),
-                                                                       o => o.Types,
-                                                                       (o, v) => o.Types = v);
+                                                                           o => o.Types,
+                                                                           (o, v) => o.Types = v);
 
     private readonly IDisposable _subscription;
 

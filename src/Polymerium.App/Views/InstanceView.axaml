@@ -100,7 +100,7 @@
             </husk:SwitchCase>
         </husk:SwitchPresenter>
         <Grid ColumnDefinitions="Auto,0,*">
-            <Border Grid.Column="0" Background="{DynamicResource Layer1BackgroundBrush}"
+            <Border Grid.Column="0" Background="{StaticResource OverlayBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}" Width="64" Margin="12,12,0,12">
                 <Grid RowDefinitions="Auto,12,*,12,Auto,12,Auto,0,Auto">
                     <Button Grid.Row="0" Command="{Binding $parent[husk:Frame].GoBackCommand}" Margin="12">
@@ -121,9 +121,9 @@
                                 <Setter Property="ClipToBounds" Value="False" />
                                 <Setter Property="Template">
                                     <ControlTemplate>
-                                        <Panel Background="{DynamicResource TransparentBrush}">
+                                        <Panel Background="{StaticResource TransparentBrush}">
                                             <Border Name="Indicator" Opacity="0"
-                                                    Background="{DynamicResource ControlTranslucentOverlayAccentBackgroundBrush}">
+                                                    Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
                                                 <Border.Transitions>
                                                     <Transitions>
                                                         <DoubleTransition Property="Opacity" Easing="CubicEaseOut"
@@ -132,7 +132,7 @@
                                                 </Border.Transitions>
                                             </Border>
                                             <Border Name="Lock" Opacity="0" BorderThickness="3,0"
-                                                    BorderBrush="{DynamicResource ControlAccentBorderBrush}"
+                                                    BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
                                                     RenderTransform="scaleX(1.1)">
                                                 <Border.Transitions>
                                                     <Transitions>
@@ -159,7 +159,7 @@
                                 </Setter>
                                 <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
                                     <Setter Property="Foreground"
-                                            Value="{DynamicResource ControlAccentForegroundBrush}" />
+                                            Value="{StaticResource ControlAccentForegroundBrush}" />
                                 </Style>
                                 <Style Selector="^:pointerover /template/ Border#Indicator">
                                     <Setter Property="Opacity" Value="1" />
@@ -183,7 +183,7 @@
                         <icons:PackIconLucide Kind="Folder" />
                     </Button>
                     <Border Grid.Row="8" CornerRadius="{StaticResource SmallCornerRadius}" Margin="8"
-                            BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="2"
+                            BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="2"
                             Height="{Binding Bounds.Width,RelativeSource={RelativeSource Mode=Self}}"
                             BackgroundSizing="InnerBorderEdge">
                         <Border.Background>

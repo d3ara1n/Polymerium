@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Design.PreviewWith>
         <Grid ColumnDefinitions="*,32,*" Background="White">
@@ -51,8 +50,8 @@
     </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type ProgressBar}" TargetType="ProgressBar">
-        <Setter Property="Background" Value="{DynamicResource ControlAccentBackgroundBrush}" />
-        <Setter Property="CornerRadius" Value="{DynamicResource SmallCornerRadius}" />
+        <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="TextBlock.FontSize" Value="{StaticResource SmallFontSize}" />
         <Setter Property="ProgressTextFormat" Value="{}{1:0}%" />
         <Setter Property="Template">
@@ -60,29 +59,29 @@
                 <Border Name="Border" ClipToBounds="True"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="{DynamicResource ControlBackgroundBrush}"
+                        Background="{StaticResource ControlBackgroundBrush}"
                         Padding="{TemplateBinding Padding}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <Panel>
-                        <Popup Name="PART_Popup" IsOpen="{TemplateBinding ShowProgressText}">
-                            <Border Background="{DynamicResource Card1BackgroundBrush}"
-                                    BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1"
-                                    CornerRadius="{StaticResource SmallCornerRadius}" Padding="4,0" Margin="6">
-                                <TextBlock
-                                    FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Center">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{x:Static huskc:InternalConverters.StringFormat}">
-                                            <TemplateBinding Property="ProgressTextFormat" />
-                                            <Binding Path="Value"
-                                                     RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <TemplateBinding Property="Percentage" />
-                                            <TemplateBinding Property="Minimum" />
-                                            <TemplateBinding Property="Maximum" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </Border>
-                        </Popup>
+                        <!-- <Popup Name="PART_Popup" IsOpen="{TemplateBinding ShowProgressText}"> -->
+                        <!--     <Border Background="{StaticResource CardBackgroundBrush}" -->
+                        <!--             BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1" -->
+                        <!--             CornerRadius="{StaticResource SmallCornerRadius}" Padding="4,0" Margin="6"> -->
+                        <!--         <TextBlock -->
+                        <!--             FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Center"> -->
+                        <!--             <TextBlock.Text> -->
+                        <!--                 <MultiBinding Converter="{x:Static huskc:InternalConverters.StringFormat}"> -->
+                        <!--                     <TemplateBinding Property="ProgressTextFormat" /> -->
+                        <!--                     <Binding Path="Value" -->
+                        <!--                              RelativeSource="{RelativeSource TemplatedParent}" /> -->
+                        <!--                     <TemplateBinding Property="Percentage" /> -->
+                        <!--                     <TemplateBinding Property="Minimum" /> -->
+                        <!--                     <TemplateBinding Property="Maximum" /> -->
+                        <!--                 </MultiBinding> -->
+                        <!--             </TextBlock.Text> -->
+                        <!--         </TextBlock> -->
+                        <!--     </Border> -->
+                        <!-- </Popup> -->
                         <Panel Name="Determinate">
                             <Border Name="PART_Indicator"
                                     Background="{TemplateBinding Background}" />
@@ -105,9 +104,9 @@
         <Style Selector="^:horizontal">
             <Setter Property="MinHeight" Value="4" />
 
-            <Style Selector="^ /template/ Popup#PART_Popup">
-                <Setter Property="Placement" Value="Top" />
-            </Style>
+            <!-- <Style Selector="^ /template/ Popup#PART_Popup"> -->
+            <!--     <Setter Property="Placement" Value="Top" /> -->
+            <!-- </Style> -->
 
             <Style Selector="^ /template/ Border#PART_Indicator">
                 <Setter Property="HorizontalAlignment" Value="Left" />
@@ -123,9 +122,9 @@
             </Style>
 
             <Style Selector="^:indeterminate">
-                <Style Selector="^ /template/ Popup#PART_Popup">
-                    <Setter Property="IsOpen" Value="False" />
-                </Style>
+                <!-- <Style Selector="^ /template/ Popup#PART_Popup"> -->
+                <!--     <Setter Property="IsOpen" Value="False" /> -->
+                <!-- </Style> -->
 
                 <Style Selector="^ /template/ Panel#Determinate">
                     <Setter Property="Opacity" Value="0.0" />
@@ -198,9 +197,9 @@
         <Style Selector="^:vertical">
             <Setter Property="MinWidth" Value="4" />
 
-            <Style Selector="^ /template/ Popup#PART_Popup">
-                <Setter Property="Placement" Value="Bottom" />
-            </Style>
+            <!-- <Style Selector="^ /template/ Popup#PART_Popup"> -->
+            <!--     <Setter Property="Placement" Value="Bottom" /> -->
+            <!-- </Style> -->
 
             <Style Selector="^ /template/ Border#PART_Indicator">
                 <Setter Property="VerticalAlignment" Value="Bottom" />
@@ -216,9 +215,9 @@
             </Style>
 
             <Style Selector="^:indeterminate">
-                <Style Selector="^ /template/ Popup#PART_Popup">
-                    <Setter Property="IsOpen" Value="False" />
-                </Style>
+                <!-- <Style Selector="^ /template/ Popup#PART_Popup"> -->
+                <!--     <Setter Property="IsOpen" Value="False" /> -->
+                <!-- </Style> -->
 
                 <Style Selector="^ /template/ Panel#PART_Determinate">
                     <Setter Property="Opacity" Value="0.0" />
@@ -290,7 +289,7 @@
 
     <ControlTheme x:Key="BorderedProgressBarTheme" TargetType="ProgressBar"
                   BasedOn="{StaticResource {x:Type ProgressBar}}">
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlInteractiveBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Padding" Value="1" />
 

@@ -19,7 +19,7 @@
                             <TextBlock Text="{TemplateBinding Title}"
                                        FontWeight="Bold" />
                             <TextBlock Text="{TemplateBinding Summary}"
-                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                        TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>

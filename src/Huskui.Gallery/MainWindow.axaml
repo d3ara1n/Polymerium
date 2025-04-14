@@ -17,18 +17,22 @@
             <husk:Card>
                 <StackPanel Spacing="4" Width="128">
                     <ComboBox>
-                        <ComboBoxItem Content="AAA"/>
-                        <ComboBoxItem Content="BBB"/>
+                        <ComboBoxItem Content="AAA" />
+                        <ComboBoxItem Content="BBB" />
                     </ComboBox>
                 </StackPanel>
             </husk:Card>
             <husk:Card>
                 <StackPanel Spacing="4">
                     <Button Content="Hello" Theme="{StaticResource GhostButtonTheme}" />
-                    <Button Content="Hello" Classes="Primary" Theme="{StaticResource GhostButtonTheme}" />
-                    <Button Content="Hello" Classes="Success" Theme="{StaticResource GhostButtonTheme}" />
-                    <Button Content="Hello" Classes="Warning" Theme="{StaticResource GhostButtonTheme}" />
-                    <Button Content="Hello" Classes="Danger" Theme="{StaticResource GhostButtonTheme}" />
+                    <husk:Divider />
+                    <Button Content="Hello" Classes="Primary" />
+                    <husk:Divider />
+                    <Button Content="Hello" Classes="Success" />
+                    <husk:Divider />
+                    <Button Content="Hello" Classes="Warning" />
+                    <husk:Divider />
+                    <Button Content="Hello" Classes="Danger" />
                 </StackPanel>
             </husk:Card>
         </StackPanel>

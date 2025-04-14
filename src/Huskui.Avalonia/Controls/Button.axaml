@@ -100,8 +100,7 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         RecognizesAccessKey="True"
                         TextElement.FontSize="{TemplateBinding FontSize}"
-                        TextElement.FontWeight="{TemplateBinding FontWeight}"
-                        UseLayoutRounding="False">
+                        TextElement.FontWeight="{TemplateBinding FontWeight}">
                         <ContentPresenter.Transitions>
                             <Transitions>
                                 <DoubleTransition
@@ -143,7 +142,7 @@
             <Setter Property="Padding" Value="10,6" />
         </Style>
 
-        <Style Selector="^.Small">
+        <Style Selector="^.Large">
             <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
             <Setter Property="Padding" Value="18,12" />
         </Style>
@@ -164,22 +163,22 @@
 
         <Style Selector="^.Primary">
             <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
         </Style>
 
         <Style Selector="^.Success">
             <Setter Property="Background" Value="{StaticResource ControlSuccessInteractiveBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
         </Style>
 
         <Style Selector="^.Warning">
             <Setter Property="Background" Value="{StaticResource ControlWarningInteractiveBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
         </Style>
 
         <Style Selector="^.Danger">
             <Setter Property="Background" Value="{StaticResource ControlDangerInteractiveBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
         </Style>
     </ControlTheme>
 
@@ -188,7 +187,7 @@
         BasedOn="{StaticResource BaseButtonTheme}"
         TargetType="Button">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlayInteractiveBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
 
         <Style Selector="^ /template/ Border#Indicator">
@@ -291,6 +290,7 @@
         x:Key="GhostButtonTheme"
         BasedOn="{StaticResource BaseButtonTheme}"
         TargetType="Button">
+
         <Style Selector="^ /template/ Border#Indicator">
             <Setter Property="RenderTransform" Value="scale(0.98)" />
         </Style>

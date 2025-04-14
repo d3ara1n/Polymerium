@@ -12,6 +12,10 @@
     xmlns:v="using:Polymerium.App.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+    ExtendClientAreaChromeHints="NoChrome"
+    ExtendClientAreaToDecorationsHint="True"
+    ExtendClientAreaTitleBarHeightHint="44"
+    TransparencyLevelHint="Mica, None"
     Title="{x:Static local:Program.Brand}"
     Width="1024"
     Height="600"
@@ -19,10 +23,6 @@
     MinHeight="460"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    ExtendClientAreaChromeHints="NoChrome"
-    ExtendClientAreaToDecorationsHint="True"
-    ExtendClientAreaTitleBarHeightHint="44"
-    TransparencyLevelHint="Mica, None"
     mc:Ignorable="d" x:DataType="local:MainWindowContext">
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
@@ -179,7 +179,7 @@
                             IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                             Command="{Binding $parent[TextBox].Clear}"
                             Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                            Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </TextBox.InnerRightContent>
                 </TextBox>
                 <ScrollViewer

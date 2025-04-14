@@ -48,7 +48,7 @@
     <ControlTheme x:Key="{x:Type MenuItem}" TargetType="MenuItem">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
@@ -82,19 +82,19 @@
                             <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="6">
                                 <Panel>
                                     <TextBlock VerticalAlignment="Center"
-                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                Text="{TemplateBinding InputGesture,Converter={x:Static huskc:InternalConverters.KeyGestureToString}}" />
                                 </Panel>
 
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <fi:SymbolIcon Name="Checkbox" Symbol="CheckboxUnchecked"
                                                    IsVisible="False"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                    FontSize="{TemplateBinding FontSize}"
                                                    HorizontalAlignment="Right" VerticalAlignment="Center" />
                                     <fi:SymbolIcon Name="ExpandMark" Symbol="ArrowRight"
                                                    IsVisible="False"
-                                                   Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                    FontSize="{TemplateBinding FontSize}"
                                                    HorizontalAlignment="Right" VerticalAlignment="Center" />
                                 </StackPanel>
@@ -104,7 +104,7 @@
                                IsLightDismissEnabled="False"
                                IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}"
                                Placement="RightEdgeAlignedTop">
-                            <Border Margin="2,4" Background="{DynamicResource LayerSolidBackgroundBrush}"
+                            <Border Margin="2,4" Background="{StaticResource OverlaySolidBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
                                 <Border.Effect>
                                     <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
@@ -131,7 +131,7 @@
 
         <Style Selector="^:selected">
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
             </Style>
 
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
@@ -168,7 +168,7 @@
 
     <ControlTheme x:Key="TopMenuItemTheme" TargetType="MenuItem">
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
-        <Setter Property="Background" Value="{DynamicResource TransparentBrush}" />
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
@@ -200,18 +200,19 @@
 
                             <Panel Grid.Column="2">
                                 <TextBlock x:Name="PART_InputGestureText" VerticalAlignment="Center"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            Text="{TemplateBinding InputGesture,Converter={x:Static huskc:InternalConverters.KeyGestureToString}}" />
                             </Panel>
 
                             <Panel Grid.Column="4">
                                 <fi:SymbolIcon Name="ExpandMark" Symbol="ArrowRight"
                                                IsVisible="False"
-                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{TemplateBinding FontSize}"
                                                HorizontalAlignment="Right" VerticalAlignment="Center" />
                                 <fi:SymbolIcon Name="Checkbox" Symbol="CheckboxUnchecked"
                                                IsVisible="False"
-                                               Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                FontSize="{TemplateBinding FontSize}"
                                                HorizontalAlignment="Right" VerticalAlignment="Center" />
                             </Panel>
@@ -221,7 +222,7 @@
                                IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}"
                                Placement="RightEdgeAlignedTop"
                                OverlayInputPassThroughElement="{Binding $parent[Menu]}">
-                            <Border Margin="2,4" Background="{DynamicResource LayerSolidBackgroundBrush}"
+                            <Border Margin="2,4" Background="{StaticResource OverlaySolidBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
                                 <Border.Effect>
                                     <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
@@ -248,13 +249,13 @@
 
         <Style Selector="^:selected">
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
             </Style>
         </Style>
 
         <Style Selector="^:pressed">
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="Background" Value="{DynamicResource Layer2BackgroundBrush}" />
+                <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
             </Style>
         </Style>
 

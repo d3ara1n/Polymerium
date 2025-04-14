@@ -20,13 +20,13 @@
                     </Border.Background>
                 </Border>
                 <Border Grid.Row="1" CornerRadius="{StaticResource MediumCornerRadius}" Margin="4"
-                        Background="{DynamicResource LayerSolidBackgroundBrush}">
+                        Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <Grid ColumnDefinitions="Auto,8,*,8,Auto" Margin="12">
                         <Border Grid.Column="0"
-                                Background="{DynamicResource LayerSmokeBackgroundBrush}"
+                                Background="{StaticResource OverlaySmokeBackgroundBrush}"
                                 CornerRadius="99">
                             <icons:PackIconLucide Kind="Newspaper" Height="14" Width="14"
-                                                  Foreground="{DynamicResource ControlHighlightForegroundBrush}"
+                                                  Foreground="{StaticResource ControlReversedForegroundBrush}"
                                                   Margin="8" />
                         </Border>
                         <StackPanel Grid.Column="2" VerticalAlignment="Center">
@@ -34,7 +34,7 @@
                                        TextTrimming="CharacterEllipsis" FontWeight="Bold" />
                             <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis"
                                        FontSize="{StaticResource SmallFontSize}"
-                                       Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </StackPanel>
                         <Button Grid.Column="4" Classes="Small"
                                 Theme="{StaticResource GhostButtonTheme}"
@@ -58,7 +58,7 @@
                     </Border.Background>
                 </Border>
                 <Border Grid.Row="2" CornerRadius="{StaticResource MediumCornerRadius}" Margin="8"
-                        Background="{DynamicResource LayerSolidBackgroundBrush}">
+                        Background="{StaticResource OverlaySolidBackgroundBrush}">
                     <Grid Margin="6">
                         <Button Classes="Small"
                                 Theme="{StaticResource GhostButtonTheme}"
@@ -87,7 +87,7 @@
                 </TextBlock>
                 <TextBox Name="QueryBox" Watermark="Everything(mostly) begins here" HorizontalAlignment="Stretch"
                          HorizontalContentAlignment="Center"
-                         Foreground="{DynamicResource ControlAccentForegroundBrush}" Margin="36,0"
+                         Foreground="{StaticResource ControlAccentForegroundBrush}" Margin="36,0"
                          Theme="{StaticResource UnderlineTextBoxTheme}" BorderThickness="0,0,0,2" />
                 <Button Command="{Binding GotoSearchViewCommand}" IsDefault="True"
                         CommandParameter="{Binding #QueryBox.Text}" Classes="Primary"

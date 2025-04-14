@@ -11,7 +11,7 @@
     <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="Auto,Auto,*">
         <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" RowDefinitions="Auto,*" Margin="12" RowSpacing="24">
             <Border Grid.Row="0" Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
-                    Background="{DynamicResource ControlBackgroundBrush}">
+                    Background="{StaticResource ControlBackgroundBrush}">
                 <StackPanel Orientation="Horizontal" Spacing="6">
                     <fi:SymbolIcon Symbol="BoxArrowLeft" FontSize="{StaticResource MediumFontSize}" />
                     <TextBlock Text="Pending" />
@@ -19,8 +19,8 @@
             </Border>
             <ItemsControl Grid.Row="1">
                 <Border Padding="8" CornerRadius="{StaticResource LargeCornerRadius}"
-                        Background="{DynamicResource LayerSolidBackgroundBrush}"
-                        BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1">
+                        Background="{StaticResource OverlaySolidBackgroundBrush}"
+                        BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1">
                     <Border Height="36" Width="36">
                         <Border.Background>
                             <ImageBrush Source="/Assets/Icons/Package.png" />
@@ -59,7 +59,7 @@
                                     IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                     Command="{Binding $parent[TextBox].Clear}"
                                     Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                                    Foreground="{DynamicResource ControlSecondaryForegroundBrush}" />
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <husk:Divider Orientation="Vertical" />
                                 <CheckBox Margin="6,0">
                                     <StackPanel Spacing="4" Orientation="Horizontal">

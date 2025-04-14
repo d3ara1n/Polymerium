@@ -11,6 +11,13 @@ public partial class InstancePackageVersionModel(
     DateTimeOffset publishedAt,
     ReleaseType releaseType) : InstancePackageVersionModelBase
 {
+    #region Reactive
+
+    [ObservableProperty]
+    public partial bool IsCurrent { get; set; }
+
+    #endregion
+
     #region Direct
 
     public string Id => id;
@@ -19,13 +26,6 @@ public partial class InstancePackageVersionModel(
     public string PublishedAt => publishedAt.Humanize();
 
     public ReleaseType ReleaseTypeRaw => releaseType;
-
-    #endregion
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial bool IsCurrent { get; set; }
 
     #endregion
 }
