@@ -33,7 +33,6 @@
             <Setter Property="BorderThickness" Value="0,0,0,3" />
             <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
             <Setter Property="BorderBrush" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
-            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
             <Setter Property="RenderTransformOrigin" Value="50%,100%" />
             <Setter Property="Transitions">
                 <Transitions>
@@ -411,6 +410,7 @@
                                         Margin="0,0,8,0"
                                         HorizontalAlignment="Center"
                                         Background="{StaticResource OverlayInteractiveBackgroundBrush}"
+                                        Foreground="{StaticResource ControlDarkForegroundBrush}"
                                         CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}"
                                         Padding="12,6">
                                     <TextBlock Text="{Binding Mode,FallbackValue=Mode}" />
@@ -425,17 +425,16 @@
                                     CornerRadius="{StaticResource MediumCornerRadius}"
                                     Theme="{StaticResource GhostButtonTheme}">
                                     <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*,Auto">
-                                        <Border
+                                        <Image
                                             Grid.Row="0"
                                             Grid.RowSpan="3"
                                             Grid.Column="0"
+                                            RenderOptions.BitmapInterpolationMode="None"
+                                            Source="/Assets/Images/Placeholders/Steve_Face.png"
+                                            Stretch="Fill"
                                             Width="36"
                                             Height="36">
-                                            <Border.Background>
-                                                <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png"
-                                                            Stretch="Fill" />
-                                            </Border.Background>
-                                        </Border>
+                                        </Image>
                                         <TextBlock
                                             Grid.Row="0"
                                             Grid.Column="2"

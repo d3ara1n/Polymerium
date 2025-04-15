@@ -176,7 +176,6 @@
             <Setter Property="IsVisible" Value="True" />
         </Style>
 
-
         <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>

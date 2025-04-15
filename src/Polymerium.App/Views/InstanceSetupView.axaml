@@ -138,7 +138,7 @@
                                         <TextBlock Grid.Column="1" Text="{Binding VersionName,FallbackValue=Version}"
                                                    VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                                                    ToolTip.Tip="{Binding VersionName}" />
-                                        <Button Grid.Column="2" Content="Check Update" Classes="Small"
+                                        <Button Grid.Column="2" Content="Switch Version" Classes="Small"
                                                 Theme="{StaticResource OutlineButtonTheme}"
                                                 Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}" />
                                     </Grid>

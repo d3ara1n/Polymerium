@@ -152,7 +152,8 @@
                     Background="{StaticResource ControlBackgroundBrush}" Padding="3"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="*,4,Auto">
-                        <Button Grid.Column="2" Classes="Small" Command="{Binding ClearImportedPackCommand}">
+                        <Button Grid.Column="2" Classes="Small" Command="{Binding ClearImportedPackCommand}"
+                                Theme="{StaticResource GhostButtonTheme}">
                             <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
                         </Button>
                         <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8"

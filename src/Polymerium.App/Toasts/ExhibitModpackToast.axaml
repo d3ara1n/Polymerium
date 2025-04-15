@@ -30,7 +30,8 @@
                           ItemsSource="{Binding Gallery}">
                     <Carousel.ItemTemplate>
                         <DataTemplate x:DataType="x:Uri">
-                            <Image async:ImageLoader.Source="{Binding}" Stretch="UniformToFill" />
+                            <Image RenderOptions.BitmapInterpolationMode="HighQuality"
+                                   async:ImageLoader.Source="{Binding}" Stretch="UniformToFill" />
                         </DataTemplate>
                     </Carousel.ItemTemplate>
                 </Carousel>
