@@ -15,10 +15,12 @@
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                    <ContentPresenter Name="PART_ContentPresenter"
-                                      Padding="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}"
-                                      Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    <Panel>
+                        <ContentPresenter Name="PART_ContentPresenter"
+                                          Padding="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </Panel>
                 </Border>
             </ControlTemplate>
         </Setter>

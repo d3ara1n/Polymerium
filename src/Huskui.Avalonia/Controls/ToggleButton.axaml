@@ -16,7 +16,7 @@
     <ControlTheme x:Key="{x:Type ToggleButton}" TargetType="ToggleButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Padding" Value="14,9" />
-        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Bold" />

@@ -4,6 +4,7 @@
     <Design.PreviewWith>
         <Panel Background="White" Width="256">
             <StackPanel Margin="24" Spacing="12">
+                <local:InfoBar Content="Here is some text." />
                 <local:InfoBar Header="Hello" Content="Here is some text." />
                 <local:InfoBar Header="Hello"
                                Content="Here is some text but very very looooooooooooooooooooooooooooooooong."
