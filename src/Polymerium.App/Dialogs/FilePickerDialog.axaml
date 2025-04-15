@@ -17,7 +17,7 @@
                            Stroke="{StaticResource ControlInteractiveBorderBrush}"
                            StrokeDashArray="6,2"
                            StrokeLineCap="Round"
-                           StrokeJoin="Round" Fill="{StaticResource OverlayInteractiveBackgroundBrush}">
+                           StrokeJoin="Round" Fill="{StaticResource ControlInteractiveBackgroundBrush}">
                     <Rectangle.Transitions>
                         <Transitions>
                             <DoubleTransition Property="Opacity"

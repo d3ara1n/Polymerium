@@ -14,7 +14,7 @@
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
     ExtendClientAreaChromeHints="NoChrome"
     ExtendClientAreaToDecorationsHint="True"
-    ExtendClientAreaTitleBarHeightHint="44"
+    ExtendClientAreaTitleBarHeightHint="44" 
     TransparencyLevelHint="Mica, None"
     Title="{x:Static local:Program.Brand}"
     Width="1024"

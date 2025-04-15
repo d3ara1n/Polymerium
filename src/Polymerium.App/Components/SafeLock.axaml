@@ -13,7 +13,7 @@
             <Setter Property="BorderBrush" Value="{StaticResource ControlDangerBorderBrush}" />
         </Style>
         <Style Selector=":locked Border#Indicator">
-            <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlTranslucentHalfBackgroundBrush}" />
             <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         </Style>
     </UserControl.Styles>

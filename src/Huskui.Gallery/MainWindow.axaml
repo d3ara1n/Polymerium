@@ -23,17 +23,30 @@
                 </StackPanel>
             </husk:Card>
             <husk:Card>
-                <StackPanel Spacing="4">
-                    <Button Content="Hello" Theme="{StaticResource GhostButtonTheme}" />
-                    <husk:Divider />
-                    <Button Content="Hello" Classes="Primary" />
-                    <husk:Divider />
-                    <Button Content="Hello" Classes="Success" />
-                    <husk:Divider />
-                    <Button Content="Hello" Classes="Warning" />
-                    <husk:Divider />
-                    <Button Content="Hello" Classes="Danger" />
-                </StackPanel>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <StackPanel Grid.Column="0" Spacing="4">
+                        <Button Content="Hello" Theme="{StaticResource OutlineButtonTheme}" />
+                        <husk:Divider />
+                        <Button Content="Hello" Classes="Primary" Theme="{StaticResource OutlineButtonTheme}" />
+                        <husk:Divider />
+                        <Button Content="Hello" Classes="Success" Theme="{StaticResource OutlineButtonTheme}" />
+                        <husk:Divider />
+                        <Button Content="Hello" Classes="Warning" Theme="{StaticResource OutlineButtonTheme}" />
+                        <husk:Divider />
+                        <Button Content="Hello" Classes="Danger" Theme="{StaticResource OutlineButtonTheme}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Spacing="4">
+                        <Button Content="Hello" Theme="{StaticResource GhostButtonTheme}" />
+                        <husk:Divider />
+                        <Button Content="Hello" Classes="Primary" Theme="{StaticResource GhostButtonTheme}" />
+                        <husk:Divider />
+                        <Button Content="Hello" Classes="Success" Theme="{StaticResource GhostButtonTheme}" />
+                        <husk:Divider />
+                        <Button Content="Hello" Classes="Warning" Theme="{StaticResource GhostButtonTheme}" />
+                        <husk:Divider />
+                        <Button Content="Hello" Classes="Danger" Theme="{StaticResource GhostButtonTheme}" />
+                    </StackPanel>
+                </Grid>
             </husk:Card>
         </StackPanel>
     </Grid>
