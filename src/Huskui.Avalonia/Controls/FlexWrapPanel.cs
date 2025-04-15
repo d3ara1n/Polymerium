@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Layout;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -63,7 +64,8 @@ public class FlexWrapPanel : Panel
             row++;
         }
 
-        return new Size(totalWidth, double.Max(totalHeight + RowSpacing * (row - 1), 0d));
+        var requiredHeight = double.Max(totalHeight + RowSpacing * (row - 1), 0d);
+        return new Size(totalWidth, requiredHeight);
     }
 
     protected override Size ArrangeOverride(Size final)
@@ -126,6 +128,7 @@ public class FlexWrapPanel : Panel
                 // 当 usedWidth = x.5 且 width 也是 x.5 时，最后一颗像素会被裁剪掉
                 //  通过 double.Floor(width) 解决
                 // TODO: 当 HorizontalAlignment 不为 Stretch 时，依旧用同一个 count，但取每个 child 的 MinWidth
+                // TODO: 应该使用 DesiredSize.Width 作为 MinWidth 而不是 MinWidth
 
                 child.Arrange(new Rect(usedWidth,
                                        totalHeight + RowSpacing * row,
@@ -140,7 +143,8 @@ public class FlexWrapPanel : Panel
             row++;
         }
 
-        return new Size(totalWidth, double.Max(totalHeight + RowSpacing * (row - 1), 0d));
+        var actualHeight = double.Max(totalHeight + RowSpacing * (row - 1), 0d);
+        return new Size(totalWidth, VerticalAlignment == VerticalAlignment.Stretch ? final.Height : actualHeight);
     }
 
     private int SeparateLines(double width, int start)
@@ -179,6 +183,6 @@ public class FlexWrapPanel : Panel
             start++;
         }
 
-        return (maxCount + minCount + 1) / 2;
+        return minCount < 1 ? 1 : (maxCount + minCount + 1) / 2;
     }
 }

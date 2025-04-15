@@ -2,4 +2,4 @@
 
 namespace Polymerium.App.Controls;
 
-public class ModpackEntryButton : Button;
+public class ExhibitModpackButton : Button;
