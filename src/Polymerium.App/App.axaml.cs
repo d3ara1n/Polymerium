@@ -178,6 +178,8 @@ public class App : Application
 
         var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();
         window.IsLeftPanelMode = configuration.Value.ApplicationLeftPanelMode;
+        window.SetThemeVariantByIndex(configuration.Value.ApplicationStyleThemeVariant);
+        window.SetTransparencyLevelHintByIndex(configuration.Value.ApplicationStyleBackground);
         // 并不还原窗体大小，没必要
 
         #endregion

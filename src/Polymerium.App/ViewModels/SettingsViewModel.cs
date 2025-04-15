@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -20,6 +21,8 @@ public partial class SettingsViewModel : ViewModelBase
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         SidebarPlacement = configurationService.Value.ApplicationLeftPanelMode ? 0 : 1;
+        BackgroundMode = configurationService.Value.ApplicationStyleBackground;
+        DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
         Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
                 ?? Languages.First();
         JavaHome8 = configurationService.Value.RuntimeJavaHome8;
@@ -75,10 +78,41 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial int SidebarPlacement { get; set; }
 
-    partial void OnSidebarPlacementChanged(int value) =>
-        _configurationService.Value.ApplicationLeftPanelMode = value == 0;
+    partial void OnSidebarPlacementChanged(int value)
+    {
+        var rv = value == 0;
+        _configurationService.Value.ApplicationLeftPanelMode = rv;
+        MainWindow.Instance.IsLeftPanelMode = rv;
+    }
 
     #endregion
+
+    #region BackgroundMode
+
+    [ObservableProperty]
+    public partial int BackgroundMode { get; set; }
+
+    partial void OnBackgroundModeChanged(int value)
+    {
+        _configurationService.Value.ApplicationStyleBackground = value;
+        MainWindow.Instance.SetTransparencyLevelHintByIndex(value);
+    }
+
+    #endregion
+
+    #region DarkMode
+
+    [ObservableProperty]
+    public partial int DarkMode { get; set; }
+
+    partial void OnDarkModeChanged(int value)
+    {
+        _configurationService.Value.ApplicationStyleThemeVariant = value;
+        MainWindow.Instance.SetThemeVariantByIndex(value);
+    }
+
+    #endregion
+
 
     #region Language
 

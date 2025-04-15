@@ -57,7 +57,7 @@
     <SolidColorBrush x:Key="OverlayInteractiveBackgroundBrush" Color="{DynamicResource InteractiveColor}" />
     <SolidColorBrush x:Key="OverlayHalfBackgroundBrush" Color="{DynamicResource Overlay1Color}" />
     <SolidColorBrush x:Key="OverlayFullBackgroundBrush" Color="{DynamicResource Overlay2Color}" />
-    <SolidColorBrush x:Key="OverlaySolidBackgroundBrush" Color="{DynamicResource Gray2Color}" />
+    <SolidColorBrush x:Key="OverlaySolidBackgroundBrush" Color="{DynamicResource Gray1Color}" />
     <SolidColorBrush x:Key="OverlaySmokeBackgroundBrush" Color="{DynamicResource SmokeColor}" />
     <SolidColorBrush x:Key="OverlayMaskBackgroundBrush" Color="{DynamicResource Layover7Color}" />
 

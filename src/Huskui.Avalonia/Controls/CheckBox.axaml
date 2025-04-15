@@ -29,7 +29,7 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" Background="{StaticResource TransparentBrush}">
-                    <Border Grid.Column="0" Name="Box"
+                    <Border Grid.Column="0" Name="Box" Cursor="Hand"
                             Width="16"
                             Height="16"
                             VerticalAlignment="Center"
@@ -45,7 +45,7 @@
                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
-                        <Panel Cursor="Hand">
+                        <Panel>
                             <fi:SymbolIcon Name="Indeterminate" Symbol="LineHorizontal1"
                                            FontSize="{TemplateBinding FontSize}"
                                            Foreground="{StaticResource ControlDarkForegroundBrush}" Opacity="0"
