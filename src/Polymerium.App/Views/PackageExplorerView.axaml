@@ -49,7 +49,7 @@
                                 Theme="{StaticResource GhostButtonTheme}">
                             <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
                         </Button>
-                        <TextBlock Grid.Column="1" Text="Very Loooooooooong instance name"
+                        <TextBlock Grid.Column="1" Text="Instance"
                                    TextTrimming="CharacterEllipsis"
                                    FontSize="{StaticResource ExtraLargeFontSize}" />
                     </Grid>

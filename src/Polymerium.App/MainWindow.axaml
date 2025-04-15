@@ -22,8 +22,7 @@
     MinHeight="460"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d" x:DataType="local:MainWindowContext"
-    RenderOptions.TextRenderingMode="Antialias">
+    mc:Ignorable="d" x:DataType="local:MainWindowContext">
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*" />

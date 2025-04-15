@@ -14,7 +14,7 @@
             <ControlTemplate>
                 <Panel>
                     <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
-                    <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                    <ExperimentalAcrylicBorder Name="PART_AcrylicMaterial" IsHitTestVisible="False" IsVisible="False">
                         <ExperimentalAcrylicBorder.Material>
                             <ExperimentalAcrylicMaterial
                                 BackgroundSource="Digger"
@@ -107,6 +107,11 @@
         </Style>
         <Style Selector="^local|AppWindow[ActualTransparencyLevel=Blur][IsActive=True]">
             <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        </Style>
+
+        <Style
+            Selector="^local|AppWindow[ActualTransparencyLevel=AcrylicBlur] /template/ ExperimentalAcrylicBorder#PART_AcrylicMaterial">
+            <Setter Property="IsVisible" Value="True" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

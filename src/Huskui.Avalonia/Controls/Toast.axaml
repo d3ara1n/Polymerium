@@ -9,8 +9,6 @@
     <Thickness x:Key="ToastToplessContentMargin">24,0,24,24</Thickness>
     <ControlTheme x:Key="{x:Type local:Toast}" TargetType="local:Toast">
         <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
-        <!-- <Setter Property="BorderThickness" Value="1" /> -->
-        <!-- <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" /> -->
         <Setter Property="Padding" Value="{StaticResource ToastContentMargin}" />
         <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
         <Setter Property="ClipToBounds" Value="True" />

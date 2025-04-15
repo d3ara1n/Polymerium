@@ -15,7 +15,7 @@
         <Setter Property="Margin" Value="24" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border ClipToBounds="True" Background="{TemplateBinding Background}"
+                <Border Background="{TemplateBinding Background}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
