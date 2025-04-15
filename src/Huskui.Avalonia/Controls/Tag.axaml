@@ -27,8 +27,8 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Padding" Value="6,2" />
-        <Setter Property="TextBlock.FontSize" Value="{StaticResource SmallFontSize}" />
-        <Setter Property="TextBlock.FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="PART_Border" CornerRadius="{TemplateBinding CornerRadius}"
@@ -74,6 +74,10 @@
         </Style>
         <Style Selector="^.Status">
             <Setter Property="CornerRadius" Value="{StaticResource FullCornerRadius}" />
+        </Style>
+        <Style Selector="^.Small">
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="FontSize" Value="{StaticResource ExtraSmallFontSize}"/>
         </Style>
     </ControlTheme>
 </ResourceDictionary>

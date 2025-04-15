@@ -38,6 +38,35 @@
                     </TabStripItem>
                 </TabStrip>
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Theme Variant" HorizontalContentAlignment="Left">
+                <TabStrip Theme="{StaticResource SegmentedTabStripTheme}"
+                          SelectedIndex="{Binding DarkMode,Mode=TwoWay}">
+                    <TabStripItem>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <icons:PackIconLucide Kind="SunMoon" VerticalAlignment="Center"
+                                                  Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}" />
+                            <TextBlock Text="System" />
+                        </StackPanel>
+                    </TabStripItem>
+                    <TabStripItem>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <icons:PackIconLucide Kind="Sun" VerticalAlignment="Center"
+                                                  Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}" />
+                            <TextBlock Text="Light" />
+                        </StackPanel>
+                    </TabStripItem>
+                    <TabStripItem>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <icons:PackIconLucide Kind="Moon" VerticalAlignment="Center"
+                                                  Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}" />
+                            <TextBlock Text="Dark" />
+                        </StackPanel>
+                    </TabStripItem>
+                </TabStrip>
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Background Style">
                 <ComboBox SelectedIndex="{Binding BackgroundMode,Mode=TwoWay}">
                     <ComboBoxItem Content="Auto" />
@@ -47,20 +76,13 @@
                     <ComboBoxItem Content="None" />
                 </ComboBox>
             </controls:SettingsEntryItem>
-            <controls:SettingsEntryItem Header="Theme Variant">
-                <ComboBox SelectedIndex="{Binding DarkMode,Mode=TwoWay}">
-                    <ComboBoxItem Content="System" />
-                    <ComboBoxItem Content="Light" />
-                    <ComboBoxItem Content="Dark" />
-                </ComboBox>
-            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Language">
                 <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language,Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="m:LanguageModel">
                             <Grid ColumnDefinitions="*,4,Auto">
                                 <TextBlock Grid.Column="0" Text="{Binding Display}" VerticalAlignment="Center" />
-                                <husk:Tag Grid.Column="2" CornerRadius="{StaticResource SmallCornerRadius}">
+                                <husk:Tag Grid.Column="2" Classes="Small" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding Id}" />
                                 </husk:Tag>
                             </Grid>

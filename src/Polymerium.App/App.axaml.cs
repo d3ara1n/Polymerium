@@ -24,21 +24,19 @@ public class App : Application
 {
     private static int activatorErrorCount;
 
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+    public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
     {
         CultureInfo.CurrentUICulture = new CultureInfo("en-US");
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            desktop.MainWindow = ConstructWindow();
-
+        
         AppDomain.CurrentDomain.UnhandledException += (_, e) => ShowOrDump(e.ExceptionObject, e.IsTerminating);
         TaskScheduler.UnobservedTaskException += (_, e) => ShowOrDump(e.Exception, !e.Observed);
         Dispatcher.UIThread.UnhandledException += (_, e) => ShowOrDump(e.Exception, !e.Handled);
-
+        
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            desktop.MainWindow = ConstructWindow();
+        
         base.OnFrameworkInitializationCompleted();
     }
 
@@ -56,11 +54,11 @@ public class App : Application
     private static void Dump(object core)
     {
         var path = Path.Combine(AppContext.BaseDirectory, "dumps", $"Exception-{DateTimeOffset.Now.ToFileTime()}.log");
-        StringBuilder sb = new($"""
-                                // {DateTimeOffset.Now.ToString()}
-                                // {Assembly.GetEntryAssembly()?.GetName().Version}
+        var sb = new StringBuilder($"""
+                                    // {DateTimeOffset.Now.ToString()}
+                                    // {Assembly.GetEntryAssembly()?.GetName().Version}
 
-                                """);
+                                    """);
         sb.AppendLine();
         DumpInternal(sb, core, 0);
         var dir = Path.GetDirectoryName(path);
@@ -172,14 +170,14 @@ public class App : Application
         if (Program.AppHost is null)
             return new MainWindow();
 
-        MainWindow window = new() { DataContext = Program.AppHost.Services.GetRequiredService<MainWindowContext>() };
+        var window = new MainWindow { DataContext = Program.AppHost.Services.GetRequiredService<MainWindowContext>() };
 
         #region Window Configuration
 
         var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();
-        window.IsLeftPanelMode = configuration.Value.ApplicationLeftPanelMode;
         window.SetThemeVariantByIndex(configuration.Value.ApplicationStyleThemeVariant);
         window.SetTransparencyLevelHintByIndex(configuration.Value.ApplicationStyleBackground);
+        window.IsLeftPanelMode = configuration.Value.ApplicationLeftPanelMode;
         // 并不还原窗体大小，没必要
 
         #endregion

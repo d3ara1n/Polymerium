@@ -15,7 +15,9 @@
                         </ContentPresenter.Styles>
                     </ContentPresenter>
                     <ContentPresenter Grid.Row="2" Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                 </Grid>
             </ControlTemplate>
         </Setter>

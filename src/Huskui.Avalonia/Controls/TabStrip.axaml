@@ -220,7 +220,7 @@
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
 
-        <Style Selector="^:disabled /template/ Border#Indicator">
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
     </ControlTheme>
