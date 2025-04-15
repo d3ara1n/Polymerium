@@ -14,17 +14,26 @@
             <ControlTemplate>
                 <Panel>
                     <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
+                    <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                        <ExperimentalAcrylicBorder.Material>
+                            <ExperimentalAcrylicMaterial
+                                BackgroundSource="Digger"
+                                TintColor="{DynamicResource SolidColor}"
+                                TintOpacity="1"
+                                MaterialOpacity="0.6" />
+                        </ExperimentalAcrylicBorder.Material>
+                    </ExperimentalAcrylicBorder>
                     <Border Background="{TemplateBinding Background}" IsHitTestVisible="False">
                         <Border.Transitions>
                             <Transitions>
                                 <BrushTransition
                                     Easing="CubicEaseOut"
                                     Property="Background"
-                                    Duration="{StaticResource ControlNormalAnimationDuration}" />
+                                    Duration="{StaticResource ControlSlowestAnimationDuration}" />
                                 <BrushTransition
                                     Easing="SineEaseOut"
                                     Property="BorderBrush"
-                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                    Duration="{StaticResource ControlSlowerAnimationDuration}" />
                             </Transitions>
                         </Border.Transitions>
                     </Border>

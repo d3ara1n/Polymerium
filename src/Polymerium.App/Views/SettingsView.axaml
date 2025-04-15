@@ -38,6 +38,22 @@
                     </TabStripItem>
                 </TabStrip>
             </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Background Style">
+                <ComboBox SelectedIndex="{Binding BackgroundMode,Mode=TwoWay}">
+                    <ComboBoxItem Content="Auto" />
+                    <ComboBoxItem Content="Mica" IsEnabled="{OnPlatform {x:False},Windows={x:True}}" />
+                    <ComboBoxItem Content="Acrylic" IsEnabled="{OnPlatform {x:False},Windows={x:True}}" />
+                    <ComboBoxItem Content="Blur" IsEnabled="{OnPlatform {x:False},macOS={x:True}}" />
+                    <ComboBoxItem Content="None" />
+                </ComboBox>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Theme Variant">
+                <ComboBox SelectedIndex="{Binding DarkMode,Mode=TwoWay}">
+                    <ComboBoxItem Content="System" />
+                    <ComboBoxItem Content="Light" />
+                    <ComboBoxItem Content="Dark" />
+                </ComboBox>
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Language">
                 <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language,Mode=TwoWay}">
                     <ComboBox.ItemTemplate>

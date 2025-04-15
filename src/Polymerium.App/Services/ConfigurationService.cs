@@ -9,7 +9,8 @@ public sealed class ConfigurationService : IDisposable
 {
     private readonly string _filePath = PathDef.Default.FileOfPrivateSettings(Program.Brand);
 
-    private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
+    private readonly JsonSerializerOptions _serializerOptions =
+        new(JsonSerializerDefaults.General) { WriteIndented = true };
 
     public ConfigurationService()
     {

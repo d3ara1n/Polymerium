@@ -6,6 +6,8 @@
     <sys:TimeSpan x:Key="ControlFastestAnimationDuration">0:0:0.106</sys:TimeSpan>
     <sys:TimeSpan x:Key="ControlFasterAnimationDuration">0:0:0.197</sys:TimeSpan>
     <sys:TimeSpan x:Key="ControlNormalAnimationDuration">0:0:0.304</sys:TimeSpan>
+    <sys:TimeSpan x:Key="ControlSlowerAnimationDuration">0:0:0.414</sys:TimeSpan>
+    <sys:TimeSpan x:Key="ControlSlowestAnimationDuration">0:0:0.608</sys:TimeSpan>
 
     <!-- Float Layers Opacity -->
     <sys:Double x:Key="Overlay1Opacity">0.3</sys:Double>

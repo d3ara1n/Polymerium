@@ -45,7 +45,8 @@
             <Panel x:Name="ContentPanel">
                 <StackPanel Margin="12" Spacing="12">
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Button Grid.Column="0" Command="{Binding $parent[husk:Frame].GoBackCommand}">
+                        <Button Grid.Column="0" Command="{Binding $parent[husk:Frame].GoBackCommand}"
+                                Theme="{StaticResource GhostButtonTheme}">
                             <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
                         </Button>
                         <TextBlock Grid.Column="1" Text="Very Loooooooooong instance name"

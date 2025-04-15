@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Styling;
 using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App;
@@ -31,6 +32,32 @@ public partial class MainWindow : AppWindow
         get => Root.PageActivator;
         set => Root.PageActivator = value;
     }
+
+    internal void SetTransparencyLevelHintByIndex(int index) =>
+        TransparencyLevelHint = index switch
+        {
+            0 =>
+            [
+                WindowTransparencyLevel.Mica,
+                WindowTransparencyLevel.AcrylicBlur,
+                WindowTransparencyLevel.Blur,
+                WindowTransparencyLevel.None
+            ],
+            1 => [WindowTransparencyLevel.Mica, WindowTransparencyLevel.None],
+            2 => [WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.None],
+            3 => [WindowTransparencyLevel.Blur, WindowTransparencyLevel.None],
+            4 => [WindowTransparencyLevel.None],
+            _ => [WindowTransparencyLevel.None]
+        };
+
+    internal void SetThemeVariantByIndex(int index) =>
+        Application.Current!.RequestedThemeVariant = index switch
+        {
+            0 => ThemeVariant.Default,
+            1 => ThemeVariant.Light,
+            2 => ThemeVariant.Dark,
+            _ => ThemeVariant.Default
+        };
 
     #region Navigation Service
 
