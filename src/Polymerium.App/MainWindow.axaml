@@ -114,12 +114,12 @@
             </DockPanel>
             <Grid
                 Margin="9"
-                ColumnDefinitions="Auto,8,*,8,Auto"
-                RowDefinitions="Auto,8,Auto,8,Auto,8,Auto,8,*,8,Auto,8,Auto">
+                ColumnDefinitions="Auto,*,Auto"
+                RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto" RowSpacing="8" ColumnSpacing="8">
                 <Button
                     Grid.Row="0"
                     Grid.Column="0"
-                    Grid.ColumnSpan="3"
+                    Grid.ColumnSpan="2"
                     Height="48"
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:LandingView}"
@@ -135,7 +135,7 @@
                 </Button>
                 <Button
                     Grid.Row="0"
-                    Grid.Column="4"
+                    Grid.Column="2"
                     Width="48"
                     Height="48"
                     Command="{Binding NavigateCommand}"
@@ -147,9 +147,9 @@
                         Kind="PackagePlus" />
                 </Button>
                 <Button
-                    Grid.Row="2"
+                    Grid.Row="1"
                     Grid.Column="0"
-                    Grid.ColumnSpan="5"
+                    Grid.ColumnSpan="3"
                     Height="36"
                     Classes="Primary"
                     Command="{Binding NavigateCommand}"
@@ -163,14 +163,14 @@
                     </StackPanel>
                 </Button>
                 <husk:Divider
-                    Grid.Row="4"
+                    Grid.Row="2"
                     Grid.Column="0"
-                    Grid.ColumnSpan="5" />
+                    Grid.ColumnSpan="3" />
                 <!-- <AutoCompleteBox/> -->
                 <TextBox
-                    Grid.Row="6"
+                    Grid.Row="3"
                     Grid.Column="0"
-                    Grid.ColumnSpan="5"
+                    Grid.ColumnSpan="3"
                     Text="{Binding FilterText, Mode=TwoWay}"
                     Watermark="Filter entries by names...">
                     <TextBox.InnerRightContent>
@@ -182,9 +182,9 @@
                     </TextBox.InnerRightContent>
                 </TextBox>
                 <ScrollViewer
-                    Grid.Row="8"
+                    Grid.Row="4"
                     Grid.Column="0"
-                    Grid.ColumnSpan="5"
+                    Grid.ColumnSpan="3"
                     Margin="0,0,-8,0">
                     <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding View}"
                                   ClipToBounds="False">
@@ -207,11 +207,11 @@
                     </ItemsControl>
                 </ScrollViewer>
                 <husk:Divider
-                    Grid.Row="10"
+                    Grid.Row="5"
                     Grid.Column="0"
-                    Grid.ColumnSpan="5" />
+                    Grid.ColumnSpan="3" />
                 <Button
-                    Grid.Row="12"
+                    Grid.Row="6"
                     Grid.Column="0"
                     Command="{Binding NavigateCommand}"
                     DockPanel.Dock="Left"
@@ -220,9 +220,9 @@
                     <icons:PackIconLucide Height="18" Kind="Settings" />
                 </Button>
                 <Button
-                    Grid.Row="12"
-                    Grid.Column="2"
-                    Grid.ColumnSpan="3"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:AccountsView}"
                     Theme="{StaticResource OutlineButtonTheme}">

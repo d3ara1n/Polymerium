@@ -290,17 +290,16 @@ public partial class InstanceSetupViewModel(
     [RelayCommand]
     private void ViewPackage(InstancePackageModel? model)
     {
-        if (model is not null)
-            if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
-                overlayService.PopModal(new PackageEntryModal
-                {
-                    DataContext = model,
-                    Guard = guard,
-                    DataService = dataService,
-                    Filter = new Filter(Kind: model.Kind,
-                                        Version: Basic.Version,
-                                        Loader: Basic.Loader)
-                });
+        if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
+            overlayService.PopModal(new PackageEntryModal
+            {
+                DataContext = model,
+                Guard = guard,
+                DataService = dataService,
+                Filter = new Filter(Kind: model.Kind,
+                                    Version: Basic.Version,
+                                    Loader: Basic.Loader)
+            });
     }
 
     [RelayCommand]
@@ -318,7 +317,6 @@ public partial class InstanceSetupViewModel(
                                                                       });
                 var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
                 var model = new ExhibitModpackModel(project.ProjectName,
-                                                    project.ProjectId,
                                                     project.Author,
                                                     project.Label,
                                                     project.Reference,
@@ -421,7 +419,7 @@ public partial class InstanceSetupViewModel(
                                     version.Label,
                                     version.Namespace,
                                     version.ProjectId,
-                                    version.Versionid);
+                                    version.VersionId);
             notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
         }
     }

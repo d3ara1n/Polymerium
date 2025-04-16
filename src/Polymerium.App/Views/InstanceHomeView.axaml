@@ -433,8 +433,7 @@
                                             Source="/Assets/Images/Placeholders/Steve_Face.png"
                                             Stretch="Fill"
                                             Width="36"
-                                            Height="36">
-                                        </Image>
+                                            Height="36" />
                                         <TextBlock
                                             Grid.Row="0"
                                             Grid.Column="2"

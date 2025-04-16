@@ -80,8 +80,7 @@
                      Opacity="0.1" />
     <SolidColorBrush x:Key="ControlAccentTranslucentFullBackgroundBrush" Color="{DynamicResource Accent9Color}"
                      Opacity="0.2" />
-    <SolidColorBrush x:Key="ControlAccentForegroundBrush" Color="{DynamicResource Accent9Color}" />
-    <SolidColorBrush x:Key="ControlAccentTranslucentForegroundBrush" Color="{DynamicResource Accent11Color}" />
+    <SolidColorBrush x:Key="ControlAccentForegroundBrush" Color="{DynamicResource Accent11Color}" />
 
     <!-- Success -->
     <SolidColorBrush x:Key="ControlSuccessBackgroundBrush" Color="{DynamicResource Success8Color}" />

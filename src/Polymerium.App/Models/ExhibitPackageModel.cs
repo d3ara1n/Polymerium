@@ -1,29 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using Humanizer;
+using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public class ExhibitModpackModel(
-    string displayName,
+public class ExhibitPackageModel(
+    string label,
+    string? @namespace,
+    string projectId,
+    string projectName,
     string authorName,
     string referenceLabel,
     Uri? referenceUrl,
+    Uri? thumbnail,
     IReadOnlyList<string> tags,
     ulong downloadCount,
     string summary,
     string description,
     DateTimeOffset updatedAt,
-    IReadOnlyList<Uri> gallery,
-    IReadOnlyList<ExhibitVersionModel> versions) : ModelBase
+    IReadOnlyList<Uri> gallery) : ModelBase
 {
     #region Direct
 
-    public string DisplayName => displayName;
+    public string Label => label;
+    public string? Namespace => @namespace;
+    public string ProjectId => projectId;
+    public string ProjectName => projectName;
     public string AuthorName => authorName;
     public string ReferenceLabel => referenceLabel;
     public Uri? ReferenceUrl => referenceUrl;
+    public Uri Thumbnail => thumbnail ?? AssetUriIndex.DIRT_IMAGE;
     public IReadOnlyList<string> Tags => tags;
     public string Summary => summary;
     public string Description => description;
@@ -32,7 +40,6 @@ public class ExhibitModpackModel(
     public DateTimeOffset UpdatedAtRaw => updatedAt;
     public string UpdatedAt => updatedAt.Humanize();
     public IReadOnlyList<Uri> Gallery => gallery;
-    public IReadOnlyList<ExhibitVersionModel> Versions => versions;
 
     #endregion
 }
