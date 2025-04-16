@@ -105,7 +105,7 @@
                     Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
         </Style>
         <Style Selector="^:pointerover /template/ Border#Background">
-            <Setter Property="RenderTransform" Value="scale(1.02)" />
+            <Setter Property="RenderTransform" Value="scale(1.05)" />
         </Style>
         <Style Selector="^:pressed /template/ Border#Background">
             <Setter Property="RenderTransform" Value="scale(0.98)" />
