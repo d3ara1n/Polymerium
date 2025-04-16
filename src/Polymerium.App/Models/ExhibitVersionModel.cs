@@ -25,7 +25,7 @@ public class ExhibitVersionModel(
     public string ProjectName => projectName;
     public string ProjectId => projectId;
     public string VersionName => versionName;
-    public string Versionid => versionId;
+    public string VersionId => versionId;
     public string Changelog => changelog;
     public DateTimeOffset PublishedAtRaw => publishedAt;
     public string PublishedAt => publishedAt.Humanize();

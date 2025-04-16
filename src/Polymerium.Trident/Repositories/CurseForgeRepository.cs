@@ -64,7 +64,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         return new PaginationHandle<Exhibit>(initial,
                                              50,
                                              first.Pagination.TotalCount,
-                                             async index =>
+                                             async pageIndex =>
                                              {
                                                  var rv = await service
                                                                .SearchAsync(query,
@@ -73,7 +73,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                                                             filter.Version,
                                                                             CurseForgeService
                                                                                .LoaderIdToType(filter.Loader),
-                                                                            index)
+                                                                            pageIndex * first.Pagination.PageSize)
                                                                .ConfigureAwait(false);
                                                  var exhibits = rv.Data.Select(CurseForgeService.ToExhibit).ToList();
                                                  return exhibits;

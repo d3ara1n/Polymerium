@@ -134,7 +134,7 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
-        
+
         <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
@@ -247,7 +247,7 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
-        
+
         <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
@@ -403,7 +403,7 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
-        
+
         <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>

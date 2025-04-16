@@ -5,8 +5,13 @@
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             xmlns:m="clr-namespace:Polymerium.App.Models"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+            xmlns:modals="clr-namespace:Polymerium.App.Modals"
+            xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
+            xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
             mc:Ignorable="d" d:DesignWidth="660" d:DesignHeight="420" MinHeight="360"
-            x:Class="Polymerium.App.Modals.ExhibitPackageModal" Background="{x:Null}" BorderBrush="{x:Null}"
+            x:Class="Polymerium.App.Modals.ExhibitPackageModal" x:DataType="m:ExhibitPackageModel"
+            Background="{x:Null}" BorderBrush="{x:Null}"
             BorderThickness="0" Padding="0" CornerRadius="0" Margin="0,65">
     <husk:ConstrainedBox AspectRatio="1.4">
         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
@@ -19,17 +24,19 @@
                         <Border Grid.Column="0" Height="48" Width="48"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                             <Border.Background>
-                                <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
+                                <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
                             </Border.Background>
                         </Border>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
-                            <TextBlock Text="Refined Storage" TextTrimming="CharacterEllipsis"
+                            <TextBlock Text="{Binding ProjectName,FallbackValue=Package}"
+                                       TextTrimming="CharacterEllipsis"
                                        FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
                             <HyperlinkButton
-                                Command="{x:Static m:InternalCommands.OpenUriCommand}">
+                                Command="{x:Static m:InternalCommands.OpenUriCommand}"
+                                CommandParameter="{Binding ReferenceUrl}">
                                 <StackPanel Orientation="Horizontal" Spacing="4">
                                     <TextBlock
-                                        Text="CURSEFORGE" />
+                                        Text="{Binding ReferenceLabel,FallbackValue=Label,Converter={x:Static huskc:StringConverters.ToUpper}}" />
                                     <fi:SymbolIcon Symbol="Open" FontSize="12" />
                                 </StackPanel>
                             </HyperlinkButton>
@@ -44,12 +51,12 @@
                             <!-- </ToggleButton> -->
                         </Grid>
                     </Grid>
-                    <ItemsControl Grid.Row="1">
-                        <husk:Tag Content="Tech" FontSize="{StaticResource MediumFontSize}" />
-                        <husk:Tag Content="Magic" FontSize="{StaticResource MediumFontSize}" />
-                        <husk:Tag Content="Many Pipes" FontSize="{StaticResource MediumFontSize}" />
-                        <husk:Tag Content="Logistics" FontSize="{StaticResource MediumFontSize}" />
-                        <husk:Tag Content="Big Chests" FontSize="{StaticResource MediumFontSize}" />
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Tags}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <husk:Tag Content="{Binding}" FontSize="{StaticResource MediumFontSize}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel ItemSpacing="4" LineSpacing="4" />
@@ -57,38 +64,75 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                     <TextBlock Grid.Row="2"
-                               Text="Refined Storage is a mass storage mod for Minecraft that offers the player a network-based storage system, allowing them to store items and fluids on a massively expandable device network."
+                               Text="{Binding Summary,FallbackValue=Summary}"
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
                     <StackPanel Grid.Row="3" Spacing="4">
-                        <CheckBox>
+                        <CheckBox IsChecked="{Binding $parent[modals:ExhibitPackageModal].IsFilterEnabled,Mode=TwoWay}">
                             <TextBlock Text="Show compatible versions only" />
                         </CheckBox>
-                        <TabStrip>
+                        <TabStrip
+                            SelectedIndex="{Binding $parent[modals:ExhibitPackageModal].SelectedVersionMode,Mode=TwoWay}">
                             <TabStrip.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" />
                                 </ItemsPanelTemplate>
                             </TabStrip.ItemsPanel>
                             <TabStripItem Grid.Column="0" Padding="0">
-                                <husk:LazyContainer CornerRadius="{StaticResource SmallCornerRadius}">
+                                <husk:LazyContainer
+                                    LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyVersions,Mode=OneWay}"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
                                     <husk:LazyContainer.ContentTemplate>
-                                        <DataTemplate>
+                                        <DataTemplate DataType="m:ExhibitVersionCollection">
                                             <ComboBox Theme="{StaticResource GhostComboBoxTheme}"
+                                                      SelectedItem="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion,Mode=TwoWay,FallbackValue={x:Null}}"
+                                                      ItemsSource="{Binding}"
                                                       PlaceholderText="Specific version..." VerticalAlignment="Stretch"
                                                       VerticalContentAlignment="Center">
                                                 <ComboBox.SelectionBoxItemTemplate>
-                                                    <DataTemplate DataType="x:String">
+                                                    <DataTemplate DataType="m:ExhibitVersionModel">
                                                         <StackPanel>
                                                             <TextBlock Text="Version:"
                                                                        FontSize="{StaticResource SmallFontSize}"
                                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                            <TextBlock Text="{Binding}" />
+                                                            <TextBlock Text="{Binding VersionName}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </ComboBox.SelectionBoxItemTemplate>
-                                                <ComboBoxItem Content="1.1 - The Best Version" />
-                                                <ComboBoxItem Content="1.2" />
-                                                <ComboBoxItem Content="1.3" />
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate DataType="m:ExhibitVersionModel">
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Text="{Binding VersionName,FallbackValue=Display}" />
+                                                            <DockPanel>
+                                                                <StackPanel Orientation="Horizontal"
+                                                                            DockPanel.Dock="Right">
+                                                                    <TextBlock Text="{Binding PublishedAt}" />
+                                                                </StackPanel>
+                                                                <husk:SwitchPresenter TargetType="trident:ReleaseType"
+                                                                    Value="{Binding TypeRaw,FallbackValue=Release}">
+                                                                    <husk:SwitchCase Value="Release">
+                                                                        <husk:Tag Classes="Success"
+                                                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                            <TextBlock Text="Release" />
+                                                                        </husk:Tag>
+                                                                    </husk:SwitchCase>
+                                                                    <husk:SwitchCase Value="Beta">
+                                                                        <husk:Tag Classes="Warning"
+                                                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                            <TextBlock Text="Beta" />
+                                                                        </husk:Tag>
+                                                                    </husk:SwitchCase>
+                                                                    <husk:SwitchCase Value="Alpha">
+                                                                        <husk:Tag Classes="Danger"
+                                                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                                                            <TextBlock Text="Alpha" />
+                                                                        </husk:Tag>
+                                                                    </husk:SwitchCase>
+                                                                </husk:SwitchPresenter>
+                                                            </DockPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
                                             </ComboBox>
                                         </DataTemplate>
                                     </husk:LazyContainer.ContentTemplate>
@@ -118,7 +162,11 @@
             <Border Grid.Column="0" Padding="{StaticResource ModalContentMargin}"
                     Background="{StaticResource OverlaySolidBackgroundBrush}"
                     BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
-                    CornerRadius="{StaticResource MediumCornerRadius}" />
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                <TextBlock Text="WIP" Foreground="{StaticResource ControlAccentForegroundBrush}"
+                           FontSize="{StaticResource ExtraLargeFontSize}" VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
+            </Border>
         </Grid>
     </husk:ConstrainedBox>
 </husk:Modal>

@@ -116,7 +116,7 @@
                 <husk:InfiniteScrollView.ItemTemplate>
                     <DataTemplate x:DataType="m:ExhibitModel">
                         <controls:ExhibitModpackButton
-                            Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewDetailsCommand,FallbackValue={x:Null}}"
+                            Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewModpackCommand,FallbackValue={x:Null}}"
                             CommandParameter="{Binding}" />
                     </DataTemplate>
                 </husk:InfiniteScrollView.ItemTemplate>

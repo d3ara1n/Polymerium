@@ -9,9 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.3.0-beta2" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.3.0-beta2" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0-beta2" />
+        <PackageReference Include="Avalonia" Version="11.3.0-beta2"/>
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.0-beta2"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0-beta2"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Include="Avalonia.Diagnostics" Version="11.3.0-beta2">
             <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>

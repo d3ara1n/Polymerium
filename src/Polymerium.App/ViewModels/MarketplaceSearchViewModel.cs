@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -133,7 +132,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial Bitmap? HeaderImage { get; set; }
-    
+
     [ObservableProperty]
     public partial string QueryText { get; set; } = string.Empty;
 
@@ -207,7 +206,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task ViewDetails(ExhibitModel? exhibit)
+    private async Task ViewModpack(ExhibitModel? exhibit)
     {
         if (exhibit is not null)
             try
@@ -221,7 +220,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                                        });
                 var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
                 var model = new ExhibitModpackModel(project.ProjectName,
-                                                    project.ProjectId,
                                                     project.Author,
                                                     project.Label,
                                                     project.Reference,
@@ -275,7 +273,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                      version.Label,
                                      version.Namespace,
                                      version.ProjectId,
-                                     version.Versionid);
+                                     version.VersionId);
             _notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
         }
     }

@@ -9,6 +9,7 @@
                      xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
                      xmlns:m="clr-namespace:Polymerium.App.Models"
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                     xmlns:v="clr-namespace:Polymerium.App.Views"
                      mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
                      x:Class="Polymerium.App.Views.PackageExplorerView" x:DataType="vm:PackageExplorerViewModel"
                      Padding="0" IsHeaderVisible="False" ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -100,14 +101,13 @@
                         </Button>
                     </Grid>
                     <Grid ColumnDefinitions="*,Auto">
-                        <husk:SkeletonContainer Grid.Column="1" MinHeight="32" MinWidth="128"
+                        <husk:SkeletonContainer Grid.Column="1" MinHeight="33" MinWidth="128"
                                                 CornerRadius="{StaticResource SmallCornerRadius}"
                                                 IsLoading="{Binding SelectedRepository.Kinds,Converter={x:Static ObjectConverters.IsNull}}">
                             <TabStrip
                                 Theme="{StaticResource SegmentedTabStripTheme}"
                                 SelectedItem="{Binding SelectedKind,Mode=TwoWay}"
-                                ItemsSource="{Binding SelectedRepository.Kinds}">
-                            </TabStrip>
+                                ItemsSource="{Binding SelectedRepository.Kinds}" />
                         </husk:SkeletonContainer>
                     </Grid>
                 </StackPanel>
@@ -143,7 +143,9 @@
             </husk:InfiniteScrollView.PendingContent>
             <husk:InfiniteScrollView.ItemTemplate>
                 <DataTemplate x:DataType="m:ExhibitModel">
-                    <controls:ExhibitPackageButton CommandParameter="{Binding}" />
+                    <controls:ExhibitPackageButton
+                        Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand,FallbackValue={x:Null}}"
+                        CommandParameter="{Binding}" />
                 </DataTemplate>
             </husk:InfiniteScrollView.ItemTemplate>
             <husk:InfiniteScrollView.ItemContainerTheme>

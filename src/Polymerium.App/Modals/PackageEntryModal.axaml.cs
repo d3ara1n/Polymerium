@@ -31,11 +31,11 @@ public partial class PackageEntryModal : Modal
                                                                                     (o, v) =>
                                                                                         o.SelectedVersionProxy = v);
 
+
     public PackageEntryModal() => InitializeComponent();
 
     public required ProfileGuard Guard { get; init; }
     public required DataService DataService { get; init; }
-
     public required Filter Filter { get; init; }
 
     private InstancePackageModel Model => (DataContext as InstancePackageModel)!;
@@ -50,7 +50,7 @@ public partial class PackageEntryModal : Modal
     {
         get;
         set => SetAndRaise(IsFilterEnabledProperty, ref field, value);
-    } = true;
+    }
 
     public InstancePackageVersionModel? SelectedVersionProxy
     {
@@ -89,7 +89,7 @@ public partial class PackageEntryModal : Modal
     {
         base.OnLoaded(e);
 
-        LazyVersions = ConstructVersions();
+        IsFilterEnabled = true;
         if (Model.Version is InstancePackageVersionModel v)
             SelectedVersionProxy = v;
     }

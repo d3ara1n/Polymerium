@@ -29,14 +29,14 @@ public class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         CultureInfo.CurrentUICulture = new CultureInfo("en-US");
-        
+
         AppDomain.CurrentDomain.UnhandledException += (_, e) => ShowOrDump(e.ExceptionObject, e.IsTerminating);
         TaskScheduler.UnobservedTaskException += (_, e) => ShowOrDump(e.Exception, !e.Observed);
         Dispatcher.UIThread.UnhandledException += (_, e) => ShowOrDump(e.Exception, !e.Handled);
-        
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             desktop.MainWindow = ConstructWindow();
-        
+
         base.OnFrameworkInitializationCompleted();
     }
 

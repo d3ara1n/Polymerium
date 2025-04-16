@@ -45,7 +45,7 @@
         </Setter>
 
         <Style Selector="^.Primary">
-            <Setter Property="Foreground" Value="{StaticResource ControlAccentTranslucentForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Border">
                 <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
@@ -76,8 +76,8 @@
             <Setter Property="CornerRadius" Value="{StaticResource FullCornerRadius}" />
         </Style>
         <Style Selector="^.Small">
-            <Setter Property="Padding" Value="4,2"/>
-            <Setter Property="FontSize" Value="{StaticResource ExtraSmallFontSize}"/>
+            <Setter Property="Padding" Value="4,2" />
+            <Setter Property="FontSize" Value="{StaticResource ExtraSmallFontSize}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>
