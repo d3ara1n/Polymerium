@@ -46,11 +46,22 @@
                             </ComboBox>
                             <Button Grid.Column="4" Classes="Primary" IsDefault="True"
                                     Command="{Binding SearchCommand}"
-                                    IsEnabled="{Binding Exhibits.IsFetching,Converter={x:Static BoolConverters.Not},FallbackValue=True}">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <icons:PackIconLucide Kind="Text" Height="{StaticResource MediumFontSize}"
-                                                          Width="{StaticResource MediumFontSize}"
-                                                          VerticalAlignment="Center" />
+                                    IsEnabled="{Binding Exhibits.IsFetching,Converter={x:Static BoolConverters.Not},FallbackValue=False}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <husk:SwitchPresenter VerticalAlignment="Center"
+                                                          Value="{Binding Exhibits.IsFetching,FallbackValue=True}"
+                                                          TargetType="x:Boolean"
+                                                          Height="{StaticResource MediumFontSize}"
+                                                          Width="{StaticResource MediumFontSize}">
+                                        <husk:SwitchCase Value="True">
+                                            <husk:ProgressRing IsIndeterminate="True" StrokeWidth="2"
+                                                               TrackStrokeWidth="2"
+                                                               Background="{Binding  $parent[Button].Foreground}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="False">
+                                            <icons:PackIconLucide Kind="Search" />
+                                        </husk:SwitchCase>
+                                    </husk:SwitchPresenter>
                                     <TextBlock Text="Query" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
@@ -79,8 +90,6 @@
                             <Run Text="Results:" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
                         </TextBlock>
-                        <husk:ProgressRing IsVisible="{Binding Exhibits.IsFetching,FallbackValue=True}" Height="18"
-                                           Width="18" StrokeWidth="3" IsIndeterminate="True" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
                         <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
@@ -92,6 +101,8 @@
             <husk:InfiniteScrollView Grid.Row="2" Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}">
                 <husk:InfiniteScrollView.PendingContent>
                     <StackPanel Margin="36" Spacing="6">
+                        <!-- BUG: https://github.com/AvaloniaUI/Avalonia/issues/18358 -->
+                        <!-- 由于这个问题，当全屏上一层 Blur 时会触发全屏刷新 -->
                         <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
                                            HorizontalAlignment="Center" />
                         <TextBlock Text="Fetching..." HorizontalAlignment="Center" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Humanizer;
 using Polymerium.App.Facilities;
+using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 

@@ -72,14 +72,14 @@
                                 <Rectangle
                                     RadiusX="3"
                                     RadiusY="3"
-                                    Stroke="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Stroke="{StaticResource ControlInteractiveBorderBrush}"
                                     StrokeDashArray="4,2"
                                     StrokeThickness="3" />
 
                                 <icons:PackIconLucide
                                     Name="Icon"
                                     Margin="24"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Foreground="{StaticResource ControlInteractiveBorderBrush}"
                                     Kind="Image" />
                             </Panel>
                         </Panel>

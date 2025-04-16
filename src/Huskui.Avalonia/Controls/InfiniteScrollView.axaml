@@ -13,6 +13,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <ScrollViewer Name="{x:Static local:InfiniteScrollView.PART_ScrollViewer}"
+                                  ClipToBounds="{TemplateBinding ClipToBounds}"
                                   AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
                                   BringIntoViewOnFocusChange="{TemplateBinding (ScrollViewer.BringIntoViewOnFocusChange)}"
                                   HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
@@ -22,12 +23,13 @@
                                   VerticalSnapPointsType="{TemplateBinding (ScrollViewer.VerticalSnapPointsType)}"
                                   HorizontalSnapPointsType="{TemplateBinding (ScrollViewer.HorizontalSnapPointsType)}">
                         <DockPanel>
-                            <Border DockPanel.Dock="Bottom" Name="Container">
+                            <Border Name="Container" DockPanel.Dock="Bottom">
                                 <ContentPresenter Name="{x:Static local:InfiniteScrollView.PART_PendingPresenter}"
                                                   Content="{TemplateBinding PendingContent}" IsVisible="False"
                                                   ContentTemplate="{TemplateBinding PendingContentTemplate}" />
                             </Border>
-                            <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                            <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}"
+                                            Margin="{TemplateBinding Padding}" />
                         </DockPanel>
                     </ScrollViewer>
                 </Border>
