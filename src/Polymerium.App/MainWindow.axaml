@@ -181,31 +181,43 @@
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </TextBox.InnerRightContent>
                 </TextBox>
-                <ScrollViewer
+                <Panel
                     Grid.Row="4"
                     Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Margin="0,0,-8,0">
-                    <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding View}"
-                                  ClipToBounds="False">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="m:InstanceEntryModel">
-                                <controls:InstanceEntryButton
-                                    Basic="{Binding Basic}"
-                                    Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand,FallbackValue={x:Null}}"
-                                    CommandParameter="{Binding Basic.Key}"
-                                    Progress="{Binding Progress,Mode=OneWay}"
-                                    IsPending="{Binding IsPending,Mode=OneWay}"
-                                    State="{Binding State}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Spacing="4" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </ScrollViewer>
+                    Grid.ColumnSpan="3">
+                    <StackPanel VerticalAlignment="Center"
+                                IsVisible="{Binding View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}"
+                                Spacing="8">
+                        <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                              Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                        <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <ScrollViewer
+                        Margin="0,0,-8,0">
+                        <ItemsControl Margin="0,0,8,0" ItemsSource="{Binding View}"
+                                      ClipToBounds="False">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="m:InstanceEntryModel">
+                                    <controls:InstanceEntryButton
+                                        Basic="{Binding Basic}"
+                                        Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand,FallbackValue={x:Null}}"
+                                        CommandParameter="{Binding Basic.Key}"
+                                        Progress="{Binding Progress,Mode=OneWay}"
+                                        IsPending="{Binding IsPending,Mode=OneWay}"
+                                        State="{Binding State}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="4" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Panel>
                 <husk:Divider
                     Grid.Row="5"
                     Grid.Column="0"

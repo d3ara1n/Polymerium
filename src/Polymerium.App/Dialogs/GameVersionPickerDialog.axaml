@@ -6,6 +6,7 @@
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:local="using:Polymerium.App.Dialogs"
              xmlns:m="using:Polymerium.App.Models"
+             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              mc:Ignorable="d" Title="Pick a game version"
              x:Class="Polymerium.App.Dialogs.GameVersionPickerDialog"
              IsPrimaryButtonVisible="True">
@@ -31,18 +32,29 @@
                 </DataTemplate>
             </TabStrip.ItemTemplate>
         </TabStrip>
-        <ListBox Grid.Row="4" MinHeight="64"
-                 SelectedItem="{Binding $parent[local:GameVersionPickerDialog].Result,Mode=OneWayToSource}"
-                 ItemsSource="{Binding $parent[local:GameVersionPickerDialog].View}">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="m:GameVersionModel">
-                    <Grid ColumnDefinitions="*,4,Auto">
-                        <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                        <husk:Tag Grid.Column="2" CornerRadius="{StaticResource SmallCornerRadius}"
-                                  Content="{Binding ReleaseTime}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Panel Grid.Row="4" MinHeight="128">
+            <StackPanel VerticalAlignment="Center"
+                        IsVisible="{Binding $parent[local:GameVersionPickerDialog].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}"
+                        Spacing="8">
+                <icons:PackIconLucide Kind="Joystick" Height="{StaticResource ExtraLargeFontSize}"
+                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                      Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center" />
+            </StackPanel>
+            <ListBox MinHeight="64"
+                     SelectedItem="{Binding $parent[local:GameVersionPickerDialog].Result,Mode=OneWayToSource}"
+                     ItemsSource="{Binding $parent[local:GameVersionPickerDialog].View}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="m:GameVersionModel">
+                        <Grid ColumnDefinitions="*,4,Auto">
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                            <husk:Tag Grid.Column="2" CornerRadius="{StaticResource SmallCornerRadius}"
+                                      Content="{Binding ReleaseTime}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Panel>
     </Grid>
 </husk:Dialog>

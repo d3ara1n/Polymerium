@@ -7,6 +7,7 @@
              xmlns:cp="using:Polymerium.App.Components"
              xmlns:fie="using:FluentIcons.Avalonia.MarkupExtensions"
              xmlns:controls="clr-namespace:Polymerium.App.Controls"
+             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
     <Grid RowDefinitions="Auto,0,*">
@@ -42,22 +43,33 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <ScrollViewer Grid.Row="2">
-            <ItemsControl Margin="{StaticResource PageToplessContentMargin}"
-                          ItemsSource="{Binding $parent[cp:PackageContainer].View}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="m:InstancePackageModel">
-                        <controls:PackageEntryButton Margin="0,3"
-                                                     Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
-                                                     CommandParameter="{Binding }" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </ScrollViewer>
+        <Panel Grid.Row="2">
+            <StackPanel VerticalAlignment="Center"
+                        IsVisible="{Binding $parent[cp:PackageContainer].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}"
+                        Spacing="8">
+                <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
+                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                      Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center" />
+            </StackPanel>
+            <ScrollViewer>
+                <ItemsControl Margin="{StaticResource PageToplessContentMargin}"
+                              ItemsSource="{Binding $parent[cp:PackageContainer].View}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="m:InstancePackageModel">
+                            <controls:PackageEntryButton Margin="0,3"
+                                                         Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
+                                                         CommandParameter="{Binding }" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </Panel>
     </Grid>
 </UserControl>

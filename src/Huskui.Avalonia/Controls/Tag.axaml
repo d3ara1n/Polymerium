@@ -45,7 +45,7 @@
         </Setter>
 
         <Style Selector="^.Primary">
-            <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlAccentTranslucentForegroundBrush}" />
 
             <Style Selector="^ /template/ Border#PART_Border">
                 <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
