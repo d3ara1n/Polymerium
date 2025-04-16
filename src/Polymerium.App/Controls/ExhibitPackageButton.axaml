@@ -1,4 +1,100 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Add Resources Here -->
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+                    xmlns:m="clr-namespace:Polymerium.App.Models"
+                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                    xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                    xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions">
+    <ControlTheme x:Key="{x:Type controls:ExhibitPackageButton}" TargetType="controls:ExhibitPackageButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="m:ExhibitModel">
+                <Border Name="Background" CornerRadius="{TemplateBinding CornerRadius}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
+                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                           Duration="{StaticResource ControlFastestAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <ToolTip.Tip>
+                        <Grid RowDefinitions="*,Auto" MaxWidth="300">
+                            <Border Grid.Row="0">
+                                <StackPanel Margin="12">
+                                    <TextBlock Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}"
+                                               FontWeight="Bold" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Author}" FontSize="{StaticResource SmallFontSize}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    <TextBlock Text="{Binding Summary}" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Row="1" Background="{StaticResource ControlBackgroundBrush}" Padding="6">
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
+                                            Padding="4,2" CornerRadius="{StaticResource SmallCornerRadius}"
+                                            Background="{StaticResource LayerBackgroundBrush}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <avalonia:SymbolIcon Symbol="Clock"
+                                                                 FontSize="{StaticResource MediumFontSize}" />
+                                            <TextBlock Text="{Binding UpdatedAt}" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
+                                            Padding="4,2" CornerRadius="{StaticResource SmallCornerRadius}"
+                                            Background="{StaticResource LayerBackgroundBrush}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <avalonia:SymbolIcon Symbol="ArrowCircleDown"
+                                                                 FontSize="{StaticResource MediumFontSize}" />
+                                            <TextBlock Text="{Binding Downloads}" />
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </ToolTip.Tip>
+                    <Grid RowDefinitions="Auto,*">
+                        <Border Grid.Row="0" Padding="12">
+                            <Border Height="64" Width="64"
+                                    CornerRadius="{StaticResource SmallCornerRadius}" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <Border.Background>
+                                    <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                </Border.Background>
+                            </Border>
+                        </Border>
+                        <Border Grid.Row="1" Padding="8" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}">
+                            <Grid>
+                                <TextBlock Text="{Binding ProjectName}" FontWeight="Bold" TextAlignment="Center"
+                                           TextTrimming="CharacterEllipsis"
+                                           TextWrapping="Wrap" MaxLines="2" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Background">
+            <Setter Property="BorderBrush"
+                    Value="{StaticResource ControlAccentInteractiveBorderBrush}">
+            </Setter>
+        </Style>
+        <Style Selector="^:pointerover /template/ Border#Background">
+            <Setter Property="RenderTransform" Value="scale(1.02)" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Background">
+            <Setter Property="RenderTransform" Value="scale(0.98)"/>
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

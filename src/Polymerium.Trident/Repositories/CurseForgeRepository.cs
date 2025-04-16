@@ -43,7 +43,13 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                                         LoaderHelper.LOADERID_FABRIC,
                                         LoaderHelper.LOADERID_QUILT
                                     ],
-                                    versions);
+                                    versions,
+                                    [
+                                        ResourceKind.Modpack,
+                                        ResourceKind.Mod,
+                                        ResourceKind.ResourcePack,
+                                        ResourceKind.ShaderPack
+                                    ]);
     }
 
     public async Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)

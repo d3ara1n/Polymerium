@@ -1,3 +1,8 @@
-﻿namespace Trident.Abstractions.Repositories;
+﻿using Trident.Abstractions.Repositories.Resources;
 
-public record RepositoryStatus(IReadOnlyList<string> SupportedLoaders, IReadOnlyList<string> SupportedVersions);
+namespace Trident.Abstractions.Repositories;
+
+public record RepositoryStatus(
+    IReadOnlyList<string> SupportedLoaders,
+    IReadOnlyList<string> SupportedVersions,
+    IReadOnlyList<ResourceKind> SupportedKinds);

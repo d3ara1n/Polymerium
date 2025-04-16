@@ -39,11 +39,12 @@
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:ProgressRing}" TargetType="local:ProgressRing">
         <Setter Property="StrokeWidth" Value="4" />
+        <Setter Property="TrackStrokeWidth" Value="4" />
+        <Setter Property="TrackerPadding" Value="0"/>
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
         <Setter Property="ProgressTextFormat" Value="{}{1:0}%" />
         <Setter Property="ShowProgressText" Value="True" />
-        <Setter Property="TrackStrokeWidth" Value="4" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="Container">

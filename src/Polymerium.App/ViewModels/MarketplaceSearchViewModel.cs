@@ -53,9 +53,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         }
     }
 
-    [ObservableProperty]
-    public partial string QueryText { get; set; } = string.Empty;
-
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
 
     protected override async Task OnInitializedAsync(CancellationToken token)
@@ -91,22 +88,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             }
     }
 
-    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-    {
-        base.OnPropertyChanged(e);
-        if (e.PropertyName == nameof(SelectedRepository))
-        {
-            var cur = SelectedRepository;
-            HeaderImage = cur.Label switch
-            {
-                "curseforge" => AssetUriIndex.REPOSITORY_HEADER_CURSEFORGE_BITMAP,
-                "modrinth" => AssetUriIndex.REPOSITORY_HEADER_MODRINTH_BITMAP,
-                "favorite" => AssetUriIndex.REPOSITORY_HEADER_FAVORITE_BITMAP,
-                _ => HeaderImage
-            };
-        }
-    }
-
     #region Nested type: SearchArguments
 
     public record SearchArguments(string? Query, string? Label);
@@ -130,6 +111,14 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
 
     partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
     {
+        var cur = SelectedRepository;
+        HeaderImage = cur.Label switch
+        {
+            "curseforge" => AssetUriIndex.REPOSITORY_HEADER_CURSEFORGE_BITMAP,
+            "modrinth" => AssetUriIndex.REPOSITORY_HEADER_MODRINTH_BITMAP,
+            "favorite" => AssetUriIndex.REPOSITORY_HEADER_FAVORITE_BITMAP,
+            _ => HeaderImage
+        };
         _ = SearchAsync();
     }
 
@@ -144,6 +133,9 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
 
     [ObservableProperty]
     public partial Bitmap? HeaderImage { get; set; }
+    
+    [ObservableProperty]
+    public partial string QueryText { get; set; } = string.Empty;
 
     #endregion
 

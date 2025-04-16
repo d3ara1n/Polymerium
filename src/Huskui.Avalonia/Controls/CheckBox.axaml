@@ -5,7 +5,7 @@
         <Panel Background="White">
             <StackPanel Margin="24" Spacing="12">
                 <CheckBox>
-                    <TextBlock Text="Check or Not" />
+                    <Button Content="Check or Not" />
                 </CheckBox>
                 <CheckBox IsEnabled="False">
                     <TextBlock Text="Not" />
@@ -30,9 +30,12 @@
             <ControlTemplate>
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" Background="{StaticResource TransparentBrush}">
                     <Border Grid.Column="0" Name="Box" Cursor="Hand"
-                            Width="16"
+                            MinHeight="{TemplateBinding FontSize}"
+                            MinWidth="{TemplateBinding FontSize}"
                             Height="16"
-                            VerticalAlignment="Center"
+                            Width="16"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -76,8 +79,8 @@
                     <ContentPresenter Name="PART_ContentPresenter"
                                       Grid.Column="1"
                                       Margin="{TemplateBinding Padding}"
-                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
                                       IsVisible="{TemplateBinding Content,

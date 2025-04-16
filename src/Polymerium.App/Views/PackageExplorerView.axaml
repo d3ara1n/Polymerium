@@ -6,8 +6,12 @@
                      xmlns:controls="using:Polymerium.App.Controls"
                      xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                      xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+                     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+                     xmlns:m="clr-namespace:Polymerium.App.Models"
+                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
-                     x:Class="Polymerium.App.Views.PackageExplorerView" Padding="0" IsHeaderVisible="False">
+                     x:Class="Polymerium.App.Views.PackageExplorerView" x:DataType="vm:PackageExplorerViewModel"
+                     Padding="0" IsHeaderVisible="False" ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="Auto,Auto,*">
         <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" RowDefinitions="Auto,*" Margin="12" RowSpacing="24">
             <Border Grid.Row="0" Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
@@ -49,218 +53,107 @@
                                 Theme="{StaticResource GhostButtonTheme}">
                             <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
                         </Button>
-                        <TextBlock Grid.Column="1" Text="Instance Name"
+                        <TextBlock Grid.Column="1" Text="{Binding Basic.Name,FallbackValue=Name}"
                                    TextTrimming="CharacterEllipsis"
                                    FontSize="{StaticResource ExtraLargeFontSize}" />
                     </Grid>
-                    <TextBox>
-                        <TextBox.InnerRightContent>
-                            <StackPanel Orientation="Horizontal">
-                                <Button
-                                    IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                    Command="{Binding $parent[TextBox].Clear}"
-                                    Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <husk:Divider Orientation="Vertical" />
-                                <CheckBox Margin="6,0">
-                                    <StackPanel Spacing="4" Orientation="Horizontal">
-                                        <husk:Tag Content="Vanilla" FontSize="{StaticResource MediumFontSize}" />
-                                        <husk:Tag Content="1.20.1" FontSize="{StaticResource MediumFontSize}" />
-                                    </StackPanel>
-                                </CheckBox>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <TextBox Grid.Column="0" Watermark="Search by names and names..." Text="{Binding QueryText}">
+                            <TextBox.InnerRightContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                        IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                        Command="{Binding $parent[TextBox].Clear}"
+                                        Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    <husk:Divider Orientation="Vertical" />
+                                    <CheckBox Margin="6,0" IsChecked="{Binding IsFilterEnabled,Mode=TwoWay}">
+                                        <StackPanel Spacing="4" Orientation="Horizontal">
+                                            <husk:Tag Content="{Binding Basic.LoaderLabel,FallbackValue=Type}"
+                                                      FontSize="{StaticResource MediumFontSize}" />
+                                            <husk:Tag Content="{Binding Basic.Version,FallbackValue=Version}"
+                                                      FontSize="{StaticResource MediumFontSize}" />
+                                        </StackPanel>
+                                    </CheckBox>
+                                </StackPanel>
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+                        <Button Grid.Column="1" Classes="Primary" IsDefault="True"
+                                Command="{Binding SearchCommand}"
+                                IsEnabled="{Binding Exhibits.IsFetching,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
+                                Theme="{StaticResource OutlineButtonTheme}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <husk:SwitchPresenter VerticalAlignment="Center"
+                                                      Value="{Binding Exhibits.IsFetching,FallbackValue=True}"
+                                                      TargetType="x:Boolean"
+                                                      Height="{StaticResource MediumFontSize}"
+                                                      Width="{StaticResource MediumFontSize}">
+                                    <husk:SwitchCase Value="True">
+                                        <husk:ProgressRing IsIndeterminate="True" StrokeWidth="2" TrackStrokeWidth="2" />
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="False">
+                                        <icons:PackIconLucide Kind="Search" />
+                                    </husk:SwitchCase>
+                                </husk:SwitchPresenter>
+                                <TextBlock Text="Query" VerticalAlignment="Center" />
                             </StackPanel>
-                        </TextBox.InnerRightContent>
-                    </TextBox>
+                        </Button>
+                    </Grid>
                     <Grid ColumnDefinitions="*,Auto">
-                        <TabStrip Grid.Column="1"
-                                  Theme="{StaticResource SegmentedTabStripTheme}">
-                            <TabStripItem Content="Mod" />
-                            <TabStripItem Content="ResourcePack" />
-                            <TabStripItem Content="ShaderPack" />
-                        </TabStrip>
+                        <husk:SkeletonContainer Grid.Column="1" MinHeight="32" MinWidth="128"
+                                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                                IsLoading="{Binding SelectedRepository.Kinds,Converter={x:Static ObjectConverters.IsNull}}">
+                            <TabStrip
+                                Theme="{StaticResource SegmentedTabStripTheme}"
+                                SelectedItem="{Binding SelectedKind,Mode=TwoWay}"
+                                ItemsSource="{Binding SelectedRepository.Kinds}">
+                            </TabStrip>
+                        </husk:SkeletonContainer>
                     </Grid>
                 </StackPanel>
                 <TabStrip HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                          SelectedItem="{Binding SelectedRepository}" ItemsSource="{Binding Repositories}"
                           Theme="{StaticResource PivotTabStripTheme}">
                     <TabStrip.Styles>
                         <Style Selector="TabStripItem">
                             <Setter Property="Margin" Value="0" />
                         </Style>
                     </TabStrip.Styles>
-                    <TabStripItem Content="CurseForge" />
-                    <TabStripItem Content="Collection" />
+                    <TabStrip.ItemTemplate>
+                        <DataTemplate x:DataType="m:RepositoryBasicModel">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </TabStrip.ItemTemplate>
                 </TabStrip>
             </Panel>
         </Panel>
         <husk:Divider Grid.Column="2" Grid.Row="1" />
-        <ItemsControl Grid.Column="2" Grid.Row="2" Margin="12">
+        <husk:InfiniteScrollView Grid.Column="2" Grid.Row="2" Padding="12" ItemsSource="{Binding Exhibits}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-            <husk:Card MaxWidth="128" MinWidth="90" MaxHeight="198" MinHeight="98" Padding="0">
-                <Grid RowDefinitions="Auto,*">
-                    <Border Grid.Row="0" Height="64" Width="64" Margin="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Images/Placeholders/Dirt.png" />
-                        </Border.Background>
-                    </Border>
-                    <Border Grid.Row="1" Padding="8"
-                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                        <Grid>
-                            <TextBlock Text="A Very Long Package Name" FontWeight="Bold" TextAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap" MaxLines="2" />
-                        </Grid>
-                    </Border>
-                </Grid>
-            </husk:Card>
-        </ItemsControl>
+            <husk:InfiniteScrollView.PendingContent>
+                <StackPanel Margin="36" Spacing="6">
+                    <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
+                                       HorizontalAlignment="Center" />
+                    <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
+                </StackPanel>
+            </husk:InfiniteScrollView.PendingContent>
+            <husk:InfiniteScrollView.ItemTemplate>
+                <DataTemplate x:DataType="m:ExhibitModel">
+                    <controls:ExhibitPackageButton CommandParameter="{Binding}" />
+                </DataTemplate>
+            </husk:InfiniteScrollView.ItemTemplate>
+            <husk:InfiniteScrollView.ItemContainerTheme>
+                <ControlTheme TargetType="ContentPresenter">
+                    <Setter Property="MaxWidth" Value="128" />
+                    <Setter Property="MinWidth" Value="90" />
+                    <Setter Property="MaxHeight" Value="168" />
+                    <Setter Property="MinHeight" Value="128" />
+                </ControlTheme>
+            </husk:InfiniteScrollView.ItemContainerTheme>
+        </husk:InfiniteScrollView>
     </Grid>
 </controls:ScopedPage>
