@@ -333,6 +333,11 @@ public partial class InstanceSetupViewModel(
                                                                    project.ProjectId,
                                                                    x.VersionName,
                                                                    x.VersionId,
+                                                                   string.Join(",",
+                                                                               x.Requirements.AnyOfLoaders
+                                                                                  .Select(LoaderHelper
+                                                                                      .ToDisplayName)),
+                                                                   string.Join(",", x.Requirements.AnyOfVersions),
                                                                    string.Empty,
                                                                    x.PublishedAt,
                                                                    x.DownloadCount,

@@ -122,14 +122,18 @@ public partial class ExhibitPackageModal : Modal
                                                            project.ProjectId,
                                                            x.VersionName,
                                                            x.VersionId,
-                                                           string.Empty,
-                                                           x.PublishedAt,
-                                                           x.DownloadCount,
-                                                           x.ReleaseType,
-                                                           PackageHelper.ToPurl(x.Label,
-                                                                                    x.Namespace,
-                                                                                    x.ProjectId,
-                                                                                    x.VersionId)))
+                                                           string.Join(",",
+                                                                       x.Requirements.AnyOfLoaders
+                                                                        .Select(LoaderHelper.ToDisplayName)),
+                                                                       string.Join(",", x.Requirements.AnyOfVersions),
+                                                                       string.Empty,
+                                                                       x.PublishedAt,
+                                                                       x.DownloadCount,
+                                                                       x.ReleaseType,
+                                                                       PackageHelper.ToPurl(x.Label,
+                                                                           x.Namespace,
+                                                                           x.ProjectId,
+                                                                           x.VersionId)))
                                                .ToList());
         });
 

@@ -85,7 +85,7 @@
                                 Theme="{StaticResource OutlineButtonTheme}">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <husk:SwitchPresenter VerticalAlignment="Center"
-                                                      Value="{Binding Exhibits.IsFetching,FallbackValue=True}"
+                                                      Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
                                                       TargetType="x:Boolean"
                                                       Height="{StaticResource MediumFontSize}"
                                                       Width="{StaticResource MediumFontSize}">

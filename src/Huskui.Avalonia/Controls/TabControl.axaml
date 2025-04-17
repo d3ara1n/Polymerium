@@ -1,10 +1,17 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="using:System">
+                    xmlns:sys="using:System"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <Design.PreviewWith>
         <Grid Width="1024" Height="340" ColumnDefinitions="*,*">
             <TabControl Grid.Column="0" Margin="24" TabStripPlacement="Top">
-                <TabItem Header="Fancy">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="4" >
+                            <fi:SymbolIcon Symbol="Info" FontSize="{StaticResource MediumFontSize}" />
+                            <TextBlock Text="Fancy" />
+                        </StackPanel>
+                    </TabItem.Header>
                     <Button Content="Too" />
                 </TabItem>
                 <TabItem Header="Too" Classes="Primary">
@@ -46,13 +53,15 @@
         <Setter Property="Padding" Value="{StaticResource TabContentMargin}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="TabControl">
-                <Border
-                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                    VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                <Border>
                     <DockPanel>
                         <Panel DockPanel.Dock="{TemplateBinding TabStripPlacement}">
-                            <ItemsPresenter Name="PART_ItemsPresenter"
-                                            ItemsPanel="{TemplateBinding ItemsPanel}" />
+                            <ScrollViewer
+                                HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ItemsPresenter Name="PART_ItemsPresenter"
+                                                ItemsPanel="{TemplateBinding ItemsPanel}" />
+                            </ScrollViewer>
                         </Panel>
                         <ContentPresenter
                             Name="PART_ContentPresenter"
