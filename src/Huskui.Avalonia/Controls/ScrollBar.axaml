@@ -26,7 +26,13 @@
             <Setter Property="Margin" Value="1" />
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Border Background="{TemplateBinding Background}">
+                    <Border Name="Background" Background="{TemplateBinding Background}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlSlowerAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
                         <Grid ColumnDefinitions="Auto,*,Auto">
                             <RepeatButton Name="PART_LineUpButton"
                                           Grid.Column="0"
@@ -67,7 +73,7 @@
                 </ControlTemplate>
             </Setter>
 
-            <Style Selector="^ScrollBar[AllowAutoHide=True]:not(:pointerover)">
+            <Style Selector="^:not(:pointerover)">
                 <Style Selector="^ /template/ RepeatButton">
                     <Setter Property="Opacity" Value="0" />
                 </Style>
@@ -75,13 +81,24 @@
                     <Setter Property="VerticalAlignment" Value="Bottom" />
                     <Setter Property="Height" Value="{StaticResource ScrollBarCompatThickness}" />
                 </Style>
+
+                <Style Selector="^ScrollBar[AllowAutoHide=True] /template/ Border#Background">
+                    <Setter Property="Opacity" Value="0" />
+                </Style>
             </Style>
         </Style>
+
         <Style Selector="^:vertical">
             <Setter Property="Width" Value="{StaticResource ScrollBarThickness}" />
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Border Background="{TemplateBinding Background}">
+                    <Border Name="Background" Background="{TemplateBinding Background}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlSlowerAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
                         <Grid RowDefinitions="Auto,*,Auto">
                             <RepeatButton Name="PART_LineUpButton"
                                           Grid.Row="0"
@@ -123,13 +140,17 @@
                 </ControlTemplate>
             </Setter>
 
-            <Style Selector="^ScrollBar[AllowAutoHide=True]:not(:pointerover)">
+            <Style Selector="^:not(:pointerover)">
                 <Style Selector="^ /template/ RepeatButton">
                     <Setter Property="Opacity" Value="0" />
                 </Style>
                 <Style Selector="^ /template/ Track">
                     <Setter Property="HorizontalAlignment" Value="Right" />
                     <Setter Property="Width" Value="{StaticResource ScrollBarCompatThickness}" />
+                </Style>
+
+                <Style Selector="^ScrollBar[AllowAutoHide=True] /template/ Border#Background">
+                    <Setter Property="Opacity" Value="0" />
                 </Style>
             </Style>
         </Style>

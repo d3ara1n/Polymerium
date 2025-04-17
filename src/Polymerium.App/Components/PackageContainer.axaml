@@ -8,22 +8,99 @@
              xmlns:fie="using:FluentIcons.Avalonia.MarkupExtensions"
              xmlns:controls="clr-namespace:Polymerium.App.Controls"
              xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
     <Grid RowDefinitions="Auto,0,*">
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,12,*,12,Auto" Margin="16,8">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="16,8" ColumnSpacing="12">
             <TextBox Grid.Column="0" Watermark="Enter filter string..."
                      MinWidth="168"
                      Text="{Binding $parent[cp:PackageContainer].FilterText,Mode=OneWayToSource}">
                 <TextBox.InnerRightContent>
-                    <Button
-                        IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                        Command="{Binding $parent[TextBox].Clear}"
-                        Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                            Command="{Binding $parent[TextBox].Clear}"
+                            Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <Button>
+                            <Button.Flyout>
+                                <Flyout>
+                                    <StackPanel Spacing="8" Width="320" MaxHeight="360" Margin="12">
+                                        <TextBlock Text="Filter" FontSize="{StaticResource SmallFontSize}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   VerticalAlignment="Center" />
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                            <TextBlock Grid.Column="0" Text="Status" VerticalAlignment="Bottom" />
+                                            <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}">
+                                                <TabStripItem Content="All" />
+                                                <TabStripItem Content="Enabled" />
+                                                <TabStripItem Content="Disabled" />
+                                            </TabStrip>
+                                        </Grid>
+                                        <husk:Divider />
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                            <TextBlock Grid.Column="0" Text="Source" VerticalAlignment="Bottom" />
+                                            <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}">
+                                                <TabStripItem Content="All" />
+                                                <TabStripItem Content="Original" />
+                                                <TabStripItem Content="Local" />
+                                            </TabStrip>
+                                        </Grid>
+                                        <husk:Divider />
+                                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
+                                            <TextBlock Grid.Column="0" Text="Tags" VerticalAlignment="Center"
+                                                       FontSize="{StaticResource SmallFontSize}"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                            <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}"
+                                                    Classes="Small">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <icons:PackIconLucide Kind="SquareCheck"
+                                                                          Height="{StaticResource SmallFontSize}"
+                                                                          Width="{StaticResource SmallFontSize}"
+                                                                          VerticalAlignment="Center" />
+                                                    <TextBlock Text="Check All" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}"
+                                                    Classes="Small">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <icons:PackIconLucide Kind="SquareDashed"
+                                                                          Height="{StaticResource SmallFontSize}"
+                                                                          Width="{StaticResource SmallFontSize}"
+                                                                          VerticalAlignment="Center" />
+                                                    <TextBlock Text="Uncheck All" />
+                                                </StackPanel>
+                                            </Button>
+                                        </Grid>
+                                        <ItemsControl>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel ItemSpacing="8" LineSpacing="8" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <Border CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    BorderBrush="{StaticResource ControlBorderBrush}"
+                                                    BorderThickness="1" Padding="8">
+                                                <CheckBox Content="Gameplay" />
+                                            </Border>
+                                            <Border CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    BorderBrush="{StaticResource ControlBorderBrush}"
+                                                    BorderThickness="1" Padding="8">
+                                                <CheckBox Content="Optimization" />
+                                            </Border>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                            <icons:PackIconLucide Kind="ListFilter" Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}" />
+                        </Button>
+                    </StackPanel>
+
                 </TextBox.InnerRightContent>
             </TextBox>
-            <TextBlock Grid.Column="2">
+            <TextBlock Grid.Column="1">
                 <Run Text="Results"
                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <LineBreak />
@@ -31,7 +108,7 @@
                 <Run Text="/" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <Run Text="{Binding $parent[cp:PackageContainer].TotalCount,Mode=OneWay,FallbackValue=0}" />
             </TextBlock>
-            <StackPanel Grid.Column="4" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+            <StackPanel Grid.Column="2" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
                 <Button Content="Bulk Update" />
                 <Button Content="Export List" />
                 <Button Classes="Primary" Command="{Binding $parent[cp:PackageContainer].GotoExplorerCommand}">

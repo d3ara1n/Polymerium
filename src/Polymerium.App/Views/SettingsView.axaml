@@ -40,7 +40,7 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Theme Variant" HorizontalContentAlignment="Left">
                 <TabStrip Theme="{StaticResource SegmentedTabStripTheme}"
-                          SelectedIndex="{Binding DarkMode,Mode=TwoWay}">
+                          SelectedIndex="{Binding DarkMode,Mode=TwoWay}" AutoScrollToSelectedItem="False">
                     <TabStripItem>
                         <StackPanel Orientation="Horizontal" Spacing="4">
                             <icons:PackIconLucide Kind="SunMoon" VerticalAlignment="Center"
