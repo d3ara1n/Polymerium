@@ -62,7 +62,7 @@
     <SolidColorBrush x:Key="OverlayMaskBackgroundBrush" Color="{DynamicResource Layover7Color}" />
 
     <!-- Normal：这 ParkUI 这部分的颜色就完全没按 Step 分区来 -->
-    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource Gray5Color}" />
+    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource Gray7Color}" />
     <SolidColorBrush x:Key="ControlInteractiveBackgroundBrush" Color="{DynamicResource Gray5Color}" />
     <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource BorderColor}" />
     <SolidColorBrush x:Key="ControlInteractiveBorderBrush" Color="{DynamicResource Gray7Color}" />

@@ -102,7 +102,7 @@ public class CurseForgeService(ICurseForgeClient client)
     {
         List<string> gameReq = [];
         List<string> loaderReq = [];
-        foreach (var version in file.GameVersions)
+        foreach (var version in file.GameVersions.Where(x => x != "Client" && x != "Server"))
             if (LOADER_MAPPINGS.TryGetValue(version, out var loader))
                 loaderReq.Add(loader);
             else
@@ -170,7 +170,9 @@ public class CurseForgeService(ICurseForgeClient client)
             file.DisplayName,
             ToReleaseType(file.ReleaseType),
             file.FileDate,
-            file.DownloadCount);
+            file.DownloadCount,
+            ToRequirement(file),
+            ToDependencies(file));
 
 
     public static Project ToProject(ModModel model) =>

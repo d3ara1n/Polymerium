@@ -18,6 +18,7 @@ using Polymerium.Trident.Services;
 using Refit;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.ViewModels;
 
@@ -109,7 +110,13 @@ public partial class PackageExplorerViewModel : ViewModelBase
     partial void OnIsFilterEnabledChanged(bool value)
     {
         if (value)
-            Filter = Filter with { Loader = Basic.Loader, Version = Basic.Version };
+            Filter = Filter with
+            {
+                Loader = Basic.Loader != null && LoaderHelper.TryParse(Basic.Loader, out var loader)
+                             ? loader.Identity
+                             : null,
+                Version = Basic.Version
+            };
         else
             Filter = Filter with { Loader = null, Version = null };
     }
@@ -218,7 +225,12 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 {
                     DataContext = model,
                     DataService = _dataService,
-                    Filter = Filter,
+                    Filter = new Filter(Basic.Version,
+                                        Basic.Loader != null
+                                     && LoaderHelper.TryParse(Basic.Loader, out var loader)
+                                            ? loader.Identity
+                                            : null,
+                                        project.Kind),
                     Guard = guard,
                     InstallCommand = InstallVersionCommand
                 });

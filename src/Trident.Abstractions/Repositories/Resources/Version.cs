@@ -8,4 +8,6 @@ public record Version(
     string VersionName,
     ReleaseType ReleaseType,
     DateTimeOffset PublishedAt,
-    ulong DownloadCount);
+    ulong DownloadCount,
+    Requirement Requirements,
+    IEnumerable<Dependency> Dependencies);
