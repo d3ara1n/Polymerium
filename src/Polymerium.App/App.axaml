@@ -9,4 +9,18 @@
         <StyleInclude Source="avares://Huskui.Avalonia.Markdown/Themes/Markdown.Avalonia.axaml" />
         <StyleInclude Source="avares://Polymerium.App/Themes/Bundle.axaml" />
     </Application.Styles>
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <ImageBrush x:Key="SettingsImageBrush" Source="/Assets/Images/126997360_p2.jpg"
+                                Stretch="UniformToFill" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <ImageBrush x:Key="SettingsImageBrush" Source="/Assets/Images/126997360_p0.jpg"
+                                Stretch="UniformToFill" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

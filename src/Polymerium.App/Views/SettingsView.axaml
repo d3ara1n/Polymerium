@@ -225,5 +225,68 @@
                 </StackPanel>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
+        <husk:Divider />
+        <Panel>
+            <husk:ConstrainedBox HorizontalAlignment="Right" AspectRatio="0.6840277777777778"
+                                 Height="{Binding #LinksPanel.Bounds.Height}">
+                <Border CornerRadius="{StaticResource MediumCornerRadius}"
+                        RenderOptions.BitmapInterpolationMode="HighQuality"
+                        Background="{DynamicResource SettingsImageBrush}">
+                </Border>
+            </husk:ConstrainedBox>
+            <StackPanel Name="LinksPanel" Spacing="2">
+                <TextBlock ClipToBounds="False">
+                    <Run Text="Source Code:" />
+                    <HyperlinkButton Content="GitHub" NavigateUri="https://github.com/d3ara1n/Polymerium" />
+                    <Run Text="License:" />
+                    <HyperlinkButton Content="MIT"
+                                     NavigateUri="https://github.com/d3ara1n/Polymerium/blob/master/LICENSE.txt" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
+                    <Run Text="Image in the Settings Page:" />
+                    <HyperlinkButton Content="Pixiv#126997360" NavigateUri="https://www.pixiv.net/artworks/126997360" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
+                    <Run Text="Architecture &amp; Engine:" />
+                    <HyperlinkButton Content="Trident" NavigateUri="https://github.com/TridentCore/trident" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
+                    <Run Text="Repositories:" />
+                    <HyperlinkButton Content="CurseForge" NavigateUri="https://docs.curseforge.com/" />
+                    <HyperlinkButton Content="Modrinth" NavigateUri="https://docs.modrinth.com/" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
+                    <Run Text="Frontend Framework:" />
+                    <HyperlinkButton Content="Avalonia" NavigateUri="https://avaloniaui.net" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
+                    <Run Text="Control Library:" />
+                    <HyperlinkButton Content="Huskui" NavigateUri="https://github.com/d3ara1n/Huskui.Avalonia" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
+                    <Run Text="Emoji:" />
+                    <HyperlinkButton Content="Fluent Emoji" NavigateUri="https://github.com/microsoft/fluentui-emoji" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
+                    <Run Text="Icon Libraries:" />
+                    <HyperlinkButton Content="Fluent Icons" NavigateUri="fluent2.microsoft.design/" />
+                    <Run Text="(" />
+                    <HyperlinkButton Content="FluentIcons.Avalonia"
+                                     NavigateUri="https://github.com/davidxuang/FluentIcons" />
+                    <Run Text=")" />
+                    <Run Text="&amp;" />
+                    <HyperlinkButton Content="Lucide Icons" NavigateUri="https://lucide.dev" />
+                    <Run Text="(" />
+                    <HyperlinkButton Content="IconPacks.Avalonia.Lucide"
+                                     NavigateUri="https://github.com/MahApps/IconPacks.Avalonia" />
+                    <Run Text=")" />
+                </TextBlock>
+            </StackPanel>
+        </Panel>
+        <husk:Divider />
+        <TextBlock FontSize="{StaticResource SmallFontSize}"
+                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                   Text="Disclaimer: 任何在 UI 上看到的预期外行为、Bug、错误的渲染，均为 Avalonia 自身五六年前至今未解决或被直接关闭的 Issues，笔者一直知道它们的存在，且也一直在关注这些 Issues 的进展。由于笔者能力不足钱包扁扁，无法支持 Avalonia 的开发，导致 Avalonia 项目开发进展缓慢。这一切的一切，都是笔者本人导致的。"
+                   TextWrapping="Wrap" />
     </StackPanel>
 </husk:Page>
