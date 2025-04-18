@@ -73,23 +73,35 @@
                                                 </StackPanel>
                                             </Button>
                                         </Grid>
-                                        <ItemsControl>
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <WrapPanel ItemSpacing="8" LineSpacing="8" />
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                            <Border CornerRadius="{StaticResource SmallCornerRadius}"
-                                                    BorderBrush="{StaticResource ControlBorderBrush}"
-                                                    BorderThickness="1" Padding="8">
-                                                <CheckBox Content="Gameplay" />
-                                            </Border>
-                                            <Border CornerRadius="{StaticResource SmallCornerRadius}"
-                                                    BorderBrush="{StaticResource ControlBorderBrush}"
-                                                    BorderThickness="1" Padding="8">
-                                                <CheckBox Content="Optimization" />
-                                            </Border>
-                                        </ItemsControl>
+                                        <Panel MinHeight="120">
+                                            <StackPanel VerticalAlignment="Center"
+                                                        Spacing="8">
+                                                <icons:PackIconLucide Kind="Tags"
+                                                                      Height="{StaticResource ExtraLargeFontSize}"
+                                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                      Width="{StaticResource ExtraLargeFontSize}"
+                                                                      HorizontalAlignment="Center" />
+                                                <TextBlock Text="WIP" FontSize="{StaticResource LargeFontSize}"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                           HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                            <ItemsControl>
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel ItemSpacing="8" LineSpacing="8" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border CornerRadius="{StaticResource SmallCornerRadius}"
+                                                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                                                BorderThickness="1" Padding="8">
+                                                            <CheckBox Content="Gameplay" />
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Panel>
                                     </StackPanel>
                                 </Flyout>
                             </Button.Flyout>
