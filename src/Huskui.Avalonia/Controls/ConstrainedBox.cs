@@ -25,6 +25,14 @@ public class ConstrainedBox : ContentControl
             width = height * AspectRatio;
         }
 
-        return new Size(width, height);
+        var desired = new Size(width, height);
+        // if (Content is Control control)
+        // {
+        //     control.Measure(new Size(width, height));
+        //     desired = control.DesiredSize;
+        // }
+        // 答案是不关心内部成员大小，不 Measure 他们！
+
+        return desired;
     }
 }

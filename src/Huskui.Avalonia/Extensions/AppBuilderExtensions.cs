@@ -26,7 +26,7 @@ public static class AppBuilderExtensions
                 DefaultFamilyName = "fonts:Quicksand#Quicksand",
                 FontFallbacks =
                 [
-                    new FontFallback { FontFamily = "fonts:ChillRoundM#寒蝉半圆体" }
+                    new FontFallback { FontFamily = "fonts:ChillRoundM#寒蝉半圆体" },
                     // new FontFallback { FontFamily = "fonts:MaoKenWangXingYuan#猫啃忘形圆" }
                 ]
             });
