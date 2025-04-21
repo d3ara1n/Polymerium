@@ -7,17 +7,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Polymerium.App.Services;
 
-public class AvaloniaLifetime : IHostLifetime
+public class AvaloniaLifetime : IHostedService
 {
-    private readonly IHostApplicationLifetime _parent;
+    private readonly IHostApplicationLifetime _lifetime;
     private readonly Thread _thread;
 
     public AvaloniaLifetime(
-        IHostApplicationLifetime parent,
+        IHostApplicationLifetime lifetime,
         ILogger<AvaloniaLifetime> logger,
         IHostEnvironment environment)
     {
-        _parent = parent;
+        _lifetime = lifetime;
 
         logger.LogInformation("""
                               {}({}):{}
@@ -44,22 +44,20 @@ public class AvaloniaLifetime : IHostLifetime
     private void Serve()
     {
         Program.BuildAvaloniaApp().StartWithClassicDesktopLifetime(Environment.GetCommandLineArgs());
-        _parent.StopApplication();
+        _lifetime.StopApplication();
     }
 
     private void Deserve() { }
 
     #region IHostLifetime Members
 
-    public Task WaitForStartAsync(CancellationToken cancellationToken)
+    public Task StartAsync(CancellationToken cancellationToken)
     {
         _thread.Start();
         return Task.CompletedTask;
     }
 
-    public Task StopAsync(CancellationToken cancellationToken) =>
-        // 因为停止 Host 的唯一方法就是 Avalonia 自己退出，所以这里不需要再返去请求 Avalonia 退出（主要是 Avalonia 没给方法来判断其是否已经 Shutdown）
-        Task.CompletedTask;
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
     #endregion
 }

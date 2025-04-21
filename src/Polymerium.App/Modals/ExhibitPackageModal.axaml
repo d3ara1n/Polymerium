@@ -31,9 +31,20 @@
                             <TextBlock Text="{Binding ProjectName,FallbackValue=Package}"
                                        TextTrimming="CharacterEllipsis"
                                        FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
-                            <HyperlinkButton
-                                Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                                CommandParameter="{Binding ReferenceUrl}">
+                            <HyperlinkButton NavigateUri="{Binding ReferenceUrl}">
+                                <ToolTip.Tip>
+                                    <StackPanel Margin="10,6" Spacing="2">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                            <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                            <fi:SymbolIcon Grid.Column="1" Symbol="Open"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                           FontSize="{StaticResource MediumFontSize}" />
+                                        </Grid>
+                                        <TextBlock
+                                            Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                                    </StackPanel>
+                                </ToolTip.Tip>
                                 <StackPanel Orientation="Horizontal" Spacing="4">
                                     <TextBlock
                                         Text="{Binding ReferenceLabel,FallbackValue=Label,Converter={x:Static huskc:StringConverters.ToUpper}}" />

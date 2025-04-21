@@ -26,9 +26,20 @@
                            FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center" />
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4"
                             VerticalAlignment="Center">
-                    <HyperlinkButton
-                        Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                        CommandParameter="{Binding Reference}">
+                    <HyperlinkButton NavigateUri="{Binding Reference}">
+                        <ToolTip.Tip>
+                            <StackPanel Margin="10,6" Spacing="2">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                    <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                    <fi:SymbolIcon Grid.Column="1" Symbol="Open"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource MediumFontSize}" />
+                                </Grid>
+                                <TextBlock
+                                    Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                            </StackPanel>
+                        </ToolTip.Tip>
                         <StackPanel Orientation="Horizontal" Spacing="4">
                             <TextBlock
                                 Text="{Binding Label,FallbackValue=Label,Converter={x:Static huskc:StringConverters.ToUpper}}" />
