@@ -9,6 +9,7 @@
            xmlns:v="using:Polymerium.App.Views"
            xmlns:m="using:Polymerium.App.Models"
            xmlns:controls="clr-namespace:Polymerium.App.Controls"
+           xmlns:collection="clr-namespace:System.Collections.Generic;assembly=System.Collections"
            ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:MarketplaceSearchViewModel" Padding="0"
@@ -91,14 +92,69 @@
                             <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
                         </TextBlock>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
                         <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
                             <TextBlock Text="Clear Filters" />
                         </HyperlinkButton>
+                        <TabStrip Name="LayoutSelector" SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}"
+                                  Theme="{StaticResource SegmentedTabStripTheme}">
+                            <TabStrip.ItemsSource>
+                                <collection:List x:TypeArguments="m:ListTemplateCombinationModel">
+                                    <m:ListTemplateCombinationModel
+                                        Icon="List">
+                                        <m:ListTemplateCombinationModel.ItemTemplate>
+                                            <DataTemplate x:DataType="m:ExhibitModel">
+                                                <controls:ExhibitModpackButton
+                                                    Theme="{StaticResource ListExhibitModpackButtonTheme}"
+                                                    Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewModpackCommand,FallbackValue={x:Null}}"
+                                                    CommandParameter="{Binding}" />
+                                            </DataTemplate>
+                                        </m:ListTemplateCombinationModel.ItemTemplate>
+                                        <m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Margin="16" Spacing="8" />
+                                            </ItemsPanelTemplate>
+                                        </m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                    </m:ListTemplateCombinationModel>
+                                    <m:ListTemplateCombinationModel
+                                        Icon="Grid">
+                                        <m:ListTemplateCombinationModel.ItemTemplate>
+                                            <DataTemplate x:DataType="m:ExhibitModel">
+                                                <controls:ExhibitModpackButton
+                                                    Theme="{StaticResource GridExhibitModpackButtonTheme}"
+                                                    Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewModpackCommand,FallbackValue={x:Null}}"
+                                                    CommandParameter="{Binding}" />
+                                            </DataTemplate>
+                                        </m:ListTemplateCombinationModel.ItemTemplate>
+                                        <m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                            <ItemsPanelTemplate>
+                                                <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" Margin="16" />
+                                            </ItemsPanelTemplate>
+                                        </m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                        <m:ListTemplateCombinationModel.ItemContainerTheme>
+                                            <ControlTheme TargetType="ContentPresenter">
+                                                <Setter Property="MaxWidth" Value="420" />
+                                                <Setter Property="MinWidth" Value="198" />
+                                                <Setter Property="MaxHeight" Value="256" />
+                                                <Setter Property="MinHeight" Value="128" />
+                                            </ControlTheme>
+                                        </m:ListTemplateCombinationModel.ItemContainerTheme>
+                                    </m:ListTemplateCombinationModel>
+                                </collection:List>
+                            </TabStrip.ItemsSource>
+                            <TabStrip.ItemTemplate>
+                                <DataTemplate x:DataType="m:ListTemplateCombinationModel">
+                                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="{StaticResource MediumFontSize}" />
+                                </DataTemplate>
+                            </TabStrip.ItemTemplate>
+                        </TabStrip>
                     </StackPanel>
                 </Grid>
             </StackPanel>
-            <husk:InfiniteScrollView Grid.Row="2" Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}">
+            <husk:InfiniteScrollView Grid.Row="2" Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}"
+                                     ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate,FallbackValue={x:Null}}"
+                                     ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate,FallbackValue={x:Null}}"
+                                     ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme,FallbackValue={x:Null}}">
                 <husk:InfiniteScrollView.PendingContent>
                     <StackPanel Margin="36" Spacing="6">
                         <!-- BUG: https://github.com/AvaloniaUI/Avalonia/issues/18358 -->
@@ -108,18 +164,6 @@
                         <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
-                <!-- <husk:InfiniteScrollView.ItemsPanel> -->
-                <!--     <ItemsPanelTemplate> -->
-                <!--         <VirtualizingStackPanel /> -->
-                <!--     </ItemsPanelTemplate> -->
-                <!-- </husk:InfiniteScrollView.ItemsPanel> -->
-                <husk:InfiniteScrollView.ItemTemplate>
-                    <DataTemplate x:DataType="m:ExhibitModel">
-                        <controls:ExhibitModpackButton
-                            Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewModpackCommand,FallbackValue={x:Null}}"
-                            CommandParameter="{Binding}" />
-                    </DataTemplate>
-                </husk:InfiniteScrollView.ItemTemplate>
             </husk:InfiniteScrollView>
         </Grid>
     </Panel>

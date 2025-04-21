@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Polymerium.App.Facilities;
 using Polymerium.App.Services;
 
@@ -9,7 +8,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAvalonia(this IServiceCollection services)
     {
-        services.AddSingleton<IHostedService, AvaloniaLifetime>();
+        services.AddHostedService<AvaloniaLifetime>();
         return services;
     }
 
