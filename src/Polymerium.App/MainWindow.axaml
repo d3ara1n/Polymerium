@@ -130,7 +130,7 @@
                             Height="18"
                             VerticalAlignment="Center"
                             Kind="Ghost" />
-                        <TextBlock VerticalAlignment="Center" Text="Home🎉" />
+                        <TextBlock VerticalAlignment="Center" Text="Home" />
                     </StackPanel>
                 </Button>
                 <Button
