@@ -48,6 +48,19 @@
                                 MaxWidth="450">
                         <Button Padding="12,4" Classes="Primary" HorizontalAlignment="Left"
                                 Click="SourceLinkButton_OnClick">
+                            <ToolTip.Tip>
+                                <StackPanel Margin="10,6" Spacing="2">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                        <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" FontSize="{StaticResource SmallFontSize}"/>
+                                        <fi:SymbolIcon Grid.Column="1" Symbol="Open"
+                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                       FontSize="{StaticResource SmallFontSize}" />
+                                    </Grid>
+                                    <TextBlock
+                                        Text="{Binding ReferenceUrl}" />
+                                </StackPanel>
+                            </ToolTip.Tip>
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <TextBlock
                                     Text="{Binding ReferenceLabel,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />

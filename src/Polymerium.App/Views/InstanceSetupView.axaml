@@ -113,9 +113,21 @@
                                                            FontSize="{StaticResource LargeFontSize}"
                                                            TextTrimming="CharacterEllipsis" FontWeight="Bold"
                                                            ToolTip.Tip="{Binding ProjectName,FallbackValue=Name}" />
-                                                <HyperlinkButton
-                                                    Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                                                    CommandParameter="{Binding SourceUrl}">
+                                                <HyperlinkButton NavigateUri="{Binding SourceUrl}">
+                                                    <ToolTip.Tip>
+                                                        <StackPanel Margin="10,6" Spacing="2">
+                                                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                                                <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
+                                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                           FontSize="{StaticResource SmallFontSize}" />
+                                                                <fi:SymbolIcon Grid.Column="1" Symbol="Open"
+                                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                               FontSize="{StaticResource SmallFontSize}" />
+                                                            </Grid>
+                                                            <TextBlock
+                                                                Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                                                        </StackPanel>
+                                                    </ToolTip.Tip>
                                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                                         <TextBlock
                                                             Text="{Binding Label,FallbackValue=LABEL,Converter={x:Static huskc:StringConverters.ToUpper}}" />
