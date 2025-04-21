@@ -9,7 +9,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAvalonia(this IServiceCollection services)
     {
-        services.AddSingleton<IHostLifetime, AvaloniaLifetime>();
+        services.AddSingleton<IHostedService, AvaloniaLifetime>();
         return services;
     }
 
