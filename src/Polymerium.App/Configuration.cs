@@ -10,6 +10,7 @@ public class Configuration
     public const string APPLICATION_STYLE_THEME = "Application.Style.Theme";
     public const string APPLICATION_STYLE_THEME_VARIANT = "Application.Style.ThemeVariant";
     public const string APPLICATION_LANGUAGE = "Application.Language";
+    public const string INTERFACE_MARKETPLACE_LAYOUT = "Interface.Marketplace.Layout";
     public const string RUNTIME_JAVA_HOME_8 = "Runtime.Java.Home.8";
     public const string RUNTIME_JAVA_HOME_11 = "Runtime.Java.Home.11";
     public const string RUNTIME_JAVA_HOME_16 = "Runtime.Java.Home.16";
@@ -28,6 +29,7 @@ public class Configuration
         { APPLICATION_STYLE_THEME, new object() },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
         { APPLICATION_LANGUAGE, "en_US" },
+        { INTERFACE_MARKETPLACE_LAYOUT, 0 },
         { RUNTIME_JAVA_HOME_8, string.Empty },
         { RUNTIME_JAVA_HOME_11, string.Empty },
         { RUNTIME_JAVA_HOME_16, string.Empty },
@@ -44,6 +46,7 @@ public class Configuration
     public int ApplicationStyleBackground { get; set; } = AccessDefault<int>(APPLICATION_STYLE_BACKGROUND);
     public int ApplicationStyleThemeVariant { get; set; } = AccessDefault<int>(APPLICATION_STYLE_THEME_VARIANT);
     public string ApplicationLanguage { get; set; } = AccessDefault<string>(APPLICATION_LANGUAGE);
+    public int InterfaceMarketplaceLayout { get; set; } = AccessDefault<int>(INTERFACE_MARKETPLACE_LAYOUT);
     public string RuntimeJavaHome8 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_8);
     public string RuntimeJavaHome11 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_11);
     public string RuntimeJavaHome16 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_16);
