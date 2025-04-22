@@ -10,6 +10,7 @@
                      xmlns:m="clr-namespace:Polymerium.App.Models"
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      xmlns:v="clr-namespace:Polymerium.App.Views"
+                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                      mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
                      x:Class="Polymerium.App.Views.PackageExplorerView" x:DataType="vm:PackageExplorerViewModel"
                      Padding="0" IsHeaderVisible="False" ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -128,34 +129,62 @@
             </Panel>
         </Panel>
         <husk:Divider Grid.Column="2" Grid.Row="1" />
-        <husk:InfiniteScrollView Grid.Column="2" Grid.Row="2" Padding="12" ItemsSource="{Binding Exhibits}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <husk:InfiniteScrollView.PendingContent>
-                <StackPanel Margin="36" Spacing="6">
-                    <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
-                                       HorizontalAlignment="Center" />
-                    <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
-                </StackPanel>
-            </husk:InfiniteScrollView.PendingContent>
-            <husk:InfiniteScrollView.ItemTemplate>
-                <DataTemplate x:DataType="m:ExhibitModel">
-                    <controls:ExhibitPackageButton
-                        Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand,FallbackValue={x:Null}}"
-                        CommandParameter="{Binding}" />
-                </DataTemplate>
-            </husk:InfiniteScrollView.ItemTemplate>
-            <husk:InfiniteScrollView.ItemContainerTheme>
-                <ControlTheme TargetType="ContentPresenter">
-                    <Setter Property="MaxWidth" Value="128" />
-                    <Setter Property="MinWidth" Value="90" />
-                    <Setter Property="MaxHeight" Value="168" />
-                    <Setter Property="MinHeight" Value="128" />
-                </ControlTheme>
-            </husk:InfiniteScrollView.ItemContainerTheme>
-        </husk:InfiniteScrollView>
+        <Panel Grid.Column="2" Grid.Row="2">
+            <husk:SwitchPresenter Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
+                                  TargetType="x:Boolean"
+                                  IsVisible="{Binding Exhibits.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
+                <husk:SwitchCase Value="True">
+                    <StackPanel VerticalAlignment="Center"
+                                             Spacing="8">
+                        <icons:PackIconLucide Kind="Loader" Height="{StaticResource ExtraLargeFontSize}"
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                              Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                        <TextBlock Text="Loading..." FontSize="{StaticResource LargeFontSize}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="False">
+                    <StackPanel VerticalAlignment="Center"
+                                Spacing="8">
+                        <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
+                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                              Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                        <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </husk:SwitchCase>
+            </husk:SwitchPresenter>
+            <husk:InfiniteScrollView Padding="12" ItemsSource="{Binding Exhibits}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <husk:InfiniteScrollView.PendingContent>
+                    <StackPanel Margin="36" Spacing="6">
+                        <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
+                                           HorizontalAlignment="Center" />
+                        <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
+                    </StackPanel>
+                </husk:InfiniteScrollView.PendingContent>
+                <husk:InfiniteScrollView.ItemTemplate>
+                    <DataTemplate x:DataType="m:ExhibitModel">
+                        <controls:ExhibitPackageButton
+                            Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand,FallbackValue={x:Null}}"
+                            CommandParameter="{Binding}" />
+                    </DataTemplate>
+                </husk:InfiniteScrollView.ItemTemplate>
+                <husk:InfiniteScrollView.ItemContainerTheme>
+                    <ControlTheme TargetType="ContentPresenter">
+                        <Setter Property="MaxWidth" Value="128" />
+                        <Setter Property="MinWidth" Value="90" />
+                        <Setter Property="MaxHeight" Value="168" />
+                        <Setter Property="MinHeight" Value="128" />
+                    </ControlTheme>
+                </husk:InfiniteScrollView.ItemContainerTheme>
+            </husk:InfiniteScrollView>
+        </Panel>
     </Grid>
 </controls:ScopedPage>

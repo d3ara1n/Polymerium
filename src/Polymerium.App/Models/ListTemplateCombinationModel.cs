@@ -1,8 +1,10 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Styling;
 using FluentIcons.Common;
+using IconPacks.Avalonia.Lucide;
 
 namespace Polymerium.App.Models;
 
@@ -32,16 +34,16 @@ public class ListTemplateCombinationModel : AvaloniaObject
         set => SetAndRaise(ItemsPanelTemplateProperty, ref field, value);
     }
 
-    public static readonly DirectProperty<ListTemplateCombinationModel, Symbol> IconProperty =
-        AvaloniaProperty.RegisterDirect<ListTemplateCombinationModel, Symbol>(nameof(Icon),
-                                                                              o => o.Icon,
-                                                                              (o, v) => o.Icon = v);
+    public static readonly DirectProperty<ListTemplateCombinationModel, PackIconLucideKind> IconProperty =
+        AvaloniaProperty.RegisterDirect<ListTemplateCombinationModel, PackIconLucideKind>(nameof(Icon),
+            o => o.Icon,
+            (o, v) => o.Icon = v);
 
-    public Symbol Icon
+    public PackIconLucideKind Icon
     {
         get;
         set => SetAndRaise(IconProperty, ref field, value);
-    } = Symbol.Home;
+    } = PackIconLucideKind.House;
 
 
     public static readonly DirectProperty<ListTemplateCombinationModel, ControlTheme?> ItemContainerThemeProperty =

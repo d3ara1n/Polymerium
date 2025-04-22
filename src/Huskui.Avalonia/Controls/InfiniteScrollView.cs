@@ -90,6 +90,8 @@ public class InfiniteScrollView : ItemsControl
             _pendingPresenter.IsVisible = true;
 
         PseudoClasses.Set(":loading", false);
+        PseudoClasses.Set(":finished", false);
+        PseudoClasses.Set(":idle", false);
 
         Task
            .Run(_source.FetchAsync)
@@ -98,11 +100,7 @@ public class InfiniteScrollView : ItemsControl
                 Dispatcher.UIThread.Post(() =>
                 {
                     PseudoClasses.Set(":loading", false);
-
-                    if (!_source.HasNext)
-                        PseudoClasses.Set(":finished", true);
-                    else
-                        PseudoClasses.Set(":idle", true);
+                    PseudoClasses.Set(!_source.HasNext ? ":finished" : ":idle", true);
                 });
                 if (t.Exception != null)
                     Debug.WriteLine(t.Exception);
