@@ -10,6 +10,7 @@
            xmlns:m="using:Polymerium.App.Models"
            xmlns:controls="clr-namespace:Polymerium.App.Controls"
            xmlns:collection="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+           xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
            ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:MarketplaceSearchViewModel" Padding="0"
@@ -94,14 +95,17 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
                         <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
-                            <TextBlock Text="Clear Filters" />
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <fi:SymbolIcon Symbol="FilterDismiss" FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Text="Clear Filters" />
+                            </StackPanel>
                         </HyperlinkButton>
                         <TabStrip Name="LayoutSelector" SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}"
                                   Theme="{StaticResource SegmentedTabStripTheme}">
                             <TabStrip.ItemsSource>
                                 <collection:List x:TypeArguments="m:ListTemplateCombinationModel">
                                     <m:ListTemplateCombinationModel
-                                        Icon="List">
+                                        Icon="LayoutList">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:ExhibitModel">
                                                 <controls:ExhibitModpackButton
@@ -112,12 +116,12 @@
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
-                                                <StackPanel Margin="16" Spacing="8" />
+                                                <StackPanel Margin="16,0" Spacing="8" />
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                     </m:ListTemplateCombinationModel>
                                     <m:ListTemplateCombinationModel
-                                        Icon="Grid">
+                                        Icon="LayoutGrid">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:ExhibitModel">
                                                 <controls:ExhibitModpackButton
@@ -128,7 +132,7 @@
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
-                                                <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" Margin="16" />
+                                                <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" Margin="16,0" />
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                         <m:ListTemplateCombinationModel.ItemContainerTheme>
@@ -144,27 +148,59 @@
                             </TabStrip.ItemsSource>
                             <TabStrip.ItemTemplate>
                                 <DataTemplate x:DataType="m:ListTemplateCombinationModel">
-                                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="{StaticResource MediumFontSize}" />
+                                    <icons:PackIconLucide Kind="{Binding Icon}"
+                                                          Height="{StaticResource MediumFontSize}"
+                                                          Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </DataTemplate>
                             </TabStrip.ItemTemplate>
                         </TabStrip>
                     </StackPanel>
                 </Grid>
             </StackPanel>
-            <husk:InfiniteScrollView Grid.Row="2" Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}"
-                                     ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate,FallbackValue={x:Null}}"
-                                     ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate,FallbackValue={x:Null}}"
-                                     ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme,FallbackValue={x:Null}}">
-                <husk:InfiniteScrollView.PendingContent>
-                    <StackPanel Margin="36" Spacing="6">
-                        <!-- BUG: https://github.com/AvaloniaUI/Avalonia/issues/18358 -->
-                        <!-- 由于这个问题，当全屏上一层 Blur 时会触发全屏刷新 -->
-                        <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
-                                           HorizontalAlignment="Center" />
-                        <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
-                    </StackPanel>
-                </husk:InfiniteScrollView.PendingContent>
-            </husk:InfiniteScrollView>
+            <Panel Grid.Row="2">
+                <husk:SwitchPresenter Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
+                                      TargetType="x:Boolean"
+                                      IsVisible="{Binding Exhibits.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
+                    <husk:SwitchCase Value="True">
+                        <StackPanel VerticalAlignment="Center"
+                                    Spacing="8">
+                            <icons:PackIconLucide Kind="Loader" Height="{StaticResource ExtraLargeFontSize}"
+                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                  Width="{StaticResource ExtraLargeFontSize}"
+                                                  HorizontalAlignment="Center" />
+                            <TextBlock Text="Loading..." FontSize="{StaticResource LargeFontSize}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="False">
+                        <StackPanel VerticalAlignment="Center"
+                                    Spacing="8">
+                            <icons:PackIconLucide Kind="Package2" Height="{StaticResource ExtraLargeFontSize}"
+                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                  Width="{StaticResource ExtraLargeFontSize}"
+                                                  HorizontalAlignment="Center" />
+                            <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </husk:SwitchCase>
+                </husk:SwitchPresenter>
+                <husk:InfiniteScrollView Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}"
+                                         ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate,FallbackValue={x:Null}}"
+                                         ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate,FallbackValue={x:Null}}"
+                                         ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme,FallbackValue={x:Null}}">
+                    <husk:InfiniteScrollView.PendingContent>
+                        <StackPanel Margin="36" Spacing="6">
+                            <!-- BUG: https://github.com/AvaloniaUI/Avalonia/issues/18358 -->
+                            <!-- 由于这个问题，当全屏上一层 Blur 时会触发全屏刷新 -->
+                            <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
+                                               HorizontalAlignment="Center" />
+                            <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </husk:InfiniteScrollView.PendingContent>
+                </husk:InfiniteScrollView>
+            </Panel>
         </Grid>
     </Panel>
 
