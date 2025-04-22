@@ -179,7 +179,7 @@
                             <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
                         </Button>
                         <Button Grid.Column="1" Classes="Primary">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
                                 <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
                                 <TextBlock Text="Add to the instance" />
                             </StackPanel>
