@@ -31,7 +31,8 @@
                             <StackPanel Margin="10,6" Spacing="2">
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
                                     <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
-                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               FontSize="{StaticResource SmallFontSize}" />
                                     <fi:SymbolIcon Grid.Column="1" Symbol="Open"
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                    FontSize="{StaticResource MediumFontSize}" />

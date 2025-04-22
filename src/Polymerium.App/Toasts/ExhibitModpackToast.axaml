@@ -52,7 +52,8 @@
                                 <StackPanel Margin="10,6" Spacing="2">
                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
                                         <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" FontSize="{StaticResource SmallFontSize}"/>
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                   FontSize="{StaticResource SmallFontSize}" />
                                         <fi:SymbolIcon Grid.Column="1" Symbol="Open"
                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                        FontSize="{StaticResource SmallFontSize}" />
@@ -106,9 +107,26 @@
                                 </ComboBox.SelectionBoxItemTemplate>
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="m:ExhibitVersionModel">
-                                        <StackPanel>
+                                        <StackPanel Spacing="4">
                                             <TextBlock
                                                 Text="{Binding VersionName,FallbackValue=Display}" />
+                                            <Grid ColumnDefinitions="Auto,Auto,Auto,*"
+                                                  ColumnSpacing="4">
+                                                <fi:SymbolIcon Grid.Column="0" Symbol="Flag"
+                                                               FontSize="{StaticResource MediumFontSize}"
+                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding CompatibleLoaders}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <fi:SymbolIcon Grid.Column="2" Symbol="Branch"
+                                                               FontSize="{StaticResource MediumFontSize}"
+                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                <TextBlock Grid.Column="3"
+                                                           Text="{Binding CompatibleVersions}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                            </Grid>
                                             <DockPanel>
                                                 <StackPanel Orientation="Horizontal"
                                                             DockPanel.Dock="Right">
