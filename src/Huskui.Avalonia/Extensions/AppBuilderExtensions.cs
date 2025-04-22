@@ -20,6 +20,9 @@ public static class AppBuilderExtensions
                 fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:ChillRoundM"),
                                                                          new
                                                                              Uri("avares://Huskui.Avalonia/Assets/Fonts/ChillRoundM")));
+                fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:BaiJamjuree"),
+                                                                         new
+                                                                             Uri("avares://Huskui.Avalonia/Assets/Fonts/BaiJamjuree")));
             })
            .With(new FontManagerOptions
             {

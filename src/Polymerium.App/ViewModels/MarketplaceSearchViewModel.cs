@@ -31,13 +31,18 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         InstanceManager instanceManager,
         NotificationService notificationService,
         OverlayService overlayService,
-        DataService dataService)
+        DataService dataService,
+        ConfigurationService configurationService)
     {
         _agent = agent;
         _instanceManager = instanceManager;
         _notificationService = notificationService;
         _overlayService = overlayService;
         _dataService = dataService;
+        _configurationService = configurationService;
+
+        LayoutIndex = configurationService.Value.InterfaceMarketplaceLayout;
+        
         // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
         Repositories = r;
@@ -100,11 +105,20 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     private readonly NotificationService _notificationService;
     private readonly OverlayService _overlayService;
     private readonly DataService _dataService;
+    private readonly ConfigurationService _configurationService;
 
     #endregion
 
     #region Reactive
 
+    [ObservableProperty]
+    public partial int LayoutIndex { get; set; }
+
+    partial void OnLayoutIndexChanged(int value)
+    {
+        _configurationService.Value.InterfaceMarketplaceLayout = value;
+    }
+    
     [ObservableProperty]
     public partial RepositoryBasicModel SelectedRepository { get; set; }
 

@@ -132,7 +132,7 @@ public class FlexWrapPanel : Panel
 
                 child.Arrange(new Rect(usedWidth,
                                        totalHeight + RowSpacing * row,
-                                       UseLayoutRounding ? double.Floor(width) : width,
+                                       UseLayoutRounding ? double.Ceiling(width) : width,
                                        height));
                 usedWidth += width + ColumnSpacing;
             }
