@@ -9,6 +9,7 @@
            xmlns:v="using:Polymerium.App.Views"
            xmlns:m="using:Polymerium.App.Models"
            xmlns:controls="clr-namespace:Polymerium.App.Controls"
+           xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
            ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:MarketplaceSearchViewModel" Padding="0"
@@ -98,29 +99,57 @@
                     </StackPanel>
                 </Grid>
             </StackPanel>
-            <husk:InfiniteScrollView Grid.Row="2" Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}">
-                <husk:InfiniteScrollView.PendingContent>
-                    <StackPanel Margin="36" Spacing="6">
-                        <!-- BUG: https://github.com/AvaloniaUI/Avalonia/issues/18358 -->
-                        <!-- 由于这个问题，当全屏上一层 Blur 时会触发全屏刷新 -->
-                        <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
+            <Panel Grid.Row="2">
+                <husk:SwitchPresenter Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
+                                          TargetType="x:Boolean"
+                                          IsVisible="{Binding Exhibits.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
+                        <husk:SwitchCase Value="True">
+                            <StackPanel VerticalAlignment="Center"
+                                        Spacing="8">
+                                <icons:PackIconLucide Kind="Package2" Height="{StaticResource ExtraLargeFontSize}"
+                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                      Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                                <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            HorizontalAlignment="Center" />
-                        <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
-                    </StackPanel>
-                </husk:InfiniteScrollView.PendingContent>
-                <!-- <husk:InfiniteScrollView.ItemsPanel> -->
-                <!--     <ItemsPanelTemplate> -->
-                <!--         <VirtualizingStackPanel /> -->
-                <!--     </ItemsPanelTemplate> -->
-                <!-- </husk:InfiniteScrollView.ItemsPanel> -->
-                <husk:InfiniteScrollView.ItemTemplate>
-                    <DataTemplate x:DataType="m:ExhibitModel">
-                        <controls:ExhibitModpackButton
-                            Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewModpackCommand,FallbackValue={x:Null}}"
-                            CommandParameter="{Binding}" />
-                    </DataTemplate>
-                </husk:InfiniteScrollView.ItemTemplate>
-            </husk:InfiniteScrollView>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="False">
+                            <StackPanel VerticalAlignment="Center"
+                                        Spacing="8">
+                                <icons:PackIconLucide Kind="Loader" Height="{StaticResource ExtraLargeFontSize}"
+                                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                      Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                                <TextBlock Text="Loading..." FontSize="{StaticResource LargeFontSize}"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </husk:SwitchCase>
+                    </husk:SwitchPresenter>
+                <husk:InfiniteScrollView Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}">
+                    <husk:InfiniteScrollView.PendingContent>
+                        <StackPanel Margin="36" Spacing="6">
+                            <!-- BUG: https://github.com/AvaloniaUI/Avalonia/issues/18358 -->
+                            <!-- 由于这个问题，当全屏上一层 Blur 时会触发全屏刷新 -->
+                            <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
+                                               HorizontalAlignment="Center" />
+                            <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </husk:InfiniteScrollView.PendingContent>
+                    <!-- <husk:InfiniteScrollView.ItemsPanel> -->
+                    <!--     <ItemsPanelTemplate> -->
+                    <!--         <VirtualizingStackPanel /> -->
+                    <!--     </ItemsPanelTemplate> -->
+                    <!-- </husk:InfiniteScrollView.ItemsPanel> -->
+                    <husk:InfiniteScrollView.ItemTemplate>
+                        <DataTemplate x:DataType="m:ExhibitModel">
+                            <controls:ExhibitModpackButton
+                                Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).ViewModpackCommand,FallbackValue={x:Null}}"
+                                CommandParameter="{Binding}" />
+                        </DataTemplate>
+                    </husk:InfiniteScrollView.ItemTemplate>
+                </husk:InfiniteScrollView>
+            </Panel>
         </Grid>
     </Panel>
 
