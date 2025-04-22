@@ -105,7 +105,7 @@
                             <TabStrip.ItemsSource>
                                 <collection:List x:TypeArguments="m:ListTemplateCombinationModel">
                                     <m:ListTemplateCombinationModel
-                                        Icon="List">
+                                        Icon="LayoutList">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:ExhibitModel">
                                                 <controls:ExhibitModpackButton
@@ -116,12 +116,12 @@
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
-                                                <StackPanel Margin="16" Spacing="8" />
+                                                <StackPanel Margin="16,0" Spacing="8" />
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                     </m:ListTemplateCombinationModel>
                                     <m:ListTemplateCombinationModel
-                                        Icon="Grid">
+                                        Icon="LayoutGrid">
                                         <m:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="m:ExhibitModel">
                                                 <controls:ExhibitModpackButton
@@ -132,7 +132,7 @@
                                         </m:ListTemplateCombinationModel.ItemTemplate>
                                         <m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                             <ItemsPanelTemplate>
-                                                <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" Margin="16" />
+                                                <husk:FlexWrapPanel ColumnSpacing="8" RowSpacing="8" Margin="16,0" />
                                             </ItemsPanelTemplate>
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                         <m:ListTemplateCombinationModel.ItemContainerTheme>
@@ -148,7 +148,9 @@
                             </TabStrip.ItemsSource>
                             <TabStrip.ItemTemplate>
                                 <DataTemplate x:DataType="m:ListTemplateCombinationModel">
-                                    <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="{StaticResource MediumFontSize}" />
+                                    <icons:PackIconLucide Kind="{Binding Icon}"
+                                                          Height="{StaticResource MediumFontSize}"
+                                                          Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </DataTemplate>
                             </TabStrip.ItemTemplate>
                         </TabStrip>
