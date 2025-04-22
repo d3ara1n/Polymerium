@@ -135,11 +135,11 @@
                                   IsVisible="{Binding Exhibits.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
                 <husk:SwitchCase Value="True">
                     <StackPanel VerticalAlignment="Center"
-                                Spacing="8">
-                        <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
+                                             Spacing="8">
+                        <icons:PackIconLucide Kind="Loader" Height="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                               Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                        <TextBlock Text="Loading..." FontSize="{StaticResource LargeFontSize}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -147,10 +147,10 @@
                 <husk:SwitchCase Value="False">
                     <StackPanel VerticalAlignment="Center"
                                 Spacing="8">
-                        <icons:PackIconLucide Kind="Loader" Height="{StaticResource ExtraLargeFontSize}"
+                        <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                               Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="Loading..." FontSize="{StaticResource LargeFontSize}"
+                        <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
