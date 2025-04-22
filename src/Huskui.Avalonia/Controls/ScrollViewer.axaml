@@ -30,5 +30,9 @@
                 </Panel>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^[AllowAutoHide=True]:not(:pointerover) /template/ ScrollBar:not(:focus-within)">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

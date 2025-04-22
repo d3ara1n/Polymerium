@@ -24,11 +24,6 @@ namespace Polymerium.App.ViewModels;
 
 public partial class PackageExplorerViewModel : ViewModelBase
 {
-    // 在赋值时会产生副作用，因此该警告不准确
-    // ReSharper disable once MemberInitializerValueIgnored
-    // ReSharper disable once FieldCanBeMadeReadOnly.Local
-    private bool _initSafe = true;
-
     public PackageExplorerViewModel(
         ViewBag bag,
         RepositoryAgent agent,
@@ -65,7 +60,6 @@ public partial class PackageExplorerViewModel : ViewModelBase
         Repositories = r;
         SelectedRepository = r.First();
         IsFilterEnabled = true;
-        _initSafe = false;
     }
 
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
@@ -94,13 +88,6 @@ public partial class PackageExplorerViewModel : ViewModelBase
     [ObservableProperty]
     public partial Filter Filter { get; set; } = Filter.Empty;
 
-    partial void OnFilterChanged(Filter value)
-    {
-        if (_initSafe)
-            return;
-        _ = SearchAsync();
-    }
-
     [ObservableProperty]
     public partial string QueryText { get; set; } = string.Empty;
 
@@ -128,6 +115,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
     {
         if (value != null)
             Filter = Filter with { Kind = value };
+        _ = SearchAsync();
     }
 
     [ObservableProperty]
