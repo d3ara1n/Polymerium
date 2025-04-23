@@ -24,6 +24,7 @@
         <Setter Property="CanGoBack" Value="{Binding $parent[local:Frame].CanGoBack, Mode=OneWay}" />
         <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
         <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlFontWeight}" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="Template">

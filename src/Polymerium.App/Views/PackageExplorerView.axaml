@@ -15,30 +15,56 @@
                      x:Class="Polymerium.App.Views.PackageExplorerView" x:DataType="vm:PackageExplorerViewModel"
                      Padding="0" IsHeaderVisible="False" ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="Auto,Auto,*">
-        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" RowDefinitions="Auto,*" Margin="12" RowSpacing="24">
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" RowDefinitions="Auto,*" Margin="12" RowSpacing="12">
             <Border Grid.Row="0" Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
-                    Background="{StaticResource LayerBackgroundBrush}">
+                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
                 <StackPanel Orientation="Horizontal" Spacing="6">
-                    <fi:SymbolIcon Symbol="BoxArrowLeft" FontSize="{StaticResource MediumFontSize}" />
+                    <fi:SymbolIcon Symbol="BoxMultipleArrowLeft" FontSize="{StaticResource LargeFontSize}" />
                     <TextBlock Text="Pending" />
                 </StackPanel>
             </Border>
-            <ItemsControl Grid.Row="1">
-                <Border Padding="8" CornerRadius="{StaticResource LargeCornerRadius}"
-                        Background="{StaticResource CardBackgroundBrush}"
-                        BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1">
-                    <Border Height="36" Width="36">
-                        <Border.Background>
-                            <ImageBrush Source="/Assets/Icons/Package.png" />
-                        </Border.Background>
-                    </Border>
-                </Border>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Spacing="8" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            <!-- <ItemsControl Grid.Row="1"> -->
+            <!--     <Border Padding="8" CornerRadius="{StaticResource LargeCornerRadius}" -->
+            <!--             Background="{StaticResource CardBackgroundBrush}" -->
+            <!--             BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"> -->
+            <!--         <Border Height="36" Width="36"> -->
+            <!--             <Border.Background> -->
+            <!--                 <ImageBrush Source="/Assets/Icons/Package.png" /> -->
+            <!--             </Border.Background> -->
+            <!--         </Border> -->
+            <!--     </Border> -->
+            <!--     <ItemsControl.ItemsPanel> -->
+            <!--         <ItemsPanelTemplate> -->
+            <!--             <StackPanel Spacing="8" /> -->
+            <!--         </ItemsPanelTemplate> -->
+            <!--     </ItemsControl.ItemsPanel> -->
+            <!-- </ItemsControl> -->
+            <StackPanel Grid.Row="1" Spacing="8">
+                <husk:Divider>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="Add" />
+                    </StackPanel>
+                </husk:Divider>
+                <Panel>
+                    <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" />
+                </Panel>
+                <husk:Divider>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="Modify" />
+                    </StackPanel>
+                </husk:Divider>
+                <Panel>
+                    <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" />
+                </Panel>
+                <husk:Divider>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="Remove" />
+                    </StackPanel>
+                </husk:Divider>
+                <Panel>
+                    <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" />
+                </Panel>
+            </StackPanel>
         </Grid>
         <husk:Divider Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical" />
         <Panel Grid.Column="2" Grid.Row="0" ClipToBounds="True">
@@ -135,7 +161,7 @@
                                   IsVisible="{Binding Exhibits.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
                 <husk:SwitchCase Value="True">
                     <StackPanel VerticalAlignment="Center"
-                                             Spacing="8">
+                                Spacing="8">
                         <icons:PackIconLucide Kind="Loader" Height="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                               Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />

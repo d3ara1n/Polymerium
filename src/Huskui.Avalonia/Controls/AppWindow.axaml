@@ -9,7 +9,7 @@
         <Setter Property="TransparencyBackgroundFallback" Value="{StaticResource WindowBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlFontWeight}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>

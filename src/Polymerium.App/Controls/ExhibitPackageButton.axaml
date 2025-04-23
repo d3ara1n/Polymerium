@@ -4,7 +4,9 @@
                     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                     xmlns:m="clr-namespace:Polymerium.App.Models"
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia">
+                    xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+                    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <ControlTheme x:Key="{x:Type controls:ExhibitPackageButton}" TargetType="controls:ExhibitPackageButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
@@ -77,14 +79,82 @@
                         </Grid>
                     </ToolTip.Tip>
                     <Grid RowDefinitions="Auto,*">
-                        <Border Grid.Row="0" Padding="12">
-                            <Border Height="64" Width="64"
-                                    CornerRadius="{StaticResource SmallCornerRadius}" HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                                <Border.Background>
-                                    <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
-                                </Border.Background>
-                            </Border>
+                        <Border Grid.Row="0">
+                            <Panel>
+                                <Border Height="64" Width="64" Margin="12"
+                                        CornerRadius="{StaticResource SmallCornerRadius}" HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                    <Border.Background>
+                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                    </Border.Background>
+                                </Border>
+                                <husk:SwitchPresenter
+                                    RenderTransform="translateY(8px)" HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom" Value="{Binding State}"
+                                    TargetType="m:ExhibitPackageState">
+                                    <husk:SwitchCase Value="{x:Null}" />
+                                    <husk:SwitchCase Value="Editable">
+                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <husk:Tag Classes="Success Small">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <fi:SymbolIcon Symbol="Checkmark"
+                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
+                                                    <TextBlock Text="Installed" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </husk:Tag>
+                                        </Border>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Locked">
+                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <husk:Tag Classes="Success Small">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <fi:SymbolIcon Symbol="LockClosed"
+                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
+                                                    <TextBlock Text="Locked" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </husk:Tag>
+                                        </Border>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Adding">
+                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <husk:Tag Classes="Warning Small">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <fi:SymbolIcon Symbol="Add"
+                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
+                                                    <TextBlock Text="Adding" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </husk:Tag>
+                                        </Border>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Modifying">
+                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <husk:Tag Classes="Warning Small">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <fi:SymbolIcon Symbol="Pen"
+                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
+                                                    <TextBlock Text="Modifying" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </husk:Tag>
+                                        </Border>
+                                    </husk:SwitchCase>
+                                    <husk:SwitchCase Value="Editable">
+                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <husk:Tag Classes="Danger Small">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <fi:SymbolIcon Symbol="Dismiss"
+                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
+                                                    <TextBlock Text="Removing" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </husk:Tag>
+                                        </Border>
+                                    </husk:SwitchCase>
+                                </husk:SwitchPresenter>
+                            </Panel>
                         </Border>
                         <Border Grid.Row="1" Padding="8"
                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"

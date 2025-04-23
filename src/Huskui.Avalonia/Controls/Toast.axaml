@@ -11,6 +11,7 @@
         <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
         <Setter Property="Padding" Value="{StaticResource ToastContentMargin}" />
         <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlFontWeight}" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="CornerRadius"
                 Value="{Binding Source={StaticResource ExtraExtraLargeCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}" />

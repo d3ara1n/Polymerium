@@ -212,6 +212,32 @@
                             </husk:ProgressRing.Styles>
                         </husk:ProgressRing>
                         <husk:ProgressRing x:Name="Zing" Value="50" Height="64" Width="64" />
+                        <husk:ProgressRing TrackPadding="6" TrackStrokeWidth="4"
+                                           Theme="{StaticResource SolidProgressRingTheme}" Value="50" Height="64"
+                                           Width="64">
+                            <husk:ProgressRing.Styles>
+                                <Style Selector="husk|ProgressRing">
+                                    <Style.Animations>
+                                        <Animation Duration="0:0:3" IterationCount="Infinite"
+                                                   Easing="QuadraticEaseOut">
+                                            <KeyFrame Cue="0%">
+                                                <Setter Property="Value" Value="0" />
+                                            </KeyFrame>
+                                            <KeyFrame Cue="50%">
+                                                <Setter Property="Value" Value="100" />
+                                            </KeyFrame>
+                                            <KeyFrame Cue="100%">
+                                                <Setter Property="Value" Value="0" />
+                                            </KeyFrame>
+                                        </Animation>
+                                    </Style.Animations>
+                                </Style>
+                            </husk:ProgressRing.Styles>
+                        </husk:ProgressRing>
+                        <husk:ProgressRing TrackPadding="6" TrackStrokeWidth="4"
+                                           Theme="{StaticResource SolidProgressRingTheme}" Value="50" Height="64"
+                                           Width="64" IsIndeterminate="True" />
+                        <Arc Height="64" Width="64" Fill="Yellow" SweepAngle="270"  StartAngle="-90"/>
                     </StackPanel>
                     <ListBox>
                         <ListBoxItem Content="这是一个 1" />

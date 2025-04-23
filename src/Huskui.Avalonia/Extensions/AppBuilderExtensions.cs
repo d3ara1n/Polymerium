@@ -26,7 +26,7 @@ public static class AppBuilderExtensions
             })
            .With(new FontManagerOptions
             {
-                DefaultFamilyName = "fonts:Quicksand#Quicksand",
+                DefaultFamilyName = "fonts:BaiJamjuree#Bai Jamjuree",
                 FontFallbacks =
                 [
                     new FontFallback { FontFamily = "fonts:ChillRoundM#寒蝉半圆体" },

@@ -8,6 +8,7 @@
 
     <ControlTheme x:Key="{x:Type local:Subpage}" TargetType="local:Subpage">
         <Setter Property="Padding" Value="12" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlFontWeight}" />
         <Setter Property="CanGoBack" Value="{Binding $parent[husk:Frame].CanGoBack, Mode=OneWay}" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />

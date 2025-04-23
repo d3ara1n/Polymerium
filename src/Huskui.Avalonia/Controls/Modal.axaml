@@ -9,6 +9,7 @@
         <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
         <Setter Property="Padding" Value="{StaticResource ModalContentMargin}" />
         <Setter Property="Margin" Value="24" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlFontWeight}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border ClipToBounds="True" Background="{TemplateBinding Background}"
