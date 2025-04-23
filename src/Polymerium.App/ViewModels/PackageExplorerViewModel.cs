@@ -146,7 +146,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
                 try
                 {
-                    // var profile = _profileManager.GetImmutable(Basic.Key);
+                    var profile = _profileManager.GetImmutable(Basic.Key);
                     // TODO: 具有三种状态
                     //  锁定（存在于构建中但锁定而无法操作）
                     //  已安装（存在于构建中且可以操作）
@@ -156,17 +156,30 @@ public partial class PackageExplorerViewModel : ViewModelBase
 
                     var rv = await handle.FetchAsync();
                     var tasks = rv
-                               .Select(x => new ExhibitModel(x.Label,
-                                                             x.Namespace,
-                                                             x.Pid,
-                                                             x.Name,
-                                                             x.Summary,
-                                                             x.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
-                                                             x.Author,
-                                                             x.Tags,
-                                                             x.UpdatedAt,
-                                                             x.DownloadCount,
-                                                             x.Reference))
+                               .Select(x =>
+                                {
+                                    var model = new ExhibitModel(x.Label,
+                                                                 x.Namespace,
+                                                                 x.Pid,
+                                                                 x.Name,
+                                                                 x.Summary,
+                                                                 x.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                                 x.Author,
+                                                                 x.Tags,
+                                                                 x.UpdatedAt,
+                                                                 x.DownloadCount,
+                                                                 x.Reference);
+                                    var installed =
+                                        profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Purl,
+                                                                                  x.Label,
+                                                                                  x.Namespace,
+                                                                                  x.Pid));
+                                    if (installed is not null)
+                                        model.State = installed.Source == null || installed.Source != Basic.Source
+                                                          ? ExhibitPackageState.Editable
+                                                          : ExhibitPackageState.Locked;
+                                    return model;
+                                })
                                .ToArray();
                     return tasks;
                 }

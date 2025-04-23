@@ -12,6 +12,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="PrimaryText" Value="Confirm" />
         <Setter Property="SecondaryText" Value="Cancel" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlFontWeight}" />
         <Setter Property="Margin" Value="24" />
         <Setter Property="Template">
             <ControlTemplate>

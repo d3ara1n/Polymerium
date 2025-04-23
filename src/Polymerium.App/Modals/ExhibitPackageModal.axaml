@@ -107,7 +107,7 @@
                                                             <TextBlock Text="Version:"
                                                                        FontSize="{StaticResource SmallFontSize}"
                                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                                            <TextBlock Text="{Binding VersionName}" />
+                                                            <TextBlock Text="{Binding VersionName}" TextTrimming="CharacterEllipsis" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </ComboBox.SelectionBoxItemTemplate>
@@ -189,16 +189,22 @@
                     </Grid>
                 </Grid>
             </Border>
-            <Border Grid.Column="0" Padding="{StaticResource ModalContentMargin}"
+            <Border Grid.Column="0" Padding="12"
                     Background="{StaticResource OverlaySolidBackgroundBrush}"
                     BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                     CornerRadius="{StaticResource MediumCornerRadius}">
-                <TabControl Theme="{StaticResource SolidTabControlTheme}">
+                <TabControl Theme="{StaticResource SolidTabControlTheme}" Padding="6">
                     <TabControl.ItemContainerTheme>
                         <ControlTheme TargetType="TabItem" BasedOn="{StaticResource SolidTabItemTheme}">
+                            <Setter Property="Margin" Value="0"/>
                             <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
                         </ControlTheme>
                     </TabControl.ItemContainerTheme>
+                    <TabControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="4" />
+                        </ItemsPanelTemplate>
+                    </TabControl.ItemsPanel>
                     <TabItem ToolTip.Tip="About">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
@@ -216,6 +222,9 @@
                                                       Width="{StaticResource MediumFontSize}"
                                                       VerticalAlignment="Center" />
                                 <TextBlock Text="Dependencies" VerticalAlignment="Center" />
+                                <husk:Tag Classes="Status Primary">
+                                    <TextBlock Text="15" />
+                                </husk:Tag>
                             </StackPanel>
                         </TabItem.Header>
                     </TabItem>
@@ -229,7 +238,6 @@
                             </StackPanel>
                         </TabItem.Header>
                     </TabItem>
-
                 </TabControl>
             </Border>
         </Grid>

@@ -7,7 +7,7 @@
             <TabControl Grid.Column="0" Margin="24" TabStripPlacement="Top">
                 <TabItem>
                     <TabItem.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="4" >
+                        <StackPanel Orientation="Horizontal" Spacing="4">
                             <fi:SymbolIcon Symbol="Info" FontSize="{StaticResource MediumFontSize}" />
                             <TextBlock Text="Fancy" />
                         </StackPanel>
@@ -63,7 +63,19 @@
                                                 ItemsPanel="{TemplateBinding ItemsPanel}" />
                             </ScrollViewer>
                         </Panel>
-                        <ContentPresenter
+                        <!-- <ContentPresenter -->
+                        <!--     Name="PART_ContentPresenter" -->
+                        <!--     Padding="{TemplateBinding Padding}" -->
+                        <!--     Background="{TemplateBinding Background}" -->
+                        <!--     BackgroundSizing="{TemplateBinding BackgroundSizing}" -->
+                        <!--     BorderBrush="{TemplateBinding BorderBrush}" -->
+                        <!--     BorderThickness="{TemplateBinding BorderThickness}" -->
+                        <!--     CornerRadius="{TemplateBinding CornerRadius}" -->
+                        <!--     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" -->
+                        <!--     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" -->
+                        <!--     Content="{TemplateBinding SelectedContent}" -->
+                        <!--     ContentTemplate="{TemplateBinding SelectedContentTemplate}" /> -->
+                        <TransitioningContentControl
                             Name="PART_ContentPresenter"
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
@@ -443,11 +455,11 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:selected /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Border#PART_Indicator">
@@ -500,10 +512,10 @@
         </Style>
 
         <Style Selector="^.Primary:pointerover /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
         </Style>
         <Style Selector="^.Primary:selected /template/ Border#PART_Indicator">
-            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

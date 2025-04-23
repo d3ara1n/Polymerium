@@ -58,10 +58,11 @@
                                         <husk:SwitchPresenter Value="{Binding IsRecommended}" TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock Text="{Binding Version}"
-                                                           Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                                                           Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                           VerticalAlignment="Center" />
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
-                                                <TextBlock Text="{Binding Version}" />
+                                                <TextBlock Text="{Binding Version}" VerticalAlignment="Center" />
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
                                     </DataTemplate>

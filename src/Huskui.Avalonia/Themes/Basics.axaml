@@ -1,6 +1,10 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="using:System">
+    
+    <!-- Typography -->
+    <FontWeight x:Key="ControlFontWeight">Medium</FontWeight>
+
     <!-- Animations -->
     <sys:TimeSpan x:Key="ControlInstantAnimationDuration">0:0:0.088</sys:TimeSpan>
     <sys:TimeSpan x:Key="ControlFastestAnimationDuration">0:0:0.106</sys:TimeSpan>
