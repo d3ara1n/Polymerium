@@ -39,8 +39,7 @@ public class DataService(
         GetOrCreate($"bitmap:{url.AbsoluteUri}:{widthDesired}",
                     async () =>
                     {
-                        using var client = clientFactory.CreateClient();
-                        var bytes = await client.GetByteArrayAsync(url);
+                        var bytes = await agent.SeeAsync(url);
                         return Bitmap.DecodeToWidth(new MemoryStream(bytes), 64);
                     });
 
