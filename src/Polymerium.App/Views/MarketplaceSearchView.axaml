@@ -150,7 +150,8 @@
                                 <DataTemplate x:DataType="m:ListTemplateCombinationModel">
                                     <icons:PackIconLucide Kind="{Binding Icon}"
                                                           Height="{StaticResource MediumFontSize}"
-                                                          Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                          Width="{StaticResource MediumFontSize}"
+                                                          VerticalAlignment="Center" HorizontalAlignment="Center" />
                                 </DataTemplate>
                             </TabStrip.ItemTemplate>
                         </TabStrip>
@@ -160,7 +161,7 @@
             <Panel Grid.Row="2">
                 <husk:SwitchPresenter Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
                                       TargetType="x:Boolean"
-                                      IsVisible="{Binding Exhibits.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
+                                      IsVisible="{Binding Exhibits.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
                     <husk:SwitchCase Value="True">
                         <StackPanel VerticalAlignment="Center"
                                     Spacing="8">
@@ -194,8 +195,9 @@
                         <StackPanel Margin="36" Spacing="6">
                             <!-- BUG: https://github.com/AvaloniaUI/Avalonia/issues/18358 -->
                             <!-- 由于这个问题，当全屏上一层 Blur 时会触发全屏刷新 -->
-                            <husk:ProgressRing Width="20" Height="20" StrokeWidth="3" IsIndeterminate="True"
-                                               HorizontalAlignment="Center" />
+                            <husk:ProgressRing Width="20" Height="20" StrokeWidth="3"
+                                               IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
+                                               HorizontalAlignment="Center" ShowProgressText="False" />
                             <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
                         </StackPanel>
                     </husk:InfiniteScrollView.PendingContent>
