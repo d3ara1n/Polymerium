@@ -26,11 +26,11 @@
                         <Button>
                             <Button.Flyout>
                                 <Flyout>
-                                    <StackPanel Spacing="8" Width="320" MaxHeight="360" Margin="12">
+                                    <StackPanel Spacing="8" MinWidth="320" MaxWidth="520" MaxHeight="360" Margin="12">
                                         <TextBlock Text="Filter" FontSize="{StaticResource SmallFontSize}"
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                    VerticalAlignment="Center" />
-                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                             <TextBlock Grid.Column="0" Text="Status" VerticalAlignment="Bottom" />
                                             <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}">
                                                 <TabStripItem Content="All" />
@@ -39,7 +39,7 @@
                                             </TabStrip>
                                         </Grid>
                                         <husk:Divider />
-                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                             <TextBlock Grid.Column="0" Text="Source" VerticalAlignment="Bottom" />
                                             <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}">
                                                 <TabStripItem Content="All" />
@@ -48,7 +48,18 @@
                                             </TabStrip>
                                         </Grid>
                                         <husk:Divider />
-                                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                                            <TextBlock Grid.Column="0" Text="Type" VerticalAlignment="Bottom" />
+                                            <TabStrip Grid.Column=" 1" Theme="{StaticResource SegmentedTabStripTheme}">
+                                                <TabStripItem Content="All" />
+                                                <TabStripItem Content="Mod" />
+                                                <TabStripItem Content="ResourcePack" />
+                                                <TabStripItem Content="ShaderPack" />
+                                                <TabStripItem Content="DataPack" />
+                                            </TabStrip>
+                                        </Grid>
+                                        <husk:Divider />
+                                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="24">
                                             <TextBlock Grid.Column="0" Text="Tags" VerticalAlignment="Center"
                                                        FontSize="{StaticResource SmallFontSize}"
                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />

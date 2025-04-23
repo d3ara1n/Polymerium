@@ -101,6 +101,9 @@ public class InfiniteScrollView : ItemsControl
                 {
                     PseudoClasses.Set(":loading", false);
                     PseudoClasses.Set(!_source.HasNext ? ":finished" : ":idle", true);
+
+                    if (_scrollViewer != null)
+                        OnScroll(_scrollViewer.Offset);
                 });
                 if (t.Exception != null)
                     Debug.WriteLine(t.Exception);
