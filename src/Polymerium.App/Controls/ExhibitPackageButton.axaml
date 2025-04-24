@@ -108,7 +108,7 @@
                                     <husk:SwitchCase Value="Locked">
                                         <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <husk:Tag Classes="Success Small">
+                                            <husk:Tag Classes="Small">
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
                                                     <fi:SymbolIcon Symbol="LockClosed"
                                                                    FontSize="{Binding $parent[husk:Tag].FontSize}" />
@@ -164,7 +164,7 @@
                                            TextTrimming="CharacterEllipsis"
                                            TextWrapping="Wrap" MaxLines="2" />
                             </Grid>
-                        </Border>
+                           </Border>
                     </Grid>
                 </Border>
             </ControlTemplate>
