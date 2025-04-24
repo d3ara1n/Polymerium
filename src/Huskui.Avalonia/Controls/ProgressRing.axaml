@@ -72,6 +72,7 @@
                         <Arc Name="{x:Static local:ProgressRing.PART_Indicator}"
                              Stretch="None"
                              StartAngle="-90"
+                             SweepAngle="{TemplateBinding Angle}"
                              Stroke="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                              StrokeThickness="{TemplateBinding StrokeWidth}" StrokeLineCap="Round" />
                     </Panel>
@@ -129,7 +130,7 @@
         <Setter Property="Foreground" Value="{StaticResource ControlReversedForegroundBrush}" />
         <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
         <Setter Property="TrackStrokeWidth" Value="2" />
-        <Setter Property="TrackPadding" Value="4" />
+        <Setter Property="TrackPadding" Value="3" />
         <Setter Property="StrokeWidth" Value="2" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -142,18 +143,18 @@
                          SweepAngle="360" />
                     <Panel Name="Indeterminate" IsVisible="False"
                            Margin="{TemplateBinding TrackPadding}">
-                        <Arc Name="Chaser"
+                        <Sector Name="Chaser"
                              Stretch="None"
                              StartAngle="-90"
                              Fill="{TemplateBinding Background}" />
                     </Panel>
-
                     <Panel Name="Determinate"
                            Margin="{TemplateBinding TrackPadding}">
-                        <Arc Name="{x:Static local:ProgressRing.PART_Indicator}"
-                             StartAngle="-90"
-                             Stretch="None"
-                             Fill="{TemplateBinding Background}" />
+                        <Sector Name="{x:Static local:ProgressRing.PART_Indicator}"
+                                StartAngle="-90"
+                                Stretch="None"
+                                SweepAngle="{TemplateBinding Angle}"
+                                Fill="{TemplateBinding Background}" />
                     </Panel>
                     <TextBlock Name="PercentageText" FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Center"
                                VerticalAlignment="Center" IsVisible="{TemplateBinding ShowProgressText}"
@@ -187,7 +188,7 @@
                 <Setter Property="IsVisible" Value="False" />
             </Style>
 
-            <Style Selector="^ /template/ Arc#Chaser">
+            <Style Selector="^ /template/ Sector#Chaser">
                 <Style.Animations>
                     <Animation Duration="0:0:3" IterationCount="Infinite">
                         <KeyFrame Cue="0%">
@@ -203,9 +204,9 @@
                                     Value="0" />
                         </KeyFrame>
                     </Animation>
-                    <!-- 迭代次数为无限会导致 DelayBetweenIterations 一次之后后续就不进行 Duration 了 -->
+                    <!-- TODO: 迭代次数为无限会导致 DelayBetweenIterations 一次之后后续就不进行 Duration 了 -->
                     <Animation Duration="0:0:1.5" Delay="0:0:1.5" DelayBetweenIterations="0:0:1.5"
-                               IterationCount="Infinite">
+                               IterationCount="99999">
                         <KeyFrame Cue="0%">
                             <Setter Property="StartAngle"
                                     Value="-90" />

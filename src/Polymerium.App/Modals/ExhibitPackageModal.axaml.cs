@@ -39,6 +39,20 @@ public partial class ExhibitPackageModal : Modal
                                                                         o => o.InstallCommand,
                                                                         (o, v) => o.InstallCommand = v);
 
+    public static readonly DirectProperty<ExhibitPackageModal, bool> IsDetailPanelVisibleProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, bool>(nameof(IsDetailPanelVisible),
+                                                                   o => o.IsDetailPanelVisible,
+                                                                   (o, v) => o.IsDetailPanelVisible = v);
+
+    private static bool isDetailPanelVisible;
+
+    public bool IsDetailPanelVisible
+    {
+        get => isDetailPanelVisible;
+        set => SetAndRaise(IsDetailPanelVisibleProperty, ref isDetailPanelVisible, value);
+    }
+
+
     public ExhibitPackageModal() => InitializeComponent();
 
     public ICommand? InstallCommand
@@ -125,15 +139,15 @@ public partial class ExhibitPackageModal : Modal
                                                            string.Join(",",
                                                                        x.Requirements.AnyOfLoaders
                                                                         .Select(LoaderHelper.ToDisplayName)),
-                                                                       string.Join(",", x.Requirements.AnyOfVersions),
-                                                                       string.Empty,
-                                                                       x.PublishedAt,
-                                                                       x.DownloadCount,
-                                                                       x.ReleaseType,
-                                                                       PackageHelper.ToPurl(x.Label,
-                                                                           x.Namespace,
-                                                                           x.ProjectId,
-                                                                           x.VersionId)))
+                                                           string.Join(",", x.Requirements.AnyOfVersions),
+                                                           string.Empty,
+                                                           x.PublishedAt,
+                                                           x.DownloadCount,
+                                                           x.ReleaseType,
+                                                           PackageHelper.ToPurl(x.Label,
+                                                                                    x.Namespace,
+                                                                                    x.ProjectId,
+                                                                                    x.VersionId)))
                                                .ToList());
         });
 

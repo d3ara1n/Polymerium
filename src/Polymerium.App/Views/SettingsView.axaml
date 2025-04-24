@@ -264,6 +264,10 @@
                     <HyperlinkButton Content="Huskui" NavigateUri="https://github.com/d3ara1n/Huskui.Avalonia" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
+                    <Run Text="Color Palette:" />
+                    <HyperlinkButton Content="Radix Colors" NavigateUri="https://www.radix-ui.com/colors" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
                     <Run Text="Emoji:" />
                     <HyperlinkButton Content="Fluent Emoji" NavigateUri="https://github.com/microsoft/fluentui-emoji" />
                 </TextBlock>

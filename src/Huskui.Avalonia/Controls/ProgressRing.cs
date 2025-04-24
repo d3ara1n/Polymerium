@@ -6,7 +6,6 @@ using Avalonia.Controls.Shapes;
 
 namespace Huskui.Avalonia.Controls;
 
-[TemplatePart(PART_Indicator, typeof(Arc))]
 [PseudoClasses(":indeterminate")]
 public class ProgressRing : RangeBase
 {
@@ -34,7 +33,14 @@ public class ProgressRing : RangeBase
     public static readonly DirectProperty<ProgressRing, double> PercentageProperty =
         AvaloniaProperty.RegisterDirect<ProgressRing, double>(nameof(Percentage), o => o.Percentage);
 
-    private Arc? _indicator;
+    public static readonly DirectProperty<ProgressRing, double> AngleProperty =
+        AvaloniaProperty.RegisterDirect<ProgressRing, double>(nameof(Angle), o => o.Angle);
+
+    public double Angle
+    {
+        get;
+        private set => SetAndRaise(AngleProperty, ref field, value);
+    }
 
     public double TrackStrokeWidth
     {
@@ -95,22 +101,18 @@ public class ProgressRing : RangeBase
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-
-        _indicator = e.NameScope.Find<Arc>(PART_Indicator);
+        
         UpdateIndicator();
     }
 
     private void UpdateIndicator()
     {
-        if (_indicator == null)
-            return;
-
         var percent = Math.Abs(Maximum - Minimum) < double.Epsilon ? 1.0 : (Value - Minimum) / (Maximum - Minimum);
 
         Percentage = percent * 100;
 
         var angle = Math.Abs(100 - Percentage) < double.Epsilon ? 360 : percent * 360 % 360;
 
-        _indicator.SweepAngle = angle;
+        Angle = angle;
     }
 }

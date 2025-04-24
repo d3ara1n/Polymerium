@@ -86,6 +86,9 @@ public class InfiniteScrollView : ItemsControl
         if (_source.IsFetching)
             return;
 
+        if (!_source.HasNext)
+            return;
+
         if (_pendingPresenter != null)
             _pendingPresenter.IsVisible = true;
 
