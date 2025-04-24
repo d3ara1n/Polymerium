@@ -44,7 +44,8 @@ public class RepositoryAgent
         throw new KeyNotFoundException($"{label} is not a listed repository label or not found");
     }
 
-    public Task<RepositoryStatus> CheckStatusAsync(string label) => Redirect(label).CheckStatusAsync();
+    public Task<RepositoryStatus> CheckStatusAsync(string label) =>
+        RetrieveCachedAsync($"status:{label}", () => Redirect(label).CheckStatusAsync());
 
     public Task<IPaginationHandle<Exhibit>> SearchAsync(string label, string query, Filter filter) =>
         Redirect(label).SearchAsync(query, filter);

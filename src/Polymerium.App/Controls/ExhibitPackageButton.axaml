@@ -91,7 +91,7 @@
                                 <husk:SwitchPresenter
                                     RenderTransform="translateY(8px)" HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom" Value="{Binding State}"
-                                    TargetType="m:ExhibitPackageState">
+                                    TargetType="m:ExhibitState">
                                     <husk:SwitchCase Value="{x:Null}" />
                                     <husk:SwitchCase Value="Editable">
                                         <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
