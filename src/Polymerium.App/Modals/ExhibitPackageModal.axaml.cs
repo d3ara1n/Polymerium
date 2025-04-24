@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
@@ -52,6 +53,17 @@ public partial class ExhibitPackageModal : Modal
         set => SetAndRaise(IsDetailPanelVisibleProperty, ref isDetailPanelVisible, value);
     }
 
+    public static readonly DirectProperty<ExhibitPackageModal, ExhibitModel> ExhibitProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitModel>(nameof(Exhibit),
+                                                                           o => o.Exhibit,
+                                                                           (o, v) => o.Exhibit = v);
+
+    public required ExhibitModel Exhibit
+    {
+        get;
+        set => SetAndRaise(ExhibitProperty, ref field, value);
+    }
+
 
     public ExhibitPackageModal() => InitializeComponent();
 
@@ -69,7 +81,7 @@ public partial class ExhibitPackageModal : Modal
     } = 1;
 
 
-    private ExhibitPackageModel Model => (DataContext as ExhibitPackageModel)!;
+    private ExhibitPackageModel Package => (DataContext as ExhibitPackageModel)!;
 
     public LazyObject? LazyVersions
     {
@@ -124,31 +136,51 @@ public partial class ExhibitPackageModal : Modal
     {
         var lazy = new LazyObject(async t =>
         {
-            var versions = await DataService.InspectVersionsAsync(Model.Label,
-                                                                  Model.Namespace,
-                                                                  Model.ProjectId,
-                                                                  IsFilterEnabled ? Filter : Filter.Empty);
-            var project = Model;
-            return new ExhibitVersionCollection(versions
-                                               .Select(x => new ExhibitVersionModel(project.Label,
-                                                           project.Namespace,
-                                                           project.ProjectName,
-                                                           project.ProjectId,
-                                                           x.VersionName,
-                                                           x.VersionId,
-                                                           string.Join(",",
-                                                                       x.Requirements.AnyOfLoaders
-                                                                        .Select(LoaderHelper.ToDisplayName)),
-                                                           string.Join(",", x.Requirements.AnyOfVersions),
-                                                           string.Empty,
-                                                           x.PublishedAt,
-                                                           x.DownloadCount,
-                                                           x.ReleaseType,
-                                                           PackageHelper.ToPurl(x.Label,
-                                                                                    x.Namespace,
-                                                                                    x.ProjectId,
-                                                                                    x.VersionId)))
-                                               .ToList());
+            var versions = (await DataService.InspectVersionsAsync(Package.Label,
+                                                                   Package.Namespace,
+                                                                   Package.ProjectId,
+                                                                   IsFilterEnabled ? Filter : Filter.Empty)).ToArray();
+            var project = Package;
+            var rv = new ExhibitVersionCollection(versions
+                                                 .Select(x => new ExhibitVersionModel(project.Label,
+                                                             project.Namespace,
+                                                             project.ProjectName,
+                                                             project.ProjectId,
+                                                             x.VersionName,
+                                                             x.VersionId,
+                                                             string.Join(",",
+                                                                         x.Requirements.AnyOfLoaders
+                                                                          .Select(LoaderHelper.ToDisplayName)),
+                                                             string.Join(",", x.Requirements.AnyOfVersions),
+                                                             string.Empty,
+                                                             x.PublishedAt,
+                                                             x.DownloadCount,
+                                                             x.ReleaseType,
+                                                             PackageHelper.ToPurl(x.Label,
+                                                                 x.Namespace,
+                                                                 x.ProjectId,
+                                                                 x.VersionId)))
+                                                 .ToList());
+            if (Exhibit.InstalledVersionId != null)
+            {
+                var installed = rv.FirstOrDefault(x => x.VersionId == Exhibit.InstalledVersionId);
+                if (installed != null)
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        // TODO: 这里赋值没用，ItemsSource 还没绑定上
+                        SelectedVersion = installed;
+                        SelectedVersionMode = 0;
+                    });
+            }
+            else
+            {
+                Dispatcher.UIThread.Post(() =>
+                {
+                    SelectedVersionMode = 1;
+                });
+            }
+
+            return rv;
         });
 
         return lazy;

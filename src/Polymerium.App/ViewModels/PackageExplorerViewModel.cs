@@ -175,9 +175,16 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                                                   x.Namespace,
                                                                                   x.Pid));
                                     if (installed is not null)
+                                    {
                                         model.State = installed.Source == null || installed.Source != Basic.Source
-                                                          ? ExhibitPackageState.Editable
-                                                          : ExhibitPackageState.Locked;
+                                                          ? ExhibitState.Editable
+                                                          : ExhibitState.Locked;
+                                        model.Installed = installed;
+                                        // HACK: 为了优化性能，这里不获取 VersionName，而是在为 ExhibitPackageModal 弹出前加载数据时一并获取
+                                        if (PackageHelper.TryParse(installed.Purl, out var parsed))
+                                            model.InstalledVersionId = parsed.Vid;
+                                    }
+
                                     return model;
                                 })
                                .ToArray();
@@ -207,6 +214,29 @@ public partial class PackageExplorerViewModel : ViewModelBase
             try
             {
                 var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Ns, exhibit.ProjectId);
+
+                // 非 Unspecific
+                if (exhibit.InstalledVersionId != null)
+                    try
+                    {
+                        var package = await _dataService
+                                           .ResolvePackageAsync(exhibit.Label,
+                                                                exhibit.Ns,
+                                                                exhibit.ProjectId,
+                                                                exhibit.InstalledVersionId,
+                                                                Filter.Empty)
+                                           .ConfigureAwait(false);
+                        exhibit.InstalledVersionName = package.VersionName;
+                    }
+                    catch
+                    {
+                        // 获取失败，可能是网络问题，也可能是 Purl 本身写的就有问题
+                        // 这里给 VersionName 一个坏值
+                        exhibit.InstalledVersionName = exhibit.InstalledVersionId;
+                        // 这里可以打一下日志，但是懒得加了
+                    }
+
+
                 var model = new ExhibitPackageModel(project.Label,
                                                     project.Namespace,
                                                     project.ProjectId,
@@ -225,6 +255,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 _overlayService.PopModal(new ExhibitPackageModal
                 {
                     DataContext = model,
+                    Exhibit = exhibit,
                     DataService = _dataService,
                     Filter = new Filter(Basic.Version,
                                         Basic.Loader != null

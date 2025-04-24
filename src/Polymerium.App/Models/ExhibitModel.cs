@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;
+using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.Models;
 
@@ -44,11 +45,26 @@ public partial class ExhibitModel(
     public Uri Reference => reference;
 
     #endregion
-    
+
     #region Reactive
 
     [ObservableProperty]
-    public partial ExhibitPackageState? State { get; set; }
+    public partial ExhibitState? State { get; set; }
+
+    [ObservableProperty]
+    public partial Profile.Rice.Entry? Installed { get; set; }
+
+    [ObservableProperty]
+    public partial string? InstalledVersionName { get; set; }
+
+    [ObservableProperty]
+    public partial string? InstalledVersionId { get; set; }
+
+    [ObservableProperty]
+    public partial string? PendingVersionName { get; set; }
+
+    [ObservableProperty]
+    public partial string? PendingVersionId { get; set; }
 
     #endregion
 }
