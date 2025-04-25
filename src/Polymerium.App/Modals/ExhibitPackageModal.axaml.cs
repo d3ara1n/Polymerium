@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
@@ -35,11 +38,6 @@ public partial class ExhibitPackageModal : Modal
                                                                   o => o.SelectedVersionMode,
                                                                   (o, v) => o.SelectedVersionMode = v);
 
-    public static readonly DirectProperty<ExhibitPackageModal, ICommand?> InstallCommandProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ICommand?>(nameof(InstallCommand),
-                                                                        o => o.InstallCommand,
-                                                                        (o, v) => o.InstallCommand = v);
-
     public static readonly DirectProperty<ExhibitPackageModal, bool> IsDetailPanelVisibleProperty =
         AvaloniaProperty.RegisterDirect<ExhibitPackageModal, bool>(nameof(IsDetailPanelVisible),
                                                                    o => o.IsDetailPanelVisible,
@@ -66,12 +64,6 @@ public partial class ExhibitPackageModal : Modal
 
 
     public ExhibitPackageModal() => InitializeComponent();
-
-    public ICommand? InstallCommand
-    {
-        get;
-        set => SetAndRaise(InstallCommandProperty, ref field, value);
-    }
 
 
     public int SelectedVersionMode
@@ -101,21 +93,11 @@ public partial class ExhibitPackageModal : Modal
         set => SetAndRaise(SelectedVersionProperty, ref field, value);
     }
 
-    public required ProfileGuard Guard { get; init; }
     public required DataService DataService { get; init; }
     public required Filter Filter { get; init; }
 
-    private void DismissButton_OnClick(object? sender, RoutedEventArgs e)
-    {
-        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
-    }
+    public required Action<ExhibitModel> ModifyPendingCallback { get; init; }
 
-    protected override async void OnUnloaded(RoutedEventArgs e)
-    {
-        base.OnUnloaded(e);
-
-        await Guard.DisposeAsync();
-    }
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
@@ -135,54 +117,123 @@ public partial class ExhibitPackageModal : Modal
     private LazyObject ConstructVersions()
     {
         var lazy = new LazyObject(async t =>
-        {
-            var versions = (await DataService.InspectVersionsAsync(Package.Label,
-                                                                   Package.Namespace,
-                                                                   Package.ProjectId,
-                                                                   IsFilterEnabled ? Filter : Filter.Empty)).ToArray();
-            var project = Package;
-            var rv = new ExhibitVersionCollection(versions
-                                                 .Select(x => new ExhibitVersionModel(project.Label,
-                                                             project.Namespace,
-                                                             project.ProjectName,
-                                                             project.ProjectId,
-                                                             x.VersionName,
-                                                             x.VersionId,
-                                                             string.Join(",",
-                                                                         x.Requirements.AnyOfLoaders
-                                                                          .Select(LoaderHelper.ToDisplayName)),
-                                                             string.Join(",", x.Requirements.AnyOfVersions),
-                                                             string.Empty,
-                                                             x.PublishedAt,
-                                                             x.DownloadCount,
-                                                             x.ReleaseType,
-                                                             PackageHelper.ToPurl(x.Label,
-                                                                 x.Namespace,
-                                                                 x.ProjectId,
-                                                                 x.VersionId)))
-                                                 .ToList());
-            if (Exhibit.InstalledVersionId != null)
-            {
-                var installed = rv.FirstOrDefault(x => x.VersionId == Exhibit.InstalledVersionId);
-                if (installed != null)
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        // TODO: 这里赋值没用，ItemsSource 还没绑定上
-                        SelectedVersion = installed;
-                        SelectedVersionMode = 0;
-                    });
-            }
-            else
-            {
-                Dispatcher.UIThread.Post(() =>
-                {
-                    SelectedVersionMode = 1;
-                });
-            }
-
-            return rv;
-        });
+                                  {
+                                      if (t.IsCancellationRequested)
+                                          return null;
+                                      var versions = (await DataService.InspectVersionsAsync(Package.Label,
+                                                          Package.Namespace,
+                                                          Package.ProjectId,
+                                                          IsFilterEnabled ? Filter : Filter.Empty)).ToArray();
+                                      var project = Package;
+                                      var rv = new ExhibitVersionCollection(versions
+                                                                           .Select(x =>
+                                                                                new ExhibitVersionModel(project.Label,
+                                                                                    project.Namespace,
+                                                                                    project.ProjectName,
+                                                                                    project.ProjectId,
+                                                                                    x.VersionName,
+                                                                                    x.VersionId,
+                                                                                    string.Join(",",
+                                                                                        x.Requirements.AnyOfLoaders
+                                                                                           .Select(LoaderHelper
+                                                                                               .ToDisplayName)),
+                                                                                    string.Join(",",
+                                                                                        x.Requirements.AnyOfVersions),
+                                                                                    string.Empty,
+                                                                                    x.PublishedAt,
+                                                                                    x.DownloadCount,
+                                                                                    x.ReleaseType,
+                                                                                    PackageHelper.ToPurl(x.Label,
+                                                                                        x.Namespace,
+                                                                                        x.ProjectId,
+                                                                                        x.VersionId)))
+                                                                           .ToList());
+                                      return rv;
+                                  },
+                                  value =>
+                                  {
+                                      var versionId = Exhibit.State switch
+                                      {
+                                          null or ExhibitState.Editable or ExhibitState.Removing => Exhibit
+                                             .InstalledVersionId,
+                                          _ => Exhibit.PendingVersionId
+                                      };
+                                      if (versionId != null && value is ExhibitVersionCollection versions)
+                                      {
+                                          var installed = versions.FirstOrDefault(x => x.VersionId == versionId);
+                                          if (installed != null)
+                                          {
+                                              SelectedVersion = installed;
+                                              SelectedVersionMode = 0;
+                                          }
+                                      }
+                                      else
+                                      {
+                                          Dispatcher.UIThread.Post(() =>
+                                          {
+                                              SelectedVersionMode = 1;
+                                          });
+                                      }
+                                  });
 
         return lazy;
     }
+
+    #region Commands
+
+    [RelayCommand]
+    private void Dismiss()
+    {
+        RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
+    }
+
+    [RelayCommand]
+    private void Apply()
+    {
+        if (Exhibit.State == null)
+        {
+            Exhibit.State = ExhibitState.Adding;
+        }
+
+        if (Exhibit.State is ExhibitState.Editable)
+        {
+            Exhibit.State = ExhibitState.Modifying;
+        }
+
+        if (SelectedVersionMode == 0 && SelectedVersion != null)
+        {
+            // 指定了版本
+            Exhibit.PendingVersionId = SelectedVersion?.VersionId;
+            Exhibit.PendingVersionName = SelectedVersion?.VersionName;
+        }
+        else
+        {
+            // 未指定版本
+            Exhibit.PendingVersionId = null;
+            Exhibit.PendingVersionName = null;
+        }
+
+        ModifyPendingCallback(Exhibit);
+        Dismiss();
+    }
+
+    [RelayCommand]
+    private void Delete()
+    {
+        Exhibit.State = ExhibitState.Removing;
+        Exhibit.PendingVersionId = null;
+        Exhibit.PendingVersionName = null;
+        ModifyPendingCallback(Exhibit);
+    }
+
+    [RelayCommand]
+    private void Undo()
+    {
+        Exhibit.State = Exhibit.Installed == null ? null : ExhibitState.Editable;
+        Exhibit.PendingVersionId = null;
+        Exhibit.PendingVersionName = null;
+        ModifyPendingCallback(Exhibit);
+    }
+
+    #endregion
 }

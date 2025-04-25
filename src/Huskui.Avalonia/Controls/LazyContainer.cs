@@ -43,20 +43,23 @@ public class LazyContainer : ContentControl
 
         if (change.Property == LazySourceProperty)
         {
-            if (change.OldValue is LazyObject { IsCancelled: false } old)
+            if (change.OldValue is LazyObject { IsCancelled: false, InProgress: true } old)
                 old.Cancel();
             Content = null;
             IsBad = false;
             if (change.NewValue is LazyObject lazy)
-                try
-                {
-                    await lazy.FetchAsync().ConfigureAwait(true);
+                if (lazy.Value != null)
                     Content = lazy.Value;
-                }
-                catch
-                {
-                    IsBad = true;
-                }
+                else
+                    try
+                    {
+                        await lazy.FetchAsync().ConfigureAwait(true);
+                        Content = lazy.Value;
+                    }
+                    catch
+                    {
+                        IsBad = true;
+                    }
         }
     }
 

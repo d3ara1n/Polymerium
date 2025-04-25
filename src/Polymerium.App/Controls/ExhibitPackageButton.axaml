@@ -122,7 +122,7 @@
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
                                             <husk:Tag Classes="Warning Small">
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <fi:SymbolIcon Symbol="Add"
+                                                    <fi:SymbolIcon Symbol="AddCircle"
                                                                    FontSize="{Binding $parent[husk:Tag].FontSize}" />
                                                     <TextBlock Text="Adding" VerticalAlignment="Center" />
                                                 </StackPanel>

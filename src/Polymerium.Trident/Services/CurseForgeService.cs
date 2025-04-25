@@ -235,11 +235,11 @@ public class CurseForgeService(ICurseForgeClient client)
         uint modId,
         string? gameVersion,
         ModLoaderTypeModel? modLoader,
-        int index = 0,
-        int count = 50)
+        uint index = 0,
+        uint count = 50)
     {
         var rv = await client
-                      .GetModFilesAsync(modId, gameVersion, modLoader, (uint)index, (uint)count)
+                      .GetModFilesAsync(modId, gameVersion, modLoader, index, count)
                       .ConfigureAwait(false);
         return rv;
     }

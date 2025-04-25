@@ -62,25 +62,34 @@ public partial class PackageEntryModal : Modal
     private LazyObject ConstructVersions()
     {
         var lazy = new LazyObject(async t =>
-        {
-            var versions = await DataService.InspectVersionsAsync(Model.Label,
-                                                                  Model.Namespace,
-                                                                  Model.ProjectId,
-                                                                  IsFilterEnabled ? Filter : Filter.Empty);
-            return new InstancePackageVersionCollection(versions
-                                                       .Select<Version,
-                                                            InstancePackageVersionModelBase>(x => Model is
-                                                                {
-                                                                    Version: InstancePackageVersionModel v
-                                                                }
-                                                             && v.Id == x.VersionId
-                                                                ? v
-                                                                : new InstancePackageVersionModel(x.VersionId,
-                                                                    x.VersionName,
-                                                                    x.PublishedAt,
-                                                                    x.ReleaseType))
-                                                       .ToList());
-        });
+                                  {
+                                      if (t.IsCancellationRequested)
+                                          return null;
+                                      var versions = await DataService.InspectVersionsAsync(Model.Label,
+                                                         Model.Namespace,
+                                                         Model.ProjectId,
+                                                         IsFilterEnabled ? Filter : Filter.Empty);
+                                      return new InstancePackageVersionCollection(versions
+                                         .Select<Version,
+                                              InstancePackageVersionModelBase>(x => Model is
+                                                                                       {
+                                                                                           Version:
+                                                                                           InstancePackageVersionModel v
+                                                                                       }
+                                                                                    && v.Id == x.VersionId
+                                                                                       ? v
+                                                                                       : new
+                                                                                           InstancePackageVersionModel(x.VersionId,
+                                                                                               x.VersionName,
+                                                                                               x.PublishedAt,
+                                                                                               x.ReleaseType))
+                                         .ToList());
+                                  },
+                                  _ =>
+                                  {
+                                      if (Model.Version is InstancePackageVersionModel v)
+                                          SelectedVersionProxy = v;
+                                  });
 
         return lazy;
     }
@@ -90,8 +99,6 @@ public partial class PackageEntryModal : Modal
         base.OnLoaded(e);
 
         IsFilterEnabled = true;
-        if (Model.Version is InstancePackageVersionModel v)
-            SelectedVersionProxy = v;
     }
 
     protected override async void OnUnloaded(RoutedEventArgs e)
