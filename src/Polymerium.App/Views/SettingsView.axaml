@@ -251,6 +251,10 @@
                     <HyperlinkButton Content="Trident" NavigateUri="https://github.com/TridentCore/trident" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
+                    <Run Text="Platform Service:" />
+                    <HyperlinkButton Content="PrismLauncher" NavigateUri="https://meta.prismlauncher.org/" />
+                </TextBlock>
+                <TextBlock ClipToBounds="False">
                     <Run Text="Repositories:" />
                     <HyperlinkButton Content="CurseForge" NavigateUri="https://docs.curseforge.com/" />
                     <HyperlinkButton Content="Modrinth" NavigateUri="https://docs.modrinth.com/" />
