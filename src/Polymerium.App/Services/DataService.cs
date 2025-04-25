@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,7 +50,22 @@ public class DataService(
 
     public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
         GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
-                    async () => await (await agent.InspectAsync(label, ns, pid, filter)).FetchAsync());
+                    async () =>
+                    {
+                        var handle = await agent.InspectAsync(label, ns, pid, filter);
+                        var rv = new List<Version>();
+                        int lastCount;
+                        var index = 0u;
+                        do
+                        {
+                            lastCount = rv.Count;
+                            handle.PageIndex = index;
+                            rv.AddRange(await handle.FetchAsync());
+                            index ++;
+                        } while (rv.Count != lastCount);
+
+                        return rv.AsEnumerable();
+                    });
 
     public ValueTask<ComponentIndex> GetComponentAsync(string loaderId) =>
         GetOrCreate($"loader:{loaderId}",

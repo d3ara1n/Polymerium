@@ -8,6 +8,7 @@
             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
+            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" MinWidth="360" MinHeight="360"
             x:Class="Polymerium.App.Modals.PackageEntryModal" x:DataType="m:InstancePackageModel">
     <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
@@ -123,8 +124,15 @@
                                             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                                                 <CheckBox Grid.Column="0" Content="Show compatible versions only"
                                                           IsChecked="{Binding $parent[modals:PackageEntryModal].IsFilterEnabled,Mode=TwoWay}" />
+                                                <Button Grid.Column="1" Theme="{StaticResource OutlineButtonTheme}"
+                                                        Padding="6" Command="{Binding #VersionBox.ScrollIntoView}"
+                                                        CommandParameter="{Binding #VersionBox.SelectedIndex}">
+                                                    <icons:PackIconLucide Kind="LocateFixed"
+                                                                          Height="{StaticResource MediumFontSize}"
+                                                                          Width="{StaticResource MediumFontSize}" />
+                                                </Button>
                                             </Grid>
-                                            <ListBox Grid.Row="1" ItemsSource="{Binding}"
+                                            <ListBox Name="VersionBox" Grid.Row="1" ItemsSource="{Binding}"
                                                      SelectedItem="{Binding $parent[modals:PackageEntryModal].SelectedVersionProxy,Mode=TwoWay,FallbackValue={x:Null}}">
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate DataType="m:InstancePackageVersionModel">

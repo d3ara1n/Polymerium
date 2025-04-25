@@ -77,6 +77,11 @@ public partial class PackageExplorerViewModel : ViewModelBase
             }
     }
 
+    private void ModifyPending(ExhibitModel model)
+    {
+        
+    }
+
     #region Reactive
 
     [ObservableProperty]
@@ -263,8 +268,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                             ? loader.Identity
                                             : null,
                                         project.Kind),
-                    Guard = guard,
-                    InstallCommand = InstallVersionCommand
+                    ModifyPendingCallback = ModifyPending
                 });
             }
             catch (OperationCanceledException) { }
@@ -273,9 +277,6 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
             }
     }
-
-    [RelayCommand]
-    private void InstallVersion(ExhibitVersionModel model) { }
-
+    
     #endregion
 }

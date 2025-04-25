@@ -14,21 +14,6 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
 {
     private static readonly Converter CONVERTER = new(new Config { GithubFlavored = false, SmartHrefHandling = true });
 
-    private async Task<(IEnumerable<Version>, uint)> GetVersionsAsync(
-        uint modId,
-        string? version,
-        ModLoaderTypeModel? loader,
-        int index = 0,
-        int count = 50)
-    {
-        var data = await service.GetModFilesAsync(modId, version, loader, index, count).ConfigureAwait(false);
-        // var tasks = data.Data.Select(x => service.GetModFileChangelogAsync(modId, x.Id)).ToArray();
-        // await Task.WhenAll(tasks).ConfigureAwait(false);
-        // return
-        //     (data.Data.Zip(tasks).Select(x => CurseForgeService.ToVersion(x.First, CONVERTER.Convert(x.Second.Result))),
-        //      data.Pagination.TotalCount);
-        return (data.Data.Select(CurseForgeService.ToVersion), data.Pagination.TotalCount);
-    }
 
     #region IRepository Members
 
@@ -62,7 +47,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                          .ConfigureAwait(false);
         var initial = first.Data.Select(CurseForgeService.ToExhibit);
         return new PaginationHandle<Exhibit>(initial,
-                                             50,
+                                             first.Pagination.PageSize,
                                              first.Pagination.TotalCount,
                                              async pageIndex =>
                                              {
@@ -145,20 +130,23 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
     {
         if (uint.TryParse(pid, out var modId))
         {
-            var initial = await GetVersionsAsync(modId, filter.Version, CurseForgeService.LoaderIdToType(filter.Loader))
+            var first = await service
+                             .GetModFilesAsync(modId, filter.Version, CurseForgeService.LoaderIdToType(filter.Loader))
                              .ConfigureAwait(false);
-            return new PaginationHandle<Version>(initial.Item1,
-                                                 50,
-                                                 initial.Item2,
-                                                 async index =>
+            var initial = first.Data.Select(CurseForgeService.ToVersion);
+            return new PaginationHandle<Version>(initial,
+                                                 first.Pagination.PageSize,
+                                                 first.Pagination.TotalCount,
+                                                 async pageIndex =>
                                                  {
-                                                     var data = await GetVersionsAsync(modId,
-                                                                        filter.Version,
-                                                                        CurseForgeService
-                                                                           .LoaderIdToType(filter.Loader),
-                                                                        (int)index)
-                                                                   .ConfigureAwait(false);
-                                                     return data.Item1;
+                                                     var data = await service
+                                                                     .GetModFilesAsync(modId,
+                                                                          filter.Version,
+                                                                          CurseForgeService
+                                                                             .LoaderIdToType(filter.Loader),
+                                                                          pageIndex * first.Pagination.PageSize)
+                                                                     .ConfigureAwait(false);
+                                                     return data.Data.Select(CurseForgeService.ToVersion);
                                                  });
         }
 

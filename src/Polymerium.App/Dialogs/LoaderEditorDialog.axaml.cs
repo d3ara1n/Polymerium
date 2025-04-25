@@ -82,6 +82,8 @@ public partial class LoaderEditorDialog : Dialog
         {
             var lazy = new LazyObject(async token =>
                                       {
+                                          if(token.IsCancellationRequested)
+                                              return null;
                                           var index = await DataService.GetComponentVersionsAsync(SelectedLoader,
                                                           GameVersion);
                                           return new LoaderCandidateVersionCollectionModel(index
@@ -89,8 +91,7 @@ public partial class LoaderEditorDialog : Dialog
                                              .Select(x => new LoaderCandidateVersionModel(x.Version,
                                                          x.Recommended))
                                              .ToList());
-                                      },
-                                      CancellationToken.None);
+                                      });
             LazyVersions = lazy;
         }
     }
