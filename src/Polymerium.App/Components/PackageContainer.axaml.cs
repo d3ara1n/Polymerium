@@ -52,16 +52,16 @@ public partial class PackageContainer : UserControl
                                                                     o => o.RemoveCommand,
                                                                     (o, v) => o.RemoveCommand = v);
 
+
+    private IDisposable? _subscription;
+
+    public PackageContainer() => InitializeComponent();
+
     public ICommand RemoveCommand
     {
         get;
         set => SetAndRaise(RemoveCommandProperty, ref field, value);
     }
-
-
-    private IDisposable? _subscription;
-
-    public PackageContainer() => InitializeComponent();
 
     public ICommand? PrimaryCommand
     {

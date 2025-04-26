@@ -61,7 +61,7 @@ public class DataService(
                             lastCount = rv.Count;
                             handle.PageIndex = index;
                             rv.AddRange(await handle.FetchAsync());
-                            index ++;
+                            index++;
                         } while (rv.Count != lastCount);
 
                         return rv.AsEnumerable();

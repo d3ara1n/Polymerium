@@ -131,6 +131,10 @@ public partial class InstanceSetupViewModel(
                                                         p.ProjectName,
                                                         new InstancePackageVersionModel(p.VersionId,
                                                             p.VersionName,
+                                                            string.Join(",",
+                                                                        p.Requirements.AnyOfLoaders
+                                                                         .Select(LoaderHelper.ToDisplayName)),
+                                                            string.Join(",", p.Requirements.AnyOfVersions),
                                                             p.PublishedAt,
                                                             p.ReleaseType) { IsCurrent = true },
                                                         p.Summary,
@@ -298,7 +302,11 @@ public partial class InstanceSetupViewModel(
                 DataService = dataService,
                 Filter = new Filter(Kind: model.Kind,
                                     Version: Basic.Version,
-                                    Loader: Basic.Loader)
+                                    Loader: Basic.Loader is not null
+                                                ? LoaderHelper.TryParse(Basic.Loader, out var result)
+                                                      ? result.Identity
+                                                      : null
+                                                : null)
             });
     }
 

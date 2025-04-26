@@ -2,7 +2,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
-using Avalonia.Controls.Shapes;
 
 namespace Huskui.Avalonia.Controls;
 
@@ -101,7 +100,7 @@ public class ProgressRing : RangeBase
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        
+
         UpdateIndicator();
     }
 

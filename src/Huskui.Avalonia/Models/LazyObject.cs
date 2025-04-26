@@ -10,9 +10,9 @@ public class LazyObject(
     public bool IsCancelled => _cts.IsCancellationRequested;
     public bool InProgress { get; private set; }
     public object? Value { get; private set; }
-    public void Cancel() => _cts.Cancel();
 
     public Action<object?>? Callback { get; set; } = callback;
+    public void Cancel() => _cts.Cancel();
 
     public async Task FetchAsync()
     {

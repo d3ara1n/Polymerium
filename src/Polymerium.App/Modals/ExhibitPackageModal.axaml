@@ -10,7 +10,6 @@
             xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-            xmlns:huskm="https://github.com/d3ara1n/Huskui.Avalonia/Models"
             mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="420" MinHeight="360"
             x:Class="Polymerium.App.Modals.ExhibitPackageModal" x:DataType="m:ExhibitPackageModel"
             Background="{x:Null}" BorderBrush="{x:Null}"
@@ -128,7 +127,7 @@
             </Border>
         </DataTemplate>
     </husk:Modal.Resources>
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+    <Grid Name="ContentContainer" ColumnDefinitions="*,Auto" ColumnSpacing="12">
         <Border Grid.Column="1" Padding="18" Width="280"
                 Background="{StaticResource OverlaySolidBackgroundBrush}"
                 BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"

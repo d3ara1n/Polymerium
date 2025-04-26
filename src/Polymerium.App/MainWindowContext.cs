@@ -11,6 +11,7 @@ using DynamicData.Binding;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
+using Polymerium.App.Toasts;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
@@ -31,10 +32,12 @@ public partial class MainWindowContext : ObservableObject
         ProfileManager profileManager,
         InstanceManager instanceManager,
         NotificationService notificationService,
-        NavigationService navigationService)
+        NavigationService navigationService,
+        OverlayService overlayService)
     {
         _notificationService = notificationService;
         _navigationService = navigationService;
+        _overlayService = overlayService;
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
 
@@ -51,6 +54,7 @@ public partial class MainWindowContext : ObservableObject
 
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
+    private readonly OverlayService _overlayService;
 
     #endregion
 
@@ -78,6 +82,17 @@ public partial class MainWindowContext : ObservableObject
     {
         if (page != null)
             _navigationService.Navigate(page);
+    }
+
+    [RelayCommand]
+    private void OpenDashboard(LaunchTracker? tracker)
+    {
+        if (tracker != null)
+        {
+            var toast = new InstanceDashboardToast();
+            toast.SetItems(tracker.ScrapBuffer);
+            _overlayService.PopToast(toast);
+        }
     }
 
     #endregion
@@ -375,7 +390,14 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
-                        _notificationService.PopMessage(e.FailureReason, $"{e.Key}");
+                        _notificationService.PopMessage(e.FailureReason,
+                                                        $"{e.Key}",
+                                                        actions:
+                                                        [
+                                                            new NotificationAction("View Output",
+                                                                OpenDashboardCommand,
+                                                                e)
+                                                        ]);
                     });
                     e.StateUpdated -= OnStateChanged;
                     break;

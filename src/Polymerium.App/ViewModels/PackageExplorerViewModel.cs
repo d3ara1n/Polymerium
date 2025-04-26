@@ -29,6 +29,8 @@ namespace Polymerium.App.ViewModels;
 
 public partial class PackageExplorerViewModel : ViewModelBase
 {
+    private readonly CompositeDisposable _subscriptions = new();
+
     public PackageExplorerViewModel(
         ViewBag bag,
         RepositoryAgent agent,
@@ -89,8 +91,6 @@ public partial class PackageExplorerViewModel : ViewModelBase
     }
 
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
-
-    private readonly CompositeDisposable _subscriptions = new();
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {

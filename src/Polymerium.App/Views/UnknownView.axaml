@@ -237,7 +237,7 @@
                         <husk:ProgressRing TrackPadding="6" TrackStrokeWidth="4"
                                            Theme="{StaticResource SolidProgressRingTheme}" Value="50" Height="64"
                                            Width="64" IsIndeterminate="True" />
-                        <Arc Height="64" Width="64" Fill="Yellow" SweepAngle="270"  StartAngle="-90"/>
+                        <Arc Height="64" Width="64" Fill="Yellow" SweepAngle="270" StartAngle="-90" />
                     </StackPanel>
                     <ListBox>
                         <ListBoxItem Content="这是一个 1" />

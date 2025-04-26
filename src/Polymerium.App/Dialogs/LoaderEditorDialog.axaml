@@ -21,7 +21,7 @@
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                             <Grid ColumnDefinitions="Auto,8,*">
                                 <Border Grid.Column="0"
-                                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                         CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Left}}">
                                     <Image
                                         Source="{Binding $parent[local:LoaderEditorDialog].Loader.Thumbnail,FallbackValue={x:Null}}"

@@ -238,9 +238,7 @@ public class CurseForgeService(ICurseForgeClient client)
         uint index = 0,
         uint count = 50)
     {
-        var rv = await client
-                      .GetModFilesAsync(modId, gameVersion, modLoader, index, count)
-                      .ConfigureAwait(false);
+        var rv = await client.GetModFilesAsync(modId, gameVersion, modLoader, index, count).ConfigureAwait(false);
         return rv;
     }
 }

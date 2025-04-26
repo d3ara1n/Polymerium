@@ -42,25 +42,25 @@ public partial class ExhibitPackageModal : Modal
 
     private static bool isDetailPanelVisible;
 
+    public static readonly DirectProperty<ExhibitPackageModal, ExhibitModel> ExhibitProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitModel>(nameof(Exhibit),
+                                                                           o => o.Exhibit,
+                                                                           (o, v) => o.Exhibit = v);
+
+
+    public ExhibitPackageModal() => InitializeComponent();
+
     public bool IsDetailPanelVisible
     {
         get => isDetailPanelVisible;
         set => SetAndRaise(IsDetailPanelVisibleProperty, ref isDetailPanelVisible, value);
     }
 
-    public static readonly DirectProperty<ExhibitPackageModal, ExhibitModel> ExhibitProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitModel>(nameof(Exhibit),
-                                                                           o => o.Exhibit,
-                                                                           (o, v) => o.Exhibit = v);
-
     public required ExhibitModel Exhibit
     {
         get;
         set => SetAndRaise(ExhibitProperty, ref field, value);
     }
-
-
-    public ExhibitPackageModal() => InitializeComponent();
 
 
     public int SelectedVersionMode
@@ -188,9 +188,7 @@ public partial class ExhibitPackageModal : Modal
     private void Apply()
     {
         if (Exhibit.State is null)
-        {
             Exhibit.State = ExhibitState.Adding;
-        }
 
         if (Exhibit.State is ExhibitState.Editable)
         {
