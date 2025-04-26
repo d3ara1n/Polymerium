@@ -200,6 +200,31 @@
                 <TextBox Watermark="Replace this with a TokenTextBox!!!" />
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
+        <husk:Divider />
+        <controls:SettingsEntry Icon="Handshake" Title="Behaviors"
+                                Summary="How the application acts and chooses strategies">
+            <controls:SettingsEntryItem Header="[Experimental] Resolve Package Dependencies">
+                <StackPanel Spacing="8">
+                    <husk:InfoBar
+                        Content="This always leads to unexpected package conflicts due to poor management of package distribution sites. "
+                        Classes="Warning" />
+                    <ToggleSwitch OnContent="I know what I'm doing" />
+                </StackPanel>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="[Experimental] Deployment Method">
+                <StackPanel Spacing="8">
+                    <husk:InfoBar
+                        Content="This always leads to unexpected package conflicts due to poor management of package distribution sites. "
+                        Classes="Warning" />
+                    <ComboBox>
+                        <ComboBoxItem Content="Auto" />
+                        <ComboBoxItem Content="Symlink" />
+                        <ComboBoxItem Content="Copy" />
+                        <ComboBoxItem Content="Hark Link" />
+                    </ComboBox>
+                </StackPanel>
+            </controls:SettingsEntryItem>
+        </controls:SettingsEntry>
         <husk:Divider>
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource MediumFontSize}" />
@@ -213,16 +238,36 @@
             <controls:SettingsEntry Icon="Bug" Title="Danger Zone"
                                     Summary="These settings are applied instantly and can't be recovered">
                 <components:SafeLock Name="Lock" SafeCode="{Binding SafeCode}" />
-                <controls:SettingsEntryItem Header="Reset &amp; Delete"
+                <controls:SettingsEntryItem Header="Sacrifice"
                                             IsEnabled="{Binding #Lock.IsUnlocked }">
                     <Grid ColumnDefinitions="*,8,*">
                         <Button Grid.Column="0" Command="{Binding ResetInstanceCommand}">
-                            <fi:SymbolIcon Symbol="ArrowReset" FontSize="{StaticResource MediumFontSize}" />
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <fi:SymbolIcon Symbol="ArrowReset" FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Text="Reset" />
+                            </StackPanel>
                         </Button>
                         <Button Grid.Column="2" Classes="Danger" Command="{Binding DeleteInstanceCommand}">
-                            <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource MediumFontSize}" />
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Text="Delete" />
+                            </StackPanel>
                         </Button>
                     </Grid>
+                </controls:SettingsEntryItem>
+                <controls:SettingsEntryItem Header="Unlocker"
+                                            IsEnabled="{Binding #Lock.IsUnlocked}"
+                                            IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull}}">
+                    <StackPanel Spacing="8">
+                        <husk:InfoBar
+                            Content="Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages." />
+                        <Button>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <fi:SymbolIcon Symbol="WarningLockOpen" FontSize="{StaticResource MediumFontSize}" />
+                                <TextBlock Text="Unlock" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </controls:SettingsEntryItem>
             </controls:SettingsEntry>
             <husk:BusyContainer.PendingContent>

@@ -214,18 +214,6 @@
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
         <husk:Divider />
-        <controls:SettingsEntry Icon="Handshake" Title="Behaviors"
-                                Summary="How the application acts and chooses strategies">
-            <controls:SettingsEntryItem Header="[Experimental] Resolve Package Dependencies">
-                <StackPanel Spacing="8">
-                    <husk:InfoBar
-                        Content="This always leads to unexpected package conflicts due to poor management of package distribution sites. "
-                        Classes="Warning" />
-                    <ToggleSwitch OnContent="I know what I'm doing" />
-                </StackPanel>
-            </controls:SettingsEntryItem>
-        </controls:SettingsEntry>
-        <husk:Divider />
         <Panel>
             <husk:ConstrainedBox HorizontalAlignment="Right" AspectRatio="0.6840277777777778"
                                  Height="{Binding #LinksPanel.Bounds.Height}">

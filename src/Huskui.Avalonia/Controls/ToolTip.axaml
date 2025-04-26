@@ -16,13 +16,15 @@
                         <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
                     </Border.Effect>
                     <ContentPresenter Name="PART_ContentPresenter"
+                                      Padding="10,6"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}">
-                        <ContentPresenter.DataTemplates>
-                            <DataTemplate DataType="x:String">
-                                <TextBlock Text="{Binding}" Margin="12,6" />
-                            </DataTemplate>
-                        </ContentPresenter.DataTemplates>
+                        <!-- 由于 ToolTip 不在 LogicalTree上，无法选中 -->
+                        <!-- <ContentPresenter.Styles> -->
+                        <!--     <Style Selector="ContentPresenter > TextBlock"> -->
+                        <!--         <Setter Property="Margin" Value="12,6"/> -->
+                        <!--     </Style> -->
+                        <!-- </ContentPresenter.Styles> -->
                     </ContentPresenter>
                 </Border>
             </ControlTemplate>

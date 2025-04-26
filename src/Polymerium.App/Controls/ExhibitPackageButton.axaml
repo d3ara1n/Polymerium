@@ -28,7 +28,7 @@
                         </Transitions>
                     </Border.Transitions>
                     <ToolTip.Tip>
-                        <Grid RowDefinitions="*,Auto" MaxWidth="300">
+                        <Grid RowDefinitions="*,Auto" MaxWidth="300" Margin="-10,-6">
                             <Border Grid.Row="0">
                                 <StackPanel Margin="12">
                                     <TextBlock Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}"

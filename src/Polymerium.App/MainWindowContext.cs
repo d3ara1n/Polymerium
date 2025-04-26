@@ -215,7 +215,6 @@ public partial class MainWindowContext : ObservableObject
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -226,6 +225,10 @@ public partial class MainWindowContext : ObservableObject
                                                             ViewInstanceCommand,
                                                             e.Key));
                     });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
@@ -275,7 +278,6 @@ public partial class MainWindowContext : ObservableObject
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -286,6 +288,10 @@ public partial class MainWindowContext : ObservableObject
                                                             ViewInstanceCommand,
                                                             e.Key));
                     });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
@@ -342,7 +348,6 @@ public partial class MainWindowContext : ObservableObject
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -350,6 +355,10 @@ public partial class MainWindowContext : ObservableObject
                                                         e.Key,
                                                         NotificationLevel.Success);
                     });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
@@ -402,7 +411,6 @@ public partial class MainWindowContext : ObservableObject
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
-                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
@@ -410,6 +418,10 @@ public partial class MainWindowContext : ObservableObject
                                                         e.Key,
                                                         NotificationLevel.Success);
                     });
+                    e.StateUpdated -= OnStateChanged;
+                    break;
+                case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:

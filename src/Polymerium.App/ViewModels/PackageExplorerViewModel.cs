@@ -31,6 +31,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
 {
     private readonly CompositeDisposable _subscriptions = new();
 
+    private readonly bool _safeUnlock;
+
     public PackageExplorerViewModel(
         ViewBag bag,
         RepositoryAgent agent,
@@ -67,6 +69,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
         Repositories = r;
         SelectedRepository = r.First();
         IsFilterEnabled = true;
+        _safeUnlock = true;
         PendingPackagesSource
            .Connect()
            .Filter(x => x.State == ExhibitState.Adding)
@@ -133,6 +136,12 @@ public partial class PackageExplorerViewModel : ViewModelBase
     [ObservableProperty]
     public partial Filter Filter { get; set; } = Filter.Empty;
 
+    partial void OnFilterChanged(Filter value)
+    {
+        if (_safeUnlock)
+            _ = SearchAsync();
+    }
+
     [ObservableProperty]
     public partial string QueryText { get; set; } = string.Empty;
 
@@ -160,7 +169,6 @@ public partial class PackageExplorerViewModel : ViewModelBase
     {
         if (value != null)
             Filter = Filter with { Kind = value };
-        _ = SearchAsync();
     }
 
     [ObservableProperty]
