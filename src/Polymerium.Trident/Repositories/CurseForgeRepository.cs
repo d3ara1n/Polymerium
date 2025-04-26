@@ -42,7 +42,9 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
                          .SearchAsync(query,
                                       CurseForgeService.ResourceKindToClassId(filter.Kind),
                                       filter.Version,
-                                      CurseForgeService.LoaderIdToType(filter.Loader))
+                                      filter.Kind is ResourceKind.Mod
+                                          ? CurseForgeService.LoaderIdToType(filter.Loader)
+                                          : null)
                          .ConfigureAwait(false);
         var initial = first.Data.Select(CurseForgeService.ToExhibit);
         return new PaginationHandle<Exhibit>(initial,

@@ -94,13 +94,13 @@ public partial class InstanceDashboardToast : Toast
 
     protected override void OnUnloaded(RoutedEventArgs e)
     {
-        base.OnUnloaded(e);
-
         if (Bindable != null)
             Bindable.CollectionChanged -= BindableOnCollectionChanged;
         Bindable?.Dispose();
         _view?.Dispose();
         RemoveHandler(ScrollViewer.ScrollChangedEvent, ViewerOnScrollChanged);
+
+        base.OnUnloaded(e);
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -112,5 +112,8 @@ public partial class InstanceDashboardToast : Toast
             var filter = change.GetNewValue<string>();
             _view?.AttachFilter(x => string.IsNullOrEmpty(filter) || x.Message.Contains(filter));
         }
+
+        if (change.Property == IsAutoScrollProperty && change.NewValue is true)
+            Dispatcher.UIThread.Post(() => Viewer.ScrollToEnd());
     }
 }

@@ -38,7 +38,10 @@ public partial class ExhibitModel(
 
     public IReadOnlyList<string> Tags => tags;
 
+    public DateTimeOffset UpdatedAtRaw => updatedAt;
+
     public string UpdatedAt => updatedAt.Humanize();
+    public ulong DownloadsRaw => downloads;
 
     public string Downloads => ((double)downloads).ToMetric(decimals: 2);
 

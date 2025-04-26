@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using IBuilder;
+﻿using IBuilder;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.Trident.Engines.Deploying;
@@ -95,23 +94,21 @@ public class DataLockBuilder : IBuilder<DataLock>
 
         // 规则：
         //  允许除 IsNative 不同的同时存在，但不允许除了 IsPresent 不同的同时存在， IsPresent==True的优先
-        var found = _libraries.FirstOrDefault(x => x.Id == library.Id && x.IsNative == library.IsNative);
+        var found = _libraries.FirstOrDefault(x => x.Id.Namespace == library.Id.Namespace
+                                                && x.Id.Name == library.Id.Name
+                                                && x.Id.Platform == library.Id.Platform
+                                                && x.Id.Extension == library.Id.Extension
+                                                && x.IsNative == library.IsNative);
         if (found != null)
         {
-            if (!found.IsPresent && library.IsPresent)
+            // Present 只能有一个
+            if (found.IsPresent && library.IsPresent)
             {
                 _libraries.Remove(found);
-                _libraries.Add(library);
-            }
-            else
-            {
-                Debug.WriteLine($"[DUPLICATE]: {library}");
             }
         }
-        else
-        {
-            _libraries.Add(library);
-        }
+
+        _libraries.Add(library);
 
         // if (_libraries.All(x => x != library))
         //     _libraries.Add(library);

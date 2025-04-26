@@ -49,7 +49,7 @@
                         <Button Padding="12,4" Classes="Primary" HorizontalAlignment="Left"
                                 Click="SourceLinkButton_OnClick">
                             <ToolTip.Tip>
-                                <StackPanel Margin="10,6" Spacing="2">
+                                <StackPanel Spacing="2">
                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
                                         <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
