@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:Polymerium.App.Controls"
+                    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+                    xmlns:m="clr-namespace:Polymerium.App.Models">
+    <ControlTheme x:Key="{x:Type local:ExhibitPendingPackageButton}" TargetType="local:ExhibitPendingPackageButton">
+        <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
+        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="m:ExhibitModel">
+                <Border x:Name="Background" Padding="8" CornerRadius="{TemplateBinding CornerRadius}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
+                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                           Duration="{StaticResource ControlFastestAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <Border Height="36" Width="36" CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Border.Background>
+                            <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                        </Border.Background>
+                    </Border>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Background">
+            <Setter Property="BorderBrush"
+                    Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+        </Style>
+        <Style Selector="^:pointerover /template/ Border#Background">
+            <Setter Property="RenderTransform" Value="scale(1.05)" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Background">
+            <Setter Property="RenderTransform" Value="scale(0.98)" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Border#Background">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

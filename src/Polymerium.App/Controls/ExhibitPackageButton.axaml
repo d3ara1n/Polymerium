@@ -141,7 +141,7 @@
                                             </husk:Tag>
                                         </Border>
                                     </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Editable">
+                                    <husk:SwitchCase Value="Removing">
                                         <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
                                             <husk:Tag Classes="Danger Small">
@@ -164,7 +164,7 @@
                                            TextTrimming="CharacterEllipsis"
                                            TextWrapping="Wrap" MaxLines="2" />
                             </Grid>
-                           </Border>
+                        </Border>
                     </Grid>
                 </Border>
             </ControlTemplate>
@@ -179,6 +179,10 @@
         </Style>
         <Style Selector="^:pressed /template/ Border#Background">
             <Setter Property="RenderTransform" Value="scale(0.98)" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Border#Background">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

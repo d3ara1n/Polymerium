@@ -9,6 +9,7 @@
         <ResourceInclude Source="/Controls/PackageEntryButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitModpackButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitPackageButton.axaml" />
+        <ResourceInclude Source="/Controls/ExhibitPendingPackageButton.axaml" />
         <ResourceInclude Source="/Controls/SettingsEntry.axaml" />
         <ResourceInclude Source="/Controls/SettingsEntryItem.axaml" />
     </ResourceDictionary.MergedDictionaries>

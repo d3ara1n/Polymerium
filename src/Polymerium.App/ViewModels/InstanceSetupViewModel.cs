@@ -102,7 +102,7 @@ public partial class InstanceSetupViewModel(
                                     : AssetUriIndex.DIRT_IMAGE_BITMAP;
                         Dispatcher.UIThread.Post(() => RefreshingCount++);
                         return new InstancePackageModel(entry,
-                                                        entry.Source == Basic.Source,
+                                                        entry.Source is not null && entry.Source == Basic.Source,
                                                         p.Label,
                                                         p.Namespace,
                                                         p.ProjectId,
@@ -124,7 +124,7 @@ public partial class InstanceSetupViewModel(
                                     : AssetUriIndex.DIRT_IMAGE_BITMAP;
                         Dispatcher.UIThread.Post(() => RefreshingCount++);
                         return new InstancePackageModel(entry,
-                                                        entry.Source == Basic.Source,
+                                                        entry.Source is not null && entry.Source == Basic.Source,
                                                         p.Label,
                                                         p.Namespace,
                                                         p.ProjectId,
@@ -426,6 +426,18 @@ public partial class InstanceSetupViewModel(
                                     version.ProjectId,
                                     version.VersionId);
             notificationService.PopMessage($"{version.ProjectName}({version.VersionName}) has added to install queue");
+        }
+    }
+
+    [RelayCommand]
+    private async Task RemovePackage(InstancePackageModel? model)
+    {
+        if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        {
+            guard.Value.Setup.Packages.Remove(model.Key);
+            Stage.Remove(model);
+            StageCount--;
+            await guard.DisposeAsync();
         }
     }
 

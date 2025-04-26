@@ -165,7 +165,8 @@
                     <cp:PackageContainer Items="{Binding Stage}"
                                          TotalCount="{Binding StageCount}"
                                          PrimaryCommand="{Binding ViewPackageCommand}"
-                                         GotoExplorerCommand="{Binding GotoPackageExplorerViewCommand}" />
+                                         GotoExplorerCommand="{Binding GotoPackageExplorerViewCommand}"
+                                         RemoveCommand="{Binding RemovePackageCommand}" />
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="True">
                     <StackPanel VerticalAlignment="Center" Spacing="8">

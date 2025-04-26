@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Exceptions;
@@ -16,6 +19,8 @@ using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Refit;
+using Trident.Abstractions.Extensions;
+using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
@@ -60,9 +65,32 @@ public partial class PackageExplorerViewModel : ViewModelBase
         Repositories = r;
         SelectedRepository = r.First();
         IsFilterEnabled = true;
+        PendingPackagesSource
+           .Connect()
+           .Filter(x => x.State == ExhibitState.Adding)
+           .Bind(out var adding)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
+        PendingPackagesSource
+           .Connect()
+           .Filter(x => x.State == ExhibitState.Modifying)
+           .Bind(out var modifying)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
+        PendingPackagesSource
+           .Connect()
+           .Filter(x => x.State == ExhibitState.Removing)
+           .Bind(out var removing)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
+        AddingPackagesView = adding;
+        ModifyingPackagesView = modifying;
+        RemovingPackagesView = removing;
     }
 
     public IEnumerable<RepositoryBasicModel> Repositories { get; }
+
+    private readonly CompositeDisposable _subscriptions = new();
 
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
@@ -79,8 +107,20 @@ public partial class PackageExplorerViewModel : ViewModelBase
 
     private void ModifyPending(ExhibitModel model)
     {
-        
+        if (model.State is null or ExhibitState.Editable)
+            PendingPackagesSource.RemoveKey(model);
+        else
+            PendingPackagesSource.AddOrUpdate(model);
     }
+
+    #region Collections
+
+    public SourceCache<ExhibitModel, ExhibitModel> PendingPackagesSource { get; } = new(x => x);
+    public ReadOnlyObservableCollection<ExhibitModel> AddingPackagesView { get; }
+    public ReadOnlyObservableCollection<ExhibitModel> ModifyingPackagesView { get; }
+    public ReadOnlyObservableCollection<ExhibitModel> RemovingPackagesView { get; }
+
+    #endregion
 
     #region Reactive
 
@@ -277,6 +317,54 @@ public partial class PackageExplorerViewModel : ViewModelBase
                 _notificationService.PopMessage(ex, "Failed to load project information", NotificationLevel.Warning);
             }
     }
-    
+
+    [RelayCommand]
+    private void DismissPending()
+    {
+        foreach (var model in PendingPackagesSource.Items)
+            model.State = model.Installed == null ? null : ExhibitState.Editable;
+        PendingPackagesSource.Clear();
+    }
+
+    [RelayCommand]
+    private async Task CollectPending()
+    {
+        if (_profileManager.TryGetMutable(Basic.Key, out var guard))
+        {
+            foreach (var model in PendingPackagesSource.Items)
+                if (model.State == ExhibitState.Adding)
+                {
+                    guard.Value.Setup.Packages.Add(new Profile.Rice.Entry(PackageHelper.ToPurl(model.Label,
+                                                                              model.Ns,
+                                                                              model.ProjectId,
+                                                                              model.PendingVersionId),
+                                                                          true,
+                                                                          null,
+                                                                          []));
+                    model.State = ExhibitState.Editable;
+                }
+                else if (model is { State: ExhibitState.Removing, Installed: not null })
+                {
+                    var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
+                    if (exist != null)
+                        guard.Value.Setup.Packages.Remove(exist);
+                    model.State = null;
+                }
+                else if (model is { State: ExhibitState.Modifying, Installed: not null })
+                {
+                    var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
+                    if (exist != null)
+                        exist.Purl = PackageHelper.ToPurl(model.Label,
+                                                          model.Ns,
+                                                          model.ProjectId,
+                                                          model.PendingVersionId);
+                    model.State = ExhibitState.Editable;
+                }
+
+            await guard.DisposeAsync();
+            PendingPackagesSource.Clear();
+        }
+    }
+
     #endregion
 }
