@@ -12,15 +12,6 @@ public class RepositoryAgent
 {
     private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromDays(7);
 
-    #region Injected
-
-    private readonly IDistributedCache _cache;
-    private readonly ILogger<RepositoryAgent> _logger;
-    private readonly IReadOnlyDictionary<string, IRepository> _repositories;
-    private readonly IHttpClientFactory _clientFactory;
-
-    #endregion
-
     public RepositoryAgent(
         IEnumerable<IRepository> repositories,
         ILogger<RepositoryAgent> logger,
@@ -141,4 +132,13 @@ public class RepositoryAgent
             throw;
         }
     }
+
+    #region Injected
+
+    private readonly IDistributedCache _cache;
+    private readonly ILogger<RepositoryAgent> _logger;
+    private readonly IReadOnlyDictionary<string, IRepository> _repositories;
+    private readonly IHttpClientFactory _clientFactory;
+
+    #endregion
 }

@@ -26,8 +26,15 @@
             <husk:Card HorizontalAlignment="Center" VerticalAlignment="Center"
                        Background="{StaticResource OverlaySolidBackgroundBrush}">
                 <StackPanel Spacing="8" Margin="24">
-                    <husk:ProgressRing IsIndeterminate="{Binding UpdatingPending}" HorizontalAlignment="Center"
-                                       Height="56" Width="56" Value="{Binding UpdatingProgress,Mode=OneWay}">
+                    <husk:ProgressRing HorizontalAlignment="Center" Height="56" Width="56"
+                                       Value="{Binding UpdatingProgress,Mode=OneWay}">
+                        <husk:ProgressRing.IsIndeterminate>
+                            <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                <Binding Path="UpdatingPending" />
+                                <Binding Path="State" Converter="{x:Static huskc:ObjectConverters.Match}"
+                                         ConverterParameter="Deploying" />
+                            </MultiBinding>
+                        </husk:ProgressRing.IsIndeterminate>
                         <husk:ProgressRing.Transitions>
                             <Transitions>
                                 <DoubleTransition Property="Value" Easing="SineEaseOut"

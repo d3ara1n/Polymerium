@@ -42,7 +42,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         _configurationService = configurationService;
 
         LayoutIndex = configurationService.Value.InterfaceMarketplaceLayout;
-        
+
         // TODO: 名字应该在本地化键值对中获取
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
         Repositories = r;
@@ -118,7 +118,7 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
     {
         _configurationService.Value.InterfaceMarketplaceLayout = value;
     }
-    
+
     [ObservableProperty]
     public partial RepositoryBasicModel SelectedRepository { get; set; }
 

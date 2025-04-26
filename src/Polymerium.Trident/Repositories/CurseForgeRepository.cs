@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Polymerium.Trident.Models.CurseForgeApi;
 using Polymerium.Trident.Services;
 using Refit;
 using ReverseMarkdown;
@@ -100,13 +99,14 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
 
                     throw new FormatException("Vid is not well formatted into fileId");
                 }
-
+                else
                 {
                     var files = await service
                                      .GetModFilesAsync(modId,
                                                        filter.Version,
-                                                       CurseForgeService.LoaderIdToType(filter.Loader),
-                                                       count: 1)
+                                                       mod.ClassId == CurseForgeService.CLASSID_MOD
+                                                           ? CurseForgeService.LoaderIdToType(filter.Loader)
+                                                           : null)
                                      .ConfigureAwait(false);
                     var file = files.Data.FirstOrDefault();
                     if (file is not null)
@@ -130,8 +130,13 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
     {
         if (uint.TryParse(pid, out var modId))
         {
+            var mod = await service.GetModAsync(modId).ConfigureAwait(false);
             var first = await service
-                             .GetModFilesAsync(modId, filter.Version, CurseForgeService.LoaderIdToType(filter.Loader))
+                             .GetModFilesAsync(modId,
+                                               filter.Version,
+                                               mod.ClassId == CurseForgeService.CLASSID_MOD
+                                                   ? CurseForgeService.LoaderIdToType(filter.Loader)
+                                                   : null)
                              .ConfigureAwait(false);
             var initial = first.Data.Select(CurseForgeService.ToVersion);
             return new PaginationHandle<Version>(initial,

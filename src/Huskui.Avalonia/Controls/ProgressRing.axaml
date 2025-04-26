@@ -144,9 +144,9 @@
                     <Panel Name="Indeterminate" IsVisible="False"
                            Margin="{TemplateBinding TrackPadding}">
                         <Sector Name="Chaser"
-                             Stretch="None"
-                             StartAngle="-90"
-                             Fill="{TemplateBinding Background}" />
+                                Stretch="None"
+                                StartAngle="-90"
+                                Fill="{TemplateBinding Background}" />
                     </Panel>
                     <Panel Name="Determinate"
                            Margin="{TemplateBinding TrackPadding}">

@@ -144,7 +144,7 @@
                 </Grid>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
-        <husk:Divider IsVisible="False"/>
+        <husk:Divider IsVisible="False" />
         <controls:SettingsEntry Title="Persistence Storage (WIP)"
                                 Summary="Files or folders that are shared between builds"
                                 Icon="HardDrive" IsVisible="False">
@@ -184,7 +184,7 @@
                 </TabStrip>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>
-        <husk:Divider IsVisible="False"/>
+        <husk:Divider IsVisible="False" />
         <controls:SettingsEntry Title="Snapshots (WIP)" Icon="Camera" Summary="Backup, yes, it's called backup"
                                 IsVisible="False">
             <controls:SettingsEntryItem Header="Taken Automatically When (Shooting Trigger)">

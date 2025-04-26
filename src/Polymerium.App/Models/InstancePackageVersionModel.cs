@@ -8,6 +8,8 @@ namespace Polymerium.App.Models;
 public partial class InstancePackageVersionModel(
     string id,
     string name,
+    string compatibleLoaders,
+    string compatibleVersions,
     DateTimeOffset publishedAt,
     ReleaseType releaseType) : InstancePackageVersionModelBase
 {
@@ -22,6 +24,8 @@ public partial class InstancePackageVersionModel(
 
     public string Id => id;
     public string Name => name;
+    public string CompatibleLoaders => compatibleLoaders;
+    public string CompatibleVersions => compatibleVersions;
     public DateTimeOffset PublishedAtRaw => publishedAt;
     public string PublishedAt => publishedAt.Humanize();
 

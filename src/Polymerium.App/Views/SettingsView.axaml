@@ -231,8 +231,7 @@
                                  Height="{Binding #LinksPanel.Bounds.Height}">
                 <Border CornerRadius="{StaticResource MediumCornerRadius}"
                         RenderOptions.BitmapInterpolationMode="HighQuality"
-                        Background="{DynamicResource SettingsImageBrush}">
-                </Border>
+                        Background="{DynamicResource SettingsImageBrush}" />
             </husk:ConstrainedBox>
             <StackPanel Name="LinksPanel" Spacing="2">
                 <TextBlock ClipToBounds="False">

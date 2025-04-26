@@ -8,6 +8,7 @@ using Polymerium.App.Services;
 using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Repositories.Resources;
+using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Modals;
 
@@ -81,6 +82,14 @@ public partial class PackageEntryModal : Modal
                                                                                        : new
                                                                                            InstancePackageVersionModel(x.VersionId,
                                                                                                x.VersionName,
+                                                                                               string.Join(",",
+                                                                                                   x.Requirements
+                                                                                                      .AnyOfLoaders
+                                                                                                      .Select(LoaderHelper
+                                                                                                          .ToDisplayName)),
+                                                                                               string.Join(",",
+                                                                                                   x.Requirements
+                                                                                                      .AnyOfVersions),
                                                                                                x.PublishedAt,
                                                                                                x.ReleaseType))
                                          .ToList());
