@@ -14,7 +14,7 @@
         TargetType="x:Boolean">
         <husk:SwitchCase Value="True">
             <Grid RowDefinitions="*,12,Auto,4,Auto">
-                <Border Grid.Row="0" Background="{StaticResource ControlBackgroundBrush}"
+                <Border Grid.Row="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="*,4,Auto" Margin="4">
                         <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}"

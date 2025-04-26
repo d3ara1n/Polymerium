@@ -14,56 +14,94 @@
                      mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
                      x:Class="Polymerium.App.Views.PackageExplorerView" x:DataType="vm:PackageExplorerViewModel"
                      Padding="0" IsHeaderVisible="False" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    <controls:ScopedPage.Resources>
+        <DataTemplate x:Key="ExhibitModelTemplate" x:DataType="m:ExhibitModel">
+            <controls:ExhibitPendingPackageButton
+                Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand,FallbackValue={x:Null}}"
+                CommandParameter="{Binding}" />
+
+        </DataTemplate>
+    </controls:ScopedPage.Resources>
     <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="Auto,Auto,*">
-        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" RowDefinitions="Auto,*" Margin="12" RowSpacing="12">
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" RowDefinitions="Auto,*,Auto" RowSpacing="12">
             <Border Grid.Row="0" Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
-                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
+                    Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Margin="12">
                 <StackPanel Orientation="Horizontal" Spacing="6">
-                    <fi:SymbolIcon Symbol="BoxMultipleArrowLeft" FontSize="{StaticResource LargeFontSize}" />
+                    <fi:SymbolIcon Symbol="Drawer" FontSize="{StaticResource LargeFontSize}" />
                     <TextBlock Text="Pending" />
                 </StackPanel>
             </Border>
-            <!-- <ItemsControl Grid.Row="1"> -->
-            <!--     <Border Padding="8" CornerRadius="{StaticResource LargeCornerRadius}" -->
-            <!--             Background="{StaticResource CardBackgroundBrush}" -->
-            <!--             BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"> -->
-            <!--         <Border Height="36" Width="36"> -->
-            <!--             <Border.Background> -->
-            <!--                 <ImageBrush Source="/Assets/Icons/Package.png" /> -->
-            <!--             </Border.Background> -->
-            <!--         </Border> -->
-            <!--     </Border> -->
-            <!--     <ItemsControl.ItemsPanel> -->
-            <!--         <ItemsPanelTemplate> -->
-            <!--             <StackPanel Spacing="8" /> -->
-            <!--         </ItemsPanelTemplate> -->
-            <!--     </ItemsControl.ItemsPanel> -->
-            <!-- </ItemsControl> -->
-            <StackPanel Grid.Row="1" Spacing="8">
-                <husk:Divider>
+            <ScrollViewer Grid.Row="1" Padding="12,0">
+                <StackPanel Spacing="8">
+                    <husk:Divider>
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Add" />
+                        </StackPanel>
+                    </husk:Divider>
+                    <Panel>
+                        <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8"
+                                   IsVisible="{Binding AddingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
+                        <ItemsControl ItemsSource="{Binding AddingPackagesView}"
+                                      ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="8" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Panel>
+                    <husk:Divider>
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Modify" />
+                        </StackPanel>
+                    </husk:Divider>
+                    <Panel>
+                        <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8"
+                                   IsVisible="{Binding ModifyingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
+                        <ItemsControl ItemsSource="{Binding ModifyingPackagesView}"
+                                      ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="8" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Panel>
+                    <husk:Divider>
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Remove" />
+                        </StackPanel>
+                    </husk:Divider>
+                    <Panel>
+                        <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8"
+                                   IsVisible="{Binding RemovingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
+                        <ItemsControl ItemsSource="{Binding RemovingPackagesView}"
+                                      ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="8" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Panel>
+                </StackPanel>
+            </ScrollViewer>
+            <StackPanel Grid.Row="2" Spacing="10" Margin="12">
+                <!-- TODO: 改成 DropDownButton，Dismiss 放进菜单，免得误触。配色改成普通而非 Primary，太闪眼了 -->
+                <Button Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}" Classes="Primary"
+                        Command="{Binding CollectPendingCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="6">
-                        <TextBlock Text="Add" />
+                        <fi:SymbolIcon Symbol="BoxMultipleArrowLeft" FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock Text="Collect" />
                     </StackPanel>
-                </husk:Divider>
-                <Panel>
-                    <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" />
-                </Panel>
-                <husk:Divider>
+                </Button>
+                <Button Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
+                        Command="{Binding DismissPendingCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="6">
-                        <TextBlock Text="Modify" />
+                        <fi:SymbolIcon Symbol="DrawerDismiss" FontSize="{StaticResource LargeFontSize}" />
+                        <TextBlock Text="Dismiss" />
                     </StackPanel>
-                </husk:Divider>
-                <Panel>
-                    <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" />
-                </Panel>
-                <husk:Divider>
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <TextBlock Text="Remove" />
-                    </StackPanel>
-                </husk:Divider>
-                <Panel>
-                    <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" />
-                </Panel>
+                </Button>
             </StackPanel>
         </Grid>
         <husk:Divider Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical" />

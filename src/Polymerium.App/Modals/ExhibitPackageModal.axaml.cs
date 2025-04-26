@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Avalonia;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
@@ -10,7 +8,6 @@ using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.Trident.Services.Profiles;
 using Trident.Abstractions.Repositories;
 using Trident.Abstractions.Utilities;
 
@@ -190,13 +187,20 @@ public partial class ExhibitPackageModal : Modal
     [RelayCommand]
     private void Apply()
     {
-        if (Exhibit.State == null)
+        if (Exhibit.State is null)
         {
             Exhibit.State = ExhibitState.Adding;
         }
 
         if (Exhibit.State is ExhibitState.Editable)
         {
+            if (Exhibit.InstalledVersionId == SelectedVersion?.VersionId)
+            {
+                // 未作出更改，Abort
+                Dismiss();
+                return;
+            }
+
             Exhibit.State = ExhibitState.Modifying;
         }
 
@@ -224,6 +228,7 @@ public partial class ExhibitPackageModal : Modal
         Exhibit.PendingVersionId = null;
         Exhibit.PendingVersionName = null;
         ModifyPendingCallback(Exhibit);
+        Dismiss();
     }
 
     [RelayCommand]
@@ -233,6 +238,7 @@ public partial class ExhibitPackageModal : Modal
         Exhibit.PendingVersionId = null;
         Exhibit.PendingVersionName = null;
         ModifyPendingCallback(Exhibit);
+        Dismiss();
     }
 
     #endregion

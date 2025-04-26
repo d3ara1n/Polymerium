@@ -3,34 +3,10 @@
                     xmlns:local="using:Polymerium.App.Controls"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-                    xmlns:cp="using:Polymerium.App.Components"
-                    xmlns:fie="using:FluentIcons.Avalonia.MarkupExtensions"
                     xmlns:m="using:Polymerium.App.Models"
                     xmlns:converters="using:Polymerium.App.Converters">
     <ControlTheme x:Key="{x:Type local:PackageEntryButton}" TargetType="local:PackageEntryButton">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="ContextFlyout">
-            <MenuFlyout x:DataType="m:InstancePackageModel">
-                <MenuItem Header="Active"
-                          IsChecked="{Binding IsEnabled,Mode=TwoWay}"
-                          ToggleType="CheckBox"
-                          IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
-                          Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
-                <MenuItem Header="-" />
-                <MenuItem Header="Open Website"
-                          Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                          CommandParameter="{Binding Reference}"
-                          Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
-                <!-- <MenuItem Header="Add to Favorites" -->
-                <!--           Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" /> -->
-                <!-- <MenuItem Header="Remove from Favorite" -->
-                <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
-                <MenuItem Header="-" />
-                <MenuItem Header="Remove"
-                          IsEnabled="{Binding $parent[cp:PackageContainer].IsLoaded,Converter={x:Static BoolConverters.Not}}"
-                          Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
-            </MenuFlyout>
-        </Setter>
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
                 <husk:Card Name="Background" Height="78" Background="{StaticResource LayerBackgroundBrush}"

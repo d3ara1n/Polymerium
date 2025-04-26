@@ -12,7 +12,7 @@
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" MinWidth="360" MinHeight="360"
             x:Class="Polymerium.App.Modals.PackageEntryModal" x:DataType="m:InstancePackageModel">
     <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
-        <Border Grid.Row="0" Background="{StaticResource OverlayBackgroundBrush}" Padding="12"
+        <Border Grid.Row="0" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Padding="12"
                 CornerRadius="{StaticResource MediumCornerRadius}">
             <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*" ColumnSpacing="12">
                 <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Height="48" Width="48"
@@ -60,7 +60,7 @@
             <TabItem Header="Basic" />
             <TabItem Header="Versions">
                 <Grid RowDefinitions="Auto,*" RowSpacing="8">
-                    <Border Grid.Row="0" Background="{StaticResource ControlBackgroundBrush}"
+                    <Border Grid.Row="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
                         <ContentControl
                             Content="{Binding $parent[modals:PackageEntryModal].((m:InstancePackageModel)DataContext).Version,Mode=OneWay,FallbackValue={x:Null}}">
