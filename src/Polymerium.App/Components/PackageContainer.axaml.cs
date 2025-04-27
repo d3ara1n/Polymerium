@@ -6,8 +6,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using DynamicData;
+using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Trident.Abstractions.FileModels;
+using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Components;
 
@@ -17,6 +19,41 @@ public partial class PackageContainer : UserControl
         AvaloniaProperty.RegisterDirect<PackageContainer, string>(nameof(FilterText),
                                                                   o => o.FilterText,
                                                                   (o, v) => o.FilterText = v);
+
+    public static readonly DirectProperty<PackageContainer, PackageEntryEnabilityFilter?> FilterEnabilityProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, PackageEntryEnabilityFilter?>(nameof(FilterEnability),
+            o => o.FilterEnability,
+            (o, v) => o.FilterEnability = v);
+
+    public PackageEntryEnabilityFilter? FilterEnability
+    {
+        get;
+        set => SetAndRaise(FilterEnabilityProperty, ref field, value);
+    }
+
+    public static readonly DirectProperty<PackageContainer, PackageEntryLockilityFilter?> FilterLockilityProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, PackageEntryLockilityFilter?>(nameof(FilterLockility),
+            o => o.FilterLockility,
+            (o, v) => o.FilterLockility = v);
+
+    public PackageEntryLockilityFilter? FilterLockility
+    {
+        get;
+        set => SetAndRaise(FilterLockilityProperty, ref field, value);
+    }
+
+
+    public static readonly DirectProperty<PackageContainer, PackageEntryKindFilter?> FilterKindProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, PackageEntryKindFilter?>(nameof(FilterKind),
+            o => o.FilterKind,
+            (o, v) => o.FilterKind = v);
+
+    public PackageEntryKindFilter? FilterKind
+    {
+        get;
+        set => SetAndRaise(FilterKindProperty, ref field, value);
+    }
+
 
     public static readonly DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageModel>?>
         ViewProperty =
@@ -98,8 +135,18 @@ public partial class PackageContainer : UserControl
                 _subscription?.Dispose();
                 if (value is not null)
                 {
-                    var filter = this.GetObservable(FilterTextProperty).Select(BuildFilter);
-                    _subscription = value.Connect().Filter(filter).Bind(out var view).Subscribe();
+                    var text = this.GetObservable(FilterTextProperty).Select(BuildTextFilter);
+                    var enability = this.GetObservable(FilterEnabilityProperty).Select(BuildEnabilityFilter);
+                    var lockility = this.GetObservable(FilterLockilityProperty).Select(BuildLockilityFilter);
+                    var kind = this.GetObservable(FilterKindProperty).Select(BuildKindFilter);
+                    _subscription = value
+                                   .Connect()
+                                   .Filter(enability)
+                                   .Filter(lockility)
+                                   .Filter(kind)
+                                   .Filter(text)
+                                   .Bind(out var view)
+                                   .Subscribe();
                     View = view;
                 }
             }
@@ -118,7 +165,16 @@ public partial class PackageContainer : UserControl
         base.OnUnloaded(e);
     }
 
-    private static Func<InstancePackageModel, bool> BuildFilter(string filter) =>
+    private static Func<InstancePackageModel, bool> BuildEnabilityFilter(PackageEntryEnabilityFilter? enablity) =>
+        x => enablity?.Enability is null || x.IsEnabled == enablity.Enability;
+
+    private static Func<InstancePackageModel, bool> BuildLockilityFilter(PackageEntryLockilityFilter? lockility) =>
+        x => lockility?.Lockility is null || x.IsLocked == lockility.Lockility;
+
+    private static Func<InstancePackageModel, bool> BuildKindFilter(PackageEntryKindFilter? kind) =>
+        x => kind?.Kind is null || x.Kind == kind.Kind;
+
+    private static Func<InstancePackageModel, bool> BuildTextFilter(string filter) =>
         x => string.IsNullOrEmpty(filter)
           || (x is { ProjectName: { } name, Summary: { } summary }
            && (name.Contains(filter, StringComparison.InvariantCultureIgnoreCase)

@@ -87,7 +87,6 @@
                 </StackPanel>
             </ScrollViewer>
             <StackPanel Grid.Row="2" Spacing="10" Margin="12">
-                <!-- TODO: 改成 DropDownButton，Dismiss 放进菜单，免得误触。配色改成普通而非 Primary，太闪眼了 -->
                 <Button Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}" Classes="Primary"
                         IsEnabled="{Binding AddingPackagesView.Count,Converter={x:Static huskc:NumberConverters.IsNonZero},FallbackValue=False}"
                         Command="{Binding CollectPendingCommand}">

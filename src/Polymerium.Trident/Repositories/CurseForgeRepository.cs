@@ -128,6 +128,44 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         throw new FormatException("Pid is not well formatted into modId");
     }
 
+    public async Task<string> ReadDescriptionAsync(string? ns, string pid)
+    {
+        if (uint.TryParse(pid, out var modId))
+            try
+            {
+                var html = await service.GetModDescriptionAsync(modId).ConfigureAwait(false);
+                return CONVERTER.Convert(html);
+            }
+            catch (ApiException ex)
+            {
+                if (ex.StatusCode == HttpStatusCode.NotFound)
+                    throw new ResourceNotFoundException($"{pid} not found in the repository");
+
+                throw;
+            }
+
+        throw new FormatException("Pid is not well formatted into modId");
+    }
+
+    public async Task<string> ReadChangelogAsync(string? ns, string pid, string vid)
+    {
+        if (uint.TryParse(pid, out var modId) && uint.TryParse(vid, out var fileId))
+            try
+            {
+                var html = await service.GetModFileChangelogAsync(modId, fileId).ConfigureAwait(false);
+                return CONVERTER.Convert(html);
+            }
+            catch (ApiException ex)
+            {
+                if (ex.StatusCode == HttpStatusCode.NotFound)
+                    throw new ResourceNotFoundException($"{pid}/{vid} not found in the repository");
+
+                throw;
+            }
+
+        throw new FormatException("Pid or Vid is not well formatted into modId or fileId");
+    }
+
     public async Task<IPaginationHandle<Version>> InspectAsync(string? _, string pid, Filter filter)
     {
         if (uint.TryParse(pid, out var modId))

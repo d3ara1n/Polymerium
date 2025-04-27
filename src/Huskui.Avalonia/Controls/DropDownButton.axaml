@@ -1,4 +1,130 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <ControlTheme x:Key="{x:Type DropDownButton}" TargetType="DropDownButton" />
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+    <Design.PreviewWith>
+        <Panel Background="White">
+            <StackPanel>
+                <DropDownButton>
+                    <TextBlock Text="Hello World" />
+                </DropDownButton>
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="{x:Type DropDownButton}" TargetType="DropDownButton">
+        <Setter Property="Background" Value="{StaticResource ControlInteractiveBackgroundBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="14,9" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border
+                        x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="Background"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <DoubleTransition
+                                    Easing="SineEaseOut"
+                                    Property="Opacity"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <Grid ColumnDefinitions="*,Auto" Margin="{TemplateBinding Padding}" ColumnSpacing="6">
+                        <ContentPresenter Grid.Column="0"
+                                          Name="PART_ContentPresenter"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Background="{StaticResource TransparentBrush}"
+                                          BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          CornerRadius="{TemplateBinding CornerRadius}"
+                                          RecognizesAccessKey="True"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}">
+                            <ContentPresenter.Transitions>
+                                <Transitions>
+                                    <DoubleTransition
+                                        Easing="SineEaseOut"
+                                        Property="Opacity"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                </Transitions>
+                            </ContentPresenter.Transitions>
+                        </ContentPresenter>
+                        <fi:SymbolIcon Grid.Column="1" Symbol="ChevronDown"
+                                       FontSize="{TemplateBinding FontSize}" />
+                    </Grid>
+                    <Border x:Name="Indicator" Background="{StaticResource TransparentBrush}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition
+                                    Easing="SineEaseOut"
+                                    Property="Background"
+                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^.Small">
+            <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+            <Setter Property="Padding" Value="10,6" />
+        </Style>
+
+        <Style Selector="^.Large">
+            <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
+            <Setter Property="Padding" Value="18,12" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Border#Border">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ Border#Indicator">
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Indicator">
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Primary">
+            <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Success">
+            <Setter Property="Background" Value="{StaticResource ControlSuccessInteractiveBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Warning">
+            <Setter Property="Background" Value="{StaticResource ControlWarningInteractiveBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
+        </Style>
+
+        <Style Selector="^.Danger">
+            <Setter Property="Background" Value="{StaticResource ControlDangerInteractiveBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDarkForegroundBrush}" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

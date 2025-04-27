@@ -9,6 +9,7 @@
              xmlns:controls="clr-namespace:Polymerium.App.Controls"
              xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+             xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
     <Grid RowDefinitions="Auto,0,*">
@@ -32,30 +33,56 @@
                                                    VerticalAlignment="Center" />
                                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                             <TextBlock Grid.Column="0" Text="Status" VerticalAlignment="Bottom" />
-                                            <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}">
-                                                <TabStripItem Content="All" />
-                                                <TabStripItem Content="Enabled" />
-                                                <TabStripItem Content="Disabled" />
+                                            <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}"
+                                                      SelectedItem="{Binding $parent[cp:PackageContainer].FilterEnability,Mode=TwoWay}">
+                                                <TabStrip.ItemTemplate>
+                                                    <DataTemplate DataType="controls:PackageEntryEnabilityFilter">
+                                                        <TextBlock Text="{Binding Label}" />
+                                                    </DataTemplate>
+                                                </TabStrip.ItemTemplate>
+                                                <controls:PackageEntryEnabilityFilter Label="All" Enability="{x:Null}" />
+                                                <controls:PackageEntryEnabilityFilter Label="Enabled"
+                                                    Enability="{x:True}" />
+                                                <controls:PackageEntryEnabilityFilter Label="Disabled"
+                                                    Enability="{x:False}" />
                                             </TabStrip>
                                         </Grid>
                                         <husk:Divider />
                                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                             <TextBlock Grid.Column="0" Text="Source" VerticalAlignment="Bottom" />
-                                            <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}">
-                                                <TabStripItem Content="All" />
-                                                <TabStripItem Content="Original" />
-                                                <TabStripItem Content="Local" />
+                                            <TabStrip Grid.Column="1" Theme="{StaticResource SegmentedTabStripTheme}"
+                                                      SelectedItem="{Binding $parent[cp:PackageContainer].FilterLockility,Mode=TwoWay}">
+                                                <TabStrip.ItemTemplate>
+                                                    <DataTemplate DataType="controls:PackageEntryLockilityFilter">
+                                                        <TextBlock Text="{Binding Label}" />
+                                                    </DataTemplate>
+                                                </TabStrip.ItemTemplate>
+                                                <controls:PackageEntryLockilityFilter Label="All" Lockility="{x:Null}" />
+                                                <controls:PackageEntryLockilityFilter Label="Original"
+                                                    Lockility="{x:True}" />
+                                                <controls:PackageEntryLockilityFilter Label="Local"
+                                                    Lockility="{x:False}" />
                                             </TabStrip>
                                         </Grid>
                                         <husk:Divider />
                                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
                                             <TextBlock Grid.Column="0" Text="Type" VerticalAlignment="Bottom" />
-                                            <TabStrip Grid.Column=" 1" Theme="{StaticResource SegmentedTabStripTheme}">
-                                                <TabStripItem Content="All" />
-                                                <TabStripItem Content="Mod" />
-                                                <TabStripItem Content="ResourcePack" />
-                                                <TabStripItem Content="ShaderPack" />
-                                                <TabStripItem Content="DataPack" />
+                                            <TabStrip Grid.Column=" 1" Theme="{StaticResource SegmentedTabStripTheme}"
+                                                      SelectedItem="{Binding $parent[cp:PackageContainer].FilterKind,Mode=TwoWay}">
+                                                <TabStrip.ItemTemplate>
+                                                    <DataTemplate DataType="controls:PackageEntryKindFilter">
+                                                        <TextBlock Text="{Binding Label}" />
+                                                    </DataTemplate>
+                                                </TabStrip.ItemTemplate>
+                                                <controls:PackageEntryKindFilter Label="All" Kind="{x:Null}" />
+                                                <controls:PackageEntryKindFilter Label="Mod"
+                                                    Kind="{Binding Source=Mod,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
+                                                <controls:PackageEntryKindFilter Label="ResourcePack"
+                                                    Kind="{Binding Source=ResourcePack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
+                                                <controls:PackageEntryKindFilter Label="ShaderPack"
+                                                    Kind="{Binding Source=ShaderPack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
+                                                <controls:PackageEntryKindFilter Label="DataPack"
+                                                    Kind="{Binding Source=DataPack,Converter={x:Static DefaultValueConverter.Instance},x:DataType=resources:ResourceKind}" />
                                             </TabStrip>
                                         </Grid>
                                         <husk:Divider />

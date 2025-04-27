@@ -17,6 +17,7 @@
             <StaticResource x:Key="SolidColor" ResourceKey="Gray1Color" />
             <!-- 👆 两个极端 👆 -->
 
+            <StaticResource x:Key="FlyoutColor" ResourceKey="Gray1Color" />
             <StaticResource x:Key="LayerColor" ResourceKey="White7Color" />
             <StaticResource x:Key="CardColor" ResourceKey="Gray2Color" />
             <StaticResource x:Key="InteractiveColor" ResourceKey="White7Color" />
@@ -29,6 +30,7 @@
             <StaticResource x:Key="SolidColor" ResourceKey="Gray1Color" />
             <!-- 👆 不准动 👆 -->
 
+            <StaticResource x:Key="FlyoutColor" ResourceKey="Gray3Color" />
             <StaticResource x:Key="LayerColor" ResourceKey="White1Color" />
             <StaticResource x:Key="CardColor" ResourceKey="White1Color" />
             <StaticResource x:Key="InteractiveColor" ResourceKey="Black3Color" />
@@ -47,6 +49,7 @@
     <!-- Control(Variant)TranslucentBackgroundBrush：半透明背景色，除按钮外只用作静态底色（因为过渡动画有BUG） -->
 
     <SolidColorBrush x:Key="TransparentBrush" Color="{DynamicResource TransparentColor}" />
+    <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="{DynamicResource FlyoutColor}" />
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource Gray3Color}" />
     <SolidColorBrush x:Key="LayerBackgroundBrush" Color="{DynamicResource LayerColor}" />
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource CardColor}" />
