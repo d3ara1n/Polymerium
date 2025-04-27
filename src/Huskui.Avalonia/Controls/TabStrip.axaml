@@ -195,6 +195,7 @@
                     </Border>
                     <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
                                       Margin="{TemplateBinding Padding}"
+                                      Foreground="{TemplateBinding Foreground}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}">
                         <ContentPresenter.Transitions>
                             <Transitions>
@@ -207,7 +208,7 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Style Selector="^:pointerover:not(:selected) /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Opacity" Value="{StaticResource Overlay3Opacity}" />
         </Style>
 
@@ -216,8 +217,8 @@
             <Setter Property="RenderTransform" Value="scale(1.0)" />
         </Style>
 
-        <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="FontWeight" Value="Bold" />
+        <Style Selector="^:not(:selected) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{StaticResource ControlSecondaryForegroundBrush}" />
         </Style>
 
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">

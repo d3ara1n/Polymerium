@@ -50,6 +50,14 @@ public class RepositoryAgent
         RetrieveCachedAsync($"project:{PackageHelper.Identify(label, ns, pid, null, null)}",
                             () => Redirect(label).QueryAsync(ns, pid));
 
+    public Task<string> ReadDescriptionAsync(string label, string? ns, string pid) =>
+        RetrieveCachedAsync($"description:{PackageHelper.Identify(label, ns, pid, null, null)}",
+                            () => Redirect(label).ReadDescriptionAsync(ns, pid));
+
+    public Task<string> ReadChangelogAsync(string label, string? ns, string pid, string vid) =>
+        RetrieveCachedAsync($"Changelog:{PackageHelper.Identify(label, ns, pid, vid, null)}",
+                            () => Redirect(label).ReadChangelogAsync(ns, pid, vid));
+
     public Task<IPaginationHandle<Version>> InspectAsync(string label, string? ns, string pid, Filter filter) =>
         Redirect(label).InspectAsync(ns, pid, filter);
 

@@ -48,6 +48,14 @@ public class DataService(
         GetOrCreate($"project:{PackageHelper.Identify(label, ns, pid, null, null)}",
                     () => agent.QueryAsync(label, ns, pid));
 
+    public ValueTask<string> ReadDescriptionAsync(string label, string? ns, string pid) =>
+        GetOrCreate($"description:{PackageHelper.Identify(label, ns, pid, null, null)}",
+                    () => agent.ReadDescriptionAsync(label, ns, pid));
+
+    public ValueTask<string> ReadChangelogAsync(string label, string? ns, string pid, string vid) =>
+        GetOrCreate($"changelog:{PackageHelper.Identify(label, ns, pid, vid, null)}",
+                    () => agent.ReadChangelogAsync(label, ns, pid, vid));
+
     public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
         GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
                     async () =>

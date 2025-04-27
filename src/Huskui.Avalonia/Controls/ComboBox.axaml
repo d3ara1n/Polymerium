@@ -84,7 +84,7 @@
                                IsOpen="{TemplateBinding IsDropDownOpen,Mode=TwoWay}"
                                PlacementTarget="{TemplateBinding}"
                                InheritsTransform="True">
-                            <Border Margin="2,4" Background="{StaticResource WindowBackgroundBrush}"
+                            <Border Margin="2,4" Background="{StaticResource FlyoutBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
                                 <Border.Effect>
                                     <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
@@ -237,7 +237,7 @@
                                IsOpen="{TemplateBinding IsDropDownOpen,Mode=TwoWay}"
                                PlacementTarget="{TemplateBinding}"
                                InheritsTransform="True">
-                            <Border Margin="2,4" Background="{StaticResource WindowBackgroundBrush}"
+                            <Border Margin="2,4" Background="{StaticResource FlyoutBackgroundBrush}"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True">
                                 <Border.Effect>
                                     <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
