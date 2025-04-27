@@ -261,7 +261,7 @@
                     <StackPanel Spacing="8">
                         <husk:InfoBar
                             Content="Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages." />
-                        <Button>
+                        <Button Command="{Binding UnlockInstanceCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <fi:SymbolIcon Symbol="WarningLockOpen" FontSize="{StaticResource MediumFontSize}" />
                                 <TextBlock Text="Unlock" />

@@ -170,6 +170,17 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     }
 
     [RelayCommand]
+    private void UnlockInstance()
+    {
+        if (_owned != null)
+            _owned.Value.Setup.Source = null;
+        Basic.Source = null;
+        _notificationService.PopMessage("The instance is no longer associated to any modpack brand and free to edit.",
+                                        Basic.Key,
+                                        NotificationLevel.Success);
+    }
+
+    [RelayCommand]
     private void RemoveThumbnail()
     {
         ThumbnailOverwrite = AssetUriIndex.DIRT_IMAGE_BITMAP;
