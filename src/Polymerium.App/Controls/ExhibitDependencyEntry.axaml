@@ -1,0 +1,85 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+                    xmlns:m="clr-namespace:Polymerium.App.Models"
+                    xmlns:local="clr-namespace:Polymerium.App.Controls">
+
+    <ControlTheme x:Key="{x:Type local:ExhibitDependencyEntry}" TargetType="local:ExhibitDependencyEntry">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="m:ExhibitDependencyModel">
+                <Panel Name="Container">
+                    <Border Name="Background"
+                            Background="{StaticResource TransparentBrush}"
+                            BorderBrush="{StaticResource TransparentBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <BrushTransition Property="Background" Easing="SineEaseOut"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
+                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <Grid Margin="12" ColumnDefinitions="Auto,*,Auto,Auto">
+                        <Border Grid.Column="0"
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                Height="24" Width="24">
+                            <Border.Background>
+                                <ImageBrush
+                                    async:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding ProjectName}" />
+                        <CheckBox Grid.Column="2"
+                                  IsChecked="{Binding IsSelected,Mode=TwoWay}" />
+                    </Grid>
+                    <Border Name="Overlay" Opacity="0"
+                            Background="{StaticResource OverlayHalfBackgroundBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <Border Name="Indicator" Width="3" Opacity="0" HorizontalAlignment="Left"
+                            RenderTransform="translateX(-4px)" BorderThickness="1"
+                            BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                            Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
+                            CornerRadius="{StaticResource SmallCornerRadius}" Margin="0,4">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                               Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^[IsRequired=False]:not(:pointerover) /template/ Panel#Container">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+        <Style Selector="^:pointerover /template/ Border#Overlay">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+        <Style Selector="^[IsChecked=True]">
+            <Style Selector="^ /template/ Border#Background">
+                <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+            </Style>
+            <Style Selector="^ /template/ Border#Indicator">
+                <Setter Property="Opacity" Value="1" />
+                <Setter Property="RenderTransform" Value="translateX(0px)" />
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

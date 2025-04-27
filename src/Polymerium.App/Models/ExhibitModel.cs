@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.App.Facilities;
@@ -46,6 +47,8 @@ public partial class ExhibitModel(
     public string Downloads => ((double)downloads).ToMetric(decimals: 2);
 
     public Uri Reference => reference;
+
+    public ObservableCollection<ExhibitDependencyModel> AttachedDependencies { get; } = [];
 
     #endregion
 

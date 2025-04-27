@@ -301,7 +301,6 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                     project.Tags,
                                                     project.DownloadCount,
                                                     project.Summary,
-                                                    string.Empty,
                                                     project.UpdatedAt,
                                                     project.Gallery.Select(x => x.Url).ToList());
 
