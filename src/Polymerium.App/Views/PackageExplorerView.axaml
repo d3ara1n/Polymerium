@@ -88,16 +88,34 @@
             </ScrollViewer>
             <StackPanel Grid.Row="2" Spacing="10" Margin="12">
                 <Button Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}" Classes="Primary"
-                        IsEnabled="{Binding AddingPackagesView.Count,Converter={x:Static huskc:NumberConverters.IsNonZero},FallbackValue=False}"
                         Command="{Binding CollectPendingCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                            <Binding Path="AddingPackagesView.Count"
+                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                            <Binding Path="ModifyingPackagesView.Count"
+                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                            <Binding Path="RemovingPackagesView.Count"
+                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <fi:SymbolIcon Symbol="BoxMultipleArrowLeft" FontSize="{StaticResource LargeFontSize}" />
                         <TextBlock Text="Collect" />
                     </StackPanel>
                 </Button>
                 <Button Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
-                        IsEnabled="{Binding AddingPackagesView.Count,Converter={x:Static huskc:NumberConverters.IsNonZero},FallbackValue=False}"
                         Command="{Binding DismissPendingCommand}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                            <Binding Path="AddingPackagesView.Count"
+                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                            <Binding Path="ModifyingPackagesView.Count"
+                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                            <Binding Path="RemovingPackagesView.Count"
+                                     Converter="{x:Static huskc:NumberConverters.IsNonZero}" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <fi:SymbolIcon Symbol="DrawerDismiss" FontSize="{StaticResource LargeFontSize}" />
                         <TextBlock Text="Dismiss" />

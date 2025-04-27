@@ -14,13 +14,4 @@ public class ExhibitDependencyButton : Button
         get => GetValue(IsCheckedProperty);
         set => SetValue(IsCheckedProperty, value);
     }
-
-    public static readonly StyledProperty<bool> IsRequiredProperty =
-        AvaloniaProperty.Register<ExhibitDependencyButton, bool>(nameof(IsRequired));
-
-    public bool IsRequired
-    {
-        get => GetValue(IsRequiredProperty);
-        set => SetValue(IsRequiredProperty, value);
-    }
 }

@@ -8,7 +8,7 @@ public record Project(
     Uri? Thumbnail,
     string Author,
     string Summary,
-    Uri? Reference,
+    Uri Reference,
     ResourceKind Kind,
     IReadOnlyList<string> Tags,
     DateTimeOffset CreatedAt,
