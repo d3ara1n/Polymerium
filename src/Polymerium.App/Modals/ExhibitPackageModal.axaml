@@ -10,6 +10,7 @@
             xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+            xmlns:controls="clr-namespace:Polymerium.App.Controls"
             mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="420" MinHeight="360"
             x:Class="Polymerium.App.Modals.ExhibitPackageModal" x:DataType="m:ExhibitPackageModel"
             Background="{x:Null}" BorderBrush="{x:Null}"
@@ -127,7 +128,7 @@
             </Border>
         </DataTemplate>
     </husk:Modal.Resources>
-    <Grid Name="ContentContainer" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
         <Border Grid.Column="1" Padding="18" Width="280"
                 Background="{StaticResource OverlaySolidBackgroundBrush}"
                 BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
@@ -422,13 +423,13 @@
                 </husk:SwitchPresenter>
             </Grid>
         </Border>
+        <!-- 即使这个面板没有被展开也会触发懒加载，因为 IsEffectivelyVisible 不是依赖属性也没法跟踪值 -->
         <husk:ConstrainedBox Grid.Column="0" AspectRatio="0.8"
                              IsVisible="{Binding $parent[modals:ExhibitPackageModal].IsDetailPanelVisible,Mode=OneWay}">
-            <Border Padding="12"
-                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+            <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
                     BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                     CornerRadius="{StaticResource MediumCornerRadius}">
-                <TabControl Theme="{StaticResource SolidTabControlTheme}" Padding="6">
+                <TabControl Theme="{StaticResource SolidTabControlTheme}" Padding="0">
                     <TabControl.ItemContainerTheme>
                         <ControlTheme TargetType="TabItem" BasedOn="{StaticResource SolidTabItemTheme}">
                             <Setter Property="Margin" Value="0" />
@@ -437,7 +438,7 @@
                     </TabControl.ItemContainerTheme>
                     <TabControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="4" />
+                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="12" />
                         </ItemsPanelTemplate>
                     </TabControl.ItemsPanel>
                     <TabItem ToolTip.Tip="About">
@@ -449,7 +450,39 @@
                                 <!-- <TextBlock Text="About" VerticalAlignment="Center" /> -->
                             </StackPanel>
                         </TabItem.Header>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <husk:ConstrainedBox AspectRatio="1.78"
+                                                     IsVisible="{Binding Gallery.Count,Converter={x:Static huskc:NumberConverters.IsNonZero}}">
+                                    <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
+                                        <Panel>
+                                            <Carousel Name="GalleryCarousel" ItemsSource="{Binding Gallery}">
+                                                <Carousel.ItemTemplate>
+                                                    <DataTemplate DataType="x:Uri">
+                                                        <Image async:ImageLoader.Source="{Binding}"
+                                                               RenderOptions.BitmapInterpolationMode="HighQuality" />
+                                                    </DataTemplate>
+                                                </Carousel.ItemTemplate>
+                                            </Carousel>
+                                            <husk:PipsPager VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                                                            Margin="6"
+                                                            SelectedIndex="{Binding #GalleryCarousel.SelectedIndex,Mode=TwoWay}"
+                                                            ItemCount="{Binding #GalleryCarousel.ItemCount}" />
+                                        </Panel>
+                                    </Border>
+                                </husk:ConstrainedBox>
+                                <husk:LazyContainer
+                                    LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyDescription}">
+                                    <husk:LazyContainer.ContentTemplate>
+                                        <DataTemplate DataType="x:String">
+                                            <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="12" />
+                                        </DataTemplate>
+                                    </husk:LazyContainer.ContentTemplate>
+                                </husk:LazyContainer>
+                            </StackPanel>
+                        </ScrollViewer>
                     </TabItem>
+                    <!-- Note: 依赖附属于版本，放在这不合适，根本没办法显示依赖 -->
                     <TabItem ToolTip.Tip="Dependencies">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
@@ -457,11 +490,41 @@
                                                       Width="{StaticResource MediumFontSize}"
                                                       VerticalAlignment="Center" />
                                 <TextBlock Text="Dependencies" VerticalAlignment="Center" />
-                                <husk:Tag Classes="Status Primary">
-                                    <TextBlock Text="15" />
+                                <husk:Tag Classes="Status"
+                                          Classes.Primary="{Binding $parent[modals:ExhibitPackageModal].Exhibit.AttachedDependencies.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsNonZero}}">
+                                    <husk:SwitchPresenter
+                                        Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.AttachedDependencies.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsNonZero}}">
+                                        <husk:SwitchCase Value="True">
+                                            <TextBlock Text="" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="False">
+                                            <TextBlock Text="" />
+                                        </husk:SwitchCase>
+                                    </husk:SwitchPresenter>
                                 </husk:Tag>
                             </StackPanel>
                         </TabItem.Header>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
+                            <StackPanel>
+                                <husk:InfoBar Content="依赖信息来自资源托管平台，通常不准确且仅供参考" />
+                                <husk:LazyContainer
+                                    LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies}">
+                                    <husk:LazyContainer.ContentTemplate>
+                                        <DataTemplate x:DataType="m:ExhibitDependencyCollection">
+                                            <ItemsControl
+                                                ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="m:ExhibitDependencyModel">
+                                                        <controls:ExhibitDependencyEntry
+                                                            IsChecked="{Binding IsSelected,Mode=TwoWay}" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </DataTemplate>
+                                    </husk:LazyContainer.ContentTemplate>
+                                </husk:LazyContainer>
+                            </StackPanel>
+                        </ScrollViewer>
                     </TabItem>
                     <TabItem ToolTip.Tip="Changelogs">
                         <TabItem.Header>

@@ -12,5 +12,6 @@
         <ResourceInclude Source="/Controls/ExhibitPendingPackageButton.axaml" />
         <ResourceInclude Source="/Controls/SettingsEntry.axaml" />
         <ResourceInclude Source="/Controls/SettingsEntryItem.axaml" />
+        <ResourceInclude Source="/Controls/ExhibitDependencyEntry.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

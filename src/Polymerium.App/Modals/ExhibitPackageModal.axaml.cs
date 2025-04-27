@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.Repositories;
@@ -46,6 +48,29 @@ public partial class ExhibitPackageModal : Modal
         AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitModel>(nameof(Exhibit),
                                                                            o => o.Exhibit,
                                                                            (o, v) => o.Exhibit = v);
+
+    public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyDescriptionProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyDescription),
+                                                                          o => o.LazyDescription,
+                                                                          (o, v) => o.LazyDescription = v);
+
+    public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyDependenciesProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyDependencies),
+                                                                          o => o.LazyDependencies,
+                                                                          (o, v) => o.LazyDependencies = v);
+
+    public LazyObject? LazyDependencies
+    {
+        get;
+        set => SetAndRaise(LazyDependenciesProperty, ref field, value);
+    }
+
+
+    public LazyObject? LazyDescription
+    {
+        get;
+        set => SetAndRaise(LazyDescriptionProperty, ref field, value);
+    }
 
 
     public ExhibitPackageModal() => InitializeComponent();
@@ -100,7 +125,19 @@ public partial class ExhibitPackageModal : Modal
     {
         base.OnLoaded(e);
 
+        // Trigger ConstructVersions
         IsFilterEnabled = true;
+
+        // Initialize
+        LazyDescription = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+                return null;
+            var description = await DataService.ReadDescriptionAsync(Package.Label,
+                                                                     Package.Namespace,
+                                                                     Package.ProjectId);
+            return description;
+        });
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -109,6 +146,41 @@ public partial class ExhibitPackageModal : Modal
 
         if (change.Property == IsFilterEnabledProperty)
             LazyVersions = ConstructVersions();
+        if (change.Property == SelectedVersionProperty || change.Property == SelectedVersionModeProperty)
+            LazyDependencies = ConstructDependencies();
+    }
+
+    private LazyObject ConstructDependencies()
+    {
+        var lazy = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+                return null;
+            var vid = SelectedVersionMode == 0 ? SelectedVersion?.VersionId : null;
+            var package = await DataService.ResolvePackageAsync(Package.Label,
+                                                                Package.Namespace,
+                                                                Package.ProjectId,
+                                                                vid,
+                                                                Filter);
+            var tasks = package
+                       .Dependencies.Select(async x =>
+                        {
+                            var dependency = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
+                            return new ExhibitDependencyModel(x.Label,
+                                                              x.Namespace,
+                                                              x.Pid,
+                                                              x.Vid,
+                                                              dependency.ProjectName,
+                                                              dependency.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                                              dependency.Author,
+                                                              dependency.Kind,
+                                                              x.IsRequired);
+                        })
+                       .ToArray();
+            await Task.WhenAll(tasks);
+            return new ExhibitDependencyCollection(tasks.Select(x => x.Result).ToList());
+        });
+        return lazy;
     }
 
     private LazyObject ConstructVersions()

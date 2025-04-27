@@ -18,7 +18,6 @@ public class ExhibitPackageModel(
     IReadOnlyList<string> tags,
     ulong downloadCount,
     string summary,
-    string description,
     DateTimeOffset updatedAt,
     IReadOnlyList<Uri> gallery) : ModelBase
 {
@@ -34,7 +33,6 @@ public class ExhibitPackageModel(
     public Uri Thumbnail => thumbnail ?? AssetUriIndex.DIRT_IMAGE;
     public IReadOnlyList<string> Tags => tags;
     public string Summary => summary;
-    public string Description => description;
     public ulong DownloadCountRaw => downloadCount;
     public string DownloadCount => ((int)downloadCount).ToMetric(decimals: 2);
     public DateTimeOffset UpdatedAtRaw => updatedAt;

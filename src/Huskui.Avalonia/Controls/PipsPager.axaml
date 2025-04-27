@@ -4,34 +4,53 @@
                     xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
     <ControlTheme x:Key="{x:Type local:PipsPager}" TargetType="local:PipsPager">
-        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="Padding" Value="6" />
         <Setter Property="Template">
             <ControlTemplate>
-                <ListBox HorizontalAlignment="Center" Margin="24"
-                         SelectionMode="AlwaysSelected"
-                         SelectedIndex="{TemplateBinding SelectedIndex,Mode=TwoWay}"
-                         ItemsSource="{TemplateBinding ItemCount,Converter={x:Static huskc:InternalConverters.CountToArray}}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="4" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemContainerTheme>
-                        <ControlTheme TargetType="ListBoxItem">
-                            <Setter Property="Template">
-                                <ControlTemplate>
-                                    <avalonia:SymbolIcon Name="Icon" Symbol="RadioButton"
-                                                         FontSize="{StaticResource ExtraSmallFontSize}" />
-                                </ControlTemplate>
-                            </Setter>
+                <Border Name="Background" Padding="{TemplateBinding Padding}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Background="{TemplateBinding Background}" ClipToBounds="{TemplateBinding ClipToBounds}"
+                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition Property="Background" Easing="SineEaseOut"
+                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <ListBox HorizontalAlignment="Center"
+                             SelectionMode="AlwaysSelected"
+                             SelectedIndex="{TemplateBinding SelectedIndex,Mode=TwoWay}"
+                             ItemsSource="{TemplateBinding ItemCount,Converter={x:Static huskc:InternalConverters.CountToArray}}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="4" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerTheme>
+                            <ControlTheme TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <ControlTemplate>
+                                        <avalonia:SymbolIcon Name="Icon" Symbol="RadioButton"
+                                                             FontSize="{StaticResource ExtraSmallFontSize}" />
+                                    </ControlTemplate>
+                                </Setter>
 
-                            <Style Selector="^:selected /template/ avalonia|SymbolIcon#Icon">
-                                <Setter Property="IconVariant" Value="Filled" />
-                            </Style>
-                        </ControlTheme>
-                    </ListBox.ItemContainerTheme>
-                </ListBox>
+                                <Style Selector="^:selected /template/ avalonia|SymbolIcon#Icon">
+                                    <Setter Property="IconVariant" Value="Filled" />
+                                </Style>
+                            </ControlTheme>
+                        </ListBox.ItemContainerTheme>
+                    </ListBox>
+                </Border>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Background">
+            <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
+        </Style>
+
     </ControlTheme>
 </ResourceDictionary>

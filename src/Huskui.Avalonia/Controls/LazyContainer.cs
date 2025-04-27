@@ -45,28 +45,33 @@ public class LazyContainer : ContentControl
         {
             if (change.OldValue is LazyObject { IsCancelled: false, InProgress: true } old)
                 old.Cancel();
-            Content = null;
-            IsBad = false;
             if (change.NewValue is LazyObject lazy)
-                if (lazy.Value != null)
-                    Content = lazy.Value;
-                else
-                    try
-                    {
-                        await lazy.FetchAsync().ConfigureAwait(true);
-                        Content = lazy.Value;
-                    }
-                    catch
-                    {
-                        IsBad = true;
-                    }
+                await LoadAsync(lazy);
         }
+    }
+
+    private async Task LoadAsync(LazyObject lazy)
+    {
+        Content = null;
+        IsBad = false;
+        if (lazy.Value != null)
+            Content = lazy.Value;
+        else
+            try
+            {
+                await lazy.FetchAsync();
+                Content = lazy.Value;
+            }
+            catch
+            {
+                IsBad = true;
+            }
     }
 
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         base.OnUnloaded(e);
-        if (LazySource is { IsCancelled: false })
+        if (LazySource is { IsCancelled: false, InProgress: true })
             LazySource.Cancel();
     }
 }

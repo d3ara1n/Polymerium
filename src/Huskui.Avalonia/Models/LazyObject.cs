@@ -17,7 +17,7 @@ public class LazyObject(
     public async Task FetchAsync()
     {
         InProgress = true;
-        var value = await factory(_cts.Token).ConfigureAwait(true);
+        var value = await factory(_cts.Token);
         Value = value;
         InProgress = false;
         Callback?.Invoke(value);
