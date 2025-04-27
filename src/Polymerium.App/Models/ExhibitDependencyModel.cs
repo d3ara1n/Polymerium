@@ -1,11 +1,11 @@
 ﻿using System;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 
 public partial class ExhibitDependencyModel(
+    ExhibitModel exhibit,
     string label,
     string? @namespace,
     string pid,
@@ -20,6 +20,7 @@ public partial class ExhibitDependencyModel(
 
     #region Direct
 
+    public ExhibitModel Exhibit => exhibit;
     public string Label => label;
     public string? Namespace => @namespace;
     public string Pid => pid;
@@ -29,13 +30,6 @@ public partial class ExhibitDependencyModel(
     public string Author => author;
     public ResourceKind Kind => kind;
     public bool IsRequired => isRequired;
-
-    #endregion
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial bool IsSelected { get; set; }
 
     #endregion
 }

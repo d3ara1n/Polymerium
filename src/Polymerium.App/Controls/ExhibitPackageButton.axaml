@@ -6,7 +6,7 @@
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+                    xmlns:components="clr-namespace:Polymerium.App.Components">
     <ControlTheme x:Key="{x:Type controls:ExhibitPackageButton}" TargetType="controls:ExhibitPackageButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
@@ -88,72 +88,9 @@
                                         <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
                                     </Border.Background>
                                 </Border>
-                                <husk:SwitchPresenter
-                                    RenderTransform="translateY(8px)" HorizontalAlignment="Center"
-                                    VerticalAlignment="Bottom" Value="{Binding State}"
-                                    TargetType="m:ExhibitState">
-                                    <husk:SwitchCase Value="{x:Null}" />
-                                    <husk:SwitchCase Value="Editable">
-                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <husk:Tag Classes="Success Small">
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <fi:SymbolIcon Symbol="Checkmark"
-                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                                                    <TextBlock Text="Installed" VerticalAlignment="Center" />
-                                                </StackPanel>
-                                            </husk:Tag>
-                                        </Border>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Locked">
-                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <husk:Tag Classes="Small">
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <fi:SymbolIcon Symbol="LockClosed"
-                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                                                    <TextBlock Text="Locked" VerticalAlignment="Center" />
-                                                </StackPanel>
-                                            </husk:Tag>
-                                        </Border>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Adding">
-                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <husk:Tag Classes="Warning Small">
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <fi:SymbolIcon Symbol="AddCircle"
-                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                                                    <TextBlock Text="Adding" VerticalAlignment="Center" />
-                                                </StackPanel>
-                                            </husk:Tag>
-                                        </Border>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Modifying">
-                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <husk:Tag Classes="Warning Small">
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <fi:SymbolIcon Symbol="Pen"
-                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                                                    <TextBlock Text="Modifying" VerticalAlignment="Center" />
-                                                </StackPanel>
-                                            </husk:Tag>
-                                        </Border>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Removing">
-                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <husk:Tag Classes="Danger Small">
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <fi:SymbolIcon Symbol="Dismiss"
-                                                                   FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                                                    <TextBlock Text="Removing" VerticalAlignment="Center" />
-                                                </StackPanel>
-                                            </husk:Tag>
-                                        </Border>
-                                    </husk:SwitchCase>
-                                </husk:SwitchPresenter>
+                                <components:ExhibitStatePresenter RenderTransform="translateY(8px)"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Bottom" State="{Binding State}" />
                             </Panel>
                         </Border>
                         <Border Grid.Row="1" Padding="8"

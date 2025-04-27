@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
@@ -11,6 +12,7 @@ using Polymerium.App.Assets;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Trident.Abstractions.Repositories;
+using Trident.Abstractions.Repositories.Resources;
 using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Modals;
@@ -42,8 +44,6 @@ public partial class ExhibitPackageModal : Modal
                                                                    o => o.IsDetailPanelVisible,
                                                                    (o, v) => o.IsDetailPanelVisible = v);
 
-    private static bool isDetailPanelVisible;
-
     public static readonly DirectProperty<ExhibitPackageModal, ExhibitModel> ExhibitProperty =
         AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ExhibitModel>(nameof(Exhibit),
                                                                            o => o.Exhibit,
@@ -58,6 +58,30 @@ public partial class ExhibitPackageModal : Modal
         AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyDependencies),
                                                                           o => o.LazyDependencies,
                                                                           (o, v) => o.LazyDependencies = v);
+
+    public static readonly DirectProperty<ExhibitPackageModal, ICommand?> ViewPackageCommandProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, ICommand?>(nameof(ViewPackageCommand),
+                                                                        o => o.ViewPackageCommand,
+                                                                        (o, v) => o.ViewPackageCommand = v);
+
+    public static readonly DirectProperty<ExhibitPackageModal, LazyObject?> LazyChangelogProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitPackageModal, LazyObject?>(nameof(LazyChangelog),
+                                                                          o => o.LazyChangelog,
+                                                                          (o, v) => o.LazyChangelog = v);
+
+    public LazyObject? LazyChangelog
+    {
+        get;
+        set => SetAndRaise(LazyChangelogProperty, ref field, value);
+    }
+
+
+    public ICommand? ViewPackageCommand
+    {
+        get;
+        set => SetAndRaise(ViewPackageCommandProperty, ref field, value);
+    }
+
 
     public LazyObject? LazyDependencies
     {
@@ -75,11 +99,14 @@ public partial class ExhibitPackageModal : Modal
 
     public ExhibitPackageModal() => InitializeComponent();
 
+
+    private static bool isDetailPanelVisible;
+
     public bool IsDetailPanelVisible
     {
-        get => isDetailPanelVisible;
-        set => SetAndRaise(IsDetailPanelVisibleProperty, ref isDetailPanelVisible, value);
-    }
+        get;
+        set => SetAndRaise(IsDetailPanelVisibleProperty, ref field, value);
+    } = isDetailPanelVisible;
 
     public required ExhibitModel Exhibit
     {
@@ -119,6 +146,7 @@ public partial class ExhibitPackageModal : Modal
     public required Filter Filter { get; init; }
 
     public required Action<ExhibitModel> ModifyPendingCallback { get; init; }
+    public required Func<Project, ExhibitModel> LinkExhibitCallback { get; init; }
 
 
     protected override void OnLoaded(RoutedEventArgs e)
@@ -129,15 +157,8 @@ public partial class ExhibitPackageModal : Modal
         IsFilterEnabled = true;
 
         // Initialize
-        LazyDescription = new LazyObject(async t =>
-        {
-            if (t.IsCancellationRequested)
-                return null;
-            var description = await DataService.ReadDescriptionAsync(Package.Label,
-                                                                     Package.Namespace,
-                                                                     Package.ProjectId);
-            return description;
-        });
+        LazyDescription = ConstructDescription();
+        LazyChangelog = ConstructChangelog();
         LazyDependencies = ConstructDependencies();
     }
 
@@ -149,6 +170,41 @@ public partial class ExhibitPackageModal : Modal
             LazyVersions = ConstructVersions();
         if (change.Property == SelectedVersionProperty || change.Property == SelectedVersionModeProperty)
             LazyDependencies = ConstructDependencies();
+        if (change.Property == SelectedVersionProperty)
+            LazyChangelog = ConstructChangelog();
+        if (change.Property == IsDetailPanelVisibleProperty)
+            isDetailPanelVisible = change.GetNewValue<bool>();
+    }
+
+    private LazyObject ConstructDescription()
+    {
+        var lazy = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+                return null;
+            var description = await DataService.ReadDescriptionAsync(Package.Label,
+                                                                     Package.Namespace,
+                                                                     Package.ProjectId);
+            return description;
+        });
+        return lazy;
+    }
+
+    private LazyObject ConstructChangelog()
+    {
+        var lazy = new LazyObject(async t =>
+        {
+            if (t.IsCancellationRequested)
+                return null;
+            var vid = SelectedVersionMode == 0 ? SelectedVersion?.VersionId : null;
+            if (vid is null)
+                return null;
+
+            var description =
+                await DataService.ReadChangelogAsync(Package.Label, Package.Namespace, Package.ProjectId, vid);
+            return description;
+        });
+        return lazy;
     }
 
     private LazyObject ConstructDependencies()
@@ -167,7 +223,8 @@ public partial class ExhibitPackageModal : Modal
                        .Dependencies.Select(async x =>
                         {
                             var dependency = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.Pid);
-                            return new ExhibitDependencyModel(x.Label,
+                            return new ExhibitDependencyModel(LinkExhibitCallback(dependency),
+                                                              x.Label,
                                                               x.Namespace,
                                                               x.Pid,
                                                               x.Vid,

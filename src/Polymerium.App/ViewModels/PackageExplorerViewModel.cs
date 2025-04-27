@@ -116,6 +116,51 @@ public partial class PackageExplorerViewModel : ViewModelBase
             PendingPackagesSource.AddOrUpdate(model);
     }
 
+    private ExhibitModel LinkExhibit(Project project)
+    {
+        var foundInPending = PendingPackagesSource.Items.FirstOrDefault(x => x.Label == project.Label
+                                                                          && x.Ns == project.Namespace
+                                                                          && x.ProjectId == project.ProjectId);
+        if (foundInPending != null)
+            return foundInPending;
+
+        var foundInResult = Exhibits?.FirstOrDefault(x => x.Label == project.Label
+                                                       && x.Ns == project.Namespace
+                                                       && x.ProjectId == project.ProjectId);
+        if (foundInResult != null)
+            return foundInResult;
+
+        var profile = _profileManager.GetImmutable(Basic.Key);
+        var model = new ExhibitModel(project.Label,
+                                     project.Namespace,
+                                     project.ProjectId,
+                                     project.ProjectName,
+                                     project.Summary,
+                                     project.Thumbnail ?? AssetUriIndex.DIRT_IMAGE,
+                                     project.Author,
+                                     project.Tags,
+                                     project.UpdatedAt,
+                                     project.DownloadCount,
+                                     project.Reference);
+        var installed =
+            profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Purl,
+                                                                               project.Label,
+                                                                               project.Namespace,
+                                                                               project.ProjectId));
+        if (installed is not null)
+        {
+            model.State = installed.Source == null || installed.Source != Basic.Source
+                              ? ExhibitState.Editable
+                              : ExhibitState.Locked;
+            model.Installed = installed;
+            // HACK: 为了优化性能，这里不获取 VersionName，而是在为 ExhibitPackageModal 弹出前加载数据时一并获取
+            if (PackageHelper.TryParse(installed.Purl, out var parsed))
+                model.InstalledVersionId = parsed.Vid;
+        }
+
+        return model;
+    }
+
     #region Collections
 
     public SourceCache<ExhibitModel, ExhibitModel> PendingPackagesSource { get; } = new(x => x);
@@ -211,6 +256,11 @@ public partial class PackageExplorerViewModel : ViewModelBase
                     var tasks = rv
                                .Select(x =>
                                 {
+                                    var found = PendingPackagesSource.Items.FirstOrDefault(y => x.Label == y.Label
+                                     && x.Namespace == y.Ns
+                                     && x.Pid == y.ProjectId);
+                                    if (found != null)
+                                        return found;
                                     var model = new ExhibitModel(x.Label,
                                                                  x.Namespace,
                                                                  x.Pid,
@@ -315,7 +365,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                             ? loader.Identity
                                             : null,
                                         project.Kind),
-                    ModifyPendingCallback = ModifyPending
+                    ViewPackageCommand = ViewPackageCommand,
+                    ModifyPendingCallback = ModifyPending,
+                    LinkExhibitCallback = LinkExhibit
                 });
             }
             catch (OperationCanceledException) { }

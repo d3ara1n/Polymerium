@@ -8,7 +8,7 @@
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Transitions">
             <Transitions>
-                <DoubleTransition Property="Opacity" Delay="{StaticResource ControlFastestAnimationDuration}"
+                <DoubleTransition Property="Opacity"
                                   Duration="{StaticResource ControlFasterAnimationDuration}" />
                 <TransformOperationsTransition Property="RenderTransform"
                                                Delay="{StaticResource ControlFastestAnimationDuration}"

@@ -9,7 +9,7 @@ public class ExhibitModpackModel(
     string displayName,
     string authorName,
     string referenceLabel,
-    Uri? referenceUrl,
+    Uri referenceUrl,
     IReadOnlyList<string> tags,
     ulong downloadCount,
     string summary,
@@ -23,7 +23,7 @@ public class ExhibitModpackModel(
     public string DisplayName => displayName;
     public string AuthorName => authorName;
     public string ReferenceLabel => referenceLabel;
-    public Uri? ReferenceUrl => referenceUrl;
+    public Uri ReferenceUrl => referenceUrl;
     public IReadOnlyList<string> Tags => tags;
     public string Summary => summary;
     public string Description => description;
