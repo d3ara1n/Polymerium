@@ -138,6 +138,7 @@ public partial class ExhibitPackageModal : Modal
                                                                      Package.ProjectId);
             return description;
         });
+        LazyDependencies = ConstructDependencies();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -178,7 +179,9 @@ public partial class ExhibitPackageModal : Modal
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
-            return new ExhibitDependencyCollection(tasks.Select(x => x.Result).ToList());
+            return new ExhibitDependencyCollection(package.VersionName,
+                                                   package.VersionId,
+                                                   tasks.Select(x => x.Result).ToList());
         });
         return lazy;
     }

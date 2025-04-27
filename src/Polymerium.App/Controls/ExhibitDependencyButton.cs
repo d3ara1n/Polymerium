@@ -1,12 +1,13 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 
 namespace Polymerium.App.Controls;
 
-public class ExhibitDependencyEntry : TemplatedControl
+public class ExhibitDependencyButton : Button
 {
     public static readonly StyledProperty<bool> IsCheckedProperty =
-        AvaloniaProperty.Register<ExhibitDependencyEntry, bool>(nameof(IsChecked));
+        AvaloniaProperty.Register<ExhibitDependencyButton, bool>(nameof(IsChecked));
 
     public bool IsChecked
     {
@@ -15,7 +16,7 @@ public class ExhibitDependencyEntry : TemplatedControl
     }
 
     public static readonly StyledProperty<bool> IsRequiredProperty =
-        AvaloniaProperty.Register<ExhibitDependencyEntry, bool>(nameof(IsRequired));
+        AvaloniaProperty.Register<ExhibitDependencyButton, bool>(nameof(IsRequired));
 
     public bool IsRequired
     {

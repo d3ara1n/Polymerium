@@ -48,8 +48,6 @@ public partial class ExhibitModel(
 
     public Uri Reference => reference;
 
-    public ObservableCollection<ExhibitDependencyModel> AttachedDependencies { get; } = [];
-
     #endregion
 
     #region Reactive

@@ -28,7 +28,7 @@ public partial class ExhibitDependencyModel(
     public Uri Thumbnail => thumbnail;
     public string Author => author;
     public ResourceKind Kind => kind;
-    public bool IsRequred => isRequired;
+    public bool IsRequired => isRequired;
 
     #endregion
 
