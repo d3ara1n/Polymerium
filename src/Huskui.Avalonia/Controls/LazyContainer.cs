@@ -43,7 +43,7 @@ public class LazyContainer : ContentControl
 
         if (change.Property == LazySourceProperty)
         {
-            if (change.OldValue is LazyObject { IsCancelled: false, InProgress: true } old)
+            if (change.OldValue is LazyObject { IsCancelled: false, IsInProgress: true } old)
                 old.Cancel();
             if (change.NewValue is LazyObject lazy)
                 await LoadAsync(lazy);
@@ -71,7 +71,7 @@ public class LazyContainer : ContentControl
     protected override void OnUnloaded(RoutedEventArgs e)
     {
         base.OnUnloaded(e);
-        if (LazySource is { IsCancelled: false, InProgress: true })
+        if (LazySource is { IsCancelled: false, IsInProgress: true })
             LazySource.Cancel();
     }
 }

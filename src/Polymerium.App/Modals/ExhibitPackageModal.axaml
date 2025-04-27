@@ -482,7 +482,6 @@
                             </StackPanel>
                         </ScrollViewer>
                     </TabItem>
-                    <!-- Note: 依赖附属于版本，放在这不合适，根本没办法显示依赖 -->
                     <TabItem ToolTip.Tip="Dependencies">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
@@ -490,41 +489,48 @@
                                                       Width="{StaticResource MediumFontSize}"
                                                       VerticalAlignment="Center" />
                                 <TextBlock Text="Dependencies" VerticalAlignment="Center" />
-                                <husk:Tag Classes="Status"
-                                          Classes.Primary="{Binding $parent[modals:ExhibitPackageModal].Exhibit.AttachedDependencies.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsNonZero}}">
-                                    <husk:SwitchPresenter
-                                        Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.AttachedDependencies.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsNonZero}}">
-                                        <husk:SwitchCase Value="True">
-                                            <TextBlock Text="" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="False">
-                                            <TextBlock Text="" />
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
+                                <husk:Tag Classes="Status">
+                                    <TextBlock
+                                        Text="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Mode=OneWay,FallbackValue=0}" />
                                 </husk:Tag>
                             </StackPanel>
                         </TabItem.Header>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
-                            <StackPanel>
-                                <husk:InfoBar Content="依赖信息来自资源托管平台，通常不准确且仅供参考" />
-                                <husk:LazyContainer
-                                    LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies}">
-                                    <husk:LazyContainer.ContentTemplate>
-                                        <DataTemplate x:DataType="m:ExhibitDependencyCollection">
-                                            <ItemsControl
-                                                ItemsSource="{Binding}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate x:DataType="m:ExhibitDependencyModel">
-                                                        <controls:ExhibitDependencyEntry
-                                                            IsChecked="{Binding IsSelected,Mode=TwoWay}" />
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </DataTemplate>
-                                    </husk:LazyContainer.ContentTemplate>
-                                </husk:LazyContainer>
-                            </StackPanel>
-                        </ScrollViewer>
+                        <Grid RowDefinitions="Auto,*">
+                            <husk:InfoBar Grid.Row="0" Margin="12,0" Header="Showing dependencies of version:"
+                                          Content="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).VersionName,FallbackValue=None}" />
+                            <Panel Grid.Row="1">
+                                <StackPanel VerticalAlignment="Center"
+                                            IsVisible="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}"
+                                            Spacing="8">
+                                    <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
+                                                          Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                          Width="{StaticResource ExtraLargeFontSize}"
+                                                          HorizontalAlignment="Center" />
+                                    <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               HorizontalAlignment="Center" />
+                                </StackPanel>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
+                                    <husk:LazyContainer MinHeight="72"
+                                                        LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies}">
+                                        <husk:LazyContainer.ContentTemplate>
+                                            <DataTemplate x:DataType="m:ExhibitDependencyCollection">
+                                                <ItemsControl
+                                                    ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="m:ExhibitDependencyModel">
+                                                            <controls:ExhibitDependencyButton
+                                                                IsRequired="{Binding IsRequired}"
+                                                                IsChecked="{Binding IsSelected,Mode=TwoWay}" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </husk:LazyContainer.ContentTemplate>
+                                    </husk:LazyContainer>
+                                </ScrollViewer>
+                            </Panel>
+                        </Grid>
                     </TabItem>
                     <TabItem ToolTip.Tip="Changelogs">
                         <TabItem.Header>
