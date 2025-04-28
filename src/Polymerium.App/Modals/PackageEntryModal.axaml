@@ -9,7 +9,7 @@
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" MinWidth="360" MinHeight="360"
+            mc:Ignorable="d" Width="360" MinHeight="360"
             x:Class="Polymerium.App.Modals.PackageEntryModal" x:DataType="m:InstancePackageModel">
     <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
         <Border Grid.Row="0" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Padding="12"
@@ -57,7 +57,6 @@
                     <Setter Property="Margin" Value="0" />
                 </Style>
             </TabControl.Styles>
-            <TabItem Header="Basic" />
             <TabItem Header="Versions">
                 <Grid RowDefinitions="Auto,*" RowSpacing="8">
                     <Border Grid.Row="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"

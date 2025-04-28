@@ -520,11 +520,11 @@
                                 </StackPanel>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
                                     <husk:LazyContainer MinHeight="72"
-                                                        LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies}">
+                                                        LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies,Mode=OneWay}">
                                         <husk:LazyContainer.ContentTemplate>
                                             <DataTemplate x:DataType="m:ExhibitDependencyCollection">
                                                 <ItemsControl
-                                                    ItemsSource="{Binding}">
+                                                    ItemsSource="{Binding Mode=OneWay}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate x:DataType="m:ExhibitDependencyModel">
                                                             <controls:ExhibitDependencyButton

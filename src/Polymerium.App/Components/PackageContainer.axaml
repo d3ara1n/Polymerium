@@ -159,13 +159,13 @@
                 <Run Text="{Binding $parent[cp:PackageContainer].TotalCount,Mode=OneWay,FallbackValue=0}" />
             </TextBlock>
             <StackPanel Grid.Column="2" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
-                <Button Content="Bulk Update" />
-                <Button Content="Export List" />
+                <Button Content="Bulk Update" Command="{Binding $parent[cp:PackageContainer].BulkUpdateCommand}" />
+                <Button Content="Export List" Command="{Binding $parent[cp:PackageContainer].ExportListCommand}" />
                 <Button Classes="Primary" Command="{Binding $parent[cp:PackageContainer].GotoExplorerCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <icons:PackIconLucide Kind="WandSparkles" Height="{StaticResource MediumFontSize}"
                                               VerticalAlignment="Center" />
-                        <TextBlock Text="Get" />
+                        <TextBlock Text="Get More" />
                     </StackPanel>
                 </Button>
             </StackPanel>

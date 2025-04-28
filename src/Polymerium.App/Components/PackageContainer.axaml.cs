@@ -9,7 +9,6 @@ using DynamicData;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
 using Trident.Abstractions.FileModels;
-using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Components;
 
@@ -25,34 +24,16 @@ public partial class PackageContainer : UserControl
             o => o.FilterEnability,
             (o, v) => o.FilterEnability = v);
 
-    public PackageEntryEnabilityFilter? FilterEnability
-    {
-        get;
-        set => SetAndRaise(FilterEnabilityProperty, ref field, value);
-    }
-
     public static readonly DirectProperty<PackageContainer, PackageEntryLockilityFilter?> FilterLockilityProperty =
         AvaloniaProperty.RegisterDirect<PackageContainer, PackageEntryLockilityFilter?>(nameof(FilterLockility),
             o => o.FilterLockility,
             (o, v) => o.FilterLockility = v);
-
-    public PackageEntryLockilityFilter? FilterLockility
-    {
-        get;
-        set => SetAndRaise(FilterLockilityProperty, ref field, value);
-    }
 
 
     public static readonly DirectProperty<PackageContainer, PackageEntryKindFilter?> FilterKindProperty =
         AvaloniaProperty.RegisterDirect<PackageContainer, PackageEntryKindFilter?>(nameof(FilterKind),
             o => o.FilterKind,
             (o, v) => o.FilterKind = v);
-
-    public PackageEntryKindFilter? FilterKind
-    {
-        get;
-        set => SetAndRaise(FilterKindProperty, ref field, value);
-    }
 
 
     public static readonly DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageModel>?>
@@ -84,17 +65,57 @@ public partial class PackageContainer : UserControl
                                                                      o => o.GotoExplorerCommand,
                                                                      (o, v) => o.GotoExplorerCommand = v);
 
-    public static readonly DirectProperty<PackageContainer, ICommand> RemoveCommandProperty =
-        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand>(nameof(RemoveCommand),
-                                                                    o => o.RemoveCommand,
-                                                                    (o, v) => o.RemoveCommand = v);
+    public static readonly DirectProperty<PackageContainer, ICommand?> RemoveCommandProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(RemoveCommand),
+                                                                     o => o.RemoveCommand,
+                                                                     (o, v) => o.RemoveCommand = v);
+
+    public static readonly DirectProperty<PackageContainer, ICommand?> ExportListCommandProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(ExportListCommand),
+                                                                     o => o.ExportListCommand,
+                                                                     (o, v) => o.ExportListCommand = v);
+
+    public static readonly DirectProperty<PackageContainer, ICommand?> BulkUpdateCommandProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(BulkUpdateCommand),
+                                                                     o => o.BulkUpdateCommand,
+                                                                     (o, v) => o.BulkUpdateCommand = v);
 
 
     private IDisposable? _subscription;
-
     public PackageContainer() => InitializeComponent();
 
-    public ICommand RemoveCommand
+    public PackageEntryEnabilityFilter? FilterEnability
+    {
+        get;
+        set => SetAndRaise(FilterEnabilityProperty, ref field, value);
+    }
+
+    public PackageEntryLockilityFilter? FilterLockility
+    {
+        get;
+        set => SetAndRaise(FilterLockilityProperty, ref field, value);
+    }
+
+    public PackageEntryKindFilter? FilterKind
+    {
+        get;
+        set => SetAndRaise(FilterKindProperty, ref field, value);
+    }
+
+    public ICommand? BulkUpdateCommand
+    {
+        get;
+        set => SetAndRaise(BulkUpdateCommandProperty, ref field, value);
+    }
+
+
+    public ICommand? ExportListCommand
+    {
+        get;
+        set => SetAndRaise(ExportListCommandProperty, ref field, value);
+    }
+
+    public ICommand? RemoveCommand
     {
         get;
         set => SetAndRaise(RemoveCommandProperty, ref field, value);
