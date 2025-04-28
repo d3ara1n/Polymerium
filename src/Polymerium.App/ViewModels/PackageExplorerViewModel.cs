@@ -175,6 +175,13 @@ public partial class PackageExplorerViewModel : ViewModelBase
     [ObservableProperty]
     public partial RepositoryBasicModel SelectedRepository { get; set; }
 
+    partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
+    {
+        // 此时可能获取 SupportedKinds 还没完成，避免加载，转而让 SelectedKind 触发加载
+        if (SelectedKind is not null)
+            _ = SearchAsync();
+    }
+
     [ObservableProperty]
     public partial Filter Filter { get; set; } = Filter.Empty;
 
