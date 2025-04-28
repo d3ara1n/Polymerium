@@ -462,11 +462,10 @@ public partial class InstanceSetupViewModel(
         if (Reference is { Value: InstanceReferenceModel reference }
          && PackageHelper.TryParse(reference.Purl, out var result))
         {
-            var page = await (await repositories.InspectAsync(result.Label,
+            var page = await dataService.InspectVersionsAsync(result.Label,
                                                               result.Namespace,
                                                               result.Pid,
-                                                              Filter.Empty with { Kind = ResourceKind.Modpack }))
-                          .FetchAsync();
+                                                              Filter.Empty with { Kind = ResourceKind.Modpack });
             var versions = page
                           .Select(x => new InstanceReferenceVersionModel(x.Label,
                                                                          x.Namespace,

@@ -183,7 +183,10 @@ public class CurseForgeService(ICurseForgeClient client)
             model.Logo?.ThumbnailUrl?.IsAbsoluteUri is false ? model.Logo.Url : model.Logo?.ThumbnailUrl,
             model.Authors.Select(x => x.Name).FirstOrDefault() ?? "Anonymous",
             model.Summary,
-            model.Links.WebsiteUrl,
+            model.Links.WebsiteUrl
+         ?? new Uri(PROJECT_URL
+                   .Replace("{0}", ResourceKindToUrlKind(ClassIdToResourceKind(model.ClassId)))
+                   .Replace("{1}", model.Slug)),
             ClassIdToResourceKind(model.ClassId) ?? ResourceKind.Unknown,
             model.Categories.Select(x => x.Name).ToList(),
             model.DateCreated,
