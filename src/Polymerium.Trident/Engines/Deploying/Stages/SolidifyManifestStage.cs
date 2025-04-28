@@ -58,16 +58,14 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         var dir = Path.GetDirectoryName(fragile.SourcePath);
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
-                                        var client = factory.CreateClient();
-                                        var reader = await client
-                                                          .GetStreamAsync(fragile.Url, cancel.Token)
-                                                          .ConfigureAwait(false);
-                                        var writer = new FileStream(fragile.SourcePath,
-                                                                    FileMode.Create,
-                                                                    FileAccess.Write);
+                                        using var client = factory.CreateClient();
+                                        await using var reader = await client
+                                                                      .GetStreamAsync(fragile.Url, cancel.Token)
+                                                                      .ConfigureAwait(false);
+                                        await using var writer = new FileStream(fragile.SourcePath,
+                                                                                    FileMode.Create,
+                                                                                    FileAccess.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
-                                        reader.Close();
-                                        writer.Close();
                                     }
                                     else
                                     {
@@ -87,14 +85,13 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                                         var dir = Path.GetDirectoryName(present.Path);
                                         if (dir != null && !Directory.Exists(dir))
                                             Directory.CreateDirectory(dir);
-                                        var client = factory.CreateClient();
-                                        var reader = await client
-                                                          .GetStreamAsync(present.Url, cancel.Token)
-                                                          .ConfigureAwait(false);
-                                        var writer = new FileStream(present.Path, FileMode.Create, FileAccess.Write);
+                                        using var client = factory.CreateClient();
+                                        await using var reader = await client
+                                                                      .GetStreamAsync(present.Url, cancel.Token)
+                                                                      .ConfigureAwait(false);
+                                        await using var writer =
+                                            new FileStream(present.Path, FileMode.Create, FileAccess.Write);
                                         await reader.CopyToAsync(writer, cancel.Token).ConfigureAwait(false);
-                                        reader.Close();
-                                        writer.Close();
                                     }
                                     else
                                     {
@@ -155,6 +152,10 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
                     })
                    .ToArray();
         await Task.WhenAll(tasks).ConfigureAwait(false);
+
+        if (cancel.IsCancellationRequested)
+            return;
+        
         foreach (var explosive in manifest.ExplosiveFiles)
         {
             if (Directory.Exists(explosive.TargetDirectory) && explosive.IsDestructive)
@@ -199,9 +200,8 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
         {
             if (hash != null)
             {
-                var reader = new FileStream(path, FileMode.Open, FileAccess.Read);
+                using var reader = new FileStream(path, FileMode.Open, FileAccess.Read);
                 var computed = Convert.ToHexString(SHA1.HashData(reader));
-                reader.Close();
                 return hash.Equals(computed, StringComparison.InvariantCultureIgnoreCase);
             }
 
