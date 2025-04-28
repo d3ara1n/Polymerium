@@ -294,6 +294,7 @@ public partial class InstanceSetupViewModel(
                 DataContext = model,
                 Guard = guard,
                 DataService = dataService,
+                OverlayService = overlayService,
                 Filter = new Filter(Kind: model.Kind,
                                     Version: Basic.Version,
                                     Loader: Basic.Loader is not null

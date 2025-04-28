@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Interactivity;
+using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
@@ -38,6 +40,8 @@ public partial class PackageEntryModal : Modal
     public required ProfileGuard Guard { get; init; }
     public required DataService DataService { get; init; }
     public required Filter Filter { get; init; }
+
+    public required OverlayService OverlayService { get; init; }
 
     private InstancePackageModel Model => (DataContext as InstancePackageModel)!;
 
@@ -129,16 +133,44 @@ public partial class PackageEntryModal : Modal
             Model.Version = v;
     }
 
-    private void DismissButton_Click(object? sender, RoutedEventArgs e)
+
+    #region Commands
+
+    [RelayCommand]
+    private void Dismiss()
     {
         RaiseEvent(new OverlayItem.DismissRequestedEventArgs(this));
         if (Model.Version is InstancePackageVersionModel v)
             v.IsCurrent = true;
     }
 
-    private void RemoveVersionButton_Click(object? sender, RoutedEventArgs e)
+    [RelayCommand]
+    private void RemoveVersion()
     {
         Model.Version = InstancePackageUnspecifiedVersionModel.Instance;
         SelectedVersionProxy = null;
     }
+
+    [RelayCommand]
+    private async Task AddTag()
+    {
+        var tag = await OverlayService.RequestInputAsync();
+        if (string.IsNullOrEmpty(tag))
+            return;
+
+        Model.Tags.Add(tag);
+    }
+
+    [RelayCommand]
+    private void RemoveTag(string? tag)
+    {
+        if (tag == null)
+            return;
+
+        var index = Model.Tags.IndexOf(tag);
+        if (index >= 0)
+            Model.Tags.RemoveAt(index);
+    }
+
+    #endregion
 }
