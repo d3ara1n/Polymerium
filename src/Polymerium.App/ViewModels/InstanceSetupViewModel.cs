@@ -24,6 +24,7 @@ using Polymerium.App.Toasts;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using Refit;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 using Trident.Abstractions.Repositories;
@@ -409,7 +410,10 @@ public partial class InstanceSetupViewModel(
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, "Failed to exporting: \n{}", entry.Purl);
+                        logger.LogError(ex, "Failed to exporting: {}", entry.Purl);
+                        notificationService.PopMessage($"{entry.Purl}: {ex.Message}",
+                                                       "Failed to fetching information",
+                                                       NotificationLevel.Warning);
                     }
 
                 output.Add(new ExportedEntry(entry.Purl,
@@ -457,30 +461,39 @@ public partial class InstanceSetupViewModel(
         string? Version);
 
     [RelayCommand]
-    private async Task CheckUpdate()
+    private async Task CheckUpdateAsync()
     {
         if (Reference is { Value: InstanceReferenceModel reference }
          && PackageHelper.TryParse(reference.Purl, out var result))
         {
-            var page = await dataService.InspectVersionsAsync(result.Label,
-                                                              result.Namespace,
-                                                              result.Pid,
-                                                              Filter.Empty with { Kind = ResourceKind.Modpack });
-            var versions = page
-                          .Select(x => new InstanceReferenceVersionModel(x.Label,
-                                                                         x.Namespace,
-                                                                         x.ProjectId,
-                                                                         x.VersionId,
-                                                                         x.VersionName,
-                                                                         x.ReleaseType,
-                                                                         x.PublishedAt)
-                           {
-                               IsCurrent = x.VersionId == reference.VersionId
-                           })
-                          .ToList();
-            var dialog = new InstanceVersionPickerDialog { Versions = versions };
-            if (await overlayService.PopDialogAsync(dialog) && dialog.Result is InstanceReferenceVersionModel version)
-                Update(version);
+            try
+            {
+                var page = await dataService.InspectVersionsAsync(result.Label,
+                                                                  result.Namespace,
+                                                                  result.Pid,
+                                                                  Filter.Empty with { Kind = ResourceKind.Modpack });
+                var versions = page
+                              .Select(x => new InstanceReferenceVersionModel(x.Label,
+                                                                             x.Namespace,
+                                                                             x.ProjectId,
+                                                                             x.VersionId,
+                                                                             x.VersionName,
+                                                                             x.ReleaseType,
+                                                                             x.PublishedAt)
+                               {
+                                   IsCurrent = x.VersionId == reference.VersionId
+                               })
+                              .ToList();
+                var dialog = new InstanceVersionPickerDialog { Versions = versions };
+                if (await overlayService.PopDialogAsync(dialog)
+                 && dialog.Result is InstanceReferenceVersionModel version)
+                    Update(version);
+            }
+            catch (ApiException ex)
+            {
+                logger.LogError(ex, "Failed to check update: {}", reference.Purl);
+                notificationService.PopMessage(ex, "Failed to check update");
+            }
         }
     }
 

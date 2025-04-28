@@ -71,7 +71,7 @@ public class DataService(
                             rv.AddRange(await handle.FetchAsync());
                             index++;
                         } while (rv.Count != lastCount);
-
+                        
                         return rv.AsEnumerable();
                     });
 
@@ -117,4 +117,5 @@ public class DataService(
                                   }
                               }));
                           });
+    
 }
