@@ -49,6 +49,9 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
 
         await Task.WhenAll(tasks).ConfigureAwait(false);
 
+        if (token.IsCancellationRequested)
+            return;
+
         foreach (var (key, value) in flatten)
             builder.AddParcel(key.Label,
                               key.Namespace,
