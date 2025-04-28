@@ -16,7 +16,8 @@ public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int 
             return;
 
         IsFetching = true;
-        var rv = await factory.Invoke(_index++).ConfigureAwait(false);
+        var rv = await factory.Invoke(_index++);
+        await Task.Delay(TimeSpan.FromSeconds(3));
         var dirty = false;
         foreach (var item in rv)
         {

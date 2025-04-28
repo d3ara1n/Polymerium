@@ -4,29 +4,30 @@
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
     <Design.PreviewWith>
         <Grid ColumnDefinitions="*,12,*" Background="White">
-            <StackPanel Grid.Column="0" Width="128" Margin="32" VerticalAlignment="Center">
-                <Panel Width="64" Height="64">
-                    <local:ProgressRing Value="50"
-                                        ShowProgressText="True">
-                        <local:ProgressRing.Styles>
-                            <Style Selector="local|ProgressRing">
-                                <Style.Animations>
-                                    <Animation Duration="0:0:3" IterationCount="Infinite" Easing="QuadraticEaseOut">
-                                        <KeyFrame Cue="0%">
-                                            <Setter Property="Value" Value="0" />
-                                        </KeyFrame>
-                                        <KeyFrame Cue="50%">
-                                            <Setter Property="Value" Value="100" />
-                                        </KeyFrame>
-                                        <KeyFrame Cue="100%">
-                                            <Setter Property="Value" Value="0" />
-                                        </KeyFrame>
-                                    </Animation>
-                                </Style.Animations>
-                            </Style>
-                        </local:ProgressRing.Styles>
-                    </local:ProgressRing>
-                </Panel>
+            <StackPanel Grid.Column="0" Width="128" Margin="32" VerticalAlignment="Center" Orientation="Horizontal"
+                        Spacing="8">
+                <local:ProgressRing Value="50" Height="54" Width="54"
+                                    ShowProgressText="True">
+                    <local:ProgressRing.Styles>
+                        <Style Selector="local|ProgressRing">
+                            <Style.Animations>
+                                <Animation Duration="0:0:3" IterationCount="Infinite" Easing="QuadraticEaseOut">
+                                    <KeyFrame Cue="0%">
+                                        <Setter Property="Value" Value="0" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="50%">
+                                        <Setter Property="Value" Value="100" />
+                                    </KeyFrame>
+                                    <KeyFrame Cue="100%">
+                                        <Setter Property="Value" Value="0" />
+                                    </KeyFrame>
+                                </Animation>
+                            </Style.Animations>
+                        </Style>
+                    </local:ProgressRing.Styles>
+                </local:ProgressRing>
+                <local:ProgressRing Width="54" Height="54" IsIndeterminate="True"
+                                    ShowProgressText="True" />
             </StackPanel>
             <StackPanel Grid.Column="2" Height="128" Margin="32" Orientation="Horizontal"
                         HorizontalAlignment="Center">
@@ -63,7 +64,7 @@
                     <Panel Name="Indeterminate" IsVisible="False">
                         <Arc Name="Chaser"
                              Stretch="None"
-                             StartAngle="-90"
+                             SweepAngle="90"
                              Stroke="{TemplateBinding Background}"
                              StrokeThickness="{TemplateBinding StrokeWidth}"
                              StrokeLineCap="Round" />

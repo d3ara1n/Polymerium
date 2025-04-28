@@ -5,7 +5,6 @@ using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
-using Avalonia.Threading;
 using Huskui.Avalonia.Models;
 
 namespace Huskui.Avalonia.Controls;
@@ -50,8 +49,8 @@ public class InfiniteScrollView : ItemsControl
         if (change.Property == ItemsSourceProperty)
         {
             _source = change.NewValue as IInfiniteCollection;
-
-            Update();
+            _scrollViewer?.ScrollToHome();
+            UpdateAsync();
         }
     }
 
@@ -70,10 +69,10 @@ public class InfiniteScrollView : ItemsControl
             return;
 
         if (offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height)
-            Update();
+            _ = UpdateAsync();
     }
 
-    private void Update()
+    private async Task UpdateAsync()
     {
         if (_source == null)
         {
@@ -96,20 +95,16 @@ public class InfiniteScrollView : ItemsControl
         PseudoClasses.Set(":finished", false);
         PseudoClasses.Set(":idle", false);
 
-        Task
-           .Run(_source.FetchAsync)
-           .ContinueWith(t =>
-            {
-                Dispatcher.UIThread.Post(() =>
-                {
-                    PseudoClasses.Set(":loading", false);
-                    PseudoClasses.Set(!_source.HasNext ? ":finished" : ":idle", true);
+        try
+        {
+            await _source.FetchAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+        }
 
-                    if (_scrollViewer != null)
-                        OnScroll(_scrollViewer.Offset);
-                });
-                if (t.Exception != null)
-                    Debug.WriteLine(t.Exception);
-            });
+        PseudoClasses.Set(":loading", false);
+        PseudoClasses.Set(!_source.HasNext ? ":finished" : ":idle", true);
     }
 }

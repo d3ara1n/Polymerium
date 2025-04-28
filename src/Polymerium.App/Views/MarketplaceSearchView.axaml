@@ -51,14 +51,16 @@
                                     IsEnabled="{Binding Exhibits.IsFetching,Converter={x:Static BoolConverters.Not},FallbackValue=False}">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <husk:SwitchPresenter VerticalAlignment="Center"
-                                                          Value="{Binding Exhibits.IsFetching,FallbackValue=True}"
+                                                          Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
                                                           TargetType="x:Boolean"
                                                           Height="{StaticResource MediumFontSize}"
                                                           Width="{StaticResource MediumFontSize}">
                                         <husk:SwitchCase Value="True">
-                                            <husk:ProgressRing IsIndeterminate="True" StrokeWidth="2"
-                                                               TrackStrokeWidth="2"
-                                                               Background="{Binding  $parent[Button].Foreground}" />
+                                            <husk:ProgressRing
+                                                IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
+                                                StrokeWidth="2"
+                                                TrackStrokeWidth="2"
+                                                Background="{Binding  $parent[Button].Foreground}" />
                                         </husk:SwitchCase>
                                         <husk:SwitchCase Value="False">
                                             <icons:PackIconLucide Kind="Search" />
@@ -159,34 +161,25 @@
                 </Grid>
             </StackPanel>
             <Panel Grid.Row="2">
-                <husk:SwitchPresenter Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
-                                      TargetType="x:Boolean"
-                                      IsVisible="{Binding Exhibits.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
-                    <husk:SwitchCase Value="True">
-                        <StackPanel VerticalAlignment="Center"
-                                    Spacing="8">
-                            <icons:PackIconLucide Kind="Loader" Height="{StaticResource ExtraLargeFontSize}"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                  Width="{StaticResource ExtraLargeFontSize}"
-                                                  HorizontalAlignment="Center" />
-                            <TextBlock Text="Loading..." FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="False">
-                        <StackPanel VerticalAlignment="Center"
-                                    Spacing="8">
-                            <icons:PackIconLucide Kind="Package2" Height="{StaticResource ExtraLargeFontSize}"
-                                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                  Width="{StaticResource ExtraLargeFontSize}"
-                                                  HorizontalAlignment="Center" />
-                            <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
-                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                       HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </husk:SwitchCase>
-                </husk:SwitchPresenter>
+                <StackPanel VerticalAlignment="Center"
+                            Spacing="8">
+                    <StackPanel.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                            <Binding Path="Exhibits.IsFetching" Mode="OneWay" Converter="{x:Static BoolConverters.Not}"
+                                     FallbackValue="{x:True}" />
+                            <Binding Path="Exhibits.Count" Mode="OneWay"
+                                     Converter="{x:Static huskc:NumberConverters.IsZero}"
+                                     FallbackValue="{x:True}" />
+                        </MultiBinding>
+                    </StackPanel.IsVisible>
+                    <icons:PackIconLucide Kind="Package2" Height="{StaticResource ExtraLargeFontSize}"
+                                          Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                          Width="{StaticResource ExtraLargeFontSize}"
+                                          HorizontalAlignment="Center" />
+                    <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                               HorizontalAlignment="Center" />
+                </StackPanel>
                 <husk:InfiniteScrollView Margin="0,-12,0,0" ItemsSource="{Binding Exhibits}"
                                          ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate,FallbackValue={x:Null}}"
                                          ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate,FallbackValue={x:Null}}"

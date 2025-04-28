@@ -174,7 +174,9 @@
                                                       Height="{StaticResource MediumFontSize}"
                                                       Width="{StaticResource MediumFontSize}">
                                     <husk:SwitchCase Value="True">
-                                        <husk:ProgressRing IsIndeterminate="True" StrokeWidth="2" TrackStrokeWidth="2" />
+                                        <husk:ProgressRing
+                                            IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
+                                            StrokeWidth="2" TrackStrokeWidth="2" />
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="False">
                                         <icons:PackIconLucide Kind="Search" />
@@ -213,32 +215,26 @@
         </Panel>
         <husk:Divider Grid.Column="2" Grid.Row="1" />
         <Panel Grid.Column="2" Grid.Row="2">
-            <husk:SwitchPresenter Value="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=True}"
-                                  TargetType="x:Boolean"
-                                  IsVisible="{Binding Exhibits.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
-                <husk:SwitchCase Value="True">
-                    <StackPanel VerticalAlignment="Center"
-                                Spacing="8">
-                        <icons:PackIconLucide Kind="Loader" Height="{StaticResource ExtraLargeFontSize}"
-                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                              Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="Loading..." FontSize="{StaticResource LargeFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
-                    </StackPanel>
-                </husk:SwitchCase>
-                <husk:SwitchCase Value="False">
-                    <StackPanel VerticalAlignment="Center"
-                                Spacing="8">
-                        <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
-                                              Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                              Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
-                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   HorizontalAlignment="Center" />
-                    </StackPanel>
-                </husk:SwitchCase>
-            </husk:SwitchPresenter>
+
+            <StackPanel VerticalAlignment="Center"
+                        Spacing="8">
+                <StackPanel.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding Path="Exhibits.IsFetching" Mode="OneWay"
+                                 Converter="{x:Static BoolConverters.Not}"
+                                 FallbackValue="{x:True}" />
+                        <Binding Path="Exhibits.Count" Mode="OneWay"
+                                 Converter="{x:Static huskc:NumberConverters.IsZero}"
+                                 FallbackValue="{x:True}" />
+                    </MultiBinding>
+                </StackPanel.IsVisible>
+                <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
+                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                      Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
             <husk:InfiniteScrollView Padding="12" ItemsSource="{Binding Exhibits}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
