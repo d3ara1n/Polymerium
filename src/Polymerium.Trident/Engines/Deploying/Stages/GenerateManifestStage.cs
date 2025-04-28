@@ -35,7 +35,8 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
             manifest.FragileFiles.Add(new EntityManifest.FragileFile(PathDef.Default.FileOfPackageObject(parcel.Label,
                                                                          parcel.Namespace,
                                                                          parcel.Pid,
-                                                                         parcel.Vid),
+                                                                         parcel.Vid,
+                                                                         Path.GetExtension(parcel.Path)),
                                                                      Path.Combine(PathDef.Default
                                                                             .DirectoryOfHome(Context.Key),
                                                                          parcel.Path),
@@ -67,8 +68,8 @@ public class GenerateManifestStage(IHttpClientFactory factory) : StageBase
             {
                 foreach (var file in Directory.GetFiles(sub))
                     manifest.PersistentFiles.Add(new EntityManifest.PersistentFile(file,
-                                                     Path.Combine(buildDir, Path.GetRelativePath(importDir, file)),
-                                                     false));
+                                                                    Path.Combine(buildDir, Path.GetRelativePath(importDir, file)),
+                                                                    false));
                 foreach (var dir in Directory.GetDirectories(sub))
                     dirs.Push(dir);
             }

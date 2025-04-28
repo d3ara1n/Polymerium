@@ -59,10 +59,10 @@ public class PathDef
                                 : $"{name}-{version}.{extension}");
     }
 
-    public string FileOfPackageObject(string label, string? ns, string pid, string vid) =>
+    public string FileOfPackageObject(string label, string? ns, string pid, string vid, string extension) =>
         ns != null
-            ? Path.Combine(CachePackageDirectory, label, ns, pid, $"{vid}.obj")
-            : Path.Combine(CachePackageDirectory, label, pid, $"{vid}.obj");
+            ? Path.Combine(CachePackageDirectory, label, ns, pid, $"{vid}{extension}")
+            : Path.Combine(CachePackageDirectory, label, pid, $"{vid}{extension}");
 
     public string FileOfPackageMetadata(string label, string? ns, string pid, string vid) =>
         ns != null
