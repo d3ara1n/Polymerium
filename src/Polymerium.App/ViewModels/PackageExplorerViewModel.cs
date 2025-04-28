@@ -383,16 +383,18 @@ public partial class PackageExplorerViewModel : ViewModelBase
         if (_profileManager.TryGetMutable(Basic.Key, out var guard))
         {
             foreach (var model in PendingPackagesSource.Items)
-                if (model.State == ExhibitState.Adding)
+                if (model.State is ExhibitState.Adding)
                 {
-                    guard.Value.Setup.Packages.Add(new Profile.Rice.Entry(PackageHelper.ToPurl(model.Label,
-                                                                              model.Ns,
-                                                                              model.ProjectId,
-                                                                              model.PendingVersionId),
-                                                                          true,
-                                                                          null,
-                                                                          []));
+                    var entry = new Profile.Rice.Entry(PackageHelper.ToPurl(model.Label,
+                                                                            model.Ns,
+                                                                            model.ProjectId,
+                                                                            model.PendingVersionId),
+                                                       true,
+                                                       null,
+                                                       []);
+                    guard.Value.Setup.Packages.Add(entry);
                     model.State = ExhibitState.Editable;
+                    model.Installed = entry;
                 }
                 else if (model is { State: ExhibitState.Removing, Installed: not null })
                 {
@@ -400,15 +402,14 @@ public partial class PackageExplorerViewModel : ViewModelBase
                     if (exist != null)
                         guard.Value.Setup.Packages.Remove(exist);
                     model.State = null;
+                    model.Installed = null;
                 }
                 else if (model is { State: ExhibitState.Modifying, Installed: not null })
                 {
-                    var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
-                    if (exist != null)
-                        exist.Purl = PackageHelper.ToPurl(model.Label,
-                                                          model.Ns,
-                                                          model.ProjectId,
-                                                          model.PendingVersionId);
+                    model.Installed.Purl = PackageHelper.ToPurl(model.Label,
+                                                                model.Ns,
+                                                                model.ProjectId,
+                                                                model.PendingVersionId);
                     model.State = ExhibitState.Editable;
                 }
 
