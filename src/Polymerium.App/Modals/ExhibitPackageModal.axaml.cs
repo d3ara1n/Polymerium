@@ -69,6 +69,12 @@ public partial class ExhibitPackageModal : Modal
                                                                           o => o.LazyChangelog,
                                                                           (o, v) => o.LazyChangelog = v);
 
+
+    private static bool isDetailPanelVisible;
+
+
+    public ExhibitPackageModal() => InitializeComponent();
+
     public LazyObject? LazyChangelog
     {
         get;
@@ -95,12 +101,6 @@ public partial class ExhibitPackageModal : Modal
         get;
         set => SetAndRaise(LazyDescriptionProperty, ref field, value);
     }
-
-
-    public ExhibitPackageModal() => InitializeComponent();
-
-
-    private static bool isDetailPanelVisible;
 
     public bool IsDetailPanelVisible
     {
@@ -167,7 +167,11 @@ public partial class ExhibitPackageModal : Modal
         base.OnPropertyChanged(change);
 
         if (change.Property == IsFilterEnabledProperty)
+        {
             LazyVersions = ConstructVersions();
+            LazyDependencies = ConstructDependencies();
+        }
+
         if (change.Property == SelectedVersionProperty || change.Property == SelectedVersionModeProperty)
             LazyDependencies = ConstructDependencies();
         if (change.Property == SelectedVersionProperty)
@@ -236,9 +240,10 @@ public partial class ExhibitPackageModal : Modal
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
-            return new ExhibitDependencyCollection(package.VersionName,
-                                                   package.VersionId,
-                                                   tasks.Select(x => x.Result).ToList());
+            var rv = new ExhibitDependencyCollection(package.VersionName,
+                                                     package.VersionId,
+                                                     tasks.Select(x => x.Result).ToList());
+            return rv;
         });
         return lazy;
     }

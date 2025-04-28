@@ -36,12 +36,6 @@ public partial class InstanceSetupViewModel(
     OverlayService overlayService,
     NavigationService navigationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
-    #region Injected
-
-    private readonly NavigationService _navigationService = navigationService;
-
-    #endregion
-
     private CancellationTokenSource? _pageCancellationTokenSource;
     private CancellationTokenSource? _refreshingCancellationTokenSource;
     private IDisposable? _updatingSubscription;
@@ -370,7 +364,14 @@ public partial class InstanceSetupViewModel(
     [RelayCommand]
     private void GotoPackageExplorerView()
     {
-        _navigationService.Navigate<PackageExplorerView>(Basic.Key);
+        navigationService.Navigate<PackageExplorerView>(Basic.Key);
+    }
+
+    [RelayCommand]
+    private async Task ExportList()
+    {
+        var dialog = new ExportPackageListDialog();
+        if (await overlayService.PopDialogAsync(dialog)) { }
     }
 
     [RelayCommand]

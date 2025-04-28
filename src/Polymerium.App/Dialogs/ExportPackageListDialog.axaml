@@ -1,0 +1,37 @@
+﻿<husk:Dialog xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:local="clr-namespace:Polymerium.App.Dialogs"
+             mc:Ignorable="d" Width="300" Title="Export package list"
+             x:Class="Polymerium.App.Dialogs.ExportPackageListDialog"
+             IsPrimaryButtonVisible="True"
+             Message="Export package list of the instance into the selected formatted table file">
+    <StackPanel Spacing="12">
+        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="4"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+            <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
+                    CornerRadius="{StaticResource SmallCornerRadius}" Padding="12">
+                <StackPanel Spacing="12" HorizontalAlignment="Center">
+                    <TextBlock>
+                        <Run Text="128" FontSize="{StaticResource ExtraLargeFontSize}" />
+                        <Run Text="packages" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </Border>
+        <StackPanel Spacing="4">
+            <TextBlock Text="Export to" />
+            <DockPanel HorizontalSpacing="8">
+                <Button DockPanel.Dock="Right" Click="BrowseButton_OnClick">
+                    <fi:SymbolIcon Symbol="MoreHorizontal" HorizontalAlignment="Center"
+                                   FontSize="{StaticResource MediumFontSize}" />
+                </Button>
+                <TextBox Watermark="Chooooosen file path"
+                         Text="{Binding $parent[local:ExportPackageListDialog].Result,Mode=TwoWay}" />
+            </DockPanel>
+        </StackPanel>
+    </StackPanel>
+</husk:Dialog>

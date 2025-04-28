@@ -60,8 +60,7 @@ public partial class NewInstanceViewModel(
     [RelayCommand]
     private async Task OpenImportDialog()
     {
-        var dialog = new FilePickerDialog { Message = "Select a file to import" };
-        var path = await overlayService.RequestFileAsync("Select a file to import");
+        var path = await overlayService.RequestFileAsync("Select a compressed modpack file to import");
         if (path != null)
             try
             {

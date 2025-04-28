@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <ControlTheme x:Key="{x:Type ToolTip}"
                   TargetType="ToolTip">
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
@@ -16,7 +17,7 @@
                         <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
                     </Border.Effect>
                     <ContentPresenter Name="PART_ContentPresenter"
-                                      Padding="10,6"
+                                      Padding="12,8"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}">
                         <!-- 由于 ToolTip 不在 LogicalTree上，无法选中 -->
