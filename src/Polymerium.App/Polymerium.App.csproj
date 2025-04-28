@@ -17,6 +17,7 @@
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.0-rc1"/>
         <PackageReference Include="Avalonia.Svg" Version="11.2.7.1"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
+        <PackageReference Include="CsvHelper" Version="33.0.1"/>
         <PackageReference Include="DynamicData" Version="9.2.1"/>
         <PackageReference Include="FluentIcons.Avalonia" Version="1.1.298-ci"/>
         <PackageReference Include="Humanizer" Version="3.0.0-beta.54"/>
