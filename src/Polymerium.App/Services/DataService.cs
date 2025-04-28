@@ -104,6 +104,17 @@ public class DataService(
                           entry =>
                           {
                               entry.SetSlidingExpiration(EXPIRED_IN);
-                              return new ValueTask<T>(factory());
+                              return new ValueTask<T>(Task.Run(async () =>
+                              {
+                                  try
+                                  {
+                                      return await factory();
+                                  }
+                                  catch
+                                  {
+                                      entry.SetSlidingExpiration(TimeSpan.FromSeconds(1));
+                                      throw;
+                                  }
+                              }));
                           });
 }
