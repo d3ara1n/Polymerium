@@ -90,6 +90,8 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                         SemVersion.SortOrderComparer)
                                      .ToList();
             }
+
+        _ = SearchAsync();
     }
 
     #region Nested type: SearchArguments
@@ -132,7 +134,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
             "favorite" => AssetUriIndex.REPOSITORY_HEADER_FAVORITE_BITMAP,
             _ => HeaderImage
         };
-        _ = SearchAsync();
     }
 
     [ObservableProperty]
