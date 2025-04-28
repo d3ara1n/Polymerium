@@ -1,15 +1,28 @@
 ﻿using System.IO;
-using System.Linq;
+using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 
 namespace Polymerium.App.Dialogs;
 
 public partial class ExportPackageListDialog : Dialog
 {
+    public static readonly DirectProperty<ExportPackageListDialog, int> PackageCountProperty =
+        AvaloniaProperty.RegisterDirect<ExportPackageListDialog, int>(nameof(PackageCount),
+                                                                      o => o.PackageCount,
+                                                                      (o, v) => o.PackageCount = v);
+
     public ExportPackageListDialog() => InitializeComponent();
+
+    public int PackageCount
+    {
+        get;
+        set => SetAndRaise(PackageCountProperty, ref field, value);
+    }
+
 
     protected override bool ValidateResult(object? result)
     {
@@ -23,7 +36,10 @@ public partial class ExportPackageListDialog : Dialog
         return false;
     }
 
-    private async void BrowseButton_OnClick(object? sender, RoutedEventArgs e)
+    #region Commands
+
+    [RelayCommand]
+    private async Task Browse()
     {
         var top = TopLevel.GetTopLevel(this);
         if (top != null)
@@ -31,17 +47,19 @@ public partial class ExportPackageListDialog : Dialog
             var storage = top.StorageProvider;
             if (storage.CanOpen)
             {
-                var files = await storage.OpenFilePickerAsync(new FilePickerOpenOptions
+                var file = await storage.SaveFilePickerAsync(new FilePickerSaveOptions
                 {
                     SuggestedStartLocation =
                         await storage
-                           .TryGetWellKnownFolderAsync(WellKnownFolder
-                                                          .Downloads)
+                           .TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
+                    SuggestedFileName = "packages.csv",
+                    DefaultExtension = "csv"
                 });
-                var file = files.FirstOrDefault();
                 if (file != null)
                     Result = file.TryGetLocalPath();
             }
         }
     }
+
+    #endregion
 }

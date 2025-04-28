@@ -16,7 +16,9 @@
                     CornerRadius="{StaticResource SmallCornerRadius}" Padding="12">
                 <StackPanel Spacing="12" HorizontalAlignment="Center">
                     <TextBlock>
-                        <Run Text="128" FontSize="{StaticResource ExtraLargeFontSize}" />
+                        <Run
+                            Text="{Binding $parent[local:ExportPackageListDialog].PackageCount,Mode=OneWay,FallbackValue=0}"
+                            FontSize="{StaticResource ExtraLargeFontSize}" />
                         <Run Text="packages" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </TextBlock>
                 </StackPanel>
@@ -25,7 +27,8 @@
         <StackPanel Spacing="4">
             <TextBlock Text="Export to" />
             <DockPanel HorizontalSpacing="8">
-                <Button DockPanel.Dock="Right" Click="BrowseButton_OnClick">
+                <Button DockPanel.Dock="Right"
+                        Command="{Binding $parent[local:ExportPackageListDialog].BrowseCommand}">
                     <fi:SymbolIcon Symbol="MoreHorizontal" HorizontalAlignment="Center"
                                    FontSize="{StaticResource MediumFontSize}" />
                 </Button>

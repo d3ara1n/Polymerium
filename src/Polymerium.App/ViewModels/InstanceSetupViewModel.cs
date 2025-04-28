@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -6,8 +9,11 @@ using System.Threading.Tasks;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CsvHelper;
 using DynamicData;
+using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
+using Microsoft.Extensions.Logging;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
@@ -28,6 +34,7 @@ namespace Polymerium.App.ViewModels;
 
 public partial class InstanceSetupViewModel(
     ViewBag bag,
+    ILogger<InstanceSetupViewModel> logger,
     ProfileManager profileManager,
     RepositoryAgent repositories,
     NotificationService notificationService,
@@ -371,9 +378,83 @@ public partial class InstanceSetupViewModel(
     [RelayCommand]
     private async Task ExportList()
     {
-        var dialog = new ExportPackageListDialog();
-        if (await overlayService.PopDialogAsync(dialog)) { }
+        var profile = ProfileManager.GetImmutable(Basic.Key);
+        var list = new List<Profile.Rice.Entry>(profile.Setup.Packages);
+        var dialog = new ExportPackageListDialog { PackageCount = list.Count };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
+        {
+            // TODO: 使用 Notification Progress
+            var notification = new NotificationItem
+            {
+                Title = "Export package list to file", IsProgressBarVisible = true
+            };
+            var output = new List<ExportedEntry>();
+            notification.ProgressMaximum = list.Count;
+            notificationService.Pop(notification);
+            foreach (var entry in list)
+            {
+                string? name = null;
+                string? version = null;
+                if (PackageHelper.TryParse(entry.Purl, out var result))
+                    try
+                    {
+                        await Task.Delay(TimeSpan.FromMilliseconds(100));
+                        var package = await dataService.ResolvePackageAsync(result.Label,
+                                                                            result.Namespace,
+                                                                            result.Pid,
+                                                                            result.Vid,
+                                                                            Filter.Empty);
+                        name = package.ProjectName;
+                        version = package.VersionName;
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "Failed to exporting: \n{}", entry.Purl);
+                    }
+
+                output.Add(new ExportedEntry(entry.Purl,
+                                             entry.Enabled,
+                                             entry.Source,
+                                             entry.Tags.ToArray(),
+                                             name,
+                                             version));
+                notification.Progress = output.Count;
+                notification.Content = $"Exporting package list...({output.Count}/{list.Count})";
+            }
+
+            notification.Close();
+
+            try
+            {
+                var dir = Path.GetDirectoryName(path);
+                if (dir != null && !Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+                await using (var writer = new StreamWriter(path))
+                await using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    await csv.WriteRecordsAsync(output);
+                }
+
+                notificationService.PopMessage($"Exported package list to file {path}",
+                                               "Export package list to file",
+                                               NotificationLevel.Success);
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage($"Writing data to file ({path}) failed: {ex.Message}",
+                                               "Export package list to file",
+                                               NotificationLevel.Danger);
+            }
+        }
     }
+
+    private record ExportedEntry(
+        string Purl,
+        bool Enabled,
+        string? Source,
+        string[] Tags,
+        string? Name,
+        string? Version);
 
     [RelayCommand]
     private async Task CheckUpdate()
