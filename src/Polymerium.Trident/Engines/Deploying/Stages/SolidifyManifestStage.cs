@@ -176,11 +176,19 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
             ProgressStream.OnNext((++downloaded, files.Count + manifest.ExplosiveFiles.Count));
         }
 
+        Snapshot.Apply(buildDir, entities);
+
+        // 生成 allowed_symlinks.txt
+        if (!Path.Exists(buildDir))
+            Directory.CreateDirectory(buildDir);
+        await File
+             .WriteAllTextAsync(Path.Combine(buildDir, "allowed_symlinks.txt"),
+                                $"[prefix]{PathDef.Default.CachePackageDirectory}",
+                                cancel.Token)
+             .ConfigureAwait(false);
 
         watch.Stop();
         logger.LogInformation("Solidifying finished in {ms}ms", watch.ElapsedMilliseconds);
-
-        Snapshot.Apply(buildDir, entities);
 
         Context.IsSolidified = true;
     }
