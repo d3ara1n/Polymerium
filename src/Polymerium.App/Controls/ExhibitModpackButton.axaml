@@ -225,7 +225,7 @@
                         <ItemsControl Grid.Row="3" ItemsSource="{Binding Tags}" Margin="12"
                                       Background="Transparent" MaxHeight="40">
                             <ToolTip.Tip>
-                                <ItemsControl ItemsSource="{Binding Tags}" Margin="12">
+                                <ItemsControl>
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <StackPanel Spacing="4" />
