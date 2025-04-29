@@ -399,7 +399,7 @@ public partial class InstanceSetupViewModel(
                 if (PackageHelper.TryParse(entry.Purl, out var result))
                     try
                     {
-                        await Task.Delay(TimeSpan.FromMilliseconds(100));
+                        await Task.Delay(TimeSpan.FromMilliseconds(50));
                         var package = await dataService.ResolvePackageAsync(result.Label,
                                                                             result.Namespace,
                                                                             result.Pid,

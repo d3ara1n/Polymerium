@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using DynamicData;
+using DynamicData.Binding;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
+using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 
 namespace Polymerium.App.Components;
@@ -80,9 +84,22 @@ public partial class PackageContainer : UserControl
                                                                      o => o.BulkUpdateCommand,
                                                                      (o, v) => o.BulkUpdateCommand = v);
 
+    public static readonly
+        DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageEntryFilterTagModel>?>
+        TagsViewProperty =
+            AvaloniaProperty
+               .RegisterDirect<PackageContainer, ReadOnlyObservableCollection<InstancePackageEntryFilterTagModel>
+                    ?>(nameof(TagsView), o => o.TagsView, (o, v) => o.TagsView = v);
 
-    private IDisposable? _subscription;
+
+    private CompositeDisposable _subscriptions = new();
     public PackageContainer() => InitializeComponent();
+
+    public ReadOnlyObservableCollection<InstancePackageEntryFilterTagModel>? TagsView
+    {
+        get;
+        set => SetAndRaise(TagsViewProperty, ref field, value);
+    }
 
     public PackageEntryEnabilityFilter? FilterEnability
     {
@@ -133,7 +150,6 @@ public partial class PackageContainer : UserControl
         set => SetAndRaise(GotoExplorerCommandProperty, ref field, value);
     }
 
-
     public string FilterText
     {
         get;
@@ -153,21 +169,40 @@ public partial class PackageContainer : UserControl
         {
             if (SetAndRaise(ItemsProperty, ref field, value))
             {
-                _subscription?.Dispose();
+                _subscriptions.Dispose();
+                _subscriptions.Clear();
+                _subscriptions = new CompositeDisposable();
                 if (value is not null)
                 {
+                    value
+                       .Connect()
+                       .MergeManyChangeSets(x => x.Tags.ToObservableChangeSet())
+                       .Distinct()
+                       .Transform(x => new InstancePackageEntryFilterTagModel(x) { RefCount = 1 })
+                       .Bind(out var tagsView)
+                       .AutoRefresh()
+                       .Filter(x => x.IsSelected)
+                       .Transform(x => x.Content)
+                       .Bind(out var filterTags)
+                       .Subscribe()
+                       .DisposeWith(_subscriptions);
+                    TagsView = tagsView;
+
                     var text = this.GetObservable(FilterTextProperty).Select(BuildTextFilter);
                     var enability = this.GetObservable(FilterEnabilityProperty).Select(BuildEnabilityFilter);
                     var lockility = this.GetObservable(FilterLockilityProperty).Select(BuildLockilityFilter);
                     var kind = this.GetObservable(FilterKindProperty).Select(BuildKindFilter);
-                    _subscription = value
-                                   .Connect()
-                                   .Filter(enability)
-                                   .Filter(lockility)
-                                   .Filter(kind)
-                                   .Filter(text)
-                                   .Bind(out var view)
-                                   .Subscribe();
+                    var tags = filterTags.ToObservableChangeSet().Select(_ => BuildTagFilter(filterTags));
+                    value
+                       .Connect()
+                       .Filter(enability)
+                       .Filter(lockility)
+                       .Filter(kind)
+                       .Filter(tags)
+                       .Filter(text)
+                       .Bind(out var view)
+                       .Subscribe()
+                       .DisposeWith(_subscriptions);
                     View = view;
                 }
             }
@@ -182,7 +217,7 @@ public partial class PackageContainer : UserControl
 
     protected override void OnUnloaded(RoutedEventArgs e)
     {
-        _subscription?.Dispose();
+        _subscriptions?.Dispose();
         base.OnUnloaded(e);
     }
 
@@ -200,4 +235,7 @@ public partial class PackageContainer : UserControl
           || (x is { ProjectName: { } name, Summary: { } summary }
            && (name.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
             || summary.Contains(filter, StringComparison.InvariantCultureIgnoreCase)));
+
+    private static Func<InstancePackageModel, bool> BuildTagFilter(ReadOnlyObservableCollection<string>? tags) =>
+        x => tags is null or { Count: 0 } || tags.All(x.Tags.Contains);
 }
