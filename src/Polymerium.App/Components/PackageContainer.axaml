@@ -24,7 +24,7 @@
                             Command="{Binding $parent[TextBox].Clear}"
                             Content="{fie:SymbolIcon Symbol=Dismiss,FontSize={StaticResource MediumFontSize}}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                        <Button>
+                        <Button Classes.Primary="{Binding $parent[cp:PackageContainer].IsFilterActive,Mode=OneWay}">
                             <Button.Flyout>
                                 <Flyout>
                                     <StackPanel Spacing="8" MinWidth="320" MaxWidth="520" MaxHeight="360" Margin="12">
