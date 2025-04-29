@@ -96,12 +96,27 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         await base.OnDeinitializeAsync(token);
     }
 
-    private void WriteIcon()
+    private async Task WriteIconAsync()
     {
         // NOTE: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
-        var path = ProfileHelper.PickIcon(Basic.Key);
-        if (path != null)
-            ThumbnailOverwrite.Save(path);
+        try
+        {
+            var path = ProfileHelper.PickIcon(Basic.Key);
+            if (path != null && File.Exists(path))
+                File.Delete(path);
+            using var stream = new MemoryStream();
+            ThumbnailOverwrite.Save(stream);
+            stream.Position = 0;
+            var extension = FileHelper.GuessBitmapExtension(stream);
+            stream.Position = 0;
+            var iconPath = PathDef.Default.FileOfIcon(Basic.Key, extension);
+            await using var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
+            await stream.CopyToAsync(writer);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, "Saving thumbnail bitmap");
+        }
     }
 
     #region Injected
@@ -181,14 +196,14 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     }
 
     [RelayCommand]
-    private void RemoveThumbnail()
+    private async Task RemoveThumbnailAsync()
     {
         ThumbnailOverwrite = AssetUriIndex.DIRT_IMAGE_BITMAP;
-        WriteIcon();
+        await WriteIconAsync();
     }
 
     [RelayCommand]
-    private async Task SelectThumbnail()
+    private async Task SelectThumbnailAsync()
     {
         var path = await _overlayService.RequestFileAsync("Select a image file", "Select thumbnail");
         if (path != null)
@@ -196,7 +211,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             if (FileHelper.IsBitmapFile(path))
             {
                 ThumbnailOverwrite = new Bitmap(path);
-                WriteIcon();
+                await WriteIconAsync();
             }
             else
             {

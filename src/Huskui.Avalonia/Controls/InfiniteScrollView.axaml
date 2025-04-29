@@ -39,9 +39,5 @@
         <Style Selector="^:disabled /template/ Border#Border">
             <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
         </Style>
-
-        <Style Selector="^:finished /template/ Border#Container">
-            <Setter Property="IsVisible" Value="False" />
-        </Style>
     </ControlTheme>
 </ResourceDictionary>

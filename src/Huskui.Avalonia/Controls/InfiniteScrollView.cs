@@ -50,7 +50,7 @@ public class InfiniteScrollView : ItemsControl
         {
             _source = change.NewValue as IInfiniteCollection;
             _scrollViewer?.ScrollToHome();
-            UpdateAsync();
+            _ = UpdateAsync();
         }
     }
 
@@ -74,41 +74,53 @@ public class InfiniteScrollView : ItemsControl
 
     private async Task UpdateAsync()
     {
-        if (_source == null)
+        do
         {
+            if (_source == null)
+            {
+                if (_pendingPresenter != null)
+                    _pendingPresenter.IsVisible = false;
+
+                return;
+            }
+
+            if (_source.IsFetching)
+                return;
+
+            if (!_source.HasNext)
+                return;
+
             if (_pendingPresenter != null)
-                _pendingPresenter.IsVisible = false;
+                _pendingPresenter.IsVisible = true;
 
-            return;
-        }
+            PseudoClasses.Set(":loading", false);
+            PseudoClasses.Set(":finished", false);
+            PseudoClasses.Set(":idle", false);
 
-        if (_source.IsFetching)
-            return;
+            try
+            {
+                await _source.FetchAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
 
-        if (!_source.HasNext)
-        {
-            if (_pendingPresenter != null)
-                _pendingPresenter.IsVisible = false;
-            return;
-        }
+            if (!_source.HasNext)
+            {
+                if (_pendingPresenter != null)
+                    _pendingPresenter.IsVisible = false;
+                return;
+            }
 
-        if (_pendingPresenter != null)
-            _pendingPresenter.IsVisible = true;
+            PseudoClasses.Set(":loading", false);
+            PseudoClasses.Set(!_source.HasNext ? ":finished" : ":idle", true);
 
-        PseudoClasses.Set(":loading", false);
-        PseudoClasses.Set(":finished", false);
-        PseudoClasses.Set(":idle", false);
-
-        try
-        {
-            await _source.FetchAsync();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex);
-        }
-
-        PseudoClasses.Set(":loading", false);
-        PseudoClasses.Set(!_source.HasNext ? ":finished" : ":idle", true);
+            // 直接判断是否循环会因为元素还没生成滚动条还在原位而被迫继续刷新
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+        } while (_source.HasNext
+              && _scrollViewer is not null
+              && _pendingPresenter is not null
+              && _scrollViewer.Offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height);
     }
 }
