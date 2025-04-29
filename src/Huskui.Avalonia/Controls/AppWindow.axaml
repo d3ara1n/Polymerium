@@ -72,7 +72,7 @@
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center">
                                 <local:OverlayHost.Transition>
-                                    <huskt:HookUpTransition />
+                                    <huskt:ScaleInTransition />
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
                             <local:NotificationHost
@@ -94,11 +94,11 @@
         </Setter>
 
         <!-- TODO: 目前 Blur 效果会导致看不见的元素也被强行触发全屏重绘导致性能裂开 -->
-        <!-- <Style Selector="^:obstructed /template/ ContentPresenter#ContentPresenter"> -->
-        <!--     <Setter Property="Effect"> -->
-        <!--         <BlurEffect /> -->
-        <!--     </Setter> -->
-        <!-- </Style> -->
+        <Style Selector="^:obstructed /template/ ContentPresenter#ContentPresenter">
+            <Setter Property="Effect">
+                <BlurEffect />
+            </Setter>
+        </Style>
 
         <Style Selector="^local|AppWindow[ActualTransparencyLevel=Mica][IsActive=True]">
             <Setter Property="Background" Value="{StaticResource TransparentBrush}" />

@@ -179,14 +179,7 @@
                 <husk:SwitchCase Value="True">
                     <StackPanel VerticalAlignment="Center" Spacing="8">
                         <husk:ProgressRing Width="56" Height="56" Value="{Binding RefreshingCount,Mode=OneWay}"
-                                           Maximum="{Binding StageCount}">
-                            <husk:ProgressRing.Transitions>
-                                <Transitions>
-                                    <DoubleTransition Property="Value" Easing="SineEaseOut"
-                                                      Duration="{StaticResource ControlNormalAnimationDuration}" />
-                                </Transitions>
-                            </husk:ProgressRing.Transitions>
-                        </husk:ProgressRing>
+                                           Maximum="{Binding StageCount}" />
                         <TextBlock HorizontalAlignment="Center">
                             <Run Text="Loading packages metadata..." />
                             <Run Text="(" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />

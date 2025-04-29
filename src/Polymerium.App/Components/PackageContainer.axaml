@@ -86,55 +86,38 @@
                                             </TabStrip>
                                         </Grid>
                                         <husk:Divider />
-                                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="24">
+                                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
                                             <TextBlock Grid.Column="0" Text="Tags" VerticalAlignment="Center"
                                                        FontSize="{StaticResource SmallFontSize}"
                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                            <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}"
-                                                    Classes="Small">
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <icons:PackIconLucide Kind="SquareCheck"
-                                                                          Height="{StaticResource SmallFontSize}"
-                                                                          Width="{StaticResource SmallFontSize}"
-                                                                          VerticalAlignment="Center" />
-                                                    <TextBlock Text="Check All" />
-                                                </StackPanel>
-                                            </Button>
-                                            <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}"
-                                                    Classes="Small">
-                                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <icons:PackIconLucide Kind="SquareDashed"
-                                                                          Height="{StaticResource SmallFontSize}"
-                                                                          Width="{StaticResource SmallFontSize}"
-                                                                          VerticalAlignment="Center" />
-                                                    <TextBlock Text="Uncheck All" />
-                                                </StackPanel>
-                                            </Button>
                                         </Grid>
                                         <Panel MinHeight="120">
                                             <StackPanel VerticalAlignment="Center"
-                                                        Spacing="8">
+                                                        Spacing="8"
+                                                        IsVisible="{Binding $parent[cp:PackageContainer].TagsView.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}">
                                                 <icons:PackIconLucide Kind="Tags"
                                                                       Height="{StaticResource ExtraLargeFontSize}"
                                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                                       Width="{StaticResource ExtraLargeFontSize}"
                                                                       HorizontalAlignment="Center" />
-                                                <TextBlock Text="WIP" FontSize="{StaticResource LargeFontSize}"
+                                                <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                            HorizontalAlignment="Center" />
                                             </StackPanel>
-                                            <ItemsControl>
+                                            <ItemsControl
+                                                ItemsSource="{Binding $parent[cp:PackageContainer].TagsView}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
                                                         <WrapPanel ItemSpacing="8" LineSpacing="8" />
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
+                                                    <DataTemplate x:DataType="m:InstancePackageEntryFilterTagModel">
                                                         <Border CornerRadius="{StaticResource SmallCornerRadius}"
                                                                 BorderBrush="{StaticResource ControlBorderBrush}"
                                                                 BorderThickness="1" Padding="8">
-                                                            <CheckBox Content="Gameplay" />
+                                                            <CheckBox Content="{Binding Content}"
+                                                                      IsChecked="{Binding IsSelected,Mode=TwoWay}" />
                                                         </Border>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>

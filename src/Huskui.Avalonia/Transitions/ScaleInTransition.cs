@@ -4,11 +4,11 @@ using Avalonia.Media;
 
 namespace Huskui.Avalonia.Transitions;
 
-public sealed class PopUpTransition : PageTransitionBase
+public class ScaleInTransition : PageTransitionBase
 {
-    public PopUpTransition() { }
+    public ScaleInTransition() { }
 
-    public PopUpTransition(TimeSpan? duration = null) : base(duration) { }
+    public ScaleInTransition(TimeSpan? duration = null) : base(duration) { }
 
     protected override void Cleanup(Visual? from, Visual? to)
     {
@@ -28,8 +28,8 @@ public sealed class PopUpTransition : PageTransitionBase
            .AddFrame(1d, [(Visual.OpacityProperty, 0d)]);
 
         to
-           .Animation(new BackEaseOut())
-           .AddFrame(0d, [(ScaleTransform.ScaleXProperty, 0.9d), (ScaleTransform.ScaleYProperty, 0.9d)])
+           .Animation(new CubicEaseOut())
+           .AddFrame(0d, [(ScaleTransform.ScaleXProperty, 1.1d), (ScaleTransform.ScaleYProperty, 1.1d)])
            .AddFrame(1d, [(ScaleTransform.ScaleXProperty, 1d), (ScaleTransform.ScaleYProperty, 1d)]);
 
         to
