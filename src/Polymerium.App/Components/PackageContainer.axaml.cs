@@ -91,9 +91,20 @@ public partial class PackageContainer : UserControl
                .RegisterDirect<PackageContainer, ReadOnlyObservableCollection<InstancePackageEntryFilterTagModel>
                     ?>(nameof(TagsView), o => o.TagsView, (o, v) => o.TagsView = v);
 
+    public static readonly DirectProperty<PackageContainer, bool> IsFilterActiveProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, bool>(nameof(IsFilterActive),
+                                                                o => o.IsFilterActive,
+                                                                (o, v) => o.IsFilterActive = v);
+
 
     private CompositeDisposable _subscriptions = new();
     public PackageContainer() => InitializeComponent();
+
+    public bool IsFilterActive
+    {
+        get;
+        set => SetAndRaise(IsFilterActiveProperty, ref field, value);
+    }
 
     public ReadOnlyObservableCollection<InstancePackageEntryFilterTagModel>? TagsView
     {
@@ -204,6 +215,24 @@ public partial class PackageContainer : UserControl
                        .Subscribe()
                        .DisposeWith(_subscriptions);
                     View = view;
+
+                    filterTags
+                       .ToObservableChangeSet()
+                       .Select(_ => filterTags.Any())
+                       .CombineLatest(this.GetObservable(FilterTextProperty).Select(x => !string.IsNullOrEmpty(x)),
+                                      (x, y) => x || y)
+                       .CombineLatest(this
+                                     .GetObservable(FilterEnabilityProperty)
+                                     .Select(x => x is { Enability: not null }),
+                                      (x, y) => x || y)
+                       .CombineLatest(this
+                                     .GetObservable(FilterLockilityProperty)
+                                     .Select(x => x is { Lockility: not null }),
+                                      (x, y) => x || y)
+                       .CombineLatest(this.GetObservable(FilterKindProperty).Select(x => x is { Kind: not null }),
+                                      (x, y) => x || y)
+                       .Subscribe(x => IsFilterActive = x)
+                       .DisposeWith(_subscriptions);
                 }
             }
         }
