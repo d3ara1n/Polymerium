@@ -15,7 +15,7 @@
             mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="420" MinHeight="360"
             x:Class="Polymerium.App.Modals.ExhibitPackageModal" x:DataType="m:ExhibitPackageModel"
             Background="{x:Null}" BorderBrush="{x:Null}"
-            BorderThickness="0" Padding="0" CornerRadius="0" Margin="0,65">
+            BorderThickness="0" Padding="0" CornerRadius="0" Margin="64" VerticalAlignment="Stretch">
     <husk:Modal.Resources>
         <DataTemplate x:Key="VersionEditorTemplate">
             <Border>
