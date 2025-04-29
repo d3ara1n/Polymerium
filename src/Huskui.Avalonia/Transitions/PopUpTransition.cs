@@ -29,7 +29,7 @@ public sealed class PopUpTransition : PageTransitionBase
 
         to
            .Animation(new BackEaseOut())
-           .AddFrame(0d, [(ScaleTransform.ScaleXProperty, 0.9d), (ScaleTransform.ScaleYProperty, 0.9d)])
+           .AddFrame(0d, [(ScaleTransform.ScaleXProperty, 0.98d), (ScaleTransform.ScaleYProperty, 0.98d)])
            .AddFrame(1d, [(ScaleTransform.ScaleXProperty, 1d), (ScaleTransform.ScaleYProperty, 1d)]);
 
         to
