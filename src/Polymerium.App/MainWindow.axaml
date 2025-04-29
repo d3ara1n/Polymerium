@@ -79,10 +79,21 @@
                             x:Name="ToggleMaximizeButton"
                             Padding="10"
                             Click="ToggleMaximizeButton_OnClick">
-                            <icons:PackIconLucide
-                                Width="10"
-                                Height="10"
-                                Kind="Square" />
+                            <husk:SwitchPresenter Value="{Binding $parent[husk:AppWindow].IsMaximized,Mode=OneWay}"
+                                                  TargetType="x:Boolean">
+                                <husk:SwitchCase Value="True">
+                                    <icons:PackIconLucide
+                                        Width="10"
+                                        Height="10"
+                                        Kind="SquareSquare" />
+                                </husk:SwitchCase>
+                                <husk:SwitchCase Value="False">
+                                    <icons:PackIconLucide
+                                        Width="10"
+                                        Height="10"
+                                        Kind="Square" />
+                                </husk:SwitchCase>
+                            </husk:SwitchPresenter>
                         </Button>
                         <Button
                             x:Name="CloseButton"

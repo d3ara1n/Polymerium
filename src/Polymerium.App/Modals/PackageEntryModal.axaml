@@ -16,8 +16,7 @@
                 CornerRadius="{StaticResource MediumCornerRadius}">
             <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*" ColumnSpacing="12">
                 <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Height="48" Width="48"
-                        BorderBrush="{StaticResource ControlBorderBrush}"
-                        CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="2">
+                        CornerRadius="{StaticResource SmallCornerRadius}">
                     <Border.Background>
                         <ImageBrush Source="{Binding Thumbnail}" />
                     </Border.Background>
@@ -210,54 +209,54 @@
                     BorderBrush="{StaticResource ControlBorderBrush}"
                     CornerRadius="{StaticResource SmallCornerRadius}" BorderThickness="1">
                     <Grid RowDefinitions="Auto,*">
-                        <Grid Grid.Row="0">
-                            <DockPanel Margin="6">
-                                <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Margin="4,0"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                    <Run Text="/" />
-                                    <Run Text="{Binding Tags.Count,FallbackValue=0}" />
-                                </TextBlock>
-                                <Button HorizontalAlignment="Left" Classes="Small"
-                                        Command="{Binding $parent[modals:PackageEntryModal].AddTagCommand}"
-                                        Theme="{StaticResource GhostButtonTheme}">
-                                    <StackPanel Orientation="Horizontal" Spacing="4">
-                                        <fi:SymbolIcon Symbol="Add" FontSize="{Binding $parent[Button].FontSize}" />
-                                        <TextBlock Text="Add" />
-                                    </StackPanel>
-                                </Button>
-                            </DockPanel>
-                        </Grid>
-                        <Border Grid.Row="1" Background="{StaticResource ControlBackgroundBrush}"
-                                CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}">
-                            <ItemsControl Margin="12" ItemsSource="{Binding Tags}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel LineSpacing="6" ItemSpacing="6" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="x:String">
-                                        <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <DockPanel>
-                                                <Button DockPanel.Dock="Right"
-                                                        Command="{Binding $parent[modals:PackageEntryModal].RemoveTagCommand}"
-                                                        CommandParameter="{Binding}"
-                                                        Theme="{StaticResource GhostButtonTheme}"
-                                                        Padding="4,0"
-                                                        CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
-                                                    <fi:SymbolIcon VerticalAlignment="Center"
-                                                                   HorizontalAlignment="Right"
-                                                                   FontSize="{Binding $parent[Button].FontSize}"
-                                                                   Symbol="Dismiss" />
-                                                </Button>
-                                                <TextBlock Text="{Binding}" Margin="8,4,0,4" />
-                                            </DockPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                        <Border Grid.Row="0" Background="{StaticResource ControlBackgroundBrush}"
+                                CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}">
+                            <Grid>
+                                <DockPanel Margin="6">
+                                    <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Margin="4,0"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                        <Run Text="/" />
+                                        <Run Text="{Binding Tags.Count,FallbackValue=0}" />
+                                    </TextBlock>
+                                    <Button HorizontalAlignment="Left" Classes="Small"
+                                            Command="{Binding $parent[modals:PackageEntryModal].AddTagCommand}"
+                                            Theme="{StaticResource GhostButtonTheme}">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <fi:SymbolIcon Symbol="Add" FontSize="{Binding $parent[Button].FontSize}" />
+                                            <TextBlock Text="Add" />
+                                        </StackPanel>
+                                    </Button>
+                                </DockPanel>
+                            </Grid>
                         </Border>
+                        <ItemsControl Grid.Row="1" Margin="12" ItemsSource="{Binding Tags}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel LineSpacing="6" ItemSpacing="6" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Border Background="{StaticResource ControlInteractiveBackgroundBrush}"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <DockPanel>
+                                            <Button DockPanel.Dock="Right"
+                                                    Command="{Binding $parent[modals:PackageEntryModal].RemoveTagCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Theme="{StaticResource GhostButtonTheme}"
+                                                    Padding="4,0"
+                                                    CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Right}}">
+                                                <fi:SymbolIcon VerticalAlignment="Center"
+                                                               HorizontalAlignment="Right"
+                                                               FontSize="{Binding $parent[Button].FontSize}"
+                                                               Symbol="Dismiss" />
+                                            </Button>
+                                            <TextBlock Text="{Binding}" Margin="8,4,0,4" />
+                                        </DockPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </Grid>
                 </Border>
             </TabItem>
