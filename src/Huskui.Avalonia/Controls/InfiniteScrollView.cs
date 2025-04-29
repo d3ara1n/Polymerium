@@ -63,6 +63,17 @@ public class InfiniteScrollView : ItemsControl
         _scrollViewer?.GetObservable(ScrollViewer.OffsetProperty).Subscribe(OnScroll);
     }
 
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        if (_scrollViewer != null
+         && _pendingPresenter != null
+         && _scrollViewer.Offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height)
+            _ = UpdateAsync();
+
+
+        return base.ArrangeOverride(finalSize);
+    }
+
     private void OnScroll(Vector offset)
     {
         if (_scrollViewer == null || _pendingPresenter == null)
