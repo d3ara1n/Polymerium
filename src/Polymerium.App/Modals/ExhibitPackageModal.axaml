@@ -132,299 +132,308 @@
         </DataTemplate>
     </husk:Modal.Resources>
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-        <Border Grid.Column="1" Padding="18" Width="300"
+        <Border Grid.Column="1" Width="300"
                 Background="{StaticResource OverlaySolidBackgroundBrush}"
                 BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                 CornerRadius="{StaticResource MediumCornerRadius}">
-            <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="12">
-                <Grid Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                    <Border Grid.Column="0" Height="56" Width="56"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
-                        </Border.Background>
-                    </Border>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding ProjectName,FallbackValue=Package}"
-                                   TextTrimming="CharacterEllipsis"
-                                   FontSize="{StaticResource LargeFontSize}" FontWeight="Bold"
-                                   ToolTip.Tip="{Binding ProjectName}" />
-                        <TextBlock>
-                            <Run Text="@" />
-                            <Run Text="{Binding AuthorName,FallbackValue=Author}" />
-                        </TextBlock>
-                        <HyperlinkButton NavigateUri="{Binding ReferenceUrl}">
-                            <ToolTip.Tip>
-                                <StackPanel Margin="10,6" Spacing="2">
-                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
-                                        <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                   FontSize="{StaticResource SmallFontSize}" />
-                                        <fi:SymbolIcon Grid.Column="1" Symbol="Open"
-                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                       FontSize="{StaticResource MediumFontSize}" />
-                                    </Grid>
-                                    <TextBlock
-                                        Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
-                                </StackPanel>
-                            </ToolTip.Tip>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <TextBlock
-                                    Text="{Binding ReferenceLabel,FallbackValue=Label,Converter={x:Static huskc:StringConverters.ToUpper}}" />
-                                <fi:SymbolIcon Symbol="Open" FontSize="12" />
+            <Grid RowDefinitions="Auto,*">
+                <Border Grid.Row="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                        CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Upper}}">
+                    <Panel>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Margin="10" VerticalAlignment="Top">
+                            <ToggleButton Grid.Column="0" Classes="Small" BorderThickness="1"
+                                          IsChecked="{Binding $parent[modals:ExhibitPackageModal].IsDetailPanelVisible,Mode=TwoWay}">
+                                <fi:SymbolIcon Symbol="PanelLeftText" FontSize="{StaticResource MediumFontSize}" />
+                            </ToggleButton>
+                            <Button Grid.Column="2" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
+                                    Background="Transparent"
+                                    Command="{Binding $parent[modals:ExhibitPackageModal].DismissCommand}">
+                                <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
+                            </Button>
+                        </Grid>
+                        <StackPanel Margin="18" Spacing="6">
+                            <Border Height="72" Width="72" BorderBrush="{StaticResource OverlaySolidBackgroundBrush}"
+                                    BorderThickness="4" CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Border.Background>
+                                    <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                                Stretch="UniformToFill" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock Text="{Binding ProjectName,FallbackValue=Fabric API(Fabric or NeoForge)}"
+                                       TextAlignment="Center" FontSize="{StaticResource LargeFontSize}"
+                                       TextWrapping="Wrap" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                                <HyperlinkButton NavigateUri="{Binding ReferenceUrl}">
+                                    <ToolTip.Tip>
+                                        <StackPanel Margin="10,6" Spacing="2">
+                                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                                <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
+                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                           FontSize="{StaticResource SmallFontSize}" />
+                                                <fi:SymbolIcon Grid.Column="1" Symbol="Open"
+                                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                               FontSize="{StaticResource MediumFontSize}" />
+                                            </Grid>
+                                            <TextBlock
+                                                Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                                        </StackPanel>
+                                    </ToolTip.Tip>
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <TextBlock
+                                            Text="{Binding ReferenceLabel,FallbackValue=Label,Converter={x:Static huskc:StringConverters.ToUpper}}" />
+                                        <fi:SymbolIcon Symbol="Open" FontSize="12" />
+                                    </StackPanel>
+                                </HyperlinkButton>
+                                <TextBlock>
+                                    <Run Text="@" />
+                                    <Run Text="{Binding AuthorName,FallbackValue=Author}" />
+                                </TextBlock>
                             </StackPanel>
-                        </HyperlinkButton>
-                    </StackPanel>
-                    <Grid Grid.Column="2" RowDefinitions="*,*" RowSpacing="4">
-                        <Button Grid.Row="0" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
-                                Command="{Binding $parent[modals:ExhibitPackageModal].DismissCommand}">
-                            <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
-                        </Button>
-                        <ToggleButton Grid.Row="1" Classes="Small"
-                                      IsChecked="{Binding $parent[modals:ExhibitPackageModal].IsDetailPanelVisible,Mode=TwoWay}">
-                            <fi:SymbolIcon Symbol="PanelLeftText" FontSize="{StaticResource MediumFontSize}" />
-                        </ToggleButton>
-                    </Grid>
+                        </StackPanel>
+                    </Panel>
+                </Border>
+                <Grid Grid.Row="1" RowDefinitions="Auto,Auto,*,Auto" Margin="18" RowSpacing="12">
+                    <ItemsControl Grid.Row="0" ItemsSource="{Binding Tags}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <husk:Tag Content="{Binding}" FontSize="{StaticResource MediumFontSize}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemSpacing="4" LineSpacing="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <TextBlock Grid.Row="1"
+                               Text="{Binding Summary,FallbackValue=Summary}"
+                               TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
+                    <husk:SwitchPresenter Grid.Row="3"
+                                          Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.State,Mode=OneWay,FallbackValue={x:Null}}"
+                                          TargetType="m:ExhibitState">
+                        <husk:SwitchCase Value="{x:Null}">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="12">
+                                <ContentControl Grid.Row="0" ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
+                                        <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                    <Button Grid.Column="1" Classes="Primary"
+                                            Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
+                                            <TextBlock Text="Add to the instance" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Editable">
+                            <Grid RowDefinitions="Auto,4,Auto,12,Auto">
+                                <husk:Tag Grid.Row="0" Classes="Success"
+                                          ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <fi:SymbolIcon Symbol="MailInbox" FontSize="{StaticResource SmallFontSize}" />
+                                        <husk:SwitchPresenter
+                                            Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
+                                            TargetType="x:Boolean">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="Installed:" />
+                                                    <Run
+                                                        Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="Installed:" />
+                                                    <Run FontWeight="Bold"
+                                                         Text="Unspecified" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <ContentControl Grid.Row="2" ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
+                                        <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                    <Button Grid.Column="1" Classes="Primary"
+                                            Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
+                                            <TextBlock Text="Apply changes" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Grid.Column="2"
+                                            Command="{Binding $parent[modals:ExhibitPackageModal].DeleteCommand}">
+                                        <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Locked">
+                            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    CornerRadius="{StaticResource MediumCornerRadius}" Padding="12">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <icons:PackIconLucide Grid.Column="0" Kind="Lock"
+                                                          Height="{StaticResource ExtraLargeFontSize}"
+                                                          VerticalAlignment="Center" />
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Locked Version" FontSize="{StaticResource SmallFontSize}"
+                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock
+                                            Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=LockedVersionName}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Adding">
+                            <Grid RowDefinitions="Auto,4,Auto,12,Auto">
+                                <husk:Tag Grid.Row="0" Classes="Warning"
+                                          ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName,FallbackValue=Version}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <fi:SymbolIcon Symbol="New" FontSize="{StaticResource SmallFontSize}" />
+                                        <husk:SwitchPresenter
+                                            Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
+                                            TargetType="x:Boolean">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="Adding:" />
+                                                    <Run
+                                                        Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionName,FallbackValue=Version}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="Adding:" />
+                                                    <Run FontWeight="Bold"
+                                                         Text="Unspecified" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <ContentControl Grid.Row="2" ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
+                                        <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                    <Button Grid.Column="1" Classes="Primary"
+                                            Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
+                                            <TextBlock Text="Apply changes" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Grid.Column="2"
+                                            Command="{Binding $parent[modals:ExhibitPackageModal].UndoCommand}">
+                                        <fi:SymbolIcon Symbol="ArrowUndo" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Modifying">
+                            <Grid RowDefinitions="Auto,4,Auto,4,Auto,12,Auto">
+                                <husk:Tag Grid.Row="0" Classes="Success"
+                                          ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <fi:SymbolIcon Symbol="MailInbox" FontSize="{StaticResource SmallFontSize}" />
+                                        <husk:SwitchPresenter
+                                            Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
+                                            TargetType="x:Boolean">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="Installed:" />
+                                                    <Run
+                                                        Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="Installed:" />
+                                                    <Run FontWeight="Bold"
+                                                         Text="Unspecified" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <husk:Tag Grid.Row="2" Classes="Warning"
+                                          ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName,FallbackValue=Version}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <fi:SymbolIcon Symbol="Pen" FontSize="{StaticResource SmallFontSize}" />
+                                        <husk:SwitchPresenter
+                                            Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
+                                            TargetType="x:Boolean">
+                                            <husk:SwitchCase Value="True">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="Replacing:" />
+                                                    <Run
+                                                        Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionName,FallbackValue=Version}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                            <husk:SwitchCase Value="False">
+                                                <TextBlock TextTrimming="CharacterEllipsis">
+                                                    <Run Text="Replacing:" />
+                                                    <Run FontWeight="Bold"
+                                                         Text="Auto}" />
+                                                </TextBlock>
+                                            </husk:SwitchCase>
+                                        </husk:SwitchPresenter>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <ContentControl Grid.Row="4" ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid Grid.Row="6" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
+                                        <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                    <Button Grid.Column="1" Classes="Primary"
+                                            Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
+                                            <TextBlock Text="Apply changes" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Grid.Column="2"
+                                            Command="{Binding $parent[modals:ExhibitPackageModal].UndoCommand}">
+                                        <fi:SymbolIcon Symbol="ArrowUndo" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="Removing">
+                            <Grid RowDefinitions="Auto,4,Auto,4,Auto,12,Auto">
+                                <husk:Tag Grid.Row="0" Classes="Danger"
+                                          ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource SmallFontSize}" />
+                                        <TextBlock TextTrimming="CharacterEllipsis">
+                                            <Run Text="Removing:" />
+                                            <Run
+                                                Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </husk:Tag>
+                                <ContentControl Grid.Row="4" ContentTemplate="{StaticResource VersionEditorTemplate}" />
+                                <Grid Grid.Row="6" ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
+                                        <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
+                                    </Button>
+                                    <Button Grid.Column="1"
+                                            Command="{Binding $parent[modals:ExhibitPackageModal].UndoCommand}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <fi:SymbolIcon Symbol="ArrowReset"
+                                                           FontSize="{StaticResource MediumFontSize}" />
+                                            <TextBlock Text="Restore" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </husk:SwitchCase>
+                    </husk:SwitchPresenter>
                 </Grid>
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding Tags}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
-                            <husk:Tag Content="{Binding}" FontSize="{StaticResource MediumFontSize}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel ItemSpacing="4" LineSpacing="4" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-                <TextBlock Grid.Row="2"
-                           Text="{Binding Summary,FallbackValue=Summary}"
-                           TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
-                <husk:SwitchPresenter Grid.Row="3"
-                                      Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.State,Mode=OneWay,FallbackValue={x:Null}}"
-                                      TargetType="m:ExhibitState">
-                    <husk:SwitchCase Value="{x:Null}">
-                        <Grid RowDefinitions="Auto,Auto" RowSpacing="12">
-                            <ContentControl Grid.Row="0" ContentTemplate="{StaticResource VersionEditorTemplate}" />
-                            <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
-                                    <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                                <Button Grid.Column="1" Classes="Primary"
-                                        Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="12">
-                                        <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                                        <TextBlock Text="Add to the instance" />
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Editable">
-                        <Grid RowDefinitions="Auto,4,Auto,12,Auto">
-                            <husk:Tag Grid.Row="0" Classes="Success"
-                                      ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <fi:SymbolIcon Symbol="MailInbox" FontSize="{StaticResource SmallFontSize}" />
-                                    <husk:SwitchPresenter
-                                        Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
-                                        TargetType="x:Boolean">
-                                        <husk:SwitchCase Value="True">
-                                            <TextBlock TextTrimming="CharacterEllipsis">
-                                                <Run Text="Installed:" />
-                                                <Run
-                                                    Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
-                                            </TextBlock>
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="False">
-                                            <TextBlock TextTrimming="CharacterEllipsis">
-                                                <Run Text="Installed:" />
-                                                <Run FontWeight="Bold"
-                                                     Text="Unspecified" />
-                                            </TextBlock>
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
-                                </StackPanel>
-                            </husk:Tag>
-                            <ContentControl Grid.Row="2" ContentTemplate="{StaticResource VersionEditorTemplate}" />
-                            <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
-                                    <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                                <Button Grid.Column="1" Classes="Primary"
-                                        Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="12">
-                                        <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                                        <TextBlock Text="Apply changes" />
-                                    </StackPanel>
-                                </Button>
-                                <Button Grid.Column="2"
-                                        Command="{Binding $parent[modals:ExhibitPackageModal].DeleteCommand}">
-                                    <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Locked">
-                        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                                CornerRadius="{StaticResource MediumCornerRadius}" Padding="12">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                <icons:PackIconLucide Grid.Column="0" Kind="Lock"
-                                                      Height="{StaticResource ExtraLargeFontSize}"
-                                                      VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="Locked Version" FontSize="{StaticResource SmallFontSize}"
-                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                    <TextBlock
-                                        Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=LockedVersionName}" />
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Adding">
-                        <Grid RowDefinitions="Auto,4,Auto,12,Auto">
-                            <husk:Tag Grid.Row="0" Classes="Warning"
-                                      ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName,FallbackValue=Version}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <fi:SymbolIcon Symbol="New" FontSize="{StaticResource SmallFontSize}" />
-                                    <husk:SwitchPresenter
-                                        Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
-                                        TargetType="x:Boolean">
-                                        <husk:SwitchCase Value="True">
-                                            <TextBlock TextTrimming="CharacterEllipsis">
-                                                <Run Text="Adding:" />
-                                                <Run
-                                                    Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionName,FallbackValue=Version}" />
-                                            </TextBlock>
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="False">
-                                            <TextBlock TextTrimming="CharacterEllipsis">
-                                                <Run Text="Adding:" />
-                                                <Run FontWeight="Bold"
-                                                     Text="Unspecified" />
-                                            </TextBlock>
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
-                                </StackPanel>
-                            </husk:Tag>
-                            <ContentControl Grid.Row="2" ContentTemplate="{StaticResource VersionEditorTemplate}" />
-                            <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
-                                    <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                                <Button Grid.Column="1" Classes="Primary"
-                                        Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="12">
-                                        <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                                        <TextBlock Text="Apply changes" />
-                                    </StackPanel>
-                                </Button>
-                                <Button Grid.Column="2"
-                                        Command="{Binding $parent[modals:ExhibitPackageModal].UndoCommand}">
-                                    <fi:SymbolIcon Symbol="ArrowUndo" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Modifying">
-                        <Grid RowDefinitions="Auto,4,Auto,4,Auto,12,Auto">
-                            <husk:Tag Grid.Row="0" Classes="Success"
-                                      ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <fi:SymbolIcon Symbol="MailInbox" FontSize="{StaticResource SmallFontSize}" />
-                                    <husk:SwitchPresenter
-                                        Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
-                                        TargetType="x:Boolean">
-                                        <husk:SwitchCase Value="True">
-                                            <TextBlock TextTrimming="CharacterEllipsis">
-                                                <Run Text="Installed:" />
-                                                <Run
-                                                    Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
-                                            </TextBlock>
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="False">
-                                            <TextBlock TextTrimming="CharacterEllipsis">
-                                                <Run Text="Installed:" />
-                                                <Run FontWeight="Bold"
-                                                     Text="Unspecified" />
-                                            </TextBlock>
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
-                                </StackPanel>
-                            </husk:Tag>
-                            <husk:Tag Grid.Row="2" Classes="Warning"
-                                      ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName,FallbackValue=Version}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <fi:SymbolIcon Symbol="Pen" FontSize="{StaticResource SmallFontSize}" />
-                                    <husk:SwitchPresenter
-                                        Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
-                                        TargetType="x:Boolean">
-                                        <husk:SwitchCase Value="True">
-                                            <TextBlock TextTrimming="CharacterEllipsis">
-                                                <Run Text="Replacing:" />
-                                                <Run
-                                                    Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionName,FallbackValue=Version}" />
-                                            </TextBlock>
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="False">
-                                            <TextBlock TextTrimming="CharacterEllipsis">
-                                                <Run Text="Replacing:" />
-                                                <Run FontWeight="Bold"
-                                                     Text="Auto}" />
-                                            </TextBlock>
-                                        </husk:SwitchCase>
-                                    </husk:SwitchPresenter>
-                                </StackPanel>
-                            </husk:Tag>
-                            <ContentControl Grid.Row="4" ContentTemplate="{StaticResource VersionEditorTemplate}" />
-                            <Grid Grid.Row="6" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                                <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
-                                    <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                                <Button Grid.Column="1" Classes="Primary"
-                                        Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="12">
-                                        <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                                        <TextBlock Text="Apply changes" />
-                                    </StackPanel>
-                                </Button>
-                                <Button Grid.Column="2"
-                                        Command="{Binding $parent[modals:ExhibitPackageModal].UndoCommand}">
-                                    <fi:SymbolIcon Symbol="ArrowUndo" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </husk:SwitchCase>
-                    <husk:SwitchCase Value="Removing">
-                        <Grid RowDefinitions="Auto,4,Auto,4,Auto,12,Auto">
-                            <husk:Tag Grid.Row="0" Classes="Danger"
-                                      ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
-                                    <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource SmallFontSize}" />
-                                    <TextBlock TextTrimming="CharacterEllipsis">
-                                        <Run Text="Removing:" />
-                                        <Run
-                                            Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
-                                    </TextBlock>
-                                </StackPanel>
-                            </husk:Tag>
-                            <ContentControl Grid.Row="4" ContentTemplate="{StaticResource VersionEditorTemplate}" />
-                            <Grid Grid.Row="6" ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                <Button Grid.Column="0" Theme="{StaticResource OutlineButtonTheme}">
-                                    <fi:SymbolIcon Symbol="Bookmark" FontSize="{StaticResource MediumFontSize}" />
-                                </Button>
-                                <Button Grid.Column="1"
-                                        Command="{Binding $parent[modals:ExhibitPackageModal].UndoCommand}">
-                                    <StackPanel Orientation="Horizontal" Spacing="12">
-                                        <fi:SymbolIcon Symbol="ArrowReset" FontSize="{StaticResource MediumFontSize}" />
-                                        <TextBlock Text="Restore" />
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </husk:SwitchCase>
-                </husk:SwitchPresenter>
             </Grid>
         </Border>
         <!-- 即使这个面板没有打开也会触发懒加载，因为 IsEffectivelyVisible 不是依赖属性也没法跟踪值 -->

@@ -58,7 +58,11 @@
                                     </Transitions>
                                 </ContentPresenter.Transitions>
                             </ContentPresenter>
-                            <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" Padding="12,32,12,0" />
+                            <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" Padding="12,32,12,0">
+                                <local:OverlayHost.Transition>
+                                    <huskt:PopUpTransition />
+                                </local:OverlayHost.Transition>
+                            </local:OverlayHost>
                             <local:OverlayHost
                                 Name="{x:Static local:AppWindow.PART_ModalHost}"
                                 HorizontalContentAlignment="Center"
