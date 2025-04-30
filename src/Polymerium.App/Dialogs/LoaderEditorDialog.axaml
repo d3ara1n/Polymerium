@@ -81,9 +81,10 @@
         <husk:SwitchCase Value="False">
             <Grid RowDefinitions="Auto,24,Auto" Margin="24,32,24,12">
                 <StackPanel Grid.Row="0" Spacing="6">
-                    <fi:SymbolIcon Symbol="Branch" HorizontalAlignment="Center" />
+                    <fi:SymbolIcon Symbol="VehicleTractor" FontSize="{StaticResource ExtraLargeFontSize}"
+                                   HorizontalAlignment="Center" />
                     <TextBlock Text="No loader selected yet..." HorizontalAlignment="Center" />
-                    <TextBlock Text="Mod functions rely on mod loaders."
+                    <TextBlock Text="Mods will not function without a loader."
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                HorizontalAlignment="Center" />
                 </StackPanel>
