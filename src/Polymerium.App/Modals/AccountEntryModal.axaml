@@ -45,7 +45,16 @@
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </DockPanel>
                 </StackPanel>
-                <Button HorizontalAlignment="Right" Content="Refresh" Classes="Primary Small" />
+                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="{StaticResource MediumFontSize}"
+                                       IconVariant="Filled" VerticalAlignment="Center"
+                                       Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                        <TextBlock Text="Refreshed" VerticalAlignment="Center"
+                                   Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                    </StackPanel>
+                    <Button HorizontalAlignment="Right" Content="Refresh" Classes="Primary Small" />
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>

@@ -2,4 +2,7 @@
 
 namespace Trident.Abstractions.Importers;
 
-public record ImportedProfileContainer(Profile Profile, IReadOnlyList<(string, string)> ImportFileNames, Uri? IconUrl);
+public record ImportedProfileContainer(
+    Profile Profile,
+    IReadOnlyList<(string Source, string Target)> ImportFileNames,
+    Uri? IconUrl);

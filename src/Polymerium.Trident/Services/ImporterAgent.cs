@@ -5,7 +5,7 @@ namespace Polymerium.Trident.Services;
 
 public class ImporterAgent(IEnumerable<IProfileImporter> importers)
 {
-    private static readonly string[] INVALID_NAMES = ["", ".", ".."];
+    public static readonly string[] INVALID_NAMES = ["", ".", ".."];
 
     public async Task<ImportedProfileContainer> ImportAsync(CompressedProfilePack pack)
     {
@@ -23,8 +23,7 @@ public class ImporterAgent(IEnumerable<IProfileImporter> importers)
     {
         var importDir = PathDef.Default.DirectoryOfImport(key);
 
-        foreach (var (source, target) in container.ImportFileNames.Where(x => !x.Item2.EndsWith('/')
-                                                                           && !INVALID_NAMES.Contains(x.Item2)))
+        foreach (var (source, target) in container.ImportFileNames)
         {
             var to = Path.Combine(importDir, target);
             var dir = Path.GetDirectoryName(to);
