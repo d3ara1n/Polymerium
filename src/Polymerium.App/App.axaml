@@ -13,12 +13,22 @@
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
-                    <ImageBrush x:Key="SettingsImageBrush" Source="/Assets/Images/126997360_p2.jpg"
+                    <ImageBrush x:Key="SettingsImageBrush"
+                                Source="avares://Polymerium.App/Assets/Images/126997360_p2.jpg"
                                 Stretch="UniformToFill" />
+                    <ImageBrush x:Key="SettingsAiBadgeEnglishImageBrush"
+                                Source="avares://Polymerium.App/Assets/Badges/Developed-By-Humans-Not-By-AI-Badge-white-EN.png" />
+                    <ImageBrush x:Key="SettingsAiBadgeChineseImageBrush"
+                                Source="avares://Polymerium.App/Assets/Badges/Developed-By-Human-Not-By-AI-Badge-white-CN.png" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
-                    <ImageBrush x:Key="SettingsImageBrush" Source="/Assets/Images/126997360_p0.jpg"
+                    <ImageBrush x:Key="SettingsImageBrush"
+                                Source="avares://Polymerium.App/Assets/Images/126997360_p0.jpg"
                                 Stretch="UniformToFill" />
+                    <ImageBrush x:Key="SettingsAiBadgeEnglishImageBrush"
+                                Source="avares://Polymerium.App/Assets/Badges/Developed-By-Humans-Not-By-AI-Badge-black-EN.png" />
+                    <ImageBrush x:Key="SettingsAiBadgeChineseImageBrush"
+                                Source="avares://Polymerium.App/Assets/Badges/Developed-By-Human-Not-By-AI-Badge-black-CN.png" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

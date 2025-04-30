@@ -50,7 +50,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         return new PaginationHandle<Exhibit>(initial,
                                              first.Pagination.PageSize,
                                              first.Pagination.TotalCount,
-                                             async pageIndex =>
+                                             async (pageIndex, _) =>
                                              {
                                                  var rv = await service
                                                                .SearchAsync(query,
@@ -182,7 +182,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
             return new PaginationHandle<Version>(initial,
                                                  first.Pagination.PageSize,
                                                  first.Pagination.TotalCount,
-                                                 async pageIndex =>
+                                                 async (pageIndex, _) =>
                                                  {
                                                      var data = await service
                                                                      .GetModFilesAsync(modId,

@@ -6,19 +6,21 @@ public class PaginationHandle<T>(
     IEnumerable<T> initial,
     uint pageSize,
     uint totalCount,
-    Func<uint, Task<IEnumerable<T>>> next) : IPaginationHandle<T>
+    Func<uint, CancellationToken, Task<IEnumerable<T>>> next) : IPaginationHandle<T>
 {
     private IEnumerable<T> _currentItems = initial;
     private uint _currentPage;
 
     #region IPaginationHandle<T> Members
 
-    public async Task<IEnumerable<T>> FetchAsync()
+    public async Task<IEnumerable<T>> FetchAsync(CancellationToken token)
     {
+        if (token.IsCancellationRequested)
+            return [];
         if (_currentPage == PageIndex && _currentItems.Any())
             return _currentItems;
 
-        var rv = await next(PageIndex).ConfigureAwait(false);
+        var rv = await next(PageIndex, token).ConfigureAwait(false);
         var currentItems = rv as T[] ?? rv.ToArray();
         _currentItems = currentItems;
         _currentPage = PageIndex;

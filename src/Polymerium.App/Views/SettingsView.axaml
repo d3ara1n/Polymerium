@@ -279,9 +279,13 @@
             </StackPanel>
         </Panel>
         <husk:Divider />
-        <TextBlock FontSize="{StaticResource SmallFontSize}"
-                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                   Text="Disclaimer: 任何在 UI 上看到的预期外行为、Bug、错误的渲染，均为 Avalonia 自身五六年前至今未解决或被直接关闭的 Issues，笔者一直知道它们的存在，且也一直在关注这些 Issues 的进展。由于笔者能力不足钱包扁扁，无法支持 Avalonia 的开发，导致 Avalonia 项目开发进展缓慢。这一切的一切，都是笔者本人导致的。"
-                   TextWrapping="Wrap" />
+        <StackPanel Orientation="Horizontal" Spacing="12">
+            <Border Background="{DynamicResource SettingsAiBadgeEnglishImageBrush}"
+                    Width="132"
+                    Height="42" />
+            <Border Background="{DynamicResource SettingsAiBadgeChineseImageBrush}"
+                    Width="132"
+                    Height="42" />
+        </StackPanel>
     </StackPanel>
 </husk:Page>
