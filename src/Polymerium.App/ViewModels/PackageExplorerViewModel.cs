@@ -238,7 +238,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
         try
         {
             var handle = await _agent.SearchAsync(SelectedRepository.Label, QueryText, Filter);
-            var source = new InfiniteCollection<ExhibitModel>(async i =>
+            var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
             {
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
                 try
@@ -251,13 +251,13 @@ public partial class PackageExplorerViewModel : ViewModelBase
                     //  待移除（存在于构建，并位于待定区具有移除标记）
                     //  待修改（存在于构建，并位于待定区具有不同版本选择）
 
-                    var rv = await handle.FetchAsync();
+                    var rv = await handle.FetchAsync(token);
                     var tasks = rv
                                .Select(x =>
                                 {
                                     var found = PendingPackagesSource.Items.FirstOrDefault(y => x.Label == y.Label
-                                     && x.Namespace == y.Ns
-                                     && x.Pid == y.ProjectId);
+                                              && x.Namespace == y.Ns
+                                              && x.Pid == y.ProjectId);
                                     if (found != null)
                                         return found;
                                     var model = new ExhibitModel(x.Label,
@@ -273,9 +273,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                                  x.Reference);
                                     var installed =
                                         profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Purl,
-                                                                                  x.Label,
-                                                                                  x.Namespace,
-                                                                                  x.Pid));
+                                                                                       x.Label,
+                                                                                       x.Namespace,
+                                                                                       x.Pid));
                                     if (installed is not null)
                                     {
                                         model.State = installed.Source == null || installed.Source != Basic.Source

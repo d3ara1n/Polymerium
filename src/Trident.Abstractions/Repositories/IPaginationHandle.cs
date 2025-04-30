@@ -6,5 +6,5 @@ public interface IPaginationHandle<T>
     uint PageIndex { get; set; }
 
     ulong TotalCount { get; }
-    Task<IEnumerable<T>> FetchAsync();
+    Task<IEnumerable<T>> FetchAsync(CancellationToken token);
 }

@@ -68,10 +68,10 @@ public class DataService(
                         {
                             lastCount = rv.Count;
                             handle.PageIndex = index;
-                            rv.AddRange(await handle.FetchAsync());
+                            rv.AddRange(await handle.FetchAsync(CancellationToken.None));
                             index++;
                         } while (rv.Count != lastCount);
-                        
+
                         return rv.AsEnumerable();
                     });
 
@@ -117,5 +117,4 @@ public class DataService(
                                   }
                               }));
                           });
-    
 }

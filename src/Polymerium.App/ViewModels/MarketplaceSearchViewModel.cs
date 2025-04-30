@@ -64,6 +64,8 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
         if (token.IsCancellationRequested)
             return;
 
+        _ = SearchAsync();
+
         foreach (var repository in Repositories)
             if (repository.Loaders == null || repository.Versions == null)
             {
@@ -90,8 +92,6 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                         SemVersion.SortOrderComparer)
                                      .ToList();
             }
-
-        _ = SearchAsync();
     }
 
     #region Nested type: SearchArguments
@@ -172,12 +172,12 @@ public partial class MarketplaceSearchViewModel : ViewModelBase
                                                   new Filter(FilteredVersion,
                                                              FilteredLoader?.LoaderId,
                                                              ResourceKind.Modpack));
-            var source = new InfiniteCollection<ExhibitModel>(async i =>
+            var source = new InfiniteCollection<ExhibitModel>(async (i, token) =>
             {
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
                 try
                 {
-                    var rv = await handle.FetchAsync();
+                    var rv = await handle.FetchAsync(token);
                     var tasks = rv
                                .Select(x => new ExhibitModel(x.Label,
                                                              x.Namespace,

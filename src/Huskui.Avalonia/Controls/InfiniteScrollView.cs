@@ -28,6 +28,8 @@ public class InfiniteScrollView : ItemsControl
     private ScrollViewer? _scrollViewer;
     private IInfiniteCollection? _source;
 
+    private bool _updatingSafe;
+
     public InfiniteScrollView() => PseudoClasses.Set(":idle", true);
 
     public object? PendingContent
@@ -48,6 +50,9 @@ public class InfiniteScrollView : ItemsControl
 
         if (change.Property == ItemsSourceProperty)
         {
+            if (change.OldValue is IDisposable old)
+                old.Dispose();
+
             _source = change.NewValue as IInfiniteCollection;
             _scrollViewer?.ScrollToHome();
             _ = UpdateAsync();
@@ -65,7 +70,8 @@ public class InfiniteScrollView : ItemsControl
 
     protected override Size ArrangeOverride(Size finalSize)
     {
-        if (_scrollViewer != null
+        if (!_updatingSafe
+         && _scrollViewer != null
          && _pendingPresenter != null
          && _scrollViewer.Offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height)
             _ = UpdateAsync();
@@ -79,59 +85,54 @@ public class InfiniteScrollView : ItemsControl
         if (_scrollViewer == null || _pendingPresenter == null)
             return;
 
-        if (offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height)
+        if (!_updatingSafe && offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height)
             _ = UpdateAsync();
     }
 
     private async Task UpdateAsync()
     {
-        do
+        if (_source == null)
         {
-            if (_source == null)
-            {
-                if (_pendingPresenter != null)
-                    _pendingPresenter.IsVisible = false;
-
-                return;
-            }
-
-            if (_source.IsFetching)
-                return;
-
-            if (!_source.HasNext)
-                return;
-
             if (_pendingPresenter != null)
-                _pendingPresenter.IsVisible = true;
+                _pendingPresenter.IsVisible = false;
 
-            PseudoClasses.Set(":loading", false);
-            PseudoClasses.Set(":finished", false);
-            PseudoClasses.Set(":idle", false);
+            return;
+        }
 
-            try
-            {
-                await _source.FetchAsync();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+        if (_source.IsFetching)
+            return;
 
-            if (!_source.HasNext)
-            {
-                if (_pendingPresenter != null)
-                    _pendingPresenter.IsVisible = false;
-                return;
-            }
+        if (!_source.HasNext)
+            return;
 
-            PseudoClasses.Set(":loading", false);
-            PseudoClasses.Set(!_source.HasNext ? ":finished" : ":idle", true);
+        if (_pendingPresenter != null)
+            _pendingPresenter.IsVisible = true;
 
-            // 直接判断是否循环会因为元素还没生成滚动条还在原位而被迫继续刷新
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-        } while (_source.HasNext
-              && _scrollViewer is not null
-              && _pendingPresenter is not null
-              && _scrollViewer.Offset.Y > _scrollViewer.ScrollBarMaximum.Y - _pendingPresenter.Bounds.Height);
+        PseudoClasses.Set(":loading", false);
+        PseudoClasses.Set(":finished", false);
+        PseudoClasses.Set(":idle", false);
+
+        _updatingSafe = true;
+
+        try
+        {
+            await _source.FetchAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+        }
+
+        if (!_source.HasNext)
+        {
+            if (_pendingPresenter != null)
+                _pendingPresenter.IsVisible = false;
+            return;
+        }
+
+        PseudoClasses.Set(":loading", false);
+        PseudoClasses.Set(!_source.HasNext ? ":finished" : ":idle", true);
+
+        _updatingSafe = false;
     }
 }

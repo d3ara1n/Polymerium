@@ -67,17 +67,19 @@
                                                         <Grid ColumnDefinitions="Auto,Auto,Auto,*"
                                                               ColumnSpacing="4">
                                                             <fi:SymbolIcon Grid.Column="0" Symbol="Flag"
-                                                                           FontSize="{StaticResource MediumFontSize}"
+                                                                           FontSize="{StaticResource SmallFontSize}"
                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                             <TextBlock Grid.Column="1"
                                                                        Text="{Binding CompatibleLoaders}"
+                                                                       FontSize="{StaticResource SmallFontSize}"
                                                                        TextTrimming="CharacterEllipsis"
                                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                             <fi:SymbolIcon Grid.Column="2" Symbol="Branch"
-                                                                           FontSize="{StaticResource MediumFontSize}"
+                                                                           FontSize="{StaticResource SmallFontSize}"
                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                             <TextBlock Grid.Column="3"
                                                                        Text="{Binding CompatibleVersions}"
+                                                                       FontSize="{StaticResource SmallFontSize}"
                                                                        TextTrimming="CharacterEllipsis"
                                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                         </Grid>

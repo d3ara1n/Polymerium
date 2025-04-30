@@ -3,20 +3,27 @@ using System.ComponentModel;
 
 namespace Huskui.Avalonia.Models;
 
-public class InfiniteCollection<T>(Func<int, Task<IEnumerable<T>>> factory, int startIndex = 0)
-    : ObservableCollection<T>, IInfiniteCollection
+public class InfiniteCollection<T>(Func<int, CancellationToken, Task<IEnumerable<T>>> factory, int startIndex = 0)
+    : ObservableCollection<T>, IInfiniteCollection, IDisposable
 {
+    private readonly CancellationTokenSource _cts = new();
     private int _index = startIndex;
+
+    public void Dispose()
+    {
+        if (!_cts.IsCancellationRequested)
+            _cts.Cancel();
+    }
 
     #region IInfiniteCollection Members
 
     public async Task FetchAsync()
     {
-        if (IsFetching)
+        if (IsFetching && _cts.IsCancellationRequested)
             return;
 
         IsFetching = true;
-        var rv = await factory.Invoke(_index++);
+        var rv = await factory.Invoke(_index++, _cts.Token);
         await Task.Delay(TimeSpan.FromSeconds(3));
         var dirty = false;
         foreach (var item in rv)
