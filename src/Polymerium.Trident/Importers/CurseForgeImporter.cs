@@ -59,8 +59,7 @@ public class CurseForgeImporter : IProfileImporter
                                                                             .Files
                                                                             .Select(x =>
                                                                                  new
-                                                                                     Profile.Rice.
-                                                                                     Entry(PackageHelper
+                                                                                     Profile.Rice.Entry(PackageHelper
                                                                                             .ToPurl(CurseForgeService
                                                                                                     .LABEL,
                                                                                                  null,
@@ -79,6 +78,8 @@ public class CurseForgeImporter : IProfileImporter
                                                         && x != manifest.Overrides
                                                         && x.Length > manifest.Overrides.Length + 1)
                                                .Select(x => (x, x[(manifest.Overrides.Length + 1)..]))
+                                               .Where(x => !x.Item2.EndsWith('/')
+                                                        && !ImporterAgent.INVALID_NAMES.Contains(x.Item2))
                                                .ToList(),
                                             pack.Reference?.Thumbnail);
     }

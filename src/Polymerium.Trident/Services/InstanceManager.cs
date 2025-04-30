@@ -457,8 +457,52 @@ public class InstanceManager(
 
         logger.LogDebug("{} files collected to extract", container.ImportFileNames.Count);
 
+        // HACK: 因为 Trident 中没有如何滚动活跃的 Import 部分，这里采取直接删除 /build 中的对应文件的方式
+        // 这里给出一种未来的方案：/live，类似 /persist 但是赋值自来自 Import，最后软链接进 /build
+        // 这样不用管 /build 里的文件内容就能做到 RESET 实例
+        // 其实也可以实现上述方案，毕竟用户文件都会被覆盖。整合包缺少配置合并机制，无法实现同时尊重用户配置和整合包配置
+        // 不过用户的更改都是对 /build/configs 做出的改变，属于“定制游戏体验”，而玩整合包本就是想要第一方的整合包游戏体验
+        // 用户的游戏体验修改被覆盖是意料之内的
+        var buildDir = PathDef.Default.DirectoryOfBuild(key);
         var importDir = PathDef.Default.DirectoryOfImport(key);
-        // TODO: rename import to import.bak rather than delete and restore if failed
+
+        if (Directory.Exists(buildDir) && Directory.Exists(importDir))
+        {
+            var queue = new Queue<string>();
+            var cleans = new List<string>();
+            queue.Enqueue(importDir);
+            while (queue.TryDequeue(out var dir))
+            {
+                var files = Directory.GetFiles(dir);
+                var dirs = Directory.GetDirectories(dir);
+                foreach (var sub in dirs)
+                {
+                    queue.Enqueue(sub);
+                    cleans.Add(sub);
+                }
+
+                foreach (var file in files)
+                {
+                    var relative = Path.GetRelativePath(importDir, file);
+                    var target = Path.Combine(buildDir, relative);
+                    if (File.Exists(target))
+                        File.Delete(target);
+                }
+            }
+
+            // 这里的排序是为了遍历顺序永远是级别深入的在前，以此代替 DFS 达到效果
+            // 证明有限遍历到 A 的子文件夹 A/B，由 A/B(3) 长度必定大于 A(1)
+            foreach (var target in cleans
+                                  .OrderByDescending(x => x.Length)
+                                  .Select(x => Path.GetRelativePath(importDir, x))
+                                  .Select(x => Path.Combine(buildDir, x))
+                                  .Where(Directory.Exists)
+                                  .Where(x => Directory.GetDirectories(x).Length == 0
+                                           && Directory.GetFiles(x).Length == 0))
+                Directory.Delete(target);
+        }
+
+
         if (Directory.Exists(importDir))
             Directory.Delete(importDir, true);
 

@@ -273,6 +273,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
+                        model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage(e.FailureReason, $"Failed to update {e.Key}");
                     });
                     e.StateUpdated -= OnStateChanged;
@@ -390,6 +391,7 @@ public partial class MainWindowContext : ObservableObject
                     model.Progress = 0d;
                     Dispatcher.UIThread.Post(() =>
                     {
+                        model.State = InstanceEntryState.Idle;
                         _notificationService.PopMessage("The instance has been launched",
                                                         e.Key,
                                                         NotificationLevel.Success);
