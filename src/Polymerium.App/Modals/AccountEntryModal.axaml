@@ -1,0 +1,51 @@
+﻿<husk:Modal xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+            xmlns:modals="clr-namespace:Polymerium.App.Modals"
+            mc:Ignorable="d"
+            x:Class="Polymerium.App.Modals.AccountEntryModal">
+    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="24">
+        <DockPanel Grid.Row="0">
+            <Button DockPanel.Dock="Right" CornerRadius="{StaticResource FullCornerRadius}" HorizontalAlignment="Right"
+                    Command="{Binding $parent[modals:AccountEntryModal].DismissCommand}">
+                <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+            </Button>
+            <TextBlock Text="Roleplaying" VerticalAlignment="Center" FontWeight="Bold"
+                       FontSize="{StaticResource LargeFontSize}" />
+        </DockPanel>
+        <StackPanel Grid.Row="1" Spacing="4">
+            <Border Height="62" Width="62">
+                <Border.Background>
+                    <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" />
+                </Border.Background>
+            </Border>
+            <TextBlock Text="Steve" HorizontalAlignment="Center"
+                       FontSize="{StaticResource LargeFontSize}" />
+        </StackPanel>
+        <Border Grid.Row="2" CornerRadius="{StaticResource SmallCornerRadius}"
+                BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}" BorderThickness="1" Padding="12,8"
+                Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Microsoft" FontSize="{StaticResource LargeFontSize}" />
+                <StackPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Right" Text="2025/07/26 07:03" />
+                        <TextBlock Text="Enrolled"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Right" Text="2025/12/13 02:03" />
+                        <TextBlock Text="Last Used"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    </DockPanel>
+                </StackPanel>
+                <Button HorizontalAlignment="Right" Content="Refresh" Classes="Primary Small" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</husk:Modal>

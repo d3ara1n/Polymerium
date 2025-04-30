@@ -11,8 +11,8 @@
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.UnknownView" x:DataType="vm:UnknownViewModel">
     <husk:Page.Header>
-        <DockPanel>
-            <StackPanel Margin="8,0,0,0" DockPanel.Dock="Right" Spacing="4" Orientation="Horizontal">
+        <DockPanel HorizontalSpacing="8">
+            <StackPanel DockPanel.Dock="Right" Spacing="4" Orientation="Horizontal">
                 <Button Command="{Binding DebugCommand}">
                     <icons:PackIconLucide Kind="Bug" Width="12" Height="12" />
                 </Button>
@@ -20,12 +20,7 @@
                     <icons:PackIconLucide Kind="Lightbulb" Width="12" Height="12" />
                 </Button>
             </StackPanel>
-            <TextBlock Text="我能吞下玻璃而不伤身体" FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center"
-                       TextAlignment="Center" FontWeight="Bold">
-                <TextBlock.Effect>
-                    <DropShadowEffect Opacity="0.1" BlurRadius="6" />
-                </TextBlock.Effect>
-            </TextBlock>
+            <TextBlock Text="我能吞下玻璃而不伤身体" Theme="{StaticResource PageHeaderTextBlockTheme}" />
         </DockPanel>
     </husk:Page.Header>
     <husk:Page.Styles>

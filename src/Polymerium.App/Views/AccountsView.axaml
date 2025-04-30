@@ -4,6 +4,20 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+           xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
            x:Class="Polymerium.App.Views.AccountsView">
-    Welcome to Avalonia!
+    <husk:Page.Header>
+        <DockPanel HorizontalSpacing="8">
+            <StackPanel DockPanel.Dock="Right" Spacing="4" Orientation="Horizontal">
+                <Button Classes="Primary">
+                    <StackPanel Orientation="Horizontal" Spacing="7">
+                        <icons:PackIconLucide Kind="UserPlus" Width="{StaticResource MediumFontSize}"
+                                              Height="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
+                        <TextBlock Text="Add Account" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <TextBlock Text="Accounts" Theme="{StaticResource PageHeaderTextBlockTheme}" />
+        </DockPanel>
+    </husk:Page.Header>
 </husk:Page>
