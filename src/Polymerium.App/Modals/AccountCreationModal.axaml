@@ -1,0 +1,34 @@
+﻿<husk:Modal xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+            mc:Ignorable="d"
+            x:Class="Polymerium.App.Modals.AccountCreationModal">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button>
+                <TextBlock Text="Back" />
+            </Button>
+            <Button Classes="Primary">
+                <TextBlock Text="Next" />
+            </Button>
+            <Button Classes="Primary">
+                <TextBlock Text="Finish" />
+            </Button>
+            <Button>
+                <TextBlock Text="Dismiss" />
+            </Button>
+        </StackPanel>
+        <TransitioningContentControl>
+            <TransitioningContentControl.PageTransition>
+                <CompositePageTransition>
+                    <CrossFade Duration="{StaticResource ControlFasterAnimationDuration}" FadeInEasing="CubicEaseOut"
+                               FadeOutEasing="CubicEaseIn" />
+                    <PageSlide Duration="{StaticResource ControlFasterAnimationDuration}" SlideInEasing="CubicEaseOut"
+                               SlideOutEasing="CubicEaseIn" />
+                </CompositePageTransition>
+            </TransitioningContentControl.PageTransition>
+        </TransitioningContentControl>
+    </DockPanel>
+</husk:Modal>

@@ -10,10 +10,10 @@
     <Thickness x:Key="PageToplessBottomlessContentMargin">16,0,16,0</Thickness>
 
     <ControlTheme x:Key="PageHeaderTextBlockTheme" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="{StaticResource ExtraLargeFontSize}" />
+        <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Effect">
             <DropShadowEffect Opacity="0.1" BlurRadius="6" />
         </Setter>

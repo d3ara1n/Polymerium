@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Facilities;
+using Polymerium.App.Modals;
 using Polymerium.App.Services;
 
 namespace Polymerium.App.ViewModels;
@@ -75,7 +76,10 @@ public partial class UnknownViewModel(
     }
 
     [RelayCommand]
-    private void Debug() { }
+    private void Debug()
+    {
+        overlayService.PopModal(new AccountEntryModal());
+    }
 
     #endregion
 }

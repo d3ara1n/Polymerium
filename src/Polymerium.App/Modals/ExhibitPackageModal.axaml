@@ -132,7 +132,7 @@
         </DataTemplate>
     </husk:Modal.Resources>
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-        <Border Grid.Column="1" Padding="18" Width="280"
+        <Border Grid.Column="1" Padding="18" Width="300"
                 Background="{StaticResource OverlaySolidBackgroundBrush}"
                 BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                 CornerRadius="{StaticResource MediumCornerRadius}">

@@ -77,7 +77,11 @@
         <Panel Grid.Row="0" Height="{Binding $parent[husk:Page].Bounds.Height,Mode=OneWay}"
                Margin="{StaticResource PageToplessBottomlessContentMargin}">
             <StackPanel Spacing="24" VerticalAlignment="Center" MaxWidth="1270">
-                <TextBlock Text="Discovery Center" Theme="{StaticResource PageHeaderTextBlockTheme}">
+                <TextBlock Text="Discovery Center" TextAlignment="Center"
+                           FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Opacity="0.1" BlurRadius="6" />
+                    </TextBlock.Effect>
                     <TextBlock.Foreground>
                         <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
                             <GradientStop Offset="0" Color="#f6d365" />
