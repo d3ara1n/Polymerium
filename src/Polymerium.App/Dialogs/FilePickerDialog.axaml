@@ -28,9 +28,11 @@
                 <StackPanel Margin="16,12" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="4">
                         <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" IsHitTestVisible="False" />
-                        <TextBlock FontWeight="Bold" Text="Drag and drop, or" IsHitTestVisible="False" />
+                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="Drag and drop, or"
+                                   IsHitTestVisible="False" />
                         <HyperlinkButton Name="BrowseButton" Content="Browser files..."
-                                         FontWeight="Bold" Click="BrowseButton_OnClick"
+                                         FontWeight="{StaticResource ControlStrongFontWeight}"
+                                         Click="BrowseButton_OnClick"
                                          Foreground="{StaticResource ControlAccentForegroundBrush}" />
                     </StackPanel>
                     <TextBlock Text="Up to 1024MiB" HorizontalAlignment="Center" IsHitTestVisible="False"

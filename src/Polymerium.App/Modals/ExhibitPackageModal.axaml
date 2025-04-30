@@ -133,7 +133,7 @@
     </husk:Modal.Resources>
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
         <Border Grid.Column="1" Width="300"
-                Background="{StaticResource OverlaySolidBackgroundBrush}"
+                Background="{StaticResource FlyoutBackgroundBrush}"
                 BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                 CornerRadius="{StaticResource MediumCornerRadius}">
             <Grid RowDefinitions="Auto,*">
@@ -247,7 +247,7 @@
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
                                                     <Run Text="Installed:" />
-                                                    <Run FontWeight="Bold"
+                                                    <Run FontWeight="{StaticResource ControlStrongFontWeight}"
                                                          Text="Unspecified" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
@@ -308,7 +308,7 @@
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
                                                     <Run Text="Adding:" />
-                                                    <Run FontWeight="Bold"
+                                                    <Run FontWeight="{StaticResource ControlStrongFontWeight}"
                                                          Text="Unspecified" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
@@ -353,7 +353,7 @@
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
                                                     <Run Text="Installed:" />
-                                                    <Run FontWeight="Bold"
+                                                    <Run FontWeight="{StaticResource ControlStrongFontWeight}"
                                                          Text="Unspecified" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
@@ -377,7 +377,7 @@
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
                                                     <Run Text="Replacing:" />
-                                                    <Run FontWeight="Bold"
+                                                    <Run FontWeight="{StaticResource ControlStrongFontWeight}"
                                                          Text="Auto}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
@@ -439,7 +439,7 @@
         <!-- 即使这个面板没有打开也会触发懒加载，因为 IsEffectivelyVisible 不是依赖属性也没法跟踪值 -->
         <husk:ConstrainedBox Grid.Column="0" AspectRatio="0.8"
                              IsVisible="{Binding $parent[modals:ExhibitPackageModal].IsDetailPanelVisible,Mode=OneWay}">
-            <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
+            <Border Background="{StaticResource FlyoutBackgroundBrush}"
                     BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                 <TabControl Theme="{StaticResource SolidTabControlTheme}" Padding="0">
@@ -513,7 +513,7 @@
                                     Padding="12" Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
                                 <StackPanel>
                                     <TextBlock Text="Showing dependencies of version:" />
-                                    <TextBlock FontWeight="Bold"
+                                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
                                                Text="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).VersionName,FallbackValue=None}" />
                                 </StackPanel>
                             </Border>
@@ -588,7 +588,7 @@
                                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
                                         <StackPanel>
                                             <TextBlock Text="Showing changelog of version:" />
-                                            <TextBlock FontWeight="Bold"
+                                            <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
                                                        Text="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName,FallbackValue=None}" />
                                         </StackPanel>
                                     </Border>

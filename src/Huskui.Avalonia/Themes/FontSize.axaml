@@ -17,13 +17,23 @@
                                Text="Medium Font Size 中等大小字体" />
                     <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Light"
                                Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="SemiLight"
+                               Text="Medium Font Size 中等大小字体" />
                     <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Regular"
                                Text="Medium Font Size 中等大小字体" />
                     <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Medium"
                                Text="Medium Font Size 中等大小字体" />
                     <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="SemiBold"
                                Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="DemiBold"
+                               Text="Medium Font Size 中等大小字体" />
                     <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Bold"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="ExtraBold"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="Black"
+                               Text="Medium Font Size 中等大小字体" />
+                    <TextBlock FontSize="{StaticResource MediumFontSize}" FontWeight="SemiBold"
                                Text="Medium Font Size 中等大小字体" />
                 </StackPanel>
             </Grid>
@@ -33,7 +43,7 @@
     <ResourceDictionary.MergedDictionaries>
         <!-- Quicksand 的字形要求普通大小为 14 才看得清, 不过能用 Medium 字重补偿 -->
         <!-- Outfit 则只需要 12 就能很好显示 -->
-        <ResourceInclude Source="/Themes/FontSize.Normal.axaml" />
+        <ResourceInclude Source="/Themes/FontSize.Large.axaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

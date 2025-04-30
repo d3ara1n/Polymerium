@@ -73,7 +73,7 @@
                         </Border>
                         <StackPanel Grid.Row="0" Grid.Column="1">
                             <TextBlock Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}"
-                                       FontWeight="Bold" />
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
                             <TextBlock Text="{Binding Summary}" MaxLines="2" TextWrapping="Wrap"
                                        TextTrimming="CharacterEllipsis" />
                         </StackPanel>
@@ -189,7 +189,8 @@
                             </Border>
                             <Grid Grid.Column="1" RowDefinitions="*,Auto" RowSpacing="4">
                                 <TextBlock Grid.Row="0"
-                                           Text="{Binding ProjectName,FallbackValue=Name}" FontWeight="Bold"
+                                           Text="{Binding ProjectName,FallbackValue=Name}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}"
                                            FontSize="{StaticResource LargeFontSize}"
                                            TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding ProjectName}"
                                            TextWrapping="Wrap" MaxLines="2" />

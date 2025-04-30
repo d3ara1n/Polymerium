@@ -42,7 +42,7 @@
         <Setter Property="Padding" Value="6,4" />
         <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlStrongFontWeight}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />

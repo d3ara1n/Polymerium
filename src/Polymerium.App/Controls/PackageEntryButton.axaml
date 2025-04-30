@@ -60,7 +60,8 @@
                                         <ContentControl.DataTemplates>
                                             <DataTemplate DataType="m:InstancePackageVersionModel">
                                                 <TextBlock Text="{Binding Name}"
-                                                           VerticalAlignment="Center" FontWeight="Bold" />
+                                                           VerticalAlignment="Center"
+                                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
                                             </DataTemplate>
                                             <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
                                                 <husk:Tag Content="Unspecified" />
@@ -81,7 +82,7 @@
                                     <TextBlock Grid.Column="2" Text="{Binding ProjectName}"
                                                TextTrimming="CharacterEllipsis"
                                                FontSize="{StaticResource LargeFontSize}"
-                                               FontWeight="Bold" />
+                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
                                 </Grid>
                             </DockPanel>
                             <Grid Grid.Row="1" Grid.Column="2" ColumnDefinitions="*,4,Auto" RowDefinitions="*,0,Auto">

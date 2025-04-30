@@ -13,7 +13,8 @@
             <DataTemplate DataType="m:LoaderCandidateModel">
                 <StackPanel>
                     <Image Source="{Binding Thumbnail}" Height="48" Width="48" Margin="12" />
-                    <TextBlock Text="{Binding Display}" HorizontalAlignment="Center" FontWeight="Bold" />
+                    <TextBlock Text="{Binding Display}" HorizontalAlignment="Center"
+                               FontWeight="{StaticResource ControlStrongFontWeight}" />
                 </StackPanel>
             </DataTemplate>
         </TabStrip.ItemTemplate>

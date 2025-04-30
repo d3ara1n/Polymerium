@@ -31,7 +31,8 @@
                         </Border>
                         <StackPanel Grid.Column="2" VerticalAlignment="Center">
                             <TextBlock Text="{Binding Title}"
-                                       TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+                                       TextTrimming="CharacterEllipsis"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
                             <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis"
                                        FontSize="{StaticResource SmallFontSize}"
                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
@@ -65,7 +66,8 @@
                                 Command="{Binding $parent[v:MarketplacePortalView].((vm:MarketplacePortalViewModel)DataContext).OpenReadMoreLinkCommand,FallbackValue={x:Null}}"
                                 CommandParameter="{Binding}">
                             <TextBlock Text="{Binding Title}"
-                                       TextTrimming="CharacterEllipsis" FontWeight="Bold" TextWrapping="Wrap"
+                                       TextTrimming="CharacterEllipsis"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" TextWrapping="Wrap"
                                        MaxLines="2" TextAlignment="Center" />
                         </Button>
                     </Grid>
@@ -78,7 +80,8 @@
                Margin="{StaticResource PageToplessBottomlessContentMargin}">
             <StackPanel Spacing="24" VerticalAlignment="Center" MaxWidth="1270">
                 <TextBlock Text="Discovery Center" TextAlignment="Center"
-                           FontSize="{StaticResource ExtraLargeFontSize}" FontWeight="Bold">
+                           FontSize="{StaticResource ExtraLargeFontSize}"
+                           FontWeight="{StaticResource ControlStrongFontWeight}">
                     <TextBlock.Effect>
                         <DropShadowEffect Opacity="0.1" BlurRadius="6" />
                     </TextBlock.Effect>

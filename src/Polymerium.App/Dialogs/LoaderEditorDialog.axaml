@@ -16,10 +16,10 @@
             <Grid RowDefinitions="*,12,Auto,4,Auto">
                 <Border Grid.Row="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Grid ColumnDefinitions="*,4,Auto" Margin="4">
+                    <Grid ColumnDefinitions="*,4,Auto" Margin="3">
                         <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                            <Grid ColumnDefinitions="Auto,8,*">
+                            <Grid ColumnDefinitions="Auto,*">
                                 <Border Grid.Column="0"
                                         Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                         CornerRadius="{Binding Source={StaticResource SmallCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Left}}">
@@ -27,11 +27,11 @@
                                         Source="{Binding $parent[local:LoaderEditorDialog].Loader.Thumbnail,FallbackValue={x:Null}}"
                                         Height="36" Width="36" Margin="12" />
                                 </Border>
-                                <StackPanel Grid.Column="2" Margin="16,0" VerticalAlignment="Center">
+                                <StackPanel Grid.Column="1" Margin="16,0" VerticalAlignment="Center">
                                     <TextBlock
                                         Text="{Binding $parent[local:LoaderEditorDialog].Loader.Display,FallbackValue=Loader}"
                                         FontSize="{StaticResource LargeFontSize}"
-                                        FontWeight="Bold" />
+                                        FontWeight="{StaticResource ControlStrongFontWeight}" />
                                     <TextBlock
                                         Text="{Binding $parent[local:LoaderEditorDialog].Loader.Id,FallbackValue=Identity}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}" />

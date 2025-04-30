@@ -11,7 +11,7 @@
 
     <ControlTheme x:Key="PageHeaderTextBlockTheme" TargetType="TextBlock">
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlStrongFontWeight}" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Effect">
@@ -62,7 +62,8 @@
                                     <ContentPresenter.Styles>
                                         <Style Selector="ContentPresenter > TextBlock">
                                             <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
-                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="FontWeight"
+                                                    Value="{StaticResource ControlStrongFontWeight}" />
                                             <Setter Property="VerticalAlignment" Value="Center" />
                                             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                                             <Setter Property="Effect">

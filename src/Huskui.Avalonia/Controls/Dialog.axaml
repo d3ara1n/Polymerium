@@ -6,7 +6,7 @@
         <Setter Property="Container" Value="{Binding $parent[local:OverlayItem], Mode=OneWay} " />
         <Setter Property="MinHeight" Value="128" />
         <Setter Property="MinWidth" Value="256" />
-        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource FlyoutBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
         <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -27,7 +27,8 @@
                         <StackPanel Grid.Row="1" Spacing="4" Margin="18,18,18,0">
                             <TextBlock Text="{TemplateBinding Title}"
                                        IsVisible="{Binding Title,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                       FontSize="{StaticResource LargeFontSize}" FontWeight="Bold" />
+                                       FontSize="{StaticResource LargeFontSize}"
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
                             <TextBlock Text="{TemplateBinding Message}"
                                        IsVisible="{Binding Message,RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"

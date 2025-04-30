@@ -10,7 +10,7 @@ public class HookUpTransition : PageTransitionBase
     {
         var height = 72d;
         from
-           .Animation(new SineEaseOut())
+           .Animation(new CubicEaseOut())
            .AddFrame(0d, [(TranslateTransform.YProperty, 0), (Visual.OpacityProperty, 1d)])
            .AddFrame(1d, [(TranslateTransform.YProperty, height), (Visual.OpacityProperty, 0d)]);
 

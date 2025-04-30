@@ -8,7 +8,7 @@
     <Thickness x:Key="ToastHeaderContentMargin">0,68,0,0</Thickness>
     <Thickness x:Key="ToastToplessContentMargin">24,0,24,24</Thickness>
     <ControlTheme x:Key="{x:Type local:Toast}" TargetType="local:Toast">
-        <Setter Property="Background" Value="{StaticResource OverlaySolidBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource FlyoutBackgroundBrush}" />
         <Setter Property="Padding" Value="{StaticResource ToastContentMargin}" />
         <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
         <Setter Property="FontWeight" Value="{StaticResource ControlFontWeight}" />
@@ -56,7 +56,8 @@
                                     <ContentPresenter.Styles>
                                         <Style Selector="ContentPresenter > TextBlock">
                                             <Setter Property="FontSize" Value="{StaticResource ExtraLargeFontSize}" />
-                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="FontWeight"
+                                                    Value="{StaticResource ControlStrongFontWeight}" />
                                             <Setter Property="VerticalAlignment" Value="Center" />
                                         </Style>
                                     </ContentPresenter.Styles>

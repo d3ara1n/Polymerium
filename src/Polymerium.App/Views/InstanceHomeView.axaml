@@ -98,31 +98,9 @@
                 Background="{StaticResource LayerBackgroundBrush}"
                 BorderBrush="{StaticResource ControlBorderBrush}"
                 BorderThickness="1">
-                <Grid RowDefinitions="Auto,8,*,8,Auto">
-                    <husk:Card Grid.Row="4" BorderThickness="0" CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Grid ColumnDefinitions="*,6,Auto,6,*">
-                            <Grid Grid.Column="0" RowDefinitions="Auto,4,*">
-                                <TextBlock Grid.Row="0" Text="Type"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Grid.Row="2"
-                                           Text="{Binding Basic.LoaderLabel, FallbackValue=Type}"
-                                           FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <husk:Divider Grid.Column="2" Orientation="Vertical" />
-                            <Grid Grid.Column="4" RowDefinitions="Auto,4,*">
-                                <TextBlock Grid.Row="0" Text="Version"
-                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                                <TextBlock Grid.Row="2"
-                                           Text="{Binding Basic.Version, FallbackValue=Version}"
-                                           FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                                           ToolTip.Tip="{Binding Basic.Version,FallbackValue=Version}" />
-                            </Grid>
-                        </Grid>
-                    </husk:Card>
+                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="8">
                     <StackPanel
-                        Grid.Row="2"
+                        Grid.Row="1"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
@@ -142,7 +120,7 @@
                             Kind="Boxes" />
                         <TextBlock
                             Grid.Column="2"
-                            FontWeight="Bold"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="Setup" />
                         <Button
                             Grid.Column="4"
@@ -155,6 +133,28 @@
                             </StackPanel>
                         </Button>
                     </Grid>
+                    <husk:Card Grid.Row="2" BorderThickness="0" CornerRadius="{StaticResource MediumCornerRadius}">
+                        <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="12">
+                            <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="4">
+                                <TextBlock Grid.Row="0" Text="Type"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Row="1"
+                                           Text="{Binding Basic.LoaderLabel, FallbackValue=Type}"
+                                           FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                            <husk:Divider Grid.Column="1" Orientation="Vertical" />
+                            <Grid Grid.Column="2" RowDefinitions="Auto,*" RowSpacing="4">
+                                <TextBlock Grid.Row="0" Text="Version"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                <TextBlock Grid.Row="1"
+                                           Text="{Binding Basic.Version, FallbackValue=Version}"
+                                           FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                           ToolTip.Tip="{Binding Basic.Version,FallbackValue=Version}" />
+                            </Grid>
+                        </Grid>
+                    </husk:Card>
                 </Grid>
             </husk:Card>
             <husk:BusyContainer.PendingContent>
@@ -165,7 +165,7 @@
                         IsIndeterminate="True" />
                     <TextBlock
                         HorizontalAlignment="Center"
-                        FontWeight="Bold"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
                         Text="Updating In Progress" />
                 </StackPanel>
             </husk:BusyContainer.PendingContent>
@@ -179,7 +179,7 @@
                 <TextBlock
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
-                    FontWeight="Bold"
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
                     Text="Activities" />
                 <Button
                     Grid.Row="0"
@@ -240,7 +240,7 @@
                 <TextBlock
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
-                    FontWeight="Bold"
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
                     Text="Widgets" />
                 <Button
                     Grid.Row="0"
@@ -313,7 +313,7 @@
             <TextBlock
                 Grid.Row="0"
                 FontSize="{StaticResource LargeFontSize}"
-                FontWeight="Bold"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
                 Text="Launch Pad" />
             <husk:Card
                 Grid.Row="2"
@@ -438,7 +438,7 @@
                                             Grid.Row="0"
                                             Grid.Column="2"
                                             FontSize="{StaticResource LargeFontSize}"
-                                            FontWeight="Bold"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
                                             Text="Steve" />
                                         <TextBlock
                                             Grid.Row="2"
@@ -510,7 +510,7 @@
                                         <TextBlock
                                             Grid.Row="0"
                                             Grid.Column="2"
-                                            FontWeight="Bold"
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
                                             Text="Logs" />
                                         <TextBlock
                                             Grid.Row="2"

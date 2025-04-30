@@ -28,7 +28,7 @@
         <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Padding" Value="6,2" />
         <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlStrongFontWeight}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="PART_Border" CornerRadius="{TemplateBinding CornerRadius}"
