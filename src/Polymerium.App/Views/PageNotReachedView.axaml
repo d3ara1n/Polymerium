@@ -14,7 +14,7 @@
         <Image Source="/Assets/Icons/Desert.png" Width="128" Height="128" HorizontalAlignment="Center" />
         <TextBlock Margin="48,12,48,12" Text="{Binding Message}"
                    TextAlignment="Center" FontSize="24"
-                   FontWeight="Bold"
+                   FontWeight="{StaticResource ControlStrongFontWeight}"
                    TextWrapping="WrapWithOverflow" />
     </StackPanel>
 </husk:Page>

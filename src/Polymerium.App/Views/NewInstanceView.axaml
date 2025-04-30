@@ -149,7 +149,7 @@
                 </Grid>
                 <Border
                     IsVisible="{Binding ImportedPack,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}"
-                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="4"
+                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3"
                     CornerRadius="{StaticResource MediumCornerRadius}">
                     <Grid ColumnDefinitions="*,4,Auto">
                         <Button Grid.Column="2" Classes="Small" Command="{Binding ClearImportedPackCommand}"

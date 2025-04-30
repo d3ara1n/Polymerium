@@ -80,7 +80,8 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                        <TextBlock Text="{Binding Summary,FallbackValue=Summary}" FontWeight="Bold" TextWrapping="Wrap"
+                        <TextBlock Text="{Binding Summary,FallbackValue=Summary}"
+                                   FontWeight="{StaticResource ControlStrongFontWeight}" TextWrapping="Wrap"
                                    TextTrimming="CharacterEllipsis" MaxLines="4" />
                         <TextBlock Text="{Binding DisplayName,FallbackValue=DisplayName}" FontSize="36"
                                    TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2" />

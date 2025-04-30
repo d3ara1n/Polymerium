@@ -60,7 +60,7 @@
                             </ContentPresenter>
                             <local:OverlayHost Name="{x:Static local:AppWindow.PART_ToastHost}" Padding="12,32,12,0">
                                 <local:OverlayHost.Transition>
-                                    <huskt:PopUpTransition />
+                                    <huskt:HookUpTransition />
                                 </local:OverlayHost.Transition>
                             </local:OverlayHost>
                             <local:OverlayHost

@@ -76,7 +76,8 @@
                                         <TextBlock Text="Abort" />
                                     </StackPanel>
                                 </Button>
-                                <TextBlock Name="PART_BuildingText" Text="Building..." FontWeight="Bold"
+                                <TextBlock Name="PART_BuildingText" Text="Building..."
+                                           FontWeight="{StaticResource ControlStrongFontWeight}"
                                            FontSize="{StaticResource ExtraLargeFontSize}">
                                     <TextBlock.Transitions>
                                         <Transitions>
@@ -119,7 +120,8 @@
                                         <TextBlock Text="Dashboard" />
                                     </StackPanel>
                                 </Button>
-                                <TextBlock Name="PART_RunningText" Text="Running..." FontWeight="Bold"
+                                <TextBlock Name="PART_RunningText" Text="Running..."
+                                           FontWeight="{StaticResource ControlStrongFontWeight}"
                                            FontSize="{StaticResource ExtraLargeFontSize}">
                                     <TextBlock.Transitions>
                                         <Transitions>

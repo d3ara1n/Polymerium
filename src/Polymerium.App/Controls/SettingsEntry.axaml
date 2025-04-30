@@ -17,7 +17,7 @@
                                        FontSize="26" VerticalAlignment="Top" Margin="3" IconVariant="Regular" />
                         <StackPanel Grid.Column="2" Spacing="4">
                             <TextBlock Text="{TemplateBinding Title}"
-                                       FontWeight="Bold" />
+                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
                             <TextBlock Text="{TemplateBinding Summary}"
                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                        TextWrapping="Wrap" />

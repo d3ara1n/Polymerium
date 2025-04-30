@@ -31,7 +31,8 @@
                             <Border Grid.Row="0">
                                 <StackPanel Margin="12">
                                     <TextBlock Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}"
-                                               FontWeight="Bold" TextWrapping="Wrap" />
+                                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                                               TextWrapping="Wrap" />
                                     <TextBlock Text="{Binding Summary}" TextWrapping="Wrap" />
                                 </StackPanel>
                             </Border>
@@ -96,7 +97,8 @@
                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                 CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}">
                             <Grid>
-                                <TextBlock Text="{Binding ProjectName}" FontWeight="Bold" TextAlignment="Center"
+                                <TextBlock Text="{Binding ProjectName}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}" TextAlignment="Center"
                                            TextTrimming="CharacterEllipsis"
                                            TextWrapping="Wrap" MaxLines="2" />
                             </Grid>

@@ -42,7 +42,8 @@
                             </Transitions>
                         </husk:ProgressRing.Transitions>
                     </husk:ProgressRing>
-                    <TextBlock Text="Operating In Progress" FontWeight="Bold" HorizontalAlignment="Center" />
+                    <TextBlock Text="Operating In Progress" FontWeight="{StaticResource ControlStrongFontWeight}"
+                               HorizontalAlignment="Center" />
                 </StackPanel>
             </husk:Card>
         </husk:BusyContainer.PendingContent>
@@ -118,7 +119,8 @@
                                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
                                                 <TextBlock Text="{Binding ProjectName,FallbackValue=Display}"
                                                            FontSize="{StaticResource LargeFontSize}"
-                                                           TextTrimming="CharacterEllipsis" FontWeight="Bold"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           FontWeight="{StaticResource ControlStrongFontWeight}"
                                                            ToolTip.Tip="{Binding ProjectName,FallbackValue=Name}" />
                                                 <HyperlinkButton NavigateUri="{Binding SourceUrl}">
                                                     <ToolTip.Tip>

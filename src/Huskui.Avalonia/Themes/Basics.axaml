@@ -3,7 +3,8 @@
                     xmlns:sys="using:System">
 
     <!-- Typography -->
-    <FontWeight x:Key="ControlFontWeight">Medium</FontWeight>
+    <FontWeight x:Key="ControlFontWeight">Normal</FontWeight><!-- Typography -->
+    <FontWeight x:Key="ControlStrongFontWeight">Bold</FontWeight>
 
     <!-- Animations -->
     <sys:TimeSpan x:Key="ControlInstantAnimationDuration">0:0:0.088</sys:TimeSpan>

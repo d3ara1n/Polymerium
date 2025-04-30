@@ -223,7 +223,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private async Task RenameInstance()
     {
-        var name = await _overlayService.RequestInputAsync("Get the instance a new name",
+        var name = await _overlayService.RequestInputAsync("Give the instance a new name",
                                                            "Rename instance",
                                                            Basic.Name);
         if (name != null && _owned != null)

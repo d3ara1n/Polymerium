@@ -16,8 +16,8 @@
     ExtendClientAreaToDecorationsHint="True"
     ExtendClientAreaTitleBarHeightHint="44"
     Title="{x:Static local:Program.Brand}"
-    Width="1024"
-    Height="600"
+    Width="1111"
+    Height="666"
     MinWidth="600"
     MinHeight="460"
     d:DesignHeight="450"
@@ -53,7 +53,7 @@
                     <TextBlock
                         Margin="48,12,48,12"
                         FontSize="24"
-                        FontWeight="Bold"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
                         Text="B-b-b-bird, bird, bird, b-bird's the word..."
                         TextAlignment="Center"
                         TextWrapping="WrapWithOverflow" />

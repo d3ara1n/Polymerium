@@ -16,7 +16,7 @@
             <controls:SettingsEntryItem Header="Display Name">
                 <Border Background="{StaticResource ControlBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}">
-                    <StackPanel Margin="4" Spacing="4">
+                    <StackPanel Margin="3" Spacing="3">
                         <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                             <TextBlock Text="{Binding NameOverwrite,FallbackValue=Name}" Margin="8"

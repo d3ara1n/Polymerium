@@ -26,7 +26,7 @@
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlStrongFontWeight}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Name="Container" Background="{TemplateBinding Background}">
@@ -92,7 +92,7 @@
         <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontWeight" Value="{StaticResource ControlStrongFontWeight}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Template">
             <ControlTemplate>

@@ -30,7 +30,7 @@
             <StaticResource x:Key="SolidColor" ResourceKey="Gray1Color" />
             <!-- 👆 不准动 👆 -->
 
-            <StaticResource x:Key="FlyoutColor" ResourceKey="Gray3Color" />
+            <StaticResource x:Key="FlyoutColor" ResourceKey="Gray2Color" />
             <StaticResource x:Key="LayerColor" ResourceKey="White1Color" />
             <StaticResource x:Key="CardColor" ResourceKey="White1Color" />
             <StaticResource x:Key="InteractiveColor" ResourceKey="Black3Color" />

@@ -14,7 +14,8 @@
                 <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" HorizontalAlignment="Center"
                                VerticalAlignment="Center" />
             </Button>
-            <TextBlock Text="Roleplaying" VerticalAlignment="Center" FontWeight="Bold"
+            <TextBlock Text="Roleplaying" VerticalAlignment="Center"
+                       FontWeight="{StaticResource ControlStrongFontWeight}"
                        FontSize="{StaticResource LargeFontSize}" />
         </DockPanel>
         <StackPanel Grid.Row="1" Spacing="4">

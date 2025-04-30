@@ -23,7 +23,7 @@
                         </Border.Background>
                     </Border>
                     <TextBlock Grid.Row="0" Grid.Column="1"
-                               Text="{Binding ProjectName}" FontWeight="Bold"
+                               Text="{Binding ProjectName}" FontWeight="{StaticResource ControlStrongFontWeight}"
                                FontSize="{StaticResource LargeFontSize}" VerticalAlignment="Center" />
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="4"
                                 VerticalAlignment="Center">
@@ -80,7 +80,7 @@
                                         </Grid>
                                     </DataTemplate>
                                     <DataTemplate DataType="m:InstancePackageVersionModel">
-                                        <Grid Margin="4" ColumnDefinitions="*,Auto">
+                                        <Grid Margin="3" ColumnDefinitions="*,Auto">
                                             <Border Grid.Column="0"
                                                     Background="{StaticResource OverlaySolidBackgroundBrush}"
                                                     CornerRadius="{StaticResource SmallCornerRadius}"
