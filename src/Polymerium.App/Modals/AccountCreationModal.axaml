@@ -10,13 +10,13 @@
             <Button>
                 <TextBlock Text="Back" />
             </Button>
-            <Button Classes="Primary">
+            <Button Classes="Primary" IsDefault="True">
                 <TextBlock Text="Next" />
             </Button>
-            <Button Classes="Primary">
+            <Button Classes="Primary" IsDefault="True">
                 <TextBlock Text="Finish" />
             </Button>
-            <Button>
+            <Button IsCancel="True">
                 <TextBlock Text="Dismiss" />
             </Button>
         </StackPanel>

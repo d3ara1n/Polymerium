@@ -46,7 +46,7 @@
                             <DockPanel Margin="{StaticResource ToastHeaderlessContentMargin}">
                                 <Button Padding="8" CornerRadius="{StaticResource FullCornerRadius}"
                                         Theme="{StaticResource OutlineButtonTheme}"
-                                        DockPanel.Dock="Right"
+                                        DockPanel.Dock="Right" IsCancel="True"
                                         Command="{Binding Dismiss,RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                     <fi:SymbolIcon Symbol="Dismiss" Height="16" Width="16" />
                                 </Button>
