@@ -25,7 +25,6 @@ namespace Polymerium.App.Services;
 // 由于状态是共享的，所以根本不需要取消
 public class DataService(
     IMemoryCache cache,
-    IHttpClientFactory clientFactory,
     RepositoryAgent agent,
     PrismLauncherService prismLauncherService,
     MojangLauncherService mojangLauncherService)
