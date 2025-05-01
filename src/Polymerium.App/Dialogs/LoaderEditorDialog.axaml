@@ -39,7 +39,7 @@
                             </Grid>
                         </Border>
                         <Button Grid.Column="2" Theme="{StaticResource GhostButtonTheme}" Classes="Small"
-                                Click="RemoveButton_OnClick">
+                                Click="RemoveButton_OnClick" IsCancel="True">
                             <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}"
                                            VerticalAlignment="Center" />
                         </Button>

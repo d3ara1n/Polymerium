@@ -65,7 +65,7 @@
                           ColumnSpacing="8">
                         <Border Grid.Row="0" Grid.Column="0"
                                 CornerRadius="{StaticResource SmallCornerRadius}"
-                                Width="{Binding Bounds.Height,RelativeSource={RelativeSource Mode=Self}}">
+                                Width="{Binding $self.Bounds.Height}">
                             <Border.Background>
                                 <ImageBrush Stretch="UniformToFill"
                                             async:ImageBrushLoader.Source="{Binding Thumbnail}" />

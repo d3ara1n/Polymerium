@@ -12,8 +12,9 @@
              xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
-    <Grid RowDefinitions="Auto,0,*">
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="16,8" ColumnSpacing="12">
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto">
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="Auto,*,Auto" Margin="16,8"
+              ColumnSpacing="12">
             <TextBox Grid.Column="0" Watermark="Enter filter string..."
                      MinWidth="168"
                      Text="{Binding $parent[cp:PackageContainer].FilterText,Mode=OneWayToSource}">
@@ -141,19 +142,39 @@
                 <Run Text="/" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 <Run Text="{Binding $parent[cp:PackageContainer].TotalCount,Mode=OneWay,FallbackValue=0}" />
             </TextBlock>
-            <StackPanel Grid.Column="2" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
-                <Button Content="Bulk Update" Command="{Binding $parent[cp:PackageContainer].BulkUpdateCommand}" />
-                <Button Content="Export List" Command="{Binding $parent[cp:PackageContainer].ExportListCommand}" />
-                <Button Classes="Primary" Command="{Binding $parent[cp:PackageContainer].GotoExplorerCommand}">
+            <StackPanel Grid.Column="2" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="12">
+                <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
+                    <TabStripItem>
+                        <icons:PackIconLucide Kind="LayoutList" Height="{StaticResource MediumFontSize}"
+                                              Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
+                    </TabStripItem>
+                    <TabStripItem>
+                        <icons:PackIconLucide Kind="LayoutGrid" Height="{StaticResource MediumFontSize}"
+                                              Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
+                    </TabStripItem>
+                </TabStrip>
+                <SplitButton Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
+                             Foreground="{StaticResource ControlDarkForegroundBrush}"
+                             Command="{Binding $parent[cp:PackageContainer].GotoExplorerCommand}">
+                    <SplitButton.Flyout>
+                        <MenuFlyout>
+                            <MenuItem Header="Batch Update" IsEnabled="False"
+                                      Icon="{fie:SymbolIcon Symbol=ArrowForward,FontSize={StaticResource MediumFontSize}}"
+                                      Command="{Binding $parent[cp:PackageContainer].BulkUpdateCommand}" />
+                            <MenuItem Header="Export List"
+                                      Icon="{fie:SymbolIcon Symbol=ArrowExport,FontSize={StaticResource MediumFontSize}}"
+                                      Command="{Binding $parent[cp:PackageContainer].ExportListCommand}" />
+                        </MenuFlyout>
+                    </SplitButton.Flyout>
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <icons:PackIconLucide Kind="WandSparkles" Height="{StaticResource MediumFontSize}"
                                               VerticalAlignment="Center" />
                         <TextBlock Text="Get More" />
                     </StackPanel>
-                </Button>
+                </SplitButton>
             </StackPanel>
         </Grid>
-        <Panel Grid.Row="2">
+        <Panel Grid.Row="1">
             <StackPanel VerticalAlignment="Center"
                         IsVisible="{Binding $parent[cp:PackageContainer].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}"
                         Spacing="8">
@@ -205,5 +226,72 @@
                 </ItemsControl>
             </ScrollViewer>
         </Panel>
+        <!-- <Border Grid.Row="1" Grid.Column="1" Padding="12" -->
+        <!--         Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"> -->
+        <!--     <Grid RowDefinitions="Auto,*,Auto" RowSpan="24"> -->
+        <!--         <Border Grid.Row="0" Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}" -->
+        <!--                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"> -->
+        <!--             <StackPanel Orientation="Horizontal" Spacing="6"> -->
+        <!--                 <fi:SymbolIcon Symbol="Drafts" FontSize="{StaticResource LargeFontSize}" /> -->
+        <!--                 <TextBlock Text="Drafts" VerticalAlignment="Center" /> -->
+        <!--             </StackPanel> -->
+        <!--         </Border> -->
+        <!--         <ScrollViewer Grid.Row="1"> -->
+        <!--             <StackPanel Spacing="8"> -->
+        <!--                 <husk:Divider> -->
+        <!--                     <StackPanel Orientation="Horizontal" Spacing="6"> -->
+        <!--                         <TextBlock Text="Add" /> -->
+        <!--                     </StackPanel> -->
+        <!--                 </husk:Divider> -->
+        <!--                 <Panel> -->
+        <!--                     <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" -->
+        <!--                                IsVisible="{Binding AddingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" /> -->
+        <!--                     <ItemsControl ItemsSource="{Binding AddingPackagesView}" -->
+        <!--                                   ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False"> -->
+        <!--                         <ItemsControl.ItemsPanel> -->
+        <!--                             <ItemsPanelTemplate> -->
+        <!--                                 <StackPanel Spacing="8" /> -->
+        <!--                             </ItemsPanelTemplate> -->
+        <!--                         </ItemsControl.ItemsPanel> -->
+        <!--                     </ItemsControl> -->
+        <!--                 </Panel> -->
+        <!--                 <husk:Divider> -->
+        <!--                     <StackPanel Orientation="Horizontal" Spacing="6"> -->
+        <!--                         <TextBlock Text="Modify" /> -->
+        <!--                     </StackPanel> -->
+        <!--                 </husk:Divider> -->
+        <!--                 <Panel> -->
+        <!--                     <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" -->
+        <!--                                IsVisible="{Binding ModifyingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" /> -->
+        <!--                     <ItemsControl ItemsSource="{Binding ModifyingPackagesView}" -->
+        <!--                                   ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False"> -->
+        <!--                         <ItemsControl.ItemsPanel> -->
+        <!--                             <ItemsPanelTemplate> -->
+        <!--                                 <StackPanel Spacing="8" /> -->
+        <!--                             </ItemsPanelTemplate> -->
+        <!--                         </ItemsControl.ItemsPanel> -->
+        <!--                     </ItemsControl> -->
+        <!--                 </Panel> -->
+        <!--                 <husk:Divider> -->
+        <!--                     <StackPanel Orientation="Horizontal" Spacing="6"> -->
+        <!--                         <TextBlock Text="Remove" /> -->
+        <!--                     </StackPanel> -->
+        <!--                 </husk:Divider> -->
+        <!--                 <Panel> -->
+        <!--                     <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8" -->
+        <!--                                IsVisible="{Binding RemovingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" /> -->
+        <!--                     <ItemsControl ItemsSource="{Binding RemovingPackagesView}" -->
+        <!--                                   ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False"> -->
+        <!--                         <ItemsControl.ItemsPanel> -->
+        <!--                             <ItemsPanelTemplate> -->
+        <!--                                 <StackPanel Spacing="8" /> -->
+        <!--                             </ItemsPanelTemplate> -->
+        <!--                         </ItemsControl.ItemsPanel> -->
+        <!--                     </ItemsControl> -->
+        <!--                 </Panel> -->
+        <!--             </StackPanel> -->
+        <!--         </ScrollViewer> -->
+        <!--     </Grid> -->
+        <!-- </Border> -->
     </Grid>
 </UserControl>

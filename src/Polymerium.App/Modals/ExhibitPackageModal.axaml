@@ -146,7 +146,7 @@
                                 <fi:SymbolIcon Symbol="PanelLeftText" FontSize="{StaticResource MediumFontSize}" />
                             </ToggleButton>
                             <Button Grid.Column="2" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
-                                    Background="Transparent"
+                                    Background="Transparent" IsCancel="True"
                                     Command="{Binding $parent[modals:ExhibitPackageModal].DismissCommand}">
                                 <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" />
                             </Button>

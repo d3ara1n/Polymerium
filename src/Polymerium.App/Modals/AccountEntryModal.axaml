@@ -5,34 +5,27 @@
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:modals="clr-namespace:Polymerium.App.Modals"
-            mc:Ignorable="d"
+            mc:Ignorable="d" Background="Transparent" Width="280"
             x:Class="Polymerium.App.Modals.AccountEntryModal">
-    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="24">
-        <DockPanel Grid.Row="0">
-            <Button DockPanel.Dock="Right" CornerRadius="{StaticResource FullCornerRadius}" HorizontalAlignment="Right"
-                    Command="{Binding $parent[modals:AccountEntryModal].DismissCommand}">
-                <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" />
-            </Button>
-            <TextBlock Text="Roleplaying" VerticalAlignment="Center"
-                       FontWeight="{StaticResource ControlStrongFontWeight}"
-                       FontSize="{StaticResource LargeFontSize}" />
-        </DockPanel>
-        <StackPanel Grid.Row="1" Spacing="4">
-            <Border Height="62" Width="62">
-                <Border.Background>
-                    <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" />
-                </Border.Background>
-            </Border>
-            <TextBlock Text="Steve" HorizontalAlignment="Center"
-                       FontSize="{StaticResource LargeFontSize}" />
-        </StackPanel>
-        <Border Grid.Row="2" CornerRadius="{StaticResource SmallCornerRadius}"
-                BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}" BorderThickness="1" Padding="12,8"
-                Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
-            <StackPanel Spacing="10">
-                <TextBlock Text="Microsoft" FontSize="{StaticResource LargeFontSize}" />
-                <StackPanel>
+    <Grid RowDefinitions="Auto,Auto,*" ColumnSpacing="12">
+        <Border Grid.Row="1" Grid.RowSpan="2" CornerRadius="{StaticResource MediumCornerRadius}"
+                Background="{StaticResource FlyoutBackgroundBrush}">
+            <StackPanel Margin="{StaticResource ModalContentMargin}" Spacing="24">
+                <StackPanel Spacing="12">
+                    <Panel>
+                        <Button DockPanel.Dock="Right" CornerRadius="{StaticResource FullCornerRadius}"
+                                HorizontalAlignment="Right" Classes="Small" IsCancel="True"
+                                Command="{Binding $parent[modals:AccountEntryModal].DismissCommand}">
+                            <fi:SymbolIcon Symbol="Dismiss" FontSize="{StaticResource MediumFontSize}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                        </Button>
+                    </Panel>
+                    <TextBlock Text="Steve" HorizontalAlignment="Center"
+                               FontWeight="{StaticResource ControlStrongFontWeight}"
+                               FontSize="{StaticResource LargeFontSize}" />
+                </StackPanel>
+                <StackPanel Spacing="4">
                     <DockPanel>
                         <TextBlock DockPanel.Dock="Right" Text="2025/07/26 07:03" />
                         <TextBlock Text="Enrolled"
@@ -45,17 +38,43 @@
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </DockPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
-                    <StackPanel Orientation="Horizontal" Spacing="4">
-                        <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="{StaticResource MediumFontSize}"
-                                       IconVariant="Filled" VerticalAlignment="Center"
-                                       Foreground="{StaticResource ControlSuccessForegroundBrush}" />
-                        <TextBlock Text="Refreshed" VerticalAlignment="Center"
-                                   Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                <Border CornerRadius="{StaticResource SmallCornerRadius}"
+                        BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}" BorderThickness="1"
+                        Padding="12,8" BoxShadow="{StaticResource ModalBoxShadow}"
+                        Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Microsoft" FontSize="{StaticResource LargeFontSize}" />
+                        <StackPanel>
+                            <TextBlock
+                                Text="This kind of account is kind of: No use in the past then no use in the future any more."
+                                TextWrapping="Wrap"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="{StaticResource MediumFontSize}"
+                                               IconVariant="Filled" VerticalAlignment="Center"
+                                               Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                                <TextBlock Text="Refreshed" VerticalAlignment="Center"
+                                           Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                            </StackPanel>
+                            <Button HorizontalAlignment="Right" Content="Refresh" Classes="Primary Small" />
+                        </StackPanel>
                     </StackPanel>
-                    <Button HorizontalAlignment="Right" Content="Refresh" Classes="Primary Small" />
-                </StackPanel>
+                </Border>
             </StackPanel>
+        </Border>
+        <Border Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center"
+                CornerRadius="{StaticResource LargeCornerRadius}"
+                Background="{StaticResource FlyoutBackgroundBrush}" Padding="8">
+            <Border.Effect>
+                <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
+            </Border.Effect>
+            <Border Width="64" Height="64" CornerRadius="{StaticResource SmallCornerRadius}">
+                <Border.Background>
+                    <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" />
+                </Border.Background>
+            </Border>
         </Border>
     </Grid>
 </husk:Modal>

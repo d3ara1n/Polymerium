@@ -243,8 +243,11 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">
-                                        <Border Background="{StaticResource ControlInteractiveBackgroundBrush}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <Border
+                                            Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                                            CornerRadius="{StaticResource SmallCornerRadius}"
+                                            BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                                            BorderThickness="1">
                                             <DockPanel>
                                                 <Button DockPanel.Dock="Right"
                                                         Command="{Binding $parent[modals:PackageEntryModal].RemoveTagCommand}"
@@ -272,7 +275,8 @@
                               IsChecked="{Binding IsEnabled,Mode=TwoWay}" OnContent="Enabled"
                               OffContent="Disabled" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
-                    <Button Content="Dismiss" Command="{Binding $parent[modals:PackageEntryModal].DismissCommand}" />
+                    <Button Content="Dismiss" IsCancel="True"
+                            Command="{Binding $parent[modals:PackageEntryModal].DismissCommand}" />
                 </StackPanel>
             </Grid>
         </Grid>

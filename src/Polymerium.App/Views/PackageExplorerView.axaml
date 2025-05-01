@@ -19,7 +19,6 @@
             <controls:ExhibitPendingPackageButton
                 Command="{Binding $parent[v:PackageExplorerView].((vm:PackageExplorerViewModel)DataContext).ViewPackageCommand,FallbackValue={x:Null}}"
                 CommandParameter="{Binding}" />
-
         </DataTemplate>
     </controls:ScopedPage.Resources>
     <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="Auto,Auto,*">
@@ -28,7 +27,7 @@
                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Margin="12">
                 <StackPanel Orientation="Horizontal" Spacing="6">
                     <fi:SymbolIcon Symbol="Drawer" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Pending" />
+                    <TextBlock Text="Pending" VerticalAlignment="Center" />
                 </StackPanel>
             </Border>
             <ScrollViewer Grid.Row="1" Padding="12,0">

@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
     <Thickness x:Key="ModalContentMargin">18</Thickness>
+    <BoxShadows x:Key="ModalBoxShadow">0 0 8 0 #3F000000</BoxShadows>
     <ControlTheme x:Key="{x:Type local:Modal}" TargetType="local:Modal">
         <Setter Property="MinHeight" Value="128" />
         <Setter Property="MinWidth" Value="256" />
@@ -15,7 +16,8 @@
                 <Border ClipToBounds="True" Background="{TemplateBinding Background}"
                         BackgroundSizing="{TemplateBinding BackgroundSizing}"
                         CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
+                        BorderThickness="{TemplateBinding BorderThickness}" Margin="4"
+                        BoxShadow="{StaticResource ModalBoxShadow}">
                     <Panel>
                         <ContentPresenter Name="PART_ContentPresenter"
                                           Padding="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}"
