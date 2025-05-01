@@ -177,13 +177,11 @@ public partial class PackageExplorerViewModel : ViewModelBase
 
     partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
     {
-        // 此时可能获取 SupportedKinds 还没完成，避免加载，转而让 SelectedKind 触发加载
-        if (SelectedKind is not null)
-            _ = SearchAsync();
+        _ = SearchAsync();
     }
 
     [ObservableProperty]
-    public partial Filter Filter { get; set; } = Filter.Empty;
+    public partial Filter Filter { get; set; } = Filter.Empty with { Kind = ResourceKind.Mod };
 
     [ObservableProperty]
     public partial string QueryText { get; set; } = string.Empty;
@@ -212,7 +210,6 @@ public partial class PackageExplorerViewModel : ViewModelBase
     {
         if (value != null)
             Filter = Filter with { Kind = value };
-        _ = SearchAsync();
     }
 
     [ObservableProperty]
@@ -256,8 +253,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                .Select(x =>
                                 {
                                     var found = PendingPackagesSource.Items.FirstOrDefault(y => x.Label == y.Label
-                                              && x.Namespace == y.Ns
-                                              && x.Pid == y.ProjectId);
+                                     && x.Namespace == y.Ns
+                                     && x.Pid == y.ProjectId);
                                     if (found != null)
                                         return found;
                                     var model = new ExhibitModel(x.Label,
@@ -273,9 +270,9 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                                  x.Reference);
                                     var installed =
                                         profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Purl,
-                                                                                       x.Label,
-                                                                                       x.Namespace,
-                                                                                       x.Pid));
+                                                                                  x.Label,
+                                                                                  x.Namespace,
+                                                                                  x.Pid));
                                     if (installed is not null)
                                     {
                                         model.State = installed.Source == null || installed.Source != Basic.Source

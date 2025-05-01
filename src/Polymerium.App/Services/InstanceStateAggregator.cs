@@ -65,11 +65,7 @@ public class InstanceStateAggregator : IDisposable
                                                 }));
                 break;
             case TrackerState.Running:
-                switch (tracker)
-                {
-                    // TODO
-                }
-
+                // TODO
                 break;
             case TrackerState.Faulted:
                 Stream.OnNext(new ExceptionTracklet(tracker.Key,

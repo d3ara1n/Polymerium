@@ -259,7 +259,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [ObservableProperty]
     public partial string JavaHomeWatermark { get; set; } = string.Empty;
 
-    partial void OnJavaHomeOverrideChanged(string? value)
+    partial void OnJavaHomeOverrideChanged(string value)
     {
         WriteOverride(Profile.OVERRIDE_JAVA_HOME, value);
     }
@@ -270,10 +270,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [ObservableProperty]
     public partial string JavaMaxMemoryWatermark { get; set; } = string.Empty;
 
-    partial void OnJavaMaxMemoryOverrideChanged(string? value)
+    partial void OnJavaMaxMemoryOverrideChanged(string value)
     {
         WriteOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                      value is not null && uint.TryParse(value, out var ui) ? ui : null);
+                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
     }
 
     [ObservableProperty]
@@ -282,9 +282,9 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [ObservableProperty]
     public partial string JavaAdditionalArgumentsWatermark { get; set; } = string.Empty;
 
-    partial void OnJavaAdditionalArgumentsOverrideChanged(string? value)
+    partial void OnJavaAdditionalArgumentsOverrideChanged(string value)
     {
-        WriteOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS, value);
+        WriteOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS, !string.IsNullOrEmpty(value) ? value : null);
     }
 
     [ObservableProperty]
@@ -293,10 +293,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [ObservableProperty]
     public partial string WindowInitialHeightWatermark { get; set; } = string.Empty;
 
-    partial void OnWindowInitialHeightOverrideChanged(string? value)
+    partial void OnWindowInitialHeightOverrideChanged(string value)
     {
         WriteOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
-                      value is not null && uint.TryParse(value, out var ui) ? ui : null);
+                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
     }
 
     [ObservableProperty]
@@ -305,9 +305,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [ObservableProperty]
     public partial string WindowInitialWidthWatermark { get; set; } = string.Empty;
 
-    partial void OnWindowInitialWidthOverrideChanged(string? value)
+    partial void OnWindowInitialWidthOverrideChanged(string value)
     {
-        WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH, value is not null && uint.TryParse(value, out var ui) ? ui : null);
+        WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH,
+                      !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
     }
 
     #endregion

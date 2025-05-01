@@ -176,7 +176,6 @@
                                         <MenuItem Header="Active"
                                                   IsChecked="{Binding IsEnabled,Mode=TwoWay}"
                                                   ToggleType="CheckBox"
-                                                  IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
                                                   Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
                                         <MenuItem Header="-" />
                                         <MenuItem Header="Open Website"

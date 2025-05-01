@@ -37,7 +37,6 @@ public partial class InstanceSetupViewModel(
     ViewBag bag,
     ILogger<InstanceSetupViewModel> logger,
     ProfileManager profileManager,
-    RepositoryAgent repositories,
     NotificationService notificationService,
     InstanceManager instanceManager,
     DataService dataService,

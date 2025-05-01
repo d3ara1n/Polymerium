@@ -268,7 +268,7 @@
                 </TabItem>
             </TabControl>
             <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <ToggleSwitch Grid.Column="0" IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
+                <ToggleSwitch Grid.Column="0"
                               IsChecked="{Binding IsEnabled,Mode=TwoWay}" OnContent="Enabled"
                               OffContent="Disabled" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
