@@ -9,7 +9,6 @@ using Trident.Abstractions.Utilities;
 
 namespace Polymerium.Trident.Services;
 
-// 只有 profile.json 是共享文件，其他都是独占文件，因此不对其他文件做 Guard 保护。
 public class ProfileManager : IDisposable
 {
     #region Injected
@@ -21,6 +20,9 @@ public class ProfileManager : IDisposable
     private readonly List<ProfileHandle> _profiles = [];
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly IList<ReservedKey> ReservedKeys = new List<ReservedKey>();
+
+    private readonly IDictionary<string, HotDataGuard<DataUser>> _hotUserData = [];
+    private readonly IDictionary<string, HotDataGuard<Preference>> _hotPreferenceData = [];
 
     public ProfileManager(ILogger<ProfileManager> logger)
     {
@@ -185,6 +187,59 @@ public class ProfileManager : IDisposable
         handle.SaveAsync().Wait();
         _logger.LogInformation("{} updated", key);
         OnProfileUpdated(key, handle.Value);
+    }
+
+    public HotDataGuard<DataUser> OpenDataUser(string key)
+    {
+        if (_hotUserData.TryGetValue(key, out var guard))
+        {
+            guard.RefCount++;
+            return guard;
+        }
+
+        {
+            var path = PathDef.Default.FileOfUserData(key);
+            HotDataGuard<DataUser> hot;
+            if (File.Exists(path))
+                try
+                {
+                    var data = JsonSerializer.Deserialize<DataUser>(File.ReadAllText(path), _serializerOptions);
+                    if (data != null)
+                    {
+                        hot = new HotDataGuard<DataUser>(data) { RefCount = 1 };
+                        hot.Callback = () => DisposeInternal(hot, path);
+                        _hotUserData.Add(key, hot);
+                        return hot;
+                    }
+                }
+                catch
+                {
+                    _logger.LogWarning("Failed to load user data of {}, created new one", key);
+                }
+
+            var created = new DataUser(TimeSpan.Zero, DateTimeOffset.MinValue, null);
+            hot = new HotDataGuard<DataUser>(created) { RefCount = 1 };
+
+            hot.Callback = () => DisposeInternal(hot, path);
+            _hotUserData.Add(key, hot);
+            return hot;
+        }
+
+        void DisposeInternal(HotDataGuard<DataUser> self, string path)
+        {
+            if (--self.RefCount == 0)
+            {
+                _hotUserData.Remove(key);
+                try
+                {
+                    File.WriteAllText(path, JsonSerializer.Serialize(self.Value, _serializerOptions));
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to save user data of {}", key);
+                }
+            }
+        }
     }
 
     #region Profile Changed Event

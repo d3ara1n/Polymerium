@@ -71,10 +71,10 @@
                                                            Symbol="Branch"
                                                            VerticalAlignment="Center"
                                                            FontSize="{StaticResource ExtraLargeFontSize}" />
-                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="Unspecified Version"
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="Auto Select Version"
                                                        FontSize="{StaticResource LargeFontSize}" />
                                             <TextBlock Grid.Row="1" Grid.Column="1"
-                                                       Text="Pick a version in the list below."
+                                                       Text="Or pick a version in the list below."
                                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                        FontSize="{StaticResource MediumFontSize}" />
                                         </Grid>

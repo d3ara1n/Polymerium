@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
@@ -17,7 +18,17 @@ public partial class UnknownViewModel(
 {
     public string Title { get; } = $"User's Unknown Playground({bag.Parameter ?? "None"})";
 
-    protected override Task OnInitializedAsync(CancellationToken token) => Task.Delay(TimeSpan.FromSeconds(7), token);
+    protected override async Task OnInitializedAsync(CancellationToken token)
+    {
+        await Task.Delay(TimeSpan.FromSeconds(7), token);
+
+        if (Application.Current is { PlatformSettings: not null })
+        {
+            var accent1 = Application.Current.PlatformSettings.GetColorValues().AccentColor1;
+            var accent2 = Application.Current.PlatformSettings.GetColorValues().AccentColor2;
+            var accent3 = Application.Current.PlatformSettings.GetColorValues().AccentColor3;
+        }
+    }
 
     #region Commands
 

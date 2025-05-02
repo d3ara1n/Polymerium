@@ -65,8 +65,8 @@ public partial class PackageExplorerViewModel : ViewModelBase
 
         var r = agent.Labels.Select(x => new RepositoryBasicModel(x, x.ToString().ToUpper())).ToList();
         Repositories = r;
-        SelectedRepository = r.First();
         IsFilterEnabled = true;
+        SelectedRepository = r.First();
         PendingPackagesSource
            .Connect()
            .Filter(x => x.State == ExhibitState.Adding)

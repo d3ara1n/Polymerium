@@ -294,7 +294,7 @@
                                 <husk:Tag Grid.Row="0" Classes="Warning"
                                           ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName,FallbackValue=Version}">
                                     <StackPanel Orientation="Horizontal" Spacing="4">
-                                        <fi:SymbolIcon Symbol="New" FontSize="{StaticResource SmallFontSize}" />
+                                        <fi:SymbolIcon Symbol="AddCircle" FontSize="{StaticResource SmallFontSize}" />
                                         <husk:SwitchPresenter
                                             Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionId,Mode=OneWay,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}"
                                             TargetType="x:Boolean">

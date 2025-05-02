@@ -281,8 +281,7 @@ public class InstanceManager(
                    .SetReleaseType("Polymerium");
                 foreach (var additional in options.AdditionalArguments.Split(' '))
                     igniter.AddJvmArgument(additional);
-
-                igniter.IsDebug = options.Mode == LaunchMode.FireAndForget;
+                
                 var process = igniter.Build();
                 await File
                      .WriteAllLinesAsync(Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key),
