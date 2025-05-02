@@ -219,8 +219,6 @@ public partial class PackageContainer : UserControl
                     filterTags
                        .ToObservableChangeSet()
                        .Select(_ => filterTags.Any())
-                       .CombineLatest(this.GetObservable(FilterTextProperty).Select(x => !string.IsNullOrEmpty(x)),
-                                      (x, y) => x || y)
                        .CombineLatest(this
                                      .GetObservable(FilterEnabilityProperty)
                                      .Select(x => x is { Enability: not null }),
@@ -261,8 +259,9 @@ public partial class PackageContainer : UserControl
 
     private static Func<InstancePackageModel, bool> BuildTextFilter(string filter) =>
         x => string.IsNullOrEmpty(filter)
-          || (x is { ProjectName: { } name, Summary: { } summary }
-           && (name.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
+          || (x is { ProjectId: { } id, ProjectName: { } name, Summary: { } summary }
+           && (id.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
+            || name.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
             || summary.Contains(filter, StringComparison.InvariantCultureIgnoreCase)));
 
     private static Func<InstancePackageModel, bool> BuildTagFilter(ReadOnlyObservableCollection<string>? tags) =>

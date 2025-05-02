@@ -238,8 +238,9 @@
                     <HyperlinkButton Content="Trident" NavigateUri="https://github.com/TridentCore/trident" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
-                    <Run Text="Platform Service:" />
-                    <HyperlinkButton Content="PrismLauncher" NavigateUri="https://meta.prismlauncher.org/" />
+                    <Run Text="Platform Services:" />
+                    <HyperlinkButton Content="PrismLauncher Meta" NavigateUri="https://meta.prismlauncher.org/" />
+                    <HyperlinkButton Content="Starlight API" NavigateUri="https://docs.lunareclipse.studio/" />
                 </TextBlock>
                 <TextBlock ClipToBounds="False">
                     <Run Text="Repositories:" />
@@ -279,6 +280,17 @@
             </StackPanel>
         </Panel>
         <husk:Divider />
+        <StackPanel>
+            <TextBlock Text="Disclaimer:" />
+            <TextBlock Text="1. 作为 Advanced Instance Manager，Polymerium 仅提供功能，不提供任何服务，所使用的服务均来自第三方平台，日后也不会提供联机服务。"
+                       TextWrapping="Wrap" />
+            <TextBlock
+                Text="2. Polymerium 为整合包创作者和整合包体验者设计，专门为游玩和编辑实例优化功能，为此引入了大量区别于传统的实例构建机制，这些机制可能会有极高的上手门槛，甚至会降低非目标用户的使用体验。"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Text="3. Polymerium 的目标是在开源软件 PrismLauncher 的基础上提供更好的体验和功能，和中国大陆方块游戏圈并非一个生态，因此无法与那些开源或闭源的项目或产品进行比较。任何以兼容这些项目或产品为目的的批评或建议均不会听取或采纳。"
+                TextWrapping="Wrap" />
+        </StackPanel>
         <StackPanel Orientation="Horizontal" Spacing="12">
             <Border Background="{DynamicResource SettingsAiBadgeEnglishImageBrush}"
                     Width="132"

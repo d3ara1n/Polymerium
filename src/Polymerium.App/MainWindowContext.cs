@@ -175,10 +175,7 @@ public partial class MainWindowContext : ObservableObject
     private void OnInstanceInstalling(object? sender, InstallTracker e)
     {
         // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null)
-        {
-            State = InstanceEntryState.Installing
-        };
+        var model = new InstanceEntryModel(e.Key, e.Key, "Unknown", null, null);
 
         e
            .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
@@ -204,6 +201,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Running:
                     model.IsPending = true;
                     model.Progress = 0d;
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Installing);
                     break;
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
@@ -244,8 +242,6 @@ public partial class MainWindowContext : ObservableObject
         if (model is null)
             return;
 
-        model.State = InstanceEntryState.Updating;
-
         e
            .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
            .Where(x => x.Any())
@@ -269,6 +265,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Running:
                     model.IsPending = true;
                     model.Progress = 0d;
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Updating);
                     break;
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
@@ -307,8 +304,6 @@ public partial class MainWindowContext : ObservableObject
         if (model is null)
             return;
 
-        model.State = InstanceEntryState.Preparing;
-
         e
            .StageStream.Subscribe(x =>
             {
@@ -339,6 +334,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Running:
                     model.IsPending = true;
                     model.Progress = 0d;
+                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Preparing);
                     break;
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
@@ -375,8 +371,6 @@ public partial class MainWindowContext : ObservableObject
         if (model is null)
             return;
 
-        model.State = InstanceEntryState.Running;
-
         e.StateUpdated += OnStateChanged;
         return;
 
@@ -391,7 +385,7 @@ public partial class MainWindowContext : ObservableObject
                     model.Progress = 0d;
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceEntryState.Running;
                         _notificationService.PopMessage("The instance has been launched",
                                                         e.Key,
                                                         NotificationLevel.Success);

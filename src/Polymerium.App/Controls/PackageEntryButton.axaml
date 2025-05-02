@@ -5,6 +5,13 @@
                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                     xmlns:m="using:Polymerium.App.Models"
                     xmlns:converters="using:Polymerium.App.Converters">
+    <Design.PreviewWith>
+        <Panel>
+            <StackPanel Margin="24" Spacing="12">
+                <local:PackageEntryButton />
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:PackageEntryButton}" TargetType="local:PackageEntryButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
@@ -45,7 +52,7 @@
                                 </Transitions>
                             </TextBlock.Transitions>
                         </TextBlock>
-                        <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,*">
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*" ColumnSpacing="8">
                             <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
                                     CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True"
                                     Width="{Binding $self.Bounds.Height}">
@@ -53,40 +60,38 @@
                                     <ImageBrush Source="{Binding Thumbnail}" />
                                 </Border.Background>
                             </Border>
-                            <DockPanel Grid.Row="0" Grid.Column="2">
-                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
-                                            Spacing="4">
-                                    <ContentControl Content="{Binding Version}">
-                                        <ContentControl.DataTemplates>
-                                            <DataTemplate DataType="m:InstancePackageVersionModel">
-                                                <TextBlock Text="{Binding Name}"
-                                                           VerticalAlignment="Center"
-                                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                            </DataTemplate>
-                                            <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
-                                                <husk:Tag Content="Unspecified" />
-                                            </DataTemplate>
-                                        </ContentControl.DataTemplates>
-                                    </ContentControl>
+                            <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*,Auto"
+                                  ColumnSpacing="6">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
+                                    <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
+                                              Classes="Primary" IsVisible="{Binding IsLocked}">
+                                        <TextBlock Text="Original" />
+                                    </husk:Tag>
+                                    <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <TextBlock Text="{Binding Kind,FallbackValue=Kind}" />
+                                    </husk:Tag>
                                 </StackPanel>
-                                <Grid ColumnDefinitions="Auto,6,*">
-                                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
-                                        <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
-                                                  Classes="Primary" IsVisible="{Binding IsLocked}">
-                                            <TextBlock Text="Original" />
-                                        </husk:Tag>
-                                        <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <TextBlock Text="{Binding Kind}" />
-                                        </husk:Tag>
-                                    </StackPanel>
-                                    <TextBlock Grid.Column="2" Text="{Binding ProjectName}"
-                                               TextTrimming="CharacterEllipsis"
-                                               FontSize="{StaticResource LargeFontSize}"
-                                               FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                </Grid>
-                            </DockPanel>
-                            <Grid Grid.Row="1" Grid.Column="2" ColumnDefinitions="*,4,Auto" RowDefinitions="*,0,Auto">
-                                <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2"
+                                <TextBlock Grid.Column="1"
+                                           TextTrimming="CharacterEllipsis"
+                                           Text="{Binding ProjectName,FallbackValue=Name}"
+                                           FontSize="{StaticResource LargeFontSize}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                <ContentControl Grid.Column="2" Content="{Binding Version}">
+                                    <ContentControl.DataTemplates>
+                                        <DataTemplate DataType="m:InstancePackageVersionModel">
+                                            <TextBlock Text="{Binding Name,FallbackValue=Version}"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
+                                            <husk:Tag Content="Auto" />
+                                        </DataTemplate>
+                                    </ContentControl.DataTemplates>
+                                </ContentControl>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="*,Auto" RowDefinitions="*,Auto"
+                                  ColumnSpacing="4">
+                                <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
                                             Orientation="Horizontal" VerticalAlignment="Bottom" Spacing="4">
                                     <ItemsControl Name="TagBlock"
                                                   ItemsSource="{Binding Tags}" Opacity="0.0">
@@ -115,7 +120,7 @@
                                     </Button>
                                 </StackPanel>
                                 <Panel Name="SummaryBlock" Grid.Row="0" Grid.Column="0">
-                                    <TextBlock Text="{Binding Summary}"
+                                    <TextBlock Text="{Binding Summary,FallbackValue=Summary}"
                                                MaxLines="2"
                                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
                                 </Panel>
