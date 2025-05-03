@@ -241,6 +241,7 @@ public class InstanceManager(
             if (artifact == null || !artifact.Verify(tracker.Key, profile.Setup))
                 throw new InvalidOperationException("Artifact is not valid");
 
+            var beginTime = DateTimeOffset.Now;
 
             try
             {
@@ -281,7 +282,7 @@ public class InstanceManager(
                    .SetReleaseType("Polymerium");
                 foreach (var additional in options.AdditionalArguments.Split(' '))
                     igniter.AddJvmArgument(additional);
-                
+
                 var process = igniter.Build();
                 await File
                      .WriteAllLinesAsync(Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key),
@@ -314,20 +315,18 @@ public class InstanceManager(
                     process.Start();
                 }
 
-                // profile.Records.Timeline.Add(new Profile.RecordData.TimelinePoint(true,
-                //                                  profile.Reference,
-                //                                  Profile.RecordData.TimelinePoint.TimelineAction.Play,
-                //                                  beginTime,
-                //                                  DateTimeOffset.Now));
+                using var data = profileManager.OpenDataUser(tracker.Key);
+                if (options.Mode == LaunchMode.Managed)
+                    data.Value.TotalPlayed += DateTimeOffset.Now - beginTime;
+                data.Value.LastPlayed = beginTime;
             }
             catch (Exception e)
             {
                 logger.LogError(e, "Launch failed due to exception: {ex}", e.Message);
-                // profile.Records.Timeline.Add(new Profile.RecordData.TimelinePoint(false,
-                //                                  profile.Reference,
-                //                                  Profile.RecordData.TimelinePoint.TimelineAction.Play,
-                //                                  beginTime,
-                //                                  DateTimeOffset.Now));
+                using var data = profileManager.OpenDataUser(tracker.Key);
+                if (options.Mode == LaunchMode.Managed)
+                    data.Value.TotalPlayed += DateTimeOffset.Now - beginTime;
+                data.Value.LastPlayed = beginTime;
                 throw;
             }
         }
@@ -398,6 +397,9 @@ public class InstanceManager(
         await importers.ExtractImportFilesAsync(key.Key, container, pack).ConfigureAwait(false);
 
         profileManager.Add(key, container.Profile);
+
+        using var data = profileManager.OpenDataUser(key.Key);
+        data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Install, null, container.Profile.Setup.Source));
 
         logger.LogInformation("{} added", key.Key);
 
@@ -507,6 +509,8 @@ public class InstanceManager(
 
         await importers.ExtractImportFilesAsync(key, container, pack).ConfigureAwait(false);
 
+        var oldSource = profileManager.GetImmutable(key).Setup.Source;
+
         profileManager.Update(key,
                               container.Profile.Setup.Source,
                               container.Profile.Name,
@@ -514,6 +518,11 @@ public class InstanceManager(
                               container.Profile.Setup.Loader,
                               container.Profile.Setup.Packages.Select(x => x.Purl).ToList(),
                               container.Profile.Overrides);
+
+        using var data = profileManager.OpenDataUser(key);
+        data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Update,
+                                                   oldSource,
+                                                   container.Profile.Setup.Source));
 
         logger.LogInformation("{} updated", key);
 

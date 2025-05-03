@@ -213,15 +213,16 @@
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="[Experimental] Deployment Method">
                 <StackPanel Spacing="8">
-                    <husk:InfoBar
-                        Content="This always leads to unexpected package conflicts due to poor management of package distribution sites. "
-                        Classes="Warning" />
-                    <ComboBox>
+                    <ComboBox SelectedIndex="0" IsEnabled="False">
                         <ComboBoxItem Content="Auto" />
-                        <ComboBoxItem Content="Symlink" />
-                        <ComboBoxItem Content="Copy" />
-                        <ComboBoxItem Content="Hark Link" />
                     </ComboBox>
+                </StackPanel>
+            </controls:SettingsEntryItem>
+            <controls:SettingsEntryItem Header="Fast Launch">
+                <StackPanel Spacing="8">
+                    <husk:InfoBar
+                        Content="Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted." />
+                    <ToggleSwitch OnContent="I'm in a hurry" />
                 </StackPanel>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>

@@ -70,28 +70,6 @@ public class DataLockBuilder : IBuilder<DataLock>
 
     public DataLockBuilder AddLibrary(DataLock.Library library)
     {
-        // var found = _libraries.FirstOrDefault(x => x.Id.Namespace == library.Id.Namespace
-        //                                         && x.Id.Name == library.Id.Name
-        //                                         && x.Id.Platform == library.Id.Platform
-        //                                         && x.Id.Extension == library.Id.Extension);
-        // if (found != null)
-        // {
-        //     if (SemVersion.TryParse(found.Id.Version, out var oldVersion)
-        //      && SemVersion.TryParse(library.Id.Version, out var newVersion)
-        //      && newVersion.CompareSortOrderTo(oldVersion) > 0)
-        //     {
-        //         _libraries.Remove(found);
-        //         _libraries.Add(library);
-        //     }
-        // }
-        // else
-        // {
-        //     _libraries.Add(library);
-        // }
-
-        // 傻逼 Fabric 两个不同版本库会导致冲突，NeoForge 则必须多版本库同时存在
-
-
         // 规则：
         //  允许除 IsNative 不同的同时存在，但不允许除了 IsPresent 不同的同时存在， IsPresent==True的优先
         var found = _libraries.FirstOrDefault(x => x.Id.Namespace == library.Id.Namespace
@@ -102,18 +80,23 @@ public class DataLockBuilder : IBuilder<DataLock>
         if (found != null)
         {
             // Present 只能有一个
-            if (found.IsPresent && library.IsPresent)
+
+            if (found.Id.Version == library.Id.Version)
+            {
+                if (library.IsPresent)
+                    // 保留新的
+                    _libraries.Remove(found);
+                else
+                    // 保留旧的
+                    return this;
+            }
+            else if (found.IsPresent && library.IsPresent)
             {
                 _libraries.Remove(found);
             }
         }
 
         _libraries.Add(library);
-
-        // if (_libraries.All(x => x != library))
-        //     _libraries.Add(library);
-        // else
-        //     Debug.WriteLine($"[DUPLICATE]: {library}");
 
         return this;
     }

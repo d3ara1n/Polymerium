@@ -71,7 +71,7 @@ public partial class NewInstanceViewModel(
                 ms.Position = 0;
                 var pack = new CompressedProfilePack(ms);
                 var container = await importerAgent.ImportAsync(pack);
-                ImportedPack = new FloatingImportedPackModel(pack, container);
+                ImportedPack = new FloatingImportedPackModel(path, pack, container);
                 VersionName = container.Profile.Setup.Version;
                 DisplayName = container.Profile.Name;
             }
@@ -127,6 +127,8 @@ public partial class NewInstanceViewModel(
         }
 
         profileManager.Add(key, profile);
+        using var data = profileManager.OpenDataUser(key.Key);
+        data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Install, null, ImportedPack?.Path));
 
         navigationService.Navigate<InstanceView>(key.Key);
     }

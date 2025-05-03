@@ -159,6 +159,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                     Directory.Delete(dir, true);
                 if (File.Exists(file))
                     File.Delete(file);
+                using var data = ProfileManager.OpenDataUser(Basic.Key);
+                data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Reset, null, null));
                 _notificationService.PopMessage("Instance reset", Basic.Key, NotificationLevel.Success);
             }
             catch (Exception ex)
@@ -189,7 +191,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     {
         if (_owned != null)
             _owned.Value.Setup.Source = null;
+        var oldSource = Basic.Source;
         Basic.Source = null;
+        using var data = ProfileManager.OpenDataUser(Basic.Key);
+        data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Unlock, oldSource, null));
         _notificationService.PopMessage("The instance is no longer associated to any modpack brand and free to edit.",
                                         Basic.Key,
                                         NotificationLevel.Success);
@@ -226,10 +231,13 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         var name = await _overlayService.RequestInputAsync("Give the instance a new name",
                                                            "Rename instance",
                                                            Basic.Name);
-        if (name != null && _owned != null)
+        if (name != null && _owned != null && !string.Equals(name, Basic.Name))
         {
+            var oldName = NameOverwrite;
             NameOverwrite = name;
             _owned.Value.Name = name;
+            using var data = ProfileManager.OpenDataUser(Basic.Key);
+            data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Rename, oldName, name));
         }
     }
 
