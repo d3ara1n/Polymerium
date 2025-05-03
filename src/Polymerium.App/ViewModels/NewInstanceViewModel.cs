@@ -28,7 +28,8 @@ public partial class NewInstanceViewModel(
     NavigationService navigationService,
     NotificationService notificationService,
     ImporterAgent importerAgent,
-    DataService dataService) : ViewModelBase
+    DataService dataService,
+    PersistenceService persistenceService) : ViewModelBase
 {
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
@@ -127,8 +128,11 @@ public partial class NewInstanceViewModel(
         }
 
         profileManager.Add(key, profile);
-        using var data = profileManager.OpenDataUser(key.Key);
-        data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Install, null, ImportedPack?.Path));
+
+        persistenceService.AppendAction(new PersistenceService.Action(key.Key,
+                                                                      PersistenceService.ActionKind.Install,
+                                                                      null,
+                                                                      ImportedPack?.Path));
 
         navigationService.Navigate<InstanceView>(key.Key);
     }

@@ -213,12 +213,9 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="m:InstanceEntryModel">
                                     <controls:InstanceEntryButton
-                                        Basic="{Binding Basic}"
                                         Command="{Binding $parent[local:MainWindow].((local:MainWindowContext)DataContext).ViewInstanceCommand,FallbackValue={x:Null}}"
                                         CommandParameter="{Binding Basic.Key}"
-                                        Progress="{Binding Progress,Mode=OneWay}"
-                                        IsPending="{Binding IsPending,Mode=OneWay}"
-                                        State="{Binding State}" />
+                                        State="{Binding State,Mode=OneWay}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>

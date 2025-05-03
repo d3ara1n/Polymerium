@@ -33,11 +33,13 @@ public partial class MainWindowContext : ObservableObject
         InstanceManager instanceManager,
         NotificationService notificationService,
         NavigationService navigationService,
-        OverlayService overlayService)
+        OverlayService overlayService,
+        PersistenceService persistenceService)
     {
         _notificationService = notificationService;
         _navigationService = navigationService;
         _overlayService = overlayService;
+        _persistenceService = persistenceService;
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
 
@@ -45,7 +47,9 @@ public partial class MainWindowContext : ObservableObject
         _ = _entries
            .Connect()
            .Filter(filter)
-           .SortAndBind(out var view, SortExpressionComparer<InstanceEntryModel>.Descending(x => x.LastPlayed))
+           .SortAndBind(out var view,
+                        SortExpressionComparer<InstanceEntryModel>.Descending(x => x.LastPlayedAtRaw
+                                                                               ?? DateTimeOffset.MinValue))
            .Subscribe();
         View = view;
     }
@@ -59,6 +63,7 @@ public partial class MainWindowContext : ObservableObject
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
     private readonly OverlayService _overlayService;
+    private readonly PersistenceService _persistenceService;
 
     #endregion
 
@@ -113,8 +118,7 @@ public partial class MainWindowContext : ObservableObject
         foreach (var (key, item) in manager.Profiles)
         {
             InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source);
-            var data = manager.GetDataUser(key);
-            model.LastPlayed = data.LastPlayed;
+            model.LastPlayedAtRaw = _persistenceService.GetLastActivity(key)?.End;
             list.Add(model);
         }
 
@@ -213,9 +217,9 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         model.State = InstanceEntryState.Idle;
+                        _entries.Remove(model);
                         _notificationService.PopMessage(e.FailureReason, $"Failed to install {e.Key}");
                     });
-                    _entries.Remove(model);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -229,10 +233,18 @@ public partial class MainWindowContext : ObservableObject
                                                             ViewInstanceCommand,
                                                             e.Key));
                     });
+                    _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
+                                                                PersistenceService.ActionKind.Install,
+                                                                null,
+                                                                e.Source));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
+                    Dispatcher.UIThread.Post(() =>
+                    {
+                        model.State = InstanceEntryState.Idle;
+                        _entries.Remove(model);
+                    });
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
@@ -292,6 +304,10 @@ public partial class MainWindowContext : ObservableObject
                                                             ViewInstanceCommand,
                                                             e.Key));
                     });
+                    _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
+                                                                PersistenceService.ActionKind.Update,
+                                                                e.OldSource,
+                                                                e.NewSource));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -392,7 +408,7 @@ public partial class MainWindowContext : ObservableObject
                     Dispatcher.UIThread.Post(() =>
                     {
                         // 不从 ProfileManager 里取，反正 UI 上只要行为类似就好
-                        model.LastPlayed = DateTimeOffset.Now;
+                        model.LastPlayedAtRaw = DateTimeOffset.Now;
                         model.State = InstanceEntryState.Running;
                         _notificationService.PopMessage("The instance has been launched",
                                                         e.Key,
@@ -412,6 +428,10 @@ public partial class MainWindowContext : ObservableObject
                                                                 e)
                                                         ]);
                     });
+                    _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
+                                                                    e.StartedAt,
+                                                                    DateTimeOffset.Now,
+                                                                    false));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -422,6 +442,10 @@ public partial class MainWindowContext : ObservableObject
                                                         e.Key,
                                                         NotificationLevel.Success);
                     });
+                    _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
+                                                                    e.StartedAt,
+                                                                    DateTimeOffset.Now,
+                                                                    true));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:

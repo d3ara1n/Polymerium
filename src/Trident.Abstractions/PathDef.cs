@@ -33,8 +33,9 @@ public class PathDef
 
     public string PrivateDirectory(string brand) => Path.Combine(Home, $".{brand.ToLower()}");
 
-    public string FileOfPrivateSettings(string brand) => Path.Combine(PrivateDirectory(brand), "settings.json");
-    public string FileOfPrivateCache(string brand) => Path.Combine(PrivateDirectory(brand), "cache.sqlite.db");
+    // public string FileOfPrivateSettings(string brand) => Path.Combine(PrivateDirectory(brand), "settings.json");
+    // public string FileOfPrivateCache(string brand) => Path.Combine(PrivateDirectory(brand), "cache.sqlite.db");
+    // public string FileOfPrivatePersistence(string brand) => Path.Combine(PrivateDirectory(brand), "persistence.sqlite.db");
 
     #endregion
 

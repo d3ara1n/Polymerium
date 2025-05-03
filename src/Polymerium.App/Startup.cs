@@ -41,9 +41,9 @@ public static class Startup
            .AddSqliteCache(setup =>
             {
                 setup.MemoryOnly = false;
-                var path = PathDef.Default.FileOfPrivateCache(Program.Brand);
-                var dir = Path.GetDirectoryName(path);
-                if (dir != null && !Directory.Exists(dir))
+                var dir = PathDef.Default.PrivateDirectory(Program.Brand);
+                var path = Path.Combine(dir, "cache.sqlite.db");
+                if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
                 setup.CachePath = path;
             })
@@ -69,6 +69,6 @@ public static class Startup
            .AddSingleton<NavigationService>()
            .AddSingleton<OverlayService>()
            .AddSingleton<DataService>()
-           .AddSingleton<StateService>();
+           .AddSingleton<PersistenceService>();
     }
 }

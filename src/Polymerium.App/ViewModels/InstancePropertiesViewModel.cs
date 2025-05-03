@@ -30,12 +30,14 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         OverlayService overlayService,
         NotificationService notificationService,
         NavigationService navigationService,
-        ConfigurationService configurationService) : base(bag, instanceManager, profileManager)
+        ConfigurationService configurationService,
+        PersistenceService persistenceService) : base(bag, instanceManager, profileManager)
     {
         _overlayService = overlayService;
         _notificationService = notificationService;
         _navigationService = navigationService;
         _configurationService = configurationService;
+        _persistenceService = persistenceService;
 
         SafeCode = Random.Shared.Next(1000, 9999).ToString();
     }
@@ -125,6 +127,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
     private readonly ConfigurationService _configurationService;
+    private readonly PersistenceService _persistenceService;
 
     #endregion
 
@@ -159,8 +162,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                     Directory.Delete(dir, true);
                 if (File.Exists(file))
                     File.Delete(file);
-                using var data = ProfileManager.OpenDataUser(Basic.Key);
-                data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Reset, null, null));
+                _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                               PersistenceService.ActionKind.Reset,
+                                                                               null,
+                                                                               null));
                 _notificationService.PopMessage("Instance reset", Basic.Key, NotificationLevel.Success);
             }
             catch (Exception ex)
@@ -193,8 +198,10 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             _owned.Value.Setup.Source = null;
         var oldSource = Basic.Source;
         Basic.Source = null;
-        using var data = ProfileManager.OpenDataUser(Basic.Key);
-        data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Unlock, oldSource, null));
+        _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                       PersistenceService.ActionKind.Unlock,
+                                                                       oldSource,
+                                                                       null));
         _notificationService.PopMessage("The instance is no longer associated to any modpack brand and free to edit.",
                                         Basic.Key,
                                         NotificationLevel.Success);
@@ -236,8 +243,11 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             var oldName = NameOverwrite;
             NameOverwrite = name;
             _owned.Value.Name = name;
-            using var data = ProfileManager.OpenDataUser(Basic.Key);
-            data.Value.Records.Add(new DataUser.Record(DataUser.ActionKind.Rename, oldName, name));
+            _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                           PersistenceService.ActionKind.Rename,
+                                                                           oldName,
+                                                                           name));
+            
         }
     }
 
