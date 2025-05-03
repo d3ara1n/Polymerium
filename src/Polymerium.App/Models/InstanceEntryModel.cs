@@ -1,5 +1,6 @@
 ﻿using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Humanizer;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
@@ -23,7 +24,10 @@ public partial class InstanceEntryModel : ModelBase
     public partial bool IsPending { get; set; }
 
     [ObservableProperty]
-    public partial DateTimeOffset LastPlayed { get; set; } = DateTimeOffset.MinValue;
+    [NotifyPropertyChangedFor(nameof(LastPlayedAt))]
+    public partial DateTimeOffset? LastPlayedAtRaw { get; set; } = DateTimeOffset.MinValue;
+
+    public string LastPlayedAt => LastPlayedAtRaw.Humanize();
 
     #endregion
 }

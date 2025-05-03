@@ -2,9 +2,12 @@
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Humanizer;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
@@ -26,9 +29,12 @@ public partial class InstanceHomeViewModel(
     OverlayService overlayService,
     InstanceManager instanceManager,
     NotificationService notificationService,
-    ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    ConfigurationService configurationService,
+    PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     private CompositeDisposable? _subscription;
+    private IDisposable? _timerSubscription;
+
 
     protected override void OnUpdateModel(string key, Profile profile)
     {
@@ -36,6 +42,46 @@ public partial class InstanceHomeViewModel(
         var screenshotPath = ProfileHelper.PickScreenshotRandomly(key);
         Screenshot = screenshotPath is not null ? new Bitmap(screenshotPath) : AssetUriIndex.WALLPAPER_IMAGE_BITMAP;
         PackageCount = profile.Setup.Packages.Count;
+        UpdateTime(key);
+    }
+
+    private void UpdateTime(string key)
+    {
+        var activity = persistenceService.GetLastActivity(key);
+        LastPlayedAtRaw = activity?.End;
+        LastPlayTimeRaw = activity?.End - activity?.Begin ?? TimeSpan.Zero;
+        TotalPlayTimeRaw = persistenceService.GetTotalPlayTime(key);
+        PercentageInTotalPlayTime = persistenceService.GetPercentageInTotalPlayTime(key);
+    }
+
+    internal void ViewForTimerLaunch()
+    {
+        _timerSubscription?.Dispose();
+        // var start = InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch
+        //                 ? DateTimeOffset.Now - launch.StartedAt
+        //                 : TimeSpan.Zero;
+        // _timerSubscription = Observable
+        //                     .Interval(TimeSpan.FromSeconds(1))
+        //                     .Subscribe(x => TimerCount = start + TimeSpan.FromSeconds(x));
+        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
+        {
+            var start = DateTimeOffset.Now - launch.StartedAt;
+            _timerSubscription = Observable
+                                .Interval(TimeSpan.FromSeconds(1))
+                                .Subscribe(x => TimerCount = start + TimeSpan.FromSeconds(x));
+        }
+    }
+
+    internal void ViewForTimerDestruct()
+    {
+        _timerSubscription?.Dispose();
+    }
+
+    protected override Task OnDeinitializeAsync(CancellationToken token)
+    {
+        _subscription?.Dispose();
+        _timerSubscription?.Dispose();
+        return base.OnDeinitializeAsync(token);
     }
 
     #region Tracking
@@ -80,6 +126,13 @@ public partial class InstanceHomeViewModel(
             DeployStage.SolidifyManifest => "Solidifying files...",
             _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
         };
+
+    protected override void OnInstanceLaunched(LaunchTracker tracker)
+    {
+        base.OnInstanceLaunched(tracker);
+
+        UpdateTime(Basic.Key);
+    }
 
     #endregion
 
@@ -206,7 +259,28 @@ public partial class InstanceHomeViewModel(
     public partial LaunchMode Mode { get; set; } = LaunchMode.Managed;
 
     [ObservableProperty]
-    public partial DateTimeOffset LastPlayed { get; set; } = DateTimeOffset.MinValue;
+    [NotifyPropertyChangedFor(nameof(LastPlayedAt))]
+    public partial DateTimeOffset? LastPlayedAtRaw { get; set; }
+
+    public string LastPlayedAt => LastPlayedAtRaw.Humanize();
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LastPlayTime))]
+    public partial TimeSpan LastPlayTimeRaw { get; set; }
+
+    public string LastPlayTime => LastPlayTimeRaw.Humanize(maxUnit: TimeUnit.Day, minUnit: TimeUnit.Second);
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TotalPlayTime))]
+    public partial TimeSpan TotalPlayTimeRaw { get; set; }
+
+    public double TotalPlayTime => TotalPlayTimeRaw.TotalHours;
+
+    [ObservableProperty]
+    public partial double PercentageInTotalPlayTime { get; set; }
+
+    [ObservableProperty]
+    public partial TimeSpan TimerCount { get; set; }
 
     #endregion
 }
