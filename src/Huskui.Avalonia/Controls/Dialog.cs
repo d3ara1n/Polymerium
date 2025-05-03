@@ -34,10 +34,6 @@ public class Dialog : HeaderedContentControl
 
     public readonly TaskCompletionSource<bool> CompletionSource = new();
 
-    private OverlayItem? _container;
-    private OverlayHost? _host;
-    private object? _result;
-
     public Dialog()
     {
         PrimaryCommand = new InternalCommand(Confirm, CanConfirm);
@@ -78,10 +74,10 @@ public class Dialog : HeaderedContentControl
 
     public object? Result
     {
-        get => _result;
+        get;
         set
         {
-            SetAndRaise(ResultProperty, ref _result, value);
+            SetAndRaise(ResultProperty, ref field, value);
             (PrimaryCommand as InternalCommand)?.OnCanExecuteChanged();
         }
     }
@@ -89,8 +85,8 @@ public class Dialog : HeaderedContentControl
 
     public OverlayItem? Container
     {
-        get => _container;
-        set => SetAndRaise(ContainerProperty, ref _container, value);
+        get;
+        set => SetAndRaise(ContainerProperty, ref field, value);
     }
 
     public ICommand PrimaryCommand { get; }

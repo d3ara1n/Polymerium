@@ -94,16 +94,16 @@ public class PersistenceService : IDisposable
         public bool DieInPeace { get; set; } = dieInPeace;
     }
 
-    public class Preference
-    {
-        public const string BEHAVIOR_DEPLOY_METHOD = "behavior.deploy.method";
-        public const string BEHAVIOR_DEPLOY_FASTMODE = "behavior.deploy.fastmode";
-        public const string BEHAVIOR_RESOLVE_DEPENDENCY = "behavior.resolve.dependency";
-
-        public string Key { get; set; }
-        public string Id { get; set; }
-        public string? String { get; set; }
-        public bool? Boolean { get; set; }
-        public int? Integer { get; set; }
-    }
+    // public class Preference
+    // {
+    //     public const string BEHAVIOR_DEPLOY_METHOD = "behavior.deploy.method";
+    //     public const string BEHAVIOR_DEPLOY_FASTMODE = "behavior.deploy.fastmode";
+    //     public const string BEHAVIOR_RESOLVE_DEPENDENCY = "behavior.resolve.dependency";
+    //
+    //     public string Key { get; set; }
+    //     public string Id { get; set; }
+    //     public string? String { get; set; }
+    //     public bool? Boolean { get; set; }
+    //     public int? Integer { get; set; }
+    // }
 }
