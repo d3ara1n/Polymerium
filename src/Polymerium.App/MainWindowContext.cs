@@ -42,7 +42,11 @@ public partial class MainWindowContext : ObservableObject
         SubscribeState(instanceManager);
 
         var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
-        _ = _entries.Connect().Filter(filter).Bind(out var view).Subscribe();
+        _ = _entries
+           .Connect()
+           .Filter(filter)
+           .SortAndBind(out var view, SortExpressionComparer<InstanceEntryModel>.Descending(x => x.LastPlayed))
+           .Subscribe();
         View = view;
     }
 
@@ -109,6 +113,8 @@ public partial class MainWindowContext : ObservableObject
         foreach (var (key, item) in manager.Profiles)
         {
             InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source);
+            var data = manager.GetDataUser(key);
+            model.LastPlayed = data.LastPlayed;
             list.Add(model);
         }
 
@@ -385,6 +391,8 @@ public partial class MainWindowContext : ObservableObject
                     model.Progress = 0d;
                     Dispatcher.UIThread.Post(() =>
                     {
+                        // 不从 ProfileManager 里取，反正 UI 上只要行为类似就好
+                        model.LastPlayed = DateTimeOffset.Now;
                         model.State = InstanceEntryState.Running;
                         _notificationService.PopMessage("The instance has been launched",
                                                         e.Key,

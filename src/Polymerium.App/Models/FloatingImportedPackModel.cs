@@ -4,10 +4,14 @@ using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Models;
 
-public class FloatingImportedPackModel(CompressedProfilePack pack, ImportedProfileContainer container) : ModelBase
+public class FloatingImportedPackModel(
+    string path,
+    CompressedProfilePack pack,
+    ImportedProfileContainer container) : ModelBase
 {
     #region Direct
 
+    public string Path => path;
     public int PackageCount { get; } = container.Profile.Setup.Packages.Count;
 
     public string LoaderLabel { get; } =

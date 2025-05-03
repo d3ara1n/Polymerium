@@ -205,5 +205,8 @@ public partial class InstanceHomeViewModel(
     [ObservableProperty]
     public partial LaunchMode Mode { get; set; } = LaunchMode.Managed;
 
+    [ObservableProperty]
+    public partial DateTimeOffset LastPlayed { get; set; } = DateTimeOffset.MinValue;
+
     #endregion
 }

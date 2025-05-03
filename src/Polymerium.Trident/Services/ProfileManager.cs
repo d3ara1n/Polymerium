@@ -21,8 +21,11 @@ public class ProfileManager : IDisposable
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly IList<ReservedKey> ReservedKeys = new List<ReservedKey>();
 
-    private readonly IDictionary<string, HotDataGuard<DataUser>> _hotUserData = [];
-    private readonly IDictionary<string, HotDataGuard<Preference>> _hotPreferenceData = [];
+    private readonly IDictionary<string, HotDataGuard<DataUser>> _hotUserData =
+        new Dictionary<string, HotDataGuard<DataUser>>();
+
+    private readonly IDictionary<string, HotDataGuard<Preference>> _hotPreferenceData =
+        new Dictionary<string, HotDataGuard<Preference>>();
 
     public ProfileManager(ILogger<ProfileManager> logger)
     {
@@ -197,33 +200,31 @@ public class ProfileManager : IDisposable
             return guard;
         }
 
-        {
-            var path = PathDef.Default.FileOfUserData(key);
-            HotDataGuard<DataUser> hot;
-            if (File.Exists(path))
-                try
+        var path = PathDef.Default.FileOfUserData(key);
+        if (File.Exists(path))
+            try
+            {
+                var data = JsonSerializer.Deserialize<DataUser>(File.ReadAllText(path), _serializerOptions);
+                if (data != null)
                 {
-                    var data = JsonSerializer.Deserialize<DataUser>(File.ReadAllText(path), _serializerOptions);
-                    if (data != null)
-                    {
-                        hot = new HotDataGuard<DataUser>(data) { RefCount = 1 };
-                        hot.Callback = () => DisposeInternal(hot, path);
-                        _hotUserData.Add(key, hot);
-                        return hot;
-                    }
+                    var hot = new HotDataGuard<DataUser>(data) { RefCount = 1 };
+                    hot.Callback = () => DisposeInternal(hot, path);
+                    _hotUserData.Add(key, hot);
+                    return hot;
                 }
-                catch
-                {
-                    _logger.LogWarning("Failed to load user data of {}, created new one", key);
-                }
+            }
+            catch
+            {
+                _logger.LogWarning("Failed to load user data of {}, created new one", key);
+            }
 
-            var created = new DataUser(TimeSpan.Zero, DateTimeOffset.MinValue, null);
-            hot = new HotDataGuard<DataUser>(created) { RefCount = 1 };
+        var created = new DataUser(TimeSpan.Zero, DateTimeOffset.MinValue, null);
+        var createdHot = new HotDataGuard<DataUser>(created) { RefCount = 1 };
 
-            hot.Callback = () => DisposeInternal(hot, path);
-            _hotUserData.Add(key, hot);
-            return hot;
-        }
+        createdHot.Callback = () => DisposeInternal(createdHot, path);
+        _hotUserData.Add(key, createdHot);
+        return createdHot;
+
 
         void DisposeInternal(HotDataGuard<DataUser> self, string path)
         {
@@ -232,6 +233,9 @@ public class ProfileManager : IDisposable
                 _hotUserData.Remove(key);
                 try
                 {
+                    var dir = Path.GetDirectoryName(path);
+                    if (dir != null && !Directory.Exists(dir))
+                        Directory.CreateDirectory(dir);
                     File.WriteAllText(path, JsonSerializer.Serialize(self.Value, _serializerOptions));
                 }
                 catch (Exception ex)
@@ -241,6 +245,29 @@ public class ProfileManager : IDisposable
             }
         }
     }
+
+    public DataUser GetDataUser(string key)
+    {
+        if (_hotUserData.TryGetValue(key, out var guard))
+            return guard.Value;
+
+        var path = PathDef.Default.FileOfUserData(key);
+        if (File.Exists(path))
+            try
+            {
+                var data = JsonSerializer.Deserialize<DataUser>(File.ReadAllText(path), _serializerOptions);
+                if (data != null)
+                    return data;
+            }
+            catch
+            {
+                _logger.LogWarning("Failed to load user data of {}, created new one", key);
+            }
+
+        var created = new DataUser(TimeSpan.Zero, DateTimeOffset.MinValue, null);
+        return created;
+    }
+
 
     #region Profile Changed Event
 

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
@@ -20,6 +21,9 @@ public partial class InstanceEntryModel : ModelBase
 
     [ObservableProperty]
     public partial bool IsPending { get; set; }
+
+    [ObservableProperty]
+    public partial DateTimeOffset LastPlayed { get; set; } = DateTimeOffset.MinValue;
 
     #endregion
 }
