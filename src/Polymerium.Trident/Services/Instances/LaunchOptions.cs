@@ -1,16 +1,20 @@
 ﻿using Polymerium.Trident.Exceptions;
 using Polymerium.Trident.Igniters;
+using Trident.Abstractions.Accounts;
 
 namespace Polymerium.Trident.Services.Instances;
 
 public class LaunchOptions(
     LaunchMode launchMode = LaunchMode.Managed,
+    IAccount? account = null,
     (uint, uint)? windowSize = null,
     uint maxMemory = 4096,
     string? additionalArguments = null,
     JavaHomeLocatorDelegate? javaHomeLocator = null)
 {
     public LaunchMode Mode { get; set; } = launchMode;
+
+    public IAccount? Account { get; set; } = account;
     public uint MaxMemory { get; set; } = maxMemory;
     public (uint, uint) WindowSize { get; set; } = windowSize ?? (1270, 720);
     public string AdditionalArguments { get; set; } = additionalArguments ?? string.Empty;

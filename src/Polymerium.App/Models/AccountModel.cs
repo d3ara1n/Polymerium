@@ -38,8 +38,9 @@ public partial class AccountModel : ModelBase
         else
         {
             TypeName = "Offline";
-            Color1 = Color.FromArgb(255, 196, 197, 199);
-            Color2 = Color.FromArgb(255, 235, 235, 235);
+            // background-image: linear-gradient(to right, #868f96 0%, #596164 100%);
+            Color1 = Color.FromArgb(255, 134, 143, 150);
+            Color2 = Color.FromArgb(255, 89, 97, 100);
             FaceUrl = new Uri($"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face",
                               UriKind.Absolute);
             BodyUrl = new Uri($"https://starlightskins.lunareclipse.studio/render/default/{userName}/face",
