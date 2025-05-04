@@ -93,13 +93,42 @@ public class PersistenceService : IDisposable
 
     public void MarkDefaultAccount(string uuid)
     {
-        _db.Value.Update<Account>().Set(x => x.IsDefault, false).ExecuteAffrows();
-        _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.IsDefault, true).ExecuteAffrows();
+        _db.Value.Transaction(() =>
+        {
+            _db.Value.Update<Account>().Set(x => x.IsDefault, false).ExecuteAffrows();
+            _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.IsDefault, true).ExecuteAffrows();
+        });
     }
 
     public void RemoveAccount(string uuid)
     {
         _db.Value.Delete<Account>().Where(x => x.Uuid == uuid).ExecuteAffrows();
+    }
+
+    public AccountSelector? GetAccountSelector(string key)
+    {
+        return _db.Value.Select<AccountSelector>().Where(x => x.Key == key).First();
+    }
+
+    public void SetAccountSelector(string key, string uuid)
+    {
+        _db.Value.Transaction(() =>
+        {
+            var found = _db.Value.Select<AccountSelector>().Where(x => x.Key == key).First();
+            if (found != null)
+            {
+                if (found.Uuid != uuid)
+                    _db
+                       .Value.Update<AccountSelector>()
+                       .Where(x => x.Key == key)
+                       .Set(x => x.Uuid, uuid)
+                       .ExecuteAffrows();
+            }
+            else
+            {
+                _db.Value.Insert(new AccountSelector(key, uuid)).ExecuteAffrows();
+            }
+        });
     }
 
     public void Dispose()
@@ -146,6 +175,14 @@ public class PersistenceService : IDisposable
         public DateTime EnrolledAt { get; set; } = enrolledAt;
         public DateTime? LastUsedAt { get; set; } = lastUsedAt;
         public bool IsDefault { get; set; } = isDefault;
+    }
+
+    public class AccountSelector(string key, string uuid)
+    {
+        [Column(IsPrimary = true)]
+        public string Key { get; set; } = key;
+
+        public string Uuid { get; set; } = uuid;
     }
 
     // public class Preference

@@ -26,37 +26,15 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="{TemplateBinding ClipToBounds}">
-                    <Panel>
-                        <ScrollViewer
-                            Name="PART_ScrollViewer"
-                            BringIntoViewOnFocusChange="False"
-                            HorizontalScrollBarVisibility="Hidden"
-                            VerticalScrollBarVisibility="Hidden">
-                            <ItemsPresenter Name="PART_ItemsPresenter"
-                                            ItemsPanel="{TemplateBinding ItemsPanel}"
-                                            Margin="{TemplateBinding Padding}" />
-                        </ScrollViewer>
-                        <!-- <Grid Name="ControlPanel" ColumnDefinitions="Auto,*,Auto" RowDefinitions="*,Auto,*" Margin="8" -->
-                        <!--       Opacity="0"> -->
-                        <!--     <Grid.Transitions> -->
-                        <!--         <Transitions> -->
-                        <!--             <DoubleTransition Property="Opacity" -->
-                        <!--                               Duration="{StaticResource ControlFasterAnimationDuration}" /> -->
-                        <!--         </Transitions> -->
-                        <!--     </Grid.Transitions> -->
-                        <!--     <Button Grid.Row="1" Grid.Column="0" Padding="8" CornerRadius="99" -->
-                        <!--             Command="{Binding $parent[Carousel].Previous}"> -->
-                        <!--         <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource SmallFontSize}" -->
-                        <!--                        IconVariant="Filled" /> -->
-                        <!--     </Button> -->
-                        <!--     <Button Grid.Row="1" Grid.Column="2" Padding="8" CornerRadius="99" -->
-                        <!--             Command="{Binding $parent[Carousel].Next}"> -->
-                        <!--         <fi:SymbolIcon Symbol="ArrowRight" FontSize="{StaticResource SmallFontSize}" -->
-                        <!--                        IconVariant="Filled" /> -->
-                        <!--     </Button> -->
-                        <!--     <Panel Grid.Row="2" Grid.Column="1" /> -->
-                        <!-- </Grid> -->
-                    </Panel>
+                    <ScrollViewer
+                        Name="PART_ScrollViewer"
+                        BringIntoViewOnFocusChange="False"
+                        HorizontalScrollBarVisibility="Hidden"
+                        VerticalScrollBarVisibility="Hidden">
+                        <ItemsPresenter Name="PART_ItemsPresenter"
+                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                        Margin="{TemplateBinding Padding}" />
+                    </ScrollViewer>
                 </Border>
             </ControlTemplate>
         </Setter>

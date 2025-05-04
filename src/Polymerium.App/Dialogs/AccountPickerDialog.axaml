@@ -3,59 +3,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+             xmlns:local="clr-namespace:Polymerium.App.Dialogs"
+             xmlns:m="clr-namespace:Polymerium.App.Models"
+             xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              mc:Ignorable="d" Title="Choose a game account"
-             x:Class="Polymerium.App.Dialogs.AccountPickerDialog">
-    <ItemsControl>
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <WrapPanel />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <husk:Card Margin="4">
-            <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="*,8,Auto">
-                <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Images/Placeholders/Steve_Face.png"
-                       Height="48"
-                       Width="48" />
-                <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
-                    <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
-                    <LineBreak />
-                    <Run Text="Microsoft" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                </TextBlock>
-                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
-                    <TextBlock Text="Select" />
-                </Button>
-            </Grid>
-        </husk:Card>
-        <husk:Card Margin="4" BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}" BorderThickness="2"
-                   Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
-            <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="*,8,Auto">
-                <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Images/Placeholders/Steve_Face.png"
-                       Height="48"
-                       Width="48" />
-                <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
-                    <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
-                    <LineBreak />
-                    <Run Text="Microsoft" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                </TextBlock>
-                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" IsEnabled="False">
-                    <TextBlock Text="Selected" />
-                </Button>
-            </Grid>
-        </husk:Card>
-        <husk:Card Margin="4">
-            <Grid ColumnDefinitions="Auto,0,*" RowDefinitions="*,8,Auto">
-                <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Images/Placeholders/Steve_Face.png"
-                       Height="48"
-                       Width="48" />
-                <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" Margin="8">
-                    <Run Text="Steve" FontSize="{StaticResource LargeFontSize}" />
-                    <LineBreak />
-                    <Run Text="Microsoft" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                </TextBlock>
-                <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
-                    <TextBlock Text="Select" />
-                </Button>
-            </Grid>
-        </husk:Card>
-    </ItemsControl>
+             x:Class="Polymerium.App.Dialogs.AccountPickerDialog" Width="256" IsPrimaryButtonVisible="True">
+    <ListBox ItemsSource="{Binding $parent[local:AccountPickerDialog].AccountsSource}"
+             SelectedItem="{Binding $parent[local:AccountPickerDialog].Result,Mode=TwoWay}">
+        <ListBox.ItemTemplate>
+            <DataTemplate DataType="m:AccountModel">
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto">
+                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="{StaticResource SmallCornerRadius}" Height="48"
+                            Width="48" BoxShadow="0 0 8 0 #3F000000">
+                        <Border.Background>
+                            <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl}" />
+                        </Border.Background>
+                    </Border>
+                    <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="8">
+                        <Run Text="{Binding UserName,FallbackValue=Name}" FontSize="{StaticResource LargeFontSize}" />
+                        <LineBreak />
+                        <Run Text="{Binding TypeName,FallbackValue=Type}"
+                             Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                    </TextBlock>
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </husk:Dialog>

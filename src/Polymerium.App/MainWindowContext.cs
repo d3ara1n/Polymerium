@@ -12,6 +12,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
+using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
@@ -145,6 +146,14 @@ public partial class MainWindowContext : ObservableObject
                                            e.Value.Setup.Loader,
                                            e.Value.Setup.Source);
             _entries.AddOrUpdate(model);
+
+            // 把以下代码放在这里并不合理，但也没其他地方可以放
+            var defaultAccount = _persistenceService.GetDefaultAccount();
+            if (defaultAccount != null)
+            {
+                var cooked = AccountHelper.ToCooked(defaultAccount);
+                _persistenceService.SetAccountSelector(e.Key, cooked.Uuid);
+            }
         }
     }
 

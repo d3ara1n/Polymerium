@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
+    <ControlTheme x:Key="{x:Type local:PlaceholderPresenter}" TargetType="local:PlaceholderPresenter">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter Name="{x:Static local:PlaceholderPresenter.PART_ContentPresenter}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

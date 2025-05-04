@@ -8,11 +8,14 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Humanizer;
+using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
+using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
+using Polymerium.App.Utilities;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Igniters;
 using Polymerium.Trident.Services;
@@ -77,6 +80,28 @@ public partial class InstanceHomeViewModel(
         _timerSubscription?.Dispose();
     }
 
+    protected override Task OnInitializedAsync(CancellationToken token)
+    {
+        base.OnInitializedAsync(token);
+
+        var selector = persistenceService.GetAccountSelector(Basic.Key);
+        if (selector != null)
+        {
+            var account = persistenceService.GetAccount(selector.Uuid);
+            if (account != null)
+            {
+                var cooked = AccountHelper.ToCooked(account);
+                SelectedAccount = new AccountModel(cooked.GetType(),
+                                                   cooked.Uuid,
+                                                   cooked.Username,
+                                                   account.EnrolledAt,
+                                                   account.LastUsedAt);
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+
     protected override Task OnDeinitializeAsync(CancellationToken token)
     {
         _subscription?.Dispose();
@@ -139,52 +164,93 @@ public partial class InstanceHomeViewModel(
     #region Commands
 
     [RelayCommand]
-    private void SwitchAccount() => overlayService.PopDialog(new AccountPickerDialog());
+    private async Task SwitchAccount()
+    {
+        var accounts = persistenceService
+                      .GetAccounts()
+                      .Select(x =>
+                       {
+                           var cooked = AccountHelper.ToCooked(x);
+                           return SelectedAccount?.Uuid == cooked.Uuid
+                                      ? SelectedAccount
+                                      : new AccountModel(cooked.GetType(),
+                                                         cooked.Uuid,
+                                                         cooked.Username,
+                                                         x.EnrolledAt,
+                                                         x.LastUsedAt);
+                       })
+                      .ToList();
+        var dialog = new AccountPickerDialog { AccountsSource = accounts, Result = SelectedAccount };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
+        {
+            SelectedAccount = account;
+            persistenceService.SetAccountSelector(Basic.Key, account.Uuid);
+        }
+    }
 
     [RelayCommand]
     private void Play()
     {
-        try
+        var selector = persistenceService.GetAccountSelector(Basic.Key);
+        if (selector != null)
         {
-            var profile = ProfileManager.GetImmutable(Basic.Key);
-            var options = new LaunchOptions(javaHomeLocator: major => profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
-                                                                          major switch
-                                                                          {
-                                                                              8 => configurationService.Value
-                                                                                 .RuntimeJavaHome8,
-                                                                              11 => configurationService.Value
-                                                                                 .RuntimeJavaHome11,
-                                                                              16 => configurationService.Value
-                                                                                 .RuntimeJavaHome16,
-                                                                              17 => configurationService.Value
-                                                                                 .RuntimeJavaHome17,
-                                                                              21 => configurationService.Value
-                                                                                 .RuntimeJavaHome21,
-                                                                              _ => throw new
-                                                                                  ArgumentOutOfRangeException(nameof
-                                                                                          (major),
-                                                                                      major,
-                                                                                      "Not supported java version")
-                                                                          })
-                                                                   ?? throw new
-                                                                          InvalidOperationException("Java home fallback unset"),
-                                            additionalArguments:
-                                            profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
-                                                                configurationService.Value.GameJavaAdditionalArguments),
-                                            maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                                                                           configurationService.Value
-                                                                              .GameJavaMaxMemory),
-                                            windowSize:
-                                            (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, configurationService.Value.GameWindowInitialWidth),
-                                             profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
-                                                                 configurationService.Value.GameWindowInitialHeight)),
-                                            launchMode: Mode);
-            InstanceManager.DeployAndLaunch(Basic.Key, options);
+            var account = persistenceService.GetAccount(selector.Uuid);
+            if (account != null)
+            {
+                var cooked = AccountHelper.ToCooked(account);
+                try
+                {
+                    var profile = ProfileManager.GetImmutable(Basic.Key);
+                    // Profile 的引用会被捕获，也就是在 Deploy 期间修改 OVERRIDE_JAVA_HOME 也会产生影响
+                    var options = new LaunchOptions(javaHomeLocator: major =>
+                                                        profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
+                                                                            major switch
+                                                                            {
+                                                                                8 => configurationService.Value
+                                                                                   .RuntimeJavaHome8,
+                                                                                11 => configurationService.Value
+                                                                                   .RuntimeJavaHome11,
+                                                                                16 => configurationService.Value
+                                                                                   .RuntimeJavaHome16,
+                                                                                17 => configurationService.Value
+                                                                                   .RuntimeJavaHome17,
+                                                                                21 => configurationService.Value
+                                                                                   .RuntimeJavaHome21,
+                                                                                _ => throw new
+                                                                                    ArgumentOutOfRangeException(nameof
+                                                                                            (major),
+                                                                                        major,
+                                                                                        "Not supported java version")
+                                                                            })
+                                                     ?? throw new InvalidOperationException("Java home fallback unset"),
+                                                    additionalArguments:
+                                                    profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+                                                                        configurationService.Value
+                                                                           .GameJavaAdditionalArguments),
+                                                    maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
+                                                        configurationService.Value.GameJavaMaxMemory),
+                                                    windowSize:
+                                                    (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, configurationService.Value.GameWindowInitialWidth),
+                                                     profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
+                                                                         configurationService.Value
+                                                                            .GameWindowInitialHeight)),
+                                                    launchMode: Mode,
+                                                    account: cooked);
+                    InstanceManager.DeployAndLaunch(Basic.Key, options);
+
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    notificationService.PopMessage(ex, "Update failed");
+                }
+            }
         }
-        catch (Exception ex)
-        {
-            notificationService.PopMessage(ex, "Update failed");
-        }
+
+        notificationService.PopMessage("Account is not provided or removed after set",
+                                       "Account not found",
+                                       NotificationLevel.Danger,
+                                       actions: [new NotificationAction("Select Account", SwitchAccountCommand)]);
     }
 
     [RelayCommand]
@@ -281,6 +347,9 @@ public partial class InstanceHomeViewModel(
 
     [ObservableProperty]
     public partial TimeSpan TimerCount { get; set; }
+
+    [ObservableProperty]
+    public partial AccountModel? SelectedAccount { get; set; }
 
     #endregion
 }
