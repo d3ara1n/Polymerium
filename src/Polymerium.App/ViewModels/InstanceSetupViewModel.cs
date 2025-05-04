@@ -470,7 +470,11 @@ public partial class InstanceSetupViewModel(
                 var page = await dataService.InspectVersionsAsync(result.Label,
                                                                   result.Namespace,
                                                                   result.Pid,
-                                                                  Filter.Empty with { Kind = ResourceKind.Modpack });
+                                                                  Filter.Empty with
+                                                                  {
+                                                                      Kind = ResourceKind.Modpack,
+                                                                      Version = Basic.Version
+                                                                  });
                 var versions = page
                               .Select(x => new InstanceReferenceVersionModel(x.Label,
                                                                              x.Namespace,
