@@ -18,16 +18,9 @@ public static class DataLockExtensions
         if (self.Viability.Packages.Count != setup.Packages.Count(x => x.Enabled))
             return false;
 
-        var map = self.Viability.Packages.Distinct().ToDictionary(x => x, _ => 0);
+        var map = self.Viability.Packages.Distinct().ToHashSet();
 
-        foreach (var check in setup.Packages.Where(x => x.Enabled).Select(x => x.Purl))
-        {
-            if (!map.TryGetValue(check, out var value))
-                return false;
-
-            map[check] = ++value;
-        }
-
-        return map.Values.All(x => x == 1);
+        var rv = map.SetEquals(setup.Packages.Where(x => x.Enabled).Select(x => x.Purl).Distinct());
+        return rv;
     }
 }
