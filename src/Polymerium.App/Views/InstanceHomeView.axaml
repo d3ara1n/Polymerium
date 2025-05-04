@@ -133,7 +133,8 @@
                             </StackPanel>
                         </Button>
                     </Grid>
-                    <husk:Card Grid.Row="2" BorderThickness="0" CornerRadius="{StaticResource MediumCornerRadius}">
+                    <husk:Card Grid.Row="2" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                               BorderThickness="0" CornerRadius="{StaticResource MediumCornerRadius}">
                         <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="12">
                             <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="4">
                                 <TextBlock Grid.Row="0" Text="Type"
@@ -416,7 +417,6 @@
                                         Command="{Binding SwitchModeCommand}"
                                         Margin="0,0,8,0"
                                         HorizontalAlignment="Center"
-                                        Background="{StaticResource OverlayInteractiveBackgroundBrush}"
                                         CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}"
                                         Padding="12,6">
                                     <TextBlock Text="{Binding Mode,FallbackValue=Mode}" />

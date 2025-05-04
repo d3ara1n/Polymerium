@@ -519,7 +519,7 @@
                             </Border>
                             <Panel Grid.Row="1">
                                 <StackPanel VerticalAlignment="Center"
-                                            IsVisible="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}"
+                                            IsVisible="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
                                             Spacing="8">
                                     <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"

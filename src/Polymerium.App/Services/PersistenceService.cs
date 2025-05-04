@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using FreeSql;
+using FreeSql.DataAnnotations;
+using Polymerium.Trident.Accounts;
 using Trident.Abstractions;
 
 namespace Polymerium.App.Services;
@@ -36,7 +39,7 @@ public class PersistenceService : IDisposable
 
     public Activity? GetLastActivity(string key)
     {
-        return _db.Value.Select<Activity>().Where(x => x.Key == key).OrderBy(x => x.End).First();
+        return _db.Value.Select<Activity>().Where(x => x.Key == key).OrderByDescending(x => x.End).First();
     }
 
     public TimeSpan GetTotalPlayTime(string key)
@@ -66,6 +69,39 @@ public class PersistenceService : IDisposable
         return (double)(keyTotalSeconds / allTotalSeconds);
     }
 
+    public void AppendAccount(Account account)
+    {
+        _db.Value.Insert(account).ExecuteAffrows();
+    }
+
+    public IReadOnlyList<Account> GetAccounts() => _db.Value.Select<Account>().ToList();
+
+    public Account? GetDefaultAccount()
+    {
+        return _db.Value.Select<Account>().Where(x => x.IsDefault).First();
+    }
+
+    public Account? GetAccount(string uuid)
+    {
+        return _db.Value.Select<Account>().Where(x => x.Uuid == uuid).First();
+    }
+
+    public bool HasMicrosoftAccount()
+    {
+        return _db.Value.Select<Account>().Where(x => x.Kind == nameof(MicrosoftAccount)).Any();
+    }
+
+    public void MarkDefaultAccount(string uuid)
+    {
+        _db.Value.Update<Account>().Set(x => x.IsDefault, false).ExecuteAffrows();
+        _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.IsDefault, true).ExecuteAffrows();
+    }
+
+    public void RemoveAccount(string uuid)
+    {
+        _db.Value.Delete<Account>().Where(x => x.Uuid == uuid).ExecuteAffrows();
+    }
+
     public void Dispose()
     {
         // TODO 在此释放托管资源
@@ -92,6 +128,24 @@ public class PersistenceService : IDisposable
         public DateTime End { get; set; } = end.DateTime;
 
         public bool DieInPeace { get; set; } = dieInPeace;
+    }
+
+    public class Account(
+        string uuid,
+        string kind,
+        string data,
+        DateTime enrolledAt,
+        DateTime? lastUsedAt,
+        bool isDefault)
+    {
+        [Column(IsPrimary = true)]
+        public string Uuid { get; set; } = uuid;
+
+        public string Kind { get; set; } = kind;
+        public string Data { get; set; } = data;
+        public DateTime EnrolledAt { get; set; } = enrolledAt;
+        public DateTime? LastUsedAt { get; set; } = lastUsedAt;
+        public bool IsDefault { get; set; } = isDefault;
     }
 
     // public class Preference

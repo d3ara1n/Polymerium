@@ -176,7 +176,7 @@
         </Grid>
         <Panel Grid.Row="1">
             <StackPanel VerticalAlignment="Center"
-                        IsVisible="{Binding $parent[cp:PackageContainer].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}"
+                        IsVisible="{Binding $parent[cp:PackageContainer].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
                         Spacing="8">
                 <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"

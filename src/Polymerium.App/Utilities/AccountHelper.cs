@@ -1,0 +1,34 @@
+﻿using System;
+using System.Text.Json;
+using Polymerium.App.Services;
+using Polymerium.Trident.Accounts;
+using Trident.Abstractions.Accounts;
+
+namespace Polymerium.App.Utilities;
+
+public static class AccountHelper
+{
+    public static IAccount ToCooked(PersistenceService.Account raw)
+    {
+        return (IAccount?)(raw.Kind switch
+                              {
+                                  nameof(MicrosoftAccount) => JsonSerializer.Deserialize<MicrosoftAccount>(raw.Data),
+                                  nameof(FamilyAccount) => JsonSerializer.Deserialize<FamilyAccount>(raw.Data),
+                                  nameof(OfflineAccount) => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
+                                  _ => throw new ArgumentOutOfRangeException(nameof(raw.Kind))
+                              })
+            ?? throw new FormatException("Failed to deserialize account from the raw data");
+    }
+
+    public static PersistenceService.Account ToRaw(
+        IAccount account,
+        DateTimeOffset enrolledAt,
+        DateTimeOffset? lastUsedAt,
+        bool isDefault) =>
+        new(account.Uuid,
+            account.GetType().Name,
+            JsonSerializer.Serialize(account, account.GetType()),
+            enrolledAt.DateTime,
+            lastUsedAt?.DateTime,
+            isDefault);
+}

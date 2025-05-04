@@ -158,18 +158,18 @@
                         </Button>
                         <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}" Padding="8"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                            <Grid ColumnDefinitions="*,8,Auto,8,*">
-                                <Grid Grid.Column="0" ColumnDefinitions="Auto,8,*">
+                            <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="8">
+                                <Grid Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="8">
                                     <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
-                                    <StackPanel Grid.Column="2">
+                                    <StackPanel Grid.Column="1">
                                         <TextBlock Text="Packages"
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                         <TextBlock Text="{Binding ImportedPack.PackageCount,FallbackValue=114514}"
                                                    FontSize="{StaticResource LargeFontSize}" />
                                     </StackPanel>
                                 </Grid>
-                                <husk:Divider Grid.Column="2" Orientation="Vertical" />
-                                <StackPanel Grid.Column="4">
+                                <husk:Divider Grid.Column="1" Orientation="Vertical" />
+                                <StackPanel Grid.Column="2">
                                     <TextBlock Text="Mod Loader"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                     <TextBlock Text="{Binding ImportedPack.LoaderLabel,FallbackValue=None}"

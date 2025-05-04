@@ -34,7 +34,7 @@
         </TabStrip>
         <Panel Grid.Row="4" MinHeight="128">
             <StackPanel VerticalAlignment="Center"
-                        IsVisible="{Binding $parent[local:GameVersionPickerDialog].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}"
+                        IsVisible="{Binding $parent[local:GameVersionPickerDialog].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
                         Spacing="8">
                 <icons:PackIconLucide Kind="Joystick" Height="{StaticResource ExtraLargeFontSize}"
                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
