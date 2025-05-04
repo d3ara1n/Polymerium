@@ -10,7 +10,7 @@
              IsPrimaryButtonVisible="True"
              Message="Export package list of the instance into the selected formatted table file">
     <StackPanel Spacing="12">
-        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="4"
+        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3"
                 CornerRadius="{StaticResource MediumCornerRadius}">
             <Border Background="{StaticResource OverlaySolidBackgroundBrush}"
                     CornerRadius="{StaticResource SmallCornerRadius}" Padding="12">

@@ -5,11 +5,17 @@
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
            xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
-           x:Class="Polymerium.App.Views.AccountsView">
+           xmlns:controls="clr-namespace:Polymerium.App.Controls"
+           xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
+           xmlns:m="clr-namespace:Polymerium.App.Models"
+           xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+           xmlns:v="clr-namespace:Polymerium.App.Views"
+           xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+           x:Class="Polymerium.App.Views.AccountsView" x:DataType="vm:AccountsViewModel">
     <husk:Page.Header>
         <DockPanel HorizontalSpacing="8">
             <StackPanel DockPanel.Dock="Right" Spacing="4" Orientation="Horizontal">
-                <Button Classes="Primary">
+                <Button Classes="Primary" Command="{Binding CreateAccountCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="7">
                         <icons:PackIconLucide Kind="UserPlus" Width="{StaticResource MediumFontSize}"
                                               Height="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
@@ -20,4 +26,43 @@
             <TextBlock Text="Accounts" Theme="{StaticResource PageHeaderTextBlockTheme}" />
         </DockPanel>
     </husk:Page.Header>
+    <Panel>
+        <StackPanel VerticalAlignment="Center"
+                    IsVisible="{Binding Accounts.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
+                    Spacing="8">
+            <icons:PackIconLucide Kind="Users" Height="{StaticResource ExtraLargeFontSize}"
+                                  Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                  Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+            <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                       Foreground="{StaticResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center" />
+        </StackPanel>
+        <ItemsControl ClipToBounds="False" ItemsSource="{Binding Accounts}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel ItemSpacing="8" LineSpacing="8" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="m:AccountModel">
+                    <controls:AccountEntryButton
+                        Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).ViewAccountCommand,FallbackValue={x:Null}}"
+                        CommandParameter="{Binding}">
+                        <controls:AccountEntryButton.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuItem Header="Mark as Default"
+                                          Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,FontSize={StaticResource MediumFontSize}}"
+                                          IsEnabled="{Binding IsDefault,Converter={x:Static BoolConverters.Not},Mode=OneWay}"
+                                          Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).MarkAsDefaultAccountCommand,Mode=OneWay,FallbackValue={x:Null}}"
+                                          CommandParameter="{Binding}" />
+                                <MenuItem Header="Remove"
+                                          Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}"
+                                          Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).RemoveAccountCommand,Mode=OneWay,FallbackValue={x:Null}}"
+                                          CommandParameter="{Binding}" />
+                            </MenuFlyout>
+                        </controls:AccountEntryButton.ContextFlyout>
+                    </controls:AccountEntryButton>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Panel>
 </husk:Page>

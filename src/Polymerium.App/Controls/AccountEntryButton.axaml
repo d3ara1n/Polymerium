@@ -1,0 +1,91 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Polymerium.App.Controls"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+                    xmlns:m="clr-namespace:Polymerium.App.Models">
+    <Design.PreviewWith>
+        <Panel>
+            <StackPanel Margin="24">
+                <local:AccountEntryButton />
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+    <ControlTheme x:Key="{x:Type local:AccountEntryButton}" TargetType="local:AccountEntryButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="m:AccountModel">
+                <Border
+                    Name="Background"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Panel>
+                        <StackPanel Spacing="4" Margin="{TemplateBinding Padding}">
+                            <Border
+                                Width="160"
+                                Height="160"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="100%,0%" EndPoint="0%,100%">
+                                        <GradientStop Offset="0" Color="{Binding Color1}" />
+                                        <GradientStop Offset="1" Color="{Binding Color2}" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Image
+                                    Width="140"
+                                    Height="140"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    async:ImageLoader.Source="{Binding BodyUrl}" />
+                            </Border>
+                            <TextBlock FontSize="{StaticResource LargeFontSize}"
+                                       Text="{Binding UserName,FallbackValue=Name}" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding TypeName,FallbackValue=Type}" />
+                                <fi:SymbolIcon
+                                    Grid.Column="1"
+                                    IsVisible="{Binding IsDefault,Mode=OneWay,FallbackValue=True}"
+                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                    IconVariant="Filled"
+                                    Symbol="CheckmarkCircle" FontSize="{StaticResource MediumFontSize}" />
+                            </Grid>
+                        </StackPanel>
+                        <Border Name="Border" Opacity="0"
+                                BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                                BorderThickness="2" CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <TransformOperationsTransition Property="RenderTransform" Easing="SineEaseOut"
+                                                                   Duration="{StaticResource ControlInstantAnimationDuration}" />
+                                    <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                                      Duration="{StaticResource ControlInstantAnimationDuration}" />
+                                </Transitions>
+                            </Border.Transitions>
+                        </Border>
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Border">
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="RenderTransform" Value="scale(1.06,1.05)" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Border">
+            <Setter Property="RenderTransform" Value="scale(1.02,1.01)" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

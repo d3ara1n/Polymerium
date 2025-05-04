@@ -5,8 +5,12 @@
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:modals="clr-namespace:Polymerium.App.Modals"
+            xmlns:m="clr-namespace:Polymerium.App.Models"
+            xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+            xmlns:assets="clr-namespace:Polymerium.App.Assets"
+            xmlns:accounts="clr-namespace:Polymerium.Trident.Accounts;assembly=Polymerium.Trident"
             mc:Ignorable="d" Background="Transparent" Width="280"
-            x:Class="Polymerium.App.Modals.AccountEntryModal">
+            x:Class="Polymerium.App.Modals.AccountEntryModal" x:DataType="m:AccountModel">
     <Grid RowDefinitions="Auto,Auto,*" ColumnSpacing="12">
         <Border Grid.Row="1" Grid.RowSpan="2" CornerRadius="{StaticResource MediumCornerRadius}"
                 Background="{StaticResource FlyoutBackgroundBrush}">
@@ -21,58 +25,88 @@
                                            VerticalAlignment="Center" />
                         </Button>
                     </Panel>
-                    <TextBlock Text="Steve" HorizontalAlignment="Center"
+                    <TextBlock Text="{Binding UserName,FallbackValue=Name}" HorizontalAlignment="Center"
                                FontWeight="{StaticResource ControlStrongFontWeight}"
                                FontSize="{StaticResource LargeFontSize}" />
                 </StackPanel>
                 <StackPanel Spacing="4">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Right" Text="2025/07/26 07:03" />
+                        <TextBlock DockPanel.Dock="Right"
+                                   Text="{Binding EnrolledAtRaw,StringFormat={}{0:g},FallbackValue=2025/12/13 02:03}" />
                         <TextBlock Text="Enrolled"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
 
                     </DockPanel>
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Right" Text="2025/12/13 02:03" />
+                        <TextBlock DockPanel.Dock="Right"
+                                   Text="{Binding LastUsedAt,FallbackValue=never}" />
                         <TextBlock Text="Last Used"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </DockPanel>
                 </StackPanel>
                 <Border CornerRadius="{StaticResource SmallCornerRadius}"
                         BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}" BorderThickness="1"
-                        Padding="12,8" BoxShadow="{StaticResource ModalBoxShadow}"
+                        Padding="12,8"
                         Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
-                    <StackPanel Spacing="8">
-                        <TextBlock Text="Microsoft" FontSize="{StaticResource LargeFontSize}" />
-                        <StackPanel>
-                            <TextBlock
-                                Text="This kind of account is kind of: No use in the past then no use in the future any more."
-                                TextWrapping="Wrap"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="{StaticResource MediumFontSize}"
-                                               IconVariant="Filled" VerticalAlignment="Center"
-                                               Foreground="{StaticResource ControlSuccessForegroundBrush}" />
-                                <TextBlock Text="Refreshed" VerticalAlignment="Center"
-                                           Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                    <husk:SwitchPresenter Value="{Binding Type}">
+                        <husk:SwitchCase Value="{x:Type accounts:FamilyAccount}">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding TypeName,FallbackValue=Family}"
+                                           FontSize="{StaticResource LargeFontSize}" />
+                                <StackPanel>
+                                    <TextBlock
+                                        Text="It's all set."
+                                        TextWrapping="Wrap"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                </StackPanel>
                             </StackPanel>
-                            <Button HorizontalAlignment="Right" Content="Refresh" Classes="Primary Small" />
-                        </StackPanel>
-                    </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="{x:Type accounts:OfflineAccount}">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding TypeName,FallbackValue=Offline}"
+                                           FontSize="{StaticResource LargeFontSize}" />
+                                <StackPanel>
+                                    <TextBlock
+                                        Text="It's all set."
+                                        TextWrapping="Wrap"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                        <husk:SwitchCase Value="{x:Type accounts:MicrosoftAccount}">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding TypeName,FallbackValue=Microsoft}"
+                                           FontSize="{StaticResource LargeFontSize}" />
+                                <StackPanel>
+                                    <TextBlock
+                                        Text="This kind of account is kind of: No use in the past then no use in the future any more."
+                                        TextWrapping="Wrap"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <fi:SymbolIcon Symbol="CheckmarkCircle"
+                                                       FontSize="{StaticResource MediumFontSize}"
+                                                       IconVariant="Filled" VerticalAlignment="Center"
+                                                       Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                                        <TextBlock Text="Refreshed" VerticalAlignment="Center"
+                                                   Foreground="{StaticResource ControlSuccessForegroundBrush}" />
+                                    </StackPanel>
+                                    <Button HorizontalAlignment="Right" Content="Refresh" Classes="Primary Small" />
+                                </StackPanel>
+                            </StackPanel>
+                        </husk:SwitchCase>
+                    </husk:SwitchPresenter>
                 </Border>
             </StackPanel>
         </Border>
         <Border Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center"
                 CornerRadius="{StaticResource LargeCornerRadius}"
-                Background="{StaticResource FlyoutBackgroundBrush}" Padding="8">
-            <Border.Effect>
-                <DropShadowEffect OffsetX="0" OffsetY="0" Opacity="0.2" />
-            </Border.Effect>
+                Background="{StaticResource FlyoutBackgroundBrush}" Padding="8" BoxShadow="0 0 8 0 #3F000000">
             <Border Width="64" Height="64" CornerRadius="{StaticResource SmallCornerRadius}">
                 <Border.Background>
-                    <ImageBrush Source="/Assets/Images/Placeholders/Steve_Face.png" />
+                    <ImageBrush
+                        async:ImageBrushLoader.Source="{Binding FaceUrl,FallbackValue={x:Static assets:AssetUriIndex.STEVE_FACE_IMAGE}}" />
                 </Border.Background>
             </Border>
         </Border>

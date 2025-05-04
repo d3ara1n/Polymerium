@@ -1,0 +1,66 @@
+﻿<controls:AccountCreationStep xmlns="https://github.com/avaloniaui"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                              mc:Ignorable="d"
+                              x:Class="Polymerium.App.Components.AccountCreationFamily"
+                              Header="Pick your favorite family guy" IsNextAvailable="True">
+    <TabStrip Name="RoleSelectBox">
+        <TabStrip.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Spacing="6" />
+            </ItemsPanelTemplate>
+        </TabStrip.ItemsPanel>
+        <TabStripItem>
+            <DockPanel HorizontalSpacing="8">
+                <TextBlock DockPanel.Dock="Left" Text="👶" FontSize="24" VerticalAlignment="Center" />
+                <StackPanel>
+                    <TextBlock Text="Stewie" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="A baby" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </DockPanel>
+        </TabStripItem>
+        <TabStripItem>
+            <DockPanel HorizontalSpacing="8">
+                <TextBlock DockPanel.Dock="Left" Text="🐶" FontSize="24" VerticalAlignment="Center" />
+                <StackPanel>
+                    <TextBlock Text="Brian" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="A dog" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </DockPanel>
+        </TabStripItem>
+        <TabStripItem>
+            <DockPanel HorizontalSpacing="8">
+                <TextBlock DockPanel.Dock="Left" Text="👦" FontSize="24" VerticalAlignment="Center" />
+                <StackPanel>
+                    <TextBlock Text="Chris" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="A boy" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </DockPanel>
+        </TabStripItem>
+        <TabStripItem>
+            <DockPanel HorizontalSpacing="8">
+                <TextBlock DockPanel.Dock="Left" Text="👨" FontSize="24" VerticalAlignment="Center" />
+                <StackPanel>
+                    <TextBlock Text="Peter" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="A retard" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </DockPanel>
+        </TabStripItem>
+        <TabStripItem>
+            <DockPanel HorizontalSpacing="8">
+                <TextBlock DockPanel.Dock="Left" Text="👩" FontSize="24" VerticalAlignment="Center" />
+                <StackPanel>
+                    <TextBlock Text="Lois" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="A lady" Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </DockPanel>
+        </TabStripItem>
+    </TabStrip>
+</controls:AccountCreationStep>

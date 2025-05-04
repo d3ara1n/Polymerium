@@ -18,6 +18,9 @@ public static class AssetUriIndex
     public static readonly Uri DIRT_IMAGE = new("avares://Polymerium.App/Assets/Images/Placeholders/Dirt.png",
                                                 UriKind.Absolute);
 
+    public static readonly Uri STEVE_FACE_IMAGE =
+        new("avares://Polymerium.App/Assets/Images/Placeholders/Steve_Face.png", UriKind.Absolute);
+
     private static readonly Uri WALLPAPER_IMAGE = new("avares://Polymerium.App/Assets/Images/Wallpaper.png",
                                                       UriKind.Absolute);
 

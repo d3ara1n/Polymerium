@@ -1,0 +1,45 @@
+﻿<controls:AccountCreationStep xmlns="https://github.com/avaloniaui"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                              xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                              xmlns:local="clr-namespace:Polymerium.App.Components"
+                              mc:Ignorable="d" d:DesignHeight="320" d:DesignWidth="256"
+                              x:Class="Polymerium.App.Components.AccountCreationPortal" Header="Pick an account type"
+                              IsNextAvailable="True">
+    <StackPanel Spacing="12">
+        <TabStrip Name="AccountTypeSelectBox">
+            <TabStrip.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Spacing="6" />
+                </ItemsPanelTemplate>
+            </TabStrip.ItemsPanel>
+            <TabStripItem>
+                <StackPanel>
+                    <TextBlock Text="Microsoft" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="Enables all the online features and is the only way to play the game legally"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                </StackPanel>
+            </TabStripItem>
+            <TabStripItem>
+                <StackPanel>
+                    <TextBlock Text="Family" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="Take a trail if dont have an account"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                </StackPanel>
+            </TabStripItem>
+            <TabStripItem
+                IsEnabled="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable,FallbackValue=False}">
+                <StackPanel>
+                    <TextBlock Text="Offline" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="Nothing good but no Internet connection required"
+                               Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
+                </StackPanel>
+            </TabStripItem>
+        </TabStrip>
+        <husk:InfoBar
+            IsVisible="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable,Converter={x:Static BoolConverters.Not},FallbackValue=True}"
+            Content="Offline account is unavailable if no Microsoft account is linked." />
+    </StackPanel>
+</controls:AccountCreationStep>

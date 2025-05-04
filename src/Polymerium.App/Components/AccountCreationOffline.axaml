@@ -1,0 +1,24 @@
+﻿<controls:AccountCreationStep xmlns="https://github.com/avaloniaui"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                              xmlns:local="clr-namespace:Polymerium.App.Components"
+                              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                              mc:Ignorable="d"
+                              x:Class="Polymerium.App.Components.AccountCreationOffline" Header="Pick a name">
+    <StackPanel Spacing="12">
+        <StackPanel>
+            <TextBlock Text="Name" />
+            <TextBox Text="{Binding $parent[local:AccountCreationOffline].UserName,Mode=TwoWay}" />
+        </StackPanel>
+        <StackPanel>
+            <TextBlock Text="Uuid" />
+            <TextBox Watermark="{Binding $parent[local:AccountCreationOffline].Uuid,Mode=OneWay}"
+                     Text="{Binding $parent[local:AccountCreationOffline].UuidOverwrite,Mode=TwoWay}" />
+        </StackPanel>
+        <husk:InfoBar Header="Warning" Content="Name containing spaces or other non-ascii characters may cause issues."
+                      Classes="Warning"
+                      IsVisible="{Binding $parent[local:AccountCreationOffline].IsWarned,FallbackValue=False}" />
+    </StackPanel>
+</controls:AccountCreationStep>

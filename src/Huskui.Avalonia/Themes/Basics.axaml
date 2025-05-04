@@ -3,7 +3,7 @@
                     xmlns:sys="using:System">
 
     <!-- Typography -->
-    <FontWeight x:Key="ControlFontWeight">Normal</FontWeight><!-- Typography -->
+    <FontWeight x:Key="ControlFontWeight">Normal</FontWeight>
     <FontWeight x:Key="ControlStrongFontWeight">Bold</FontWeight>
 
     <!-- Animations -->
