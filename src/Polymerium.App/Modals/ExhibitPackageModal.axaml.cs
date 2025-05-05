@@ -297,16 +297,12 @@ public partial class ExhibitPackageModal : Modal
                                           var installed = versions.FirstOrDefault(x => x.VersionId == versionId);
                                           if (installed != null)
                                           {
-                                              SelectedVersion = installed;
-                                              SelectedVersionMode = 0;
+                                              Dispatcher.UIThread.Post(() =>
+                                              {
+                                                  SelectedVersion = installed;
+                                                  SelectedVersionMode = 0;
+                                              });
                                           }
-                                      }
-                                      else
-                                      {
-                                          Dispatcher.UIThread.Post(() =>
-                                          {
-                                              SelectedVersionMode = 1;
-                                          });
                                       }
                                   });
 
