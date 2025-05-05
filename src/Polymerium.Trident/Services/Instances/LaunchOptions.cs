@@ -5,6 +5,7 @@ using Trident.Abstractions.Accounts;
 namespace Polymerium.Trident.Services.Instances;
 
 public class LaunchOptions(
+    string? brand = null,
     LaunchMode launchMode = LaunchMode.Managed,
     IAccount? account = null,
     (uint, uint)? windowSize = null,
@@ -18,6 +19,8 @@ public class LaunchOptions(
     public uint MaxMemory { get; set; } = maxMemory;
     public (uint, uint) WindowSize { get; set; } = windowSize ?? (1270, 720);
     public string AdditionalArguments { get; set; } = additionalArguments ?? string.Empty;
+
+    public string Brand { get; set; } = brand ?? "Trident";
 
     public JavaHomeLocatorDelegate JavaHomeLocator { get; set; } =
         javaHomeLocator ?? (v => throw new JavaNotFoundException(v));

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Input;
 using Avalonia;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Models;
@@ -19,6 +20,18 @@ public partial class AccountPickerDialog : Dialog
         get;
         set => SetAndRaise(AccountsSourceProperty, ref field, value);
     }
+
+    public static readonly DirectProperty<AccountPickerDialog, ICommand> GotoManagerViewCommandProperty =
+        AvaloniaProperty.RegisterDirect<AccountPickerDialog, ICommand>(nameof(GotoManagerViewCommand),
+                                                                       o => o.GotoManagerViewCommand,
+                                                                       (o, v) => o.GotoManagerViewCommand = v);
+
+    public required ICommand GotoManagerViewCommand
+    {
+        get;
+        set => SetAndRaise(GotoManagerViewCommandProperty, ref field, value);
+    }
+
 
     protected override bool ValidateResult(object? result) => result is AccountModel;
 }

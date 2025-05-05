@@ -6,27 +6,56 @@
              xmlns:local="clr-namespace:Polymerium.App.Dialogs"
              xmlns:m="clr-namespace:Polymerium.App.Models"
              xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              mc:Ignorable="d" Title="Choose a game account"
              x:Class="Polymerium.App.Dialogs.AccountPickerDialog" Width="256" IsPrimaryButtonVisible="True">
-    <ListBox ItemsSource="{Binding $parent[local:AccountPickerDialog].AccountsSource}"
-             SelectedItem="{Binding $parent[local:AccountPickerDialog].Result,Mode=TwoWay}">
-        <ListBox.ItemTemplate>
-            <DataTemplate DataType="m:AccountModel">
-                <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto">
-                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="{StaticResource SmallCornerRadius}" Height="48"
-                            Width="48" BoxShadow="0 0 8 0 #3F000000">
-                        <Border.Background>
-                            <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl}" />
-                        </Border.Background>
-                    </Border>
-                    <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="8">
-                        <Run Text="{Binding UserName,FallbackValue=Name}" FontSize="{StaticResource LargeFontSize}" />
-                        <LineBreak />
-                        <Run Text="{Binding TypeName,FallbackValue=Type}"
-                             Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                    </TextBlock>
-                </Grid>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+    <husk:SwitchPresenter
+        Value="{Binding $parent[local:AccountPickerDialog].AccountsSource.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsNonZero},FallbackValue={x:False}}"
+        TargetType="x:Boolean">
+        <husk:SwitchCase Value="{x:False}">
+            <StackPanel Spacing="8" VerticalAlignment="Center" Margin="0,24">
+                <icons:PackIconLucide Kind="UserCog" Height="{StaticResource ExtraLargeFontSize}"
+                                      Width="{StaticResource ExtraLargeFontSize}"
+                                      VerticalAlignment="Center" HorizontalAlignment="Center"
+                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+
+                <TextBlock Text="No account present in the vault" HorizontalAlignment="Center" TextWrapping="Wrap" />
+                <Button Command="{Binding $parent[local:AccountPickerDialog].GotoManagerViewCommand}"
+                        CommandParameter="{Binding $parent[local:AccountPickerDialog]}"
+                        HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <icons:PackIconLucide Kind="BookUser" Height="{StaticResource MediumFontSize}"
+                                              Width="{StaticResource MediumFontSize}" HorizontalAlignment="Center" />
+                        <TextBlock Text="Account Manager" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </husk:SwitchCase>
+        <husk:SwitchCase Value="{x:True}">
+            <ListBox ItemsSource="{Binding $parent[local:AccountPickerDialog].AccountsSource}"
+                     SelectedItem="{Binding $parent[local:AccountPickerDialog].Result,Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="m:AccountModel">
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto">
+                            <Border Grid.Row="0" Grid.Column="0" CornerRadius="{StaticResource SmallCornerRadius}"
+                                    Height="48"
+                                    Width="48" BoxShadow="0 0 8 0 #3F000000">
+                                <Border.Background>
+                                    <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl}" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="8">
+                                <Run Text="{Binding UserName,FallbackValue=Name}"
+                                     FontSize="{StaticResource LargeFontSize}" />
+                                <LineBreak />
+                                <Run Text="{Binding TypeName,FallbackValue=Type}"
+                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </husk:SwitchCase>
+    </husk:SwitchPresenter>
 </husk:Dialog>

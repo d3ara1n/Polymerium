@@ -226,6 +226,9 @@ public class InstanceManager(
     {
         logger.LogInformation("Begin launch {}", tracker.Key);
 
+        if (options.Account == null)
+            throw new InvalidOperationException("Account is not provided");
+
         var profile = profileManager.GetImmutable(tracker.Key);
 
         var artifactPath = PathDef.Default.FileOfLockData(tracker.Key);
@@ -261,23 +264,19 @@ public class InstanceManager(
                    .SetNativesRootDirectory(nativeDir)
                    .SetLibraryRootDirectory(libraryDir)
                    .SetClassPathSeparator(';')
-                   .SetLauncherName("Polymerium")
+                   .SetLauncherName(options.Brand)
                    .SetLauncherVersion(Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Eternal")
                    .SetOsName(PlatformHelper.GetOsName())
                    .SetOsArch(PlatformHelper.GetOsArch())
                    .SetOsVersion(PlatformHelper.GetOsVersion())
-                    // .SetUserUuid(account.Uuid)
-                    // .SetUserType(account.UserType)
-                    // .SetUserName(account.Username)
-                    // .SetUserAccessToken(account.AccessToken)
-                   .SetUserName("Steve")
-                   .SetUserType("legacy")
-                   .SetUserUuid("00000000-0000-0000-0000-000000000000")
-                   .SetUserAccessToken("rand(32)")
+                   .SetUserUuid(options.Account.Uuid)
+                   .SetUserType(options.Account.UserType)
+                   .SetUserName(options.Account.Username)
+                   .SetUserAccessToken(options.Account.AccessToken)
                    .SetVersionName(profile.Setup.Version)
                    .SetWindowSize(options.WindowSize)
                    .SetMaxMemory(options.MaxMemory)
-                   .SetReleaseType("Polymerium");
+                   .SetReleaseType(options.Brand);
                 foreach (var additional in options.AdditionalArguments.Split(' '))
                     igniter.AddJvmArgument(additional);
 
