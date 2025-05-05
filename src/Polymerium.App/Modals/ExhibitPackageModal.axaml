@@ -207,7 +207,7 @@
                     </ItemsControl>
                     <TextBlock Grid.Row="1"
                                Text="{Binding Summary,FallbackValue=Summary}"
-                               TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
+                               TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="4" />
                     <husk:SwitchPresenter Grid.Row="3"
                                           Value="{Binding $parent[modals:ExhibitPackageModal].Exhibit.State,Mode=OneWay,FallbackValue={x:Null}}"
                                           TargetType="m:ExhibitState">
