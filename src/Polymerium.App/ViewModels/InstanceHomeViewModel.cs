@@ -8,6 +8,7 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Humanizer;
+using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Dialogs;
@@ -16,6 +17,7 @@ using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.App.Utilities;
+using Polymerium.App.Views;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Igniters;
 using Polymerium.Trident.Services;
@@ -31,6 +33,7 @@ public partial class InstanceHomeViewModel(
     ProfileManager profileManager,
     OverlayService overlayService,
     InstanceManager instanceManager,
+    NavigationService navigationService,
     NotificationService notificationService,
     ConfigurationService configurationService,
     PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
@@ -180,7 +183,10 @@ public partial class InstanceHomeViewModel(
                                                          x.LastUsedAt);
                        })
                       .ToList();
-        var dialog = new AccountPickerDialog { AccountsSource = accounts, Result = SelectedAccount };
+        var dialog = new AccountPickerDialog
+        {
+            GotoManagerViewCommand = OpenAccountsViewCommand, AccountsSource = accounts, Result = SelectedAccount
+        };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
         {
             SelectedAccount = account;
@@ -235,7 +241,8 @@ public partial class InstanceHomeViewModel(
                                                                          configurationService.Value
                                                                             .GameWindowInitialHeight)),
                                                     launchMode: Mode,
-                                                    account: cooked);
+                                                    account: cooked,
+                                                    brand: Program.Brand);
                     InstanceManager.DeployAndLaunch(Basic.Key, options);
 
                     return;
@@ -285,6 +292,17 @@ public partial class InstanceHomeViewModel(
             var toast = new InstanceDashboardToast();
             toast.SetItems(launch.ScrapBuffer);
             overlayService.PopToast(toast);
+        }
+    }
+
+
+    [RelayCommand]
+    private void OpenAccountsView(Dialog? self)
+    {
+        if (self != null)
+        {
+            navigationService.Navigate<AccountsView>();
+            self.Dismiss();
         }
     }
 

@@ -113,6 +113,8 @@ public class Dialog : HeaderedContentControl
         CompletionSource.TrySetResult(false);
     }
 
+    public void Dismiss() => Cancel();
+
     private class InternalCommand(Action execute, Func<bool>? canExecute = null) : ICommand
     {
         public bool CanExecute(object? parameter) => canExecute?.Invoke() ?? true;
