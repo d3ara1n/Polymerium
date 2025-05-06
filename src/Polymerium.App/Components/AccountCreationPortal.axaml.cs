@@ -11,16 +11,16 @@ public partial class AccountCreationPortal : AccountCreationStep
                                                                      o => o.IsOfflineAvailable,
                                                                      (o, v) => o.IsOfflineAvailable = v);
 
-    public bool IsOfflineAvailable
-    {
-        get;
-        set => SetAndRaise(IsOfflineAvailableProperty, ref field, value);
-    }
-
 
     public AccountCreationPortal()
     {
         InitializeComponent();
+    }
+
+    public bool IsOfflineAvailable
+    {
+        get;
+        set => SetAndRaise(IsOfflineAvailableProperty, ref field, value);
     }
 
     public override object NextStep()
@@ -28,7 +28,7 @@ public partial class AccountCreationPortal : AccountCreationStep
         return AccountTypeSelectBox.SelectedIndex switch
         {
             0 => new AccountCreationMicrosoft(),
-            1 => new AccountCreationFamily(),
+            1 => new AccountCreationTrial(),
             2 => new AccountCreationOffline(),
             _ => throw new ArgumentOutOfRangeException()
         };

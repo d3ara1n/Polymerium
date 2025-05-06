@@ -76,7 +76,7 @@
                                              Fill="{StaticResource OverlaySolidBackgroundBrush}"
                                              Width="16" Height="16">
                                         <Ellipse.Effect>
-                                            <DropShadowEffect BlurRadius="6" Opacity="0.2" OffsetX="2" OffsetY="2" />
+                                            <DropShadowEffect BlurRadius="6" Opacity="0.1" OffsetX="2" OffsetY="2" />
                                         </Ellipse.Effect>
                                         <Ellipse.Transitions>
                                             <Transitions>

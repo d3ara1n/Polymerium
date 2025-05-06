@@ -4,7 +4,7 @@
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:controls="clr-namespace:Polymerium.App.Controls"
                               mc:Ignorable="d"
-                              x:Class="Polymerium.App.Components.AccountCreationFamily"
+                              x:Class="Polymerium.App.Components.AccountCreationTrial"
                               Header="Pick your favorite family guy" IsNextAvailable="True">
     <TabStrip Name="RoleSelectBox">
         <TabStrip.ItemsPanel>
