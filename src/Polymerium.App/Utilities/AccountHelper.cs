@@ -13,7 +13,7 @@ public static class AccountHelper
         return (IAccount?)(raw.Kind switch
                               {
                                   nameof(MicrosoftAccount) => JsonSerializer.Deserialize<MicrosoftAccount>(raw.Data),
-                                  nameof(FamilyAccount) => JsonSerializer.Deserialize<FamilyAccount>(raw.Data),
+                                  nameof(TrialAccount) => JsonSerializer.Deserialize<TrialAccount>(raw.Data),
                                   nameof(OfflineAccount) => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
                                   _ => throw new ArgumentOutOfRangeException(nameof(raw.Kind))
                               })

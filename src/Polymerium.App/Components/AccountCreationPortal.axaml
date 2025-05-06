@@ -24,8 +24,8 @@
             </TabStripItem>
             <TabStripItem>
                 <StackPanel>
-                    <TextBlock Text="Family" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Take a trail if dont have an account"
+                    <TextBlock Text="Trial" FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="Play as the preset character if dont have an account"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>

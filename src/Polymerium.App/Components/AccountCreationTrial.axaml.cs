@@ -4,9 +4,9 @@ using Polymerium.Trident.Accounts;
 
 namespace Polymerium.App.Components;
 
-public partial class AccountCreationFamily : AccountCreationStep
+public class AccountCreationTrial : AccountCreationStep
 {
-    public AccountCreationFamily()
+    public AccountCreationTrial()
     {
         InitializeComponent();
     }
@@ -17,11 +17,11 @@ public partial class AccountCreationFamily : AccountCreationStep
         {
             Account = RoleSelectBox.SelectedIndex switch
             {
-                0 => FamilyAccount.CreateStewie(),
-                1 => FamilyAccount.CreateBrian(),
-                2 => FamilyAccount.CreateChris(),
-                3 => FamilyAccount.CreatePeter(),
-                4 => FamilyAccount.CreateLois(),
+                0 => TrialAccount.CreateStewie(),
+                1 => TrialAccount.CreateBrian(),
+                2 => TrialAccount.CreateChris(),
+                3 => TrialAccount.CreatePeter(),
+                4 => TrialAccount.CreateLois(),
                 _ => throw new ArgumentOutOfRangeException()
             }
         };

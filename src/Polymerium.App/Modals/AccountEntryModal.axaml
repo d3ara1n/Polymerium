@@ -49,7 +49,7 @@
                         Padding="12,8"
                         Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}">
                     <husk:SwitchPresenter Value="{Binding Type}">
-                        <husk:SwitchCase Value="{x:Type accounts:FamilyAccount}">
+                        <husk:SwitchCase Value="{x:Type accounts:TrialAccount}">
                             <StackPanel Spacing="8">
                                 <TextBlock Text="{Binding TypeName,FallbackValue=Family}"
                                            FontSize="{StaticResource LargeFontSize}" />

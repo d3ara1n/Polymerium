@@ -25,7 +25,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
-        <Setter Property="CornerRadius" Value="{StaticResource ExtraSmallCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6" Background="{StaticResource TransparentBrush}">

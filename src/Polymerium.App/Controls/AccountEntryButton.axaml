@@ -14,8 +14,8 @@
     <ControlTheme x:Key="{x:Type local:AccountEntryButton}" TargetType="local:AccountEntryButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
-        <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
-        <Setter Property="Padding" Value="8" />
+        <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}" />
+        <Setter Property="Padding" Value="12" />
         <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -30,11 +30,9 @@
                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                     CornerRadius="{TemplateBinding CornerRadius}">
                     <Panel>
-                        <StackPanel Spacing="4" Margin="{TemplateBinding Padding}">
+                        <StackPanel Spacing="12" Margin="{TemplateBinding Padding}">
                             <Border
-                                Width="160"
-                                Height="160"
-                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                CornerRadius="{StaticResource MediumCornerRadius}">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="100%,0%" EndPoint="0%,100%">
                                         <GradientStop Offset="0" Color="{Binding Color1}" />
@@ -42,26 +40,29 @@
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <Image
-                                    Width="140"
-                                    Height="140"
-                                    HorizontalAlignment="Center"
+                                    Height="148"
+                                    Width="148"
                                     VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center"
                                     async:ImageLoader.Source="{Binding BodyUrl}" />
                             </Border>
-                            <TextBlock FontSize="{StaticResource LargeFontSize}"
-                                       Text="{Binding UserName,FallbackValue=Name}" />
-                            <Grid ColumnDefinitions="*,Auto">
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{Binding TypeName,FallbackValue=Type}" />
-                                <fi:SymbolIcon
-                                    Grid.Column="1"
-                                    IsVisible="{Binding IsDefault,Mode=OneWay,FallbackValue=True}"
-                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                    IconVariant="Filled"
-                                    Symbol="CheckmarkCircle" FontSize="{StaticResource MediumFontSize}" />
-                            </Grid>
+                            <StackPanel Spacing="6">
+                                <TextBlock FontSize="{StaticResource LargeFontSize}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}"
+                                           Text="{Binding UserName,FallbackValue=Name}" />
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding TypeName,FallbackValue=Type}" />
+                                    <fi:SymbolIcon
+                                        Grid.Column="1"
+                                        IsVisible="{Binding IsDefault,Mode=OneWay,FallbackValue=True}"
+                                        Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                        IconVariant="Filled"
+                                        Symbol="CheckmarkCircle" FontSize="{StaticResource MediumFontSize}" />
+                                </Grid>
+                            </StackPanel>
                         </StackPanel>
                         <Border Name="Border" Opacity="0"
                                 BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
@@ -82,7 +83,7 @@
 
         <Style Selector="^:pointerover /template/ Border#Border">
             <Setter Property="Opacity" Value="1" />
-            <Setter Property="RenderTransform" Value="scale(1.06,1.05)" />
+            <Setter Property="RenderTransform" Value="scale(1.07,1.055)" />
         </Style>
         <Style Selector="^:pressed /template/ Border#Border">
             <Setter Property="RenderTransform" Value="scale(1.02,1.01)" />

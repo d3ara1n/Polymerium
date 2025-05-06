@@ -25,9 +25,9 @@ public partial class AccountModel : ModelBase
             BodyUrl = new Uri($"https://starlightskins.lunareclipse.studio/render/default/{uuid}/face",
                               UriKind.Absolute);
         }
-        else if (type.IsAssignableTo(typeof(FamilyAccount)))
+        else if (type.IsAssignableTo(typeof(TrialAccount)))
         {
-            TypeName = "Family";
+            TypeName = "Trial";
             Color1 = Color.FromArgb(255, 253, 160, 133);
             Color2 = Color.FromArgb(255, 246, 211, 101);
             FaceUrl = new Uri($"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face",
@@ -38,7 +38,6 @@ public partial class AccountModel : ModelBase
         else
         {
             TypeName = "Offline";
-            // background-image: linear-gradient(to right, #868f96 0%, #596164 100%);
             Color1 = Color.FromArgb(255, 134, 143, 150);
             Color2 = Color.FromArgb(255, 89, 97, 100);
             FaceUrl = new Uri($"https://starlightskins.lunareclipse.studio/render/pixel/{userName}/face",
