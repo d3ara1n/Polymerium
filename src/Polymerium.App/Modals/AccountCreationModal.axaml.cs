@@ -17,16 +17,33 @@ public partial class AccountCreationModal : Modal
                                                                        o => o.CurrentStep,
                                                                        (o, v) => o.CurrentStep = v);
 
+    public static readonly DirectProperty<AccountCreationModal, bool> IsReversedProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsReversed),
+                                                                    o => o.IsReversed,
+                                                                    (o, v) => o.IsReversed = v);
+
+    public static readonly DirectProperty<AccountCreationModal, bool> IsBackAvailableProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsBackAvailable),
+                                                                    o => o.IsBackAvailable,
+                                                                    (o, v) => o.IsBackAvailable = v);
+
+    public static readonly DirectProperty<AccountCreationModal, bool> IsLastProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsLast),
+                                                                    o => o.IsLast,
+                                                                    (o, v) => o.IsLast = v);
+
+    private readonly Stack<object> _history = new();
+
+    public AccountCreationModal()
+    {
+        InitializeComponent();
+    }
+
     public object? CurrentStep
     {
         get;
         set => SetAndRaise(CurrentStepProperty, ref field, value);
     }
-
-    public static readonly DirectProperty<AccountCreationModal, bool> IsReversedProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsReversed),
-                                                                    o => o.IsReversed,
-                                                                    (o, v) => o.IsReversed = v);
 
     public bool IsReversed
     {
@@ -34,21 +51,11 @@ public partial class AccountCreationModal : Modal
         set => SetAndRaise(IsReversedProperty, ref field, value);
     }
 
-    public static readonly DirectProperty<AccountCreationModal, bool> IsBackAvailableProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsBackAvailable),
-                                                                    o => o.IsBackAvailable,
-                                                                    (o, v) => o.IsBackAvailable = v);
-
     public bool IsBackAvailable
     {
         get;
         set => SetAndRaise(IsBackAvailableProperty, ref field, value);
     }
-
-    public static readonly DirectProperty<AccountCreationModal, bool> IsLastProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationModal, bool>(nameof(IsLast),
-                                                                    o => o.IsLast,
-                                                                    (o, v) => o.IsLast = v);
 
     public bool IsLast
     {
@@ -59,19 +66,12 @@ public partial class AccountCreationModal : Modal
     public required bool IsOfflineAvailable { get; init; }
     public required Func<IAccount, bool> FinishCallback { get; init; }
 
-    public AccountCreationModal()
-    {
-        InitializeComponent();
-    }
-
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
 
         CurrentStep = new AccountCreationPortal { IsOfflineAvailable = IsOfflineAvailable };
     }
-
-    private readonly Stack<object> _history = new();
 
     #region Commands
 

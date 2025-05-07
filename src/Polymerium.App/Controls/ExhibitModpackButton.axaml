@@ -7,8 +7,7 @@
                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                     xmlns:v="clr-namespace:Polymerium.App.Views"
                     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <Design.PreviewWith>
         <Panel Background="White">
             <StackPanel Margin="24">

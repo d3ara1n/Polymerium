@@ -7,10 +7,15 @@ public class LazyObject(
     Action<object?>? callback = null,
     CancellationToken token = default) : AvaloniaObject
 {
-    private readonly CancellationTokenSource _cts = CancellationTokenSource.CreateLinkedTokenSource(token);
-
     public static readonly DirectProperty<LazyObject, object?> ValueProperty =
         AvaloniaProperty.RegisterDirect<LazyObject, object?>(nameof(Value), o => o.Value, (o, v) => o.Value = v);
+
+    public static readonly DirectProperty<LazyObject, bool> IsInProgressProperty =
+        AvaloniaProperty.RegisterDirect<LazyObject, bool>(nameof(IsInProgress),
+                                                          o => o.IsInProgress,
+                                                          (o, v) => o.IsInProgress = v);
+
+    private readonly CancellationTokenSource _cts = CancellationTokenSource.CreateLinkedTokenSource(token);
 
     public object? Value
     {
@@ -19,11 +24,6 @@ public class LazyObject(
     }
 
     public bool IsCancelled => _cts.IsCancellationRequested;
-
-    public static readonly DirectProperty<LazyObject, bool> IsInProgressProperty =
-        AvaloniaProperty.RegisterDirect<LazyObject, bool>(nameof(IsInProgress),
-                                                          o => o.IsInProgress,
-                                                          (o, v) => o.IsInProgress = v);
 
     public bool IsInProgress
     {

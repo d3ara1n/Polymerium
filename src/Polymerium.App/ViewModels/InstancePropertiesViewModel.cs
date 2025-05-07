@@ -247,7 +247,6 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                                                                            PersistenceService.ActionKind.Rename,
                                                                            oldName,
                                                                            name));
-            
         }
     }
 

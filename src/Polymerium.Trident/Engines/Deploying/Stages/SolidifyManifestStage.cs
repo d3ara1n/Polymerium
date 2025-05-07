@@ -155,7 +155,7 @@ public class SolidifyManifestStage(ILogger<SolidifyManifestStage> logger, IHttpC
 
         if (cancel.IsCancellationRequested)
             return;
-        
+
         foreach (var explosive in manifest.ExplosiveFiles)
         {
             if (Directory.Exists(explosive.TargetDirectory) && explosive.IsDestructive)

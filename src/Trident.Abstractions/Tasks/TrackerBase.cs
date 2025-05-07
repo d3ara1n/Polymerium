@@ -14,9 +14,9 @@ public abstract class TrackerBase(
     public CancellationToken Token => _tokenSource.Token;
     public TrackerState State { get; private set; } = TrackerState.Idle;
     public Exception? FailureReason { get; private set; }
-    public CompositeDisposable DisposableLifetime { get; } = new();
 
     public DateTimeOffset StartedAt { get; private set; } = DateTimeOffset.Now;
+    public CompositeDisposable DisposableLifetime { get; } = new();
 
     public virtual void Dispose()
     {

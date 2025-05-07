@@ -13,16 +13,19 @@ public partial class AccountCreationPreview : AccountCreationStep
                                                                            o => o.Account,
                                                                            (o, v) => o.Account = v);
 
+    public static readonly DirectProperty<AccountCreationPreview, AccountModel?> ModelProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationPreview, AccountModel?>(nameof(Model),
+                                                                               o => o.Model,
+                                                                               (o, v) => o.Model = v);
+
+
+    public AccountCreationPreview() => InitializeComponent();
+
     public IAccount? Account
     {
         get;
         set => SetAndRaise(AccountProperty, ref field, value);
     }
-
-    public static readonly DirectProperty<AccountCreationPreview, AccountModel?> ModelProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationPreview, AccountModel?>(nameof(Model),
-                                                                               o => o.Model,
-                                                                               (o, v) => o.Model = v);
 
     public AccountModel? Model
     {
@@ -40,9 +43,6 @@ public partial class AccountCreationPreview : AccountCreationStep
             Model = new AccountModel(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null);
         }
     }
-
-
-    public AccountCreationPreview() => InitializeComponent();
 
     public override object NextStep() => throw new NotImplementedException();
 }
