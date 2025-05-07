@@ -305,7 +305,8 @@ public partial class InstanceSetupViewModel(
                 Filter = new Filter(Kind: model.Kind,
                                     Version: Basic.Version,
                                     Loader: Basic.Loader is not null
-                                                ? LoaderHelper.TryParse(Basic.Loader, out var result)
+                                                ? LoaderHelper.TryParse(Basic.Loader,
+                                                                        out var result)
                                                       ? result.Identity
                                                       : null
                                                 : null)
@@ -464,7 +465,6 @@ public partial class InstanceSetupViewModel(
     {
         if (Reference is { Value: InstanceReferenceModel reference }
          && PackageHelper.TryParse(reference.Purl, out var result))
-        {
             try
             {
                 var page = await dataService.InspectVersionsAsync(result.Label,
@@ -497,7 +497,6 @@ public partial class InstanceSetupViewModel(
                 logger.LogError(ex, "Failed to check update: {}", reference.Purl);
                 notificationService.PopMessage(ex, "Failed to check update");
             }
-        }
     }
 
     private bool CanUpdate(InstanceReferenceVersionModel? model) => model is { IsCurrent: false };

@@ -4,7 +4,7 @@ using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Models;
 
-public partial class ExhibitDependencyModel(
+public class ExhibitDependencyModel(
     ExhibitModel exhibit,
     string label,
     string? @namespace,

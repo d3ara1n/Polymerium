@@ -99,7 +99,7 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
 
                     throw new FormatException("Vid is not well formatted into fileId");
                 }
-                else
+
                 {
                     var files = await service
                                      .GetModFilesAsync(modId,

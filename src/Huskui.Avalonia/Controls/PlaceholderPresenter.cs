@@ -17,6 +17,14 @@ public class PlaceholderPresenter : TemplatedControl
     public static readonly StyledProperty<object?> PlaceholderProperty =
         AvaloniaProperty.Register<PlaceholderPresenter, object?>(nameof(Placeholder));
 
+    public static readonly StyledProperty<object?> SourceProperty =
+        AvaloniaProperty.Register<PlaceholderPresenter, object?>(nameof(Source));
+
+    public static readonly StyledProperty<IDataTemplate?> SourceTemplateProperty =
+        AvaloniaProperty.Register<PlaceholderPresenter, IDataTemplate?>(nameof(SourceTemplate));
+
+    private ContentPresenter? _contentPresenter;
+
     [Content]
     public object? Placeholder
     {
@@ -24,25 +32,17 @@ public class PlaceholderPresenter : TemplatedControl
         set => SetValue(PlaceholderProperty, value);
     }
 
-    public static readonly StyledProperty<object?> SourceProperty =
-        AvaloniaProperty.Register<PlaceholderPresenter, object?>(nameof(Source));
-
     public object? Source
     {
         get => GetValue(SourceProperty);
         set => SetValue(SourceProperty, value);
     }
 
-    public static readonly StyledProperty<IDataTemplate?> SourceTemplateProperty =
-        AvaloniaProperty.Register<PlaceholderPresenter, IDataTemplate?>(nameof(SourceTemplate));
-
     public IDataTemplate? SourceTemplate
     {
         get => GetValue(SourceTemplateProperty);
         set => SetValue(SourceTemplateProperty, value);
     }
-
-    private ContentPresenter? _contentPresenter;
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {

@@ -6,12 +6,12 @@ namespace Polymerium.App.Controls;
 
 public abstract class AccountCreationStep : HeaderedContentControl
 {
-    protected override Type StyleKeyOverride => typeof(AccountCreationStep);
-
     public static readonly DirectProperty<AccountCreationStep, bool> IsNextAvailableProperty =
         AvaloniaProperty.RegisterDirect<AccountCreationStep, bool>(nameof(IsNextAvailable),
                                                                    o => o.IsNextAvailable,
                                                                    (o, v) => o.IsNextAvailable = v);
+
+    protected override Type StyleKeyOverride => typeof(AccountCreationStep);
 
     public bool IsNextAvailable
     {

@@ -10,6 +10,7 @@ namespace Polymerium.App.Services;
 
 public class PersistenceService : IDisposable
 {
+    public enum ActionKind { Install, Update, Unlock, Reset, Rename, EditPackage, EditLoader }
     // Preferences
     // Activities
 
@@ -26,6 +27,13 @@ public class PersistenceService : IDisposable
               .UseAutoSyncStructure(true)
               .Build();
     });
+
+    public void Dispose()
+    {
+        // TODO 在此释放托管资源
+        if (_db.IsValueCreated)
+            _db.Value.Dispose();
+    }
 
     public void AppendAction(Action action)
     {
@@ -130,15 +138,6 @@ public class PersistenceService : IDisposable
             }
         });
     }
-
-    public void Dispose()
-    {
-        // TODO 在此释放托管资源
-        if (_db.IsValueCreated)
-            _db.Value.Dispose();
-    }
-
-    public enum ActionKind { Install, Update, Unlock, Reset, Rename, EditPackage, EditLoader }
 
     public class Action(string key, ActionKind kind, string? old, string? @new)
     {

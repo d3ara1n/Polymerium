@@ -8,14 +8,14 @@ public class PackageEntryKindFilter : AvaloniaObject
     public static readonly StyledProperty<string> LabelProperty =
         AvaloniaProperty.Register<PackageEntryKindFilter, string>(nameof(Label));
 
+    public static readonly StyledProperty<ResourceKind?> KindProperty =
+        AvaloniaProperty.Register<PackageEntryKindFilter, ResourceKind?>(nameof(Kind));
+
     public string Label
     {
         get => GetValue(LabelProperty);
         set => SetValue(LabelProperty, value);
     }
-
-    public static readonly StyledProperty<ResourceKind?> KindProperty =
-        AvaloniaProperty.Register<PackageEntryKindFilter, ResourceKind?>(nameof(Kind));
 
     public ResourceKind? Kind
     {

@@ -59,7 +59,8 @@ public class CurseForgeImporter : IProfileImporter
                                                                             .Files
                                                                             .Select(x =>
                                                                                  new
-                                                                                     Profile.Rice.Entry(PackageHelper
+                                                                                     Profile.Rice.
+                                                                                     Entry(PackageHelper
                                                                                             .ToPurl(CurseForgeService
                                                                                                     .LABEL,
                                                                                                  null,

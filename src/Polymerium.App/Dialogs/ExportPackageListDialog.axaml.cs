@@ -51,7 +51,8 @@ public partial class ExportPackageListDialog : Dialog
                 {
                     SuggestedStartLocation =
                         await storage
-                           .TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
+                           .TryGetWellKnownFolderAsync(WellKnownFolder
+                                                          .Downloads),
                     SuggestedFileName = "packages.csv",
                     DefaultExtension = "csv"
                 });

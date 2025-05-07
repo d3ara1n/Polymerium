@@ -19,6 +19,12 @@ public partial class AccountsViewModel(
     PersistenceService persistenceService,
     ConfigurationService configurationService) : ViewModelBase
 {
+    #region Direct
+
+    public ObservableCollection<AccountModel> Accounts { get; } = [];
+
+    #endregion
+
     private bool Finish(IAccount account)
     {
         var found = persistenceService.GetAccount(account.Uuid);
@@ -53,12 +59,6 @@ public partial class AccountsViewModel(
 
         return base.OnInitializedAsync(token);
     }
-
-    #region Direct
-
-    public ObservableCollection<AccountModel> Accounts { get; } = [];
-
-    #endregion
 
     #region Commands
 

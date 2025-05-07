@@ -15,16 +15,32 @@ public partial class AccountCreationOffline : AccountCreationStep
                                                                         o => o.UserName,
                                                                         (o, v) => o.UserName = v);
 
+    public static readonly DirectProperty<AccountCreationOffline, string> UuidProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(nameof(Uuid),
+                                                                        o => o.Uuid,
+                                                                        (o, v) => o.Uuid = v);
+
+    public static readonly DirectProperty<AccountCreationOffline, string> UuidOverwriteProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(nameof(UuidOverwrite),
+                                                                        o => o.UuidOverwrite,
+                                                                        (o, v) => o.UuidOverwrite = v);
+
+    public static readonly DirectProperty<AccountCreationOffline, bool> IsWarnedProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationOffline, bool>(nameof(IsWarned),
+                                                                      o => o.IsWarned,
+                                                                      (o, v) => o.IsWarned = v);
+
+
+    public AccountCreationOffline()
+    {
+        InitializeComponent();
+    }
+
     public string UserName
     {
         get;
         set => SetAndRaise(UserNameProperty, ref field, value);
     } = string.Empty;
-
-    public static readonly DirectProperty<AccountCreationOffline, string> UuidProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(nameof(Uuid),
-                                                                        o => o.Uuid,
-                                                                        (o, v) => o.Uuid = v);
 
     public string Uuid
     {
@@ -32,32 +48,16 @@ public partial class AccountCreationOffline : AccountCreationStep
         set => SetAndRaise(UuidProperty, ref field, value);
     } = string.Empty;
 
-    public static readonly DirectProperty<AccountCreationOffline, string> UuidOverwriteProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationOffline, string>(nameof(UuidOverwrite),
-                                                                        o => o.UuidOverwrite,
-                                                                        (o, v) => o.UuidOverwrite = v);
-
     public string UuidOverwrite
     {
         get;
         set => SetAndRaise(UuidOverwriteProperty, ref field, value);
     } = string.Empty;
 
-    public static readonly DirectProperty<AccountCreationOffline, bool> IsWarnedProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationOffline, bool>(nameof(IsWarned),
-                                                                      o => o.IsWarned,
-                                                                      (o, v) => o.IsWarned = v);
-
     public bool IsWarned
     {
         get;
         set => SetAndRaise(IsWarnedProperty, ref field, value);
-    }
-
-
-    public AccountCreationOffline()
-    {
-        InitializeComponent();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)

@@ -4,7 +4,7 @@ using Polymerium.Trident.Accounts;
 
 namespace Polymerium.App.Components;
 
-public class AccountCreationTrial : AccountCreationStep
+public partial class AccountCreationTrial : AccountCreationStep
 {
     public AccountCreationTrial()
     {
