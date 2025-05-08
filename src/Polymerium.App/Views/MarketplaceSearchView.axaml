@@ -139,7 +139,7 @@
                                         </m:ListTemplateCombinationModel.ItemsPanelTemplate>
                                         <m:ListTemplateCombinationModel.ItemContainerTheme>
                                             <ControlTheme TargetType="ContentPresenter">
-                                                <Setter Property="MaxWidth" Value="420" />
+                                                <Setter Property="MaxWidth" Value="396" />
                                                 <Setter Property="MinWidth" Value="198" />
                                                 <Setter Property="MaxHeight" Value="256" />
                                                 <Setter Property="MinHeight" Value="128" />

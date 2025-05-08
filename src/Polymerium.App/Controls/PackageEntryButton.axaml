@@ -4,7 +4,9 @@
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                     xmlns:m="using:Polymerium.App.Models"
-                    xmlns:converters="using:Polymerium.App.Converters">
+                    xmlns:converters="using:Polymerium.App.Converters"
+                    xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+                    xmlns:cp="clr-namespace:Polymerium.App.Components">
     <Design.PreviewWith>
         <Panel>
             <StackPanel Margin="24" Spacing="12">
@@ -12,8 +14,35 @@
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
-    <ControlTheme x:Key="{x:Type local:PackageEntryButton}" TargetType="local:PackageEntryButton">
+    <ControlTheme x:Key="BasePackageEntryButtonTheme" TargetType="local:PackageEntryButton">
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="ContextFlyout">
+            <MenuFlyout x:DataType="m:InstancePackageModel">
+                <MenuItem Header="Active"
+                          IsChecked="{Binding IsEnabled,Mode=TwoWay}"
+                          ToggleType="CheckBox"
+                          Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
+                <MenuItem Header="-" />
+                <MenuItem Header="Open Website"
+                          Command="{x:Static m:InternalCommands.OpenUriCommand}"
+                          CommandParameter="{Binding Reference}"
+                          Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
+                <!-- <MenuItem Header="Add to Favorites" -->
+                <!--           Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" /> -->
+                <!-- <MenuItem Header="Remove from Favorite" -->
+                <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
+                <MenuItem Header="-" />
+                <MenuItem Header="Remove"
+                          Command="{Binding $parent[cp:PackageContainer].RemoveCommand,Mode=OneWay}"
+                          CommandParameter="{Binding }"
+                          IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
+                          Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
+            </MenuFlyout>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="ListPackageEntryButtonTheme" TargetType="local:PackageEntryButton"
+                  BasedOn="{StaticResource BasePackageEntryButtonTheme}">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
                 <husk:Card Name="Background" Height="78" Background="{StaticResource LayerBackgroundBrush}"
@@ -135,6 +164,52 @@
             <Setter Property="Opacity" Value="1.0" />
         </Style>
 
+        <Style Selector="^:pointerover /template/ husk|Card#Background">
+            <Setter Property="BorderBrush"
+                    Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ husk|Card#Background">
+            <Setter Property="Background"
+                    Value="{StaticResource OverlayFullBackgroundBrush}" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ husk|Card#Background">
+            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="GridPackageEntryButtonTheme" TargetType="local:PackageEntryButton"
+                  BasedOn="{StaticResource BasePackageEntryButtonTheme}">
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="m:InstancePackageModel">
+                <husk:Card Name="Background" Background="{StaticResource LayerBackgroundBrush}"
+                           CornerRadius="{StaticResource MediumCornerRadius}">
+                    <husk:Card.Opacity>
+                        <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
+                            <Binding Path="IsEnabled" Mode="OneWay" />
+                            <Binding Source="{StaticResource ControlDimOpacity}" />
+                        </MultiBinding>
+                    </husk:Card.Opacity>
+                    <husk:Card.Transitions>
+                        <Transitions>
+                            <BrushTransition Property="Background" Easing="SineEaseOut"
+                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition Property="BorderBrush" Easing="SineEaseOut"
+                                             Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <DoubleTransition Property="Opacity" Easing="SineEaseOut"
+                                              Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </husk:Card.Transitions>
+                    <Border CornerRadius="{StaticResource SmallCornerRadius}" ClipToBounds="True"
+                            Width="64" Height="64">
+                        <Border.Background>
+                            <ImageBrush Source="{Binding Thumbnail}" />
+                        </Border.Background>
+                    </Border>
+                </husk:Card>
+            </ControlTemplate>
+        </Setter>
         <Style Selector="^:pointerover /template/ husk|Card#Background">
             <Setter Property="BorderBrush"
                     Value="{StaticResource ControlAccentInteractiveBorderBrush}" />

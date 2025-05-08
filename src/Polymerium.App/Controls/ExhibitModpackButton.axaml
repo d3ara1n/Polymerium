@@ -39,8 +39,6 @@
                 <!-- </MenuItem> -->
             </MenuFlyout>
         </Setter>
-
-
     </ControlTheme>
 
     <ControlTheme x:Key="ListExhibitModpackButtonTheme" TargetType="controls:ExhibitModpackButton"
