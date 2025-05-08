@@ -96,9 +96,20 @@ public partial class PackageContainer : UserControl
                                                                 o => o.IsFilterActive,
                                                                 (o, v) => o.IsFilterActive = v);
 
+    public static readonly DirectProperty<PackageContainer, int> LayoutIndexProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, int>(nameof(LayoutIndex),
+                                                               o => o.LayoutIndex,
+                                                               (o, v) => o.LayoutIndex = v);
+
 
     private CompositeDisposable _subscriptions = new();
     public PackageContainer() => InitializeComponent();
+
+    public int LayoutIndex
+    {
+        get;
+        set => SetAndRaise(LayoutIndexProperty, ref field, value);
+    }
 
     public bool IsFilterActive
     {

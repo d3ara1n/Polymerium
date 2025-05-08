@@ -171,7 +171,7 @@
             </Grid>
             <husk:SwitchPresenter Grid.Row="2" Value="{Binding IsRefreshing}" TargetType="x:Boolean">
                 <husk:SwitchCase Value="False">
-                    <cp:PackageContainer Items="{Binding Stage}"
+                    <cp:PackageContainer LayoutIndex="{Binding LayoutIndex,Mode=TwoWay}" Items="{Binding Stage}"
                                          TotalCount="{Binding StageCount}"
                                          PrimaryCommand="{Binding ViewPackageCommand}"
                                          RemoveCommand="{Binding RemovePackageCommand}"

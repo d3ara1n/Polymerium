@@ -41,7 +41,8 @@ public partial class InstanceSetupViewModel(
     InstanceManager instanceManager,
     DataService dataService,
     OverlayService overlayService,
-    NavigationService navigationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    NavigationService navigationService,
+    ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     private CancellationTokenSource? _pageCancellationTokenSource;
     private CancellationTokenSource? _refreshingCancellationTokenSource;
@@ -549,6 +550,14 @@ public partial class InstanceSetupViewModel(
     #endregion
 
     #region Reactive
+
+    [ObservableProperty]
+    public partial int LayoutIndex { get; set; } = configurationService.Value.InterfaceSetupLayout;
+
+    partial void OnLayoutIndexChanged(int value)
+    {
+        configurationService.Value.InterfaceSetupLayout = value;
+    }
 
     [ObservableProperty]
     public partial LazyObject? Reference { get; set; }

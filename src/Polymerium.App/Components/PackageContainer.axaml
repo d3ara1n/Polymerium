@@ -10,6 +10,7 @@
              xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
+             xmlns:collections="clr-namespace:System.Collections.Generic;assembly=System.Collections"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.PackageContainer">
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto">
@@ -131,7 +132,6 @@
                                                   Width="{StaticResource MediumFontSize}" />
                         </Button>
                     </StackPanel>
-
                 </TextBox.InnerRightContent>
             </TextBox>
             <TextBlock Grid.Column="1">
@@ -143,15 +143,60 @@
                 <Run Text="{Binding $parent[cp:PackageContainer].TotalCount,Mode=OneWay,FallbackValue=0}" />
             </TextBlock>
             <StackPanel Grid.Column="2" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="12">
-                <TabStrip Theme="{StaticResource SegmentedTabStripTheme}">
-                    <TabStripItem>
-                        <icons:PackIconLucide Kind="LayoutList" Height="{StaticResource MediumFontSize}"
-                                              Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
-                    </TabStripItem>
-                    <TabStripItem>
-                        <icons:PackIconLucide Kind="LayoutGrid" Height="{StaticResource MediumFontSize}"
-                                              Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
-                    </TabStripItem>
+                <TabStrip Name="LayoutSelector" Theme="{StaticResource SegmentedTabStripTheme}"
+                          SelectedIndex="{Binding $parent[cp:PackageContainer].LayoutIndex,Mode=TwoWay}">
+                    <TabStrip.ItemsSource>
+                        <collections:List x:TypeArguments="m:ListTemplateCombinationModel">
+                            <m:ListTemplateCombinationModel
+                                Icon="LayoutList">
+                                <m:ListTemplateCombinationModel.ItemTemplate>
+                                    <DataTemplate x:DataType="m:InstancePackageModel">
+                                        <controls:PackageEntryButton Margin="0,3"
+                                                                     Theme="{StaticResource ListPackageEntryButtonTheme}"
+                                                                     Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
+                                                                     CommandParameter="{Binding}" />
+                                    </DataTemplate>
+                                </m:ListTemplateCombinationModel.ItemTemplate>
+                                <m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                            </m:ListTemplateCombinationModel>
+                            <m:ListTemplateCombinationModel
+                                Icon="LayoutGrid">
+                                <m:ListTemplateCombinationModel.ItemTemplate>
+                                    <DataTemplate x:DataType="m:InstancePackageModel">
+                                        <controls:PackageEntryButton ToolTip.Tip="{Binding ProjectName}"
+                                                                     Theme="{StaticResource GridPackageEntryButtonTheme}"
+                                                                     Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
+                                                                     CommandParameter="{Binding}" />
+                                    </DataTemplate>
+                                </m:ListTemplateCombinationModel.ItemTemplate>
+                                <m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                    <ItemsPanelTemplate>
+                                        <husk:FlexWrapPanel ColumnSpacing="6" RowSpacing="6" />
+                                    </ItemsPanelTemplate>
+                                </m:ListTemplateCombinationModel.ItemsPanelTemplate>
+                                <m:ListTemplateCombinationModel.ItemContainerTheme>
+                                    <ControlTheme TargetType="ContentPresenter">
+                                        <Setter Property="MaxWidth" Value="144" />
+                                        <Setter Property="MinWidth" Value="90" />
+                                        <Setter Property="MaxHeight" Value="144" />
+                                        <Setter Property="MinHeight" Value="90" />
+                                    </ControlTheme>
+                                </m:ListTemplateCombinationModel.ItemContainerTheme>
+                            </m:ListTemplateCombinationModel>
+                        </collections:List>
+                    </TabStrip.ItemsSource>
+                    <TabStrip.ItemTemplate>
+                        <DataTemplate x:DataType="m:ListTemplateCombinationModel">
+                            <icons:PackIconLucide Kind="{Binding Icon}"
+                                                  Height="{StaticResource MediumFontSize}"
+                                                  Width="{StaticResource MediumFontSize}"
+                                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </TabStrip.ItemTemplate>
                 </TabStrip>
                 <SplitButton Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                              Foreground="{StaticResource ControlDarkForegroundBrush}"
@@ -174,7 +219,7 @@
                 </SplitButton>
             </StackPanel>
         </Grid>
-        <Panel Grid.Row="1">
+        <Panel Grid.Column="0" Grid.Row="1">
             <StackPanel VerticalAlignment="Center"
                         IsVisible="{Binding $parent[cp:PackageContainer].View.Count,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=True}"
                         Spacing="8">
@@ -186,44 +231,10 @@
             </StackPanel>
             <ScrollViewer>
                 <ItemsControl Margin="{StaticResource PageToplessContentMargin}"
-                              ItemsSource="{Binding $parent[cp:PackageContainer].View}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="m:InstancePackageModel">
-                            <controls:PackageEntryButton Margin="0,3"
-                                                         Command="{Binding PrimaryCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=cp:PackageContainer}}"
-                                                         CommandParameter="{Binding }">
-                                <controls:PackageEntryButton.ContextFlyout>
-                                    <MenuFlyout x:DataType="m:InstancePackageModel">
-                                        <MenuItem Header="Active"
-                                                  IsChecked="{Binding IsEnabled,Mode=TwoWay}"
-                                                  ToggleType="CheckBox"
-                                                  Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
-                                        <MenuItem Header="-" />
-                                        <MenuItem Header="Open Website"
-                                                  Command="{x:Static m:InternalCommands.OpenUriCommand}"
-                                                  CommandParameter="{Binding Reference}"
-                                                  Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
-                                        <!-- <MenuItem Header="Add to Favorites" -->
-                                        <!--           Icon="{fie:SymbolIcon Symbol=CollectionsAdd,FontSize={StaticResource MediumFontSize}}" /> -->
-                                        <!-- <MenuItem Header="Remove from Favorite" -->
-                                        <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
-                                        <MenuItem Header="-" />
-                                        <MenuItem Header="Remove"
-                                                  Command="{Binding $parent[cp:PackageContainer].RemoveCommand,Mode=OneWay}"
-                                                  CommandParameter="{Binding }"
-                                                  IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
-                                                  Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}" />
-                                    </MenuFlyout>
-                                </controls:PackageEntryButton.ContextFlyout>
-                            </controls:PackageEntryButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+                              ItemsSource="{Binding $parent[cp:PackageContainer].View}"
+                              ItemTemplate="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemTemplate,FallbackValue={x:Null}}"
+                              ItemsPanel="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate,FallbackValue={x:Null}}"
+                              ItemContainerTheme="{Binding #LayoutSelector.((m:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme,FallbackValue={x:Null}}" />
             </ScrollViewer>
         </Panel>
         <!-- <Border Grid.Row="1" Grid.Column="1" Padding="12" -->
