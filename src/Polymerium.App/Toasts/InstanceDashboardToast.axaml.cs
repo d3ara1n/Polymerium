@@ -5,16 +5,17 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Huskui.Avalonia.Controls;
 using ObservableCollections;
-using Polymerium.Trident.Engines.Launching;
+using Polymerium.App.Models;
 
 namespace Polymerium.App.Toasts;
 
 public partial class InstanceDashboardToast : Toast
 {
-    public static readonly DirectProperty<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<Scrap>?>
+    public static readonly
+        DirectProperty<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<ScrapModel>?>
         BindableProperty =
             AvaloniaProperty
-               .RegisterDirect<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<Scrap>
+               .RegisterDirect<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<ScrapModel>
                     ?>(nameof(Bindable), o => o.Bindable, (o, v) => o.Bindable = v);
 
     public static readonly DirectProperty<InstanceDashboardToast, string> FilterTextProperty =
@@ -31,7 +32,7 @@ public partial class InstanceDashboardToast : Toast
     private int _debounce;
 
 
-    private ISynchronizedView<Scrap, Scrap>? _view;
+    private ISynchronizedView<ScrapModel, ScrapModel>? _view;
 
     public InstanceDashboardToast()
     {
@@ -39,7 +40,7 @@ public partial class InstanceDashboardToast : Toast
         AddHandler(ScrollViewer.ScrollChangedEvent, ViewerOnScrollChanged);
     }
 
-    public NotifyCollectionChangedSynchronizedViewList<Scrap>? Bindable
+    public NotifyCollectionChangedSynchronizedViewList<ScrapModel>? Bindable
     {
         get;
         set => SetAndRaise(BindableProperty, ref field, value);
@@ -75,7 +76,7 @@ public partial class InstanceDashboardToast : Toast
         }
     }
 
-    public void SetItems(ObservableFixedSizeRingBuffer<Scrap> source)
+    public void SetItems(ObservableFixedSizeRingBuffer<ScrapModel> source)
     {
         _view = source.CreateView(x => x);
         Bindable = _view.ToNotifyCollectionChanged();

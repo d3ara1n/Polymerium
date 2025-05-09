@@ -36,7 +36,8 @@ public partial class InstanceHomeViewModel(
     NavigationService navigationService,
     NotificationService notificationService,
     ConfigurationService configurationService,
-    PersistenceService persistenceService) : InstanceViewModelBase(bag, instanceManager, profileManager)
+    PersistenceService persistenceService,
+    ScrapService scrapService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     private CompositeDisposable? _subscription;
     private IDisposable? _timerSubscription;
@@ -208,42 +209,45 @@ public partial class InstanceHomeViewModel(
                 {
                     var profile = ProfileManager.GetImmutable(Basic.Key);
                     // Profile 的引用会被捕获，也就是在 Deploy 期间修改 OVERRIDE_JAVA_HOME 也会产生影响
-                    var options = new LaunchOptions(javaHomeLocator: major =>
-                                                        profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
-                                                                            major switch
-                                                                            {
-                                                                                8 => configurationService.Value
-                                                                                   .RuntimeJavaHome8,
-                                                                                11 => configurationService.Value
-                                                                                   .RuntimeJavaHome11,
-                                                                                16 => configurationService.Value
-                                                                                   .RuntimeJavaHome16,
-                                                                                17 => configurationService.Value
-                                                                                   .RuntimeJavaHome17,
-                                                                                21 => configurationService.Value
-                                                                                   .RuntimeJavaHome21,
-                                                                                _ => throw new
-                                                                                    ArgumentOutOfRangeException(nameof
-                                                                                            (major),
-                                                                                        major,
-                                                                                        "Not supported java version")
-                                                                            })
-                                                     ?? throw new InvalidOperationException("Java home fallback unset"),
-                                                    additionalArguments:
-                                                    profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+                    var deploy =
+                        new DeployOptions(profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
+                                          profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false));
+                    var launch = new LaunchOptions(javaHomeLocator: major =>
+                                                       profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
+                                                                           major switch
+                                                                           {
+                                                                               8 => configurationService.Value
+                                                                                  .RuntimeJavaHome8,
+                                                                               11 => configurationService.Value
+                                                                                  .RuntimeJavaHome11,
+                                                                               16 => configurationService.Value
+                                                                                  .RuntimeJavaHome16,
+                                                                               17 => configurationService.Value
+                                                                                  .RuntimeJavaHome17,
+                                                                               21 => configurationService.Value
+                                                                                  .RuntimeJavaHome21,
+                                                                               _ => throw new
+                                                                                   ArgumentOutOfRangeException(nameof
+                                                                                           (major),
+                                                                                       major,
+                                                                                       "Not supported java version")
+                                                                           })
+                                                    ?? throw new InvalidOperationException("Java home fallback unset"),
+                                                   additionalArguments:
+                                                   profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+                                                                       configurationService.Value
+                                                                          .GameJavaAdditionalArguments),
+                                                   maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
+                                                       configurationService.Value.GameJavaMaxMemory),
+                                                   windowSize:
+                                                   (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, configurationService.Value.GameWindowInitialWidth),
+                                                    profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
                                                                         configurationService.Value
-                                                                           .GameJavaAdditionalArguments),
-                                                    maxMemory: profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                                                        configurationService.Value.GameJavaMaxMemory),
-                                                    windowSize:
-                                                    (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, configurationService.Value.GameWindowInitialWidth),
-                                                     profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
-                                                                         configurationService.Value
-                                                                            .GameWindowInitialHeight)),
-                                                    launchMode: Mode,
-                                                    account: cooked,
-                                                    brand: Program.Brand);
-                    InstanceManager.DeployAndLaunch(Basic.Key, options);
+                                                                           .GameWindowInitialHeight)),
+                                                   launchMode: Mode,
+                                                   account: cooked,
+                                                   brand: Program.Brand);
+                    InstanceManager.DeployAndLaunch(Basic.Key, deploy, launch);
 
                     return;
                 }
@@ -290,7 +294,8 @@ public partial class InstanceHomeViewModel(
         if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
         {
             var toast = new InstanceDashboardToast();
-            toast.SetItems(launch.ScrapBuffer);
+            if (scrapService.TryGetBuffer(launch.Key, out var buffer))
+                toast.SetItems(buffer);
             overlayService.PopToast(toast);
         }
     }

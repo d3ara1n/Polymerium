@@ -69,6 +69,7 @@ public static class Startup
            .AddSingleton<NavigationService>()
            .AddSingleton<OverlayService>()
            .AddSingleton<DataService>()
-           .AddSingleton<PersistenceService>();
+           .AddSingleton<PersistenceService>()
+           .AddSingleton<ScrapService>();
     }
 }

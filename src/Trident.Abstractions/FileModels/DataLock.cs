@@ -17,6 +17,7 @@ public record DataLock(
     // Home 是 Trident Home，Key 是 Profile Key，这两者结合来保证必须是同一个目录的实例
     public record ViabilityData(
         int Format,
+        string Watermark,
         string Home,
         string Key,
         string Version,

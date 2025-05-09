@@ -8,6 +8,9 @@ public class Profile(string name, Profile.Rice setup, IDictionary<string, object
     public const string OVERRIDE_WINDOW_HEIGHT = "window.height";
     public const string OVERRIDE_WINDOW_WIDTH = "window.width";
     public const string OVERRIDE_WINDOW_TITLE = "window.title";
+    public const string OVERRIDE_BEHAVIOR_DEPLOY_METHOD = "behavior.deploy.method";
+    public const string OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE = "behavior.deploy.fastmode";
+    public const string OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY = "behavior.resolve.dependency";
 
     public string Name { get; set; } = name ?? throw new ArgumentNullException(nameof(name));
     public Rice Setup { get; private set; } = setup ?? throw new ArgumentNullException(nameof(setup));

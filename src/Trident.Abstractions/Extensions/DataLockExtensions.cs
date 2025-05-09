@@ -4,9 +4,9 @@ namespace Trident.Abstractions.Extensions;
 
 public static class DataLockExtensions
 {
-    public static bool Verify(this DataLock self, string key, Profile.Rice setup)
+    public static bool Verify(this DataLock self, string key, Profile.Rice setup, string watermark)
     {
-        if (self.Viability.Format != DataLock.FORMAT)
+        if (self.Viability.Format != DataLock.FORMAT || self.Viability.Watermark != watermark)
             return false;
 
         if (self.Viability.Home != PathDef.Default.Home

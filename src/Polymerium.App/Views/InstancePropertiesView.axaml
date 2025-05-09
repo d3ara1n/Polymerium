@@ -208,7 +208,8 @@
                     <husk:InfoBar
                         Content="This always leads to unexpected package conflicts due to poor management of package distribution sites. "
                         Classes="Warning" />
-                    <ToggleSwitch OnContent="I know what I'm doing" />
+                    <ToggleSwitch OnContent="I know what I'm doing"
+                                  IsChecked="{Binding BehaviorResolveDependency,Mode=TwoWay}" />
                 </StackPanel>
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="[Experimental] Deployment Method">
@@ -222,7 +223,7 @@
                 <StackPanel Spacing="8">
                     <husk:InfoBar
                         Content="Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted." />
-                    <ToggleSwitch OnContent="I'm in a hurry" />
+                    <ToggleSwitch OnContent="I'm in a hurry" IsChecked="{Binding BehaviorDeployFastMode,Mode=TwoWay}" />
                 </StackPanel>
             </controls:SettingsEntryItem>
         </controls:SettingsEntry>

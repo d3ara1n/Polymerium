@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,11 +14,11 @@ using DynamicData.Binding;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
-using Polymerium.App.Toasts;
 using Polymerium.App.Utilities;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
+using Trident.Abstractions;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.Tasks;
 
@@ -35,12 +38,15 @@ public partial class MainWindowContext : ObservableObject
         NotificationService notificationService,
         NavigationService navigationService,
         OverlayService overlayService,
-        PersistenceService persistenceService)
+        PersistenceService persistenceService,
+        ScrapService scrapService)
     {
         _notificationService = notificationService;
         _navigationService = navigationService;
         _overlayService = overlayService;
         _persistenceService = persistenceService;
+        _scrapService = scrapService;
+
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
 
@@ -65,6 +71,7 @@ public partial class MainWindowContext : ObservableObject
     private readonly NavigationService _navigationService;
     private readonly OverlayService _overlayService;
     private readonly PersistenceService _persistenceService;
+    private readonly ScrapService _scrapService;
 
     #endregion
 
@@ -95,13 +102,17 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private void OpenDashboard(LaunchTracker? tracker)
+    private void ViewLog(LaunchTracker? tracker)
     {
         if (tracker != null)
         {
-            var toast = new InstanceDashboardToast();
-            toast.SetItems(tracker.ScrapBuffer);
-            _overlayService.PopToast(toast);
+            var path = Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key), "logs", "latest.log");
+            if (File.Exists(path))
+                TopLevel.GetTopLevel(MainWindow.Instance)?.Launcher.LaunchFileInfoAsync(new FileInfo(path));
+            else
+                _notificationService.PopMessage("Log file not found",
+                                                "Failed to open log file",
+                                                NotificationLevel.Warning);
         }
     }
 
@@ -243,9 +254,9 @@ public partial class MainWindowContext : ObservableObject
                                                             e.Key));
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
-                                                         PersistenceService.ActionKind.Install,
-                                                         null,
-                                                         e.Source));
+                                                                PersistenceService.ActionKind.Install,
+                                                                null,
+                                                                e.Source));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -314,9 +325,9 @@ public partial class MainWindowContext : ObservableObject
                                                             e.Key));
                     });
                     _persistenceService.AppendAction(new PersistenceService.Action(e.Key,
-                                                         PersistenceService.ActionKind.Update,
-                                                         e.OldSource,
-                                                         e.NewSource));
+                                                                PersistenceService.ActionKind.Update,
+                                                                e.OldSource,
+                                                                e.NewSource));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
@@ -432,15 +443,13 @@ public partial class MainWindowContext : ObservableObject
                                                         $"{e.Key}",
                                                         actions:
                                                         [
-                                                            new NotificationAction("View Output",
-                                                                OpenDashboardCommand,
-                                                                e)
+                                                            new NotificationAction("View Output", ViewLogCommand, e)
                                                         ]);
                     });
                     _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
-                                                           e.StartedAt,
-                                                           DateTimeOffset.Now,
-                                                           false));
+                                                                    e.StartedAt,
+                                                                    DateTimeOffset.Now,
+                                                                    false));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Finished:
@@ -452,9 +461,9 @@ public partial class MainWindowContext : ObservableObject
                                                         NotificationLevel.Success);
                     });
                     _persistenceService.AppendActivity(new PersistenceService.Activity(e.Key,
-                                                           e.StartedAt,
-                                                           DateTimeOffset.Now,
-                                                           true));
+                                                                    e.StartedAt,
+                                                                    DateTimeOffset.Now,
+                                                                    true));
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:

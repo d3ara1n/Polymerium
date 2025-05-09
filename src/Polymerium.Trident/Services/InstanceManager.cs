@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Subjects;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Polymerium.Trident.Engines;
@@ -59,18 +61,38 @@ public class InstanceManager(
 
     public bool IsInUse(string key) => _trackers.ContainsKey(key);
 
-    public void DeployAndLaunch(string key, LaunchOptions options)
+    private string ComputeWatermark(DeployOptions options)
+    {
+        var data = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(options));
+        return Convert.ToHexString(SHA1.HashData(data));
+    }
+
+    public void DeployAndLaunch(string key, DeployOptions deploy, LaunchOptions launch)
     {
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
+        var path = PathDef.Default.FileOfLockData(key);
+        if (deploy.FastMode && File.Exists(path))
+        {
+            var artifact = JsonSerializer.Deserialize<DataLock>(File.ReadAllText(path), JsonSerializerOptions.Web);
+
+            if (artifact != null
+             && artifact.Verify(key, profileManager.GetImmutable(key).Setup, ComputeWatermark(deploy)))
+            {
+                Launch(key, launch);
+                return;
+            }
+        }
+
         var tracker = new DeployTracker(key,
-                                        async t => await DeployInternalAsync((DeployTracker)t).ConfigureAwait(false),
+                                        async t => await DeployInternalAsync((DeployTracker)t, deploy)
+                                                      .ConfigureAwait(false),
                                         t =>
                                         {
                                             TrackerOnCompleted(t);
                                             if (t is { State: TrackerState.Finished })
-                                                Launch(key, options);
+                                                Launch(key, launch);
                                         });
         _trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, tracker);
@@ -130,13 +152,14 @@ public class InstanceManager(
 
     #region Deploy
 
-    public DeployTracker Deploy(string key)
+    public DeployTracker Deploy(string key, DeployOptions options)
     {
         if (IsInUse(key))
             throw new InvalidOperationException($"Instance {key} is operated in progress");
 
         var tracker = new DeployTracker(key,
-                                        async t => await DeployInternalAsync((DeployTracker)t).ConfigureAwait(false),
+                                        async t => await DeployInternalAsync((DeployTracker)t, options)
+                                                      .ConfigureAwait(false),
                                         TrackerOnCompleted);
         _trackers.Add(key, tracker);
         InstanceDeploying?.Invoke(this, tracker);
@@ -144,12 +167,19 @@ public class InstanceManager(
         return tracker;
     }
 
-    private async Task DeployInternalAsync(DeployTracker tracker)
+    private async Task DeployInternalAsync(DeployTracker tracker, DeployOptions options)
     {
         logger.LogInformation("Begin deploy {}", tracker.Key);
 
         var profile = profileManager.GetImmutable(tracker.Key);
-        var engine = new DeployEngine(tracker.Key, profile.Setup, provider, new DeployEngineOptions());
+        var engine = new DeployEngine(tracker.Key,
+                                      profile.Setup,
+                                      provider,
+                                      new DeployEngineOptions
+                                      {
+                                          FastMode = options.FastMode, ResolveDependency = options.ResolveDependency
+                                      },
+                                      ComputeWatermark(options));
 
         var watch = Stopwatch.StartNew();
         foreach (var stage in engine)
@@ -241,7 +271,7 @@ public class InstanceManager(
                                                           .ConfigureAwait(false),
                                                      JsonSerializerOptions.Web);
 
-            if (artifact == null || !artifact.Verify(tracker.Key, profile.Setup))
+            if (artifact == null)
                 throw new InvalidOperationException("Artifact is not valid");
 
             try
@@ -281,16 +311,18 @@ public class InstanceManager(
                     igniter.AddJvmArgument(additional);
 
                 var process = igniter.Build();
+                var build = PathDef.Default.DirectoryOfBuild(tracker.Key);
+                if (!Directory.Exists(build))
+                    Directory.CreateDirectory(build);
                 await File
-                     .WriteAllLinesAsync(Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key),
-                                                      "trident.launch.dump.txt"),
-                                         process.StartInfo.ArgumentList)
+                     .WriteAllLinesAsync(Path.Combine(build, "trident.launch.dump.txt"), process.StartInfo.ArgumentList)
                      .ConfigureAwait(false);
                 if (options.Mode == LaunchMode.Managed)
                 {
                     var launcher = new LaunchEngine(process);
                     await foreach (var scrap in launcher.WithCancellation(tracker.Token).ConfigureAwait(false))
-                        tracker.ScrapBuffer.AddLast(scrap);
+                        tracker.ScrapStream.OnNext(scrap);
+                    tracker.ScrapStream.OnCompleted();
 
                     if (tracker.Token.IsCancellationRequested)
                     {
