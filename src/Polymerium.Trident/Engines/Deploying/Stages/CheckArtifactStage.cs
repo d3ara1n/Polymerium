@@ -17,7 +17,7 @@ public class CheckArtifactStage(ILogger<CheckArtifactStage> logger) : StageBase
             {
                 var content = await File.ReadAllTextAsync(artifactPath, token).ConfigureAwait(false);
                 var artifact = JsonSerializer.Deserialize<DataLock>(content, JsonSerializerOptions.Web);
-                if (artifact != null && artifact.Verify(Context.Key, Context.Setup))
+                if (artifact != null && artifact.Verify(Context.Key, Context.Setup, Context.VerificationWatermark))
                 {
                     Context.Artifact = artifact;
                     logger.LogInformation("Using artifact: {path}", Path.GetFileName(artifactPath));

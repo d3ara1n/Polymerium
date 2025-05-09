@@ -50,12 +50,20 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         ThumbnailOverwrite = Basic.Thumbnail;
     }
 
-    private string AccessOverride<T>(string key)
+    private string AccessOverrideString<T>(string key)
     {
         if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result is T rv)
             return rv.ToString() ?? string.Empty;
 
         return string.Empty;
+    }
+
+    private bool AccessOverrideBoolean(string key)
+    {
+        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result is bool rv)
+            return rv;
+
+        return false;
     }
 
     private void WriteOverride(string key, object? value)
@@ -75,16 +83,18 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
 
         #region Update Overrides & Perferences
 
-        JavaHomeOverride = AccessOverride<string>(Profile.OVERRIDE_JAVA_HOME);
+        JavaHomeOverride = AccessOverrideString<string>(Profile.OVERRIDE_JAVA_HOME);
         JavaHomeWatermark = "Auto decide if unset";
-        JavaMaxMemoryOverride = AccessOverride<uint>(Profile.OVERRIDE_JAVA_MAX_MEMORY);
+        JavaMaxMemoryOverride = AccessOverrideString<uint>(Profile.OVERRIDE_JAVA_MAX_MEMORY);
         JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
-        JavaAdditionalArgumentsOverride = AccessOverride<string>(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
+        JavaAdditionalArgumentsOverride = AccessOverrideString<string>(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
         JavaAdditionalArgumentsWatermark = _configurationService.Value.GameJavaAdditionalArguments;
-        WindowInitialHeightOverride = AccessOverride<uint>(Profile.OVERRIDE_WINDOW_HEIGHT);
+        WindowInitialHeightOverride = AccessOverrideString<uint>(Profile.OVERRIDE_WINDOW_HEIGHT);
         WindowInitialHeightWatermark = _configurationService.Value.GameWindowInitialHeight.ToString();
-        WindowInitialWidthOverride = AccessOverride<uint>(Profile.OVERRIDE_WINDOW_WIDTH);
+        WindowInitialWidthOverride = AccessOverrideString<uint>(Profile.OVERRIDE_WINDOW_WIDTH);
         WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
+        BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
+        BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
 
         #endregion
 
@@ -326,6 +336,22 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     {
         WriteOverride(Profile.OVERRIDE_WINDOW_WIDTH,
                       !string.IsNullOrEmpty(value) && uint.TryParse(value, out var ui) ? ui : null);
+    }
+
+    [ObservableProperty]
+    public partial bool BehaviorResolveDependency { get; set; }
+
+    partial void OnBehaviorResolveDependencyChanged(bool value)
+    {
+        WriteOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, value);
+    }
+
+    [ObservableProperty]
+    public partial bool BehaviorDeployFastMode { get; set; }
+
+    partial void OnBehaviorDeployFastModeChanged(bool value)
+    {
+        WriteOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, value);
     }
 
     #endregion

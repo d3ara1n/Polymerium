@@ -8,12 +8,13 @@
             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+            xmlns:m="clr-namespace:Polymerium.App.Models"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             Header="Dashboard" Padding="0"
             x:Class="Polymerium.App.Toasts.InstanceDashboardToast"
             ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <husk:Toast.Resources>
-        <DataTemplate x:Key="ScrapTemplate" DataType="launching:Scrap">
+        <DataTemplate x:Key="ScrapTemplate" DataType="m:ScrapModel">
             <Border Background="Transparent">
                 <Panel Margin="4,2">
                     <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
@@ -45,7 +46,7 @@
             <ScrollViewer x:Name="Viewer" Margin="0,72,0,0">
                 <ItemsControl ItemsSource="{Binding $parent[local:InstanceDashboardToast].Bindable}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="launching:Scrap">
+                        <DataTemplate DataType="m:ScrapModel">
                             <Panel>
                                 <husk:SwitchPresenter Value="{Binding Level}" TargetType="launching:ScrapLevel">
                                     <husk:SwitchCase Value="Information">

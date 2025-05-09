@@ -17,11 +17,15 @@ namespace Polymerium.Trident.Engines;
 // ...
 // 版本锁中需要保存验证信息，例如当时的所有包列表
 
-public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provider, DeployEngineOptions options)
-    : IEnumerable<StageBase>
+public class DeployEngine(
+    string key,
+    Profile.Rice setup,
+    IServiceProvider provider,
+    DeployEngineOptions options,
+    string verificationWatermark) : IEnumerable<StageBase>
 {
     public IEnumerator<StageBase> GetEnumerator() =>
-        new DeployEngineEnumerator(new DeployContext(key, setup, provider));
+        new DeployEngineEnumerator(new DeployContext(key, setup, provider, options, verificationWatermark));
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -67,7 +71,13 @@ public class DeployEngine(string key, Profile.Rice setup, IServiceProvider provi
             }
 
             if (context.Artifact != null)
-                return CreateStage<GenerateManifestStage>();
+            {
+                if (context.Options.FastMode)
+                    // Fast-Forward
+                    return null;
+                else
+                    return CreateStage<GenerateManifestStage>();
+            }
 
 
             if (context.ArtifactBuilder != null)

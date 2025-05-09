@@ -108,8 +108,9 @@ public class ResolvePackageStage(ILogger<ResolvePackageStage> logger, Repository
                     {
                         flatten.TryAdd(parsed.Identity, version);
                         // NOTE: 实测有些模组的依赖是互相冲突的，这游戏的资源托管站数据就是依托狗屎
-                        // foreach (var dep in resolved.Dependencies.Where(x => x.IsRequired))
-                        //     purls.Push(new Purl(new Identity(dep.Label, dep.Namespace, dep.Pid), dep.Vid, true));
+                        if (Context.Options.ResolveDependency)
+                            foreach (var dep in resolved.Dependencies.Where(x => x.IsRequired))
+                                purls.Push(new Purl(new Identity(dep.Label, dep.Namespace, dep.Pid), dep.Vid, true));
                     }
                 }
                 catch

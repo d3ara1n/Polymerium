@@ -107,7 +107,8 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
              && match.Groups.TryGetValue("message", out var message))
             {
                 match.Groups.TryGetValue("source", out var sender);
-                return new Scrap(level.Value.ToUpper() switch
+                return new Scrap(message.Value,
+                                 level.Value.ToUpper() switch
                                  {
                                      "INFO" => ScrapLevel.Information,
                                      "WARN" => ScrapLevel.Warning,
@@ -116,11 +117,10 @@ public partial class LaunchEngine : IAsyncEnumerable<Scrap>
                                  },
                                  DateTimeOffset.Now,
                                  thread.Value,
-                                 sender?.Value,
-                                 message.Value);
+                                 sender?.Value);
             }
 
-            return new Scrap(ScrapLevel.Information, DateTimeOffset.Now, "*", null, data);
+            return new Scrap(data);
         }
 
         [GeneratedRegex(@"\[(.*)\] \[(?<thread>[a-zA-Z0-9\ \-#@]+)/(?<level>[a-zA-Z]+)\](\ \[(?<source>[a-zA-Z0-9\ \\./\-]+)\])?: (?<message>.*)")]

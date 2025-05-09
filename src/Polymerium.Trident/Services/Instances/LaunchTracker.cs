@@ -1,4 +1,4 @@
-﻿using ObservableCollections;
+﻿using System.Reactive.Subjects;
 using Polymerium.Trident.Engines.Launching;
 using Trident.Abstractions.Tasks;
 
@@ -10,7 +10,7 @@ public class LaunchTracker(
     Action<TrackerBase>? onCompleted,
     CancellationToken token = default) : TrackerBase(key, handler, onCompleted, token)
 {
-    public ObservableFixedSizeRingBuffer<Scrap> ScrapBuffer { get; } = new(9527);
+    public Subject<Scrap> ScrapStream { get; } = new();
 
     public bool IsDetaching { get; set; } = false;
 }

@@ -27,11 +27,13 @@ public class ProfileManager : IDisposable
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly IList<ReservedKey> ReservedKeys = new List<ReservedKey>();
 
+
     public ProfileManager(ILogger<ProfileManager> logger)
     {
         _logger = logger;
         _serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web) { WriteIndented = true };
         _serializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+        _serializerOptions.Converters.Add(new SystemObjectNewtonsoftCompatibleConverter());
 
         var dir = new DirectoryInfo(PathDef.Default.InstanceDirectory);
         if (!dir.Exists)
@@ -190,6 +192,40 @@ public class ProfileManager : IDisposable
         handle.SaveAsync().Wait();
         _logger.LogInformation("{} updated", key);
         OnProfileUpdated(key, handle.Value);
+    }
+
+    private class SystemObjectNewtonsoftCompatibleConverter : JsonConverter<object>
+    {
+        public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            switch (reader.TokenType)
+            {
+                case JsonTokenType.True:
+                    return true;
+                case JsonTokenType.False:
+                    return false;
+                case JsonTokenType.Number when reader.TryGetInt64(out var l):
+                    return l;
+                case JsonTokenType.Number:
+                    return reader.GetDouble();
+                case JsonTokenType.String when reader.TryGetDateTime(out var datetime):
+                    return datetime;
+                case JsonTokenType.String:
+                    return reader.GetString();
+                default:
+                {
+                    // Use JsonElement as fallback.
+                    // Newtonsoft uses JArray or JObject.
+                    using var document = JsonDocument.ParseValue(ref reader);
+                    return document.RootElement.Clone();
+                }
+            }
+        }
+
+        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
+        {
+            writer.WriteRawValue(JsonSerializer.Serialize(value));
+        }
     }
 
 
