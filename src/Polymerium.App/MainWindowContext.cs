@@ -143,6 +143,7 @@ public partial class MainWindowContext : ObservableObject
         var exist = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
         if (exist != null)
         {
+            // Import
             exist.Basic.Name = e.Value.Name;
             exist.Basic.Source = e.Value.Setup.Source;
             exist.Basic.Version = e.Value.Setup.Version;
@@ -151,20 +152,21 @@ public partial class MainWindowContext : ObservableObject
         }
         else
         {
-            InstanceEntryModel model = new(e.Key,
+            // Install
+            exist = new InstanceEntryModel(e.Key,
                                            e.Value.Name,
                                            e.Value.Setup.Version,
                                            e.Value.Setup.Loader,
                                            e.Value.Setup.Source);
-            _entries.AddOrUpdate(model);
+            _entries.AddOrUpdate(exist);
+        }
 
-            // 把以下代码放在这里并不合理，但也没其他地方可以放
-            var defaultAccount = _persistenceService.GetDefaultAccount();
-            if (defaultAccount != null)
-            {
-                var cooked = AccountHelper.ToCooked(defaultAccount);
-                _persistenceService.SetAccountSelector(e.Key, cooked.Uuid);
-            }
+        // 把以下代码放在这里并不合理，但也没其他地方可以放
+        var defaultAccount = _persistenceService.GetDefaultAccount();
+        if (defaultAccount != null)
+        {
+            var cooked = AccountHelper.ToCooked(defaultAccount);
+            _persistenceService.SetAccountSelector(e.Key, cooked.Uuid);
         }
     }
 
