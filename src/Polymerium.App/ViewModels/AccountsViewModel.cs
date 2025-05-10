@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -36,9 +37,13 @@ public partial class AccountsViewModel(
             return false;
         }
 
-        var raw = AccountHelper.ToRaw(account, DateTimeOffset.Now, null, false);
+        var isDefault = !Accounts.Any(x => x.IsDefault);
+        var raw = AccountHelper.ToRaw(account, DateTimeOffset.Now, null, isDefault);
         persistenceService.AppendAccount(raw);
-        Accounts.Add(new AccountModel(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null));
+        Accounts.Add(new AccountModel(account.GetType(), account.Uuid, account.Username, DateTimeOffset.Now, null)
+        {
+            IsDefault = isDefault
+        });
         return true;
     }
 

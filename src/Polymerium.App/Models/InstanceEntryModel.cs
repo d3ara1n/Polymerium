@@ -25,7 +25,7 @@ public partial class InstanceEntryModel : ModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LastPlayedAt))]
-    public partial DateTimeOffset? LastPlayedAtRaw { get; set; } = DateTimeOffset.MinValue;
+    public partial DateTimeOffset? LastPlayedAtRaw { get; set; }
 
     public string LastPlayedAt => LastPlayedAtRaw.Humanize();
 

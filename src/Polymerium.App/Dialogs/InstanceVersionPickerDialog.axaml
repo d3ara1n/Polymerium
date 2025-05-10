@@ -7,7 +7,7 @@
              xmlns:m="using:Polymerium.App.Models"
              xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
              Title="Choose a version to upgrade/downgrade to"
-             Message="All the mods will be replaced. Configs will be kept but fill new ones."
+             Message="All the mods will be replaced. Configs will be replaced with new ones."
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsPrimaryButtonVisible="True"
              x:Class="Polymerium.App.Dialogs.InstanceVersionPickerDialog">
     <ListBox MinHeight="64" ItemsSource="{Binding $parent[local:InstanceVersionPickerDialog].Versions}"
