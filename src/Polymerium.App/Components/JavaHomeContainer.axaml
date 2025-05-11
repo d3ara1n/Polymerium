@@ -24,17 +24,34 @@
                 <DataTemplate x:DataType="m:JavaInstallationModel">
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
                         <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                CornerRadius="{StaticResource SmallCornerRadius}" Padding="12">
-                            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
-                                <TextBlock Grid.Column="0" Text="17" FontSize="{StaticResource ExtraLargeFontSize}"
-                                           VerticalAlignment="Center" />
+                                CornerRadius="{StaticResource SmallCornerRadius}" Padding="8">
+                            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="8">
+                                <husk:PlaceholderPresenter Grid.Column="0" Source="{Binding Major}"
+                                                           VerticalAlignment="Center">
+                                    <fi:SymbolIcon Symbol="Warning" FontSize="{StaticResource ExtraLargeFontSize}" />
+                                    <husk:PlaceholderPresenter.SourceTemplate>
+                                        <DataTemplate x:DataType="x:Int32">
+                                            <TextBlock Text="{Binding}"
+                                                       FontSize="{StaticResource ExtraLargeFontSize}" />
+                                        </DataTemplate>
+                                    </husk:PlaceholderPresenter.SourceTemplate>
+                                </husk:PlaceholderPresenter>
                                 <husk:Divider Grid.Column="1" Orientation="Vertical" />
                                 <Grid Grid.Column="2" RowDefinitions="*,*" ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Eclipse Adoptium" />
-                                    <husk:Tag Grid.Row="0" Grid.Column="1" Classes="Small" Content="17.0.12" />
+                                    <husk:PlaceholderPresenter Grid.Row="0" Grid.Column="0" Source="{Binding Vendor}">
+                                        <TextBlock Text="Unknown" />
+                                        <husk:PlaceholderPresenter.SourceTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <TextBlock Text="{Binding}" />
+                                            </DataTemplate>
+                                        </husk:PlaceholderPresenter.SourceTemplate>
+                                    </husk:PlaceholderPresenter>
+                                    <husk:Tag Grid.Row="0" Grid.Column="1" Classes="Small"
+                                              Content="{Binding Version}"
+                                              IsVisible="{Binding Version,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=False}" />
                                     <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                               Text="C:\Users\Windows\Programs\Files\Java_Home" />
+                                               Text="{Binding Path}" TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Grid>
                         </Border>
