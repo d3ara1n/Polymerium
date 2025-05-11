@@ -24,15 +24,27 @@ public partial class SettingsViewModel : ViewModelBase
         DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
         Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
                 ?? Languages.First();
-        JavaHome8 = configurationService.Value.RuntimeJavaHome8;
-        JavaHome11 = configurationService.Value.RuntimeJavaHome11;
-        JavaHome16 = configurationService.Value.RuntimeJavaHome16;
-        JavaHome17 = configurationService.Value.RuntimeJavaHome17;
-        JavaHome21 = configurationService.Value.RuntimeJavaHome21;
+        JavaHome8 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome8);
+        JavaHome11 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome11);
+        JavaHome16 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome16);
+        JavaHome17 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome17);
+        JavaHome21 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome21);
         JavaMaxMemory = configurationService.Value.GameJavaMaxMemory;
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
+    }
+
+    private JavaInstallationModel? MayKnowYourJavaInstallation(string maybeHome) =>
+        !string.IsNullOrEmpty(maybeHome) ? KnowYourJavaInstallation(maybeHome) : null;
+
+    private JavaInstallationModel KnowYourJavaInstallation(string home)
+    {
+        var path = Path.Combine(home, "release");
+        if (File.Exists(path))
+            return new JavaInstallationModel(home, null, null, null);
+
+        return new JavaInstallationModel(home, null, null, null);
     }
 
     #region Commands
@@ -127,29 +139,34 @@ public partial class SettingsViewModel : ViewModelBase
     #region JavaHome
 
     [ObservableProperty]
-    public partial string JavaHome8 { get; set; }
+    public partial JavaInstallationModel? JavaHome8 { get; set; }
 
-    partial void OnJavaHome8Changed(string value) => _configurationService.Value.RuntimeJavaHome8 = value;
-
-    [ObservableProperty]
-    public partial string JavaHome11 { get; set; }
-
-    partial void OnJavaHome11Changed(string value) => _configurationService.Value.RuntimeJavaHome11 = value;
+    partial void OnJavaHome8Changed(JavaInstallationModel? value) =>
+        _configurationService.Value.RuntimeJavaHome8 = value?.Path ?? string.Empty;
 
     [ObservableProperty]
-    public partial string JavaHome16 { get; set; }
+    public partial JavaInstallationModel? JavaHome11 { get; set; }
 
-    partial void OnJavaHome16Changed(string value) => _configurationService.Value.RuntimeJavaHome16 = value;
-
-    [ObservableProperty]
-    public partial string JavaHome17 { get; set; }
-
-    partial void OnJavaHome17Changed(string value) => _configurationService.Value.RuntimeJavaHome17 = value;
+    partial void OnJavaHome11Changed(JavaInstallationModel? value) =>
+        _configurationService.Value.RuntimeJavaHome11 = value?.Path ?? string.Empty;
 
     [ObservableProperty]
-    public partial string JavaHome21 { get; set; }
+    public partial JavaInstallationModel? JavaHome16 { get; set; }
 
-    partial void OnJavaHome21Changed(string value) => _configurationService.Value.RuntimeJavaHome21 = value;
+    partial void OnJavaHome16Changed(JavaInstallationModel? value) =>
+        _configurationService.Value.RuntimeJavaHome16 = value?.Path ?? string.Empty;
+
+    [ObservableProperty]
+    public partial JavaInstallationModel? JavaHome17 { get; set; }
+
+    partial void OnJavaHome17Changed(JavaInstallationModel? value) =>
+        _configurationService.Value.RuntimeJavaHome17 = value?.Path ?? string.Empty;
+
+    [ObservableProperty]
+    public partial JavaInstallationModel? JavaHome21 { get; set; }
+
+    partial void OnJavaHome21Changed(JavaInstallationModel? value) =>
+        _configurationService.Value.RuntimeJavaHome21 = value?.Path ?? string.Empty;
 
     #endregion
 

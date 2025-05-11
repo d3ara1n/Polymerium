@@ -124,7 +124,7 @@
                                                            ToolTip.Tip="{Binding ProjectName,FallbackValue=Name}" />
                                                 <HyperlinkButton NavigateUri="{Binding SourceUrl}">
                                                     <ToolTip.Tip>
-                                                        <StackPanel Margin="10,6" Spacing="2">
+                                                        <StackPanel Spacing="2">
                                                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
                                                                 <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"

@@ -2,7 +2,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
+             xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d"
              x:Class="Polymerium.App.Components.JavaHomeContainer">
-    Welcome to Avalonia!
+    <Border CornerRadius="{StaticResource MediumCornerRadius}"
+            Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3">
+        <husk:PlaceholderPresenter>
+            <StackPanel Spacing="8" Margin="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <icons:PackIconLucide Kind="Sparkles" Height="{StaticResource ExtraLargeFontSize}"
+                                      Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                      Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                <TextBlock Text="Bundled" FontSize="{StaticResource LargeFontSize}"
+                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+            <husk:PlaceholderPresenter.SourceTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
+                        <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                CornerRadius="{StaticResource SmallCornerRadius}" Padding="12">
+                            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
+                                <TextBlock Grid.Column="0" Text="17" FontSize="{StaticResource ExtraLargeFontSize}"
+                                           VerticalAlignment="Center" />
+                                <husk:Divider Grid.Column="1" Orientation="Vertical" />
+                                <Grid Grid.Column="2" RowDefinitions="*,*" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Eclipse Adoptium" />
+                                    <husk:Tag Grid.Row="0" Grid.Column="1" Classes="Small" Content="17.0.12" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                               Text="C:\Users\Windows\Programs\Files\Java_Home" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}" Padding="6">
+                            <fi:SymbolIcon VerticalAlignment="Center" Symbol="Dismiss"
+                                           FontSize="{StaticResource MediumFontSize}" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </husk:PlaceholderPresenter.SourceTemplate>
+        </husk:PlaceholderPresenter>
+    </Border>
 </UserControl>
