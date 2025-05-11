@@ -165,7 +165,7 @@
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
                                 <HyperlinkButton NavigateUri="{Binding ReferenceUrl}">
                                     <ToolTip.Tip>
-                                        <StackPanel Margin="10,6" Spacing="2">
+                                        <StackPanel Spacing="2">
                                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
                                                 <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"

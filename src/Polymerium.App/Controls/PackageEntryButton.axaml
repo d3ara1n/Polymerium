@@ -7,7 +7,8 @@
                     xmlns:converters="using:Polymerium.App.Converters"
                     xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
                     xmlns:cp="clr-namespace:Polymerium.App.Components"
-                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
+                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
     <Design.PreviewWith>
         <Panel>
             <StackPanel Margin="24" Spacing="12">
@@ -110,7 +111,8 @@
                                               IsChecked="{Binding IsEnabled,Mode=TwoWay}" />
                                 <Button Grid.Column="3" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
                                         Flyout="{TemplateBinding ContextFlyout}">
-                                    <icons:PackIconLucide Kind="Ellipsis" Width="12" Height="12" />
+                                    <icons:PackIconLucide Kind="Ellipsis" Width="{StaticResource MediumFontSize}"
+                                                          Height="{StaticResource MediumFontSize}" />
                                 </Button>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,Auto,*,Auto"
@@ -143,7 +145,14 @@
                                                        FontWeight="{StaticResource ControlStrongFontWeight}" />
                                         </DataTemplate>
                                         <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
-                                            <husk:Tag Content="Auto" Classes="Primary" />
+                                            <husk:Tag Classes="Primary Small">
+                                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                                    <TextBlock Text="Auto" />
+                                                    <fi:SymbolIcon Symbol="Sparkle"
+                                                                   FontSize="{StaticResource SmallFontSize}"
+                                                                   VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </husk:Tag>
                                         </DataTemplate>
                                     </ContentControl.DataTemplates>
                                 </ContentControl>
