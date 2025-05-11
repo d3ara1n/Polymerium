@@ -15,7 +15,7 @@ public partial class SettingsViewModel : ViewModelBase
     public SettingsViewModel(ConfigurationService configurationService, OverlayService overlayService)
     {
         _configurationService = configurationService;
-        _overlayService = overlayService;
+        OverlayService = overlayService;
 
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
@@ -24,28 +24,32 @@ public partial class SettingsViewModel : ViewModelBase
         DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
         Language = Languages.FirstOrDefault(x => x.Id == configurationService.Value.ApplicationLanguage)
                 ?? Languages.First();
-        JavaHome8 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome8);
-        JavaHome11 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome11);
-        JavaHome16 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome16);
-        JavaHome17 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome17);
-        JavaHome21 = MayKnowYourJavaInstallation(configurationService.Value.RuntimeJavaHome21);
+        JavaHome8 = configurationService.Value.RuntimeJavaHome8 != string.Empty
+                        ? configurationService.Value.RuntimeJavaHome8
+                        : null;
+        JavaHome11 = configurationService.Value.RuntimeJavaHome11 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome11
+                         : null;
+        JavaHome16 = configurationService.Value.RuntimeJavaHome16 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome16
+                         : null;
+        JavaHome17 = configurationService.Value.RuntimeJavaHome17 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome17
+                         : null;
+        JavaHome21 = configurationService.Value.RuntimeJavaHome21 != string.Empty
+                         ? configurationService.Value.RuntimeJavaHome21
+                         : null;
         JavaMaxMemory = configurationService.Value.GameJavaMaxMemory;
         JavaAdditionalArguments = configurationService.Value.GameJavaAdditionalArguments;
         WindowInitialWidth = configurationService.Value.GameWindowInitialWidth;
         WindowInitialHeight = configurationService.Value.GameWindowInitialHeight;
     }
 
-    private JavaInstallationModel? MayKnowYourJavaInstallation(string maybeHome) =>
-        !string.IsNullOrEmpty(maybeHome) ? KnowYourJavaInstallation(maybeHome) : null;
+    #region Service Export
 
-    private JavaInstallationModel KnowYourJavaInstallation(string home)
-    {
-        var path = Path.Combine(home, "release");
-        if (File.Exists(path))
-            return new JavaInstallationModel(home, null, null, null);
+    public OverlayService OverlayService { get; }
 
-        return new JavaInstallationModel(home, null, null, null);
-    }
+    #endregion
 
     #region Commands
 
@@ -54,8 +58,8 @@ public partial class SettingsViewModel : ViewModelBase
     {
         if (box != null)
         {
-            var path = await _overlayService.RequestFileAsync("Pick a file like /bin/java.exe or /bin/javaw.exe",
-                                                              "Select a Java executable");
+            var path = await OverlayService.RequestFileAsync("Pick a file like /bin/java.exe or /bin/javaw.exe",
+                                                             "Select a Java executable");
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
@@ -70,7 +74,6 @@ public partial class SettingsViewModel : ViewModelBase
     #region Injected
 
     private readonly ConfigurationService _configurationService;
-    private readonly OverlayService _overlayService;
 
     #endregion
 
@@ -139,34 +142,34 @@ public partial class SettingsViewModel : ViewModelBase
     #region JavaHome
 
     [ObservableProperty]
-    public partial JavaInstallationModel? JavaHome8 { get; set; }
+    public partial string? JavaHome8 { get; set; }
 
-    partial void OnJavaHome8Changed(JavaInstallationModel? value) =>
-        _configurationService.Value.RuntimeJavaHome8 = value?.Path ?? string.Empty;
-
-    [ObservableProperty]
-    public partial JavaInstallationModel? JavaHome11 { get; set; }
-
-    partial void OnJavaHome11Changed(JavaInstallationModel? value) =>
-        _configurationService.Value.RuntimeJavaHome11 = value?.Path ?? string.Empty;
+    partial void OnJavaHome8Changed(string? value) =>
+        _configurationService.Value.RuntimeJavaHome8 = value ?? string.Empty;
 
     [ObservableProperty]
-    public partial JavaInstallationModel? JavaHome16 { get; set; }
+    public partial string? JavaHome11 { get; set; }
 
-    partial void OnJavaHome16Changed(JavaInstallationModel? value) =>
-        _configurationService.Value.RuntimeJavaHome16 = value?.Path ?? string.Empty;
-
-    [ObservableProperty]
-    public partial JavaInstallationModel? JavaHome17 { get; set; }
-
-    partial void OnJavaHome17Changed(JavaInstallationModel? value) =>
-        _configurationService.Value.RuntimeJavaHome17 = value?.Path ?? string.Empty;
+    partial void OnJavaHome11Changed(string? value) =>
+        _configurationService.Value.RuntimeJavaHome11 = value ?? string.Empty;
 
     [ObservableProperty]
-    public partial JavaInstallationModel? JavaHome21 { get; set; }
+    public partial string? JavaHome16 { get; set; }
 
-    partial void OnJavaHome21Changed(JavaInstallationModel? value) =>
-        _configurationService.Value.RuntimeJavaHome21 = value?.Path ?? string.Empty;
+    partial void OnJavaHome16Changed(string? value) =>
+        _configurationService.Value.RuntimeJavaHome16 = value ?? string.Empty;
+
+    [ObservableProperty]
+    public partial string? JavaHome17 { get; set; }
+
+    partial void OnJavaHome17Changed(string? value) =>
+        _configurationService.Value.RuntimeJavaHome17 = value ?? string.Empty;
+
+    [ObservableProperty]
+    public partial string? JavaHome21 { get; set; }
+
+    partial void OnJavaHome21Changed(string? value) =>
+        _configurationService.Value.RuntimeJavaHome21 = value ?? string.Empty;
 
     #endregion
 
