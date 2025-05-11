@@ -12,7 +12,7 @@
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:controls="clr-namespace:Polymerium.App.Controls"
             xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
-            mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="420" MinHeight="360"
+            mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="660" MinHeight="360"
             x:Class="Polymerium.App.Modals.ExhibitPackageModal" x:DataType="m:ExhibitPackageModel"
             Background="{x:Null}" BorderBrush="{x:Null}"
             BorderThickness="0" Padding="0" CornerRadius="0" Margin="64" VerticalAlignment="Stretch">
@@ -184,10 +184,7 @@
                                         <fi:SymbolIcon Symbol="Open" FontSize="12" />
                                     </StackPanel>
                                 </HyperlinkButton>
-                                <TextBlock>
-                                    <Run Text="@" />
-                                    <Run Text="{Binding AuthorName,FallbackValue=Author}" />
-                                </TextBlock>
+                                <TextBlock Text="{Binding AuthorName,StringFormat={}@{0},FallbackValue=@Author}" />
                             </StackPanel>
                         </StackPanel>
                     </Panel>
@@ -284,7 +281,9 @@
                                         <TextBlock Text="Locked Version" FontSize="{StaticResource SmallFontSize}"
                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                         <TextBlock
-                                            Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=LockedVersionName}" />
+                                            Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=LockedVersionName}"
+                                            TextTrimming="CharacterEllipsis"
+                                            ToolTip.Tip="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName}" />
                                     </StackPanel>
                                 </Grid>
                             </Border>

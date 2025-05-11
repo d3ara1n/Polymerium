@@ -83,6 +83,10 @@ public class CurseForgeRepository(CurseForgeService service) : IRepository
         throw new FormatException("Pid is not well formatted into modId");
     }
 
+    // POST api.curseforge.com/v1/mods {"modIds": [...]}
+    public Task<IEnumerable<Project>> QueryBatchAsync(IEnumerable<(string?, string pid)> batch) =>
+        throw new NotImplementedException();
+
     public async Task<Package> ResolveAsync(string? _, string pid, string? vid, Filter filter)
     {
         if (uint.TryParse(pid, out var modId))

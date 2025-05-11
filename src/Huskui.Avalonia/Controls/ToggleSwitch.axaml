@@ -7,6 +7,11 @@
                 <ToggleSwitch IsChecked="True" />
                 <ToggleSwitch IsChecked="False" IsEnabled="False" />
                 <ToggleSwitch IsChecked="True" IsEnabled="False" />
+                <StackPanel Orientation="Horizontal">
+                    <Button />
+                    <ToggleSwitch OffContent="{x:Null}" OnContent="{x:Null}" />
+                    <Button />
+                </StackPanel>
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
@@ -37,22 +42,23 @@
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       RecognizesAccessKey="True" />
-                    <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" ColumnSpacing="6">
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto">
                         <ContentPresenter Name="PART_OffContentPresenter"
                                           Grid.Column="1"
+                                          Margin="6,0,0,0"
+                                          IsVisible="{TemplateBinding OffContent,Converter={x:Static ObjectConverters.IsNotNull}}"
                                           Content="{TemplateBinding OffContent}"
                                           ContentTemplate="{TemplateBinding OffContentTemplate}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-
                         <ContentPresenter Name="PART_OnContentPresenter"
                                           Grid.Column="1"
+                                          Margin="6,0,0,0"
+                                          IsVisible="{TemplateBinding OnContent,Converter={x:Static ObjectConverters.IsNotNull}}"
                                           Content="{TemplateBinding OnContent}"
                                           ContentTemplate="{TemplateBinding OnContentTemplate}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-
-
                         <Border Grid.Column="0" Name="SwitchKnobBounds" Height="20" Width="40"
                                 Cursor="Hand"
                                 CornerRadius="{TemplateBinding CornerRadius}"
