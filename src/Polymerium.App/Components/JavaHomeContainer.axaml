@@ -5,11 +5,13 @@
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:m="clr-namespace:Polymerium.App.Models"
              mc:Ignorable="d"
-             x:Class="Polymerium.App.Components.JavaHomeContainer">
+             x:Class="Polymerium.App.Components.JavaHomeContainer" x:DataType="m:JavaInstallationModel"
+             ToolTip.Tip="{Binding Path}">
     <Border CornerRadius="{StaticResource MediumCornerRadius}"
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3">
-        <husk:PlaceholderPresenter>
+        <husk:PlaceholderPresenter Source="{Binding}">
             <StackPanel Spacing="8" Margin="24" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <icons:PackIconLucide Kind="Sparkles" Height="{StaticResource ExtraLargeFontSize}"
                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -19,7 +21,7 @@
                            HorizontalAlignment="Center" />
             </StackPanel>
             <husk:PlaceholderPresenter.SourceTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="m:JavaInstallationModel">
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
                         <Border Grid.Column="0" Background="{StaticResource OverlaySolidBackgroundBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}" Padding="12">
