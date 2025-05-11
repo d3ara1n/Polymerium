@@ -12,11 +12,6 @@ namespace Polymerium.App.Components;
 
 public partial class JavaHomeContainer : UserControl
 {
-    public JavaHomeContainer()
-    {
-        InitializeComponent();
-    }
-
     public static readonly DirectProperty<JavaHomeContainer, string?> HomeProperty =
         AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Home), o => o.Home, (o, v) => o.Home = v);
 
@@ -24,6 +19,25 @@ public partial class JavaHomeContainer : UserControl
         AvaloniaProperty.RegisterDirect<JavaHomeContainer, OverlayService?>(nameof(OverlayService),
                                                                             o => o.OverlayService,
                                                                             (o, v) => o.OverlayService = v);
+
+    public static readonly DirectProperty<JavaHomeContainer, string?> VendorProperty =
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Vendor),
+                                                                    o => o.Vendor,
+                                                                    (o, v) => o.Vendor = v);
+
+
+    public static readonly DirectProperty<JavaHomeContainer, string?> VersionProperty =
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Version),
+                                                                    o => o.Version,
+                                                                    (o, v) => o.Version = v);
+
+    public static readonly DirectProperty<JavaHomeContainer, int?> MajorProperty =
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, int?>(nameof(Major), o => o.Major, (o, v) => o.Major = v);
+
+    public JavaHomeContainer()
+    {
+        InitializeComponent();
+    }
 
     public OverlayService? OverlayService
     {
@@ -38,31 +52,17 @@ public partial class JavaHomeContainer : UserControl
         set => SetAndRaise(HomeProperty, ref field, value);
     }
 
-    public static readonly DirectProperty<JavaHomeContainer, string?> VendorProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Vendor),
-                                                                    o => o.Vendor,
-                                                                    (o, v) => o.Vendor = v);
-
     public string? Vendor
     {
         get;
         set => SetAndRaise(VendorProperty, ref field, value);
     }
 
-
-    public static readonly DirectProperty<JavaHomeContainer, string?> VersionProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Version),
-                                                                    o => o.Version,
-                                                                    (o, v) => o.Version = v);
-
     public string? Version
     {
         get;
         set => SetAndRaise(VersionProperty, ref field, value);
     }
-
-    public static readonly DirectProperty<JavaHomeContainer, int?> MajorProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, int?>(nameof(Major), o => o.Major, (o, v) => o.Major = v);
 
     public int? Major
     {

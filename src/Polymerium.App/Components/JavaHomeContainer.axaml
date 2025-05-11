@@ -65,7 +65,7 @@
                                           Width="{StaticResource LargeFontSize}" />
                     <TextBlock Text="Bundled or" FontSize="{StaticResource LargeFontSize}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" VerticalAlignment="Center" />
-                    <Button Classes="Small">
+                    <Button Classes="Small" IsVisible="False">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <icons:PackIconLucide Kind="FolderSearch" Height="{StaticResource MediumFontSize}"
                                                   Width="{StaticResource MediumFontSize}" />
