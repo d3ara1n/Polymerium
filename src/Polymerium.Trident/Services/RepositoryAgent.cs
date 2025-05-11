@@ -50,6 +50,9 @@ public class RepositoryAgent
         RetrieveCachedAsync($"project:{PackageHelper.Identify(label, ns, pid, null, null)}",
                             () => Redirect(label).QueryAsync(ns, pid));
 
+    public Task<Project> QueryBatchAsync(IEnumerable<(string, string?, string)> batch) =>
+        throw new NotImplementedException();
+
     public Task<string> ReadDescriptionAsync(string label, string? ns, string pid) =>
         RetrieveCachedAsync($"description:{PackageHelper.Identify(label, ns, pid, null, null)}",
                             () => Redirect(label).ReadDescriptionAsync(ns, pid));

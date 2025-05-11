@@ -9,6 +9,7 @@ public interface IRepository
     Task<RepositoryStatus> CheckStatusAsync();
     Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter);
     Task<Project> QueryAsync(string? ns, string pid);
+    Task<IEnumerable<Project>> QueryBatchAsync(IEnumerable<(string?, string pid)> batch);
     Task<Package> ResolveAsync(string? ns, string pid, string? vid, Filter filter);
     Task<string> ReadDescriptionAsync(string? ns, string pid);
     Task<string> ReadChangelogAsync(string? ns, string pid, string vid);

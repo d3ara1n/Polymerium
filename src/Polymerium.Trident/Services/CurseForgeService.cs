@@ -167,7 +167,7 @@ public class CurseForgeService(ICurseForgeClient client)
             null,
             file.ModId.ToString(),
             file.Id.ToString(),
-            file.DisplayName,
+            file.DisplayName.Trim(),
             ToReleaseType(file.ReleaseType),
             file.FileDate,
             file.DownloadCount,

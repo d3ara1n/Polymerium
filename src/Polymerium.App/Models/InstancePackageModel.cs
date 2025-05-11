@@ -16,6 +16,7 @@ public partial class InstancePackageModel(
     string projectId,
     string projectName,
     InstancePackageVersionModelBase version,
+    string author,
     string summary,
     Uri? reference,
     Bitmap thumbnail,
@@ -29,6 +30,7 @@ public partial class InstancePackageModel(
     public string? Namespace => @namespace;
     public string ProjectId => projectId;
     public string ProjectName => projectName;
+    public string Author => author;
     public string Summary => summary;
     public Bitmap Thumbnail => thumbnail;
     public ResourceKind Kind => kind;

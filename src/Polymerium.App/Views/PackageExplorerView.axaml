@@ -124,8 +124,8 @@
         </Grid>
         <husk:Divider Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical" />
         <Panel Grid.Column="2" Grid.Row="0" ClipToBounds="True">
-            <Image Source="/Assets/Images/Wallpaper.png" Height="{Binding #ContentPanel.Bounds.Height}" Stretch="Fill"
-                   Opacity="0.1" RenderTransform="scale(1.1)">
+            <Image Source="{Binding Basic.Thumbnail}" Height="{Binding #ContentPanel.Bounds.Height}" Stretch="Fill"
+                   Opacity="0.2" RenderTransform="scale(1.1)">
                 <Image.Effect>
                     <BlurEffect Radius="32" />
                 </Image.Effect>

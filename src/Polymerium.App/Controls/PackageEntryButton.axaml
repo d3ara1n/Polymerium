@@ -6,7 +6,8 @@
                     xmlns:m="using:Polymerium.App.Models"
                     xmlns:converters="using:Polymerium.App.Converters"
                     xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
-                    xmlns:cp="clr-namespace:Polymerium.App.Components">
+                    xmlns:cp="clr-namespace:Polymerium.App.Components"
+                    xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters">
     <Design.PreviewWith>
         <Panel>
             <StackPanel Margin="24" Spacing="12">
@@ -45,7 +46,7 @@
                   BasedOn="{StaticResource BasePackageEntryButtonTheme}">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
-                <husk:Card Name="Background" Height="78" Background="{StaticResource LayerBackgroundBrush}"
+                <husk:Card Name="Background" Height="68" Background="{StaticResource LayerBackgroundBrush}"
                            CornerRadius="{StaticResource MediumCornerRadius}">
                     <husk:Card.Opacity>
                         <MultiBinding Converter="{x:Static converters:InternalConverters.OneOr}">
@@ -89,7 +90,7 @@
                                     <ImageBrush Source="{Binding Thumbnail}" />
                                 </Border.Background>
                             </Border>
-                            <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*,Auto"
+                            <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="Auto,*,Auto,Auto"
                                   ColumnSpacing="6">
                                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
                                     <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
@@ -105,64 +106,53 @@
                                            Text="{Binding ProjectName,FallbackValue=Name}"
                                            FontSize="{StaticResource LargeFontSize}"
                                            FontWeight="{StaticResource ControlStrongFontWeight}" />
-                                <ContentControl Grid.Column="2" Content="{Binding Version}">
+                                <ToggleSwitch Grid.Column="2" OnContent="{x:Null}" OffContent="{x:Null}"
+                                              IsChecked="{Binding IsEnabled,Mode=TwoWay}" />
+                                <Button Grid.Column="3" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
+                                        Flyout="{TemplateBinding ContextFlyout}">
+                                    <icons:PackIconLucide Kind="Ellipsis" Width="12" Height="12" />
+                                </Button>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,Auto,*,Auto"
+                                  ColumnSpacing="8">
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}"
+                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                           Text="{Binding Author,StringFormat={}@{0},FallbackValue=Author}" />
+                                <husk:Divider Grid.Column="1" Orientation="Vertical" Margin="0,4"
+                                              IsVisible="{Binding Tags.Count,Converter={x:Static huskc:NumberConverters.IsNonZero}}" />
+                                <ItemsControl Grid.Column="2"
+                                              ItemsSource="{Binding Tags}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <husk:Tag>
+                                                <TextBlock Text="{Binding}" />
+                                            </husk:Tag>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="4" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                                <ContentControl Grid.Column="3" Content="{Binding Version}" VerticalAlignment="Center">
                                     <ContentControl.DataTemplates>
                                         <DataTemplate DataType="m:InstancePackageVersionModel">
                                             <TextBlock Text="{Binding Name,FallbackValue=Version}"
-                                                       VerticalAlignment="Center"
                                                        FontWeight="{StaticResource ControlStrongFontWeight}" />
                                         </DataTemplate>
                                         <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
-                                            <husk:Tag Content="Auto" />
+                                            <husk:Tag Content="Auto" Classes="Primary" />
                                         </DataTemplate>
                                     </ContentControl.DataTemplates>
                                 </ContentControl>
-                            </Grid>
-                            <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="*,Auto" RowDefinitions="*,Auto"
-                                  ColumnSpacing="4">
-                                <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
-                                            Orientation="Horizontal" VerticalAlignment="Bottom" Spacing="4">
-                                    <ItemsControl Name="TagBlock"
-                                                  ItemsSource="{Binding Tags}" Opacity="0.0">
-                                        <ItemsControl.Transitions>
-                                            <Transitions>
-                                                <DoubleTransition Property="Opacity" Easing="SineEaseOut"
-                                                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                            </Transitions>
-                                        </ItemsControl.Transitions>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="x:String">
-                                                <husk:Tag>
-                                                    <TextBlock Text="{Binding}" />
-                                                </husk:Tag>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" Spacing="4" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
-                                    <Button Theme="{StaticResource OutlineButtonTheme}" Classes="Small"
-                                            Flyout="{TemplateBinding ContextFlyout}">
-                                        <icons:PackIconLucide Kind="Ellipsis" Width="12" Height="12" />
-                                    </Button>
-                                </StackPanel>
-                                <Panel Name="SummaryBlock" Grid.Row="0" Grid.Column="0">
-                                    <TextBlock Text="{Binding Summary,FallbackValue=Summary}"
-                                               MaxLines="2"
-                                               TextWrapping="Wrap" TextTrimming="CharacterEllipsis" />
-                                </Panel>
                             </Grid>
                         </Grid>
                     </Panel>
                 </husk:Card>
             </ControlTemplate>
         </Setter>
-
-        <Style Selector="^:pointerover /template/ ItemsControl#TagBlock">
-            <Setter Property="Opacity" Value="1.0" />
-        </Style>
 
         <Style Selector="^:pointerover /template/ husk|Card#Background">
             <Setter Property="BorderBrush"
