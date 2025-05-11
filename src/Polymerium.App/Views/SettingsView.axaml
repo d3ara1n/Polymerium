@@ -7,6 +7,7 @@
            xmlns:controls="using:Polymerium.App.Controls"
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:m="using:Polymerium.App.Models"
+           xmlns:cp="clr-namespace:Polymerium.App.Components"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
            x:Class="Polymerium.App.Views.SettingsView" Header="Application Settings" x:DataType="vm:SettingsViewModel">
     <StackPanel MaxWidth="1440" Spacing="12" Margin="24">
@@ -98,19 +99,7 @@
         <controls:SettingsEntry Icon="DrinkCoffee" Title="Java Presets"
                                 Summary="Instance will select the best match while launching">
             <controls:SettingsEntryItem Header="Java Home 8">
-                <TextBox Watermark="Never fallback to the bundled if unset" Text="{Binding JavaHome8,Mode=TwoWay}">
-                    <TextBox.InnerRightContent>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding $parent[TextBox].Clear}">
-                                <icons:PackIconLucide Kind="X" Height="{StaticResource SmallFontSize}" />
-                            </Button>
-                            <Button Command="{Binding PickFileCommand}"
-                                    CommandParameter="{Binding $parent[TextBox]}">
-                                <icons:PackIconLucide Kind="FileOutput" Height="{StaticResource MediumFontSize}" />
-                            </Button>
-                        </StackPanel>
-                    </TextBox.InnerRightContent>
-                </TextBox>
+                <cp:JavaHomeContainer DataContext="{Binding JavaHome8,Mode=TwoWay}" />
             </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="Java Home 11">
                 <TextBox Watermark="Never fallback to the bundled if unset" Text="{Binding JavaHome11,Mode=TwoWay}">
