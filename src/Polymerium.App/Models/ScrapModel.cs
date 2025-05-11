@@ -12,19 +12,19 @@ public partial class ScrapModel(
     string thread,
     string sender) : ModelBase
 {
+    #region Reactive
+
+    [ObservableProperty]
+    public partial string Message { get; set; } = message;
+
+    #endregion
+
     #region Direct
 
     public ScrapLevel Level => level;
     public DateTimeOffset Time => time;
     public string Thread => thread;
     public string Sender => sender;
-
-    #endregion
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial string Message { get; set; } = message;
 
     #endregion
 }

@@ -27,6 +27,11 @@ public class ScrapService : IDisposable
         instanceManager.InstanceLaunching += InstanceManagerOnInstanceLaunching;
     }
 
+    public void Dispose()
+    {
+        _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
+    }
+
     private void InstanceManagerOnInstanceLaunching(object? _, LaunchTracker e)
     {
         if (!_buffers.TryGetValue(e.Key, out var buffer))
@@ -66,9 +71,4 @@ public class ScrapService : IDisposable
 
     public bool TryGetBuffer(string key, [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer) =>
         _buffers.TryGetValue(key, out buffer);
-
-    public void Dispose()
-    {
-        _instanceManager.InstanceLaunching -= InstanceManagerOnInstanceLaunching;
-    }
 }

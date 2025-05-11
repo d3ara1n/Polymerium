@@ -75,8 +75,7 @@ public class DeployEngine(
                 if (context.Options.FastMode)
                     // Fast-Forward
                     return null;
-                else
-                    return CreateStage<GenerateManifestStage>();
+                return CreateStage<GenerateManifestStage>();
             }
 
 
