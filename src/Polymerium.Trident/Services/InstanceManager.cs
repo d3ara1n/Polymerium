@@ -310,6 +310,10 @@ public class InstanceManager(
                 foreach (var additional in options.AdditionalArguments.Split(' '))
                     igniter.AddJvmArgument(additional);
 
+
+                if (options.Mode == LaunchMode.FireAndForget && Debugger.IsAttached)
+                    igniter.Debug();
+
                 var process = igniter.Build();
                 var build = PathDef.Default.DirectoryOfBuild(tracker.Key);
                 if (!Directory.Exists(build))
