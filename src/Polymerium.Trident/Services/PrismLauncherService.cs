@@ -84,7 +84,8 @@ public class PrismLauncherService(IPrismLauncherClient client)
     public static bool ValidateLibraryRule(Component.Library lib)
     {
         if (lib.Rules != null && lib.Rules.Any())
-            return lib.Rules.Any(y =>
+        {
+            var rv = lib.Rules.All(y =>
             {
                 var pass = true;
                 // name
@@ -95,6 +96,8 @@ public class PrismLauncherService(IPrismLauncherClient client)
                 // ignore
                 return y.Action == "allow" ? pass : !pass;
             });
+            return rv;
+        }
 
         return true;
     }
