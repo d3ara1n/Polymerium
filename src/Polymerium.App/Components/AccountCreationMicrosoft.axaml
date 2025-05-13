@@ -3,7 +3,21 @@
                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:controls="clr-namespace:Polymerium.App.Controls"
-                              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                              x:Class="Polymerium.App.Components.AccountCreationMicrosoft">
-
+                              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                              mc:Ignorable="d"
+                              x:Class="Polymerium.App.Components.AccountCreationMicrosoft"
+                              Header="Microsoft Authentication">
+    <Grid>
+        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="12" Width="198"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+            <Panel>
+                <TextBlock Text="114514" FontSize="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                <Button Theme="{StaticResource GhostButtonTheme}" Padding="6" VerticalAlignment="Center"
+                        HorizontalAlignment="Right">
+                    <fi:SymbolIcon Symbol="Copy" FontSize="{StaticResource MediumFontSize}" VerticalAlignment="Center"
+                                   HorizontalAlignment="Center" />
+                </Button>
+            </Panel>
+        </Border>
+    </Grid>
 </controls:AccountCreationStep>
