@@ -158,79 +158,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
         return model;
     }
 
-    #region Collections
-
-    public SourceCache<ExhibitModel, ExhibitModel> PendingPackagesSource { get; } = new(x => x);
-    public ReadOnlyObservableCollection<ExhibitModel> AddingPackagesView { get; }
-    public ReadOnlyObservableCollection<ExhibitModel> ModifyingPackagesView { get; }
-    public ReadOnlyObservableCollection<ExhibitModel> RemovingPackagesView { get; }
-
-    #endregion
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial InstanceBasicModel Basic { get; set; }
-
-    [ObservableProperty]
-    public partial RepositoryBasicModel SelectedRepository { get; set; }
-
-    partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
-    {
-        _ = SearchAsync();
-    }
-
-    [ObservableProperty]
-    public partial Filter Filter { get; set; } = Filter.Empty with { Kind = ResourceKind.Mod };
-
-    [ObservableProperty]
-    public partial string QueryText { get; set; } = string.Empty;
-
-    [ObservableProperty]
-    public partial bool IsFilterEnabled { get; set; }
-
-    partial void OnIsFilterEnabledChanged(bool value)
-    {
-        if (value)
-            Filter = Filter with
-            {
-                Loader = Basic.Loader != null && LoaderHelper.TryParse(Basic.Loader, out var loader)
-                             ? loader.Identity
-                             : null,
-                Version = Basic.Version
-            };
-        else
-            Filter = Filter with { Loader = null, Version = null };
-    }
-
-    [ObservableProperty]
-    public partial ResourceKind? SelectedKind { get; set; }
-
-    partial void OnSelectedKindChanged(ResourceKind? value)
-    {
-        if (value != null)
-            Filter = Filter with { Kind = value };
-    }
-
-    [ObservableProperty]
-    public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }
-
-    #endregion
-
-    #region Injected
-
-    private readonly RepositoryAgent _agent;
-    private readonly DataService _dataService;
-    private readonly ProfileManager _profileManager;
-    private readonly NotificationService _notificationService;
-    private readonly OverlayService _overlayService;
-
-    #endregion
-
-    #region Commands
-
-    [RelayCommand]
-    private async Task SearchAsync()
+    private async Task SearchInternalAsync()
     {
         try
         {
@@ -304,6 +232,83 @@ public partial class PackageExplorerViewModel : ViewModelBase
             _notificationService.PopMessage("Network unreachable", level: NotificationLevel.Warning);
             Debug.WriteLine(ex);
         }
+    }
+
+    #region Collections
+
+    public SourceCache<ExhibitModel, ExhibitModel> PendingPackagesSource { get; } = new(x => x);
+    public ReadOnlyObservableCollection<ExhibitModel> AddingPackagesView { get; }
+    public ReadOnlyObservableCollection<ExhibitModel> ModifyingPackagesView { get; }
+    public ReadOnlyObservableCollection<ExhibitModel> RemovingPackagesView { get; }
+
+    #endregion
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial InstanceBasicModel Basic { get; set; }
+
+    [ObservableProperty]
+    public partial RepositoryBasicModel SelectedRepository { get; set; }
+
+    partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
+    {
+        _ = SearchInternalAsync();
+    }
+
+    [ObservableProperty]
+    public partial Filter Filter { get; set; } = Filter.Empty with { Kind = ResourceKind.Mod };
+
+    [ObservableProperty]
+    public partial string QueryText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial bool IsFilterEnabled { get; set; }
+
+    partial void OnIsFilterEnabledChanged(bool value)
+    {
+        if (value)
+            Filter = Filter with
+            {
+                Loader = Basic.Loader != null && LoaderHelper.TryParse(Basic.Loader, out var loader)
+                             ? loader.Identity
+                             : null,
+                Version = Basic.Version
+            };
+        else
+            Filter = Filter with { Loader = null, Version = null };
+    }
+
+    [ObservableProperty]
+    public partial ResourceKind? SelectedKind { get; set; }
+
+    partial void OnSelectedKindChanged(ResourceKind? value)
+    {
+        if (value != null)
+            Filter = Filter with { Kind = value };
+    }
+
+    [ObservableProperty]
+    public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }
+
+    #endregion
+
+    #region Injected
+
+    private readonly RepositoryAgent _agent;
+    private readonly DataService _dataService;
+    private readonly ProfileManager _profileManager;
+    private readonly NotificationService _notificationService;
+    private readonly OverlayService _overlayService;
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private void Search()
+    {
+        _ = SearchInternalAsync();
     }
 
     [RelayCommand]

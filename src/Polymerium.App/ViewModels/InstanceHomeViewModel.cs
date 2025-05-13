@@ -317,7 +317,8 @@ public partial class InstanceHomeViewModel(
         Mode = Mode switch
         {
             LaunchMode.Managed => LaunchMode.FireAndForget,
-            LaunchMode.FireAndForget => LaunchMode.Managed,
+            LaunchMode.FireAndForget => LaunchMode.Debug,
+            LaunchMode.Debug => LaunchMode.Managed,
             _ => throw new ArgumentOutOfRangeException()
         };
     }

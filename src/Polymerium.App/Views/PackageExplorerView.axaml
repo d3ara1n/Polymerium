@@ -164,7 +164,6 @@
                         </TextBox>
                         <Button Grid.Column="1" Classes="Primary" IsDefault="True"
                                 Command="{Binding SearchCommand}"
-                                IsEnabled="{Binding Exhibits.IsFetching,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
                                 Theme="{StaticResource OutlineButtonTheme}">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <husk:SwitchPresenter VerticalAlignment="Center"
