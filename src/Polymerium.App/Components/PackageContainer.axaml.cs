@@ -272,8 +272,7 @@ public partial class PackageContainer : UserControl
         x => string.IsNullOrEmpty(filter)
           || (x is { ProjectId: { } id, ProjectName: { } name, Summary: { } summary }
            && (id.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
-            || name.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
-            || summary.Contains(filter, StringComparison.InvariantCultureIgnoreCase)));
+            || name.Contains(filter, StringComparison.InvariantCultureIgnoreCase)));
 
     private static Func<InstancePackageModel, bool> BuildTagFilter(ReadOnlyObservableCollection<string>? tags) =>
         x => tags is null or { Count: 0 } || tags.All(x.Tags.Contains);
