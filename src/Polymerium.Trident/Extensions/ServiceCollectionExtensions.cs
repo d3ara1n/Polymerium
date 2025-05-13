@@ -86,4 +86,66 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddMicrosoft(this IServiceCollection services)
+    {
+        services
+           .AddRefitClient<
+                IMicrosoftClient>(_ =>
+                                      new RefitSettings(new
+                                                            SystemTextJsonContentSerializer(new
+                                                                JsonSerializerOptions(JsonSerializerDefaults.Web)
+                                                                {
+                                                                    PropertyNamingPolicy = JsonNamingPolicy
+                                                                       .SnakeCaseLower
+                                                                })))
+           .ConfigureHttpClient(client =>
+            {
+                client.BaseAddress = new Uri(MicrosoftService.ENDPOINT);
+                client.DefaultRequestHeaders.Add("User-Agent",
+                                                 $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+            });
+        services.AddSingleton<MicrosoftService>();
+        return services;
+    }
+
+    public static IServiceCollection AddXboxLive(this IServiceCollection services)
+    {
+        services
+           .AddRefitClient<
+                IXboxLiveClient>(_ =>
+                                     new RefitSettings(new
+                                                           SystemTextJsonContentSerializer(new
+                                                               JsonSerializerOptions(JsonSerializerDefaults.Web)
+                                                               {
+                                                                   PropertyNameCaseInsensitive = true
+                                                               })))
+           .ConfigureHttpClient(client =>
+            {
+                client.BaseAddress = new Uri(XboxLiveService.ENDPOINT);
+                client.DefaultRequestHeaders.Add("User-Agent",
+                                                 $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+            });
+        services.AddSingleton<XboxLiveService>();
+        return services;
+    }
+
+    public static IServiceCollection AddMinecraft(this IServiceCollection services)
+    {
+        services
+           .AddRefitClient<
+                IMinecraftClient>(_ =>
+                                      new RefitSettings(new
+                                                            SystemTextJsonContentSerializer(new
+                                                                JsonSerializerOptions(JsonSerializerDefaults
+                                                                   .Web))))
+           .ConfigureHttpClient(client =>
+            {
+                client.BaseAddress = new Uri(MinecraftService.ENDPOINT);
+                client.DefaultRequestHeaders.Add("User-Agent",
+                                                 $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+            });
+        services.AddSingleton<MinecraftService>();
+        return services;
+    }
 }

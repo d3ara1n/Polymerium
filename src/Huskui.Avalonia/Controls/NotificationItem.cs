@@ -46,6 +46,8 @@ public class NotificationItem : ContentControl
     public static readonly StyledProperty<bool> IsProgressBarVisibleProperty =
         AvaloniaProperty.Register<NotificationItem, bool>(nameof(IsProgressBarVisible));
 
+    private readonly CancellationTokenSource _cts = new();
+
 
     public bool IsOpen
     {
@@ -101,6 +103,8 @@ public class NotificationItem : ContentControl
         set => SetValue(TitleProperty, value);
     }
 
+    public CancellationToken Token => _cts.Token;
+
     public event EventHandler<RoutedEventArgs>? Opened
     {
         add => AddHandler(OpenedEvent, value);
@@ -135,11 +139,16 @@ public class NotificationItem : ContentControl
             PseudoClasses.Set(":open", opened);
         }
 
-        if (change.Property == OpacityProperty && change.NewValue is < double.Epsilon && IsOpen == false)
+        if (Token.IsCancellationRequested && change.Property == OpacityProperty && change.NewValue is < double.Epsilon)
             RaiseEvent(new RoutedEventArgs(ClosedEvent, this));
     }
 
-    public void Close() => IsOpen = false;
+    public void Close()
+    {
+        if (!Token.IsCancellationRequested)
+            _cts.Cancel();
+        IsOpen = false;
+    }
 
     private void SetPseudoClass(string name)
     {

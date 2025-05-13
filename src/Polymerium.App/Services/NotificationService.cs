@@ -52,8 +52,8 @@ public class NotificationService
             {
                 item.IsProgressBarVisible = true;
                 COUNTDOWN
-                   .RunAsync(item)
-                   .ContinueWith(_ => item.IsOpen = false, TaskScheduler.FromCurrentSynchronizationContext());
+                   .RunAsync(item, item.Token)
+                   .ContinueWith(_ => item.Close(), TaskScheduler.FromCurrentSynchronizationContext());
             }
         });
 
