@@ -311,7 +311,7 @@ public class InstanceManager(
                     igniter.AddJvmArgument(additional);
 
 
-                if (options.Mode == LaunchMode.FireAndForget && Debugger.IsAttached)
+                if (options.Mode == LaunchMode.Debug)
                     igniter.Debug();
 
                 var process = igniter.Build();
