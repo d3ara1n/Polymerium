@@ -105,13 +105,13 @@
                                             <TextBlock Grid.Column="0" Text="{TemplateBinding Title}"
                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
                                                        TextTrimming="CharacterEllipsis" />
-                                            <ToggleButton Grid.Column="2" Padding="6" CornerRadius="10"
-                                                          Theme="{StaticResource OutlineButtonTheme}"
-                                                          DockPanel.Dock="Right" IsEnabled="{TemplateBinding IsOpen}"
-                                                          IsChecked="{TemplateBinding IsOpen,Mode=TwoWay}"
-                                                          IsVisible="{TemplateBinding IsCloseButtonVisible}">
+                                            <Button Grid.Column="2" Padding="6" CornerRadius="10"
+                                                    Theme="{StaticResource OutlineButtonTheme}"
+                                                    DockPanel.Dock="Right" IsEnabled="{TemplateBinding IsOpen}"
+                                                    Command="{Binding Close,RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                    IsVisible="{TemplateBinding IsCloseButtonVisible}">
                                                 <fi:SymbolIcon Symbol="Dismiss" Height="6" Width="6" />
-                                            </ToggleButton>
+                                            </Button>
                                         </Grid>
                                         <ContentPresenter Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
                                                           Content="{TemplateBinding Content}"
