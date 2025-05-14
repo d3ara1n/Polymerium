@@ -6,12 +6,13 @@
                               xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
                               mc:Ignorable="d"
                               x:Class="Polymerium.App.Components.AccountCreationMicrosoft"
-                              Header="Microsoft Authentication">
-    <Grid>
-        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="12" Width="198"
+                              Header="Microsoft Authentication" d:DesignWidth="256">
+    <StackPanel Spacing="12">
+        <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="12"
                 CornerRadius="{StaticResource MediumCornerRadius}">
             <Panel>
-                <TextBlock Text="114514" FontSize="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                <TextBlock Text="A0B1C2D3" FontWeight="{StaticResource ControlStrongFontWeight}"
+                           FontSize="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
                 <Button Theme="{StaticResource GhostButtonTheme}" Padding="6" VerticalAlignment="Center"
                         HorizontalAlignment="Right">
                     <fi:SymbolIcon Symbol="Copy" FontSize="{StaticResource MediumFontSize}" VerticalAlignment="Center"
@@ -19,5 +20,12 @@
                 </Button>
             </Panel>
         </Border>
-    </Grid>
+        <StackPanel>
+            <TextBlock Text="The code will be expired in 15 minutes. Please fill this code in the page:"
+                       TextWrapping="Wrap" />
+            <TextBlock Text="https://aka.ms/devicelogin" Foreground="{StaticResource ControlAccentForegroundBrush}"
+                       FontWeight="{StaticResource ControlStrongFontWeight}" />
+        </StackPanel>
+        <Button Classes="Primary" Content="Open in the browser" />
+    </StackPanel>
 </controls:AccountCreationStep>
