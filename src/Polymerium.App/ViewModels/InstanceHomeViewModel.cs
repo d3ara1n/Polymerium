@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
@@ -18,11 +19,13 @@ using Polymerium.App.Services;
 using Polymerium.App.Toasts;
 using Polymerium.App.Utilities;
 using Polymerium.App.Views;
+using Polymerium.Trident.Accounts;
 using Polymerium.Trident.Engines.Deploying;
 using Polymerium.Trident.Igniters;
 using Polymerium.Trident.Services;
 using Polymerium.Trident.Services.Instances;
 using Polymerium.Trident.Utilities;
+using Refit;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
 
@@ -37,6 +40,9 @@ public partial class InstanceHomeViewModel(
     NotificationService notificationService,
     ConfigurationService configurationService,
     PersistenceService persistenceService,
+    MicrosoftService microsoftService,
+    MinecraftService minecraftService,
+    XboxLiveService xboxLiveService,
     ScrapService scrapService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     private CompositeDisposable? _subscription;
@@ -196,7 +202,7 @@ public partial class InstanceHomeViewModel(
     }
 
     [RelayCommand]
-    private void Play()
+    private async Task PlayAsync()
     {
         var selector = persistenceService.GetAccountSelector(Basic.Key);
         if (selector != null)
@@ -205,6 +211,37 @@ public partial class InstanceHomeViewModel(
             if (account != null)
             {
                 var cooked = AccountHelper.ToCooked(account);
+
+                if (cooked is MicrosoftAccount msa)
+                    try
+                    {
+                        var profile =
+                            await minecraftService.AcquireAccountProfileByMinecraftTokenAsync(msa.AccessToken);
+                    }
+                    catch (ApiException ex)
+                    {
+                        if (ex.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            var microsoft = await microsoftService.RefreshUserAsync(msa.RefreshToken);
+                            var xbox =
+                                await xboxLiveService
+                                   .AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(microsoft.AccessToken);
+                            var xsts = await xboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(xbox.Token);
+                            var minecraft = await minecraftService.AuthenticateByXboxLiveServiceTokenAsync(xsts.Token,
+                                                xsts.DisplayClaims.Xui.First().Uhs);
+
+                            msa.AccessToken = minecraft.AccessToken;
+                            msa.RefreshToken = microsoft.RefreshToken;
+                            persistenceService.UpdateAccount(account.Uuid, AccountHelper.ToRaw(msa));
+                        }
+                        else
+                        {
+                            notificationService.PopMessage(ex, "Failed to authenticate account and rescue");
+                            return;
+                        }
+                    }
+
+                persistenceService.UseAccount(account.Uuid);
                 try
                 {
                     var profile = ProfileManager.GetImmutable(Basic.Key);

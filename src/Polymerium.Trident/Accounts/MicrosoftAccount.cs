@@ -61,30 +61,4 @@ public class MicrosoftAccount : IAccount
         //     return false;
         // }
         false;
-
-    public static async Task<MicrosoftAccount> LoginAsync(
-        Action<string, Uri?> codeCallback,
-        CancellationToken token = default) =>
-        // var deviceCode = await MicrosoftHelper.AcquireUserCodeAsync(factory);
-        // codeCallback(deviceCode.UserCode, deviceCode.VerificationUri);
-        // var microsoft =
-        //     await MicrosoftHelper.AuthenticateUserAsync(factory, deviceCode.DeviceCode, deviceCode.Interval, token);
-        // var xbox =
-        //     await XboxLiveHelper.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(factory, microsoft.AccessToken);
-        // var xsts =
-        //     await XboxLiveHelper.AuthorizeForServiceTokenByXboxLiveTokenAsync(factory, xbox.Token);
-        // var minecraft =
-        //     await MinecraftHelper.AuthenticateByXboxLiveServiceTokenAsync(factory, xsts.Token,
-        //         xsts.DisplayClaims.Xui.First().Uhs);
-        // var inventory =
-        //     await MinecraftHelper.AcquireAccountInventoryByMinecraftTokenAsync(factory, minecraft.AccessToken);
-        // if (!inventory.Items.Any())
-        // {
-        //     throw new AccountAuthenticationException("The account does not own the game");
-        // }
-        //
-        // var profile =
-        //     await MinecraftHelper.AcquireAccountProfileByMinecraftTokenAsync(factory, minecraft.AccessToken);
-        // return new MicrosoftAccount(minecraft.AccessToken, microsoft.RefreshToken, profile.Id, profile.Name);
-        null;
 }

@@ -31,4 +31,6 @@ public static class AccountHelper
             enrolledAt.DateTime,
             lastUsedAt?.DateTime,
             isDefault);
+
+    public static string ToRaw(IAccount account) => JsonSerializer.Serialize(account, account.GetType());
 }

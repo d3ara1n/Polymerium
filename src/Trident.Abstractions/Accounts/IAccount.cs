@@ -6,6 +6,4 @@ public interface IAccount
     string Uuid { get; }
     string AccessToken { get; }
     string UserType { get; }
-    ValueTask<bool> ValidateAsync(CancellationToken token = default);
-    ValueTask<bool> RefreshAsync(CancellationToken token = default);
 }
