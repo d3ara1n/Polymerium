@@ -117,8 +117,8 @@
                             <husk:SwitchCase Value="False">
                                 <!-- TabItem 不是 Lazy 的，导致 LazyContainer 就算不可见也会开始 Load -->
                                 <husk:LazyContainer
-                                    LazySource="{Binding $parent[modals:PackageEntryModal].LazyVersions}">
-                                    <husk:LazyContainer.ContentTemplate>
+                                    Source="{Binding $parent[modals:PackageEntryModal].LazyVersions}">
+                                    <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="m:InstancePackageVersionCollection">
                                             <Grid RowDefinitions="Auto,*" RowSpacing="8">
                                                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
@@ -203,7 +203,7 @@
                                                 </ListBox>
                                             </Grid>
                                         </DataTemplate>
-                                    </husk:LazyContainer.ContentTemplate>
+                                    </husk:LazyContainer.SourceTemplate>
                                 </husk:LazyContainer>
                             </husk:SwitchCase>
                         </husk:SwitchPresenter>

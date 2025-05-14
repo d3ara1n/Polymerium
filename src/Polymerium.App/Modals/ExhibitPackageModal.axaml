@@ -38,9 +38,9 @@
                         </TabStrip.ItemsPanel>
                         <TabStripItem Grid.Column="0" Padding="0">
                             <husk:LazyContainer
-                                LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyVersions,Mode=OneWay}"
+                                Source="{Binding $parent[modals:ExhibitPackageModal].LazyVersions,Mode=OneWay}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                <husk:LazyContainer.ContentTemplate>
+                                <husk:LazyContainer.SourceTemplate>
                                     <DataTemplate DataType="m:ExhibitVersionCollection">
                                         <ComboBox Theme="{StaticResource GhostComboBoxTheme}"
                                                   SelectedItem="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion,Mode=TwoWay,FallbackValue={x:Null}}"
@@ -116,7 +116,7 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
                                     </DataTemplate>
-                                </husk:LazyContainer.ContentTemplate>
+                                </husk:LazyContainer.SourceTemplate>
                             </husk:LazyContainer>
                         </TabStripItem>
                         <TabStripItem Grid.Column="1">
@@ -484,12 +484,12 @@
                                     </Border>
                                 </husk:ConstrainedBox>
                                 <husk:LazyContainer
-                                    LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyDescription}">
-                                    <husk:LazyContainer.ContentTemplate>
+                                    Source="{Binding $parent[modals:ExhibitPackageModal].LazyDescription}">
+                                    <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="x:String">
                                             <mdxaml:MarkdownScrollViewer Markdown="{Binding}" Margin="12" />
                                         </DataTemplate>
-                                    </husk:LazyContainer.ContentTemplate>
+                                    </husk:LazyContainer.SourceTemplate>
                                 </husk:LazyContainer>
                             </StackPanel>
                         </ScrollViewer>
@@ -530,8 +530,8 @@
                                 </StackPanel>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
                                     <husk:LazyContainer MinHeight="72"
-                                                        LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies,Mode=OneWay}">
-                                        <husk:LazyContainer.ContentTemplate>
+                                                        Source="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies,Mode=OneWay}">
+                                        <husk:LazyContainer.SourceTemplate>
                                             <DataTemplate x:DataType="m:ExhibitDependencyCollection">
                                                 <ItemsControl
                                                     ItemsSource="{Binding Mode=OneWay}">
@@ -562,7 +562,7 @@
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
                                             </DataTemplate>
-                                        </husk:LazyContainer.ContentTemplate>
+                                        </husk:LazyContainer.SourceTemplate>
                                     </husk:LazyContainer>
                                 </ScrollViewer>
                             </Panel>
@@ -592,12 +592,12 @@
                                         </StackPanel>
                                     </Border>
                                     <husk:LazyContainer Grid.Row="1"
-                                                        LazySource="{Binding $parent[modals:ExhibitPackageModal].LazyChangelog}">
-                                        <husk:LazyContainer.ContentTemplate>
+                                                        Source="{Binding $parent[modals:ExhibitPackageModal].LazyChangelog}">
+                                        <husk:LazyContainer.SourceTemplate>
                                             <DataTemplate DataType="x:String">
                                                 <mdxaml:MarkdownScrollViewer Markdown="{Binding}" Margin="12" />
                                             </DataTemplate>
-                                        </husk:LazyContainer.ContentTemplate>
+                                        </husk:LazyContainer.SourceTemplate>
                                     </husk:LazyContainer>
                                 </Grid>
                             </ScrollViewer>

@@ -10,6 +10,7 @@ using Polymerium.App.Modals;
 using Polymerium.App.Models;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
+using Polymerium.Trident.Services;
 using Trident.Abstractions.Accounts;
 
 namespace Polymerium.App.ViewModels;
@@ -18,7 +19,10 @@ public partial class AccountsViewModel(
     OverlayService overlayService,
     NotificationService notificationService,
     PersistenceService persistenceService,
-    ConfigurationService configurationService) : ViewModelBase
+    ConfigurationService configurationService,
+    MicrosoftService microsoftService,
+    XboxLiveService xboxLiveService,
+    MinecraftService minecraftService) : ViewModelBase
 {
     #region Direct
 
@@ -73,8 +77,11 @@ public partial class AccountsViewModel(
         overlayService.PopModal(new AccountCreationModal
         {
             FinishCallback = Finish,
-            IsOfflineAvailable = configurationService.Value.ApplicationSuperPowerActivated
-                              || persistenceService.HasMicrosoftAccount()
+            IsOfflineAvailable =
+                configurationService.Value.ApplicationSuperPowerActivated || persistenceService.HasMicrosoftAccount(),
+            MicrosoftService = microsoftService,
+            XboxLiveService = xboxLiveService,
+            MinecraftService = minecraftService
         });
     }
 

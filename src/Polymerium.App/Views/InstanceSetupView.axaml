@@ -89,7 +89,7 @@
                     </StackPanel>
                 </Grid>
                 <husk:LazyContainer Grid.Column="1" MinWidth="128"
-                                    LazySource="{Binding Reference,FallbackValue={x:Null}}"
+                                    Source="{Binding Reference,FallbackValue={x:Null}}"
                                     IsVisible="{Binding Basic.Source,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue=True}">
                     <husk:LazyContainer.BadContent>
                         <husk:Card BorderThickness="2"
@@ -100,7 +100,7 @@
                             </StackPanel>
                         </husk:Card>
                     </husk:LazyContainer.BadContent>
-                    <husk:LazyContainer.ContentTemplate>
+                    <husk:LazyContainer.SourceTemplate>
                         <DataTemplate x:DataType="m:InstanceReferenceModel">
                             <Border Background="{StaticResource ControlBackgroundBrush}"
                                     CornerRadius="{StaticResource MediumCornerRadius}" MaxWidth="320">
@@ -166,7 +166,7 @@
                                 </Grid>
                             </Border>
                         </DataTemplate>
-                    </husk:LazyContainer.ContentTemplate>
+                    </husk:LazyContainer.SourceTemplate>
                 </husk:LazyContainer>
             </Grid>
             <husk:SwitchPresenter Grid.Row="2" Value="{Binding IsRefreshing}" TargetType="x:Boolean">

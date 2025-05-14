@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Polymerium.App.Components;
 using Polymerium.App.Controls;
+using Polymerium.Trident.Services;
 using Trident.Abstractions.Accounts;
 
 namespace Polymerium.App.Modals;
@@ -39,6 +40,10 @@ public partial class AccountCreationModal : Modal
         InitializeComponent();
     }
 
+    public required MicrosoftService MicrosoftService { get; init; }
+    public required XboxLiveService XboxLiveService { get; init; }
+    public required MinecraftService MinecraftService { get; init; }
+
     public object? CurrentStep
     {
         get;
@@ -70,7 +75,13 @@ public partial class AccountCreationModal : Modal
     {
         base.OnLoaded(e);
 
-        CurrentStep = new AccountCreationPortal { IsOfflineAvailable = IsOfflineAvailable };
+        CurrentStep = new AccountCreationPortal
+        {
+            IsOfflineAvailable = IsOfflineAvailable,
+            MicrosoftService = MicrosoftService,
+            XboxLiveService = XboxLiveService,
+            MinecraftService = MinecraftService
+        };
     }
 
     #region Commands
