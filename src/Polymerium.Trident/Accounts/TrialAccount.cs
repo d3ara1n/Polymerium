@@ -12,10 +12,6 @@ public class TrialAccount : IAccount
 
     public string UserType => "legacy";
 
-    public ValueTask<bool> RefreshAsync(CancellationToken token) => ValueTask.FromResult(true);
-
-    public ValueTask<bool> ValidateAsync(CancellationToken token) => ValueTask.FromResult(true);
-
     public static TrialAccount CreateStewie() => new() { Username = "Stewie", Uuid = Guid.NewGuid().ToString() };
 
     public static TrialAccount CreateBrian() => new() { Username = "Brian", Uuid = Guid.NewGuid().ToString() };

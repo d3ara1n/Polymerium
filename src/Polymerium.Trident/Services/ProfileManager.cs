@@ -11,12 +11,6 @@ namespace Polymerium.Trident.Services;
 
 public class ProfileManager : IDisposable
 {
-    private readonly IDictionary<string, HotDataGuard<Preference>> _hotPreferenceData =
-        new Dictionary<string, HotDataGuard<Preference>>();
-
-    private readonly IDictionary<string, HotDataGuard<DataUser>> _hotUserData =
-        new Dictionary<string, HotDataGuard<DataUser>>();
-
     #region Injected
 
     private readonly ILogger<ProfileManager> _logger;
