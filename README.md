@@ -77,6 +77,7 @@ Available in Windows 10&11 only.
 
 ### 1.下载 | Download
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c97b5288f39f4092bd4b4a465da89202)](https://app.codacy.com/gh/d3ara1n/Polymerium?utm_source=github.com&utm_medium=referral&utm_content=d3ara1n/Polymerium&utm_campaign=Badge_Grade)
 [![Microsoft Store](https://get.microsoft.com/images/en-us%20dark.svg)](https://www.microsoft.com/store/apps/9NGQHHCT2Q6Z)
 
 ### 2.开启 Windows 开发者模式
