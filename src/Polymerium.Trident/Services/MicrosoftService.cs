@@ -1,6 +1,6 @@
 ﻿using Polymerium.Trident.Clients;
 using Polymerium.Trident.Exceptions;
-using Polymerium.Trident.Models.Microsoft;
+using Polymerium.Trident.Models.MicrosoftApi;
 
 namespace Polymerium.Trident.Services;
 
@@ -11,7 +11,7 @@ public class MicrosoftService(IMicrosoftClient client)
     public const string SCOPE = "XboxLive.signin offline_access";
 
     public async Task<DeviceCodeResponse> AcquireUserCodeAsync() =>
-        await client.AcquireUserCodeAsync().ConfigureAwait(false);
+        await client.AcquireUserCodeAsync(new AcquireUserCodeRequest()).ConfigureAwait(false);
 
     public async Task<TokenResponse> AuthenticateAsync(
         string deviceCode,
@@ -21,7 +21,7 @@ public class MicrosoftService(IMicrosoftClient client)
         while (true)
         {
             token.ThrowIfCancellationRequested();
-            var response = await client.AuthenticateAsync(deviceCode).ConfigureAwait(false);
+            var response = await client.AuthenticateAsync(new AuthenticateRequest(deviceCode)).ConfigureAwait(false);
             if (!string.IsNullOrEmpty(response.Error))
             {
                 if (response.Error == "authorization_pending")
@@ -38,5 +38,5 @@ public class MicrosoftService(IMicrosoftClient client)
     }
 
     public async Task<TokenResponse> RefreshUserAsync(string refreshToken) =>
-        await client.RefreshUserAsync(refreshToken).ConfigureAwait(false);
+        await client.RefreshUserAsync(new RefreshUserRequest(refreshToken)).ConfigureAwait(false);
 }

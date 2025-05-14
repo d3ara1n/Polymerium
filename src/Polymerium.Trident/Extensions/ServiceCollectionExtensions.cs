@@ -116,13 +116,31 @@ public static class ServiceCollectionExtensions
                 IXboxLiveClient>(_ =>
                                      new RefitSettings(new
                                                            SystemTextJsonContentSerializer(new
-                                                               JsonSerializerOptions(JsonSerializerDefaults.Web)
+                                                               JsonSerializerOptions(JsonSerializerDefaults
+                                                                  .General)
                                                                {
                                                                    PropertyNameCaseInsensitive = true
                                                                })))
            .ConfigureHttpClient(client =>
             {
-                client.BaseAddress = new Uri(XboxLiveService.ENDPOINT);
+                client.BaseAddress = new Uri(XboxLiveService.XBOX_ENDPOINT);
+                client.DefaultRequestHeaders.Add("User-Agent",
+                                                 $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
+            });
+        services
+           .AddRefitClient<
+                IXboxServiceClient>(_ =>
+                                        new
+                                            RefitSettings(new
+                                                              SystemTextJsonContentSerializer(new
+                                                                  JsonSerializerOptions(JsonSerializerDefaults
+                                                                     .General)
+                                                                  {
+                                                                      PropertyNameCaseInsensitive = true
+                                                                  })))
+           .ConfigureHttpClient(client =>
+            {
+                client.BaseAddress = new Uri(XboxLiveService.XSTS_ENDPOINT);
                 client.DefaultRequestHeaders.Add("User-Agent",
                                                  $"Polymerium/{Assembly.GetExecutingAssembly().GetName().Version}");
             });
@@ -138,7 +156,11 @@ public static class ServiceCollectionExtensions
                                       new RefitSettings(new
                                                             SystemTextJsonContentSerializer(new
                                                                 JsonSerializerOptions(JsonSerializerDefaults
-                                                                   .Web))))
+                                                                   .Web)
+                                                                {
+                                                                    PropertyNamingPolicy = JsonNamingPolicy
+                                                                       .SnakeCaseLower
+                                                                })))
            .ConfigureHttpClient(client =>
             {
                 client.BaseAddress = new Uri(MinecraftService.ENDPOINT);

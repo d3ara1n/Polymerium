@@ -18,14 +18,14 @@
             <TabStripItem>
                 <StackPanel>
                     <TextBlock Text="Microsoft" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Enables all the online features and is the only way to play the game legally"
+                    <TextBlock Text="Enables all the online features and is the only way to play the game legally."
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
             <TabStripItem>
                 <StackPanel>
                     <TextBlock Text="Trial" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Play as the preset character if dont have an account"
+                    <TextBlock Text="Play as the preset character if dont have an account."
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
@@ -33,7 +33,7 @@
                 IsEnabled="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable,FallbackValue=False}">
                 <StackPanel>
                     <TextBlock Text="Offline" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Nothing good but no Internet connection required"
+                    <TextBlock Text="Nothing good but no Internet connection required."
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>

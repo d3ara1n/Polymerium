@@ -1,3 +1,10 @@
-﻿namespace Polymerium.Trident.Clients;
+﻿using Polymerium.Trident.Models.XboxLiveApi;
+using Refit;
 
-public interface IXboxLiveClient { }
+namespace Polymerium.Trident.Clients;
+
+public interface IXboxLiveClient
+{
+    [Post("/user/authenticate")]
+    Task<XboxLiveResponse> AcquireXboxLiveTokenAsync([Body] XboxLiveRequest<XboxLiveTokenProperties> request);
+}
