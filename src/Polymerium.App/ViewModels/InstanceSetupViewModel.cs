@@ -210,7 +210,8 @@ public partial class InstanceSetupViewModel(
     protected override async Task OnInitializedAsync(CancellationToken token)
     {
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
-        if (!InstanceManager.IsTracking(Basic.Key, out var tracker) || tracker is not UpdateTracker)
+        if (!InstanceManager.IsTracking(Basic.Key, out var tracker)
+         || tracker is not UpdateTracker and not DeployTracker)
             TriggerRefresh(_pageCancellationTokenSource.Token);
 
         await base.OnInitializedAsync(token);
