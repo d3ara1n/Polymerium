@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -6,7 +8,9 @@ using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.App.Controls;
 using Polymerium.App.Models;
+using Polymerium.Trident.Accounts;
 using Polymerium.Trident.Services;
+using Trident.Abstractions.Accounts;
 
 namespace Polymerium.App.Components;
 
@@ -21,6 +25,18 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
         AvaloniaProperty.RegisterDirect<AccountCreationMicrosoft, string?>(nameof(ErrorMessage),
                                                                            o => o.ErrorMessage,
                                                                            (o, v) => o.ErrorMessage = v);
+
+    public static readonly DirectProperty<AccountCreationMicrosoft, IAccount?> AccountProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationMicrosoft, IAccount?>(nameof(Account),
+                                                                             o => o.Account,
+                                                                             (o, v) => o.Account = v);
+
+    public IAccount? Account
+    {
+        get;
+        set => SetAndRaise(AccountProperty, ref field, value);
+    }
+
 
     public AccountCreationMicrosoft()
     {
@@ -44,7 +60,9 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
     public required XboxLiveService XboxLiveService { get; init; }
     public required MinecraftService MinecraftService { get; init; }
 
-    public override object NextStep() => throw new NotImplementedException();
+    private CancellationTokenSource _cts = new();
+
+    public override object NextStep() => new AccountCreationPreview { Account = Account };
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
@@ -53,10 +71,19 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
         _ = LoadModelAsync();
     }
 
+    protected override void OnUnloaded(RoutedEventArgs e)
+    {
+        base.OnUnloaded(e);
+
+        _cts.Cancel();
+    }
+
     private async Task LoadModelAsync()
     {
         ErrorMessage = null;
         Model = null;
+        await _cts.CancelAsync();
+        _cts = new CancellationTokenSource();
 
         try
         {
@@ -64,6 +91,21 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
             Model = new MicrosoftUserCodeModel(model.DeviceCode,
                                                model.UserCode,
                                                model.VerificationUri ?? new Uri("https://aka.ms/devicelogin"));
+
+
+            var microsoft = await MicrosoftService.AuthenticateAsync(model.DeviceCode, model.Interval, _cts.Token);
+            var xbox = await XboxLiveService.AuthenticateForXboxLiveTokenByMicrosoftTokenAsync(microsoft.AccessToken);
+            var xsts = await XboxLiveService.AuthorizeForServiceTokenByXboxLiveTokenAsync(xbox.Token);
+            var minecraft = await MinecraftService.AuthenticateByXboxLiveServiceTokenAsync(xsts.Token,
+                                xsts.DisplayClaims.Xui.First().Uhs);
+            var profile = await MinecraftService.AcquireAccountProfileByMinecraftTokenAsync(minecraft.AccessToken);
+            Account = new MicrosoftAccount
+            {
+                AccessToken = minecraft.AccessToken,
+                RefreshToken = microsoft.RefreshToken,
+                Uuid = profile.Id,
+                Username = profile.Name
+            };
         }
         catch (Exception ex)
         {

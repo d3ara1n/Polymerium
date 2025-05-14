@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Net;
+using System.Reflection;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
@@ -14,6 +15,8 @@ namespace Polymerium.Trident.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    private static readonly RefitSettings dummy = new();
+
     public static IServiceCollection AddCurseForge(this IServiceCollection services)
     {
         services
@@ -91,14 +94,27 @@ public static class ServiceCollectionExtensions
     {
         services
            .AddRefitClient<
-                IMicrosoftClient>(_ =>
-                                      new RefitSettings(new
-                                                            SystemTextJsonContentSerializer(new
-                                                                JsonSerializerOptions(JsonSerializerDefaults.Web)
-                                                                {
-                                                                    PropertyNamingPolicy = JsonNamingPolicy
-                                                                       .SnakeCaseLower
-                                                                })))
+                IMicrosoftClient>(_ => new RefitSettings(new
+                                                             SystemTextJsonContentSerializer(new
+                                                                          JsonSerializerOptions(JsonSerializerDefaults.Web)
+                                                                          {
+                                                                              PropertyNamingPolicy = JsonNamingPolicy
+                                                                                 .SnakeCaseLower
+                                                                          }))
+                                  {
+                                      ExceptionFactory = async message => message switch
+                                      {
+                                          { IsSuccessStatusCode: true } => null,
+                                          { StatusCode: HttpStatusCode.BadRequest } => null,
+                                          { RequestMessage: not null } => await ApiException
+                                             .Create(message.RequestMessage,
+                                                     message.RequestMessage.Method,
+                                                     message,
+                                                     dummy)
+                                             .ConfigureAwait(false),
+                                          _ => new NotImplementedException()
+                                      }
+                                  })
            .ConfigureHttpClient(client =>
             {
                 client.BaseAddress = new Uri(MicrosoftService.ENDPOINT);
