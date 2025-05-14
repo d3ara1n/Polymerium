@@ -46,9 +46,9 @@
                     </Grid>
                 </Border>
                 <TextBlock Grid.Row="2" Text="More Versions" />
-                <husk:LazyContainer Grid.Row="4" LazySource="{Binding $parent[local:LoaderEditorDialog].LazyVersions}"
+                <husk:LazyContainer Grid.Row="4" Source="{Binding $parent[local:LoaderEditorDialog].LazyVersions}"
                                     MinHeight="36">
-                    <husk:LazyContainer.ContentTemplate>
+                    <husk:LazyContainer.SourceTemplate>
                         <DataTemplate DataType="m:LoaderCandidateVersionCollectionModel">
                             <ComboBox
                                 SelectedValue="{Binding $parent[local:LoaderEditorDialog].SelectedVersion,Mode=TwoWay}"
@@ -69,7 +69,7 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </DataTemplate>
-                    </husk:LazyContainer.ContentTemplate>
+                    </husk:LazyContainer.SourceTemplate>
                     <husk:LazyContainer.BadContent>
                         <ComboBox IsEnabled="False" SelectedIndex="0">
                             <ComboBoxItem Content="(Network unreachable)" />

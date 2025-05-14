@@ -4,6 +4,6 @@ public record DeviceCodeResponse(
     string? Message,
     string DeviceCode,
     string UserCode,
-    Uri VerificationUri,
+    Uri? VerificationUri,
     int ExpiresIn,
     int Interval);

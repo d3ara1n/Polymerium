@@ -1,19 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="https://github.com/d3ara1n/Huskui.Avalonia">
-    <Design.PreviewWith>
-        <Panel Background="White" Height="328" Width="256">
-            <Grid Margin="24" RowDefinitions="*,8,*,8,*">
-                <local:LazyContainer Grid.Row="0" />
-                <local:LazyContainer Grid.Row="2">
-                    <Button>Hello World</Button>
-                </local:LazyContainer>
-                <local:LazyContainer Grid.Row="4" IsBad="True" BadContent="Hello World">
-                    <Button>Hello World</Button>
-                </local:LazyContainer>
-            </Grid>
-        </Panel>
-    </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type local:LazyContainer}" TargetType="local:LazyContainer">
         <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
         <Setter Property="Template">
@@ -21,9 +8,8 @@
                 <local:SwitchPresenter Value="{TemplateBinding IsBad}" TargetType="x:Boolean">
                     <local:SwitchCase Value="False">
                         <local:SkeletonContainer CornerRadius="{TemplateBinding CornerRadius}"
-                                                 IsLoading="{Binding Content,Converter={x:Static ObjectConverters.IsNull},RelativeSource={RelativeSource Mode=TemplatedParent},FallbackValue=False}">
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                                 IsLoading="{Binding Source.IsInProgress,RelativeSource={RelativeSource Mode=TemplatedParent},FallbackValue=False}">
+                            <ContentPresenter Name="{x:Static local:LazyContainer.PART_ContentPresenter}" />
                         </local:SkeletonContainer>
                     </local:SwitchCase>
                     <local:SwitchCase Value="True">
