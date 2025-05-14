@@ -9,7 +9,8 @@
                               xmlns:m="clr-namespace:Polymerium.App.Models"
                               mc:Ignorable="d"
                               x:Class="Polymerium.App.Components.AccountCreationMicrosoft"
-                              Header="Microsoft Authentication" d:DesignWidth="256">
+                              Header="Microsoft Authentication" d:DesignWidth="256"
+                              IsNextAvailable="{Binding $self.Account,Converter={x:Static ObjectConverters.IsNotNull}}">
     <husk:SwitchPresenter
         Value="{Binding $parent[cp:AccountCreationMicrosoft].ErrorMessage,Converter={x:Static ObjectConverters.IsNull},FallbackValue={x:False}}"
         TargetType="x:Boolean">
@@ -33,37 +34,58 @@
             </StackPanel>
         </husk:SwitchCase>
         <husk:SwitchCase Value="{x:True}">
-            <husk:SkeletonContainer
-                IsLoading="{Binding $parent[cp:AccountCreationMicrosoft].Model,Converter={x:Static ObjectConverters.IsNull}}">
-                <StackPanel Spacing="12">
-                    <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="12"
-                            CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Panel>
-                            <TextBlock
-                                Text="{Binding $parent[cp:AccountCreationMicrosoft].Model.UserCode,FallbackValue=A1B2C3D4}"
-                                FontWeight="{StaticResource ControlStrongFontWeight}"
-                                FontSize="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                            <Button Theme="{StaticResource GhostButtonTheme}" Padding="6" VerticalAlignment="Center"
-                                    Command="{Binding $parent[cp:AccountCreationMicrosoft].CopyCommand}"
-                                    HorizontalAlignment="Right">
-                                <fi:SymbolIcon Symbol="Copy" FontSize="{StaticResource MediumFontSize}"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center" />
-                            </Button>
-                        </Panel>
-                    </Border>
-                    <StackPanel>
-                        <TextBlock Text="The code will be expired in 15 minutes. Please fill this code in the page:"
-                                   TextWrapping="Wrap" />
-                        <TextBlock Text="https://aka.ms/devicelogin"
-                                   Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                   FontWeight="{StaticResource ControlStrongFontWeight}" />
+            <husk:SwitchPresenter
+                Value="{Binding $parent[cp:AccountCreationMicrosoft].Account,Converter={x:Static ObjectConverters.IsNotNull},FallbackValue={x:False}}"
+                TargetType="x:Boolean">
+                <husk:SwitchCase Value="{x:True}">
+                    <StackPanel Margin="0,12" Spacing="12">
+                        <StackPanel>
+                            <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="{StaticResource ExtraLargeFontSize}"
+                                           HorizontalAlignment="Center" />
+                            <TextBlock Text="Done!" HorizontalAlignment="Center"
+                                       FontSize="{StaticResource LargeFontSize}" />
+                        </StackPanel>
+                        <TextBlock Text="The account has been linked. Checkout in the next page."
+                                   HorizontalAlignment="Center" TextWrapping="Wrap"
+                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </StackPanel>
-                    <Button Classes="Primary" Content="Open in the browser"
-                            Command="{Binding Source={x:Static m:InternalCommands.OpenUriCommand}}"
-                            CommandParameter="{Binding $parent[cp:AccountCreationMicrosoft].Model.VerificationUri,FallbackValue={x:Null}}" />
-                </StackPanel>
-            </husk:SkeletonContainer>
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="{x:False}">
+                    <husk:SkeletonContainer
+                        IsLoading="{Binding $parent[cp:AccountCreationMicrosoft].Model,Converter={x:Static ObjectConverters.IsNull}}">
+                        <StackPanel Spacing="12">
+                            <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="12"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Panel>
+                                    <TextBlock
+                                        Text="{Binding $parent[cp:AccountCreationMicrosoft].Model.UserCode,FallbackValue=A1B2C3D4}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        FontSize="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
+                                    <Button Theme="{StaticResource GhostButtonTheme}" Padding="6"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding $parent[cp:AccountCreationMicrosoft].CopyCommand}"
+                                            HorizontalAlignment="Right">
+                                        <fi:SymbolIcon Symbol="Copy" FontSize="{StaticResource MediumFontSize}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center" />
+                                    </Button>
+                                </Panel>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock
+                                    Text="The code will be expired in 15 minutes. Please fill this code in the page:"
+                                    TextWrapping="Wrap" />
+                                <TextBlock Text="https://aka.ms/devicelogin"
+                                           Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
+                            </StackPanel>
+                            <Button Classes="Primary" Content="Open in the browser"
+                                    Command="{Binding Source={x:Static m:InternalCommands.OpenUriCommand}}"
+                                    CommandParameter="{Binding $parent[cp:AccountCreationMicrosoft].Model.VerificationUri,FallbackValue={x:Null}}" />
+                        </StackPanel>
+                    </husk:SkeletonContainer>
+                </husk:SwitchCase>
+            </husk:SwitchPresenter>
         </husk:SwitchCase>
     </husk:SwitchPresenter>
 </controls:AccountCreationStep>
