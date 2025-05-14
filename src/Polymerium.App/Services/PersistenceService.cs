@@ -113,6 +113,16 @@ public class PersistenceService : IDisposable
         _db.Value.Delete<Account>().Where(x => x.Uuid == uuid).ExecuteAffrows();
     }
 
+    public void UseAccount(string uuid)
+    {
+        _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.LastUsedAt, DateTime.Now).ExecuteAffrows();
+    }
+
+    public void UpdateAccount(string uuid, string data)
+    {
+        _db.Value.Update<Account>().Where(x => x.Uuid == uuid).Set(x => x.Data, data).ExecuteAffrows();
+    }
+
     public AccountSelector? GetAccountSelector(string key)
     {
         return _db.Value.Select<AccountSelector>().Where(x => x.Key == key).First();
