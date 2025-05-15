@@ -23,7 +23,6 @@ public partial class SettingsViewModel : ViewModelBase
         _configurationService = configurationService;
         OverlayService = overlayService;
 
-
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         SidebarPlacement = configurationService.Value.ApplicationLeftPanelMode ? 0 : 1;
         BackgroundMode = configurationService.Value.ApplicationStyleBackground;
@@ -130,7 +129,7 @@ public partial class SettingsViewModel : ViewModelBase
 
     #region Language
 
-    public LanguageModel[] Languages { get; } = [new("en_US", "Chinglish"), new("zh_CN", "中国人")];
+    public LanguageModel[] Languages { get; } = [new("en-us", "Chinglish"), new("zh-Hans", "中国人")];
 
     [ObservableProperty]
     public partial LanguageModel Language { get; set; }

@@ -3,7 +3,7 @@ using Polymerium.App.Facilities;
 
 namespace Polymerium.App.Models;
 
-public partial class InstancePackageEntryFilterTagModel(string content) : ModelBase
+public partial class InstancePackageFilterTagModel(string content) : ModelBase
 {
     #region Reactive
 

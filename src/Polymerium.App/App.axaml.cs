@@ -28,8 +28,6 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        CultureInfo.CurrentUICulture = new CultureInfo("en-US");
-
         AppDomain.CurrentDomain.UnhandledException += (_, e) => ShowOrDump(e.ExceptionObject, e.IsTerminating);
         TaskScheduler.UnobservedTaskException += (_, e) => ShowOrDump(e.Exception, !e.Observed);
         Dispatcher.UIThread.UnhandledException += (_, e) => ShowOrDump(e.Exception, !e.Handled);
@@ -170,17 +168,16 @@ public class App : Application
         if (Program.AppHost is null)
             return new MainWindow();
 
+        var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(configuration.Value.ApplicationLanguage);
+        Properties.Resources.Culture = CultureInfo.CurrentUICulture;
+
         var window = new MainWindow { DataContext = Program.AppHost.Services.GetRequiredService<MainWindowContext>() };
 
-        #region Window Configuration
-
-        var configuration = Program.AppHost.Services.GetRequiredService<ConfigurationService>();
         window.SetThemeVariantByIndex(configuration.Value.ApplicationStyleThemeVariant);
         window.SetTransparencyLevelHintByIndex(configuration.Value.ApplicationStyleBackground);
         window.IsLeftPanelMode = configuration.Value.ApplicationLeftPanelMode;
         // 并不还原窗体大小，没必要
-
-        #endregion
 
         #region Navigation
 
