@@ -18,14 +18,14 @@ public static class AppBuilderExtensions
                 fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:BaiJamjuree"),
                                                                          new
                                                                              Uri("avares://Polymerium.App/Assets/Fonts/BaiJamjuree")));
-                fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:HuXiaoBo"),
+                fontManager.AddFontCollection(new EmbeddedFontCollection(new Uri("fonts:SanJiSuQian"),
                                                                          new
-                                                                             Uri("avares://Polymerium.App/Assets/Fonts/HuXiaoBo")));
+                                                                             Uri("avares://Polymerium.App/Assets/Fonts/SanJiSuQian")));
             })
            .With(new FontManagerOptions
             {
                 DefaultFamilyName = "fonts:BaiJamjuree#Bai Jamjuree",
-                FontFallbacks = [new FontFallback { FontFamily = new FontFamily("fonts:HuXiaoBo#胡晓波真帅体2.0") }]
+                FontFallbacks = [new FontFallback { FontFamily = new FontFamily("fonts:SanJiSuQian#三极素纤简体") }]
             });
 
         return appBuilder;

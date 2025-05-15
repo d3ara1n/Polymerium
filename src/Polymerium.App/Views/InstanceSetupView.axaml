@@ -11,6 +11,7 @@
                   xmlns:controls="using:Polymerium.App.Controls"
                   xmlns:v="clr-namespace:Polymerium.App.Views"
                   xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+                  xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                   mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600" Padding="0"
                   x:Class="Polymerium.App.Views.InstanceSetupView" x:DataType="vm:InstanceSetupViewModel"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -42,7 +43,8 @@
                             </Transitions>
                         </husk:ProgressRing.Transitions>
                     </husk:ProgressRing>
-                    <TextBlock Text="Operating In Progress" FontWeight="{StaticResource ControlStrongFontWeight}"
+                    <TextBlock Text="{x:Static lang:Resources.InstanceSetupView_InoperableLabelText}"
+                               FontWeight="{StaticResource ControlStrongFontWeight}"
                                HorizontalAlignment="Center" />
                 </StackPanel>
             </husk:Card>
@@ -61,7 +63,7 @@
                             <StackPanel Margin="12,6">
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="Game Version" />
+                                    Text="{x:Static lang:Resources.InstanceSetupView_VersionLabelText}" />
                                 <TextBlock FontSize="{StaticResource LargeFontSize}"
                                            Text="{Binding Basic.Version, FallbackValue=Version}" />
 
@@ -80,7 +82,7 @@
                                 <StackPanel Margin="12,6">
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="Mod Loader" />
+                                        Text="{x:Static lang:Resources.InstanceSetupView_LoaderLabelText}" />
                                     <TextBlock FontSize="{StaticResource LargeFontSize}"
                                                Text="{Binding LoaderLabel, FallbackValue=None}" />
                                 </StackPanel>
@@ -95,8 +97,9 @@
                         <husk:Card BorderThickness="2"
                                    BorderBrush="{StaticResource ControlBorderBrush}">
                             <StackPanel>
-                                <TextBlock Text="Something went wrong" />
-                                <Button Content="Retry" />
+                                <TextBlock
+                                    Text="{x:Static lang:Resources.InstanceSetupView_ReferenceUnavailableLabelText}" />
+                                <Button Content="Retry" IsVisible="False" />
                             </StackPanel>
                         </husk:Card>
                     </husk:LazyContainer.BadContent>
@@ -126,7 +129,8 @@
                                                     <ToolTip.Tip>
                                                         <StackPanel Spacing="2">
                                                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
-                                                                <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
+                                                                <TextBlock Grid.Column="0"
+                                                                           Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}"
                                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                                            FontSize="{StaticResource SmallFontSize}" />
                                                                 <fi:SymbolIcon Grid.Column="1" Symbol="Open"
@@ -159,7 +163,9 @@
                                         <TextBlock Grid.Column="1" Text="{Binding VersionName,FallbackValue=Version}"
                                                    VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                                                    ToolTip.Tip="{Binding VersionName}" />
-                                        <Button Grid.Column="2" Content="Switch Version" Classes="Small"
+                                        <Button Grid.Column="2"
+                                                Content="{x:Static lang:Resources.InstanceSetupView_SwitchVersionButtonText}"
+                                                Classes="Small"
                                                 Theme="{StaticResource OutlineButtonTheme}"
                                                 Command="{Binding $parent[v:InstanceSetupView].((vm:InstanceSetupViewModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}" />
                                     </Grid>
@@ -183,7 +189,7 @@
                         <husk:ProgressRing Width="56" Height="56" Value="{Binding RefreshingCount,Mode=OneWay}"
                                            Maximum="{Binding StageCount}" />
                         <TextBlock HorizontalAlignment="Center">
-                            <Run Text="Loading packages metadata..." />
+                            <Run Text="{x:Static lang:Resources.InstanceSetupView_LoadingPackageLabelText}" />
                             <Run Text="(" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <Run Text="{Binding RefreshingCount,FallbackValue=0}" />
                             <Run Text="/" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />

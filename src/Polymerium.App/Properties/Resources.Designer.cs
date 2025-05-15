@@ -303,6 +303,348 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to How the application acts and chooses strategies.
+        /// </summary>
+        public static string InstancePropertiesView_BehaviorsSubtitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_BehaviorsSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Behaviors.
+        /// </summary>
+        public static string InstancePropertiesView_BehaviorsTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_BehaviorsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These settings are applied instantly and can&apos;t be recovered.
+        /// </summary>
+        public static string InstancePropertiesView_DangerZoneSubtitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_DangerZoneSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danger Zone.
+        /// </summary>
+        public static string InstancePropertiesView_DangerZoneTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_DangerZoneTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string InstancePropertiesView_DeleteButtonText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display Name.
+        /// </summary>
+        public static string InstancePropertiesView_DisplayNameLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_DisplayNameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted..
+        /// </summary>
+        public static string InstancePropertiesView_FastLaunchInfo {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_FastLaunchInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fast Launch.
+        /// </summary>
+        public static string InstancePropertiesView_FastLaunchLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_FastLaunchLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The instance is busy now.
+        /// </summary>
+        public static string InstancePropertiesView_InoperableLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_InoperableLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java Additional Arguments.
+        /// </summary>
+        public static string InstancePropertiesView_JavaAdditionalArgumentsLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_JavaAdditionalArgumentsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java Home.
+        /// </summary>
+        public static string InstancePropertiesView_JavaLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_JavaLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java Max Memory.
+        /// </summary>
+        public static string InstancePropertiesView_JavaMaxMemoryLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_JavaMaxMemoryLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MiB.
+        /// </summary>
+        public static string InstancePropertiesView_JavaMaxMemoryUnitText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_JavaMaxMemoryUnitText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages..
+        /// </summary>
+        public static string InstancePropertiesView_LinkerInfo {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_LinkerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link.
+        /// </summary>
+        public static string InstancePropertiesView_LinkerLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_LinkerLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entries here will overwrite the global settings.
+        /// </summary>
+        public static string InstancePropertiesView_NavigateToGlobalButtonSubtitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_NavigateToGlobalButtonSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate to the global settings page.
+        /// </summary>
+        public static string InstancePropertiesView_NavigateToGlobalButtonTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_NavigateToGlobalButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration specified to the instance; left blank to refer to the global settings.
+        /// </summary>
+        public static string InstancePropertiesView_OverridesSubtitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_OverridesSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Overrides.
+        /// </summary>
+        public static string InstancePropertiesView_OverridesTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_OverridesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string InstancePropertiesView_RemoveButtonText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_RemoveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string InstancePropertiesView_RenameButtonText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_RenameButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string InstancePropertiesView_ResetButtonText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ResetButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This always leads to unexpected package conflicts due to poor management of package distribution sites. .
+        /// </summary>
+        public static string InstancePropertiesView_ResolvePackageDependenciesInfo {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Experimental] Resolve Package Dependencies.
+        /// </summary>
+        public static string InstancePropertiesView_ResolvePackageDependenciesLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scrifice.
+        /// </summary>
+        public static string InstancePropertiesView_SacrificeLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_SacrificeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string InstancePropertiesView_SelectButtonText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_SelectButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How this instance identify itself.
+        /// </summary>
+        public static string InstancePropertiesView_TitleSubtitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_TitleSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string InstancePropertiesView_TitleTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_TitleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock.
+        /// </summary>
+        public static string InstancePropertiesView_UnlockButtonText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_UnlockButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string InstancePropertiesView_WindowHeightLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_WindowHeightLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window Initial Size.
+        /// </summary>
+        public static string InstancePropertiesView_WindowInitialSizeLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_WindowInitialSizeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width.
+        /// </summary>
+        public static string InstancePropertiesView_WindowWidthLabelText {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_WindowWidthLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operating In Progress.
+        /// </summary>
+        public static string InstanceSetupView_InoperableLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_InoperableLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Loader.
+        /// </summary>
+        public static string InstanceSetupView_LoaderLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_LoaderLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading packages information....
+        /// </summary>
+        public static string InstanceSetupView_LoadingPackageLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_LoadingPackageLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong.
+        /// </summary>
+        public static string InstanceSetupView_ReferenceUnavailableLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_ReferenceUnavailableLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch Version.
+        /// </summary>
+        public static string InstanceSetupView_SwitchVersionButtonText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_SwitchVersionButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Version.
+        /// </summary>
+        public static string InstanceSetupView_VersionLabelText {
+            get {
+                return ResourceManager.GetString("InstanceSetupView_VersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string MainWindow_AccountButtonText {
@@ -350,9 +692,18 @@ namespace Polymerium.App.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No Entries.
         /// </summary>
-        public static string Shared_EmptyList {
+        public static string Shared_EmptyListLabelText {
             get {
-                return ResourceManager.GetString("Shared_EmptyList", resourceCulture);
+                return ResourceManager.GetString("Shared_EmptyListLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EXTERNAL LINK TO.
+        /// </summary>
+        public static string Shared_ExternalLinkLabelText {
+            get {
+                return ResourceManager.GetString("Shared_ExternalLinkLabelText", resourceCulture);
             }
         }
     }

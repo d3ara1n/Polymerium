@@ -45,7 +45,7 @@
     <data name="AccountsView_Title" xml:space="preserve">
         <value>Accounts</value>
     </data>
-    <data name="Shared_EmptyList" xml:space="preserve">
+    <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>No Entries</value>
     </data>
     <data name="AccountEntryButton_MarkAsDefaultMenu" xml:space="preserve">
@@ -122,5 +122,122 @@
     </data>
     <data name="InstanceHomeView_DashboardButtonSubtitle" xml:space="preserve">
         <value>Dashboard</value>
+    </data>
+    <data name="InstancePropertiesView_TitleTitle" xml:space="preserve">
+        <value>Title</value>
+    </data>
+    <data name="InstancePropertiesView_TitleSubtitle" xml:space="preserve">
+        <value>How this instance identify itself</value>
+    </data>
+    <data name="InstancePropertiesView_DisplayNameLabelText" xml:space="preserve">
+        <value>Display Name</value>
+    </data>
+    <data name="InstancePropertiesView_RenameButtonText" xml:space="preserve">
+        <value>Rename</value>
+    </data>
+    <data name="InstancePropertiesView_SelectButtonText" xml:space="preserve">
+        <value>Select</value>
+    </data>
+    <data name="InstancePropertiesView_RemoveButtonText" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+    <data name="InstancePropertiesView_OverridesTitle" xml:space="preserve">
+        <value>Game Overrides</value>
+    </data>
+    <data name="InstancePropertiesView_OverridesSubtitle" xml:space="preserve">
+        <value>Configuration specified to the instance; left blank to refer to the global settings</value>
+    </data>
+    <data name="InstancePropertiesView_NavigateToGlobalButtonTitle" xml:space="preserve">
+        <value>Navigate to the global settings page</value>
+    </data>
+    <data name="InstancePropertiesView_NavigateToGlobalButtonSubtitle" xml:space="preserve">
+        <value>Entries here will overwrite the global settings</value>
+    </data>
+    <data name="InstancePropertiesView_JavaLabelText" xml:space="preserve">
+        <value>Java Home</value>
+    </data>
+    <data name="InstancePropertiesView_JavaMaxMemoryLabelText" xml:space="preserve">
+        <value>Java Max Memory</value>
+    </data>
+    <data name="InstancePropertiesView_JavaMaxMemoryUnitText" xml:space="preserve">
+        <value>MiB</value>
+    </data>
+    <data name="InstancePropertiesView_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+        <value>Java Additional Arguments</value>
+    </data>
+    <data name="InstancePropertiesView_WindowInitialSizeLabelText" xml:space="preserve">
+        <value>Window Initial Size</value>
+    </data>
+    <data name="InstancePropertiesView_WindowWidthLabelText" xml:space="preserve">
+        <value>Width</value>
+    </data>
+    <data name="InstancePropertiesView_WindowHeightLabelText" xml:space="preserve">
+        <value>Height</value>
+    </data>
+    <data name="InstancePropertiesView_BehaviorsTitle" xml:space="preserve">
+        <value>Behaviors</value>
+    </data>
+    <data name="InstancePropertiesView_BehaviorsSubtitle" xml:space="preserve">
+        <value>How the application acts and chooses strategies</value>
+    </data>
+    <data name="InstancePropertiesView_ResolvePackageDependenciesLabelText" xml:space="preserve">
+        <value>[Experimental] Resolve Package Dependencies</value>
+    </data>
+    <data name="InstancePropertiesView_ResolvePackageDependenciesInfo" xml:space="preserve">
+        <value>This always leads to unexpected package conflicts due to poor management of package distribution sites. </value>
+    </data>
+    <data name="InstancePropertiesView_FastLaunchLabelText" xml:space="preserve">
+        <value>Fast Launch</value>
+    </data>
+    <data name="InstancePropertiesView_FastLaunchInfo" xml:space="preserve">
+        <value>Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted.</value>
+    </data>
+    <data name="InstancePropertiesView_DangerZoneTitle" xml:space="preserve">
+        <value>Danger Zone</value>
+    </data>
+    <data name="InstancePropertiesView_DangerZoneSubtitle" xml:space="preserve">
+        <value>These settings are applied instantly and can't be recovered</value>
+    </data>
+    <data name="InstancePropertiesView_SacrificeLabelText" xml:space="preserve">
+        <value>Scrifice</value>
+    </data>
+    <data name="InstancePropertiesView_UnlockButtonText" xml:space="preserve">
+        <value>Unlock</value>
+    </data>
+    <data name="InstancePropertiesView_ResetButtonText" xml:space="preserve">
+        <value>Reset</value>
+    </data>
+    <data name="InstancePropertiesView_DeleteButtonText" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="InstancePropertiesView_LinkerLabelText" xml:space="preserve">
+        <value>Link</value>
+    </data>
+    <data name="InstancePropertiesView_LinkerInfo" xml:space="preserve">
+        <value>Unlock by removing the attached pack brand/metadata that will make the instance losing the ability of updating but gaining the ability of editing all the imported packages.</value>
+    </data>
+    <data name="InstancePropertiesView_InoperableLabelText" xml:space="preserve">
+        <value>The instance is busy now</value>
+    </data>
+    <data name="InstanceSetupView_InoperableLabelText" xml:space="preserve">
+        <value>Operating In Progress</value>
+    </data>
+    <data name="InstanceSetupView_VersionLabelText" xml:space="preserve">
+        <value>Game Version</value>
+    </data>
+    <data name="InstanceSetupView_LoaderLabelText" xml:space="preserve">
+        <value>Mod Loader</value>
+    </data>
+    <data name="InstanceSetupView_ReferenceUnavailableLabelText" xml:space="preserve">
+        <value>Something went wrong</value>
+    </data>
+    <data name="Shared_ExternalLinkLabelText" xml:space="preserve">
+        <value>EXTERNAL LINK TO</value>
+    </data>
+    <data name="InstanceSetupView_SwitchVersionButtonText" xml:space="preserve">
+        <value>Switch Version</value>
+    </data>
+    <data name="InstanceSetupView_LoadingPackageLabelText" xml:space="preserve">
+        <value>Loading packages information...</value>
     </data>
 </root>

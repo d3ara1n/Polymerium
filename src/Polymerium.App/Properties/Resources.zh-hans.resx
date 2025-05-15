@@ -36,7 +36,7 @@
     <data name="AccountsView_Title" xml:space="preserve">
         <value>账号</value>
     </data>
-    <data name="Shared_EmptyList" xml:space="preserve">
+    <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>空列表</value>
     </data>
     <data name="AccountEntryButton_MarkAsDefaultMenu" xml:space="preserve">
@@ -113,5 +113,122 @@
     </data>
     <data name="InstanceHomeView_DashboardButtonSubtitle" xml:space="preserve">
         <value>信息面板</value>
+    </data>
+    <data name="InstancePropertiesView_TitleTitle" xml:space="preserve">
+        <value>标题</value>
+    </data>
+    <data name="InstancePropertiesView_TitleSubtitle" xml:space="preserve">
+        <value>实例的身份认同</value>
+    </data>
+    <data name="InstancePropertiesView_DisplayNameLabelText" xml:space="preserve">
+        <value>显示名</value>
+    </data>
+    <data name="InstancePropertiesView_RenameButtonText" xml:space="preserve">
+        <value>重命名</value>
+    </data>
+    <data name="InstancePropertiesView_SelectButtonText" xml:space="preserve">
+        <value>选择</value>
+    </data>
+    <data name="InstancePropertiesView_RemoveButtonText" xml:space="preserve">
+        <value>移除</value>
+    </data>
+    <data name="InstancePropertiesView_OverridesTitle" xml:space="preserve">
+        <value>游戏覆盖设置</value>
+    </data>
+    <data name="InstancePropertiesView_OverridesSubtitle" xml:space="preserve">
+        <value>在此处对实例的设置会覆盖全局中对应设置，若干为空，则遵循全局设置</value>
+    </data>
+    <data name="InstancePropertiesView_NavigateToGlobalButtonTitle" xml:space="preserve">
+        <value>跳转到全局游戏设置</value>
+    </data>
+    <data name="InstancePropertiesView_NavigateToGlobalButtonSubtitle" xml:space="preserve">
+        <value>此处的项目会覆盖全局游戏设置</value>
+    </data>
+    <data name="InstancePropertiesView_JavaLabelText" xml:space="preserve">
+        <value>Java 主目录</value>
+    </data>
+    <data name="InstancePropertiesView_JavaMaxMemoryLabelText" xml:space="preserve">
+        <value>Java 最大内存</value>
+    </data>
+    <data name="InstancePropertiesView_JavaMaxMemoryUnitText" xml:space="preserve">
+        <value>兆字节</value>
+    </data>
+    <data name="InstancePropertiesView_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+        <value>Java 附加命令行参数</value>
+    </data>
+    <data name="InstancePropertiesView_WindowInitialSizeLabelText" xml:space="preserve">
+        <value>窗口初始大小</value>
+    </data>
+    <data name="InstancePropertiesView_WindowHeightLabelText" xml:space="preserve">
+        <value>高度</value>
+    </data>
+    <data name="InstancePropertiesView_WindowWidthLabelText" xml:space="preserve">
+        <value>宽度</value>
+    </data>
+    <data name="InstancePropertiesView_BehaviorsTitle" xml:space="preserve">
+        <value>行为</value>
+    </data>
+    <data name="InstancePropertiesView_BehaviorsSubtitle" xml:space="preserve">
+        <value>程序会根据这些设置选择对应策略</value>
+    </data>
+    <data name="InstancePropertiesView_ResolvePackageDependenciesLabelText" xml:space="preserve">
+        <value>[实验] 解析包依赖</value>
+    </data>
+    <data name="InstancePropertiesView_ResolvePackageDependenciesInfo" xml:space="preserve">
+        <value>由于包托管与分发库在数据上的不完善，开启该选项必定会使包冲突。</value>
+    </data>
+    <data name="InstancePropertiesView_FastLaunchLabelText" xml:space="preserve">
+        <value>快速启动</value>
+    </data>
+    <data name="InstancePropertiesView_FastLaunchInfo" xml:space="preserve">
+        <value>当成功部署过一次实例后且未检测到文件清单修改时将跳过还原步骤。可能会导致游戏缺少文件。</value>
+    </data>
+    <data name="InstancePropertiesView_DangerZoneTitle" xml:space="preserve">
+        <value>危险操作</value>
+    </data>
+    <data name="InstancePropertiesView_DangerZoneSubtitle" xml:space="preserve">
+        <value>这些设置一旦应用无法恢复</value>
+    </data>
+    <data name="InstancePropertiesView_SacrificeLabelText" xml:space="preserve">
+        <value>牺牲</value>
+    </data>
+    <data name="InstancePropertiesView_DeleteButtonText" xml:space="preserve">
+        <value>删除</value>
+    </data>
+    <data name="InstancePropertiesView_ResetButtonText" xml:space="preserve">
+        <value>重置</value>
+    </data>
+    <data name="InstancePropertiesView_UnlockButtonText" xml:space="preserve">
+        <value>解锁</value>
+    </data>
+    <data name="InstancePropertiesView_LinkerLabelText" xml:space="preserve">
+        <value>关联</value>
+    </data>
+    <data name="InstancePropertiesView_LinkerInfo" xml:space="preserve">
+        <value>实例会保存并链接关于整合包的引用，以此实现实例的更新，但代价是无法更改/移除整合包带来的包版本。解锁/取消链接实例会失去这些能力和限制。</value>
+    </data>
+    <data name="InstancePropertiesView_InoperableLabelText" xml:space="preserve">
+        <value>实例此时无法操作</value>
+    </data>
+    <data name="InstanceSetupView_InoperableLabelText" xml:space="preserve">
+        <value>操作进行中</value>
+    </data>
+    <data name="InstanceSetupView_VersionLabelText" xml:space="preserve">
+        <value>游戏版本</value>
+    </data>
+    <data name="InstanceSetupView_LoaderLabelText" xml:space="preserve">
+        <value>模组加载器</value>
+    </data>
+    <data name="InstanceSetupView_ReferenceUnavailableLabelText" xml:space="preserve">
+        <value>加载出错</value>
+    </data>
+    <data name="Shared_ExternalLinkLabelText" xml:space="preserve">
+        <value>链接指向</value>
+    </data>
+    <data name="InstanceSetupView_SwitchVersionButtonText" xml:space="preserve">
+        <value>切换版本</value>
+    </data>
+    <data name="InstanceSetupView_LoadingPackageLabelText" xml:space="preserve">
+        <value>加载包信息...</value>
     </data>
 </root>
