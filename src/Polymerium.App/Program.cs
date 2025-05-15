@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Huskui.Avalonia.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace Polymerium.App;

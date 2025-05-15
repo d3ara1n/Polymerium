@@ -300,7 +300,7 @@ public partial class InstanceSetupViewModel(
     private void ViewPackage(InstancePackageModel? model)
     {
         if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
-            overlayService.PopModal(new PackageEntryModal
+            overlayService.PopModal(new InstancePackageModal
             {
                 DataContext = model,
                 Guard = guard,

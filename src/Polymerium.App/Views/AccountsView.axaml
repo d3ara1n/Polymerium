@@ -11,6 +11,7 @@
            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
            xmlns:v="clr-namespace:Polymerium.App.Views"
            xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+           xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
            x:Class="Polymerium.App.Views.AccountsView" x:DataType="vm:AccountsViewModel">
     <husk:Page.Header>
         <DockPanel HorizontalSpacing="8">
@@ -19,11 +20,13 @@
                     <StackPanel Orientation="Horizontal" Spacing="7">
                         <icons:PackIconLucide Kind="UserPlus" Width="{StaticResource MediumFontSize}"
                                               Height="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
-                        <TextBlock Text="Add Account" VerticalAlignment="Center" />
+                        <TextBlock Text="{x:Static lang:Resources.AccountsView_AddAccountButtonText}"
+                                   VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </StackPanel>
-            <TextBlock Text="Accounts" Theme="{StaticResource PageHeaderTextBlockTheme}" />
+            <TextBlock Text="{x:Static lang:Resources.AccountsView_Title}"
+                       Theme="{StaticResource PageHeaderTextBlockTheme}" />
         </DockPanel>
     </husk:Page.Header>
     <Panel>
@@ -33,7 +36,7 @@
             <icons:PackIconLucide Kind="Users" Height="{StaticResource ExtraLargeFontSize}"
                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                   Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-            <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+            <TextBlock Text="{x:Static lang:Resources.Shared_EmptyList}" FontSize="{StaticResource LargeFontSize}"
                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center" />
         </StackPanel>
         <ItemsControl ClipToBounds="False" ItemsSource="{Binding Accounts}">
@@ -49,12 +52,12 @@
                         CommandParameter="{Binding}">
                         <controls:AccountEntryButton.ContextFlyout>
                             <MenuFlyout>
-                                <MenuItem Header="Mark as Default"
+                                <MenuItem Header="{x:Static lang:Resources.AccountEntryButton_MarkAsDefaultMenu}"
                                           Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,FontSize={StaticResource MediumFontSize}}"
                                           IsEnabled="{Binding IsDefault,Converter={x:Static BoolConverters.Not},Mode=OneWay}"
                                           Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).MarkAsDefaultAccountCommand,Mode=OneWay,FallbackValue={x:Null}}"
                                           CommandParameter="{Binding}" />
-                                <MenuItem Header="Remove"
+                                <MenuItem Header="{x:Static lang:Resources.AccountEntryButton_RemoveMenu}"
                                           Icon="{fie:SymbolIcon Symbol=Delete,FontSize={StaticResource MediumFontSize}}"
                                           Command="{Binding $parent[v:AccountsView].((vm:AccountsViewModel)DataContext).RemoveAccountCommand,Mode=OneWay,FallbackValue={x:Null}}"
                                           CommandParameter="{Binding}" />

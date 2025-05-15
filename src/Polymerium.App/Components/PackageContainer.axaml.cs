@@ -85,10 +85,10 @@ public partial class PackageContainer : UserControl
                                                                      (o, v) => o.BulkUpdateCommand = v);
 
     public static readonly
-        DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageEntryFilterTagModel>?>
+        DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageFilterTagModel>?>
         TagsViewProperty =
             AvaloniaProperty
-               .RegisterDirect<PackageContainer, ReadOnlyObservableCollection<InstancePackageEntryFilterTagModel>
+               .RegisterDirect<PackageContainer, ReadOnlyObservableCollection<InstancePackageFilterTagModel>
                     ?>(nameof(TagsView), o => o.TagsView, (o, v) => o.TagsView = v);
 
     public static readonly DirectProperty<PackageContainer, bool> IsFilterActiveProperty =
@@ -117,7 +117,7 @@ public partial class PackageContainer : UserControl
         set => SetAndRaise(IsFilterActiveProperty, ref field, value);
     }
 
-    public ReadOnlyObservableCollection<InstancePackageEntryFilterTagModel>? TagsView
+    public ReadOnlyObservableCollection<InstancePackageFilterTagModel>? TagsView
     {
         get;
         set => SetAndRaise(TagsViewProperty, ref field, value);
@@ -200,7 +200,7 @@ public partial class PackageContainer : UserControl
                        .Connect()
                        .MergeManyChangeSets(x => x.Tags.ToObservableChangeSet())
                        .Distinct()
-                       .Transform(x => new InstancePackageEntryFilterTagModel(x) { RefCount = 1 })
+                       .Transform(x => new InstancePackageFilterTagModel(x) { RefCount = 1 })
                        .Bind(out var tagsView)
                        .AutoRefresh()
                        .Filter(x => x.IsSelected)

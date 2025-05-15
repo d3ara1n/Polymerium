@@ -10,7 +10,7 @@
             xmlns:trident="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             mc:Ignorable="d" MinWidth="360" Margin="64"
-            x:Class="Polymerium.App.Modals.PackageEntryModal" x:DataType="m:InstancePackageModel">
+            x:Class="Polymerium.App.Modals.InstancePackageModal" x:DataType="m:InstancePackageModel">
     <husk:ConstrainedBox AspectRatio="0.8">
         <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
             <Border Grid.Row="0" Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Padding="12"
@@ -62,7 +62,7 @@
                         <Border Grid.Row="0" Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                 CornerRadius="{StaticResource MediumCornerRadius}">
                             <ContentControl
-                                Content="{Binding $parent[modals:PackageEntryModal].((m:InstancePackageModel)DataContext).Version,Mode=OneWay,FallbackValue={x:Null}}">
+                                Content="{Binding $parent[modals:InstancePackageModal].((m:InstancePackageModel)DataContext).Version,Mode=OneWay,FallbackValue={x:Null}}">
                                 <ContentControl.DataTemplates>
                                     <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
                                         <Grid Margin="6,12" ColumnDefinitions="Auto,*" RowDefinitions="*,*"
@@ -95,8 +95,8 @@
                                             <Button Grid.Column="1" Theme="{StaticResource GhostButtonTheme}"
                                                     Margin="4,0,0,0"
                                                     Classes="Small"
-                                                    IsVisible="{Binding $parent[modals:PackageEntryModal].((m:InstancePackageModel)DataContext).IsLocked,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
-                                                    Command="{Binding $parent[modals:PackageEntryModal].RemoveVersionCommand}">
+                                                    IsVisible="{Binding $parent[modals:InstancePackageModal].((m:InstancePackageModel)DataContext).IsLocked,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
+                                                    Command="{Binding $parent[modals:InstancePackageModal].RemoveVersionCommand}">
                                                 <fi:SymbolIcon Symbol="Dismiss"
                                                                FontSize="{StaticResource MediumFontSize}" />
                                             </Button>
@@ -117,13 +117,13 @@
                             <husk:SwitchCase Value="False">
                                 <!-- TabItem 不是 Lazy 的，导致 LazyContainer 就算不可见也会开始 Load -->
                                 <husk:LazyContainer
-                                    Source="{Binding $parent[modals:PackageEntryModal].LazyVersions}">
+                                    Source="{Binding $parent[modals:InstancePackageModal].LazyVersions}">
                                     <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="m:InstancePackageVersionCollection">
                                             <Grid RowDefinitions="Auto,*" RowSpacing="8">
                                                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                                                     <CheckBox Grid.Column="0" Content="Show compatible versions only"
-                                                              IsChecked="{Binding $parent[modals:PackageEntryModal].IsFilterEnabled,Mode=TwoWay}" />
+                                                              IsChecked="{Binding $parent[modals:InstancePackageModal].IsFilterEnabled,Mode=TwoWay}" />
                                                     <Button Grid.Column="1" Theme="{StaticResource OutlineButtonTheme}"
                                                             Padding="6" Command="{Binding #VersionBox.ScrollIntoView}"
                                                             CommandParameter="{Binding #VersionBox.SelectedIndex}">
@@ -133,7 +133,7 @@
                                                     </Button>
                                                 </Grid>
                                                 <ListBox Name="VersionBox" Grid.Row="1" ItemsSource="{Binding}"
-                                                         SelectedItem="{Binding $parent[modals:PackageEntryModal].SelectedVersionProxy,Mode=TwoWay,FallbackValue={x:Null}}">
+                                                         SelectedItem="{Binding $parent[modals:InstancePackageModal].SelectedVersionProxy,Mode=TwoWay,FallbackValue={x:Null}}">
                                                     <ListBox.ItemTemplate>
                                                         <DataTemplate DataType="m:InstancePackageVersionModel">
                                                             <StackPanel Spacing="4">
@@ -224,7 +224,7 @@
                                             <Run Text="{Binding Tags.Count,FallbackValue=0}" />
                                         </TextBlock>
                                         <Button HorizontalAlignment="Left" Classes="Small"
-                                                Command="{Binding $parent[modals:PackageEntryModal].AddTagCommand}"
+                                                Command="{Binding $parent[modals:InstancePackageModal].AddTagCommand}"
                                                 Theme="{StaticResource GhostButtonTheme}">
                                             <StackPanel Orientation="Horizontal" Spacing="4">
                                                 <fi:SymbolIcon Symbol="Add"
@@ -250,7 +250,7 @@
                                             BorderThickness="1">
                                             <DockPanel>
                                                 <Button DockPanel.Dock="Right"
-                                                        Command="{Binding $parent[modals:PackageEntryModal].RemoveTagCommand}"
+                                                        Command="{Binding $parent[modals:InstancePackageModal].RemoveTagCommand}"
                                                         CommandParameter="{Binding}"
                                                         Theme="{StaticResource GhostButtonTheme}"
                                                         Padding="4,0"
@@ -276,7 +276,7 @@
                               OffContent="Disabled" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
                     <Button Content="Dismiss" IsCancel="True"
-                            Command="{Binding $parent[modals:PackageEntryModal].DismissCommand}" />
+                            Command="{Binding $parent[modals:InstancePackageModal].DismissCommand}" />
                 </StackPanel>
             </Grid>
         </Grid>

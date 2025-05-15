@@ -14,28 +14,27 @@ using Trident.Abstractions.Utilities;
 
 namespace Polymerium.App.Modals;
 
-public partial class PackageEntryModal : Modal
+public partial class InstancePackageModal : Modal
 {
-    public static readonly DirectProperty<PackageEntryModal, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<PackageEntryModal, LazyObject?>(nameof(LazyVersions),
-                                                                        o => o.LazyVersions,
-                                                                        (o, v) => o.LazyVersions = v);
+    public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyVersionsProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyVersions),
+                                                                           o => o.LazyVersions,
+                                                                           (o, v) => o.LazyVersions = v);
 
-    public static readonly DirectProperty<PackageEntryModal, bool> IsFilterEnabledProperty =
-        AvaloniaProperty.RegisterDirect<PackageEntryModal, bool>(nameof(IsFilterEnabled),
-                                                                 o => o.IsFilterEnabled,
-                                                                 (o, v) => o.IsFilterEnabled = v);
+    public static readonly DirectProperty<InstancePackageModal, bool> IsFilterEnabledProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, bool>(nameof(IsFilterEnabled),
+                                                                    o => o.IsFilterEnabled,
+                                                                    (o, v) => o.IsFilterEnabled = v);
 
-    public static readonly DirectProperty<PackageEntryModal, InstancePackageVersionModel?>
+    public static readonly DirectProperty<InstancePackageModal, InstancePackageVersionModel?>
         SelectedVersionProxyProperty =
             AvaloniaProperty
-               .RegisterDirect<PackageEntryModal, InstancePackageVersionModel?>(nameof(SelectedVersionProxy),
-                                                                                    o => o.SelectedVersionProxy,
-                                                                                    (o, v) =>
-                                                                                        o.SelectedVersionProxy = v);
+               .RegisterDirect<InstancePackageModal, InstancePackageVersionModel?>(nameof(SelectedVersionProxy),
+                    o => o.SelectedVersionProxy,
+                    (o, v) => o.SelectedVersionProxy = v);
 
 
-    public PackageEntryModal() => InitializeComponent();
+    public InstancePackageModal() => InitializeComponent();
 
     public required ProfileGuard Guard { get; init; }
     public required DataService DataService { get; init; }

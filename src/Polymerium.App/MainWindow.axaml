@@ -12,6 +12,7 @@
     xmlns:v="using:Polymerium.App.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     ExtendClientAreaChromeHints="NoChrome"
     ExtendClientAreaToDecorationsHint="True"
     ExtendClientAreaTitleBarHeightHint="44"
@@ -54,7 +55,7 @@
                         Margin="48,12,48,12"
                         FontSize="24"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="B-b-b-bird, bird, bird, b-bird's the word..."
+                        Text="{x:Static lang:Resources.MainWindow_BackgroundText}"
                         TextAlignment="Center"
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>
@@ -141,7 +142,8 @@
                             Height="18"
                             VerticalAlignment="Center"
                             Kind="Ghost" />
-                        <TextBlock VerticalAlignment="Center" Text="Home" />
+                        <TextBlock VerticalAlignment="Center"
+                                   Text="{x:Static lang:Resources.MainWindow_HomeButtonText}" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -170,7 +172,8 @@
                             Width="18"
                             Height="18"
                             Kind="Store" />
-                        <TextBlock VerticalAlignment="Center" Text="Go to Marketplace" />
+                        <TextBlock VerticalAlignment="Center"
+                                   Text="{x:Static lang:Resources.MainWindow_MarketplaceButtonText}" />
                     </StackPanel>
                 </Button>
                 <husk:Divider
@@ -183,7 +186,7 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Text="{Binding FilterText, Mode=TwoWay}"
-                    Watermark="Filter entries by names...">
+                    Watermark="{x:Static lang:Resources.MainWindow_InstanceFilterPlaceholder}">
                     <TextBox.InnerRightContent>
                         <Button
                             IsVisible="{Binding $parent[TextBox].Text,Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
@@ -202,7 +205,8 @@
                         <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                               Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyList}"
+                                   FontSize="{StaticResource LargeFontSize}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
@@ -246,7 +250,7 @@
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Type v:AccountsView}"
                     Theme="{StaticResource OutlineButtonTheme}">
-                    Accounts
+                    <TextBlock Text="{x:Static lang:Resources.MainWindow_AccountButtonText}" />
                 </Button>
             </Grid>
         </DockPanel>

@@ -1,6 +1,5 @@
 ﻿using System;
 using Avalonia;
-using Huskui.Avalonia.Extensions;
 
 namespace Huskui.Gallery;
 
@@ -13,6 +12,5 @@ internal class Program
     public static void Main(string[] args) => BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
     // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp() =>
-        AppBuilder.Configure<App>().UsePlatformDetect().WithOutfitFont().LogToTrace();
+    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>().UsePlatformDetect().LogToTrace();
 }

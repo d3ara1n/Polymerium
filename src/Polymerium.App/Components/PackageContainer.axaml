@@ -114,7 +114,7 @@
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
-                                                    <DataTemplate x:DataType="m:InstancePackageEntryFilterTagModel">
+                                                    <DataTemplate x:DataType="m:InstancePackageFilterTagModel">
                                                         <Border CornerRadius="{StaticResource SmallCornerRadius}"
                                                                 BorderBrush="{StaticResource ControlBorderBrush}"
                                                                 BorderThickness="1" Padding="8">
