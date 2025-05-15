@@ -60,4 +60,67 @@
     <data name="ExceptionView_Subtitle" xml:space="preserve">
         <value>It seems something went wrong...</value>
     </data>
+    <data name="InstanceHomeView_OverviewTitle" xml:space="preserve">
+        <value>Overview</value>
+    </data>
+    <data name="InstanceHomeView_PackageCountText" xml:space="preserve">
+        <value>packages</value>
+    </data>
+    <data name="InstanceHomeView_SetupTitle" xml:space="preserve">
+        <value>Setup</value>
+    </data>
+    <data name="InstanceHomeView_SetupTypeText" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="InstanceHomeView_SetupVersionText" xml:space="preserve">
+        <value>Version</value>
+    </data>
+    <data name="InstanceHomeView_ActivitiesTitle" xml:space="preserve">
+        <value>Activities</value>
+    </data>
+    <data name="InstanceHomeView_HourCountText" xml:space="preserve">
+        <value>Total Hours</value>
+    </data>
+    <data name="InstanceHomeView_WidgetsTitle" xml:space="preserve">
+        <value>Widgets</value>
+    </data>
+    <data name="InstanceHomeView_LaunchPadTitle" xml:space="preserve">
+        <value>Launch Pad</value>
+    </data>
+    <data name="InstanceHomeView_SeeMoreButtonText" xml:space="preserve">
+        <value>See More</value>
+    </data>
+    <data name="InstanceHomeView_SetupDetailsButtonText" xml:space="preserve">
+        <value>Details</value>
+    </data>
+    <data name="InstanceHomeView_ReadyLabelText" xml:space="preserve">
+        <value>Everything is ready</value>
+    </data>
+    <data name="InstanceHomeView_NoAccountLabelText" xml:space="preserve">
+        <value>Account is not set yet</value>
+    </data>
+    <data name="InstanceHomeView_LaunchButtonText" xml:space="preserve">
+        <value>LAUNCH</value>
+    </data>
+    <data name="InstanceHomeView_AccountButtonTitle" xml:space="preserve">
+        <value>Account</value>
+    </data>
+    <data name="InstanceHomeView_AccountButtonSubtitle" xml:space="preserve">
+        <value>Unchosen</value>
+    </data>
+    <data name="InstanceHomeView_AbortButtonText" xml:space="preserve">
+        <value>ABORT</value>
+    </data>
+    <data name="InstanceHomeView_KillButtonText" xml:space="preserve">
+        <value>KILL</value>
+    </data>
+    <data name="InstanceHomeView_DetachButtonText" xml:space="preserve">
+        <value>Eject</value>
+    </data>
+    <data name="InstanceHomeView_DashboardButtonTitle" xml:space="preserve">
+        <value>Logs</value>
+    </data>
+    <data name="InstanceHomeView_DashboardButtonSubtitle" xml:space="preserve">
+        <value>Dashboard</value>
+    </data>
 </root>

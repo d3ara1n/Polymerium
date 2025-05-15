@@ -15,6 +15,7 @@
     xmlns:assets="clr-namespace:Polymerium.App.Assets"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:m="clr-namespace:Polymerium.App.Models"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     d:DesignHeight="566"
     d:DesignWidth="780"
     x:DataType="vm:InstanceHomeViewModel"
@@ -79,7 +80,7 @@
                     </Border.OpacityMask>
                 </Border>
                 <Grid Margin="24" RowDefinitions="Auto,8,Auto">
-                    <husk:Tag Grid.Row="0" Content="Overview" />
+                    <husk:Tag Grid.Row="0" Content="{x:Static lang:Resources.InstanceHomeView_OverviewTitle}" />
                     <TextBlock
                         Grid.Row="2"
                         FontSize="36"
@@ -111,7 +112,7 @@
                             Margin="4"
                             VerticalAlignment="Bottom"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="packages" />
+                            Text="{x:Static lang:Resources.InstanceHomeView_PackageCountText}" />
                     </StackPanel>
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,8,*,8,Auto">
                         <icons:PackIconLucide
@@ -122,14 +123,15 @@
                         <TextBlock
                             Grid.Column="2"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="Setup" />
+                            Text="{x:Static lang:Resources.InstanceHomeView_SetupTitle}" />
                         <Button
                             Grid.Column="4"
                             Command="{Binding $parent[v:InstanceView].NavigateCommand}"
                             CommandParameter="{x:Type v:InstanceSetupView}"
                             Theme="{StaticResource SectionHeaderButtonTheme}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock FontSize="{StaticResource SmallFontSize}" Text="Details" />
+                                <TextBlock FontSize="{StaticResource SmallFontSize}"
+                                           Text="{x:Static lang:Resources.InstanceHomeView_SetupDetailsButtonText}" />
                                 <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
                             </StackPanel>
                         </Button>
@@ -138,7 +140,7 @@
                                BorderThickness="0" CornerRadius="{StaticResource MediumCornerRadius}">
                         <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="12">
                             <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="4">
-                                <TextBlock Grid.Row="0" Text="Type"
+                                <TextBlock Grid.Row="0" Text="{x:Static lang:Resources.InstanceHomeView_SetupTypeText}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Grid.Row="1"
                                            Text="{Binding Basic.LoaderLabel, FallbackValue=Type}"
@@ -147,7 +149,8 @@
                             </Grid>
                             <husk:Divider Grid.Column="1" Orientation="Vertical" />
                             <Grid Grid.Column="2" RowDefinitions="Auto,*" RowSpacing="4">
-                                <TextBlock Grid.Row="0" Text="Version"
+                                <TextBlock Grid.Row="0"
+                                           Text="{x:Static lang:Resources.InstanceHomeView_SetupVersionText}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                 <TextBlock Grid.Row="1"
                                            Text="{Binding Basic.Version, FallbackValue=Version}"
@@ -160,16 +163,10 @@
                 </Grid>
             </husk:Card>
             <husk:BusyContainer.PendingContent>
-                <StackPanel VerticalAlignment="Center" Spacing="8">
-                    <husk:ProgressRing
-                        Width="56"
-                        Height="56"
-                        IsIndeterminate="True" />
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="Updating In Progress" />
-                </StackPanel>
+                <husk:ProgressRing
+                    Width="56"
+                    Height="56"
+                    IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </husk:BusyContainer.PendingContent>
         </husk:BusyContainer>
         <Grid
@@ -182,7 +179,7 @@
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="Activities" />
+                    Text="{x:Static lang:Resources.InstanceHomeView_ActivitiesTitle}" />
                 <Button
                     Grid.Row="0"
                     Grid.Column="2"
@@ -191,7 +188,8 @@
                     CommandParameter="{x:Type v:InstanceStatisticsView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock FontSize="{StaticResource SmallFontSize}" Text="See More" />
+                        <TextBlock FontSize="{StaticResource SmallFontSize}"
+                                   Text="{x:Static lang:Resources.InstanceHomeView_SeeMoreButtonText}" />
                         <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
                     </StackPanel>
                 </Button>
@@ -208,7 +206,7 @@
                                            TrackStrokeWidth="2" TrackPadding="1" />
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock TextAlignment="Center">
-                                <Run Text="Total Hours" />
+                                <Run Text="{x:Static lang:Resources.InstanceHomeView_HourCountText}" />
                                 <LineBreak />
                                 <Run FontSize="{StaticResource ExtraLargeFontSize}"
                                      Text="{Binding TotalPlayTime,StringFormat={}{0:0.0},FallbackValue=12.4}" />
@@ -248,7 +246,7 @@
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="Widgets" />
+                    Text="{x:Static lang:Resources.InstanceHomeView_WidgetsTitle}" />
                 <Button
                     Grid.Row="0"
                     Grid.Column="2"
@@ -257,7 +255,8 @@
                     CommandParameter="{x:Type v:InstanceWidgetsView}"
                     Theme="{StaticResource SectionHeaderButtonTheme}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock FontSize="{StaticResource SmallFontSize}" Text="See More" />
+                        <TextBlock FontSize="{StaticResource SmallFontSize}"
+                                   Text="{x:Static lang:Resources.InstanceHomeView_SeeMoreButtonText}" />
                         <fi:SymbolIcon FontSize="{StaticResource SmallFontSize}" Symbol="ArrowRight" />
                     </StackPanel>
                 </Button>
@@ -322,7 +321,7 @@
                 Grid.Row="0"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="Launch Pad" />
+                Text="{x:Static lang:Resources.InstanceHomeView_LaunchPadTitle}" />
             <husk:Card
                 Grid.Row="1"
                 Grid.Column="0"
@@ -346,7 +345,7 @@
                                         IconVariant="Filled"
                                         Symbol="CheckmarkCircle" />
                                     <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                               Text="Everything is ready" />
+                                               Text="{x:Static lang:Resources.InstanceHomeView_ReadyLabelText}" />
                                 </StackPanel>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="{x:False}">
@@ -362,7 +361,7 @@
                                         IconVariant="Filled"
                                         Symbol="DismissCircle" />
                                     <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                               Text="Account is not set yet" />
+                                               Text="{x:Static lang:Resources.InstanceHomeView_NoAccountLabelText}" />
                                 </StackPanel>
                             </husk:SwitchCase>
                         </husk:SwitchPresenter>
@@ -432,7 +431,8 @@
                                         HorizontalAlignment="Center"
                                         FontSize="20"
                                         Symbol="Rocket" />
-                                    <TextBlock HorizontalAlignment="Center" Text="LAUNCH" />
+                                    <TextBlock HorizontalAlignment="Center"
+                                               Text="{x:Static lang:Resources.InstanceHomeView_LaunchButtonText}" />
                                 </StackPanel>
                             </Button>
                             <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
@@ -466,13 +466,13 @@
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource MediumFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="Account" />
+                                                    Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonTitle}" />
                                                 <TextBlock
                                                     Grid.Row="2"
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="Unchosen" />
+                                                    Text="{x:Static lang:Resources.InstanceHomeView_AccountButtonSubtitle}" />
                                             </Grid>
                                         </husk:PlaceholderPresenter.Placeholder>
                                         <husk:PlaceholderPresenter.SourceTemplate>
@@ -518,7 +518,8 @@
                                     HorizontalAlignment="Center"
                                     FontSize="20"
                                     Symbol="Stop" />
-                                <TextBlock HorizontalAlignment="Center" Text="ABORT" />
+                                <TextBlock HorizontalAlignment="Center"
+                                           Text="{x:Static lang:Resources.InstanceHomeView_AbortButtonText}" />
                             </StackPanel>
                         </Button>
                     </husk:SwitchCase>
@@ -536,7 +537,8 @@
                                         HorizontalAlignment="Center"
                                         FontSize="20"
                                         Symbol="Rocket" />
-                                    <TextBlock HorizontalAlignment="Center" Text="STOP" />
+                                    <TextBlock HorizontalAlignment="Center"
+                                               Text="{x:Static lang:Resources.InstanceHomeView_KillButtonText}" />
                                 </StackPanel>
                             </Button>
                             <Grid Grid.Column="2" RowDefinitions="Auto,0,*">
@@ -545,7 +547,7 @@
                                     Command="{Binding EjectCommand}"
                                     Margin="0,8,8,0"
                                     Classes="Small">
-                                    <TextBlock Text="Eject" />
+                                    <TextBlock Text="{x:Static lang:Resources.InstanceHomeView_DetachButtonText}" />
                                 </Button>
                                 <Button
                                     Grid.Row="2"
@@ -569,12 +571,12 @@
                                             Grid.Row="0"
                                             Grid.Column="2"
                                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                                            Text="Logs" />
+                                            Text="{x:Static lang:Resources.InstanceHomeView_DashboardButtonTitle}" />
                                         <TextBlock
                                             Grid.Row="2"
                                             Grid.Column="2"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="Dashboard" />
+                                            Text="{x:Static lang:Resources.InstanceHomeView_DashboardButtonSubtitle}" />
                                     </Grid>
                                 </Button>
                             </Grid>

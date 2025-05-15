@@ -114,6 +114,195 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ABORT.
+        /// </summary>
+        public static string InstanceHomeView_AbortButtonText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_AbortButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unchosen.
+        /// </summary>
+        public static string InstanceHomeView_AccountButtonSubtitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_AccountButtonSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string InstanceHomeView_AccountButtonTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_AccountButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activities.
+        /// </summary>
+        public static string InstanceHomeView_ActivitiesTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_ActivitiesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string InstanceHomeView_DashboardButtonSubtitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_DashboardButtonSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logs.
+        /// </summary>
+        public static string InstanceHomeView_DashboardButtonTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_DashboardButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eject.
+        /// </summary>
+        public static string InstanceHomeView_DetachButtonText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_DetachButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Hours.
+        /// </summary>
+        public static string InstanceHomeView_HourCountText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_HourCountText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KILL.
+        /// </summary>
+        public static string InstanceHomeView_KillButtonText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_KillButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LAUNCH.
+        /// </summary>
+        public static string InstanceHomeView_LaunchButtonText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_LaunchButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launch Pad.
+        /// </summary>
+        public static string InstanceHomeView_LaunchPadTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_LaunchPadTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account is not set yet.
+        /// </summary>
+        public static string InstanceHomeView_NoAccountLabelText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_NoAccountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overview.
+        /// </summary>
+        public static string InstanceHomeView_OverviewTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_OverviewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to packages.
+        /// </summary>
+        public static string InstanceHomeView_PackageCountText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_PackageCountText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everything is ready.
+        /// </summary>
+        public static string InstanceHomeView_ReadyLabelText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_ReadyLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See More.
+        /// </summary>
+        public static string InstanceHomeView_SeeMoreButtonText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_SeeMoreButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string InstanceHomeView_SetupDetailsButtonText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_SetupDetailsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setup.
+        /// </summary>
+        public static string InstanceHomeView_SetupTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_SetupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string InstanceHomeView_SetupTypeText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_SetupTypeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string InstanceHomeView_SetupVersionText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_SetupVersionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Widgets.
+        /// </summary>
+        public static string InstanceHomeView_WidgetsTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_WidgetsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string MainWindow_AccountButtonText {
