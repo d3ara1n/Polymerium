@@ -205,7 +205,7 @@
                         <icons:PackIconLucide Kind="Box" Height="{StaticResource ExtraLargeFontSize}"
                                               Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                               Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyList}"
+                        <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
                                    FontSize="{StaticResource LargeFontSize}"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                    HorizontalAlignment="Center" />

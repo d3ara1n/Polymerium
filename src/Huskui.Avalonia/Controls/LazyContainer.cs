@@ -55,11 +55,14 @@ public class LazyContainer : TemplatedControl
         set => SetValue(IsBadProperty, value);
     }
 
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    protected override async void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
 
         _contentPresenter = e.NameScope.Find<ContentPresenter>(PART_ContentPresenter);
+
+        if (Source != null)
+            await LoadAsync(Source);
     }
 
 
@@ -71,7 +74,7 @@ public class LazyContainer : TemplatedControl
         {
             if (change.OldValue is LazyObject { IsCancelled: false, IsInProgress: true } old)
                 old.Cancel();
-            if (change.NewValue is LazyObject lazy)
+            if (change.NewValue is LazyObject lazy && _contentPresenter is not null)
                 await LoadAsync(lazy);
         }
     }
@@ -97,6 +100,8 @@ public class LazyContainer : TemplatedControl
             }
             catch
             {
+                _contentPresenter.Content = BadContent;
+                _contentPresenter.ContentTemplate = null;
                 IsBad = true;
             }
     }
