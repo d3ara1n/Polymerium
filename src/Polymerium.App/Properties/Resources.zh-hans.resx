@@ -16,7 +16,7 @@
         </value>
     </resheader>
     <data name="MainWindow_BackgroundText" xml:space="preserve">
-        <value>一个字，鸟。</value>
+        <value>Ciallo～(∠・ω&lt; )⌒★</value>
     </data>
     <data name="MainWindow_HomeButtonText" xml:space="preserve">
         <value>主页</value>
@@ -50,5 +50,68 @@
     </data>
     <data name="ExceptionView_Subtitle" xml:space="preserve">
         <value>程序遇到了无法自救的问题...</value>
+    </data>
+    <data name="InstanceHomeView_OverviewTitle" xml:space="preserve">
+        <value>总览</value>
+    </data>
+    <data name="InstanceHomeView_PackageCountText" xml:space="preserve">
+        <value>个包</value>
+    </data>
+    <data name="InstanceHomeView_SetupTitle" xml:space="preserve">
+        <value>配置</value>
+    </data>
+    <data name="InstanceHomeView_SetupTypeText" xml:space="preserve">
+        <value>类型</value>
+    </data>
+    <data name="InstanceHomeView_SetupVersionText" xml:space="preserve">
+        <value>版本</value>
+    </data>
+    <data name="InstanceHomeView_ActivitiesTitle" xml:space="preserve">
+        <value>活动</value>
+    </data>
+    <data name="InstanceHomeView_HourCountText" xml:space="preserve">
+        <value>总时数</value>
+    </data>
+    <data name="InstanceHomeView_WidgetsTitle" xml:space="preserve">
+        <value>小部件</value>
+    </data>
+    <data name="InstanceHomeView_LaunchPadTitle" xml:space="preserve">
+        <value>发射台</value>
+    </data>
+    <data name="InstanceHomeView_SeeMoreButtonText" xml:space="preserve">
+        <value>更多</value>
+    </data>
+    <data name="InstanceHomeView_SetupDetailsButtonText" xml:space="preserve">
+        <value>细节</value>
+    </data>
+    <data name="InstanceHomeView_ReadyLabelText" xml:space="preserve">
+        <value>准备就绪</value>
+    </data>
+    <data name="InstanceHomeView_NoAccountLabelText" xml:space="preserve">
+        <value>未选择账号</value>
+    </data>
+    <data name="InstanceHomeView_LaunchButtonText" xml:space="preserve">
+        <value>开始逆行</value>
+    </data>
+    <data name="InstanceHomeView_AccountButtonTitle" xml:space="preserve">
+        <value>账号</value>
+    </data>
+    <data name="InstanceHomeView_AccountButtonSubtitle" xml:space="preserve">
+        <value>未选择</value>
+    </data>
+    <data name="InstanceHomeView_AbortButtonText" xml:space="preserve">
+        <value>不中嘞</value>
+    </data>
+    <data name="InstanceHomeView_KillButtonText" xml:space="preserve">
+        <value>强制退出</value>
+    </data>
+    <data name="InstanceHomeView_DetachButtonText" xml:space="preserve">
+        <value>弹射</value>
+    </data>
+    <data name="InstanceHomeView_DashboardButtonTitle" xml:space="preserve">
+        <value>日志</value>
+    </data>
+    <data name="InstanceHomeView_DashboardButtonSubtitle" xml:space="preserve">
+        <value>信息面板</value>
     </data>
 </root>
