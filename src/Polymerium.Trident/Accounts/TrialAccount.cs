@@ -12,13 +12,18 @@ public class TrialAccount : IAccount
 
     public string UserType => "legacy";
 
-    public static TrialAccount CreateStewie() => new() { Username = "Stewie", Uuid = Guid.NewGuid().ToString() };
+    public static TrialAccount CreateStewie() =>
+        new() { Username = "Stewie", Uuid = Guid.NewGuid().ToString().Replace("-", string.Empty) };
 
-    public static TrialAccount CreateBrian() => new() { Username = "Brian", Uuid = Guid.NewGuid().ToString() };
+    public static TrialAccount CreateBrian() =>
+        new() { Username = "Brian", Uuid = Guid.NewGuid().ToString().Replace("-", string.Empty) };
 
-    public static TrialAccount CreateChris() => new() { Username = "Chris", Uuid = Guid.NewGuid().ToString() };
+    public static TrialAccount CreateChris() =>
+        new() { Username = "Chris", Uuid = Guid.NewGuid().ToString().Replace("-", string.Empty) };
 
-    public static TrialAccount CreatePeter() => new() { Username = "Peter", Uuid = Guid.NewGuid().ToString() };
+    public static TrialAccount CreatePeter() =>
+        new() { Username = "Peter", Uuid = Guid.NewGuid().ToString().Replace("-", string.Empty) };
 
-    public static TrialAccount CreateLois() => new() { Username = "Lois", Uuid = Guid.NewGuid().ToString() };
+    public static TrialAccount CreateLois() =>
+        new() { Username = "Lois", Uuid = Guid.NewGuid().ToString().Replace("-", string.Empty) };
 }

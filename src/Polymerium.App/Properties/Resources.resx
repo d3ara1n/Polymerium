@@ -828,4 +828,73 @@
     <data name="InstanceDashboardToast_Title" xml:space="preserve">
         <value>Dashboard</value>
     </data>
+    <data name="JavaHomeContainer_ReqeustJavaTitle" xml:space="preserve">
+        <value>Select a Java executable</value>
+    </data>
+    <data name="JavaHomeContainer_RequestJavaPrompt" xml:space="preserve">
+        <value>Pick a file like /bin/java.exe or /bin/javaw.exe</value>
+    </data>
+    <data name="NewInstanceView_RequestFileTitle" xml:space="preserve">
+        <value>Import from file</value>
+    </data>
+    <data name="NewInstanceView_RequestFilePrompt" xml:space="preserve">
+        <value>Select a compressed modpack file to import</value>
+    </data>
+    <data name="NewInstanceView_ImportDangerNotificationTitle" xml:space="preserve">
+        <value>Import failed</value>
+    </data>
+    <data name="NewInstanceView_IconSavingDangerNotificationTitle" xml:space="preserve">
+        <value>Write icon failed</value>
+    </data>
+    <data name="AccountsView_AccountAddingDangerNotificationTitle" xml:space="preserve">
+        <value>Account creation failed</value>
+    </data>
+    <data name="AccountsView_AccountAddingDangerNotificationPrompt" xml:space="preserve">
+        <value>Account with the same uuid already exists</value>
+    </data>
+    <data name="InstanceHomeView_AccountAuthenticationDangerNotificationTitle" xml:space="preserve">
+        <value>Account authentication failed</value>
+    </data>
+    <data name="InstanceHomeView_DeployDangerNotificationTitle" xml:space="preserve">
+        <value>Deployment failed</value>
+    </data>
+    <data name="InstanceHomeView_AccountNotFoundDangerNotificationTitle" xml:space="preserve">
+        <value>Account Not Found</value>
+    </data>
+    <data name="InstanceHomeView_AccountNotFoundDangerNotificationPrompt" xml:space="preserve">
+        <value>Account is not provided or removed after set</value>
+    </data>
+    <data name="InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText" xml:space="preserve">
+        <value>Select Account</value>
+    </data>
+    <data name="InstancePropertiesView_ThumbnailSavingDangerNotificationTitle" xml:space="preserve">
+        <value>Thumbnail saving failed</value>
+    </data>
+    <data name="InstancePropertiesView_RequestJavaTitle" xml:space="preserve">
+        <value>Select a Java executable</value>
+    </data>
+    <data name="InstancePropertiesView_RequestJavaPrompt" xml:space="preserve">
+        <value>Pick a file like /bin/java.exe or /bin/javaw.exe</value>
+    </data>
+    <data name="InstancePropertiesView_UnlockingSuccessNotificationPrompt" xml:space="preserve">
+        <value>The instance is no longer associated to any modpack brand and free to edit.</value>
+    </data>
+    <data name="InstancePropertiesView_RequestThumbnailTitle" xml:space="preserve">
+        <value>Select thumbnail</value>
+    </data>
+    <data name="InstancePropertiesView_RequestThumbnailPrompt" xml:space="preserve">
+        <value>Select a image file</value>
+    </data>
+    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationTitle" xml:space="preserve">
+        <value>Set instance thumbnail</value>
+    </data>
+    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt" xml:space="preserve">
+        <value>Selected file is not a valid image or no file selected.</value>
+    </data>
+    <data name="InstancePropertiesView_RequestNameTitle" xml:space="preserve">
+        <value>Rename instance</value>
+    </data>
+    <data name="InstancePropertiesView_RequestNamePrompt" xml:space="preserve">
+        <value>Give the instance a new name</value>
+    </data>
 </root>

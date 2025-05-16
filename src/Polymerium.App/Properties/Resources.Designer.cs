@@ -384,6 +384,24 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account with the same uuid already exists.
+        /// </summary>
+        public static string AccountsView_AccountAddingDangerNotificationPrompt {
+            get {
+                return ResourceManager.GetString("AccountsView_AccountAddingDangerNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account creation failed.
+        /// </summary>
+        public static string AccountsView_AccountAddingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("AccountsView_AccountAddingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Account.
         /// </summary>
         public static string AccountsView_AddAccountButtonText {
@@ -888,6 +906,15 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account authentication failed.
+        /// </summary>
+        public static string InstanceHomeView_AccountAuthenticationDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_AccountAuthenticationDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unchosen.
         /// </summary>
         public static string InstanceHomeView_AccountButtonSubtitle {
@@ -902,6 +929,33 @@ namespace Polymerium.App.Properties {
         public static string InstanceHomeView_AccountButtonTitle {
             get {
                 return ResourceManager.GetString("InstanceHomeView_AccountButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account is not provided or removed after set.
+        /// </summary>
+        public static string InstanceHomeView_AccountNotFoundDangerNotificationPrompt {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_AccountNotFoundDangerNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Account.
+        /// </summary>
+        public static string InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Not Found.
+        /// </summary>
+        public static string InstanceHomeView_AccountNotFoundDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_AccountNotFoundDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -929,6 +983,15 @@ namespace Polymerium.App.Properties {
         public static string InstanceHomeView_DashboardButtonTitle {
             get {
                 return ResourceManager.GetString("InstanceHomeView_DashboardButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deployment failed.
+        /// </summary>
+        public static string InstanceHomeView_DeployDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstanceHomeView_DeployDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -1383,6 +1446,60 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick a file like /bin/java.exe or /bin/javaw.exe.
+        /// </summary>
+        public static string InstancePropertiesView_RequestJavaPrompt {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_RequestJavaPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Java executable.
+        /// </summary>
+        public static string InstancePropertiesView_RequestJavaTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_RequestJavaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Give the instance a new name.
+        /// </summary>
+        public static string InstancePropertiesView_RequestNamePrompt {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_RequestNamePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename instance.
+        /// </summary>
+        public static string InstancePropertiesView_RequestNameTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_RequestNameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a image file.
+        /// </summary>
+        public static string InstancePropertiesView_RequestThumbnailPrompt {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_RequestThumbnailPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select thumbnail.
+        /// </summary>
+        public static string InstancePropertiesView_RequestThumbnailTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_RequestThumbnailTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string InstancePropertiesView_ResetButtonText {
@@ -1428,6 +1545,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thumbnail saving failed.
+        /// </summary>
+        public static string InstancePropertiesView_ThumbnailSavingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ThumbnailSavingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected file is not a valid image or no file selected..
+        /// </summary>
+        public static string InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set instance thumbnail.
+        /// </summary>
+        public static string InstancePropertiesView_ThumbnailSettingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ThumbnailSettingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to How this instance identify itself.
         /// </summary>
         public static string InstancePropertiesView_TitleSubtitle {
@@ -1451,6 +1595,15 @@ namespace Polymerium.App.Properties {
         public static string InstancePropertiesView_UnlockButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_UnlockButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The instance is no longer associated to any modpack brand and free to edit..
+        /// </summary>
+        public static string InstancePropertiesView_UnlockingSuccessNotificationPrompt {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_UnlockingSuccessNotificationPrompt", resourceCulture);
             }
         }
         
@@ -1559,6 +1712,24 @@ namespace Polymerium.App.Properties {
         public static string JavaHomeContainer_Prompt {
             get {
                 return ResourceManager.GetString("JavaHomeContainer_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Java executable.
+        /// </summary>
+        public static string JavaHomeContainer_ReqeustJavaTitle {
+            get {
+                return ResourceManager.GetString("JavaHomeContainer_ReqeustJavaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a file like /bin/java.exe or /bin/javaw.exe.
+        /// </summary>
+        public static string JavaHomeContainer_RequestJavaPrompt {
+            get {
+                return ResourceManager.GetString("JavaHomeContainer_RequestJavaPrompt", resourceCulture);
             }
         }
         
@@ -1734,11 +1905,29 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Write icon failed.
+        /// </summary>
+        public static string NewInstanceView_IconSavingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("NewInstanceView_IconSavingDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         public static string NewInstanceView_ImportButtonText {
             get {
                 return ResourceManager.GetString("NewInstanceView_ImportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import failed.
+        /// </summary>
+        public static string NewInstanceView_ImportDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("NewInstanceView_ImportDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -1766,6 +1955,24 @@ namespace Polymerium.App.Properties {
         public static string NewInstanceView_PackageCountLabelText {
             get {
                 return ResourceManager.GetString("NewInstanceView_PackageCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a compressed modpack file to import.
+        /// </summary>
+        public static string NewInstanceView_RequestFilePrompt {
+            get {
+                return ResourceManager.GetString("NewInstanceView_RequestFilePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import from file.
+        /// </summary>
+        public static string NewInstanceView_RequestFileTitle {
+            get {
+                return ResourceManager.GetString("NewInstanceView_RequestFileTitle", resourceCulture);
             }
         }
         

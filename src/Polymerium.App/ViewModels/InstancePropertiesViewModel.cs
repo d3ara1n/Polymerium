@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using Polymerium.App.Assets;
 using Polymerium.App.Facilities;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
@@ -127,7 +128,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "Saving thumbnail bitmap");
+            _notificationService.PopMessage(ex,
+                                            Resources.InstancePropertiesView_ThumbnailSavingDangerNotificationTitle);
         }
     }
 
@@ -148,8 +150,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     {
         if (box != null)
         {
-            var path = await _overlayService.RequestFileAsync("Pick a file like /bin/java.exe or /bin/javaw.exe",
-                                                              "Select a Java executable");
+            var path = await _overlayService.RequestFileAsync(Resources.InstancePropertiesView_RequestJavaPrompt,
+                                                              Resources.InstancePropertiesView_RequestJavaTitle);
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
@@ -212,7 +214,7 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
                                                                        PersistenceService.ActionKind.Unlock,
                                                                        oldSource,
                                                                        null));
-        _notificationService.PopMessage("The instance is no longer associated to any modpack brand and free to edit.",
+        _notificationService.PopMessage(Resources.InstancePropertiesView_UnlockingSuccessNotificationPrompt,
                                         Basic.Key,
                                         NotificationLevel.Success);
     }
@@ -227,7 +229,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private async Task SelectThumbnailAsync()
     {
-        var path = await _overlayService.RequestFileAsync("Select a image file", "Select thumbnail");
+        var path = await _overlayService.RequestFileAsync(Resources.InstancePropertiesView_RequestThumbnailPrompt,
+                                                          Resources.InstancePropertiesView_RequestThumbnailTitle);
         if (path != null)
         {
             if (FileHelper.IsBitmapFile(path))
@@ -237,7 +240,11 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
             }
             else
             {
-                _notificationService.PopMessage("Selected file is not a valid image or no file selected.");
+                _notificationService.PopMessage(Resources
+                                                   .InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt,
+                                                Resources
+                                                   .InstancePropertiesView_ThumbnailSettingDangerNotificationTitle,
+                                                NotificationLevel.Warning);
             }
         }
     }
@@ -245,8 +252,8 @@ public partial class InstancePropertiesViewModel : InstanceViewModelBase
     [RelayCommand]
     private async Task RenameInstance()
     {
-        var name = await _overlayService.RequestInputAsync("Give the instance a new name",
-                                                           "Rename instance",
+        var name = await _overlayService.RequestInputAsync(Resources.InstancePropertiesView_RequestNamePrompt,
+                                                           Resources.InstancePropertiesView_RequestNameTitle,
                                                            Basic.Name);
         if (name != null && _owned != null && !string.Equals(name, Basic.Name))
         {

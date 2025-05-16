@@ -8,10 +8,10 @@ using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Huskui.Avalonia.Models;
 using Polymerium.App.Dialogs;
 using Polymerium.App.Facilities;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Views;
 using Polymerium.Trident.Services;
@@ -61,7 +61,8 @@ public partial class NewInstanceViewModel(
     [RelayCommand]
     private async Task OpenImportDialog()
     {
-        var path = await overlayService.RequestFileAsync("Select a compressed modpack file to import");
+        var path = await overlayService.RequestFileAsync(Resources.NewInstanceView_RequestFilePrompt,
+                                                         Resources.NewInstanceView_RequestFileTitle);
         if (path != null)
             try
             {
@@ -78,7 +79,7 @@ public partial class NewInstanceViewModel(
             }
             catch (Exception e)
             {
-                notificationService.PopMessage(e, "Import failed");
+                notificationService.PopMessage(e, Resources.NewInstanceView_ImportDangerNotificationTitle);
             }
     }
 
@@ -116,15 +117,25 @@ public partial class NewInstanceViewModel(
 
         if (Thumbnail != null)
         {
-            var stream = new MemoryStream();
-            Thumbnail.Save(stream);
-            stream.Position = 0;
-            var extension = FileHelper.GuessBitmapExtension(stream);
-            var iconPath = PathDef.Default.FileOfIcon(key.Key, extension);
-            stream.Position = 0;
-            if (!await FileHelper.TryWriteToFileAsync(iconPath, stream))
-                notificationService.PopMessage("Write icon file to the instance dir failed",
-                                               level: NotificationLevel.Danger);
+            try
+            {
+                using var stream = new MemoryStream();
+                Thumbnail.Save(stream);
+                stream.Position = 0;
+                var extension = FileHelper.GuessBitmapExtension(stream);
+                var iconPath = PathDef.Default.FileOfIcon(key.Key, extension);
+                stream.Position = 0;
+                var parent = Path.GetDirectoryName(iconPath);
+                if (parent != null && !Directory.Exists(parent))
+                    Directory.CreateDirectory(parent);
+                var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
+                await stream.CopyToAsync(writer).ConfigureAwait(false);
+                await writer.FlushAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex, Resources.NewInstanceView_IconSavingDangerNotificationTitle);
+            }
         }
 
         profileManager.Add(key, profile);

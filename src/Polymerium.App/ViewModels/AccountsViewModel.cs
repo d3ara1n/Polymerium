@@ -8,6 +8,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.App.Facilities;
 using Polymerium.App.Modals;
 using Polymerium.App.Models;
+using Polymerium.App.Properties;
 using Polymerium.App.Services;
 using Polymerium.App.Utilities;
 using Polymerium.Trident.Services;
@@ -35,8 +36,8 @@ public partial class AccountsViewModel(
         var found = persistenceService.GetAccount(account.Uuid);
         if (found != null)
         {
-            notificationService.PopMessage("Account with the same uuid already exists",
-                                           "Account creation failed",
+            notificationService.PopMessage(Resources.AccountsView_AccountAddingDangerNotificationPrompt,
+                                           Resources.AccountsView_AccountAddingDangerNotificationTitle,
                                            NotificationLevel.Danger);
             return false;
         }
