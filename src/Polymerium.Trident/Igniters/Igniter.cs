@@ -58,7 +58,9 @@ public class Igniter : IBuilder<Process>
             { "${classpath_separator}", ClassPathSeparator!.ToString()! },
             { "${classpath}", classPath }
         };
-        var executable = Path.Combine(JavaHome!, "bin", IsDebug ? "java.exe" : "javaw.exe");
+        var executable = Path.Combine(JavaHome!,
+                                      "bin",
+                                      !OperatingSystem.IsWindows() ? "java" : IsDebug ? "java.exe" : "javaw.exe");
         var start = new ProcessStartInfo(executable)
         {
             WorkingDirectory = WorkingDirectory!, UseShellExecute = IsDebug

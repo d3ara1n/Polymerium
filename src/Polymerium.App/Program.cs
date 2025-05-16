@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Avalonia;
-using Avalonia.Logging;
 using Microsoft.Extensions.Hosting;
 
 namespace Polymerium.App;
@@ -38,7 +37,7 @@ internal static class Program
         var builder = AppBuilder.Configure<App>().UsePlatformDetect().WithFontSetup();
 
         if (Debug)
-            builder.LogToTextWriter(Console.Out, LogEventLevel.Debug);
+            builder.LogToTextWriter(Console.Out);
         else
             builder.LogToTrace();
 
