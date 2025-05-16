@@ -3,9 +3,10 @@
                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                               xmlns:controls="clr-namespace:Polymerium.App.Controls"
+                              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                               mc:Ignorable="d"
                               x:Class="Polymerium.App.Components.AccountCreationTrial"
-                              Header="Pick your favorite family guy" IsNextAvailable="True">
+                              Header="{x:Static lang:Resources.AccountCreationTrial_Title}" IsNextAvailable="True">
     <TabStrip Name="RoleSelectBox">
         <TabStrip.ItemsPanel>
             <ItemsPanelTemplate>

@@ -9,6 +9,7 @@
     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Polymerium.App.ViewModels"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     Padding="0"
     HorizontalAlignment="Center"
     VerticalAlignment="Center"
@@ -38,7 +39,7 @@
                 </Button>
                 <TextBlock
                     Grid.Column="2"
-                    Text="Create an instance"
+                    Text="{x:Static lang:Resources.NewInstanceView_Title}"
                     Theme="{StaticResource PageHeaderTextBlockTheme}" />
             </Grid>
             <StackPanel
@@ -105,7 +106,7 @@
                         VerticalAlignment="Center"
                         Spacing="12">
                         <StackPanel>
-                            <TextBlock Text="Name" />
+                            <TextBlock Text="{x:Static lang:Resources.NewInstanceView_NameLabelText}" />
                             <TextBox Text="{Binding DisplayName, Mode=TwoWay}" Watermark="{Binding VersionName}">
                                 <TextBox.InnerLeftContent>
                                     <StackPanel Orientation="Horizontal">
@@ -121,7 +122,7 @@
                             </TextBox>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="Version" />
+                            <TextBlock Text="{x:Static lang:Resources.NewInstanceView_VersionLabelText}" />
                             <husk:SkeletonContainer CornerRadius="{StaticResource SmallCornerRadius}"
                                                     IsLoading="{Binding IsVersionLoaded, Converter={x:Static BoolConverters.Not}}">
                                 <TextBox Text="{Binding VersionName, Mode=TwoWay}"
@@ -162,15 +163,16 @@
                                 <Grid Grid.Column="0" ColumnDefinitions="Auto,*" ColumnSpacing="8">
                                     <Image Grid.Column="0" Source="/Assets/Icons/Package.png" Height="36" Width="36" />
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Packages"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock
+                                            Text="{x:Static lang:Resources.NewInstanceView_PackageCountLabelText}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                         <TextBlock Text="{Binding ImportedPack.PackageCount,FallbackValue=114514}"
                                                    FontSize="{StaticResource LargeFontSize}" />
                                     </StackPanel>
                                 </Grid>
                                 <husk:Divider Grid.Column="1" Orientation="Vertical" />
                                 <StackPanel Grid.Column="2">
-                                    <TextBlock Text="Mod Loader"
+                                    <TextBlock Text="{x:Static lang:Resources.NewInstanceView_ModLoaderLabelText}"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                     <TextBlock Text="{Binding ImportedPack.LoaderLabel,FallbackValue=None}"
                                                FontSize="{StaticResource LargeFontSize}" />
@@ -187,10 +189,11 @@
                             Width="18"
                             Height="18"
                             Kind="PackagePlus" />
-                        <TextBlock Text="Create instance" VerticalAlignment="Center" />
+                        <TextBlock Text="{x:Static lang:Resources.NewInstanceView_CreateButtonText}"
+                                   VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                <husk:Divider Content="Or create from" />
+                <husk:Divider Content="{x:Static lang:Resources.NewInstanceView_SeparatorLabelText}" />
                 <Grid ColumnDefinitions="*,12,*">
                     <Button
                         Grid.Column="0"
@@ -201,7 +204,8 @@
                                 Width="18"
                                 Height="18"
                                 Kind="Import" />
-                            <TextBlock Text="Import" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static lang:Resources.NewInstanceView_ImportButtonText}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -214,7 +218,8 @@
                                 Width="18"
                                 Height="18"
                                 Kind="Store" />
-                            <TextBlock Text="Marketplace" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static lang:Resources.NewInstanceView_DownloadButtonText}"
+                                       VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </Grid>

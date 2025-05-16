@@ -8,24 +8,25 @@
                     xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
                     xmlns:cp="clr-namespace:Polymerium.App.Components"
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <Design.PreviewWith>
         <Panel>
             <StackPanel Margin="24" Spacing="12">
-                <local:PackageEntryButton />
+                <local:InstancePackageButton />
             </StackPanel>
         </Panel>
     </Design.PreviewWith>
-    <ControlTheme x:Key="BasePackageEntryButtonTheme" TargetType="local:PackageEntryButton">
+    <ControlTheme x:Key="BasePackageEntryButtonTheme" TargetType="local:InstancePackageButton">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="ContextFlyout">
             <MenuFlyout x:DataType="m:InstancePackageModel">
-                <MenuItem Header="Active"
+                <MenuItem Header="{x:Static lang:Resources.InstancePackageButton_ActiveMenuText}"
                           IsChecked="{Binding IsEnabled,Mode=TwoWay}"
                           ToggleType="CheckBox"
                           Icon="{fie:SymbolIcon Symbol=Star,FontSize={StaticResource MediumFontSize}}" />
                 <MenuItem Header="-" />
-                <MenuItem Header="Open Website"
+                <MenuItem Header="{x:Static lang:Resources.InstancePackageButton_OpenWebsiteMenuText}"
                           Command="{x:Static m:InternalCommands.OpenUriCommand}"
                           CommandParameter="{Binding Reference}"
                           Icon="{fie:SymbolIcon Symbol=Open,FontSize={StaticResource MediumFontSize}}" />
@@ -34,7 +35,7 @@
                 <!-- <MenuItem Header="Remove from Favorite" -->
                 <!--           Icon="{fie:SymbolIcon Symbol=Collections,FontSize={StaticResource MediumFontSize}}" /> -->
                 <MenuItem Header="-" />
-                <MenuItem Header="Remove"
+                <MenuItem Header="{x:Static lang:Resources.InstancePackageButton_RemoveMenuText}"
                           Command="{Binding $parent[cp:PackageContainer].RemoveCommand,Mode=OneWay}"
                           CommandParameter="{Binding }"
                           IsEnabled="{Binding IsLocked,Converter={x:Static BoolConverters.Not}}"
@@ -43,7 +44,7 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme x:Key="ListPackageEntryButtonTheme" TargetType="local:PackageEntryButton"
+    <ControlTheme x:Key="ListPackageEntryButtonTheme" TargetType="local:InstancePackageButton"
                   BasedOn="{StaticResource BasePackageEntryButtonTheme}">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">
@@ -66,7 +67,8 @@
                         </Transitions>
                     </husk:Card.Transitions>
                     <Panel>
-                        <TextBlock Text="Disabled" FontSize="36" HorizontalAlignment="Center"
+                        <TextBlock Text="{x:Static lang:Resources.InstancePackageButton_DisabledLabelText}"
+                                   FontSize="36" HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    RenderTransform="scaleX(1.2)"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}">
@@ -96,7 +98,8 @@
                                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
                                     <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}"
                                               Classes="Primary" IsVisible="{Binding IsLocked}">
-                                        <TextBlock Text="Original" />
+                                        <TextBlock
+                                            Text="{x:Static lang:Resources.InstancePackageButton_OriginalTagText}" />
                                     </husk:Tag>
                                     <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
                                         <TextBlock Text="{Binding Kind,FallbackValue=Kind}" />
@@ -147,7 +150,8 @@
                                         <DataTemplate DataType="m:InstancePackageUnspecifiedVersionModel">
                                             <husk:Tag Classes="Primary Small">
                                                 <StackPanel Orientation="Horizontal" Spacing="4">
-                                                    <TextBlock Text="Auto" />
+                                                    <TextBlock
+                                                        Text="{x:Static lang:Resources.InstancePackageButton_AutoVersionTagText}" />
                                                     <fi:SymbolIcon Symbol="Sparkle"
                                                                    FontSize="{StaticResource SmallFontSize}"
                                                                    VerticalAlignment="Center" />
@@ -178,7 +182,7 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="GridPackageEntryButtonTheme" TargetType="local:PackageEntryButton"
+    <ControlTheme x:Key="GridPackageEntryButtonTheme" TargetType="local:InstancePackageButton"
                   BasedOn="{StaticResource BasePackageEntryButtonTheme}">
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:InstancePackageModel">

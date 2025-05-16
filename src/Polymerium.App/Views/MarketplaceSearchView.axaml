@@ -11,6 +11,7 @@
            xmlns:controls="clr-namespace:Polymerium.App.Controls"
            xmlns:collection="clr-namespace:System.Collections.Generic;assembly=System.Collections"
            xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+           xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
            ScrollViewer.VerticalScrollBarVisibility="Disabled"
            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsHeaderVisible="False"
            x:DataType="vm:MarketplaceSearchViewModel" Padding="0"
@@ -29,12 +30,14 @@
                                     Command="{Binding $parent[husk:Frame].GoBackCommand}">
                                 <fi:SymbolIcon Symbol="ArrowLeft" FontSize="{StaticResource MediumFontSize}" />
                             </Button>
-                            <TextBlock Text="Search modpacks" FontSize="{StaticResource LargeFontSize}"
+                            <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_Title}"
+                                       FontSize="{StaticResource LargeFontSize}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
                         <Grid ColumnDefinitions="*,4,Auto,4,Auto" VerticalAlignment="Center" MaxWidth="720"
                               Margin="64,0,64,0">
-                            <TextBox Grid.Column="0" Watermark="With the keywords in..."
+                            <TextBox Grid.Column="0"
+                                     Watermark="{x:Static lang:Resources.MarketplaceSearchView_SearchBarPlaceholder}"
                                      BorderBrush="{StaticResource OverlayInteractiveBackgroundBrush}"
                                      Text="{Binding QueryText,Mode=TwoWay}" />
                             <ComboBox Grid.Column="2" ItemsSource="{Binding Repositories}"
@@ -66,7 +69,8 @@
                                             <icons:PackIconLucide Kind="Search" />
                                         </husk:SwitchCase>
                                     </husk:SwitchPresenter>
-                                    <TextBlock Text="Query" VerticalAlignment="Center" />
+                                    <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_SearchButtonText}"
+                                               VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -91,7 +95,8 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <TextBlock VerticalAlignment="Center" Margin="8,0">
-                            <Run Text="Results:" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                            <Run Text="{x:Static lang:Resources.MarketplaceSearchView_ResultCountLabelText}"
+                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                             <Run Text="{Binding Exhibits.Count,FallbackValue=0}" />
                         </TextBlock>
                     </StackPanel>
@@ -99,7 +104,7 @@
                         <HyperlinkButton VerticalAlignment="Center" Command="{Binding ClearFiltersCommand}">
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <fi:SymbolIcon Symbol="FilterDismiss" FontSize="{StaticResource MediumFontSize}" />
-                                <TextBlock Text="Clear Filters" />
+                                <TextBlock Text="{x:Static lang:Resources.MarketplaceSearchView_ResetFilterButtonText}" />
                             </StackPanel>
                         </HyperlinkButton>
                         <TabStrip Name="LayoutSelector" SelectedIndex="{Binding LayoutIndex,Mode=TwoWay}"
@@ -176,7 +181,8 @@
                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                           Width="{StaticResource ExtraLargeFontSize}"
                                           HorizontalAlignment="Center" />
-                    <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                    <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                               FontSize="{StaticResource LargeFontSize}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                HorizontalAlignment="Center" />
                 </StackPanel>
@@ -191,7 +197,8 @@
                             <husk:ProgressRing Width="20" Height="20" StrokeWidth="3"
                                                IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
                                                HorizontalAlignment="Center" ShowProgressText="False" />
-                            <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
+                            <TextBlock Text="{x:Static lang:Resources.Shared_FetchingLabelText}"
+                                       HorizontalAlignment="Center" />
                         </StackPanel>
                     </husk:InfiniteScrollView.PendingContent>
                 </husk:InfiniteScrollView>

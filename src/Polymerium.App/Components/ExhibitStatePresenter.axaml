@@ -6,6 +6,7 @@
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:local="clr-namespace:Polymerium.App.Components"
              xmlns:m="clr-namespace:Polymerium.App.Models"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.ExhibitStatePresenter" ClipToBounds="False">
     <husk:SwitchPresenter
@@ -17,7 +18,8 @@
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <fi:SymbolIcon Symbol="Checkmark"
                                    FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="Installed" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_EditableTagText}"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
@@ -26,7 +28,8 @@
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <fi:SymbolIcon Symbol="LockClosed"
                                    FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="Locked" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_LockedTagText}"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
@@ -35,7 +38,8 @@
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <fi:SymbolIcon Symbol="AddCircle"
                                    FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="Adding" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_AddingTagText}"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
@@ -44,7 +48,8 @@
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <fi:SymbolIcon Symbol="Pen"
                                    FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="Modifying" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_ModifyingTagText}"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>
@@ -53,7 +58,8 @@
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <fi:SymbolIcon Symbol="Dismiss"
                                    FontSize="{Binding $parent[husk:Tag].FontSize}" />
-                    <TextBlock Text="Removing" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.ExhibitStatePresenter_RemovingTagText}"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </husk:Tag>
         </husk:SwitchCase>

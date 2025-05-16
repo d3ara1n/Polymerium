@@ -11,6 +11,7 @@
                      xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                      xmlns:v="clr-namespace:Polymerium.App.Views"
                      xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
+                     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                      mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
                      x:Class="Polymerium.App.Views.PackageExplorerView" x:DataType="vm:PackageExplorerViewModel"
                      Padding="0" IsHeaderVisible="False" ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -27,18 +28,20 @@
                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}" Margin="12">
                 <StackPanel Orientation="Horizontal" Spacing="6">
                     <fi:SymbolIcon Symbol="Drawer" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Pending" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_PendingLabelText}"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </Border>
             <ScrollViewer Grid.Row="1" Padding="12,0">
                 <StackPanel Spacing="8">
                     <husk:Divider>
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBlock Text="Add" />
+                            <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_AddLabelText}" />
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
-                        <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8"
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
+                                   HorizontalAlignment="Center" Margin="8"
                                    IsVisible="{Binding AddingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
                         <ItemsControl ItemsSource="{Binding AddingPackagesView}"
                                       ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
@@ -51,11 +54,12 @@
                     </Panel>
                     <husk:Divider>
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBlock Text="Modify" />
+                            <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_ModifyLabelText}" />
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
-                        <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8"
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
+                                   HorizontalAlignment="Center" Margin="8"
                                    IsVisible="{Binding ModifyingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
                         <ItemsControl ItemsSource="{Binding ModifyingPackagesView}"
                                       ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
@@ -68,11 +72,12 @@
                     </Panel>
                     <husk:Divider>
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBlock Text="Remove" />
+                            <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_RemoveLabelText}" />
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
-                        <TextBlock Text="Empty" Opacity="0.5" HorizontalAlignment="Center" Margin="8"
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_EmptyLabelText}" Opacity="0.5"
+                                   HorizontalAlignment="Center" Margin="8"
                                    IsVisible="{Binding RemovingPackagesView.Count,Mode=OneWay,Converter={x:Static huskc:NumberConverters.IsZero},FallbackValue=False}" />
                         <ItemsControl ItemsSource="{Binding RemovingPackagesView}"
                                       ItemTemplate="{StaticResource ExhibitModelTemplate}" ClipToBounds="False">
@@ -100,7 +105,7 @@
                     </Button.IsEnabled>
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <fi:SymbolIcon Symbol="BoxMultipleArrowLeft" FontSize="{StaticResource LargeFontSize}" />
-                        <TextBlock Text="Collect" />
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_CollectButtonText}" />
                     </StackPanel>
                 </Button>
                 <Button Padding="12,6" CornerRadius="{StaticResource MediumCornerRadius}"
@@ -117,7 +122,7 @@
                     </Button.IsEnabled>
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <fi:SymbolIcon Symbol="DrawerDismiss" FontSize="{StaticResource LargeFontSize}" />
-                        <TextBlock Text="Dismiss" />
+                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_DismissButtonText}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -142,7 +147,9 @@
                                    FontSize="{StaticResource ExtraLargeFontSize}" />
                     </Grid>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                        <TextBox Grid.Column="0" Watermark="Search by names and names..." Text="{Binding QueryText}">
+                        <TextBox Grid.Column="0"
+                                 Watermark="{x:Static lang:Resources.PackageExplorerView_SearchBarPlaceholder}"
+                                 Text="{Binding QueryText}">
                             <TextBox.InnerRightContent>
                                 <StackPanel Orientation="Horizontal">
                                     <Button
@@ -180,7 +187,8 @@
                                         <icons:PackIconLucide Kind="Search" />
                                     </husk:SwitchCase>
                                 </husk:SwitchPresenter>
-                                <TextBlock Text="Query" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Static lang:Resources.PackageExplorerView_SearchButtonText}"
+                                           VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
                     </Grid>
@@ -229,7 +237,8 @@
                 <icons:PackIconLucide Kind="Package" Height="{StaticResource ExtraLargeFontSize}"
                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                       Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                           FontSize="{StaticResource LargeFontSize}"
                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                            HorizontalAlignment="Center" />
             </StackPanel>
@@ -244,7 +253,8 @@
                         <husk:ProgressRing Width="20" Height="20" StrokeWidth="3"
                                            IsIndeterminate="{Binding Exhibits.IsFetching,Mode=OneWay,FallbackValue=False}"
                                            HorizontalAlignment="Center" ShowProgressText="False" />
-                        <TextBlock Text="Fetching..." HorizontalAlignment="Center" />
+                        <TextBlock Text="{x:Static lang:Resources.Shared_FetchingLabelText}"
+                                   HorizontalAlignment="Center" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
                 <husk:InfiniteScrollView.ItemTemplate>

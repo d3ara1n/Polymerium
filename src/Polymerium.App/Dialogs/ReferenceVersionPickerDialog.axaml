@@ -6,12 +6,13 @@
              xmlns:local="using:Polymerium.App.Dialogs"
              xmlns:m="using:Polymerium.App.Models"
              xmlns:trident="using:Trident.Abstractions.Repositories.Resources"
-             Title="Choose a version to upgrade/downgrade to"
-             Message="All the mods will be replaced. Configs will be replaced with new ones."
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+             Title="{x:Static lang:Resources.ReferenceVersionPickerDialog_Title}"
+             Message="{x:Static lang:Resources.ReferenceVersionPickerDialog_Prompt}"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" IsPrimaryButtonVisible="True"
-             x:Class="Polymerium.App.Dialogs.InstanceVersionPickerDialog">
-    <ListBox MinHeight="64" ItemsSource="{Binding $parent[local:InstanceVersionPickerDialog].Versions}"
-             SelectedItem="{Binding $parent[local:InstanceVersionPickerDialog].Result,Mode=OneWayToSource}">
+             x:Class="Polymerium.App.Dialogs.ReferenceVersionPickerDialog">
+    <ListBox MinHeight="64" ItemsSource="{Binding $parent[local:ReferenceVersionPickerDialog].Versions}"
+             SelectedItem="{Binding $parent[local:ReferenceVersionPickerDialog].Result,Mode=OneWayToSource}">
         <ListBox.ItemTemplate>
             <DataTemplate DataType="m:InstanceReferenceVersionModel">
                 <StackPanel>
@@ -38,19 +39,19 @@
                             <husk:SwitchCase Value="Release">
                                 <husk:Tag Classes="Success"
                                           CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <TextBlock Text="Release" />
+                                    <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
                                 </husk:Tag>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="Beta">
                                 <husk:Tag Classes="Warning"
                                           CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <TextBlock Text="Beta" />
+                                    <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
                                 </husk:Tag>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="Alpha">
                                 <husk:Tag Classes="Danger"
                                           CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <TextBlock Text="Alpha" />
+                                    <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                 </husk:Tag>
                             </husk:SwitchCase>
                         </husk:SwitchPresenter>

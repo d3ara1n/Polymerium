@@ -2,4 +2,4 @@
 
 namespace Polymerium.App.Controls;
 
-public class PackageEntryButton : Button;
+public class InstancePackageButton : Button;

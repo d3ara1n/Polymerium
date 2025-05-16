@@ -35,9 +35,6 @@ public partial class SettingsViewModel : ViewModelBase
         JavaHome11 = configurationService.Value.RuntimeJavaHome11 != string.Empty
                          ? configurationService.Value.RuntimeJavaHome11
                          : null;
-        JavaHome16 = configurationService.Value.RuntimeJavaHome16 != string.Empty
-                         ? configurationService.Value.RuntimeJavaHome16
-                         : null;
         JavaHome17 = configurationService.Value.RuntimeJavaHome17 != string.Empty
                          ? configurationService.Value.RuntimeJavaHome17
                          : null;
@@ -151,12 +148,6 @@ public partial class SettingsViewModel : ViewModelBase
 
     partial void OnJavaHome11Changed(string? value) =>
         _configurationService.Value.RuntimeJavaHome11 = value ?? string.Empty;
-
-    [ObservableProperty]
-    public partial string? JavaHome16 { get; set; }
-
-    partial void OnJavaHome16Changed(string? value) =>
-        _configurationService.Value.RuntimeJavaHome16 = value ?? string.Empty;
 
     [ObservableProperty]
     public partial string? JavaHome17 { get; set; }

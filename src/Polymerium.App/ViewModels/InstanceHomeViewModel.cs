@@ -258,7 +258,7 @@ public partial class InstanceHomeViewModel(
                                                                                11 => configurationService.Value
                                                                                   .RuntimeJavaHome11,
                                                                                16 => configurationService.Value
-                                                                                  .RuntimeJavaHome16,
+                                                                                  .RuntimeJavaHome17,
                                                                                17 => configurationService.Value
                                                                                   .RuntimeJavaHome17,
                                                                                21 => configurationService.Value

@@ -4,7 +4,8 @@
                     xmlns:m="clr-namespace:Polymerium.App.Models"
                     xmlns:local="clr-namespace:Polymerium.App.Controls"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-                    xmlns:components="clr-namespace:Polymerium.App.Components">
+                    xmlns:components="clr-namespace:Polymerium.App.Components"
+                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <ControlTheme x:Key="{x:Type local:ExhibitDependencyButton}" TargetType="local:ExhibitDependencyButton">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ClipToBounds" Value="False" />
@@ -44,7 +45,7 @@
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                                        Text="{Binding ProjectName}" FontSize="{StaticResource LargeFontSize}" />
                             <Panel Grid.Column="2" VerticalAlignment="Center">
-                                <husk:Tag Content="Required"
+                                <husk:Tag Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}"
                                           VerticalAlignment="Center">
                                     <husk:Tag.IsVisible>
                                         <MultiBinding Converter="{x:Static BoolConverters.And}">

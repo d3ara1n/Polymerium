@@ -60,20 +60,326 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The account has been linked. Checkout in the next page..
+        /// </summary>
+        public static string AccountCreationMicrosoft_DoneSubtitle {
+            get {
+                return ResourceManager.GetString("AccountCreationMicrosoft_DoneSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done!.
+        /// </summary>
+        public static string AccountCreationMicrosoft_DoneTitle {
+            get {
+                return ResourceManager.GetString("AccountCreationMicrosoft_DoneTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in the browser.
+        /// </summary>
+        public static string AccountCreationMicrosoft_OpenLinkButtonText {
+            get {
+                return ResourceManager.GetString("AccountCreationMicrosoft_OpenLinkButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The code will be expired in 15 minutes. Please fill this code in the page:.
+        /// </summary>
+        public static string AccountCreationMicrosoft_Prompt {
+            get {
+                return ResourceManager.GetString("AccountCreationMicrosoft_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retry.
+        /// </summary>
+        public static string AccountCreationMicrosoft_RetryButtonText {
+            get {
+                return ResourceManager.GetString("AccountCreationMicrosoft_RetryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft Authentication.
+        /// </summary>
+        public static string AccountCreationMicrosoft_Title {
+            get {
+                return ResourceManager.GetString("AccountCreationMicrosoft_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong....
+        /// </summary>
+        public static string AccountCreationMicrosoft_UnavailableLabelText {
+            get {
+                return ResourceManager.GetString("AccountCreationMicrosoft_UnavailableLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string AccountCreationModal_BackButtonText {
+            get {
+                return ResourceManager.GetString("AccountCreationModal_BackButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dismiss.
+        /// </summary>
+        public static string AccountCreationModal_DismissButtonText {
+            get {
+                return ResourceManager.GetString("AccountCreationModal_DismissButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finish.
+        /// </summary>
+        public static string AccountCreationModal_FinishButtonText {
+            get {
+                return ResourceManager.GetString("AccountCreationModal_FinishButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string AccountCreationModal_NextButtonText {
+            get {
+                return ResourceManager.GetString("AccountCreationModal_NextButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string AccountCreationOffline_NameLabelText {
+            get {
+                return ResourceManager.GetString("AccountCreationOffline_NameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name containing spaces or other non-ascii characters may cause issues..
+        /// </summary>
+        public static string AccountCreationOffline_Prompt {
+            get {
+                return ResourceManager.GetString("AccountCreationOffline_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a name.
+        /// </summary>
+        public static string AccountCreationOffline_Title {
+            get {
+                return ResourceManager.GetString("AccountCreationOffline_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UUID.
+        /// </summary>
+        public static string AccountCreationOffline_UuidLabelText {
+            get {
+                return ResourceManager.GetString("AccountCreationOffline_UuidLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables all the online features and is the only way to play the game legally..
+        /// </summary>
+        public static string AccountCreationPortal_MicrosoftSubtitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_MicrosoftSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft.
+        /// </summary>
+        public static string AccountCreationPortal_MicrosoftTitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_MicrosoftTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing good but no Internet connection required..
+        /// </summary>
+        public static string AccountCreationPortal_OfflineSubtitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_OfflineSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offline.
+        /// </summary>
+        public static string AccountCreationPortal_OfflineTitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_OfflineTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offline account is unavailable if no Microsoft account is linked..
+        /// </summary>
+        public static string AccountCreationPortal_Prompt {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick an account type.
+        /// </summary>
+        public static string AccountCreationPortal_Title {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play as the preset character if dont have an account..
+        /// </summary>
+        public static string AccountCreationPortal_TrialSubtitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_TrialSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trial.
+        /// </summary>
+        public static string AccountCreationPortal_TrialTitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPortal_TrialTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 🎉It&apos;s nearly done🎉.
+        /// </summary>
+        public static string AccountCreationPreview_Subtitle {
+            get {
+                return ResourceManager.GetString("AccountCreationPreview_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Preview.
+        /// </summary>
+        public static string AccountCreationPreview_Title {
+            get {
+                return ResourceManager.GetString("AccountCreationPreview_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick your favorite family guy.
+        /// </summary>
+        public static string AccountCreationTrial_Title {
+            get {
+                return ResourceManager.GetString("AccountCreationTrial_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mark as Default.
         /// </summary>
-        public static string AccountEntryButton_MarkAsDefaultMenu {
+        public static string AccountEntryButton_MarkAsDefaultMenuText {
             get {
-                return ResourceManager.GetString("AccountEntryButton_MarkAsDefaultMenu", resourceCulture);
+                return ResourceManager.GetString("AccountEntryButton_MarkAsDefaultMenuText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
-        public static string AccountEntryButton_RemoveMenu {
+        public static string AccountEntryButton_RemoveMenuText {
             get {
-                return ResourceManager.GetString("AccountEntryButton_RemoveMenu", resourceCulture);
+                return ResourceManager.GetString("AccountEntryButton_RemoveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enrolled.
+        /// </summary>
+        public static string AccountEntryModal_EnrolledLabelText {
+            get {
+                return ResourceManager.GetString("AccountEntryModal_EnrolledLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Used.
+        /// </summary>
+        public static string AccountEntryModal_LastUsedLabelText {
+            get {
+                return ResourceManager.GetString("AccountEntryModal_LastUsedLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This kind of account is kind of: No use in the past then no use in the future any more..
+        /// </summary>
+        public static string AccountEntryModal_MicrosoftPrompt {
+            get {
+                return ResourceManager.GetString("AccountEntryModal_MicrosoftPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It&apos;s all set..
+        /// </summary>
+        public static string AccountEntryModal_OfflinePrompt {
+            get {
+                return ResourceManager.GetString("AccountEntryModal_OfflinePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It&apos;s all set..
+        /// </summary>
+        public static string AccountEntryModal_TrialPrompt {
+            get {
+                return ResourceManager.GetString("AccountEntryModal_TrialPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No account present in the vault.
+        /// </summary>
+        public static string AccountPickerDialog_EmptyListPrompt {
+            get {
+                return ResourceManager.GetString("AccountPickerDialog_EmptyListPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Accounts.
+        /// </summary>
+        public static string AccountPickerDialog_ManageAccountsButtonText {
+            get {
+                return ResourceManager.GetString("AccountPickerDialog_ManageAccountsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a game account.
+        /// </summary>
+        public static string AccountPickerDialog_Title {
+            get {
+                return ResourceManager.GetString("AccountPickerDialog_Title", resourceCulture);
             }
         }
         
@@ -96,6 +402,69 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Dialog_CancelButtonText {
+            get {
+                return ResourceManager.GetString("Dialog_CancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Dialog_ConfirmButtonText {
+            get {
+                return ResourceManager.GetString("Dialog_ConfirmButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dismiss.
+        /// </summary>
+        public static string Dialog_DismissButtonText {
+            get {
+                return ResourceManager.GetString("Dialog_DismissButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string Enum_All {
+            get {
+                return ResourceManager.GetString("Enum_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Enum_Disabled {
+            get {
+                return ResourceManager.GetString("Enum_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Enum_Enabled {
+            get {
+                return ResourceManager.GetString("Enum_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string Enum_None {
+            get {
+                return ResourceManager.GetString("Enum_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It seems something went wrong....
         /// </summary>
         public static string ExceptionView_Subtitle {
@@ -110,6 +479,402 @@ namespace Polymerium.App.Properties {
         public static string ExceptionView_Title {
             get {
                 return ResourceManager.GetString("ExceptionView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required.
+        /// </summary>
+        public static string ExhibitDependencyButton_RequiredTagText {
+            get {
+                return ResourceManager.GetString("ExhibitDependencyButton_RequiredTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string ExhibitModpackButton_InstallButtonText {
+            get {
+                return ResourceManager.GetString("ExhibitModpackButton_InstallButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Website.
+        /// </summary>
+        public static string ExhibitModpackButton_OpenWebsiteMenuText {
+            get {
+                return ResourceManager.GetString("ExhibitModpackButton_OpenWebsiteMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        public static string ExhibitModpackToast_InstallButtonText {
+            get {
+                return ResourceManager.GetString("ExhibitModpackToast_InstallButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string ExhibitPackageModal_AboutTabText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_AboutTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to the instance.
+        /// </summary>
+        public static string ExhibitPackageModal_AddButtonText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_AddButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding:.
+        /// </summary>
+        public static string ExhibitPackageModal_AddingVersionTagText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_AddingVersionTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Showing changelog of version:.
+        /// </summary>
+        public static string ExhibitPackageModal_ChangelogsTabPrompt {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_ChangelogsTabPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changlogs.
+        /// </summary>
+        public static string ExhibitPackageModal_ChangelogsTabText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_ChangelogsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Showing dependencies of version:.
+        /// </summary>
+        public static string ExhibitPackageModal_DependenciesTabPrompt {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_DependenciesTabPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dependencies.
+        /// </summary>
+        public static string ExhibitPackageModal_DependenciesTabText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_DependenciesTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Version.
+        /// </summary>
+        public static string ExhibitPackageModal_EmptyListLabelText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_EmptyListLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show compatible versions only.
+        /// </summary>
+        public static string ExhibitPackageModal_FilterLabelText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_FilterLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed:.
+        /// </summary>
+        public static string ExhibitPackageModal_InstalledVersionTagText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_InstalledVersionTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locked Version.
+        /// </summary>
+        public static string ExhibitPackageModal_LockedVersionLabelText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_LockedVersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply changes.
+        /// </summary>
+        public static string ExhibitPackageModal_ModifyButtonText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_ModifyButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replacing:.
+        /// </summary>
+        public static string ExhibitPackageModal_ModifyingTagText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_ModifyingTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removing:.
+        /// </summary>
+        public static string ExhibitPackageModal_RemovingTagText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_RemovingTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string ExhibitPackageModal_RestoreButtonText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_RestoreButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unspecified.
+        /// </summary>
+        public static string ExhibitPackageModal_UnspecifiedVersionTagText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_UnspecifiedVersionTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify version....
+        /// </summary>
+        public static string ExhibitPackageModal_VersionBoxPlaceholder {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_VersionBoxPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version:.
+        /// </summary>
+        public static string ExhibitPackageModal_VersionLabelText {
+            get {
+                return ResourceManager.GetString("ExhibitPackageModal_VersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding.
+        /// </summary>
+        public static string ExhibitStatePresenter_AddingTagText {
+            get {
+                return ResourceManager.GetString("ExhibitStatePresenter_AddingTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed.
+        /// </summary>
+        public static string ExhibitStatePresenter_EditableTagText {
+            get {
+                return ResourceManager.GetString("ExhibitStatePresenter_EditableTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locked.
+        /// </summary>
+        public static string ExhibitStatePresenter_LockedTagText {
+            get {
+                return ResourceManager.GetString("ExhibitStatePresenter_LockedTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modifying.
+        /// </summary>
+        public static string ExhibitStatePresenter_ModifyingTagText {
+            get {
+                return ResourceManager.GetString("ExhibitStatePresenter_ModifyingTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removing.
+        /// </summary>
+        public static string ExhibitStatePresenter_RemovingTagText {
+            get {
+                return ResourceManager.GetString("ExhibitStatePresenter_RemovingTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to packages.
+        /// </summary>
+        public static string ExportPackageListDialog_PackageCountLabelText {
+            get {
+                return ResourceManager.GetString("ExportPackageListDialog_PackageCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chooooosen file path.
+        /// </summary>
+        public static string ExportPackageListDialog_PathBarPlaceholder {
+            get {
+                return ResourceManager.GetString("ExportPackageListDialog_PathBarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to.
+        /// </summary>
+        public static string ExportPackageListDialog_PathLabelText {
+            get {
+                return ResourceManager.GetString("ExportPackageListDialog_PathLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export package list of the instance into the selected formatted table file.
+        /// </summary>
+        public static string ExportPackageListDialog_Prompt {
+            get {
+                return ResourceManager.GetString("ExportPackageListDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export package list.
+        /// </summary>
+        public static string ExportPackageListDialog_Title {
+            get {
+                return ResourceManager.GetString("ExportPackageListDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File too big makes app crash.
+        /// </summary>
+        public static string FilePickerDialog_AlertPrompt {
+            get {
+                return ResourceManager.GetString("FilePickerDialog_AlertPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browser files....
+        /// </summary>
+        public static string FilePickerDialog_BrowseButtonText {
+            get {
+                return ResourceManager.GetString("FilePickerDialog_BrowseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag and drop, or.
+        /// </summary>
+        public static string FilePickerDialog_DropZonePrompt {
+            get {
+                return ResourceManager.GetString("FilePickerDialog_DropZonePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chooooosen file path&quot;.
+        /// </summary>
+        public static string FilePickerDialog_PathBarPlaceholder {
+            get {
+                return ResourceManager.GetString("FilePickerDialog_PathBarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a file.
+        /// </summary>
+        public static string FilePickerDialog_Title {
+            get {
+                return ResourceManager.GetString("FilePickerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a game version.
+        /// </summary>
+        public static string GameVersionPickerDialog_Title {
+            get {
+                return ResourceManager.GetString("GameVersionPickerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter by version names....
+        /// </summary>
+        public static string GameVersionPickerDialog_VersionBarPlaceholder {
+            get {
+                return ResourceManager.GetString("GameVersionPickerDialog_VersionBarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string InstanceDashboardToast_Title {
+            get {
+                return ResourceManager.GetString("InstanceDashboardToast_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSTALLING.
+        /// </summary>
+        public static string InstanceEntryButton_InstallTagText {
+            get {
+                return ResourceManager.GetString("InstanceEntryButton_InstallTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PREPARING.
+        /// </summary>
+        public static string InstanceEntryButton_PreparingTagText {
+            get {
+                return ResourceManager.GetString("InstanceEntryButton_PreparingTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUNNING.
+        /// </summary>
+        public static string InstanceEntryButton_RunningTagText {
+            get {
+                return ResourceManager.GetString("InstanceEntryButton_RunningTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATING.
+        /// </summary>
+        public static string InstanceEntryButton_UpdatingTagText {
+            get {
+                return ResourceManager.GetString("InstanceEntryButton_UpdatingTagText", resourceCulture);
             }
         }
         
@@ -303,6 +1068,132 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string InstancePackageButton_ActiveMenuText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_ActiveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Version.
+        /// </summary>
+        public static string InstancePackageButton_AutoVersionTagText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_AutoVersionTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string InstancePackageButton_DisabledLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_DisabledLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Website.
+        /// </summary>
+        public static string InstancePackageButton_OpenWebsiteMenuText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_OpenWebsiteMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original.
+        /// </summary>
+        public static string InstancePackageButton_OriginalTagText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_OriginalTagText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string InstancePackageButton_RemoveMenuText {
+            get {
+                return ResourceManager.GetString("InstancePackageButton_RemoveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string InstancePackageModal_AddTagButtonText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_AddTagButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show compatible versions only.
+        /// </summary>
+        public static string InstancePackageModal_FilterLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_FilterLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Editable.
+        /// </summary>
+        public static string InstancePackageModal_LockedVersionLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_LockedVersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string InstancePackageModal_TagsTabText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_TagsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Version.
+        /// </summary>
+        public static string InstancePackageModal_VersionBoxLabelText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_VersionBoxLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Or pick a version in the list below..
+        /// </summary>
+        public static string InstancePackageModal_VersionBoxUnspecificSubtitle {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_VersionBoxUnspecificSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Select Version.
+        /// </summary>
+        public static string InstancePackageModal_VersionBoxUnspecificTitle {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_VersionBoxUnspecificTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Versions.
+        /// </summary>
+        public static string InstancePackageModal_VersionsTabText {
+            get {
+                return ResourceManager.GetString("InstancePackageModal_VersionsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to How the application acts and chooses strategies.
         /// </summary>
         public static string InstancePropertiesView_BehaviorsSubtitle {
@@ -357,20 +1248,20 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted..
-        /// </summary>
-        public static string InstancePropertiesView_FastLaunchInfo {
-            get {
-                return ResourceManager.GetString("InstancePropertiesView_FastLaunchInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Fast Launch.
         /// </summary>
         public static string InstancePropertiesView_FastLaunchLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_FastLaunchLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted..
+        /// </summary>
+        public static string InstancePropertiesView_FastLaunchPrompt {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_FastLaunchPrompt", resourceCulture);
             }
         }
         
@@ -501,20 +1392,20 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This always leads to unexpected package conflicts due to poor management of package distribution sites. .
-        /// </summary>
-        public static string InstancePropertiesView_ResolvePackageDependenciesInfo {
-            get {
-                return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to [Experimental] Resolve Package Dependencies.
         /// </summary>
         public static string InstancePropertiesView_ResolvePackageDependenciesLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This always leads to unexpected package conflicts due to poor management of package distribution sites. .
+        /// </summary>
+        public static string InstancePropertiesView_ResolvePackageDependenciesPrompt {
+            get {
+                return ResourceManager.GetString("InstancePropertiesView_ResolvePackageDependenciesPrompt", resourceCulture);
             }
         }
         
@@ -645,6 +1536,42 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string JavaHomeContainer_BrowseButtonText {
+            get {
+                return ResourceManager.GetString("JavaHomeContainer_BrowseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detect.
+        /// </summary>
+        public static string JavaHomeContainer_DetectButtonText {
+            get {
+                return ResourceManager.GetString("JavaHomeContainer_DetectButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bundled or.
+        /// </summary>
+        public static string JavaHomeContainer_Prompt {
+            get {
+                return ResourceManager.GetString("JavaHomeContainer_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string JavaHomeContainer_UnknownLabelText {
+            get {
+                return ResourceManager.GetString("JavaHomeContainer_UnknownLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string MainWindow_AccountButtonText {
@@ -690,6 +1617,816 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Everything(mostly) begins here.
+        /// </summary>
+        public static string MarketplacePortalView_DiscoveryCenterSubtitle {
+            get {
+                return ResourceManager.GetString("MarketplacePortalView_DiscoveryCenterSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discovery Center.
+        /// </summary>
+        public static string MarketplacePortalView_DiscoveryCenterTitle {
+            get {
+                return ResourceManager.GetString("MarketplacePortalView_DiscoveryCenterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News.
+        /// </summary>
+        public static string MarketplacePortalView_NewsLabelText {
+            get {
+                return ResourceManager.GetString("MarketplacePortalView_NewsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn More.
+        /// </summary>
+        public static string MarketplacePortalView_NewsLearnMoreButtonText {
+            get {
+                return ResourceManager.GetString("MarketplacePortalView_NewsLearnMoreButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string MarketplacePortalView_SearchButtonText {
+            get {
+                return ResourceManager.GetString("MarketplacePortalView_SearchButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Marketplace Portal.
+        /// </summary>
+        public static string MarketplacePortalView_Title {
+            get {
+                return ResourceManager.GetString("MarketplacePortalView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Filter.
+        /// </summary>
+        public static string MarketplaceSearchView_ResetFilterButtonText {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_ResetFilterButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results:.
+        /// </summary>
+        public static string MarketplaceSearchView_ResultCountLabelText {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_ResultCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to With the keywords in....
+        /// </summary>
+        public static string MarketplaceSearchView_SearchBarPlaceholder {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_SearchBarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query.
+        /// </summary>
+        public static string MarketplaceSearchView_SearchButtonText {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_SearchButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search modpacks.
+        /// </summary>
+        public static string MarketplaceSearchView_Title {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create instance.
+        /// </summary>
+        public static string NewInstanceView_CreateButtonText {
+            get {
+                return ResourceManager.GetString("NewInstanceView_CreateButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Marketplace.
+        /// </summary>
+        public static string NewInstanceView_DownloadButtonText {
+            get {
+                return ResourceManager.GetString("NewInstanceView_DownloadButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string NewInstanceView_ImportButtonText {
+            get {
+                return ResourceManager.GetString("NewInstanceView_ImportButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Loader.
+        /// </summary>
+        public static string NewInstanceView_ModLoaderLabelText {
+            get {
+                return ResourceManager.GetString("NewInstanceView_ModLoaderLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string NewInstanceView_NameLabelText {
+            get {
+                return ResourceManager.GetString("NewInstanceView_NameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Packages.
+        /// </summary>
+        public static string NewInstanceView_PackageCountLabelText {
+            get {
+                return ResourceManager.GetString("NewInstanceView_PackageCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Or create from.
+        /// </summary>
+        public static string NewInstanceView_SeparatorLabelText {
+            get {
+                return ResourceManager.GetString("NewInstanceView_SeparatorLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create an instance.
+        /// </summary>
+        public static string NewInstanceView_Title {
+            get {
+                return ResourceManager.GetString("NewInstanceView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string NewInstanceView_VersionLabelText {
+            get {
+                return ResourceManager.GetString("NewInstanceView_VersionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch Update.
+        /// </summary>
+        public static string PackageContainer_BatchUpdateButtonText {
+            get {
+                return ResourceManager.GetString("PackageContainer_BatchUpdateButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string PackageContainer_ConditionLabelText {
+            get {
+                return ResourceManager.GetString("PackageContainer_ConditionLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Explort List.
+        /// </summary>
+        public static string PackageContainer_ExportListButtonText {
+            get {
+                return ResourceManager.GetString("PackageContainer_ExportListButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter filter string....
+        /// </summary>
+        public static string PackageContainer_FilterBarPlaceholder {
+            get {
+                return ResourceManager.GetString("PackageContainer_FilterBarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get More.
+        /// </summary>
+        public static string PackageContainer_GetMoreButtonText {
+            get {
+                return ResourceManager.GetString("PackageContainer_GetMoreButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        public static string PackageContainer_ResultCountLabelText {
+            get {
+                return ResourceManager.GetString("PackageContainer_ResultCountLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string PackageContainer_SourceLabelText {
+            get {
+                return ResourceManager.GetString("PackageContainer_SourceLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local.
+        /// </summary>
+        public static string PackageContainer_SourceLocalText {
+            get {
+                return ResourceManager.GetString("PackageContainer_SourceLocalText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original.
+        /// </summary>
+        public static string PackageContainer_SourceOriginalText {
+            get {
+                return ResourceManager.GetString("PackageContainer_SourceOriginalText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string PackageContainer_TagLabelText {
+            get {
+                return ResourceManager.GetString("PackageContainer_TagLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string PackageContainer_TypeLabelText {
+            get {
+                return ResourceManager.GetString("PackageContainer_TypeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string PackageExplorerView_AddLabelText {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_AddLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collect.
+        /// </summary>
+        public static string PackageExplorerView_CollectButtonText {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_CollectButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dismiss.
+        /// </summary>
+        public static string PackageExplorerView_DismissButtonText {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_DismissButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty.
+        /// </summary>
+        public static string PackageExplorerView_EmptyLabelText {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_EmptyLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify.
+        /// </summary>
+        public static string PackageExplorerView_ModifyLabelText {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_ModifyLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string PackageExplorerView_PendingLabelText {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_PendingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string PackageExplorerView_RemoveLabelText {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_RemoveLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search by names and names....
+        /// </summary>
+        public static string PackageExplorerView_SearchBarPlaceholder {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_SearchBarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query.
+        /// </summary>
+        public static string PackageExplorerView_SearchButtonText {
+            get {
+                return ResourceManager.GetString("PackageExplorerView_SearchButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All the mods will be replaced. Configs will be replaced with new ones..
+        /// </summary>
+        public static string ReferenceVersionPickerDialog_Prompt {
+            get {
+                return ResourceManager.GetString("ReferenceVersionPickerDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a version to upgrade/downgrade to.
+        /// </summary>
+        public static string ReferenceVersionPickerDialog_Title {
+            get {
+                return ResourceManager.GetString("ReferenceVersionPickerDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alpha.
+        /// </summary>
+        public static string ReleaseType_Alpha {
+            get {
+                return ResourceManager.GetString("ReleaseType_Alpha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beta.
+        /// </summary>
+        public static string ReleaseType_Beta {
+            get {
+                return ResourceManager.GetString("ReleaseType_Beta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release.
+        /// </summary>
+        public static string ReleaseType_Release {
+            get {
+                return ResourceManager.GetString("ReleaseType_Release", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Pack.
+        /// </summary>
+        public static string ResourceKind_DataPack {
+            get {
+                return ResourceManager.GetString("ResourceKind_DataPack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod.
+        /// </summary>
+        public static string ResourceKind_Mod {
+            get {
+                return ResourceManager.GetString("ResourceKind_Mod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modpack.
+        /// </summary>
+        public static string ResourceKind_Modpack {
+            get {
+                return ResourceManager.GetString("ResourceKind_Modpack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource Pack.
+        /// </summary>
+        public static string ResourceKind_ResourcePack {
+            get {
+                return ResourceManager.GetString("ResourceKind_ResourcePack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shader Pack.
+        /// </summary>
+        public static string ResourceKind_ShaderPack {
+            get {
+                return ResourceManager.GetString("ResourceKind_ShaderPack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code:.
+        /// </summary>
+        public static string SafeLock_CodeLabelText {
+            get {
+                return ResourceManager.GetString("SafeLock_CodeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat.
+        /// </summary>
+        public static string SafeLock_RepeatLabelText {
+            get {
+                return ResourceManager.GetString("SafeLock_RepeatLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safe Lock.
+        /// </summary>
+        public static string SafeLock_Title {
+            get {
+                return ResourceManager.GetString("SafeLock_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acrylic.
+        /// </summary>
+        public static string SettingsView_BackgroundStyleAcrylicText {
+            get {
+                return ResourceManager.GetString("SettingsView_BackgroundStyleAcrylicText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string SettingsView_BackgroundStyleAutoText {
+            get {
+                return ResourceManager.GetString("SettingsView_BackgroundStyleAutoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blur.
+        /// </summary>
+        public static string SettingsView_BackgroundStyleBlurText {
+            get {
+                return ResourceManager.GetString("SettingsView_BackgroundStyleBlurText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background Style.
+        /// </summary>
+        public static string SettingsView_BackgroundStyleLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_BackgroundStyleLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mica.
+        /// </summary>
+        public static string SettingsView_BackgroundStyleMicaText {
+            get {
+                return ResourceManager.GetString("SettingsView_BackgroundStyleMicaText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string SettingsView_BackgroundStyleNoneText {
+            get {
+                return ResourceManager.GetString("SettingsView_BackgroundStyleNoneText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The look, the language, the font.
+        /// </summary>
+        public static string SettingsView_DisplaySubtitle {
+            get {
+                return ResourceManager.GetString("SettingsView_DisplaySubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display and Appearance.
+        /// </summary>
+        public static string SettingsView_DisplayTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_DisplayTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font.
+        /// </summary>
+        public static string SettingsView_FontLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_FontLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The listing configuration can be override by the instance individually.
+        /// </summary>
+        public static string SettingsView_GameDefaultsSubtitle {
+            get {
+                return ResourceManager.GetString("SettingsView_GameDefaultsSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Defaults.
+        /// </summary>
+        public static string SettingsView_GameDefaultsTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_GameDefaultsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java 11 Home.
+        /// </summary>
+        public static string SettingsView_Java11LabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_Java11LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java 17 Home.
+        /// </summary>
+        public static string SettingsView_Java17LabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_Java17LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java 21 Home.
+        /// </summary>
+        public static string SettingsView_Java21LabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_Java21LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java 8 Home.
+        /// </summary>
+        public static string SettingsView_Java8LabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_Java8LabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java Additional Arguments.
+        /// </summary>
+        public static string SettingsView_JavaAdditionalArgumentsLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_JavaAdditionalArgumentsLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Less is more.
+        /// </summary>
+        public static string SettingsView_JavaAdditionalArgumentsPlaceholder {
+            get {
+                return ResourceManager.GetString("SettingsView_JavaAdditionalArgumentsPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java Max Memory.
+        /// </summary>
+        public static string SettingsView_JavaMaxMemoryLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_JavaMaxMemoryLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bigger is better.
+        /// </summary>
+        public static string SettingsView_JavaMaxMemoryPlaceholder {
+            get {
+                return ResourceManager.GetString("SettingsView_JavaMaxMemoryPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MiB.
+        /// </summary>
+        public static string SettingsView_JavaMaxMemoryUnitText {
+            get {
+                return ResourceManager.GetString("SettingsView_JavaMaxMemoryUnitText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instance will select the best match while launching.
+        /// </summary>
+        public static string SettingsView_JavaSubtitle {
+            get {
+                return ResourceManager.GetString("SettingsView_JavaSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Java Presents.
+        /// </summary>
+        public static string SettingsView_JavaTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_JavaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string SettingsView_LanguageLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_LanguageLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sidebar Placement.
+        /// </summary>
+        public static string SettingsView_SidebarPlacementLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_SidebarPlacementLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string SettingsView_SidebarPlacementLeftText {
+            get {
+                return ResourceManager.GetString("SettingsView_SidebarPlacementLeftText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string SettingsView_SidebarPlacementRightText {
+            get {
+                return ResourceManager.GetString("SettingsView_SidebarPlacementRightText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activate.
+        /// </summary>
+        public static string SettingsView_SuperPowerLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_SuperPowerLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ....
+        /// </summary>
+        public static string SettingsView_SuperPowerSubtitle {
+            get {
+                return ResourceManager.GetString("SettingsView_SuperPowerSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Power.
+        /// </summary>
+        public static string SettingsView_SuperPowerTitle {
+            get {
+                return ResourceManager.GetString("SettingsView_SuperPowerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string SettingsView_ThemeVariantDarkText {
+            get {
+                return ResourceManager.GetString("SettingsView_ThemeVariantDarkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme Variant.
+        /// </summary>
+        public static string SettingsView_ThemeVariantLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_ThemeVariantLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string SettingsView_ThemeVariantLightText {
+            get {
+                return ResourceManager.GetString("SettingsView_ThemeVariantLightText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string SettingsView_ThemeVariantSystemText {
+            get {
+                return ResourceManager.GetString("SettingsView_ThemeVariantSystemText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application Settings.
+        /// </summary>
+        public static string SettingsView_Title {
+            get {
+                return ResourceManager.GetString("SettingsView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string SettingsView_WindowHeightLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_WindowHeightLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window Initial Size.
+        /// </summary>
+        public static string SettingsView_WindowInitialSizeLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_WindowInitialSizeLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width.
+        /// </summary>
+        public static string SettingsView_WindowWidthLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_WindowWidthLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Entries.
         /// </summary>
         public static string Shared_EmptyListLabelText {
@@ -704,6 +2441,33 @@ namespace Polymerium.App.Properties {
         public static string Shared_ExternalLinkLabelText {
             get {
                 return ResourceManager.GetString("Shared_ExternalLinkLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fetching....
+        /// </summary>
+        public static string Shared_FetchingLabelText {
+            get {
+                return ResourceManager.GetString("Shared_FetchingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Just write something down below....
+        /// </summary>
+        public static string UserInputDialog_Prompt {
+            get {
+                return ResourceManager.GetString("UserInputDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get something entered.
+        /// </summary>
+        public static string UserInputDialog_Title {
+            get {
+                return ResourceManager.GetString("UserInputDialog_Title", resourceCulture);
             }
         }
     }

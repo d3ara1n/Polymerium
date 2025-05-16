@@ -1,5 +1,7 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+        xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
 
     <Styles.Resources>
         <ResourceDictionary>
@@ -8,4 +10,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
+
+    <Style Selector="husk|Dialog">
+        <Setter Property="PrimaryText" Value="{x:Static lang:Resources.Dialog_ConfirmButtonText}" />
+        <Setter Property="SecondaryText" Value="{x:Static lang:Resources.Dialog_CancelButtonText}" />
+    </Style>
 </Styles>

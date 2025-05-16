@@ -491,7 +491,7 @@ public partial class InstanceSetupViewModel(
                                    IsCurrent = x.VersionId == reference.VersionId
                                })
                               .ToList();
-                var dialog = new InstanceVersionPickerDialog { Versions = versions };
+                var dialog = new ReferenceVersionPickerDialog { Versions = versions };
                 if (await overlayService.PopDialogAsync(dialog)
                  && dialog.Result is InstanceReferenceVersionModel version)
                     Update(version);

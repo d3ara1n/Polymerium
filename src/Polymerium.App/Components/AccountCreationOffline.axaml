@@ -5,19 +5,21 @@
                               xmlns:controls="clr-namespace:Polymerium.App.Controls"
                               xmlns:local="clr-namespace:Polymerium.App.Components"
                               xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+                              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                               mc:Ignorable="d"
-                              x:Class="Polymerium.App.Components.AccountCreationOffline" Header="Pick a name">
+                              x:Class="Polymerium.App.Components.AccountCreationOffline"
+                              Header="{x:Static lang:Resources.AccountCreationOffline_Title}">
     <StackPanel Spacing="12">
         <StackPanel>
-            <TextBlock Text="Name" />
+            <TextBlock Text="{x:Static lang:Resources.AccountCreationOffline_NameLabelText}" />
             <TextBox Text="{Binding $parent[local:AccountCreationOffline].UserName,Mode=TwoWay}" />
         </StackPanel>
         <StackPanel>
-            <TextBlock Text="Uuid" />
+            <TextBlock Text="{x:Static lang:Resources.AccountCreationOffline_UuidLabelText}" />
             <TextBox Watermark="{Binding $parent[local:AccountCreationOffline].Uuid,Mode=OneWay}"
                      Text="{Binding $parent[local:AccountCreationOffline].UuidOverwrite,Mode=TwoWay}" />
         </StackPanel>
-        <husk:InfoBar Header="Warning" Content="Name containing spaces or other non-ascii characters may cause issues."
+        <husk:InfoBar Header="Warning" Content="{x:Static lang:Resources.AccountCreationOffline_Prompt}"
                       Classes="Warning"
                       IsVisible="{Binding $parent[local:AccountCreationOffline].IsWarned,FallbackValue=False}" />
     </StackPanel>
