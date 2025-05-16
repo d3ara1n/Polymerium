@@ -139,8 +139,8 @@ public partial class JavaHomeContainer : UserControl
     {
         if (OverlayService != null)
         {
-            var path = await OverlayService.RequestFileAsync("Pick a file like /bin/java.exe or /bin/javaw.exe",
-                                                             "Select a Java executable");
+            var path = await OverlayService.RequestFileAsync(Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
+                                                             Properties.Resources.JavaHomeContainer_ReqeustJavaTitle);
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));

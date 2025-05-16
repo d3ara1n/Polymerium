@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia.Animation;
 using Avalonia.Styling;
@@ -62,7 +61,7 @@ public class NotificationService
         string title = "Operation failed",
         NotificationLevel level = NotificationLevel.Danger,
         params NotificationAction[] actions) =>
-        PopMessage(ex is not null ? Debugger.IsAttached ? ex.ToString() : ex.Message : "Unknown error",
+        PopMessage(ex is not null ? Program.Debug ? ex.ToString() : ex.Message : "Unknown error",
                    title,
                    level,
                    false,

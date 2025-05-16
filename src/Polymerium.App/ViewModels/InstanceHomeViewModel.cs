@@ -28,6 +28,7 @@ using Polymerium.Trident.Utilities;
 using Refit;
 using Trident.Abstractions.Extensions;
 using Trident.Abstractions.FileModels;
+using Resources = Polymerium.App.Properties.Resources;
 
 namespace Polymerium.App.ViewModels;
 
@@ -236,7 +237,9 @@ public partial class InstanceHomeViewModel(
                         }
                         else
                         {
-                            notificationService.PopMessage(ex, "Failed to authenticate account and rescue");
+                            notificationService.PopMessage(ex,
+                                                           Resources
+                                                              .InstanceHomeView_AccountAuthenticationDangerNotificationTitle);
                             return;
                         }
                     }
@@ -290,15 +293,20 @@ public partial class InstanceHomeViewModel(
                 }
                 catch (Exception ex)
                 {
-                    notificationService.PopMessage(ex, "Update failed");
+                    notificationService.PopMessage(ex, Resources.InstanceHomeView_DeployDangerNotificationTitle);
                 }
             }
         }
 
-        notificationService.PopMessage("Account is not provided or removed after set",
-                                       "Account not found",
+        notificationService.PopMessage(Resources.InstanceHomeView_AccountNotFoundDangerNotificationPrompt,
+                                       Resources.InstanceHomeView_AccountNotFoundDangerNotificationTitle,
                                        NotificationLevel.Danger,
-                                       actions: [new NotificationAction("Select Account", SwitchAccountCommand)]);
+                                       actions:
+                                       [
+                                           new NotificationAction(Resources
+                                                                     .InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText,
+                                                                  SwitchAccountCommand)
+                                       ]);
     }
 
     [RelayCommand]

@@ -56,23 +56,15 @@ public static class FileHelper
         inspector.Inspect(stream).ByFileExtension().OrderBy(x => -x.Points).Select(x => x.Extension).FirstOrDefault()
      ?? fallback;
 
-    public static async Task<bool> TryWriteToFileAsync(string path, Stream stream)
+    public static async Task TryWriteToFileAsync(string path, Stream stream)
     {
-        try
-        {
-            var parent = Path.GetDirectoryName(path);
-            if (parent != null && !Directory.Exists(parent))
-                Directory.CreateDirectory(parent);
-            var writer = new FileStream(path, FileMode.Create, FileAccess.Write);
-            await stream.CopyToAsync(writer).ConfigureAwait(false);
-            await writer.FlushAsync().ConfigureAwait(false);
-            writer.Close();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        var parent = Path.GetDirectoryName(path);
+        if (parent != null && !Directory.Exists(parent))
+            Directory.CreateDirectory(parent);
+        var writer = new FileStream(path, FileMode.Create, FileAccess.Write);
+        await stream.CopyToAsync(writer).ConfigureAwait(false);
+        await writer.FlushAsync().ConfigureAwait(false);
+        writer.Close();
     }
 
     public static string GetAssetFolderName(ResourceKind kind) =>

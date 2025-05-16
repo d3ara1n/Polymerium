@@ -1,4 +1,7 @@
-﻿using Avalonia;
+﻿using System;
+using System.Diagnostics;
+using Avalonia;
+using Avalonia.Logging;
 using Microsoft.Extensions.Hosting;
 
 namespace Polymerium.App;
@@ -29,6 +32,18 @@ internal static class Program
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp() =>
-        AppBuilder.Configure<App>().UsePlatformDetect().WithOutfitFont().LogToTrace();
+    public static AppBuilder BuildAvaloniaApp()
+    {
+        var builder = AppBuilder.Configure<App>().UsePlatformDetect().WithFontSetup();
+
+        if (Debug)
+            builder.LogToTextWriter(Console.Out, LogEventLevel.Debug);
+        else
+            builder.LogToTrace();
+
+        return builder;
+    }
+
+    public static bool Debug { get; } = Environment.GetEnvironmentVariable("POLYMERIUM_DEBUG") != null
+                                     || Debugger.IsAttached;
 }

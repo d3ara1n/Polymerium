@@ -463,7 +463,7 @@
         <value>U U I D</value>
     </data>
     <data name="AccountCreationOffline_Prompt" xml:space="preserve">
-        <value>名字中包含空格或中文字符会导致许多问题.</value>
+        <value>名字中包含空格或中文字符会导致许多问题。</value>
     </data>
     <data name="AccountCreationPortal_Title" xml:space="preserve">
         <value>选择账号类型</value>
@@ -813,13 +813,79 @@
     <data name="Dialog_DismissButtonText" xml:space="preserve">
         <value>关闭</value>
     </data>
-    <data name="InstancePackageModal_ActiveOnText" xml:space="preserve">
-        <value>启用</value>
-    </data>
-    <data name="InstancePackageModal_ActiveOffText" xml:space="preserve">
-        <value>停用</value>
-    </data>
     <data name="InstanceDashboardToast_Title" xml:space="preserve">
         <value>大师伯德</value>
+    </data>
+    <data name="ExhibitModpackToast_InstallButtonText" xml:space="preserve">
+        <value>安装</value>
+    </data>
+    <data name="JavaHomeContainer_ReqeustJavaTitle" xml:space="preserve">
+        <value>选择 Java 可执行文件</value>
+    </data>
+    <data name="JavaHomeContainer_RequestJavaPrompt" xml:space="preserve">
+        <value>文件名形如 bin/java.exe 或 /bin/javaw.exe</value>
+    </data>
+    <data name="NewInstanceView_RequestFileTitle" xml:space="preserve">
+        <value>从文件导入</value>
+    </data>
+    <data name="NewInstanceView_RequestFilePrompt" xml:space="preserve">
+        <value>选择一个包含整合包的压缩文件</value>
+    </data>
+    <data name="NewInstanceView_ImportDangerNotificationTitle" xml:space="preserve">
+        <value>导入失败</value>
+    </data>
+    <data name="NewInstanceView_IconSavingDangerNotificationTitle" xml:space="preserve">
+        <value>写入图标失败</value>
+    </data>
+    <data name="AccountsView_AccountAddingDangerNotificationPrompt" xml:space="preserve">
+        <value>已存在相同 UUID 的账号</value>
+    </data>
+    <data name="AccountsView_AccountAddingDangerNotificationTitle" xml:space="preserve">
+        <value>账号添加失败</value>
+    </data>
+    <data name="InstanceHomeView_AccountAuthenticationDangerNotificationTitle" xml:space="preserve">
+        <value>账号验证失败</value>
+    </data>
+    <data name="InstanceHomeView_DeployDangerNotificationTitle" xml:space="preserve">
+        <value>部署失败</value>
+    </data>
+    <data name="InstanceHomeView_AccountNotFoundDangerNotificationTitle" xml:space="preserve">
+        <value>账号不存在</value>
+    </data>
+    <data name="InstanceHomeView_AccountNotFoundDangerNotificationPrompt" xml:space="preserve">
+        <value>未提供账号或被移除</value>
+    </data>
+    <data name="InstanceHomeView_AccountNotFoundDangerNotificationSelectActionText" xml:space="preserve">
+        <value>选择账号</value>
+    </data>
+    <data name="InstancePropertiesView_ThumbnailSavingDangerNotificationTitle" xml:space="preserve">
+        <value>保存图标失败</value>
+    </data>
+    <data name="InstancePropertiesView_RequestJavaPrompt" xml:space="preserve">
+        <value>文件名形如 /bin/java.exe 或 /bin/javaw.exe</value>
+    </data>
+    <data name="InstancePropertiesView_RequestJavaTitle" xml:space="preserve">
+        <value>选择 Java 可执行文件</value>
+    </data>
+    <data name="InstancePropertiesView_UnlockingSuccessNotificationPrompt" xml:space="preserve">
+        <value>实例不再与任何整合包关联并可以随意编辑。</value>
+    </data>
+    <data name="InstancePropertiesView_RequestThumbnailTitle" xml:space="preserve">
+        <value>选择图标</value>
+    </data>
+    <data name="InstancePropertiesView_RequestThumbnailPrompt" xml:space="preserve">
+        <value>选择一个图像文件</value>
+    </data>
+    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationTitle" xml:space="preserve">
+        <value>设置实例图标</value>
+    </data>
+    <data name="InstancePropertiesView_ThumbnailSettingDangerNotificationPrompt" xml:space="preserve">
+        <value>选择的文件不是有效图像或无文件可用。</value>
+    </data>
+    <data name="InstancePropertiesView_RequestNameTitle" xml:space="preserve">
+        <value>重命名实例</value>
+    </data>
+    <data name="InstancePropertiesView_RequestNamePrompt" xml:space="preserve">
+        <value>为实例设置一个新名称</value>
     </data>
 </root>

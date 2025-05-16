@@ -67,7 +67,7 @@ public partial class AccountCreationOffline : AccountCreationStep
         if (change.Property == UserNameProperty)
         {
             var name = change.GetNewValue<string>();
-            Uuid = GenerateUuid(name).ToString();
+            Uuid = GenerateUuid(name).ToString().Replace("-", string.Empty);
             IsWarned = !name.All(x => x is '_' || char.IsAsciiLetterOrDigit(x));
             IsNextAvailable = !string.IsNullOrEmpty(name);
         }
