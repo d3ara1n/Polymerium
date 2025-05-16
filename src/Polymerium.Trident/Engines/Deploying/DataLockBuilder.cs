@@ -51,14 +51,16 @@ public class DataLockBuilder : IBuilder<DataLock>
     public DataLockBuilder AddGameArgument(string arg)
     {
         arg = arg.Trim();
-        _gameArguments.Add(arg);
+        if (!_gameArguments.Contains(arg))
+            _gameArguments.Add(arg);
         return this;
     }
 
     public DataLockBuilder AddJvmArgument(string arg)
     {
         arg = arg.Trim();
-        _javaArguments.Add(arg);
+        if (!_javaArguments.Contains(arg))
+            _javaArguments.Add(arg);
         return this;
     }
 

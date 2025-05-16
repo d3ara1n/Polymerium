@@ -36,9 +36,13 @@ public class AvaloniaLifetime : IHostedService
             _thread = new Thread(Serve) { Name = "Avalonia Lifetime" };
             _thread.SetApartmentState(ApartmentState.STA);
         }
+        else if (OperatingSystem.IsLinux())
+        {
+            _thread = new Thread(Serve) { Name = "Avalonia Lifetime" };
+        }
         else
         {
-            _thread = new Thread(Deserve);
+            throw new NotSupportedException("Unsupported platform");
         }
     }
 
