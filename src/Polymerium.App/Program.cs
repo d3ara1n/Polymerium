@@ -28,6 +28,7 @@ internal static class Program
         var builder = Host.CreateApplicationBuilder(args);
         Startup.ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
         AppHost = builder.Build();
+        Debug = Debug || builder.Environment.EnvironmentName == "Development";
         AppHost.Run();
     }
 
@@ -44,6 +45,5 @@ internal static class Program
         return builder;
     }
 
-    public static bool Debug { get; } = Environment.GetEnvironmentVariable("POLYMERIUM_DEBUG") != null
-                                     || Debugger.IsAttached;
+    public static bool Debug { get; private set; } = Debugger.IsAttached;
 }

@@ -22,12 +22,13 @@ public class AvaloniaLifetime : IHostedService
         logger.LogInformation("""
                               {}({}):{}
                               Polymerium/{}
-                              Avalonia/{}
+                              Avalonia({})/{}
                               """,
                               environment.ApplicationName,
                               environment.EnvironmentName,
                               environment.ContentRootPath,
                               typeof(AvaloniaLifetime).Assembly.GetName().Version,
+                              Program.Debug ? "Debug" : "Prod",
                               typeof(AvaloniaObject).Assembly.GetName().Version);
 
         if (OperatingSystem.IsWindows())
