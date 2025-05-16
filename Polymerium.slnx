@@ -1,6 +1,7 @@
 ﻿<Solution>
     <Folder Name="/Docs/">
         <File Path="docs\TRIDENT_V2.md"/>
+        <File Path="docs\Localization.md"/>
     </Folder>
     <Folder Name="/Misc/">
         <File Path="README.md"/>

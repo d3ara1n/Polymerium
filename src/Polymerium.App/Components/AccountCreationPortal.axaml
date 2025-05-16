@@ -5,8 +5,10 @@
                               xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                               xmlns:controls="clr-namespace:Polymerium.App.Controls"
                               xmlns:local="clr-namespace:Polymerium.App.Components"
+                              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                               mc:Ignorable="d" d:DesignHeight="320" d:DesignWidth="256"
-                              x:Class="Polymerium.App.Components.AccountCreationPortal" Header="Pick an account type"
+                              x:Class="Polymerium.App.Components.AccountCreationPortal"
+                              Header="{x:Static lang:Resources.AccountCreationPortal_Title}"
                               IsNextAvailable="True">
     <StackPanel Spacing="12">
         <TabStrip Name="AccountTypeSelectBox">
@@ -17,29 +19,32 @@
             </TabStrip.ItemsPanel>
             <TabStripItem>
                 <StackPanel>
-                    <TextBlock Text="Microsoft" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Enables all the online features and is the only way to play the game legally."
+                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftTitle}"
+                               FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_MicrosoftSubtitle}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
             <TabStripItem>
                 <StackPanel>
-                    <TextBlock Text="Trial" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Play as the preset character if dont have an account."
+                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_TrialTitle}"
+                               FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_TrialSubtitle}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
             <TabStripItem
                 IsEnabled="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable,FallbackValue=False}">
                 <StackPanel>
-                    <TextBlock Text="Offline" FontSize="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Nothing good but no Internet connection required."
+                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_OfflineTitle}"
+                               FontSize="{StaticResource LargeFontSize}" />
+                    <TextBlock Text="{x:Static lang:Resources.AccountCreationPortal_OfflineSubtitle}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" TextWrapping="Wrap" />
                 </StackPanel>
             </TabStripItem>
         </TabStrip>
         <husk:InfoBar
             IsVisible="{Binding $parent[local:AccountCreationPortal].IsOfflineAvailable,Converter={x:Static BoolConverters.Not},FallbackValue=True}"
-            Content="Offline account is unavailable if no Microsoft account is linked." />
+            Content="{x:Static lang:Resources.AccountCreationPortal_Prompt}" />
     </StackPanel>
 </controls:AccountCreationStep>

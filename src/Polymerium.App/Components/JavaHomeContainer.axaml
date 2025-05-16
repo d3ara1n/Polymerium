@@ -6,6 +6,7 @@
              xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:cp="clr-namespace:Polymerium.App.Components"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              mc:Ignorable="d"
              x:Class="Polymerium.App.Components.JavaHomeContainer">
     <Border CornerRadius="{StaticResource MediumCornerRadius}"
@@ -34,7 +35,7 @@
                             <Grid Grid.Column="2" RowDefinitions="*,*" ColumnDefinitions="Auto,*" ColumnSpacing="8">
                                 <husk:PlaceholderPresenter Grid.Row="0" Grid.Column="0"
                                                            Source="{Binding $parent[cp:JavaHomeContainer].Vendor}">
-                                    <TextBlock Text="Unknown" />
+                                    <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_UnknownLabelText}" />
                                     <husk:PlaceholderPresenter.SourceTemplate>
                                         <DataTemplate x:DataType="x:String">
                                             <TextBlock Text="{Binding}" />
@@ -63,20 +64,21 @@
                     <icons:PackIconLucide Kind="Sparkles" Height="{StaticResource ExtraLargeFontSize}"
                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                           Width="{StaticResource LargeFontSize}" />
-                    <TextBlock Text="Bundled or" FontSize="{StaticResource LargeFontSize}"
+                    <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_Prompt}"
+                               FontSize="{StaticResource LargeFontSize}"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" VerticalAlignment="Center" />
                     <Button Classes="Small" IsVisible="False">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <icons:PackIconLucide Kind="FolderSearch" Height="{StaticResource MediumFontSize}"
                                                   Width="{StaticResource MediumFontSize}" />
-                            <TextBlock Text="Detect" />
+                            <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_DetectButtonText}" />
                         </StackPanel>
                     </Button>
                     <Button Classes="Small" Command="{Binding $parent[cp:JavaHomeContainer].PickFileCommand}">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <icons:PackIconLucide Kind="FileScan" Height="{StaticResource MediumFontSize}"
                                                   Width="{StaticResource MediumFontSize}" />
-                            <TextBlock Text="Browse" />
+                            <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_BrowseButtonText}" />
                         </StackPanel>
                     </Button>
                 </StackPanel>

@@ -48,10 +48,10 @@
     <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>No Entries</value>
     </data>
-    <data name="AccountEntryButton_MarkAsDefaultMenu" xml:space="preserve">
+    <data name="AccountEntryButton_MarkAsDefaultMenuText" xml:space="preserve">
         <value>Mark as Default</value>
     </data>
-    <data name="AccountEntryButton_RemoveMenu" xml:space="preserve">
+    <data name="AccountEntryButton_RemoveMenuText" xml:space="preserve">
         <value>Remove</value>
     </data>
     <data name="ExceptionView_Title" xml:space="preserve">
@@ -183,13 +183,13 @@
     <data name="InstancePropertiesView_ResolvePackageDependenciesLabelText" xml:space="preserve">
         <value>[Experimental] Resolve Package Dependencies</value>
     </data>
-    <data name="InstancePropertiesView_ResolvePackageDependenciesInfo" xml:space="preserve">
+    <data name="InstancePropertiesView_ResolvePackageDependenciesPrompt" xml:space="preserve">
         <value>This always leads to unexpected package conflicts due to poor management of package distribution sites. </value>
     </data>
     <data name="InstancePropertiesView_FastLaunchLabelText" xml:space="preserve">
         <value>Fast Launch</value>
     </data>
-    <data name="InstancePropertiesView_FastLaunchInfo" xml:space="preserve">
+    <data name="InstancePropertiesView_FastLaunchPrompt" xml:space="preserve">
         <value>Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted.</value>
     </data>
     <data name="InstancePropertiesView_DangerZoneTitle" xml:space="preserve">
@@ -239,5 +239,593 @@
     </data>
     <data name="InstanceSetupView_LoadingPackageLabelText" xml:space="preserve">
         <value>Loading packages information...</value>
+    </data>
+    <data name="MarketplacePortalView_Title" xml:space="preserve">
+        <value>Marketplace Portal</value>
+    </data>
+    <data name="MarketplacePortalView_NewsLearnMoreButtonText" xml:space="preserve">
+        <value>Learn More</value>
+    </data>
+    <data name="MarketplacePortalView_DiscoveryCenterTitle" xml:space="preserve">
+        <value>Discovery Center</value>
+    </data>
+    <data name="MarketplacePortalView_DiscoveryCenterSubtitle" xml:space="preserve">
+        <value>Everything(mostly) begins here</value>
+    </data>
+    <data name="MarketplacePortalView_SearchButtonText" xml:space="preserve">
+        <value>Search</value>
+    </data>
+    <data name="MarketplacePortalView_NewsLabelText" xml:space="preserve">
+        <value>News</value>
+    </data>
+    <data name="MarketplaceSearchView_Title" xml:space="preserve">
+        <value>Search modpacks</value>
+    </data>
+    <data name="MarketplaceSearchView_SearchBarPlaceholder" xml:space="preserve">
+        <value>With the keywords in...</value>
+    </data>
+    <data name="MarketplaceSearchView_SearchButtonText" xml:space="preserve">
+        <value>Query</value>
+    </data>
+    <data name="MarketplaceSearchView_ResultCountLabelText" xml:space="preserve">
+        <value>Results:</value>
+    </data>
+    <data name="MarketplaceSearchView_ResetFilterButtonText" xml:space="preserve">
+        <value>Clear Filter</value>
+    </data>
+    <data name="Shared_FetchingLabelText" xml:space="preserve">
+        <value>Fetching...</value>
+    </data>
+    <data name="NewInstanceView_CreateButtonText" xml:space="preserve">
+        <value>Create instance</value>
+    </data>
+    <data name="NewInstanceView_Title" xml:space="preserve">
+        <value>Create an instance</value>
+    </data>
+    <data name="NewInstanceView_NameLabelText" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="NewInstanceView_VersionLabelText" xml:space="preserve">
+        <value>Version</value>
+    </data>
+    <data name="NewInstanceView_PackageCountLabelText" xml:space="preserve">
+        <value>Packages</value>
+    </data>
+    <data name="NewInstanceView_ModLoaderLabelText" xml:space="preserve">
+        <value>Mod Loader</value>
+    </data>
+    <data name="NewInstanceView_SeparatorLabelText" xml:space="preserve">
+        <value>Or create from</value>
+    </data>
+    <data name="NewInstanceView_ImportButtonText" xml:space="preserve">
+        <value>Import</value>
+    </data>
+    <data name="NewInstanceView_DownloadButtonText" xml:space="preserve">
+        <value>Marketplace</value>
+    </data>
+    <data name="PackageExplorerView_PendingLabelText" xml:space="preserve">
+        <value>Pending</value>
+    </data>
+    <data name="PackageExplorerView_AddLabelText" xml:space="preserve">
+        <value>Add</value>
+    </data>
+    <data name="PackageExplorerView_ModifyLabelText" xml:space="preserve">
+        <value>Modify</value>
+    </data>
+    <data name="PackageExplorerView_RemoveLabelText" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+    <data name="PackageExplorerView_EmptyLabelText" xml:space="preserve">
+        <value>Empty</value>
+    </data>
+    <data name="PackageExplorerView_CollectButtonText" xml:space="preserve">
+        <value>Collect</value>
+    </data>
+    <data name="PackageExplorerView_DismissButtonText" xml:space="preserve">
+        <value>Dismiss</value>
+    </data>
+    <data name="PackageExplorerView_SearchBarPlaceholder" xml:space="preserve">
+        <value>Search by names and names...</value>
+    </data>
+    <data name="PackageExplorerView_SearchButtonText" xml:space="preserve">
+        <value>Query</value>
+    </data>
+    <data name="SettingsView_Title" xml:space="preserve">
+        <value>Application Settings</value>
+    </data>
+    <data name="SettingsView_SuperPowerTitle" xml:space="preserve">
+        <value>Super Power</value>
+    </data>
+    <data name="SettingsView_SuperPowerSubtitle" xml:space="preserve">
+        <value>...</value>
+    </data>
+    <data name="SettingsView_SuperPowerLabelText" xml:space="preserve">
+        <value>Activate</value>
+    </data>
+    <data name="SettingsView_DisplayTitle" xml:space="preserve">
+        <value>Display and Appearance</value>
+    </data>
+    <data name="SettingsView_DisplaySubtitle" xml:space="preserve">
+        <value>The look, the language, the font</value>
+    </data>
+    <data name="SettingsView_SidebarPlacementLabelText" xml:space="preserve">
+        <value>Sidebar Placement</value>
+    </data>
+    <data name="SettingsView_SidebarPlacementLeftText" xml:space="preserve">
+        <value>Left</value>
+    </data>
+    <data name="SettingsView_SidebarPlacementRightText" xml:space="preserve">
+        <value>Right</value>
+    </data>
+    <data name="SettingsView_ThemeVariantLabelText" xml:space="preserve">
+        <value>Theme Variant</value>
+    </data>
+    <data name="SettingsView_ThemeVariantSystemText" xml:space="preserve">
+        <value>System</value>
+    </data>
+    <data name="SettingsView_ThemeVariantLightText" xml:space="preserve">
+        <value>Light</value>
+    </data>
+    <data name="SettingsView_ThemeVariantDarkText" xml:space="preserve">
+        <value>Dark</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleLabelText" xml:space="preserve">
+        <value>Background Style</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleAutoText" xml:space="preserve">
+        <value>Auto</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleMicaText" xml:space="preserve">
+        <value>Mica</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleAcrylicText" xml:space="preserve">
+        <value>Acrylic</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleBlurText" xml:space="preserve">
+        <value>Blur</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleNoneText" xml:space="preserve">
+        <value>None</value>
+    </data>
+    <data name="SettingsView_LanguageLabelText" xml:space="preserve">
+        <value>Language</value>
+    </data>
+    <data name="SettingsView_FontLabelText" xml:space="preserve">
+        <value>Font</value>
+    </data>
+    <data name="SettingsView_JavaTitle" xml:space="preserve">
+        <value>Java Presents</value>
+    </data>
+    <data name="SettingsView_JavaSubtitle" xml:space="preserve">
+        <value>Instance will select the best match while launching</value>
+    </data>
+    <data name="SettingsView_Java8LabelText" xml:space="preserve">
+        <value>Java 8 Home</value>
+    </data>
+    <data name="SettingsView_Java11LabelText" xml:space="preserve">
+        <value>Java 11 Home</value>
+    </data>
+    <data name="SettingsView_Java17LabelText" xml:space="preserve">
+        <value>Java 17 Home</value>
+    </data>
+    <data name="SettingsView_Java21LabelText" xml:space="preserve">
+        <value>Java 21 Home</value>
+    </data>
+    <data name="SettingsView_GameDefaultsTitle" xml:space="preserve">
+        <value>Game Defaults</value>
+    </data>
+    <data name="SettingsView_GameDefaultsSubtitle" xml:space="preserve">
+        <value>The listing configuration can be override by the instance individually</value>
+    </data>
+    <data name="SettingsView_JavaMaxMemoryLabelText" xml:space="preserve">
+        <value>Java Max Memory</value>
+    </data>
+    <data name="SettingsView_JavaMaxMemoryPlaceholder" xml:space="preserve">
+        <value>Bigger is better</value>
+    </data>
+    <data name="SettingsView_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+        <value>Java Additional Arguments</value>
+    </data>
+    <data name="SettingsView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
+        <value>Less is more</value>
+    </data>
+    <data name="SettingsView_WindowInitialSizeLabelText" xml:space="preserve">
+        <value>Window Initial Size</value>
+    </data>
+    <data name="SettingsView_JavaMaxMemoryUnitText" xml:space="preserve">
+        <value>MiB</value>
+    </data>
+    <data name="SettingsView_WindowHeightLabelText" xml:space="preserve">
+        <value>Height</value>
+    </data>
+    <data name="SettingsView_WindowWidthLabelText" xml:space="preserve">
+        <value>Width</value>
+    </data>
+    <data name="AccountCreationMicrosoft_Title" xml:space="preserve">
+        <value>Microsoft Authentication</value>
+    </data>
+    <data name="AccountCreationMicrosoft_UnavailableLabelText" xml:space="preserve">
+        <value>Something went wrong...</value>
+    </data>
+    <data name="AccountCreationMicrosoft_RetryButtonText" xml:space="preserve">
+        <value>Retry</value>
+    </data>
+    <data name="AccountCreationMicrosoft_DoneTitle" xml:space="preserve">
+        <value>Done!</value>
+    </data>
+    <data name="AccountCreationMicrosoft_DoneSubtitle" xml:space="preserve">
+        <value>The account has been linked. Checkout in the next page.</value>
+    </data>
+    <data name="AccountCreationMicrosoft_OpenLinkButtonText" xml:space="preserve">
+        <value>Open in the browser</value>
+    </data>
+    <data name="AccountCreationMicrosoft_Prompt" xml:space="preserve">
+        <value>The code will be expired in 15 minutes. Please fill this code in the page:</value>
+    </data>
+    <data name="AccountCreationOffline_Title" xml:space="preserve">
+        <value>Pick a name</value>
+    </data>
+    <data name="AccountCreationOffline_NameLabelText" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="AccountCreationOffline_UuidLabelText" xml:space="preserve">
+        <value>UUID</value>
+    </data>
+    <data name="AccountCreationOffline_Prompt" xml:space="preserve">
+        <value>Name containing spaces or other non-ascii characters may cause issues.</value>
+    </data>
+    <data name="AccountCreationPortal_Title" xml:space="preserve">
+        <value>Pick an account type</value>
+    </data>
+    <data name="AccountCreationPortal_MicrosoftTitle" xml:space="preserve">
+        <value>Microsoft</value>
+    </data>
+    <data name="AccountCreationPortal_MicrosoftSubtitle" xml:space="preserve">
+        <value>Enables all the online features and is the only way to play the game legally.</value>
+    </data>
+    <data name="AccountCreationPortal_TrialTitle" xml:space="preserve">
+        <value>Trial</value>
+    </data>
+    <data name="AccountCreationPortal_TrialSubtitle" xml:space="preserve">
+        <value>Play as the preset character if dont have an account.</value>
+    </data>
+    <data name="AccountCreationPortal_OfflineTitle" xml:space="preserve">
+        <value>Offline</value>
+    </data>
+    <data name="AccountCreationPortal_OfflineSubtitle" xml:space="preserve">
+        <value>Nothing good but no Internet connection required.</value>
+    </data>
+    <data name="AccountCreationPortal_Prompt" xml:space="preserve">
+        <value>Offline account is unavailable if no Microsoft account is linked.</value>
+    </data>
+    <data name="AccountCreationPreview_Title" xml:space="preserve">
+        <value>Account Preview</value>
+    </data>
+    <data name="AccountCreationPreview_Subtitle" xml:space="preserve">
+        <value>🎉It's nearly done🎉</value>
+    </data>
+    <data name="AccountCreationTrial_Title" xml:space="preserve">
+        <value>Pick your favorite family guy</value>
+    </data>
+    <data name="ExhibitStatePresenter_AddingTagText" xml:space="preserve">
+        <value>Adding</value>
+    </data>
+    <data name="ExhibitStatePresenter_EditableTagText" xml:space="preserve">
+        <value>Installed</value>
+    </data>
+    <data name="ExhibitStatePresenter_LockedTagText" xml:space="preserve">
+        <value>Locked</value>
+    </data>
+    <data name="ExhibitStatePresenter_RemovingTagText" xml:space="preserve">
+        <value>Removing</value>
+    </data>
+    <data name="ExhibitStatePresenter_ModifyingTagText" xml:space="preserve">
+        <value>Modifying</value>
+    </data>
+    <data name="JavaHomeContainer_BrowseButtonText" xml:space="preserve">
+        <value>Browse</value>
+    </data>
+    <data name="JavaHomeContainer_DetectButtonText" xml:space="preserve">
+        <value>Detect</value>
+    </data>
+    <data name="JavaHomeContainer_UnknownLabelText" xml:space="preserve">
+        <value>Unknown</value>
+    </data>
+    <data name="JavaHomeContainer_Prompt" xml:space="preserve">
+        <value>Bundled or</value>
+    </data>
+    <data name="PackageContainer_FilterBarPlaceholder" xml:space="preserve">
+        <value>Enter filter string...</value>
+    </data>
+    <data name="PackageContainer_ConditionLabelText" xml:space="preserve">
+        <value>Filter</value>
+    </data>
+    <data name="PackageContainer_TagLabelText" xml:space="preserve">
+        <value>Tags</value>
+    </data>
+    <data name="ResourceKind_Modpack" xml:space="preserve">
+        <value>Modpack</value>
+    </data>
+    <data name="ResourceKind_Mod" xml:space="preserve">
+        <value>Mod</value>
+    </data>
+    <data name="ResourceKind_ResourcePack" xml:space="preserve">
+        <value>Resource Pack</value>
+    </data>
+    <data name="ResourceKind_ShaderPack" xml:space="preserve">
+        <value>Shader Pack</value>
+    </data>
+    <data name="ResourceKind_DataPack" xml:space="preserve">
+        <value>Data Pack</value>
+    </data>
+    <data name="Enum_All" xml:space="preserve">
+        <value>All</value>
+    </data>
+    <data name="Enum_None" xml:space="preserve">
+        <value>None</value>
+    </data>
+    <data name="Enum_Enabled" xml:space="preserve">
+        <value>Enabled</value>
+    </data>
+    <data name="Enum_Disabled" xml:space="preserve">
+        <value>Disabled</value>
+    </data>
+    <data name="PackageContainer_SourceOriginalText" xml:space="preserve">
+        <value>Original</value>
+    </data>
+    <data name="PackageContainer_SourceLocalText" xml:space="preserve">
+        <value>Local</value>
+    </data>
+    <data name="PackageContainer_SourceLabelText" xml:space="preserve">
+        <value>Source</value>
+    </data>
+    <data name="PackageContainer_TypeLabelText" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="PackageContainer_ResultCountLabelText" xml:space="preserve">
+        <value>Results</value>
+    </data>
+    <data name="PackageContainer_BatchUpdateButtonText" xml:space="preserve">
+        <value>Batch Update</value>
+    </data>
+    <data name="PackageContainer_GetMoreButtonText" xml:space="preserve">
+        <value>Get More</value>
+    </data>
+    <data name="PackageContainer_ExportListButtonText" xml:space="preserve">
+        <value>Explort List</value>
+    </data>
+    <data name="SafeLock_Title" xml:space="preserve">
+        <value>Safe Lock</value>
+    </data>
+    <data name="SafeLock_CodeLabelText" xml:space="preserve">
+        <value>Code:</value>
+    </data>
+    <data name="SafeLock_RepeatLabelText" xml:space="preserve">
+        <value>Repeat</value>
+    </data>
+    <data name="ExhibitDependencyButton_RequiredTagText" xml:space="preserve">
+        <value>Required</value>
+    </data>
+    <data name="ExhibitModpackButton_OpenWebsiteMenuText" xml:space="preserve">
+        <value>Open Website</value>
+    </data>
+    <data name="ExhibitModpackButton_InstallButtonText" xml:space="preserve">
+        <value>Install</value>
+    </data>
+    <data name="InstanceEntryButton_InstallTagText" xml:space="preserve">
+        <value>INSTALLING</value>
+    </data>
+    <data name="InstanceEntryButton_PreparingTagText" xml:space="preserve">
+        <value>PREPARING</value>
+    </data>
+    <data name="InstanceEntryButton_UpdatingTagText" xml:space="preserve">
+        <value>UPDATING</value>
+    </data>
+    <data name="InstanceEntryButton_RunningTagText" xml:space="preserve">
+        <value>RUNNING</value>
+    </data>
+    <data name="InstancePackageButton_ActiveMenuText" xml:space="preserve">
+        <value>Active</value>
+    </data>
+    <data name="InstancePackageButton_OpenWebsiteMenuText" xml:space="preserve">
+        <value>Open Website</value>
+    </data>
+    <data name="InstancePackageButton_RemoveMenuText" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+    <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
+        <value>Disabled</value>
+    </data>
+    <data name="InstancePackageButton_OriginalTagText" xml:space="preserve">
+        <value>Original</value>
+    </data>
+    <data name="InstancePackageButton_AutoVersionTagText" xml:space="preserve">
+        <value>Auto Version</value>
+    </data>
+    <data name="AccountPickerDialog_Title" xml:space="preserve">
+        <value>Choose a game account</value>
+    </data>
+    <data name="AccountPickerDialog_EmptyListPrompt" xml:space="preserve">
+        <value>No account present in the vault</value>
+    </data>
+    <data name="AccountPickerDialog_ManageAccountsButtonText" xml:space="preserve">
+        <value>Manage Accounts</value>
+    </data>
+    <data name="ExportPackageListDialog_Title" xml:space="preserve">
+        <value>Export package list</value>
+    </data>
+    <data name="ExportPackageListDialog_Prompt" xml:space="preserve">
+        <value>Export package list of the instance into the selected formatted table file</value>
+    </data>
+    <data name="ExportPackageListDialog_PackageCountLabelText" xml:space="preserve">
+        <value>packages</value>
+    </data>
+    <data name="ExportPackageListDialog_PathLabelText" xml:space="preserve">
+        <value>Export to</value>
+    </data>
+    <data name="ExportPackageListDialog_PathBarPlaceholder" xml:space="preserve">
+        <value>Chooooosen file path</value>
+    </data>
+    <data name="FilePickerDialog_Title" xml:space="preserve">
+        <value>Pick a file</value>
+    </data>
+    <data name="FilePickerDialog_DropZonePrompt" xml:space="preserve">
+        <value>Drag and drop, or</value>
+    </data>
+    <data name="FilePickerDialog_BrowseButtonText" xml:space="preserve">
+        <value>Browser files...</value>
+    </data>
+    <data name="FilePickerDialog_AlertPrompt" xml:space="preserve">
+        <value>File too big makes app crash</value>
+    </data>
+    <data name="FilePickerDialog_PathBarPlaceholder" xml:space="preserve">
+        <value>Chooooosen file path"</value>
+    </data>
+    <data name="GameVersionPickerDialog_Title" xml:space="preserve">
+        <value>Pick a game version</value>
+    </data>
+    <data name="GameVersionPickerDialog_VersionBarPlaceholder" xml:space="preserve">
+        <value>Filter by version names...</value>
+    </data>
+    <data name="ReferenceVersionPickerDialog_Title" xml:space="preserve">
+        <value>Choose a version to upgrade/downgrade to</value>
+    </data>
+    <data name="ReferenceVersionPickerDialog_Prompt" xml:space="preserve">
+        <value>All the mods will be replaced. Configs will be replaced with new ones.</value>
+    </data>
+    <data name="ReleaseType_Release" xml:space="preserve">
+        <value>Release</value>
+    </data>
+    <data name="ReleaseType_Beta" xml:space="preserve">
+        <value>Beta</value>
+    </data>
+    <data name="ReleaseType_Alpha" xml:space="preserve">
+        <value>Alpha</value>
+    </data>
+    <data name="UserInputDialog_Title" xml:space="preserve">
+        <value>Get something entered</value>
+    </data>
+    <data name="UserInputDialog_Prompt" xml:space="preserve">
+        <value>Just write something down below...</value>
+    </data>
+    <data name="AccountCreationModal_NextButtonText" xml:space="preserve">
+        <value>Next</value>
+    </data>
+    <data name="AccountCreationModal_FinishButtonText" xml:space="preserve">
+        <value>Finish</value>
+    </data>
+    <data name="AccountCreationModal_BackButtonText" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    <data name="AccountCreationModal_DismissButtonText" xml:space="preserve">
+        <value>Dismiss</value>
+    </data>
+    <data name="AccountEntryModal_LastUsedLabelText" xml:space="preserve">
+        <value>Last Used</value>
+    </data>
+    <data name="AccountEntryModal_EnrolledLabelText" xml:space="preserve">
+        <value>Enrolled</value>
+    </data>
+    <data name="AccountEntryModal_OfflinePrompt" xml:space="preserve">
+        <value>It's all set.</value>
+    </data>
+    <data name="AccountEntryModal_TrialPrompt" xml:space="preserve">
+        <value>It's all set.</value>
+    </data>
+    <data name="AccountEntryModal_MicrosoftPrompt" xml:space="preserve">
+        <value>This kind of account is kind of: No use in the past then no use in the future any more.</value>
+    </data>
+    <data name="ExhibitPackageModal_FilterLabelText" xml:space="preserve">
+        <value>Show compatible versions only</value>
+    </data>
+    <data name="ExhibitPackageModal_VersionBoxPlaceholder" xml:space="preserve">
+        <value>Specify version...</value>
+    </data>
+    <data name="ExhibitPackageModal_VersionLabelText" xml:space="preserve">
+        <value>Version:</value>
+    </data>
+    <data name="ExhibitPackageModal_AddButtonText" xml:space="preserve">
+        <value>Add to the instance</value>
+    </data>
+    <data name="ExhibitPackageModal_InstalledVersionTagText" xml:space="preserve">
+        <value>Installed:</value>
+    </data>
+    <data name="ExhibitPackageModal_UnspecifiedVersionTagText" xml:space="preserve">
+        <value>Unspecified</value>
+    </data>
+    <data name="ExhibitPackageModal_ModifyButtonText" xml:space="preserve">
+        <value>Apply changes</value>
+    </data>
+    <data name="ExhibitPackageModal_LockedVersionLabelText" xml:space="preserve">
+        <value>Locked Version</value>
+    </data>
+    <data name="ExhibitPackageModal_AddingVersionTagText" xml:space="preserve">
+        <value>Adding:</value>
+    </data>
+    <data name="ExhibitPackageModal_ModifyingTagText" xml:space="preserve">
+        <value>Replacing:</value>
+    </data>
+    <data name="ExhibitPackageModal_RemovingTagText" xml:space="preserve">
+        <value>Removing:</value>
+    </data>
+    <data name="ExhibitPackageModal_RestoreButtonText" xml:space="preserve">
+        <value>Restore</value>
+    </data>
+    <data name="ExhibitPackageModal_AboutTabText" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="ExhibitPackageModal_DependenciesTabText" xml:space="preserve">
+        <value>Dependencies</value>
+    </data>
+    <data name="ExhibitPackageModal_DependenciesTabPrompt" xml:space="preserve">
+        <value>Showing dependencies of version:</value>
+    </data>
+    <data name="ExhibitPackageModal_ChangelogsTabText" xml:space="preserve">
+        <value>Changlogs</value>
+    </data>
+    <data name="ExhibitPackageModal_ChangelogsTabPrompt" xml:space="preserve">
+        <value>Showing changelog of version:</value>
+    </data>
+    <data name="ExhibitPackageModal_EmptyListLabelText" xml:space="preserve">
+        <value>Select a Version</value>
+    </data>
+    <data name="InstancePackageModal_VersionsTabText" xml:space="preserve">
+        <value>Versions</value>
+    </data>
+    <data name="InstancePackageModal_VersionBoxUnspecificTitle" xml:space="preserve">
+        <value>Auto Select Version</value>
+    </data>
+    <data name="InstancePackageModal_VersionBoxUnspecificSubtitle" xml:space="preserve">
+        <value>Or pick a version in the list below.</value>
+    </data>
+    <data name="InstancePackageModal_VersionBoxLabelText" xml:space="preserve">
+        <value>Current Version</value>
+    </data>
+    <data name="InstancePackageModal_LockedVersionLabelText" xml:space="preserve">
+        <value>Not Editable</value>
+    </data>
+    <data name="InstancePackageModal_FilterLabelText" xml:space="preserve">
+        <value>Show compatible versions only</value>
+    </data>
+    <data name="InstancePackageModal_TagsTabText" xml:space="preserve">
+        <value>Tags</value>
+    </data>
+    <data name="InstancePackageModal_AddTagButtonText" xml:space="preserve">
+        <value>Add</value>
+    </data>
+    <data name="Dialog_ConfirmButtonText" xml:space="preserve">
+        <value>Confirm</value>
+    </data>
+    <data name="Dialog_CancelButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="Dialog_DismissButtonText" xml:space="preserve">
+        <value>Dismiss</value>
+    </data>
+    <data name="ExhibitModpackToast_InstallButtonText" xml:space="preserve">
+        <value>Install</value>
+    </data>
+    <data name="InstanceDashboardToast_Title" xml:space="preserve">
+        <value>Dashboard</value>
     </data>
 </root>

@@ -5,6 +5,7 @@
              xmlns:controls="using:Polymerium.App.Controls"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:local="using:Polymerium.App.Components"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Polymerium.App.Components.SafeLock">
     <UserControl.Styles>
@@ -27,14 +28,14 @@
                                  Duration="{StaticResource ControlFasterAnimationDuration}" />
             </Transitions>
         </Border.Transitions>
-        <controls:SettingsEntryItem Header="Safe Lock">
+        <controls:SettingsEntryItem Header="{x:Static lang:Resources.SafeLock_Title}">
             <StackPanel Spacing="8">
                 <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                         CornerRadius="{StaticResource SmallCornerRadius}">
                     <Grid Margin="12,8" ColumnDefinitions="Auto,0,*">
                         <TextBlock Grid.Column="0"
                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                   Text="Code:" />
+                                   Text="{x:Static lang:Resources.SafeLock_CodeLabelText}" />
                         <TextBlock Grid.Column="2" Text="{Binding $parent[local:SafeLock].SafeCode}"
                                    HorizontalAlignment="Center" />
                     </Grid>
@@ -43,7 +44,8 @@
                     <TextBox.InnerLeftContent>
                         <DockPanel>
                             <husk:Divider DockPanel.Dock="Right" Orientation="Vertical" />
-                            <TextBlock Text="Repeat" Margin="12,0" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Static lang:Resources.SafeLock_RepeatLabelText}" Margin="12,0"
+                                       VerticalAlignment="Center" />
                         </DockPanel>
                     </TextBox.InnerLeftContent>
                 </TextBox>

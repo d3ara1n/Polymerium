@@ -5,10 +5,11 @@
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
              xmlns:local="clr-namespace:Polymerium.App.Dialogs"
-             mc:Ignorable="d" Width="300" Title="Export package list"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+             mc:Ignorable="d" Width="300" Title="{x:Static lang:Resources.ExportPackageListDialog_Title}"
              x:Class="Polymerium.App.Dialogs.ExportPackageListDialog"
              IsPrimaryButtonVisible="True"
-             Message="Export package list of the instance into the selected formatted table file">
+             Message="{x:Static lang:Resources.ExportPackageListDialog_Prompt}">
     <StackPanel Spacing="12">
         <Border Background="{StaticResource ControlTranslucentFullBackgroundBrush}" Padding="3"
                 CornerRadius="{StaticResource MediumCornerRadius}">
@@ -19,20 +20,21 @@
                         <Run
                             Text="{Binding $parent[local:ExportPackageListDialog].PackageCount,Mode=OneWay,FallbackValue=0}"
                             FontSize="{StaticResource ExtraLargeFontSize}" />
-                        <Run Text="packages" Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                        <Run Text="{x:Static lang:Resources.ExportPackageListDialog_PackageCountLabelText}"
+                             Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                     </TextBlock>
                 </StackPanel>
             </Border>
         </Border>
         <StackPanel Spacing="4">
-            <TextBlock Text="Export to" />
+            <TextBlock Text="{x:Static lang:Resources.ExportPackageListDialog_PathLabelText}" />
             <DockPanel HorizontalSpacing="8">
                 <Button DockPanel.Dock="Right"
                         Command="{Binding $parent[local:ExportPackageListDialog].BrowseCommand}">
                     <fi:SymbolIcon Symbol="MoreHorizontal" HorizontalAlignment="Center"
                                    FontSize="{StaticResource MediumFontSize}" />
                 </Button>
-                <TextBox Watermark="Chooooosen file path"
+                <TextBox Watermark="{x:Static lang:Resources.ExportPackageListDialog_PathBarPlaceholder}"
                          Text="{Binding $parent[local:ExportPackageListDialog].Result,Mode=TwoWay}" />
             </DockPanel>
         </StackPanel>

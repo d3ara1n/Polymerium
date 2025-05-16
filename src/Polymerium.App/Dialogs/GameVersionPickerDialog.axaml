@@ -7,11 +7,12 @@
              xmlns:local="using:Polymerium.App.Dialogs"
              xmlns:m="using:Polymerium.App.Models"
              xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-             mc:Ignorable="d" Title="Pick a game version"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+             mc:Ignorable="d" Title="{x:Static lang:Resources.GameVersionPickerDialog_Title}"
              x:Class="Polymerium.App.Dialogs.GameVersionPickerDialog"
              IsPrimaryButtonVisible="True">
     <Grid RowDefinitions="Auto,12,Auto,12,*">
-        <TextBox Grid.Row="0" Watermark="Filter by version names..."
+        <TextBox Grid.Row="0" Watermark="{x:Static lang:Resources.GameVersionPickerDialog_VersionBarPlaceholder}"
                  Text="{Binding $parent[local:GameVersionPickerDialog].FilterText,Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
@@ -39,7 +40,8 @@
                 <icons:PackIconLucide Kind="Joystick" Height="{StaticResource ExtraLargeFontSize}"
                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                       Width="{StaticResource ExtraLargeFontSize}" HorizontalAlignment="Center" />
-                <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                           FontSize="{StaticResource LargeFontSize}"
                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" HorizontalAlignment="Center" />
             </StackPanel>
             <ListBox MinHeight="64"

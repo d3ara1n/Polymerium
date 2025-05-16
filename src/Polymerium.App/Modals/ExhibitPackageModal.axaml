@@ -12,6 +12,7 @@
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:controls="clr-namespace:Polymerium.App.Controls"
             xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
+            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
             mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="660" MinHeight="360"
             x:Class="Polymerium.App.Modals.ExhibitPackageModal" x:DataType="m:ExhibitPackageModel"
             Background="{x:Null}" BorderBrush="{x:Null}"
@@ -26,7 +27,7 @@
                             Padding="12,8">
                         <CheckBox
                             IsChecked="{Binding $parent[modals:ExhibitPackageModal].IsFilterEnabled,Mode=TwoWay}">
-                            <TextBlock Text="Show compatible versions only" />
+                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_FilterLabelText}" />
                         </CheckBox>
                     </Border>
                     <TabStrip Grid.Row="1"
@@ -45,15 +46,16 @@
                                         <ComboBox Theme="{StaticResource GhostComboBoxTheme}"
                                                   SelectedItem="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion,Mode=TwoWay,FallbackValue={x:Null}}"
                                                   ItemsSource="{Binding}"
-                                                  PlaceholderText="Specific version..."
+                                                  PlaceholderText="{x:Static lang:Resources.ExhibitPackageModal_VersionBoxPlaceholder}"
                                                   VerticalAlignment="Stretch"
                                                   VerticalContentAlignment="Center">
                                             <ComboBox.SelectionBoxItemTemplate>
                                                 <DataTemplate DataType="m:ExhibitVersionModel">
                                                     <StackPanel>
-                                                        <TextBlock Text="Version:"
-                                                                   FontSize="{StaticResource SmallFontSize}"
-                                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                                        <TextBlock
+                                                            Text="{x:Static lang:Resources.ExhibitPackageModal_VersionLabelText}"
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                                         <TextBlock Text="{Binding VersionName}"
                                                                    TextTrimming="CharacterEllipsis" />
                                                     </StackPanel>
@@ -94,19 +96,22 @@
                                                                 <husk:SwitchCase Value="Release">
                                                                     <husk:Tag Classes="Success"
                                                                               CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                        <TextBlock Text="Release" />
+                                                                        <TextBlock
+                                                                            Text="{x:Static lang:Resources.ReleaseType_Release}" />
                                                                     </husk:Tag>
                                                                 </husk:SwitchCase>
                                                                 <husk:SwitchCase Value="Beta">
                                                                     <husk:Tag Classes="Warning"
                                                                               CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                        <TextBlock Text="Beta" />
+                                                                        <TextBlock
+                                                                            Text="{x:Static lang:Resources.ReleaseType_Beta}" />
                                                                     </husk:Tag>
                                                                 </husk:SwitchCase>
                                                                 <husk:SwitchCase Value="Alpha">
                                                                     <husk:Tag Classes="Danger"
                                                                               CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                        <TextBlock Text="Alpha" />
+                                                                        <TextBlock
+                                                                            Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
                                                                     </husk:Tag>
                                                                 </husk:SwitchCase>
                                                             </husk:SwitchPresenter>
@@ -159,7 +164,7 @@
                                                 Stretch="UniformToFill" />
                                 </Border.Background>
                             </Border>
-                            <TextBlock Text="{Binding ProjectName,FallbackValue=Fabric API(Fabric or NeoForge)}"
+                            <TextBlock Text="{Binding ProjectName,FallbackValue=Project}"
                                        TextAlignment="Center" FontSize="{StaticResource LargeFontSize}"
                                        TextWrapping="Wrap" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
@@ -167,7 +172,8 @@
                                     <ToolTip.Tip>
                                         <StackPanel Spacing="2">
                                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
-                                                <TextBlock Grid.Column="0" Text="EXTERNAL LINK TO"
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}"
                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                            FontSize="{StaticResource SmallFontSize}" />
                                                 <fi:SymbolIcon Grid.Column="1" Symbol="Open"
@@ -219,7 +225,8 @@
                                             Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
                                         <StackPanel Orientation="Horizontal" Spacing="12">
                                             <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                                            <TextBlock Text="Add to the instance" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.ExhibitPackageModal_AddButtonText}" />
                                         </StackPanel>
                                     </Button>
                                 </Grid>
@@ -236,16 +243,18 @@
                                             TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
-                                                    <Run Text="Installed:" />
+                                                    <Run
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_InstalledVersionTagText}" />
                                                     <Run
                                                         Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
-                                                    <Run Text="Installed:" />
+                                                    <Run
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_InstalledVersionTagText}" />
                                                     <Run FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                         Text="Unspecified" />
+                                                         Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
@@ -260,7 +269,8 @@
                                             Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
                                         <StackPanel Orientation="Horizontal" Spacing="12">
                                             <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                                            <TextBlock Text="Apply changes" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyButtonText}" />
                                         </StackPanel>
                                     </Button>
                                     <Button Grid.Column="2"
@@ -278,8 +288,10 @@
                                                           Height="{StaticResource ExtraLargeFontSize}"
                                                           VerticalAlignment="Center" />
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Locked Version" FontSize="{StaticResource SmallFontSize}"
-                                                   Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
+                                        <TextBlock
+                                            Text="{x:Static lang:Resources.ExhibitPackageModal_LockedVersionLabelText}"
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                                         <TextBlock
                                             Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=LockedVersionName}"
                                             TextTrimming="CharacterEllipsis"
@@ -299,16 +311,18 @@
                                             TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
-                                                    <Run Text="Adding:" />
+                                                    <Run
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_AddingVersionTagText}" />
                                                     <Run
                                                         Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionName,FallbackValue=Version}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
-                                                    <Run Text="Adding:" />
+                                                    <Run
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_AddingVersionTagText}" />
                                                     <Run FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                         Text="Unspecified" />
+                                                         Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
@@ -323,7 +337,8 @@
                                             Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
                                         <StackPanel Orientation="Horizontal" Spacing="12">
                                             <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                                            <TextBlock Text="Apply changes" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyButtonText}" />
                                         </StackPanel>
                                     </Button>
                                     <Button Grid.Column="2"
@@ -344,16 +359,18 @@
                                             TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
-                                                    <Run Text="Installed:" />
+                                                    <Run
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_InstalledVersionTagText}" />
                                                     <Run
                                                         Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
-                                                    <Run Text="Installed:" />
+                                                    <Run
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_InstalledVersionTagText}" />
                                                     <Run FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                         Text="Unspecified" />
+                                                         Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
@@ -368,16 +385,18 @@
                                             TargetType="x:Boolean">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
-                                                    <Run Text="Replacing:" />
+                                                    <Run
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyingTagText}" />
                                                     <Run
                                                         Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.PendingVersionName,FallbackValue=Version}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
-                                                    <Run Text="Replacing:" />
+                                                    <Run
+                                                        Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyingTagText}" />
                                                     <Run FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                         Text="Auto}" />
+                                                         Text="{x:Static lang:Resources.ExhibitPackageModal_UnspecifiedVersionTagText}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                         </husk:SwitchPresenter>
@@ -392,7 +411,8 @@
                                             Command="{Binding $parent[modals:ExhibitPackageModal].ApplyCommand}">
                                         <StackPanel Orientation="Horizontal" Spacing="12">
                                             <fi:SymbolIcon Symbol="Add" FontSize="{StaticResource MediumFontSize}" />
-                                            <TextBlock Text="Apply changes" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.ExhibitPackageModal_ModifyButtonText}" />
                                         </StackPanel>
                                     </Button>
                                     <Button Grid.Column="2"
@@ -409,7 +429,7 @@
                                     <StackPanel Orientation="Horizontal" Spacing="4">
                                         <fi:SymbolIcon Symbol="Delete" FontSize="{StaticResource SmallFontSize}" />
                                         <TextBlock TextTrimming="CharacterEllipsis">
-                                            <Run Text="Removing:" />
+                                            <Run Text="{x:Static lang:Resources.ExhibitPackageModal_RemovingTagText}" />
                                             <Run
                                                 Text="{Binding $parent[modals:ExhibitPackageModal].Exhibit.InstalledVersionName,FallbackValue=Version}" />
                                         </TextBlock>
@@ -425,7 +445,8 @@
                                         <StackPanel Orientation="Horizontal" Spacing="12">
                                             <fi:SymbolIcon Symbol="ArrowReset"
                                                            FontSize="{StaticResource MediumFontSize}" />
-                                            <TextBlock Text="Restore" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.ExhibitPackageModal_RestoreButtonText}" />
                                         </StackPanel>
                                     </Button>
                                 </Grid>
@@ -453,7 +474,7 @@
                             <StackPanel Orientation="Horizontal" Spacing="4" Margin="12" />
                         </ItemsPanelTemplate>
                     </TabControl.ItemsPanel>
-                    <TabItem ToolTip.Tip="About">
+                    <TabItem ToolTip.Tip="{x:Static lang:Resources.ExhibitPackageModal_AboutTabText}">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
                                 <icons:PackIconLucide Kind="House" Height="{StaticResource MediumFontSize}"
@@ -494,13 +515,14 @@
                             </StackPanel>
                         </ScrollViewer>
                     </TabItem>
-                    <TabItem ToolTip.Tip="Dependencies">
+                    <TabItem ToolTip.Tip="{x:Static lang:Resources.ExhibitPackageModal_DependenciesTabText}">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
                                 <icons:PackIconLucide Kind="List" Height="{StaticResource MediumFontSize}"
                                                       Width="{StaticResource MediumFontSize}"
                                                       VerticalAlignment="Center" />
-                                <TextBlock Text="Dependencies" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_DependenciesTabText}"
+                                           VerticalAlignment="Center" />
                                 <husk:Tag Classes="Status">
                                     <TextBlock
                                         Text="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).Count,Mode=OneWay,FallbackValue=0}" />
@@ -511,7 +533,8 @@
                             <Border Grid.Row="0" Margin="12,0" CornerRadius="{StaticResource MediumCornerRadius}"
                                     Padding="12" Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
                                 <StackPanel>
-                                    <TextBlock Text="Showing dependencies of version:" />
+                                    <TextBlock
+                                        Text="{x:Static lang:Resources.ExhibitPackageModal_DependenciesTabPrompt}" />
                                     <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
                                                Text="{Binding $parent[modals:ExhibitPackageModal].LazyDependencies.((m:ExhibitDependencyCollection)Value).VersionName,FallbackValue=None}" />
                                 </StackPanel>
@@ -524,7 +547,8 @@
                                                           Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                           Width="{StaticResource ExtraLargeFontSize}"
                                                           HorizontalAlignment="Center" />
-                                    <TextBlock Text="No Entries" FontSize="{StaticResource LargeFontSize}"
+                                    <TextBlock Text="{x:Static lang:Resources.Shared_EmptyListLabelText}"
+                                               FontSize="{StaticResource LargeFontSize}"
                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                HorizontalAlignment="Center" />
                                 </StackPanel>
@@ -568,13 +592,14 @@
                             </Panel>
                         </Grid>
                     </TabItem>
-                    <TabItem ToolTip.Tip="Changelogs">
+                    <TabItem ToolTip.Tip="{x:Static lang:Resources.ExhibitPackageModal_ChangelogsTabText}">
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
                                 <icons:PackIconLucide Kind="FileText" Height="{StaticResource MediumFontSize}"
                                                       Width="{StaticResource MediumFontSize}"
                                                       VerticalAlignment="Center" />
-                                <TextBlock Text="Changelogs" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_ChangelogsTabText}"
+                                           VerticalAlignment="Center" />
                             </StackPanel>
                         </TabItem.Header>
                         <Panel>
@@ -586,7 +611,8 @@
                                             Padding="12"
                                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}">
                                         <StackPanel>
-                                            <TextBlock Text="Showing changelog of version:" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.ExhibitPackageModal_ChangelogsTabPrompt}" />
                                             <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
                                                        Text="{Binding $parent[modals:ExhibitPackageModal].SelectedVersion.VersionName,FallbackValue=None}" />
                                         </StackPanel>
@@ -608,7 +634,8 @@
                                                       Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                       Width="{StaticResource ExtraLargeFontSize}"
                                                       HorizontalAlignment="Center" />
-                                <TextBlock Text="Select a Version" FontSize="{StaticResource LargeFontSize}"
+                                <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_EmptyListLabelText}"
+                                           FontSize="{StaticResource LargeFontSize}"
                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                            HorizontalAlignment="Center" />
                             </StackPanel>

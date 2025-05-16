@@ -8,7 +8,9 @@
            xmlns:vm="using:Polymerium.App.ViewModels"
            xmlns:m="using:Polymerium.App.Models"
            xmlns:v="using:Polymerium.App.Views"
-           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Header="Marketplace Portal" Padding="0"
+           xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+           mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+           Header="{x:Static lang:Resources.MarketplacePortalView_Title}" Padding="0"
            x:Class="Polymerium.App.Views.MarketplacePortalView" x:DataType="vm:MarketplacePortalViewModel">
     <husk:Page.Resources>
         <DataTemplate x:Key="BigNewsDataTemplate" DataType="m:MinecraftNewsModel">
@@ -41,7 +43,7 @@
                                 Theme="{StaticResource GhostButtonTheme}"
                                 Command="{Binding $parent[v:MarketplacePortalView].((vm:MarketplacePortalViewModel)DataContext).OpenReadMoreLinkCommand,FallbackValue={x:Null}}"
                                 CommandParameter="{Binding}">
-                            <TextBlock Text="Learn More" />
+                            <TextBlock Text="{x:Static lang:Resources.MarketplacePortalView_NewsLearnMoreButtonText}" />
                         </Button>
                     </Grid>
                     <Border.Effect>
@@ -79,7 +81,8 @@
         <Panel Grid.Row="0" Height="{Binding $parent[husk:Page].Bounds.Height,Mode=OneWay}"
                Margin="{StaticResource PageToplessBottomlessContentMargin}">
             <StackPanel Spacing="24" VerticalAlignment="Center" MaxWidth="1270">
-                <TextBlock Text="Discovery Center" TextAlignment="Center"
+                <TextBlock Text="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterTitle}"
+                           TextAlignment="Center"
                            FontSize="{StaticResource ExtraLargeFontSize}"
                            FontWeight="{StaticResource ControlStrongFontWeight}">
                     <TextBlock.Effect>
@@ -92,7 +95,9 @@
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <TextBox Name="QueryBox" Watermark="Everything(mostly) begins here" HorizontalAlignment="Stretch"
+                <TextBox Name="QueryBox"
+                         Watermark="{x:Static lang:Resources.MarketplacePortalView_DiscoveryCenterSubtitle}"
+                         HorizontalAlignment="Stretch"
                          HorizontalContentAlignment="Center"
                          Foreground="{StaticResource ControlAccentForegroundBrush}" Margin="36,0"
                          Theme="{StaticResource UnderlineTextBoxTheme}" BorderThickness="0,0,0,2" />
@@ -102,7 +107,8 @@
                     <StackPanel Orientation="Horizontal" Margin="8,4" Spacing="8">
                         <icons:PackIconLucide Kind="Search" Height="{StaticResource MediumFontSize}"
                                               Width="{StaticResource MediumFontSize}" VerticalAlignment="Center" />
-                        <TextBlock Text="Search" VerticalAlignment="Center" />
+                        <TextBlock Text="{x:Static lang:Resources.MarketplacePortalView_SearchButtonText}"
+                                   VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -113,7 +119,9 @@
                                         IsLoading="{Binding HeadNews,Converter={x:Static ObjectConverters.IsNull}}">
                     <ContentControl Content="{Binding HeadNews}" ContentTemplate="{StaticResource BigNewsDataTemplate}" />
                 </husk:SkeletonContainer>
-                <TextBlock Grid.Column="2" Grid.Row="0" Text="News" Margin="12,12,0,0" VerticalAlignment="Center"
+                <TextBlock Grid.Column="2" Grid.Row="0"
+                           Text="{x:Static lang:Resources.MarketplacePortalView_NewsLabelText}" Margin="12,12,0,0"
+                           VerticalAlignment="Center"
                            FontSize="{StaticResource ExtraLargeFontSize}" />
                 <husk:SkeletonContainer Grid.Column="2" Grid.Row="2" Margin="6"
                                         IsLoading="{Binding TailNews,Converter={x:Static ObjectConverters.IsNull}}">

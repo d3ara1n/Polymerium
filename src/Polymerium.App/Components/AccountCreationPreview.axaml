@@ -6,11 +6,13 @@
                               xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
                               xmlns:local="clr-namespace:Polymerium.App.Components"
                               xmlns:assets="clr-namespace:Polymerium.App.Assets"
+                              xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
                               mc:Ignorable="d"
                               x:Class="Polymerium.App.Components.AccountCreationPreview" IsNextAvailable="False"
-                              Header="Account Preview">
+                              Header="{x:Static lang:Resources.AccountCreationPreview_Title}">
     <StackPanel Spacing="24">
-        <TextBlock Text="🎉It's nearly done🎉" FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center" />
+        <TextBlock Text="{x:Static lang:Resources.AccountCreationPreview_Subtitle}"
+                   FontSize="{StaticResource LargeFontSize}" HorizontalAlignment="Center" />
         <ContentControl Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                         CornerRadius="{StaticResource MediumCornerRadius}" HorizontalContentAlignment="Center"
                         Padding="24" VerticalAlignment="Center">

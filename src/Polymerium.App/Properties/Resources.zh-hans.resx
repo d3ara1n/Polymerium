@@ -22,7 +22,7 @@
         <value>主页</value>
     </data>
     <data name="MainWindow_MarketplaceButtonText" xml:space="preserve">
-        <value>整合包下载中心</value>
+        <value>正在前往：集市</value>
     </data>
     <data name="MainWindow_InstanceFilterPlaceholder" xml:space="preserve">
         <value>过滤实例名...</value>
@@ -39,10 +39,10 @@
     <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>空列表</value>
     </data>
-    <data name="AccountEntryButton_MarkAsDefaultMenu" xml:space="preserve">
+    <data name="AccountEntryButton_MarkAsDefaultMenuText" xml:space="preserve">
         <value>标记为默认</value>
     </data>
-    <data name="AccountEntryButton_RemoveMenu" xml:space="preserve">
+    <data name="AccountEntryButton_RemoveMenuText" xml:space="preserve">
         <value>移除</value>
     </data>
     <data name="ExceptionView_Title" xml:space="preserve">
@@ -174,13 +174,13 @@
     <data name="InstancePropertiesView_ResolvePackageDependenciesLabelText" xml:space="preserve">
         <value>[实验] 解析包依赖</value>
     </data>
-    <data name="InstancePropertiesView_ResolvePackageDependenciesInfo" xml:space="preserve">
+    <data name="InstancePropertiesView_ResolvePackageDependenciesPrompt" xml:space="preserve">
         <value>由于包托管与分发库在数据上的不完善，开启该选项必定会使包冲突。</value>
     </data>
     <data name="InstancePropertiesView_FastLaunchLabelText" xml:space="preserve">
         <value>快速启动</value>
     </data>
-    <data name="InstancePropertiesView_FastLaunchInfo" xml:space="preserve">
+    <data name="InstancePropertiesView_FastLaunchPrompt" xml:space="preserve">
         <value>当成功部署过一次实例后且未检测到文件清单修改时将跳过还原步骤。可能会导致游戏缺少文件。</value>
     </data>
     <data name="InstancePropertiesView_DangerZoneTitle" xml:space="preserve">
@@ -230,5 +230,596 @@
     </data>
     <data name="InstanceSetupView_LoadingPackageLabelText" xml:space="preserve">
         <value>加载包信息...</value>
+    </data>
+    <data name="MarketplacePortalView_Title" xml:space="preserve">
+        <value>集市门户</value>
+    </data>
+    <data name="MarketplacePortalView_NewsLearnMoreButtonText" xml:space="preserve">
+        <value>了解更多</value>
+    </data>
+    <data name="MarketplacePortalView_DiscoveryCenterTitle" xml:space="preserve">
+        <value>探索发现</value>
+    </data>
+    <data name="MarketplacePortalView_DiscoveryCenterSubtitle" xml:space="preserve">
+        <value>寻找新的开始</value>
+    </data>
+    <data name="MarketplacePortalView_SearchButtonText" xml:space="preserve">
+        <value>搜索</value>
+    </data>
+    <data name="MarketplacePortalView_NewsLabelText" xml:space="preserve">
+        <value>新闻</value>
+    </data>
+    <data name="MarketplaceSearchView_Title" xml:space="preserve">
+        <value>搜索整合包</value>
+    </data>
+    <data name="MarketplaceSearchView_SearchBarPlaceholder" xml:space="preserve">
+        <value>由这些关键词在...</value>
+    </data>
+    <data name="MarketplaceSearchView_SearchButtonText" xml:space="preserve">
+        <value>查询</value>
+    </data>
+    <data name="MarketplaceSearchView_ResultCountLabelText" xml:space="preserve">
+        <value>结果：</value>
+    </data>
+    <data name="MarketplaceSearchView_ResetFilterButtonText" xml:space="preserve">
+        <value>清除筛选</value>
+    </data>
+    <data name="Shared_FetchingLabelText" xml:space="preserve">
+        <value>拉取中...</value>
+    </data>
+    <data name="NewInstanceView_CreateButtonText" xml:space="preserve">
+        <value>创建实例</value>
+    </data>
+    <data name="NewInstanceView_Title" xml:space="preserve">
+        <value>新建实例</value>
+    </data>
+    <data name="NewInstanceView_NameLabelText" xml:space="preserve">
+        <value>名称</value>
+    </data>
+    <data name="NewInstanceView_VersionLabelText" xml:space="preserve">
+        <value>版本</value>
+    </data>
+    <data name="NewInstanceView_PackageCountLabelText" xml:space="preserve">
+        <value>包数量</value>
+    </data>
+    <data name="NewInstanceView_ModLoaderLabelText" xml:space="preserve">
+        <value>模组加载器</value>
+    </data>
+    <data name="NewInstanceView_SeparatorLabelText" xml:space="preserve">
+        <value>或来自于</value>
+    </data>
+    <data name="NewInstanceView_DownloadButtonText" xml:space="preserve">
+        <value>集市</value>
+    </data>
+    <data name="NewInstanceView_ImportButtonText" xml:space="preserve">
+        <value>导入</value>
+    </data>
+    <data name="PackageExplorerView_PendingLabelText" xml:space="preserve">
+        <value>操作中</value>
+    </data>
+    <data name="PackageExplorerView_AddLabelText" xml:space="preserve">
+        <value>新增</value>
+    </data>
+    <data name="PackageExplorerView_ModifyLabelText" xml:space="preserve">
+        <value>修改</value>
+    </data>
+    <data name="PackageExplorerView_RemoveLabelText" xml:space="preserve">
+        <value>移除</value>
+    </data>
+    <data name="PackageExplorerView_EmptyLabelText" xml:space="preserve">
+        <value>无</value>
+    </data>
+    <data name="PackageExplorerView_CollectButtonText" xml:space="preserve">
+        <value>执行</value>
+    </data>
+    <data name="PackageExplorerView_DismissButtonText" xml:space="preserve">
+        <value>清空</value>
+    </data>
+    <data name="PackageExplorerView_SearchBarPlaceholder" xml:space="preserve">
+        <value>根据名字...</value>
+    </data>
+    <data name="PackageExplorerView_SearchButtonText" xml:space="preserve">
+        <value>查询</value>
+    </data>
+    <data name="SettingsView_Title" xml:space="preserve">
+        <value>应用程序设置</value>
+    </data>
+    <data name="SettingsView_SuperPowerTitle" xml:space="preserve">
+        <value>超能力</value>
+    </data>
+    <data name="SettingsView_SuperPowerSubtitle" xml:space="preserve">
+        <value>味大，我为自己带盐</value>
+    </data>
+    <data name="SettingsView_SuperPowerLabelText" xml:space="preserve">
+        <value>激活</value>
+    </data>
+    <data name="SettingsView_DisplayTitle" xml:space="preserve">
+        <value>显示与外观</value>
+    </data>
+    <data name="SettingsView_DisplaySubtitle" xml:space="preserve">
+        <value>效果、字体、语言</value>
+    </data>
+    <data name="SettingsView_SidebarPlacementLabelText" xml:space="preserve">
+        <value>边栏位置</value>
+    </data>
+    <data name="SettingsView_SidebarPlacementRightText" xml:space="preserve">
+        <value>右边</value>
+    </data>
+    <data name="SettingsView_SidebarPlacementLeftText" xml:space="preserve">
+        <value>左边</value>
+    </data>
+    <data name="SettingsView_ThemeVariantLabelText" xml:space="preserve">
+        <value>主题样式</value>
+    </data>
+    <data name="SettingsView_ThemeVariantSystemText" xml:space="preserve">
+        <value>系统</value>
+    </data>
+    <data name="SettingsView_ThemeVariantLightText" xml:space="preserve">
+        <value>亮</value>
+    </data>
+    <data name="SettingsView_ThemeVariantDarkText" xml:space="preserve">
+        <value>暗</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleLabelText" xml:space="preserve">
+        <value>背景风格</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleAutoText" xml:space="preserve">
+        <value>自动</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleAcrylicText" xml:space="preserve">
+        <value>亚克力</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleMicaText" xml:space="preserve">
+        <value>云母</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleBlurText" xml:space="preserve">
+        <value>模糊</value>
+    </data>
+    <data name="SettingsView_BackgroundStyleNoneText" xml:space="preserve">
+        <value>禁用</value>
+    </data>
+    <data name="SettingsView_LanguageLabelText" xml:space="preserve">
+        <value>语言</value>
+    </data>
+    <data name="SettingsView_FontLabelText" xml:space="preserve">
+        <value>字体</value>
+    </data>
+    <data name="SettingsView_JavaTitle" xml:space="preserve">
+        <value>Java 预设</value>
+    </data>
+    <data name="SettingsView_JavaSubtitle" xml:space="preserve">
+        <value>实例会从列表中自动选择最佳版本</value>
+    </data>
+    <data name="SettingsView_Java11LabelText" xml:space="preserve">
+        <value>Java 11 主目录</value>
+    </data>
+    <data name="SettingsView_Java17LabelText" xml:space="preserve">
+        <value>Java 17 主目录</value>
+    </data>
+    <data name="SettingsView_Java21LabelText" xml:space="preserve">
+        <value>Java 21 主目录</value>
+    </data>
+    <data name="SettingsView_Java8LabelText" xml:space="preserve">
+        <value>Java 8 主目录</value>
+    </data>
+    <data name="SettingsView_GameDefaultsSubtitle" xml:space="preserve">
+        <value>此处的配置项可能会被实例单独覆写</value>
+    </data>
+    <data name="SettingsView_GameDefaultsTitle" xml:space="preserve">
+        <value>游戏默认设置</value>
+    </data>
+    <data name="SettingsView_JavaMaxMemoryLabelText" xml:space="preserve">
+        <value>Java 最大内存</value>
+    </data>
+    <data name="SettingsView_JavaMaxMemoryPlaceholder" xml:space="preserve">
+        <value>通常为最大物理内存的一半</value>
+    </data>
+    <data name="SettingsView_JavaAdditionalArgumentsLabelText" xml:space="preserve">
+        <value>Java 附加命令行参数</value>
+    </data>
+    <data name="SettingsView_JavaAdditionalArgumentsPlaceholder" xml:space="preserve">
+        <value>默认为空</value>
+    </data>
+    <data name="SettingsView_WindowInitialSizeLabelText" xml:space="preserve">
+        <value>窗口初始大小</value>
+    </data>
+    <data name="SettingsView_JavaMaxMemoryUnitText" xml:space="preserve">
+        <value>兆字节</value>
+    </data>
+    <data name="SettingsView_WindowHeightLabelText" xml:space="preserve">
+        <value>高度</value>
+    </data>
+    <data name="SettingsView_WindowWidthLabelText" xml:space="preserve">
+        <value>宽度</value>
+    </data>
+    <data name="AccountCreationMicrosoft_Title" xml:space="preserve">
+        <value>微软验证</value>
+    </data>
+    <data name="AccountCreationMicrosoft_UnavailableLabelText" xml:space="preserve">
+        <value>过程出错</value>
+    </data>
+    <data name="AccountCreationMicrosoft_RetryButtonText" xml:space="preserve">
+        <value>重试</value>
+    </data>
+    <data name="AccountCreationMicrosoft_DoneTitle" xml:space="preserve">
+        <value>完成！</value>
+    </data>
+    <data name="AccountCreationMicrosoft_DoneSubtitle" xml:space="preserve">
+        <value>账号链接成功，可以在下一个页面中进行预览。</value>
+    </data>
+    <data name="AccountCreationMicrosoft_OpenLinkButtonText" xml:space="preserve">
+        <value>在浏览器中打开</value>
+    </data>
+    <data name="AccountCreationMicrosoft_Prompt" xml:space="preserve">
+        <value>代码会在十五分钟后过期，请及时在网页中完成认证：</value>
+    </data>
+    <data name="AccountCreationOffline_Title" xml:space="preserve">
+        <value>创建角色</value>
+    </data>
+    <data name="AccountCreationOffline_NameLabelText" xml:space="preserve">
+        <value>名字</value>
+    </data>
+    <data name="AccountCreationOffline_UuidLabelText" xml:space="preserve">
+        <value>U U I D</value>
+    </data>
+    <data name="AccountCreationOffline_Prompt" xml:space="preserve">
+        <value>名字中包含空格或中文字符会导致许多问题.</value>
+    </data>
+    <data name="AccountCreationPortal_Title" xml:space="preserve">
+        <value>选择账号类型</value>
+    </data>
+    <data name="AccountCreationPortal_MicrosoftTitle" xml:space="preserve">
+        <value>微软验证</value>
+    </data>
+    <data name="AccountCreationPortal_MicrosoftSubtitle" xml:space="preserve">
+        <value>视为正版用户并能在在线服务器中使用在线功能。</value>
+    </data>
+    <data name="AccountCreationPortal_TrialTitle" xml:space="preserve">
+        <value>试用</value>
+    </data>
+    <data name="AccountCreationPortal_TrialSubtitle" xml:space="preserve">
+        <value>在未拥有正版账号前使用预设角色体验游戏。</value>
+    </data>
+    <data name="AccountCreationPortal_OfflineTitle" xml:space="preserve">
+        <value>离线</value>
+    </data>
+    <data name="AccountCreationPortal_OfflineSubtitle" xml:space="preserve">
+        <value>不用网。</value>
+    </data>
+    <data name="AccountCreationPortal_Prompt" xml:space="preserve">
+        <value>只有存在已链接的正版账号时才能添加离线账号。</value>
+    </data>
+    <data name="AccountCreationPreview_Title" xml:space="preserve">
+        <value>账号预览</value>
+    </data>
+    <data name="AccountCreationPreview_Subtitle" xml:space="preserve">
+        <value>🎉就差一点了🎉</value>
+    </data>
+    <data name="AccountCreationTrial_Title" xml:space="preserve">
+        <value>挑选你的家庭角色</value>
+    </data>
+    <data name="ExhibitStatePresenter_AddingTagText" xml:space="preserve">
+        <value>新增</value>
+    </data>
+    <data name="ExhibitStatePresenter_EditableTagText" xml:space="preserve">
+        <value>已安装</value>
+    </data>
+    <data name="ExhibitStatePresenter_LockedTagText" xml:space="preserve">
+        <value>锁定</value>
+    </data>
+    <data name="ExhibitStatePresenter_ModifyingTagText" xml:space="preserve">
+        <value>修改</value>
+    </data>
+    <data name="ExhibitStatePresenter_RemovingTagText" xml:space="preserve">
+        <value>移除</value>
+    </data>
+    <data name="JavaHomeContainer_BrowseButtonText" xml:space="preserve">
+        <value>浏览</value>
+    </data>
+    <data name="JavaHomeContainer_DetectButtonText" xml:space="preserve">
+        <value>检测</value>
+    </data>
+    <data name="JavaHomeContainer_UnknownLabelText" xml:space="preserve">
+        <value>未知</value>
+    </data>
+    <data name="JavaHomeContainer_Prompt" xml:space="preserve">
+        <value>使用内置或</value>
+    </data>
+    <data name="PackageContainer_FilterBarPlaceholder" xml:space="preserve">
+        <value>输入过滤字符串...</value>
+    </data>
+    <data name="PackageContainer_ConditionLabelText" xml:space="preserve">
+        <value>条件</value>
+    </data>
+    <data name="PackageContainer_TagLabelText" xml:space="preserve">
+        <value>标签</value>
+    </data>
+    <data name="ResourceKind_Modpack" xml:space="preserve">
+        <value>整合包</value>
+    </data>
+    <data name="Enum_All" xml:space="preserve">
+        <value>全部</value>
+    </data>
+    <data name="Enum_Disabled" xml:space="preserve">
+        <value>禁用</value>
+    </data>
+    <data name="Enum_Enabled" xml:space="preserve">
+        <value>启用</value>
+    </data>
+    <data name="Enum_None" xml:space="preserve">
+        <value>无</value>
+    </data>
+    <data name="ResourceKind_DataPack" xml:space="preserve">
+        <value>数据包</value>
+    </data>
+    <data name="ResourceKind_Mod" xml:space="preserve">
+        <value>模组</value>
+    </data>
+    <data name="ResourceKind_ResourcePack" xml:space="preserve">
+        <value>资源包</value>
+    </data>
+    <data name="ResourceKind_ShaderPack" xml:space="preserve">
+        <value>着色器包</value>
+    </data>
+    <data name="PackageContainer_SourceOriginalText" xml:space="preserve">
+        <value>导入</value>
+    </data>
+    <data name="PackageContainer_SourceLocalText" xml:space="preserve">
+        <value>本地</value>
+    </data>
+    <data name="PackageContainer_SourceLabelText" xml:space="preserve">
+        <value>来源</value>
+    </data>
+    <data name="PackageContainer_TypeLabelText" xml:space="preserve">
+        <value>类型</value>
+    </data>
+    <data name="PackageContainer_ResultCountLabelText" xml:space="preserve">
+        <value>结果</value>
+    </data>
+    <data name="PackageContainer_BatchUpdateButtonText" xml:space="preserve">
+        <value>批量升级</value>
+    </data>
+    <data name="PackageContainer_GetMoreButtonText" xml:space="preserve">
+        <value>获取更多</value>
+    </data>
+    <data name="PackageContainer_ExportListButtonText" xml:space="preserve">
+        <value>导出列表</value>
+    </data>
+    <data name="SafeLock_Title" xml:space="preserve">
+        <value>安全锁</value>
+    </data>
+    <data name="SafeLock_CodeLabelText" xml:space="preserve">
+        <value>代码：</value>
+    </data>
+    <data name="SafeLock_RepeatLabelText" xml:space="preserve">
+        <value>重复</value>
+    </data>
+    <data name="ExhibitDependencyButton_RequiredTagText" xml:space="preserve">
+        <value>必需</value>
+    </data>
+    <data name="ExhibitModpackButton_OpenWebsiteMenuText" xml:space="preserve">
+        <value>前往网站</value>
+    </data>
+    <data name="ExhibitModpackButton_InstallButtonText" xml:space="preserve">
+        <value>安装</value>
+    </data>
+    <data name="InstanceEntryButton_InstallTagText" xml:space="preserve">
+        <value>安装中</value>
+    </data>
+    <data name="InstanceEntryButton_PreparingTagText" xml:space="preserve">
+        <value>准备中</value>
+    </data>
+    <data name="InstanceEntryButton_UpdatingTagText" xml:space="preserve">
+        <value>更新中</value>
+    </data>
+    <data name="InstanceEntryButton_RunningTagText" xml:space="preserve">
+        <value>运行中</value>
+    </data>
+    <data name="InstancePackageButton_ActiveMenuText" xml:space="preserve">
+        <value>激活</value>
+    </data>
+    <data name="InstancePackageButton_OpenWebsiteMenuText" xml:space="preserve">
+        <value>前往网站</value>
+    </data>
+    <data name="InstancePackageButton_RemoveMenuText" xml:space="preserve">
+        <value>移除</value>
+    </data>
+    <data name="InstancePackageButton_DisabledLabelText" xml:space="preserve">
+        <value>禁用</value>
+    </data>
+    <data name="InstancePackageButton_OriginalTagText" xml:space="preserve">
+        <value>导入</value>
+    </data>
+    <data name="InstancePackageButton_AutoVersionTagText" xml:space="preserve">
+        <value>自动版本</value>
+    </data>
+    <data name="AccountPickerDialog_Title" xml:space="preserve">
+        <value>选择一个游戏账号</value>
+    </data>
+    <data name="AccountPickerDialog_EmptyListPrompt" xml:space="preserve">
+        <value>还未添加任何账号</value>
+    </data>
+    <data name="AccountPickerDialog_ManageAccountsButtonText" xml:space="preserve">
+        <value>管理账号</value>
+    </data>
+    <data name="ExportPackageListDialog_Title" xml:space="preserve">
+        <value>导出包列表</value>
+    </data>
+    <data name="ExportPackageListDialog_Prompt" xml:space="preserve">
+        <value>将所有的包保存为表导出到文件</value>
+    </data>
+    <data name="ExportPackageListDialog_PackageCountLabelText" xml:space="preserve">
+        <value>个包</value>
+    </data>
+    <data name="ExportPackageListDialog_PathLabelText" xml:space="preserve">
+        <value>导出到</value>
+    </data>
+    <data name="ExportPackageListDialog_PathBarPlaceholder" xml:space="preserve">
+        <value>选择一个文件路径</value>
+    </data>
+    <data name="FilePickerDialog_Title" xml:space="preserve">
+        <value>选择文件</value>
+    </data>
+    <data name="FilePickerDialog_DropZonePrompt" xml:space="preserve">
+        <value>拖放文件或</value>
+    </data>
+    <data name="FilePickerDialog_BrowseButtonText" xml:space="preserve">
+        <value>浏览文件...</value>
+    </data>
+    <data name="FilePickerDialog_AlertPrompt" xml:space="preserve">
+        <value>过大文件会导致程序崩溃</value>
+    </data>
+    <data name="FilePickerDialog_PathBarPlaceholder" xml:space="preserve">
+        <value>选择文件路径</value>
+    </data>
+    <data name="GameVersionPickerDialog_Title" xml:space="preserve">
+        <value>选择一个游戏版本</value>
+    </data>
+    <data name="GameVersionPickerDialog_VersionBarPlaceholder" xml:space="preserve">
+        <value>输入版本名过滤...</value>
+    </data>
+    <data name="ReferenceVersionPickerDialog_Title" xml:space="preserve">
+        <value>选择更新/降级到特定版本</value>
+    </data>
+    <data name="ReferenceVersionPickerDialog_Prompt" xml:space="preserve">
+        <value>所有模组会被替换，游戏设置会被更新（形容词）的更新（动词）。</value>
+    </data>
+    <data name="ReleaseType_Release" xml:space="preserve">
+        <value>正式</value>
+    </data>
+    <data name="ReleaseType_Beta" xml:space="preserve">
+        <value>B测</value>
+    </data>
+    <data name="ReleaseType_Alpha" xml:space="preserve">
+        <value>A测</value>
+    </data>
+    <data name="UserInputDialog_Title" xml:space="preserve">
+        <value>输入点东西</value>
+    </data>
+    <data name="UserInputDialog_Prompt" xml:space="preserve">
+        <value>总得写点什么东西...</value>
+    </data>
+    <data name="AccountCreationModal_NextButtonText" xml:space="preserve">
+        <value>继续</value>
+    </data>
+    <data name="AccountCreationModal_FinishButtonText" xml:space="preserve">
+        <value>完成</value>
+    </data>
+    <data name="AccountCreationModal_BackButtonText" xml:space="preserve">
+        <value>返回</value>
+    </data>
+    <data name="AccountCreationModal_DismissButtonText" xml:space="preserve">
+        <value>关闭</value>
+    </data>
+    <data name="AccountEntryModal_LastUsedLabelText" xml:space="preserve">
+        <value>最后使用于</value>
+    </data>
+    <data name="AccountEntryModal_EnrolledLabelText" xml:space="preserve">
+        <value>登记于</value>
+    </data>
+    <data name="AccountEntryModal_OfflinePrompt" xml:space="preserve">
+        <value>账号正确，允许启动！</value>
+    </data>
+    <data name="AccountEntryModal_TrialPrompt" xml:space="preserve">
+        <value>账号正确，允许启动！</value>
+    </data>
+    <data name="AccountEntryModal_MicrosoftPrompt" xml:space="preserve">
+        <value>需要定期检查令牌是否有效，检查可以，但定期还没做。</value>
+    </data>
+    <data name="ExhibitPackageModal_FilterLabelText" xml:space="preserve">
+        <value>仅显示兼容版本</value>
+    </data>
+    <data name="ExhibitPackageModal_VersionBoxPlaceholder" xml:space="preserve">
+        <value>指定版本...</value>
+    </data>
+    <data name="ExhibitPackageModal_VersionLabelText" xml:space="preserve">
+        <value>版本：</value>
+    </data>
+    <data name="ExhibitPackageModal_AddButtonText" xml:space="preserve">
+        <value>添加到实例</value>
+    </data>
+    <data name="ExhibitPackageModal_InstalledVersionTagText" xml:space="preserve">
+        <value>已安装：</value>
+    </data>
+    <data name="ExhibitPackageModal_UnspecifiedVersionTagText" xml:space="preserve">
+        <value>未指定</value>
+    </data>
+    <data name="ExhibitPackageModal_ModifyButtonText" xml:space="preserve">
+        <value>应用更改</value>
+    </data>
+    <data name="ExhibitPackageModal_LockedVersionLabelText" xml:space="preserve">
+        <value>版本已锁定</value>
+    </data>
+    <data name="ExhibitPackageModal_AddingVersionTagText" xml:space="preserve">
+        <value>新增：</value>
+    </data>
+    <data name="ExhibitPackageModal_ModifyingTagText" xml:space="preserve">
+        <value>替换：</value>
+    </data>
+    <data name="ExhibitPackageModal_RemovingTagText" xml:space="preserve">
+        <value>移除：</value>
+    </data>
+    <data name="ExhibitPackageModal_RestoreButtonText" xml:space="preserve">
+        <value>还原</value>
+    </data>
+    <data name="ExhibitPackageModal_AboutTabText" xml:space="preserve">
+        <value>关于</value>
+    </data>
+    <data name="ExhibitPackageModal_DependenciesTabText" xml:space="preserve">
+        <value>依赖</value>
+    </data>
+    <data name="ExhibitPackageModal_DependenciesTabPrompt" xml:space="preserve">
+        <value>正在展示如下版本的依赖：</value>
+    </data>
+    <data name="ExhibitPackageModal_ChangelogsTabText" xml:space="preserve">
+        <value>变更日志</value>
+    </data>
+    <data name="ExhibitPackageModal_ChangelogsTabPrompt" xml:space="preserve">
+        <value>正在展示如下版本的日志：</value>
+    </data>
+    <data name="ExhibitPackageModal_EmptyListLabelText" xml:space="preserve">
+        <value>选择一个版本</value>
+    </data>
+    <data name="InstancePackageModal_VersionsTabText" xml:space="preserve">
+        <value>版本</value>
+    </data>
+    <data name="InstancePackageModal_VersionBoxUnspecificTitle" xml:space="preserve">
+        <value>自动选择版本</value>
+    </data>
+    <data name="InstancePackageModal_VersionBoxUnspecificSubtitle" xml:space="preserve">
+        <value>或从列表中手动选择一个版本</value>
+    </data>
+    <data name="InstancePackageModal_VersionBoxLabelText" xml:space="preserve">
+        <value>当前版本</value>
+    </data>
+    <data name="InstancePackageModal_LockedVersionLabelText" xml:space="preserve">
+        <value>不可修改</value>
+    </data>
+    <data name="InstancePackageModal_FilterLabelText" xml:space="preserve">
+        <value>仅显示兼容的版本</value>
+    </data>
+    <data name="InstancePackageModal_TagsTabText" xml:space="preserve">
+        <value>标签</value>
+    </data>
+    <data name="InstancePackageModal_AddTagButtonText" xml:space="preserve">
+        <value>添加</value>
+    </data>
+    <data name="Dialog_ConfirmButtonText" xml:space="preserve">
+        <value>确定</value>
+    </data>
+    <data name="Dialog_CancelButtonText" xml:space="preserve">
+        <value>取消</value>
+    </data>
+    <data name="Dialog_DismissButtonText" xml:space="preserve">
+        <value>关闭</value>
+    </data>
+    <data name="InstancePackageModal_ActiveOnText" xml:space="preserve">
+        <value>启用</value>
+    </data>
+    <data name="InstancePackageModal_ActiveOffText" xml:space="preserve">
+        <value>停用</value>
+    </data>
+    <data name="InstanceDashboardToast_Title" xml:space="preserve">
+        <value>大师伯德</value>
     </data>
 </root>

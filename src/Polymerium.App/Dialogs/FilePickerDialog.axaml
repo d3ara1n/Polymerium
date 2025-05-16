@@ -5,7 +5,8 @@
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:fi="using:FluentIcons.Avalonia"
              xmlns:local="using:Polymerium.App.Dialogs"
-             mc:Ignorable="d" Title="Pick a file"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+             mc:Ignorable="d" Title="{x:Static lang:Resources.FilePickerDialog_Title}"
              IsPrimaryButtonVisible="True" Width="300"
              x:Class="Polymerium.App.Dialogs.FilePickerDialog">
     <StackPanel Spacing="12">
@@ -28,14 +29,17 @@
                 <StackPanel Margin="16,12" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Spacing="4">
                         <fi:SymbolIcon Symbol="Attach" FontSize="14" IconVariant="Filled" IsHitTestVisible="False" />
-                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}" Text="Drag and drop, or"
+                        <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}"
+                                   Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}"
                                    IsHitTestVisible="False" />
-                        <HyperlinkButton Name="BrowseButton" Content="Browser files..."
+                        <HyperlinkButton Name="BrowseButton"
+                                         Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
                                          FontWeight="{StaticResource ControlStrongFontWeight}"
                                          Click="BrowseButton_OnClick"
                                          Foreground="{StaticResource ControlAccentForegroundBrush}" />
                     </StackPanel>
-                    <TextBlock Text="Up to 1024MiB" HorizontalAlignment="Center" IsHitTestVisible="False"
+                    <TextBlock Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}"
+                               HorizontalAlignment="Center" IsHitTestVisible="False"
                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </StackPanel>
             </Panel>
@@ -48,6 +52,7 @@
                 </Style>
             </husk:DropZone.Styles>
         </husk:DropZone>
-        <TextBox Text="{Binding $parent[local:FilePickerDialog].Result,Mode=TwoWay}" Watermark="Chooooosen file path" />
+        <TextBox Text="{Binding $parent[local:FilePickerDialog].Result,Mode=TwoWay}"
+                 Watermark="{x:Static lang:Resources.FilePickerDialog_PathBarPlaceholder}" />
     </StackPanel>
 </husk:Dialog>

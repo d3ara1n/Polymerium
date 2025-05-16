@@ -7,7 +7,8 @@
                     xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
                     xmlns:v="clr-namespace:Polymerium.App.Views"
                     xmlns:vm="clr-namespace:Polymerium.App.ViewModels"
-                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
+                    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <Design.PreviewWith>
         <Panel Background="White">
             <StackPanel Margin="24">
@@ -20,7 +21,7 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="ContextFlyout">
             <MenuFlyout x:DataType="m:ExhibitModel">
-                <MenuItem Header="Open Website"
+                <MenuItem Header="{x:Static lang:Resources.ExhibitModpackButton_OpenWebsiteMenuText}"
                           Command="{Binding $parent[v:MarketplaceSearchView].((vm:MarketplaceSearchViewModel)DataContext).OpenWebsiteCommand,FallbackValue={x:Null}}"
                           CommandParameter="{Binding}">
                     <MenuItem.Icon>
@@ -110,7 +111,8 @@
                                         <!--                       Height="10" Width="10" VerticalAlignment="Center" /> -->
                                         <fi:SymbolIcon Symbol="ArrowDownload"
                                                        FontSize="{StaticResource SmallFontSize}" />
-                                        <TextBlock Text="Install" />
+                                        <TextBlock
+                                            Text="{x:Static lang:Resources.ExhibitModpackButton_InstallButtonText}" />
                                     </StackPanel>
                                 </Button>
                                 <Button Classes="Small" Flyout="{TemplateBinding ContextFlyout}">

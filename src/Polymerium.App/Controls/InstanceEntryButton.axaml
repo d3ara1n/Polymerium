@@ -3,7 +3,8 @@
                     xmlns:local="using:Polymerium.App.Controls"
                     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
                     xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
-                    xmlns:m="clr-namespace:Polymerium.App.Models">
+                    xmlns:m="clr-namespace:Polymerium.App.Models"
+                    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
 
     <ControlTheme x:Key="{x:Type local:InstanceEntryButton}" TargetType="local:InstanceEntryButton">
         <Setter Property="Cursor" Value="Hand" />
@@ -82,7 +83,8 @@
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
                                                      Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock Text="INSTALLING" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.InstanceEntryButton_InstallTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag Name="UpdatingTag" Classes="Status Warning">
@@ -90,7 +92,8 @@
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
                                                      Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock Text="UPDATING" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.InstanceEntryButton_UpdatingTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag Name="PreparingTag" Classes="Status Warning">
@@ -98,7 +101,8 @@
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
                                                      Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock Text="PREPARING" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.InstanceEntryButton_PreparingTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag Name="RunningTag" Classes="Status Success">
@@ -106,7 +110,8 @@
                                                     Spacing="4">
                                             <Ellipse Width="6" Height="6"
                                                      Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock Text="RUNNING" />
+                                            <TextBlock
+                                                Text="{x:Static lang:Resources.InstanceEntryButton_RunningTagText}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <StackPanel Name="InfoTags" Orientation="Horizontal" Spacing="8">

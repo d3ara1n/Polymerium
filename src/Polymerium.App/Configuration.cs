@@ -14,7 +14,6 @@ public class Configuration
     public const string INTERFACE_MARKETPLACE_LAYOUT = "Interface.Marketplace.Layout";
     public const string RUNTIME_JAVA_HOME_8 = "Runtime.Java.Home.8";
     public const string RUNTIME_JAVA_HOME_11 = "Runtime.Java.Home.11";
-    public const string RUNTIME_JAVA_HOME_16 = "Runtime.Java.Home.16";
     public const string RUNTIME_JAVA_HOME_17 = "Runtime.Java.Home.17";
     public const string RUNTIME_JAVA_HOME_21 = "Runtime.Java.Home.21";
     public const string GAME_JAVA_MAX_MEMORY = "Game.Java.MaxMemory";
@@ -34,7 +33,6 @@ public class Configuration
         { INTERFACE_MARKETPLACE_LAYOUT, 0 },
         { RUNTIME_JAVA_HOME_8, string.Empty },
         { RUNTIME_JAVA_HOME_11, string.Empty },
-        { RUNTIME_JAVA_HOME_16, string.Empty },
         { RUNTIME_JAVA_HOME_17, string.Empty },
         { RUNTIME_JAVA_HOME_21, string.Empty },
         { GAME_JAVA_MAX_MEMORY, 4096u },
@@ -52,7 +50,6 @@ public class Configuration
     public int InterfaceMarketplaceLayout { get; set; } = AccessDefault<int>(INTERFACE_MARKETPLACE_LAYOUT);
     public string RuntimeJavaHome8 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_8);
     public string RuntimeJavaHome11 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_11);
-    public string RuntimeJavaHome16 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_16);
     public string RuntimeJavaHome17 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_17);
     public string RuntimeJavaHome21 { get; set; } = AccessDefault<string>(RUNTIME_JAVA_HOME_21);
     public uint GameJavaMaxMemory { get; set; } = AccessDefault<uint>(GAME_JAVA_MAX_MEMORY);

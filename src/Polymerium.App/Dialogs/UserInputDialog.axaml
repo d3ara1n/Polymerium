@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
              xmlns:local="using:Polymerium.App.Dialogs"
+             xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             IsPrimaryButtonVisible="True" Title="Get something entered" Message="Just write something down below..."
+             IsPrimaryButtonVisible="True" Title="{x:Static lang:Resources.UserInputDialog_Title}"
+             Message="{x:Static lang:Resources.UserInputDialog_Prompt}"
              x:Class="Polymerium.App.Dialogs.UserInputDialog">
     <TextBox Text="{Binding $parent[local:UserInputDialog].Result,Mode=TwoWay}"
              Watermark="{Binding $parent[local:UserInputDialog].Watermark}" />

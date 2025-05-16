@@ -5,15 +5,14 @@ using Polymerium.App.Models;
 
 namespace Polymerium.App.Dialogs;
 
-public partial class InstanceVersionPickerDialog : Dialog
+public partial class ReferenceVersionPickerDialog : Dialog
 {
-    public static readonly DirectProperty<InstanceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>?>
+    public static readonly DirectProperty<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>?>
         VersionsProperty =
-            AvaloniaProperty
-               .RegisterDirect<InstanceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>
+            AvaloniaProperty.RegisterDirect<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>
                     ?>(nameof(Versions), o => o.Versions, (o, v) => o.Versions = v);
 
-    public InstanceVersionPickerDialog() => InitializeComponent();
+    public ReferenceVersionPickerDialog() => InitializeComponent();
 
     public IReadOnlyList<InstanceReferenceVersionModel>? Versions
     {

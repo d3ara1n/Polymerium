@@ -6,7 +6,7 @@
         <ResourceInclude Source="/Controls/Subpage.axaml" />
         <ResourceInclude Source="/Controls/LaunchBar.axaml" />
         <ResourceInclude Source="/Controls/InstanceEntryButton.axaml" />
-        <ResourceInclude Source="/Controls/PackageEntryButton.axaml" />
+        <ResourceInclude Source="/Controls/InstancePackageButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitModpackButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitPackageButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitPendingPackageButton.axaml" />

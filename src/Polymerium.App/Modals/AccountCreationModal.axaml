@@ -5,27 +5,28 @@
             xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
             xmlns:modals="clr-namespace:Polymerium.App.Modals"
             xmlns:controls="clr-namespace:Polymerium.App.Controls"
+            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
             mc:Ignorable="d" Width="300"
             x:Class="Polymerium.App.Modals.AccountCreationModal">
     <DockPanel VerticalSpacing="24">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
             <Button Command="{Binding $parent[modals:AccountCreationModal].GoBackCommand}"
                     IsVisible="{Binding $parent[modals:AccountCreationModal].IsBackAvailable,FallbackValue=True}">
-                <TextBlock Text="Back" />
+                <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_BackButtonText}" />
             </Button>
             <Button Classes="Primary" IsDefault="True"
                     IsEnabled="{Binding $parent[modals:AccountCreationModal].((controls:AccountCreationStep)CurrentStep).IsNextAvailable,Mode=OneWay,FallbackValue=False}"
                     IsVisible="{Binding $parent[modals:AccountCreationModal].IsLast,Converter={x:Static BoolConverters.Not},FallbackValue=False}"
                     Command="{Binding $parent[modals:AccountCreationModal].GoNextCommand}">
-                <TextBlock Text="Next" />
+                <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_NextButtonText}" />
             </Button>
             <Button Classes="Primary" IsDefault="True"
                     Command="{Binding $parent[modals:AccountCreationModal].GoFinishCommand}"
                     IsVisible="{Binding $parent[modals:AccountCreationModal].IsLast,FallbackValue=True}">
-                <TextBlock Text="Finish" />
+                <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_FinishButtonText}" />
             </Button>
             <Button IsCancel="True" Command="{Binding $parent[modals:AccountCreationModal].DismissCommand}">
-                <TextBlock Text="Dismiss" />
+                <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_DismissButtonText}" />
             </Button>
         </StackPanel>
         <TransitioningContentControl Content="{Binding $parent[modals:AccountCreationModal].CurrentStep}"
