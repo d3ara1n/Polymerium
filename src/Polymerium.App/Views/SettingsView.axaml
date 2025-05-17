@@ -22,6 +22,11 @@
         <husk:Divider />
         <controls:SettingsEntry Icon="LocalLanguage" Title="{x:Static lang:Resources.SettingsView_DisplayTitle}"
                                 Summary="{x:Static lang:Resources.SettingsView_DisplaySubtitle}">
+            <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_TitleBarVisibilityLabelText}">
+                <ToggleSwitch IsChecked="{Binding TitleBarVisibility,Mode=TwoWay}"
+                              OnContent="{x:Static lang:Resources.Enum_On}"
+                              OffContent="{x:Static lang:Resources.Enum_Off}" />
+            </controls:SettingsEntryItem>
             <controls:SettingsEntryItem Header="{x:Static lang:Resources.SettingsView_SidebarPlacementLabelText}">
                 <TabStrip SelectedIndex="{Binding SidebarPlacement,Mode=TwoWay}">
                     <TabStripItem>

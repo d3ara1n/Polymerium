@@ -73,7 +73,7 @@
         <value>总时数</value>
     </data>
     <data name="InstanceHomeView_WidgetsTitle" xml:space="preserve">
-        <value>小部件</value>
+        <value>工具</value>
     </data>
     <data name="InstanceHomeView_LaunchPadTitle" xml:space="preserve">
         <value>发射台</value>
@@ -947,5 +947,17 @@
     </data>
     <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
         <value>查看输出</value>
+    </data>
+    <data name="LaunchMode_Managed" xml:space="preserve">
+        <value>托管</value>
+    </data>
+    <data name="LaunchMode_Debug" xml:space="preserve">
+        <value>调试</value>
+    </data>
+    <data name="LaunchMode_FireAndForget" xml:space="preserve">
+        <value>薄情</value>
+    </data>
+    <data name="SettingsView_TitleBarVisibilityLabelText" xml:space="preserve">
+        <value>标题栏可见性</value>
     </data>
 </root>

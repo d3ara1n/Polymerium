@@ -64,7 +64,8 @@
             </Panel>
         </DockPanel>
         <DockPanel x:Name="Sidebar" Grid.Column="1">
-            <DockPanel x:Name="TitleBar" DockPanel.Dock="Top">
+            <DockPanel x:Name="TitleBar" DockPanel.Dock="Top"
+                       IsVisible="{Binding $parent[local:MainWindow].IsTitleBarVisible, Mode=OneWay}">
                 <StackPanel DockPanel.Dock="Right">
                     <husk:ButtonGroup BorderThickness="0">
                         <Button

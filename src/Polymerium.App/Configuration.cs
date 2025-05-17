@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Polymerium.App;
 
 public class Configuration
 {
     public const string APPLICATION_SUPERPOWER_ACTIVATED = "Application.SuperpowerActivated";
+    public const string APPLICATION_TITLEBAR_VISIBILITY = "Application.TitleBar.Visibility";
     public const string APPLICATION_LEFT_PANEL_MODE = "Application.LeftPanelMode";
     public const string APPLICATION_STYLE_BACKGROUND = "Application.Style.Background";
-    public const string APPLICATION_STYLE_THEME = "Application.Style.Theme";
     public const string APPLICATION_STYLE_THEME_VARIANT = "Application.Style.ThemeVariant";
     public const string APPLICATION_LANGUAGE = "Application.Language";
     public const string INTERFACE_SETUP_LAYOUT = "Interface.Setup.Layout";
@@ -24,9 +25,9 @@ public class Configuration
     private static readonly IReadOnlyDictionary<string, object?> Defaults = new Dictionary<string, object?>
     {
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
+        { APPLICATION_TITLEBAR_VISIBILITY, !OperatingSystem.IsLinux() },
         { APPLICATION_LEFT_PANEL_MODE, false },
         { APPLICATION_STYLE_BACKGROUND, 0 },
-        { APPLICATION_STYLE_THEME, new object() },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
         { APPLICATION_LANGUAGE, "en_US" },
         { INTERFACE_SETUP_LAYOUT, 0 },
@@ -42,6 +43,7 @@ public class Configuration
     };
 
     public bool ApplicationSuperPowerActivated { get; set; } = AccessDefault<bool>(APPLICATION_SUPERPOWER_ACTIVATED);
+    public bool ApplicationTitleBarVisibility { get; set; } = AccessDefault<bool>(APPLICATION_TITLEBAR_VISIBILITY);
     public bool ApplicationLeftPanelMode { get; set; } = AccessDefault<bool>(APPLICATION_LEFT_PANEL_MODE);
     public int ApplicationStyleBackground { get; set; } = AccessDefault<int>(APPLICATION_STYLE_BACKGROUND);
     public int ApplicationStyleThemeVariant { get; set; } = AccessDefault<int>(APPLICATION_STYLE_THEME_VARIANT);

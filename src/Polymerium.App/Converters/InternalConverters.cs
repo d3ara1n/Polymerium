@@ -2,6 +2,7 @@
 using Avalonia.Data.Converters;
 using Huskui.Avalonia.Converters;
 using Polymerium.App.Properties;
+using Polymerium.Trident.Igniters;
 using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Converters;
@@ -42,7 +43,20 @@ public static class InternalConverters
                 ResourceKind.ResourcePack => Resources.ResourceKind_ResourcePack,
                 ResourceKind.ShaderPack => Resources.ResourceKind_ShaderPack,
                 ResourceKind.DataPack => Resources.ResourceKind_DataPack,
-                _ => throw new NotImplementedException()
+                _ => kind.ToString()
+            };
+        return v;
+    });
+
+    public static IValueConverter LocalizedLaunchModeConverter { get; } = new RelayConverter((v, _) =>
+    {
+        if (v is LaunchMode mode)
+            return mode switch
+            {
+                LaunchMode.Managed => Resources.LaunchMode_Managed,
+                LaunchMode.FireAndForget => Resources.LaunchMode_FireAndForget,
+                LaunchMode.Debug => Resources.LaunchMode_Debug,
+                _ => mode.ToString()
             };
         return v;
     });

@@ -176,6 +176,7 @@ public class App : Application
 
         window.SetThemeVariantByIndex(configuration.Value.ApplicationStyleThemeVariant);
         window.SetTransparencyLevelHintByIndex(configuration.Value.ApplicationStyleBackground);
+        window.IsTitleBarVisible = configuration.Value.ApplicationTitleBarVisibility;
         window.IsLeftPanelMode = configuration.Value.ApplicationLeftPanelMode;
         // 并不还原窗体大小，没必要
 

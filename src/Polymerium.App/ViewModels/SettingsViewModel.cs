@@ -24,6 +24,7 @@ public partial class SettingsViewModel : ViewModelBase
         OverlayService = overlayService;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
+        TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
         SidebarPlacement = configurationService.Value.ApplicationLeftPanelMode ? 0 : 1;
         BackgroundMode = configurationService.Value.ApplicationStyleBackground;
         DarkMode = configurationService.Value.ApplicationStyleThemeVariant;
@@ -83,6 +84,19 @@ public partial class SettingsViewModel : ViewModelBase
 
     #endregion
 
+    #region TitleBarVisibility
+
+    [ObservableProperty]
+    public partial bool TitleBarVisibility { get; set; }
+
+    partial void OnTitleBarVisibilityChanged(bool value)
+    {
+        _configurationService.Value.ApplicationTitleBarVisibility = value;
+        MainWindow.Instance.IsTitleBarVisible = value;
+    }
+
+    #endregion
+
     #region SidebarPlacement
 
     [ObservableProperty]
@@ -122,8 +136,7 @@ public partial class SettingsViewModel : ViewModelBase
     }
 
     #endregion
-
-
+    
     #region Language
 
     public LanguageModel[] Languages { get; } = [new("en-us", "Chinglish"), new("zh-Hans", "中国人")];

@@ -8,5 +8,8 @@ internal class DummyCommand : ICommand
     public bool CanExecute(object? parameter) => true;
 
     public void Execute(object? parameter) { }
+
+    #pragma warning disable 67
     public event EventHandler? CanExecuteChanged;
+    #pragma warning restore 67
 }
