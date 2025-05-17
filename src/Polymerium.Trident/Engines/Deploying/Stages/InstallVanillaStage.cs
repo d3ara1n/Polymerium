@@ -5,13 +5,11 @@ namespace Polymerium.Trident.Engines.Deploying.Stages;
 
 public class InstallVanillaStage(
     ILogger<InstallVanillaStage> logger,
-    IHttpClientFactory factory,
     PrismLauncherService prismLauncherService) : StageBase
 {
     protected override async Task OnProcessAsync(CancellationToken token)
     {
         var builder = Context.ArtifactBuilder!;
-        using var client = factory.CreateClient();
 
         var version = await prismLauncherService
                            .GetVersionAsync(PrismLauncherService.UID_MINECRAFT, Context.Setup.Version, token)

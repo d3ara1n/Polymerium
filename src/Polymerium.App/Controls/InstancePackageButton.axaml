@@ -102,7 +102,8 @@
                                             Text="{x:Static lang:Resources.InstancePackageButton_OriginalTagText}" />
                                     </husk:Tag>
                                     <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                        <TextBlock Text="{Binding Kind,FallbackValue=Kind}" />
+                                        <TextBlock
+                                            Text="{Binding Kind,Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter},FallbackValue=Kind}" />
                                     </husk:Tag>
                                 </StackPanel>
                                 <TextBlock Grid.Column="1"

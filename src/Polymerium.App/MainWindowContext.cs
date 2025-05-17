@@ -43,9 +43,7 @@ public partial class MainWindowContext : ObservableObject
     {
         _notificationService = notificationService;
         _navigationService = navigationService;
-        _overlayService = overlayService;
         _persistenceService = persistenceService;
-        _scrapService = scrapService;
 
         SubscribeProfileList(profileManager);
         SubscribeState(instanceManager);
@@ -69,9 +67,7 @@ public partial class MainWindowContext : ObservableObject
 
     private readonly NotificationService _notificationService;
     private readonly NavigationService _navigationService;
-    private readonly OverlayService _overlayService;
     private readonly PersistenceService _persistenceService;
-    private readonly ScrapService _scrapService;
 
     #endregion
 
