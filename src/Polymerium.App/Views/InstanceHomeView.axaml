@@ -16,6 +16,7 @@
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:m="clr-namespace:Polymerium.App.Models"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:converters="clr-namespace:Polymerium.App.Converters"
     d:DesignHeight="566"
     d:DesignWidth="780"
     x:DataType="vm:InstanceHomeViewModel"
@@ -442,7 +443,8 @@
                                         HorizontalAlignment="Center"
                                         CornerRadius="{Binding Source={StaticResource MediumCornerRadius},Converter={x:Static huskc:CornerRadiusConverters.Lower}}"
                                         Padding="12,6">
-                                    <TextBlock Text="{Binding Mode,FallbackValue=Mode}" />
+                                    <TextBlock
+                                        Text="{Binding Mode,Converter={x:Static converters:InternalConverters.LocalizedLaunchModeConverter},FallbackValue=Mode}" />
                                 </Button>
                                 <Button
                                     Grid.Row="2"

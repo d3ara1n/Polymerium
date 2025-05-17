@@ -25,6 +25,18 @@ public partial class MainWindow : AppWindow
         set => SetValue(IsLeftPanelModeProperty, value);
     }
 
+    public static readonly DirectProperty<MainWindow, bool> IsTitleBarVisibleProperty =
+        AvaloniaProperty.RegisterDirect<MainWindow, bool>(nameof(IsTitleBarVisible),
+                                                          o => o.IsTitleBarVisible,
+                                                          (o, v) => o.IsTitleBarVisible = v);
+
+    public bool IsTitleBarVisible
+    {
+        get;
+        set => SetAndRaise(IsTitleBarVisibleProperty, ref field, value);
+    } = true;
+
+
     public static MainWindow Instance { get; private set; } = null!;
 
     public Frame.PageActivatorDelegate PageActivator
@@ -46,7 +58,6 @@ public partial class MainWindow : AppWindow
             1 => [WindowTransparencyLevel.Mica, WindowTransparencyLevel.None],
             2 => [WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.None],
             3 => [WindowTransparencyLevel.Blur, WindowTransparencyLevel.None],
-            4 => [WindowTransparencyLevel.None],
             _ => [WindowTransparencyLevel.None]
         };
 

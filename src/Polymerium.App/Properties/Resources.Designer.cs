@@ -1797,6 +1797,33 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debug.
+        /// </summary>
+        public static string LaunchMode_Debug {
+            get {
+                return ResourceManager.GetString("LaunchMode_Debug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fire &amp; Forget.
+        /// </summary>
+        public static string LaunchMode_FireAndForget {
+            get {
+                return ResourceManager.GetString("LaunchMode_FireAndForget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Managed.
+        /// </summary>
+        public static string LaunchMode_Managed {
+            get {
+                return ResourceManager.GetString("LaunchMode_Managed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string MainWindow_AccountButtonText {
@@ -2783,6 +2810,15 @@ namespace Polymerium.App.Properties {
         public static string SettingsView_Title {
             get {
                 return ResourceManager.GetString("SettingsView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title Bar Visibility.
+        /// </summary>
+        public static string SettingsView_TitleBarVisibilityLabelText {
+            get {
+                return ResourceManager.GetString("SettingsView_TitleBarVisibilityLabelText", resourceCulture);
             }
         }
         

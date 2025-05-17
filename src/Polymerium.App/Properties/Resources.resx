@@ -957,4 +957,16 @@
     <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
         <value>View Output</value>
     </data>
+    <data name="LaunchMode_Managed" xml:space="preserve">
+        <value>Managed</value>
+    </data>
+    <data name="LaunchMode_Debug" xml:space="preserve">
+        <value>Debug</value>
+    </data>
+    <data name="LaunchMode_FireAndForget" xml:space="preserve">
+        <value>Fire &amp; Forget</value>
+    </data>
+    <data name="SettingsView_TitleBarVisibilityLabelText" xml:space="preserve">
+        <value>Title Bar Visibility</value>
+    </data>
 </root>
