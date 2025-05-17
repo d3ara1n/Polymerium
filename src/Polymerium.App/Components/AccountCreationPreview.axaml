@@ -17,7 +17,7 @@
                         CornerRadius="{StaticResource MediumCornerRadius}" HorizontalContentAlignment="Center"
                         Padding="24" VerticalAlignment="Center">
             <DockPanel VerticalSpacing="12">
-                <Border Height="64" Width="64" DockPanel.Dock="Top" BoxShadow="0 0 8 0 #3F000000"
+                <Border Height="64" Width="64" DockPanel.Dock="Top" BoxShadow="0 0 4 0 #3F000000"
                         CornerRadius="{StaticResource SmallCornerRadius}">
                     <Border.Background>
                         <ImageBrush

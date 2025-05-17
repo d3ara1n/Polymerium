@@ -585,13 +585,13 @@
     <data name="PackageContainer_ResultCountLabelText" xml:space="preserve">
         <value>Results</value>
     </data>
-    <data name="PackageContainer_BatchUpdateButtonText" xml:space="preserve">
+    <data name="PackageContainer_BatchUpdateMenuText" xml:space="preserve">
         <value>Batch Update</value>
     </data>
     <data name="PackageContainer_GetMoreButtonText" xml:space="preserve">
         <value>Get More</value>
     </data>
-    <data name="PackageContainer_ExportListButtonText" xml:space="preserve">
+    <data name="PackageContainer_ExportListMenuText" xml:space="preserve">
         <value>Explort List</value>
     </data>
     <data name="SafeLock_Title" xml:space="preserve">
@@ -896,5 +896,17 @@
     </data>
     <data name="InstancePropertiesView_RequestNamePrompt" xml:space="preserve">
         <value>Give the instance a new name</value>
+    </data>
+    <data name="PackageBulkUpdaterModal_FetchingLabelText" xml:space="preserve">
+        <value>Check updates...</value>
+    </data>
+    <data name="PackageBulkUpdaterModal_UpdateButtonText" xml:space="preserve">
+        <value>Update Checked</value>
+    </data>
+    <data name="PackageBulkUpdaterModal_Title" xml:space="preserve">
+        <value>Update packages in bulk</value>
+    </data>
+    <data name="PackageContainer_DependencyGraphMenuText" xml:space="preserve">
+        <value>Dependency Graph</value>
     </data>
 </root>

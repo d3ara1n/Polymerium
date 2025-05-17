@@ -78,8 +78,8 @@ public partial class AccountsViewModel(
         overlayService.PopModal(new AccountCreationModal
         {
             FinishCallback = Finish,
-            IsOfflineAvailable =
-                configurationService.Value.ApplicationSuperPowerActivated || persistenceService.HasMicrosoftAccount(),
+            IsOfflineAvailable = configurationService.Value.ApplicationSuperPowerActivated
+                              || persistenceService.HasMicrosoftAccount(),
             MicrosoftService = microsoftService,
             XboxLiveService = xboxLiveService,
             MinecraftService = minecraftService

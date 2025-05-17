@@ -2004,11 +2004,38 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check updates....
+        /// </summary>
+        public static string PackageBulkUpdaterModal_FetchingLabelText {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdaterModal_FetchingLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update packages in bulk.
+        /// </summary>
+        public static string PackageBulkUpdaterModal_Title {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdaterModal_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Checked.
+        /// </summary>
+        public static string PackageBulkUpdaterModal_UpdateButtonText {
+            get {
+                return ResourceManager.GetString("PackageBulkUpdaterModal_UpdateButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Batch Update.
         /// </summary>
-        public static string PackageContainer_BatchUpdateButtonText {
+        public static string PackageContainer_BatchUpdateMenuText {
             get {
-                return ResourceManager.GetString("PackageContainer_BatchUpdateButtonText", resourceCulture);
+                return ResourceManager.GetString("PackageContainer_BatchUpdateMenuText", resourceCulture);
             }
         }
         
@@ -2022,11 +2049,20 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dependency Graph.
+        /// </summary>
+        public static string PackageContainer_DependencyGraphMenuText {
+            get {
+                return ResourceManager.GetString("PackageContainer_DependencyGraphMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Explort List.
         /// </summary>
-        public static string PackageContainer_ExportListButtonText {
+        public static string PackageContainer_ExportListMenuText {
             get {
-                return ResourceManager.GetString("PackageContainer_ExportListButtonText", resourceCulture);
+                return ResourceManager.GetString("PackageContainer_ExportListMenuText", resourceCulture);
             }
         }
         

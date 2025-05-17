@@ -576,13 +576,13 @@
     <data name="PackageContainer_ResultCountLabelText" xml:space="preserve">
         <value>结果</value>
     </data>
-    <data name="PackageContainer_BatchUpdateButtonText" xml:space="preserve">
+    <data name="PackageContainer_BatchUpdateMenuText" xml:space="preserve">
         <value>批量升级</value>
     </data>
     <data name="PackageContainer_GetMoreButtonText" xml:space="preserve">
         <value>获取更多</value>
     </data>
-    <data name="PackageContainer_ExportListButtonText" xml:space="preserve">
+    <data name="PackageContainer_ExportListMenuText" xml:space="preserve">
         <value>导出列表</value>
     </data>
     <data name="SafeLock_Title" xml:space="preserve">
@@ -887,5 +887,17 @@
     </data>
     <data name="InstancePropertiesView_RequestNamePrompt" xml:space="preserve">
         <value>为实例设置一个新名称</value>
+    </data>
+    <data name="PackageBulkUpdaterModal_FetchingLabelText" xml:space="preserve">
+        <value>检查更新中...</value>
+    </data>
+    <data name="PackageBulkUpdaterModal_UpdateButtonText" xml:space="preserve">
+        <value>升级选中</value>
+    </data>
+    <data name="PackageBulkUpdaterModal_Title" xml:space="preserve">
+        <value>批量升级包版本</value>
+    </data>
+    <data name="PackageContainer_DependencyGraphMenuText" xml:space="preserve">
+        <value>依赖关系</value>
     </data>
 </root>

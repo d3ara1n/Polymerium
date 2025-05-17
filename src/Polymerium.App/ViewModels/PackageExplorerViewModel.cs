@@ -37,13 +37,15 @@ public partial class PackageExplorerViewModel : ViewModelBase
         DataService dataService,
         ProfileManager profileManager,
         NotificationService notificationService,
-        OverlayService overlayService)
+        OverlayService overlayService,
+        PersistenceService persistenceService)
     {
         _agent = agent;
         _dataService = dataService;
         _profileManager = profileManager;
         _notificationService = notificationService;
         _overlayService = overlayService;
+        _persistenceService = persistenceService;
 
         if (bag.Parameter is string key)
         {
@@ -300,6 +302,7 @@ public partial class PackageExplorerViewModel : ViewModelBase
     private readonly ProfileManager _profileManager;
     private readonly NotificationService _notificationService;
     private readonly OverlayService _overlayService;
+    private readonly PersistenceService _persistenceService;
 
     #endregion
 
@@ -401,6 +404,10 @@ public partial class PackageExplorerViewModel : ViewModelBase
                                                        true,
                                                        null,
                                                        []);
+                    _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                PersistenceService.ActionKind.EditPackage,
+                                                                null,
+                                                                entry.Purl));
                     guard.Value.Setup.Packages.Add(entry);
                     model.State = ExhibitState.Editable;
                     model.Installed = entry;
@@ -410,15 +417,24 @@ public partial class PackageExplorerViewModel : ViewModelBase
                     var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
                     if (exist != null)
                         guard.Value.Setup.Packages.Remove(exist);
+                    _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                PersistenceService.ActionKind.EditPackage,
+                                                                model.Installed.Purl,
+                                                                null));
                     model.State = null;
                     model.Installed = null;
                 }
                 else if (model is { State: ExhibitState.Modifying, Installed: not null })
                 {
+                    var old = model.Installed.Purl;
                     model.Installed.Purl = PackageHelper.ToPurl(model.Label,
                                                                 model.Ns,
                                                                 model.ProjectId,
                                                                 model.PendingVersionId);
+                    _persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                PersistenceService.ActionKind.EditPackage,
+                                                                old,
+                                                                model.Installed.Purl));
                     model.State = ExhibitState.Editable;
                 }
 

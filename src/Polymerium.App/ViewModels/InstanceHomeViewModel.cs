@@ -338,7 +338,7 @@ public partial class InstanceHomeViewModel(
     {
         if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
         {
-            var toast = new InstanceDashboardToast();
+            var toast = new InstanceDashboardToast { Header = Basic.Name };
             if (scrapService.TryGetBuffer(launch.Key, out var buffer))
                 toast.SetItems(buffer);
             overlayService.PopToast(toast);

@@ -9,9 +9,8 @@
             xmlns:icons="https://github.com/MahApps/IconPacks.Avalonia"
             xmlns:fie="clr-namespace:FluentIcons.Avalonia.MarkupExtensions;assembly=FluentIcons.Avalonia"
             xmlns:m="clr-namespace:Polymerium.App.Models"
-            xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-            Header="{x:Static lang:Resources.InstanceDashboardToast_Title}" Padding="0"
+            Header="Dashboard" Padding="0"
             x:Class="Polymerium.App.Toasts.InstanceDashboardToast"
             ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <husk:Toast.Resources>

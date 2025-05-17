@@ -3,6 +3,8 @@
 namespace Polymerium.Trident.Models.PrismLauncherApi;
 
 public record Component(
+    [property: JsonPropertyName("+tweakers")]
+    IReadOnlyList<string>? Tweakers,
     [property: JsonPropertyName("+traits")]
     IReadOnlyList<string>? Traits,
     Component.AssetIndexEntry? AssetIndex,

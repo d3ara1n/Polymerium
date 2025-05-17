@@ -42,7 +42,7 @@
                         <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto">
                             <Border Grid.Row="0" Grid.Column="0" CornerRadius="{StaticResource SmallCornerRadius}"
                                     Height="48"
-                                    Width="48" BoxShadow="0 0 8 0 #3F000000">
+                                    Width="48" BoxShadow="0 0 4 0 #3F000000">
                                 <Border.Background>
                                     <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl}" />
                                 </Border.Background>

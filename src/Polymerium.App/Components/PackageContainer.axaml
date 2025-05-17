@@ -223,11 +223,14 @@
                              Command="{Binding $parent[cp:PackageContainer].GotoExplorerCommand}">
                     <SplitButton.Flyout>
                         <MenuFlyout>
-                            <MenuItem Header="{x:Static lang:Resources.PackageContainer_BatchUpdateButtonText}"
-                                      IsEnabled="False"
+                            <MenuItem Header="{x:Static lang:Resources.PackageContainer_BatchUpdateMenuText}"
                                       Icon="{fie:SymbolIcon Symbol=ArrowForward,FontSize={StaticResource MediumFontSize}}"
-                                      Command="{Binding $parent[cp:PackageContainer].BulkUpdateCommand}" />
-                            <MenuItem Header="{x:Static lang:Resources.PackageContainer_ExportListButtonText}"
+                                      Command="{Binding $parent[cp:PackageContainer].UpdateBatchCommand}"
+                                      CommandParameter="{Binding $parent[cp:PackageContainer].Items}" />
+                            <MenuItem Header="{x:Static lang:Resources.PackageContainer_DependencyGraphMenuText}"
+                                      Icon="{fie:SymbolIcon Symbol=ArrowSplit,FontSize={StaticResource MediumFontSize}}"
+                                      IsEnabled="False" />
+                            <MenuItem Header="{x:Static lang:Resources.PackageContainer_ExportListMenuText}"
                                       Icon="{fie:SymbolIcon Symbol=ArrowExport,FontSize={StaticResource MediumFontSize}}"
                                       Command="{Binding $parent[cp:PackageContainer].ExportListCommand}" />
                         </MenuFlyout>

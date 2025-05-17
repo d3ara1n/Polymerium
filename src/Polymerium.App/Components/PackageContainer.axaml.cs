@@ -79,10 +79,10 @@ public partial class PackageContainer : UserControl
                                                                      o => o.ExportListCommand,
                                                                      (o, v) => o.ExportListCommand = v);
 
-    public static readonly DirectProperty<PackageContainer, ICommand?> BulkUpdateCommandProperty =
-        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(BulkUpdateCommand),
-                                                                     o => o.BulkUpdateCommand,
-                                                                     (o, v) => o.BulkUpdateCommand = v);
+    public static readonly DirectProperty<PackageContainer, ICommand?> UpdateBatchCommandProperty =
+        AvaloniaProperty.RegisterDirect<PackageContainer, ICommand?>(nameof(UpdateBatchCommand),
+                                                                     o => o.UpdateBatchCommand,
+                                                                     (o, v) => o.UpdateBatchCommand = v);
 
     public static readonly
         DirectProperty<PackageContainer, ReadOnlyObservableCollection<InstancePackageFilterTagModel>?>
@@ -141,10 +141,10 @@ public partial class PackageContainer : UserControl
         set => SetAndRaise(FilterKindProperty, ref field, value);
     }
 
-    public ICommand? BulkUpdateCommand
+    public ICommand? UpdateBatchCommand
     {
         get;
-        set => SetAndRaise(BulkUpdateCommandProperty, ref field, value);
+        set => SetAndRaise(UpdateBatchCommandProperty, ref field, value);
     }
 
 

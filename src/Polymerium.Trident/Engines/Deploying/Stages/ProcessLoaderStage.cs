@@ -63,6 +63,14 @@ public class ProcessLoaderStage(
         foreach (var argument in index.MinecraftArguments?.Split(' ') ?? Enumerable.Empty<string>())
             builder.AddGameArgument(argument);
 
+        if (index.Tweakers != null)
+            // 不知道如果列表有多个元素该如何添加，估计不会有多个，这是一个大胆的估计！
+            foreach (var tweaker in index.Tweakers)
+            {
+                builder.AddGameArgument("--tweakClass");
+                builder.AddGameArgument(tweaker);
+            }
+
         builder.AddJvmArgument("-Dforgewrapper.librariesDir=${library_directory}");
 
         var installer = builder.Libraries.FirstOrDefault(x => x.Id.Platform == "installer"

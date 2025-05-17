@@ -16,10 +16,7 @@ public static class AppBuilderExtensions
                                                                          new
                                                                              Uri("avares://Polymerium.App/Assets/Fonts/BaiJamjuree")));
             })
-           .With(new FontManagerOptions
-            {
-                DefaultFamilyName = "fonts:BaiJamjuree#Bai Jamjuree",
-            });
+           .With(new FontManagerOptions { DefaultFamilyName = "fonts:BaiJamjuree#Bai Jamjuree" });
 
         return appBuilder;
     }

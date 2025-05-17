@@ -94,27 +94,30 @@ public static class ServiceCollectionExtensions
     {
         services
            .AddRefitClient<
-                IMicrosoftClient>(_ => new RefitSettings(new
-                                                             SystemTextJsonContentSerializer(new
-                                                                          JsonSerializerOptions(JsonSerializerDefaults.Web)
-                                                                          {
-                                                                              PropertyNamingPolicy = JsonNamingPolicy
-                                                                                 .SnakeCaseLower
-                                                                          }))
-                                  {
-                                      ExceptionFactory = async message => message switch
-                                      {
-                                          { IsSuccessStatusCode: true } => null,
-                                          { StatusCode: HttpStatusCode.BadRequest } => null,
-                                          { RequestMessage: not null } => await ApiException
-                                             .Create(message.RequestMessage,
-                                                     message.RequestMessage.Method,
-                                                     message,
-                                                     dummy)
-                                             .ConfigureAwait(false),
-                                          _ => new NotImplementedException()
-                                      }
-                                  })
+                IMicrosoftClient>(_ =>
+                                      new
+                                          RefitSettings(new
+                                                            SystemTextJsonContentSerializer(new
+                                                                JsonSerializerOptions(JsonSerializerDefaults
+                                                                   .Web)
+                                                                {
+                                                                    PropertyNamingPolicy = JsonNamingPolicy
+                                                                       .SnakeCaseLower
+                                                                }))
+                                          {
+                                              ExceptionFactory = async message => message switch
+                                              {
+                                                  { IsSuccessStatusCode: true } => null,
+                                                  { StatusCode: HttpStatusCode.BadRequest } => null,
+                                                  { RequestMessage: not null } => await ApiException
+                                                     .Create(message.RequestMessage,
+                                                             message.RequestMessage.Method,
+                                                             message,
+                                                             dummy)
+                                                     .ConfigureAwait(false),
+                                                  _ => new NotImplementedException()
+                                              }
+                                          })
            .ConfigureHttpClient(client =>
             {
                 client.BaseAddress = new Uri(MicrosoftService.ENDPOINT);

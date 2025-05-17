@@ -24,7 +24,7 @@ public partial class InstancePackageModel(
 {
     #region Direct
 
-    public Profile.Rice.Entry Key => entry;
+    public Profile.Rice.Entry Entry => entry;
     public Uri? Reference => reference;
     public string Label => label;
     public string? Namespace => @namespace;

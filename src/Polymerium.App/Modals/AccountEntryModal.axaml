@@ -104,7 +104,7 @@
         </Border>
         <Border Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center"
                 CornerRadius="{StaticResource LargeCornerRadius}"
-                Background="{StaticResource FlyoutBackgroundBrush}" Padding="8" BoxShadow="0 0 8 0 #3F000000">
+                Background="{StaticResource FlyoutBackgroundBrush}" Padding="8" BoxShadow="0 0 4 0 #3F000000">
             <Border Width="64" Height="64" CornerRadius="{StaticResource SmallCornerRadius}">
                 <Border.Background>
                     <ImageBrush
