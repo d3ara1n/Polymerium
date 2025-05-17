@@ -92,6 +92,7 @@ public class LazyContainer : TemplatedControl
             _contentPresenter.ContentTemplate = SourceTemplate;
         }
         else
+        {
             try
             {
                 await lazy.FetchAsync();
@@ -104,6 +105,7 @@ public class LazyContainer : TemplatedControl
                 _contentPresenter.ContentTemplate = null;
                 IsBad = true;
             }
+        }
     }
 
     protected override void OnUnloaded(RoutedEventArgs e)

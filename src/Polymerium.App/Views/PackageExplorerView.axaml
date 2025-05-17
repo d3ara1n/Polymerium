@@ -230,7 +230,6 @@
         </Panel>
         <husk:Divider Grid.Column="2" Grid.Row="1" />
         <Panel Grid.Column="2" Grid.Row="2">
-
             <StackPanel VerticalAlignment="Center"
                         Spacing="8">
                 <StackPanel.IsVisible>

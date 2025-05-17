@@ -116,7 +116,6 @@ public partial class NewInstanceViewModel(
         }
 
         if (Thumbnail != null)
-        {
             try
             {
                 using var stream = new MemoryStream();
@@ -136,7 +135,6 @@ public partial class NewInstanceViewModel(
             {
                 notificationService.PopMessage(ex, Resources.NewInstanceView_IconSavingDangerNotificationTitle);
             }
-        }
 
         profileManager.Add(key, profile);
 

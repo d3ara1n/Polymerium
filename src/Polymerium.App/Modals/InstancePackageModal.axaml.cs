@@ -33,14 +33,16 @@ public partial class InstancePackageModal : Modal
                     o => o.SelectedVersionProxy,
                     (o, v) => o.SelectedVersionProxy = v);
 
+    private string? _old;
+
 
     public InstancePackageModal() => InitializeComponent();
 
     public required ProfileGuard Guard { get; init; }
     public required DataService DataService { get; init; }
     public required Filter Filter { get; init; }
-
     public required OverlayService OverlayService { get; init; }
+    public required PersistenceService PersistenceService { get; init; }
 
     private InstancePackageModel Model => (DataContext as InstancePackageModel)!;
 
@@ -109,14 +111,18 @@ public partial class InstancePackageModal : Modal
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-
+        _old = Model.Entry.Purl;
         IsFilterEnabled = true;
     }
 
     protected override async void OnUnloaded(RoutedEventArgs e)
     {
         base.OnUnloaded(e);
-
+        if (Model.Entry.Purl != _old)
+            PersistenceService.AppendAction(new PersistenceService.Action(Guard.Key,
+                                                                          PersistenceService.ActionKind.EditPackage,
+                                                                          _old,
+                                                                          Model.Entry.Purl));
         await Guard.DisposeAsync();
     }
 

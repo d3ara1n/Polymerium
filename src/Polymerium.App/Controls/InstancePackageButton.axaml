@@ -110,7 +110,8 @@
                                            TextTrimming="CharacterEllipsis"
                                            Text="{Binding ProjectName,FallbackValue=Name}"
                                            FontSize="{StaticResource LargeFontSize}"
-                                           FontWeight="{StaticResource ControlStrongFontWeight}" />
+                                           FontWeight="{StaticResource ControlStrongFontWeight}"
+                                           VerticalAlignment="Center" />
                                 <ToggleSwitch Grid.Column="2" OnContent="{x:Null}" OffContent="{x:Null}"
                                               IsChecked="{Binding IsEnabled,Mode=TwoWay}" />
                                 <Button Grid.Column="3" Theme="{StaticResource OutlineButtonTheme}" Classes="Small"

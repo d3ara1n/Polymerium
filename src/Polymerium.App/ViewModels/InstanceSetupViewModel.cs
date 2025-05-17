@@ -42,6 +42,7 @@ public partial class InstanceSetupViewModel(
     DataService dataService,
     OverlayService overlayService,
     NavigationService navigationService,
+    PersistenceService persistenceService,
     ConfigurationService configurationService) : InstanceViewModelBase(bag, instanceManager, profileManager)
 {
     private CancellationTokenSource? _pageCancellationTokenSource;
@@ -249,6 +250,15 @@ public partial class InstanceSetupViewModel(
         base.OnInstanceUpdated(tracker);
     }
 
+    protected override void OnInstanceDeployed(DeployTracker tracker)
+    {
+        if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
+            return;
+
+        TriggerRefresh(_pageCancellationTokenSource.Token);
+        base.OnInstanceDeployed(tracker);
+    }
+
     private void TrackUpdateProgress(UpdateTracker update)
     {
         _updatingSubscription?.Dispose();
@@ -306,6 +316,7 @@ public partial class InstanceSetupViewModel(
                 Guard = guard,
                 DataService = dataService,
                 OverlayService = overlayService,
+                PersistenceService = persistenceService,
                 Filter = new Filter(Kind: model.Kind,
                                     Version: Basic.Version,
                                     Loader: Basic.Loader is not null
@@ -543,10 +554,31 @@ public partial class InstanceSetupViewModel(
     {
         if (model is not null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
-            guard.Value.Setup.Packages.Remove(model.Key);
+            guard.Value.Setup.Packages.Remove(model.Entry);
             Stage.Remove(model);
             StageCount--;
             await guard.DisposeAsync();
+            persistenceService.AppendAction(new PersistenceService.Action(Basic.Key,
+                                                                          PersistenceService.ActionKind.EditPackage,
+                                                                          model.Entry.Purl,
+                                                                          null));
+        }
+    }
+
+
+    [RelayCommand]
+    private void UpdateBatch(SourceCache<InstancePackageModel, Profile.Rice.Entry>? packages)
+    {
+        if (packages != null && ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        {
+            var modal = new PackageBulkUpdaterModal
+            {
+                DataService = dataService,
+                NotificationService = notificationService,
+                PersistenceService = persistenceService
+            };
+            modal.SetGuard(guard, packages);
+            overlayService.PopModal(modal);
         }
     }
 
@@ -569,7 +601,7 @@ public partial class InstanceSetupViewModel(
     public partial string LoaderLabel { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial SourceCache<InstancePackageModel, Profile.Rice.Entry> Stage { get; set; } = new(x => x.Key);
+    public partial SourceCache<InstancePackageModel, Profile.Rice.Entry> Stage { get; set; } = new(x => x.Entry);
 
     [ObservableProperty]
     public partial int StageCount { get; set; }

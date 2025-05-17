@@ -44,6 +44,7 @@ public class InstallVanillaStage(
         [
             // 由于版本文件不再提供，这里手动生成，还有个 logging，这里就不加了
             "-Djava.library.path=${natives_directory}",
+            "-DlibraryDirectory=${library_directory}",
             "-Djna.tmpdir=${natives_directory}",
             "-Dorg.lwjgl.system.SharedLibraryExtractPath=${natives_directory}",
             "-Dio.netty.native.workdir=${natives_directory}",

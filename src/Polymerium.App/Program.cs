@@ -22,6 +22,8 @@ internal static class Program
 
     internal static IHost? AppHost { get; private set; }
 
+    public static bool Debug { get; private set; } = Debugger.IsAttached;
+
     public static void Main(string[] args)
     {
         var builder = Host.CreateApplicationBuilder(args);
@@ -43,6 +45,4 @@ internal static class Program
 
         return builder;
     }
-
-    public static bool Debug { get; private set; } = Debugger.IsAttached;
 }

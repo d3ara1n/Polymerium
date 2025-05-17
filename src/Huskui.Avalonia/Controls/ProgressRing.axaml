@@ -39,8 +39,8 @@
         </Grid>
     </Design.PreviewWith>
     <ControlTheme x:Key="BaseProgressRingTheme" TargetType="local:ProgressRing">
-        <Setter Property="StrokeWidth" Value="4" />
-        <Setter Property="TrackStrokeWidth" Value="4" />
+        <Setter Property="StrokeWidth" Value="2" />
+        <Setter Property="TrackStrokeWidth" Value="2" />
         <Setter Property="TrackPadding" Value="0" />
         <Setter Property="FontSize" Value="{StaticResource LargeFontSize}" />
         <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />

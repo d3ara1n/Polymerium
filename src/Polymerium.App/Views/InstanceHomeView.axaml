@@ -203,7 +203,7 @@
                         <husk:ProgressRing ShowProgressText="False"
                                            Value="{Binding PercentageInTotalPlayTime,FallbackValue=0.37}"
                                            Maximum="1"
-                                           TrackStrokeWidth="2" TrackPadding="1" />
+                                           TrackStrokeWidth="2" TrackPadding="2" StrokeWidth="6" />
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock TextAlignment="Center">
                                 <Run Text="{x:Static lang:Resources.InstanceHomeView_HourCountText}" />

@@ -31,16 +31,18 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
                                                                              o => o.Account,
                                                                              (o, v) => o.Account = v);
 
-    public IAccount? Account
-    {
-        get;
-        set => SetAndRaise(AccountProperty, ref field, value);
-    }
+    private CancellationTokenSource _cts = new();
 
 
     public AccountCreationMicrosoft()
     {
         InitializeComponent();
+    }
+
+    public IAccount? Account
+    {
+        get;
+        set => SetAndRaise(AccountProperty, ref field, value);
     }
 
     public MicrosoftUserCodeModel? Model
@@ -59,8 +61,6 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
     public required MicrosoftService MicrosoftService { get; init; }
     public required XboxLiveService XboxLiveService { get; init; }
     public required MinecraftService MinecraftService { get; init; }
-
-    private CancellationTokenSource _cts = new();
 
     public override object NextStep() => new AccountCreationPreview { Account = Account };
 
