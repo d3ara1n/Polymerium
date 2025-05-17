@@ -362,7 +362,9 @@ public partial class InstanceHomeViewModel(
         Mode = Mode switch
         {
             LaunchMode.Managed => LaunchMode.FireAndForget,
-            LaunchMode.FireAndForget => LaunchMode.Debug,
+            LaunchMode.FireAndForget => configurationService.Value.ApplicationSuperPowerActivated
+                                            ? LaunchMode.Debug
+                                            : LaunchMode.Managed,
             LaunchMode.Debug => LaunchMode.Managed,
             _ => throw new ArgumentOutOfRangeException()
         };
