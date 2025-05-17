@@ -900,4 +900,52 @@
     <data name="PackageContainer_DependencyGraphMenuText" xml:space="preserve">
         <value>依赖关系</value>
     </data>
+    <data name="Enum_Off" xml:space="preserve">
+        <value>关</value>
+    </data>
+    <data name="Enum_On" xml:space="preserve">
+        <value>开</value>
+    </data>
+    <data name="InstancePropertiesView_FastLaunchOnText" xml:space="preserve">
+        <value>我很急啊</value>
+    </data>
+    <data name="InstancePropertiesView_ResolvePackageDependenciesOnText" xml:space="preserve">
+        <value>我知道我在做什么</value>
+    </data>
+    <data name="Enum_Vanilla" xml:space="preserve">
+        <value>原版</value>
+    </data>
+    <data name="Enum_Unknown" xml:space="preserve">
+        <value>未知</value>
+    </data>
+    <data name="MainWindow_InstanceInstallingDangerNotificationTitle" xml:space="preserve">
+        <value>安装 {0} 失败</value>
+    </data>
+    <data name="MainWindow_InstanceInstallingSuccessNotificationPrompt" xml:space="preserve">
+        <value>实例安装完成</value>
+    </data>
+    <data name="MainWindow_InstanceInstallingSuccessNotificationOpenText" xml:space="preserve">
+        <value>打开</value>
+    </data>
+    <data name="MainWindow_InstanceUpdatingDangerNotificationTitle" xml:space="preserve">
+        <value>更新 {0} 失败</value>
+    </data>
+    <data name="MainWindow_InstanceUpdatingSuccessNotificationPrompt" xml:space="preserve">
+        <value>实例更新完成</value>
+    </data>
+    <data name="MainWindow_InstanceUpdatingSuccessNotificationOpenText" xml:space="preserve">
+        <value>打开</value>
+    </data>
+    <data name="MainWindow_InstanceDeployingNotificationTitle" xml:space="preserve">
+        <value>部署 {0} 失败</value>
+    </data>
+    <data name="MainWindow_InstanceDeployingSuccessNotificationPrompt" xml:space="preserve">
+        <value>实例部署完成</value>
+    </data>
+    <data name="MainWindow_InstanceLaunchingSuccessNotificationPrompt" xml:space="preserve">
+        <value>实例正常退出</value>
+    </data>
+    <data name="MainWindow_InstanceLaunchingDangerNotificationViewOutputText" xml:space="preserve">
+        <value>查看输出</value>
+    </data>
 </root>
