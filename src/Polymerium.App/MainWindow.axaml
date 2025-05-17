@@ -24,6 +24,12 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d" x:DataType="local:MainWindowContext">
+    <husk:AppWindow.Styles>
+        <Style Selector="husk|Dialog">
+            <Setter Property="PrimaryText" Value="{x:Static lang:Resources.Dialog_ConfirmButtonText}" />
+            <Setter Property="SecondaryText" Value="{x:Static lang:Resources.Dialog_CancelButtonText}" />
+        </Style>
+    </husk:AppWindow.Styles>
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*" />

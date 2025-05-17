@@ -7,11 +7,9 @@
 
 [![Screenshot][product-screenshot]](#i关于)
 
-**这是个 WIP 早期项目，大部分功能还没写完或仅存在于设计，开发进度请参考 [Roadmap](#ivroadmap)。**
+(More screenshots checkout [Screenshots](assets/screenshots))
 
 ## I.About
-
-**It's in very early stage and most features are under development. Refer to [Roadmap](#ivroadmap) for progress.**
 
 ### 1.理念
 
@@ -33,19 +31,17 @@ To introduce the MMC-style of game resource & instance organizing into the domes
 
 这不是 *launcher*，也不是压缩毛巾，这是 Polymerium —— *游戏实例管理器*。
 初衷是在用 PrismLauncher 的时候遇到一些问题并想出一些改进的的方法，不过在写代码、与 forge installer
-斗智斗勇的过程中已经忘记哪些改进了（囧。现在要回答这个问题的话，那么答案是：没有为什么，小孩子不懂事写着玩的。
+斗智斗勇的过程中已经忘记哪些改进了（囧）。
 
 ### 2.Why another launcher?
 
 Go back read the last section and you get it.
 
-### 3.跨平台
+### 3.跨平台 | Cross-platform
 
-跨。跨了 Windows 10 和 Windows 11 两个“平台”。
-
-### 3.Cross-platform
-
-Available in Windows 10&11 only.
+- Windows
+- Linux
+- macOS(Planning)
 
 ### 4.使用以下技术栈和工具构建 | Tech stack and toolchain
 
@@ -53,21 +49,19 @@ Available in Windows 10&11 only.
 * [![dotnet][DotNet]][DotNet-url]
 * [![Avalonia][Avalonia]][Avalonia-url]
 * [![Rider][Rider]][Rider-url]
-* [![VisualStudio][VisualStudio]][VisualStudio-url]
-* [![VisualStudioCode][VSCode]][VSCode-url]
 
 <!-- FEATURES -->
 
 ## II.特色 | Features
 
-- 🎨 Custom UI Styles
+- 🎨 丰富的界面视觉效果 | Custom UI Styles
 - 💾 增量部署，使用软链接节省硬盘空间 | Pooled file objects & Symlink deployment.
 - 🎭 支持多账号且账号与实例绑定 | Instance linked multi account support.
 - 🎟️ 多种在线仓库，与 Curseforge 和 Modrinth 集成 | Integrated with Curseforge & Modrinth.
 - ☕ 手动配置 Java 并在运行时智能选择版本 | No stupid Java auto-detection. Configure Java once, configured every time.
 - 📜 实例元数据附件分层管理 | Layered attachment management.
 - ✨ 发布所游玩的实例为整合包，自动编写更新日志 | Publish the instance as a modpack with generated changelog.
-- 🛁 洁癖友好，看不惯友商所谓智能不是在扫盘就是后台安装第三方软件 | Never touch user's filesystem other than instance
+- 🛁 洁癖友好 | Never touch user's filesystem other than instance
   folder. Never scan disks for java binaries. Uninstall by clicking
   DELETE on the program folder and instance folder; boom, they were all gone like they never came.
 
@@ -83,7 +77,7 @@ Available in Windows 10&11 only.
 
 由于部署采用了 [Symbolic Link](https://www.wikiwand.com/en/Symbolic_link)，该功能需要管理员权限。
 Windows
-没有为打包的应用提供管理员权限申请能力，但提供了 [开发者模式](https://blogs.windows.com/windowsdeveloper/2016/12/02/symlinks-windows-10/)
+无法直接申请管理员权限，但提供了 [开发者模式](https://blogs.windows.com/windowsdeveloper/2016/12/02/symlinks-windows-10/)
 来降低创建软连接的特权要求。
 
 #### Windows 10
@@ -111,10 +105,6 @@ Google it.
 
 Google it.
 
-#### Other OS
-
-Install Windows 10 or 11 then Google it.
-
 ### 3.配置
 
 开箱即用。
@@ -122,10 +112,6 @@ Install Windows 10 or 11 then Google it.
 ### 3.Setup
 
 Available out of the box.
-
-<!-- ROADMAP -->
-
-## IV.Roadmap
 
 <!-- Privacy -->
 
@@ -136,7 +122,7 @@ Polymerium 没有遥测。
 但会在部分保存或导出的数据文件中包含隐私数据，其中包括：
 
 - 你的用户名：被包含在日志和临时文件中，通过 Home 目录暴露
-- 你使用的操作系统类型：被包含在日志和临时文件中，且仅有唯一的值 Windows
+- 你使用的操作系统类型：被包含在日志和临时文件中
 
 上面有提到你的账号信息吗？没有，因为这部分信息不被保存在公共区域。
 
@@ -207,9 +193,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [license-url]: https://github.com/d3ara1n/Polymerium/blob/master/LICENSE.txt
 
-[product-screenshot]: assets/images/Screenshot.gif
+[product-screenshot]: assets/screenshots/overview.avif
 
-[CSharp]: https://img.shields.io/badge/C%23-13-239120?style=for-the-badge&logoColor=white
+[CSharp]: https://img.shields.io/badge/C%23-14-239120?style=for-the-badge&logoColor=white
 
 [CSharp-url]: https://learn.microsoft.com/en-us/dotnet/csharp/
 
