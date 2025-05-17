@@ -1,6 +1,8 @@
 ﻿using System;
 using Avalonia.Data.Converters;
 using Huskui.Avalonia.Converters;
+using Polymerium.App.Properties;
+using Trident.Abstractions.Repositories.Resources;
 
 namespace Polymerium.App.Converters;
 
@@ -27,6 +29,21 @@ public static class InternalConverters
         if (v is double d)
             return Math.Min(Math.Max((1 - d) * 2, 0.0d), 1.0d);
 
+        return v;
+    });
+
+    public static IValueConverter LocalizedResourceKindConverter { get; } = new RelayConverter((v, _) =>
+    {
+        if (v is ResourceKind kind)
+            return kind switch
+            {
+                ResourceKind.Modpack => Resources.ResourceKind_Modpack,
+                ResourceKind.Mod => Resources.ResourceKind_Mod,
+                ResourceKind.ResourcePack => Resources.ResourceKind_ResourcePack,
+                ResourceKind.ShaderPack => Resources.ResourceKind_ShaderPack,
+                ResourceKind.DataPack => Resources.ResourceKind_DataPack,
+                _ => throw new NotImplementedException()
+            };
         return v;
     });
 }

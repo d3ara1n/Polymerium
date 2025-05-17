@@ -12,6 +12,8 @@
                      xmlns:v="clr-namespace:Polymerium.App.Views"
                      xmlns:huskc="https://github.com/d3ara1n/Huskui.Avalonia/Converters"
                      xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+                     xmlns:converters="clr-namespace:Polymerium.App.Converters"
+                     xmlns:resources="clr-namespace:Trident.Abstractions.Repositories.Resources;assembly=Trident.Abstractions"
                      mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
                      x:Class="Polymerium.App.Views.PackageExplorerView" x:DataType="vm:PackageExplorerViewModel"
                      Padding="0" IsHeaderVisible="False" ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -199,7 +201,14 @@
                             <TabStrip
                                 Theme="{StaticResource SegmentedTabStripTheme}"
                                 SelectedItem="{Binding SelectedKind,Mode=TwoWay}"
-                                ItemsSource="{Binding SelectedRepository.Kinds}" />
+                                ItemsSource="{Binding SelectedRepository.Kinds}">
+                                <TabStrip.ItemTemplate>
+                                    <DataTemplate x:DataType="resources:ResourceKind">
+                                        <TextBlock
+                                            Text="{Binding Converter={x:Static converters:InternalConverters.LocalizedResourceKindConverter}}" />
+                                    </DataTemplate>
+                                </TabStrip.ItemTemplate>
+                            </TabStrip>
                         </husk:SkeletonContainer>
                     </Grid>
                 </StackPanel>
