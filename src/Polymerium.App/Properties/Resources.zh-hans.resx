@@ -960,4 +960,25 @@
     <data name="SettingsView_TitleBarVisibilityLabelText" xml:space="preserve">
         <value>标题栏可见性</value>
     </data>
+    <data name="DeployStage_BuildArtifact" xml:space="preserve">
+        <value>构建版本锁...</value>
+    </data>
+    <data name="DeployStage_CheckArtifact" xml:space="preserve">
+        <value>检查版本锁...</value>
+    </data>
+    <data name="DeployStage_GenerateManifest" xml:space="preserve">
+        <value>生成文件清单...</value>
+    </data>
+    <data name="DeployStage_InstallVanilla" xml:space="preserve">
+        <value>安装原版...</value>
+    </data>
+    <data name="DeployStage_ProcessLoader" xml:space="preserve">
+        <value>处理加载器...</value>
+    </data>
+    <data name="DeployStage_ResolvePackage" xml:space="preserve">
+        <value>解析包版本...</value>
+    </data>
+    <data name="DeployStage_SolidifyManifest" xml:space="preserve">
+        <value>固实文件...</value>
+    </data>
 </root>
