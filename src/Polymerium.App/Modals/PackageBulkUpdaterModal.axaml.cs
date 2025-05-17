@@ -97,7 +97,7 @@ public partial class PackageBulkUpdaterModal : Modal
         {
             if (_cts.IsCancellationRequested)
                 break;
-            if (PackageHelper.TryParse(entry.Entry.Purl, out var result))
+            if (!entry.IsLocked && PackageHelper.TryParse(entry.Entry.Purl, out var result))
                 if (result.Vid is not null)
                     try
                     {
