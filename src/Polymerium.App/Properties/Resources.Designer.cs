@@ -420,6 +420,69 @@ namespace Polymerium.App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Building artifacts....
+        /// </summary>
+        public static string DeployStage_BuildArtifact {
+            get {
+                return ResourceManager.GetString("DeployStage_BuildArtifact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking artifacts....
+        /// </summary>
+        public static string DeployStage_CheckArtifact {
+            get {
+                return ResourceManager.GetString("DeployStage_CheckArtifact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generating manifest....
+        /// </summary>
+        public static string DeployStage_GenerateManifest {
+            get {
+                return ResourceManager.GetString("DeployStage_GenerateManifest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing vanilla....
+        /// </summary>
+        public static string DeployStage_InstallVanilla {
+            get {
+                return ResourceManager.GetString("DeployStage_InstallVanilla", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing loader....
+        /// </summary>
+        public static string DeployStage_ProcessLoader {
+            get {
+                return ResourceManager.GetString("DeployStage_ProcessLoader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolving packages....
+        /// </summary>
+        public static string DeployStage_ResolvePackage {
+            get {
+                return ResourceManager.GetString("DeployStage_ResolvePackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solidifying files....
+        /// </summary>
+        public static string DeployStage_SolidifyManifest {
+            get {
+                return ResourceManager.GetString("DeployStage_SolidifyManifest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Dialog_CancelButtonText {

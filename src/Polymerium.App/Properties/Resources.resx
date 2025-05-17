@@ -969,4 +969,25 @@
     <data name="SettingsView_TitleBarVisibilityLabelText" xml:space="preserve">
         <value>Title Bar Visibility</value>
     </data>
+    <data name="DeployStage_CheckArtifact" xml:space="preserve">
+        <value>Checking artifacts...</value>
+    </data>
+    <data name="DeployStage_InstallVanilla" xml:space="preserve">
+        <value>Installing vanilla...</value>
+    </data>
+    <data name="DeployStage_ProcessLoader" xml:space="preserve">
+        <value>Processing loader...</value>
+    </data>
+    <data name="DeployStage_ResolvePackage" xml:space="preserve">
+        <value>Resolving packages...</value>
+    </data>
+    <data name="DeployStage_BuildArtifact" xml:space="preserve">
+        <value>Building artifacts...</value>
+    </data>
+    <data name="DeployStage_GenerateManifest" xml:space="preserve">
+        <value>Generating manifest...</value>
+    </data>
+    <data name="DeployStage_SolidifyManifest" xml:space="preserve">
+        <value>Solidifying files...</value>
+    </data>
 </root>

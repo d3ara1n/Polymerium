@@ -153,13 +153,13 @@ public partial class InstanceHomeViewModel(
     private string GetStageTitle(DeployStage stage) =>
         stage switch
         {
-            DeployStage.CheckArtifact => "Checking artifacts...",
-            DeployStage.InstallVanilla => "Installing vanilla...",
-            DeployStage.ProcessLoader => "Processing loader...",
-            DeployStage.ResolvePackage => "Resolving packages...",
-            DeployStage.BuildArtifact => "Building artifacts...",
-            DeployStage.GenerateManifest => "Generating manifest...",
-            DeployStage.SolidifyManifest => "Solidifying files...",
+            DeployStage.CheckArtifact => Resources.DeployStage_CheckArtifact,
+            DeployStage.InstallVanilla => Resources.DeployStage_InstallVanilla,
+            DeployStage.ProcessLoader => Resources.DeployStage_ProcessLoader,
+            DeployStage.ResolvePackage => Resources.DeployStage_ResolvePackage,
+            DeployStage.BuildArtifact => Resources.DeployStage_BuildArtifact,
+            DeployStage.GenerateManifest => Resources.DeployStage_GenerateManifest,
+            DeployStage.SolidifyManifest => Resources.DeployStage_SolidifyManifest,
             _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
         };
 
